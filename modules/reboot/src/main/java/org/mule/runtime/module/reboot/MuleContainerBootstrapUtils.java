@@ -34,6 +34,7 @@ public final class MuleContainerBootstrapUtils
 
     /**
      * Whether Mule is running embedded or standalone.
+     *
      * @return true if running standalone
      */
     public static boolean isStandalone()
@@ -111,32 +112,6 @@ public final class MuleContainerBootstrapUtils
         return isStandalone() ? new File(getMuleHome(), MULE_CONF_FILENAME) : null;
     }
 
-    public static class ProxyInfo
-    {
-        String host;
-        String port;
-        String username;
-        String password;
-
-        public ProxyInfo(String host, String port)
-        {
-            this(host, port, null, null);
-        }
-
-        public ProxyInfo(String host, String port, String username, String password)
-        {
-            this.host = host;
-            this.port = port;
-            this.username = username;
-            this.password = password;
-        }
-    }
-
-    //////////////////////////////////////////////////////////////////////////////////////////
-    // The following methods are intentionally duplicated from org.mule.runtime.core.util so that
-    // mule-module-reboot has no external dependencies at system startup.
-    //////////////////////////////////////////////////////////////////////////////////////////
-
     /**
      * @see org.mule.runtime.core.util.ClassUtils#getResource
      */
@@ -175,6 +150,11 @@ public final class MuleContainerBootstrapUtils
 
         return url;
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////
+    // The following methods are intentionally duplicated from org.mule.runtime.core.util so that
+    // mule-module-reboot has no external dependencies at system startup.
+    //////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * @see org.mule.runtime.core.util.FileUtils#renameFile
@@ -272,5 +252,26 @@ public final class MuleContainerBootstrapUtils
             count += n;
         }
         return count;
+    }
+
+    public static class ProxyInfo
+    {
+        String host;
+        String port;
+        String username;
+        String password;
+
+        public ProxyInfo(String host, String port)
+        {
+            this(host, port, null, null);
+        }
+
+        public ProxyInfo(String host, String port, String username, String password)
+        {
+            this.host = host;
+            this.port = port;
+            this.username = username;
+            this.password = password;
+        }
     }
 }

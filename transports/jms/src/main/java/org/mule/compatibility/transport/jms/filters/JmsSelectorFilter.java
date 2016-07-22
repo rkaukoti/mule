@@ -6,11 +6,11 @@
  */
 package org.mule.compatibility.transport.jms.filters;
 
-import static org.mule.runtime.core.util.ClassUtils.equal;
-import static org.mule.runtime.core.util.ClassUtils.hash;
-
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.routing.filter.Filter;
+
+import static org.mule.runtime.core.util.ClassUtils.equal;
+import static org.mule.runtime.core.util.ClassUtils.hash;
 
 /**
  * <code>JmsSelectorFilter</code> is a wrapper for a JMS Selector. This filter
@@ -42,8 +42,10 @@ public class JmsSelectorFilter implements Filter
     @Override
     public boolean equals(Object obj)
     {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
 
         final JmsSelectorFilter other = (JmsSelectorFilter) obj;
         return equal(expression, other.expression);
@@ -52,6 +54,6 @@ public class JmsSelectorFilter implements Filter
     @Override
     public int hashCode()
     {
-        return hash(new Object[]{this.getClass(), expression});
+        return hash(new Object[] {this.getClass(), expression});
     }
 }

@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
-import static org.mule.runtime.api.metadata.DataType.MULE_MESSAGE_COLLECTION;
-
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -18,12 +16,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static org.mule.runtime.api.metadata.DataType.MULE_MESSAGE_COLLECTION;
+
 /**
- * 
  * Takes a payload which is a Collection of Collections and turns into a single List. For example, if the payload is a Collection
  * which contains a Collection with elements A and B and another Collection with elements C and D, this will turn them into
  * a single Collection with elements A, B, C and D.
- *    
+ *
  * This transformer will also work on MuleMessageCollections. In this case, it will take the individual Collection
  * payloads of each MuleMessage and merge them into a single Collection on a new MuleMessage.
  */
@@ -52,10 +51,10 @@ public class CombineCollectionsTransformer implements MessageProcessor
                     payload.add(childPayload);
                 }
             }
-        } 
+        }
         else if (msg.getPayload() instanceof Collection)
         {
-            add(payload, (Collection)msg.getPayload());
+            add(payload, (Collection) msg.getPayload());
         }
         else
         {
@@ -73,9 +72,9 @@ public class CombineCollectionsTransformer implements MessageProcessor
         {
             if (o instanceof Collection)
             {
-                newPayload.addAll((Collection)o);
+                newPayload.addAll((Collection) o);
             }
-            else 
+            else
             {
                 newPayload.add(o);
             }

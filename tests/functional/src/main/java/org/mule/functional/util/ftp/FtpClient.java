@@ -6,30 +6,29 @@
  */
 package org.mule.functional.util.ftp;
 
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 import org.mule.runtime.core.util.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Ftp client wrapper for working with an FTP server.
  */
 public class FtpClient
 {
+    public static final int TIMEOUT = 5000; // just to make sure we don't hang the test on invalid connection attempts
     protected final transient Logger logger = LoggerFactory.getLogger(this.getClass());
-    FTPClient ftpClient = null;   
+    FTPClient ftpClient = null;
     String server = null;
     int port;
     String user = null;
     String password = null;
-    public static final int TIMEOUT = 5000; // just to make sure we don't hang the test on invalid connection attempts
-        
+
     public FtpClient(String server, int port, String user, String password)
     {
         super();
@@ -43,13 +42,13 @@ public class FtpClient
     public boolean testConnection() throws IOException
     {
         connect();
-        return verifyStatusCode(ftpClient.noop());        
+        return verifyStatusCode(ftpClient.noop());
     }
-    
+
     /**
      * Get a list of file names in a given directory for admin
+     *
      * @return List of files/directories
-     * @throws java.io.IOException
      */
     public String[] getFileList(String path) throws IOException
     {
@@ -59,9 +58,8 @@ public class FtpClient
 
     /**
      * Create a directory
-     * @param dir
+     *
      * @return true if successful, false if not
-     * @throws java.io.IOException
      */
     public boolean makeDir(String dir) throws IOException
     {
@@ -71,9 +69,9 @@ public class FtpClient
 
     /**
      * Delete a directory
+     *
      * @param dir The directory to delete
      * @return true if successful, false if not
-     * @throws java.io.IOException
      */
     public boolean deleteDir(String dir) throws IOException
     {
@@ -83,12 +81,13 @@ public class FtpClient
 
     /**
      * Check that the status code is successful (between 200 and 299)
+     *
      * @param status The status code to check
      * @return true if status is successful, false if not
      */
     private boolean verifyStatusCode(int status)
     {
-        if(status >= 200 && status < 300)
+        if (status >= 200 && status < 300)
         {
             return true;
         }
@@ -97,9 +96,9 @@ public class FtpClient
 
     /**
      * Upload a file to the ftp server
+     *
      * @param fileName The file to upload
      * @return true if successful, false if not
-     * @throws java.io.IOException
      */
     public boolean putFile(String fileName, String targetDir) throws IOException
     {
@@ -110,9 +109,9 @@ public class FtpClient
 
     /**
      * Upload a file to the ftp server
+     *
      * @param fileName The file to upload
      * @return true if successful, false if not
-     * @throws java.io.IOException
      */
     public boolean putFile(String fileName, String targetDir, String fileContent) throws IOException
     {
@@ -123,9 +122,9 @@ public class FtpClient
 
     /**
      * Check if a directory exists by trying to go to it
+     *
      * @param path The directory to try
      * @return True if the directory exists, false if not
-     * @throws java.io.IOException
      */
     public boolean dirExists(String path) throws IOException
     {
@@ -139,7 +138,6 @@ public class FtpClient
     /**
      * Delete all files and subdirectories. Note: extra slashes are ignored by the
      * ftp server, so I didn't bother to filter them out
-     *
      */
     public void recursiveDelete(String path) throws IOException
     {
@@ -150,18 +148,18 @@ public class FtpClient
         System.out.println("Changed CWD: " + path);
 
         FTPFile[] fileObjs = ftpClient.listFiles();
-        for(int i = 0; i < fileObjs.length; i++)
+        for (int i = 0; i < fileObjs.length; i++)
         {
-            if(fileObjs[i].isFile()) //delete the file
+            if (fileObjs[i].isFile()) //delete the file
             {
                 ftpClient.deleteFile(fileObjs[i].getName());
             }
-            else if(fileObjs[i].isDirectory() && (getFileList(ftpClient.printWorkingDirectory() + "/" + fileObjs[i].getName()).length > 0))
+            else if (fileObjs[i].isDirectory() && (getFileList(ftpClient.printWorkingDirectory() + "/" + fileObjs[i].getName()).length > 0))
             {
                 recursiveDelete(ftpClient.printWorkingDirectory() + "/" + fileObjs[i].getName());
                 deleteDir(ftpClient.printWorkingDirectory() + "/" + fileObjs[i].getName()); //safe to delete dir now that it's empty
             }
-            else if(fileObjs[i].isDirectory()) //delete the empty directory
+            else if (fileObjs[i].isDirectory()) //delete the empty directory
             {
                 deleteDir(ftpClient.printWorkingDirectory() + "/" + fileObjs[i].getName());
             }
@@ -172,11 +170,10 @@ public class FtpClient
 
     /**
      * Initiate a connection to the ftp server
-     * @throws java.io.IOException
      */
     protected void connect() throws IOException
     {
-        if(!ftpClient.isConnected())
+        if (!ftpClient.isConnected())
         {
             ftpClient = new FTPClient();
             ftpClient.setDefaultTimeout(TIMEOUT);
@@ -187,6 +184,7 @@ public class FtpClient
 
     /**
      * Check if the ftp client is connected
+     *
      * @return true if connected, false if not
      */
     public boolean isConnected()
@@ -196,7 +194,6 @@ public class FtpClient
 
     /**
      * Disconnect the ftp client
-     * @throws java.io.IOException
      */
     public void disconnect() throws IOException
     {
@@ -205,9 +202,9 @@ public class FtpClient
 
     /**
      * Check if a file exists on the ftp server
+     *
      * @param file The name of the file to check
      * @return true if file exists, false if not
-     * @throws java.io.IOException
      */
     public boolean fileExists(String file) throws IOException
     {
@@ -216,9 +213,9 @@ public class FtpClient
 
     /**
      * Delete a single file.
+     *
      * @param name The file to delete
      * @return true if successful, false if not
-     * @throws java.io.IOException
      */
     public boolean deleteFile(String name) throws IOException
     {
@@ -227,22 +224,23 @@ public class FtpClient
 
     /**
      * Verify that a number of files exist on the ftp server
+     *
      * @param directory The remote directory to check
-     * @param timeout The max time to wait
+     * @param timeout   The max time to wait
      * @return true if the file count matches before the timeout, false if not
      */
     public boolean expectFileCount(String directory, int count, long timeout) throws InterruptedException, IOException
     {
         long endTime = System.currentTimeMillis() + timeout;
         int iteration = 1;
-        while(System.currentTimeMillis() < endTime)
+        while (System.currentTimeMillis() < endTime)
         {
             logger.debug("checking file list, iteration :" + iteration);
             if (getFileList(directory).length == count)
             {
                 logger.debug("found expected file count : " + count);
                 return true;
-            }            
+            }
             Thread.sleep(1000);
             ++iteration;
         }

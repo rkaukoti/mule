@@ -6,83 +6,82 @@
  */
 package org.mule.runtime.module.json.transformers;
 
+import org.junit.Test;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.module.xml.util.XMLUtils;
 import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.w3c.dom.Document;
 
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 
-import org.junit.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.w3c.dom.Document;
-
 public class XmlToJsonTestCase extends AbstractMuleTestCase
 {
     private static final String EXPECTED_JSON =
-        "{" +
-        "    \"customer\" : {" +
-        "        \"id\" : \"112\"," +
-        "        \"first-name\" : \"Jane\"," +
-        "        \"last-name\" : \"Doe\"," +
-        "        \"address\" : {" +
-        "            \"street\" : \"123 A Street\"" +
-        "        }," +
-        "        \"phone-number\" : [ {" +
-        "            \"@type\" : \"work\"," +
-        "            \"$\" : \"555-1111\"" +
-        "        }, {" +
-        "            \"@type\" : \"cell\"," +
-        "            \"$\" : \"555-2222\"" +
-        "        } ]" +
-        "    }" +
-        "}";
+            "{" +
+            "    \"customer\" : {" +
+            "        \"id\" : \"112\"," +
+            "        \"first-name\" : \"Jane\"," +
+            "        \"last-name\" : \"Doe\"," +
+            "        \"address\" : {" +
+            "            \"street\" : \"123 A Street\"" +
+            "        }," +
+            "        \"phone-number\" : [ {" +
+            "            \"@type\" : \"work\"," +
+            "            \"$\" : \"555-1111\"" +
+            "        }, {" +
+            "            \"@type\" : \"cell\"," +
+            "            \"$\" : \"555-2222\"" +
+            "        } ]" +
+            "    }" +
+            "}";
 
     private static final String EXPECTED_JSON_WITH_NAMESPACE =
-        "{" +
-        "    \"cust:customer\" : {" +
-        "        \"@xmlns:cust\" : \"http:customer.com\"," +
-        "        \"cust:id\" : \"112\"," +
-        "        \"cust:first-name\" : \"Jane\"," +
-        "        \"cust:last-name\" : \"Doe\"," +
-        "        \"cust:address\" : {" +
-        "           \"cust:street\" : \"123 A Street\"" +
-        "        }," +
-        "        \"cust:phone-number\" : [ {" +
-        "            \"@type\" : \"work\"," +
-        "            \"$\" : \"555-1111\"" +
-        "        }, {" +
-        "            \"@type\" : \"cell\"," +
-        "            \"$\" : \"555-2222\"" +
-        "        } ]" +
-        "    }" +
-        "}";
+            "{" +
+            "    \"cust:customer\" : {" +
+            "        \"@xmlns:cust\" : \"http:customer.com\"," +
+            "        \"cust:id\" : \"112\"," +
+            "        \"cust:first-name\" : \"Jane\"," +
+            "        \"cust:last-name\" : \"Doe\"," +
+            "        \"cust:address\" : {" +
+            "           \"cust:street\" : \"123 A Street\"" +
+            "        }," +
+            "        \"cust:phone-number\" : [ {" +
+            "            \"@type\" : \"work\"," +
+            "            \"$\" : \"555-1111\"" +
+            "        }, {" +
+            "            \"@type\" : \"cell\"," +
+            "            \"$\" : \"555-2222\"" +
+            "        } ]" +
+            "    }" +
+            "}";
 
     private static final String XML =
-        "<?xml version=\"1.0\" ?>" +
-        "<customer>" +
-        "    <id>112</id>" +
-        "    <first-name>Jane</first-name>" +
-        "    <last-name>Doe</last-name>" +
-        "    <address>" +
-        "        <street>123 A Street</street>" +
-        "    </address>" +
-        "    <phone-number type=\"work\">555-1111</phone-number>" +
-        "    <phone-number type=\"cell\">555-2222</phone-number>" +
-        "</customer>";
+            "<?xml version=\"1.0\" ?>" +
+            "<customer>" +
+            "    <id>112</id>" +
+            "    <first-name>Jane</first-name>" +
+            "    <last-name>Doe</last-name>" +
+            "    <address>" +
+            "        <street>123 A Street</street>" +
+            "    </address>" +
+            "    <phone-number type=\"work\">555-1111</phone-number>" +
+            "    <phone-number type=\"cell\">555-2222</phone-number>" +
+            "</customer>";
 
     private static final String XML_WITH_NAMESPACE =
-        "<?xml version=\"1.0\" ?>" +
-        "<cust:customer xmlns:cust=\"http:customer.com\">" +
-        "    <cust:id>112</cust:id>" +
-        "    <cust:first-name>Jane</cust:first-name>" +
-        "    <cust:last-name>Doe</cust:last-name>" +
-        "    <cust:address>" +
-        "        <cust:street>123 A Street</cust:street>" +
-        "    </cust:address>\n" +
-        "    <cust:phone-number type=\"work\">555-1111</cust:phone-number>" +
-        "    <cust:phone-number type=\"cell\">555-2222</cust:phone-number>" +
-        "</cust:customer>";
+            "<?xml version=\"1.0\" ?>" +
+            "<cust:customer xmlns:cust=\"http:customer.com\">" +
+            "    <cust:id>112</cust:id>" +
+            "    <cust:first-name>Jane</cust:first-name>" +
+            "    <cust:last-name>Doe</cust:last-name>" +
+            "    <cust:address>" +
+            "        <cust:street>123 A Street</cust:street>" +
+            "    </cust:address>\n" +
+            "    <cust:phone-number type=\"work\">555-1111</cust:phone-number>" +
+            "    <cust:phone-number type=\"cell\">555-2222</cust:phone-number>" +
+            "</cust:customer>";
 
     @Test
     public void stringInputShouldBeTransformedToJson() throws Exception

@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.management.agents;
 
-import static org.junit.Assert.assertEquals;
-import org.mule.runtime.module.management.mbean.MBeanServerFactory;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.module.management.mbean.MBeanServerFactory;
 
 import java.util.Set;
 
@@ -16,7 +16,7 @@ import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class MuleContextRestartTestCase extends FunctionalTestCase
 {

@@ -30,6 +30,7 @@ public class MuleCoreExtensionProcessConfigurer implements ProcessBuilderConfigu
         {
             propertyValue.append(coreExtensionClass.getName() + ",");
         }
-        configurableProcessBuilder.addConfigurationAttribute(MuleContextProcessBuilder.MULE_CORE_EXTENSIONS_PROPERTY, propertyValue.substring(0, propertyValue.length() - 1));
+        configurableProcessBuilder.addConfigurationAttribute(MuleContextProcessBuilder.MULE_CORE_EXTENSIONS_PROPERTY,
+                propertyValue.substring(0, propertyValue.length() - 1));
     }
 }

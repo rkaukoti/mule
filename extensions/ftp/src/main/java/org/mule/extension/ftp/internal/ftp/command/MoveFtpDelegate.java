@@ -6,14 +6,15 @@
  */
 package org.mule.extension.ftp.internal.ftp.command;
 
-import static java.lang.String.format;
-import org.mule.extension.ftp.internal.ftp.connection.FtpFileSystem;
 import org.mule.extension.ftp.internal.FtpCopyDelegate;
+import org.mule.extension.ftp.internal.ftp.connection.FtpFileSystem;
 import org.mule.runtime.api.message.MuleEvent;
 import org.mule.runtime.module.extension.file.api.FileAttributes;
 import org.mule.runtime.module.extension.file.api.FileConnectorConfig;
 
 import java.nio.file.Path;
+
+import static java.lang.String.format;
 
 public class MoveFtpDelegate implements FtpCopyDelegate
 {

@@ -6,14 +6,14 @@
  */
 package org.mule.compatibility.transport.tcp.protocols;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The LengthProtocol is an application level tcp protocol that can be used to
@@ -26,11 +26,11 @@ import org.slf4j.LoggerFactory;
  */
 public class LengthProtocol extends DirectProtocol
 {
-    
+
+    public static final int NO_MAX_LENGTH = -1;
     private static final Logger logger = LoggerFactory.getLogger(LengthProtocol.class);
     // TODO - can we not get this from the API somewhere?
     private static final int SIZE_INT = 4;
-    public static final int NO_MAX_LENGTH = -1;
     private int maxMessageLength;
 
     public LengthProtocol()
@@ -101,7 +101,7 @@ public class LengthProtocol extends DirectProtocol
     /**
      * Read all four bytes for initial integer (limit is set in read)
      *
-     * @param len Amount transferred last call (-1 on EOF or socket error)
+     * @param len       Amount transferred last call (-1 on EOF or socket error)
      * @param available Amount available
      * @return true if the transfer should continue
      */
@@ -120,5 +120,5 @@ public class LengthProtocol extends DirectProtocol
     {
         this.maxMessageLength = maxMessageLength;
     }
-    
+
 }

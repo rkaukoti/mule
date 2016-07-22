@@ -64,8 +64,7 @@ public class NamedGroup extends RealGroup
     /**
      * Gets the value of the choice property.
      *
-     * @return possible object is
-     * {@link ExplicitGroup }
+     * @return possible object is {@link ExplicitGroup }
      */
     public ExplicitGroup getChoice()
     {
@@ -79,8 +78,7 @@ public class NamedGroup extends RealGroup
     /**
      * Sets the value of the choice property.
      *
-     * @param value allowed object is
-     *              {@link ExplicitGroup }
+     * @param value allowed object is {@link ExplicitGroup }
      */
     public void setChoice(ExplicitGroup value)
     {

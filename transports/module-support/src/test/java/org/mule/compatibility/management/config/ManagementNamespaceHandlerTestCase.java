@@ -6,20 +6,14 @@
  */
 package org.mule.compatibility.management.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.agent.EndpointNotificationLoggerAgent;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.agent.Agent;
-import org.mule.runtime.core.api.registry.Registry;
 import org.mule.runtime.module.management.agent.JmxApplicationAgent;
 
-import java.util.Collection;
-import java.util.Iterator;
-
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ManagementNamespaceHandlerTestCase extends FunctionalTestCase
 {

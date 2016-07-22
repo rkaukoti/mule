@@ -6,33 +6,7 @@
  */
 package org.mule.runtime.module.extension.internal.metadata;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.sameInstance;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import static org.mule.runtime.module.extension.internal.metadata.PartAwareMetadataKeyBuilder.newKey;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.toMetadataType;
-import static org.mule.tck.junit4.matcher.MetadataKeyMatcher.metadataKeyWithId;
-import static org.mule.test.metadata.extension.MetadataConnection.CAR;
-import static org.mule.test.metadata.extension.MetadataConnection.HOUSE;
-import static org.mule.test.metadata.extension.MetadataConnection.PERSON;
-import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.AGE;
-import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.BRAND;
-import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.NAME;
-import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.AMERICA;
-import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.EUROPE;
-import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.SAN_FRANCISCO;
-import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.USA;
-import static org.mule.test.metadata.extension.resolver.TestResolverWithCache.AGE_VALUE;
-import static org.mule.test.metadata.extension.resolver.TestResolverWithCache.BRAND_VALUE;
-import static org.mule.test.metadata.extension.resolver.TestResolverWithCache.NAME_VALUE;
-
+import org.junit.Test;
 import org.mule.functional.listener.Callback;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.metadata.api.model.impl.DefaultUnionType;
@@ -61,9 +35,33 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Test;
-
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.sameInstance;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+import static org.mule.runtime.module.extension.internal.metadata.PartAwareMetadataKeyBuilder.newKey;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.toMetadataType;
+import static org.mule.tck.junit4.matcher.MetadataKeyMatcher.metadataKeyWithId;
+import static org.mule.test.metadata.extension.MetadataConnection.CAR;
+import static org.mule.test.metadata.extension.MetadataConnection.HOUSE;
+import static org.mule.test.metadata.extension.MetadataConnection.PERSON;
+import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.AGE;
+import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.BRAND;
+import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.NAME;
+import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.AMERICA;
+import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.EUROPE;
+import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.SAN_FRANCISCO;
+import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.USA;
+import static org.mule.test.metadata.extension.resolver.TestResolverWithCache.AGE_VALUE;
+import static org.mule.test.metadata.extension.resolver.TestResolverWithCache.BRAND_VALUE;
+import static org.mule.test.metadata.extension.resolver.TestResolverWithCache.NAME_VALUE;
 
 public class OperationMetadataTestCase extends MetadataExtensionFunctionalTestCase
 {
@@ -310,7 +308,8 @@ public class OperationMetadataTestCase extends MetadataExtensionFunctionalTestCa
         MetadataType attributesType = metadataDescriptor.getOutputMetadata().get().getAttributesMetadata().get().getType();
         assertThat(attributesType, is(instanceOf(DefaultUnionType.class)));
         assertThat(((DefaultUnionType) attributesType).getTypes(), hasSize(2));
-        assertThat(((DefaultUnionType) attributesType).getTypes(), hasItems(toMetadataType(ShapeOutputAttributes.class), toMetadataType(AnimalsOutputAttributes.class)));
+        assertThat(((DefaultUnionType) attributesType).getTypes(),
+                hasItems(toMetadataType(ShapeOutputAttributes.class), toMetadataType(AnimalsOutputAttributes.class)));
     }
 
     @Test
@@ -396,14 +395,15 @@ public class OperationMetadataTestCase extends MetadataExtensionFunctionalTestCa
         final ComponentMetadataDescriptor metadataDescriptor = getComponentDynamicMetadata(nullMetadataKey);
 
         assertThat(metadataDescriptor.getContentMetadata().get().get().getType(),
-                   is(equalTo(metadataDescriptor.getOutputMetadata().get().getPayloadMetadata().get().getType())));
+                is(equalTo(metadataDescriptor.getOutputMetadata().get().getPayloadMetadata().get().getType())));
 
     }
 
     @Test
     public void typeKeysResolverWithContextClassLoader() throws Exception
     {
-        doResolverTestWithContextClassLoader(RESOLVER_KEYS_WITH_CONTEXT_CLASSLOADER, source -> source.metadataManager.getMetadataKeys(componentId));
+        doResolverTestWithContextClassLoader(RESOLVER_KEYS_WITH_CONTEXT_CLASSLOADER,
+                source -> source.metadataManager.getMetadataKeys(componentId));
     }
 
     @Test
@@ -542,17 +542,14 @@ public class OperationMetadataTestCase extends MetadataExtensionFunctionalTestCa
      * Test template that sets an "invalid" classloader in TCCL different from the one that was used to register the extension
      * and asserts that, it sets back the original classloader to TCCL.
      * Done in this way due to it is not possible to change extension model classloader property once it is registered.
-     *
-     * @param flowName
-     * @param doAction
-     * @throws Exception
      */
     private void doResolverTestWithContextClassLoader(String flowName, Callback<OperationMetadataTestCase> doAction) throws Exception
     {
         componentId = new ProcessorId(flowName, FIRST_PROCESSOR_INDEX);
         TestThreadContextClassLoaderResolver.reset();
         final ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
-        withContextClassLoader(mock(ClassLoader.class), () -> {
+        withContextClassLoader(mock(ClassLoader.class), () ->
+        {
             doAction.execute(OperationMetadataTestCase.this);
             assertThat(TestThreadContextClassLoaderResolver.getCurrentState(), is(sameInstance(originalClassLoader)));
         });

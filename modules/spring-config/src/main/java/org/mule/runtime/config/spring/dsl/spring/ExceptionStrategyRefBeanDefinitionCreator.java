@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
-import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.EXCEPTION_STRATEGY_REFERENCE_IDENTIFIER;
-import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.REFERENCE_ATTRIBUTE;
 import org.mule.runtime.config.spring.dsl.model.ComponentModel;
 import org.mule.runtime.core.api.exception.MessagingExceptionHandler;
-
 import org.springframework.beans.factory.config.RuntimeBeanReference;
+
+import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.EXCEPTION_STRATEGY_REFERENCE_IDENTIFIER;
+import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.REFERENCE_ATTRIBUTE;
 
 /**
  * Processor of the chain of responsibility that knows how to create the {@link org.springframework.beans.factory.config.BeanDefinition}

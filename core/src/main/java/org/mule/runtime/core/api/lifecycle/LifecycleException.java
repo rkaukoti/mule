@@ -10,12 +10,16 @@ import org.mule.runtime.core.api.LocatedMuleException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.config.i18n.Message;
 
-/** <code>LifecycleException</code> TODO */
+/**
+ * <code>LifecycleException</code> TODO
+ */
 
 public class LifecycleException extends LocatedMuleException
 {
 
-    /** Serial version */
+    /**
+     * Serial version
+     */
     private static final long serialVersionUID = 2909614055858287394L;
 
     private transient Object component;

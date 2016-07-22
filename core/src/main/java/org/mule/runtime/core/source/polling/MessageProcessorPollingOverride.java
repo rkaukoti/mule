@@ -22,6 +22,7 @@ public abstract class MessageProcessorPollingOverride
      * This method will be called on every poll, and may return a new instance every time or always the same instance
      * (the latter case requires the instance to be threadsafe). Interceptor's are scoped for each poll and flow execution
      * and will be discarded after the scope ends.
+     *
      * @return a new interceptor instance that cn be used to alter the functionality of a message processor polling component
      */
     public abstract MessageProcessorPollingInterceptor interceptor();

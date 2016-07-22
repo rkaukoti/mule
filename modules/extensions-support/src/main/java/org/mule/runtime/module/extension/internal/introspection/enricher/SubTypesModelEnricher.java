@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
-import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.toList;
-import static org.mule.runtime.module.extension.internal.introspection.describer.MuleExtensionAnnotationParser.parseRepeatableAnnotation;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getMetadataType;
 import org.mule.metadata.api.ClassTypeLoader;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.core.util.collection.ImmutableListCollector;
@@ -26,6 +22,11 @@ import org.mule.runtime.extension.api.introspection.property.SubTypesModelProper
 
 import java.util.List;
 import java.util.Map;
+
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.toList;
+import static org.mule.runtime.module.extension.internal.introspection.describer.MuleExtensionAnnotationParser.parseRepeatableAnnotation;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getMetadataType;
 
 /**
  * Test the extension type to be annotated with {@link SubTypeMapping}, in which
@@ -59,15 +60,16 @@ public final class SubTypesModelEnricher extends AbstractAnnotatedModelEnricher
     {
         if (typeMappings.stream().map(SubTypeMapping::baseType).distinct().collect(toList()).size() != typeMappings.size())
         {
-            throw new IllegalModelDefinitionException(String.format("There should be only one SubtypeMapping for any given base type in extension [%s]." +
-                                                                    " Duplicated base types are not allowed", name));
+            throw new IllegalModelDefinitionException(
+                    String.format("There should be only one SubtypeMapping for any given base type in extension [%s]." +
+                                  " Duplicated base types are not allowed", name));
         }
 
         Map<MetadataType, List<MetadataType>> subTypesMap = typeMappings.stream().collect(
                 new ImmutableMapCollector<>(mapping -> getMetadataType(mapping.baseType(), typeLoader),
-                                            mapping -> stream(mapping.subTypes())
-                                                    .map(subType -> getMetadataType(subType, typeLoader))
-                                                    .collect(new ImmutableListCollector<>())));
+                        mapping -> stream(mapping.subTypes())
+                                .map(subType -> getMetadataType(subType, typeLoader))
+                                .collect(new ImmutableListCollector<>())));
 
         return new SubTypesModelProperty(subTypesMap);
     }

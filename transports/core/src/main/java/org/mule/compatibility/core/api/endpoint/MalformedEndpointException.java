@@ -11,7 +11,7 @@ import org.mule.runtime.core.config.i18n.Message;
 
 /**
  * <code>MalformedEndpointException</code> is thrown by the MuleEndpointURI class if it fails to parse a Url
- * 
+ *
  * @see org.mule.compatibility.core.endpoint.MuleEndpointURI
  * @deprecated Transport infrastructure is deprecated.
  */
@@ -41,7 +41,7 @@ public class MalformedEndpointException extends EndpointException
 
     /**
      * @param endpoint the endpoint that could not be parsed
-     * @param cause the exception that cause this exception to be thrown
+     * @param cause    the exception that cause this exception to be thrown
      */
     public MalformedEndpointException(String endpoint, Throwable cause)
     {

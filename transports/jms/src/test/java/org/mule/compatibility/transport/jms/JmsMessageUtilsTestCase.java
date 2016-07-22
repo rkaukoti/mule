@@ -6,19 +6,14 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.apache.activemq.command.ActiveMQBytesMessage;
+import org.apache.activemq.command.ActiveMQMapMessage;
+import org.apache.activemq.command.ActiveMQObjectMessage;
+import org.apache.activemq.command.ActiveMQStreamMessage;
+import org.apache.activemq.command.ActiveMQTextMessage;
+import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.collections.iterators.IteratorEnumeration;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.testmodels.fruit.BananaFactory;
 import org.mule.tck.testmodels.fruit.Orange;
@@ -47,14 +42,18 @@ import javax.jms.Session;
 import javax.jms.StreamMessage;
 import javax.jms.TextMessage;
 
-import org.apache.activemq.command.ActiveMQBytesMessage;
-import org.apache.activemq.command.ActiveMQMapMessage;
-import org.apache.activemq.command.ActiveMQObjectMessage;
-import org.apache.activemq.command.ActiveMQStreamMessage;
-import org.apache.activemq.command.ActiveMQTextMessage;
-import org.apache.commons.collections.IteratorUtils;
-import org.apache.commons.collections.iterators.IteratorEnumeration;
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class JmsMessageUtilsTestCase extends AbstractMuleTestCase
 {
@@ -84,7 +83,7 @@ public class JmsMessageUtilsTestCase extends AbstractMuleTestCase
         when(mockMessage.getText()).thenReturn(null);
 
         byte[] result = JmsMessageUtils.toByteArray(mockMessage, JmsConstants.JMS_SPECIFICATION_102B,
-                                                    ENCODING);
+                ENCODING);
         assertNotNull(result);
         assertEquals("Should return an empty byte array.", 0, result.length);
 
@@ -98,7 +97,7 @@ public class JmsMessageUtilsTestCase extends AbstractMuleTestCase
         when(mockMessage1.readBytes((byte[]) anyObject())).thenReturn(-1);
 
         byte[] result1 = JmsMessageUtils.toByteArray(mockMessage1, JmsConstants.JMS_SPECIFICATION_102B,
-                                                     ENCODING);
+                ENCODING);
         assertNotNull(result1);
         assertEquals("Should return an empty byte array.", 0, result1.length);
         verify(mockMessage1).reset();
@@ -111,7 +110,7 @@ public class JmsMessageUtilsTestCase extends AbstractMuleTestCase
         when(mockMessage2.getBodyLength()).thenReturn(Long.valueOf(0));
 
         byte[] result2 = JmsMessageUtils.toByteArray(mockMessage2, JmsConstants.JMS_SPECIFICATION_11,
-                                                     ENCODING);
+                ENCODING);
         assertNotNull(result2);
         assertEquals("Should return an empty byte array.", 0, result2.length);
         verify(mockMessage2).reset();
@@ -309,7 +308,7 @@ public class JmsMessageUtilsTestCase extends AbstractMuleTestCase
 
         final String OBJECT_ID = "id1234";
         ObjectMessage message = (ObjectMessage) JmsMessageUtils.toMessage(new SerializableObject(OBJECT_ID),
-                                                                          session);
+                session);
 
         Serializable serializable = message.getObject();
         assertTrue(serializable instanceof SerializableObject);

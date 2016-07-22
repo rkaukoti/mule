@@ -8,11 +8,15 @@ package org.mule.runtime.core.api.lifecycle;
 
 import org.mule.runtime.core.config.i18n.Message;
 
-/** <code>DisposeException</code> TODO (document class) */
+/**
+ * <code>DisposeException</code> TODO (document class)
+ */
 
 public class DisposeException extends LifecycleException
 {
-    /** Serial version */
+    /**
+     * Serial version
+     */
     private static final long serialVersionUID = 1714192290605243678L;
 
     /**

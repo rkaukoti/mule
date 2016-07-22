@@ -112,7 +112,7 @@ public class TransformerChain extends AbstractMessageTransformer
     {
         String name = transformers.get(0).getClass().getSimpleName();
         int i = name.indexOf("To");
-        DataType dt = transformers.get(transformers.size() -1).getReturnDataType();
+        DataType dt = transformers.get(transformers.size() - 1).getReturnDataType();
         if (i > 0 && dt != null)
         {
             String target = dt.getType().getSimpleName();

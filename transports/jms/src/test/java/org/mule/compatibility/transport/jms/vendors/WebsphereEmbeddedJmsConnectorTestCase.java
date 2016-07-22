@@ -6,15 +6,14 @@
  */
 package org.mule.compatibility.transport.jms.vendors;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.transport.jms.DefaultJmsTopicResolver;
 import org.mule.compatibility.transport.jms.JmsConnector;
 import org.mule.compatibility.transport.jms.JmsTopicResolver;
 import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class WebsphereEmbeddedJmsConnectorTestCase extends FunctionalTestCase
 {
@@ -35,6 +34,6 @@ public class WebsphereEmbeddedJmsConnectorTestCase extends FunctionalTestCase
         JmsTopicResolver resolver = c.getTopicResolver();
         assertNotNull("Topic resolver must not be null.", resolver);
         assertTrue("Wrong topic resolver configured on the connector.",
-                   resolver instanceof DefaultJmsTopicResolver);
+                resolver instanceof DefaultJmsTopicResolver);
     }
 }

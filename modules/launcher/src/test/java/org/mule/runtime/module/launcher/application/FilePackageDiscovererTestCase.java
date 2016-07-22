@@ -7,23 +7,23 @@
 
 package org.mule.runtime.module.launcher.application;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.core.IsCollectionContaining.hasItem;
+import org.junit.Test;
+import org.mule.runtime.core.util.FileUtils;
 import org.mule.tck.ZipUtils;
 import org.mule.tck.ZipUtils.ZipResource;
 import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.runtime.core.util.FileUtils;
 
 import java.io.File;
 import java.util.Set;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
 
 public class FilePackageDiscovererTestCase extends AbstractMuleTestCase
 {
 
-    private final FilePackageDiscoverer packageExplorer= new FilePackageDiscoverer();
+    private final FilePackageDiscoverer packageExplorer = new FilePackageDiscoverer();
 
     @Test
     public void readsPackagesFromJar() throws Exception

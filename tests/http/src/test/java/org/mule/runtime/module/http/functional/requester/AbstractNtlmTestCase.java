@@ -6,25 +6,25 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static javax.servlet.http.HttpServletResponse.SC_OK;
-import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.functional.matcher.HttpMessageAttributesMatchers.hasStatusCode;
+import com.ning.http.client.ntlm.NTLMEngine;
+
+import org.eclipse.jetty.server.Request;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.extension.http.api.HttpResponseAttributes;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.util.NetworkUtils;
-
-import com.ning.http.client.ntlm.NTLMEngine;
 
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.Request;
-import org.junit.Before;
-import org.junit.Test;
+import static javax.servlet.http.HttpServletResponse.SC_OK;
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.functional.matcher.HttpMessageAttributesMatchers.hasStatusCode;
 
 public abstract class AbstractNtlmTestCase extends AbstractHttpRequestTestCase
 {
@@ -35,10 +35,8 @@ public abstract class AbstractNtlmTestCase extends AbstractHttpRequestTestCase
     private static final String PASSWORD = "Beeblebrox";
     private static final String DOMAIN = "Ursa-Minor";
     private static final String AUTHORIZED = "Authorized";
-
-    private String type3Message;
     protected String requestUrl;
-
+    private String type3Message;
     private String clientAuthHeader;
     private String serverAuthHeader;
     private int unauthorizedHeader;

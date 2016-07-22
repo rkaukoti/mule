@@ -6,8 +6,12 @@
  */
 package org.mule.runtime.module.launcher;
 
-import static org.mule.runtime.module.launcher.ArtifactDeploymentTemplate.NOP_ARTIFACT_DEPLOYMENT_TEMPLATE;
-import static org.mule.runtime.module.launcher.DefaultArchiveDeployer.ZIP_FILE_SUFFIX;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.io.filefilter.AndFileFilter;
+import org.apache.commons.io.filefilter.FileFileFilter;
+import org.apache.commons.io.filefilter.IOFileFilter;
+import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.mule.runtime.core.util.Preconditions;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
 import org.mule.runtime.module.artifact.classloader.DefaultArtifactClassLoaderFilterFactory;
@@ -31,6 +35,8 @@ import org.mule.runtime.module.launcher.plugin.ArtifactPluginRepository;
 import org.mule.runtime.module.launcher.plugin.DefaultArtifactPluginRepository;
 import org.mule.runtime.module.launcher.util.DebuggableReentrantLock;
 import org.mule.runtime.module.launcher.util.ObservableList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,14 +47,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.io.filefilter.AndFileFilter;
-import org.apache.commons.io.filefilter.FileFileFilter;
-import org.apache.commons.io.filefilter.IOFileFilter;
-import org.apache.commons.io.filefilter.SuffixFileFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.module.launcher.ArtifactDeploymentTemplate.NOP_ARTIFACT_DEPLOYMENT_TEMPLATE;
+import static org.mule.runtime.module.launcher.DefaultArchiveDeployer.ZIP_FILE_SUFFIX;
 
 public class MuleDeploymentService implements DeploymentService
 {
@@ -79,35 +79,44 @@ public class MuleDeploymentService implements DeploymentService
     {
         DomainClassLoaderFactory domainClassLoaderFactory = new DomainClassLoaderFactory(containerClassLoader.getClassLoader());
 
-        MuleApplicationClassLoaderFactory applicationClassLoaderFactory = new MuleApplicationClassLoaderFactory(new DefaultNativeLibraryFinderFactory());
+        MuleApplicationClassLoaderFactory applicationClassLoaderFactory =
+                new MuleApplicationClassLoaderFactory(new DefaultNativeLibraryFinderFactory());
 
         //TODO MULE-9653 : Migrate domain class loader creation to use ArtifactClassLoaderBuilder which already has support for artifact plugins.
         DefaultDomainFactory domainFactory = new DefaultDomainFactory(domainClassLoaderFactory, domainManager, containerClassLoader);
         domainFactory.setDeploymentListener(domainDeploymentListener);
 
         final ArtifactPluginFactory artifactPluginFactory = new DefaultArtifactPluginFactory(new ArtifactPluginClassLoaderFactory());
-        final ArtifactPluginDescriptorFactory artifactPluginDescriptorFactory = new ArtifactPluginDescriptorFactory(new DefaultArtifactClassLoaderFilterFactory());
+        final ArtifactPluginDescriptorFactory artifactPluginDescriptorFactory =
+                new ArtifactPluginDescriptorFactory(new DefaultArtifactClassLoaderFilterFactory());
         artifactPluginRepository = new DefaultArtifactPluginRepository(artifactPluginDescriptorFactory);
 
         ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader = new ArtifactPluginDescriptorLoader(artifactPluginDescriptorFactory);
-        final ApplicationDescriptorFactory applicationDescriptorFactory = new ApplicationDescriptorFactory(artifactPluginDescriptorLoader, artifactPluginRepository);
+        final ApplicationDescriptorFactory applicationDescriptorFactory =
+                new ApplicationDescriptorFactory(artifactPluginDescriptorLoader, artifactPluginRepository);
 
-        ApplicationClassLoaderBuilderFactory applicationClassLoaderBuilderFactory = new ApplicationClassLoaderBuilderFactory(applicationClassLoaderFactory, artifactPluginRepository, artifactPluginFactory, artifactPluginDescriptorLoader);
+        ApplicationClassLoaderBuilderFactory applicationClassLoaderBuilderFactory =
+                new ApplicationClassLoaderBuilderFactory(applicationClassLoaderFactory, artifactPluginRepository, artifactPluginFactory,
+                        artifactPluginDescriptorLoader);
 
-        DefaultApplicationFactory applicationFactory = new DefaultApplicationFactory(applicationClassLoaderBuilderFactory, applicationDescriptorFactory, artifactPluginRepository, domainManager);
+        DefaultApplicationFactory applicationFactory =
+                new DefaultApplicationFactory(applicationClassLoaderBuilderFactory, applicationDescriptorFactory, artifactPluginRepository,
+                        domainManager);
         applicationFactory.setDeploymentListener(applicationDeploymentListener);
 
         ArtifactDeployer<Application> applicationMuleDeployer = new DefaultArtifactDeployer<>();
         ArtifactDeployer<Domain> domainMuleDeployer = new DefaultArtifactDeployer<>();
 
-        this.applicationDeployer = new DefaultArchiveDeployer<>(applicationMuleDeployer, applicationFactory, applications, deploymentLock, NOP_ARTIFACT_DEPLOYMENT_TEMPLATE);
+        this.applicationDeployer = new DefaultArchiveDeployer<>(applicationMuleDeployer, applicationFactory, applications, deploymentLock,
+                NOP_ARTIFACT_DEPLOYMENT_TEMPLATE);
         this.applicationDeployer.setDeploymentListener(applicationDeploymentListener);
         this.domainDeployer = new DomainArchiveDeployer(
                 new DefaultArchiveDeployer<>(domainMuleDeployer, domainFactory, domains, deploymentLock,
                         new DomainDeploymentTemplate(applicationDeployer, this)),
                 applicationDeployer, this);
         this.domainDeployer.setDeploymentListener(domainDeploymentListener);
-        this.deploymentDirectoryWatcher = new DeploymentDirectoryWatcher(domainDeployer, applicationDeployer, domains, applications, deploymentLock);
+        this.deploymentDirectoryWatcher =
+                new DeploymentDirectoryWatcher(domainDeployer, applicationDeployer, domains, applications, deploymentLock);
     }
 
     @Override

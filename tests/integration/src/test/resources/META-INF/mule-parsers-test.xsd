@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/parsers-test"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:mule="http://www.mulesoft.org/schema/mule/core"
             xmlns:spring="http://www.springframework.org/schema/beans"
+            xmlns="http://www.mulesoft.org/schema/mule/parsers-test"
             targetNamespace="http://www.mulesoft.org/schema/mule/parsers-test"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">

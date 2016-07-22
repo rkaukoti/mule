@@ -7,15 +7,15 @@
 
 package org.mule.tck.junit4.matcher;
 
-import static java.lang.String.format;
-import static org.hamcrest.Matchers.equalTo;
-import org.mule.runtime.core.api.debug.FieldDebugInfo;
-import org.mule.runtime.core.api.debug.SimpleFieldDebugInfo;
-
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.mule.runtime.core.api.debug.FieldDebugInfo;
+import org.mule.runtime.core.api.debug.SimpleFieldDebugInfo;
+
+import static java.lang.String.format;
+import static org.hamcrest.Matchers.equalTo;
 
 public class FieldDebugInfoMatcher extends TypeSafeMatcher<FieldDebugInfo<?>>
 {
@@ -38,20 +38,6 @@ public class FieldDebugInfoMatcher extends TypeSafeMatcher<FieldDebugInfo<?>>
         this.matcher = matcher;
     }
 
-    @Override
-    public boolean matchesSafely(FieldDebugInfo<?> item)
-    {
-        boolean sameValue = matcher.matches(item.getValue());
-
-        return name.equals(item.getName()) && sameValue && type.equals(item.getType());
-    }
-
-    public void describeTo(Description description)
-    {
-        description.appendText(format("a %s with name: '%s' type: '%s' and value that is ", SimpleFieldDebugInfo.class.getSimpleName(), name, type));
-        matcher.describeTo(description);
-    }
-
     @Factory
     public static Matcher<FieldDebugInfo<?>> fieldLike(String name, Class type, Object value)
     {
@@ -67,5 +53,20 @@ public class FieldDebugInfoMatcher extends TypeSafeMatcher<FieldDebugInfo<?>>
         }
 
         return new FieldDebugInfoMatcher(name, type, matcher);
+    }
+
+    @Override
+    public boolean matchesSafely(FieldDebugInfo<?> item)
+    {
+        boolean sameValue = matcher.matches(item.getValue());
+
+        return name.equals(item.getName()) && sameValue && type.equals(item.getType());
+    }
+
+    public void describeTo(Description description)
+    {
+        description.appendText(
+                format("a %s with name: '%s' type: '%s' and value that is ", SimpleFieldDebugInfo.class.getSimpleName(), name, type));
+        matcher.describeTo(description);
     }
 }

@@ -60,7 +60,8 @@ public class SenderOperations
     @Summary("Sends an email message")
     public void send(@Connection SenderConnection connection,
                      @UseConfig SMTPConfiguration configuration,
-                     EmailContent content, // TODO: create a transformer from string to EmailContent when the sdk have support for it - MULE-9181.
+                     EmailContent content,
+                     // TODO: create a transformer from string to EmailContent when the sdk have support for it - MULE-9181.
                      @Optional(defaultValue = "[No Subject]") String subject,
                      List<String> toAddresses,
                      @Optional List<String> ccAddresses,
@@ -69,15 +70,15 @@ public class SenderOperations
                      @Optional List<EmailAttachment> attachments)
     {
         sendOperation.send(connection,
-                           content,
-                           subject,
-                           toAddresses,
-                           configuration.getFrom(),
-                           configuration.getDefaultCharset(),
-                           ccAddresses != null ? ccAddresses : new ArrayList<>(),
-                           bccAddresses != null ? bccAddresses : new ArrayList<>(),
-                           headers != null ? headers : new HashMap<>(),
-                           attachments);
+                content,
+                subject,
+                toAddresses,
+                configuration.getFrom(),
+                configuration.getDefaultCharset(),
+                ccAddresses != null ? ccAddresses : new ArrayList<>(),
+                bccAddresses != null ? bccAddresses : new ArrayList<>(),
+                headers != null ? headers : new HashMap<>(),
+                attachments);
     }
 
     /**
@@ -90,8 +91,7 @@ public class SenderOperations
      * @param configuration Configuration of the connector.
      * @param muleMessage   The incoming {@link MuleMessage}.
      * @param content       Content of the message to be forwarded
-     * @param subject       Subject of the email message to forward. If not set, the subject of the forwarded message
-     *                      will be used
+     * @param subject       Subject of the email message to forward. If not set, the subject of the forwarded message will be used
      * @param toAddresses   List of "To" (primary) email message recipients
      * @param ccAddresses   List of "Cc" (carbon copy) email message recipients
      * @param bccAddresses  List of "Bcc" (blind carbon copy) email message recipients
@@ -109,15 +109,15 @@ public class SenderOperations
                         @DisplayName("Additional Headers") @Optional Map<String, String> headers)
     {
         forwardCommand.forward(connection,
-                               muleMessage,
-                               content,
-                               subject,
-                               configuration.getFrom(),
-                               configuration.getDefaultCharset(),
-                               toAddresses,
-                               ccAddresses,
-                               bccAddresses,
-                               headers);
+                muleMessage,
+                content,
+                subject,
+                configuration.getFrom(),
+                configuration.getDefaultCharset(),
+                toAddresses,
+                ccAddresses,
+                bccAddresses,
+                headers);
     }
 
     /**
@@ -131,8 +131,7 @@ public class SenderOperations
      * @param configuration Configuration of the connector.
      * @param muleMessage   The incoming {@link MuleMessage}.
      * @param content       Content of the reply message
-     * @param subject       Subject of the email message, if not set, the subject of the replied email message
-     *                      will be used
+     * @param subject       Subject of the email message, if not set, the subject of the replied email message will be used
      * @param headers       Map of custom headers that are bounded with the email message
      * @param replyToAll    Whether this reply should be sent to all recipients of this message
      */
@@ -146,12 +145,12 @@ public class SenderOperations
                       @Optional(defaultValue = "false") Boolean replyToAll)
     {
         replyOperation.reply(connection,
-                             muleMessage,
-                             content,
-                             subject,
-                             configuration.getFrom(),
-                             configuration.getDefaultCharset(),
-                             headers,
-                             replyToAll);
+                muleMessage,
+                content,
+                subject,
+                configuration.getFrom(),
+                configuration.getDefaultCharset(),
+                headers,
+                replyToAll);
     }
 }

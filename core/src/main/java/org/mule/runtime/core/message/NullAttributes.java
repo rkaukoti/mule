@@ -12,19 +12,18 @@ import java.io.ObjectStreamException;
 
 /**
  * Default implementation of {@link Attributes} to be used when no other connector specific attributes instance is set.
- * 
+ *
  * @since 4.0
  */
 public final class NullAttributes implements Attributes
 {
+    private static final long serialVersionUID = 1201393762712713465L;
     public static NullAttributes NULL_ATTRIBUTES = new NullAttributes();
 
     private NullAttributes()
     {
         // Nothing to do
     }
-
-    private static final long serialVersionUID = 1201393762712713465L;
 
     private Object readResolve() throws ObjectStreamException
     {

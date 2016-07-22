@@ -6,14 +6,7 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.registerConnector;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.core.api.transport.MessageDispatcherFactory;
@@ -28,7 +21,13 @@ import org.mule.tck.testmodels.fruit.Apple;
 
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.registerConnector;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 /**
  * <code>AbstractConnectorTestCase</code> tests common behaviour of all endpoints and
@@ -62,7 +61,9 @@ public abstract class AbstractConnectorTestCase extends AbstractMuleContextEndpo
         }
     }
 
-    /** Look up the connector from the Registry */
+    /**
+     * Look up the connector from the Registry
+     */
     protected Connector getConnector()
     {
         return (muleContext == null) ? null : muleContext.getRegistry().lookupObject(connectorName);
@@ -113,7 +114,7 @@ public abstract class AbstractConnectorTestCase extends AbstractMuleContextEndpo
         // simulate disposal as well we have to create an extra instance here.
 
         Connector localConnector = createConnector();
-        localConnector.setName(connectorName+"-temp");
+        localConnector.setName(connectorName + "-temp");
         // the connector did not come from the registry, so we need to initialise manually
         localConnector.initialise();
         localConnector.start();

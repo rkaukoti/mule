@@ -7,9 +7,7 @@
 package org.mule.compatibility.core.source.polling.schedule;
 
 
-import static org.junit.Assert.assertFalse;
-import static org.mockito.Mockito.mock;
-
+import org.junit.Test;
 import org.mule.compatibility.core.transport.AbstractPollingMessageReceiver;
 import org.mule.compatibility.core.transport.PollingReceiverWorker;
 import org.mule.runtime.core.api.MuleException;
@@ -21,7 +19,8 @@ import org.mule.tck.probe.Prober;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.mock;
 
 public class FixedFrequencySchedulerTest extends AbstractMuleContextTestCase
 {

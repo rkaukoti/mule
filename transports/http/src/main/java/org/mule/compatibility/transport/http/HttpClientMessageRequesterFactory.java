@@ -16,7 +16,9 @@ import org.mule.runtime.core.api.MuleException;
  */
 public class HttpClientMessageRequesterFactory extends AbstractMessageRequesterFactory
 {
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public MessageRequester create(InboundEndpoint endpoint) throws MuleException
     {

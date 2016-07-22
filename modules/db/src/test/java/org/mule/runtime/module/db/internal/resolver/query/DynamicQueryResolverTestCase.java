@@ -7,10 +7,7 @@
 
 package org.mule.runtime.module.db.internal.resolver.query;
 
-import static org.hamcrest.core.IsSame.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.runtime.core.api.expression.ExpressionManager;
 import org.mule.runtime.core.api.expression.ExpressionRuntimeException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
@@ -20,7 +17,10 @@ import org.mule.runtime.module.db.internal.parser.QueryTemplateParser;
 import org.mule.runtime.module.db.internal.parser.QueryTemplateParsingException;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
+import static org.hamcrest.core.IsSame.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class DynamicQueryResolverTestCase extends AbstractQueryResolverTestCase
@@ -65,7 +65,8 @@ public class DynamicQueryResolverTestCase extends AbstractQueryResolverTestCase
     public void throwsErrorOnExpressionEvaluationError() throws Exception
     {
         ExpressionManager expressionManager = mock(ExpressionManager.class);
-        when(expressionManager.parse(DYNAMIC_SQL_TEXT, muleEvent)).thenThrow(new ExpressionRuntimeException(CoreMessages.createStaticMessage("Error")));
+        when(expressionManager.parse(DYNAMIC_SQL_TEXT, muleEvent)).thenThrow(
+                new ExpressionRuntimeException(CoreMessages.createStaticMessage("Error")));
 
         DynamicQueryResolver queryResolver = new DynamicQueryResolver(query, null, expressionManager);
 

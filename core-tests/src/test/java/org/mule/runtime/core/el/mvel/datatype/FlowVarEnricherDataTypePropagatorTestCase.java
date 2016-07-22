@@ -7,10 +7,10 @@
 
 package org.mule.runtime.core.el.mvel.datatype;
 
-import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.FLOW_VARS;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleEvent;
+
+import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.FLOW_VARS;
 
 public class FlowVarEnricherDataTypePropagatorTestCase extends AbstractScopedVarAssignmentDataTypePropagatorTestCase
 {

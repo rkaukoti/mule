@@ -6,6 +6,8 @@
  */
 
 package org.mule.mvel;
-public class FooDetails {
+
+public class FooDetails
+{
 
 }

@@ -6,13 +6,12 @@
  */
 package org.mule.compatibility.transport.ssl.issues;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class MultipleConnectorsMule1765TestCase extends FunctionalTestCase
 {

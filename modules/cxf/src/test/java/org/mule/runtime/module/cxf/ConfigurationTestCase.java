@@ -6,19 +6,19 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import org.mule.runtime.module.cxf.config.FlowConfiguringMessageProcessor;
-import org.mule.runtime.module.cxf.config.ProxyServiceFactoryBean;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import java.util.List;
-
 import org.apache.cxf.Bus;
 import org.apache.cxf.interceptor.Interceptor;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.message.Message;
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.module.cxf.config.FlowConfiguringMessageProcessor;
+import org.mule.runtime.module.cxf.config.ProxyServiceFactoryBean;
+
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ConfigurationTestCase extends FunctionalTestCase
 {
@@ -52,9 +52,9 @@ public class ConfigurationTestCase extends FunctionalTestCase
     public void testSpringRefs() throws Exception
     {
         FlowConfiguringMessageProcessor processor =
-            muleContext.getRegistry().lookupObjects(FlowConfiguringMessageProcessor.class).iterator().next();
+                muleContext.getRegistry().lookupObjects(FlowConfiguringMessageProcessor.class).iterator().next();
         List<Interceptor<? extends Message>> inInterceptors =
-            ((ProxyServiceFactoryBean) processor.getMessageProcessorBuilder()).getInInterceptors();
+                ((ProxyServiceFactoryBean) processor.getMessageProcessorBuilder()).getInInterceptors();
         assertEquals(muleContext.getRegistry().get("foo1"), inInterceptors.get(0));
         assertEquals(muleContext.getRegistry().get("foo3"), inInterceptors.get(1));
     }

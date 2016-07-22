@@ -6,11 +6,7 @@
  */
 package org.mule.issues;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupConnector;
-
+import org.junit.Test;
 import org.mule.compatibility.core.transport.AbstractConnector;
 import org.mule.compatibility.core.transport.service.DefaultEndpointAwareTransformer;
 import org.mule.functional.junit4.FunctionalTestCase;
@@ -20,7 +16,10 @@ import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.transformer.TransformerUtils;
 import org.mule.tck.testmodels.mule.TestMessageDispatcherFactory;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupConnector;
 
 public class ServiceOverridesMule1770TestCase extends FunctionalTestCase
 {
@@ -36,7 +35,7 @@ public class ServiceOverridesMule1770TestCase extends FunctionalTestCase
         AbstractConnector c = (AbstractConnector) lookupConnector(muleContext.getRegistry(), "test");
         assertNotNull("Connector should not be null", c);
         assertNotNull("Service overrides should not be null", c.getServiceOverrides());
-        String temp =  (String)c.getServiceOverrides().get(MuleProperties.CONNECTOR_DISPATCHER_FACTORY);
+        String temp = (String) c.getServiceOverrides().get(MuleProperties.CONNECTOR_DISPATCHER_FACTORY);
         assertNotNull("DispatcherFactory override should not be null", temp);
         assertEquals(TestMessageDispatcherFactory.class.getName(), temp);
         Transformer transformer = TransformerUtils.firstOrNull(c.getDefaultInboundTransformers(null));

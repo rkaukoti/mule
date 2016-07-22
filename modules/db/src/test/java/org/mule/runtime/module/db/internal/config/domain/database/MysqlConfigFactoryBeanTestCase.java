@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.module.db.internal.config.domain.database;
 
-import static junit.framework.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
@@ -17,8 +16,8 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.junit.Before;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 @SmallTest
 public class MysqlConfigFactoryBeanTestCase extends AbstractMuleTestCase

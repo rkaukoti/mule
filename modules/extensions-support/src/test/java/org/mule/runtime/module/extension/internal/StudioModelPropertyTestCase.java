@@ -6,12 +6,10 @@
  */
 package org.mule.runtime.module.extension.internal;
 
-import static java.util.Arrays.asList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.api.registry.ServiceRegistry;
 import org.mule.runtime.extension.api.introspection.ExtensionFactory;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
@@ -27,10 +25,12 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 import org.mule.test.heisenberg.extension.HeisenbergExtension;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -53,8 +53,9 @@ public class StudioModelPropertyTestCase extends AbstractMuleTestCase
     public void verifyPropertyIsPopulated() throws Exception
     {
         DescribingContext context = new DefaultDescribingContext(HeisenbergExtension.class.getClassLoader());
-        ExtensionDeclarer declarer = new AnnotationsBasedDescriber(HeisenbergExtension.class, new StaticVersionResolver(getProductVersion()))
-                .describe(context);
+        ExtensionDeclarer declarer =
+                new AnnotationsBasedDescriber(HeisenbergExtension.class, new StaticVersionResolver(getProductVersion()))
+                        .describe(context);
         ExtensionModel extensionModel = extensionFactory.createFrom(declarer, context);
         StudioModelProperty studioModelProperty = extensionModel.getModelProperty(StudioModelProperty.class).get();
         assertThat(studioModelProperty.getEditorFileName(), is(""));

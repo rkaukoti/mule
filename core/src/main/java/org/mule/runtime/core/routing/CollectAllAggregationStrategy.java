@@ -18,7 +18,7 @@ import org.mule.runtime.core.api.routing.RouterResultsHandler;
  * overriding {@link #aggregateWithoutFailedRoutes(AggregationContext)}. Otherwise, a
  * {@link CompositeRoutingException} is thrown (override
  * {@link #aggregateWithFailedRoutes(AggregationContext) to customize}
- * 
+ *
  * @since 3.5.0
  */
 public class CollectAllAggregationStrategy implements AggregationStrategy

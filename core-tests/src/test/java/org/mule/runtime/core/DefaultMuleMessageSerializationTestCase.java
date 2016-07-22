@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.apache.commons.lang.SerializationUtils;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.transformer.TransformerException;
@@ -20,8 +19,8 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
-import org.apache.commons.lang.SerializationUtils;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class DefaultMuleMessageSerializationTestCase extends AbstractMuleContextTestCase
 {

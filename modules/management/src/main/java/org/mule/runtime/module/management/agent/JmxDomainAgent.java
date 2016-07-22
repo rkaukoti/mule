@@ -20,7 +20,9 @@ public class JmxDomainAgent extends AbstractJmxAgent
 {
 
     @Override
-    protected void registerServices() throws MuleException, NotCompliantMBeanException, MBeanRegistrationException, InstanceAlreadyExistsException, MalformedObjectNameException
+    protected void registerServices()
+            throws MuleException, NotCompliantMBeanException, MBeanRegistrationException, InstanceAlreadyExistsException,
+            MalformedObjectNameException
     {
         registerWrapperService();
         registerMuleService();

@@ -11,15 +11,14 @@ import org.mule.runtime.core.api.Closeable;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
 import org.mule.runtime.module.db.internal.result.row.RowHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Iterates a {@link ResultSet} to provide rows streaming
@@ -35,7 +34,8 @@ public class ResultSetIterator implements Iterator<Map<String, Object>>, Closeab
     private DbConnection connection;
     private Boolean cachedNext = null;
 
-    public ResultSetIterator(DbConnection connection, ResultSet resultSet, RowHandler rowHandler, StreamingResultSetCloser streamingResultSetCloser)
+    public ResultSetIterator(DbConnection connection, ResultSet resultSet, RowHandler rowHandler,
+                             StreamingResultSetCloser streamingResultSetCloser)
     {
         if (connection == null)
         {

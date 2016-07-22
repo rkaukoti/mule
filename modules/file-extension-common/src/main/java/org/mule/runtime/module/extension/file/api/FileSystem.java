@@ -52,7 +52,8 @@ public interface FileSystem
      * @return a {@link TreeNode} object representing the listed directory
      * @throws IllegalArgumentException if {@code directoryPath} points to a file which doesn't exists or is not a directory
      */
-    TreeNode list(FileConnectorConfig config, String directoryPath, boolean recursive, MuleMessage message, Predicate<FileAttributes> matcher);
+    TreeNode list(FileConnectorConfig config, String directoryPath, boolean recursive, MuleMessage message,
+                  Predicate<FileAttributes> matcher);
 
     /**
      * Obtains the content and metadata of a file at a given path.
@@ -75,8 +76,8 @@ public interface FileSystem
      * @param message  the incoming {@link MuleMessage}
      * @param filePath the path of the file you want to read
      * @param lock     whether or not to lock the file
-     * @return An {@link OperationResult} with an {@link InputStream} with the file's content as payload
-     * and a {@link FileAttributes} object as {@link MuleMessage#getAttributes()}
+     * @return An {@link OperationResult} with an {@link InputStream} with the file's content as payload and a {@link FileAttributes} object
+     * as {@link MuleMessage#getAttributes()}
      * @throws IllegalArgumentException if the file at the given path doesn't exists
      */
     OperationResult<InputStream, FileAttributes> read(FileConnectorConfig config, MuleMessage message, String filePath, boolean lock);
@@ -115,9 +116,8 @@ public interface FileSystem
      * @param event                   the {@link MuleEvent} which processing triggers this operation
      * @param lock                    whether or not to lock the file
      * @param createParentDirectories whether or not to attempt creating any parent directories which don't exists.
-     * @param encoding                when {@@code content} is a {@link String}, this attribute specifies the encoding
-     *                                to be used when writing. If not set, then it defaults to
-     *                                {@link FileConnectorConfig#getDefaultWriteEncoding()}
+     * @param encoding                when {@@code content} is a {@link String}, this attribute specifies the encoding to be used when
+     *                                writing. If not set, then it defaults to {@link FileConnectorConfig#getDefaultWriteEncoding()}
      * @throws IllegalArgumentException if an illegal combination of arguments is supplied
      */
     void write(FileConnectorConfig config,
@@ -158,7 +158,8 @@ public interface FileSystem
      * @param event                   whether or not to attempt creating the parent directory if it doesn't exists.
      * @throws IllegalArgumentException if an illegal combination of arguments is supplied
      */
-    void copy(FileConnectorConfig config, String sourcePath, String targetPath, boolean overwrite, boolean createParentDirectories, MuleEvent event);
+    void copy(FileConnectorConfig config, String sourcePath, String targetPath, boolean overwrite, boolean createParentDirectories,
+              MuleEvent event);
 
     /**
      * Moves the file at the {@code sourcePath} into the {@code targetPath}.
@@ -244,8 +245,7 @@ public interface FileSystem
      * <p>
      * As for the {@link MediaType#getCharset()}, the {@code dataType} one is respected
      *
-     * @param originalMediaType the original {@link MediaType} that the {@link MuleMessage} had before
-     *                          executing the operation
+     * @param originalMediaType the original {@link MediaType} that the {@link MuleMessage} had before executing the operation
      * @param attributes        the {@link FileAttributes} of the file being processed
      * @return a {@link DataType} the resulting {@link DataType}.
      */

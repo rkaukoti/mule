@@ -6,9 +6,9 @@
  */
 package org.mule.tck.util;
 
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.junit.Assert.assertThat;
-
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.context.notification.FlowCallStack;
@@ -17,12 +17,55 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 
 import java.util.concurrent.CountDownLatch;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.Assert.assertThat;
 
 public class FlowTraceUtils
 {
+    public static void assertStackElements(FlowCallStack flowStack, Matcher<FlowStackElement>... flowStackElementMatchers)
+    {
+        assertThat(flowStack.getElements(), hasSize(flowStackElementMatchers.length));
+        int i = 0;
+        for (Matcher<FlowStackElement> flowStackElementMatcher : flowStackElementMatchers)
+        {
+            assertThat(flowStack.getElements().get(i), flowStackElementMatcher);
+            ++i;
+        }
+    }
+
+    public static Matcher<FlowStackElement> isFlowStackElement(final String flowName, final String executingMessageProcessor)
+    {
+        return new TypeSafeMatcher<FlowStackElement>()
+        {
+            @Override
+            protected boolean matchesSafely(FlowStackElement flowStackElement)
+            {
+                return flowStackElement.getFlowName().startsWith(flowName)
+                       && (executingMessageProcessor == null ?
+                        flowStackElement.getProcessorPath() == null :
+                        flowStackElement.getProcessorPath().startsWith(executingMessageProcessor + " @"));
+            }
+
+            @Override
+            public void describeTo(Description description)
+            {
+                if (executingMessageProcessor == null)
+                {
+                    description.appendText("<")
+                               .appendText(flowName);
+                }
+                else
+                {
+                    description.appendText("<")
+                               .appendText(flowName)
+                               .appendText("(")
+                               .appendText(executingMessageProcessor)
+                               .appendText("*)");
+                }
+            }
+        };
+    }
+
     public static class FlowStackAsserter implements MessageProcessor
     {
 
@@ -48,48 +91,5 @@ public class FlowTraceUtils
             latch.countDown();
             return event;
         }
-    }
-
-
-    public static void assertStackElements(FlowCallStack flowStack, Matcher<FlowStackElement>... flowStackElementMatchers)
-    {
-        assertThat(flowStack.getElements(), hasSize(flowStackElementMatchers.length));
-        int i = 0;
-        for (Matcher<FlowStackElement> flowStackElementMatcher : flowStackElementMatchers)
-        {
-            assertThat(flowStack.getElements().get(i), flowStackElementMatcher);
-            ++i;
-        }
-    }
-
-    public static Matcher<FlowStackElement> isFlowStackElement(final String flowName, final String executingMessageProcessor)
-    {
-        return new TypeSafeMatcher<FlowStackElement>()
-        {
-            @Override
-            protected boolean matchesSafely(FlowStackElement flowStackElement)
-            {
-                return flowStackElement.getFlowName().startsWith(flowName)
-                       && (executingMessageProcessor == null ? flowStackElement.getProcessorPath() == null : flowStackElement.getProcessorPath().startsWith(executingMessageProcessor + " @"));
-            }
-
-            @Override
-            public void describeTo(Description description)
-            {
-                if (executingMessageProcessor == null)
-                {
-                    description.appendText("<")
-                               .appendText(flowName);
-                }
-                else
-                {
-                    description.appendText("<")
-                               .appendText(flowName)
-                               .appendText("(")
-                               .appendText(executingMessageProcessor)
-                               .appendText("*)");
-                }
-            }
-        };
     }
 }

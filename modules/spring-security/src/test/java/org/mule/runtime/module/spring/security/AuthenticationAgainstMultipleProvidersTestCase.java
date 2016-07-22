@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.module.spring.security;
 
-import static org.junit.Assert.assertEquals;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
@@ -19,6 +15,10 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
+
+import static org.junit.Assert.assertEquals;
 
 public class AuthenticationAgainstMultipleProvidersTestCase extends FunctionalTestCase
 {

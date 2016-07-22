@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
-       xmlns:spring="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
+      xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="
                http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/transports http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd">
@@ -16,9 +16,9 @@
     <!-- Test custom filter parsing -->
     <transports:endpoint address="test://foo" name="fooEndpoint" exchange-pattern="one-way">
         <custom-filter class="org.mule.test.integration.config.TestFilter">
-           <spring:property name="foo" value="goo"/>
-           <spring:property name="bar" value="12"/>
+            <spring:property name="foo" value="goo"/>
+            <spring:property name="bar" value="12"/>
         </custom-filter>
     </transports:endpoint>
-    
+
 </mule>

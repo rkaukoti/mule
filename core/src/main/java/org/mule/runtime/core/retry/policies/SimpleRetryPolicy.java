@@ -8,11 +8,10 @@ package org.mule.runtime.core.retry.policies;
 
 import org.mule.runtime.core.api.retry.RetryPolicy;
 import org.mule.runtime.core.retry.PolicyStatus;
-
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Allows to configure how many times a retry should be attempted and how long to wait between retries.
@@ -50,8 +49,8 @@ public class SimpleRetryPolicy implements RetryPolicy
                             + (retryCounter.current().get() + 1)
                             + " of "
                             + (count != SimpleRetryPolicyTemplate.RETRY_COUNT_FOREVER
-                                                                                     ? String.valueOf(count)
-                                                                                     : "unlimited"));
+                        ? String.valueOf(count)
+                        : "unlimited"));
             }
 
             try
@@ -71,7 +70,7 @@ public class SimpleRetryPolicy implements RetryPolicy
     /**
      * Indicates if the policy is applicable for the cause that caused the policy invocation. Subclasses can override
      * this method in order to filter the type of exceptions that does not deserve a retry.
-     * 
+     *
      * @return true if the policy is applicable, false otherwise.
      */
     protected boolean isApplicableTo(Throwable cause)

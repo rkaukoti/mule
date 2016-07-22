@@ -14,7 +14,8 @@ import org.mule.runtime.core.context.notification.MuleContextNotification;
  * can implement and then register themselves with the Mule manager to be notified
  * when a Manager event occurs.
  */
-public interface MuleContextNotificationListener<T extends MuleContextNotification> extends ServerNotificationListener<MuleContextNotification>
+public interface MuleContextNotificationListener<T extends MuleContextNotification>
+        extends ServerNotificationListener<MuleContextNotification>
 {
     // no methods
 }

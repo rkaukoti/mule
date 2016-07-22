@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.module.cxf.support;
 
-import org.mule.compatibility.core.api.endpoint.EndpointNotFoundException;
-
-import java.io.IOException;
-
 import org.apache.cxf.endpoint.Endpoint;
 import org.apache.cxf.service.model.EndpointInfo;
 import org.apache.cxf.transport.ChainInitiationObserver;
 import org.apache.cxf.transport.Destination;
 import org.apache.cxf.transport.DestinationFactory;
 import org.apache.cxf.transport.MessageObserver;
+import org.mule.compatibility.core.api.endpoint.EndpointNotFoundException;
+
+import java.io.IOException;
 
 public final class CxfEndpointUtils
 {

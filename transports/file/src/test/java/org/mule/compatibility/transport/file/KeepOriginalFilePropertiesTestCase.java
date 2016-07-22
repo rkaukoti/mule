@@ -6,11 +6,9 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import org.mule.compatibility.transport.file.FileConnector;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
@@ -20,9 +18,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class KeepOriginalFilePropertiesTestCase extends FunctionalTestCase
 {
@@ -60,7 +58,8 @@ public class KeepOriginalFilePropertiesTestCase extends FunctionalTestCase
 
     private void assertPropertiesAvailableAtPatternResolution(MuleMessage msg)
     {
-        assertTrue(new File(getFileInsideWorkingDirectory(OUTPUT_DIRECTORY), PROCESSED_PREFIX + getProperty(msg, CUSTOM_PROPERTY_ORIGINAL_FILENAME)).exists());
+        assertTrue(new File(getFileInsideWorkingDirectory(OUTPUT_DIRECTORY),
+                PROCESSED_PREFIX + getProperty(msg, CUSTOM_PROPERTY_ORIGINAL_FILENAME)).exists());
     }
 
     private void assertOriginalDirectoryIsCorrectlySet(MuleMessage msg) throws IOException
@@ -78,7 +77,7 @@ public class KeepOriginalFilePropertiesTestCase extends FunctionalTestCase
 
     private String removePrivatePath(String path)
     {
-        if(path.startsWith(PRIVATE_PATH))
+        if (path.startsWith(PRIVATE_PATH))
         {
             path = path.substring(PRIVATE_PATH.length());
         }

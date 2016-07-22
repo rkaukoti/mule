@@ -6,7 +6,9 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.junit.Assert.assertThat;
+import org.hamcrest.core.Is;
+import org.hamcrest.core.IsInstanceOf;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.component.simple.EchoService;
@@ -14,38 +16,36 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.module.cxf.builder.SimpleClientMessageProcessorBuilder;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.hamcrest.core.Is;
-import org.hamcrest.core.IsInstanceOf;
-import org.junit.Test;
+import static org.junit.Assert.assertThat;
 
 public class CxfOutboundMessageProcessorTestCase extends AbstractMuleContextTestCase
 {
-    String msg = 
-        "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body>" +
+    String msg =
+            "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body>" +
             "<ns1:echo xmlns:ns1=\"http://simple.component.api.core.runtime.mule.org/\">" +
-                "<ns1:return>hello</ns1:return>" +
+            "<ns1:return>hello</ns1:return>" +
             "</ns1:echo>" +
-        "</soap:Body></soap:Envelope>";
+            "</soap:Body></soap:Envelope>";
 
     boolean gotEvent = false;
     Object payload;
-    
+
     @Test
     public void testOutbound() throws Exception
     {
         CxfConfiguration config = new CxfConfiguration();
         config.setMuleContext(muleContext);
         config.initialise();
-        
+
         // Build a CXF MessageProcessor
         SimpleClientMessageProcessorBuilder builder = new SimpleClientMessageProcessorBuilder();
         builder.setConfiguration(config);
         builder.setServiceClass(EchoService.class);
         builder.setOperation("echo");
         builder.setMuleContext(muleContext);
-        
+
         CxfOutboundMessageProcessor processor = builder.build();
-        
+
         MessageProcessor messageProcessor = event ->
         {
             payload = event.getMessage().getPayload();
@@ -62,15 +62,15 @@ public class CxfOutboundMessageProcessorTestCase extends AbstractMuleContextTest
             return event;
         };
         processor.setListener(messageProcessor);
-        
+
         MuleEvent event = getTestEvent("hello");
         MuleEvent response = processor.process(event);
         assertThat(processor.getClient().getRequestContext().isEmpty(), Is.is(true));
         assertThat(processor.getClient().getResponseContext().isEmpty(), Is.is(true));
         Object payload = response.getMessage().getPayload();
         assertThat(payload, IsInstanceOf.instanceOf(String.class));
-        assertThat((String) payload,Is.is("hello"));
-        assertThat(gotEvent,Is.is(true));
+        assertThat((String) payload, Is.is("hello"));
+        assertThat(gotEvent, Is.is(true));
     }
 
 }

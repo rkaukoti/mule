@@ -7,12 +7,7 @@
 
 package org.mule.runtime.module.db.internal.resolver.query;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.core.IsNot.not;
-import static org.hamcrest.core.IsSame.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
 import org.mule.runtime.module.db.internal.domain.query.Query;
 import org.mule.runtime.module.db.internal.domain.query.QueryParamValue;
@@ -25,14 +20,21 @@ import org.mule.tck.size.SmallTest;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.core.IsSame.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class ParametrizedQueryResolverTestCase extends AbstractQueryResolverTestCase
 {
 
-    private final Query resolvedTemplateQuery = createQuery(createQueryTemplate(STATIC_SQL_TEXT, new DbType[] {JdbcTypes.INTEGER_DB_TYPE}), new Object[] {"foo"});
-    private final Query unresolvedTemplateQuery = createQuery(createQueryTemplate(STATIC_SQL_TEXT, new DbType[] {UnknownDbType.getInstance()}), new Object[] {"foo"});
+    private final Query resolvedTemplateQuery =
+            createQuery(createQueryTemplate(STATIC_SQL_TEXT, new DbType[] {JdbcTypes.INTEGER_DB_TYPE}), new Object[] {"foo"});
+    private final Query unresolvedTemplateQuery =
+            createQuery(createQueryTemplate(STATIC_SQL_TEXT, new DbType[] {UnknownDbType.getInstance()}), new Object[] {"foo"});
 
     @Test
     public void resolvesQuery() throws Exception
@@ -61,7 +63,8 @@ public class ParametrizedQueryResolverTestCase extends AbstractQueryResolverTest
         QueryResolver queryResolver = new ParametrizedQueryResolver(unresolvedTemplateQuery, paramValueResolver);
 
         DbConnection connection = mock(DbConnection.class);
-        when(connection.getParamTypes(unresolvedTemplateQuery.getQueryTemplate())).thenReturn(Collections.singletonMap(1, JdbcTypes.INTEGER_DB_TYPE));
+        when(connection.getParamTypes(unresolvedTemplateQuery.getQueryTemplate())).thenReturn(
+                Collections.singletonMap(1, JdbcTypes.INTEGER_DB_TYPE));
 
         Query resolvedQuery = queryResolver.resolve(connection, muleEvent);
 

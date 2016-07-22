@@ -6,19 +6,18 @@
  */
 package org.mule.runtime.module.http.internal.request.grizzly;
 
-import static org.mule.runtime.module.http.internal.HttpMessageLogger.LoggerType.REQUESTER;
-
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.module.http.internal.HttpMessageLogger;
-
 import com.ning.http.client.providers.grizzly.TransportCustomizer;
 
 import org.glassfish.grizzly.filterchain.Filter;
 import org.glassfish.grizzly.filterchain.FilterChainBuilder;
 import org.glassfish.grizzly.http.HttpCodecFilter;
 import org.glassfish.grizzly.nio.transport.TCPNIOTransport;
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.module.http.internal.HttpMessageLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.mule.runtime.module.http.internal.HttpMessageLogger.LoggerType.REQUESTER;
 
 /**
  * Transport customizer that adds a probe for logging HTTP messages.

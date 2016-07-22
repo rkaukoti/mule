@@ -6,6 +6,16 @@
  */
 package org.mule.runtime.module.launcher.domain;
 
+import org.hamcrest.Matcher;
+import org.junit.Test;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Set;
+
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
@@ -16,19 +26,11 @@ import static org.mule.runtime.module.launcher.descriptor.PropertiesDescriptorPa
 import static org.mule.runtime.module.launcher.domain.Domain.DEFAULT_DOMAIN_NAME;
 import static org.mule.runtime.module.reboot.MuleContainerBootstrapUtils.MULE_DOMAIN_FOLDER;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.Set;
-
-import org.hamcrest.Matcher;
-import org.junit.Test;
-
 public class DefaultDomainFactoryTestCase extends AbstractDomainTestCase
 {
-    private DomainFactory domainFactory = new DefaultDomainFactory(new DomainClassLoaderFactory(getClass().getClassLoader()), new DefaultDomainManager(), containerClassLoader);
+    private DomainFactory domainFactory =
+            new DefaultDomainFactory(new DomainClassLoaderFactory(getClass().getClassLoader()), new DefaultDomainManager(),
+                    containerClassLoader);
 
     public DefaultDomainFactoryTestCase() throws IOException
     {
@@ -61,7 +63,8 @@ public class DefaultDomainFactoryTestCase extends AbstractDomainTestCase
         createAndVerifyDomain(domainName, false, containsInAnyOrder("org.mycom.MyClass", "org.yourcom"));
     }
 
-    private void createAndVerifyDomain(String name, boolean redeployment, Matcher<? super Set<String>> loaderOverridesMatcher) throws IOException
+    private void createAndVerifyDomain(String name, boolean redeployment, Matcher<? super Set<String>> loaderOverridesMatcher)
+            throws IOException
     {
         Domain domain = domainFactory.createArtifact(name);
         assertThat(domain.getArtifactName(), is(name));

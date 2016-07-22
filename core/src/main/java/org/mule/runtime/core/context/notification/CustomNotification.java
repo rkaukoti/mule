@@ -16,7 +16,7 @@ import org.mule.runtime.core.api.context.notification.ServerNotification;
  * care should be taken not to set the action code to an existing action code. To
  * ensure this doesn't happen always set the action code greater than the
  * CUSTOM_ACTION_START_RANGE.
- * 
+ *
  * @see CustomNotificationListener
  */
 public class CustomNotification extends ServerNotification
@@ -28,11 +28,10 @@ public class CustomNotification extends ServerNotification
 
     /**
      * Creates a custom action event
-     * 
+     *
      * @param message the message to associate with the event
-     * @param action the action code for the event
-     * @throws IllegalArgumentException if the action value is less than
-     *             CUSTOM_ACTION_START_RANGE
+     * @param action  the action code for the event
+     * @throws IllegalArgumentException if the action value is less than CUSTOM_ACTION_START_RANGE
      */
     public CustomNotification(Object message, int action)
     {
@@ -40,8 +39,8 @@ public class CustomNotification extends ServerNotification
         if (action < CUSTOM_EVENT_ACTION_START_RANGE && action > 0)
         {
             throw new IllegalArgumentException(
-                "Action range must be greater than CUSTOM_ACTION_START_RANGE ("
-                                + CUSTOM_EVENT_ACTION_START_RANGE + ")");
+                    "Action range must be greater than CUSTOM_ACTION_START_RANGE ("
+                    + CUSTOM_EVENT_ACTION_START_RANGE + ")");
         }
     }
 
@@ -51,13 +50,13 @@ public class CustomNotification extends ServerNotification
         if (action < CUSTOM_EVENT_ACTION_START_RANGE && action > 0)
         {
             throw new IllegalArgumentException(
-                "Action range must be greater than CUSTOM_ACTION_START_RANGE ("
-                                + CUSTOM_EVENT_ACTION_START_RANGE + ")");
+                    "Action range must be greater than CUSTOM_ACTION_START_RANGE ("
+                    + CUSTOM_EVENT_ACTION_START_RANGE + ")");
         }
     }
 
     protected String[] getActionNames()
     {
-        return new String[]{};
+        return new String[] {};
     }
 }

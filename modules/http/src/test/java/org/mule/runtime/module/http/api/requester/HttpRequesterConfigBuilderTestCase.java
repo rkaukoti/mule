@@ -6,6 +6,18 @@
  */
 package org.mule.runtime.module.http.api.requester;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Answers;
+import org.mockito.Mockito;
+import org.mule.runtime.api.tls.TlsContextFactory;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.module.http.api.HttpAuthentication;
+import org.mule.runtime.module.http.api.requester.proxy.ProxyConfig;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
 import static java.lang.String.valueOf;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -14,19 +26,6 @@ import static org.mockito.Mockito.when;
 import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
 import static org.mule.runtime.module.http.api.requester.HttpSendBodyMode.ALWAYS;
 import static org.mule.runtime.module.http.api.requester.HttpStreamingType.AUTO;
-
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.module.http.api.HttpAuthentication;
-import org.mule.runtime.module.http.api.requester.proxy.ProxyConfig;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-import org.mule.runtime.api.tls.TlsContextFactory;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Answers;
-import org.mockito.Mockito;
 
 @SmallTest
 public class HttpRequesterConfigBuilderTestCase extends AbstractMuleTestCase
@@ -64,7 +63,7 @@ public class HttpRequesterConfigBuilderTestCase extends AbstractMuleTestCase
     @Test(expected = MuleException.class)
     public void tlsContextWithoutHttps() throws Exception
     {
-        assertThat(builder.setTlsContext(mockTlsContext).build().getTlsContext(), is(mockTlsContext ));
+        assertThat(builder.setTlsContext(mockTlsContext).build().getTlsContext(), is(mockTlsContext));
     }
 
     @Test

@@ -6,13 +6,10 @@
  */
 package org.mule.compatibility.transport.http.components;
 
-import static java.lang.String.valueOf;
-import static org.mule.compatibility.transport.http.HttpConstants.CUSTOM_HEADER_PREFIX;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_GROUP_SIZE_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_ID_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_SEQUENCE_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROPERTY;
-
+import org.apache.commons.httpclient.Cookie;
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpVersion;
+import org.apache.commons.httpclient.ProtocolException;
 import org.mule.compatibility.transport.http.CacheControlHeader;
 import org.mule.compatibility.transport.http.CookieHelper;
 import org.mule.compatibility.transport.http.CookieWrapper;
@@ -31,6 +28,8 @@ import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.processor.AbstractMessageProcessorOwner;
 import org.mule.runtime.core.transformer.AbstractTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,15 +40,15 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
-import org.apache.commons.httpclient.Cookie;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpVersion;
-import org.apache.commons.httpclient.ProtocolException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.valueOf;
+import static org.mule.compatibility.transport.http.HttpConstants.CUSTOM_HEADER_PREFIX;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_GROUP_SIZE_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_ID_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_SEQUENCE_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROPERTY;
 
 public class HttpResponseBuilder extends AbstractMessageProcessorOwner
-    implements Initialisable, MessageProcessor, NonBlockingSupported
+        implements Initialisable, MessageProcessor, NonBlockingSupported
 {
     private static final Logger logger = LoggerFactory.getLogger(HttpResponseBuilder.class);
 
@@ -109,7 +108,7 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
 
     protected void setBody(HttpResponse response, MuleMessage message, MuleEvent event) throws MuleException
     {
-        if(bodyTransformer != null)
+        if (bodyTransformer != null)
         {
             message = muleContext.getTransformationService().applyTransformers(event.getMessage(), event, bodyTransformer);
         }
@@ -117,12 +116,12 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
         try
         {
             // If the payload is already HttpResponse then it already has the body set
-            if(!(message.getPayload() instanceof HttpResponse))
+            if (!(message.getPayload() instanceof HttpResponse))
             {
                 response.setBody(message, muleContext);
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             throw new DefaultMuleException(e);
         }
@@ -131,7 +130,7 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
     private void propagateMessageProperties(HttpResponse response, MuleMessage message)
     {
         copyOutboundProperties(response, message);
-        if(propagateMuleProperties)
+        if (propagateMuleProperties)
         {
             copyCorrelationIdProperties(response, message);
             copyReplyToProperty(response, message);
@@ -143,14 +142,18 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
         message.getCorrelation().getId().ifPresent(v ->
         {
             response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_ID_PROPERTY, v));
-            message.getCorrelation().getGroupSize().ifPresent(s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_GROUP_SIZE_PROPERTY, valueOf(s))));
-            message.getCorrelation().getSequence().ifPresent(s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_SEQUENCE_PROPERTY, valueOf(s))));
+            message.getCorrelation()
+                   .getGroupSize()
+                   .ifPresent(s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_GROUP_SIZE_PROPERTY, valueOf(s))));
+            message.getCorrelation()
+                   .getSequence()
+                   .ifPresent(s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_SEQUENCE_PROPERTY, valueOf(s))));
         });
     }
 
     private void copyReplyToProperty(HttpResponse response, MuleMessage message)
     {
-        if(message.getReplyTo() != null)
+        if (message.getReplyTo() != null)
         {
             response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_REPLY_TO_PROPERTY, message.getReplyTo().toString()));
         }
@@ -158,19 +161,19 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
 
     protected void copyOutboundProperties(HttpResponse response, MuleMessage message)
     {
-        for(String headerName : message.getOutboundPropertyNames())
+        for (String headerName : message.getOutboundPropertyNames())
         {
             Object headerValue = message.getOutboundProperty(headerName);
-            if(headerValue != null)
+            if (headerValue != null)
             {
-                if(isMuleProperty(headerName))
+                if (isMuleProperty(headerName))
                 {
-                    if(propagateMuleProperties)
+                    if (propagateMuleProperties)
                     {
                         addMuleHeader(response, headerName, headerValue);
                     }
                 }
-                else if(isMultiValueCookie(headerName, headerValue))
+                else if (isMultiValueCookie(headerName, headerValue))
                 {
                     addMultiValueCookie(response, (Cookie[]) headerValue);
                 }
@@ -198,21 +201,21 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
         for (Cookie cookie : arrayOfCookies)
         {
             response.addHeader(new Header(HttpConstants.HEADER_COOKIE_SET,
-                CookieHelper.formatCookieForASetCookieHeader(cookie)));
+                    CookieHelper.formatCookieForASetCookieHeader(cookie)));
         }
     }
 
     private boolean isMultiValueCookie(String headerName, Object headerValue)
     {
         return HttpConstants.HEADER_COOKIE_SET.equals(headerName)
-                && headerValue instanceof Cookie[];
+               && headerValue instanceof Cookie[];
     }
 
     private HttpResponse getHttpResponse(MuleMessage message)
     {
         HttpResponse httpResponse;
 
-        if(message.getPayload() instanceof HttpResponse)
+        if (message.getPayload() instanceof HttpResponse)
         {
             httpResponse = (HttpResponse) message.getPayload();
         }
@@ -227,16 +230,16 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
 
     protected void setCacheControl(HttpResponse response, MuleEvent event)
     {
-        if(cacheControl != null)
+        if (cacheControl != null)
         {
             cacheControl.parse(event, muleContext.getExpressionManager());
             String cacheControlValue = cacheControl.toString();
-            if(!"".equals(cacheControlValue))
+            if (!"".equals(cacheControlValue))
             {
-                if(headers.get(HttpConstants.HEADER_CACHE_CONTROL) != null)
+                if (headers.get(HttpConstants.HEADER_CACHE_CONTROL) != null)
                 {
                     Header cacheControlHeader = response.getFirstHeader(HttpConstants.HEADER_CACHE_CONTROL);
-                    if(cacheControlHeader != null)
+                    if (cacheControlHeader != null)
                     {
                         cacheControlValue += "," + cacheControlHeader.getValue();
                     }
@@ -248,18 +251,18 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
 
     protected void setCookies(HttpResponse response, MuleEvent event) throws MuleException
     {
-        if(!cookies.isEmpty())
+        if (!cookies.isEmpty())
         {
-            for(CookieWrapper cookie : cookies)
+            for (CookieWrapper cookie : cookies)
             {
                 try
                 {
                     cookie.parse(event, muleContext.getExpressionManager());
                     response.addHeader(new Header(HttpConstants.HEADER_COOKIE_SET,
-                                                   CookieHelper.formatCookieForASetCookieHeader(cookie.createCookie())));
+                            CookieHelper.formatCookieForASetCookieHeader(cookie.createCookie())));
 
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     throw new DefaultMuleException(e);
                 }
@@ -270,13 +273,13 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
 
     protected void setHeaders(HttpResponse response, MuleEvent event)
     {
-        if(headers != null && !headers.isEmpty())
+        if (headers != null && !headers.isEmpty())
         {
-            for(String headerName : headers.keySet())
+            for (String headerName : headers.keySet())
             {
                 String name = parse(headerName, event);
                 String value = headers.get(headerName);
-                if(HttpConstants.HEADER_EXPIRES.equals(name))
+                if (HttpConstants.HEADER_EXPIRES.equals(name))
                 {
                     response.setHeader(new Header(name, evaluateDate(value, event)));
                 }
@@ -291,21 +294,21 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
     protected void checkVersion(MuleMessage message)
     {
         version = message.getInboundProperty(HttpConnector.HTTP_VERSION_PROPERTY);
-        if(version == null)
+        if (version == null)
         {
-           version = HttpConstants.HTTP11;
+            version = HttpConstants.HTTP11;
         }
     }
 
     private void setStatus(HttpResponse response, MuleEvent event) throws MuleException
     {
-        if(status != null)
+        if (status != null)
         {
             try
             {
                 response.setStatusLine(HttpVersion.parse(version), Integer.valueOf(parse(status, event)));
             }
-            catch(ProtocolException e)
+            catch (ProtocolException e)
             {
                 throw new DefaultMuleException(e);
             }
@@ -314,7 +317,7 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
 
     protected void setContentType(HttpResponse response, MuleEvent event)
     {
-        if(contentType == null)
+        if (contentType == null)
         {
             contentType = getDefaultContentType(event.getMessage());
 
@@ -324,7 +327,7 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
 
     private String parse(String value, MuleEvent event)
     {
-        if(value != null)
+        if (value != null)
         {
             return muleContext.getExpressionManager().parse(value, event);
         }
@@ -340,14 +343,13 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
             realValue = muleContext.getExpressionManager().evaluate(value, event);
         }
 
-        if(realValue instanceof Date)
+        if (realValue instanceof Date)
         {
             return expiresHeaderFormatter.format(realValue);
         }
 
         return String.valueOf(realValue);
     }
-
 
 
     private String getDefaultContentType(MuleMessage message)
@@ -382,11 +384,6 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
         this.contentType = contentType;
     }
 
-    public void setVersion(String version)
-    {
-        this.version = version;
-    }
-
     public void setCookies(List<CookieWrapper> cookies)
     {
         this.cookies = cookies;
@@ -405,6 +402,11 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
     public String getVersion()
     {
         return version;
+    }
+
+    public void setVersion(String version)
+    {
+        this.version = version;
     }
 
     public void setPropagateMuleProperties(boolean propagateMuleProperties)

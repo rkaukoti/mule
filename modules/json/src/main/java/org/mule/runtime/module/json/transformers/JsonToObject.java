@@ -131,7 +131,7 @@ public class JsonToObject extends AbstractJsonTransformer
         catch (Exception e)
         {
             throw new TransformerException(CoreMessages.transformFailed("json",
-                getReturnDataType().getType().getName()), this, e);
+                    getReturnDataType().getType().getName()), this, e);
         }
         finally
         {

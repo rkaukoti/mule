@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.module.launcher.util;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -18,14 +14,17 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 import java.util.Collections;
 import java.util.ListIterator;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
 public class ObservableListTestCase extends AbstractMuleTestCase
 {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     // Must be equal to java.util.Collections.REVERSE_THRESHOLD
     // Collections#reverse() uses two different algorithms.
     private static final int COLLECTIONS_REVERSE_THRESHOLD = 18;
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void testListIteratorRemove()
@@ -99,7 +98,8 @@ public class ObservableListTestCase extends AbstractMuleTestCase
     private ObservableList<Integer> createObservableList(int n)
     {
         ObservableList<Integer> list = new ObservableList<Integer>();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
+        {
             list.add(i);
         }
         return list;

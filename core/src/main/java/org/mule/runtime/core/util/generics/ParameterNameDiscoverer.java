@@ -27,8 +27,7 @@ public interface ParameterNameDiscoverer
      * or <code>null</code> if they cannot be determined.
      *
      * @param method method to find parameter names for
-     * @return an array of parameter names if the names can be resolved,
-     *         or <code>null</code> if they cannot
+     * @return an array of parameter names if the names can be resolved, or <code>null</code> if they cannot
      */
     String[] getParameterNames(Method method);
 
@@ -37,8 +36,7 @@ public interface ParameterNameDiscoverer
      * or <code>null</code> if they cannot be determined.
      *
      * @param ctor constructor to find parameter names for
-     * @return an array of parameter names if the names can be resolved,
-     *         or <code>null</code> if they cannot
+     * @return an array of parameter names if the names can be resolved, or <code>null</code> if they cannot
      */
     String[] getParameterNames(Constructor ctor);
 

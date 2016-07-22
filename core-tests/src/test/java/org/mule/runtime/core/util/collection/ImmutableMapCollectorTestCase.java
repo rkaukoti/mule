@@ -6,9 +6,7 @@
  */
 package org.mule.runtime.core.util.collection;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 import org.mule.tck.testmodels.fruit.Apple;
@@ -21,7 +19,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class ImmutableMapCollectorTestCase extends AbstractMuleTestCase
@@ -36,7 +36,8 @@ public class ImmutableMapCollectorTestCase extends AbstractMuleTestCase
         Map<String, Fruit> map = fruits.stream().collect(collector);
 
         assertThat(map.size(), is(3));
-        fruits.forEach(fruit -> {
+        fruits.forEach(fruit ->
+        {
             Fruit value = map.get(fruit.getClass().getName());
             assertThat(value, sameInstance(fruit));
         });

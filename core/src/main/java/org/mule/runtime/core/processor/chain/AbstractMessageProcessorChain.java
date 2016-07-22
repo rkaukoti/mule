@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.core.processor.chain;
 
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
 import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -28,13 +27,14 @@ import org.mule.runtime.core.api.processor.MessageProcessorPathElement;
 import org.mule.runtime.core.processor.NonBlockingMessageProcessor;
 import org.mule.runtime.core.util.NotificationUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
 
 /**
  * Builder needs to return a composite rather than the first MessageProcessor in the chain. This is so that if
@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractMessageProcessorChain extends AbstractAnnotatedObject
         implements NonBlockingMessageProcessor, MessageProcessorChain, Lifecycle, FlowConstructAware,
-    MuleContextAware, MessageProcessorContainer, MessagingExceptionHandlerAware
+        MuleContextAware, MessageProcessorContainer, MessagingExceptionHandlerAware
 {
 
     protected final transient Logger log = LoggerFactory.getLogger(getClass());
@@ -99,7 +99,7 @@ public abstract class AbstractMessageProcessorChain extends AbstractAnnotatedObj
                 }
             }
         }
-        catch(MuleException e)
+        catch (MuleException e)
         {
             stop(startedProcessors);
             throw e;

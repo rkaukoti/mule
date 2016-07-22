@@ -6,10 +6,7 @@
  */
 package org.mule.runtime.core.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
 public class WildcardAttributeEvaluator
 {
@@ -24,8 +21,9 @@ public class WildcardAttributeEvaluator
             throw new IllegalArgumentException("null not allowed");
         }
         this.attributeValue = attributeValue;
-        this.escapedValue = attributeValue.replaceAll("\\*","*");
-        hasWildcards = attributeValue.startsWith("*") || (attributeValue.endsWith("*") && !attributeValue.endsWith("\\*"))|| attributeValue.equals("*");
+        this.escapedValue = attributeValue.replaceAll("\\*", "*");
+        hasWildcards = attributeValue.startsWith("*") || (attributeValue.endsWith("*") && !attributeValue.endsWith("\\*")) ||
+                       attributeValue.equals("*");
     }
 
     public boolean hasWildcards()
@@ -58,19 +56,19 @@ public class WildcardAttributeEvaluator
         if (escapedValue.equals("*"))
         {
             return true;
-        } 
+        }
         else if (escapedValue.startsWith("*"))
         {
             return value.endsWith(escapedValue.substring(1, escapedValue.length()));
         }
         else if (escapedValue.endsWith("*"))
         {
-            return value.startsWith(escapedValue.substring(0, escapedValue.length()-1));
+            return value.startsWith(escapedValue.substring(0, escapedValue.length() - 1));
         }
         return false;
     }
 
-    public interface MatchCallback 
+    public interface MatchCallback
     {
         public void processMatch(String matchedValue);
     }

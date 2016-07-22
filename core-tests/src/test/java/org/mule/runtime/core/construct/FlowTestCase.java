@@ -6,23 +6,8 @@
  */
 package org.mule.runtime.core.construct;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.withSettings;
-import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
-
+import org.junit.After;
+import org.junit.Test;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -43,8 +28,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
+import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
 
 public class FlowTestCase extends AbstractFlowConstuctTestCase
 {
@@ -115,7 +114,7 @@ public class FlowTestCase extends AbstractFlowConstuctTestCase
         flow.initialise();
         flow.start();
         MuleEvent event = MuleTestUtils.getTestEvent("hello",
-                                                     MessageExchangePattern.ONE_WAY, muleContext);
+                MessageExchangePattern.ONE_WAY, muleContext);
         MuleEvent response = directInboundMessageSource.process(event);
         Thread.sleep(50);
 
@@ -132,7 +131,7 @@ public class FlowTestCase extends AbstractFlowConstuctTestCase
         flow.initialise();
         flow.start();
         MuleEvent response = directInboundMessageSource.process(MuleTestUtils.getTestEvent("hello",
-            REQUEST_RESPONSE, muleContext));
+                REQUEST_RESPONSE, muleContext));
 
         assertEquals("helloabcdef", response.getMessageAsString());
         assertEquals(Thread.currentThread(), response.getFlowVariable("thread"));
@@ -218,12 +217,15 @@ public class FlowTestCase extends AbstractFlowConstuctTestCase
         MessageProcessor appendPost2 = new StringAppendTransformer("4");
 
         String pipelineId = flow.dynamicPipeline(null).injectBefore(appendPre, new StringAppendTransformer("2"))
-                .injectAfter(new StringAppendTransformer("3"), appendPost2)
-                .resetAndUpdate();
+                                .injectAfter(new StringAppendTransformer("3"), appendPost2)
+                                .resetAndUpdate();
         MuleEvent response = directInboundMessageSource.process(MuleTestUtils.getTestEvent("hello", REQUEST_RESPONSE, muleContext));
         assertEquals("hello12abcdef34", response.getMessageAsString());
 
-        flow.dynamicPipeline(pipelineId).injectBefore(new StringAppendTransformer("2")).injectAfter(new StringAppendTransformer("3")).resetAndUpdate();
+        flow.dynamicPipeline(pipelineId)
+            .injectBefore(new StringAppendTransformer("2"))
+            .injectAfter(new StringAppendTransformer("3"))
+            .resetAndUpdate();
         response = directInboundMessageSource.process(MuleTestUtils.getTestEvent("hello", REQUEST_RESPONSE, muleContext));
         assertEquals("hello2abcdef3", response.getMessageAsString());
 
@@ -239,7 +241,8 @@ public class FlowTestCase extends AbstractFlowConstuctTestCase
         doThrow(new LifecycleException(mock(Message.class), "Error starting component")).when(((Startable) mockMessageSource)).start();
         flow.setMessageSource(mockMessageSource);
 
-        MessageProcessor mockMessageProcessor = mock(MessageProcessor.class, withSettings().extraInterfaces(Startable.class, Stoppable.class));
+        MessageProcessor mockMessageProcessor =
+                mock(MessageProcessor.class, withSettings().extraInterfaces(Startable.class, Stoppable.class));
         flow.getMessageProcessors().add(mockMessageProcessor);
 
         flow.initialise();
@@ -247,7 +250,8 @@ public class FlowTestCase extends AbstractFlowConstuctTestCase
         {
             flow.start();
             fail();
-        } catch (LifecycleException e)
+        }
+        catch (LifecycleException e)
         {
         }
 

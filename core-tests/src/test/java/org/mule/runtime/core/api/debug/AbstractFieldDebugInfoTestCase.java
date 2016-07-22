@@ -7,9 +7,8 @@
 
 package org.mule.runtime.core.api.debug;
 
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
 import org.junit.Test;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 
 public abstract class AbstractFieldDebugInfoTestCase<T> extends AbstractMuleTestCase
 {

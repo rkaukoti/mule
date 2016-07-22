@@ -6,10 +6,9 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.functional.exceptions.FunctionalTestException;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MessagingException;
@@ -19,9 +18,9 @@ import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.component.ComponentException;
 import org.mule.runtime.core.exception.AbstractMessagingExceptionStrategy;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Assert that flows do not propagate exceptions via runFlow or use of flow-ref. Also
@@ -65,8 +64,8 @@ public class ExceptionPropagationMule5737TestCase extends FunctionalTestCase
     public void testFlowWithSubFlowExceptionPropagation() throws Exception
     {
         SensingExceptionStrategy parentES = (SensingExceptionStrategy) muleContext.getRegistry()
-            .lookupFlowConstruct("flowWithSubFlow")
-            .getExceptionListener();
+                                                                                  .lookupFlowConstruct("flowWithSubFlow")
+                                                                                  .getExceptionListener();
 
         runFlow("flowWithSubFlow");
 
@@ -77,11 +76,11 @@ public class ExceptionPropagationMule5737TestCase extends FunctionalTestCase
     public void testFlowWithChildServiceExceptionPropagation() throws Exception
     {
         SensingExceptionStrategy parentES = (SensingExceptionStrategy) muleContext.getRegistry()
-            .lookupFlowConstruct("flowWithChildService")
-            .getExceptionListener();
+                                                                                  .lookupFlowConstruct("flowWithChildService")
+                                                                                  .getExceptionListener();
         SensingExceptionStrategy childServiceES = (SensingExceptionStrategy) muleContext.getRegistry()
-            .lookupFlowConstruct("childService")
-            .getExceptionListener();
+                                                                                        .lookupFlowConstruct("childService")
+                                                                                        .getExceptionListener();
 
         runFlow("flowWithChildService");
 
@@ -92,12 +91,12 @@ public class ExceptionPropagationMule5737TestCase extends FunctionalTestCase
     public static class SensingExceptionStrategy extends AbstractMessagingExceptionStrategy
     {
 
+        boolean caught;
+
         public SensingExceptionStrategy()
         {
             super(null);
         }
-
-        boolean caught;
 
         @Override
         public MuleEvent handleException(Exception e, MuleEvent event)
@@ -107,7 +106,7 @@ public class ExceptionPropagationMule5737TestCase extends FunctionalTestCase
             event.setMessage(MuleMessage.builder(event.getMessage())
                                         .exceptionPayload(null)
                                         .build());
-            ((MessagingException)e).setHandled(true);
+            ((MessagingException) e).setHandled(true);
             return resultEvent;
         }
 

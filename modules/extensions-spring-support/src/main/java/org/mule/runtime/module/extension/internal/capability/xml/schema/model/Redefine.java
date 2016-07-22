@@ -61,12 +61,12 @@ public class Redefine extends OpenAttrs
 {
 
     @XmlElements({
-                         @XmlElement(name = "simpleType", type = TopLevelSimpleType.class),
-                         @XmlElement(name = "complexType", type = TopLevelComplexType.class),
-                         @XmlElement(name = "attributeGroup", type = NamedAttributeGroup.class),
-                         @XmlElement(name = "group", type = NamedGroup.class),
-                         @XmlElement(name = "annotation", type = Annotation.class)
-                 })
+            @XmlElement(name = "simpleType", type = TopLevelSimpleType.class),
+            @XmlElement(name = "complexType", type = TopLevelComplexType.class),
+            @XmlElement(name = "attributeGroup", type = NamedAttributeGroup.class),
+            @XmlElement(name = "group", type = NamedGroup.class),
+            @XmlElement(name = "annotation", type = Annotation.class)
+    })
     protected List<OpenAttrs> annotationOrSimpleTypeOrComplexType;
     @XmlAttribute(name = "schemaLocation", required = true)
     @XmlSchemaType(name = "anyURI")
@@ -113,8 +113,7 @@ public class Redefine extends OpenAttrs
     /**
      * Gets the value of the schemaLocation property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getSchemaLocation()
     {
@@ -124,8 +123,7 @@ public class Redefine extends OpenAttrs
     /**
      * Sets the value of the schemaLocation property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setSchemaLocation(String value)
     {
@@ -135,8 +133,7 @@ public class Redefine extends OpenAttrs
     /**
      * Gets the value of the id property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getId()
     {
@@ -146,8 +143,7 @@ public class Redefine extends OpenAttrs
     /**
      * Sets the value of the id property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setId(String value)
     {

@@ -13,7 +13,6 @@ import org.mule.runtime.core.api.schedule.SchedulerFactory;
 import org.mule.runtime.core.source.polling.MessageProcessorPollingOverride;
 import org.mule.runtime.core.source.polling.PollingMessageSource;
 import org.mule.runtime.core.source.polling.schedule.FixedFrequencySchedulerFactory;
-
 import org.springframework.beans.factory.FactoryBean;
 
 public class PollingMessageSourceFactoryBean implements FactoryBean, MuleContextAware

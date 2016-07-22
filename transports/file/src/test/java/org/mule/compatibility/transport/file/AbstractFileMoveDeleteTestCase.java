@@ -6,19 +6,18 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.mule.compatibility.core.registry.MuleRegistryTransportHelper;
 import org.mule.compatibility.core.transport.AbstractMuleMessageFactory;
-import org.mule.compatibility.transport.file.FileConnector;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractFileMoveDeleteTestCase extends AbstractFileFunctionalTestCase
 {
@@ -30,21 +29,21 @@ public abstract class AbstractFileMoveDeleteTestCase extends AbstractFileFunctio
     }
 
     protected File configureConnector(File inFile, boolean stream, boolean move, boolean delete,
-        boolean useWorkDir, Class<? extends AbstractMuleMessageFactory> messageFactoryClass) throws Exception
+                                      boolean useWorkDir, Class<? extends AbstractMuleMessageFactory> messageFactoryClass) throws Exception
     {
         FileConnector fc = new FileConnector(muleContext);
-        
+
         // some tests assert that a sinlge message arrives from this connector. Use a very large
         // polling frequency to avoid multiple messages coming in during a single test run.
         fc.setPollingFrequency(3000000);
-        
+
         if (messageFactoryClass != null)
         {
             Map<String, String> overrides = new HashMap<String, String>();
             overrides.put("message.factory", messageFactoryClass.getName());
             fc.setServiceOverrides(overrides);
         }
-        
+
         fc.setName("moveDeleteConnector");
         File moveToDir = new File(inFile.getParent() + "/moveto/");
         moveToDir.mkdir();
@@ -61,7 +60,7 @@ public abstract class AbstractFileMoveDeleteTestCase extends AbstractFileFunctio
         }
         fc.setAutoDelete(delete);
         fc.setStreaming(stream);
-        
+
         return moveToDir;
     }
 

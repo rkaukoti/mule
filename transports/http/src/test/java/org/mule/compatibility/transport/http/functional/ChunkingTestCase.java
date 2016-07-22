@@ -6,8 +6,8 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.transport.http.HttpConnector;
 import org.mule.functional.junit4.FunctionalTestCase;
@@ -16,8 +16,7 @@ import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class ChunkingTestCase extends FunctionalTestCase
 {
@@ -35,16 +34,17 @@ public class ChunkingTestCase extends FunctionalTestCase
     {
         MuleClient client = muleContext.getClient();
 
-        byte[] msg = new byte[100*1024];
+        byte[] msg = new byte[100 * 1024];
 
-        MuleMessage result = client.send(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("/foo")).getMessageSource()).getAddress(),
-            msg, null);
+        MuleMessage result =
+                client.send(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("/foo")).getMessageSource()).getAddress(),
+                        msg, null);
         assertEquals("Hello", getPayloadAsString(result));
         int status = result.getInboundProperty(HttpConnector.HTTP_STATUS_PROPERTY, 0);
         assertEquals(200, status);
 
         result = client.send(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("/foo")).getMessageSource()).getAddress(),
-            msg, null);
+                msg, null);
         assertEquals("Hello", getPayloadAsString(result));
         status = result.getInboundProperty(HttpConnector.HTTP_STATUS_PROPERTY, 0);
         assertEquals(200, status);

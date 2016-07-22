@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:spring="http://www.springframework.org/schema/beans"
-    xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
-    xmlns:test="http://www.mulesoft.org/schema/mule/test"
-        xsi:schemaLocation="
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
+      xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="
                http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
@@ -11,22 +11,22 @@
 
     <processor-chain name="composite1">
         <description>Composite thats appands 'ayz'</description>
-        <append-string-transformer message="x" />
-        <append-string-transformer message="y" />
-        <append-string-transformer message="z" />
+        <append-string-transformer message="x"/>
+        <append-string-transformer message="y"/>
+        <append-string-transformer message="z"/>
     </processor-chain>
 
     <flow name="flow">
-        <append-string-transformer message="1" />
-        <append-string-transformer message="2" />
-        <processor ref="composite1" />
+        <append-string-transformer message="1"/>
+        <append-string-transformer message="2"/>
+        <processor ref="composite1"/>
         <processor-chain>
-            <append-string-transformer message="a" />
-            <append-string-transformer message="b" />
-            <append-string-transformer message="c" />
+            <append-string-transformer message="a"/>
+            <append-string-transformer message="b"/>
+            <append-string-transformer message="c"/>
         </processor-chain>
-        <append-string-transformer message="3" />
-        <default-exception-strategy />
+        <append-string-transformer message="3"/>
+        <default-exception-strategy/>
     </flow>
 
     <flow name="flow2">
@@ -34,26 +34,26 @@
             <custom-source class="org.mule.test.construct.FlowConfigurationFunctionalTestCase$TestSimpleMessageSource"/>
             <custom-source class="org.mule.test.construct.FlowConfigurationFunctionalTestCase$TestSimpleMessageSource"/>
         </composite-source>
-        <append-string-transformer message="1" />
-        <processor ref="composite1" />
+        <append-string-transformer message="1"/>
+        <processor ref="composite1"/>
     </flow>
-    
+
     <flow name="synchronousFlow" processingStrategy="synchronous">
         <custom-processor class="org.mule.test.construct.FlowConfigurationFunctionalTestCase$ThreadSensingMessageProcessor"/>
         <test:queue name="synchronous-out"/>
-    </flow>    
+    </flow>
 
     <flow name="asynchronousFlow" processingStrategy="asynchronous">
         <custom-processor class="org.mule.test.construct.FlowConfigurationFunctionalTestCase$ThreadSensingMessageProcessor"/>
         <test:queue name="asynchronous-out"/>
-    </flow>    
+    </flow>
 
     <flow name="asynchronousAsync" processingStrategy="synchronous">
         <async processingStrategy="asynchronous">
             <custom-processor class="org.mule.test.construct.FlowConfigurationFunctionalTestCase$ThreadSensingMessageProcessor"/>
             <test:queue name="asynchronous-async-out"/>
         </async>
-    </flow>    
+    </flow>
 
     <flow name="inout">
         <echo-component/>
@@ -61,64 +61,64 @@
     </flow>
 
     <flow name="inout-append">
-        <append-string-transformer message="inout" />
+        <append-string-transformer message="inout"/>
         <test:queue name="inout-append-out"/>
     </flow>
 
     <flow name="split-aggregate">
-        <splitter expression="#[payload.fruit]" enableCorrelation="ALWAYS" />
+        <splitter expression="#[payload.fruit]" enableCorrelation="ALWAYS"/>
         <script:transformer>
             <script:script engine="groovy">
                 ((org.mule.tck.testmodels.fruit.Fruit)payload).bite();
                 return payload;
             </script:script>
         </script:transformer>
-        <collection-aggregator />
+        <collection-aggregator/>
         <test:queue name="split-aggregate-out"/>
     </flow>
-    
+
     <flow name="split-no-parts">
-        <splitter expression="#[xpath3('//Order/item', payload, 'NODESET')]" enableCorrelation="ALWAYS" />
+        <splitter expression="#[xpath3('//Order/item', payload, 'NODESET')]" enableCorrelation="ALWAYS"/>
     </flow>
 
     <flow name="split-aggregate-singleton-list">
-        <collection-splitter />
+        <collection-splitter/>
         <script:transformer>
             <script:script engine="groovy">
                 ((org.mule.tck.testmodels.fruit.Fruit)payload).bite();
                 return payload;
             </script:script>
         </script:transformer>
-        <collection-aggregator />
+        <collection-aggregator/>
         <test:queue name="split-aggregate-singleton-list-out"/>
     </flow>
 
     <flow name="split-aggregate-list">
-        <collection-splitter />
+        <collection-splitter/>
         <script:transformer>
             <script:script engine="groovy">
                 ((org.mule.tck.testmodels.fruit.Fruit)payload).bite();
                 return payload;
             </script:script>
         </script:transformer>
-        <collection-aggregator />
+        <collection-aggregator/>
         <test:queue name="split-aggregate-list-out"/>
     </flow>
 
 
     <flow name="split-aggregate-response-singleton-list">
-        <collection-splitter />
+        <collection-splitter/>
         <script:transformer>
             <script:script engine="groovy">
                 ((org.mule.tck.testmodels.fruit.Fruit)payload).bite();
                 return payload;
             </script:script>
         </script:transformer>
-        <collection-aggregator />
+        <collection-aggregator/>
     </flow>
 
     <flow name="split-aggregate-response-list">
-        <collection-splitter />
+        <collection-splitter/>
         <script:transformer>
             <script:script engine="groovy">
                 ((org.mule.tck.testmodels.fruit.Fruit)payload).bite();
@@ -128,7 +128,7 @@
     </flow>
 
     <flow name="split-aggregate-map">
-        <map-splitter enableCorrelation="IF_NOT_SET" />
+        <map-splitter enableCorrelation="IF_NOT_SET"/>
         <script:transformer>
             <script:script engine="groovy">
                 ((org.mule.tck.testmodels.fruit.Fruit)payload).bite();
@@ -138,22 +138,22 @@
     </flow>
 
     <flow name="split-filter-aggregate">
-        <splitter expression="#[payload.fruit]" enableCorrelation="ALWAYS" />
+        <splitter expression="#[payload.fruit]" enableCorrelation="ALWAYS"/>
         <message-filter throwOnUnaccepted="false">
             <not-filter>
                 <or-filter>
-                    <payload-type-filter expectedType="org.mule.tck.testmodels.fruit.Banana" />
-                    <payload-type-filter expectedType="org.mule.tck.testmodels.fruit.Orange" />
+                    <payload-type-filter expectedType="org.mule.tck.testmodels.fruit.Banana"/>
+                    <payload-type-filter expectedType="org.mule.tck.testmodels.fruit.Orange"/>
                 </or-filter>
             </not-filter>
         </message-filter>
-        <collection-aggregator failOnTimeout="false" timeout="1000" />
+        <collection-aggregator failOnTimeout="false" timeout="1000"/>
         <test:queue name="split-filter-aggregate-out"/>
     </flow>
-    
+
     <flow name="message-chunk-split-aggregate">
         <message-chunk-splitter messageSize="20" enableCorrelation="ALWAYS"/>
-        <message-chunk-aggregator />
+        <message-chunk-aggregator/>
         <test:queue name="message-chunk-split-aggregate-out"/>
     </flow>
 
@@ -163,80 +163,80 @@
     </flow>
 
     <flow name="wiretap">
-        <append-string-transformer message="in" />
+        <append-string-transformer message="in"/>
         <wire-tap>
             <processor-chain>
-                <append-string-transformer message="tap" />
+                <append-string-transformer message="tap"/>
                 <test:queue name="wiretap-tap"/>
             </processor-chain>
             <payload-type-filter expectedType="java.lang.String"/>
         </wire-tap>
-        <append-string-transformer message="out" />
+        <append-string-transformer message="out"/>
         <test:queue name="wiretap-out"/>
     </flow>
 
     <flow name="response">
-        <append-string-transformer message="a" />
+        <append-string-transformer message="a"/>
         <response>
-            <append-string-transformer message="i" />
+            <append-string-transformer message="i"/>
             <test:component/>
         </response>
-        <append-string-transformer message="b" />
+        <append-string-transformer message="b"/>
         <response>
-            <append-string-transformer message="f" />
-            <append-string-transformer message="g" />
-            <append-string-transformer message="h" />
+            <append-string-transformer message="f"/>
+            <append-string-transformer message="g"/>
+            <append-string-transformer message="h"/>
         </response>
         <response>
-            <append-string-transformer message="e" />
+            <append-string-transformer message="e"/>
         </response>
-        <append-string-transformer message="c" />
+        <append-string-transformer message="c"/>
         <response>
             <test:component/>
         </response>
-        <append-string-transformer message="d" />
+        <append-string-transformer message="d"/>
     </flow>
 
     <flow name="async-oneway">
-        <append-string-transformer message="a" />
+        <append-string-transformer message="a"/>
         <async processingStrategy="asynchronous">
-            <append-string-transformer message="b" />
+            <append-string-transformer message="b"/>
             <test:queue name="async-async-oneway-out"/>
-        </async>    
-        <append-string-transformer message="c" />    
+        </async>
+        <append-string-transformer message="c"/>
         <test:queue name="async-oneway-out"/>
     </flow>
 
     <flow name="async-seda-oneway">
-        <append-string-transformer message="a" />
+        <append-string-transformer message="a"/>
         <async>
-            <append-string-transformer message="b" />
+            <append-string-transformer message="b"/>
             <test:queue name="async-async-seda-oneway-out"/>
-        </async>    
-        <append-string-transformer message="c" />    
+        </async>
+        <append-string-transformer message="c"/>
         <test:queue name="async-seda-oneway-out"/>
     </flow>
 
     <flow name="async-requestresponse">
-        <append-string-transformer message="a" />
+        <append-string-transformer message="a"/>
         <async>
-            <append-string-transformer message="b" />
+            <append-string-transformer message="b"/>
             <test:queue name="async-async-requestresponse-out"/>
-        </async>    
-        <append-string-transformer message="c" />    
+        </async>
+        <append-string-transformer message="c"/>
         <test:queue name="async-requestresponse-out"/>
     </flow>
 
     <flow name="async-tx">
-        <append-string-transformer message="a" />
+        <append-string-transformer message="a"/>
         <async>
-            <append-string-transformer message="b" />
+            <append-string-transformer message="b"/>
             <test:queue name="async-async-tx-out"/>
-        </async>    
-        <append-string-transformer message="c" />    
+        </async>
+        <append-string-transformer message="c"/>
         <test:queue name="async-tx-out"/>
     </flow>
-    
+
     <flow name="multicaster">
         <all enableCorrelation="ALWAYS">
             <test:queue name="multicaster-out1"/>
@@ -245,25 +245,25 @@
                 <test:component/>
                 <test:queue name="multicaster-out3"/>
             </processor-chain>
-        </all>    
+        </all>
     </flow>
 
     <flow name="choice2">
         <choice>
             <when expression="payload=='foo'">
-                <append-string-transformer message=" Hello" />
-                <append-string-transformer message=" foo" />
+                <append-string-transformer message=" Hello"/>
+                <append-string-transformer message=" foo"/>
             </when>
             <when expression="#[payload=='bar']">
-                <append-string-transformer message=" Hello bar" />
+                <append-string-transformer message=" Hello bar"/>
             </when>
             <otherwise>
-                <append-string-transformer message=" Hello" />
-                <append-string-transformer message=" ?" />
+                <append-string-transformer message=" Hello"/>
+                <append-string-transformer message=" ?"/>
             </otherwise>
         </choice>
     </flow>
-    
+
     <flow name="flow-ref">
         <flow-ref name="flow"/>
         <flow-ref name="flow"/>
@@ -276,7 +276,7 @@
     <flow name="invoke2">
         <invoke object-ref="appender" method="transform" methodArguments="#[message.inboundProperties.one]"/>
     </flow>
-    
+
     <flow name="invoke3">
         <processor ref="invokeme"/>
     </flow>
@@ -287,18 +287,18 @@
 
     <flow name="enrich">
         <enricher target="#[message.outboundProperties.helloHeader]" source="#[payload]">
-            <append-string-transformer message="Hello" />
+            <append-string-transformer message="Hello"/>
         </enricher>
     </flow>
 
     <flow name="enrich2">
         <enricher>
-            <append-string-transformer message="Hello" />
-            <enrich target="#[message.outboundProperties.helloHeader]" />
-            <enrich target="#[message.outboundProperties.helloHeader2]" source="#[payload]" />
+            <append-string-transformer message="Hello"/>
+            <enrich target="#[message.outboundProperties.helloHeader]"/>
+            <enrich target="#[message.outboundProperties.helloHeader2]" source="#[payload]"/>
         </enricher>
     </flow>
-    
+
     <!-- MULE-5544 -->
     <flow name="enrichcomponent">
         <enricher target="#[message.outboundProperties.echoHeader]" source="#[payload]">
@@ -316,7 +316,7 @@
 
 
     <invoke name="invokeme" object-ref="pojo" method="method" methodArguments="#['Account'] ,    #[payload]"
-        methodArgumentTypes="java.lang.String, java.lang.String" />
+            methodArgumentTypes="java.lang.String, java.lang.String"/>
 
     <invoke name="invokeme-noargs" object-ref="pojo" method="method"/>
 
@@ -328,7 +328,7 @@
     </spring:bean>
 
     <flow name="loggermessage">
-        <append-string-transformer message=" Hello foo" />
+        <append-string-transformer message=" Hello foo"/>
         <logger level="ERROR" category="mycategory"/>
     </flow>
 
@@ -338,9 +338,9 @@
 
     <flow name="poll">
         <poll frequency="3000">
-            <append-string-transformer message=" Hello foo" />
+            <append-string-transformer message=" Hello foo"/>
         </poll>
-        <append-string-transformer message="out" />
+        <append-string-transformer message="out"/>
         <test:queue name="poll-out"/>
     </flow>
 
@@ -348,7 +348,7 @@
         <poll frequency="3000">
             <flow-ref name="pollappend"/>
         </poll>
-        <append-string-transformer message="out" />
+        <append-string-transformer message="out"/>
         <test:queue name="poll2-out"/>
     </flow>
 
@@ -357,9 +357,9 @@
             <expression-filter expression="#[false]"/>
         </message-filter>
     </flow>
-     
+
     <sub-flow name="pollappend">
-        <append-string-transformer message="pollappend" />
+        <append-string-transformer message="pollappend"/>
     </sub-flow>
 
     <sub-flow name="invokedByMessageFilter">
@@ -368,21 +368,21 @@
 
     <flow name="customRouter">
         <custom-router class="org.mule.runtime.core.routing.outbound.MulticastingRouter">
-            <append-string-transformer message="a" />
-            <append-string-transformer message="b" />
-            <append-string-transformer message="c" />
+            <append-string-transformer message="a"/>
+            <append-string-transformer message="b"/>
+            <append-string-transformer message="c"/>
         </custom-router>
     </flow>
-    
+
     <flow name="customMessageSource">
         <custom-source class="org.mule.test.construct.FlowConfigurationFunctionalTestCase$TestMessageSource">
             <spring:property name="appendBefore" value="b"/>
             <spring:property name="appendAfter" value="d"/>
         </custom-source>
-        <append-string-transformer message="c" />
+        <append-string-transformer message="c"/>
     </flow>
 
-   <flow name="customMessageSourceInComposite">
+    <flow name="customMessageSourceInComposite">
         <composite-source>
             <custom-source class="org.mule.test.construct.FlowConfigurationFunctionalTestCase$TestMessageSource">
                 <spring:property name="appendBefore" value="b"/>
@@ -390,9 +390,9 @@
             </custom-source>
             <poll>
                 <flow-ref name="pollappend"/>
-            </poll>        
+            </poll>
         </composite-source>
-        <append-string-transformer message="c" />
+        <append-string-transformer message="c"/>
     </flow>
 
 

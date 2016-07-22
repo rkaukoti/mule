@@ -6,26 +6,25 @@
  */
 package org.mule.test.usecases.routing.response;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
-
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.api.serialization.ObjectSerializer;
 import org.mule.runtime.core.api.store.ObjectStoreException;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.runtime.core.util.store.SimpleMemoryObjectStore;
+import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.io.Serializable;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class SerializationOnResponseAggregatorTestCase extends FunctionalTestCase
 {
@@ -42,9 +41,10 @@ public class SerializationOnResponseAggregatorTestCase extends FunctionalTestCas
     public void testSyncResponse() throws Exception
     {
         muleContext.getRegistry().registerObject(MuleProperties.OBJECT_STORE_DEFAULT_IN_MEMORY_NAME,
-                                                 new TestObjectStore(muleContext));
+                new TestObjectStore(muleContext));
         MuleClient client = muleContext.getClient();
-        MuleMessage message = client.send("http://localhost:" + dynamicPort.getNumber() , getTestMuleMessage("request"), newOptions().method(POST.name()).build());
+        MuleMessage message = client.send("http://localhost:" + dynamicPort.getNumber(), getTestMuleMessage("request"),
+                newOptions().method(POST.name()).build());
         assertNotNull(message);
         assertThat(new String(getPayloadAsBytes(message)), is("request processed"));
     }
@@ -53,7 +53,8 @@ public class SerializationOnResponseAggregatorTestCase extends FunctionalTestCas
     {
         private ObjectSerializer serializer;
 
-        private TestObjectStore(MuleContext muleContext) {
+        private TestObjectStore(MuleContext muleContext)
+        {
             serializer = muleContext.getObjectSerializer();
         }
 

@@ -20,7 +20,8 @@ public class HttpMessageProcessContext implements MessageProcessContext
     private final WorkManager workManager;
     private final ClassLoader executionClassLoader;
 
-    HttpMessageProcessContext(final DefaultHttpListener listener, final FlowConstruct flowConstruct, final WorkManager workManager, final ClassLoader executionClassLoader)
+    HttpMessageProcessContext(final DefaultHttpListener listener, final FlowConstruct flowConstruct, final WorkManager workManager,
+                              final ClassLoader executionClassLoader)
     {
         this.listener = listener;
         this.flowConstruct = flowConstruct;

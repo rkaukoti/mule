@@ -6,9 +6,8 @@
  */
 package org.mule.test.config.spring.parsers;
 
-import org.mule.test.config.spring.parsers.beans.OrphanBean;
-
 import org.junit.Test;
+import org.mule.test.config.spring.parsers.beans.OrphanBean;
 
 /**
  * This constructs a <em>temporary</em> bean whose contents are injected into a parent map by
@@ -38,7 +37,7 @@ public class MapEntryCombinerTestCase extends AbstractNamespaceTestCase
         logger.info("Map size: " + bean.getMap().size());
         for (int i = 0; i < 6; ++i)
         {
-            assertMapEntryExists(bean.getMap(), Integer.toString(i+1), i+1);
+            assertMapEntryExists(bean.getMap(), Integer.toString(i + 1), i + 1);
         }
     }
 
@@ -49,7 +48,7 @@ public class MapEntryCombinerTestCase extends AbstractNamespaceTestCase
         logger.info("Map size: " + bean.getMap().size());
         for (int i = 0; i < 2; ++i)
         {
-            assertMapEntryExists(bean.getMap(), Integer.toString(i+1), i+1);
+            assertMapEntryExists(bean.getMap(), Integer.toString(i + 1), i + 1);
         }
 
     }

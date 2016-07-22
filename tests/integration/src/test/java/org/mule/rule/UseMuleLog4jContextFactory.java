@@ -6,12 +6,11 @@
  */
 package org.mule.rule;
 
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.module.launcher.log4j2.MuleLog4jContextFactory;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.spi.LoggerContextFactory;
 import org.junit.rules.ExternalResource;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.module.launcher.log4j2.MuleLog4jContextFactory;
 
 /**
  * Allows tests to use the mule logging infrastructure without initializing a {@link MuleContext}.

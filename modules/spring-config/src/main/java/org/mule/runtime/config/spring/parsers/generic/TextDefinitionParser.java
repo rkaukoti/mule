@@ -8,21 +8,20 @@ package org.mule.runtime.config.spring.parsers.generic;
 
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.core.util.StringUtils;
-
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
  * Grabs the text from an element and injects it into the parent, for example:
- * 
+ *
  * <foo>
- *   <bar-text>A bunch of text.</bar-text>
+ * <bar-text>A bunch of text.</bar-text>
  * </foo>
- * 
- *   registerBeanDefinitionParser("foo", new OrphanDefinitionParser(Foo.class));
- *   registerBeanDefinitionParser("bar-text", new TextDefinitionParser("barText"));
- * 
+ *
+ * registerBeanDefinitionParser("foo", new OrphanDefinitionParser(Foo.class));
+ * registerBeanDefinitionParser("bar-text", new TextDefinitionParser("barText"));
+ *
  * will result in a call to Foo.setBarText("A bunch of text.")
  */
 public class TextDefinitionParser extends ChildDefinitionParser
@@ -42,7 +41,7 @@ public class TextDefinitionParser extends ChildDefinitionParser
 
     @Override
     protected void postProcess(ParserContext context, BeanAssembler assembler, Element element)
-    {        
+    {
         Node node = element.getFirstChild();
 
         if (requireCdata && node.getNodeType() != Node.CDATA_SECTION_NODE)
@@ -54,7 +53,8 @@ public class TextDefinitionParser extends ChildDefinitionParser
             }
             else if (node.getNodeType() != Node.CDATA_SECTION_NODE)
             {
-                throw new IllegalArgumentException("Sibling node is not a CDATA section, but one should be defined. Elements is " + element.getNodeName());
+                throw new IllegalArgumentException(
+                        "Sibling node is not a CDATA section, but one should be defined. Elements is " + element.getNodeName());
             }
         }
         if (node != null)

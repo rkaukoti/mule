@@ -6,6 +6,11 @@
  */
 package org.mule.compatibility.transport.jms.integration.activemq;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.Closeable;
+import org.apache.activemq.StreamConnection;
+import org.apache.activemq.management.StatsCapable;
+import org.apache.activemq.transport.TransportListener;
 import org.mule.compatibility.transport.jms.test.TestReconnectionConnectionFactoryWrapper;
 import org.mule.runtime.core.util.proxy.TargetInvocationHandler;
 
@@ -21,25 +26,12 @@ import javax.jms.JMSException;
 import javax.jms.QueueConnection;
 import javax.jms.TopicConnection;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.activemq.Closeable;
-import org.apache.activemq.StreamConnection;
-import org.apache.activemq.management.StatsCapable;
-import org.apache.activemq.transport.TransportListener;
-
 public class ActiveMQTestReconnectionConnectionFactoryWrapper extends ActiveMQConnectionFactory
-    implements TargetInvocationHandler, TestReconnectionConnectionFactoryWrapper
+        implements TargetInvocationHandler, TestReconnectionConnectionFactoryWrapper
 {
     private static List<Object> calledMethods;
     private static volatile boolean enabled = true;
     private static Connection connection;
-
-    @Override
-    public void init()
-    {
-        enabled = true;
-        calledMethods = new CopyOnWriteArrayList<Object>();
-    }
 
     public ActiveMQTestReconnectionConnectionFactoryWrapper()
     {
@@ -71,14 +63,24 @@ public class ActiveMQTestReconnectionConnectionFactoryWrapper extends ActiveMQCo
     }
 
     @Override
+    public void init()
+    {
+        enabled = true;
+        calledMethods = new CopyOnWriteArrayList<Object>();
+    }
+
+    @Override
     public QueueConnection createQueueConnection() throws JMSException
     {
         registration();
         connection = super.createQueueConnection();
         return (QueueConnection) Proxy.newProxyInstance(
-            ActiveMQTestReconnectionConnectionFactoryWrapper.class.getClassLoader(), new Class[]{Connection.class,
-                TopicConnection.class, QueueConnection.class, StatsCapable.class, Closeable.class,
-                StreamConnection.class, TransportListener.class}, this);
+                ActiveMQTestReconnectionConnectionFactoryWrapper.class.getClassLoader(), new Class[] {Connection.class,
+                                                                                                      TopicConnection.class,
+                                                                                                      QueueConnection.class,
+                                                                                                      StatsCapable.class, Closeable.class,
+                                                                                                      StreamConnection.class,
+                                                                                                      TransportListener.class}, this);
     }
 
     @Override
@@ -87,9 +89,12 @@ public class ActiveMQTestReconnectionConnectionFactoryWrapper extends ActiveMQCo
         registration();
         connection = super.createQueueConnection(user, passwd);
         return (QueueConnection) Proxy.newProxyInstance(
-            ActiveMQTestReconnectionConnectionFactoryWrapper.class.getClassLoader(), new Class[]{Connection.class,
-                TopicConnection.class, QueueConnection.class, StatsCapable.class, Closeable.class,
-                StreamConnection.class, TransportListener.class}, this);
+                ActiveMQTestReconnectionConnectionFactoryWrapper.class.getClassLoader(), new Class[] {Connection.class,
+                                                                                                      TopicConnection.class,
+                                                                                                      QueueConnection.class,
+                                                                                                      StatsCapable.class, Closeable.class,
+                                                                                                      StreamConnection.class,
+                                                                                                      TransportListener.class}, this);
     }
 
     @Override
@@ -98,9 +103,12 @@ public class ActiveMQTestReconnectionConnectionFactoryWrapper extends ActiveMQCo
         registration();
         connection = super.createTopicConnection();
         return (TopicConnection) Proxy.newProxyInstance(
-            ActiveMQTestReconnectionConnectionFactoryWrapper.class.getClassLoader(), new Class[]{Connection.class,
-                TopicConnection.class, QueueConnection.class, StatsCapable.class, Closeable.class,
-                StreamConnection.class, TransportListener.class}, this);
+                ActiveMQTestReconnectionConnectionFactoryWrapper.class.getClassLoader(), new Class[] {Connection.class,
+                                                                                                      TopicConnection.class,
+                                                                                                      QueueConnection.class,
+                                                                                                      StatsCapable.class, Closeable.class,
+                                                                                                      StreamConnection.class,
+                                                                                                      TransportListener.class}, this);
     }
 
     @Override
@@ -109,9 +117,12 @@ public class ActiveMQTestReconnectionConnectionFactoryWrapper extends ActiveMQCo
         registration();
         connection = super.createTopicConnection(user, passwd);
         return (TopicConnection) Proxy.newProxyInstance(
-            ActiveMQTestReconnectionConnectionFactoryWrapper.class.getClassLoader(), new Class[]{Connection.class,
-                TopicConnection.class, QueueConnection.class, StatsCapable.class, Closeable.class,
-                StreamConnection.class, TransportListener.class}, this);
+                ActiveMQTestReconnectionConnectionFactoryWrapper.class.getClassLoader(), new Class[] {Connection.class,
+                                                                                                      TopicConnection.class,
+                                                                                                      QueueConnection.class,
+                                                                                                      StatsCapable.class, Closeable.class,
+                                                                                                      StreamConnection.class,
+                                                                                                      TransportListener.class}, this);
     }
 
     // For InvocationHandler interface
@@ -131,32 +142,30 @@ public class ActiveMQTestReconnectionConnectionFactoryWrapper extends ActiveMQCo
     /**
      * If enabled == true, do nothing. If not, throw a JMSException to simulate a
      * connection error to mule.
-     *
-     * @throws JMSException
      */
     private void registration() throws JMSException
     {
         //synchronized (connection)
         //{
-            calledMethods.add(new Date());
-            if (!isEnabled())
+        calledMethods.add(new Date());
+        if (!isEnabled())
+        {
+            if (connection.getExceptionListener() != null)
             {
-                if (connection.getExceptionListener() != null)
+                try
                 {
-                    try
-                    {
-                        connection.getExceptionListener().onException(new JMSException("Disabled"));
-                    }
-                    catch (Exception e)
-                    {
-                        throw new JMSException("Disabled");
-                    }
+                    connection.getExceptionListener().onException(new JMSException("Disabled"));
                 }
-                else
+                catch (Exception e)
                 {
                     throw new JMSException("Disabled");
                 }
             }
+            else
+            {
+                throw new JMSException("Disabled");
+            }
+        }
         //}
     }
 

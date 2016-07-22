@@ -1,8 +1,8 @@
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:spring="http://www.springframework.org/schema/beans"
       xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
@@ -15,7 +15,7 @@
     <http:request-config name="requestConfig" host="localhost" port="${port1}"/>
 
     <flow name="cxfClient">
-        <set-variable variableName="originalPayload" value="#[message.payload]" />
+        <set-variable variableName="originalPayload" value="#[message.payload]"/>
         <cxf:jaxws-client clientClass="org.apache.hello_world_soap_http.SOAPService" port="SoapPort"
                           wsdlLocation="classpath:/wsdl/hello_world.wsdl" operation="greetMe">
             <cxf:ws-security>
@@ -38,7 +38,7 @@
                     <cxf:property key="action" value="UsernameToken"/>
                 </cxf:ws-config>
                 <cxf:ws-custom-validator>
-                    <cxf:username-token-validator ref="usernameTokenValidator" />
+                    <cxf:username-token-validator ref="usernameTokenValidator"/>
                 </cxf:ws-custom-validator>
             </cxf:ws-security>
         </cxf:jaxws-service>

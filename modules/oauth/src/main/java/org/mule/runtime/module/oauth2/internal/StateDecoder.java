@@ -33,7 +33,9 @@ public class StateDecoder
         if (state != null)
         {
             final int indexOfResourceOwnerParameter = state.indexOf(StateEncoder.RESOURCE_OWNER_PARAM_NAME_ASSIGN);
-            final int resourceOwnerIdSuffixIndex = indexOfResourceOwnerParameter != -1 ? indexOfResourceOwnerParameter : state.indexOf(StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN);
+            final int resourceOwnerIdSuffixIndex = indexOfResourceOwnerParameter != -1 ?
+                    indexOfResourceOwnerParameter :
+                    state.indexOf(StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN);
             if (resourceOwnerIdSuffixIndex != -1)
             {
                 originalState = state.substring(0, resourceOwnerIdSuffixIndex);
@@ -67,7 +69,9 @@ public class StateDecoder
         if (state != null && state.contains(StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN))
         {
             final int onCompleteRedirectToSuffixIndex = state.indexOf(StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN);
-            parameterValue = state.substring(onCompleteRedirectToSuffixIndex + StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN.length(), state.length());
+            parameterValue =
+                    state.substring(onCompleteRedirectToSuffixIndex + StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN.length(),
+                            state.length());
         }
         return parameterValue;
     }
@@ -78,8 +82,10 @@ public class StateDecoder
         if (state != null && state.contains(parameterNameAssignation))
         {
             final int resourceOwnerIdSuffixIndex = state.indexOf(parameterNameAssignation);
-            final String stateCustomParameters = state.substring(resourceOwnerIdSuffixIndex + parameterNameAssignation.length(), state.length());
-            final int onCompleteRedirectToParamIndex = stateCustomParameters.indexOf(StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN);
+            final String stateCustomParameters =
+                    state.substring(resourceOwnerIdSuffixIndex + parameterNameAssignation.length(), state.length());
+            final int onCompleteRedirectToParamIndex =
+                    stateCustomParameters.indexOf(StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN);
             int endIndex = onCompleteRedirectToParamIndex != -1 ? onCompleteRedirectToParamIndex : stateCustomParameters.length();
             parameterValue = stateCustomParameters.substring(0, endIndex);
         }

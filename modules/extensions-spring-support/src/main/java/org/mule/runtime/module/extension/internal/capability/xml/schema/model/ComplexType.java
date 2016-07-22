@@ -63,9 +63,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
         "anyAttribute"
 })
 @XmlSeeAlso({
-                    TopLevelComplexType.class,
-                    LocalComplexType.class
-            })
+        TopLevelComplexType.class,
+        LocalComplexType.class
+})
 public abstract class ComplexType
         extends Annotated
 {
@@ -77,9 +77,9 @@ public abstract class ComplexType
     protected ExplicitGroup choice;
     protected ExplicitGroup sequence;
     @XmlElements({
-                         @XmlElement(name = "attribute", type = Attribute.class),
-                         @XmlElement(name = "attributeGroup", type = AttributeGroupRef.class)
-                 })
+            @XmlElement(name = "attribute", type = Attribute.class),
+            @XmlElement(name = "attributeGroup", type = AttributeGroupRef.class)
+    })
     protected List<Attribute> attributeOrAttributeGroup;
     protected Wildcard anyAttribute;
     @XmlAttribute(name = "name")
@@ -100,8 +100,7 @@ public abstract class ComplexType
     /**
      * Gets the value of the simpleContent property.
      *
-     * @return possible object is
-     * {@link SimpleContent }
+     * @return possible object is {@link SimpleContent }
      */
     public SimpleContent getSimpleContent()
     {
@@ -111,8 +110,7 @@ public abstract class ComplexType
     /**
      * Sets the value of the simpleContent property.
      *
-     * @param value allowed object is
-     *              {@link SimpleContent }
+     * @param value allowed object is {@link SimpleContent }
      */
     public void setSimpleContent(SimpleContent value)
     {
@@ -122,8 +120,7 @@ public abstract class ComplexType
     /**
      * Gets the value of the complexContent property.
      *
-     * @return possible object is
-     * {@link ComplexContent }
+     * @return possible object is {@link ComplexContent }
      */
     public ComplexContent getComplexContent()
     {
@@ -133,8 +130,7 @@ public abstract class ComplexType
     /**
      * Sets the value of the complexContent property.
      *
-     * @param value allowed object is
-     *              {@link ComplexContent }
+     * @param value allowed object is {@link ComplexContent }
      */
     public void setComplexContent(ComplexContent value)
     {
@@ -144,8 +140,7 @@ public abstract class ComplexType
     /**
      * Gets the value of the group property.
      *
-     * @return possible object is
-     * {@link GroupRef }
+     * @return possible object is {@link GroupRef }
      */
     public GroupRef getGroup()
     {
@@ -155,8 +150,7 @@ public abstract class ComplexType
     /**
      * Sets the value of the group property.
      *
-     * @param value allowed object is
-     *              {@link GroupRef }
+     * @param value allowed object is {@link GroupRef }
      */
     public void setGroup(GroupRef value)
     {
@@ -166,8 +160,7 @@ public abstract class ComplexType
     /**
      * Gets the value of the all property.
      *
-     * @return possible object is
-     * {@link All }
+     * @return possible object is {@link All }
      */
     public All getAll()
     {
@@ -177,8 +170,7 @@ public abstract class ComplexType
     /**
      * Sets the value of the all property.
      *
-     * @param value allowed object is
-     *              {@link All }
+     * @param value allowed object is {@link All }
      */
     public void setAll(All value)
     {
@@ -188,8 +180,7 @@ public abstract class ComplexType
     /**
      * Gets the value of the choice property.
      *
-     * @return possible object is
-     * {@link ExplicitGroup }
+     * @return possible object is {@link ExplicitGroup }
      */
     public ExplicitGroup getChoice()
     {
@@ -199,8 +190,7 @@ public abstract class ComplexType
     /**
      * Sets the value of the choice property.
      *
-     * @param value allowed object is
-     *              {@link ExplicitGroup }
+     * @param value allowed object is {@link ExplicitGroup }
      */
     public void setChoice(ExplicitGroup value)
     {
@@ -210,8 +200,7 @@ public abstract class ComplexType
     /**
      * Gets the value of the sequence property.
      *
-     * @return possible object is
-     * {@link ExplicitGroup }
+     * @return possible object is {@link ExplicitGroup }
      */
     public ExplicitGroup getSequence()
     {
@@ -221,8 +210,7 @@ public abstract class ComplexType
     /**
      * Sets the value of the sequence property.
      *
-     * @param value allowed object is
-     *              {@link ExplicitGroup }
+     * @param value allowed object is {@link ExplicitGroup }
      */
     public void setSequence(ExplicitGroup value)
     {
@@ -262,8 +250,7 @@ public abstract class ComplexType
     /**
      * Gets the value of the anyAttribute property.
      *
-     * @return possible object is
-     * {@link Wildcard }
+     * @return possible object is {@link Wildcard }
      */
     public Wildcard getAnyAttribute()
     {
@@ -273,8 +260,7 @@ public abstract class ComplexType
     /**
      * Sets the value of the anyAttribute property.
      *
-     * @param value allowed object is
-     *              {@link Wildcard }
+     * @param value allowed object is {@link Wildcard }
      */
     public void setAnyAttribute(Wildcard value)
     {
@@ -284,8 +270,7 @@ public abstract class ComplexType
     /**
      * Gets the value of the name property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getName()
     {
@@ -295,8 +280,7 @@ public abstract class ComplexType
     /**
      * Sets the value of the name property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setName(String value)
     {
@@ -306,8 +290,7 @@ public abstract class ComplexType
     /**
      * Gets the value of the mixed property.
      *
-     * @return possible object is
-     * {@link Boolean }
+     * @return possible object is {@link Boolean }
      */
     public boolean isMixed()
     {
@@ -324,8 +307,7 @@ public abstract class ComplexType
     /**
      * Sets the value of the mixed property.
      *
-     * @param value allowed object is
-     *              {@link Boolean }
+     * @param value allowed object is {@link Boolean }
      */
     public void setMixed(Boolean value)
     {
@@ -335,8 +317,7 @@ public abstract class ComplexType
     /**
      * Gets the value of the abstract property.
      *
-     * @return possible object is
-     * {@link Boolean }
+     * @return possible object is {@link Boolean }
      */
     public boolean isAbstract()
     {
@@ -353,8 +334,7 @@ public abstract class ComplexType
     /**
      * Sets the value of the abstract property.
      *
-     * @param value allowed object is
-     *              {@link Boolean }
+     * @param value allowed object is {@link Boolean }
      */
     public void setAbstract(Boolean value)
     {

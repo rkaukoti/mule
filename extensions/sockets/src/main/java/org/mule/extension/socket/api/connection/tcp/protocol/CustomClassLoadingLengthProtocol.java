@@ -6,11 +6,11 @@
  */
 package org.mule.extension.socket.api.connection.tcp.protocol;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.apache.commons.io.input.ClassLoaderObjectInputStream;
 import org.apache.log4j.Logger;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * A length protocol that uses a specific class loader to load objects from streams

@@ -8,11 +8,10 @@ package org.mule.functional.testmodels.services;
 
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.util.StringMessageUtils;
-
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TestReceiver
 {

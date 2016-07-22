@@ -6,11 +6,9 @@
  */
 package org.mule.runtime.module.cxf.wssec;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
@@ -19,9 +17,11 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.io.InputStream;
 
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class UsernameTokenProxyTestCase extends FunctionalTestCase
 {
@@ -35,7 +35,7 @@ public class UsernameTokenProxyTestCase extends FunctionalTestCase
     protected String[] getConfigFiles()
     {
         return new String[] {
-                             "org/mule/runtime/module/cxf/wssec/username-token-conf.xml"
+                "org/mule/runtime/module/cxf/wssec/username-token-conf.xml"
         };
     }
 

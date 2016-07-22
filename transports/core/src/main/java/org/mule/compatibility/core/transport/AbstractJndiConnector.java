@@ -19,7 +19,6 @@ import javax.naming.NamingException;
 
 /**
  * This class acts as common baseclass for both Rmi & EjbConnector Resolves Jndi root for connector usage
- * 
  */
 public abstract class AbstractJndiConnector extends AbstractConnector
 {
@@ -102,24 +101,24 @@ public abstract class AbstractJndiConnector extends AbstractConnector
         this.jndiContext = jndiContext;
     }
 
-    public void setJndiInitialFactory(String jndiInitialFactory)
-    {
-        this.jndiInitialFactory = jndiInitialFactory;
-    }
-
     public String getJndiInitialFactory()
     {
         return jndiInitialFactory;
     }
 
-    public void setJndiUrlPkgPrefixes(String jndiUrlPkgPrefixes)
+    public void setJndiInitialFactory(String jndiInitialFactory)
     {
-        this.jndiUrlPkgPrefixes = jndiUrlPkgPrefixes;
+        this.jndiInitialFactory = jndiInitialFactory;
     }
 
     public String getJndiUrlPkgPrefixes()
     {
         return jndiUrlPkgPrefixes;
+    }
+
+    public void setJndiUrlPkgPrefixes(String jndiUrlPkgPrefixes)
+    {
+        this.jndiUrlPkgPrefixes = jndiUrlPkgPrefixes;
     }
 
     public String getJndiProviderUrl()

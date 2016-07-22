@@ -7,9 +7,9 @@
 
 package org.mule.runtime.core.el.mvel.datatype;
 
+import org.mule.mvel2.compiler.CompiledExpression;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.metadata.TypedValue;
-import org.mule.mvel2.compiler.CompiledExpression;
 
 /**
  * Propagates {@link org.mule.runtime.api.metadata.DataType} from the right to the left side
@@ -21,8 +21,8 @@ public interface EnricherDataTypePropagator
     /**
      * Propagates {@link org.mule.runtime.api.metadata.DataType} on message enrichment
      *
-     * @param event event being enriched
-     * @param typedValue value used to enrich the message
+     * @param event              event being enriched
+     * @param typedValue         value used to enrich the message
      * @param compiledExpression assignment expression used for enrichment
      * @return true if propagation was done, false otherwise
      */

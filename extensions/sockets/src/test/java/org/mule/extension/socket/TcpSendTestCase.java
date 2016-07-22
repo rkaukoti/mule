@@ -6,10 +6,9 @@
  */
 package org.mule.extension.socket;
 
-import org.mule.functional.junit4.runners.RunnerDelegateTo;
-
 import org.junit.Test;
 import org.junit.runners.Parameterized;
+import org.mule.functional.junit4.runners.RunnerDelegateTo;
 
 @RunnerDelegateTo(Parameterized.class)
 public class TcpSendTestCase extends ParameterizedProtocolTestCase

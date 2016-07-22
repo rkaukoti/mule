@@ -59,9 +59,9 @@ public class Annotation
 {
 
     @XmlElements({
-                         @XmlElement(name = "appinfo", type = Appinfo.class),
-                         @XmlElement(name = "documentation", type = Documentation.class)
-                 })
+            @XmlElement(name = "appinfo", type = Appinfo.class),
+            @XmlElement(name = "documentation", type = Documentation.class)
+    })
     protected List<Object> appinfoOrDocumentation;
     @XmlAttribute(name = "id")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
@@ -102,8 +102,7 @@ public class Annotation
     /**
      * Gets the value of the id property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getId()
     {
@@ -113,8 +112,7 @@ public class Annotation
     /**
      * Sets the value of the id property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setId(String value)
     {

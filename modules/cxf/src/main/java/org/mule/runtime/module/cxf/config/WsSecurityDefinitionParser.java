@@ -6,37 +6,34 @@
  */
 package org.mule.runtime.module.cxf.config;
 
-import org.mule.runtime.config.spring.parsers.delegate.ParentContextDefinitionParser;
-import org.mule.runtime.config.spring.parsers.generic.MuleOrphanDefinitionParser;
-import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.core.api.config.MuleProperties;
-import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
-import org.mule.runtime.config.spring.parsers.processors.CheckRequiredAttributesWhenNoChildren;
+import org.mule.runtime.config.spring.parsers.delegate.ParentContextDefinitionParser;
+import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
+import org.mule.runtime.config.spring.parsers.generic.MuleOrphanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.processors.CheckExclusiveAttributesAndChildren;
-
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.w3c.dom.Element;
 
 public class WsSecurityDefinitionParser extends ParentContextDefinitionParser
 {
-    
+
     public WsSecurityDefinitionParser(Class wsSecurityClass)
     {
         super(MuleOrphanDefinitionParser.ROOT_ELEMENT, createRootDefinitionParser(wsSecurityClass));
         otherwise(createChildDefinitionParser(wsSecurityClass));
 
-        super.registerPreProcessor(new CheckExclusiveAttributesAndChildren(new String[]{"ref"},
-                                                                           new String[]{"mule-security-manager", "ws-config", "ws-custom-validator"}));
+        super.registerPreProcessor(new CheckExclusiveAttributesAndChildren(new String[] {"ref"},
+                new String[] {"mule-security-manager", "ws-config", "ws-custom-validator"}));
 
     }
-    
+
     public static MuleOrphanDefinitionParser createRootDefinitionParser(Class wsSecurityClass)
     {
         return new MuleOrphanDefinitionParser(wsSecurityClass, true);
     }
-    
+
     public static ChildDefinitionParser createChildDefinitionParser(Class wsSecurityClass)
     {
         ChildDefinitionParser childParser = new ChildDefinitionParser("wsSecurity", wsSecurityClass, false);
@@ -53,7 +50,8 @@ public class WsSecurityDefinitionParser extends ParentContextDefinitionParser
             {
                 if (element.hasAttribute("name"))
                 {
-                    throw new MuleRuntimeException(CoreMessages.createStaticMessage("name attribute on exception strategy is only allowed on global exception strategies"));
+                    throw new MuleRuntimeException(CoreMessages.createStaticMessage(
+                            "name attribute on exception strategy is only allowed on global exception strategies"));
                 }
             }
         };

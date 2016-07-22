@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.transformer.codec;
 
+import org.apache.commons.io.IOUtils;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
@@ -14,8 +15,6 @@ import org.mule.runtime.core.util.XMLEntityCodec;
 
 import java.io.InputStream;
 import java.nio.charset.Charset;
-
-import org.apache.commons.io.IOUtils;
 
 /**
  * Encodes a string with XML entities
@@ -56,8 +55,8 @@ public class XmlEntityEncoder extends AbstractTransformer
         catch (Exception ex)
         {
             throw new TransformerException(
-                CoreMessages.transformFailed(src.getClass().getName(), "XML"),
-                this, ex);
+                    CoreMessages.transformFailed(src.getClass().getName(), "XML"),
+                    this, ex);
         }
     }
 

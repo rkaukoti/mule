@@ -6,12 +6,10 @@
  */
 package org.mule.test.core;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mule.functional.functional.FlowAssert.verify;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.MessagingException;
@@ -25,10 +23,11 @@ import org.mule.runtime.core.processor.strategy.NonBlockingProcessingStrategy;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mule.functional.functional.FlowAssert.verify;
 
 @RunWith(Parameterized.class)
 public class NonBlockingFullySupportedFunctionalTestCase extends FunctionalTestCase
@@ -36,12 +35,6 @@ public class NonBlockingFullySupportedFunctionalTestCase extends FunctionalTestC
 
     public static String FOO = "foo";
     private ProcessingStrategy processingStrategy;
-
-    @Override
-    protected String getConfigFile()
-    {
-        return "non-blocking-fully-supported-test-config.xml";
-    }
 
     public NonBlockingFullySupportedFunctionalTestCase(ProcessingStrategy processingStrategy)
     {
@@ -52,8 +45,14 @@ public class NonBlockingFullySupportedFunctionalTestCase extends FunctionalTestC
     public static Collection<Object[]> parameters()
     {
         return Arrays.asList(new Object[][] {
-                                             {new DefaultFlowProcessingStrategy()},
-                                             {new NonBlockingProcessingStrategy()}});
+                {new DefaultFlowProcessingStrategy()},
+                {new NonBlockingProcessingStrategy()}});
+    }
+
+    @Override
+    protected String getConfigFile()
+    {
+        return "non-blocking-fully-supported-test-config.xml";
     }
 
     @Override
@@ -84,7 +83,7 @@ public class NonBlockingFullySupportedFunctionalTestCase extends FunctionalTestC
     public void childFlow() throws Exception
     {
         flowRunner("childFlow").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern())
-                .nonBlocking().run();
+                               .nonBlocking().run();
     }
 
     @Test
@@ -115,14 +114,14 @@ public class NonBlockingFullySupportedFunctionalTestCase extends FunctionalTestC
     public void processorChain() throws Exception
     {
         flowRunner("processorChain").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern())
-                .nonBlocking().run();
+                                    .nonBlocking().run();
     }
 
     @Test
     public void filterAccepts() throws Exception
     {
         flowRunner("filterAccepts").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern())
-                .nonBlocking().run();
+                                   .nonBlocking().run();
     }
 
     @Test
@@ -167,7 +166,9 @@ public class NonBlockingFullySupportedFunctionalTestCase extends FunctionalTestC
     public void filterAfterEnricherBeforeNonBlocking() throws Exception
     {
         MuleEvent result = flowRunner("filterAfterEnricherBeforeNonBlocking").withPayload(TEST_MESSAGE)
-                .withExchangePattern(getMessageExchnagePattern()).nonBlocking().run();
+                                                                             .withExchangePattern(getMessageExchnagePattern())
+                                                                             .nonBlocking()
+                                                                             .run();
         assertThat(result, is(nullValue()));
     }
 
@@ -175,21 +176,21 @@ public class NonBlockingFullySupportedFunctionalTestCase extends FunctionalTestC
     public void securityFilter() throws Exception
     {
         flowRunner("security-filter").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern())
-                .nonBlocking().run();
+                                     .nonBlocking().run();
     }
 
     @Test
     public void transformer() throws Exception
     {
         flowRunner("transformer").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern())
-                .nonBlocking().run();
+                                 .nonBlocking().run();
     }
 
     @Test
     public void choice() throws Exception
     {
         flowRunner("choice").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern()).nonBlocking()
-                .run();
+                            .run();
     }
 
     @Test
@@ -242,7 +243,7 @@ public class NonBlockingFullySupportedFunctionalTestCase extends FunctionalTestC
     public void async() throws Exception
     {
         flowRunner("async").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern()).nonBlocking()
-                .run();
+                           .run();
     }
 
     @Test

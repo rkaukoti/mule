@@ -6,13 +6,11 @@
  */
 package org.mule.extension.validation;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
-import static org.mule.extension.validation.api.ValidationExtension.DEFAULT_LOCALE;
-import static org.mule.extension.validation.internal.ImmutableValidationResult.error;
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+
+import org.junit.Test;
 import org.mule.extension.validation.api.MultipleValidationException;
 import org.mule.extension.validation.api.MultipleValidationResult;
 import org.mule.extension.validation.api.ValidationResult;
@@ -21,15 +19,17 @@ import org.mule.functional.junit4.FlowRunner;
 import org.mule.mvel2.compiler.BlankLiteral;
 import org.mule.runtime.core.api.MuleEvent;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
+import static org.mule.extension.validation.api.ValidationExtension.DEFAULT_LOCALE;
+import static org.mule.extension.validation.internal.ImmutableValidationResult.error;
 
 public class BasicValidationTestCase extends ValidationTestCase
 {
@@ -78,7 +78,8 @@ public class BasicValidationTestCase extends ValidationTestCase
     public void url() throws Exception
     {
         assertValid(flowRunner("url").withPayload(VALID_URL));
-        assertValid(flowRunner("url").withPayload("http://username:password@example.com:8042/over/there/index.dtb?type=animal&name=narwhal#nose"));
+        assertValid(flowRunner("url").withPayload(
+                "http://username:password@example.com:8042/over/there/index.dtb?type=animal&name=narwhal#nose"));
         assertInvalid(flowRunner("url").withPayload(INVALID_URL), messages.invalidUrl("here"));
     }
 
@@ -90,7 +91,8 @@ public class BasicValidationTestCase extends ValidationTestCase
         assertValid(configureTimeRunner(flowRunner("time"), time, "h:mm a"));
         assertValid(configureTimeRunner(flowRunner("time"), "Wed, Jul 4, '01", "EEE, MMM d, ''yy"));
         final String invalidPattern = "yyMMddHHmmssZ";
-        assertInvalid(configureTimeRunner(flowRunner("time"), time, invalidPattern), messages.invalidTime(time, DEFAULT_LOCALE, invalidPattern));
+        assertInvalid(configureTimeRunner(flowRunner("time"), time, invalidPattern),
+                messages.invalidTime(time, DEFAULT_LOCALE, invalidPattern));
     }
 
     private FlowRunner configureTimeRunner(FlowRunner runner, String time, String pattern)
@@ -254,7 +256,7 @@ public class BasicValidationTestCase extends ValidationTestCase
         assertThat(getPayloadAsString(flowRunner(flowName).withPayload(INVALID_EMAIL).run().getMessage()), is("invalid"));
     }
 
-    private void assertCustomValidator(String flowName,String customMessage, String expectedMessage) throws Exception
+    private void assertCustomValidator(String flowName, String customMessage, String expectedMessage) throws Exception
     {
         Exception e = flowRunner(flowName).withPayload("").withFlowVariable("customMessage", customMessage).runExpectingException();
         assertThat(e.getMessage(), is(expectedMessage));
@@ -284,11 +286,13 @@ public class BasicValidationTestCase extends ValidationTestCase
         assertValid(configureSizeValidationRunner(flowRunner(flowName), value, minLength, maxLength));
 
         maxLength = 2;
-        assertInvalid(configureSizeValidationRunner(flowRunner(flowName), value, minLength, maxLength), messages.greaterThanMaxSize(value, maxLength, expectedSize));
+        assertInvalid(configureSizeValidationRunner(flowRunner(flowName), value, minLength, maxLength),
+                messages.greaterThanMaxSize(value, maxLength, expectedSize));
 
         minLength = 5;
         maxLength = 10;
-        assertInvalid(configureSizeValidationRunner(flowRunner(flowName), value, minLength, maxLength), messages.lowerThanMinSize(value, minLength, expectedSize));
+        assertInvalid(configureSizeValidationRunner(flowRunner(flowName), value, minLength, maxLength),
+                messages.lowerThanMinSize(value, minLength, expectedSize));
     }
 
     private FlowRunner configureSizeValidationRunner(FlowRunner runner, Object value, int minLength, int maxLength) throws Exception

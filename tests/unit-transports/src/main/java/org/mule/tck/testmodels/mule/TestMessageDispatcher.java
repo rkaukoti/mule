@@ -22,12 +22,12 @@ import org.mule.tck.processor.TestNonBlockingProcessor;
 
 public class TestMessageDispatcher extends AbstractMessageDispatcher
 {
+    private TestNonBlockingProcessor nonBlockingProcessor = new TestNonBlockingProcessor();
+
     public TestMessageDispatcher(final OutboundEndpoint endpoint)
     {
         super(endpoint);
     }
-
-    private TestNonBlockingProcessor nonBlockingProcessor = new TestNonBlockingProcessor();
 
     @Override
     protected void doInitialise()
@@ -119,13 +119,13 @@ public class TestMessageDispatcher extends AbstractMessageDispatcher
     }
 
     @Override
-    protected void doStart() 
+    protected void doStart()
     {
         // no op
     }
 
     @Override
-    protected void doStop() 
+    protected void doStop()
     {
         // no op
     }

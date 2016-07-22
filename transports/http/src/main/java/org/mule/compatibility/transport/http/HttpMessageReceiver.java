@@ -6,8 +6,6 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.mule.compatibility.transport.http.HttpConnector.HTTP_STATUS_PROPERTY;
-import static org.mule.compatibility.transport.http.HttpConstants.SC_NOT_ACCEPTABLE;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.core.transport.AbstractMessageReceiver;
@@ -25,6 +23,9 @@ import org.mule.runtime.core.execution.MessageProcessContext;
 import org.mule.runtime.core.util.MapUtils;
 
 import java.util.List;
+
+import static org.mule.compatibility.transport.http.HttpConnector.HTTP_STATUS_PROPERTY;
+import static org.mule.compatibility.transport.http.HttpConstants.SC_NOT_ACCEPTABLE;
 
 /**
  * <code>HttpMessageReceiver</code> is a simple http server that can be used to
@@ -53,7 +54,7 @@ public class HttpMessageReceiver extends AbstractMessageReceiver
 
     HttpMessageProcessTemplate createMessageProcessTemplate(HttpServerConnection httpServerConnection)
     {
-        return new HttpMessageProcessTemplate(this,httpServerConnection);
+        return new HttpMessageProcessTemplate(this, httpServerConnection);
     }
 
     MessageProcessContext createMessageProcessContext()
@@ -88,11 +89,11 @@ public class HttpMessageReceiver extends AbstractMessageReceiver
             factory = (HttpMuleMessageFactory) super.createMuleMessageFactory();
 
             boolean enableCookies = MapUtils.getBooleanValue(endpoint.getProperties(),
-                                                             HttpConnector.HTTP_ENABLE_COOKIES_PROPERTY, ((HttpConnector) connector).isEnableCookies());
+                    HttpConnector.HTTP_ENABLE_COOKIES_PROPERTY, ((HttpConnector) connector).isEnableCookies());
             factory.setEnableCookies(enableCookies);
 
             String cookieSpec = MapUtils.getString(endpoint.getProperties(),
-                                                   HttpConnector.HTTP_COOKIE_SPEC_PROPERTY, ((HttpConnector) connector).getCookieSpec());
+                    HttpConnector.HTTP_COOKIE_SPEC_PROPERTY, ((HttpConnector) connector).getCookieSpec());
             factory.setCookieSpec(cookieSpec);
 
             factory.setExchangePattern(endpoint.getExchangePattern());

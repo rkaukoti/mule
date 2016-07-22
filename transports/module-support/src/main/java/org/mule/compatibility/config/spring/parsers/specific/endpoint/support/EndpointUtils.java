@@ -10,7 +10,6 @@ import org.mule.runtime.config.spring.parsers.MuleDefinitionParser;
 import org.mule.runtime.config.spring.parsers.PostProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.core.util.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.xml.ParserContext;
@@ -25,11 +24,11 @@ import org.w3c.dom.Element;
 public class EndpointUtils
 {
 
-    private static Logger logger = LoggerFactory.getLogger(EndpointUtils.class);
     public static final String CONNECTOR_ATTRIBUTE = "connector-ref";
     public static final String TRANSFORMERS_ATTRIBUTE = "transformer-refs";
     public static final String URI_BUILDER_ATTRIBUTE = "URIBuilder";
     public static final String ADDRESS_ATTRIBUTE = "address";
+    private static Logger logger = LoggerFactory.getLogger(EndpointUtils.class);
 
     private static void processTransformerDependencies(BeanAssembler assembler, Element element)
     {

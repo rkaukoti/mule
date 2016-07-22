@@ -6,12 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.connectivity;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.api.transaction.TransactionConfig.ACTION_NOT_SUPPORTED;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.ExceptionUtils.extractConnectionException;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.CONNECTION_PARAM;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionHandler;
 import org.mule.runtime.api.connection.ConnectionProvider;
@@ -33,6 +27,13 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
+import static java.lang.String.format;
+import static org.mule.runtime.core.api.transaction.TransactionConfig.ACTION_NOT_SUPPORTED;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.ExceptionUtils.extractConnectionException;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.CONNECTION_PARAM;
+
 /**
  * Implements simple connection management by using the {@link #before(OperationContext)} phase to
  * set a connection as parameter value of key {@link ExtensionProperties#CONNECTION_PARAM} into an
@@ -51,7 +52,8 @@ public final class ConnectionInterceptor implements Interceptor
      * considerations in this type's javadoc.
      *
      * @param operationContext the {@link OperationContext} for the operation to be executed
-     * @throws IllegalArgumentException if the {@code operationContext} already contains a parameter of key {@link ExtensionProperties#CONNECTION_PARAM}
+     * @throws IllegalArgumentException if the {@code operationContext} already contains a parameter of key {@link
+     *                                  ExtensionProperties#CONNECTION_PARAM}
      */
     @Override
     public void before(OperationContext operationContext) throws Exception
@@ -99,8 +101,8 @@ public final class ConnectionInterceptor implements Interceptor
     private ConnectionHandler<?> getConnection(OperationContextAdapter operationContext) throws ConnectionException, TransactionException
     {
         return operationContext.getTransactionConfig().isPresent()
-               ? getTransactedConnectionHandler(operationContext, operationContext.getTransactionConfig().get())
-               : getTransactionlessConnectionHandler(operationContext);
+                ? getTransactedConnectionHandler(operationContext, operationContext.getTransactionConfig().get())
+                : getTransactionlessConnectionHandler(operationContext);
     }
 
     private <T> ConnectionHandler<T> getTransactionlessConnectionHandler(OperationContext operationContext) throws ConnectionException
@@ -108,17 +110,19 @@ public final class ConnectionInterceptor implements Interceptor
         Optional<ConnectionProvider> connectionProvider = operationContext.getConfiguration().getConnectionProvider();
         if (!connectionProvider.isPresent())
         {
-            throw new IllegalStateException(format("Operation '%s' of extension '%s' requires a connection but was executed with config '%s' which " +
-                                                   "is not associated to a connection provider",
-                                                   operationContext.getOperationModel().getName(),
-                                                   operationContext.getConfiguration().getModel().getExtensionModel().getName(),
-                                                   operationContext.getConfiguration().getName()));
+            throw new IllegalStateException(
+                    format("Operation '%s' of extension '%s' requires a connection but was executed with config '%s' which " +
+                           "is not associated to a connection provider",
+                            operationContext.getOperationModel().getName(),
+                            operationContext.getConfiguration().getModel().getExtensionModel().getName(),
+                            operationContext.getConfiguration().getName()));
         }
 
         return connectionManager.getConnection(operationContext.getConfiguration().getValue());
     }
 
-    private <T extends TransactionalConnection> ConnectionHandler<T> getTransactedConnectionHandler(OperationContextAdapter operationContext, TransactionConfig transactionConfig) throws ConnectionException, TransactionException
+    private <T extends TransactionalConnection> ConnectionHandler<T> getTransactedConnectionHandler(
+            OperationContextAdapter operationContext, TransactionConfig transactionConfig) throws ConnectionException, TransactionException
     {
         if (transactionConfig.getAction() == ACTION_NOT_SUPPORTED)
         {
@@ -149,11 +153,12 @@ public final class ConnectionInterceptor implements Interceptor
                 }
                 else if (transactionConfig.isTransacted())
                 {
-                    throw new TransactionException(createStaticMessage(format("Operation '%s' of extension '%s' is transactional but current transaction doesn't " +
-                                                                              "support connections of type '%s'",
-                                                                              operationContext.getOperationModel().getName(),
-                                                                              operationContext.getConfiguration().getModel().getExtensionModel().getName(),
-                                                                              connectionHandler.getClass().getName())));
+                    throw new TransactionException(createStaticMessage(
+                            format("Operation '%s' of extension '%s' is transactional but current transaction doesn't " +
+                                   "support connections of type '%s'",
+                                    operationContext.getOperationModel().getName(),
+                                    operationContext.getConfiguration().getModel().getExtensionModel().getName(),
+                                    connectionHandler.getClass().getName())));
                 }
             }
             finally

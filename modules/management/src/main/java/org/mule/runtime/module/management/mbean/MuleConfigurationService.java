@@ -13,11 +13,10 @@ import org.mule.runtime.core.util.StringUtils;
 /**
  * <code>MuleConfigurationService</code> exposes the MuleConfiguration settings as
  * a management service.
- * 
  */
 public class MuleConfigurationService implements MuleConfigurationServiceMBean
 {
-    private  MuleConfiguration muleConfiguration;
+    private MuleConfiguration muleConfiguration;
 
     public MuleConfigurationService(MuleConfiguration muleConfiguration)
     {

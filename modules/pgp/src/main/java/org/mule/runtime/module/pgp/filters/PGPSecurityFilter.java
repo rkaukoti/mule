@@ -6,13 +6,6 @@
  */
 package org.mule.runtime.module.pgp.filters;
 
-import org.mule.runtime.module.pgp.LiteralMessage;
-import org.mule.runtime.module.pgp.Message;
-import org.mule.runtime.module.pgp.MessageFactory;
-import org.mule.runtime.module.pgp.PGPAuthentication;
-import org.mule.runtime.module.pgp.PGPKeyRing;
-import org.mule.runtime.module.pgp.SignedMessage;
-import org.mule.runtime.module.pgp.i18n.PGPMessages;
 import org.mule.runtime.core.api.EncryptionStrategy;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -24,6 +17,13 @@ import org.mule.runtime.core.api.security.UnauthorisedException;
 import org.mule.runtime.core.api.security.UnknownAuthenticationTypeException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.security.AbstractOperationSecurityFilter;
+import org.mule.runtime.module.pgp.LiteralMessage;
+import org.mule.runtime.module.pgp.Message;
+import org.mule.runtime.module.pgp.MessageFactory;
+import org.mule.runtime.module.pgp.PGPAuthentication;
+import org.mule.runtime.module.pgp.PGPKeyRing;
+import org.mule.runtime.module.pgp.SignedMessage;
+import org.mule.runtime.module.pgp.i18n.PGPMessages;
 
 public class PGPSecurityFilter extends AbstractOperationSecurityFilter
 {
@@ -37,11 +37,11 @@ public class PGPSecurityFilter extends AbstractOperationSecurityFilter
 
     @Override
     protected void authenticateInbound(MuleEvent event)
-        throws SecurityException, UnauthorisedException, UnknownAuthenticationTypeException
+            throws SecurityException, UnauthorisedException, UnknownAuthenticationTypeException
     {
         MuleMessage message = event.getMessage();
 
-        String userId = (String)getCredentialsAccessor().getCredentials(event);
+        String userId = (String) getCredentialsAccessor().getCredentials(event);
 
         byte[] creds = null;
         try
@@ -91,9 +91,9 @@ public class PGPSecurityFilter extends AbstractOperationSecurityFilter
 
         try
         {
-            updatePayload(message, getUnencryptedMessageWithoutSignature((PGPAuthentication)authResult), event);
-//            TODO RequestContext.rewriteEvent(new DefaultMuleMessage(
-//                getUnencryptedMessageWithoutSignature((PGPAuthentication)authResult)));
+            updatePayload(message, getUnencryptedMessageWithoutSignature((PGPAuthentication) authResult), event);
+            //            TODO RequestContext.rewriteEvent(new DefaultMuleMessage(
+            //                getUnencryptedMessageWithoutSignature((PGPAuthentication)authResult)));
         }
         catch (Exception e2)
         {
@@ -108,16 +108,16 @@ public class PGPSecurityFilter extends AbstractOperationSecurityFilter
 
     private String getUnencryptedMessageWithoutSignature(PGPAuthentication auth) throws Exception
     {
-        Message msg = (Message)auth.getCredentials();
+        Message msg = (Message) auth.getCredentials();
 
         if (msg instanceof SignedMessage)
         {
-            msg = ((SignedMessage)msg).getContents();
+            msg = ((SignedMessage) msg).getContents();
         }
 
         if (msg instanceof LiteralMessage)
         {
-            return ((LiteralMessage)msg).getTextData();
+            return ((LiteralMessage) msg).getTextData();
         }
         else
         {

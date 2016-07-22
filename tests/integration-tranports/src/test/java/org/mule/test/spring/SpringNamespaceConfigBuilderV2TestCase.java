@@ -6,9 +6,7 @@
  */
 package org.mule.test.spring;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.functional.AbstractConfigBuilderTestCase;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.MessageExchangePattern;
@@ -24,7 +22,9 @@ import org.mule.tck.testmodels.mule.TestCompressionTransformer;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This is an extended version of the same test covered in
@@ -99,7 +99,7 @@ public class SpringNamespaceConfigBuilderV2TestCase extends AbstractConfigBuilde
         // This will only work with the MuleXml Builder other implementations
         // will have to set this proerty manually or mimic Mules behaviour
         assertEquals("this was set from the manager properties!",
-                     ((TestCompressionTransformer) t).getBeanProperty1());
+                ((TestCompressionTransformer) t).getBeanProperty1());
         assertEquals(12, ((TestCompressionTransformer) t).getBeanProperty2());
 
         assertEquals(t.getReturnDataType().getType(), java.lang.String.class);

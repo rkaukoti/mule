@@ -6,8 +6,6 @@
  */
 package org.mule.extension.socket.internal;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.extension.socket.api.SocketAttributes;
 import org.mule.extension.socket.api.connection.AbstractSocketConnection;
 import org.mule.extension.socket.api.exceptions.UnresolvableHostException;
@@ -26,16 +24,18 @@ import java.net.DatagramSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
+import static java.lang.String.format;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+
 public final class SocketUtils
 {
 
+    public static final String DEFAULT_ENCODING = "UTF-8";
+    private static final String SOCKET_COULD_NOT_BE_CREATED = "%s Socket could not be created correctly";
     private SocketUtils()
     {
 
     }
-
-    public static final String DEFAULT_ENCODING = "UTF-8";
-    private static final String SOCKET_COULD_NOT_BE_CREATED = "%s Socket could not be created correctly";
 
     /**
      * UDP doesn't allow streaming and it always sends payload when dealing with a {@link MuleMessage}
@@ -45,7 +45,8 @@ public final class SocketUtils
         return getByteArray(data, true, false, encoding, objectSerializer);
     }
 
-    public static byte[] getByteArray(Object data, boolean payloadOnly, boolean streamingIsAllowed, String encoding, ObjectSerializer objectSerializer) throws IOException
+    public static byte[] getByteArray(Object data, boolean payloadOnly, boolean streamingIsAllowed, String encoding,
+                                      ObjectSerializer objectSerializer) throws IOException
     {
         if (data instanceof InputStream && !streamingIsAllowed)
         {
@@ -98,7 +99,6 @@ public final class SocketUtils
      *
      * @param content that is going to be sent inside the packet
      * @return a packet ready to be sent
-     * @throws UnresolvableHostException
      */
     public static DatagramPacket createPacket(byte[] content) throws UnresolvableHostException
     {
@@ -107,7 +107,6 @@ public final class SocketUtils
 
     /**
      * @return a packet configured to be used for receiving purposes
-     * @throws UnresolvableHostException
      */
     public static DatagramPacket createPacket(int bufferSize) throws UnresolvableHostException
     {
@@ -120,7 +119,6 @@ public final class SocketUtils
      *
      * @param socket           UDP Socket
      * @param socketProperties Configuration properties
-     * @throws ConnectionException
      */
     public static void configureConnection(DatagramSocket socket, UdpSocketProperties socketProperties) throws ConnectionException
     {
@@ -157,7 +155,6 @@ public final class SocketUtils
      *
      * @param socket           TCP Socket
      * @param socketProperties Configuration properties
-     * @throws ConnectionException
      */
     public static void configureConnection(Socket socket, TcpSocketProperties socketProperties) throws ConnectionException
 

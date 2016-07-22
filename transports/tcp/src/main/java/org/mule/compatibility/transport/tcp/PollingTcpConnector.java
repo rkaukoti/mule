@@ -13,7 +13,7 @@ import java.util.Properties;
 
 /**
  * <code>PollingTcpMessageReceiver</code> acts as a polling TCP connector.
- * 
+ *
  * @author esteban.robles
  */
 public class PollingTcpConnector extends TcpConnector
@@ -28,7 +28,7 @@ public class PollingTcpConnector extends TcpConnector
         super(context);
         serviceOverrides = new Properties();
         serviceOverrides.setProperty(MuleProperties.CONNECTOR_MESSAGE_RECEIVER_CLASS,
-            PollingTcpMessageReceiver.class.getName());
+                PollingTcpMessageReceiver.class.getName());
     }
 
     public long getPollingFrequency()

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:jms="http://www.mulesoft.org/schema/mule/transport/jms"
       xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/transports http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd
@@ -18,12 +18,12 @@
         <transports:inbound-endpoint address="tcp://localhost:${tcpPort}" exchange-pattern="request-response"/>
         <echo-component/>
         <transports:outbound-endpoint address="jms://queue_in" responseTransformer-refs="responsetransformer"
-                           exchange-pattern="request-response"/>
+                                      exchange-pattern="request-response"/>
     </flow>
 
     <flow name="JMSReplyProvider">
         <transports:inbound-endpoint address="jms://queue_in" exchange-pattern="request-response"
-                          transformer-refs="inboundtransformer"/>
+                                     transformer-refs="inboundtransformer"/>
         <component class="org.mule.functional.testmodels.services.TestReceiver"/>
     </flow>
 

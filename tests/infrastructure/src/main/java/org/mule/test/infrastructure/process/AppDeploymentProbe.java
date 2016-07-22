@@ -21,6 +21,13 @@ public class AppDeploymentProbe implements Probe
     private MuleProcessController mule;
     private String appName;
 
+    protected AppDeploymentProbe(MuleProcessController mule, String appName, Boolean check)
+    {
+        this.mule = mule;
+        this.appName = appName;
+        this.check = check;
+    }
+
     public static AppDeploymentProbe isDeployed(MuleProcessController mule, String appName)
     {
         return new AppDeploymentProbe(mule, appName, true);
@@ -29,13 +36,6 @@ public class AppDeploymentProbe implements Probe
     public static AppDeploymentProbe notDeployed(MuleProcessController mule, String appName)
     {
         return new AppDeploymentProbe(mule, appName, false);
-    }
-
-    protected AppDeploymentProbe(MuleProcessController mule, String appName, Boolean check)
-    {
-        this.mule = mule;
-        this.appName = appName;
-        this.check = check;
     }
 
     public boolean isSatisfied()

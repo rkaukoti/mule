@@ -6,8 +6,10 @@
  */
 package org.mule.runtime.module.ws.consumer;
 
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
 import org.mule.runtime.core.util.StringUtils;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.io.File;
 import java.io.StringWriter;
@@ -34,9 +36,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
 
 public class WSDLUtils
 {
@@ -177,6 +177,7 @@ public class WSDLUtils
 
     /**
      * Converts a schema into a String.
+     *
      * @throws TransformerException If unable to transform the schema.
      */
     public static String schemaToString(Schema schema) throws TransformerException

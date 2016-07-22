@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.core.api.security.tls;
 
-import java.io.IOException;
-import java.util.Properties;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * Move a {@link TlsConfiguration} to and from Properties (typically System Properties).
@@ -73,20 +73,20 @@ public class TlsPropertiesMapper
         }
     }
 
-    private void readTrustStoreFromProperties(TlsConfiguration configuration, Properties properties) 
-    throws IOException
+    private void readTrustStoreFromProperties(TlsConfiguration configuration, Properties properties)
+            throws IOException
     {
         configuration.setTrustStore(
-            getProperty(properties, TRUST_NAME_SUFFIX, configuration.getTrustStore()));
+                getProperty(properties, TRUST_NAME_SUFFIX, configuration.getTrustStore()));
         configuration.setTrustStoreType(
-            getProperty(properties, TRUST_TYPE_SUFFIX, configuration.getTrustStoreType()));
+                getProperty(properties, TRUST_TYPE_SUFFIX, configuration.getTrustStoreType()));
         configuration.setTrustStorePassword(
-            getProperty(properties, TRUST_PASSWORD_SUFFIX, configuration.getTrustStorePassword()));
+                getProperty(properties, TRUST_PASSWORD_SUFFIX, configuration.getTrustStorePassword()));
         configuration.setTrustManagerAlgorithm(
-            getProperty(properties, TRUST_ALGORITHM_SUFFIX, configuration.getTrustManagerAlgorithm()));
+                getProperty(properties, TRUST_ALGORITHM_SUFFIX, configuration.getTrustManagerAlgorithm()));
     }
 
-    private void writeKeyStoreToProperties(Properties properties, TlsConfiguration configuration) 
+    private void writeKeyStoreToProperties(Properties properties, TlsConfiguration configuration)
     {
         if (null != configuration.getClientKeyStore())
         {
@@ -112,15 +112,15 @@ public class TlsPropertiesMapper
     // data, even though it was written from "client" data, then we can use the same code in
     // TlsConfiguration to generate the sockets in both cases.
 
-    private void readKeyStoreFromProperties(TlsConfiguration configuration, Properties properties) 
-    throws IOException 
+    private void readKeyStoreFromProperties(TlsConfiguration configuration, Properties properties)
+            throws IOException
     {
         configuration.setKeyStore(
-            getProperty(properties, KEY_NAME_SUFFIX, configuration.getKeyStore()));
+                getProperty(properties, KEY_NAME_SUFFIX, configuration.getKeyStore()));
         configuration.setKeyStoreType(
-            getProperty(properties, KEY_TYPE_SUFFIX, configuration.getKeyStoreType()));
+                getProperty(properties, KEY_TYPE_SUFFIX, configuration.getKeyStoreType()));
         configuration.setKeyStorePassword(
-            getProperty(properties, KEY_PASSWORD_SUFFIX, configuration.getKeyStorePassword()));
+                getProperty(properties, KEY_PASSWORD_SUFFIX, configuration.getKeyStorePassword()));
     }
 
 

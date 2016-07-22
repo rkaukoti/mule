@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.operation;
 
-import static org.mule.runtime.core.message.NullAttributes.NULL_ATTRIBUTES;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.ENCODING_PARAMETER_NAME;
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.MIME_TYPE_PARAMETER_NAME;
 import org.mule.runtime.api.message.Attributes;
 import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.api.metadata.DataType;
@@ -20,6 +16,11 @@ import org.mule.runtime.module.extension.internal.runtime.OperationContextAdapte
 
 import java.nio.charset.Charset;
 import java.util.Optional;
+
+import static org.mule.runtime.core.message.NullAttributes.NULL_ATTRIBUTES;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.ENCODING_PARAMETER_NAME;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.MIME_TYPE_PARAMETER_NAME;
 
 /**
  * Base class for {@link ReturnDelegate} implementations.
@@ -53,28 +54,24 @@ abstract class AbstractReturnDelegate implements ReturnDelegate
         {
             OperationResult operationResult = (OperationResult) value;
             return MuleMessage.builder()
-                    .payload(operationResult.getOutput())
-                    .mediaType(mediaType)
-                    .attributes((Attributes) operationResult.getAttributes().orElse(NULL_ATTRIBUTES))
-                    .build();
+                              .payload(operationResult.getOutput())
+                              .mediaType(mediaType)
+                              .attributes((Attributes) operationResult.getAttributes().orElse(NULL_ATTRIBUTES))
+                              .build();
         }
         else
         {
             return MuleMessage.builder()
-                    .payload(value)
-                    .mediaType(mediaType)
-                    .attributes(NULL_ATTRIBUTES)
-                    .build();
+                              .payload(value)
+                              .mediaType(mediaType)
+                              .attributes(NULL_ATTRIBUTES)
+                              .build();
         }
     }
 
     /**
      * If provided, mimeType and encoding configured as operation parameters will take precedence
      * over what comes with the message's {@link DataType}.
-     * 
-     * @param value
-     * @param operationContext
-     * @return
      */
     private MediaType resolveMediaType(Object value, OperationContextAdapter operationContext)
     {
@@ -83,7 +80,8 @@ abstract class AbstractReturnDelegate implements ReturnDelegate
         if (value instanceof OperationResult)
         {
             final Optional<MediaType> optionalMediaType = ((OperationResult) value).getMediaType();
-            if (optionalMediaType.isPresent()) {
+            if (optionalMediaType.isPresent())
+            {
                 mediaType = optionalMediaType.get();
                 if (mediaType.getCharset().isPresent())
                 {
@@ -104,7 +102,8 @@ abstract class AbstractReturnDelegate implements ReturnDelegate
 
         if (operationContext.hasParameter(ENCODING_PARAMETER_NAME))
         {
-            mediaType = mediaType.withCharset(Charset.forName(operationContext.getTypeSafeParameter(ENCODING_PARAMETER_NAME, String.class)));
+            mediaType =
+                    mediaType.withCharset(Charset.forName(operationContext.getTypeSafeParameter(ENCODING_PARAMETER_NAME, String.class)));
         }
         else
         {

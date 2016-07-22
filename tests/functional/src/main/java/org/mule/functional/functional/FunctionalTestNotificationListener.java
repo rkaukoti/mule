@@ -15,14 +15,14 @@ import org.mule.runtime.core.api.context.notification.ServerNotificationListener
  * {@link MuleContext#registerListener(ServerNotificationListener)}
  * You can receive {@link FunctionalTestNotification}s from the {@link FunctionalTestComponent}.
  *
- * This Notification contains the current MuleEventContext and reply message. The resource 
- * identifier for this event is the service name that received the message.  This means you can 
+ * This Notification contains the current MuleEventContext and reply message. The resource
+ * identifier for this event is the service name that received the message.  This means you can
  * register to listen to Notifications from a selected {@link FunctionalTestComponent}. i.e.
  * <code>
  * muleContext.registerListener(this, "*JmsTestCompoennt");
  * </code>
  *
- * This registration would only receive {@link FunctionalTestNotification} objects from components 
+ * This registration would only receive {@link FunctionalTestNotification} objects from components
  * called 'MyJmsTestComponent' and 'YourJmsTestComponent' but not 'HerFileTestComponent'.
  *
  * To receive all notifications simply do -

@@ -35,7 +35,8 @@ public final class LocalMoveCommand extends AbstractLocalCopyCommand implements 
      * {@inheritDoc}
      */
     @Override
-    public void move(FileConnectorConfig config, String sourcePath, String targetDirectory, boolean overwrite, boolean createParentDirectories)
+    public void move(FileConnectorConfig config, String sourcePath, String targetDirectory, boolean overwrite,
+                     boolean createParentDirectories)
     {
         execute(config, sourcePath, targetDirectory, overwrite, createParentDirectories);
     }

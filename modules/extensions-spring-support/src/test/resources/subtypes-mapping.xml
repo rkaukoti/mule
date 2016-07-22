@@ -9,7 +9,7 @@
       http://www.mulesoft.org/schema/mule/vegan http://www.mulesoft.org/schema/mule/vegan/current/mule-vegan.xsd
       http://www.mulesoft.org/schema/mule/subtypes http://www.mulesoft.org/schema/mule/subtypes/current/mule-subtypes.xsd">
 
-    <subtypes:config name="config" >
+    <subtypes:config name="config">
         <subtypes:connection>
             <subtypes:abstract-shape>
                 <subtypes:triangle-alias height="2" area="1"/>

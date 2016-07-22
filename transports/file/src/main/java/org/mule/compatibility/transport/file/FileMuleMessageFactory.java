@@ -6,10 +6,6 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_DIRECTORY;
-import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_FILE_SIZE;
-import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_FILE_TIMESTAMP;
-import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_ORIGINAL_FILENAME;
 import org.mule.compatibility.core.transport.AbstractMuleMessageFactory;
 import org.mule.runtime.core.api.MuleMessage;
 
@@ -18,6 +14,11 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 
 import javax.activation.MimetypesFileTypeMap;
+
+import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_DIRECTORY;
+import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_FILE_SIZE;
+import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_FILE_TIMESTAMP;
+import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_ORIGINAL_FILENAME;
 
 /**
  * <code>FileMuleMessageFactory</code> creates a new {@link MuleMessage} with a
@@ -32,7 +33,7 @@ public class FileMuleMessageFactory extends AbstractMuleMessageFactory
     @Override
     protected Class<?>[] getSupportedTransportMessageTypes()
     {
-        return new Class[]{File.class, ReceiverFileInputStream.class};
+        return new Class[] {File.class, ReceiverFileInputStream.class};
     }
 
     @Override

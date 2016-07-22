@@ -6,14 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.util;
 
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.withSettings;
-import static org.mule.metadata.api.model.MetadataFormat.JAVA;
+import org.apache.commons.lang.ArrayUtils;
+import org.custommonkey.xmlunit.DetailedDiff;
+import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.Difference;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.mule.metadata.api.ClassTypeLoader;
 import org.mule.metadata.api.builder.ArrayTypeBuilder;
 import org.mule.metadata.api.builder.BaseTypeBuilder;
@@ -21,8 +18,8 @@ import org.mule.metadata.api.builder.TypeBuilder;
 import org.mule.metadata.api.model.ArrayType;
 import org.mule.metadata.api.model.DictionaryType;
 import org.mule.metadata.api.model.MetadataType;
-import org.mule.metadata.java.api.utils.ParsingContext;
 import org.mule.metadata.java.api.handler.TypeHandlerManager;
+import org.mule.metadata.java.api.utils.ParsingContext;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.extension.api.ExtensionManager;
@@ -39,11 +36,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.custommonkey.xmlunit.DetailedDiff;
-import org.custommonkey.xmlunit.Diff;
-import org.custommonkey.xmlunit.Difference;
-import org.custommonkey.xmlunit.XMLUnit;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.same;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
+import static org.mule.metadata.api.model.MetadataFormat.JAVA;
 
 public abstract class ExtensionsTestUtils
 {
@@ -70,9 +70,9 @@ public abstract class ExtensionsTestUtils
     public static DictionaryType dictionaryOf(Class<? extends Map> clazz, TypeBuilder<?> keyTypeBuilder, TypeBuilder<?> valueTypeBuilder)
     {
         return TYPE_BUILDER.dictionaryType().id(clazz.getName())
-                .ofKey(keyTypeBuilder)
-                .ofValue(valueTypeBuilder)
-                .build();
+                           .ofKey(keyTypeBuilder)
+                           .ofValue(valueTypeBuilder)
+                           .build();
     }
 
     public static TypeBuilder<?> objectTypeBuilder(Class<?> clazz)
@@ -119,7 +119,8 @@ public abstract class ExtensionsTestUtils
 
     public static void stubRegistryKeys(MuleContext muleContext, final String... keys)
     {
-        when(muleContext.getRegistry().get(anyString())).thenAnswer(invocation -> {
+        when(muleContext.getRegistry().get(anyString())).thenAnswer(invocation ->
+        {
             String name = (String) invocation.getArguments()[0];
             if (name != null)
             {

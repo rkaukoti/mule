@@ -6,8 +6,7 @@
  */
 package org.mule.compatibility.transport.file.issues;
 
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.transport.file.AbstractFileFunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
@@ -19,7 +18,7 @@ import org.mule.runtime.core.construct.Flow;
 
 import java.io.File;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * This used to be part of FileFunctionalTest; moved here to allow isolation of

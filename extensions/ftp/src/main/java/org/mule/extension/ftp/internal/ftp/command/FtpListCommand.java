@@ -6,8 +6,10 @@
  */
 package org.mule.extension.ftp.internal.ftp.command;
 
-import static java.lang.String.format;
-
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPListParseEngine;
+import org.apache.commons.net.ftp.FTPReply;
 import org.mule.extension.ftp.api.ftp.ClassicFtpFileAttributes;
 import org.mule.extension.ftp.internal.ftp.connection.ClassicFtpFileSystem;
 import org.mule.runtime.api.message.MuleMessage;
@@ -16,18 +18,15 @@ import org.mule.runtime.module.extension.file.api.FileAttributes;
 import org.mule.runtime.module.extension.file.api.FileConnectorConfig;
 import org.mule.runtime.module.extension.file.api.TreeNode;
 import org.mule.runtime.module.extension.file.api.command.ListCommand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.function.Predicate;
 
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPListParseEngine;
-import org.apache.commons.net.ftp.FTPReply;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
 
 /**
  * A {@link ClassicFtpCommand} which implements the {@link ListCommand} contract
@@ -52,7 +51,8 @@ public final class FtpListCommand extends ClassicFtpCommand implements ListComma
      * {@inheritDoc}
      */
     @Override
-    public TreeNode list(FileConnectorConfig config, String directoryPath, boolean recursive, MuleMessage message, Predicate<FileAttributes> matcher)
+    public TreeNode list(FileConnectorConfig config, String directoryPath, boolean recursive, MuleMessage message,
+                         Predicate<FileAttributes> matcher)
     {
         FileAttributes directoryAttributes = getExistingFile(config, directoryPath);
         Path path = Paths.get(directoryAttributes.getPath());
@@ -125,12 +125,16 @@ public final class FtpListCommand extends ClassicFtpCommand implements ListComma
                         Path recursionPath = path.resolve(attributes.getName());
                         if (!client.changeWorkingDirectory(attributes.getName()))
                         {
-                            throw exception(format("Could not change working directory to '%s' while performing recursion on list operation", recursionPath));
+                            throw exception(
+                                    format("Could not change working directory to '%s' while performing recursion on list operation",
+                                            recursionPath));
                         }
                         doList(config, recursionPath, childNodeBuilder, recursive, message, matcher);
                         if (!client.changeToParentDirectory())
                         {
-                            throw exception(format("Could not return to parent working directory '%s' while performing recursion on list operation", recursionPath.getParent()));
+                            throw exception(
+                                    format("Could not return to parent working directory '%s' while performing recursion on list operation",
+                                            recursionPath.getParent()));
                         }
                     }
                 }

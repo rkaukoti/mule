@@ -7,6 +7,7 @@
 
 package org.mule.compatibility.transport.http.functional;
 
+import org.apache.commons.httpclient.HttpParser;
 import org.mule.compatibility.transport.http.HttpRequest;
 import org.mule.compatibility.transport.http.RequestLine;
 
@@ -18,15 +19,11 @@ import java.nio.charset.Charset;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.httpclient.HttpParser;
-
 public abstract class MockHttpServer extends Object implements Runnable
 {
 
-    private static final long MOCK_HTTP_SERVER_TIMEOUT = 10000;
-
     public static final String HTTP_STATUS_LINE_OK = "HTTP/1.1 200 OK\n";
-
+    private static final long MOCK_HTTP_SERVER_TIMEOUT = 10000;
     private final int listenPort;
     private final CountDownLatch startupLatch = new CountDownLatch(1);
     private final CountDownLatch shutdownLatch = new CountDownLatch(1);

@@ -6,16 +6,6 @@
  */
 package org.mule.runtime.module.launcher.log4j2;
 
-import static org.mule.runtime.module.launcher.log4j2.ArtifactAwareContextSelector.resolveLoggerContextClassLoader;
-import static org.reflections.ReflectionUtils.getAllMethods;
-import static org.reflections.ReflectionUtils.withName;
-import static org.reflections.ReflectionUtils.withParameters;
-
-import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.core.Appender;
@@ -28,6 +18,16 @@ import org.apache.logging.log4j.message.Message;
 import org.apache.logging.log4j.message.MessageFactory;
 import org.apache.logging.log4j.spi.AbstractLogger;
 import org.apache.logging.log4j.spi.ExtendedLogger;
+
+import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+
+import static org.mule.runtime.module.launcher.log4j2.ArtifactAwareContextSelector.resolveLoggerContextClassLoader;
+import static org.reflections.ReflectionUtils.getAllMethods;
+import static org.reflections.ReflectionUtils.withName;
+import static org.reflections.ReflectionUtils.withParameters;
 
 /**
  * Suppose that class X is used in applications Y and Z. If X
@@ -51,11 +51,12 @@ abstract class DispatchingLogger extends Logger
 {
 
     private final Logger originalLogger;
-    private Method updateConfigurationMethod = null;
     private final ContextSelector contextSelector;
     private final int ownerClassLoaderHash;
+    private Method updateConfigurationMethod = null;
 
-    DispatchingLogger(Logger originalLogger, int ownerClassLoaderHash, LoggerContext loggerContext, ContextSelector contextSelector, MessageFactory messageFactory)
+    DispatchingLogger(Logger originalLogger, int ownerClassLoaderHash, LoggerContext loggerContext, ContextSelector contextSelector,
+                      MessageFactory messageFactory)
     {
         super(loggerContext, originalLogger.getName(), messageFactory);
         this.originalLogger = originalLogger;
@@ -63,6 +64,10 @@ abstract class DispatchingLogger extends Logger
         this.ownerClassLoaderHash = ownerClassLoaderHash;
     }
 
+    public static void checkMessageFactory(ExtendedLogger logger, MessageFactory messageFactory)
+    {
+        AbstractLogger.checkMessageFactory(logger, messageFactory);
+    }
 
     private Logger getLogger()
     {
@@ -80,8 +85,8 @@ abstract class DispatchingLogger extends Logger
 
     /**
      * @param currentClassLoader execution classloader of the logging operation
-     * @return true if the logger context associated with this instance must be used for logging,
-     *      false if we still need to continue searching for the right logger context
+     * @return true if the logger context associated with this instance must be used for logging, false if we still need to continue
+     * searching for the right logger context
      */
     private boolean useThisLoggerContextClassLoader(ClassLoader currentClassLoader)
     {
@@ -91,10 +96,8 @@ abstract class DispatchingLogger extends Logger
     /**
      * This is workaround for the low visibility of the {@link Logger#updateConfiguration(Configuration)} method, which
      * invokes it on the {@code originalLogger}.
-     * 
-     * Using a wrapper in the log4j package causes an {@link IllegalAccessError}.
      *
-     * @param config
+     * Using a wrapper in the log4j package causes an {@link IllegalAccessError}.
      */
     @Override
     protected void updateConfiguration(final Configuration config)
@@ -116,7 +119,8 @@ abstract class DispatchingLogger extends Logger
     {
         if (updateConfigurationMethod == null)
         {
-            Collection<Method> candidateMethods = getAllMethods(originalLogger.getClass(), withName("updateConfiguration"), withParameters(Configuration.class));
+            Collection<Method> candidateMethods =
+                    getAllMethods(originalLogger.getClass(), withName("updateConfiguration"), withParameters(Configuration.class));
             if (candidateMethods.size() == 1)
             {
                 updateConfigurationMethod = candidateMethods.iterator().next();
@@ -143,12 +147,6 @@ abstract class DispatchingLogger extends Logger
     public LoggerContext getContext()
     {
         return getLogger().getContext();
-    }
-
-    @Override
-    public void setLevel(Level level)
-    {
-        getLogger().setLevel(level);
     }
 
     @Override
@@ -218,6 +216,12 @@ abstract class DispatchingLogger extends Logger
     }
 
     @Override
+    public void setLevel(Level level)
+    {
+        getLogger().setLevel(level);
+    }
+
+    @Override
     public int filterCount()
     {
         return getLogger().filterCount();
@@ -245,11 +249,6 @@ abstract class DispatchingLogger extends Logger
     public String toString()
     {
         return getLogger().toString();
-    }
-
-    public static void checkMessageFactory(ExtendedLogger logger, MessageFactory messageFactory)
-    {
-        AbstractLogger.checkMessageFactory(logger, messageFactory);
     }
 
     @Override

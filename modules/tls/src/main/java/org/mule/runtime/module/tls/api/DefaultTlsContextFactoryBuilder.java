@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.module.tls.api;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
 import org.mule.runtime.api.tls.TlsContextFactoryBuilder;
 
 import java.lang.annotation.ElementType;
@@ -17,6 +13,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
+
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * A {@link Qualifier} annotation for injecting

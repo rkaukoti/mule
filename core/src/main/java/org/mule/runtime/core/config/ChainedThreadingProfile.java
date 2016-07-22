@@ -66,7 +66,6 @@ public class ChainedThreadingProfile implements ThreadingProfile
     /**
      * Generate a mutable threading profile with dynamic default values taken from the
      * given delegate.
-     *
      */
     public ChainedThreadingProfile(ThreadingProfile delegate)
     {
@@ -77,9 +76,9 @@ public class ChainedThreadingProfile implements ThreadingProfile
      * Generate a mutable threading profile.  Default values are taken from the "delegate"
      * argument.  If dynamic is true then changes in the delegate instance are reflected in
      * this instance.
-     * 
+     *
      * @param delegate Source of default values.
-     * @param dynamic If true, changes in delegate are reflected in this instance
+     * @param dynamic  If true, changes in delegate are reflected in this instance
      */
     public ChainedThreadingProfile(ThreadingProfile delegate, boolean dynamic)
     {
@@ -96,39 +95,14 @@ public class ChainedThreadingProfile implements ThreadingProfile
         return null != maxThreadsActive ? maxThreadsActive : delegate.getMaxThreadsActive();
     }
 
-    public int getMaxThreadsIdle()
-    {
-        return null != maxThreadsIdle ? maxThreadsIdle : delegate.getMaxThreadsIdle();
-    }
-
-    public long getThreadTTL()
-    {
-        return null != threadTTL ? threadTTL : delegate.getThreadTTL();
-    }
-
-    public long getThreadWaitTimeout()
-    {
-        return null != threadWaitTimeout ? threadWaitTimeout : delegate.getThreadWaitTimeout();
-    }
-
-    public int getPoolExhaustedAction()
-    {
-        return null != poolExhaustedAction ? poolExhaustedAction : delegate.getPoolExhaustedAction();
-    }
-
-    public RejectedExecutionHandler getRejectedExecutionHandler()
-    {
-        return rejectedExecutionHandler;
-    }
-
-    public ThreadFactory getThreadFactory()
-    {
-        return threadFactory;
-    }
-
     public void setMaxThreadsActive(int maxThreadsActive)
     {
         this.maxThreadsActive = maxThreadsActive;
+    }
+
+    public int getMaxThreadsIdle()
+    {
+        return null != maxThreadsIdle ? maxThreadsIdle : delegate.getMaxThreadsIdle();
     }
 
     public void setMaxThreadsIdle(int maxThreadsIdle)
@@ -136,9 +110,19 @@ public class ChainedThreadingProfile implements ThreadingProfile
         this.maxThreadsIdle = maxThreadsIdle;
     }
 
+    public long getThreadTTL()
+    {
+        return null != threadTTL ? threadTTL : delegate.getThreadTTL();
+    }
+
     public void setThreadTTL(long threadTTL)
     {
         this.threadTTL = threadTTL;
+    }
+
+    public long getThreadWaitTimeout()
+    {
+        return null != threadWaitTimeout ? threadWaitTimeout : delegate.getThreadWaitTimeout();
     }
 
     public void setThreadWaitTimeout(long threadWaitTimeout)
@@ -146,14 +130,29 @@ public class ChainedThreadingProfile implements ThreadingProfile
         this.threadWaitTimeout = threadWaitTimeout;
     }
 
+    public int getPoolExhaustedAction()
+    {
+        return null != poolExhaustedAction ? poolExhaustedAction : delegate.getPoolExhaustedAction();
+    }
+
     public void setPoolExhaustedAction(int poolExhaustPolicy)
     {
         this.poolExhaustedAction = poolExhaustPolicy;
     }
 
+    public RejectedExecutionHandler getRejectedExecutionHandler()
+    {
+        return rejectedExecutionHandler;
+    }
+
     public void setRejectedExecutionHandler(RejectedExecutionHandler rejectedExecutionHandler)
     {
         this.rejectedExecutionHandler = rejectedExecutionHandler;
+    }
+
+    public ThreadFactory getThreadFactory()
+    {
+        return threadFactory;
     }
 
     public void setThreadFactory(ThreadFactory threadFactory)
@@ -240,11 +239,11 @@ public class ChainedThreadingProfile implements ThreadingProfile
     public String toString()
     {
         return "ThreadingProfile{" + "maxThreadsActive=" + maxThreadsActive + ", maxThreadsIdle="
-                        + maxThreadsIdle + ", maxBufferSize=" + maxBufferSize + ", threadTTL=" + threadTTL
-                        + ", poolExhaustedAction=" + poolExhaustedAction + ", threadWaitTimeout="
-                        + threadWaitTimeout + ", doThreading=" + doThreading + ", workManagerFactory="
-                        + workManagerFactory + ", rejectedExecutionHandler=" + rejectedExecutionHandler
-                        + ", threadFactory=" + threadFactory + "}";
+               + maxThreadsIdle + ", maxBufferSize=" + maxBufferSize + ", threadTTL=" + threadTTL
+               + ", poolExhaustedAction=" + poolExhaustedAction + ", threadWaitTimeout="
+               + threadWaitTimeout + ", doThreading=" + doThreading + ", workManagerFactory="
+               + workManagerFactory + ", rejectedExecutionHandler=" + rejectedExecutionHandler
+               + ", threadFactory=" + threadFactory + "}";
     }
 
 }

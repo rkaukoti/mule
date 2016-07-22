@@ -6,10 +6,8 @@
  */
 package org.mule.compatibility.transport.tcp;
 
-import org.mule.compatibility.transport.tcp.TcpConnector;
-import org.mule.tck.junit4.rule.SystemProperty;
-
 import org.junit.Rule;
+import org.mule.tck.junit4.rule.SystemProperty;
 
 public class TcpSendNoDelayConfigurationSystemPropertyTestCase extends TcpSendNoDelayConfigurationTestCase
 {
@@ -18,7 +16,7 @@ public class TcpSendNoDelayConfigurationSystemPropertyTestCase extends TcpSendNo
 
     @Rule
     public SystemProperty SendTcpNoDelaySystemProperty = new SystemProperty(
-        TcpConnector.SEND_TCP_NO_DELAY_SYSTEM_PROPERTY, Boolean.toString(defaultSendTcpNoDelay));
+            TcpConnector.SEND_TCP_NO_DELAY_SYSTEM_PROPERTY, Boolean.toString(defaultSendTcpNoDelay));
 
     @Override
     protected String getConfigFile()

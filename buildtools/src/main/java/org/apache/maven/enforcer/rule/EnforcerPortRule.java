@@ -6,14 +6,14 @@
  */
 package org.apache.maven.enforcer.rule;
 
-import java.io.IOException;
-import java.net.DatagramSocket;
-import java.net.ServerSocket;
-
 import org.apache.maven.enforcer.rule.api.EnforcerRule;
 import org.apache.maven.enforcer.rule.api.EnforcerRuleException;
 import org.apache.maven.enforcer.rule.api.EnforcerRuleHelper;
 import org.apache.maven.plugin.logging.Log;
+
+import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.ServerSocket;
 
 public class EnforcerPortRule implements EnforcerRule
 {

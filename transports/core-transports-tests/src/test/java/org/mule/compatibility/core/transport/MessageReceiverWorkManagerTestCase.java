@@ -6,9 +6,8 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-
+import org.junit.Test;
+import org.mockito.Answers;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.construct.FlowConstruct;
@@ -20,8 +19,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.resource.spi.work.Work;
 
-import org.junit.Test;
-import org.mockito.Answers;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 public class MessageReceiverWorkManagerTestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -58,7 +57,8 @@ public class MessageReceiverWorkManagerTestCase extends AbstractMuleContextEndpo
 
     private AbstractMessageReceiver createMessageReceiver() throws Exception
     {
-        return new TestMessageReceiver(getTestConnector(), mock(FlowConstruct.class, Answers.RETURNS_DEEP_STUBS.get()), getTestInboundEndpoint(MessageExchangePattern.ONE_WAY));
+        return new TestMessageReceiver(getTestConnector(), mock(FlowConstruct.class, Answers.RETURNS_DEEP_STUBS.get()),
+                getTestInboundEndpoint(MessageExchangePattern.ONE_WAY));
     }
 
 }

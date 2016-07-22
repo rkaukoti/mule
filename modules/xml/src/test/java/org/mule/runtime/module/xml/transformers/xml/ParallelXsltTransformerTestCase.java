@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.module.xml.transformers.xml;
 
+import org.custommonkey.xmlunit.XMLAssert;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.api.transformer.TransformerException;
@@ -16,11 +18,9 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import org.custommonkey.xmlunit.XMLAssert;
-import org.junit.Test;
-
 public class ParallelXsltTransformerTestCase extends AbstractMuleContextTestCase
 {
+    int running = 0;
     private String srcData;
     private String resultData;
     private Collection<Object> actualResults = new ConcurrentLinkedQueue<Object>();
@@ -30,7 +30,7 @@ public class ParallelXsltTransformerTestCase extends AbstractMuleContextTestCase
     {
         srcData = IOUtils.toString(IOUtils.getResourceAsStream("cdcatalog-utf-8.xml", getClass()), "UTF-8");
         resultData = IOUtils.toString(IOUtils.getResourceAsStream("cdcatalog-utf-8.html", getClass()),
-            "UTF-8");
+                "UTF-8");
     }
 
     public Transformer getTransformer() throws Exception
@@ -43,8 +43,6 @@ public class ParallelXsltTransformerTestCase extends AbstractMuleContextTestCase
         return transformer;
     }
 
-    int running = 0;
-
     public synchronized void signalStarted()
     {
         ++running;
@@ -52,7 +50,8 @@ public class ParallelXsltTransformerTestCase extends AbstractMuleContextTestCase
 
     public synchronized void signalDone()
     {
-        if (--running == 0) this.notify();
+        if (--running == 0)
+            this.notify();
     }
 
     @Test

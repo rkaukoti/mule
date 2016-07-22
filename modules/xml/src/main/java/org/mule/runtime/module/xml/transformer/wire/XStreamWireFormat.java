@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.module.xml.transformer.wire;
 
+import org.mule.runtime.core.transformer.wire.TransformerPairWireFormat;
 import org.mule.runtime.module.xml.transformer.ObjectToXml;
 import org.mule.runtime.module.xml.transformer.XStreamFactory;
 import org.mule.runtime.module.xml.transformer.XmlToObject;
-import org.mule.runtime.core.transformer.wire.TransformerPairWireFormat;
 
 import java.util.Map;
 import java.util.Set;
@@ -20,14 +20,14 @@ import java.util.Set;
  */
 public class XStreamWireFormat extends TransformerPairWireFormat
 {
-    
+
     public XStreamWireFormat() throws IllegalAccessException, InstantiationException, ClassNotFoundException
     {
         this(XStreamFactory.XSTREAM_XPP_DRIVER, null, null);
     }
 
     public XStreamWireFormat(String driverClassName, Map aliases, Set converters)
-        throws IllegalAccessException, InstantiationException, ClassNotFoundException
+            throws IllegalAccessException, InstantiationException, ClassNotFoundException
     {
         XmlToObject in = new XmlToObject();
         in.setDriverClass(driverClassName);

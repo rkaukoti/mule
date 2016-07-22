@@ -6,15 +6,14 @@
  */
 package org.mule.test.components;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.registry.Registry;
+import org.mule.tck.services.UniqueComponent;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-
-import org.mule.runtime.core.api.registry.Registry;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.services.UniqueComponent;
-
-import org.junit.Test;
 
 public class ObjectFactoryTestCase extends FunctionalTestCase
 {
@@ -28,15 +27,15 @@ public class ObjectFactoryTestCase extends FunctionalTestCase
     public void testDefaultScope() throws Exception
     {
         Registry registry = muleContext.getRegistry();
-        
+
         Object bean1 = registry.lookupObject("default");
         assertNotNull(bean1);
         String id1 = ((UniqueComponent) bean1).getId();
-        
+
         Object bean2 = registry.lookupObject("default");
         assertNotNull(bean2);
         String id2 = ((UniqueComponent) bean2).getId();
-        
+
         assertEquals(id1, id2);
     }
 
@@ -44,15 +43,15 @@ public class ObjectFactoryTestCase extends FunctionalTestCase
     public void testSingletonScope() throws Exception
     {
         Registry registry = muleContext.getRegistry();
-        
+
         Object bean1 = registry.lookupObject("singleton");
         assertNotNull(bean1);
         String id1 = ((UniqueComponent) bean1).getId();
-        
+
         Object bean2 = registry.lookupObject("singleton");
         assertNotNull(bean2);
         String id2 = ((UniqueComponent) bean2).getId();
-        
+
         assertEquals(id1, id2);
     }
 
@@ -60,15 +59,15 @@ public class ObjectFactoryTestCase extends FunctionalTestCase
     public void testPrototypeScope() throws Exception
     {
         Registry registry = muleContext.getRegistry();
-        
+
         Object bean1 = registry.lookupObject("prototype");
         assertNotNull(bean1);
         String id1 = ((UniqueComponent) bean1).getId();
-        
+
         Object bean2 = registry.lookupObject("prototype");
         assertNotNull(bean2);
         String id2 = ((UniqueComponent) bean2).getId();
-        
+
         assertFalse("IDs " + id1 + " and " + id2 + " should be different", id1.equals(id2));
     }
 

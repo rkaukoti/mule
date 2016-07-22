@@ -47,7 +47,8 @@ public class ExceptionToMessagingExceptionExecutionInterceptor implements Messag
     {
         for (ExceptionContextProvider exceptionContextProvider : event.getMuleContext().getExceptionContextProviders())
         {
-            for (Entry<String, Object> contextInfoEntry : exceptionContextProvider.getContextInfo(event, failingMessageProcessor).entrySet())
+            for (Entry<String, Object> contextInfoEntry : exceptionContextProvider.getContextInfo(event, failingMessageProcessor)
+                                                                                  .entrySet())
             {
                 if (!messagingException.getInfo().containsKey(contextInfoEntry.getKey()))
                 {

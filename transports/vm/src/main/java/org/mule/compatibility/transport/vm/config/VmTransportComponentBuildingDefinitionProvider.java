@@ -6,13 +6,6 @@
  */
 package org.mule.compatibility.transport.vm.config;
 
-import static org.mule.compatibility.transport.vm.config.VmXmlNamespaceInfoProvider.VM_TRANSPORT_NAMESPACE;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromChildConfiguration;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromFixedValue;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromReferenceObject;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromSimpleParameter;
-import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
-
 import org.mule.compatibility.config.spring.TransportComponentBuildingDefinitionProvider;
 import org.mule.compatibility.transport.vm.VMConnector;
 import org.mule.compatibility.transport.vm.VMTransactionFactory;
@@ -24,6 +17,13 @@ import org.mule.runtime.core.config.QueueProfile;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mule.compatibility.transport.vm.config.VmXmlNamespaceInfoProvider.VM_TRANSPORT_NAMESPACE;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromChildConfiguration;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromFixedValue;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromReferenceObject;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromSimpleParameter;
+import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
 
 /**
  * Provider for {@code ComponentBuildingDefinition}s to parse VM transport configuration.
@@ -49,19 +49,26 @@ public class VmTransportComponentBuildingDefinitionProvider extends TransportCom
         componentBuildingDefinitions.add(getInboundEndpointBuildingDefinitionBuilder().withNamespace(VM_TRANSPORT_NAMESPACE).build());
         componentBuildingDefinitions.add(getEndpointBuildingDefinitionBuilder().withNamespace(VM_TRANSPORT_NAMESPACE).build());
         componentBuildingDefinitions.add(getBaseTransactionDefinitionBuilder().withNamespace(VM_TRANSPORT_NAMESPACE)
-                                                 .withSetterParameterDefinition("factory", fromFixedValue(new VMTransactionFactory()).build()).build());
+                                                                              .withSetterParameterDefinition("factory",
+                                                                                      fromFixedValue(new VMTransactionFactory()).build())
+                                                                              .build());
         componentBuildingDefinitions.add(getBaseConnector()
-                                                 .withTypeDefinition(fromType(VMConnector.class)).withNamespace(VM_TRANSPORT_NAMESPACE)
-                                                 .withSetterParameterDefinition("queueProfile", fromChildConfiguration(QueueProfile.class).build())
-                                                 .withSetterParameterDefinition("queueTimeout", fromSimpleParameter("queueTimeout").build())
-                                                 .build());
+                .withTypeDefinition(fromType(VMConnector.class)).withNamespace(VM_TRANSPORT_NAMESPACE)
+                .withSetterParameterDefinition("queueProfile", fromChildConfiguration(QueueProfile.class).build())
+                .withSetterParameterDefinition("queueTimeout", fromSimpleParameter("queueTimeout").build())
+                .build());
 
         ComponentBuildingDefinition.Builder baseQueueProfileBuilder = baseDefinition.copy()
-                .withTypeDefinition(fromType(QueueProfile.class))
-                .withObjectFactoryType(QueueProfileFactoryBean.class)
-                .withSetterParameterDefinition("maxOutstandingMessages", fromSimpleParameter("maxOutstandingMessages").build())
-                .withSetterParameterDefinition("muleContext", fromReferenceObject(MuleContext.class).build())
-                .withSetterParameterDefinition("queueStore", fromChildConfiguration(ObjectStore.class).build());
+                                                                                    .withTypeDefinition(fromType(QueueProfile.class))
+                                                                                    .withObjectFactoryType(QueueProfileFactoryBean.class)
+                                                                                    .withSetterParameterDefinition("maxOutstandingMessages",
+                                                                                            fromSimpleParameter(
+                                                                                                    "maxOutstandingMessages").build())
+                                                                                    .withSetterParameterDefinition("muleContext",
+                                                                                            fromReferenceObject(MuleContext.class).build())
+                                                                                    .withSetterParameterDefinition("queueStore",
+                                                                                            fromChildConfiguration(
+                                                                                                    ObjectStore.class).build());
         componentBuildingDefinitions.add(baseQueueProfileBuilder.copy().withIdentifier("queueProfile").build());
         componentBuildingDefinitions.add(baseQueueProfileBuilder.copy().withIdentifier("queue-profile").build());
 

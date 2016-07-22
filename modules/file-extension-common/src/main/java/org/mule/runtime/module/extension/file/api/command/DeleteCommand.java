@@ -20,7 +20,7 @@ public interface DeleteCommand
     /**
      * Deletes a file under the considerations of {@link FileSystem#delete(FileConnectorConfig, String)}
      *
-     * @param config the config that is parameterizing this operation
+     * @param config   the config that is parameterizing this operation
      * @param filePath the path to the file to be deleted
      * @throws IllegalArgumentException if {@code filePath} doesn't exists or is locked
      */

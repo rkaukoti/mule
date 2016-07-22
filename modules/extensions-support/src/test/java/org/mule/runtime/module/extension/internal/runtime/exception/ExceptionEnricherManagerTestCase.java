@@ -6,13 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.exception;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.extension.api.introspection.RuntimeExtensionModel;
 import org.mule.runtime.extension.api.introspection.exception.ExceptionEnricher;
@@ -26,11 +24,13 @@ import java.lang.reflect.UndeclaredThrowableException;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -94,7 +94,8 @@ public class ExceptionEnricherManagerTestCase
     @Test
     public void handleInvocationTargetExceptionCause()
     {
-        Throwable e = new Throwable(new RuntimeException(new UndeclaredThrowableException(new IOException(ERROR_MESSAGE, new Exception()))));
+        Throwable e =
+                new Throwable(new RuntimeException(new UndeclaredThrowableException(new IOException(ERROR_MESSAGE, new Exception()))));
         Exception resultException = manager.handleException(e);
         assertThat(resultException, is(instanceOf(IOException.class)));
         assertThat(resultException.getMessage(), is(ERROR_MESSAGE));

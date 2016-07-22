@@ -7,18 +7,18 @@
 
 package org.mule.runtime.module.db.integration.config;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import org.mule.runtime.module.db.internal.domain.param.QueryParam;
-import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
 import org.mule.runtime.module.db.integration.TestDbConfig;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
+import org.mule.runtime.module.db.internal.domain.param.QueryParam;
+import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
 
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class CustomParamTypeTestCase extends AbstractDbIntegrationTestCase
 {

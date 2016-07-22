@@ -7,12 +7,9 @@
 
 package org.mule.runtime.module.db.integration.vendor.oracle;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecord;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.TestDbConfig;
@@ -28,9 +25,11 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecord;
 
 public class OracleStoredProcedureXmlParamTestCase extends AbstractOracleXmlTypeTestCase
 {

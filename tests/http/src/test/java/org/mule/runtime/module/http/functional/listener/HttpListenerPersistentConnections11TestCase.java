@@ -6,15 +6,15 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
+import org.apache.http.HttpVersion;
+import org.junit.Test;
+
+import java.io.IOException;
+
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mule.runtime.module.http.api.HttpHeaders.Values.CLOSE;
-
-import java.io.IOException;
-
-import org.apache.http.HttpVersion;
-import org.junit.Test;
 
 public class HttpListenerPersistentConnections11TestCase extends HttpListenerPersistentConnectionsTestCase
 {

@@ -24,7 +24,7 @@ public abstract class AbstractConnectionFactory implements ConnectionFactory
 
         if (connection == null)
         {
-          throw new ConnectionCreationException("Unable to create connection to the provided dataSource: " + dataSource);
+            throw new ConnectionCreationException("Unable to create connection to the provided dataSource: " + dataSource);
         }
 
         return connection;

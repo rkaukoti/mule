@@ -9,15 +9,14 @@ package org.mule.runtime.config.builders;
 import org.mule.runtime.core.MuleServer;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 
 /**
  * This ServletContextListener should be used instead of
@@ -28,10 +27,21 @@ import org.springframework.web.context.WebApplicationContext;
 public class DeployableMuleXmlContextListener implements ServletContextListener
 {
 
-    protected transient final Logger logger = LoggerFactory.getLogger(DeployableMuleXmlContextListener.class);
-
-    private WebappMuleXmlConfigurationBuilder configurationBuilder;
     private static MuleContext muleContext;
+    protected transient final Logger logger = LoggerFactory.getLogger(DeployableMuleXmlContextListener.class);
+    private WebappMuleXmlConfigurationBuilder configurationBuilder;
+
+    /**
+     * This method is to be used only by application server or web container
+     * integrations that allow web applications to be hot-deployed.
+     *
+     * @param context the single shared muleContext instance that will be used to configure mule configurations hot-deployed as web
+     *                application.
+     */
+    public static void setMuleContext(MuleContext context)
+    {
+        muleContext = context;
+    }
 
     public void contextInitialized(ServletContextEvent event)
     {
@@ -68,7 +78,8 @@ public class DeployableMuleXmlContextListener implements ServletContextListener
             configurationBuilder.setUseDefaultConfigResource(false);
 
             // Support Spring-first configuration in webapps
-            final ApplicationContext parentContext = (ApplicationContext) context.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+            final ApplicationContext parentContext =
+                    (ApplicationContext) context.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
             if (parentContext != null)
             {
                 configurationBuilder.setParentContext(parentContext);
@@ -99,18 +110,6 @@ public class DeployableMuleXmlContextListener implements ServletContextListener
         {
             configurationBuilder.unconfigure(muleContext);
         }
-    }
-
-    /**
-     * This method is to be used only by application server or web container
-     * integrations that allow web applications to be hot-deployed.
-     * 
-     * @param context the single shared muleContext instance that will be used to
-     *            configure mule configurations hot-deployed as web application.
-     */
-    public static void setMuleContext(MuleContext context)
-    {
-        muleContext = context;
     }
 
 }

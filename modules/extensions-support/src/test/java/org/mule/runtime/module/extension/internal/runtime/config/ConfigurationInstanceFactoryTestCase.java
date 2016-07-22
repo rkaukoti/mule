@@ -6,17 +6,13 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
-import static java.util.Arrays.asList;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.toMetadataType;
+import com.google.common.collect.ImmutableList;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionHandlingStrategy;
 import org.mule.runtime.api.connection.ConnectionHandlingStrategyFactory;
@@ -41,15 +37,19 @@ import org.mule.tck.size.SmallTest;
 import org.mule.tck.testmodels.fruit.Banana;
 import org.mule.tck.testmodels.fruit.Kiwi;
 
-import com.google.common.collect.ImmutableList;
-
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.toMetadataType;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -92,8 +92,10 @@ public class ConfigurationInstanceFactoryTestCase extends AbstractMuleTestCase
         when(configurationModel.getSourceModels()).thenReturn(ImmutableList.of());
         when(configurationModel.getExtensionModel().getOperationModels()).thenReturn(asList(operationModel));
         when(configurationModel.getExtensionModel().getSourceModels()).thenReturn(asList(sourceModel));
-        when(operationModel.getModelProperty(ConnectivityModelProperty.class)).thenReturn(Optional.of(new ConnectivityModelProperty(toMetadataType(Banana.class))));
-        when(sourceModel.getModelProperty(ConnectivityModelProperty.class)).thenReturn(Optional.of(new ConnectivityModelProperty(toMetadataType(Banana.class))));
+        when(operationModel.getModelProperty(ConnectivityModelProperty.class)).thenReturn(
+                Optional.of(new ConnectivityModelProperty(toMetadataType(Banana.class))));
+        when(sourceModel.getModelProperty(ConnectivityModelProperty.class)).thenReturn(
+                Optional.of(new ConnectivityModelProperty(toMetadataType(Banana.class))));
 
         resolverSet = ConfigurationObjectBuilderTestCase.createResolverSet();
         factory = new ConfigurationInstanceFactory<>(configurationModel, resolverSet);
@@ -102,7 +104,8 @@ public class ConfigurationInstanceFactoryTestCase extends AbstractMuleTestCase
     @Test
     public void createFromEvent() throws Exception
     {
-        ConfigurationInstance<TestConfig> configurationInstance = factory.createConfiguration(CONFIG_NAME, event, new StaticValueResolver<>(null));
+        ConfigurationInstance<TestConfig> configurationInstance =
+                factory.createConfiguration(CONFIG_NAME, event, new StaticValueResolver<>(null));
 
         assertConfiguration(configurationInstance);
     }

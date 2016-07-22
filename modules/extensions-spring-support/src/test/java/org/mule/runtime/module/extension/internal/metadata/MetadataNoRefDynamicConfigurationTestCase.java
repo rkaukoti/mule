@@ -6,10 +6,7 @@
  */
 package org.mule.runtime.module.extension.internal.metadata;
 
-import static org.mule.runtime.api.metadata.MetadataKeyBuilder.newKey;
-import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.AMERICA;
-import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.SAN_FRANCISCO;
-import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.USA;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.MetadataKey;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
 import org.mule.runtime.api.metadata.ProcessorId;
@@ -17,7 +14,10 @@ import org.mule.runtime.api.metadata.descriptor.ComponentMetadataDescriptor;
 import org.mule.runtime.api.metadata.resolving.FailureCode;
 import org.mule.runtime.api.metadata.resolving.MetadataResult;
 
-import org.junit.Test;
+import static org.mule.runtime.api.metadata.MetadataKeyBuilder.newKey;
+import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.AMERICA;
+import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.SAN_FRANCISCO;
+import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.USA;
 
 public class MetadataNoRefDynamicConfigurationTestCase extends MetadataExtensionFunctionalTestCase
 {
@@ -33,6 +33,7 @@ public class MetadataNoRefDynamicConfigurationTestCase extends MetadataExtension
         componentId = new ProcessorId(RESOLVER_WITH_IMPLICIT_DYNAMIC_CONFIG, FIRST_PROCESSOR_INDEX);
         MetadataKey key = newKey(AMERICA).withChild(newKey(USA).withChild(newKey(SAN_FRANCISCO))).build();
         final MetadataResult<ComponentMetadataDescriptor> metadataResult = metadataManager.getMetadata(componentId, key);
-        assertFailure(metadataResult, "Configuration used for Metadata fetch cannot be dynamic", FailureCode.INVALID_CONFIGURATION, MetadataResolvingException.class.getName());
+        assertFailure(metadataResult, "Configuration used for Metadata fetch cannot be dynamic", FailureCode.INVALID_CONFIGURATION,
+                MetadataResolvingException.class.getName());
     }
 }

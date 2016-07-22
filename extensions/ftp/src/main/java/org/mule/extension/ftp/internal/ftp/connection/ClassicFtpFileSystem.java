@@ -6,10 +6,8 @@
  */
 package org.mule.extension.ftp.internal.ftp.connection;
 
-import static java.lang.String.format;
-import static org.apache.commons.lang.StringUtils.EMPTY;
-import static org.mule.extension.ftp.internal.FtpConnector.FTP_PROTOCOL;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPConnectionClosedException;
 import org.mule.extension.ftp.api.ftp.FtpTransferMode;
 import org.mule.extension.ftp.internal.ftp.command.FtpCopyCommand;
 import org.mule.extension.ftp.internal.ftp.command.FtpCreateDirectoryCommand;
@@ -36,6 +34,8 @@ import org.mule.runtime.module.extension.file.api.command.RenameCommand;
 import org.mule.runtime.module.extension.file.api.command.WriteCommand;
 import org.mule.runtime.module.extension.file.api.lock.PathLock;
 import org.mule.runtime.module.extension.file.api.lock.URLPathLock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -46,10 +46,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPConnectionClosedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static org.apache.commons.lang.StringUtils.EMPTY;
+import static org.mule.extension.ftp.internal.FtpConnector.FTP_PROTOCOL;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * Implementation of {@link FtpFileSystem} for files residing on a FTP server
@@ -165,13 +165,15 @@ public final class ClassicFtpFileSystem extends AbstractFileSystem implements Ft
         {
             if (!client.setFileType(mode.getCode()))
             {
-                throw new IOException(String.format("Failed to set %s transfer type. FTP reply code is: ", mode.getDescription(), client.getReplyCode()));
+                throw new IOException(
+                        String.format("Failed to set %s transfer type. FTP reply code is: ", mode.getDescription(), client.getReplyCode()));
             }
         }
         catch (Exception e)
         {
-            throw new MuleRuntimeException(createStaticMessage(String.format("Found exception trying to change transfer mode to %s. FTP reply code is: ",
-                                                                             mode.getClass(), client.getReplyCode())));
+            throw new MuleRuntimeException(
+                    createStaticMessage(String.format("Found exception trying to change transfer mode to %s. FTP reply code is: ",
+                            mode.getClass(), client.getReplyCode())));
         }
     }
 
@@ -217,14 +219,17 @@ public final class ClassicFtpFileSystem extends AbstractFileSystem implements Ft
             InputStream inputStream = client.retrieveFileStream(filePayload.getPath());
             if (inputStream == null)
             {
-                throw new FileNotFoundException(String.format("Could not retrieve content of file '%s' because it doesn't exists", filePayload.getPath()));
+                throw new FileNotFoundException(
+                        String.format("Could not retrieve content of file '%s' because it doesn't exists", filePayload.getPath()));
             }
 
             return inputStream;
         }
         catch (Exception e)
         {
-            throw new MuleRuntimeException(createStaticMessage(format("Exception was found trying to retrieve the contents of file '%s'. Ftp reply code: %d ", filePayload.getPath(), client.getReplyCode())), e);
+            throw new MuleRuntimeException(createStaticMessage(
+                    format("Exception was found trying to retrieve the contents of file '%s'. Ftp reply code: %d ", filePayload.getPath(),
+                            client.getReplyCode())), e);
         }
     }
 
@@ -245,7 +250,8 @@ public final class ClassicFtpFileSystem extends AbstractFileSystem implements Ft
         }
         catch (IOException e)
         {
-            throw new MuleRuntimeException(createStaticMessage("Failed to complete pending command. Ftp reply code: " + client.getReplyCode()), e);
+            throw new MuleRuntimeException(
+                    createStaticMessage("Failed to complete pending command. Ftp reply code: " + client.getReplyCode()), e);
         }
     }
 
@@ -264,7 +270,8 @@ public final class ClassicFtpFileSystem extends AbstractFileSystem implements Ft
     {
         try
         {
-            return new URL(FTP_PROTOCOL, client.getRemoteAddress().toString(), client.getRemotePort(), path != null ? path.toString() : EMPTY);
+            return new URL(FTP_PROTOCOL, client.getRemoteAddress().toString(), client.getRemotePort(),
+                    path != null ? path.toString() : EMPTY);
         }
         catch (MalformedURLException e)
         {
@@ -287,7 +294,8 @@ public final class ClassicFtpFileSystem extends AbstractFileSystem implements Ft
             }
             catch (IOException e)
             {
-                throw new MuleRuntimeException(createStaticMessage(format("Failed to perform CWD to the base directory '%s'", config.getBaseDir())), e);
+                throw new MuleRuntimeException(
+                        createStaticMessage(format("Failed to perform CWD to the base directory '%s'", config.getBaseDir())), e);
             }
         }
     }

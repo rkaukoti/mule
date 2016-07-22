@@ -8,6 +8,8 @@ package org.mule.compatibility.transport.jms.jndi;
 
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -16,9 +18,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class AbstractJndiNameResolver implements JndiNameResolver
 {
@@ -42,8 +41,7 @@ public abstract class AbstractJndiNameResolver implements JndiNameResolver
     /**
      * Creates a JNDI context using the current {@link #contextFactory}
      *
-     * @return a new {@link Context} instance. Callers must provide concurrent
-     *         access control on the returned value.
+     * @return a new {@link Context} instance. Callers must provide concurrent access control on the returned value.
      * @throws NamingException if there is a problem during the context creation.
      */
     protected Context createInitialContext() throws NamingException

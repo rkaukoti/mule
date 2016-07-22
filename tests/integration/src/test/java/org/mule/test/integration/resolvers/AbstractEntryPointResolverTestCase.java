@@ -6,13 +6,13 @@
  */
 package org.mule.test.integration.resolvers;
 
-import static java.util.Collections.emptyMap;
-import static org.junit.Assert.assertEquals;
-
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 
 import java.util.Map;
+
+import static java.util.Collections.emptyMap;
+import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractEntryPointResolverTestCase extends FunctionalTestCase
 {

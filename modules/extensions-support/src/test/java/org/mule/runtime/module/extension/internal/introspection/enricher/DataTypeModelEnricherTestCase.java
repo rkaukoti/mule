@@ -6,6 +6,28 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.extension.api.annotation.DataTypeParameters;
+import org.mule.runtime.extension.api.exception.IllegalModelDefinitionException;
+import org.mule.runtime.extension.api.introspection.declaration.DescribingContext;
+import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclaration;
+import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclarer;
+import org.mule.runtime.extension.api.introspection.declaration.fluent.OperationDeclaration;
+import org.mule.runtime.extension.api.introspection.declaration.fluent.ParameterDeclaration;
+import org.mule.runtime.module.extension.internal.model.property.ImplementingMethodModelProperty;
+import org.mule.runtime.module.extension.internal.model.property.ImplementingTypeModelProperty;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+import org.reflections.ReflectionUtils;
+
+import java.lang.reflect.Method;
+import java.util.Optional;
+
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -25,28 +47,6 @@ import static org.mule.runtime.module.extension.internal.ExtensionProperties.MIM
 import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.toMetadataType;
 import static org.reflections.ReflectionUtils.withAnnotation;
 import static org.reflections.ReflectionUtils.withReturnType;
-import org.mule.runtime.extension.api.annotation.DataTypeParameters;
-import org.mule.runtime.extension.api.exception.IllegalModelDefinitionException;
-import org.mule.runtime.extension.api.introspection.declaration.DescribingContext;
-import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclaration;
-import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclarer;
-import org.mule.runtime.extension.api.introspection.declaration.fluent.OperationDeclaration;
-import org.mule.runtime.extension.api.introspection.declaration.fluent.ParameterDeclaration;
-import org.mule.runtime.module.extension.internal.model.property.ImplementingMethodModelProperty;
-import org.mule.runtime.module.extension.internal.model.property.ImplementingTypeModelProperty;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import java.lang.reflect.Method;
-import java.util.Optional;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.reflections.ReflectionUtils;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -81,7 +81,8 @@ public class DataTypeModelEnricherTestCase extends AbstractMuleTestCase
         when(extensionDeclaration.getOperations()).thenReturn(asList(annotatedOperation, notAnnotatedOperation));
         when(annotatedOperation.getModelProperty(ImplementingTypeModelProperty.class)).thenReturn(Optional.empty());
         when(notAnnotatedOperation.getModelProperty(ImplementingTypeModelProperty.class)).thenReturn(Optional.empty());
-        when(annotatedOperation.getModelProperty(ImplementingMethodModelProperty.class)).thenReturn(Optional.of(new ImplementingMethodModelProperty(method)));
+        when(annotatedOperation.getModelProperty(ImplementingMethodModelProperty.class)).thenReturn(
+                Optional.of(new ImplementingMethodModelProperty(method)));
         when(notAnnotatedOperation.getModelProperty(ImplementingMethodModelProperty.class)).thenReturn(Optional.empty());
     }
 
@@ -107,7 +108,8 @@ public class DataTypeModelEnricherTestCase extends AbstractMuleTestCase
     @Test(expected = IllegalModelDefinitionException.class)
     public void voidOperation()
     {
-        when(annotatedOperation.getModelProperty(ImplementingMethodModelProperty.class)).thenReturn(Optional.of(new ImplementingMethodModelProperty(getVoidAnnotatedMethod())));
+        when(annotatedOperation.getModelProperty(ImplementingMethodModelProperty.class)).thenReturn(
+                Optional.of(new ImplementingMethodModelProperty(getVoidAnnotatedMethod())));
         enricher.enrich(describingContext);
     }
 
@@ -130,14 +132,14 @@ public class DataTypeModelEnricherTestCase extends AbstractMuleTestCase
     private Method getAnnotatedMethod()
     {
         return ReflectionUtils.getMethods(getClass(), withAnnotation(DataTypeParameters.class),
-                                          withReturnType(Object.class))
-                .stream().findFirst().get();
+                withReturnType(Object.class))
+                              .stream().findFirst().get();
     }
 
     private Method getVoidAnnotatedMethod()
     {
         return ReflectionUtils.getMethods(getClass(), withAnnotation(DataTypeParameters.class),
-                                          withReturnType(void.class))
-                .stream().findFirst().get();
+                withReturnType(void.class))
+                              .stream().findFirst().get();
     }
 }

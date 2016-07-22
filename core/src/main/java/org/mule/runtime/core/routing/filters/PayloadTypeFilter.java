@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.core.routing.filters;
 
-import static org.mule.runtime.core.util.ClassUtils.equal;
-import static org.mule.runtime.core.util.ClassUtils.hash;
-
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.core.util.ClassUtils;
+
+import static org.mule.runtime.core.util.ClassUtils.equal;
+import static org.mule.runtime.core.util.ClassUtils.hash;
 
 /**
  * <code>PayloadTypeFilter</code> filters based on the type of the object received.
@@ -50,11 +50,13 @@ public class PayloadTypeFilter implements Filter
     {
         this.expectedType = expectedType;
     }
-    
+
     public boolean equals(Object obj)
     {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
 
         final PayloadTypeFilter other = (PayloadTypeFilter) obj;
         return equal(expectedType, other.expectedType);
@@ -62,6 +64,6 @@ public class PayloadTypeFilter implements Filter
 
     public int hashCode()
     {
-        return hash(new Object[]{this.getClass(), expectedType});
+        return hash(new Object[] {this.getClass(), expectedType});
     }
 }

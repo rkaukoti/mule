@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.module.launcher;
 
-import static org.mule.runtime.core.util.Preconditions.checkState;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
 import org.mule.runtime.module.launcher.application.ArtifactPluginFactory;
 import org.mule.runtime.module.launcher.application.MuleApplicationClassLoaderFactory;
@@ -16,8 +15,11 @@ import org.mule.runtime.module.launcher.plugin.ArtifactPluginRepository;
 
 import java.io.IOException;
 
+import static org.mule.runtime.core.util.Preconditions.checkState;
+
 /**
- * {@link ArtifactClassLoader} builder for class loaders required by {@link org.mule.runtime.module.launcher.application.Application} artifacts
+ * {@link ArtifactClassLoader} builder for class loaders required by {@link org.mule.runtime.module.launcher.application.Application}
+ * artifacts
  *
  * @since 4.0
  */
@@ -32,9 +34,9 @@ public class ApplicationClassLoaderBuilder extends AbstractArtifactClassLoaderBu
      * The {@code domainRepository} is used to locate the domain that this application belongs to and the {@code artifactClassLoaderBuilder}
      * is used for building the common parts of artifacts.
      *
-     * @param artifactClassLoaderFactory factory for the classloader specific to the artifact resource and classes
-     * @param artifactPluginRepository repository of plugins contained by the runtime
-     * @param artifactPluginFactory factory for creating artifact plugins
+     * @param artifactClassLoaderFactory     factory for the classloader specific to the artifact resource and classes
+     * @param artifactPluginRepository       repository of plugins contained by the runtime
+     * @param artifactPluginFactory          factory for creating artifact plugins
      * @param artifactPluginDescriptorLoader loader for plugin zip files into their descriptors
      */
     public ApplicationClassLoaderBuilder(MuleApplicationClassLoaderFactory artifactClassLoaderFactory,

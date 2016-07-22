@@ -8,9 +8,9 @@
 package org.mule.runtime.core.api.processor;
 
 /**
- *  Adds clone capability to {@link MessageProcessor}
- *  <p/>
- *  NOTE: Lifecycle management is shared with the original {@link MessageProcessor} instance
+ * Adds clone capability to {@link MessageProcessor}
+ * <p/>
+ * NOTE: Lifecycle management is shared with the original {@link MessageProcessor} instance
  */
 public interface CloneableMessageProcessor
 {

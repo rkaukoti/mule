@@ -6,15 +6,7 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.junit.Test;
 import org.mule.functional.functional.EventCallback;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.functional.listener.ExceptionListener;
@@ -25,7 +17,14 @@ import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.api.transaction.Transaction;
 import org.mule.runtime.core.transaction.TransactionCoordination;
 
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CatchExceptionStrategyTransactionTestCase extends FunctionalTestCase
 {
@@ -43,7 +42,7 @@ public class CatchExceptionStrategyTransactionTestCase extends FunctionalTestCas
     private static final String OUT_2_JMS_ENDPOINT = "jms://out2?connector=activeMq";
 
     private Transaction mockTransaction = mock(Transaction.class);
-    
+
     @Override
     protected String getConfigFile()
     {

@@ -15,5 +15,6 @@ import org.mule.runtime.module.db.internal.domain.type.JdbcTypes;
 public final class TestDbTypeMetadata
 {
 
-    public static final TypeMetadata INTEGER_DB_TYPE_METADATA = new TypeMetadata(JdbcTypes.INTEGER_DB_TYPE.getName(), JdbcTypes.INTEGER_DB_TYPE.getId());
+    public static final TypeMetadata INTEGER_DB_TYPE_METADATA =
+            new TypeMetadata(JdbcTypes.INTEGER_DB_TYPE.getName(), JdbcTypes.INTEGER_DB_TYPE.getId());
 }

@@ -14,11 +14,10 @@ import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.transformer.AbstractTransformer;
 import org.mule.runtime.core.transformer.TransformerUtils;
-
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class TransportTransformerUtils extends TransformerUtils
 {
@@ -33,15 +32,6 @@ public class TransportTransformerUtils extends TransformerUtils
     {
         Transformer transformer = firstOrNull(transformers);
         return null != transformer && transformer.isSourceDataTypeSupported(DataType.fromType(clazz));
-    }
-
-    /**
-     * @deprecated Transport infrastructure is deprecated.
-     */
-    @Deprecated
-    protected static interface TransformerSource
-    {
-        public List<Transformer> getTransformers() throws TransportFactoryException;
     }
 
     /**
@@ -67,7 +57,8 @@ public class TransportTransformerUtils extends TransformerUtils
      * @deprecated Transport infrastructure is deprecated.
      */
     @Deprecated
-    public static List<Transformer> getDefaultInboundTransformers(final TransportServiceDescriptor serviceDescriptor, final ImmutableEndpoint endpoint)
+    public static List<Transformer> getDefaultInboundTransformers(final TransportServiceDescriptor serviceDescriptor,
+                                                                  final ImmutableEndpoint endpoint)
     {
         return getTransformersFromSource(() -> serviceDescriptor.createInboundTransformers(endpoint));
     }
@@ -76,7 +67,8 @@ public class TransportTransformerUtils extends TransformerUtils
      * @deprecated Transport infrastructure is deprecated.
      */
     @Deprecated
-    public static List<Transformer> getDefaultResponseTransformers(final TransportServiceDescriptor serviceDescriptor, final ImmutableEndpoint endpoint)
+    public static List<Transformer> getDefaultResponseTransformers(final TransportServiceDescriptor serviceDescriptor,
+                                                                   final ImmutableEndpoint endpoint)
     {
         return getTransformersFromSource(() -> serviceDescriptor.createResponseTransformers(endpoint));
     }
@@ -85,8 +77,18 @@ public class TransportTransformerUtils extends TransformerUtils
      * @deprecated Transport infrastructure is deprecated.
      */
     @Deprecated
-    public static List<Transformer> getDefaultOutboundTransformers(final TransportServiceDescriptor serviceDescriptor, final ImmutableEndpoint endpoint)
+    public static List<Transformer> getDefaultOutboundTransformers(final TransportServiceDescriptor serviceDescriptor,
+                                                                   final ImmutableEndpoint endpoint)
     {
         return getTransformersFromSource(() -> serviceDescriptor.createOutboundTransformers(endpoint));
+    }
+
+    /**
+     * @deprecated Transport infrastructure is deprecated.
+     */
+    @Deprecated
+    protected static interface TransformerSource
+    {
+        public List<Transformer> getTransformers() throws TransportFactoryException;
     }
 }

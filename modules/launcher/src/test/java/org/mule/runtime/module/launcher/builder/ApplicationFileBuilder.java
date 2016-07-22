@@ -7,17 +7,18 @@
 
 package org.mule.runtime.module.launcher.builder;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static org.mule.runtime.module.launcher.descriptor.ApplicationDescriptor.DEFAULT_APP_PROPERTIES_RESOURCE;
-import static org.mule.runtime.module.launcher.descriptor.ApplicationDescriptor.DEFAULT_CONFIGURATION_RESOURCE;
-import static org.mule.runtime.module.launcher.descriptor.ApplicationDescriptor.DEFAULT_DEPLOY_PROPERTIES_RESOURCE;
-import org.mule.tck.ZipUtils.ZipResource;
 import org.mule.runtime.core.util.FilenameUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.mule.tck.ZipUtils.ZipResource;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static org.mule.runtime.module.launcher.descriptor.ApplicationDescriptor.DEFAULT_APP_PROPERTIES_RESOURCE;
+import static org.mule.runtime.module.launcher.descriptor.ApplicationDescriptor.DEFAULT_CONFIGURATION_RESOURCE;
+import static org.mule.runtime.module.launcher.descriptor.ApplicationDescriptor.DEFAULT_DEPLOY_PROPERTIES_RESOURCE;
 
 /**
  * Creates Mule Application files.
@@ -52,7 +53,7 @@ public class ApplicationFileBuilder extends AbstractArtifactFileBuilder<Applicat
     /**
      * Create a new builder from another instance and different ID.
      *
-     * @param id artifact identifier. Non empty.
+     * @param id     artifact identifier. Non empty.
      * @param source instance used as template to build the new one. Non null.
      */
     public ApplicationFileBuilder(String id, ApplicationFileBuilder source)
@@ -87,7 +88,7 @@ public class ApplicationFileBuilder extends AbstractArtifactFileBuilder<Applicat
     /**
      * Adds a property into the application properties file.
      *
-     * @param propertyName name fo the property to add. Non empty
+     * @param propertyName  name fo the property to add. Non empty
      * @param propertyValue value of the property to add. Non null.
      * @return the same builder instance
      */
@@ -103,7 +104,7 @@ public class ApplicationFileBuilder extends AbstractArtifactFileBuilder<Applicat
     /**
      * Adds a property into the application deployment properties file.
      *
-     * @param propertyName name fo the property to add. Non empty
+     * @param propertyName  name fo the property to add. Non empty
      * @param propertyValue value of the property to add. Non null.
      * @return the same builder instance
      */
@@ -174,7 +175,8 @@ public class ApplicationFileBuilder extends AbstractArtifactFileBuilder<Applicat
 
         for (ArtifactPluginFileBuilder plugin : plugins)
         {
-            customResources.add(new ZipResource(plugin.getArtifactFile().getAbsolutePath(), "plugins/" + plugin.getArtifactFile().getName()));
+            customResources.add(
+                    new ZipResource(plugin.getArtifactFile().getAbsolutePath(), "plugins/" + plugin.getArtifactFile().getName()));
         }
 
         final ZipResource appProperties = createPropertiesFile(this.properties, DEFAULT_APP_PROPERTIES_RESOURCE);

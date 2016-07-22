@@ -6,7 +6,8 @@
  */
 package org.mule.test.components;
 
-import static org.junit.Assert.fail;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
@@ -14,8 +15,7 @@ import org.mule.tck.probe.Probe;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.fail;
 
 @Ignore
 public class PartialStartupTestCase extends FunctionalTestCase
@@ -25,6 +25,32 @@ public class PartialStartupTestCase extends FunctionalTestCase
     {
         super();
         setStartContext(false);
+    }
+
+    private static List<String> collectThreadNames()
+    {
+        List<String> threadNames = new ArrayList<String>();
+        for (Thread t : Thread.getAllStackTraces().keySet())
+        {
+            threadNames.add(t.getName());
+        }
+        return threadNames;
+    }
+
+    private static int countOcurrences(List<String> elements, String prefix)
+    {
+        int count = 0;
+        if (elements != null)
+        {
+            for (String element : elements)
+            {
+                if (element.startsWith(prefix))
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     @Override
@@ -68,31 +94,5 @@ public class PartialStartupTestCase extends FunctionalTestCase
                 return "mule threads running during dispose";
             }
         });
-    }
-
-    private static List<String> collectThreadNames()
-    {
-        List<String> threadNames = new ArrayList<String>();
-        for (Thread t : Thread.getAllStackTraces().keySet())
-        {
-            threadNames.add(t.getName());
-        }
-        return threadNames;
-    }
-
-    private static int countOcurrences(List<String> elements, String prefix)
-    {
-        int count = 0;
-        if (elements != null)
-        {
-            for (String element : elements)
-            {
-                if (element.startsWith(prefix))
-                {
-                    count++;
-                }
-            }
-        }
-        return count;
     }
 }

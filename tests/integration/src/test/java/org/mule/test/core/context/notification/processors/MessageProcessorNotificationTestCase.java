@@ -6,8 +6,8 @@
  */
 package org.mule.test.core.context.notification.processors;
 
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.processor.MessageProcessor;
@@ -21,8 +21,7 @@ import org.mule.test.core.context.notification.RestrictedNode;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
+import static org.junit.Assert.assertNotNull;
 
 public class MessageProcessorNotificationTestCase extends AbstractMessageProcessorNotificationTestCase
 {
@@ -56,7 +55,8 @@ public class MessageProcessorNotificationTestCase extends AbstractMessageProcess
         expectedException.expect(ComponentException.class);
         flowRunner("rollback-es").withPayload(TEST_PAYLOAD).run();
         assertNotNull(flowRunner("choice-es").withPayload(TEST_PAYLOAD).run());
-        CompositeMessageSource composite = (CompositeMessageSource) ((Flow) muleContext.getRegistry().lookupFlowConstruct("composite-source")).getMessageSource();
+        CompositeMessageSource composite =
+                (CompositeMessageSource) ((Flow) muleContext.getRegistry().lookupFlowConstruct("composite-source")).getMessageSource();
         assertNotNull(((TestMessageSource) composite.getSources().get(0)).fireEvent(getTestEvent(TEST_PAYLOAD)));
         assertNotNull(((TestMessageSource) composite.getSources().get(1)).fireEvent(getTestEvent(TEST_PAYLOAD)));
         assertNotNull(flowRunner("first-successful").withPayload(TEST_PAYLOAD).run());
@@ -95,11 +95,11 @@ public class MessageProcessorNotificationTestCase extends AbstractMessageProcess
                 // scatter-gather
                 .serial(pre()) // scatter-gather
                 .serial(new Node()
-                                .parallel(pre() // route 1 chain
-                                                  .serial(prePost()) // route 1 first logger
-                                                  .serial(prePost()) // route 1 second logger
-                                                  .serial(post())) // route 1 chain
-                                .parallel(prePost())) // route 0 logger
+                        .parallel(pre() // route 1 chain
+                                        .serial(prePost()) // route 1 first logger
+                                        .serial(prePost()) // route 1 second logger
+                                        .serial(post())) // route 1 chain
+                        .parallel(prePost())) // route 0 logger
                 .serial(post()) // scatter-gather
 
                 //foreach
@@ -176,7 +176,7 @@ public class MessageProcessorNotificationTestCase extends AbstractMessageProcess
                 .serial(prePost()) // inner logger
                 .serial(post())
                 .serial(prePost()) // logger
-                
+
                 //collection-aggregator
                 .serial(pre())      //open Splitter, unpacks three messages
                 .serial(prePost())  //1st message on Logger
@@ -214,23 +214,23 @@ public class MessageProcessorNotificationTestCase extends AbstractMessageProcess
                 .serial(prePost())
                 .serial(prePost())
 
-                 // until successful
-                 .serial(pre())
-                 .serial(new Node()
-                                   .parallel(prePost())
-                                   .parallel(post().serial(prePost())))
-    
-                 // until successful with processor chain
-                 .serial(pre())
-                 .serial(new Node()
-                                   .parallel(pre().serial(prePost()).serial(prePost()).serial(post()))
-                                   .parallel(post().serial(prePost())))
-    
-                 // until successful with enricher
-                 .serial(pre())
-                 .serial(new Node()
-                                   .parallel(pre().serial(prePost()).serial(post()))
-                                   .parallel(post().serial(prePost())));
+                // until successful
+                .serial(pre())
+                .serial(new Node()
+                        .parallel(prePost())
+                        .parallel(post().serial(prePost())))
+
+                // until successful with processor chain
+                .serial(pre())
+                .serial(new Node()
+                        .parallel(pre().serial(prePost()).serial(prePost()).serial(post()))
+                        .parallel(post().serial(prePost())))
+
+                // until successful with enricher
+                .serial(pre())
+                .serial(new Node()
+                        .parallel(pre().serial(prePost()).serial(post()))
+                        .parallel(post().serial(prePost())));
     }
 
     @Override

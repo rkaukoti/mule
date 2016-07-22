@@ -6,8 +6,6 @@
  */
 package org.mule.compatibility.core.routing.outbound;
 
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.MessageExchangePattern;
@@ -34,21 +32,23 @@ import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
+
 /**
  * An event used for outbound routing tests. It is not fully fleshed out, containing only the information
  * needed for routing.
  */
 public class OutboundRoutingTestEvent implements MuleEvent
 {
+    int timeout = -1;
     private MuleMessage message;
     private MuleSession session;
     private String id = UUID.getUUID();
     private boolean stopFurtherProcessing;
-    int timeout = -1;
     private InboundEndpoint endpoint;
 
     public OutboundRoutingTestEvent(MuleMessage message, MuleSession session, MuleContext muleContext)
-        throws Exception
+            throws Exception
     {
         this.message = message;
         this.session = session;
@@ -60,6 +60,11 @@ public class OutboundRoutingTestEvent implements MuleEvent
     public MuleMessage getMessage()
     {
         return message;
+    }
+
+    @Override
+    public void setMessage(MuleMessage message)
+    {
     }
 
     @Override
@@ -105,7 +110,9 @@ public class OutboundRoutingTestEvent implements MuleEvent
     {
         try
         {
-            return (String) getMuleContext().getTransformationService().transform(message, DataType.builder().type(String.class).charset(encoding).build()).getPayload();
+            return (String) getMuleContext().getTransformationService()
+                                            .transform(message, DataType.builder().type(String.class).charset(encoding).build())
+                                            .getPayload();
         }
         catch (Exception e)
         {
@@ -128,7 +135,8 @@ public class OutboundRoutingTestEvent implements MuleEvent
     @Override
     public String transformMessageToString() throws TransformerException
     {
-        return new String((byte[]) transformMessage(DataType.BYTE_ARRAY), message.getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(getMuleContext())));
+        return new String((byte[]) transformMessage(DataType.BYTE_ARRAY),
+                message.getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(getMuleContext())));
     }
 
     @Override
@@ -232,11 +240,6 @@ public class OutboundRoutingTestEvent implements MuleEvent
     public boolean isSynchronous()
     {
         return false;
-    }
-
-    @Override
-    public void setMessage(MuleMessage message)
-    {
     }
 
     @Override

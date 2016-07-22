@@ -6,19 +6,6 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import org.mule.runtime.module.http.api.HttpHeaders;
-import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-import org.mule.tck.junit4.rule.SystemProperty;
-
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Collection;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.http.Header;
@@ -30,6 +17,19 @@ import org.hamcrest.core.Is;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.runtime.module.http.api.HttpHeaders;
+import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
+import org.mule.tck.junit4.rule.SystemProperty;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collection;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @Ignore("Currently not supported: Builders meant to be replaced by DW.")
 public class HttpListenerGlobalResponseBuilderTestCase extends AbstractHttpTestCase
@@ -38,11 +38,13 @@ public class HttpListenerGlobalResponseBuilderTestCase extends AbstractHttpTestC
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
     @Rule
-    public SystemProperty globalResponseBuilderPath = new SystemProperty("globalResponseBuilderPath","globalResponseBuilderPath");
+    public SystemProperty globalResponseBuilderPath = new SystemProperty("globalResponseBuilderPath", "globalResponseBuilderPath");
     @Rule
-    public SystemProperty globalResponseBuilderCustomizedPath = new SystemProperty("globalResponseBuilderCustomizedPath","globalResponseBuilderCustomizedPath");
+    public SystemProperty globalResponseBuilderCustomizedPath =
+            new SystemProperty("globalResponseBuilderCustomizedPath", "globalResponseBuilderCustomizedPath");
     @Rule
-    public SystemProperty globalCompositeResponseBuilderPath = new SystemProperty("globalCompositeResponseBuilderPath","globalCompositeResponseBuilderPath");
+    public SystemProperty globalCompositeResponseBuilderPath =
+            new SystemProperty("globalCompositeResponseBuilderPath", "globalCompositeResponseBuilderPath");
 
     @Override
     protected String getConfigFile()
@@ -91,11 +93,15 @@ public class HttpListenerGlobalResponseBuilderTestCase extends AbstractHttpTestC
     }
 
 
-    public boolean isDateValid(String dateToValidate) {
+    public boolean isDateValid(String dateToValidate)
+    {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        try {
+        try
+        {
             sdf.parse(dateToValidate);
-        } catch (ParseException e) {
+        }
+        catch (ParseException e)
+        {
             e.printStackTrace();
             return false;
         }

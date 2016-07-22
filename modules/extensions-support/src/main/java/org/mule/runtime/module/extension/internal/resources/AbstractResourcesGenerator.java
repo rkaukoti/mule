@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.module.extension.internal.resources;
 
+import com.google.common.collect.ImmutableList;
+
 import org.mule.runtime.core.util.collection.ImmutableListCollector;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
 import org.mule.runtime.extension.api.resources.GeneratedResource;
 import org.mule.runtime.extension.api.resources.ResourcesGenerator;
 import org.mule.runtime.extension.api.resources.spi.GeneratedResourceFactory;
-
-import com.google.common.collect.ImmutableList;
 
 import java.util.Collection;
 import java.util.List;
@@ -44,10 +44,10 @@ public abstract class AbstractResourcesGenerator implements ResourcesGenerator
     public List<GeneratedResource> generateFor(ExtensionModel extensionModel)
     {
         List<GeneratedResource> resources = resourceFactories.stream()
-                .map(factory -> factory.generateResource(extensionModel))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(new ImmutableListCollector<>());
+                                                             .map(factory -> factory.generateResource(extensionModel))
+                                                             .filter(Optional::isPresent)
+                                                             .map(Optional::get)
+                                                             .collect(new ImmutableListCollector<>());
 
         resources.forEach(this::write);
         return resources;

@@ -17,11 +17,11 @@ public class ResponseDefinitionParser extends ParentContextDefinitionParser
     public ResponseDefinitionParser()
     {
         super("endpoint", new ChildDefinitionParser("responseMessageProcessor",
-            MessageProcessorChainFactoryBean.class));
+                MessageProcessorChainFactoryBean.class));
         and("inbound-endpoint", new ChildDefinitionParser("responseMessageProcessor",
-            MessageProcessorChainFactoryBean.class));
+                MessageProcessorChainFactoryBean.class));
         and("outbound-endpoint", new ChildDefinitionParser("responseMessageProcessor",
-            MessageProcessorChainFactoryBean.class));
+                MessageProcessorChainFactoryBean.class));
         otherwise(new ChildDefinitionParser("messageProcessor", ResponseMessageProcessorsFactoryBean.class));
     }
 

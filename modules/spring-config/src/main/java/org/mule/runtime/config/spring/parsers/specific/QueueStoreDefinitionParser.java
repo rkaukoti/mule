@@ -17,8 +17,8 @@ public class QueueStoreDefinitionParser extends ParentContextDefinitionParser
 {
     public QueueStoreDefinitionParser(Class<?> queueStoreFactoryBeanClass)
     {
-        super(MuleOrphanDefinitionParser.ROOT_ELEMENT, 
-            new MuleOrphanDefinitionParser(queueStoreFactoryBeanClass, true));
+        super(MuleOrphanDefinitionParser.ROOT_ELEMENT,
+                new MuleOrphanDefinitionParser(queueStoreFactoryBeanClass, true));
         otherwise(new ChildDefinitionParser("queue-store", queueStoreFactoryBeanClass));
     }
 

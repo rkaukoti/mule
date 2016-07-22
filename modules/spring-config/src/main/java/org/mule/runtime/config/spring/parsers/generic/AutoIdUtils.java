@@ -8,18 +8,17 @@ package org.mule.runtime.config.spring.parsers.generic;
 
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
 import org.mule.runtime.core.util.StringUtils;
+import org.w3c.dom.Element;
 
 import java.util.concurrent.atomic.AtomicInteger;
-
-import org.w3c.dom.Element;
 
 public class AutoIdUtils
 {
 
     public static final String ATTRIBUTE_ID = AbstractMuleBeanDefinitionParser.ATTRIBUTE_ID;
     public static final String ATTRIBUTE_NAME = AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME;
-    private static final AtomicInteger counter = new AtomicInteger(0);
     public static final String PREFIX = "org.mule.autogen.";
+    private static final AtomicInteger counter = new AtomicInteger(0);
 
     public static boolean blankAttribute(Element element, String attribute)
     {

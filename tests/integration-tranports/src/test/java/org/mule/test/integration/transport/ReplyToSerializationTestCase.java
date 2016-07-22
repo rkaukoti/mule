@@ -7,9 +7,9 @@
 package org.mule.test.integration.transport;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupEndpointBuilder;
-
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.Connector;
@@ -26,9 +26,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupEndpointBuilder;
 
 public class ReplyToSerializationTestCase extends FunctionalTestCase
 {
@@ -69,7 +68,8 @@ public class ReplyToSerializationTestCase extends FunctionalTestCase
         ObjectOutputStream oos = new ObjectOutputStream(baos);
         oos.writeObject(handler);
         oos.flush();
-        EndpointReplyToHandler serialized = (EndpointReplyToHandler) new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray())).readObject();
+        EndpointReplyToHandler serialized =
+                (EndpointReplyToHandler) new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray())).readObject();
         serialized.initAfterDeserialisation(muleContext);
         return serialized;
     }

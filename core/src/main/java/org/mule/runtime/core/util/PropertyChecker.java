@@ -9,9 +9,9 @@ package org.mule.runtime.core.util;
 import static java.lang.Boolean.FALSE;
 
 /**
- *  Class to check that system properties are enabled or not, the latter being the default.
+ * Class to check that system properties are enabled or not, the latter being the default.
  *
- *  @since 3.6.0
+ * @since 3.6.0
  */
 public class PropertyChecker
 {
@@ -62,6 +62,7 @@ public class PropertyChecker
     {
         this.override = null;
     }
+
     public String getPropertyName()
     {
         return propertyName;

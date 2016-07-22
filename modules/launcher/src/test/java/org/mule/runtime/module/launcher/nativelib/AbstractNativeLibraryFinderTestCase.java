@@ -7,14 +7,13 @@
 
 package org.mule.runtime.module.launcher.nativelib;
 
+import org.apache.commons.io.FileUtils;
+import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.io.File;
 import java.io.IOException;
-
-import org.apache.commons.io.FileUtils;
-import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
 
 public class AbstractNativeLibraryFinderTestCase extends AbstractMuleTestCase
 {

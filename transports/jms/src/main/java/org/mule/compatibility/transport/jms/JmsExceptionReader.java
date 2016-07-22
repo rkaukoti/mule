@@ -23,14 +23,14 @@ public class JmsExceptionReader implements ExceptionReader
     @Override
     public String getMessage(Throwable t)
     {
-        JMSException e = (JMSException)t;
+        JMSException e = (JMSException) t;
         return e.getMessage() + "(JMS Code: " + e.getErrorCode() + ")";
     }
 
     @Override
     public Throwable getCause(Throwable t)
     {
-        JMSException e = (JMSException)t;
+        JMSException e = (JMSException) t;
         Throwable cause = e.getLinkedException();
         if (cause == null)
         {
@@ -47,13 +47,13 @@ public class JmsExceptionReader implements ExceptionReader
 
     /**
      * Returns a map of the non-stanard information stored on the exception
-     * 
+     *
      * @return a map of the non-stanard information stored on the exception
      */
     @Override
     public Map<?, ?> getInfo(Throwable t)
     {
-        JMSException e = (JMSException)t;
+        JMSException e = (JMSException) t;
         Map<String, Object> info = new HashMap<String, Object>();
         info.put("JMS Code", e.getErrorCode());
         return info;

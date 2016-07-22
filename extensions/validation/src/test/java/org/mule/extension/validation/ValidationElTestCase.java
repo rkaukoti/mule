@@ -6,24 +6,24 @@
  */
 package org.mule.extension.validation;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.extension.validation.ValidationTestCase.INVALID_EMAIL;
-import static org.mule.extension.validation.ValidationTestCase.INVALID_URL;
-import static org.mule.extension.validation.ValidationTestCase.VALID_EMAIL;
-import static org.mule.extension.validation.ValidationTestCase.VALID_URL;
+import com.google.common.collect.ImmutableList;
+
+import org.junit.Test;
 import org.mule.extension.validation.api.NumberType;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.el.ExpressionLanguage;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import com.google.common.collect.ImmutableList;
-
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.extension.validation.ValidationTestCase.INVALID_EMAIL;
+import static org.mule.extension.validation.ValidationTestCase.INVALID_URL;
+import static org.mule.extension.validation.ValidationTestCase.VALID_EMAIL;
+import static org.mule.extension.validation.ValidationTestCase.VALID_URL;
 
 public class ValidationElTestCase extends AbstractMuleContextTestCase
 {
@@ -158,10 +158,13 @@ public class ValidationElTestCase extends AbstractMuleContextTestCase
     public void isNumber() throws Exception
     {
         final String expression = "#[validator.isNumber(payload, numberType, minValue, maxValue)]";
-        assertNumberValue(expression, NumberType.LONG, Long.MAX_VALUE / 2, Long.MIN_VALUE + 1, Long.MAX_VALUE - 1, Long.MIN_VALUE, Long.MAX_VALUE);
-        assertNumberValue(expression, NumberType.INTEGER, Integer.MAX_VALUE / 2, Integer.MIN_VALUE + 1, Integer.MAX_VALUE - 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        assertNumberValue(expression, NumberType.LONG, Long.MAX_VALUE / 2, Long.MIN_VALUE + 1, Long.MAX_VALUE - 1, Long.MIN_VALUE,
+                Long.MAX_VALUE);
+        assertNumberValue(expression, NumberType.INTEGER, Integer.MAX_VALUE / 2, Integer.MIN_VALUE + 1, Integer.MAX_VALUE - 1,
+                Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-        assertNumberValue(expression, NumberType.SHORT, new Short("100"), new Integer(Short.MIN_VALUE + 1).shortValue(), new Integer(Short.MAX_VALUE - 1).shortValue(), Short.MIN_VALUE, Short.MAX_VALUE);
+        assertNumberValue(expression, NumberType.SHORT, new Short("100"), new Integer(Short.MIN_VALUE + 1).shortValue(),
+                new Integer(Short.MAX_VALUE - 1).shortValue(), Short.MIN_VALUE, Short.MAX_VALUE);
         assertNumberValue(expression, NumberType.DOUBLE, 10D, 1D, 10D, Double.MIN_VALUE, Double.MAX_VALUE);
         assertNumberValue(expression, NumberType.FLOAT, 10F, 1F, 10F, 0F, 20F);
     }

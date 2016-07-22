@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.injectConfigName;
 import org.mule.runtime.api.config.PoolingProfile;
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.core.api.MuleException;
@@ -19,6 +18,8 @@ import org.mule.runtime.extension.api.introspection.property.ConnectionHandlingT
 import org.mule.runtime.module.extension.internal.runtime.ParameterGroupAwareObjectBuilder;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSet;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSetResult;
+
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.injectConfigName;
 
 /**
  * Implementation of {@link ParameterGroupAwareObjectBuilder} which produces instances
@@ -42,10 +43,11 @@ public final class ConnectionProviderObjectBuilder extends ParameterGroupAwareOb
      *
      * @param providerModel     the {@link RuntimeConnectionProviderModel} which describes the instances to be produced
      * @param resolverSet       a {@link ResolverSet} to populate the values
-     * @param connectionManager a {@link ConnectionManagerAdapter} to obtain the default {@link RetryPolicyTemplate} in case
-     *                          of none is provided
+     * @param connectionManager a {@link ConnectionManagerAdapter} to obtain the default {@link RetryPolicyTemplate} in case of none is
+     *                          provided
      */
-    public ConnectionProviderObjectBuilder(RuntimeConnectionProviderModel providerModel, ResolverSet resolverSet, ConnectionManagerAdapter connectionManager)
+    public ConnectionProviderObjectBuilder(RuntimeConnectionProviderModel providerModel, ResolverSet resolverSet,
+                                           ConnectionManagerAdapter connectionManager)
     {
         this(providerModel, resolverSet, null, false, null, connectionManager);
     }
@@ -70,7 +72,8 @@ public final class ConnectionProviderObjectBuilder extends ParameterGroupAwareOb
         ConnectionProvider provider = super.build(result);
         injectConfigName(providerModel, provider, ownerConfigName);
 
-        ConnectionHandlingTypeModelProperty connectionHandlingType = providerModel.getModelProperty(ConnectionHandlingTypeModelProperty.class).orElse(null);
+        ConnectionHandlingTypeModelProperty connectionHandlingType =
+                providerModel.getModelProperty(ConnectionHandlingTypeModelProperty.class).orElse(null);
 
         if (connectionHandlingType != null)
         {

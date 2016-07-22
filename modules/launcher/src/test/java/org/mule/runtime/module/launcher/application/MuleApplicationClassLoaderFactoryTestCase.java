@@ -7,6 +7,23 @@
 
 package org.mule.runtime.module.launcher.application;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+import org.mule.runtime.core.util.FileUtils;
+import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
+import org.mule.runtime.module.artifact.classloader.ClassLoaderLookupPolicy;
+import org.mule.runtime.module.launcher.MuleApplicationClassLoader;
+import org.mule.runtime.module.launcher.descriptor.ApplicationDescriptor;
+import org.mule.runtime.module.launcher.nativelib.NativeLibraryFinderFactory;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
 import static java.lang.System.setProperty;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,36 +37,17 @@ import static org.mule.runtime.core.util.FileUtils.stringToFile;
 import static org.mule.runtime.module.launcher.MuleFoldersUtil.getAppClassesFolder;
 import static org.mule.runtime.module.launcher.MuleFoldersUtil.getAppLibFolder;
 import static org.mule.runtime.module.launcher.MuleFoldersUtil.getMulePerAppLibFolder;
-import org.mule.runtime.core.util.FileUtils;
-import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
-import org.mule.runtime.module.artifact.classloader.ClassLoaderLookupPolicy;
-import org.mule.runtime.module.launcher.MuleApplicationClassLoader;
-import org.mule.runtime.module.launcher.descriptor.ApplicationDescriptor;
-import org.mule.runtime.module.launcher.nativelib.NativeLibraryFinderFactory;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 public class MuleApplicationClassLoaderFactoryTestCase extends AbstractMuleTestCase
 {
 
     private static final String DOMAIN_NAME = "test-domain";
     private static final String APP_NAME = "test-app";
-
-    @Rule
-    public TemporaryFolder tempMuleHome = new TemporaryFolder();
-
-    private String previousMuleHome;
     private final ArtifactClassLoader parentArtifactClassLoader = mock(ArtifactClassLoader.class);
     private final ClassLoaderLookupPolicy classLoaderLookupPolicy = mock(ClassLoaderLookupPolicy.class);
+    @Rule
+    public TemporaryFolder tempMuleHome = new TemporaryFolder();
+    private String previousMuleHome;
     private URL classesFolderUrl;
     private URL appLibraryUrl;
     private URL perAppLibraryUrl;
@@ -101,7 +99,8 @@ public class MuleApplicationClassLoaderFactoryTestCase extends AbstractMuleTestC
         descriptor.setName(APP_NAME);
         descriptor.setDomain(DOMAIN_NAME);
 
-        final MuleApplicationClassLoader artifactClassLoader = (MuleApplicationClassLoader) classLoaderFactory.create(parentArtifactClassLoader, descriptor, emptyList());
+        final MuleApplicationClassLoader artifactClassLoader =
+                (MuleApplicationClassLoader) classLoaderFactory.create(parentArtifactClassLoader, descriptor, emptyList());
 
         verify(nativeLibraryFinderFactory).create(APP_NAME);
         assertThat(artifactClassLoader.getParent(), is(parentArtifactClassLoader.getClassLoader()));

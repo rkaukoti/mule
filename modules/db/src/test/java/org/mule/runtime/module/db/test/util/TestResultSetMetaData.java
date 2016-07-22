@@ -68,12 +68,12 @@ public class TestResultSetMetaData implements ResultSetMetaData
 
     public String getColumnLabel(int i) throws SQLException
     {
-        return columns.get(i-1).getLabel();
+        return columns.get(i - 1).getLabel();
     }
 
     public String getColumnName(int i) throws SQLException
     {
-        return columns.get(i-1).getName();
+        return columns.get(i - 1).getName();
     }
 
     public String getSchemaName(int i) throws SQLException

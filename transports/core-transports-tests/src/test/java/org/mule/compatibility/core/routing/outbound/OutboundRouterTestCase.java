@@ -6,10 +6,7 @@
  */
 package org.mule.compatibility.core.routing.outbound;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
@@ -21,7 +18,10 @@ import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class OutboundRouterTestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -38,7 +38,7 @@ public class OutboundRouterTestCase extends AbstractMuleContextEndpointTestCase
     @Test
     public void testSetGoodEndpoints() throws Exception
     {
-        List<MessageProcessor> list= new ArrayList<MessageProcessor>();
+        List<MessageProcessor> list = new ArrayList<MessageProcessor>();
         list.add(getTestOutboundEndpoint("test"));
         list.add(getTestOutboundEndpoint("test"));
         AbstractOutboundRouter router = new DummyOutboundRouter();
@@ -52,7 +52,7 @@ public class OutboundRouterTestCase extends AbstractMuleContextEndpointTestCase
     }
 
     @Test
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public void testSetBadEndpoints() throws Exception
     {
         List list = new ArrayList();
@@ -72,10 +72,10 @@ public class OutboundRouterTestCase extends AbstractMuleContextEndpointTestCase
     }
 
     @Test
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public void testSetBad2Endpoints() throws Exception
     {
-        List list= new ArrayList();
+        List list = new ArrayList();
         list.add(getTestOutboundEndpoint("test"));
         list.add(getTestInboundEndpoint("test"));
         AbstractOutboundRouter router = new DummyOutboundRouter();

@@ -6,26 +6,25 @@
  */
 package org.mule.runtime.modules.schedulers.cron;
 
+import org.junit.Test;
+import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.source.polling.PollingTask;
+import org.mule.runtime.core.source.polling.PollingWorker;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+import org.mule.tck.probe.PollingProber;
+import org.mule.tck.probe.Probe;
+import org.mule.tck.probe.Prober;
+
+import java.util.TimeZone;
+
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 
-import org.mule.runtime.core.api.MuleException;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-import org.mule.tck.probe.PollingProber;
-import org.mule.tck.probe.Probe;
-import org.mule.tck.probe.Prober;
-import org.mule.runtime.core.source.polling.PollingTask;
-import org.mule.runtime.core.source.polling.PollingWorker;
 
-import java.util.TimeZone;
-
-import org.junit.Test;
-
-
-public class CronSchedulerTest  extends AbstractMuleContextTestCase
+public class CronSchedulerTest extends AbstractMuleContextTestCase
 {
 
     private Prober pollingProber = new PollingProber(1000, 0l);
@@ -97,7 +96,9 @@ public class CronSchedulerTest  extends AbstractMuleContextTestCase
 
     private CronScheduler createVoidScheduler()
     {
-        CronScheduler scheduler = new CronScheduler("name", new PollingWorker(mock(PollingTask.class), muleContext.getExceptionListener()), "0/1 * * * * ?", TimeZone.getDefault());
+        CronScheduler scheduler =
+                new CronScheduler("name", new PollingWorker(mock(PollingTask.class), muleContext.getExceptionListener()), "0/1 * * * * ?",
+                        TimeZone.getDefault());
         scheduler.setMuleContext(muleContext);
         return scheduler;
     }

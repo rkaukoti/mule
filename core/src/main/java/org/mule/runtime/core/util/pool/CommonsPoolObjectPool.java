@@ -6,20 +6,19 @@
  */
 package org.mule.runtime.core.util.pool;
 
+import org.apache.commons.pool.PoolableObjectFactory;
+import org.apache.commons.pool.impl.GenericObjectPool;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.object.ObjectFactory;
 import org.mule.runtime.core.config.PoolingProfile;
 import org.mule.runtime.core.config.i18n.MessageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.pool.PoolableObjectFactory;
-import org.apache.commons.pool.impl.GenericObjectPool;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>CommonsPoolProxyPool</code> is an implementation of {@link ObjectPool}
@@ -142,7 +141,7 @@ public class CommonsPoolObjectPool implements ObjectPool
         else
         {
             throw new InitialisationException(
-                MessageFactory.createStaticMessage("Object pool has not been initialized."), this);
+                    MessageFactory.createStaticMessage("Object pool has not been initialized."), this);
         }
     }
 
@@ -218,14 +217,14 @@ public class CommonsPoolObjectPool implements ObjectPool
         }
     }
 
-    public void setObjectFactory(ObjectFactory objectFactory)
-    {
-        this.objectFactory = objectFactory;
-    }
-
     public ObjectFactory getObjectFactory()
     {
         return objectFactory;
+    }
+
+    public void setObjectFactory(ObjectFactory objectFactory)
+    {
+        this.objectFactory = objectFactory;
     }
 
     /**

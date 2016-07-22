@@ -7,9 +7,9 @@
 
 package org.mule.functional.classloading.isolation.maven;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
-
 import java.io.File;
+
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
 /**
  * Object representation of a maven artifact.
@@ -36,11 +36,11 @@ public class MavenArtifact
     /**
      * Creates a maven representation of an artifact with its different attributes
      *
-     * @param groupId cannot be null or empty
+     * @param groupId    cannot be null or empty
      * @param artifactId cannot be null or empty
-     * @param type cannot be null or empty
-     * @param version can be empty or null,
-     * @param scope cannot be null or empty
+     * @param type       cannot be null or empty
+     * @param version    can be empty or null,
+     * @param scope      cannot be null or empty
      * @throws IllegalArgumentException if any of the mandatory attributes is null
      */
     private MavenArtifact(final String groupId, final String artifactId, final String type, final String version, String scope)
@@ -55,6 +55,11 @@ public class MavenArtifact
         this.type = type;
         this.version = version;
         this.scope = scope;
+    }
+
+    public static MavenArtifactBuilder builder()
+    {
+        return new MavenArtifactBuilder();
     }
 
     private void checkNullOrEmpty(String value, String param)
@@ -118,7 +123,8 @@ public class MavenArtifact
     @Override
     public String toString()
     {
-        return groupId + MAVEN_DEPENDENCIES_DELIMITER + artifactId + MAVEN_DEPENDENCIES_DELIMITER + type + MAVEN_DEPENDENCIES_DELIMITER + (!isEmpty(version) ? version : "") + MAVEN_DEPENDENCIES_DELIMITER + scope;
+        return groupId + MAVEN_DEPENDENCIES_DELIMITER + artifactId + MAVEN_DEPENDENCIES_DELIMITER + type + MAVEN_DEPENDENCIES_DELIMITER +
+               (!isEmpty(version) ? version : "") + MAVEN_DEPENDENCIES_DELIMITER + scope;
     }
 
     @Override
@@ -164,11 +170,6 @@ public class MavenArtifact
         result = 31 * result + (version != null ? version.hashCode() : 0);
         result = 31 * result + scope.hashCode();
         return result;
-    }
-
-    public static MavenArtifactBuilder builder()
-    {
-        return new MavenArtifactBuilder();
     }
 
     /**

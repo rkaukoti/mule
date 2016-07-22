@@ -6,8 +6,8 @@
  */
 package org.mule.compatibility.transport.tcp.issues;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.compatibility.transport.tcp.protocols.LengthProtocol;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
@@ -25,8 +25,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class KeepSendSocketOpenMule1491TestCase extends FunctionalTestCase
 {
@@ -95,9 +94,9 @@ public class KeepSendSocketOpenMule1491TestCase extends FunctionalTestCase
     @SuppressWarnings("synthetic-access")
     private class SimpleServerSocket implements Runnable
     {
-        private ServerSocket server;
         AtomicBoolean running = new AtomicBoolean(true);
         AtomicInteger count = new AtomicInteger(0);
+        private ServerSocket server;
 
         public SimpleServerSocket(int port) throws Exception
         {

@@ -7,15 +7,14 @@
 
 package org.mule.runtime.module.db.internal.resolver.database;
 
-import static org.mule.common.Result.Status.FAILURE;
-import org.mule.runtime.core.AbstractAnnotatedObject;
-import org.mule.runtime.core.api.MuleEvent;
 import org.mule.common.DefaultResult;
 import org.mule.common.DefaultTestResult;
 import org.mule.common.Result;
 import org.mule.common.TestResult;
 import org.mule.common.metadata.MetaData;
 import org.mule.common.metadata.MetaDataKey;
+import org.mule.runtime.core.AbstractAnnotatedObject;
+import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.module.db.internal.domain.database.DataSourceConfig;
 import org.mule.runtime.module.db.internal.domain.database.DataSourceFactory;
 import org.mule.runtime.module.db.internal.domain.database.DbConfig;
@@ -28,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
+
+import static org.mule.common.Result.Status.FAILURE;
 
 /**
  * Resolves a {@link DbConfig} from a dynamic {@link DataSourceConfig}.
@@ -49,7 +50,8 @@ public class DynamicDbConfigResolver extends AbstractAnnotatedObject implements 
     private final Map<DataSourceConfig, DbConfig> cache = new HashMap<>();
     private int instanceCount = 1;
 
-    public DynamicDbConfigResolver(String name, DbConfigFactory dbConfigFactory, DataSourceFactory dataSourceFactory, DataSourceConfig dataSourceConfig)
+    public DynamicDbConfigResolver(String name, DbConfigFactory dbConfigFactory, DataSourceFactory dataSourceFactory,
+                                   DataSourceConfig dataSourceConfig)
     {
         this.name = name;
         this.dbConfigFactory = dbConfigFactory;

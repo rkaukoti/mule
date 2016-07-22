@@ -6,14 +6,14 @@
  */
 package org.mule.extension.http.api;
 
-import static com.google.common.collect.ImmutableMap.copyOf;
-
 import org.mule.runtime.core.message.BaseAttributes;
 import org.mule.runtime.module.http.internal.ParameterMap;
 
 import java.util.Map;
 
 import javax.activation.DataHandler;
+
+import static com.google.common.collect.ImmutableMap.copyOf;
 
 /**
  * Base representation of HTTP message attributes.
@@ -41,6 +41,7 @@ public abstract class HttpAttributes extends BaseAttributes
     {
         return headers;
     }
+
     public Map<String, DataHandler> getParts()
     {
         return parts;

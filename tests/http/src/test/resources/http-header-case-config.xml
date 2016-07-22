@@ -22,7 +22,7 @@
                 </httpn:headers>
             </httpn:response-builder>
         </httpn:listener>
-        <set-payload value="#[message.getAttributes().getHeaders().get('CusTomName2')]=value" />
+        <set-payload value="#[message.getAttributes().getHeaders().get('CusTomName2')]=value"/>
     </flow>
 
     <flow name="client">

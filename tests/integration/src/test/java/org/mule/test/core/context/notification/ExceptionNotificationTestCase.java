@@ -6,14 +6,14 @@
  */
 package org.mule.test.core.context.notification;
 
-import static org.junit.Assert.assertNull;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.component.ComponentException;
-import org.mule.functional.listener.ExceptionListener;
-import org.mule.runtime.core.context.notification.ExceptionNotification;
-
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
+import org.mule.functional.listener.ExceptionListener;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.component.ComponentException;
+import org.mule.runtime.core.context.notification.ExceptionNotification;
+
+import static org.junit.Assert.assertNull;
 
 public class ExceptionNotificationTestCase extends AbstractNotificationTestCase
 {

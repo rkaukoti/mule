@@ -7,12 +7,12 @@
 package org.mule.test.integration.schedule;
 
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.schedule.Scheduler;
 import org.mule.runtime.core.api.schedule.Schedulers;
-import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
 import org.mule.tck.probe.Prober;
@@ -21,8 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 /**
  * This is a test for poll with schedulers. It validates that the polls can be executed, stopped, run.
@@ -101,12 +100,12 @@ public class PollScheduleTestCase extends FunctionalTestCase
     }
 
 
-
     private boolean checkCollectionValues(List<String> coll, String value)
     {
         for (String s : coll)
         {
-            if ( !s.equals(value) ){
+            if (!s.equals(value))
+            {
                 return false;
             }
         }

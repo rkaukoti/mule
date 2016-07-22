@@ -6,20 +6,7 @@
  */
 package org.mule.runtime.module.pgp;
 
-import static org.mule.runtime.module.pgp.util.BouncyCastleUtil.KEY_FINGERPRINT_CALCULATOR;
-import static org.mule.runtime.module.pgp.util.BouncyCastleUtil.PBE_SECRET_KEY_DECRYPTOR_BUILDER;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.security.NoSuchProviderException;
-import java.security.Provider;
-import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicLong;
-
 import org.apache.commons.lang.Validate;
-import org.bouncycastle.openpgp.operator.bc.BcPublicKeyDataDecryptorFactory;
 import org.bouncycastle.openpgp.PGPCompressedData;
 import org.bouncycastle.openpgp.PGPEncryptedDataList;
 import org.bouncycastle.openpgp.PGPException;
@@ -31,6 +18,19 @@ import org.bouncycastle.openpgp.PGPPublicKey;
 import org.bouncycastle.openpgp.PGPPublicKeyEncryptedData;
 import org.bouncycastle.openpgp.PGPSecretKey;
 import org.bouncycastle.openpgp.PGPUtil;
+import org.bouncycastle.openpgp.operator.bc.BcPublicKeyDataDecryptorFactory;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.security.NoSuchProviderException;
+import java.security.Provider;
+import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.mule.runtime.module.pgp.util.BouncyCastleUtil.KEY_FINGERPRINT_CALCULATOR;
+import static org.mule.runtime.module.pgp.util.BouncyCastleUtil.PBE_SECRET_KEY_DECRYPTOR_BUILDER;
 
 
 public class DecryptStreamTransformer implements StreamTransformer
@@ -49,10 +49,10 @@ public class DecryptStreamTransformer implements StreamTransformer
     private long bytesWrote;
 
     public DecryptStreamTransformer(InputStream toBeDecrypted,
-                                     PGPPublicKey publicKey,
-                                     PGPSecretKey secretKey,
-                                     String password,
-                                     Provider provider) throws IOException
+                                    PGPPublicKey publicKey,
+                                    PGPSecretKey secretKey,
+                                    String password,
+                                    Provider provider) throws IOException
     {
         Validate.notNull(toBeDecrypted, "The toBeDecrypted should not be null");
         Validate.notNull(publicKey, "The publicKey should not be null");

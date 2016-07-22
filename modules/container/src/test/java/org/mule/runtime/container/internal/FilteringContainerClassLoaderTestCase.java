@@ -7,10 +7,7 @@
 
 package org.mule.runtime.container.internal;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
-
+import org.junit.Test;
 import org.mule.runtime.module.artifact.classloader.EnumerationMatcher;
 import org.mule.runtime.module.artifact.classloader.FilteringArtifactClassLoader;
 import org.mule.runtime.module.artifact.classloader.FilteringArtifactClassLoaderTestCase;
@@ -21,20 +18,22 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.Enumeration;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 
 public class FilteringContainerClassLoaderTestCase extends FilteringArtifactClassLoaderTestCase
 {
+
+    public FilteringContainerClassLoaderTestCase(boolean verboseClassloadingLog)
+    {
+        super(verboseClassloadingLog);
+    }
 
     @Override
     protected FilteringArtifactClassLoader doCreateClassLoader()
     {
         return new FilteringContainerClassLoader(artifactClassLoader, filter);
-    }
-
-    public FilteringContainerClassLoaderTestCase(boolean verboseClassloadingLog)
-    {
-        super(verboseClassloadingLog);
     }
 
     @Test

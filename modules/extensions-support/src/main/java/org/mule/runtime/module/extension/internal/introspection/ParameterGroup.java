@@ -6,14 +6,13 @@
  */
 package org.mule.runtime.module.extension.internal.introspection;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import com.google.common.collect.ImmutableSet;
+
 import org.mule.runtime.extension.api.introspection.EnrichableModel;
 import org.mule.runtime.extension.api.introspection.ModelProperty;
 import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclaration;
 import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
 import org.mule.runtime.module.extension.internal.model.property.ParameterGroupModelProperty;
-
-import com.google.common.collect.ImmutableSet;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -21,6 +20,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * A metadata class that groups a set of parameters together.

@@ -15,8 +15,8 @@ import org.mule.runtime.module.http.internal.domain.request.HttpRequest;
 public class ListenerRequestMatcher implements RequestMatcher
 {
 
-    private String path;
     private final MethodRequestMatcher methodRequestMatcher;
+    private String path;
 
     public ListenerRequestMatcher(final MethodRequestMatcher methodRequestMatcher, final String path)
     {

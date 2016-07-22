@@ -7,6 +7,8 @@
 package org.mule.runtime.core.config;
 
 import org.mule.runtime.core.api.config.MuleConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,9 +20,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This is a static class that provides access to the Mule core manifest file.
@@ -91,15 +90,15 @@ public class MuleManifest
         return getManifestProperty("Build-Date");
     }
 
-	public static String getSupportedJdks()
-	{
-		return getManifestProperty("Supported-Jdks");
-	}
+    public static String getSupportedJdks()
+    {
+        return getManifestProperty("Supported-Jdks");
+    }
 
-	public static String getRecommndedJdks()
-	{
-		return getManifestProperty("Recommended-Jdks");
-	}
+    public static String getRecommndedJdks()
+    {
+        return getManifestProperty("Recommended-Jdks");
+    }
 
     // synchronize this method as manifest initialized here.
     public static synchronized Manifest getManifest()
@@ -128,7 +127,7 @@ public class MuleManifest
             catch (IOException e)
             {
                 logger.warn("Failed to read manifest Info, Manifest information will not display correctly: "
-                        + e.getMessage());
+                            + e.getMessage());
             }
         }
         return manifest;

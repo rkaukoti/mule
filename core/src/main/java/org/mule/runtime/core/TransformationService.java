@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.core;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static org.mule.runtime.api.metadata.MediaType.ANY;
-import static org.mule.runtime.core.util.ClassUtils.isConsumable;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MuleContext;
@@ -23,14 +19,18 @@ import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.api.transformer.TransformerMessagingException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.transformer.TransformerUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static org.mule.runtime.api.metadata.MediaType.ANY;
+import static org.mule.runtime.core.util.ClassUtils.isConsumable;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 /**
  * Provides the same operations previously exposed by {@link MuleMessage} but decoupled from MuleMessage.
@@ -53,13 +53,14 @@ public class TransformationService
      * Applies a list of transformers returning the result of the transformation as a new message instance. If the list
      * of transformers is empty or transformation would be redundant then the same message instances will be returned.
      *
-     * @param event the event being processed
+     * @param event        the event being processed
      * @param transformers the transformers to apply to the message payload
      * @return the result of transformation
-     * @throws TransformerException if a transformation error occurs or one or more of the transformers passed in a
-     * are incompatible with the message payload
+     * @throws TransformerException if a transformation error occurs or one or more of the transformers passed in a are incompatible with
+     *                              the message payload
      */
-    public MuleMessage applyTransformers(final MuleMessage message, final MuleEvent event, final List<? extends Transformer> transformers) throws MuleException
+    public MuleMessage applyTransformers(final MuleMessage message, final MuleEvent event, final List<? extends Transformer> transformers)
+            throws MuleException
     {
         return applyAllTransformers(message, event, transformers);
     }
@@ -68,13 +69,14 @@ public class TransformationService
      * Applies a list of transformers returning the result of the transformation as a new message instance. If the list
      * of transformers is empty or transformation would be redundant then the same message instances will be returned.
      *
-     * @param event the event being processed
+     * @param event        the event being processed
      * @param transformers the transformers to apply to the message payload
      * @return the result of transformation
-     * @throws TransformerException if a transformation error occurs or one or more of the transformers passed in a
-     * are incompatible with the message payload
+     * @throws TransformerException if a transformation error occurs or one or more of the transformers passed in a are incompatible with
+     *                              the message payload
      */
-    public MuleMessage applyTransformers(final MuleMessage message, final MuleEvent event, final Transformer... transformers) throws MuleException
+    public MuleMessage applyTransformers(final MuleMessage message, final MuleEvent event, final Transformer... transformers)
+            throws MuleException
     {
         return applyAllTransformers(message, event, Arrays.asList(transformers));
     }
@@ -89,11 +91,9 @@ public class TransformationService
      * <p/>
      *
      * @param outputDataType the desired return type
-     * @return The converted payload of this message. Note that this method will not alter the payload of this
-     * message *unless* the payload is an InputStream in which case the stream will be read and the payload will become
-     * the fully read stream.
-     * @throws TransformerException if a transformer cannot be found or there is an error during transformation of the
-     * payload
+     * @return The converted payload of this message. Note that this method will not alter the payload of this message *unless* the payload
+     * is an InputStream in which case the stream will be read and the payload will become the fully read stream.
+     * @throws TransformerException if a transformer cannot be found or there is an error during transformation of the payload
      */
     public MuleMessage transform(MuleMessage message, DataType outputDataType) throws TransformerException
     {
@@ -147,7 +147,8 @@ public class TransformationService
         return "Payload is a stream of type: " + type;
     }
 
-    private MuleMessage applyAllTransformers(final MuleMessage message, final MuleEvent event, final List<? extends Transformer> transformers) throws MuleException
+    private MuleMessage applyAllTransformers(final MuleMessage message, final MuleEvent event,
+                                             final List<? extends Transformer> transformers) throws MuleException
     {
         MuleMessage result = message;
         if (!transformers.isEmpty())
@@ -180,7 +181,8 @@ public class TransformationService
                     }
 
                     // Resolves implicit conversion if possible
-                    Transformer implicitTransformer = muleContext.getDataTypeConverterResolver().resolve(originalSourceType, transformer.getSourceDataTypes());
+                    Transformer implicitTransformer =
+                            muleContext.getDataTypeConverterResolver().resolve(originalSourceType, transformer.getSourceDataTypes());
 
                     if (implicitTransformer != null)
                     {
@@ -223,7 +225,7 @@ public class TransformationService
             }
             else
             {
-                skipConverter= true;
+                skipConverter = true;
             }
         }
 
@@ -235,7 +237,8 @@ public class TransformationService
         return skipConverter;
     }
 
-    private MuleMessage transformMessage(final MuleMessage message, final MuleEvent event, final Transformer transformer) throws TransformerMessagingException, TransformerException
+    private MuleMessage transformMessage(final MuleMessage message, final MuleEvent event, final Transformer transformer)
+            throws TransformerMessagingException, TransformerException
     {
         Object result;
 
@@ -283,11 +286,9 @@ public class TransformationService
      *
      * @param resultType the desired return type
      * @param encoding   the encoding to use if required
-     * @return The converted payload of this message. Note that this method will not alter the
-     *         payload of this message <b>unless</b> the payload is an {@link InputStream} in which
-     *         case the stream will be read and the payload will become the fully read stream.
-     * @throws TransformerException if a transformer cannot be found or there is an error during
-     *                              transformation of the payload.
+     * @return The converted payload of this message. Note that this method will not alter the payload of this message <b>unless</b> the
+     * payload is an {@link InputStream} in which case the stream will be read and the payload will become the fully read stream.
+     * @throws TransformerException if a transformer cannot be found or there is an error during transformation of the payload.
      */
     @SuppressWarnings("unchecked")
     private <T> T getPayload(MuleMessage message, DataType resultType, Charset encoding) throws TransformerException
@@ -299,8 +300,8 @@ public class TransformationService
         }
 
         DataType dataType = DataType.builder(resultType)
-                .type(message.getDataType().getType())
-                .build();
+                                    .type(message.getDataType().getType())
+                                    .build();
 
         // If no conversion is necessary, just return the payload as-is
         if (resultType.isCompatibleWith(dataType))

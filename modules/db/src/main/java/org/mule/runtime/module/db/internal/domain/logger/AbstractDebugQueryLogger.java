@@ -14,8 +14,8 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractDebugQueryLogger implements QueryLogger
 {
-    private final Logger logger;
     protected final StringBuilder builder;
+    private final Logger logger;
 
     protected AbstractDebugQueryLogger(Logger logger)
     {

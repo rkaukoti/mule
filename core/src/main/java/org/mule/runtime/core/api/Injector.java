@@ -19,7 +19,6 @@ public interface Injector
      *
      * @param object the object on which dependencies are to be injected on
      * @return the injected object or a proxy to it
-     * @throws MuleException
      */
     <T> T inject(T object) throws MuleException;
 }

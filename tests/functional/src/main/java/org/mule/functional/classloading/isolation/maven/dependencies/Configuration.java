@@ -29,7 +29,6 @@ public final class Configuration
     /**
      * Sets the {@link DependenciesGraph} used for resolving and collecting dependencies.
      *
-     * @param dependencyGraph
      * @return this
      */
     public Configuration setMavenDependencyGraph(DependenciesGraph dependencyGraph)
@@ -55,7 +54,6 @@ public final class Configuration
      * A conditional way to define if the root artifact should be included or not in results. A {@link Predicate}
      * can be passed that will be evaluated with the root artifact during the resolution of the dependencies.
      *
-     * @param rootArtifactPredicate
      * @return this
      */
     public Configuration includeRootArtifact(Predicate<MavenArtifact> rootArtifactPredicate)
@@ -69,7 +67,6 @@ public final class Configuration
      * If this is not defined, by default, the resolver will take all the dependencies of the root artifact
      * without their transitive dependencies.
      *
-     * @param dependenciesFilter
      * @return this
      */
     public Configuration selectDependencies(DependenciesFilter dependenciesFilter)
@@ -83,7 +80,6 @@ public final class Configuration
      * dependencies for the dependencies of the root artifact that matched the criteria defined.
      * By default (if this is not set) no transitive dependencies will be collected during the dependencies resolution.
      *
-     * @param transitiveDependenciesFilter
      * @return this
      */
     public Configuration collectTransitiveDependencies(TransitiveDependenciesFilter transitiveDependenciesFilter)

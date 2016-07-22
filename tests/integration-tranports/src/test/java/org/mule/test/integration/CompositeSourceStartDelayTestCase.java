@@ -6,6 +6,10 @@
  */
 package org.mule.test.integration;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.endpoint.DefaultEndpointFactory;
@@ -18,11 +22,6 @@ import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
 
 import java.util.concurrent.CountDownLatch;
-
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.junit.Rule;
-import org.junit.Test;
 
 public class CompositeSourceStartDelayTestCase extends FunctionalTestCase
 {
@@ -80,36 +79,6 @@ public class CompositeSourceStartDelayTestCase extends FunctionalTestCase
         thread.start();
     }
 
-    private class ProcessMessageProbe implements Probe
-    {
-
-        private final HttpClient httpClient = new HttpClient();
-
-        @Override
-        public boolean isSatisfied()
-        {
-            GetMethod method = new GetMethod("http://localhost:" + httpPort.getValue());
-
-            try
-            {
-                int statusCode = httpClient.executeMethod(method);
-                String response = method.getResponseBodyAsString();
-
-                return 200 == statusCode && "Processed".equals(response);
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-        }
-
-        @Override
-        public String describeFailure()
-        {
-            return "Unable to process message when composite source was not completely started";
-        }
-    }
-
     public static class DelayedStartEndpointFactory extends DefaultEndpointFactory
     {
 
@@ -153,6 +122,36 @@ public class CompositeSourceStartDelayTestCase extends FunctionalTestCase
             }
 
             super.start();
+        }
+    }
+
+    private class ProcessMessageProbe implements Probe
+    {
+
+        private final HttpClient httpClient = new HttpClient();
+
+        @Override
+        public boolean isSatisfied()
+        {
+            GetMethod method = new GetMethod("http://localhost:" + httpPort.getValue());
+
+            try
+            {
+                int statusCode = httpClient.executeMethod(method);
+                String response = method.getResponseBodyAsString();
+
+                return 200 == statusCode && "Processed".equals(response);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        @Override
+        public String describeFailure()
+        {
+            return "Unable to process message when composite source was not completely started";
         }
     }
 }

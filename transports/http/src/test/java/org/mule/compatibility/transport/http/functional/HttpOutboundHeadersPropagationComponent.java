@@ -9,12 +9,11 @@ package org.mule.compatibility.transport.http.functional;
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.lifecycle.Callable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.TreeMap;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class HttpOutboundHeadersPropagationComponent implements Callable
 {
@@ -26,7 +25,7 @@ public class HttpOutboundHeadersPropagationComponent implements Callable
     {
         MuleMessage m = muleEventContext.getMessage();
         Map<String, Object> headers = new TreeMap<>();
-        for(String s : m.getInboundPropertyNames())
+        for (String s : m.getInboundPropertyNames())
         {
             headers.put(s, m.getInboundProperty(s));
         }

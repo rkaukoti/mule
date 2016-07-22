@@ -6,13 +6,8 @@
  */
 package org.mule.runtime.core.agent.registry;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.schedule.Scheduler;
@@ -25,8 +20,12 @@ import org.mule.tck.testmodels.fruit.Orange;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class MuleRegistryHelperTestCase extends AbstractMuleContextTestCase
 {

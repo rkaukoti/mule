@@ -30,7 +30,9 @@ public class ObjectToString extends AbstractTransformer implements DiscoverableT
 {
     protected static final int DEFAULT_BUFFER_SIZE = 80;
 
-    /** Give core transformers a slighty higher priority */
+    /**
+     * Give core transformers a slighty higher priority
+     */
     private int priorityWeighting = DiscoverableTransformer.DEFAULT_PRIORITY_WEIGHTING + 1;
 
     public ObjectToString()
@@ -68,7 +70,7 @@ public class ObjectToString extends AbstractTransformer implements DiscoverableT
     }
 
     protected String createStringFromInputStream(InputStream input, Charset outputEncoding)
-        throws TransformerException
+            throws TransformerException
     {
         try
         {
@@ -92,7 +94,7 @@ public class ObjectToString extends AbstractTransformer implements DiscoverableT
     }
 
     protected String createStringFromOutputHandler(OutputHandler handler, Charset outputEncoding)
-        throws TransformerException
+            throws TransformerException
     {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         try
@@ -107,7 +109,7 @@ public class ObjectToString extends AbstractTransformer implements DiscoverableT
     }
 
     protected String createStringFromByteArray(byte[] bytes, Charset outputEncoding)
-        throws TransformerException
+            throws TransformerException
     {
         return new String(bytes, outputEncoding);
     }

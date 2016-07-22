@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.module.xml.stax;
 
-import java.util.List;
-
 import javanet.staxutils.events.EndElementEvent;
+
+import java.util.List;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.events.Namespace;

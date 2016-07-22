@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.config.spring.factories;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.lifecycle.Lifecycle;
 import org.mule.runtime.core.api.lifecycle.LifecycleUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * A {@link FactoryBean} which returns a fixed instanced obtained
@@ -25,7 +25,6 @@ import org.springframework.beans.factory.FactoryBean;
  * Invocations related to the {@link MuleContextAware} and {@link Lifecycle} interfaces
  * are delegated into the {@link #value} object when applies.
  *
- * @param <T>
  * @since 3.7.0
  */
 public class ConstantFactoryBean<T> implements FactoryBean<T>, MuleContextAware, Lifecycle

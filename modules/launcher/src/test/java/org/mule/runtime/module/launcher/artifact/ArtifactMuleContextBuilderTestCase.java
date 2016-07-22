@@ -6,6 +6,14 @@
  */
 package org.mule.runtime.module.launcher.artifact;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.rules.TemporaryFolder;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+
 import static java.lang.Thread.currentThread;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -16,14 +24,6 @@ import static org.mule.runtime.module.launcher.artifact.ArtifactMuleContextBuild
 import static org.mule.runtime.module.launcher.artifact.ArtifactMuleContextBuilder.INSTALLATION_DIRECTORY_MUST_BE_A_DIRECTORY;
 import static org.mule.runtime.module.launcher.artifact.ArtifactMuleContextBuilder.MULE_CONTEXT_ARTIFACT_PROPERTIES_CANNOT_BE_NULL;
 import static org.mule.runtime.module.launcher.artifact.ArtifactMuleContextBuilder.ONLY_APPLICATIONS_ARE_ALLOWED_TO_HAVE_A_PARENT_CONTEXT;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.rules.TemporaryFolder;
 
 public class ArtifactMuleContextBuilderTestCase extends AbstractMuleTestCase
 {

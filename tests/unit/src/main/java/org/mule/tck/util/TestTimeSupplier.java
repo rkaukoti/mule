@@ -6,10 +6,11 @@
  */
 package org.mule.tck.util;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.core.time.TimeSupplier;
 
 import java.util.concurrent.TimeUnit;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * A test {@link TimeSupplier} for externalizing the system time. It is initialised at a given

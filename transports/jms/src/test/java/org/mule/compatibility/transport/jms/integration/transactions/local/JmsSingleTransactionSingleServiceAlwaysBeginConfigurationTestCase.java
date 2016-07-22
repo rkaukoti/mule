@@ -12,7 +12,7 @@ import org.mule.compatibility.transport.jms.integration.AbstractJmsSingleTransac
  * Test all combinations of (inbound) ALWAYS_BEGIN.  They should all pass.
  */
 public class JmsSingleTransactionSingleServiceAlwaysBeginConfigurationTestCase extends
-    AbstractJmsSingleTransactionSingleServiceTestCase
+        AbstractJmsSingleTransactionSingleServiceTestCase
 {
     @Override
     protected String getConfigFile()

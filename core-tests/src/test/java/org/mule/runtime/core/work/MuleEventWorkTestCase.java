@@ -6,10 +6,7 @@
  */
 package org.mule.runtime.core.work;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.runtime.core.OptimizedRequestContext;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -19,7 +16,10 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test case to reproduce issue described in MULE-4407 and validate fix.

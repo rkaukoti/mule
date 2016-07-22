@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.core.internal.connection;
 
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.assertNotStopping;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.startIfNeeded;
 import org.mule.runtime.api.config.PoolingProfile;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionHandler;
@@ -24,6 +20,8 @@ import org.mule.runtime.core.api.lifecycle.Lifecycle;
 import org.mule.runtime.core.api.retry.RetryPolicyTemplate;
 import org.mule.runtime.core.api.util.Reference;
 import org.mule.runtime.core.retry.policies.NoRetryPolicyTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,8 +31,10 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.assertNotStopping;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.startIfNeeded;
 
 /**
  * Implementation of {@link ConnectionManager} which manages connections
@@ -190,7 +190,8 @@ public final class DefaultConnectionManager implements ConnectionManagerAdapter,
         }
     }
 
-    private <Connection> ConnectionHandlingStrategyAdapter<Connection> getManagementStrategy(ConnectionProvider<Connection> connectionProvider)
+    private <Connection> ConnectionHandlingStrategyAdapter<Connection> getManagementStrategy(
+            ConnectionProvider<Connection> connectionProvider)
     {
         PoolingProfile poolingProfile;
         if (connectionProvider instanceof ConnectionProviderWrapper)

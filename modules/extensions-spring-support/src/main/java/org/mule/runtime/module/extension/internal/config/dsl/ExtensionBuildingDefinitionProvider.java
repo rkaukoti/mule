@@ -6,14 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.config.dsl;
 
-import static java.util.Collections.emptyMap;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromChildConfiguration;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromSimpleParameter;
-import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import static org.mule.runtime.module.extension.internal.config.dsl.ExtensionXmlNamespaceInfo.EXTENSION_NAMESPACE;
-import static org.mule.runtime.module.extension.internal.util.MetadataTypeUtils.isInstantiable;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getClassLoader;
 import org.mule.metadata.api.model.ArrayType;
 import org.mule.metadata.api.model.DictionaryType;
 import org.mule.metadata.api.model.MetadataType;
@@ -64,6 +56,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import static java.util.Collections.emptyMap;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromChildConfiguration;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromSimpleParameter;
+import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+import static org.mule.runtime.module.extension.internal.config.dsl.ExtensionXmlNamespaceInfo.EXTENSION_NAMESPACE;
+import static org.mule.runtime.module.extension.internal.util.MetadataTypeUtils.isInstantiable;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getClassLoader;
+
 /**
  * A generic {@link ComponentBuildingDefinitionProvider} which provides
  * definitions capable of handling all extensions registered on the {@link ExtensionManager}.
@@ -105,33 +106,37 @@ public class ExtensionBuildingDefinitionProvider implements ComponentBuildingDef
     {
         Builder baseDefinition = new Builder().withNamespace(EXTENSION_NAMESPACE);
         definitions.add(baseDefinition.copy()
-                                .withIdentifier("extensions-config")
-                                .withTypeDefinition(fromType(ExtensionConfig.class))
-                                .withObjectFactoryType(ExtensionConfigObjectFactory.class)
-                                .withSetterParameterDefinition("dynamicConfigurationExpiration", fromChildConfiguration(DynamicConfigurationExpiration.class).build())
-                                .build());
+                                      .withIdentifier("extensions-config")
+                                      .withTypeDefinition(fromType(ExtensionConfig.class))
+                                      .withObjectFactoryType(ExtensionConfigObjectFactory.class)
+                                      .withSetterParameterDefinition("dynamicConfigurationExpiration",
+                                              fromChildConfiguration(DynamicConfigurationExpiration.class).build())
+                                      .build());
         definitions.add(baseDefinition.copy()
-                                .withIdentifier("dynamic-configuration-expiration")
-                                .withTypeDefinition(fromType(DynamicConfigurationExpiration.class))
-                                .withObjectFactoryType(DynamicConfigurationExpirationObjectFactory.class)
-                                .withConstructorParameterDefinition(fromSimpleParameter("frequency").build())
-                                .withConstructorParameterDefinition(fromSimpleParameter("timeUnit", value -> TimeUnit.valueOf((String) value)).build())
-                                .build());
+                                      .withIdentifier("dynamic-configuration-expiration")
+                                      .withTypeDefinition(fromType(DynamicConfigurationExpiration.class))
+                                      .withObjectFactoryType(DynamicConfigurationExpirationObjectFactory.class)
+                                      .withConstructorParameterDefinition(fromSimpleParameter("frequency").build())
+                                      .withConstructorParameterDefinition(
+                                              fromSimpleParameter("timeUnit", value -> TimeUnit.valueOf((String) value)).build())
+                                      .build());
 
         definitions.add(baseDefinition.copy()
-                                .withIdentifier("dynamic-config-policy")
-                                .withTypeDefinition(fromType(DynamicConfigPolicy.class))
-                                .withObjectFactoryType(DynamicConfigPolicyObjectFactory.class)
-                                .withSetterParameterDefinition("expirationPolicy", fromChildConfiguration(ExpirationPolicy.class).build())
-                                .build());
+                                      .withIdentifier("dynamic-config-policy")
+                                      .withTypeDefinition(fromType(DynamicConfigPolicy.class))
+                                      .withObjectFactoryType(DynamicConfigPolicyObjectFactory.class)
+                                      .withSetterParameterDefinition("expirationPolicy",
+                                              fromChildConfiguration(ExpirationPolicy.class).build())
+                                      .build());
 
         definitions.add(baseDefinition.copy()
-                                .withIdentifier("expiration-policy")
-                                .withTypeDefinition(fromType(ExpirationPolicy.class))
-                                .withObjectFactoryType(ExpirationPolicyObjectFactory.class)
-                                .withSetterParameterDefinition("maxIdleTime", fromSimpleParameter("maxIdleTime").build())
-                                .withSetterParameterDefinition("timeUnit", fromSimpleParameter("timeUnit", value -> TimeUnit.valueOf((String) value)).build())
-                                .build());
+                                      .withIdentifier("expiration-policy")
+                                      .withTypeDefinition(fromType(ExpirationPolicy.class))
+                                      .withObjectFactoryType(ExpirationPolicyObjectFactory.class)
+                                      .withSetterParameterDefinition("maxIdleTime", fromSimpleParameter("maxIdleTime").build())
+                                      .withSetterParameterDefinition("timeUnit",
+                                              fromSimpleParameter("timeUnit", value -> TimeUnit.valueOf((String) value)).build())
+                                      .build());
 
         return definitions;
     }
@@ -148,60 +153,68 @@ public class ExtensionBuildingDefinitionProvider implements ComponentBuildingDef
         final ExtensionParsingContext parsingContext = new ExtensionParsingContext();
         final Builder definitionBuilder = new Builder().withNamespace(xmlModelProperty.get().getNamespace());
         Optional<SubTypesModelProperty> subTypesProperty = extensionModel.getModelProperty(SubTypesModelProperty.class);
-        final SubTypesMappingContainer typeMapping = new SubTypesMappingContainer(subTypesProperty.isPresent() ? subTypesProperty.get().getSubTypesMapping() : emptyMap());
+        final SubTypesMappingContainer typeMapping =
+                new SubTypesMappingContainer(subTypesProperty.isPresent() ? subTypesProperty.get().getSubTypesMapping() : emptyMap());
         final DslElementResolver dslElementResolver = new DslElementResolver(extensionModel);
 
         final ClassLoader extensionClassLoader = getClassLoader(extensionModel);
-        withContextClassLoader(extensionClassLoader, () -> {
+        withContextClassLoader(extensionClassLoader, () ->
+        {
             new IdempotentExtensionWalker()
             {
                 @Override
                 public void onConfiguration(ConfigurationModel model)
                 {
                     parseWith(new ConfigurationDefinitionParser(definitionBuilder, (RuntimeConfigurationModel) model,
-                                                                dslElementResolver, muleContext, parsingContext));
+                            dslElementResolver, muleContext, parsingContext));
                 }
 
                 @Override
                 public void onOperation(OperationModel model)
                 {
                     parseWith(new OperationDefinitionParser(definitionBuilder, (RuntimeExtensionModel) extensionModel,
-                                                            (RuntimeOperationModel) model, dslElementResolver, muleContext, parsingContext));
+                            (RuntimeOperationModel) model, dslElementResolver, muleContext, parsingContext));
                 }
 
                 @Override
                 public void onConnectionProvider(ConnectionProviderModel model)
                 {
-                    parseWith(new ConnectionProviderDefinitionParser(definitionBuilder, model, dslElementResolver, muleContext, parsingContext));
+                    parseWith(new ConnectionProviderDefinitionParser(definitionBuilder, model, dslElementResolver, muleContext,
+                            parsingContext));
                 }
 
                 @Override
                 public void onSource(SourceModel model)
                 {
                     parseWith(new SourceDefinitionParser(definitionBuilder, (RuntimeExtensionModel) extensionModel,
-                                                         (RuntimeSourceModel) model, dslElementResolver, muleContext, parsingContext));
+                            (RuntimeSourceModel) model, dslElementResolver, muleContext, parsingContext));
                 }
 
                 @Override
                 public void onParameter(ParameterModel model)
                 {
-                    registerSubTypes(typeMapping, model.getType(), definitionBuilder, extensionClassLoader, dslElementResolver, parsingContext);
+                    registerSubTypes(typeMapping, model.getType(), definitionBuilder, extensionClassLoader, dslElementResolver,
+                            parsingContext);
                     registerTopLevelParameter(model.getType(), definitionBuilder, extensionClassLoader, dslElementResolver, parsingContext);
                 }
 
 
             }.walk(extensionModel);
 
-            registerExportedTypesTopLevelParsers(extensionModel, definitionBuilder, extensionClassLoader, dslElementResolver, parsingContext);
+            registerExportedTypesTopLevelParsers(extensionModel, definitionBuilder, extensionClassLoader, dslElementResolver,
+                    parsingContext);
         });
     }
 
-    private void registerSubTypes(SubTypesMappingContainer typeMapping, MetadataType type, Builder definitionBuilder, ClassLoader extensionClassLoader, DslElementResolver dslElementResolver, ExtensionParsingContext parsingContext)
+    private void registerSubTypes(SubTypesMappingContainer typeMapping, MetadataType type, Builder definitionBuilder,
+                                  ClassLoader extensionClassLoader, DslElementResolver dslElementResolver,
+                                  ExtensionParsingContext parsingContext)
     {
         type.accept(new MetadataTypeVisitor()
         {
             @Override
-            public void visitUnion(UnionType unionType) {
+            public void visitUnion(UnionType unionType)
+            {
                 unionType.getTypes().forEach(type -> type.accept(this));
             }
 
@@ -215,7 +228,8 @@ public class ExtensionBuildingDefinitionProvider implements ComponentBuildingDef
             public void visitObject(ObjectType objectType)
             {
                 typeMapping.getSubTypes(objectType)
-                        .forEach(subtype -> registerTopLevelParameter(subtype, definitionBuilder, extensionClassLoader, dslElementResolver, parsingContext));
+                           .forEach(subtype -> registerTopLevelParameter(subtype, definitionBuilder, extensionClassLoader,
+                                   dslElementResolver, parsingContext));
             }
 
             @Override
@@ -254,7 +268,8 @@ public class ExtensionBuildingDefinitionProvider implements ComponentBuildingDef
             {
                 if (isInstantiable(objectType))
                 {
-                    parseWith(new ObjectTypeParameterParser(definitionBuilder, objectType, extensionClassLoader, dslElementResolver, parsingContext));
+                    parseWith(new ObjectTypeParameterParser(definitionBuilder, objectType, extensionClassLoader, dslElementResolver,
+                            parsingContext));
                 }
             }
 
@@ -262,7 +277,8 @@ public class ExtensionBuildingDefinitionProvider implements ComponentBuildingDef
             public void visitArrayType(ArrayType arrayType)
             {
 
-                registerTopLevelParameter(arrayType.getType(), definitionBuilder.copy(), extensionClassLoader, dslElementResolver, parsingContext);
+                registerTopLevelParameter(arrayType.getType(), definitionBuilder.copy(), extensionClassLoader, dslElementResolver,
+                        parsingContext);
             }
 
             @Override
@@ -274,22 +290,25 @@ public class ExtensionBuildingDefinitionProvider implements ComponentBuildingDef
             }
 
             @Override
-            public void visitUnion(UnionType unionType) {
+            public void visitUnion(UnionType unionType)
+            {
                 unionType.getTypes().forEach(type -> type.accept(this));
             }
 
         });
     }
 
-    private void registerExportedTypesTopLevelParsers(ExtensionModel extensionModel, Builder definitionBuilder, ClassLoader extensionClassLoader,
+    private void registerExportedTypesTopLevelParsers(ExtensionModel extensionModel, Builder definitionBuilder,
+                                                      ClassLoader extensionClassLoader,
                                                       DslElementResolver dslElementResolver, ExtensionParsingContext parsingContext)
     {
         extensionModel.getModelProperty(ExportModelProperty.class)
-                .map(ExportModelProperty::getExportedTypes)
-                .ifPresent(exportedTypes -> exportedTypes.stream()
-                        .filter(MetadataTypeUtils::isInstantiable)
-                        .filter(MetadataTypeUtils::hasExposedFields)
-                        .forEach(exportedType -> registerTopLevelParameter(exportedType, definitionBuilder, extensionClassLoader,
-                                                                           dslElementResolver, parsingContext)));
+                      .map(ExportModelProperty::getExportedTypes)
+                      .ifPresent(exportedTypes -> exportedTypes.stream()
+                                                               .filter(MetadataTypeUtils::isInstantiable)
+                                                               .filter(MetadataTypeUtils::hasExposedFields)
+                                                               .forEach(exportedType -> registerTopLevelParameter(exportedType,
+                                                                       definitionBuilder, extensionClassLoader,
+                                                                       dslElementResolver, parsingContext)));
     }
 }

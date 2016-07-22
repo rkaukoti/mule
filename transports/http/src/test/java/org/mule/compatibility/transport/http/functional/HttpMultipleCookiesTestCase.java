@@ -6,21 +6,6 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-
-import java.io.IOException;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.httpclient.Cookie;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpState;
@@ -34,26 +19,37 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public class HttpMultipleCookiesTestCase extends FunctionalTestCase
 {
-    
-    protected static String TEST_MESSAGE = "Test Http Request ";
+
     protected static final Logger logger = LoggerFactory.getLogger(HttpMultipleCookiesTestCase.class);
-
-    private CountDownLatch simpleServerLatch = new CountDownLatch(1);
-    private CountDownLatch simpleServerShutdownLatch = new CountDownLatch(1);
+    protected static String TEST_MESSAGE = "Test Http Request ";
     private static AtomicBoolean cookiesRecieved = new AtomicBoolean(false);
-
-    private Server server = null;
-
     @Rule
     public DynamicPort dynamicPort1 = new DynamicPort("port1");
-    
     @Rule
     public DynamicPort dynamicPort2 = new DynamicPort("port2");
+    private CountDownLatch simpleServerLatch = new CountDownLatch(1);
+    private CountDownLatch simpleServerShutdownLatch = new CountDownLatch(1);
+    private Server server = null;
 
     public HttpMultipleCookiesTestCase()
     {
@@ -73,7 +69,7 @@ public class HttpMultipleCookiesTestCase extends FunctionalTestCase
         startServer();
         assertTrue(simpleServerLatch.await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS));
     }
-            
+
     @Override
     protected void doTearDown() throws Exception
     {
@@ -129,7 +125,7 @@ public class HttpMultipleCookiesTestCase extends FunctionalTestCase
         Server server = new Server();
         AbstractNetworkConnector connector = new ServerConnector(server);
         connector.setPort(dynamicPort2.getNumber());
-        server.setConnectors(new Connector[]{connector});
+        server.setConnectors(new Connector[] {connector});
 
         ServletContextHandler handler = new ServletContextHandler();
         server.setHandler(handler);
@@ -142,18 +138,18 @@ public class HttpMultipleCookiesTestCase extends FunctionalTestCase
         simpleServerLatch.countDown();
         logger.debug("Server started");
     }
-    
+
     protected void stopServer() throws Exception
     {
         logger.debug("server stopping");
-        
-        if(server != null && server.isRunning())
+
+        if (server != null && server.isRunning())
         {
-            assertEquals(1, server.getConnectors());            
+            assertEquals(1, server.getConnectors());
             // this test only uses one connector
             server.getConnectors()[0].stop();
         }
-        
+
         simpleServerShutdownLatch.countDown();
         logger.debug("Server stopped");
     }
@@ -162,7 +158,7 @@ public class HttpMultipleCookiesTestCase extends FunctionalTestCase
     {
         @Override
         protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
+                throws ServletException, IOException
         {
             try
             {
@@ -171,7 +167,7 @@ public class HttpMultipleCookiesTestCase extends FunctionalTestCase
                 for (int i = 0; i < 3; i++)
                 {
                     javax.servlet.http.Cookie cookie1 = new javax.servlet.http.Cookie("OutputCookieName" + i,
-                        "OutputCookieValue" + i);
+                            "OutputCookieValue" + i);
                     response.addCookie(cookie1);
                 }
                 cookiesRecieved.set(false);
@@ -196,7 +192,7 @@ public class HttpMultipleCookiesTestCase extends FunctionalTestCase
 
         @Override
         protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
+                throws ServletException, IOException
         {
             doGet(request, response);
         }

@@ -6,20 +6,20 @@
  */
 package org.mule.runtime.core.util;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.expression.ExpressionManager;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.expression.ExpressionManager;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -106,7 +106,8 @@ public class AttributeEvaluatorTestCase extends AbstractMuleTestCase
         AttributeEvaluator attributeEvaluator = new AttributeEvaluator("#[expression]");
         attributeEvaluator.initialize(mockExpressionManager);
         final String expectedValue = "hi";
-        when(mockExpressionManager.evaluate(Mockito.anyString(), Mockito.any(MuleEvent.class))).thenReturn(new StringBuilder(expectedValue));
+        when(mockExpressionManager.evaluate(Mockito.anyString(), Mockito.any(MuleEvent.class))).thenReturn(
+                new StringBuilder(expectedValue));
         assertThat(attributeEvaluator.resolveStringValue(mockMuleEvent), is(expectedValue));
     }
 
@@ -127,7 +128,7 @@ public class AttributeEvaluatorTestCase extends AbstractMuleTestCase
         attributeEvaluator.initialize(mockExpressionManager);
         final long expectedValue = 1234l;
         when(mockExpressionManager.evaluate(Mockito.anyString(), Mockito.any(MuleEvent.class))).thenReturn(expectedValue);
-        assertThat(attributeEvaluator.resolveIntegerValue(mockMuleEvent), is((int)expectedValue));
+        assertThat(attributeEvaluator.resolveIntegerValue(mockMuleEvent), is((int) expectedValue));
     }
 
     @Test

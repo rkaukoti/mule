@@ -14,12 +14,11 @@ import org.mule.runtime.core.api.security.SecurityException;
  */
 public class SecurityNotification extends ServerNotification
 {
+    public static final int SECURITY_AUTHENTICATION_FAILED = SECURITY_EVENT_ACTION_START_RANGE + 1;
     /**
      * Serial version
      */
     private static final long serialVersionUID = 5951835321289699941L;
-
-    public static final int SECURITY_AUTHENTICATION_FAILED = SECURITY_EVENT_ACTION_START_RANGE + 1;
 
     static
     {

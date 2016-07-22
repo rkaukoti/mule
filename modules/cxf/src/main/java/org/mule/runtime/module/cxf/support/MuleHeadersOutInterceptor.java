@@ -6,27 +6,27 @@
  */
 package org.mule.runtime.module.cxf.support;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_GROUP_SIZE_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_ID_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_SEQUENCE_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROPERTY;
-import static org.mule.runtime.module.cxf.MuleSoapHeaders.MULE_HEADER;
-import org.mule.runtime.core.NonBlockingVoidMuleEvent;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.module.cxf.CxfConstants;
-import org.mule.runtime.module.cxf.MuleSoapHeaders;
-
-import javax.xml.namespace.QName;
-
 import org.apache.cxf.binding.soap.SoapHeader;
 import org.apache.cxf.binding.soap.SoapMessage;
 import org.apache.cxf.helpers.DOMUtils;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.Phase;
+import org.mule.runtime.core.NonBlockingVoidMuleEvent;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.module.cxf.CxfConstants;
+import org.mule.runtime.module.cxf.MuleSoapHeaders;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
+
+import javax.xml.namespace.QName;
+
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_GROUP_SIZE_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_ID_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_SEQUENCE_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROPERTY;
+import static org.mule.runtime.module.cxf.MuleSoapHeaders.MULE_HEADER;
 
 /**
  * Writes the Mule Soap Header to the outgoing request.
@@ -70,16 +70,16 @@ public class MuleHeadersOutInterceptor extends AbstractMuleHeaderInterceptor
         if (muleHeaders.getCorrelationId() != null)
         {
             mule_header.appendChild(buildMuleHeader(owner_doc, MULE_CORRELATION_ID_PROPERTY,
-                muleHeaders.getCorrelationId()));
+                    muleHeaders.getCorrelationId()));
             mule_header.appendChild(buildMuleHeader(owner_doc, MULE_CORRELATION_GROUP_SIZE_PROPERTY,
-                muleHeaders.getCorrelationGroup()));
+                    muleHeaders.getCorrelationGroup()));
             mule_header.appendChild(buildMuleHeader(owner_doc, MULE_CORRELATION_SEQUENCE_PROPERTY,
-                muleHeaders.getCorrelationSequence()));
+                    muleHeaders.getCorrelationSequence()));
         }
         if (muleHeaders.getReplyTo() != null)
         {
             mule_header.appendChild(buildMuleHeader(owner_doc, MULE_REPLY_TO_PROPERTY,
-                muleHeaders.getReplyTo()));
+                    muleHeaders.getReplyTo()));
         }
 
         SoapHeader sh = new SoapHeader(new QName(MULE_NS_URI, MULE_HEADER), mule_header);

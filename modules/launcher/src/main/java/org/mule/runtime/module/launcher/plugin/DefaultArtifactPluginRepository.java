@@ -7,6 +7,16 @@
 
 package org.mule.runtime.module.launcher.plugin;
 
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.SuffixFileFilter;
+import org.mule.runtime.module.artifact.descriptor.ArtifactDescriptorCreateException;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
 import static java.io.File.separator;
 import static java.util.Collections.EMPTY_LIST;
 import static java.util.Collections.unmodifiableList;
@@ -17,17 +27,6 @@ import static org.mule.runtime.core.util.FileUtils.unzip;
 import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import static org.mule.runtime.module.launcher.MuleFoldersUtil.getContainerAppPluginsFolder;
 
-import org.mule.runtime.module.artifact.descriptor.ArtifactDescriptorCreateException;
-
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import org.apache.commons.io.filefilter.SuffixFileFilter;
-
 /**
  * Default implementation of an {@link ArtifactPluginRepository} that holds in memory the list
  * of artifact plugin descriptors bundled with the container.
@@ -36,12 +35,12 @@ import org.apache.commons.io.filefilter.SuffixFileFilter;
  */
 public class DefaultArtifactPluginRepository implements ArtifactPluginRepository
 {
+    private final ArtifactPluginDescriptorFactory pluginDescriptorFactory;
     private volatile List<ArtifactPluginDescriptor> containerArtifactPluginDescriptors;
 
-    private final ArtifactPluginDescriptorFactory pluginDescriptorFactory;
-
     /**
-     * @param pluginDescriptorFactory a {@link ArtifactPluginDescriptorFactory} for creating from the container applications plugins folder the list of {@link ArtifactPluginDescriptor}'s
+     * @param pluginDescriptorFactory a {@link ArtifactPluginDescriptorFactory} for creating from the container applications plugins folder
+     *                                the list of {@link ArtifactPluginDescriptor}'s
      */
     public DefaultArtifactPluginRepository(ArtifactPluginDescriptorFactory pluginDescriptorFactory)
     {
@@ -73,7 +72,6 @@ public class DefaultArtifactPluginRepository implements ArtifactPluginRepository
 
     /**
      * @return collects and initializes a {@link List} of {@link ArtifactPluginDescriptor} by loading the container application plugins
-     * @throws IOException
      */
     private List<ArtifactPluginDescriptor> collectContainerApplicationPluginDescriptors() throws IOException
     {
@@ -92,8 +90,6 @@ public class DefaultArtifactPluginRepository implements ArtifactPluginRepository
     /**
      * Iterates the list of zip files in container application plugin folder, unzip them and once the plugin is expanded
      * it deletes the zip from the container app plugins folder.
-     *
-     * @throws IOException
      */
     private void unzipPluginsIfNeeded() throws IOException
     {
@@ -102,7 +98,7 @@ public class DefaultArtifactPluginRepository implements ArtifactPluginRepository
             String pluginName = removeExtension(pluginZipFile.getName());
 
             final File pluginFolderExpanded = new File(getContainerAppPluginsFolder(),
-                                                       separator + pluginName);
+                    separator + pluginName);
             unzip(pluginZipFile, pluginFolderExpanded);
 
             forceDelete(pluginZipFile);

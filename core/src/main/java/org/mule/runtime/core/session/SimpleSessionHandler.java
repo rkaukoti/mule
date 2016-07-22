@@ -6,16 +6,15 @@
  */
 package org.mule.runtime.core.session;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_SESSION_PROPERTY;
-
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.MuleSession;
 import org.mule.runtime.core.message.SessionHandler;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_SESSION_PROPERTY;
 
 /**
  * A session handler used to store and retrieve session information on an
@@ -40,5 +39,5 @@ public class SimpleSessionHandler implements SessionHandler
                           .addOutboundProperty(MULE_SESSION_PROPERTY, session)
                           .build();
     }
-    
+
 }

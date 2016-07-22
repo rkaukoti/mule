@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.util.queue.objectstore;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.mule.runtime.core.api.store.ObjectStoreException;
 import org.mule.runtime.core.util.queue.objectstore.xa.AbstractTransactionContext;
 import org.mule.runtime.core.util.xa.ResourceManagerException;
@@ -15,8 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.collections.CollectionUtils;
 
 /**
  * @deprecated this class will be removed in Mule 4.0 in favor of the new queue implementation
@@ -35,7 +34,7 @@ public class QueueTransactionContext extends AbstractTransactionContext
     }
 
     public boolean offer(QueueInfo queue, Serializable item, long offerTimeout)
-        throws InterruptedException, ObjectStoreException
+            throws InterruptedException, ObjectStoreException
     {
         readOnly = false;
         if (queue.canTakeFromStore())
@@ -101,7 +100,7 @@ public class QueueTransactionContext extends AbstractTransactionContext
     }
 
     public Serializable poll(QueueInfo queue, long pollTimeout)
-        throws InterruptedException, ObjectStoreException
+            throws InterruptedException, ObjectStoreException
     {
         readOnly = false;
         if (added != null)

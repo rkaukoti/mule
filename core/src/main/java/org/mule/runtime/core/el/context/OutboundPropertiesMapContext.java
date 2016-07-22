@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.core.el.context;
 
-import static java.util.Collections.emptyMap;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 
@@ -14,6 +13,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import static java.util.Collections.emptyMap;
 
 class OutboundPropertiesMapContext extends AbstractMapContext<Serializable>
 {

@@ -6,8 +6,10 @@
  */
 package org.mule.runtime.core.internal.metadata;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.google.common.collect.ImmutableMap;
 
 import org.mule.runtime.api.metadata.ComponentId;
 import org.mule.runtime.api.metadata.MetadataAware;
@@ -27,16 +29,14 @@ import org.mule.runtime.core.api.source.MessageSource;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.runtime.core.context.notification.NotificationException;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.google.common.collect.ImmutableMap;
-
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
+
+import static java.lang.String.format;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * Default implementation of the {@link MetadataManager}, which provides access to the Metadata of any Component in the
@@ -49,16 +49,15 @@ import javax.inject.Inject;
 public class MuleMetadataManager implements MetadataManager, Initialisable
 {
 
-    private static final String EXCEPTION_RESOLVING_COMPONENT_METADATA = "An exception occurred while resolving metadata for component '%s'";
+    private static final String EXCEPTION_RESOLVING_COMPONENT_METADATA =
+            "An exception occurred while resolving metadata for component '%s'";
     private static final String COMPONENT_NOT_METADATA_AWARE = "Component is not MetadataAware, no information available";
     private static final String EXCEPTION_RESOLVING_METADATA_KEYS = "An exception occurred while resolving Component MetadataKeys";
     private static final String SOURCE_NOT_FOUND = "Flow doesn't contain a message source";
     private static final String PROCESSOR_NOT_FOUND = "Processor doesn't exist in the given index [%s]";
-
+    private final LoadingCache<String, MetadataCache> caches;
     @Inject
     private MuleContext muleContext;
-
-    private final LoadingCache<String, MetadataCache> caches;
 
     public MuleMetadataManager()
     {
@@ -75,15 +74,14 @@ public class MuleMetadataManager implements MetadataManager, Initialisable
 
     /**
      * Initialize this instance by registering a {@link CustomNotificationListener}
-     *
-     * @throws InitialisationException
      */
     @Override
     public void initialise() throws InitialisationException
     {
         try
         {
-            muleContext.registerListener((CustomNotificationListener<ConfigurationInstanceNotification>) notification -> {
+            muleContext.registerListener((CustomNotificationListener<ConfigurationInstanceNotification>) notification ->
+            {
                 try
                 {
                     if (notification.getAction() == ConfigurationInstanceNotification.CONFIGURATION_STOPPED)
@@ -120,7 +118,7 @@ public class MuleMetadataManager implements MetadataManager, Initialisable
     public MetadataResult<ComponentMetadataDescriptor> getMetadata(ComponentId componentId, MetadataKey key)
     {
         return exceptionHandledMetadataFetch(componentId, processor -> processor.getMetadata(key),
-                                             format(EXCEPTION_RESOLVING_COMPONENT_METADATA, componentId));
+                format(EXCEPTION_RESOLVING_COMPONENT_METADATA, componentId));
     }
 
     /**
@@ -130,7 +128,7 @@ public class MuleMetadataManager implements MetadataManager, Initialisable
     public MetadataResult<ComponentMetadataDescriptor> getMetadata(ComponentId componentId)
     {
         return exceptionHandledMetadataFetch(componentId, MetadataAware::getMetadata,
-                                             format(EXCEPTION_RESOLVING_COMPONENT_METADATA, componentId));
+                format(EXCEPTION_RESOLVING_COMPONENT_METADATA, componentId));
     }
 
     /**
@@ -159,7 +157,8 @@ public class MuleMetadataManager implements MetadataManager, Initialisable
         return ImmutableMap.copyOf(caches.asMap());
     }
 
-    private <T> MetadataResult<T> exceptionHandledMetadataFetch(ComponentId componentId, MetadataDelegate<T> metadataSupplier, String failureMessage)
+    private <T> MetadataResult<T> exceptionHandledMetadataFetch(ComponentId componentId, MetadataDelegate<T> metadataSupplier,
+                                                                String failureMessage)
     {
         try
         {
@@ -193,7 +192,8 @@ public class MuleMetadataManager implements MetadataManager, Initialisable
                 }
                 catch (IndexOutOfBoundsException | NumberFormatException e)
                 {
-                    throw new InvalidComponentIdException(createStaticMessage(format(PROCESSOR_NOT_FOUND, componentId.getComponentPath())), e);
+                    throw new InvalidComponentIdException(createStaticMessage(format(PROCESSOR_NOT_FOUND, componentId.getComponentPath())),
+                            e);
                 }
             }
             else

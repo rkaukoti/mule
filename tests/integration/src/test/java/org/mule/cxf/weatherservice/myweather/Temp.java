@@ -29,15 +29,14 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "temp", namespace = "http://ws.cdyne.com/WeatherWS/", propOrder = {
-    "morningLow",
-    "daytimeHigh"
+        "morningLow",
+        "daytimeHigh"
 })
-public class Temp {
+public class Temp
+{
 
     @XmlElement(name = "MorningLow", namespace = "http://ws.cdyne.com/WeatherWS/")
     protected String morningLow;
@@ -47,48 +46,40 @@ public class Temp {
     /**
      * Gets the value of the morningLow property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getMorningLow() {
+    public String getMorningLow()
+    {
         return morningLow;
     }
 
     /**
      * Sets the value of the morningLow property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setMorningLow(String value) {
+    public void setMorningLow(String value)
+    {
         this.morningLow = value;
     }
 
     /**
      * Gets the value of the daytimeHigh property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getDaytimeHigh() {
+    public String getDaytimeHigh()
+    {
         return daytimeHigh;
     }
 
     /**
      * Sets the value of the daytimeHigh property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setDaytimeHigh(String value) {
+    public void setDaytimeHigh(String value)
+    {
         this.daytimeHigh = value;
     }
 

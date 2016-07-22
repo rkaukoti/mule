@@ -6,9 +6,7 @@
  */
 package org.mule.functional.junit4;
 
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-import static org.mule.runtime.core.util.IOUtils.getResourceAsUrl;
-import static org.springframework.util.ReflectionUtils.findMethod;
+import org.apache.commons.io.FileUtils;
 import org.mule.runtime.core.DefaultMuleContext;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.ConfigurationBuilder;
@@ -26,7 +24,9 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
+import static org.mule.runtime.core.util.IOUtils.getResourceAsUrl;
+import static org.springframework.util.ReflectionUtils.findMethod;
 
 /**
  * Base test class for {@link FunctionalTestCase}s
@@ -112,8 +112,10 @@ public abstract class ExtensionFunctionalTestCase extends FunctionalTestCase
         ((DefaultMuleContext) muleContext).setExtensionManager(extensionManager);
         initialiseIfNeeded(extensionManager, muleContext);
 
-        ExtensionsTestInfrastructureDiscoverer extensionsTestInfrastructureDiscoverer = new ExtensionsTestInfrastructureDiscoverer(extensionManager, generatedResourcesDirectory);
-        List<GeneratedResource> generatedResources = extensionsTestInfrastructureDiscoverer.discoverExtensions(getDescribers(), getAnnotatedExtensionClasses());
+        ExtensionsTestInfrastructureDiscoverer extensionsTestInfrastructureDiscoverer =
+                new ExtensionsTestInfrastructureDiscoverer(extensionManager, generatedResourcesDirectory);
+        List<GeneratedResource> generatedResources =
+                extensionsTestInfrastructureDiscoverer.discoverExtensions(getDescribers(), getAnnotatedExtensionClasses());
         generateResourcesAndAddToClasspath(generatedResourcesDirectory, generatedResources);
     }
 

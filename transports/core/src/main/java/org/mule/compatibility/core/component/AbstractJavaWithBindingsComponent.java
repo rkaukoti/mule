@@ -8,7 +8,6 @@ package org.mule.compatibility.core.component;
 
 import org.mule.compatibility.core.api.component.InterfaceBinding;
 import org.mule.compatibility.core.api.component.JavaWithBindingsComponent;
-import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.component.LifecycleAdapter;
 import org.mule.runtime.core.api.model.EntryPointResolverSet;
 import org.mule.runtime.core.api.object.ObjectFactory;
@@ -19,7 +18,7 @@ import java.util.List;
 
 /**
  * Abstract implementation of JavaComponent adds JavaComponent specifics like {@link InterfaceBinding}.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -41,8 +40,8 @@ public abstract class AbstractJavaWithBindingsComponent extends AbstractJavaComp
     }
 
     public AbstractJavaWithBindingsComponent(ObjectFactory objectFactory,
-                                 EntryPointResolverSet entryPointResolverSet,
-                                 List<InterfaceBinding> bindings)
+                                             EntryPointResolverSet entryPointResolverSet,
+                                             List<InterfaceBinding> bindings)
     {
         super(objectFactory, entryPointResolverSet);
         if (bindings != null)
@@ -66,9 +65,6 @@ public abstract class AbstractJavaWithBindingsComponent extends AbstractJavaComp
     /**
      * Creates and initialises a new LifecycleAdaptor instance wrapped the component object instance obtained from the
      * configured object factory.
-     *
-     * @throws MuleException
-     * @throws Exception
      */
     @Override
     protected LifecycleAdapter createLifecycleAdaptor() throws Exception

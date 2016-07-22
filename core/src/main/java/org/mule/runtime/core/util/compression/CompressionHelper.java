@@ -7,12 +7,11 @@
 package org.mule.runtime.core.util.compression;
 
 import org.mule.runtime.core.util.ClassUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>CompressionHelper</code> a static class that provides facilities for
@@ -28,8 +27,10 @@ public final class CompressionHelper
 
     private static CompressionStrategy defaultStrategy;
 
-    /** Do not instanciate. */
-    private CompressionHelper ()
+    /**
+     * Do not instanciate.
+     */
+    private CompressionHelper()
     {
         // no-op
     }
@@ -46,7 +47,7 @@ public final class CompressionHelper
                     try
                     {
                         Object o = ClassUtils.loadClass(CompressionStrategy.COMPRESSION_DEFAULT,
-                            CompressionHelper.class).newInstance();
+                                CompressionHelper.class).newInstance();
                         if (logger.isDebugEnabled())
                         {
                             logger.debug("Found CompressionStrategy: " + o.getClass().getName());

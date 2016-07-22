@@ -7,6 +7,20 @@
 
 package org.mule.extension.email.retriever;
 
+import org.junit.Test;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.mule.extension.email.api.EmailAttributes;
+import org.mule.extension.email.api.exception.EmailException;
+import org.mule.functional.junit4.runners.RunnerDelegateTo;
+import org.mule.runtime.api.message.MuleMessage;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import javax.mail.internet.MimeMessage;
+
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static javax.mail.Flags.Flag;
@@ -20,20 +34,6 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.runners.Parameterized.Parameters;
 import static org.mule.extension.email.internal.commands.EmailIdConsumerExecutor.NO_ID_ERROR;
-import org.mule.extension.email.api.EmailAttributes;
-import org.mule.extension.email.api.exception.EmailException;
-import org.mule.functional.junit4.runners.RunnerDelegateTo;
-import org.mule.runtime.api.message.MuleMessage;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
-import javax.mail.internet.MimeMessage;
-
-import org.junit.Test;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
 
 @RunnerDelegateTo(Parameterized.class)
 public class IMAPTestCase extends AbstractEmailRetrieverTestCase
@@ -75,7 +75,8 @@ public class IMAPTestCase extends AbstractEmailRetrieverTestCase
     {
         List<MuleMessage> messages = runFlowAndGetMessages(RETRIEVE_AND_READ);
         assertThat(messages, hasSize(10));
-        messages.forEach(m -> {
+        messages.forEach(m ->
+        {
             assertBodyContent((String) m.getPayload());
             assertThat(((EmailAttributes) m.getAttributes()).getFlags().isSeen(), is(true));
         });

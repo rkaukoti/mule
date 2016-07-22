@@ -7,19 +7,18 @@
 package org.mule.runtime.module.ws.functional;
 
 
+import org.junit.Test;
+import org.mule.functional.listener.ExceptionListener;
+import org.mule.runtime.core.api.MessagingException;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.module.ws.consumer.SoapFaultException;
+
 import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.MessagingException;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.functional.listener.ExceptionListener;
-import org.mule.runtime.module.ws.consumer.SoapFaultException;
-
-import org.junit.Test;
 
 public class CatchExceptionStrategyFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase
 {

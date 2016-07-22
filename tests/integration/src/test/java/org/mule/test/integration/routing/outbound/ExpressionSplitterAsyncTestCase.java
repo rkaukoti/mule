@@ -6,14 +6,13 @@
  */
 package org.mule.test.integration.routing.outbound;
 
+import org.junit.Test;
 import org.mule.functional.functional.FlowAssert;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.testmodels.fruit.Apple;
 import org.mule.tck.testmodels.fruit.Banana;
 import org.mule.tck.testmodels.fruit.FruitBowl;
 import org.mule.tck.testmodels.fruit.Orange;
-
-import org.junit.Test;
 
 public class ExpressionSplitterAsyncTestCase extends FunctionalTestCase
 {

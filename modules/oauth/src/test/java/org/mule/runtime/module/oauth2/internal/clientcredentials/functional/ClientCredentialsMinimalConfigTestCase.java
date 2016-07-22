@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.module.oauth2.internal.clientcredentials.functional;
 
-import org.mule.runtime.module.oauth2.asserter.OAuthContextFunctionAsserter;
-
 import org.junit.Test;
+import org.mule.runtime.module.oauth2.asserter.OAuthContextFunctionAsserter;
 
 public class ClientCredentialsMinimalConfigTestCase extends AbstractClientCredentialsBasicTestCase
 {
@@ -19,7 +18,7 @@ public class ClientCredentialsMinimalConfigTestCase extends AbstractClientCreden
         verifyRequestDoneToTokenUrlForClientCredentials();
 
         OAuthContextFunctionAsserter.createFrom(muleContext.getExpressionLanguage(), "tokenManagerConfig")
-                .assertAccessTokenIs(ACCESS_TOKEN);
+                                    .assertAccessTokenIs(ACCESS_TOKEN);
     }
 
 }

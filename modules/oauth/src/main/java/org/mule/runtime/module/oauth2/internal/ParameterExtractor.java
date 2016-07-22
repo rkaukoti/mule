@@ -15,16 +15,6 @@ public class ParameterExtractor
     private String paramName;
     private String value;
 
-    public void setParamName(final String paramName)
-    {
-        this.paramName = paramName;
-    }
-
-    public void setValue(final String value)
-    {
-        this.value = value;
-    }
-
     /**
      * @return name of the parameter used to store it in the oauth context.
      */
@@ -33,11 +23,21 @@ public class ParameterExtractor
         return paramName;
     }
 
+    public void setParamName(final String paramName)
+    {
+        this.paramName = paramName;
+    }
+
     /**
      * @return value extracted from the token response.
      */
     public String getValue()
     {
         return value;
+    }
+
+    public void setValue(final String value)
+    {
+        this.value = value;
     }
 }

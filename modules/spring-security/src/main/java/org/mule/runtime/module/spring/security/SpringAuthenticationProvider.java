@@ -10,7 +10,7 @@ import org.mule.runtime.core.api.security.Authentication;
 
 /**
  * A provider for spring authentication
- * 
+ *
  * @author estebanroblesluna
  */
 public interface SpringAuthenticationProvider
@@ -18,11 +18,11 @@ public interface SpringAuthenticationProvider
 
     /**
      * Provides a spring authentication according to mule's authentication
-     * 
+     *
      * @param authentication the mule's authentication
      * @return the spring's authentication
      */
-    org.springframework.security.core.Authentication getAuthentication(Authentication authentication);    
+    org.springframework.security.core.Authentication getAuthentication(Authentication authentication);
 }
 
 

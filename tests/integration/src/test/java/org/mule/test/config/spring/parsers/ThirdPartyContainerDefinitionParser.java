@@ -11,9 +11,9 @@ import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.assembly.DefaultBeanAssemblerFactory;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.SimplePropertyConfiguration;
-import org.mule.test.config.spring.parsers.beans.ThirdPartyContainer;
 import org.mule.runtime.config.spring.parsers.generic.OrphanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.processors.NamedSetterChildElementIterator;
+import org.mule.test.config.spring.parsers.beans.ThirdPartyContainer;
 
 public class ThirdPartyContainerDefinitionParser extends OrphanDefinitionParser
 {

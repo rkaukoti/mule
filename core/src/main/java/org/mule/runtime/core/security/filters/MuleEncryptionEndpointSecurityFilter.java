@@ -40,7 +40,8 @@ public class MuleEncryptionEndpointSecurityFilter extends AbstractOperationSecur
 
     @Override
     protected void authenticateInbound(MuleEvent event)
-            throws SecurityException, SecurityProviderNotFoundException, CryptoFailureException, EncryptionStrategyNotFoundException, UnknownAuthenticationTypeException
+            throws SecurityException, SecurityProviderNotFoundException, CryptoFailureException, EncryptionStrategyNotFoundException,
+            UnknownAuthenticationTypeException
     {
         String userHeader = (String) getCredentialsAccessor().getCredentials(event);
         if (userHeader == null)

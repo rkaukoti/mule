@@ -6,10 +6,8 @@
  */
 package org.mule.extension.socket.api.connection.tcp;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-import org.mule.extension.socket.api.connection.AbstractSocketConnection;
 import org.mule.extension.socket.api.ConnectionSettings;
+import org.mule.extension.socket.api.connection.AbstractSocketConnection;
 import org.mule.extension.socket.api.exceptions.UnresolvableHostException;
 import org.mule.extension.socket.api.socket.tcp.TcpProtocol;
 import org.mule.runtime.api.connection.ConnectionException;
@@ -22,6 +20,9 @@ import java.net.InetSocketAddress;
 
 import javax.inject.Inject;
 
+import static java.lang.String.format;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
+
 /**
  * Contains behaviour and attributes proper of TCP connections
  *
@@ -30,13 +31,12 @@ import javax.inject.Inject;
 abstract class AbstractTcpConnection extends AbstractSocketConnection implements Initialisable
 {
 
-    @Inject
-    private MuleContext muleContext;
-
     /**
      * {@link TcpProtocol}
      */
     protected final TcpProtocol protocol;
+    @Inject
+    private MuleContext muleContext;
 
     public AbstractTcpConnection(ConnectionSettings connectionSettings, TcpProtocol protocol)
     {
@@ -60,7 +60,8 @@ abstract class AbstractTcpConnection extends AbstractSocketConnection implements
      * @param failOnUnresolvedHost whether a {@link UnresolvableHostException} should be thrown if the address couldn't be resolved.
      * @return an {@link InetSocketAddress} configured with the host and port received
      */
-    protected InetSocketAddress getSocketAddress(ConnectionSettings connectionSettings, boolean failOnUnresolvedHost) throws ConnectionException
+    protected InetSocketAddress getSocketAddress(ConnectionSettings connectionSettings, boolean failOnUnresolvedHost)
+            throws ConnectionException
     {
 
         InetSocketAddress address = connectionSettings.getInetSocketAddress();

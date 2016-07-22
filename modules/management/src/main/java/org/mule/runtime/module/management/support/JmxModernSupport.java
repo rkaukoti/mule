@@ -19,7 +19,9 @@ import javax.management.ObjectName;
 public class JmxModernSupport extends AbstractJmxSupport
 {
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public String escape(String input)
     {
         return ObjectName.quote(input);
@@ -27,6 +29,7 @@ public class JmxModernSupport extends AbstractJmxSupport
 
     /**
      * For modern JMX implementation just delegate to a standard factory method.
+     *
      * @param name object name
      * @return ObjectName for MBeanServer
      * @throws MalformedObjectNameException for invalid names
@@ -36,7 +39,9 @@ public class JmxModernSupport extends AbstractJmxSupport
         return ObjectName.getInstance(name);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     protected Collection getDomains(final MBeanServer server)
     {
         return Arrays.asList(server.getDomains());

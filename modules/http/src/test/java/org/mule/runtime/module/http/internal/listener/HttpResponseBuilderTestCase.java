@@ -6,13 +6,8 @@
  */
 package org.mule.runtime.module.http.internal.listener;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -21,8 +16,13 @@ import org.mule.runtime.module.http.internal.domain.response.HttpResponse;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import org.junit.Before;
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
 
 public class HttpResponseBuilderTestCase
 {
@@ -47,7 +47,8 @@ public class HttpResponseBuilderTestCase
         int contentLengthDifferingPayloadSize = 12;
         mockMuleMessage(new ByteArrayInputStream(EXAMPLE_STRING.getBytes(UTF_8)), contentLengthDifferingPayloadSize);
 
-        HttpResponse httpResponse = httpResponseBuilder.build(new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder(), mockEvent);
+        HttpResponse httpResponse =
+                httpResponseBuilder.build(new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder(), mockEvent);
         assertThat(httpResponse.getHeaderValue(CONTENT_LENGTH), is(String.valueOf(EXAMPLE_STRING.length())));
     }
 

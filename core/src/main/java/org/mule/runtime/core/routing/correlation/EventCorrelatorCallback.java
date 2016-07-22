@@ -34,9 +34,8 @@ public interface EventCorrelatorCallback
      *
      * @param events the event group for this request
      * @return an aggregated message
-     * @throws AggregationException if the aggregation fails. in this scenario the
-     *                              whole event group is removed and passed to the exception handler
-     *                              for this component
+     * @throws AggregationException if the aggregation fails. in this scenario the whole event group is removed and passed to the exception
+     *                              handler for this component
      */
     public MuleEvent aggregateEvents(EventGroup events) throws RoutingException;
 

@@ -26,6 +26,14 @@ public class KeyAttributeDefinitionPair
     private AttributeDefinition attributeDefinition;
 
     /**
+     * @return builder for {@code KeyAttributeDefinitionPair}
+     */
+    public static Builder newBuilder()
+    {
+        return new Builder();
+    }
+
+    /**
      * @return the map key for holding the value provided by the value generated after processing {@code #getAttributeDefinition()}
      */
     public String getKey()
@@ -39,14 +47,6 @@ public class KeyAttributeDefinitionPair
     public AttributeDefinition getAttributeDefinition()
     {
         return attributeDefinition;
-    }
-
-    /**
-     * @return builder for {@code KeyAttributeDefinitionPair}
-     */
-    public static Builder newBuilder()
-    {
-        return new Builder();
     }
 
     public static class Builder

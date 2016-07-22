@@ -163,7 +163,6 @@ public abstract class AbstractQueueStoreDelegate implements QueueStoreDelegate
      * reads the first element in the queue
      *
      * @return the fist element in the queue
-     * @throws InterruptedException
      */
     protected abstract Serializable getFirst() throws InterruptedException;
 
@@ -171,7 +170,6 @@ public abstract class AbstractQueueStoreDelegate implements QueueStoreDelegate
      * removes the first element in the queue
      *
      * @return the first element in the queue
-     * @throws InterruptedException
      */
     protected abstract Serializable removeFirst() throws InterruptedException;
 
@@ -186,7 +184,6 @@ public abstract class AbstractQueueStoreDelegate implements QueueStoreDelegate
      * Adds an object at the beginning of the queue
      *
      * @param item object to add
-     * @throws InterruptedException
      */
     protected abstract void addFirst(Serializable item) throws InterruptedException;
 

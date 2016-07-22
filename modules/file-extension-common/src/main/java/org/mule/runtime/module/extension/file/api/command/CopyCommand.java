@@ -30,5 +30,6 @@ public interface CopyCommand
      * @param event                   whether or not to attempt creating the parent directory if it doesn't exists.
      * @throws IllegalArgumentException if an illegal combination of arguments is supplied
      */
-    void copy(FileConnectorConfig config, String sourcePath, String targetPath, boolean overwrite, boolean createParentDirectories, MuleEvent event);
+    void copy(FileConnectorConfig config, String sourcePath, String targetPath, boolean overwrite, boolean createParentDirectories,
+              MuleEvent event);
 }

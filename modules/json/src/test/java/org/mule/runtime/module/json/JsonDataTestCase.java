@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.module.json;
 
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.runtime.core.util.IOUtils;
-
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.junit.Test;
+import org.mule.runtime.core.util.IOUtils;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -30,7 +29,7 @@ public class JsonDataTestCase extends AbstractMuleTestCase
         assertTrue(jsonData.isArray());
         assertEquals("test from Mule: 6ffca02b-9d52-475e-8b17-946acdb01492", jsonData.getAsString("[0]/text"));
         assertEquals("test from Mule: 6ffca02b-9d52-475e-8b17-946acdb01492",
-            jsonData.getAsString("[0]/'text'"));
+                jsonData.getAsString("[0]/'text'"));
 
         assertEquals("Mule Test", jsonData.getAsString("[0]/'user'/name"));
         assertEquals("Mule Test9", jsonData.getAsString("[9]/user/name"));
@@ -84,7 +83,7 @@ public class JsonDataTestCase extends AbstractMuleTestCase
     {
         JsonData jsonData = readJsonData("bitly-response.json");
         assertEquals("NfeyS",
-            jsonData.getAsString("results/'http://rossmason.blogspot.com/2008/01/about-me.html'/hash"));
+                jsonData.getAsString("results/'http://rossmason.blogspot.com/2008/01/about-me.html'/hash"));
     }
 
     @Test

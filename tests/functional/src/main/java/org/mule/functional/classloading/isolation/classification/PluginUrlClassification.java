@@ -11,9 +11,8 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * Defines the result of the classification process for a plugin.
- * It contains a {@link List} of {@link URL}s that should have the plugin {@link org.mule.runtime.module.artifact.classloader.ArtifactClassLoader}
- * in order to run the test and a name for it.
+ * Defines the result of the classification process for a plugin. It contains a {@link List} of {@link URL}s that should have the plugin
+ * {@link org.mule.runtime.module.artifact.classloader.ArtifactClassLoader} in order to run the test and a name for it.
  *
  * @since 4.0
  */

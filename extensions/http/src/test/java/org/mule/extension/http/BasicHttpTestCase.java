@@ -6,12 +6,17 @@
  */
 package org.mule.extension.http;
 
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.hasEntry;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.extension.http.api.HttpRequestAttributes;
 import org.mule.extension.http.internal.HttpConnector;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
@@ -32,17 +37,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.AbstractHandler;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 //TODO: MULE-9702 Remove once the tests are migrated.
 public class BasicHttpTestCase extends ExtensionFunctionalTestCase
@@ -96,19 +96,6 @@ public class BasicHttpTestCase extends ExtensionFunctionalTestCase
         return new TestHandler();
     }
 
-    private class TestHandler extends AbstractHandler
-    {
-
-        @Override
-        public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
-        {
-
-            handleRequest(baseRequest, request, response);
-
-            baseRequest.setHandled(true);
-        }
-    }
-
     protected void handleRequest(Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException
     {
         extractBaseRequestParts(baseRequest);
@@ -121,7 +108,7 @@ public class BasicHttpTestCase extends ExtensionFunctionalTestCase
         uri = baseRequest.getUri().getCompletePath();
         query = baseRequest.getUri().getQuery();
         Enumeration<String> headerNames = baseRequest.getHeaderNames();
-        while(headerNames.hasMoreElements())
+        while (headerNames.hasMoreElements())
         {
             String headerName = headerNames.nextElement();
             headers.put(headerName, baseRequest.getHeader(headerName));
@@ -190,6 +177,20 @@ public class BasicHttpTestCase extends ExtensionFunctionalTestCase
             assertThat(requestAttributes.getHeaders(), hasEntry("y-custom", "value-custom"));
             assertThat(requestAttributes.getParts().entrySet(), is(empty()));
             return event;
+        }
+    }
+
+    private class TestHandler extends AbstractHandler
+    {
+
+        @Override
+        public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
+                throws IOException, ServletException
+        {
+
+            handleRequest(baseRequest, request, response);
+
+            baseRequest.setHandled(true);
         }
     }
 }

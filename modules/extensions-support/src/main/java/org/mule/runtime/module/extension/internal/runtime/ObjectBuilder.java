@@ -41,7 +41,7 @@ public interface ObjectBuilder<T>
      * Adds a property which value is to be obtained from
      * a {@link ValueResolver}
      *
-     * @param field   the {@link Field} in which the value is to be assigned
+     * @param field    the {@link Field} in which the value is to be assigned
      * @param resolver a {@link ValueResolver} used to provide the actual value
      * @return this builder
      * @throws {@link java.lang.IllegalArgumentException} if method or resolver are {@code null}

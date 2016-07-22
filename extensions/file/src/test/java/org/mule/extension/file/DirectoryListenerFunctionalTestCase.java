@@ -6,15 +6,8 @@
  */
 package org.mule.extension.file;
 
-import static org.apache.commons.io.FileUtils.write;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertThat;
-import static org.mule.extension.file.api.FileEventType.CREATE;
-import static org.mule.extension.file.api.FileEventType.DELETE;
-import static org.mule.extension.file.api.FileEventType.UPDATE;
-import static org.mule.runtime.core.util.FileUtils.deleteTree;
+import org.apache.commons.io.IOUtils;
+import org.junit.Test;
 import org.mule.extension.file.api.FileEventType;
 import org.mule.extension.file.api.ListenerFileAttributes;
 import org.mule.runtime.api.message.MuleMessage;
@@ -33,8 +26,15 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
+import static org.apache.commons.io.FileUtils.write;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertThat;
+import static org.mule.extension.file.api.FileEventType.CREATE;
+import static org.mule.extension.file.api.FileEventType.DELETE;
+import static org.mule.extension.file.api.FileEventType.UPDATE;
+import static org.mule.runtime.core.util.FileUtils.deleteTree;
 
 public class DirectoryListenerFunctionalTestCase extends FileConnectorTestCase
 {
@@ -54,6 +54,16 @@ public class DirectoryListenerFunctionalTestCase extends FileConnectorTestCase
     private File matcherLessFolder;
     private File withMatcherFolder;
     private String listenerFolder;
+
+    public static void onMessage(MessageContext messageContext)
+    {
+        Object payload = messageContext.getPayload() != null ? messageContext.getPayload() : null;
+        MuleMessage message = MuleMessage.builder().payload(payload)
+                                         .mediaType(messageContext.getDataType().getMediaType())
+                                         .attributes(messageContext.getAttributes())
+                                         .build();
+        receivedMessages.add(message);
+    }
 
     @Override
     protected String getConfigFile()
@@ -91,17 +101,17 @@ public class DirectoryListenerFunctionalTestCase extends FileConnectorTestCase
     public void stopAndRestart() throws Exception
     {
         muleContext.getRegistry().lookupObjects(Flow.class).forEach(flow ->
-                                                                    {
-                                                                        try
-                                                                        {
-                                                                            flow.stop();
-                                                                            flow.start();
-                                                                        }
-                                                                        catch (Exception e)
-                                                                        {
-                                                                            throw new RuntimeException(e);
-                                                                        }
-                                                                    });
+        {
+            try
+            {
+                flow.stop();
+                flow.start();
+            }
+            catch (Exception e)
+            {
+                throw new RuntimeException(e);
+            }
+        });
 
         onFileCreated();
     }
@@ -182,30 +192,30 @@ public class DirectoryListenerFunctionalTestCase extends FileConnectorTestCase
     public void stop() throws Exception
     {
         muleContext.getRegistry().lookupObjects(ExtensionMessageSource.class).forEach(source ->
-                                                                                      {
-                                                                                          try
-                                                                                          {
-                                                                                              source.stop();
-                                                                                          }
-                                                                                          catch (MuleException e)
-                                                                                          {
-                                                                                              throw new RuntimeException(e);
-                                                                                          }
-                                                                                      });
+        {
+            try
+            {
+                source.stop();
+            }
+            catch (MuleException e)
+            {
+                throw new RuntimeException(e);
+            }
+        });
 
         PollingProber prober = new PollingProber(TIMEOUT_MILLIS, POLL_DELAY_MILLIS);
         prober.check(new JUnitLambdaProbe(() ->
-                                          {
-                                              try
-                                              {
-                                                  onFileCreated();
-                                                  return false;
-                                              }
-                                              catch (Throwable e)
-                                              {
-                                                  return true;
-                                              }
-                                          }, "source did not stop"));
+        {
+            try
+            {
+                onFileCreated();
+                return false;
+            }
+            catch (Throwable e)
+            {
+                return true;
+            }
+        }, "source did not stop"));
     }
 
     private void assertEvent(MuleMessage message, Object expectedContent) throws Exception
@@ -225,30 +235,20 @@ public class DirectoryListenerFunctionalTestCase extends FileConnectorTestCase
         PollingProber prober = new PollingProber(TIMEOUT_MILLIS, POLL_DELAY_MILLIS);
         ValueHolder<MuleMessage> messageHolder = new ValueHolder<>();
         prober.check(new JUnitLambdaProbe(() ->
-                                          {
-                                              for (MuleMessage message : receivedMessages)
-                                              {
-                                                  ListenerFileAttributes attributes = (ListenerFileAttributes) message.getAttributes();
-                                                  if (attributes.getPath().equals(file.getAbsolutePath()) && attributes.getEventType().equals(type.name()))
-                                                  {
-                                                      messageHolder.set(message);
-                                                      return true;
-                                                  }
-                                              }
+        {
+            for (MuleMessage message : receivedMessages)
+            {
+                ListenerFileAttributes attributes = (ListenerFileAttributes) message.getAttributes();
+                if (attributes.getPath().equals(file.getAbsolutePath()) && attributes.getEventType().equals(type.name()))
+                {
+                    messageHolder.set(message);
+                    return true;
+                }
+            }
 
-                                              return false;
-                                          }));
+            return false;
+        }));
 
         return messageHolder.get();
-    }
-
-    public static void onMessage(MessageContext messageContext)
-    {
-        Object payload = messageContext.getPayload() != null ? messageContext.getPayload() : null;
-        MuleMessage message = MuleMessage.builder().payload(payload)
-                .mediaType(messageContext.getDataType().getMediaType())
-                .attributes(messageContext.getAttributes())
-                .build();
-        receivedMessages.add(message);
     }
 }

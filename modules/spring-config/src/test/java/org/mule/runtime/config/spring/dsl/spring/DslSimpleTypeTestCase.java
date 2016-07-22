@@ -6,24 +6,19 @@
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.config.spring.dsl.spring.DslSimpleType.isSimpleType;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.config.spring.dsl.spring.DslSimpleType.isSimpleType;
 
 @SmallTest
 public class DslSimpleTypeTestCase extends AbstractMuleTestCase
 {
-
-    private enum TestEnum
-    {
-        TEST
-    }
 
     @Test
     public void simpleTypes()
@@ -46,6 +41,11 @@ public class DslSimpleTypeTestCase extends AbstractMuleTestCase
         assertThat(isSimpleType(Object.class), is(false));
         assertThat(isSimpleType(TestEnum.class), is(true));
         assertThat(isSimpleType(AtomicInteger.class), is(false));
+    }
+
+    private enum TestEnum
+    {
+        TEST
     }
 
 }

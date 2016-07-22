@@ -6,23 +6,21 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import org.mule.compatibility.transport.http.CacheControlHeader;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.expression.ExpressionManager;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class CacheControlTestCase extends AbstractMuleTestCase
@@ -99,14 +97,14 @@ public class CacheControlTestCase extends AbstractMuleTestCase
     private void mockParse()
     {
         when(expressionManager.parse(anyString(), Mockito.any(MuleEvent.class))).thenAnswer(
-                 new Answer<Object>()
-                 {
-                     @Override
-                     public Object answer(InvocationOnMock invocation) throws Throwable
-                     {
-                         return invocation.getArguments()[0];
-                     }
-                 }
-         );
+                new Answer<Object>()
+                {
+                    @Override
+                    public Object answer(InvocationOnMock invocation) throws Throwable
+                    {
+                        return invocation.getArguments()[0];
+                    }
+                }
+        );
     }
 }

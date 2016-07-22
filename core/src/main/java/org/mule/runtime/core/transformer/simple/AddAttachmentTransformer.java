@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
-import static org.mule.runtime.core.util.IOUtils.toDataHandler;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MuleEvent;
@@ -19,6 +17,8 @@ import org.mule.runtime.core.util.AttributeEvaluator;
 
 import java.nio.charset.Charset;
 import java.text.MessageFormat;
+
+import static org.mule.runtime.core.util.IOUtils.toDataHandler;
 
 public class AddAttachmentTransformer extends AbstractMessageTransformer
 {
@@ -58,23 +58,24 @@ public class AddAttachmentTransformer extends AbstractMessageTransformer
                 if (value == null)
                 {
                     logger.error(MessageFormat.format(
-                         "Attachment with key ''{0}'', not found on message using ''{1}''. Since the value was marked optional, nothing was set on the message for this attachment",
-                         key, valueEvaluator.getRawValue()));
+                            "Attachment with key ''{0}'', not found on message using ''{1}''. Since the value was marked optional, nothing was set on the message for this attachment",
+                            key, valueEvaluator.getRawValue()));
                 }
                 else
                 {
-                    MediaType contentType = DataType.builder().mediaType(contentTypeEvaluator.resolveStringValue(event)).build().getMediaType();
+                    MediaType contentType =
+                            DataType.builder().mediaType(contentTypeEvaluator.resolveStringValue(event)).build().getMediaType();
                     event.setMessage(MuleMessage.builder(event.getMessage())
                                                 .addOutboundAttachment(key, toDataHandler(key, value, contentType))
                                                 .build());
                 }
             }
-            
+
             return event.getMessage();
         }
         catch (Exception e)
         {
-            throw new TransformerException(this,e);
+            throw new TransformerException(this, e);
         }
     }
 

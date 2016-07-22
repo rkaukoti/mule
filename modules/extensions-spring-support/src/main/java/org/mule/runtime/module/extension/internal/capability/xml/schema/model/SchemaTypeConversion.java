@@ -7,6 +7,22 @@
 
 package org.mule.runtime.module.extension.internal.capability.xml.schema.model;
 
+import org.mule.metadata.api.model.ArrayType;
+import org.mule.metadata.api.model.BooleanType;
+import org.mule.metadata.api.model.DateTimeType;
+import org.mule.metadata.api.model.DateType;
+import org.mule.metadata.api.model.DictionaryType;
+import org.mule.metadata.api.model.MetadataType;
+import org.mule.metadata.api.model.NumberType;
+import org.mule.metadata.api.model.StringType;
+import org.mule.metadata.api.visitor.MetadataTypeVisitor;
+import org.mule.metadata.java.api.utils.JavaTypeUtils;
+import org.mule.runtime.core.util.ValueHolder;
+import org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport;
+import org.mule.runtime.module.extension.internal.util.MuleExtensionUtils;
+
+import javax.xml.namespace.QName;
+
 import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.EXPRESSION_BOOLEAN;
 import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.EXPRESSION_DATE_TIME;
 import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.EXPRESSION_DECIMAL;
@@ -24,21 +40,6 @@ import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.SUB
 import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.SUBSTITUTABLE_LONG;
 import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.SUBSTITUTABLE_MAP;
 import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.SUBSTITUTABLE_NAME;
-import org.mule.metadata.api.model.ArrayType;
-import org.mule.metadata.api.model.BooleanType;
-import org.mule.metadata.api.model.DateTimeType;
-import org.mule.metadata.api.model.DateType;
-import org.mule.metadata.api.model.DictionaryType;
-import org.mule.metadata.api.model.MetadataType;
-import org.mule.metadata.api.model.NumberType;
-import org.mule.metadata.api.model.StringType;
-import org.mule.metadata.api.visitor.MetadataTypeVisitor;
-import org.mule.metadata.java.api.utils.JavaTypeUtils;
-import org.mule.runtime.core.util.ValueHolder;
-import org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport;
-import org.mule.runtime.module.extension.internal.util.MuleExtensionUtils;
-
-import javax.xml.namespace.QName;
 
 public final class SchemaTypeConversion
 {

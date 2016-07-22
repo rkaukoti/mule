@@ -6,14 +6,7 @@
  */
 package org.mule.extension.http.internal.request;
 
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.COOKIE;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.TRANSFER_ENCODING;
-import static org.mule.runtime.module.http.api.HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED;
-import static org.mule.runtime.module.http.api.HttpHeaders.Values.CHUNKED;
-import static org.mule.runtime.module.http.internal.request.DefaultHttpRequester.DEFAULT_PAYLOAD_EXPRESSION;
+import com.google.common.collect.Lists;
 
 import org.mule.extension.http.api.HttpSendBodyMode;
 import org.mule.extension.http.api.HttpStreamingType;
@@ -36,8 +29,8 @@ import org.mule.runtime.module.http.internal.domain.InputStreamHttpEntity;
 import org.mule.runtime.module.http.internal.domain.MultipartHttpEntity;
 import org.mule.runtime.module.http.internal.domain.request.HttpRequest;
 import org.mule.runtime.module.http.internal.multipart.HttpPartDataSource;
-
-import com.google.common.collect.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -49,8 +42,14 @@ import java.util.Map;
 
 import javax.activation.DataHandler;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.COOKIE;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.TRANSFER_ENCODING;
+import static org.mule.runtime.module.http.api.HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED;
+import static org.mule.runtime.module.http.api.HttpHeaders.Values.CHUNKED;
+import static org.mule.runtime.module.http.internal.request.DefaultHttpRequester.DEFAULT_PAYLOAD_EXPRESSION;
 
 /**
  * Component that transforms a {@link MuleEvent} to a {@link HttpRequest}.
@@ -59,9 +58,8 @@ import org.slf4j.LoggerFactory;
  */
 public class MuleEventToHttpRequest
 {
-    private static final Logger logger = LoggerFactory.getLogger(MuleEventToHttpRequest.class);
     public static final List<String> DEFAULT_EMPTY_BODY_METHODS = Lists.newArrayList("GET", "HEAD", "OPTIONS");
-
+    private static final Logger logger = LoggerFactory.getLogger(MuleEventToHttpRequest.class);
     private final String uri;
     private final String method;
     private final HttpRequesterConfig config;
@@ -70,7 +68,8 @@ public class MuleEventToHttpRequest
     private final String source;
 
 
-    public MuleEventToHttpRequest(HttpRequesterConfig config, String uri, String method, HttpStreamingType streamingMode, HttpSendBodyMode sendBodyMode, String source)
+    public MuleEventToHttpRequest(HttpRequesterConfig config, String uri, String method, HttpStreamingType streamingMode,
+                                  HttpSendBodyMode sendBodyMode, String source)
     {
         this.config = config;
         this.uri = uri;
@@ -83,13 +82,15 @@ public class MuleEventToHttpRequest
     /**
      * Creates an {@HttpRequest}.
      *
-     * @param event The {@link MuleEvent} that should be used to set the {@link HttpRequest} content.
-     * @param requestBuilder The generic {@link HttpRequesterRequestBuilder} from the request component that should be used to create the {@link HttpRequest}.
+     * @param event          The {@link MuleEvent} that should be used to set the {@link HttpRequest} content.
+     * @param requestBuilder The generic {@link HttpRequesterRequestBuilder} from the request component that should be used to create the
+     *                       {@link HttpRequest}.
      * @param authentication The {@link HttpAuthentication} that should be used to create the {@link HttpRequest}.
      * @return an {@HttpRequest} configured based on the parameters.
      * @throws MuleException if the request creation fails.
      */
-    public HttpRequest create(MuleEvent event, HttpRequesterRequestBuilder requestBuilder, HttpAuthentication authentication) throws MuleException
+    public HttpRequest create(MuleEvent event, HttpRequesterRequestBuilder requestBuilder, HttpAuthentication authentication)
+            throws MuleException
     {
         HttpRequestBuilder builder = new HttpRequestBuilder();
 
@@ -112,7 +113,7 @@ public class MuleEventToHttpRequest
             try
             {
                 Map<String, List<String>> headers = config.getCookieManager().get(URI.create(uri),
-                                                                                                 Collections.<String, List<String>>emptyMap());
+                        Collections.<String, List<String>>emptyMap());
                 List<String> cookies = headers.get(COOKIE);
                 if (cookies != null)
                 {
@@ -146,7 +147,8 @@ public class MuleEventToHttpRequest
         return parameterMap;
     }
 
-    private HttpEntity createRequestEntity(HttpRequestBuilder requestBuilder, MuleEvent muleEvent, String resolvedMethod, Map<String, DataHandler> parts) throws MessagingException
+    private HttpEntity createRequestEntity(HttpRequestBuilder requestBuilder, MuleEvent muleEvent, String resolvedMethod,
+                                           Map<String, DataHandler> parts) throws MessagingException
     {
         boolean customSource = false;
         Object oldPayload = null;
@@ -200,7 +202,8 @@ public class MuleEventToHttpRequest
         return emptyBody;
     }
 
-    private HttpEntity createRequestEntityFromPayload(HttpRequestBuilder requestBuilder, MuleEvent muleEvent, Map<String, DataHandler> parts) throws MessagingException
+    private HttpEntity createRequestEntityFromPayload(HttpRequestBuilder requestBuilder, MuleEvent muleEvent,
+                                                      Map<String, DataHandler> parts) throws MessagingException
     {
         Object payload = muleEvent.getMessage().getPayload();
 
@@ -244,7 +247,11 @@ public class MuleEventToHttpRequest
             {
                 if (muleEvent.getMessage().getPayload() instanceof Map)
                 {
-                    String body = HttpParser.encodeString(muleEvent.getMessage().getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(muleEvent.getMuleContext())), (Map) payload);
+                    String body = HttpParser.encodeString(muleEvent.getMessage()
+                                                                   .getDataType()
+                                                                   .getMediaType()
+                                                                   .getCharset()
+                                                                   .orElse(getDefaultEncoding(muleEvent.getMuleContext())), (Map) payload);
                     requestBuilder.addHeader(CONTENT_TYPE, APPLICATION_X_WWW_FORM_URLENCODED.toRfcString());
                     return new ByteArrayHttpEntity(body.getBytes());
                 }

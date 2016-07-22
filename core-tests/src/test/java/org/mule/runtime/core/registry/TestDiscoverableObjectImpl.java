@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.registry;
 
-public class TestDiscoverableObjectImpl implements TestDiscoverableObject {
+public class TestDiscoverableObjectImpl implements TestDiscoverableObject
+{
 
 }

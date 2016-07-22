@@ -6,7 +6,9 @@
  */
 package org.mule.runtime.core.internal.connection;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import org.apache.commons.pool.ObjectPool;
+import org.apache.commons.pool.PoolableObjectFactory;
+import org.apache.commons.pool.impl.GenericObjectPool;
 import org.mule.runtime.api.config.PoolingProfile;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionHandler;
@@ -16,14 +18,12 @@ import org.mule.runtime.api.connection.PoolingListener;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.NoSuchElementException;
 
-import org.apache.commons.pool.ObjectPool;
-import org.apache.commons.pool.PoolableObjectFactory;
-import org.apache.commons.pool.impl.GenericObjectPool;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * A {@link ConnectionHandlingStrategyAdapter} which returns connections obtained from a {@link #pool}
@@ -35,7 +35,8 @@ final class PoolingConnectionHandlingStrategy<Connection> extends ConnectionHand
 {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PoolingConnectionHandlingStrategy.class);
-    private static final String NULL_VALIDATION_RESULT_ERROR_MESSAGE = "Error validating connection. ConnectionValidationResult can not be null";
+    private static final String NULL_VALIDATION_RESULT_ERROR_MESSAGE =
+            "Error validating connection. ConnectionValidationResult can not be null";
 
     private final PoolingProfile poolingProfile;
     private final ObjectPool<Connection> pool;
@@ -125,8 +126,6 @@ final class PoolingConnectionHandlingStrategy<Connection> extends ConnectionHand
 
     /**
      * Closes the pool, causing the contained connections to be closed as well.
-     *
-     * @throws MuleException
      */
     //TODO: MULE-9082 - pool.close() doesn't destroy unreturned connections
     @Override

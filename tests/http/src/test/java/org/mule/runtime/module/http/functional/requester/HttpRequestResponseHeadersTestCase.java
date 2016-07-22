@@ -7,9 +7,9 @@
 
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.apache.commons.lang.StringUtils.EMPTY;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import org.eclipse.jetty.server.Request;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.tck.junit4.rule.SystemProperty;
 
@@ -18,9 +18,9 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.Request;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.apache.commons.lang.StringUtils.EMPTY;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class HttpRequestResponseHeadersTestCase extends AbstractHttpRequestTestCase
 {

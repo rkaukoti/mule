@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.module.jaas;
 
+import org.junit.Test;
+import org.mule.runtime.core.api.MuleMessage;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import org.mule.runtime.core.api.MuleMessage;
-
-import org.junit.Test;
 
 public class JaasAutenticationWithJaasConfigFileTestCase extends AbstractJaasFunctionalTestCase
 {
@@ -25,7 +25,10 @@ public class JaasAutenticationWithJaasConfigFileTestCase extends AbstractJaasFun
     public void goodAuthentication() throws Exception
     {
         SecurityHeader securityHeader = createSecurityHeader("Marie.Rizzo", "dragon");
-        MuleMessage message = flowRunner(TEST_FLOW_NAME).withInboundProperty(securityHeader.getKey(), securityHeader.getValue()).withPayload("Test").run().getMessage();
+        MuleMessage message = flowRunner(TEST_FLOW_NAME).withInboundProperty(securityHeader.getKey(), securityHeader.getValue())
+                                                        .withPayload("Test")
+                                                        .run()
+                                                        .getMessage();
 
         assertNotNull(message);
         assertTrue(message.getPayload() instanceof String);
@@ -36,7 +39,10 @@ public class JaasAutenticationWithJaasConfigFileTestCase extends AbstractJaasFun
     public void anotherGoodAuthentication() throws Exception
     {
         SecurityHeader securityHeader = createSecurityHeader("anon", "anon");
-        MuleMessage message = flowRunner(TEST_FLOW_NAME).withInboundProperty(securityHeader.getKey(), securityHeader.getValue()).withPayload("Test").run().getMessage();
+        MuleMessage message = flowRunner(TEST_FLOW_NAME).withInboundProperty(securityHeader.getKey(), securityHeader.getValue())
+                                                        .withPayload("Test")
+                                                        .run()
+                                                        .getMessage();
 
         assertNotNull(message);
         assertTrue(message.getPayload() instanceof String);

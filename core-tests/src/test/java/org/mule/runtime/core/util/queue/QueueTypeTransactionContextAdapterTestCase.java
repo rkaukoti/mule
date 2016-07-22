@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.core.util.queue;
 
-import static org.mockito.Mockito.verify;
-
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
-import java.io.Serializable;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Answers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+
+import java.io.Serializable;
+
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QueueTypeTransactionContextAdapterTestCase extends AbstractMuleTestCase
@@ -33,7 +32,8 @@ public class QueueTypeTransactionContextAdapterTestCase extends AbstractMuleTest
     @Test
     public void createPersistentContextWhenQueueIsPersistent() throws InterruptedException
     {
-        QueueTransactionContext queueTransactionContext = new QueueTypeTransactionContextAdapter<QueueTransactionContext>(mockQueueTransactionContextFactory);
+        QueueTransactionContext queueTransactionContext =
+                new QueueTypeTransactionContextAdapter<QueueTransactionContext>(mockQueueTransactionContextFactory);
         Mockito.when(mockQueueStore.isPersistent()).thenReturn(true);
         queueTransactionContext.offer(mockQueueStore, mockValue, 10);
         verify(mockQueueTransactionContextFactory.createPersistentTransactionContext());
@@ -42,7 +42,8 @@ public class QueueTypeTransactionContextAdapterTestCase extends AbstractMuleTest
     @Test
     public void createTransientContextWhenQueueIsPersistent() throws InterruptedException
     {
-        QueueTransactionContext queueTransactionContext = new QueueTypeTransactionContextAdapter<QueueTransactionContext>(mockQueueTransactionContextFactory);
+        QueueTransactionContext queueTransactionContext =
+                new QueueTypeTransactionContextAdapter<QueueTransactionContext>(mockQueueTransactionContextFactory);
         Mockito.when(mockQueueStore.isPersistent()).thenReturn(false);
         queueTransactionContext.offer(mockQueueStore, mockValue, 10);
         verify(mockQueueTransactionContextFactory.createTransientTransactionContext());

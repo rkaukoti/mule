@@ -6,22 +6,14 @@
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.core.api.config.MuleProperties;
-import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
-import org.mule.runtime.config.spring.parsers.MuleDefinitionParser;
 import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.config.spring.parsers.delegate.ParentContextDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.MuleOrphanDefinitionParser;
-import org.mule.runtime.config.spring.parsers.generic.OrphanDefinitionParser;
-import org.mule.runtime.config.spring.parsers.processors.IdAttribute;
-import org.mule.runtime.config.spring.parsers.processors.NameAttribute;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
-import org.springframework.beans.factory.xml.ParserContext;
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.w3c.dom.Element;
 
 public class ExceptionStrategyDefinitionParser extends ParentContextDefinitionParser
@@ -30,13 +22,6 @@ public class ExceptionStrategyDefinitionParser extends ParentContextDefinitionPa
     {
         super(MuleOrphanDefinitionParser.ROOT_ELEMENT, createRootDefinitionParser(exceptionStrategyClass));
         otherwise(createInFlowServiceDefinitionParser(exceptionStrategyClass));
-    }
-
-    private ChildDefinitionParser createInFlowServiceDefinitionParser(Class exceptionStrategyClass)
-    {
-        ChildDefinitionParser exceptionListenerDefinitionParser = new ChildDefinitionParser("exceptionListener", exceptionStrategyClass, false);
-        exceptionListenerDefinitionParser.registerPreProcessor(createNoNameAttributePreProcessor());
-        return exceptionListenerDefinitionParser;
     }
 
     static PreProcessor createNoNameAttributePreProcessor()
@@ -48,7 +33,8 @@ public class ExceptionStrategyDefinitionParser extends ParentContextDefinitionPa
             {
                 if (element.hasAttribute("name"))
                 {
-                    throw new MuleRuntimeException(CoreMessages.createStaticMessage("name attribute on exception strategy is only allowed on global exception strategies"));
+                    throw new MuleRuntimeException(CoreMessages.createStaticMessage(
+                            "name attribute on exception strategy is only allowed on global exception strategies"));
                 }
             }
         };
@@ -67,6 +53,14 @@ public class ExceptionStrategyDefinitionParser extends ParentContextDefinitionPa
         }
         globalExceptionStrategyDefinitionParser.addIgnored(AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME);
         return globalExceptionStrategyDefinitionParser;
+    }
+
+    private ChildDefinitionParser createInFlowServiceDefinitionParser(Class exceptionStrategyClass)
+    {
+        ChildDefinitionParser exceptionListenerDefinitionParser =
+                new ChildDefinitionParser("exceptionListener", exceptionStrategyClass, false);
+        exceptionListenerDefinitionParser.registerPreProcessor(createNoNameAttributePreProcessor());
+        return exceptionListenerDefinitionParser;
     }
 
 }

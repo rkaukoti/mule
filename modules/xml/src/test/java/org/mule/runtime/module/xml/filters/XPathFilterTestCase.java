@@ -6,6 +6,25 @@
  */
 package org.mule.runtime.module.xml.filters;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.registry.MuleRegistry;
+import org.mule.runtime.module.xml.xpath.SaxonXpathEvaluator;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
+import java.io.InputStream;
+import java.util.HashMap;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -16,25 +35,6 @@ import static org.mockito.Mockito.RETURNS_DEFAULTS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mule.tck.MuleTestUtils.getTestEvent;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.registry.MuleRegistry;
-import org.mule.runtime.module.xml.xpath.SaxonXpathEvaluator;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import java.io.InputStream;
-import java.util.HashMap;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
 /**
  * @author Ryan Heaton
@@ -52,7 +52,8 @@ public class XPathFilterTestCase extends AbstractMuleTestCase
     private XPathFilter filter;
 
     @Before
-    public void before() throws Exception {
+    public void before() throws Exception
+    {
         xpathManager = new SaxonXpathEvaluator();
         when(muleContext.getRegistry()).thenReturn(mock(MuleRegistry.class, RETURNS_DEFAULTS));
 
@@ -118,7 +119,7 @@ public class XPathFilterTestCase extends AbstractMuleTestCase
         builderFactory.setNamespaceAware(true);
         Document document = builderFactory.newDocumentBuilder().parse(testXml);
         assertFalse("shouldn't have accepted a null evaluation when expected value isn't null.",
-            filter.accept(document));
+                filter.accept(document));
         filter.setExpectedValue("null");
         assertTrue(filter.accept(document));
         filter.setPattern("test/some/in");

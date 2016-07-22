@@ -6,23 +6,6 @@
  */
 package org.mule.runtime.module.cxf.support;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.apache.cxf.message.Message.PROTOCOL_HEADERS;
-import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
-import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_METHOD_PROPERTY;
-import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
-
-import org.mule.runtime.api.metadata.MediaType;
-import org.mule.runtime.core.NonBlockingVoidMuleEvent;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.module.cxf.CxfConstants;
-
-import java.io.Serializable;
-import java.nio.charset.Charset;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.cxf.helpers.CastUtils;
 import org.apache.cxf.interceptor.AttachmentOutInterceptor;
 import org.apache.cxf.interceptor.Fault;
@@ -30,11 +13,27 @@ import org.apache.cxf.message.Exchange;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
 import org.apache.cxf.phase.Phase;
+import org.mule.runtime.api.metadata.MediaType;
+import org.mule.runtime.core.NonBlockingVoidMuleEvent;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.module.cxf.CxfConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
+import java.nio.charset.Charset;
+import java.util.List;
+import java.util.Map;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.cxf.message.Message.PROTOCOL_HEADERS;
+import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
+import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_METHOD_PROPERTY;
+import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
+
 public class MuleProtocolHeadersOutInterceptor
-    extends AbstractPhaseInterceptor<Message>
+        extends AbstractPhaseInterceptor<Message>
 {
 
     private static final Logger logger = LoggerFactory.getLogger(MuleProtocolHeadersOutInterceptor.class);
@@ -49,7 +48,7 @@ public class MuleProtocolHeadersOutInterceptor
     public void handleMessage(Message message) throws Fault
     {
         MuleEvent event = (MuleEvent) message.getExchange().get(CxfConstants.MULE_EVENT);
-        
+
         if (event == null || event instanceof NonBlockingVoidMuleEvent)
         {
             return;
@@ -89,7 +88,7 @@ public class MuleProtocolHeadersOutInterceptor
 
     private void extractAndSet(Message message, MuleMessage.Builder builder, String cxfHeader, String muleHeader)
     {
-        if(message.get(cxfHeader) instanceof Serializable)
+        if (message.get(cxfHeader) instanceof Serializable)
         {
             Serializable val = (Serializable) message.get(cxfHeader);
             if (val != null)
@@ -115,13 +114,15 @@ public class MuleProtocolHeadersOutInterceptor
     private Charset getEncoding(Message message)
     {
         Exchange ex = message.getExchange();
-        String encoding = (String)message.get(Message.ENCODING);
-        if (encoding == null && ex.getInMessage() != null) {
+        String encoding = (String) message.get(Message.ENCODING);
+        if (encoding == null && ex.getInMessage() != null)
+        {
             encoding = (String) ex.getInMessage().get(Message.ENCODING);
             message.put(Message.ENCODING, encoding);
         }
 
-        if (encoding == null) {
+        if (encoding == null)
+        {
             message.put(Message.ENCODING, UTF_8.name());
             return UTF_8;
         }
@@ -135,18 +136,19 @@ public class MuleProtocolHeadersOutInterceptor
     {
         StringBuilder sb = new StringBuilder();
         boolean first = true;
-        
-        for (String s : value) {
-            if (!first) 
+
+        for (String s : value)
+        {
+            if (!first)
             {
                 sb.append(", ");
                 first = false;
             }
-            else 
+            else
             {
                 first = false;
             }
-            
+
             sb.append(s);
         }
         return sb.toString();

@@ -7,16 +7,15 @@
 
 package org.mule.runtime.module.cxf.support;
 
-import static com.google.common.net.HttpHeaders.CONTENT_ENCODING;
-
+import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.AbstractPhaseInterceptor;
+import org.apache.cxf.transport.common.gzip.GZIPOutInterceptor;
 import org.mule.runtime.core.api.MuleMessage;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.cxf.message.Message;
-import org.apache.cxf.phase.AbstractPhaseInterceptor;
-import org.apache.cxf.transport.common.gzip.GZIPOutInterceptor;
+import static com.google.common.net.HttpHeaders.CONTENT_ENCODING;
 
 public abstract class AbstractProxyGZIPInterceptor extends AbstractPhaseInterceptor<Message>
 {
@@ -30,11 +29,11 @@ public abstract class AbstractProxyGZIPInterceptor extends AbstractPhaseIntercep
         boolean isEncoded = false;
 
         String contentEncoding = message.getInboundProperty(CONTENT_ENCODING);
-        if(contentEncoding == null)
+        if (contentEncoding == null)
         {
             contentEncoding = message.getInboundProperty(GZIPOutInterceptor.SOAP_JMS_CONTENTENCODING);
         }
-        if(contentEncoding != null)
+        if (contentEncoding != null)
         {
             List<String> encodings = Arrays.asList(GZIPOutInterceptor.ENCODINGS.split(contentEncoding.trim()));
             isEncoded = encodings.contains("gzip") || encodings.contains("x-gzip");

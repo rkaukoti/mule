@@ -15,18 +15,18 @@ import org.apache.commons.httpclient.protocol.Protocol;
 /**
  * Subclass of httpclient's {@link HostConfiguration} that retains its {@link Protocol} when
  * a new host is set via the URI.
- * 
+ *
  * It looks like we're not the only ones who stumbled over the HostConfiguration behaviour, see
  * http://issues.apache.org/jira/browse/HTTPCLIENT-634
  */
 public class MuleHostConfiguration extends HostConfiguration
 {
-    
+
     public MuleHostConfiguration()
     {
         super();
     }
-    
+
     public MuleHostConfiguration(HostConfiguration hostConfig)
     {
         super(hostConfig);
@@ -38,13 +38,13 @@ public class MuleHostConfiguration extends HostConfiguration
         try
         {
             Protocol original = getProtocol();
-    
+
             if (uri.getScheme().equals(original.getScheme()))
             {
                 Protocol newProtocol = new Protocol(uri.getScheme(), original.getSocketFactory(),
-                    original.getDefaultPort());
-    
-                    super.setHost(uri.getHost(), uri.getPort(), newProtocol);
+                        original.getDefaultPort());
+
+                super.setHost(uri.getHost(), uri.getPort(), newProtocol);
             }
             else
             {
@@ -62,7 +62,7 @@ public class MuleHostConfiguration extends HostConfiguration
     public synchronized void setHost(HttpHost host)
     {
         Protocol newProtocol = cloneProtocolKeepingSocketFactory(host.getProtocol());
-        
+
         HttpHost hostCopy = new HttpHost(host.getHostName(), host.getPort(), newProtocol);
         super.setHost(hostCopy);
     }
@@ -71,7 +71,7 @@ public class MuleHostConfiguration extends HostConfiguration
     public synchronized void setHost(String host, int port, String protocolName)
     {
         Protocol protoByName = Protocol.getProtocol(protocolName);
-        Protocol newProtocol = cloneProtocolKeepingSocketFactory(protoByName);        
+        Protocol newProtocol = cloneProtocolKeepingSocketFactory(protoByName);
 
         super.setHost(host, port, newProtocol);
     }
@@ -80,16 +80,16 @@ public class MuleHostConfiguration extends HostConfiguration
     @SuppressWarnings("deprecation")
     public synchronized void setHost(String host, String virtualHost, int port, Protocol protocol)
     {
-        Protocol newProtocol = cloneProtocolKeepingSocketFactory(protocol);        
+        Protocol newProtocol = cloneProtocolKeepingSocketFactory(protocol);
         super.setHost(host, virtualHost, port, newProtocol);
     }
-    
+
     @Override
     public synchronized void setHost(String host, int port)
     {
         super.setHost(host, port, getProtocol());
     }
-    
+
     @Override
     public synchronized void setHost(String host)
     {
@@ -102,8 +102,8 @@ public class MuleHostConfiguration extends HostConfiguration
         if (protocol.getScheme().equals(original.getScheme()))
         {
             // the protocol is the same, create a copy of it but keep the original socket factory
-            return new Protocol(protocol.getScheme(), original.getSocketFactory(), 
-                protocol.getDefaultPort());
+            return new Protocol(protocol.getScheme(), original.getSocketFactory(),
+                    protocol.getDefaultPort());
         }
         return protocol;
     }

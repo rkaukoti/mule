@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
       xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
       xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
            http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
            http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
@@ -22,15 +22,15 @@
     <flow name="echoService" processingStrategy="non-blocking">
         <http:listener path="echo" config-ref="listenerConfig"/>
         <cxf:jaxws-service serviceClass="org.mule.runtime.module.cxf.HolderService"/>
-        <component class="org.mule.runtime.module.cxf.HolderServiceImplForNonBlocking" />
+        <component class="org.mule.runtime.module.cxf.HolderServiceImplForNonBlocking"/>
     </flow>
 
 
-    <spring:bean name="sensingRequestResponseProcessorEcho" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton" />
+    <spring:bean name="sensingRequestResponseProcessorEcho" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton"/>
     <flow name="echoServiceClient" processingStrategy="non-blocking">
-        <http:listener path="/echoClient" config-ref="listenerConfig" allowedMethods="POST" />
+        <http:listener path="/echoClient" config-ref="listenerConfig" allowedMethods="POST"/>
         <transformer ref="holderTransformer"/>
-        <processor ref="sensingRequestResponseProcessorEcho" />
+        <processor ref="sensingRequestResponseProcessorEcho"/>
         <response>
             <!-- Ensure message owner is correct, test will fail otherwise -->
             <set-property propertyName="foo" value="bar"/>
@@ -39,11 +39,11 @@
         <http:request path="echo" method="POST" config-ref="requestConfig"/>
     </flow>
 
-    <spring:bean name="sensingRequestResponseProcessorEchoProxy" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton" />
+    <spring:bean name="sensingRequestResponseProcessorEchoProxy" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton"/>
     <flow name="echoServiceClientProxy" processingStrategy="non-blocking">
-        <http:listener path="/echoClientProxy" config-ref="listenerConfig" allowedMethods="POST" />
+        <http:listener path="/echoClientProxy" config-ref="listenerConfig" allowedMethods="POST"/>
         <transformer ref="holderTransformer"/>
-        <processor ref="sensingRequestResponseProcessorEchoProxy" />
+        <processor ref="sensingRequestResponseProcessorEchoProxy"/>
         <response>
             <!-- Ensure message owner is correct, test will fail otherwise -->
             <set-property propertyName="foo" value="bar"/>
@@ -53,11 +53,11 @@
     </flow>
 
 
-    <spring:bean name="sensingRequestResponseProcessorEcho2" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton" />
+    <spring:bean name="sensingRequestResponseProcessorEcho2" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton"/>
     <flow name="echo2ServiceClient" processingStrategy="non-blocking">
-        <http:listener path="/echo2Client" config-ref="listenerConfig" allowedMethods="POST" />
+        <http:listener path="/echo2Client" config-ref="listenerConfig" allowedMethods="POST"/>
         <transformer ref="holderTransformer2"/>
-        <processor ref="sensingRequestResponseProcessorEcho2" />
+        <processor ref="sensingRequestResponseProcessorEcho2"/>
         <response>
             <!-- Ensure message owner is correct, test will fail otherwise -->
             <set-property propertyName="foo" value="bar"/>
@@ -66,11 +66,11 @@
         <http:request path="echo" method="POST" config-ref="requestConfig"/>
     </flow>
 
-    <spring:bean name="sensingRequestResponseProcessorEchoProxy2" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton" />
+    <spring:bean name="sensingRequestResponseProcessorEchoProxy2" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton"/>
     <flow name="echo2ServiceClientProxy" processingStrategy="non-blocking">
-        <http:listener path="/echo2ClientProxy" config-ref="listenerConfig" allowedMethods="POST" />
+        <http:listener path="/echo2ClientProxy" config-ref="listenerConfig" allowedMethods="POST"/>
         <transformer ref="holderTransformer2"/>
-        <processor ref="sensingRequestResponseProcessorEchoProxy2" />
+        <processor ref="sensingRequestResponseProcessorEchoProxy2"/>
         <response>
             <!-- Ensure message owner is correct, test will fail otherwise -->
             <set-property propertyName="foo" value="bar"/>
@@ -80,11 +80,11 @@
     </flow>
 
 
-    <spring:bean name="sensingRequestResponseProcessorEcho3" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton" />
+    <spring:bean name="sensingRequestResponseProcessorEcho3" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton"/>
     <flow name="echo3ServiceClient" processingStrategy="non-blocking">
-        <http:listener path="/echo3Client" config-ref="listenerConfig" allowedMethods="POST" />
+        <http:listener path="/echo3Client" config-ref="listenerConfig" allowedMethods="POST"/>
         <transformer ref="holderTransformer3"/>
-        <processor ref="sensingRequestResponseProcessorEcho3" />
+        <processor ref="sensingRequestResponseProcessorEcho3"/>
         <response>
             <!-- Ensure message owner is correct, test will fail otherwise -->
             <set-property propertyName="foo" value="bar"/>
@@ -93,11 +93,11 @@
         <http:request path="echo" method="POST" config-ref="requestConfig"/>
     </flow>
 
-    <spring:bean name="sensingRequestResponseProcessorEchoProxy3" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton" />
+    <spring:bean name="sensingRequestResponseProcessorEchoProxy3" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton"/>
     <flow name="echo3ServiceClientProxy" processingStrategy="non-blocking">
-        <http:listener path="/echo3ClientProxy" config-ref="listenerConfig" allowedMethods="POST" />
+        <http:listener path="/echo3ClientProxy" config-ref="listenerConfig" allowedMethods="POST"/>
         <transformer ref="holderTransformer3"/>
-        <processor ref="sensingRequestResponseProcessorEchoProxy3" />
+        <processor ref="sensingRequestResponseProcessorEchoProxy3"/>
         <response>
             <!-- Ensure message owner is correct, test will fail otherwise -->
             <set-property propertyName="foo" value="bar"/>

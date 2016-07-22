@@ -6,53 +6,31 @@
  */
 package org.mule.runtime.core.transformer.graph;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.mule.runtime.api.metadata.DataType;
+import org.mule.runtime.core.api.registry.ResolverException;
+import org.mule.runtime.core.api.transformer.Converter;
+import org.mule.runtime.core.transformer.builder.MockConverterBuilder;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
-import org.mule.runtime.core.api.registry.ResolverException;
-import org.mule.runtime.core.api.transformer.Converter;
-import org.mule.runtime.api.metadata.DataType;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-import org.mule.runtime.core.transformer.builder.MockConverterBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 @SmallTest
 public class PriorityWeightingConverterFilterTestCase extends AbstractMuleTestCase
 {
-    
+
     private static final DataType XML_DATA_TYPE = mock(DataType.class, "XML_DATA_TYPE");
     private static final DataType JSON_DATA_TYPE = mock(DataType.class, "JSON_DATA_TYPE");
     private static final DataType INPUT_STREAM_DATA_TYPE = mock(DataType.class, "INPUT_STREAM_DATA_TYPE");
     private static final DataType STRING_DATA_TYPE = mock(DataType.class, "STRING_DATA_TYPE");
-
-    private static class XML_CLASS
-    {
-
-    }
-
-    private static class JSON_CLASS
-    {
-
-    }
-
-    private static class INPUT_STREAM_CLASS
-    {
-
-    }
-
-    private static class STRING_CLASS
-    {
-
-    }
-
     private PriorityWeightingConverterFilter filter = new PriorityWeightingConverterFilter();
 
     @BeforeClass
@@ -81,8 +59,10 @@ public class PriorityWeightingConverterFilterTestCase extends AbstractMuleTestCa
     @Test
     public void filtersSameWeight() throws ResolverException
     {
-        Converter xmlToInputStream = new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
-        Converter xmlToString = new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
+        Converter xmlToInputStream =
+                new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
+        Converter xmlToString =
+                new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
 
         List<Converter> availableConverters = new ArrayList<Converter>();
         availableConverters.add(xmlToInputStream);
@@ -98,8 +78,10 @@ public class PriorityWeightingConverterFilterTestCase extends AbstractMuleTestCa
     @Test
     public void filtersSameLengthDifferentWeightsAddingBetterTransformerFirst() throws ResolverException
     {
-        Converter xmlToInputStream = new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(2).build();
-        Converter xmlToString = new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
+        Converter xmlToInputStream =
+                new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(2).build();
+        Converter xmlToString =
+                new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
 
         List<Converter> availableConverters = new ArrayList<Converter>();
         availableConverters.add(xmlToInputStream);
@@ -114,8 +96,10 @@ public class PriorityWeightingConverterFilterTestCase extends AbstractMuleTestCa
     @Test
     public void filtersSameLengthDifferentWeightsAddingBetterTransformerLast() throws ResolverException
     {
-        Converter xmlToInputStream = new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(2).build();
-        Converter xmlToString = new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
+        Converter xmlToInputStream =
+                new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(2).build();
+        Converter xmlToString =
+                new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
 
         List<Converter> availableConverters = new ArrayList<Converter>();
         availableConverters.add(xmlToString);
@@ -125,5 +109,25 @@ public class PriorityWeightingConverterFilterTestCase extends AbstractMuleTestCa
 
         assertEquals(1, converters.size());
         assertEquals(xmlToInputStream, converters.get(0));
+    }
+
+    private static class XML_CLASS
+    {
+
+    }
+
+    private static class JSON_CLASS
+    {
+
+    }
+
+    private static class INPUT_STREAM_CLASS
+    {
+
+    }
+
+    private static class STRING_CLASS
+    {
+
     }
 }

@@ -79,9 +79,9 @@ import javax.xml.namespace.QName;
         "identityConstraint"
 })
 @XmlSeeAlso({
-                    TopLevelElement.class,
-                    LocalElement.class
-            })
+        TopLevelElement.class,
+        LocalElement.class
+})
 public abstract class Element
         extends Annotated
 {
@@ -89,10 +89,10 @@ public abstract class Element
     protected LocalSimpleType simpleType;
     protected LocalComplexType complexType;
     @XmlElementRefs({
-                            @XmlElementRef(name = "unique", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
-                            @XmlElementRef(name = "key", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
-                            @XmlElementRef(name = "keyref", namespace = "http://www.w3.org/2001/XMLSchema", type = Keyref.class)
-                    })
+            @XmlElementRef(name = "unique", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
+            @XmlElementRef(name = "key", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
+            @XmlElementRef(name = "keyref", namespace = "http://www.w3.org/2001/XMLSchema", type = Keyref.class)
+    })
     protected List<Object> identityConstraint;
     @XmlAttribute(name = "type")
     protected QName type;
@@ -130,8 +130,7 @@ public abstract class Element
     /**
      * Gets the value of the simpleType property.
      *
-     * @return possible object is
-     * {@link LocalSimpleType }
+     * @return possible object is {@link LocalSimpleType }
      */
     public LocalSimpleType getSimpleType()
     {
@@ -141,8 +140,7 @@ public abstract class Element
     /**
      * Sets the value of the simpleType property.
      *
-     * @param value allowed object is
-     *              {@link LocalSimpleType }
+     * @param value allowed object is {@link LocalSimpleType }
      */
     public void setSimpleType(LocalSimpleType value)
     {
@@ -152,8 +150,7 @@ public abstract class Element
     /**
      * Gets the value of the complexType property.
      *
-     * @return possible object is
-     * {@link LocalComplexType }
+     * @return possible object is {@link LocalComplexType }
      */
     public LocalComplexType getComplexType()
     {
@@ -163,8 +160,7 @@ public abstract class Element
     /**
      * Sets the value of the complexType property.
      *
-     * @param value allowed object is
-     *              {@link LocalComplexType }
+     * @param value allowed object is {@link LocalComplexType }
      */
     public void setComplexType(LocalComplexType value)
     {
@@ -205,8 +201,7 @@ public abstract class Element
     /**
      * Gets the value of the type property.
      *
-     * @return possible object is
-     * {@link QName }
+     * @return possible object is {@link QName }
      */
     public QName getType()
     {
@@ -216,8 +211,7 @@ public abstract class Element
     /**
      * Sets the value of the type property.
      *
-     * @param value allowed object is
-     *              {@link QName }
+     * @param value allowed object is {@link QName }
      */
     public void setType(QName value)
     {
@@ -227,8 +221,7 @@ public abstract class Element
     /**
      * Gets the value of the substitutionGroup property.
      *
-     * @return possible object is
-     * {@link QName }
+     * @return possible object is {@link QName }
      */
     public QName getSubstitutionGroup()
     {
@@ -238,8 +231,7 @@ public abstract class Element
     /**
      * Sets the value of the substitutionGroup property.
      *
-     * @param value allowed object is
-     *              {@link QName }
+     * @param value allowed object is {@link QName }
      */
     public void setSubstitutionGroup(QName value)
     {
@@ -249,8 +241,7 @@ public abstract class Element
     /**
      * Gets the value of the default property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getDefault()
     {
@@ -260,8 +251,7 @@ public abstract class Element
     /**
      * Sets the value of the default property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setDefault(String value)
     {
@@ -271,8 +261,7 @@ public abstract class Element
     /**
      * Gets the value of the fixed property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getFixed()
     {
@@ -282,8 +271,7 @@ public abstract class Element
     /**
      * Sets the value of the fixed property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setFixed(String value)
     {
@@ -293,8 +281,7 @@ public abstract class Element
     /**
      * Gets the value of the nillable property.
      *
-     * @return possible object is
-     * {@link Boolean }
+     * @return possible object is {@link Boolean }
      */
     public boolean isNillable()
     {
@@ -311,8 +298,7 @@ public abstract class Element
     /**
      * Sets the value of the nillable property.
      *
-     * @param value allowed object is
-     *              {@link Boolean }
+     * @param value allowed object is {@link Boolean }
      */
     public void setNillable(Boolean value)
     {
@@ -322,8 +308,7 @@ public abstract class Element
     /**
      * Gets the value of the abstract property.
      *
-     * @return possible object is
-     * {@link Boolean }
+     * @return possible object is {@link Boolean }
      */
     public boolean isAbstract()
     {
@@ -340,8 +325,7 @@ public abstract class Element
     /**
      * Sets the value of the abstract property.
      *
-     * @param value allowed object is
-     *              {@link Boolean }
+     * @param value allowed object is {@link Boolean }
      */
     public void setAbstract(Boolean value)
     {
@@ -409,8 +393,7 @@ public abstract class Element
     /**
      * Gets the value of the form property.
      *
-     * @return possible object is
-     * {@link FormChoice }
+     * @return possible object is {@link FormChoice }
      */
     public FormChoice getForm()
     {
@@ -420,8 +403,7 @@ public abstract class Element
     /**
      * Sets the value of the form property.
      *
-     * @param value allowed object is
-     *              {@link FormChoice }
+     * @param value allowed object is {@link FormChoice }
      */
     public void setForm(FormChoice value)
     {
@@ -431,8 +413,7 @@ public abstract class Element
     /**
      * Gets the value of the minOccurs property.
      *
-     * @return possible object is
-     * {@link BigInteger }
+     * @return possible object is {@link BigInteger }
      */
     public BigInteger getMinOccurs()
     {
@@ -449,8 +430,7 @@ public abstract class Element
     /**
      * Sets the value of the minOccurs property.
      *
-     * @param value allowed object is
-     *              {@link BigInteger }
+     * @param value allowed object is {@link BigInteger }
      */
     public void setMinOccurs(BigInteger value)
     {
@@ -460,8 +440,7 @@ public abstract class Element
     /**
      * Gets the value of the maxOccurs property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getMaxOccurs()
     {
@@ -478,8 +457,7 @@ public abstract class Element
     /**
      * Sets the value of the maxOccurs property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setMaxOccurs(String value)
     {
@@ -489,8 +467,7 @@ public abstract class Element
     /**
      * Gets the value of the name property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getName()
     {
@@ -500,8 +477,7 @@ public abstract class Element
     /**
      * Sets the value of the name property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setName(String value)
     {
@@ -511,8 +487,7 @@ public abstract class Element
     /**
      * Gets the value of the ref property.
      *
-     * @return possible object is
-     * {@link QName }
+     * @return possible object is {@link QName }
      */
     public QName getRef()
     {
@@ -522,8 +497,7 @@ public abstract class Element
     /**
      * Sets the value of the ref property.
      *
-     * @param value allowed object is
-     *              {@link QName }
+     * @param value allowed object is {@link QName }
      */
     public void setRef(QName value)
     {

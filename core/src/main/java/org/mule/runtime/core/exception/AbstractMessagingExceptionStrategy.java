@@ -21,13 +21,13 @@ import org.mule.runtime.core.management.stats.FlowConstructStatistics;
 import org.mule.runtime.core.message.DefaultExceptionPayload;
 
 /**
- * Fire a notification, log exception, increment statistics, route the problematic message to a destination 
+ * Fire a notification, log exception, increment statistics, route the problematic message to a destination
  * if one is configured (DLQ pattern), commit or rollback transaction if one exists, close any open streams.
  */
 public abstract class AbstractMessagingExceptionStrategy extends AbstractExceptionListener implements MessagingExceptionHandler
 {
-    /** 
-     * Stop the flow/service when an exception occurs.  You will need to restart the flow/service manually after this (e.g, using JMX). 
+    /**
+     * Stop the flow/service when an exception occurs.  You will need to restart the flow/service manually after this (e.g, using JMX).
      */
     private boolean stopMessageProcessing;
 
@@ -45,7 +45,8 @@ public abstract class AbstractMessagingExceptionStrategy extends AbstractExcepti
     {
         try
         {
-            muleContext.getNotificationManager().fireNotification(new ExceptionStrategyNotification(event, ExceptionStrategyNotification.PROCESS_START));
+            muleContext.getNotificationManager()
+                       .fireNotification(new ExceptionStrategyNotification(event, ExceptionStrategyNotification.PROCESS_START));
 
             //keep legacy notifications
             fireNotification(ex);
@@ -69,7 +70,8 @@ public abstract class AbstractMessagingExceptionStrategy extends AbstractExcepti
         }
         finally
         {
-            muleContext.getNotificationManager().fireNotification(new ExceptionStrategyNotification(event, ExceptionStrategyNotification.PROCESS_END));
+            muleContext.getNotificationManager()
+                       .fireNotification(new ExceptionStrategyNotification(event, ExceptionStrategyNotification.PROCESS_END));
         }
     }
 
@@ -103,7 +105,7 @@ public abstract class AbstractMessagingExceptionStrategy extends AbstractExcepti
         if (stopMessageProcessing)
         {
             stopFlow(event.getFlowConstruct());
-        }        
+        }
     }
 
     protected void stopFlow(FlowConstruct flow)

@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * <code>[%s].config.change.%d.thread.%d</code>, where %s stands for application name,
  * the next number will tell one how many redeployments this app had during this container's
  * lifetime and the last digit, thread count, should always be 1. Left there for debugging
- * purposes to quickly locate any duplicate threads trying to perform a redeploy. 
+ * purposes to quickly locate any duplicate threads trying to perform a redeploy.
  */
 public class ConfigChangeMonitorThreadFactory implements ThreadFactory
 {
@@ -37,8 +37,8 @@ public class ConfigChangeMonitorThreadFactory implements ThreadFactory
     public Thread newThread(Runnable r)
     {
         Thread t = new Thread(group, r,
-                              namePrefix + threadNumber.getAndIncrement(),
-                              0);
+                namePrefix + threadNumber.getAndIncrement(),
+                0);
         if (t.isDaemon())
         {
             t.setDaemon(false);

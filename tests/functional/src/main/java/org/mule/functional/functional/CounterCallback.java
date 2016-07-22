@@ -34,6 +34,7 @@ public class CounterCallback implements EventCallback
 
     /**
      * Increment callback count.
+     *
      * @return current count after increment
      */
     protected int incCallbackCount()

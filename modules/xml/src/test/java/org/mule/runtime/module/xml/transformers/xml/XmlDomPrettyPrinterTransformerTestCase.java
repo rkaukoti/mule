@@ -7,8 +7,8 @@
 package org.mule.runtime.module.xml.transformers.xml;
 
 import org.mule.runtime.core.api.transformer.Transformer;
-import org.mule.runtime.module.xml.transformer.XmlPrettyPrinter;
 import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
+import org.mule.runtime.module.xml.transformer.XmlPrettyPrinter;
 
 import java.io.ByteArrayInputStream;
 
@@ -18,7 +18,7 @@ import static org.junit.Assert.fail;
 
 public class XmlDomPrettyPrinterTransformerTestCase extends AbstractTransformerTestCase
 {
-    private static final String rawData ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><just><a><test>test</test></a></just>";
+    private static final String rawData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><just><a><test>test</test></a></just>";
 
     // Do not normalize any Strings for this test since we need to test formatting
     protected String normalizeString(String rawString)

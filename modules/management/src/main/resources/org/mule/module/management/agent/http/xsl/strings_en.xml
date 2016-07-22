@@ -44,13 +44,13 @@
     <str id="serverbydomain.error.query">Exception during query: {0}</str>
     <str id="serverbydomain.domain.label">Domain: {0}</str>
     <str id="serverbydomain.server.title">MBean By Domain:</str>
-    <str id="serverbydomain.server.filter">Filter: </str>
+    <str id="serverbydomain.server.filter">Filter:</str>
     <str id="serverbydomain.server.query">Query</str>
     <str id="serverbydomain.mbean.unregister">Unregister</str>
 
     <str id="emptymbean.title">{0}: JMX Management Console - MBean View</str>
     <str id="emptymbean.subtitle">MBean:</str>
-    <str id="emptymbean.querycontructors">Query constructors for class: </str>
+    <str id="emptymbean.querycontructors">Query constructors for class:</str>
     <str id="emptymbean.query">Query</str>
 
     <str id="mbean.title">{0}: JMX Management Console - MBean View</str>
@@ -66,7 +66,7 @@
     <str id="mbean.operations.parameterclass">Class</str>
     <str id="mbean.operations.invoke">Invoke</str>
     <str id="mbean.constructors.class">Class</str>
-    <str id="mbean.constructors.objectname">ObjectName: </str>
+    <str id="mbean.constructors.objectname">ObjectName:</str>
     <str id="mbean.constructors.description">Description</str>
     <str id="mbean.constructors.parameter">Parameters</str>
     <str id="mbean.constructors.parameterid">id</str>
@@ -99,15 +99,15 @@
 
     <str id="setattributes.title">{0}: JMX Management Console - MBean View</str>
     <str id="setattributes.operation.title">MBean operation: set attributes on MBean {0}</str>
-    <str id="setattributes.operation.success">Attribute {0} set to {1} </str>
-    <str id="setattributes.operation.error">Exception during set attribute {0}, message: {1} </str>
+    <str id="setattributes.operation.success">Attribute {0} set to {1}</str>
+    <str id="setattributes.operation.error">Exception during set attribute {0}, message: {1}</str>
 
     <str id="error.title">{0}: JMX Management Console - Exception</str>
     <str id="error.httpexception.title">Error during request</str>
     <str id="error.httpexception.code">Code: {0}</str>
     <str id="error.httpexception.message">Message: {0}</str>
 
-    <str id="constructors.constructors.objectnameinput">ObjectName: </str>
+    <str id="constructors.constructors.objectnameinput">ObjectName:</str>
     <str id="constructors.constructors.createnew">Create new</str>
     <str id="constructors.constructors.intro">Constructor for class {0}</str>
     <str id="constructors.title">{0}: JMX Management Console - MBean Constructor's View</str>
@@ -131,7 +131,7 @@
 
     <str id="timer.title">{0}: JMX Management Console - Timer Service</str>
     <str id="timer.main.title">Timers By Domain:</str>
-    <str id="timer.main.createlabel">ObjectName: </str>
+    <str id="timer.main.createlabel">ObjectName:</str>
     <str id="timer.main.createbutton">New timer</str>
     <str id="timer.mbean.unregister">Unregister</str>
     <str id="timer.domain.title">Timers for domain: {0}</str>
@@ -179,15 +179,15 @@
     <str id="monitor.title">{0}: JMX Management Console - Monitor Service</str>
     <str id="monitor.mbean.unregister">Unregister</str>
     <str id="monitor.main.title">Monitors By Domain:</str>
-    <str id="monitor.main.createstring.label">ObjectName: </str>
+    <str id="monitor.main.createstring.label">ObjectName:</str>
     <str id="monitor.main.createstring.button">New StringMonitor</str>
-    <str id="monitor.main.creategauge.label">ObjectName: </str>
+    <str id="monitor.main.creategauge.label">ObjectName:</str>
     <str id="monitor.main.creategauge.button">New GaugeMonitor</str>
-    <str id="monitor.main.createcounter.label">ObjectName: </str>
+    <str id="monitor.main.createcounter.label">ObjectName:</str>
     <str id="monitor.main.createcounter.button">New CounterMonitor</str>
 
     <str id="monitor_create.title">{0}: JMX Management Console - Monitor Creation</str>
-    <str id="monitor_create.operation.title"> creation with object name {0}</str>
+    <str id="monitor_create.operation.title">creation with object name {0}</str>
     <str id="monitor_create.operation.success">Monitor type {0} successfully created</str>
     <str id="monitor_create.operation.error">Exception during {0} creation, mesage: {1}</str>
     <str id="monitor_create.operation.mbeanview">Configure Monitor</str>
@@ -202,10 +202,14 @@
     <str id="invoke.title">{0}: JMX Management Console - MBean View</str>
     <str id="invoke.operation.title">MBean operation: invoke method {0} on MBean {1}</str>
     <str id="invoke.operation.success">Invocation successful</str>
-    <str id="invoke.operation.success.result">Result value: <pre>{0}</pre></str>
+    <str id="invoke.operation.success.result">Result value:
+        <pre>{0}</pre>
+    </str>
     <str id="invoke.operation.success.noresult">No result</str>
     <str id="invoke.operation.error">Error during MBean operation invocation</str>
-    <str id="invoke.operation.error.message">Message: <pre>{0}</pre></str>
+    <str id="invoke.operation.error.message">Message:
+        <pre>{0}</pre>
+    </str>
     <str id="invoke.operation.error.noresult">No result</str>
 
     <str id="about.title">{0}: JMX Management Console - About</str>
@@ -240,7 +244,7 @@
     <str id="server.title">{0}: JMX Management Console - Agent View</str>
     <str id="server.unregister">Unregister</str>
     <str id="server.mbeans.title">MBeans:</str>
-    <str id="server.filter.title">Filter: </str>
+    <str id="server.filter.title">Filter:</str>
 
     <!-- Set attribute stylesheet, to be deprecated -->
     <str id="setattribute.title">{0}: JMX Management Console - MBean View</str>
@@ -250,11 +254,11 @@
 
     <str id="emptystatistics.title">{0}: JMX Management Console - Statistics</str>
     <str id="emptystatistics.subtitle">Domain:</str>
-    <str id="emptystatistics.querystatistics">Query domain for statistics: </str>
+    <str id="emptystatistics.querystatistics">Query domain for statistics:</str>
     <str id="emptystatistics.query">Query</str>
 
     <str id="statistics.title">{0}: JMX Management Console - Statistics</str>
-    <str id="statistics.subtitle">Domain: </str>
+    <str id="statistics.subtitle">Domain:</str>
 
 </strings>
 

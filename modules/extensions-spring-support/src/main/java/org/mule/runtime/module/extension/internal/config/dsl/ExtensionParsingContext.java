@@ -41,8 +41,7 @@ public class ExtensionParsingContext
     /**
      * @param name      the {@code name} of the element
      * @param namespace the {@code namespace} of the element
-     * @return {@code true} if an {@link ObjectType} with the given {@code name} and {@code namespace}
-     * was registered in the current context
+     * @return {@code true} if an {@link ObjectType} with the given {@code name} and {@code namespace} was registered in the current context
      */
     public boolean isRegistered(String name, String namespace)
     {

@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.module.xml.stax;
 
-import java.util.List;
-
 import javanet.staxutils.events.StartElementEvent;
+
+import java.util.List;
 
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.namespace.QName;
@@ -41,8 +41,8 @@ public class StartElementEventX extends StartElementEvent
     {
         return namespaces2;
     }
-    
-    
+
+
 }
 
 

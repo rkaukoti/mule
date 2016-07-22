@@ -6,12 +6,8 @@
  */
 package org.mule.runtime.core.routing.requestreply;
 
-import static junit.framework.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -23,10 +19,10 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.routing.ResponseTimeoutException;
 import org.mule.runtime.core.api.source.MessageSource;
 import org.mule.runtime.core.processor.LaxAsyncInterceptingMessageProcessor;
-import org.mule.tck.SensingNullMessageProcessor;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import org.mule.runtime.core.util.concurrent.Latch;
 import org.mule.runtime.core.util.store.MuleObjectStoreManager;
+import org.mule.tck.SensingNullMessageProcessor;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import java.beans.ExceptionListener;
 import java.util.concurrent.CountDownLatch;
@@ -35,11 +31,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.resource.spi.work.Work;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static junit.framework.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 public class AsyncRequestReplyRequesterTestCase extends AbstractMuleContextTestCase
-    implements ExceptionListener
+        implements ExceptionListener
 {
 
     TestAsyncRequestReplyRequester asyncReplyMP;
@@ -87,13 +87,13 @@ public class AsyncRequestReplyRequesterTestCase extends AbstractMuleContextTestC
         asyncReplyMP = new TestAsyncRequestReplyRequester(muleContext);
         SensingNullMessageProcessor target = getSensingNullMessageProcessor();
         LaxAsyncInterceptingMessageProcessor asyncMP = new LaxAsyncInterceptingMessageProcessor(
-            new WorkManagerSource()
-            {
-                public WorkManager getWorkManager() throws MuleException
+                new WorkManagerSource()
                 {
-                    return muleContext.getWorkManager();
+                    public WorkManager getWorkManager() throws MuleException
+                    {
+                        return muleContext.getWorkManager();
+                    }
                 }
-            }
         );
 
         asyncMP.setListener(target);
@@ -117,14 +117,14 @@ public class AsyncRequestReplyRequesterTestCase extends AbstractMuleContextTestC
         SensingNullMessageProcessor target = getSensingNullMessageProcessor();
         target.setWaitTime(3000);
         LaxAsyncInterceptingMessageProcessor asyncMP = new LaxAsyncInterceptingMessageProcessor(
-            new WorkManagerSource()
-            {
-
-                public WorkManager getWorkManager() throws MuleException
+                new WorkManagerSource()
                 {
-                    return muleContext.getWorkManager();
+
+                    public WorkManager getWorkManager() throws MuleException
+                    {
+                        return muleContext.getWorkManager();
+                    }
                 }
-            }
         );
 
         asyncMP.setListener(target);
@@ -212,14 +212,14 @@ public class AsyncRequestReplyRequesterTestCase extends AbstractMuleContextTestC
         SensingNullMessageProcessor target = getSensingNullMessageProcessor();
         target.setWaitTime(50);
         LaxAsyncInterceptingMessageProcessor asyncMP = new LaxAsyncInterceptingMessageProcessor(
-            new WorkManagerSource()
-            {
-
-                public WorkManager getWorkManager() throws MuleException
+                new WorkManagerSource()
                 {
-                    return muleContext.getWorkManager();
+
+                    public WorkManager getWorkManager() throws MuleException
+                    {
+                        return muleContext.getWorkManager();
+                    }
                 }
-            }
         );
 
         asyncMP.setListener(target);

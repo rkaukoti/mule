@@ -37,9 +37,9 @@ import java.nio.charset.Charset;
 public abstract class AbstractMessageTransformer extends AbstractTransformer implements MessageTransformer
 {
     /**
-     * @param dataType the type to check against
-     * @param exactMatch if set to true, this method will look for an exact match to
-     *            the data type, if false it will look for a compatible data type.
+     * @param dataType   the type to check against
+     * @param exactMatch if set to true, this method will look for an exact match to the data type, if false it will look for a compatible
+     *                   data type.
      * @return whether the data type is supported
      */
     @Override
@@ -99,7 +99,8 @@ public abstract class AbstractMessageTransformer extends AbstractTransformer imp
         {
             if (isIgnoreBadInput())
             {
-                logger.debug("Source type is incompatible with this transformer and property 'ignoreBadInput' is set to true, so the transformer chain will continue.");
+                logger.debug(
+                        "Source type is incompatible with this transformer and property 'ignoreBadInput' is set to true, so the transformer chain will continue.");
                 return src;
             }
             else
@@ -172,7 +173,7 @@ public abstract class AbstractMessageTransformer extends AbstractTransformer imp
     {
 
         //Null is a valid return type
-        if(object == null && isAllowNullReturn())
+        if (object == null && isAllowNullReturn())
         {
             return object;
         }
@@ -191,7 +192,7 @@ public abstract class AbstractMessageTransformer extends AbstractTransformer imp
         if (logger.isDebugEnabled())
         {
             logger.debug("The transformed object is of expected type. Type is: " +
-                    ClassUtils.getSimpleName(object.getClass()));
+                         ClassUtils.getSimpleName(object.getClass()));
         }
 
         return object;

@@ -6,6 +6,15 @@
  */
 package org.mule.compatibility.transport.http;
 
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HostConfiguration;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.methods.ByteArrayRequestEntity;
+import org.apache.commons.httpclient.methods.EntityEnclosingMethod;
+import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.commons.httpclient.protocol.Protocol;
+import org.apache.commons.lang.BooleanUtils;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.compatibility.core.api.transformer.EndpointAwareTransformer;
 import org.mule.compatibility.core.endpoint.EndpointURIEndpointBuilder;
@@ -32,16 +41,6 @@ import java.io.Serializable;
 import java.net.URI;
 import java.util.List;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HostConfiguration;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.ByteArrayRequestEntity;
-import org.apache.commons.httpclient.methods.EntityEnclosingMethod;
-import org.apache.commons.httpclient.params.HttpMethodParams;
-import org.apache.commons.httpclient.protocol.Protocol;
-import org.apache.commons.lang.BooleanUtils;
-
 /**
  * <code>HttpClientMessageDispatcher</code> dispatches Mule events over HTTP.
  */
@@ -53,8 +52,8 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher
     public static final int ERROR_STATUS_CODE_RANGE_START = 400;
     public static final int REDIRECT_STATUS_CODE_RANGE_START = 300;
     protected final HttpConnector httpConnector;
-    private volatile HttpClient client = null;
     private final Transformer sendTransformer;
+    private volatile HttpClient client = null;
 
     public HttpClientMessageDispatcher(OutboundEndpoint endpoint)
     {
@@ -117,7 +116,7 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher
                 logger.error(httpMethod.getResponseBodyAsString());
 
                 Exception cause = new Exception(String.format("Http call returned a status of: %1d %1s",
-                    httpMethod.getStatusCode(), httpMethod.getStatusText()));
+                        httpMethod.getStatusCode(), httpMethod.getStatusText()));
                 throw new DispatchException(event, getEndpoint(), cause);
             }
             else if (httpMethod.getStatusCode() >= REDIRECT_STATUS_CODE_RANGE_START)
@@ -217,7 +216,7 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher
             httpMethod = (HttpMethod) sendTransformer.transform(msg);
         }
 
-        httpMethod.setFollowRedirects("true".equalsIgnoreCase((String)endpoint.getProperty("followRedirects")));
+        httpMethod.setFollowRedirects("true".equalsIgnoreCase((String) endpoint.getProperty("followRedirects")));
 
         // keepAlive=true is the default behavior of HttpClient
         if ("false".equalsIgnoreCase((String) endpoint.getProperty("keepAlive")))
@@ -251,7 +250,8 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher
         else if (body instanceof byte[])
         {
             byte[] buffer = (byte[]) event.transformMessage(DataType.BYTE_ARRAY);
-            postMethod.setRequestEntity(new ByteArrayRequestEntity(buffer, event.getMessage().getDataType().getMediaType().getCharset().get().name()));
+            postMethod.setRequestEntity(
+                    new ByteArrayRequestEntity(buffer, event.getMessage().getDataType().getMediaType().getCharset().get().name()));
             httpMethod = postMethod;
         }
         else
@@ -324,12 +324,13 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher
 
     protected MuleMessage handleRedirect(HttpMethod method, MuleEvent event) throws HttpResponseException, MuleException, IOException
     {
-        String followRedirects = (String)endpoint.getProperty("followRedirects");
-        if (followRedirects==null || "false".equalsIgnoreCase(followRedirects))
+        String followRedirects = (String) endpoint.getProperty("followRedirects");
+        if (followRedirects == null || "false".equalsIgnoreCase(followRedirects))
         {
             if (logger.isInfoEnabled())
             {
-                logger.info("Received a redirect, but followRedirects=false. Response code: " + method.getStatusCode() + " " + method.getStatusText());
+                logger.info("Received a redirect, but followRedirects=false. Response code: " + method.getStatusCode() + " " +
+                            method.getStatusText());
             }
             return getResponseFromMethod(method, null);
         }
@@ -339,7 +340,7 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher
             throw new HttpResponseException(method.getStatusText(), method.getStatusCode());
         }
         OutboundEndpoint out = new EndpointURIEndpointBuilder(locationHeader.getValue(),
-            getEndpoint().getMuleContext()).buildOutboundEndpoint();
+                getEndpoint().getMuleContext()).buildOutboundEndpoint();
         MuleEvent result = out.process(event);
         if (result != null && !VoidMuleEvent.getInstance().equals(result))
         {
@@ -352,7 +353,7 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher
     }
 
     protected MuleMessage getResponseFromMethod(HttpMethod httpMethod, ExceptionPayload ep)
-        throws IOException, MuleException
+            throws IOException, MuleException
     {
         MuleMessage message = createMuleMessage(httpMethod);
 
@@ -368,9 +369,9 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher
      * An exception is thrown if http.status >= 400 and exceptions are not disabled
      * through one of the following mechanisms in order of precedence:
      *
-     *  - setting to true the flow variable "http.disable.status.code.exception.check"
-     *  - setting to true the outbound property "http.disable.status.code.exception.check"
-     *  - setting to false the outbound endpoint attribute "exceptionOnMessageError"
+     * - setting to true the flow variable "http.disable.status.code.exception.check"
+     * - setting to true the outbound property "http.disable.status.code.exception.check"
+     * - setting to false the outbound endpoint attribute "exceptionOnMessageError"
      *
      * @return if an exception should be thrown
      */

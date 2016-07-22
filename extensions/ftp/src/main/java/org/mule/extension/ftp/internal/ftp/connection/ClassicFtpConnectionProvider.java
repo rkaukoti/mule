@@ -6,8 +6,8 @@
  */
 package org.mule.extension.ftp.internal.ftp.connection;
 
-import static org.mule.runtime.extension.api.annotation.param.display.Placement.CONNECTION;
-
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
 import org.mule.extension.ftp.api.ftp.FtpTransferMode;
 import org.mule.extension.ftp.internal.AbstractFtpConnectionProvider;
 import org.mule.extension.ftp.internal.FtpConnector;
@@ -24,8 +24,7 @@ import org.mule.runtime.extension.api.annotation.param.display.Summary;
 
 import java.io.IOException;
 
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPReply;
+import static org.mule.runtime.extension.api.annotation.param.display.Placement.CONNECTION;
 
 /**
  * An {@link AbstractFtpConnectionProvider} which provides instances of
@@ -131,7 +130,8 @@ public class ClassicFtpConnectionProvider extends AbstractFtpConnectionProvider<
      * {@inheritDoc}
      */
     @Override
-    public ConnectionHandlingStrategy<ClassicFtpFileSystem> getHandlingStrategy(ConnectionHandlingStrategyFactory<ClassicFtpFileSystem> handlingStrategyFactory)
+    public ConnectionHandlingStrategy<ClassicFtpFileSystem> getHandlingStrategy(
+            ConnectionHandlingStrategyFactory<ClassicFtpFileSystem> handlingStrategyFactory)
     {
         return handlingStrategyFactory.supportsPooling(new PoolingListener<ClassicFtpFileSystem>()
         {

@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.routing.correlation;
 
-import static org.mule.runtime.core.message.Correlation.NOT_SET;
-
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -37,6 +35,8 @@ import org.mule.runtime.core.util.concurrent.ThreadNameHelper;
 import org.mule.runtime.core.util.monitor.Expirable;
 import org.mule.runtime.core.util.monitor.ExpiryMonitor;
 import org.mule.runtime.core.util.store.DeserializationPostInitialisable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
@@ -44,65 +44,50 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.message.Correlation.NOT_SET;
 
 public class EventCorrelator implements Startable, Stoppable, Disposable
 {
 
+    public static final String NO_CORRELATION_ID = "no-id";
+    private static final long ONE_DAY_IN_MILLI = 1000 * 60 * 60 * 24;
     /**
      * logger used by this class
      */
     protected transient final Logger logger = LoggerFactory.getLogger(EventCorrelator.class);
-
-    public static final String NO_CORRELATION_ID = "no-id";
-
-    private static final long ONE_DAY_IN_MILLI = 1000 * 60 * 60 * 24;
-
-    protected long groupTimeToLive = ONE_DAY_IN_MILLI;
-
     protected final Object groupsLock = new Object();
-
+    private final String name;
+    private final FlowConstruct flowConstruct;
+    protected long groupTimeToLive = ONE_DAY_IN_MILLI;
     // @GuardedBy groupsLock
     protected ObjectStore<Long> processedGroups = null;
-
     private long timeout = -1; // undefined
-
     private boolean failOnTimeout = true;
-
     private MessageInfoMapping messageInfoMapping;
-
     private MuleContext muleContext;
-
     private EventCorrelatorCallback callback;
-
     private MessageProcessor timeoutMessageProcessor;
-
     /**
      * A map of EventGroup objects in a partition. These represent one or more messages to be agregated, keyed by
      * message id. There will be one response message for every EventGroup.
      */
     private PartitionableObjectStore correlatorStore = null;
     private String storePrefix;
-
     private EventCorrelator.ExpiringGroupMonitoringThread expiringGroupMonitoringThread;
-    private final String name;
-
-    private final FlowConstruct flowConstruct;
 
     public EventCorrelator(EventCorrelatorCallback callback,
-            MessageProcessor timeoutMessageProcessor,
-            MessageInfoMapping messageInfoMapping,
-            MuleContext muleContext,
-            FlowConstruct flowConstruct,
-            PartitionableObjectStore correlatorStore,
-            String storePrefix,
-            ObjectStore<Long> processedGroups)
+                           MessageProcessor timeoutMessageProcessor,
+                           MessageInfoMapping messageInfoMapping,
+                           MuleContext muleContext,
+                           FlowConstruct flowConstruct,
+                           PartitionableObjectStore correlatorStore,
+                           String storePrefix,
+                           ObjectStore<Long> processedGroups)
     {
         if (callback == null)
         {
             throw new IllegalArgumentException(CoreMessages.objectIsNull("EventCorrelatorCallback")
-                                                       .getMessage());
+                                                           .getMessage());
         }
         if (messageInfoMapping == null)
         {
@@ -117,7 +102,7 @@ public class EventCorrelator implements Startable, Stoppable, Disposable
         this.muleContext = muleContext;
         this.timeoutMessageProcessor = timeoutMessageProcessor;
         name = String.format("%s%s.event.correlator", ThreadNameHelper.getPrefix(muleContext),
-                             flowConstruct.getName());
+                flowConstruct.getName());
         this.flowConstruct = flowConstruct;
 
         this.correlatorStore = correlatorStore;
@@ -155,9 +140,9 @@ public class EventCorrelator implements Startable, Stoppable, Disposable
             try
             {
                 logger.trace(String.format("Received async reply message for correlationID: %s%n%s%n%s",
-                                           groupId, StringMessageUtils.truncate(
-                        StringMessageUtils.toString(event.getMessage().getPayload()), 200, false),
-                                           StringMessageUtils.headersToString(event.getMessage())));
+                        groupId, StringMessageUtils.truncate(
+                                StringMessageUtils.toString(event.getMessage().getPayload()), 200, false),
+                        StringMessageUtils.headersToString(event.getMessage())));
             }
             catch (Exception e)
             {
@@ -184,8 +169,8 @@ public class EventCorrelator implements Startable, Stoppable, Disposable
                     }
                     // Fire a notification to say we received this message
                     muleContext.fireNotification(new RoutingNotification(event.getMessage(),
-                                                                         event.getMessageSourceURI().toString(),
-                                                                         RoutingNotification.MISSED_AGGREGATION_GROUP_EVENT));
+                            event.getMessageSourceURI().toString(),
+                            RoutingNotification.MISSED_AGGREGATION_GROUP_EVENT));
                     return null;
                 }
             }
@@ -377,7 +362,7 @@ public class EventCorrelator implements Startable, Stoppable, Disposable
         {
             MuleEvent messageCollectionEvent = group.getMessageCollectionEvent();
             muleContext.fireNotification(new RoutingNotification(messageCollectionEvent.getMessage(), null,
-                                                                 RoutingNotification.CORRELATION_TIMEOUT));
+                    RoutingNotification.CORRELATION_TIMEOUT));
             try
             {
                 group.clear();
@@ -395,7 +380,7 @@ public class EventCorrelator implements Startable, Stoppable, Disposable
             {
                 logger.debug(MessageFormat.format(
                         "Aggregator expired, but ''failOnTimeOut'' is false. Forwarding {0} events out of {1} "
-                                                  + "total for group ID: {2}",
+                        + "total for group ID: {2}",
                         group.size(), group.expectedSize().map(v -> v.toString()).orElse(NOT_SET),
                         group.getGroupId()));
             }
@@ -425,8 +410,8 @@ public class EventCorrelator implements Startable, Stoppable, Disposable
                                                          "configured.", group.getGroupId())), newEvent);
                         }
                         correlatorStore.store((Serializable) group.getGroupId(),
-                                                         group.getCreated(),
-                                                         getExpiredAndDispatchedPartitionKey());
+                                group.getCreated(),
+                                getExpiredAndDispatchedPartitionKey());
                     }
                     else
                     {
@@ -466,11 +451,35 @@ public class EventCorrelator implements Startable, Stoppable, Disposable
         }
     }
 
+    protected String getExpiredAndDispatchedPartitionKey()
+    {
+        return storePrefix + ".expiredAndDispatchedGroups";
+    }
+
+    protected String getEventGroupsPartitionKey()
+    {
+        return storePrefix + ".eventGroups";
+    }
+
+    @Override
+    public void dispose()
+    {
+        disposeIfDisposable(expiringGroupMonitoringThread);
+    }
+
+    private void disposeIfDisposable(Object o)
+    {
+        if (o != null && o instanceof Disposable)
+        {
+            ((Disposable) o).dispose();
+        }
+    }
+
     private final class ExpiringGroupMonitoringThread extends EventProcessingThread implements Expirable, Disposable
     {
 
-        private ExpiryMonitor expiryMonitor;
         public static final long DELAY_TIME = 10;
+        private ExpiryMonitor expiryMonitor;
 
         public ExpiringGroupMonitoringThread()
         {
@@ -483,8 +492,6 @@ public class EventCorrelator implements Startable, Stoppable, Disposable
         /**
          * Removes the elements in expiredAndDispatchedGroups when groupLife is
          * reached
-         *
-         * @throws ObjectStoreException
          */
         @Override
         public void expired()
@@ -538,7 +545,9 @@ public class EventCorrelator implements Startable, Stoppable, Disposable
             }
             for (final EventGroup group : expired)
             {
-                ExecutionTemplate<MuleEvent> executionTemplate = ErrorHandlingExecutionTemplate.createErrorHandlingExecutionTemplate(muleContext, flowConstruct.getExceptionListener());
+                ExecutionTemplate<MuleEvent> executionTemplate =
+                        ErrorHandlingExecutionTemplate.createErrorHandlingExecutionTemplate(muleContext,
+                                flowConstruct.getExceptionListener());
                 try
                 {
                     executionTemplate.execute(() ->
@@ -565,30 +574,6 @@ public class EventCorrelator implements Startable, Stoppable, Disposable
             {
                 expiryMonitor.dispose();
             }
-        }
-    }
-
-    protected String getExpiredAndDispatchedPartitionKey()
-    {
-        return storePrefix + ".expiredAndDispatchedGroups";
-    }
-    
-    protected String getEventGroupsPartitionKey()
-    {
-        return storePrefix + ".eventGroups";
-    }
-
-    @Override
-    public void dispose()
-    {
-        disposeIfDisposable(expiringGroupMonitoringThread);
-    }
-
-    private void disposeIfDisposable(Object o)
-    {
-        if (o != null && o instanceof Disposable)
-        {
-            ((Disposable) o).dispose();
         }
     }
 }

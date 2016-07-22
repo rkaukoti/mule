@@ -6,20 +6,20 @@
  */
 package org.mule.runtime.core.util.journal.queue;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import com.google.common.collect.Multimap;
+
 import org.mule.runtime.core.util.journal.JournalEntry;
 import org.mule.runtime.core.util.journal.JournalEntrySerializer;
 import org.mule.runtime.core.util.journal.TransactionCompletePredicate;
 import org.mule.runtime.core.util.journal.TransactionJournal;
 import org.mule.runtime.core.util.queue.QueueStore;
-
-import com.google.common.collect.Multimap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Collection;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Base implementation for a queue transaction journal.
@@ -34,9 +34,11 @@ public abstract class AbstractQueueTransactionJournal<T, K extends JournalEntry<
 
     private TransactionJournal<T, K> logFile;
 
-    public AbstractQueueTransactionJournal(String logFilesDirectory, JournalEntrySerializer journalEntrySerializer, Integer maximumFileSizeInMegabytes)
+    public AbstractQueueTransactionJournal(String logFilesDirectory, JournalEntrySerializer journalEntrySerializer,
+                                           Integer maximumFileSizeInMegabytes)
     {
-        checkArgument(maximumFileSizeInMegabytes == null || maximumFileSizeInMegabytes > 0, "Maximum tx log file size needs to be greater than zero");
+        checkArgument(maximumFileSizeInMegabytes == null || maximumFileSizeInMegabytes > 0,
+                "Maximum tx log file size needs to be greater than zero");
         this.logFile = new TransactionJournal(logFilesDirectory, new TransactionCompletePredicate()
         {
             @Override
@@ -54,7 +56,8 @@ public abstract class AbstractQueueTransactionJournal<T, K extends JournalEntry<
         {
             logger.debug("Logging queue add operation for tx " + txId);
         }
-        logFile.logUpdateOperation(createUpdateJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.ADD.getByteRepresentation(), queue.getName(), value));
+        logFile.logUpdateOperation(
+                createUpdateJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.ADD.getByteRepresentation(), queue.getName(), value));
     }
 
     public void logAddFirst(T txId, QueueStore queue, Serializable item)
@@ -63,7 +66,9 @@ public abstract class AbstractQueueTransactionJournal<T, K extends JournalEntry<
         {
             logger.debug("Logging queue add first operation for tx " + txId);
         }
-        logFile.logUpdateOperation(createUpdateJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.ADD_FIRST.getByteRepresentation(), queue.getName(), item));
+        logFile.logUpdateOperation(
+                createUpdateJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.ADD_FIRST.getByteRepresentation(), queue.getName(),
+                        item));
     }
 
     public void logRemove(T txId, QueueStore queue, Serializable value)
@@ -72,7 +77,9 @@ public abstract class AbstractQueueTransactionJournal<T, K extends JournalEntry<
         {
             logger.debug("Logging queue remove operation for tx " + txId);
         }
-        logFile.logUpdateOperation(createUpdateJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.REMOVE.getByteRepresentation(), queue.getName(), value));
+        logFile.logUpdateOperation(
+                createUpdateJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.REMOVE.getByteRepresentation(), queue.getName(),
+                        value));
     }
 
     public void logCommit(T txId)
@@ -81,13 +88,14 @@ public abstract class AbstractQueueTransactionJournal<T, K extends JournalEntry<
         {
             logger.debug("Logging queue commit operation for tx " + txId);
         }
-        logFile.logCheckpointOperation(createCheckpointJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.COMMIT.getByteRepresentation()));
+        logFile.logCheckpointOperation(
+                createCheckpointJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.COMMIT.getByteRepresentation()));
     }
 
     /**
      * Creates a {@link org.mule.runtime.core.util.journal.JournalEntry} for an update operation in the queue.
      *
-     * @param txId transaction identifier
+     * @param txId      transaction identifier
      * @param operation operation done over the queue
      * @param queueName queueName of the queue in which the operation has been done
      * @param serialize value of the operation
@@ -98,7 +106,7 @@ public abstract class AbstractQueueTransactionJournal<T, K extends JournalEntry<
     /**
      * Creates a checkpoint {@link org.mule.runtime.core.util.journal.JournalEntry}.
      *
-     * @param txId transaction identifier
+     * @param txId      transaction identifier
      * @param operation checkpoint operation
      * @return a new {@link org.mule.runtime.core.util.journal.JournalEntry}
      */
@@ -110,7 +118,8 @@ public abstract class AbstractQueueTransactionJournal<T, K extends JournalEntry<
         {
             logger.debug("Logging queue rollback operation for tx " + txId);
         }
-        logFile.logCheckpointOperation(createCheckpointJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.ROLLBACK.getByteRepresentation()));
+        logFile.logCheckpointOperation(
+                createCheckpointJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.ROLLBACK.getByteRepresentation()));
     }
 
     public synchronized void close()

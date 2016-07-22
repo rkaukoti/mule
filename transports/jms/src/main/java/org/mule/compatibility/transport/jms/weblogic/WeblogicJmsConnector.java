@@ -14,7 +14,9 @@ import org.mule.runtime.core.api.MuleContext;
  */
 public class WeblogicJmsConnector extends JmsConnector
 {
-    /** Constructs a new WeblogicJmsConnector. */
+    /**
+     * Constructs a new WeblogicJmsConnector.
+     */
     public WeblogicJmsConnector(MuleContext context)
     {
         super(context);

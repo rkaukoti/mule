@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.module.launcher;
 
-import static org.mule.runtime.module.launcher.MuleFoldersUtil.getDomainFolder;
-
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
 import org.mule.runtime.module.artifact.classloader.ClassLoaderLookupPolicy;
 import org.mule.runtime.module.artifact.classloader.MuleArtifactClassLoader;
@@ -17,6 +15,8 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+
+import static org.mule.runtime.module.launcher.MuleFoldersUtil.getDomainFolder;
 
 /**
  * Load $MULE_HOME/lib/shared/<domain> libraries.
@@ -59,6 +59,7 @@ public class MuleSharedDomainClassLoader extends MuleArtifactClassLoader impleme
     @Override
     protected String[] getLocalResourceLocations()
     {
-        return new String[] {getDomainFolder(getArtifactName()).getAbsolutePath(), MuleContainerBootstrapUtils.getMuleConfDir().getAbsolutePath()};
+        return new String[] {getDomainFolder(getArtifactName()).getAbsolutePath(),
+                             MuleContainerBootstrapUtils.getMuleConfDir().getAbsolutePath()};
     }
 }

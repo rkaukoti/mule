@@ -7,7 +7,6 @@
 package org.mule.runtime.config.spring.parsers.generic;
 
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
-
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
@@ -43,7 +42,7 @@ public class MuleOrphanDefinitionParser extends OrphanDefinitionParser
         if (!isTopLevel(element))
         {
             throw new IllegalStateException("This element should be embedded inside the Mule <"
-                    + ROOT_ELEMENT + "> element: " + SpringXMLUtils.elementToString(element));
+                                            + ROOT_ELEMENT + "> element: " + SpringXMLUtils.elementToString(element));
         }
     }
 }

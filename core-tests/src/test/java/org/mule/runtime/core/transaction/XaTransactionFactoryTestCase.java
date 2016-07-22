@@ -7,18 +7,18 @@
 
 package org.mule.runtime.core.transaction;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.transaction.Transaction;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import javax.transaction.TransactionManager;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class XaTransactionFactoryTestCase extends AbstractMuleTestCase
 {

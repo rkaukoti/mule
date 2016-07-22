@@ -6,13 +6,12 @@
  */
 package org.mule.test.spring;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.config.ThreadingProfile;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
-import org.mule.runtime.core.api.config.ThreadingProfile;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import org.junit.Test;
 
 public class DefaultThreadingProfileTestCase extends FunctionalTestCase
 {
@@ -24,7 +23,8 @@ public class DefaultThreadingProfileTestCase extends FunctionalTestCase
     }
 
     @Test
-    public void testDefaultThreadingProfile(){
+    public void testDefaultThreadingProfile()
+    {
         assertNotNull(muleContext.getDefaultThreadingProfile());
         assertEquals(ThreadingProfile.DEFAULT_MAX_THREADS_ACTIVE, muleContext.getDefaultThreadingProfile().getMaxThreadsActive());
         assertEquals(ThreadingProfile.DEFAULT_MAX_THREADS_IDLE, muleContext.getDefaultThreadingProfile().getMaxThreadsIdle());

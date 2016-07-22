@@ -6,18 +6,14 @@
  */
 package org.mule.test.config.spring.parsers.specific;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.After;
+import org.junit.Test;
 import org.mule.runtime.config.spring.SpringXmlConfigurationBuilder;
 import org.mule.runtime.config.spring.parsers.specific.ComponentDelegatingDefinitionParser.CheckExclusiveClassAttributeObjectFactoryException;
 import org.mule.runtime.config.spring.util.SpringBeanLookup;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.component.JavaComponent;
 import org.mule.runtime.core.api.config.ConfigurationBuilder;
-import org.mule.runtime.core.api.config.ConfigurationException;
 import org.mule.runtime.core.api.context.MuleContextFactory;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.component.AbstractJavaComponent;
@@ -37,10 +33,12 @@ import org.mule.runtime.core.object.PrototypeObjectFactory;
 import org.mule.runtime.core.object.SingletonObjectFactory;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.testmodels.mule.TestComponentLifecycleAdapterFactory;
-
-import org.junit.After;
-import org.junit.Test;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase
 {
@@ -61,59 +59,69 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase
     public void testDefaultJavaComponentShortcut() throws Exception
     {
         ConfigurationBuilder configBuilder = new SpringXmlConfigurationBuilder(
-            "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
+                "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
         muleContext = muleContextFactory.createMuleContext(configBuilder);
         Flow flow = muleContext.getRegistry().lookupObject("service1");
         validateCorrectServiceCreation(flow);
         assertEquals(DefaultJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
         assertEquals(PrototypeObjectFactory.class, ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory()
-            .getClass());
+                                                                                                               .getClass());
         assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
         assertEquals(
-            2,
-            (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet()).getEntryPointResolvers().size()));
-        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
-            .toArray()[0] instanceof ArrayEntryPointResolver));
-        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
-            .toArray()[1] instanceof CallableEntryPointResolver));
+                2,
+                (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors()
+                                                                      .get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
+                                                                                                          .size()));
+        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors()
+                                                                         .get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
+                                                                                                             .toArray()[0] instanceof ArrayEntryPointResolver));
+        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors()
+                                                                         .get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
+                                                                                                             .toArray()[1] instanceof CallableEntryPointResolver));
     }
 
     @Test
     public void testDefaultJavaComponentPrototype() throws Exception
     {
         ConfigurationBuilder configBuilder = new SpringXmlConfigurationBuilder(
-            "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
+                "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
         muleContext = muleContextFactory.createMuleContext(configBuilder);
         Flow flow = muleContext.getRegistry().lookupObject("service2");
         validateCorrectServiceCreation(flow);
         assertEquals(DefaultJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
         assertEquals(PrototypeObjectFactory.class, ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory()
-            .getClass());
+                                                                                                               .getClass());
         assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
         assertEquals(
-            1,
-            (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet()).getEntryPointResolvers().size()));
-        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
-            .toArray()[0] instanceof CallableEntryPointResolver));
+                1,
+                (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors()
+                                                                      .get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
+                                                                                                          .size()));
+        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors()
+                                                                         .get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
+                                                                                                             .toArray()[0] instanceof CallableEntryPointResolver));
     }
 
     @Test
     public void testDefaultJavaComponentSingleton() throws Exception
     {
         ConfigurationBuilder configBuilder = new SpringXmlConfigurationBuilder(
-            "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
+                "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
         muleContext = muleContextFactory.createMuleContext(configBuilder);
         Flow flow = muleContext.getRegistry().lookupObject("service3");
         validateCorrectServiceCreation(flow);
         assertEquals(DefaultJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
         assertEquals(SingletonObjectFactory.class, ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory()
-            .getClass());
+                                                                                                               .getClass());
         assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
         assertEquals(
-            1,
-            (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet()).getEntryPointResolvers().size()));
-        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
-            .toArray()[0] instanceof ExplicitMethodEntryPointResolver));
+                1,
+                (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors()
+                                                                      .get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
+                                                                                                          .size()));
+        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors()
+                                                                         .get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
+                                                                                                             .toArray()[0] instanceof ExplicitMethodEntryPointResolver));
 
     }
 
@@ -121,19 +129,22 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase
     public void testDefaultJavaComponentSpringBean() throws Exception
     {
         ConfigurationBuilder configBuilder = new SpringXmlConfigurationBuilder(
-            "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
+                "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
         muleContext = muleContextFactory.createMuleContext(configBuilder);
         Flow flow = muleContext.getRegistry().lookupObject("service4");
         validateCorrectServiceCreation(flow);
         assertEquals(DefaultJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
         assertEquals(SpringBeanLookup.class, ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory()
-            .getClass());
+                                                                                                         .getClass());
         assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
         assertEquals(
-            1,
-            (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet()).getEntryPointResolvers().size()));
-        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
-            .toArray()[0] instanceof NoArgumentsEntryPointResolver));
+                1,
+                (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors()
+                                                                      .get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
+                                                                                                          .size()));
+        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors()
+                                                                         .get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
+                                                                                                             .toArray()[0] instanceof NoArgumentsEntryPointResolver));
     }
 
     private void validatePoolingProfile(Flow flow)
@@ -154,20 +165,23 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase
     public void testPooledJavaComponentShortcut() throws Exception
     {
         ConfigurationBuilder configBuilder = new SpringXmlConfigurationBuilder(
-            "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
+                "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
         muleContext = muleContextFactory.createMuleContext(configBuilder);
         Flow flow = muleContext.getRegistry().lookupObject("service5");
         validateCorrectServiceCreation(flow);
         assertEquals(PooledJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
         assertEquals(PrototypeObjectFactory.class, ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory()
-            .getClass());
+                                                                                                               .getClass());
         validatePoolingProfile(flow);
         assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
         assertEquals(
-            1,
-            (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet()).getEntryPointResolvers().size()));
-        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
-            .toArray()[0] instanceof MethodHeaderPropertyEntryPointResolver));
+                1,
+                (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors()
+                                                                      .get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
+                                                                                                          .size()));
+        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors()
+                                                                         .get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
+                                                                                                             .toArray()[0] instanceof MethodHeaderPropertyEntryPointResolver));
 
     }
 
@@ -175,20 +189,23 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase
     public void testPooledJavaComponentPrototype() throws Exception
     {
         ConfigurationBuilder configBuilder = new SpringXmlConfigurationBuilder(
-            "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
+                "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
         muleContext = muleContextFactory.createMuleContext(configBuilder);
         Flow flow = muleContext.getRegistry().lookupObject("service6");
         validateCorrectServiceCreation(flow);
         assertEquals(PooledJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
         assertEquals(PrototypeObjectFactory.class, ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory()
-            .getClass());
+                                                                                                               .getClass());
         validatePoolingProfile(flow);
         assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
         assertEquals(
-            1,
-            (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet()).getEntryPointResolvers().size()));
-        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
-            .toArray()[0] instanceof ReflectionEntryPointResolver));
+                1,
+                (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors()
+                                                                      .get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
+                                                                                                          .size()));
+        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors()
+                                                                         .get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
+                                                                                                             .toArray()[0] instanceof ReflectionEntryPointResolver));
 
     }
 
@@ -196,20 +213,23 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase
     public void testPooledJavaComponentSingleton() throws Exception
     {
         ConfigurationBuilder configBuilder = new SpringXmlConfigurationBuilder(
-            "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
+                "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
         muleContext = muleContextFactory.createMuleContext(configBuilder);
         Flow flow = muleContext.getRegistry().lookupObject("service7");
         validateCorrectServiceCreation(flow);
         assertEquals(PooledJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
         assertEquals(SingletonObjectFactory.class, ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory()
-            .getClass());
+                                                                                                               .getClass());
         validatePoolingProfile(flow);
         assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
         assertEquals(
-            1,
-            (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet()).getEntryPointResolvers().size()));
-        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
-            .toArray()[0] instanceof ReflectionEntryPointResolver));
+                1,
+                (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors()
+                                                                      .get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
+                                                                                                          .size()));
+        assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors()
+                                                                         .get(0)).getEntryPointResolverSet()).getEntryPointResolvers()
+                                                                                                             .toArray()[0] instanceof ReflectionEntryPointResolver));
 
     }
 
@@ -217,13 +237,13 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase
     public void testPooledJavaComponentSpringBean() throws Exception
     {
         ConfigurationBuilder configBuilder = new SpringXmlConfigurationBuilder(
-            "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
+                "org/mule/config/spring/parsers/specific/component-ok-test-flow.xml");
         muleContext = muleContextFactory.createMuleContext(configBuilder);
         Flow flow = muleContext.getRegistry().lookupObject("service8");
         validateCorrectServiceCreation(flow);
         assertEquals(PooledJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
         assertEquals(SpringBeanLookup.class, ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory()
-            .getClass());
+                                                                                                         .getClass());
         validatePoolingProfile(flow);
         assertNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
     }
@@ -234,7 +254,7 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase
         try
         {
             ConfigurationBuilder configBuilder = new SpringXmlConfigurationBuilder(
-                "org/mule/config/spring/parsers/specific/component-bad-test-flow.xml");
+                    "org/mule/config/spring/parsers/specific/component-bad-test-flow.xml");
             muleContextFactory.createMuleContext(configBuilder);
             throw new IllegalStateException("Expected config to fail");
         }
@@ -243,8 +263,8 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase
             //TODO MULE-10061 - Review once the MuleContext lifecycle is clearly defined
             assertEquals(InitialisationException.class, e.getClass());
             assertEquals(BeanDefinitionStoreException.class, e.getCause().getClass());
-            assertEquals(CheckExclusiveClassAttributeObjectFactoryException.class, 
-                e.getCause().getCause().getClass());
+            assertEquals(CheckExclusiveClassAttributeObjectFactoryException.class,
+                    e.getCause().getCause().getClass());
         }
     }
 
@@ -254,7 +274,8 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase
         assertNotNull(flow.getMessageProcessors().get(0));
         assertTrue(flow.getMessageProcessors().get(0) instanceof JavaComponent);
         assertEquals(DummyComponentWithBinding.class, ((JavaComponent) flow.getMessageProcessors().get(0)).getObjectType());
-        assertTrue(((JavaComponent) flow.getMessageProcessors().get(0)).getLifecycleAdapterFactory() instanceof TestComponentLifecycleAdapterFactory);
+        assertTrue(((JavaComponent) flow.getMessageProcessors()
+                                        .get(0)).getLifecycleAdapterFactory() instanceof TestComponentLifecycleAdapterFactory);
     }
 
     protected MuleContext createMuleContext() throws Exception

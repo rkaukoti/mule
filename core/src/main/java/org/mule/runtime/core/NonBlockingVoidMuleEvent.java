@@ -18,14 +18,14 @@ public class NonBlockingVoidMuleEvent extends VoidMuleEvent
 
     private static final NonBlockingVoidMuleEvent instance = new NonBlockingVoidMuleEvent();
 
-    public static NonBlockingVoidMuleEvent getInstance()
-    {
-        return instance;
-    }
-
     private NonBlockingVoidMuleEvent()
     {
         super();
+    }
+
+    public static NonBlockingVoidMuleEvent getInstance()
+    {
+        return instance;
     }
 
 }

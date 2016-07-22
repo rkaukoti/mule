@@ -72,7 +72,6 @@ public class SafeProtocol implements TcpProtocol
     /**
      * @param is Stream to read data from
      * @return true if further data are available; false if EOF
-     * @throws IOException
      */
     private boolean assertSiblingSafe(InputStream is) throws IOException
     {

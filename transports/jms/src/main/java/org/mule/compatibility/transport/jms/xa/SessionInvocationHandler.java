@@ -12,6 +12,8 @@ import org.mule.runtime.core.transaction.IllegalTransactionStateException;
 import org.mule.runtime.core.transaction.TransactionCoordination;
 import org.mule.runtime.core.transaction.XaTransaction;
 import org.mule.runtime.core.util.proxy.TargetInvocationHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -29,18 +31,14 @@ import javax.jms.XASession;
 import javax.jms.XATopicSession;
 import javax.transaction.xa.XAResource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class SessionInvocationHandler implements TargetInvocationHandler
 {
     protected static final transient Logger logger = LoggerFactory.getLogger(SessionInvocationHandler.class);
-
+    private final Session session;
     private XASession xaSession;
     private XAResource xaResource;
     private volatile boolean enlisted = false;
     private volatile boolean reuseObject = false;
-    private final Session session;
 
     private SessionInvocationHandler(XASession xaSession, Session session, Boolean sameRMOverrideValue)
     {
@@ -49,7 +47,7 @@ public class SessionInvocationHandler implements TargetInvocationHandler
         this.session = session;
         this.xaResource = new XAResourceWrapper(xaSession.getXAResource(), this, sameRMOverrideValue);
     }
-    
+
     public SessionInvocationHandler(XASession xaSession, Boolean sameRMOverrideValue) throws JMSException
     {
         this(xaSession, xaSession.getSession(), sameRMOverrideValue);
@@ -112,38 +110,38 @@ public class SessionInvocationHandler implements TargetInvocationHandler
             }
             return null;
         }
-        
+
         Object result = method.invoke(session, args);
 
         if (result instanceof TopicSubscriber)
         {
             result = Proxy.newProxyInstance(Session.class.getClassLoader(),
-                                            new Class[]{TopicSubscriber.class}, new ConsumerProducerInvocationHandler(this, result));
+                    new Class[] {TopicSubscriber.class}, new ConsumerProducerInvocationHandler(this, result));
         }
         else if (result instanceof QueueReceiver)
         {
             result = Proxy.newProxyInstance(Session.class.getClassLoader(),
-                                            new Class[]{QueueReceiver.class}, new ConsumerProducerInvocationHandler(this, result));
+                    new Class[] {QueueReceiver.class}, new ConsumerProducerInvocationHandler(this, result));
         }
         else if (result instanceof MessageConsumer)
         {
             result = Proxy.newProxyInstance(Session.class.getClassLoader(),
-                                            new Class[]{MessageConsumer.class}, new ConsumerProducerInvocationHandler(this, result));
+                    new Class[] {MessageConsumer.class}, new ConsumerProducerInvocationHandler(this, result));
         }
         else if (result instanceof TopicPublisher)
         {
             result = Proxy.newProxyInstance(Session.class.getClassLoader(),
-                                            new Class[]{TopicPublisher.class}, new ConsumerProducerInvocationHandler(this, result));
+                    new Class[] {TopicPublisher.class}, new ConsumerProducerInvocationHandler(this, result));
         }
         else if (result instanceof QueueSender)
         {
             result = Proxy.newProxyInstance(Session.class.getClassLoader(),
-                                            new Class[]{QueueSender.class}, new ConsumerProducerInvocationHandler(this, result));
+                    new Class[] {QueueSender.class}, new ConsumerProducerInvocationHandler(this, result));
         }
         else if (result instanceof MessageProducer)
         {
             result = Proxy.newProxyInstance(Session.class.getClassLoader(),
-                                            new Class[]{MessageProducer.class}, new ConsumerProducerInvocationHandler(this, result));
+                    new Class[] {MessageProducer.class}, new ConsumerProducerInvocationHandler(this, result));
         }
         return result;
     }
@@ -179,7 +177,7 @@ public class SessionInvocationHandler implements TargetInvocationHandler
 
             enlisted = ((XaTransaction) transaction).enlistResource(xaResource);
         }
-        
+
         return enlisted;
     }
 

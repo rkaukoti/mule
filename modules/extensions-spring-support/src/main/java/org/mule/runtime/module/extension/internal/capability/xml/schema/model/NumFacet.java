@@ -43,8 +43,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "numFacet")
 @XmlSeeAlso({
-                    TotalDigits.class
-            })
+        TotalDigits.class
+})
 public class NumFacet extends Facet
 {
 

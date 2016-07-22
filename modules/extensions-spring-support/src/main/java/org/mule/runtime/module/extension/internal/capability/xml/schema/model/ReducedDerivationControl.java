@@ -50,11 +50,6 @@ public enum ReducedDerivationControl
         value = v;
     }
 
-    public DerivationControl value()
-    {
-        return value;
-    }
-
     public static ReducedDerivationControl fromValue(DerivationControl v)
     {
         for (ReducedDerivationControl c : ReducedDerivationControl.values())
@@ -65,6 +60,11 @@ public enum ReducedDerivationControl
             }
         }
         throw new IllegalArgumentException(v.toString());
+    }
+
+    public DerivationControl value()
+    {
+        return value;
     }
 
 }

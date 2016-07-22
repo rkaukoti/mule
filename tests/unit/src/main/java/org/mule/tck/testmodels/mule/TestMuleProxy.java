@@ -21,7 +21,9 @@ public class TestMuleProxy extends DefaultJavaComponent
         super(objectFactory);
     }
 
-    /** Returns the underlying POJO service object for unit testing. */
+    /**
+     * Returns the underlying POJO service object for unit testing.
+     */
     public Object getPojoService() throws Exception
     {
         return objectFactory.getInstance(muleContext);

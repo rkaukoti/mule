@@ -38,7 +38,7 @@ public class OrFilter extends AbstractFilterCollection
     {
         for (Filter filter : getFilters())
         {
-            if(filter.accept(message))
+            if (filter.accept(message))
             {
                 return true;
             }

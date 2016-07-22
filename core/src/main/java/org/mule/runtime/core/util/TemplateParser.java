@@ -6,15 +6,15 @@
  */
 package org.mule.runtime.core.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>TemplateParser</code> is a simple string parser that will substitute
@@ -26,10 +26,12 @@ public final class TemplateParser
     public static final String SQUARE_TEMPLATE_STYLE = "square";
     public static final String CURLY_TEMPLATE_STYLE = "curly";
     public static final String WIGGLY_MULE_TEMPLATE_STYLE = "mule";
-
+    /**
+     * logger used by this class
+     */
+    protected static final Logger logger = LoggerFactory.getLogger(TemplateParser.class);
     private static final String DOLLAR_ESCAPE = "@@@";
     private static final String NULL_AS_STRING = "null";
-
     private static final Map<String, PatternInfo> patterns = new HashMap<>();
 
     static
@@ -43,19 +45,28 @@ public final class TemplateParser
 
         // Support for 6 levels (5 nested)
         patterns.put(WIGGLY_MULE_TEMPLATE_STYLE, new PatternInfo(WIGGLY_MULE_TEMPLATE_STYLE,
-        "#\\[((?:#?\\[(?:#?\\[(?:#?\\[(?:#?\\[(?:#?\\[.*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?)\\]", "#[", "]"));
+                "#\\[((?:#?\\[(?:#?\\[(?:#?\\[(?:#?\\[(?:#?\\[.*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?)\\]",
+                "#[", "]"));
     }
-
-    /**
-     * logger used by this class
-     */
-    protected static final Logger logger = LoggerFactory.getLogger(TemplateParser.class);
 
     private final Pattern pattern;
     private final int pre;
     private final int post;
     private final PatternInfo style;
 
+
+    private TemplateParser(String styleName)
+    {
+        this.style = patterns.get(styleName);
+        if (this.style == null)
+        {
+            throw new IllegalArgumentException("Unknown template style: " + styleName);
+
+        }
+        pattern = style.getPattern();
+        pre = style.getPrefix().length();
+        post = style.getSuffix().length();
+    }
 
     public static TemplateParser createAntStyleParser()
     {
@@ -72,27 +83,13 @@ public final class TemplateParser
         return new TemplateParser(WIGGLY_MULE_TEMPLATE_STYLE);
     }
 
-    private TemplateParser(String styleName)
-    {
-        this.style = patterns.get(styleName);
-        if (this.style == null)
-        {
-            throw new IllegalArgumentException("Unknown template style: " + styleName);
-
-        }
-        pattern = style.getPattern();
-        pre = style.getPrefix().length();
-        post = style.getSuffix().length();
-    }
-
     /**
      * Matches one or more templates against a Map of key value pairs. If a value for
      * a template is not found in the map the template is left as is in the return
      * String
      *
      * @param props    the key/value pairs to match against
-     * @param template the string containing the template place holders i.e. My name
-     *                 is ${name}
+     * @param template the string containing the template place holders i.e. My name is ${name}
      * @return the parsed String
      */
     public String parse(Map<?, ?> props, String template)
@@ -106,8 +103,7 @@ public final class TemplateParser
      * String
      *
      * @param callback a callback used to resolve the property name
-     * @param template the string containing the template place holders i.e. My name
-     *                 is ${name}
+     * @param template the string containing the template place holders i.e. My name is ${name}
      * @return the parsed String
      */
     public String parse(TemplateCallback callback, String template)
@@ -206,8 +202,7 @@ public final class TemplateParser
      * String
      *
      * @param props     the key/value pairs to match against
-     * @param templates A Map of templates. The values for each map entry will be
-     *                  parsed
+     * @param templates A Map of templates. The values for each map entry will be parsed
      * @return the parsed String
      */
     public Map<?, ?> parse(final Map<?, ?> props, Map<?, ?> templates)

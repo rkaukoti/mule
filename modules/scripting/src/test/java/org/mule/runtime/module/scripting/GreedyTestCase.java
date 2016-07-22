@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.module.scripting;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleEvent;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import org.junit.Test;
 
 public class GreedyTestCase extends FunctionalTestCase
 {
@@ -33,7 +33,7 @@ public class GreedyTestCase extends FunctionalTestCase
     {
         runTest(1.28, "GBP", "[1 pounds, 1 twenty_pence, 1 five_pence, 1 two_pence, 1 pennies]");
     }
-    
+
     private void runTest(double amount, String currency, String expectedResult) throws Exception
     {
         MuleEvent response = flowRunner("greedy").withPayload(amount * 100).withFlowVariable("currency", currency).run();

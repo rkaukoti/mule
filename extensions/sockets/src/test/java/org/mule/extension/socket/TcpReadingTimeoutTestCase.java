@@ -6,12 +6,12 @@
  */
 package org.mule.extension.socket;
 
-import static org.hamcrest.Matchers.instanceOf;
+import org.junit.Test;
 import org.mule.runtime.core.api.MessagingException;
 
 import java.net.SocketTimeoutException;
 
-import org.junit.Test;
+import static org.hamcrest.Matchers.instanceOf;
 
 public class TcpReadingTimeoutTestCase extends SocketExtensionTestCase
 {

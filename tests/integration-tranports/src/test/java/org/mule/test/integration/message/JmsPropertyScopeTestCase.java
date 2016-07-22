@@ -6,13 +6,12 @@
  */
 package org.mule.test.integration.message;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class JmsPropertyScopeTestCase extends AbstractPropertyScopeTestCase
 {

@@ -6,9 +6,9 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
+import org.hamcrest.core.IsNull;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.functional.functional.EventCallback;
 import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.functional.junit4.FunctionalTestCase;
@@ -25,9 +25,8 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.hamcrest.core.IsNull;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class ExceptionStrategyExceptionPatternTestCase extends FunctionalTestCase
 {
@@ -48,9 +47,10 @@ public class ExceptionStrategyExceptionPatternTestCase extends FunctionalTestCas
     @Before
     public void setUp() throws Exception
     {
-        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
-        @Override
-        public void onNotification(ExceptionNotification notification)
+        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>()
+        {
+            @Override
+            public void onNotification(ExceptionNotification notification)
             {
                 exceptionLatch.release();
             }
@@ -64,29 +64,30 @@ public class ExceptionStrategyExceptionPatternTestCase extends FunctionalTestCas
                 throw exceptionHolder.get();
             }
         });
-        muleContext.registerListener(new TransactionNotificationListener<TransactionNotification>() {
+        muleContext.registerListener(new TransactionNotificationListener<TransactionNotification>()
+        {
             @Override
             public void onNotification(TransactionNotification notification)
             {
                 if (notification.getAction() == TransactionNotification.TRANSACTION_COMMITTED)
                 {
-                    commitLatch.release();    
+                    commitLatch.release();
                 }
                 else if (notification.getAction() == TransactionNotification.TRANSACTION_ROLLEDBACK)
                 {
-                    rollbackLatch.release();                    
+                    rollbackLatch.release();
                 }
             }
         });
     }
-    
+
     @Test
     public void testThrowExceptionAndCommit() throws Exception
     {
 
         MuleClient client = muleContext.getClient();
         exceptionHolder.set(new IOException());
-        client.dispatch("jms://in", PAYLOAD,null);
+        client.dispatch("jms://in", PAYLOAD, null);
         if (!exceptionLatch.await(TIMEOUT, TimeUnit.MILLISECONDS))
         {
             fail("exception should be thrown");
@@ -101,7 +102,7 @@ public class ExceptionStrategyExceptionPatternTestCase extends FunctionalTestCas
 
         MuleClient client = muleContext.getClient();
         exceptionHolder.set(new IllegalArgumentException());
-        client.dispatch("jms://in", PAYLOAD,null);
+        client.dispatch("jms://in", PAYLOAD, null);
         if (!exceptionLatch.await(TIMEOUT, TimeUnit.MILLISECONDS))
         {
             fail("exception should be thrown");

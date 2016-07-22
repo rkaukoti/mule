@@ -9,11 +9,10 @@ package org.mule.runtime.config.spring.dsl.spring;
 import org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinition;
 import org.mule.runtime.config.spring.dsl.model.ComponentModel;
 import org.mule.runtime.config.spring.dsl.processor.ObjectTypeVisitor;
-
-import java.util.Collection;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.ManagedList;
+
+import java.util.Collection;
 
 /**
  * {@code BeanDefinitionCreator} that handles components that contains a collection
@@ -44,12 +43,13 @@ public class CollectionBeanDefinitionCreator extends BeanDefinitionCreator
             ManagedList<Object> managedList = new ManagedList<>();
             for (ComponentModel innerComponent : componentModel.getInnerComponents())
             {
-                Object bean = innerComponent.getBeanDefinition() == null ? innerComponent.getBeanReference() : innerComponent.getBeanDefinition();
+                Object bean =
+                        innerComponent.getBeanDefinition() == null ? innerComponent.getBeanReference() : innerComponent.getBeanDefinition();
                 managedList.add(bean);
             }
             componentModel.setBeanDefinition(BeanDefinitionBuilder.genericBeanDefinition(objectTypeVisitor.getType())
-                                                     .addConstructorArgValue(managedList)
-                                                     .getBeanDefinition());
+                                                                  .addConstructorArgValue(managedList)
+                                                                  .getBeanDefinition());
             return true;
         }
         return false;

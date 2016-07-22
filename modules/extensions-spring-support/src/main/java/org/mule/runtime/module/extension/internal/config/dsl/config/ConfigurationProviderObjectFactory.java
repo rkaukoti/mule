@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.config.dsl.config;
 
-import static java.util.Optional.empty;
-import static java.util.Optional.ofNullable;
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.config.spring.dsl.api.ObjectFactory;
 import org.mule.runtime.core.api.MuleContext;
@@ -15,10 +13,10 @@ import org.mule.runtime.core.time.TimeSupplier;
 import org.mule.runtime.extension.api.introspection.config.RuntimeConfigurationModel;
 import org.mule.runtime.extension.api.runtime.ConfigurationProvider;
 import org.mule.runtime.module.extension.internal.config.dsl.AbstractExtensionObjectFactory;
-import org.mule.runtime.module.extension.internal.runtime.resolver.ConnectionProviderResolver;
 import org.mule.runtime.module.extension.internal.runtime.DynamicConfigPolicy;
 import org.mule.runtime.module.extension.internal.runtime.config.ConfigurationProviderFactory;
 import org.mule.runtime.module.extension.internal.runtime.config.DefaultConfigurationProviderFactory;
+import org.mule.runtime.module.extension.internal.runtime.resolver.ConnectionProviderResolver;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ImplicitConnectionProviderValueResolver;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSet;
 import org.mule.runtime.module.extension.internal.runtime.resolver.StaticValueResolver;
@@ -28,13 +26,17 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
+import static java.util.Optional.empty;
+import static java.util.Optional.ofNullable;
+
 /**
  * A {@link AbstractExtensionObjectFactory} which produces {@link ConfigurationProvider}
  * instances
  *
  * @since 4.0
  */
-class ConfigurationProviderObjectFactory extends AbstractExtensionObjectFactory<ConfigurationProvider<Object>> implements ObjectFactory<ConfigurationProvider<Object>>
+class ConfigurationProviderObjectFactory extends AbstractExtensionObjectFactory<ConfigurationProvider<Object>>
+        implements ObjectFactory<ConfigurationProvider<Object>>
 {
 
     private final String name;
@@ -117,20 +119,21 @@ class ConfigurationProviderObjectFactory extends AbstractExtensionObjectFactory<
         return dynamicConfigPolicy;
     }
 
+    public void setDynamicConfigPolicy(DynamicConfigPolicy dynamicConfigPolicy)
+    {
+        this.dynamicConfigPolicy = dynamicConfigPolicy;
+    }
+
     private ValueResolver<ConnectionProvider> getConnectionProviderResolver()
     {
-        return connectionProviderResolver.orElseGet(() -> {
+        return connectionProviderResolver.orElseGet(() ->
+        {
             if (requiresConnection)
             {
                 return new ImplicitConnectionProviderValueResolver(name, configurationModel);
             }
             return new StaticValueResolver<>(null);
         });
-    }
-
-    public void setDynamicConfigPolicy(DynamicConfigPolicy dynamicConfigPolicy)
-    {
-        this.dynamicConfigPolicy = dynamicConfigPolicy;
     }
 
     public void setConnectionProviderResolver(ConnectionProviderResolver connectionProviderResolver)

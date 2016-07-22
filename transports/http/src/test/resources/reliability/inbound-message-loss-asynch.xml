@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:mule="http://www.mulesoft.org/schema/mule/core"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:http="http://www.mulesoft.org/schema/mule/transport/http"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
@@ -26,7 +25,7 @@
 
     <flow name="RouterException">
         <http:inbound-endpoint address="http://localhost:${port1}/routerException" exchange-pattern="one-way"/>
-        <custom-processor class="org.mule.tck.testmodels.mule.FailingRouter" />
+        <custom-processor class="org.mule.tck.testmodels.mule.FailingRouter"/>
         <test:component>
             <test:return-data>Here you go</test:return-data>
         </test:component>

@@ -6,21 +6,20 @@
  */
 package org.mule.test.infrastructure.process.rules;
 
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.mule.test.infrastructure.process.MuleProcessController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
- *  This rules logs Mule server logs content in case of a test failure.
+ * This rules logs Mule server logs content in case of a test failure.
  * <p>
  * <pre>
  * public class MuleServerTestCase {
@@ -36,8 +35,6 @@ import org.slf4j.LoggerFactory;
  *  }
  * }
  * </pre>
-
- *
  */
 public class MuleServerFailureLogger extends TestWatcher
 {

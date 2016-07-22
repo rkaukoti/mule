@@ -7,17 +7,17 @@
 
 package org.mule.runtime.module.db.internal.resolver.query;
 
+import org.junit.Test;
+import org.mule.runtime.module.db.internal.domain.query.BulkQuery;
+import org.mule.runtime.module.db.internal.parser.QueryTemplateParser;
+import org.mule.tck.size.SmallTest;
+
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import org.mule.runtime.module.db.internal.domain.query.BulkQuery;
-import org.mule.runtime.module.db.internal.parser.QueryTemplateParser;
-import org.mule.tck.size.SmallTest;
-
-import org.junit.Test;
 
 @SmallTest
 public class StaticBulkQueryResolverTestCase extends AbstractBulkQueryResolverTestCase

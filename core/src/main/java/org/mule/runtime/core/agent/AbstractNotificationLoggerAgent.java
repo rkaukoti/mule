@@ -24,12 +24,11 @@ import org.mule.runtime.core.context.notification.MessageProcessorNotification;
 import org.mule.runtime.core.context.notification.MuleContextNotification;
 import org.mule.runtime.core.context.notification.NotificationException;
 import org.mule.runtime.core.context.notification.SecurityNotification;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>AbstractNotificationLoggerAgent</code> Receives Mule server notifications
@@ -44,7 +43,8 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent
      * The logger used for this class
      */
     protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
+    protected Set<ServerNotificationListener<? extends ServerNotification>> listeners =
+            new HashSet<ServerNotificationListener<? extends ServerNotification>>();
     private boolean ignoreManagerNotifications = false;
     private boolean ignoreConnectionNotifications = false;
     private boolean ignoreSecurityNotifications = false;
@@ -54,8 +54,6 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent
     private boolean ignoreMessageNotifications = false;
     private boolean ignoreComponentMessageNotifications = false;
     private boolean ignoreMessageProcessorNotifications = true;
-
-    protected Set<ServerNotificationListener<? extends ServerNotification>> listeners = new HashSet<ServerNotificationListener<? extends ServerNotification>>();
 
     protected AbstractNotificationLoggerAgent(String name)
     {
@@ -180,7 +178,7 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent
         if (!ignoreManagerNotifications)
         {
             ServerNotificationListener<MuleContextNotification> l
-                = new MuleContextNotificationListener<MuleContextNotification>()
+                    = new MuleContextNotificationListener<MuleContextNotification>()
             {
                 @Override
                 public void onNotification(MuleContextNotification notification)
@@ -190,7 +188,7 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent
             };
             try
             {
-               muleContext.registerListener(l);
+                muleContext.registerListener(l);
             }
             catch (NotificationException e)
             {
@@ -201,7 +199,7 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent
         if (!ignoreSecurityNotifications)
         {
             ServerNotificationListener<SecurityNotification> l
-                = new SecurityNotificationListener<SecurityNotification>()
+                    = new SecurityNotificationListener<SecurityNotification>()
             {
                 @Override
                 public void onNotification(SecurityNotification notification)
@@ -211,7 +209,7 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent
             };
             try
             {
-               muleContext.registerListener(l);
+                muleContext.registerListener(l);
             }
             catch (NotificationException e)
             {
@@ -223,7 +221,7 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent
         if (!ignoreManagementNotifications)
         {
             ServerNotificationListener<ManagementNotification> l
-                = new ManagementNotificationListener<ManagementNotification>()
+                    = new ManagementNotificationListener<ManagementNotification>()
             {
                 @Override
                 public void onNotification(ManagementNotification notification)
@@ -233,7 +231,7 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent
             };
             try
             {
-               muleContext.registerListener(l);
+                muleContext.registerListener(l);
             }
             catch (NotificationException e)
             {
@@ -254,7 +252,7 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent
             };
             try
             {
-               muleContext.registerListener(l);
+                muleContext.registerListener(l);
             }
             catch (NotificationException e)
             {
@@ -266,7 +264,7 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent
         if (!ignoreConnectionNotifications)
         {
             ServerNotificationListener<ConnectionNotification> l
-                = new ConnectionNotificationListener<ConnectionNotification>()
+                    = new ConnectionNotificationListener<ConnectionNotification>()
             {
                 @Override
                 public void onNotification(ConnectionNotification notification)
@@ -276,7 +274,7 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent
             };
             try
             {
-               muleContext.registerListener(l);
+                muleContext.registerListener(l);
             }
             catch (NotificationException e)
             {
@@ -291,7 +289,7 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent
                     notification -> logEvent(notification);
             try
             {
-               muleContext.registerListener(l);
+                muleContext.registerListener(l);
             }
             catch (NotificationException e)
             {

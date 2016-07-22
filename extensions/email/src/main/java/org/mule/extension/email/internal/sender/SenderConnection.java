@@ -6,14 +6,15 @@
  */
 package org.mule.extension.email.internal.sender;
 
-import static org.mule.runtime.api.connection.ConnectionValidationResult.success;
+import org.mule.extension.email.api.exception.EmailConnectionException;
 import org.mule.extension.email.internal.AbstractEmailConnection;
 import org.mule.extension.email.internal.EmailProtocol;
-import org.mule.extension.email.api.exception.EmailConnectionException;
 import org.mule.runtime.api.connection.ConnectionValidationResult;
 import org.mule.runtime.api.tls.TlsContextFactory;
 
 import java.util.Map;
+
+import static org.mule.runtime.api.connection.ConnectionValidationResult.success;
 
 /**
  * A connection with a mail server for sending emails.

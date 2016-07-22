@@ -6,18 +6,6 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static org.apache.http.HttpStatus.SC_OK;
-import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.WWW_AUTHENTICATE;
-import org.mule.runtime.core.util.IOUtils;
-import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-
-import java.io.IOException;
-
 import org.apache.http.Header;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -30,6 +18,18 @@ import org.apache.http.impl.client.HttpClients;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.runtime.core.util.IOUtils;
+import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
+
+import java.io.IOException;
+
+import static org.apache.http.HttpStatus.SC_OK;
+import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.WWW_AUTHENTICATE;
 
 public class HttpListenerAuthenticationTestCase extends AbstractHttpTestCase
 {
@@ -39,12 +39,10 @@ public class HttpListenerAuthenticationTestCase extends AbstractHttpTestCase
     private static final String VALID_PASSWORD = "password";
     private static final String INVALID_PASSWORD = "invalidPassword";
     private static final String EXPECTED_PAYLOAD = "TestBasicAuthOk";
-    CloseableHttpClient httpClient;
-    CloseableHttpResponse httpResponse;
-
-
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
+    CloseableHttpClient httpClient;
+    CloseableHttpResponse httpResponse;
 
     @Override
     protected String getConfigFile()

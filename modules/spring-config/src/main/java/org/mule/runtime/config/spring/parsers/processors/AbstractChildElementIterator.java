@@ -12,7 +12,6 @@ import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssemblerFactory;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
-
 import org.springframework.beans.factory.xml.BeanDefinitionParserDelegate;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
@@ -83,10 +82,10 @@ public abstract class AbstractChildElementIterator implements PostProcessor
         else
         {
             childBean = context.getDelegate().parseCustomElement(child,
-                assembler.getBean().getBeanDefinition());
+                    assembler.getBean().getBeanDefinition());
         }
         BeanAssembler targetAssembler = beanAssemblerFactory.newBeanAssembler(null, null, configuration,
-            assembler.getBean().getRawBeanDefinition());
+                assembler.getBean().getRawBeanDefinition());
         insertBean(targetAssembler, childBean, parent, child);
     }
 

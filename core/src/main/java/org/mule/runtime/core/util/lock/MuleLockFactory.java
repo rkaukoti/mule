@@ -23,9 +23,9 @@ public class MuleLockFactory implements LockFactory, MuleContextAware, Initialis
 
     public synchronized Lock createLock(String lockId)
     {
-        return new LockAdapter(lockId,lockGroup);
+        return new LockAdapter(lockId, lockGroup);
     }
-    
+
     @Override
     public void dispose()
     {

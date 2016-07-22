@@ -6,17 +6,15 @@
  */
 package org.mule.compatibility.transport.tcp;
 
+import org.junit.Test;
+import org.mule.compatibility.core.api.transport.Connector;
+import org.mule.compatibility.core.transport.AbstractConnectorTestCase;
+import org.mule.tck.MuleTestUtils.TestCallback;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mule.tck.MuleTestUtils.testWithSystemProperty;
-
-import org.mule.compatibility.core.api.transport.Connector;
-import org.mule.compatibility.core.transport.AbstractConnectorTestCase;
-import org.mule.compatibility.transport.tcp.TcpConnector;
-import org.mule.tck.MuleTestUtils.TestCallback;
-
-import org.junit.Test;
 
 public class TcpConnectorTestCase extends AbstractConnectorTestCase
 {

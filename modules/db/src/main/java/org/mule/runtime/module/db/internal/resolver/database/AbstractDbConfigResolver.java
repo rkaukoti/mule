@@ -7,11 +7,11 @@
 
 package org.mule.runtime.module.db.internal.resolver.database;
 
-import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.common.Result;
 import org.mule.common.TestResult;
 import org.mule.common.metadata.MetaData;
 import org.mule.common.metadata.MetaDataKey;
+import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.runtime.module.db.internal.domain.database.DbConfig;
 
 import java.util.List;

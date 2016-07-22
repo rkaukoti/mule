@@ -6,16 +6,15 @@
  */
 package org.mule.runtime.module.launcher;
 
-import org.mule.runtime.core.util.SimpleLoggingTable;
-import org.mule.runtime.module.launcher.application.Application;
-
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 
-import java.util.Map;
-
+import org.mule.runtime.core.util.SimpleLoggingTable;
+import org.mule.runtime.module.launcher.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Map;
 
 /**
  * Prints application status summary table on Mule startup.
@@ -23,17 +22,14 @@ import org.slf4j.LoggerFactory;
 public class StartupSummaryDeploymentListener implements StartupListener
 {
 
-    protected transient final Logger logger = LoggerFactory.getLogger(getClass());
-
     private static final String APPLICATION_LABEL = "APPLICATION";
     private static final String DOMAIN_OWNER_LABEL = "DOMAIN";
     private static final String STATUS_LABEL = "STATUS";
     private static final int ARTIFACT_NAME_LABEL_LENGTH = 45;
     private static final int STATUS_LABEL_LENGTH = 18;
     private static final int DOMAIN_OWNER_LABEL_LENGTH = 30;
-
     private static final String UNKNOWN_ARTIFACT_NAME = "UNKNOWN";
-
+    protected transient final Logger logger = LoggerFactory.getLogger(getClass());
     private final DeploymentService deploymentService;
 
     protected DeploymentStatusTracker tracker;
@@ -53,7 +49,8 @@ public class StartupSummaryDeploymentListener implements StartupListener
 
         Multimap<String, String> applicationsPerDomain = LinkedListMultimap.create();
 
-        Map<String, ArtifactDeploymentStatusTracker.DeploymentState> domainDeploymentState = tracker.getDomainDeploymentStatusTracker().getDeploymentStates();
+        Map<String, ArtifactDeploymentStatusTracker.DeploymentState> domainDeploymentState =
+                tracker.getDomainDeploymentStatusTracker().getDeploymentStates();
 
         SimpleLoggingTable domainTable = new SimpleLoggingTable();
         domainTable.addColumn(DOMAIN_OWNER_LABEL, ARTIFACT_NAME_LABEL_LENGTH);
@@ -65,7 +62,8 @@ public class StartupSummaryDeploymentListener implements StartupListener
             domainTable.addDataRow(data);
         }
 
-        Map<String, ArtifactDeploymentStatusTracker.DeploymentState> applicationStates = tracker.getApplicationDeploymentStatusTracker().getDeploymentStates();
+        Map<String, ArtifactDeploymentStatusTracker.DeploymentState> applicationStates =
+                tracker.getApplicationDeploymentStatusTracker().getDeploymentStates();
 
         for (String applicationName : applicationStates.keySet())
         {

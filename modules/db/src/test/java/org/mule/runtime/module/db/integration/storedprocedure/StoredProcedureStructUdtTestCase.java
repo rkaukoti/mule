@@ -7,10 +7,9 @@
 
 package org.mule.runtime.module.db.integration.storedprocedure;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mule.runtime.module.db.integration.TestDbConfig.getOracleResource;
-import static org.mule.runtime.module.db.integration.model.RegionManager.SOUTHWEST_MANAGER;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
@@ -21,9 +20,10 @@ import java.sql.Struct;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mule.runtime.module.db.integration.TestDbConfig.getOracleResource;
+import static org.mule.runtime.module.db.integration.model.RegionManager.SOUTHWEST_MANAGER;
 
 public class StoredProcedureStructUdtTestCase extends AbstractDbIntegrationTestCase
 {
@@ -63,6 +63,6 @@ public class StoredProcedureStructUdtTestCase extends AbstractDbIntegrationTestC
         final MuleEvent responseEvent = flowRunner("returnsObject").withPayload(TEST_MESSAGE).run();
         final MuleMessage response = responseEvent.getMessage();
 
-        assertThat(((Struct)response.getPayload()).getAttributes(), equalTo(SOUTHWEST_MANAGER.getContactDetails().asObjectArray()));
+        assertThat(((Struct) response.getPayload()).getAttributes(), equalTo(SOUTHWEST_MANAGER.getContactDetails().asObjectArray()));
     }
 }

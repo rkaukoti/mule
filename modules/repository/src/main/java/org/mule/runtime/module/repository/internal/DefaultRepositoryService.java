@@ -6,7 +6,14 @@
  */
 package org.mule.runtime.module.repository.internal;
 
-import static org.mule.runtime.module.repository.internal.RepositoryServiceFactory.MULE_REMOTE_REPOSITORIES_PROPERTY;
+import org.eclipse.aether.DefaultRepositorySystemSession;
+import org.eclipse.aether.RepositorySystem;
+import org.eclipse.aether.artifact.DefaultArtifact;
+import org.eclipse.aether.repository.RemoteRepository;
+import org.eclipse.aether.resolution.ArtifactRequest;
+import org.eclipse.aether.resolution.ArtifactResolutionException;
+import org.eclipse.aether.resolution.ArtifactResult;
+import org.eclipse.aether.transfer.ArtifactNotFoundException;
 import org.mule.runtime.module.repository.api.BundleDescriptor;
 import org.mule.runtime.module.repository.api.BundleNotFoundException;
 import org.mule.runtime.module.repository.api.RepositoryConnectionException;
@@ -16,14 +23,7 @@ import org.mule.runtime.module.repository.api.RepositoryServiceDisabledException
 import java.io.File;
 import java.util.List;
 
-import org.eclipse.aether.DefaultRepositorySystemSession;
-import org.eclipse.aether.RepositorySystem;
-import org.eclipse.aether.artifact.DefaultArtifact;
-import org.eclipse.aether.repository.RemoteRepository;
-import org.eclipse.aether.resolution.ArtifactRequest;
-import org.eclipse.aether.resolution.ArtifactResolutionException;
-import org.eclipse.aether.resolution.ArtifactResult;
-import org.eclipse.aether.transfer.ArtifactNotFoundException;
+import static org.mule.runtime.module.repository.internal.RepositoryServiceFactory.MULE_REMOTE_REPOSITORIES_PROPERTY;
 
 /**
  * Default implementation for {@code RepositoryService}.
@@ -37,7 +37,8 @@ public class DefaultRepositoryService implements RepositoryService
     private final DefaultRepositorySystemSession repositorySystemSession;
     private final List<RemoteRepository> remoteRepositories;
 
-    DefaultRepositoryService(RepositorySystem repositorySystem, DefaultRepositorySystemSession repositorySystemSession, List<RemoteRepository> remoteRepositories)
+    DefaultRepositoryService(RepositorySystem repositorySystem, DefaultRepositorySystemSession repositorySystemSession,
+                             List<RemoteRepository> remoteRepositories)
     {
         this.repositorySystem = repositorySystem;
         this.repositorySystemSession = repositorySystemSession;
@@ -52,7 +53,8 @@ public class DefaultRepositoryService implements RepositoryService
             if (remoteRepositories.isEmpty())
             {
                 throw new RepositoryServiceDisabledException("Repository service has not been configured so it's disabled. " +
-                                                             "To enable it you must configure the set of repositories to use using the system property: " + MULE_REMOTE_REPOSITORIES_PROPERTY);
+                                                             "To enable it you must configure the set of repositories to use using the system property: " +
+                                                             MULE_REMOTE_REPOSITORIES_PROPERTY);
             }
             DefaultArtifact artifact = toArtifact(bundleDescriptor);
             ArtifactRequest getArtifactRequest = new ArtifactRequest();

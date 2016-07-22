@@ -8,8 +8,6 @@ package org.mule.runtime.module.http.internal.multipart;
 
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.message.ds.ByteArrayDataSource;
-import org.mule.runtime.core.message.ds.StringDataSource;
-import org.mule.runtime.module.http.internal.HttpParam;
 import org.mule.runtime.core.util.IOUtils;
 
 import java.io.ByteArrayInputStream;
@@ -24,7 +22,6 @@ import java.util.Map;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
-import javax.servlet.http.Part;
 
 public class HttpPartDataSource implements DataSource
 {
@@ -43,40 +40,6 @@ public class HttpPartDataSource implements DataSource
         {
             throw new MuleRuntimeException(e);
         }
-    }
-
-    public byte[] getContent() throws IOException
-    {
-        return this.content;
-    }
-
-    @Override
-    public InputStream getInputStream() throws IOException
-    {
-        return new ByteArrayInputStream(getContent());
-    }
-
-    @Override
-    public OutputStream getOutputStream() throws IOException
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String getContentType()
-    {
-        return part.getContentType();
-    }
-
-    public String getHeader(String headerName)
-    {
-        return part.getHeader(headerName);
-    }
-
-    @Override
-    public String getName()
-    {
-        return part.getName();
     }
 
     public static Collection<HttpPartDataSource> createFrom(Collection<HttpPart> parts)
@@ -114,7 +77,8 @@ public class HttpPartDataSource implements DataSource
                 byte[] data = IOUtils.toByteArray(dataHandlerPart.getInputStream());
                 String fileName = null;
 
-                if (dataHandlerPart.getDataSource() instanceof FileDataSource || dataHandlerPart.getDataSource() instanceof ByteArrayDataSource)
+                if (dataHandlerPart.getDataSource() instanceof FileDataSource ||
+                    dataHandlerPart.getDataSource() instanceof ByteArrayDataSource)
                 {
                     fileName = dataHandlerPart.getDataSource().getName();
                 }
@@ -122,6 +86,40 @@ public class HttpPartDataSource implements DataSource
             }
         }
         return httpParts;
+    }
+
+    public byte[] getContent() throws IOException
+    {
+        return this.content;
+    }
+
+    @Override
+    public InputStream getInputStream() throws IOException
+    {
+        return new ByteArrayInputStream(getContent());
+    }
+
+    @Override
+    public OutputStream getOutputStream() throws IOException
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String getContentType()
+    {
+        return part.getContentType();
+    }
+
+    public String getHeader(String headerName)
+    {
+        return part.getHeader(headerName);
+    }
+
+    @Override
+    public String getName()
+    {
+        return part.getName();
     }
 
     public HttpPart getPart()

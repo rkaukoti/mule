@@ -25,7 +25,7 @@ public abstract class ManagementException extends MuleException
 
     /**
      * @param message the exception message
-     * @param cause the exception that cause this exception to be thrown
+     * @param cause   the exception that cause this exception to be thrown
      */
     protected ManagementException(Message message, Throwable cause)
     {

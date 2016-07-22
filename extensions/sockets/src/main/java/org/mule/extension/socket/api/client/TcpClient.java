@@ -9,6 +9,8 @@ package org.mule.extension.socket.api.client;
 import org.mule.extension.socket.api.ImmutableSocketAttributes;
 import org.mule.extension.socket.api.SocketAttributes;
 import org.mule.extension.socket.api.socket.tcp.TcpProtocol;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -16,9 +18,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This {@link SocketClient} implementation allows the reading and writing

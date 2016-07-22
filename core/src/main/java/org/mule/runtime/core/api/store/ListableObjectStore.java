@@ -27,7 +27,6 @@ public interface ListableObjectStore<T extends Serializable> extends ObjectStore
 
     /**
      * @return list containing all keys that this object store currently holds values for.
-     *
      * @throws ObjectStoreException if an exception occurred while collecting the list of all keys.
      */
     List<Serializable> allKeys() throws ObjectStoreException;

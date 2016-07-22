@@ -6,17 +6,16 @@
  */
 package org.mule.extension.socket.api.provider.tcp;
 
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-import org.mule.extension.socket.api.SocketOperations;
 import org.mule.extension.socket.api.ConnectionSettings;
+import org.mule.extension.socket.api.SocketOperations;
 import org.mule.extension.socket.api.connection.tcp.TcpRequesterConnection;
 import org.mule.extension.socket.api.connection.tcp.protocol.SafeProtocol;
-import org.mule.extension.socket.api.socket.tcp.TcpProtocol;
-import org.mule.extension.socket.api.socket.tcp.TcpClientSocketProperties;
-import org.mule.extension.socket.internal.SocketUtils;
 import org.mule.extension.socket.api.socket.factory.SimpleSocketFactory;
 import org.mule.extension.socket.api.socket.factory.SslSocketFactory;
 import org.mule.extension.socket.api.socket.factory.TcpSocketFactory;
+import org.mule.extension.socket.api.socket.tcp.TcpClientSocketProperties;
+import org.mule.extension.socket.api.socket.tcp.TcpProtocol;
+import org.mule.extension.socket.internal.SocketUtils;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionHandlingStrategy;
 import org.mule.runtime.api.connection.ConnectionHandlingStrategyFactory;
@@ -35,6 +34,8 @@ import java.net.Socket;
 
 import javax.net.ssl.SSLSocket;
 
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
+
 /**
  * A {@link ConnectionProvider} which provides instances of
  * {@link TcpRequesterConnection} to be used by the {@link SocketOperations}
@@ -46,33 +47,28 @@ public final class TcpRequesterProvider implements ConnectionProvider<TcpRequest
 {
 
     /**
+     * This configuration parameter refers to the address where the {@link Socket} should bind to.
+     */
+    @Parameter
+    @Optional
+    ConnectionSettings localAddressSettings = new ConnectionSettings();
+    /**
      * Its presence will imply the use of {@link SSLSocket}
      * instead of plain TCP {@link Socket} for establishing a connection over SSL.
      */
     @Parameter
     @Optional
     private TlsContextFactory tlsContext;
-
     /**
      * This configuration parameter refers to the address where the {@link Socket} should connect to.
      */
     @ParameterGroup
     private ConnectionSettings connectionSettings;
-
     /**
      * {@link Socket} configuration properties
      */
     @ParameterGroup
     private TcpClientSocketProperties tcpClientSocketProperties;
-
-    /**
-     * This configuration parameter refers to the address where the {@link Socket} should bind to.
-     */
-    @Parameter
-    @Optional
-    ConnectionSettings localAddressSettings = new ConnectionSettings();
-
-
     /**
      * {@link TcpProtocol} that knows how the data is going to be read and written.
      * If not specified, the {@link SafeProtocol} will be used.
@@ -93,8 +89,8 @@ public final class TcpRequesterProvider implements ConnectionProvider<TcpRequest
         try
         {
             simpleSocketFactory = tlsContext != null
-                                  ? new SslSocketFactory(tlsContext)
-                                  : new TcpSocketFactory();
+                    ? new SslSocketFactory(tlsContext)
+                    : new TcpSocketFactory();
         }
         catch (Exception e)
         {
@@ -102,7 +98,7 @@ public final class TcpRequesterProvider implements ConnectionProvider<TcpRequest
         }
 
         TcpRequesterConnection connection = new TcpRequesterConnection(connectionSettings, localAddressSettings, protocol,
-                                                                       tcpClientSocketProperties, simpleSocketFactory);
+                tcpClientSocketProperties, simpleSocketFactory);
         connection.connect();
         return connection;
     }
@@ -129,7 +125,8 @@ public final class TcpRequesterProvider implements ConnectionProvider<TcpRequest
      * {@inheritDoc}
      */
     @Override
-    public ConnectionHandlingStrategy<TcpRequesterConnection> getHandlingStrategy(ConnectionHandlingStrategyFactory<TcpRequesterConnection> handlingStrategyFactory)
+    public ConnectionHandlingStrategy<TcpRequesterConnection> getHandlingStrategy(
+            ConnectionHandlingStrategyFactory<TcpRequesterConnection> handlingStrategyFactory)
     {
         return handlingStrategyFactory.supportsPooling();
     }

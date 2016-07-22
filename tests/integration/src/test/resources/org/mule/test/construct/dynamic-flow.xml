@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 
     <flow name="dynamicFlow">
-        <append-string-transformer message="(static)" />
+        <append-string-transformer message="(static)"/>
     </flow>
 
     <flow name="dynamicComponentFlow">
-        <append-string-transformer message="(static)" />
+        <append-string-transformer message="(static)"/>
         <component>
             <singleton-object class="org.mule.test.construct.DynamicFlowTestCase$Component"/>
         </component>
     </flow>
 
     <flow name="exceptionFlow">
-        <append-string-transformer message="(fail)" />
+        <append-string-transformer message="(fail)"/>
         <catch-exception-strategy>
-            <append-string-transformer message="(handled)" />
+            <append-string-transformer message="(handled)"/>
         </catch-exception-strategy>
     </flow>
 </mule>

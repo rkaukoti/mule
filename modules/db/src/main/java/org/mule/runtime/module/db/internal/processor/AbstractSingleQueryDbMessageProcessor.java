@@ -7,11 +7,6 @@
 
 package org.mule.runtime.module.db.internal.processor;
 
-import static org.mule.runtime.core.api.debug.FieldDebugInfoFactory.createFieldDebugInfo;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.INPUT_PARAMS_DEBUG_FIELD;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.PARAM_DEBUG_FIELD_PREFIX;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.SQL_TEXT_DEBUG_FIELD;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.TYPE_DEBUG_FIELD;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.debug.FieldDebugInfo;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
@@ -26,6 +21,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mule.runtime.core.api.debug.FieldDebugInfoFactory.createFieldDebugInfo;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.INPUT_PARAMS_DEBUG_FIELD;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.PARAM_DEBUG_FIELD_PREFIX;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.SQL_TEXT_DEBUG_FIELD;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.TYPE_DEBUG_FIELD;
+
 /**
  * Base class for message processors processing only one query
  */
@@ -34,7 +35,8 @@ public abstract class AbstractSingleQueryDbMessageProcessor extends AbstractDbMe
 
     private final QueryResolver queryResolver;
 
-    public AbstractSingleQueryDbMessageProcessor(DbConfigResolver dbConfigResolver, QueryResolver queryResolver, TransactionalAction transactionalAction)
+    public AbstractSingleQueryDbMessageProcessor(DbConfigResolver dbConfigResolver, QueryResolver queryResolver,
+                                                 TransactionalAction transactionalAction)
     {
         super(dbConfigResolver, transactionalAction);
         this.queryResolver = queryResolver;

@@ -46,7 +46,7 @@ public class JmsNamespaceHandler extends AbstractMuleNamespaceHandler
     public static final String NUMBER_OF_CONSUMERS_ATTRIBUTE = "numberOfConsumers";
     public static final String NUMBER_OF_CONCURRENT_TRANSACTED_RECEIVERS_ATTRIBUTE = "numberOfConcurrentTransactedReceivers";
     public static final String NUMBER_OF_CONSUMERS_PROPERTY = "numberOfConcurrentTransactedReceivers";
-    public static final String[][] JMS_ATTRIBUTES = new String[][]{new String[]{QUEUE}, new String[]{TOPIC}};
+    public static final String[][] JMS_ATTRIBUTES = new String[][] {new String[] {QUEUE}, new String[] {TOPIC}};
 
     @Override
     public void init()
@@ -54,31 +54,34 @@ public class JmsNamespaceHandler extends AbstractMuleNamespaceHandler
         registerJmsTransportEndpoints();
 
         registerMuleBeanDefinitionParser("connector", new JmsConnectorDefinitionParser()).addAlias(
-            NUMBER_OF_CONSUMERS_ATTRIBUTE, NUMBER_OF_CONSUMERS_PROPERTY).registerPreProcessor(
-            new CheckExclusiveAttributes(new String[][]{
-                new String[]{NUMBER_OF_CONCURRENT_TRANSACTED_RECEIVERS_ATTRIBUTE},
-                new String[]{NUMBER_OF_CONSUMERS_ATTRIBUTE}}));
+                NUMBER_OF_CONSUMERS_ATTRIBUTE, NUMBER_OF_CONSUMERS_PROPERTY).registerPreProcessor(
+                new CheckExclusiveAttributes(new String[][] {
+                        new String[] {NUMBER_OF_CONCURRENT_TRANSACTED_RECEIVERS_ATTRIBUTE},
+                        new String[] {NUMBER_OF_CONSUMERS_ATTRIBUTE}}));
         registerBeanDefinitionParser("custom-connector", new JmsConnectorDefinitionParser());
         registerBeanDefinitionParser("activemq-connector", new JmsConnectorDefinitionParser(ActiveMQJmsConnector.class));
         registerBeanDefinitionParser("activemq-xa-connector", new JmsConnectorDefinitionParser(ActiveMQXAJmsConnector.class));
-        
+
         registerBeanDefinitionParser("mulemq-connector", new MuleMQConnectorDefinitionParser(MuleMQJmsConnector.class));
         registerBeanDefinitionParser("mulemq-xa-connector", new MuleMQConnectorDefinitionParser(MuleMQXAJmsConnector.class));
-        
+
         registerBeanDefinitionParser("weblogic-connector", new JmsConnectorDefinitionParser(WeblogicJmsConnector.class));
         registerBeanDefinitionParser("websphere-connector", new JmsConnectorDefinitionParser(WebsphereJmsConnector.class));
 
         registerBeanDefinitionParser("transaction", new TransactionDefinitionParser(JmsTransactionFactory.class));
-        registerBeanDefinitionParser("client-ack-transaction", new TransactionDefinitionParser(JmsClientAcknowledgeTransactionFactory.class));
-        
+        registerBeanDefinitionParser("client-ack-transaction",
+                new TransactionDefinitionParser(JmsClientAcknowledgeTransactionFactory.class));
+
         registerBeanDefinitionParser("jmsmessage-to-object-transformer", new MessageProcessorDefinitionParser(JMSMessageToObject.class));
 
         registerBeanDefinitionParser("object-to-jmsmessage-transformer", new MessageProcessorDefinitionParser(ObjectToJMSMessage.class));
         registerBeanDefinitionParser("property-filter", new FilterDefinitionParser(JmsPropertyFilter.class));
         registerBeanDefinitionParser("selector", new FilterDefinitionParser(JmsSelectorFilter.class));
-        registerBeanDefinitionParser("default-jndi-name-resolver", new ChildDefinitionParser("jndiNameResolver", SimpleJndiNameResolver.class));
+        registerBeanDefinitionParser("default-jndi-name-resolver",
+                new ChildDefinitionParser("jndiNameResolver", SimpleJndiNameResolver.class));
         registerBeanDefinitionParser("custom-jndi-name-resolver", new ChildDefinitionParser("jndiNameResolver"));
-        registerBeanDefinitionParser("caching-connection-factory", new MuleOrphanDefinitionParser(CachingConnectionFactoryFactoryBean.class, true));
+        registerBeanDefinitionParser("caching-connection-factory",
+                new MuleOrphanDefinitionParser(CachingConnectionFactoryFactoryBean.class, true));
     }
 
     /**
@@ -86,9 +89,17 @@ public class JmsNamespaceHandler extends AbstractMuleNamespaceHandler
      */
     protected void registerJmsTransportEndpoints()
     {
-        registerJmsEndpointDefinitionParser("endpoint", new TransportGlobalEndpointDefinitionParser(JmsConnector.JMS, TransportGlobalEndpointDefinitionParser.PROTOCOL, TransportGlobalEndpointDefinitionParser.RESTRICTED_ENDPOINT_ATTRIBUTES, JMS_ATTRIBUTES, new String[][]{}));
-        registerJmsEndpointDefinitionParser("inbound-endpoint", new TransportEndpointDefinitionParser(JmsConnector.JMS, TransportEndpointDefinitionParser.PROTOCOL, InboundEndpointFactoryBean.class, TransportEndpointDefinitionParser.RESTRICTED_ENDPOINT_ATTRIBUTES, JMS_ATTRIBUTES, new String[][]{}));
-        registerJmsEndpointDefinitionParser("outbound-endpoint", new TransportEndpointDefinitionParser(JmsConnector.JMS, TransportEndpointDefinitionParser.PROTOCOL, OutboundEndpointFactoryBean.class, TransportEndpointDefinitionParser.RESTRICTED_ENDPOINT_ATTRIBUTES, JMS_ATTRIBUTES, new String[][]{}));
+        registerJmsEndpointDefinitionParser("endpoint",
+                new TransportGlobalEndpointDefinitionParser(JmsConnector.JMS, TransportGlobalEndpointDefinitionParser.PROTOCOL,
+                        TransportGlobalEndpointDefinitionParser.RESTRICTED_ENDPOINT_ATTRIBUTES, JMS_ATTRIBUTES, new String[][] {}));
+        registerJmsEndpointDefinitionParser("inbound-endpoint",
+                new TransportEndpointDefinitionParser(JmsConnector.JMS, TransportEndpointDefinitionParser.PROTOCOL,
+                        InboundEndpointFactoryBean.class, TransportEndpointDefinitionParser.RESTRICTED_ENDPOINT_ATTRIBUTES, JMS_ATTRIBUTES,
+                        new String[][] {}));
+        registerJmsEndpointDefinitionParser("outbound-endpoint",
+                new TransportEndpointDefinitionParser(JmsConnector.JMS, TransportEndpointDefinitionParser.PROTOCOL,
+                        OutboundEndpointFactoryBean.class, TransportEndpointDefinitionParser.RESTRICTED_ENDPOINT_ATTRIBUTES, JMS_ATTRIBUTES,
+                        new String[][] {}));
     }
 
     protected void registerJmsEndpointDefinitionParser(String element, MuleDefinitionParser parser)

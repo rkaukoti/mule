@@ -6,11 +6,12 @@
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.core.config.i18n.MessageFactory;
+
 import static org.mule.runtime.core.util.ClassUtils.instanciateClass;
 import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.checkInstantiable;
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.core.config.i18n.MessageFactory;
 
 /**
  * Default implementation of {@link ObjectBuilder} which

@@ -6,10 +6,8 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import org.mule.compatibility.transport.file.FileConnector;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 
@@ -18,8 +16,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class WorkDirectoryPropertiesTestCase extends FunctionalTestCase
 {

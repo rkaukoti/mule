@@ -133,6 +133,25 @@ public class MessageEnricher extends AbstractMessageProcessorOwner implements No
         this.enrichExpressionPairs.add(pair);
     }
 
+    @Override
+    protected List<MessageProcessor> getOwnedMessageProcessors()
+    {
+        return Collections.singletonList(enrichmentProcessor);
+    }
+
+    @Override
+    public void addMessageProcessorPathElements(MessageProcessorPathElement pathElement)
+    {
+        if (enrichmentProcessor instanceof InterceptingChainLifecycleWrapper)
+        {
+            super.addMessageProcessorPathElements(pathElement);
+        }
+        else
+        {
+            ((MessageProcessorContainer) enrichmentProcessor).addMessageProcessorPathElements(pathElement);
+        }
+    }
+
     public static class EnrichExpressionPair
     {
 
@@ -173,25 +192,6 @@ public class MessageEnricher extends AbstractMessageProcessorOwner implements No
         public void setTarget(String target)
         {
             this.target = target;
-        }
-    }
-
-    @Override
-    protected List<MessageProcessor> getOwnedMessageProcessors()
-    {
-        return Collections.singletonList(enrichmentProcessor);
-    }
-
-    @Override
-    public void addMessageProcessorPathElements(MessageProcessorPathElement pathElement)
-    {
-        if (enrichmentProcessor instanceof InterceptingChainLifecycleWrapper)
-        {
-            super.addMessageProcessorPathElements(pathElement);
-        }
-        else
-        {
-            ((MessageProcessorContainer) enrichmentProcessor).addMessageProcessorPathElements(pathElement);
         }
     }
 

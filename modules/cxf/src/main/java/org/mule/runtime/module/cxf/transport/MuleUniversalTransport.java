@@ -6,6 +6,20 @@
  */
 package org.mule.runtime.module.cxf.transport;
 
+import org.apache.cxf.Bus;
+import org.apache.cxf.service.Service;
+import org.apache.cxf.service.model.BindingInfo;
+import org.apache.cxf.service.model.EndpointInfo;
+import org.apache.cxf.service.model.ServiceInfo;
+import org.apache.cxf.transport.AbstractTransportFactory;
+import org.apache.cxf.transport.Conduit;
+import org.apache.cxf.transport.ConduitInitiator;
+import org.apache.cxf.transport.Destination;
+import org.apache.cxf.transport.DestinationFactory;
+import org.apache.cxf.ws.addressing.AttributedURIType;
+import org.apache.cxf.ws.addressing.EndpointReferenceType;
+import org.apache.cxf.wsdl.http.AddressType;
+import org.apache.cxf.wsdl11.WSDLEndpointFactory;
 import org.mule.runtime.module.cxf.CxfConfiguration;
 
 import java.io.IOException;
@@ -21,28 +35,14 @@ import javax.wsdl.extensions.http.HTTPAddress;
 import javax.wsdl.extensions.soap.SOAPAddress;
 import javax.xml.namespace.QName;
 
-import org.apache.cxf.Bus;
-import org.apache.cxf.service.Service;
-import org.apache.cxf.service.model.BindingInfo;
-import org.apache.cxf.service.model.EndpointInfo;
-import org.apache.cxf.service.model.ServiceInfo;
-import org.apache.cxf.transport.AbstractTransportFactory;
-import org.apache.cxf.transport.Conduit;
-import org.apache.cxf.transport.ConduitInitiator;
-import org.apache.cxf.transport.Destination;
-import org.apache.cxf.transport.DestinationFactory;
-import org.apache.cxf.ws.addressing.AttributedURIType;
-import org.apache.cxf.ws.addressing.EndpointReferenceType;
-import org.apache.cxf.wsdl.http.AddressType;
-import org.apache.cxf.wsdl11.WSDLEndpointFactory;
-
 public class MuleUniversalTransport extends AbstractTransportFactory
-    implements ConduitInitiator, DestinationFactory, WSDLEndpointFactory
+        implements ConduitInitiator, DestinationFactory, WSDLEndpointFactory
 {
 
     public static final String TRANSPORT_ID = "http://mule.codehaus.org/cxf";
 
     private static Set<String> PREFIXES = new HashSet<String>();
+
     static
     {
         PREFIXES.add("http://");
@@ -68,7 +68,8 @@ public class MuleUniversalTransport extends AbstractTransportFactory
         setTransportIds(tids);
 
         this.connector = connector;
-        this.muleUniversalConduitFactory = muleUniversalConduitFactory == null ? new DefaultMuleUniversalConduitFactory() : muleUniversalConduitFactory;
+        this.muleUniversalConduitFactory =
+                muleUniversalConduitFactory == null ? new DefaultMuleUniversalConduitFactory() : muleUniversalConduitFactory;
     }
 
     @Override
@@ -166,7 +167,7 @@ public class MuleUniversalTransport extends AbstractTransportFactory
     {
         if (ees != null)
         {
-            for (Iterator<?> itr = ees.iterator(); itr.hasNext();)
+            for (Iterator<?> itr = ees.iterator(); itr.hasNext(); )
             {
                 Object extensor = itr.next();
 
@@ -175,7 +176,7 @@ public class MuleUniversalTransport extends AbstractTransportFactory
                     final HTTPAddress httpAdd = (HTTPAddress) extensor;
 
                     EndpointInfo info = new HttpEndpointInfo(serviceInfo,
-                        "http://schemas.xmlsoap.org/wsdl/http/");
+                            "http://schemas.xmlsoap.org/wsdl/http/");
                     info.setAddress(httpAdd.getLocationURI());
                     info.addExtensor(httpAdd);
                     return info;
@@ -185,7 +186,7 @@ public class MuleUniversalTransport extends AbstractTransportFactory
                     final AddressType httpAdd = (AddressType) extensor;
 
                     EndpointInfo info = new HttpEndpointInfo(serviceInfo,
-                        "http://schemas.xmlsoap.org/wsdl/http/");
+                            "http://schemas.xmlsoap.org/wsdl/http/");
                     info.setAddress(httpAdd.getLocation());
                     info.addExtensor(httpAdd);
                     return info;

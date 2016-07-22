@@ -7,9 +7,8 @@
 
 package org.mule.runtime.module.db.integration.bulkexecute;
 
-import org.mule.runtime.module.db.integration.config.AbstractConfigurationErrorTestCase;
-
 import org.junit.Test;
+import org.mule.runtime.module.db.integration.config.AbstractConfigurationErrorTestCase;
 
 public class BulkExecuteFileAndTextTestCase extends AbstractConfigurationErrorTestCase
 {

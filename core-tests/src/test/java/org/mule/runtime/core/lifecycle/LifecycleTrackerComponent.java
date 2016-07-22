@@ -6,14 +6,13 @@
  */
 package org.mule.runtime.core.lifecycle;
 
+import org.mockito.Mockito;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.component.Component;
 import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.api.construct.FlowConstructAware;
 import org.mule.runtime.core.management.stats.ComponentStatistics;
-
-import org.mockito.Mockito;
 
 /**
  * @author David Dossot (david@dossot.net)
@@ -33,15 +32,15 @@ public class LifecycleTrackerComponent extends AbstractLifecycleTracker implemen
         getTracker().add("springDestroy");
     }
 
+    public FlowConstruct getFlowConstruct()
+    {
+        return flowConstruct;
+    }
+
     public void setFlowConstruct(final FlowConstruct flowConstruct)
     {
         getTracker().add("setService");
         this.flowConstruct = flowConstruct;
-    }
-
-    public FlowConstruct getFlowConstruct()
-    {
-        return flowConstruct;
     }
 
     public ComponentStatistics getStatistics()

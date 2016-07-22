@@ -13,7 +13,7 @@ import org.mule.runtime.config.spring.handlers.AbstractMuleNamespaceHandler;
  */
 public class TlsNamespaceHandler extends AbstractMuleNamespaceHandler
 {
-    
+
     public void init()
     {
         registerBeanDefinitionParser("key-store", new KeyStoreParentContextDefinitionParser());

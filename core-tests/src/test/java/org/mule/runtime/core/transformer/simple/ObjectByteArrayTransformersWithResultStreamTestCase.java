@@ -12,13 +12,13 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 public class ObjectByteArrayTransformersWithResultStreamTestCase extends
-    ObjectByteArrayTransformersWithObjectsTestCase
+        ObjectByteArrayTransformersWithObjectsTestCase
 {
 
     @Override
     public Object getResultData()
     {
-        byte[] resultData = (byte[])super.getResultData();
+        byte[] resultData = (byte[]) super.getResultData();
         return new ByteArrayInputStream(resultData);
     }
 
@@ -27,7 +27,7 @@ public class ObjectByteArrayTransformersWithResultStreamTestCase extends
     {
         if (expected instanceof InputStream)
         {
-            InputStream input = (InputStream)expected;
+            InputStream input = (InputStream) expected;
             byte[] bytes = IOUtils.toByteArray(input);
             return super.compareResults(bytes, result);
         }

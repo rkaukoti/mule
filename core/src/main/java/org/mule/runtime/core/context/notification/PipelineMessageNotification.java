@@ -18,14 +18,13 @@ import org.mule.runtime.core.api.context.notification.ServerNotification;
 public class PipelineMessageNotification extends ServerNotification implements BlockingServerEvent
 {
 
-    private static final long serialVersionUID = 6065691696506216248L;
-
     // Fired when processing of pipeline starts
     public static final int PROCESS_START = PIPELINE_MESSAGE_EVENT_ACTION_START_RANGE + 1;
     // Fired when pipeline processing reaches the end before returning
     public static final int PROCESS_END = PIPELINE_MESSAGE_EVENT_ACTION_START_RANGE + 2;
     // Fired when pipeline processing returns after processing request and response message
     public static final int PROCESS_COMPLETE = PIPELINE_MESSAGE_EVENT_ACTION_START_RANGE + 4;
+    private static final long serialVersionUID = 6065691696506216248L;
 
     static
     {

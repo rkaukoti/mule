@@ -6,8 +6,9 @@
  */
 package org.mule.runtime.core.util;
 
-import static org.junit.Assert.assertTrue;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.util.monitor.Expirable;
 import org.mule.runtime.core.util.monitor.ExpiryMonitor;
 import org.mule.tck.junit4.AbstractMuleTestCase;
@@ -16,9 +17,7 @@ import org.mule.tck.probe.PollingProber;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 public class ExpiryMonitorTestCase extends AbstractMuleTestCase
 {

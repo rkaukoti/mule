@@ -6,6 +6,7 @@
  */
 package org.mule.test.config;
 
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -14,8 +15,6 @@ import org.mule.runtime.core.api.security.EncryptionStrategyNotFoundException;
 import org.mule.runtime.core.api.security.SecurityProviderNotFoundException;
 import org.mule.runtime.core.api.security.UnknownAuthenticationTypeException;
 import org.mule.runtime.core.security.AbstractAuthenticationFilter;
-
-import org.junit.Test;
 
 /**
  * Test configuration of security filters

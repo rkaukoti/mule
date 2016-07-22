@@ -7,16 +7,16 @@
 
 package org.mule.runtime.module.launcher.nativelib;
 
+import org.junit.Test;
+import org.mule.tck.size.SmallTest;
+
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assume.assumeThat;
-import org.mule.tck.size.SmallTest;
-
-import java.io.File;
-
-import org.junit.Test;
 
 @SmallTest
 public class PerAppNativeLibraryFinderTestCase extends AbstractNativeLibraryFinderTestCase

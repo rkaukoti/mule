@@ -6,14 +6,12 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.mule.compatibility.transport.jms.JmsConnector;
+import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class JmsInfiniteRedeliveryTestCase extends AbstractJmsRedeliveryTestCase
 {

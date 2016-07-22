@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.management;
 
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.module.management.agent.FixedHostRmiClientSocketFactory;
 import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.net.ConnectException;
 import java.net.Socket;
-
-import org.junit.Rule;
-import org.junit.Test;
 
 public class JmxAgentEmptyConfigurationTestCase extends FunctionalTestCase
 {

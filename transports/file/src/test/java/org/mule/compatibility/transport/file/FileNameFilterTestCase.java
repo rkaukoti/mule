@@ -6,17 +6,16 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mule.compatibility.transport.file.FileTestUtils.createDataFile;
-import static org.mule.compatibility.transport.file.FileTestUtils.createFolder;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 
 import java.io.File;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mule.compatibility.transport.file.FileTestUtils.createDataFile;
+import static org.mule.compatibility.transport.file.FileTestUtils.createFolder;
 
 public class FileNameFilterTestCase extends AbstractFileFunctionalTestCase
 {

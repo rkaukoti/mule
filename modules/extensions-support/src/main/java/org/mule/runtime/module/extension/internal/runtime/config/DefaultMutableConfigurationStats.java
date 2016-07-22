@@ -60,6 +60,7 @@ final class DefaultMutableConfigurationStats implements MutableConfigurationStat
     {
         return inflightOperations.get();
     }
+
     /**
      * {@inheritDoc}
      */

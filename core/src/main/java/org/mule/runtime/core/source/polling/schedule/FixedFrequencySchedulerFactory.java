@@ -7,17 +7,16 @@
 package org.mule.runtime.core.source.polling.schedule;
 
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
 import org.mule.runtime.core.api.schedule.Scheduler;
 import org.mule.runtime.core.api.schedule.SchedulerFactory;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+
 /**
- * <p>
- * Implementation of {@link org.mule.runtime.core.api.schedule.SchedulerFactory} for a {@link org.mule.runtime.core.source.polling.schedule.FixedFrequencyScheduler}.
- * </p>
+ * <p> Implementation of {@link org.mule.runtime.core.api.schedule.SchedulerFactory} for a {@link
+ * org.mule.runtime.core.source.polling.schedule.FixedFrequencyScheduler}. </p>
  *
  * @since 3.5.0
  */
@@ -44,7 +43,7 @@ public class FixedFrequencySchedulerFactory<T extends Runnable> extends Schedule
     public Scheduler doCreate(String name, final T job)
     {
         FixedFrequencyScheduler<T> fixedFrequencyScheduler = new FixedFrequencyScheduler<T>(name,
-                                                                                      frequency, startDelay, job, timeUnit);
+                frequency, startDelay, job, timeUnit);
         return fixedFrequencyScheduler;
     }
 

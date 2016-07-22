@@ -6,12 +6,7 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import org.mule.compatibility.transport.file.FileConnector;
-import org.mule.compatibility.transport.file.FileMuleMessageFactory;
+import org.junit.Test;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
@@ -25,7 +20,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class FileRequestorMoveDeleteTestCase extends AbstractFileMoveDeleteTestCase
 {
@@ -160,7 +157,7 @@ public class FileRequestorMoveDeleteTestCase extends AbstractFileMoveDeleteTestC
     }
 
     protected void assertRequested(MuleMessage message, File inFile, boolean streaming)
-        throws IOException, MessagingException, InterruptedException
+            throws IOException, MessagingException, InterruptedException
     {
         // Allow time for deletes/moves, so we can then assert to check files that
         // shouldn't havn't been moved havn't

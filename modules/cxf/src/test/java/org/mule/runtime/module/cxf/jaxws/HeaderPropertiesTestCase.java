@@ -6,19 +6,18 @@
  */
 package org.mule.runtime.module.cxf.jaxws;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import org.mule.runtime.core.api.MuleEventContext;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.functional.functional.EventCallback;
-import org.mule.functional.functional.FunctionalTestComponent;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-
 import org.apache.hello_world_soap_http.GreeterImpl;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.functional.functional.EventCallback;
+import org.mule.functional.functional.FunctionalTestComponent;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleEventContext;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.tck.junit4.rule.DynamicPort;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class HeaderPropertiesTestCase extends FunctionalTestCase
 {
@@ -61,7 +60,7 @@ public class HeaderPropertiesTestCase extends FunctionalTestCase
                                                      .withOutboundProperty("FOO", "BAR")
                                                      .run()
                                                      .getMessage();
-        
+
         assertEquals("Hello Dan Received", result.getPayload());
 
         GreeterImpl impl = getGreeter();

@@ -7,14 +7,14 @@
 
 package org.mule.runtime.module.http.functional.requester;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.tck.junit4.rule.SystemProperty;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mule.runtime.core.api.config.MuleProperties.SYSTEM_PROPERTY_PREFIX;
 import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
-import org.mule.tck.junit4.rule.SystemProperty;
-
-import org.junit.Rule;
-import org.junit.Test;
 
 public class HttpRequestContentTypeTestCase extends AbstractHttpRequestTestCase
 {

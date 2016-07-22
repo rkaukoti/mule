@@ -6,16 +6,15 @@
  */
 package org.mule.test.infrastructure.server.ftp;
 
+import org.apache.ftpserver.FtpServerFactory;
+import org.apache.ftpserver.listener.Listener;
+import org.apache.ftpserver.listener.ListenerFactory;
+import org.apache.ftpserver.usermanager.PropertiesUserManagerFactory;
 import org.mule.runtime.core.util.IOUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-
-import org.apache.ftpserver.FtpServerFactory;
-import org.apache.ftpserver.listener.Listener;
-import org.apache.ftpserver.listener.ListenerFactory;
-import org.apache.ftpserver.usermanager.PropertiesUserManagerFactory;
 
 /**
  * A wrapper for the Apache ftpServer.  This will progress into a provider of its own,
@@ -24,16 +23,14 @@ import org.apache.ftpserver.usermanager.PropertiesUserManagerFactory;
 public class EmbeddedFtpServer
 {
 
-    private org.apache.ftpserver.FtpServer server;
     private final int port;
+    private org.apache.ftpserver.FtpServer server;
 
     /**
      * Initialize the ftp server on a given port
      *
-     * @param port The port to start the server on. Note, you need special
-     *             permissions on *nux to open port 22, so we usually choose a very
+     * @param port The port to start the server on. Note, you need special permissions on *nux to open port 22, so we usually choose a very
      *             high port number.
-     * @throws Exception
      */
     public EmbeddedFtpServer(int port) throws Exception
     {

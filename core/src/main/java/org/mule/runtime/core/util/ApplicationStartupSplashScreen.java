@@ -20,8 +20,8 @@ public class ApplicationStartupSplashScreen extends SplashScreen
     {
         header.add("Application: " + context.getConfiguration().getId());
         header.add(String.format("OS encoding: %s, Mule encoding: %s",
-                                 SystemUtils.FILE_SEPARATOR,
-                                 context.getConfiguration().getDefaultEncoding()));
+                SystemUtils.FILE_SEPARATOR,
+                context.getConfiguration().getDefaultEncoding()));
         header.add(" ");
     }
 
@@ -38,7 +38,7 @@ public class ApplicationStartupSplashScreen extends SplashScreen
         if (agents.size() == 0)
         {
             footer.add(CoreMessages.agentsRunning().getMessage() + " "
-                    + CoreMessages.none().getMessage());
+                       + CoreMessages.none().getMessage());
         }
         else
         {
@@ -50,7 +50,7 @@ public class ApplicationStartupSplashScreen extends SplashScreen
                 {
                     description = description.substring("'''".length());
                     // handle multiline descriptions better
-                    for (StringTokenizer st = new StringTokenizer(description, String.format("%n")); st.hasMoreTokens();)
+                    for (StringTokenizer st = new StringTokenizer(description, String.format("%n")); st.hasMoreTokens(); )
                     {
                         footer.add("  " + st.nextToken());
                     }

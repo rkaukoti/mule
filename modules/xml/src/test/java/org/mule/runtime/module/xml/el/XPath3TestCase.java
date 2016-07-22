@@ -6,24 +6,23 @@
  */
 package org.mule.runtime.module.xml.el;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.MuleEvent;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.runtime.module.xml.xpath.XPathReturnType;
+import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.util.IOUtils;
+import org.mule.runtime.module.xml.xpath.XPathReturnType;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class XPath3TestCase extends FunctionalTestCase
 {

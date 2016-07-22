@@ -7,10 +7,9 @@
 package org.mule.runtime.config.spring.parsers.specific;
 
 import org.mule.runtime.core.time.Time;
+import org.springframework.beans.factory.FactoryBean;
 
 import java.util.concurrent.TimeUnit;
-
-import org.springframework.beans.factory.FactoryBean;
 
 /**
  * A {@link FactoryBean} which creates instances of {@link Time}

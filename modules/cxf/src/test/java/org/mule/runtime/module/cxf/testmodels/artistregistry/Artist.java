@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name="artist", propOrder = {
+@XmlType(name = "artist", propOrder = {
         "artType",
         "famousWorks",
         "firstName",

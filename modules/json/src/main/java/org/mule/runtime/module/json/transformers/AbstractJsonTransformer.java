@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.module.json.transformers;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.transformer.DiscoverableTransformer;
 import org.mule.runtime.core.transformer.AbstractMessageTransformer;
-
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.util.HashMap;
 import java.util.Map;

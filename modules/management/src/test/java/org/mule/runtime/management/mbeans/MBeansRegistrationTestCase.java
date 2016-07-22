@@ -6,9 +6,7 @@
  */
 package org.mule.runtime.management.mbeans;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.module.management.agent.JmxApplicationAgent;
 import org.mule.runtime.module.management.agent.JmxServerNotificationAgent;
@@ -28,7 +26,8 @@ import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectInstance;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Verify that expected MBeans are registered based on the config.
@@ -96,7 +95,7 @@ public class MBeansRegistrationTestCase extends FunctionalTestCase
     {
         muleContext.dispose();
         assertEquals("No MBeans should be registered after disposal of MuleContext", 0,
-            getMBeanClasses().size());
+                getMBeanClasses().size());
     }
 
     protected List<String> getMBeanClasses() throws MalformedObjectNameException

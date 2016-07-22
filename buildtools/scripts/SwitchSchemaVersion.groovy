@@ -1,6 +1,6 @@
 /**
  * This script helps switching the version in all Schemas and XML config files
- * 
+ *
  * $Id$
  */
 
@@ -14,35 +14,30 @@ cliBuilder.t(longOpt: "to", args: 1, "switch to version (e.g. 3.0)")
 
 options = cliBuilder.parse(args)
 
-if (!options)
-{
+if (!options) {
     println ""
     println "Error parsing options " + args
     println ""
     System.exit(1)
 }
 
-if (options.h)
-{
+if (options.h) {
     cliBuilder.usage()
     System.exit(0)
 }
 
 def root = "."
-if (options.r)
-{
+if (options.r) {
     root = options.r
-}    
+}
 
 sourceSchemaVersion = "2.2"
-if (options.f)
-{
+if (options.f) {
     sourceSchemaVersion = options.f
 }
 
 destSchemaVersion = "3.0"
-if (options.t)
-{
+if (options.t) {
     destSchemaVersion = options.t
 }
 
@@ -55,41 +50,41 @@ xsdRegex = /(http:\/\/www.mulesoft.[org|com]{3}?\/schema\/mule[\/\w+\/]+$sourceS
 // switch the version in all XSD and XML files
 //
 AntBuilder ant = new AntBuilder()
-FileScanner scanner = ant.fileScanner 
-{
-    fileset(dir: root) 
-    {
-        include(name: "**/*.xsd")
-        include(name: "**/*.xml")
-        exclude(name: "**/pom.xml")
-        exclude(name: "**/target/**")
-        exclude(name: "**/test-data/out/**")
-    }
-}
+FileScanner scanner = ant.fileScanner
+        {
+            fileset(dir: root)
+                    {
+                        include(name: "**/*.xsd")
+                        include(name: "**/*.xml")
+                        exclude(name: "**/pom.xml")
+                        exclude(name: "**/target/**")
+                        exclude(name: "**/test-data/out/**")
+                    }
+        }
 
 def noChange = {
-    return it   
+    return it
 }
 
-scanner.each 
-{
-    println "switching schema version on $it"
-    switchSchemaVersion(it, noChange, noChange, xsdRegex)
-    switchSchemaVersion(it, noChange, noChange, schemaRegex)
-}
+scanner.each
+        {
+            println "switching schema version on $it"
+            switchSchemaVersion(it, noChange, noChange, xsdRegex)
+            switchSchemaVersion(it, noChange, noChange, schemaRegex)
+        }
 
 //
 // switch all spring.handlers and spring.schemas files
 //
 scanner = ant.fileScanner
-{
-    fileset(dir: root)
-    {
-        include(name: "**/spring.handlers")
-        include(name: "**/spring.schemas")
-        exclude(name: "**/target/**")
-    }
-}
+        {
+            fileset(dir: root)
+                    {
+                        include(name: "**/spring.handlers")
+                        include(name: "**/spring.schemas")
+                        exclude(name: "**/target/**")
+                    }
+        }
 
 def preProcess = {
     return it.replace("\\:", ":")
@@ -100,86 +95,73 @@ def postProcess = {
 }
 
 scanner.each
-{
-    println "switching schema version on $it"
-    switchSchemaVersion(it, preProcess, postProcess, xsdRegex)
-    switchSchemaVersion(it, preProcess, postProcess, schemaRegex)
-}
+        {
+            println "switching schema version on $it"
+            switchSchemaVersion(it, preProcess, postProcess, xsdRegex)
+            switchSchemaVersion(it, preProcess, postProcess, schemaRegex)
+        }
 
-def switchSchemaVersion(File inFile, def preProcessFunction, def postProcessFunction, def matcher)
-{    
+def switchSchemaVersion(File inFile, def preProcessFunction, def postProcessFunction, def matcher) {
     def filename = inFile.name + ".version-switched"
     def outFile = new File(inFile.parentFile, filename)
 
     def schemaReplaced = false
     outFile.withWriter
-    {
-        outWriter ->
-             
-        inFile.eachLine
-        {
-            line ->
-    
-            line = preProcessFunction(line)
-            
-            def match = (line =~ matcher)
-            while (match.find())
             {
-                schemaReplaced = true
-                
-                def srcSchema = null
-                srcSchema = match[0][1]
-                def destSchema = null
-                if(match =~ "xsd")
-                {
-                    destSchema = srcSchema.replace(sourceSchemaVersion, destSchemaVersion)
-                }
-                else
-                {
-                    destSchema = srcSchema.replace(sourceSchemaVersion, "")
-                    //strip last '/'
-                    destSchema = destSchema.substring(0,destSchema.length()-1)
-                }
-                line = line.replace(srcSchema, destSchema)
-                
-                match = (line =~ matcher)
+                outWriter ->
+
+                    inFile.eachLine
+                            {
+                                line ->
+
+                                    line = preProcessFunction(line)
+
+                                    def match = (line =~ matcher)
+                                    while (match.find()) {
+                                        schemaReplaced = true
+
+                                        def srcSchema = null
+                                        srcSchema = match[0][1]
+                                        def destSchema = null
+                                        if (match =~ "xsd") {
+                                            destSchema = srcSchema.replace(sourceSchemaVersion, destSchemaVersion)
+                                        } else {
+                                            destSchema = srcSchema.replace(sourceSchemaVersion, "")
+                                            //strip last '/'
+                                            destSchema = destSchema.substring(0, destSchema.length() - 1)
+                                        }
+                                        line = line.replace(srcSchema, destSchema)
+
+                                        match = (line =~ matcher)
+                                    }
+
+                                    def convertedLine = postProcessFunction(line)
+                                    outWriter.writeLine(convertedLine)
+                            }
             }
-            
-            def convertedLine = postProcessFunction(line)
-            outWriter.writeLine(convertedLine)
-        }
-    }    
-    
-    if (schemaReplaced)
-    {
+
+    if (schemaReplaced) {
         def backupFile = new File(inFile.parentFile, inFile.name + ".bak")
         move(inFile, backupFile)
         move(outFile, inFile)
         delete(backupFile)
-    }
-    else
-    {
+    } else {
         delete(outFile)
     }
 }
 
-def move(File sourceFile, File destFile)
-{
-    if (destFile.exists())
-    {
+def move(File sourceFile, File destFile) {
+    if (destFile.exists()) {
         throw new IOException(destFile.canonicalPath + " exists!")
     }
-    
-    if (sourceFile.renameTo(destFile) == false)
-    {
+
+    if (sourceFile.renameTo(destFile) == false) {
         throw new IOException("moving " + sourceFile.absolutePath + " to " + destFile.absolutePath + " failed")
     }
 }
 
-def delete(File file)
-{
-    if (file.delete() == false)
-    {
+def delete(File file) {
+    if (file.delete() == false) {
         throw new IOException("deleting " + file.canonicalFile + " failed")
     }
 }

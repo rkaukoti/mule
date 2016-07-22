@@ -29,22 +29,6 @@ public class QueueProfile
     private int maxOutstandingMessages = 0;
     private QueueStore<Serializable> objectStore;
 
-    public static QueueProfile newInstancePersistingToDefaultMemoryQueueStore(MuleContext muleContext)
-    {
-        return newInstance(MuleProperties.QUEUE_STORE_DEFAULT_IN_MEMORY_NAME, muleContext);
-    }
-
-    public static QueueProfile newInstanceWithPersistentQueueStore(MuleContext muleContext)
-    {
-        return newInstance(MuleProperties.QUEUE_STORE_DEFAULT_PERSISTENT_NAME, muleContext);
-    }
-
-    private static QueueProfile newInstance(String objectStoreKey, MuleContext muleContext)
-    {
-        QueueStore<Serializable> objectStore = muleContext.getRegistry().lookupObject(objectStoreKey);
-        return new QueueProfile(objectStore);
-    }
-
     public QueueProfile(QueueStore<Serializable> objectStore)
     {
         this.objectStore = objectStore;
@@ -63,10 +47,26 @@ public class QueueProfile
         this.objectStore = objectStore;
     }
 
+    public static QueueProfile newInstancePersistingToDefaultMemoryQueueStore(MuleContext muleContext)
+    {
+        return newInstance(MuleProperties.QUEUE_STORE_DEFAULT_IN_MEMORY_NAME, muleContext);
+    }
+
+    public static QueueProfile newInstanceWithPersistentQueueStore(MuleContext muleContext)
+    {
+        return newInstance(MuleProperties.QUEUE_STORE_DEFAULT_PERSISTENT_NAME, muleContext);
+    }
+
+    private static QueueProfile newInstance(String objectStoreKey, MuleContext muleContext)
+    {
+        QueueStore<Serializable> objectStore = muleContext.getRegistry().lookupObject(objectStoreKey);
+        return new QueueProfile(objectStore);
+    }
+
     /**
      * This specifies the number of messages that can be queued before it starts
      * blocking.
-     * 
+     *
      * @return the max number of messages that will be queued
      */
     public int getMaxOutstandingMessages()
@@ -77,7 +77,7 @@ public class QueueProfile
     /**
      * This specifies the number of messages that can be queued before it starts
      * blocking.
-     * 
+     *
      * @param maxOutstandingMessages the max number of messages that will be queued
      */
     public void setMaxOutstandingMessages(int maxOutstandingMessages)
@@ -86,7 +86,7 @@ public class QueueProfile
     }
 
     public QueueConfiguration configureQueue(MuleContext context, String component, QueueManager queueManager)
-        throws InitialisationException
+            throws InitialisationException
     {
         QueueConfiguration qc = toQueueConfiguration(context);
         queueManager.setQueueConfiguration(component, qc);

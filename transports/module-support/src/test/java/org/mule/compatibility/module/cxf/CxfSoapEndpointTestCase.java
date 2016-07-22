@@ -6,14 +6,13 @@
  */
 package org.mule.compatibility.module.cxf;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
 import org.mule.compatibility.core.endpoint.MuleEndpointURI;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class CxfSoapEndpointTestCase extends AbstractMuleContextTestCase
 {
@@ -28,7 +27,7 @@ public class CxfSoapEndpointTestCase extends AbstractMuleContextTestCase
         assertEquals("cxf", endpointUri.getSchemeMetaInfo());
         // it's up to the client to actually strip off the method name if necessary
         assertEquals("http://www.xmethods.net/wsdl/query.wsdl?method=getSomething&param1=1&param2=2",
-            endpointUri.getAddress());
+                endpointUri.getAddress());
         assertEquals("getSomething", endpointUri.getParams().getProperty(MuleProperties.MULE_METHOD_PROPERTY));
         assertEquals(3, endpointUri.getParams().size());
 
@@ -38,7 +37,7 @@ public class CxfSoapEndpointTestCase extends AbstractMuleContextTestCase
 
         assertEquals("cxf", endpointUri.getSchemeMetaInfo());
         assertEquals("http://www.xmethods.net/wsdl/query.wsdl?method=getSomething&param1=1&param2=2",
-            endpointUri.getAddress());
+                endpointUri.getAddress());
         assertEquals("getSomething", endpointUri.getParams().getProperty(MuleProperties.MULE_METHOD_PROPERTY));
         assertEquals(3, endpointUri.getParams().size());
     }
@@ -53,7 +52,7 @@ public class CxfSoapEndpointTestCase extends AbstractMuleContextTestCase
         assertEquals("cxf", endpointUri.getSchemeMetaInfo());
         // it's up to the client to actually strip off the method name if necessary
         assertEquals("http://www.xmethods.net/wsdl/query.wsdl?method=getSomething&param1=1&param2=2",
-            endpointUri.getAddress());
+                endpointUri.getAddress());
         assertEquals("getSomething", endpointUri.getParams().getProperty(MuleProperties.MULE_METHOD_PROPERTY));
         assertEquals(3, endpointUri.getParams().size());
         assertEquals("admin:pwd", endpointUri.getUserInfo());

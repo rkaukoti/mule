@@ -14,6 +14,8 @@ import java.lang.annotation.RetentionPolicy;
 public @interface MultiMarker
 {
     String value();
+
     String param1();
+
     String param2();
 }

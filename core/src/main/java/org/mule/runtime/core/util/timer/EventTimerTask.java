@@ -49,7 +49,7 @@ public class EventTimerTask extends TimerTask
      * Constructs a EventTimeTask and registers a listener with it
      *
      * @param listener the listener to register
-     * @param name the name for the task
+     * @param name     the name for the task
      */
     public EventTimerTask(TimeEventListener listener, String name)
     {

@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.core.util.queue;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class RandomAccessFileQueueStoreTestCase extends AbstractMuleTestCase
@@ -49,7 +49,8 @@ public class RandomAccessFileQueueStoreTestCase extends AbstractMuleTestCase
         {
             randomAccessFileQueueStore.addLast(data);
         }
-        assertThat(randomAccessFileQueueStore.getLength(), is((dataSize + RandomAccessFileQueueStore.CONTROL_DATA_SIZE) * numberOfElements));
+        assertThat(randomAccessFileQueueStore.getLength(),
+                is((dataSize + RandomAccessFileQueueStore.CONTROL_DATA_SIZE) * numberOfElements));
     }
 
     private RandomAccessFileQueueStore createRandomAccessFileQueueStore()

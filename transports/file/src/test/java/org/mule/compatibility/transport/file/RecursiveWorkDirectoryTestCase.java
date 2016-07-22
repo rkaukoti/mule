@@ -7,17 +7,16 @@
 
 package org.mule.compatibility.transport.file;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.tck.junit4.rule.SystemPropertyTemporaryFolder;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 public class RecursiveWorkDirectoryTestCase extends FunctionalTestCase
 {
@@ -29,16 +28,16 @@ public class RecursiveWorkDirectoryTestCase extends FunctionalTestCase
     @Override
     protected String getConfigFile()
     {
-        return  "recursive-work-directory-config.xml";
+        return "recursive-work-directory-config.xml";
     }
 
     @Test
     public void ignoresWorkDirectoryOnRequest() throws Exception
     {
         MuleClient client = muleContext.getClient();
-        
+
         MuleMessage response = client.request("file://" + temporaryFolder.getRoot(), RECEIVE_TIMEOUT);
-        
+
         assertThat(response, is(nullValue()));
     }
 }

@@ -14,7 +14,8 @@ import org.mule.runtime.core.context.notification.TransactionNotification;
  * can implement and then register themselves with the Mule manager to be notified
  * when a Transaction event occurs.
  */
-public interface TransactionNotificationListener<T extends TransactionNotification> extends ServerNotificationListener<TransactionNotification>
+public interface TransactionNotificationListener<T extends TransactionNotification>
+        extends ServerNotificationListener<TransactionNotification>
 {
     // no methods
 }

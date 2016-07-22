@@ -40,7 +40,8 @@ public abstract class AbstractRemoveVariablePropertyTransformer extends Abstract
     {
         if (wildcardAttributeEvaluator.hasWildcards())
         {
-            wildcardAttributeEvaluator.processValues(getPropertyNames(event), matchedValue -> {
+            wildcardAttributeEvaluator.processValues(getPropertyNames(event), matchedValue ->
+            {
                 removeProperty(event, matchedValue);
                 if (logger.isDebugEnabled())
                 {
@@ -63,7 +64,7 @@ public abstract class AbstractRemoveVariablePropertyTransformer extends Abstract
         return event.getMessage();
     }
 
-    protected  abstract Set<String> getPropertyNames(MuleEvent event);
+    protected abstract Set<String> getPropertyNames(MuleEvent event);
 
     protected abstract void removeProperty(MuleEvent event, String propertyName);
 

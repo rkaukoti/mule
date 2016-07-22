@@ -28,7 +28,6 @@ import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.core.api.routing.filter.FilterUnacceptedException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.processor.AbstractFilteringMessageProcessor;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,10 +66,8 @@ public class MessageFilter extends AbstractFilteringMessageProcessor implements 
     }
 
     /**
-     * @param filter
-     * @param throwExceptionOnUnaccepted throw a FilterUnacceptedException when a
-     *            message is rejected by the filter?
-     * @param messageProcessor used to handler unaccepted messages
+     * @param throwExceptionOnUnaccepted throw a FilterUnacceptedException when a message is rejected by the filter?
+     * @param messageProcessor           used to handler unaccepted messages
      */
     public MessageFilter(Filter filter, boolean throwExceptionOnUnaccepted, MessageProcessor messageProcessor)
     {
@@ -103,7 +100,8 @@ public class MessageFilter extends AbstractFilteringMessageProcessor implements 
     {
         MessagingException messagingException = new MessagingException(event, ex, this);
         String docName = LocationExecutionContextProvider.getDocName(filter);
-        messagingException.getInfo().put("Filter", docName != null ? String.format("%s (%s)", filter.toString(), docName) : filter.toString());
+        messagingException.getInfo()
+                          .put("Filter", docName != null ? String.format("%s (%s)", filter.toString(), docName) : filter.toString());
         return messagingException;
     }
 

@@ -6,18 +6,17 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertEquals;
-
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-
-import java.io.IOException;
-
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * See MULE-6968 "Http endpoint with path="" or path="/" do not attend requests at root level"

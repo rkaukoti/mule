@@ -6,16 +6,15 @@
  */
 package org.mule.test.components;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.message.DefaultExceptionPayload;
+
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.runtime.core.message.DefaultExceptionPayload;
-
-import org.junit.Test;
 
 /**
  * Test an entry-point resolver used for multiple classes
@@ -43,7 +42,10 @@ public class EntryPointResolverCacheTestCase extends FunctionalTestCase
         assertThat(payload, instanceOf(String.class));
         assertThat(payload, is("ServiceOne"));
 
-        response = flowRunner("refServiceTwo").withPayload("another request").withInboundProperty("method", "retrieveReferenceData").run().getMessage();
+        response = flowRunner("refServiceTwo").withPayload("another request")
+                                              .withInboundProperty("method", "retrieveReferenceData")
+                                              .run()
+                                              .getMessage();
         payload = response.getPayload();
         if ((payload == null) || (response.getExceptionPayload() != null))
         {

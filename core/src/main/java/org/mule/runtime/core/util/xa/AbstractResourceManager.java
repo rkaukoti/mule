@@ -7,15 +7,14 @@
 package org.mule.runtime.core.util.xa;
 
 import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
 import javax.transaction.Status;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This code is based on code coming from the <a
@@ -48,7 +47,8 @@ public abstract class AbstractResourceManager
     protected static final int DEFAULT_TIMEOUT_MSECS = 5000;
     protected static final int DEFAULT_COMMIT_TIMEOUT_FACTOR = 2;
 
-    protected Collection<AbstractTransactionContext> globalTransactions = Collections.synchronizedCollection(new ArrayList<AbstractTransactionContext>());
+    protected Collection<AbstractTransactionContext> globalTransactions =
+            Collections.synchronizedCollection(new ArrayList<AbstractTransactionContext>());
     protected int operationMode = OPERATION_MODE_STOPPED;
     protected long defaultTimeout = DEFAULT_TIMEOUT_MSECS;
 
@@ -68,7 +68,7 @@ public abstract class AbstractResourceManager
         if (dirty)
         {
             logger
-                .warn("Started ResourceManager, but in dirty mode only (Recovery of pending transactions failed)");
+                    .warn("Started ResourceManager, but in dirty mode only (Recovery of pending transactions failed)");
         }
         else
         {
@@ -122,15 +122,15 @@ public abstract class AbstractResourceManager
     {
         switch (mode)
         {
-            case SHUTDOWN_MODE_NORMAL :
-                return waitForAllTxToStop(timeoutMSecs);
-            case SHUTDOWN_MODE_ROLLBACK :
-                throw new UnsupportedOperationException();
-                // return rollBackOrForward();
-            case SHUTDOWN_MODE_KILL :
-                return true;
-            default :
-                return false;
+        case SHUTDOWN_MODE_NORMAL:
+            return waitForAllTxToStop(timeoutMSecs);
+        case SHUTDOWN_MODE_ROLLBACK:
+            throw new UnsupportedOperationException();
+            // return rollBackOrForward();
+        case SHUTDOWN_MODE_KILL:
+            return true;
+        default:
+            return false;
         }
     }
 
@@ -218,7 +218,7 @@ public abstract class AbstractResourceManager
     }
 
     public void setTransactionRollbackOnly(AbstractTransactionContext context)
-        throws ResourceManagerException
+            throws ResourceManagerException
     {
         context.status = Status.STATUS_MARKED_ROLLBACK;
     }
@@ -317,7 +317,7 @@ public abstract class AbstractResourceManager
                 if (!context.finished)
                 {
                     logger.info("Waiting for tx " + context + " to finish for " + remainingTimeout
-                                    + " milli seconds");
+                                + " milli seconds");
                 }
                 while (!context.finished && remainingTimeout > 0)
                 {
@@ -348,14 +348,11 @@ public abstract class AbstractResourceManager
     /**
      * Flag this resource manager as dirty. No more operations will be allowed until
      * a recovery has been successfully performed.
-     *
-     * @param context
-     * @param t
      */
     protected void setDirty(AbstractTransactionContext context, Throwable t)
     {
         logger.error("Fatal error during critical commit/rollback of transaction " + context
-                        + ", setting resource manager to dirty.", t);
+                     + ", setting resource manager to dirty.", t);
         dirty = true;
     }
 
@@ -381,8 +378,7 @@ public abstract class AbstractResourceManager
     /**
      * Check that the FileManager is ready.
      *
-     * @throws FileManagerSystemException if the FileManager is neither started not
-     *             stopping.
+     * @throws FileManagerSystemException if the FileManager is neither started not stopping.
      */
     protected void assureReady() throws ResourceManagerSystemException
     {

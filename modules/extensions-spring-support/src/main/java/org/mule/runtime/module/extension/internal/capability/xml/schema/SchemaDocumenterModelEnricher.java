@@ -6,20 +6,20 @@
  */
 package org.mule.runtime.module.extension.internal.capability.xml.schema;
 
-import static org.mule.runtime.module.extension.internal.resources.ExtensionResourcesGeneratorAnnotationProcessor.EXTENSION_ELEMENT;
-import static org.mule.runtime.module.extension.internal.resources.ExtensionResourcesGeneratorAnnotationProcessor.PROCESSING_ENVIRONMENT;
-import static org.mule.runtime.module.extension.internal.resources.ExtensionResourcesGeneratorAnnotationProcessor.ROUND_ENVIRONMENT;
 import org.mule.runtime.extension.api.introspection.declaration.DescribingContext;
 import org.mule.runtime.extension.api.introspection.declaration.spi.ModelEnricher;
 import org.mule.runtime.module.extension.internal.resources.ExtensionResourcesGeneratorAnnotationProcessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.TypeElement;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.module.extension.internal.resources.ExtensionResourcesGeneratorAnnotationProcessor.EXTENSION_ELEMENT;
+import static org.mule.runtime.module.extension.internal.resources.ExtensionResourcesGeneratorAnnotationProcessor.PROCESSING_ENVIRONMENT;
+import static org.mule.runtime.module.extension.internal.resources.ExtensionResourcesGeneratorAnnotationProcessor.ROUND_ENVIRONMENT;
 
 /**
  * Implementation of {@link ModelEnricher} that's only applicable when invoked in the context of an annotations
@@ -55,7 +55,8 @@ public final class SchemaDocumenterModelEnricher implements ModelEnricher
             return;
         }
 
-        new SchemaDocumenter(processingEnv).document(describingContext.getExtensionDeclarer().getDeclaration(), extensionElement, roundEnvironment);
+        new SchemaDocumenter(processingEnv).document(describingContext.getExtensionDeclarer().getDeclaration(), extensionElement,
+                roundEnvironment);
 
     }
 }

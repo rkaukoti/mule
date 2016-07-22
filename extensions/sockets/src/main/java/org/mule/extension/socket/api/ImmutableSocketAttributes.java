@@ -6,9 +6,9 @@
  */
 package org.mule.extension.socket.api;
 
-import static org.apache.commons.lang.StringUtils.EMPTY;
-
 import org.mule.runtime.core.message.BaseAttributes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -20,8 +20,7 @@ import javax.net.ssl.SSLPeerUnverifiedException;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.apache.commons.lang.StringUtils.EMPTY;
 
 /**
  * Immutable implementation of {@link SocketAttributes}.
@@ -37,6 +36,7 @@ public class ImmutableSocketAttributes extends BaseAttributes implements SocketA
     private String hostName;
     private Certificate[] localCertificates;
     private Certificate[] peerCertificates;
+
     /**
      * Creates a new instance
      *
@@ -88,6 +88,13 @@ public class ImmutableSocketAttributes extends BaseAttributes implements SocketA
         this(packet.getPort(), packet.getAddress().getHostAddress(), packet.getAddress().getHostName());
     }
 
+    public ImmutableSocketAttributes(int remotePort, String remoteHostAddress, String remoteHostName)
+    {
+        this.port = remotePort;
+        this.hostAddress = remoteHostAddress;
+        this.hostName = remoteHostName;
+    }
+
     private void fromInetAddress(int port, InetAddress address)
     {
         this.port = port;
@@ -103,14 +110,6 @@ public class ImmutableSocketAttributes extends BaseAttributes implements SocketA
             this.hostAddress = address.getHostAddress();
         }
     }
-
-    public ImmutableSocketAttributes(int remotePort, String remoteHostAddress, String remoteHostName)
-    {
-        this.port = remotePort;
-        this.hostAddress = remoteHostAddress;
-        this.hostName = remoteHostName;
-    }
-
 
     /**
      * {@inheritDoc}

@@ -15,16 +15,18 @@ import org.mule.runtime.core.api.processor.MessageProcessorContainer;
 import org.mule.runtime.core.api.processor.MessageProcessorPathElement;
 import org.mule.runtime.core.util.NotificationUtils;
 
-import javax.xml.namespace.QName;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.xml.namespace.QName;
+
 /**
  * An object that owns message processors and delegates startup/shutdown events to them.
  */
-public abstract class AbstractMessageProcessorOwner extends AbstractMuleObjectOwner<MessageProcessor> implements Lifecycle, MuleContextAware, FlowConstructAware, AnnotatedObject, MessageProcessorContainer
+public abstract class AbstractMessageProcessorOwner extends AbstractMuleObjectOwner<MessageProcessor>
+        implements Lifecycle, MuleContextAware, FlowConstructAware, AnnotatedObject, MessageProcessorContainer
 {
     private final Map<QName, Object> annotations = new ConcurrentHashMap<QName, Object>();
 

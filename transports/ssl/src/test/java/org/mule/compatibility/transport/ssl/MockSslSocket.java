@@ -34,9 +34,19 @@ public class MockSslSocket extends SSLSocket
         return false;
     }
 
+    public void setEnableSessionCreation(boolean flag)
+    {
+        // not needed
+    }
+
     public String[] getEnabledCipherSuites()
     {
         return null;
+    }
+
+    public void setEnabledCipherSuites(String[] suites)
+    {
+        // not needed
     }
 
     public String[] getEnabledProtocols()
@@ -44,9 +54,19 @@ public class MockSslSocket extends SSLSocket
         return null;
     }
 
+    public void setEnabledProtocols(String[] protocols)
+    {
+        // not needed
+    }
+
     public boolean getNeedClientAuth()
     {
         return false;
+    }
+
+    public void setNeedClientAuth(boolean need)
+    {
+        // not needed
     }
 
     public SSLSession getSession()
@@ -69,42 +89,22 @@ public class MockSslSocket extends SSLSocket
         return false;
     }
 
-    public boolean getWantClientAuth()
-    {
-        return false;
-    }
-
-    public void removeHandshakeCompletedListener(HandshakeCompletedListener listener)
-    {
-        // not needed
-    }
-
-    public void setEnableSessionCreation(boolean flag)
-    {
-        // not needed
-    }
-
-    public void setEnabledCipherSuites(String[] suites)
-    {
-        // not needed
-    }
-
-    public void setEnabledProtocols(String[] protocols)
-    {
-        // not needed
-    }
-
-    public void setNeedClientAuth(boolean need)
-    {
-        // not needed
-    }
-
     public void setUseClientMode(boolean mode)
     {
         // not needed
     }
 
+    public boolean getWantClientAuth()
+    {
+        return false;
+    }
+
     public void setWantClientAuth(boolean want)
+    {
+        // not needed
+    }
+
+    public void removeHandshakeCompletedListener(HandshakeCompletedListener listener)
     {
         // not needed
     }
@@ -113,11 +113,16 @@ public class MockSslSocket extends SSLSocket
     {
         // not needed
     }
-    
+
     @Override
     public InputStream getInputStream() throws IOException
     {
         return inputStream;
+    }
+
+    public void setInputStream(InputStream inputStream)
+    {
+        this.inputStream = inputStream;
     }
 
     @Override
@@ -130,11 +135,6 @@ public class MockSslSocket extends SSLSocket
     public SocketAddress getRemoteSocketAddress()
     {
         return new InetSocketAddress("localhost", 12345);
-    }
-
-    public void setInputStream(InputStream inputStream)
-    {
-        this.inputStream = inputStream;
     }
 }
 

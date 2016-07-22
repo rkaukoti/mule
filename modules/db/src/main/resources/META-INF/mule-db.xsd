@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/db"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:mule="http://www.mulesoft.org/schema/mule/core"
+            xmlns="http://www.mulesoft.org/schema/mule/db"
             targetNamespace="http://www.mulesoft.org/schema/mule/db"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">
@@ -104,7 +104,8 @@
                 <xsd:attribute name="fetchSize" type="mule:substitutableInt">
                     <xsd:annotation>
                         <xsd:documentation>
-                            Indicates how many rows to fetch from the database when rows are read from a resultSet. This property is required when streaming is true; in that case a default value (10) is used.
+                            Indicates how many rows to fetch from the database when rows are read from a resultSet. This property is required when streaming is true; in that case a default value (10)
+                            is used.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -243,7 +244,8 @@
                 <xsd:attribute name="fetchSize" type="mule:substitutableInt">
                     <xsd:annotation>
                         <xsd:documentation>
-                            Indicates how many rows to fetch from the database when rows are read from a resultSet. This property is required when streaming is true; in that case a default value (10) is used.
+                            Indicates how many rows to fetch from the database when rows are read from a resultSet. This property is required when streaming is true; in that case a default value (10)
+                            is used.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -579,9 +581,9 @@
         <xsd:complexContent>
             <xsd:extension base="mule:abstractExtensionType">
                 <xsd:sequence>
-                    <xsd:element ref="pooling-profile"  minOccurs="0" maxOccurs="1"/>
-                    <xsd:element ref="connection-properties" minOccurs="0" maxOccurs="1" />
-                    <xsd:element ref="data-types" minOccurs="0" maxOccurs="1" />
+                    <xsd:element ref="pooling-profile" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="connection-properties" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="data-types" minOccurs="0" maxOccurs="1"/>
                     <xsd:element ref="mule:abstract-reconnection-strategy" minOccurs="0" maxOccurs="1"/>
                 </xsd:sequence>
                 <xsd:attribute name="name" type="mule:substitutableName" use="required">
@@ -662,7 +664,7 @@
         <xsd:complexContent>
             <xsd:extension base="mule:annotatedType">
                 <xsd:sequence>
-                    <xsd:element name="property" type="propertyType" minOccurs="1" maxOccurs="unbounded" />
+                    <xsd:element name="property" type="propertyType" minOccurs="1" maxOccurs="unbounded"/>
                 </xsd:sequence>
             </xsd:extension>
         </xsd:complexContent>
@@ -671,8 +673,8 @@
     <xsd:complexType name="propertyType">
         <xsd:complexContent>
             <xsd:extension base="mule:annotatedType">
-                <xsd:attribute name="key" type="xsd:string" use="required" />
-                <xsd:attribute name="value" type="xsd:string" use="required" />
+                <xsd:attribute name="key" type="xsd:string" use="required"/>
+                <xsd:attribute name="value" type="xsd:string" use="required"/>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
@@ -689,7 +691,7 @@
         <xsd:complexContent>
             <xsd:extension base="mule:annotatedType">
                 <xsd:sequence>
-                    <xsd:element name="data-type" type="CustomDataType" minOccurs="1" maxOccurs="unbounded" />
+                    <xsd:element name="data-type" type="CustomDataType" minOccurs="1" maxOccurs="unbounded"/>
                 </xsd:sequence>
             </xsd:extension>
         </xsd:complexContent>
@@ -754,7 +756,9 @@
         </xsd:attribute>
         <xsd:attribute name="maxWaitMillis" type="xsd:string">
             <xsd:annotation>
-                <xsd:documentation>The number of milliseconds a client calling getConnection() waits for a connection to be checked-in or acquired when the pool is exhausted. Zero means wait indefinitely.</xsd:documentation>
+                <xsd:documentation>The number of milliseconds a client calling getConnection() waits for a connection to be checked-in or acquired when the pool is exhausted. Zero means wait
+                    indefinitely.
+                </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
     </xsd:complexType>

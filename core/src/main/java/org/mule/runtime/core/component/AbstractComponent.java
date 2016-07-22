@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.core.component;
 
-import static java.util.Collections.singletonList;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.runtime.core.DefaultMuleEvent;
@@ -39,17 +36,20 @@ import org.mule.runtime.core.management.stats.ComponentStatistics;
 import org.mule.runtime.core.processor.chain.DefaultMessageProcessorChainBuilder;
 import org.mule.runtime.core.transformer.TransformerTemplate;
 import org.mule.runtime.core.util.ClassUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.util.Collections.singletonList;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 /**
  * Abstract {@link Component} to be used by all {@link Component} implementations.
  */
-public abstract class AbstractComponent extends AbstractAnnotatedObject implements Component, MuleContextAware, Lifecycle, MessagingExceptionHandlerAware
+public abstract class AbstractComponent extends AbstractAnnotatedObject
+        implements Component, MuleContextAware, Lifecycle, MessagingExceptionHandlerAware
 {
 
     /**
@@ -65,6 +65,12 @@ public abstract class AbstractComponent extends AbstractAnnotatedObject implemen
     protected MuleContext muleContext;
     protected ComponentLifecycleManager lifecycleManager;
     private MessagingExceptionHandler messagingExceptionHandler;
+
+    public AbstractComponent()
+    {
+        statistics = new ComponentStatistics();
+        lifecycleManager = new ComponentLifecycleManager(getName(), this);
+    }
 
     @Override
     public void setMuleContext(MuleContext context)
@@ -82,12 +88,6 @@ public abstract class AbstractComponent extends AbstractAnnotatedObject implemen
         this.interceptors = interceptors;
     }
 
-    public AbstractComponent()
-    {
-        statistics = new ComponentStatistics();
-        lifecycleManager = new ComponentLifecycleManager(getName(), this);
-    }
-
     private MuleEvent invokeInternal(MuleEvent event) throws MuleException
     {
         // Ensure we have event in ThreadLocal
@@ -96,7 +96,7 @@ public abstract class AbstractComponent extends AbstractAnnotatedObject implemen
         if (logger.isTraceEnabled())
         {
             logger.trace(String.format("Invoking %s component for service %s", this.getClass().getName(),
-                flowConstruct.getName()));
+                    flowConstruct.getName()));
         }
 
         if (!lifecycleManager.getState().isStarted() || lifecycleManager.getState().isStopping())
@@ -127,7 +127,7 @@ public abstract class AbstractComponent extends AbstractAnnotatedObject implemen
             // stop further processing
             resultEvent.setStopFurtherProcessing(event.isStopFurtherProcessing());
             fireComponentNotification(resultEvent.getMessage(),
-                ComponentMessageNotification.COMPONENT_POST_INVOKE);
+                    ComponentMessageNotification.COMPONENT_POST_INVOKE);
 
             return resultEvent;
         }
@@ -194,15 +194,15 @@ public abstract class AbstractComponent extends AbstractAnnotatedObject implemen
         return statistics;
     }
 
+    public FlowConstruct getFlowConstruct()
+    {
+        return flowConstruct;
+    }
+
     @Override
     public void setFlowConstruct(FlowConstruct flowConstruct)
     {
         this.flowConstruct = flowConstruct;
-    }
-
-    public FlowConstruct getFlowConstruct()
-    {
-        return flowConstruct;
     }
 
     @Override
@@ -211,14 +211,14 @@ public abstract class AbstractComponent extends AbstractAnnotatedObject implemen
         if (flowConstruct == null)
         {
             throw new InitialisationException(
-                MessageFactory.createStaticMessage("Component has not been initialized properly, no flow constuct."),
-                this);
+                    MessageFactory.createStaticMessage("Component has not been initialized properly, no flow constuct."),
+                    this);
         }
 
         lifecycleManager.fireInitialisePhase((phaseName, object) ->
         {
             DefaultMessageProcessorChainBuilder chainBuilder = new DefaultMessageProcessorChainBuilder(
-                flowConstruct);
+                    flowConstruct);
             chainBuilder.setName("Component interceptor processor chain for :" + getName());
             for (Interceptor interceptor : interceptors)
             {
@@ -288,7 +288,7 @@ public abstract class AbstractComponent extends AbstractAnnotatedObject implemen
         lifecycleManager.fireStartPhase((phaseName, object) ->
         {
             notificationHandler = new OptimisedNotificationHandler(muleContext.getNotificationManager(),
-                ComponentMessageNotification.class);
+                    ComponentMessageNotification.class);
             doStart();
         });
 
@@ -305,7 +305,7 @@ public abstract class AbstractComponent extends AbstractAnnotatedObject implemen
             && notificationHandler.isNotificationEnabled(ComponentMessageNotification.class))
         {
             notificationHandler.fireNotification(new ComponentMessageNotification(message, this,
-                flowConstruct, action));
+                    flowConstruct, action));
         }
     }
 

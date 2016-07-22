@@ -63,8 +63,8 @@ import javax.xml.namespace.QName;
         "simpleType"
 })
 @XmlSeeAlso({
-                    TopLevelAttribute.class
-            })
+        TopLevelAttribute.class
+})
 public class Attribute extends Annotated
 {
 
@@ -90,8 +90,7 @@ public class Attribute extends Annotated
     /**
      * Gets the value of the simpleType property.
      *
-     * @return possible object is
-     * {@link LocalSimpleType }
+     * @return possible object is {@link LocalSimpleType }
      */
     public LocalSimpleType getSimpleType()
     {
@@ -101,8 +100,7 @@ public class Attribute extends Annotated
     /**
      * Sets the value of the simpleType property.
      *
-     * @param value allowed object is
-     *              {@link LocalSimpleType }
+     * @param value allowed object is {@link LocalSimpleType }
      */
     public void setSimpleType(LocalSimpleType value)
     {
@@ -112,8 +110,7 @@ public class Attribute extends Annotated
     /**
      * Gets the value of the type property.
      *
-     * @return possible object is
-     * {@link QName }
+     * @return possible object is {@link QName }
      */
     public QName getType()
     {
@@ -123,8 +120,7 @@ public class Attribute extends Annotated
     /**
      * Sets the value of the type property.
      *
-     * @param value allowed object is
-     *              {@link QName }
+     * @param value allowed object is {@link QName }
      */
     public void setType(QName value)
     {
@@ -134,8 +130,7 @@ public class Attribute extends Annotated
     /**
      * Gets the value of the use property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getUse()
     {
@@ -152,8 +147,7 @@ public class Attribute extends Annotated
     /**
      * Sets the value of the use property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setUse(String value)
     {
@@ -163,8 +157,7 @@ public class Attribute extends Annotated
     /**
      * Gets the value of the default property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getDefault()
     {
@@ -174,8 +167,7 @@ public class Attribute extends Annotated
     /**
      * Sets the value of the default property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setDefault(String value)
     {
@@ -185,8 +177,7 @@ public class Attribute extends Annotated
     /**
      * Gets the value of the fixed property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getFixed()
     {
@@ -196,8 +187,7 @@ public class Attribute extends Annotated
     /**
      * Sets the value of the fixed property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setFixed(String value)
     {
@@ -207,8 +197,7 @@ public class Attribute extends Annotated
     /**
      * Gets the value of the form property.
      *
-     * @return possible object is
-     * {@link FormChoice }
+     * @return possible object is {@link FormChoice }
      */
     public FormChoice getForm()
     {
@@ -218,8 +207,7 @@ public class Attribute extends Annotated
     /**
      * Sets the value of the form property.
      *
-     * @param value allowed object is
-     *              {@link FormChoice }
+     * @param value allowed object is {@link FormChoice }
      */
     public void setForm(FormChoice value)
     {
@@ -229,8 +217,7 @@ public class Attribute extends Annotated
     /**
      * Gets the value of the name property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getName()
     {
@@ -240,8 +227,7 @@ public class Attribute extends Annotated
     /**
      * Sets the value of the name property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setName(String value)
     {
@@ -251,8 +237,7 @@ public class Attribute extends Annotated
     /**
      * Gets the value of the ref property.
      *
-     * @return possible object is
-     * {@link QName }
+     * @return possible object is {@link QName }
      */
     public QName getRef()
     {
@@ -262,8 +247,7 @@ public class Attribute extends Annotated
     /**
      * Sets the value of the ref property.
      *
-     * @param value allowed object is
-     *              {@link QName }
+     * @param value allowed object is {@link QName }
      */
     public void setRef(QName value)
     {

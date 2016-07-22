@@ -5,9 +5,10 @@
  * LICENSE.txt file.
  */
 package org.mule.runtime.core.api.construct;
+
 /**
-* Implemented by objects that require the {@link FlowConstruct} to be injected.
-*/
+ * Implemented by objects that require the {@link FlowConstruct} to be injected.
+ */
 public interface FlowConstructAware
 {
     void setFlowConstruct(FlowConstruct flowConstruct);

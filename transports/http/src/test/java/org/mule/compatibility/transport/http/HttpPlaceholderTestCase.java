@@ -6,8 +6,6 @@
  */
 package org.mule.compatibility.transport.http;
 
-import org.mule.compatibility.transport.http.HttpConnector;
-
 import org.junit.Test;
 
 public class HttpPlaceholderTestCase extends AbstractNamespaceHandlerTestCase

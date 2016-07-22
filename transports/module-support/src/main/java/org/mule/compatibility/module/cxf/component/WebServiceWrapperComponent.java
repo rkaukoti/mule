@@ -35,7 +35,7 @@ public class WebServiceWrapperComponent extends AbstractWebServiceWrapperCompone
             if (tempUrl == null)
             {
                 throw new IllegalArgumentException(CoreMessages.propertyIsNotSetOnEvent(WS_SERVICE_URL)
-                    .toString());
+                                                               .toString());
             }
         }
         else
@@ -57,7 +57,7 @@ public class WebServiceWrapperComponent extends AbstractWebServiceWrapperCompone
         //TODO MULE-4952 what is the strategy here for proxy components?
         endpointBuilder.setExchangePattern(MessageExchangePattern.REQUEST_RESPONSE);
         OutboundEndpoint endpoint = endpointBuilder.buildOutboundEndpoint();
-        
+
         MuleEvent responseEvent = endpoint.process(event);
 
         if (responseEvent != null && !VoidMuleEvent.getInstance().equals(responseEvent))

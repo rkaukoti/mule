@@ -18,15 +18,15 @@ import java.util.Map.Entry;
 public class DefaultXmlMetadataAnnotations implements XmlMetadataAnnotations
 {
     public static final String METADATA_ANNOTATIONS_KEY = "metadataAnnotations";
-    
+
     private StringBuilder xmlContent = new StringBuilder();
     private int lineNumber;
 
     /**
      * Builds the opening tag of the xml element.
-     * 
+     *
      * @param qName the qualified name of the element
-     * @param atts the attributes of the element, with the qualified name as key
+     * @param atts  the attributes of the element, with the qualified name as key
      */
     @Override
     public void appendElementStart(String qName, Map<String, String> atts)
@@ -41,7 +41,7 @@ public class DefaultXmlMetadataAnnotations implements XmlMetadataAnnotations
 
     /**
      * Adds the body of the xml tag.
-     * 
+     *
      * @param elementBody the body content to be added
      */
     @Override
@@ -52,7 +52,7 @@ public class DefaultXmlMetadataAnnotations implements XmlMetadataAnnotations
 
     /**
      * Builds the closing tag of the xml element.
-     * 
+     *
      * @param qName the qualified name of the element
      */
     @Override
@@ -63,9 +63,8 @@ public class DefaultXmlMetadataAnnotations implements XmlMetadataAnnotations
 
     /**
      * @return the reconstruction of the declaration of the element in its source xml file.
-     *         <p/>
-     *         Note that the order of the elements may be different, and any implicit attributes with default values
-     *         will be included.
+     * <p/>
+     * Note that the order of the elements may be different, and any implicit attributes with default values will be included.
      */
     @Override
     public String getElementString()
@@ -76,19 +75,19 @@ public class DefaultXmlMetadataAnnotations implements XmlMetadataAnnotations
     }
 
     /**
-     * @param lineNumber the line where the declaration of the element starts in its source xml file.
-     */
-    public void setLineNumber(int lineNumber)
-    {
-        this.lineNumber = lineNumber;
-    }
-
-    /**
      * @return the line where the declaration of the element starts in its source xml file.
      */
     @Override
     public int getLineNumber()
     {
         return lineNumber;
+    }
+
+    /**
+     * @param lineNumber the line where the declaration of the element starts in its source xml file.
+     */
+    public void setLineNumber(int lineNumber)
+    {
+        this.lineNumber = lineNumber;
     }
 }

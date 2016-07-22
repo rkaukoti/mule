@@ -31,11 +31,10 @@ public interface ListenerConnection extends SocketConnection
      * This method blocks until a new connection is received or timeout exception is thrown.
      *
      * @param messageHandler used in the {@link SocketWorker} to deliver the new received messages
-     * @return a {@link Work} that will represent a new received connection. The {@link Work} should be
-     * scheduled with a {@link WorkManager} in it's own thread.
+     * @return a {@link Work} that will represent a new received connection. The {@link Work} should be scheduled with a {@link WorkManager}
+     * in it's own thread.
      * @throws IOException         if the connection was suddenly closed
-     * @throws ConnectionException if the connection was closed and the cause
-     *                             was the invocation of {@link SocketConnection#disconnect()}
+     * @throws ConnectionException if the connection was closed and the cause was the invocation of {@link SocketConnection#disconnect()}
      */
     SocketWorker listen(MessageHandler<InputStream, SocketAttributes> messageHandler) throws IOException, ConnectionException;
 }

@@ -6,11 +6,11 @@
  */
 package org.mule.compatibility.transport.http;
 
-import java.io.IOException;
-import java.net.SocketException;
-
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpMethod;
+
+import java.io.IOException;
+import java.net.SocketException;
 
 public class MuleHttpMethodRetryHandler extends DefaultHttpMethodRetryHandler
 {
@@ -21,7 +21,7 @@ public class MuleHttpMethodRetryHandler extends DefaultHttpMethodRetryHandler
         {
             return true;
         }
-        
+
         return super.retryMethod(method, exception, executionCount);
     }
 }

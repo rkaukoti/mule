@@ -32,7 +32,8 @@ public enum FtpTransferMode
         this.description = description;
     }
 
-    public int getCode() {
+    public int getCode()
+    {
         return code;
     }
 

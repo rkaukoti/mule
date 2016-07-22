@@ -7,13 +7,12 @@
 package org.mule.runtime.core.util.queue;
 
 import org.mule.runtime.core.api.MuleRuntimeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Control information for queues.
@@ -24,8 +23,8 @@ import org.slf4j.LoggerFactory;
 public class QueueControlDataFile
 {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     public static final int INTEGER_SIZE_IN_BYTES = Integer.SIZE / 8;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final QueueFileProvider queueFileProvider;
     private File currentReadFilePath;
     private File currentWriteFilePath;

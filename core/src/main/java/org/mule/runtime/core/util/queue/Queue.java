@@ -7,8 +7,8 @@
 
 package org.mule.runtime.core.util.queue;
 
-import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.api.meta.NamedObject;
+import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.store.ObjectStoreException;
 
 import java.io.Serializable;
@@ -30,7 +30,7 @@ public interface Queue extends NamedObject
 
     /**
      * Blocks and retrieves an object from this queue.
-     * 
+     *
      * @return an object.
      */
     Serializable take() throws InterruptedException;
@@ -45,8 +45,6 @@ public interface Queue extends NamedObject
 
     /**
      * Discards all the elements in the queue
-     * 
-     * @throws InterruptedException
      */
     public void clear() throws InterruptedException;
 
@@ -54,9 +52,6 @@ public interface Queue extends NamedObject
      * Disposes this queue by releasing it's storage and associated memory and
      * storage. If after disposing the queue you try go get it back, you'll get a
      * fresh new one which maintains none of the original one's data
-     * 
-     * @throws MuleException
-     * @throws InterruptedException
      */
     public void dispose() throws MuleException, InterruptedException;
 

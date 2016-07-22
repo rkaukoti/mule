@@ -7,10 +7,8 @@
 
 package org.mule.runtime.module.db.integration.transaction;
 
-import static junit.framework.TestCase.fail;
-import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
-import static org.mule.runtime.module.db.integration.model.Planet.MARS;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
 import org.mule.runtime.module.db.integration.TestDbConfig;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
@@ -20,8 +18,10 @@ import org.mule.runtime.module.db.integration.model.Record;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static junit.framework.TestCase.fail;
+import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
+import static org.mule.runtime.module.db.integration.model.Planet.MARS;
 
 public class TransactionalTestCase extends AbstractDbIntegrationTestCase
 {

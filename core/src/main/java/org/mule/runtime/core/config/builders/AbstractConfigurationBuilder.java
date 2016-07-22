@@ -10,7 +10,6 @@ import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.ConfigurationBuilder;
 import org.mule.runtime.core.api.config.ConfigurationException;
 import org.mule.runtime.core.api.lifecycle.LifecycleManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +31,7 @@ public abstract class AbstractConfigurationBuilder implements ConfigurationBuild
      * This method will delegate the actual processing to {@link #doConfigure(org.mule.runtime.core.api.MuleContext)}
      *
      * @param muleContext The current {@link org.mule.runtime.core.api.MuleContext}
-     * @throws ConfigurationException if the configuration fails i.e. an object cannot be created or
-     * initialised properly
+     * @throws ConfigurationException if the configuration fails i.e. an object cannot be created or initialised properly
      */
     @Override
     public void configure(MuleContext muleContext) throws ConfigurationException
@@ -56,8 +54,7 @@ public abstract class AbstractConfigurationBuilder implements ConfigurationBuild
      * has been called.
      *
      * @param muleContext The current {@link org.mule.runtime.core.api.MuleContext}
-     * @throws ConfigurationException if the configuration fails i.e. an object cannot be created or
-     * initialised properly
+     * @throws ConfigurationException if the configuration fails i.e. an object cannot be created or initialised properly
      */
     protected abstract void doConfigure(MuleContext muleContext) throws Exception;
 
@@ -70,14 +67,15 @@ public abstract class AbstractConfigurationBuilder implements ConfigurationBuild
      * by Mule by calling-
      * <code>
      * // If the MuleContext is started, start all objects in the new Registry.
-     *  if (lifecycleManager.isPhaseComplete(Startable.PHASE_NAME))
-     *  {
-     *      lifecycleManager.applyPhase(registry.lookupObjects(Object.class), Startable.PHASE_NAME);
-     *  }
+     * if (lifecycleManager.isPhaseComplete(Startable.PHASE_NAME))
+     * {
+     * lifecycleManager.applyPhase(registry.lookupObjects(Object.class), Startable.PHASE_NAME);
+     * }
      * </code>
+     *
      * @param lifecycleManager the lifecycleManager for the current context
-     * @throws Exception if anything goes wrong.  Usually this is an exeption bubbled up from calling
-     * a lifecycle method on an object in the registry
+     * @throws Exception if anything goes wrong.  Usually this is an exeption bubbled up from calling a lifecycle method on an object in the
+     *                   registry
      */
     protected void applyLifecycle(LifecycleManager lifecycleManager) throws Exception
     {
@@ -86,6 +84,7 @@ public abstract class AbstractConfigurationBuilder implements ConfigurationBuild
 
     /**
      * Has this builder been configured already
+     *
      * @return true if the {@link #configure(org.mule.runtime.core.api.MuleContext)} method has been called
      */
     @Override

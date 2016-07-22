@@ -6,7 +6,6 @@
  */
 package org.mule.compatibility.transport.jms.redelivery;
 
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.transport.jms.JmsConnector;
 import org.mule.runtime.core.api.MuleContext;
@@ -16,6 +15,8 @@ import org.mule.runtime.core.api.construct.FlowConstruct;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
+
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 public abstract class AbstractRedeliveryHandler implements RedeliveryHandler
 {
@@ -27,7 +28,7 @@ public abstract class AbstractRedeliveryHandler implements RedeliveryHandler
     /**
      * The connector associated with this handler is set before
      * <code>handleRedelivery()</code> is called
-     * 
+     *
      * @param connector the connector associated with this handler
      */
     @Override
@@ -35,7 +36,7 @@ public abstract class AbstractRedeliveryHandler implements RedeliveryHandler
     {
         this.connector = connector;
     }
-    
+
     protected MuleMessage createMuleMessage(Message message, MuleContext muleContext)
     {
         try

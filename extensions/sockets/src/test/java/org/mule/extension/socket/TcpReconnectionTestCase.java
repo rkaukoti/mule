@@ -6,10 +6,13 @@
  */
 package org.mule.extension.socket;
 
-import static java.lang.String.format;
-import static org.mockito.Mockito.when;
-import static org.mule.extension.socket.SocketExtensionTestCase.POLL_DELAY_MILLIS;
-import static org.mule.extension.socket.SocketExtensionTestCase.TIMEOUT_MILLIS;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.extension.socket.api.ConnectionSettings;
 import org.mule.extension.socket.api.connection.tcp.TcpListenerConnection;
 import org.mule.extension.socket.api.connection.tcp.TcpRequesterConnection;
@@ -33,13 +36,10 @@ import java.net.SocketException;
 
 import javax.inject.Inject;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.lang.String.format;
+import static org.mockito.Mockito.when;
+import static org.mule.extension.socket.SocketExtensionTestCase.POLL_DELAY_MILLIS;
+import static org.mule.extension.socket.SocketExtensionTestCase.TIMEOUT_MILLIS;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -84,8 +84,11 @@ public class TcpReconnectionTestCase extends AbstractMuleTestCase
         serverSocketProperties = new TcpServerSocketProperties();
         clientSocketProperties = new TcpClientSocketProperties();
 
-        listenerConnection = new TcpListenerConnection(connectionSettings, new SafeProtocol(), serverSocketProperties, new TcpServerSocketFactory());
-        requesterConnection = new TcpRequesterConnection(connectionSettings, new ConnectionSettings(), new SafeProtocol(), clientSocketProperties, new TcpSocketFactory());
+        listenerConnection =
+                new TcpListenerConnection(connectionSettings, new SafeProtocol(), serverSocketProperties, new TcpServerSocketFactory());
+        requesterConnection =
+                new TcpRequesterConnection(connectionSettings, new ConnectionSettings(), new SafeProtocol(), clientSocketProperties,
+                        new TcpSocketFactory());
     }
 
     @Test
@@ -93,7 +96,8 @@ public class TcpReconnectionTestCase extends AbstractMuleTestCase
     {
         int invalidPort = -1;
         connectionSettings = new ConnectionSettings(invalidPort, host);
-        listenerConnection = new TcpListenerConnection(connectionSettings, new SafeProtocol(), serverSocketProperties, new TcpServerSocketFactory());
+        listenerConnection =
+                new TcpListenerConnection(connectionSettings, new SafeProtocol(), serverSocketProperties, new TcpServerSocketFactory());
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(format("port out of range:%d", invalidPort));
         listenerConnection.connect();
@@ -106,7 +110,8 @@ public class TcpReconnectionTestCase extends AbstractMuleTestCase
         expectedException.expectMessage(format("Could not bind socket to host '%s' and port '%d'", host, port));
         listenerConnection.connect();
 
-        TcpListenerConnection secondListener = new TcpListenerConnection(connectionSettings, new SafeProtocol(), serverSocketProperties, new TcpServerSocketFactory());
+        TcpListenerConnection secondListener =
+                new TcpListenerConnection(connectionSettings, new SafeProtocol(), serverSocketProperties, new TcpServerSocketFactory());
         secondListener.connect();
     }
 
@@ -126,7 +131,8 @@ public class TcpReconnectionTestCase extends AbstractMuleTestCase
         listenerConnection.connect();
 
         PollingProber prober = new PollingProber(TIMEOUT_MILLIS, POLL_DELAY_MILLIS);
-        prober.check(new JUnitLambdaProbe(() -> {
+        prober.check(new JUnitLambdaProbe(() ->
+        {
             if (listenerConnection.validate().isValid())
             {
                 listenerConnection.disconnect();

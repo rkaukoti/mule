@@ -6,13 +6,9 @@
  */
 package org.mule.runtime.core.el.context;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.api.metadata.MediaType.ANY;
-
+import org.apache.commons.collections.keyvalue.DefaultMapEntry;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 
@@ -23,9 +19,12 @@ import java.util.Set;
 
 import javax.activation.DataHandler;
 
-import org.apache.commons.collections.keyvalue.DefaultMapEntry;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.api.metadata.MediaType.ANY;
 
 public class MessageAttachmentsTestCase extends AbstractELTestCase
 {
@@ -80,7 +79,7 @@ public class MessageAttachmentsTestCase extends AbstractELTestCase
 
         event.setMessage(MuleMessage.builder(message).addInboundAttachment("foo", dataHandler).build());
         assertUnsupportedOperation("message.inboundAttachments['foo']=new DataHandler('bar','text/plain')",
-            event);
+                event);
     }
 
     @Test
@@ -88,7 +87,7 @@ public class MessageAttachmentsTestCase extends AbstractELTestCase
     {
         MuleEvent event = getTestEvent("");
         assertUnsupportedOperation(
-            "message.inboundAttachments['foo_new']=new DataHandler('bar','text/plain')", event);
+                "message.inboundAttachments['foo_new']=new DataHandler('bar','text/plain')", event);
     }
 
     @Test
@@ -162,7 +161,7 @@ public class MessageAttachmentsTestCase extends AbstractELTestCase
                                     .addInboundAttachment("bar", mock(DataHandler.class))
                                     .build());
         assertEquals(2, evaluate("message.inboundAttachments.keySet().size()", event));
-        assertTrue((Boolean)evaluate("message.inboundAttachments.keySet().contains('foo')", event));
+        assertTrue((Boolean) evaluate("message.inboundAttachments.keySet().contains('foo')", event));
         assertTrue((Boolean) evaluate("message.inboundAttachments.keySet().contains('bar')", event));
     }
 
@@ -193,8 +192,8 @@ public class MessageAttachmentsTestCase extends AbstractELTestCase
                                     .addInboundAttachment("foo", valA)
                                     .build());
 
-        assertTrue((Boolean)evaluate("message.inboundAttachments.containsValue(payload)", event));
-        assertFalse((Boolean)evaluate("message.inboundAttachments.containsValue('bar')", event));
+        assertTrue((Boolean) evaluate("message.inboundAttachments.containsValue(payload)", event));
+        assertFalse((Boolean) evaluate("message.inboundAttachments.containsValue('bar')", event));
     }
 
     @SuppressWarnings("unchecked")
@@ -210,8 +209,8 @@ public class MessageAttachmentsTestCase extends AbstractELTestCase
                                     .addInboundAttachment("foo", valA)
                                     .addInboundAttachment("bar", valB)
                                     .build());
-        Set<Map.Entry<String, DataHandler>> entrySet = (Set<Entry<String, DataHandler>>)evaluate(
-            "message.inboundAttachments.entrySet()", event);
+        Set<Map.Entry<String, DataHandler>> entrySet = (Set<Entry<String, DataHandler>>) evaluate(
+                "message.inboundAttachments.entrySet()", event);
         assertEquals(2, entrySet.size());
         entrySet.contains(new DefaultMapEntry("foo", valA));
         entrySet.contains(new DefaultMapEntry("bar", valB));
@@ -255,8 +254,8 @@ public class MessageAttachmentsTestCase extends AbstractELTestCase
     public void inboundPutAll() throws Exception
     {
         assertUnsupportedOperation(
-            "message.inboundAttachments.putAll(['foo': new DataHandler(new URL('http://val1')),'bar': new DataHandler(new URL('http://val2'))])",
-            event);
+                "message.inboundAttachments.putAll(['foo': new DataHandler(new URL('http://val1')),'bar': new DataHandler(new URL('http://val2'))])",
+                event);
     }
 
     @Test
@@ -349,8 +348,8 @@ public class MessageAttachmentsTestCase extends AbstractELTestCase
                                     .addOutboundAttachment("foo", valA)
                                     .addOutboundAttachment("bar", valB)
                                     .build());
-        Set<Map.Entry<String, DataHandler>> entrySet = (Set<Entry<String, DataHandler>>)evaluate(
-            "message.outboundAttachments.entrySet()", event);
+        Set<Map.Entry<String, DataHandler>> entrySet = (Set<Entry<String, DataHandler>>) evaluate(
+                "message.outboundAttachments.entrySet()", event);
         assertEquals(2, entrySet.size());
         entrySet.contains(new DefaultMapEntry("foo", valA));
         entrySet.contains(new DefaultMapEntry("bar", valB));
@@ -369,8 +368,8 @@ public class MessageAttachmentsTestCase extends AbstractELTestCase
                                     .addOutboundAttachment("foo", valA)
                                     .addOutboundAttachment("bar", valB)
                                     .build());
-        Collection<DataHandler> values = (Collection<DataHandler>)evaluate(
-            "message.outboundAttachments.values()", event);
+        Collection<DataHandler> values = (Collection<DataHandler>) evaluate(
+                "message.outboundAttachments.values()", event);
         assertEquals(2, values.size());
         values.contains(valA);
         values.contains(valB);
@@ -396,10 +395,10 @@ public class MessageAttachmentsTestCase extends AbstractELTestCase
         MuleEvent event = getTestEvent("");
         MuleMessage message = event.getMessage();
         evaluate(
-            "message.outboundAttachments.putAll(['foo': new DataHandler(new URL('http://val1')),'bar': new DataHandler(new URL('http://val2'))])",
-            event);
+                "message.outboundAttachments.putAll(['foo': new DataHandler(new URL('http://val1')),'bar': new DataHandler(new URL('http://val2'))])",
+                event);
         assertEquals(DataHandler.class,
-            ((DataHandler)evaluate("message.outboundAttachments['foo']", event)).getClass());
+                ((DataHandler) evaluate("message.outboundAttachments['foo']", event)).getClass());
         assertEquals(DataHandler.class, evaluate("message.outboundAttachments['bar']", event).getClass());
     }
 
@@ -412,9 +411,9 @@ public class MessageAttachmentsTestCase extends AbstractELTestCase
         event.setMessage(MuleMessage.builder(message)
                                     .addOutboundAttachment("foo", mock(DataHandler.class))
                                     .build());
-        assertFalse((Boolean)evaluate("message.outboundAttachments.isEmpty()", event));
+        assertFalse((Boolean) evaluate("message.outboundAttachments.isEmpty()", event));
         evaluate("message.outboundAttachments.remove('foo')", event);
-        assertTrue((Boolean)evaluate("message.outboundAttachments.isEmpty()", event));
+        assertTrue((Boolean) evaluate("message.outboundAttachments.isEmpty()", event));
     }
 
 }

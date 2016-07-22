@@ -7,14 +7,14 @@
 
 package org.mule.runtime.core.util;
 
+import org.apache.commons.collections.keyvalue.DefaultMapEntry;
+
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.Vector;
-
-import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 
 public class OrderedProperties extends Properties
 {

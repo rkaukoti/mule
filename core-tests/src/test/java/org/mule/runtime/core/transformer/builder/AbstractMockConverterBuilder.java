@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.core.transformer.builder;
 
-import static org.mockito.Mockito.doReturn;
-
 import org.mule.runtime.core.api.transformer.Converter;
 import org.mule.runtime.core.api.transformer.Transformer;
+
+import static org.mockito.Mockito.doReturn;
 
 public abstract class AbstractMockConverterBuilder<T extends AbstractMockConverterBuilder<T>> extends AbstractMockTransformerBuilder<T>
 {

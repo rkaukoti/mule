@@ -7,11 +7,12 @@
 
 package org.mule.runtime.module.http.internal;
 
-import static java.util.stream.Collectors.toCollection;
 import org.mule.runtime.core.util.CaseInsensitiveMapWrapper;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+
+import static java.util.stream.Collectors.toCollection;
 
 /**
  * {@link ParameterMap} where the key's case is not taken into account when looking for it, adding or aggregating it.

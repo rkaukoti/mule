@@ -22,7 +22,8 @@ import org.mule.runtime.extension.api.runtime.ConfigurationProvider;
  * @since 4.0
  */
 // TODO: Change generic signature for a more specific one. MULE-9874
-public abstract class AbstractRetrieverProvider<Connection extends AbstractEmailConnection> extends AbstractEmailConnectionProvider<Connection>
+public abstract class AbstractRetrieverProvider<Connection extends AbstractEmailConnection>
+        extends AbstractEmailConnectionProvider<Connection>
 {
 
     /**
@@ -53,7 +54,8 @@ public abstract class AbstractRetrieverProvider<Connection extends AbstractEmail
      * {@inheritDoc}
      */
     @Override
-    public ConnectionHandlingStrategy<Connection> getHandlingStrategy(ConnectionHandlingStrategyFactory<Connection> connectionHandlingStrategyFactory)
+    public ConnectionHandlingStrategy<Connection> getHandlingStrategy(
+            ConnectionHandlingStrategyFactory<Connection> connectionHandlingStrategyFactory)
     {
         return connectionHandlingStrategyFactory.supportsPooling(new PoolingListener<Connection>()
         {

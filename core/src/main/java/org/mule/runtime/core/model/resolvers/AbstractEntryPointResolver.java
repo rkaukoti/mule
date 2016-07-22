@@ -13,13 +13,12 @@ import org.mule.runtime.core.api.model.InvocationResult;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.StringMessageUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A Base class for {@link org.mule.runtime.core.api.model.EntryPointResolver}. It provides parameters for
@@ -30,14 +29,11 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractEntryPointResolver implements EntryPointResolver
 {
     private static final Logger logger = LoggerFactory.getLogger(AbstractEntryPointResolver.class);
-
-    private boolean acceptVoidMethods = false;
-
-    private boolean synchronizeCall = false;
-
     // @GuardedBy(itself)
     private final ConcurrentHashMap<Class<?>, ConcurrentHashMap<String, Method>> methodCache =
-        new ConcurrentHashMap<Class<?>, ConcurrentHashMap<String, Method>>(4);
+            new ConcurrentHashMap<Class<?>, ConcurrentHashMap<String, Method>>(4);
+    private boolean acceptVoidMethods = false;
+    private boolean synchronizeCall = false;
 
     public boolean isAcceptVoidMethods()
     {
@@ -117,7 +113,7 @@ public abstract class AbstractEntryPointResolver implements EntryPointResolver
         }
         else
         {
-            return new Object[]{temp};
+            return new Object[] {temp};
         }
     }
 
@@ -129,13 +125,13 @@ public abstract class AbstractEntryPointResolver implements EntryPointResolver
         if (logger.isDebugEnabled())
         {
             methodCall = component.getClass().getName() + "." + method.getName() + "("
-                    + StringMessageUtils.toString(ClassUtils.getClassTypes(arguments)) + ")";
+                         + StringMessageUtils.toString(ClassUtils.getClassTypes(arguments)) + ")";
             logger.debug("Invoking " + methodCall);
         }
 
         Object result;
 
-        if(isSynchronizeCall())
+        if (isSynchronizeCall())
         {
             synchronized (component)
             {

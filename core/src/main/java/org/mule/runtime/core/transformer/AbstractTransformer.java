@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.transformer;
 
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.runtime.core.api.MuleContext;
@@ -22,6 +20,8 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.config.i18n.Message;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.StringMessageUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -31,8 +31,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.xml.transform.stream.StreamSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 /**
  * <code>AbstractTransformer</code> is a base class for all transformers.
@@ -42,27 +41,22 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractTransformer extends AbstractAnnotatedObject implements Transformer
 {
 
-    protected MuleContext muleContext;
-
     protected final Logger logger = LoggerFactory.getLogger(getClass());
-
     /**
-     * The return type that will be returned by the {@link #transform} method is
-     * called
+     * A list of supported Class types that the source payload passed into this transformer
      */
-    private volatile DataType returnType = null;
-
+    protected final List<DataType> sourceTypes = new CopyOnWriteArrayList<>();
+    protected MuleContext muleContext;
     /**
      * The name that identifies this transformer. If none is set the class name of
      * the transformer is used
      */
     protected String name = null;
-
     /**
-     * A list of supported Class types that the source payload passed into this transformer
+     * The return type that will be returned by the {@link #transform} method is
+     * called
      */
-    protected final List<DataType> sourceTypes = new CopyOnWriteArrayList<>();
-
+    private volatile DataType returnType = null;
     /**
      * Determines whether the transformer will throw an exception if the message
      * passed is is not supported
@@ -114,7 +108,8 @@ public abstract class AbstractTransformer extends AbstractAnnotatedObject implem
 
             if (dataType.getType().equals(Object.class))
             {
-                logger.debug("java.lang.Object has been added as source type for this transformer, there will be no source type checking performed");
+                logger.debug(
+                        "java.lang.Object has been added as source type for this transformer, there will be no source type checking performed");
             }
         }
     }
@@ -158,15 +153,6 @@ public abstract class AbstractTransformer extends AbstractAnnotatedObject implem
     }
 
     @Override
-    public void setReturnDataType(DataType type)
-    {
-        synchronized (this)
-        {
-            this.returnType = type;
-        }
-    }
-
-    @Override
     public DataType getReturnDataType()
     {
         if (returnType == null)
@@ -180,6 +166,15 @@ public abstract class AbstractTransformer extends AbstractAnnotatedObject implem
             }
         }
         return returnType;
+    }
+
+    @Override
+    public void setReturnDataType(DataType type)
+    {
+        synchronized (this)
+        {
+            this.returnType = type;
+        }
     }
 
     public boolean isAllowNullReturn()
@@ -202,8 +197,8 @@ public abstract class AbstractTransformer extends AbstractAnnotatedObject implem
      * Determines whether that data type passed in is supported by this transformer
      *
      * @param dataType   the type to check against
-     * @param exactMatch if set to true, this method will look for an exact match to the data type, if false it will look
-     *                   for a compatible data type.
+     * @param exactMatch if set to true, this method will look for an exact match to the data type, if false it will look for a compatible
+     *                   data type.
      * @return true if the source type is supported by this transformer, false otherwise
      */
     public boolean isSourceDataTypeSupported(DataType dataType, boolean exactMatch)
@@ -310,8 +305,6 @@ public abstract class AbstractTransformer extends AbstractAnnotatedObject implem
     /**
      * Template method where deriving classes can do any initialisation after the
      * properties have been set on this transformer
-     *
-     * @throws InitialisationException
      */
     @Override
     public void initialise() throws InitialisationException

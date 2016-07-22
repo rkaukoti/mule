@@ -7,15 +7,14 @@
 
 package org.mule.test.integration.domain.db;
 
+import org.junit.Test;
+import org.mule.functional.junit4.DomainFunctionalTestCase;
+import org.mule.functional.junit4.FlowRunner;
+import org.mule.runtime.core.api.MuleMessage;
+
 import static java.lang.Boolean.TRUE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
-
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.functional.junit4.DomainFunctionalTestCase;
-import org.mule.functional.junit4.FlowRunner;
-
-import org.junit.Test;
 
 public class DomainTransformerRegistrationTestCase extends DomainFunctionalTestCase
 {
@@ -34,7 +33,7 @@ public class DomainTransformerRegistrationTestCase extends DomainFunctionalTestC
     public ApplicationConfig[] getConfigResources()
     {
         return new ApplicationConfig[] {new ApplicationConfig(APP1, APPLICATION_RESOURCES),
-                new ApplicationConfig(APP2, APPLICATION_RESOURCES)
+                                        new ApplicationConfig(APP2, APPLICATION_RESOURCES)
         };
     }
 

@@ -6,12 +6,7 @@
  */
 package org.mule.test.tck;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.functional.functional.CounterCallback;
 import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.functional.functional.ResponseWriterCallback;
@@ -19,7 +14,11 @@ import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.io.IOException;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class MuleTestNamespaceTestCase extends FunctionalTestCase
 {

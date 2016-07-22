@@ -16,10 +16,9 @@ public interface TransactionFactory
 {
     /**
      * Create and begins a new transaction
-     * 
+     *
      * @return a new Transaction
      * @throws TransactionException if the transaction cannot be created or begun
-     * @param muleContext
      */
     Transaction beginTransaction(MuleContext muleContext) throws TransactionException;
 

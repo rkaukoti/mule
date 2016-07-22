@@ -6,6 +6,11 @@
  */
 package org.mule.compatibility.config.spring;
 
+import org.mule.runtime.config.spring.dsl.api.ObjectFactory;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.mule.runtime.core.api.config.MuleProperties.CONNECTOR_DEFAULT_EXCHANGE_PATTERN;
 import static org.mule.runtime.core.api.config.MuleProperties.CONNECTOR_DISPATCHER_FACTORY;
 import static org.mule.runtime.core.api.config.MuleProperties.CONNECTOR_ENDPOINT_BUILDER;
@@ -20,10 +25,6 @@ import static org.mule.runtime.core.api.config.MuleProperties.CONNECTOR_SESSION_
 import static org.mule.runtime.core.api.config.MuleProperties.CONNECTOR_TRANSACTED_MESSAGE_RECEIVER_CLASS;
 import static org.mule.runtime.core.api.config.MuleProperties.CONNECTOR_XA_TRANSACTED_MESSAGE_RECEIVER_CLASS;
 import static org.mule.runtime.core.api.config.MuleProperties.SERVICE_FINDER;
-import org.mule.runtime.config.spring.dsl.api.ObjectFactory;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * {@link ObjectFactory} for transport service override configuration.

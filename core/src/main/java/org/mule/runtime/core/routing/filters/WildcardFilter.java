@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.core.routing.filters;
 
-import static org.mule.runtime.core.util.ClassUtils.equal;
-import static org.mule.runtime.core.util.ClassUtils.hash;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleMessage;
@@ -19,6 +16,9 @@ import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.mule.runtime.core.util.ClassUtils.equal;
+import static org.mule.runtime.core.util.ClassUtils.hash;
 
 /**
  * <code>WildcardFilter</code> is used to match Strings against wildcards. It
@@ -66,7 +66,7 @@ public class WildcardFilter implements Filter, ObjectFilter, MuleContextAware
     @Override
     public boolean accept(Object object)
     {
-        if (object == null || pattern ==null)
+        if (object == null || pattern == null)
         {
             return false;
         }
@@ -125,7 +125,7 @@ public class WildcardFilter implements Filter, ObjectFilter, MuleContextAware
                 else if (pattern.endsWith("+") && pattern.length() > 1)
                 {
                     logger.warn("wildcard-filter for payload based filtering is deprecated. Use expression" +
-                            "-filter or payload-type-filter instead");
+                                "-filter or payload-type-filter instead");
                     return filterByClassName(object, pattern);
                 }
             }
@@ -135,7 +135,7 @@ public class WildcardFilter implements Filter, ObjectFilter, MuleContextAware
     }
 
     @Deprecated
-    private boolean filterByClassName(Object object, String pattern) 
+    private boolean filterByClassName(Object object, String pattern)
     {
         String className = pattern.substring(0, pattern.length() - 1);
         try
@@ -148,7 +148,7 @@ public class WildcardFilter implements Filter, ObjectFilter, MuleContextAware
                     return true;
                 }
             }
-            else if (theClass.isAssignableFrom(ClassUtils.loadClass(object.toString(),this.getClass())))
+            else if (theClass.isAssignableFrom(ClassUtils.loadClass(object.toString(), this.getClass())))
             {
                 return true;
             }
@@ -183,19 +183,21 @@ public class WildcardFilter implements Filter, ObjectFilter, MuleContextAware
     @Override
     public boolean equals(Object obj)
     {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
 
         final WildcardFilter other = (WildcardFilter) obj;
         return equal(pattern, other.pattern)
-                && equal(patterns, other.patterns)
-                && caseSensitive == other.caseSensitive;
+               && equal(patterns, other.patterns)
+               && caseSensitive == other.caseSensitive;
     }
 
     @Override
     public int hashCode()
     {
-        return hash(new Object[]{this.getClass(), pattern, patterns, caseSensitive});
+        return hash(new Object[] {this.getClass(), pattern, patterns, caseSensitive});
     }
 
     @Override

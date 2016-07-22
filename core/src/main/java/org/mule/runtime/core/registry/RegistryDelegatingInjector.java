@@ -6,11 +6,12 @@
  */
 package org.mule.runtime.core.registry;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.core.api.Injector;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.registry.Registry;
 import org.mule.runtime.core.api.registry.RegistryProvider;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * An implementation of {@link Injector} which uses a

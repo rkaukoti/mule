@@ -9,12 +9,11 @@ package org.mule.functional.security;
 import org.mule.runtime.core.api.security.Authentication;
 import org.mule.runtime.core.api.security.SecurityException;
 import org.mule.runtime.core.security.AbstractSecurityProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A security provider which only authenticates a single user at a time
@@ -24,10 +23,8 @@ public class TestSingleUserSecurityProvider extends AbstractSecurityProvider
 {
     public static final String PROPERTY_FAVORITE_COLOR = "FAVORITE_COLOR";
     public static final String PROPERTY_NUMBER_LOGINS = "NUMBER_LOGINS";
-
-    private Authentication authentication;
-
     protected transient final Logger logger = LoggerFactory.getLogger(getClass());
+    private Authentication authentication;
 
     public TestSingleUserSecurityProvider()
     {
@@ -53,7 +50,7 @@ public class TestSingleUserSecurityProvider extends AbstractSecurityProvider
             String favoriteColor = (String) props.get(PROPERTY_FAVORITE_COLOR);
             props.put(PROPERTY_NUMBER_LOGINS, numberLogins + 1);
             authentication.setProperties(props);
-            logger.info("Welcome back " + user + " (" + numberLogins+1 + " logins), we remembered your favorite color: " + favoriteColor);
+            logger.info("Welcome back " + user + " (" + numberLogins + 1 + " logins), we remembered your favorite color: " + favoriteColor);
         }
         else
         {
@@ -72,9 +69,13 @@ public class TestSingleUserSecurityProvider extends AbstractSecurityProvider
     // This info. would be stored in an LDAP or RDBMS
     String getFavoriteColor(String user)
     {
-        if (user.equals("marie")) return "bright red";
-        else if (user.equals("stan")) return "metallic blue";
-        else if (user.equals("cindy")) return "dark violet";
-        else return null;
+        if (user.equals("marie"))
+            return "bright red";
+        else if (user.equals("stan"))
+            return "metallic blue";
+        else if (user.equals("cindy"))
+            return "dark violet";
+        else
+            return null;
     }
 }

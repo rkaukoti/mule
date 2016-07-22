@@ -6,9 +6,7 @@
  */
 package org.mule.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
@@ -22,7 +20,8 @@ import org.mule.runtime.core.construct.Flow;
 import org.mule.runtime.core.processor.strategy.AsynchronousProcessingStrategy;
 import org.mule.runtime.core.routing.filters.MessagePropertyFilter;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public abstract class AbstractConfigBuilderTestCase extends AbstractScriptConfigBuilderTestCase
 {

@@ -7,19 +7,19 @@
 
 package org.mule.compatibility.core.endpoint;
 
-import static org.mule.compatibility.core.endpoint.URIBuilder.URL_ENCODER;
+import org.apache.commons.collections.Transformer;
 import org.mule.compatibility.core.api.endpoint.MalformedEndpointException;
 import org.mule.compatibility.core.config.i18n.TransportCoreMessages;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.expression.ExpressionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 
-import org.apache.commons.collections.Transformer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.compatibility.core.endpoint.URIBuilder.URL_ENCODER;
 
 /**
  * Builds dynamic string URI from a template {@link URIBuilder}
@@ -52,7 +52,8 @@ public class DynamicURIBuilder
 
         if (logger.isDebugEnabled())
         {
-            logger.debug(String.format("Resolved URI from template '%s' to '%s'", templateUriBuilder.getEncodedConstructor(), resolvedUri.toString()));
+            logger.debug(String.format("Resolved URI from template '%s' to '%s'", templateUriBuilder.getEncodedConstructor(),
+                    resolvedUri.toString()));
         }
 
         return resolvedUri;

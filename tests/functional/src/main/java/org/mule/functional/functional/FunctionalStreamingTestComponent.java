@@ -6,18 +6,16 @@
  */
 package org.mule.functional.functional;
 
-import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.lifecycle.Callable;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.StringMessageUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A service that can be used by streaming functional tests. This service accepts an
@@ -33,13 +31,11 @@ import org.slf4j.LoggerFactory;
 
 public class FunctionalStreamingTestComponent implements Callable
 {
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
-    private static AtomicInteger count = new AtomicInteger(0);
-    private int number = count.incrementAndGet();
-
     public static final int STREAM_SAMPLE_SIZE = 4;
     public static final int STREAM_BUFFER_SIZE = 4096;
+    private static AtomicInteger count = new AtomicInteger(0);
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
+    private int number = count.incrementAndGet();
     private EventCallback eventCallback;
     private String summary = null;
     private long targetSize = -1;
@@ -60,7 +56,7 @@ public class FunctionalStreamingTestComponent implements Callable
     {
         return summary;
     }
- 
+
     public int getNumber()
     {
         return number;
@@ -93,7 +89,7 @@ public class FunctionalStreamingTestComponent implements Callable
                     {
                         logger.debug("read " + bytesRead + " bytes");
                     }
-                    
+
                     streamLength += bytesRead;
                     long startOfEndBytes = 0;
                     for (long i = 0; startDataSize < STREAM_SAMPLE_SIZE && i < bytesRead; ++i)
@@ -121,7 +117,7 @@ public class FunctionalStreamingTestComponent implements Callable
         catch (Exception e)
         {
             in.close();
-            
+
             e.printStackTrace();
             if (logger.isDebugEnabled())
             {
@@ -129,7 +125,7 @@ public class FunctionalStreamingTestComponent implements Callable
             }
             throw e;
         }
-        
+
         return null;
     }
 
@@ -167,8 +163,8 @@ public class FunctionalStreamingTestComponent implements Callable
         summary = result.toString();
 
         String msg = StringMessageUtils.getBoilerPlate("Message Received in service: "
-                + context.getFlowConstruct().getName() + ". " + summary
-                + "\n callback: " + eventCallback,
+                                                       + context.getFlowConstruct().getName() + ". " + summary
+                                                       + "\n callback: " + eventCallback,
                 '*', 80);
 
         logger.info(msg);

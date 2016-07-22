@@ -44,15 +44,15 @@ public class DefaultMuleAuthentication implements Authentication
     }
 
     @Override
-    public void setAuthenticated(boolean b)
-    {
-        authenticated = b;
-    }
-
-    @Override
     public boolean isAuthenticated()
     {
         return authenticated;
+    }
+
+    @Override
+    public void setAuthenticated(boolean b)
+    {
+        authenticated = b;
     }
 
     @Override

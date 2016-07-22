@@ -6,12 +6,13 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.describer;
 
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.extension.api.introspection.config.ConfigurationFactory;
+
 import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.checkInstantiable;
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.extension.api.introspection.config.ConfigurationFactory;
 
 /**
  * Implementation of {@link ConfigurationFactory} which creates instances
@@ -56,7 +57,8 @@ final class TypeAwareConfigurationFactory implements ConfigurationFactory
         }
         catch (Exception e)
         {
-            throw new MuleRuntimeException(createStaticMessage("Could not instantiate configuration of type " + configurationType.getName()), e);
+            throw new MuleRuntimeException(
+                    createStaticMessage("Could not instantiate configuration of type " + configurationType.getName()), e);
         }
     }
 

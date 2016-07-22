@@ -34,7 +34,7 @@
     </flow>
 
     <flow name="onlySetEncodingOnXml">
-        <heisenberg:get-enemy index="0" outputEncoding="${customEncoding}" />
+        <heisenberg:get-enemy index="0" outputEncoding="${customEncoding}"/>
     </flow>
 
     <flow name="onlySetMimeTypeOnXml">

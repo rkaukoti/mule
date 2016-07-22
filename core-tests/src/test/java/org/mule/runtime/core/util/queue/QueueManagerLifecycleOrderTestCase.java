@@ -6,9 +6,10 @@
  */
 package org.mule.runtime.core.util.queue;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-
+import org.apache.commons.lang.NotImplementedException;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.config.ConfigurationException;
@@ -25,10 +26,8 @@ import org.mule.tck.size.SmallTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.NotImplementedException;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 @SmallTest
 public class QueueManagerLifecycleOrderTestCase extends AbstractMuleTestCase
@@ -125,7 +124,7 @@ public class QueueManagerLifecycleOrderTestCase extends AbstractMuleTestCase
         {
             muleContext.getRegistry().registerObject(MuleProperties.OBJECT_QUEUE_MANAGER, rtqm);
             muleContext.getRegistry().registerObject(MuleProperties.OBJECT_SECURITY_MANAGER,
-                new MuleSecurityManager());
+                    new MuleSecurityManager());
 
         }
     }

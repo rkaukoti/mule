@@ -24,7 +24,7 @@ public class PrototypeObjectFactoryTestCase extends AbstractObjectFactoryTestCas
         PrototypeObjectFactory factory = (PrototypeObjectFactory) getUninitialisedObjectFactory();
         factory.setObjectClass(Object.class);
         muleContext.getRegistry().applyProcessorsAndLifecycle(factory);
-        
+
         assertEquals(Object.class, factory.getObjectClass());
     }
 
@@ -34,7 +34,7 @@ public class PrototypeObjectFactoryTestCase extends AbstractObjectFactoryTestCas
         PrototypeObjectFactory factory = (PrototypeObjectFactory) getUninitialisedObjectFactory();
         factory.setObjectClass(Object.class);
         muleContext.getRegistry().applyProcessorsAndLifecycle(factory);
-        
+
         assertNotSame(factory.getInstance(muleContext), factory.getInstance(muleContext));
     }
 

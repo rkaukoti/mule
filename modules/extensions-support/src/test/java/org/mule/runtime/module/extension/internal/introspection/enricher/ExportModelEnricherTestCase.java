@@ -6,16 +6,12 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.ArgumentCaptor.forClass;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.metadata.api.ClassTypeLoader;
 import org.mule.runtime.extension.api.annotation.Export;
 import org.mule.runtime.extension.api.introspection.declaration.DescribingContext;
@@ -29,12 +25,16 @@ import org.mule.tck.size.SmallTest;
 
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.ArgumentCaptor.forClass;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -90,7 +90,8 @@ public class ExportModelEnricherTestCase extends AbstractMuleTestCase
 
     private void setImplementingType(Class<?> type)
     {
-        when(extensionDeclaration.getModelProperty(ImplementingTypeModelProperty.class)).thenReturn(Optional.of(new ImplementingTypeModelProperty(type)));
+        when(extensionDeclaration.getModelProperty(ImplementingTypeModelProperty.class)).thenReturn(
+                Optional.of(new ImplementingTypeModelProperty(type)));
     }
 
     @Export(classes = {ExportModelEnricherTestCase.class}, resources = {EXPORTED_RESOURCE})

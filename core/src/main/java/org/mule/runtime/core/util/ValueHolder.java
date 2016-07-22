@@ -26,8 +26,6 @@ public class ValueHolder<T>
 
     /**
      * Initialises this holder to the given value
-     *
-     * @param value
      */
     public ValueHolder(T value)
     {
@@ -37,8 +35,6 @@ public class ValueHolder<T>
 
     /**
      * Returns the given value
-     *
-     * @return
      */
     public T get()
     {

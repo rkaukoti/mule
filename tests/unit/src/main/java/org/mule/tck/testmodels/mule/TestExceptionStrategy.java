@@ -11,13 +11,12 @@ import org.mule.runtime.core.api.exception.MessagingExceptionHandler;
 import org.mule.runtime.core.api.exception.RollbackSourceCallback;
 import org.mule.runtime.core.api.exception.SystemExceptionHandler;
 import org.mule.runtime.core.exception.AbstractExceptionListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>TestExceptionStrategy</code> is used by the Mule test cases as a direct
@@ -47,7 +46,7 @@ public class TestExceptionStrategy extends AbstractExceptionListener implements 
     public TestExceptionStrategy()
     {
     }
-    
+
     public String getTestProperty()
     {
         return testProperty;
@@ -103,11 +102,6 @@ public class TestExceptionStrategy extends AbstractExceptionListener implements 
         handleException(exception, null, null);
     }
 
-    public interface ExceptionCallback
-    {
-        void onException(Throwable t);
-    }
-
     public void setExceptionCallback(ExceptionCallback exceptionCallback)
     {
         synchronized (callbackLock)
@@ -141,5 +135,10 @@ public class TestExceptionStrategy extends AbstractExceptionListener implements 
                 callback.onException(exception);
             }
         }
+    }
+
+    public interface ExceptionCallback
+    {
+        void onException(Throwable t);
     }
 }

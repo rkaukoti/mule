@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--// START SNIPPET: full-config -->
 <!--// START SNIPPET: component-example -->
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
@@ -14,7 +14,7 @@
         <script:component>
             <script:script engine="groovy">
                 message = org.mule.runtime.core.api.MuleMessage.builder(message).addOutboundProperty('foo', 'bar-mutated').build()
-             </script:script>
+            </script:script>
         </script:component>
         <test:assert expression="#[message.outboundProperties.foo == 'bar-mutated']"/>
     </flow>
@@ -23,7 +23,7 @@
         <script:component>
             <script:script engine="groovy">
                 message = org.mule.runtime.core.api.MuleMessage.builder(message).addOutboundProperty('foo', 'bar').build()
-             </script:script>
+            </script:script>
         </script:component>
         <test:assert expression="#[message.outboundProperties.foo == 'bar']"/>
     </flow>
@@ -31,8 +31,8 @@
     <flow name="inlineScriptMutatePropertiesMap">
         <script:component>
             <script:script engine="groovy">
-                outbound = new HashMap()              
-             </script:script>
+                outbound = new HashMap()
+            </script:script>
         </script:component>
         <test:assert expression="#[message.outboundProperties.foo == 'bar']"/>
         <test:assert expression="#[payload instanceof HashMap]"/>
@@ -42,16 +42,16 @@
         <script:component>
             <script:script engine="groovy">
                 flowVars['foo'] = 'bar-mutated'
-             </script:script>
+            </script:script>
         </script:component>
         <test:assert expression="#[flowVars.foo == 'bar-mutated']"/>
     </flow>
-    
+
     <flow name="inlineScriptAddVariable">
         <script:component>
             <script:script engine="groovy">
                 flowVars['foo'] = 'bar'
-             </script:script>
+            </script:script>
         </script:component>
         <test:assert expression="#[flowVars.foo == 'bar']"/>
     </flow>
@@ -59,8 +59,8 @@
     <flow name="inlineScriptMutateVariablesMap">
         <script:component>
             <script:script engine="groovy">
-                flowVars = new HashMap()              
-             </script:script>
+                flowVars = new HashMap()
+            </script:script>
         </script:component>
         <test:assert expression="#[flowVars.foo == 'bar']"/>
         <test:assert expression="#[payload is HashMap]"/>
@@ -69,24 +69,24 @@
     <flow name="inlineScriptMutatePayload">
         <script:component>
             <script:script engine="groovy">
-                payload = 'bar-mutated'               
-             </script:script>
+                payload = 'bar-mutated'
+            </script:script>
         </script:component>
         <test:assert expression="#[payload == 'bar-mutated']"/>
     </flow>
-    
+
     <flow name="scriptExpressionVariables">
         <script:component>
             <script:script engine="groovy">
                 <property key="expr1" value="#[flowVars.prop1]"/>
                 <property key="expr2" value="#[flowVars.prop2]"/>
                 <script:text>
-                        payload = expr1 + expr2
-                    </script:text>
+                    payload = expr1 + expr2
+                </script:text>
             </script:script>
         </script:component>
         <test:assert expression="#[payload == 'ReceivedA-OK']"/>
     </flow>
-    
+
 </mule>
 

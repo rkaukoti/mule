@@ -19,7 +19,8 @@ import java.util.List;
 
 public class DefaultMessageProcessorChain extends AbstractMessageProcessorChain
 {
-    protected MessageProcessorExecutionTemplate messageProcessorExecutionTemplate = MessageProcessorExecutionTemplate.createExecutionTemplate();
+    protected MessageProcessorExecutionTemplate messageProcessorExecutionTemplate =
+            MessageProcessorExecutionTemplate.createExecutionTemplate();
 
     protected DefaultMessageProcessorChain(List<MessageProcessor> processors)
     {

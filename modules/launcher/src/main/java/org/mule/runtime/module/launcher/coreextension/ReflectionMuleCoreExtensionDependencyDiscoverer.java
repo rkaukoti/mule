@@ -32,11 +32,12 @@ public class ReflectionMuleCoreExtensionDependencyDiscoverer implements MuleCore
             if (method.getAnnotation(MuleCoreExtensionDependency.class) != null)
             {
                 final Class<?>[] parameterTypes = method.getParameterTypes();
-                if (parameterTypes.length ==1)
+                if (parameterTypes.length == 1)
                 {
                     if (MuleCoreExtension.class.isAssignableFrom(parameterTypes[0]))
                     {
-                        final LinkedMuleCoreExtensionDependency linkedMuleCoreExtensionDependency = new LinkedMuleCoreExtensionDependency((Class<? extends MuleCoreExtension>) parameterTypes[0], method);
+                        final LinkedMuleCoreExtensionDependency linkedMuleCoreExtensionDependency =
+                                new LinkedMuleCoreExtensionDependency((Class<? extends MuleCoreExtension>) parameterTypes[0], method);
                         result.add(linkedMuleCoreExtensionDependency);
                     }
                 }

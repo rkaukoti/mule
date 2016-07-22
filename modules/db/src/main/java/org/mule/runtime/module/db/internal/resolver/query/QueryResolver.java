@@ -21,7 +21,7 @@ public interface QueryResolver
      * Resolves a query in the context of a given Mule event.
      *
      * @param connection connection to the database. not null
-     * @param muleEvent used to resolve any Mule expression. Not null
+     * @param muleEvent  used to resolve any Mule expression. Not null
      * @return query resolved for the given event
      */
     Query resolve(DbConnection connection, MuleEvent muleEvent) throws QueryResolutionException;

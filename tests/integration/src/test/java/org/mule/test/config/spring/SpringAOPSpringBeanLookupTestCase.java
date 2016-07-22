@@ -6,14 +6,13 @@
  */
 package org.mule.test.config.spring;
 
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.component.JavaComponent;
 import org.mule.runtime.core.api.object.ObjectFactory;
 import org.mule.runtime.core.construct.Flow;
-import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test to ensure that Mule always uses the real
@@ -93,12 +92,12 @@ public class SpringAOPSpringBeanLookupTestCase extends FunctionalTestCase
 
     private ObjectFactory getPrototypeSpringObjectFactory() throws Exception
     {
-        return ((JavaComponent)((Flow)getFlowConstruct("flow")).getMessageProcessors().get(0)).getObjectFactory();
+        return ((JavaComponent) ((Flow) getFlowConstruct("flow")).getMessageProcessors().get(0)).getObjectFactory();
     }
 
     private ObjectFactory getSingletonSpringObjectFactory() throws Exception
     {
-        return ((JavaComponent)((Flow)getFlowConstruct("flow")).getMessageProcessors().get(1)).getObjectFactory();
+        return ((JavaComponent) ((Flow) getFlowConstruct("flow")).getMessageProcessors().get(1)).getObjectFactory();
     }
 
 }

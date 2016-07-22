@@ -15,15 +15,19 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-/** 
+/**
  * When this exception is thrown it will trigger a retry (reconnection) policy to go into effect if one is configured.
  */
 public class ConnectException extends LocatedMuleException
 {
-    /** Serial version */
+    /**
+     * Serial version
+     */
     private static final long serialVersionUID = -7802483584780922653L;
 
-    /** Resource which has disconnected */
+    /**
+     * Resource which has disconnected
+     */
     private transient Connectable failed;
 
     public ConnectException(Message message, Connectable failed)
@@ -51,7 +55,7 @@ public class ConnectException extends LocatedMuleException
     {
         return failed;
     }
-    
+
     private void writeObject(ObjectOutputStream out) throws Exception
     {
         out.defaultWriteObject();

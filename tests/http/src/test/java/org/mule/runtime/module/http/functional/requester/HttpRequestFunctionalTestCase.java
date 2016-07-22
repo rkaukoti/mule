@@ -6,18 +6,9 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.Matchers.hasEntry;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getConfigurationInstanceFromRegistry;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
-import static org.mule.runtime.module.http.functional.matcher.HttpMessageAttributesMatchers.hasStatusCode;
+import org.eclipse.jetty.server.Request;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.extension.http.api.HttpResponseAttributes;
 import org.mule.extension.http.internal.request.validator.HttpRequesterProvider;
 import org.mule.runtime.core.api.MuleEvent;
@@ -31,9 +22,18 @@ import java.io.InputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.Request;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getConfigurationInstanceFromRegistry;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
+import static org.mule.runtime.module.http.functional.matcher.HttpMessageAttributesMatchers.hasStatusCode;
 
 public class HttpRequestFunctionalTestCase extends AbstractHttpRequestTestCase
 {
@@ -42,6 +42,8 @@ public class HttpRequestFunctionalTestCase extends AbstractHttpRequestTestCase
     private static final String TEST_HEADER_VALUE = "TestHeaderValue";
     private static final String DEFAULT_PORT_HTTP_REQUEST_CONFIG_NAME = "requestConfigHttp";
     private static final String DEFAULT_PORT_HTTPS_REQUEST_CONFIG_NAME = "requestConfigHttps";
+    @Rule
+    public DynamicPort blockingHttpPort = new DynamicPort("blockingHttpPort");
 
     @Override
     protected String getConfigFile()
@@ -93,9 +95,6 @@ public class HttpRequestFunctionalTestCase extends AbstractHttpRequestTestCase
         assertTrue(event.getMessage().getPayload() instanceof InputStream);
         assertThat(getPayloadAsString(event.getMessage()), equalTo(DEFAULT_RESPONSE));
     }
-
-    @Rule
-    public DynamicPort blockingHttpPort = new DynamicPort("blockingHttpPort");
 
     @Test
     public void blockingResponseBodyIsMappedToPayload() throws Exception

@@ -12,11 +12,10 @@ import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.context.notification.TransactionNotification;
 import org.mule.runtime.core.util.UUID;
-
-import java.text.MessageFormat;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.text.MessageFormat;
 
 /**
  * This base class provides low level features for transactions.
@@ -41,7 +40,7 @@ public abstract class AbstractTransaction implements Transaction
     {
         int status = getStatus();
         return status == STATUS_MARKED_ROLLBACK || status == STATUS_ROLLEDBACK
-                || status == STATUS_ROLLING_BACK;
+               || status == STATUS_ROLLING_BACK;
     }
 
     public boolean isBegun() throws TransactionException
@@ -114,29 +113,22 @@ public abstract class AbstractTransaction implements Transaction
 
     /**
      * Really begin the transaction. Note that resources are enlisted yet.
-     * 
-     * @throws TransactionException
      */
     protected abstract void doBegin() throws TransactionException;
 
     /**
      * Commit the transaction on the underlying resource
-     * 
-     * @throws TransactionException
      */
     protected abstract void doCommit() throws TransactionException;
 
     /**
      * Rollback the transaction on the underlying resource
-     * 
-     * @throws TransactionException
      */
     protected abstract void doRollback() throws TransactionException;
 
     /**
      * Fires a server notification to all registered
      * {@link org.mule.runtime.core.api.context.notification.TransactionNotificationListener}s.
-     *
      */
     protected void fireNotification(TransactionNotification notification)
     {

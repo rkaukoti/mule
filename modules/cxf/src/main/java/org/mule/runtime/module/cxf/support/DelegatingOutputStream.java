@@ -19,7 +19,7 @@ public class DelegatingOutputStream extends OutputStream
         super();
         this.outputStream = outputStream;
     }
-    
+
     public OutputStream getOutputStream()
     {
         return outputStream;
@@ -69,7 +69,7 @@ public class DelegatingOutputStream extends OutputStream
     {
         outputStream.write(b);
     }
-    
+
 }
 
 

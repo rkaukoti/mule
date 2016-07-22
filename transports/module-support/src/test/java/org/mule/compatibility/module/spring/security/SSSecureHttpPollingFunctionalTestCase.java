@@ -15,7 +15,7 @@ public class SSSecureHttpPollingFunctionalTestCase extends SecureHttpPollingFunc
     protected String[] getConfigFiles()
     {
         return new String[] {
-                             "spring-security/secure-http-polling-server-flow.xml",
+                "spring-security/secure-http-polling-server-flow.xml",
                 "secure-http-polling-client-flow.xml"
         };
     }

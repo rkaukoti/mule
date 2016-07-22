@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.config.dsl.parameter;
 
-import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getFieldByAlias;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getInitialiserEvent;
 import org.mule.metadata.api.model.ObjectType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -21,6 +17,11 @@ import org.mule.runtime.module.extension.internal.runtime.resolver.ObjectBuilder
 import org.mule.runtime.module.extension.internal.runtime.resolver.ValueResolver;
 
 import java.lang.reflect.Field;
+
+import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getFieldByAlias;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getInitialiserEvent;
 
 /**
  * An {@link AbstractExtensionObjectFactory} to resolve extension objects that can
@@ -35,15 +36,16 @@ import java.lang.reflect.Field;
 public class TopLevelParameterObjectFactory extends AbstractExtensionObjectFactory<Object> implements MuleContextAware
 {
 
+    private final ClassLoader classLoader;
     private ObjectBuilder builder;
     private Class<Object> objectClass;
-    private final ClassLoader classLoader;
     private MuleContext muleContext;
 
     public TopLevelParameterObjectFactory(ObjectType type, ClassLoader classLoader)
     {
         this.classLoader = classLoader;
-        withContextClassLoader(classLoader, () -> {
+        withContextClassLoader(classLoader, () ->
+        {
             objectClass = getType(type);
             builder = new DefaultObjectBuilder(objectClass);
         });
@@ -52,8 +54,10 @@ public class TopLevelParameterObjectFactory extends AbstractExtensionObjectFacto
     @Override
     public Object getObject() throws Exception
     {
-        return withContextClassLoader(classLoader, () -> {
-            getParameters().forEach((key, value) -> {
+        return withContextClassLoader(classLoader, () ->
+        {
+            getParameters().forEach((key, value) ->
+            {
                 Field field = getFieldByAlias(objectClass, key);
                 if (field != null)
                 {
@@ -63,7 +67,8 @@ public class TopLevelParameterObjectFactory extends AbstractExtensionObjectFacto
 
             ValueResolver<Object> resolver = new ObjectBuilderValueResolver<>(builder);
             return resolver.isDynamic() ? resolver : resolver.resolve(getInitialiserEvent(muleContext));
-        }, Exception.class, exception -> {
+        }, Exception.class, exception ->
+        {
             throw exception;
         });
     }

@@ -6,11 +6,9 @@
  */
 package org.mule.runtime.core.el;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Assert;
+import org.junit.Test;
+import org.mule.mvel2.compiler.AbstractParser;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -29,13 +27,15 @@ import org.mule.runtime.core.el.context.AbstractELTestCase;
 import org.mule.runtime.core.el.context.AppContext;
 import org.mule.runtime.core.el.mvel.MVELExpressionLanguage;
 import org.mule.runtime.core.el.mvel.MVELExpressionLanguageContext;
-import org.mule.mvel2.compiler.AbstractParser;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ExpressionLanguageExtensionTestCase extends AbstractELTestCase
 {
@@ -75,7 +75,7 @@ public class ExpressionLanguageExtensionTestCase extends AbstractELTestCase
         MVELExpressionLanguage mvel = new MVELExpressionLanguage(muleContext);
         return mvel;
     }
-    
+
     @Test
     public void importClass() throws RegistrationException, InitialisationException
     {
@@ -232,7 +232,7 @@ public class ExpressionLanguageExtensionTestCase extends AbstractELTestCase
             try
             {
                 context.importStaticMethod("dateFormat",
-                    DateFormat.class.getMethod("getInstance", new Class[]{}));
+                        DateFormat.class.getMethod("getInstance", new Class[] {}));
             }
             catch (Exception e)
             {
@@ -252,7 +252,7 @@ public class ExpressionLanguageExtensionTestCase extends AbstractELTestCase
             context.addAlias("p", "message.payload");
             try
             {
-                context.addAlias("m","_muleMessage");
+                context.addAlias("m", "_muleMessage");
             }
             catch (Exception e)
             {

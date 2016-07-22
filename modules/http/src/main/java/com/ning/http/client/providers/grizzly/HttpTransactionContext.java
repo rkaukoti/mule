@@ -21,10 +21,6 @@ import com.ning.http.client.ws.WebSocket;
 import com.ning.http.util.AsyncHttpProviderUtils;
 import com.ning.http.util.ProxyUtils;
 
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.glassfish.grizzly.CloseListener;
 import org.glassfish.grizzly.CloseType;
 import org.glassfish.grizzly.Closeable;
@@ -40,27 +36,27 @@ import org.glassfish.grizzly.http.HttpResponsePacket;
 import org.glassfish.grizzly.websockets.HandShake;
 import org.glassfish.grizzly.websockets.ProtocolHandler;
 
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
- *
  * @author Grizzly team
  *
- * This is a modified version from the original file from AHC.
+ *         This is a modified version from the original file from AHC.
  */
-public final class HttpTransactionContext {
+public final class HttpTransactionContext
+{
     private static final Attribute<HttpTransactionContext> REQUEST_STATE_ATTR =
             Grizzly.DEFAULT_ATTRIBUTE_BUILDER.createAttribute(HttpTransactionContext.class.getName());
-
-    int redirectCount;
     final int maxRedirectCount;
     final boolean redirectsAllowed;
     final GrizzlyAsyncHttpProvider provider;
     final ProxyServer proxyServer;
-
     private final Request ahcRequest;
-    Uri requestUri;
-
     private final Connection connection;
-
+    int redirectCount;
+    Uri requestUri;
     PayloadGenerator payloadGenerator;
 
     StatusHandler statusHandler;
@@ -70,41 +66,23 @@ public final class HttpTransactionContext {
 
     GrizzlyResponseFuture future;
     HttpResponsePacket responsePacket;
-    GrizzlyResponseStatus responseStatus;
-
-
-    Uri lastRedirectUri;
-    long totalBodyWritten;
-    AsyncHandler.STATE currentState;
-    Uri wsRequestURI;
-    boolean isWSRequest;
-    HandShake handshake;
-    ProtocolHandler protocolHandler;
-    WebSocket webSocket;
-    boolean establishingTunnel;
-
-    // don't recycle the context, don't return associated connection to
-    // the pool
-    boolean isReuseConnection;
-
-    /**
-     * <tt>true</tt> if the request is fully sent, or <tt>false</tt>otherwise.
-     */
-    volatile boolean isRequestFullySent;
-    Set<CompletionHandler<HttpTransactionContext>> reqFullySentHandlers;
-
-    private final CloseListener listener = new CloseListener<Closeable, CloseType>() {
+    private final CloseListener listener = new CloseListener<Closeable, CloseType>()
+    {
         @Override
-        public void onClosed(Closeable closeable, CloseType type) throws IOException {
-            if (isGracefullyFinishResponseOnClose()) {
+        public void onClosed(Closeable closeable, CloseType type) throws IOException
+        {
+            if (isGracefullyFinishResponseOnClose())
+            {
                 // Connection was closed.
                 // This event is fired only for responses, which don't have
                 // associated transfer-encoding or content-length.
                 // We have to complete such a request-response processing gracefully.
                 final FilterChain fc = (FilterChain) connection.getProcessor();
                 fc.fireEventUpstream(connection,
-                                     new GracefulCloseEvent(HttpTransactionContext.this), null);
-            } else if (CloseType.REMOTELY.equals(type)) {
+                        new GracefulCloseEvent(HttpTransactionContext.this), null);
+            }
+            else if (CloseType.REMOTELY.equals(type))
+            {
                 abort(AsyncHttpProviderUtils.REMOTELY_CLOSED_EXCEPTION);
                 // MULE: rem'd this else block
                 // } else {
@@ -116,10 +94,45 @@ public final class HttpTransactionContext {
             }
         }
     };
+    GrizzlyResponseStatus responseStatus;
+    Uri lastRedirectUri;
+    long totalBodyWritten;
+    AsyncHandler.STATE currentState;
+    Uri wsRequestURI;
+    boolean isWSRequest;
+    HandShake handshake;
+    ProtocolHandler protocolHandler;
+    WebSocket webSocket;
+    boolean establishingTunnel;
+    // don't recycle the context, don't return associated connection to
+    // the pool
+    boolean isReuseConnection;
+    /**
+     * <tt>true</tt> if the request is fully sent, or <tt>false</tt>otherwise.
+     */
+    volatile boolean isRequestFullySent;
+    Set<CompletionHandler<HttpTransactionContext>> reqFullySentHandlers;
+
+    private HttpTransactionContext(final GrizzlyAsyncHttpProvider provider,
+                                   final Connection connection,
+                                   final GrizzlyResponseFuture future, final Request ahcRequest)
+    {
+
+        this.provider = provider;
+        this.connection = connection;
+        this.future = future;
+        this.ahcRequest = ahcRequest;
+        this.proxyServer = ProxyUtils.getProxyServer(
+                provider.getClientConfig(), ahcRequest);
+        redirectsAllowed = provider.getClientConfig().isFollowRedirect();
+        maxRedirectCount = provider.getClientConfig().getMaxRedirects();
+        this.requestUri = ahcRequest.getUri();
+    }
 
     // -------------------------------------------------------- Static methods
     static void bind(final HttpContext httpCtx,
-                     final HttpTransactionContext httpTxContext) {
+                     final HttpTransactionContext httpTxContext)
+    {
         httpCtx.getCloseable().addCloseListener(httpTxContext.listener);
         REQUEST_STATE_ATTR.set(httpCtx, httpTxContext);
     }
@@ -155,68 +168,63 @@ public final class HttpTransactionContext {
     }
 
     static HttpTransactionContext currentTransaction(
-            final HttpHeader httpHeader) {
+            final HttpHeader httpHeader)
+    {
         return currentTransaction(httpHeader.getProcessingState().getHttpContext());
     }
 
-    static HttpTransactionContext currentTransaction(final AttributeStorage storage) {
+    static HttpTransactionContext currentTransaction(final AttributeStorage storage)
+    {
         return REQUEST_STATE_ATTR.get(storage);
     }
 
-    static HttpTransactionContext currentTransaction(final HttpContext httpCtx) {
+    static HttpTransactionContext currentTransaction(final HttpContext httpCtx)
+    {
         return ((AhcHttpContext) httpCtx).getHttpTransactionContext();
-    }
-
-    static HttpTransactionContext startTransaction(
-            final Connection connection, final GrizzlyAsyncHttpProvider provider,
-            final Request request, final GrizzlyResponseFuture future) {
-        return new HttpTransactionContext(provider, connection, future, request);
     }
 
     // -------------------------------------------------------- Constructors
 
-    private HttpTransactionContext(final GrizzlyAsyncHttpProvider provider,
-                                   final Connection connection,
-                                   final GrizzlyResponseFuture future, final Request ahcRequest) {
-
-        this.provider = provider;
-        this.connection = connection;
-        this.future = future;
-        this.ahcRequest = ahcRequest;
-        this.proxyServer = ProxyUtils.getProxyServer(
-                provider.getClientConfig(), ahcRequest);
-        redirectsAllowed = provider.getClientConfig().isFollowRedirect();
-        maxRedirectCount = provider.getClientConfig().getMaxRedirects();
-        this.requestUri = ahcRequest.getUri();
+    static HttpTransactionContext startTransaction(
+            final Connection connection, final GrizzlyAsyncHttpProvider provider,
+            final Request request, final GrizzlyResponseFuture future)
+    {
+        return new HttpTransactionContext(provider, connection, future, request);
     }
 
-    Connection getConnection() {
+    Connection getConnection()
+    {
         return connection;
     }
 
     // MULE: made this public
-    public AsyncHandler getAsyncHandler() {
+    public AsyncHandler getAsyncHandler()
+    {
         return future.getAsyncHandler();
     }
 
-    Request getAhcRequest() {
+    Request getAhcRequest()
+    {
         return ahcRequest;
     }
 
-    ProxyServer getProxyServer() {
+    ProxyServer getProxyServer()
+    {
         return proxyServer;
     }
 
     // ----------------------------------------------------- Private Methods
 
     HttpTransactionContext cloneAndStartTransactionFor(
-            final Connection connection) {
+            final Connection connection)
+    {
         return cloneAndStartTransactionFor(connection, ahcRequest);
     }
 
     HttpTransactionContext cloneAndStartTransactionFor(
             final Connection connection,
-            final Request request) {
+            final Request request)
+    {
         final HttpTransactionContext newContext = startTransaction(
                 connection, provider, request, future);
         newContext.invocationStatus = invocationStatus;
@@ -232,7 +240,8 @@ public final class HttpTransactionContext {
         return newContext;
     }
 
-    boolean isGracefullyFinishResponseOnClose() {
+    boolean isGracefullyFinishResponseOnClose()
+    {
         final HttpResponsePacket response = responsePacket;
         return response != null &&
                !response.getProcessingState().isKeepAlive() &&
@@ -240,44 +249,55 @@ public final class HttpTransactionContext {
                response.getContentLength() == -1;
     }
 
-    void abort(final Throwable t) {
-        if (future != null) {
+    void abort(final Throwable t)
+    {
+        if (future != null)
+        {
             future.abort(t);
         }
     }
 
-    void done() {
+    void done()
+    {
         done(null);
     }
 
     @SuppressWarnings(value = {"unchecked"})
-    void done(Object result) {
-        if (future != null) {
+    void done(Object result)
+    {
+        if (future != null)
+        {
             future.done(result);
         }
     }
 
-    boolean isTunnelEstablished(final Connection c) {
+    boolean isTunnelEstablished(final Connection c)
+    {
         return c.getAttributes().getAttribute("tunnel-established") != null;
     }
 
-    void tunnelEstablished(final Connection c) {
+    void tunnelEstablished(final Connection c)
+    {
         c.getAttributes().setAttribute("tunnel-established", Boolean.TRUE);
     }
 
-    void reuseConnection() {
+    void reuseConnection()
+    {
         this.isReuseConnection = true;
     }
 
-    boolean isReuseConnection() {
+    boolean isReuseConnection()
+    {
         return isReuseConnection;
     }
 
-    void touchConnection() {
+    void touchConnection()
+    {
         provider.touchConnection(connection, ahcRequest);
     }
 
-    void closeConnection() {
+    void closeConnection()
+    {
         connection.closeSilently();
     }
 

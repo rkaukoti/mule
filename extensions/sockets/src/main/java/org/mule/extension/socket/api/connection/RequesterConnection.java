@@ -25,8 +25,8 @@ public interface RequesterConnection extends SocketConnection
 {
     /**
      * Returns a new instance of {@link SocketClient} particular to this connection.
-     * @return a {@link SocketClient} that can {@link SocketClient#read()} and {@link SocketClient#write(Object)}
-     * through the socket.
+     *
+     * @return a {@link SocketClient} that can {@link SocketClient#read()} and {@link SocketClient#write(Object)} through the socket.
      */
     SocketClient getClient();
 }

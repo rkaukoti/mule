@@ -23,13 +23,6 @@ public class SetPayloadTransformer extends AbstractMessageTransformer
 {
     private AttributeEvaluator valueEvaluator;
 
-    @Override
-    public void initialise() throws InitialisationException
-    {
-        super.initialise();
-        valueEvaluator.initialize(muleContext.getExpressionManager());
-    }
-
     public SetPayloadTransformer()
     {
         registerSourceType(DataType.OBJECT);
@@ -37,9 +30,16 @@ public class SetPayloadTransformer extends AbstractMessageTransformer
     }
 
     @Override
+    public void initialise() throws InitialisationException
+    {
+        super.initialise();
+        valueEvaluator.initialize(muleContext.getExpressionManager());
+    }
+
+    @Override
     public Object transformMessage(MuleEvent event, Charset outputEncoding) throws TransformerException
     {
-        if(valueEvaluator.getRawValue() == null)
+        if (valueEvaluator.getRawValue() == null)
         {
             return null;
         }

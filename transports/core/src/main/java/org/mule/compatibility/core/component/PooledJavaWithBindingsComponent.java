@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * <code>PooledJavaComponent</code> implements pooling.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -51,9 +51,9 @@ public class PooledJavaWithBindingsComponent extends AbstractJavaWithBindingsCom
     }
 
     public PooledJavaWithBindingsComponent(ObjectFactory objectFactory,
-                               PoolingProfile poolingProfile,
-                               EntryPointResolverSet entryPointResolverSet,
-                               List<InterfaceBinding> bindings)
+                                           PoolingProfile poolingProfile,
+                                           EntryPointResolverSet entryPointResolverSet,
+                                           List<InterfaceBinding> bindings)
     {
         super(objectFactory, entryPointResolverSet, bindings);
         this.poolingProfile = poolingProfile;
@@ -94,17 +94,17 @@ public class PooledJavaWithBindingsComponent extends AbstractJavaWithBindingsCom
         }
     }
 
+    public PoolingProfile getPoolingProfile()
+    {
+        return poolingProfile;
+    }
+
     public void setPoolingProfile(PoolingProfile poolingProfile)
     {
         // TODO What happens if this is set while component is started? Should we i)
         // do nothing ii) issue warning iii) stop/start the pool
         // (!!) iv) throw exception?
         this.poolingProfile = poolingProfile;
-    }
-
-    public PoolingProfile getPoolingProfile()
-    {
-        return poolingProfile;
     }
 
     /**

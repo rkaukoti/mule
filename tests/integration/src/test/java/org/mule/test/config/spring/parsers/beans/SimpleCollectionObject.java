@@ -22,14 +22,14 @@ public class SimpleCollectionObject
     private Set<String> simpleTypeSet;
     private Map<Object, Object> simpleParameters = new HashMap<>();
 
-    public void setSimpleParameters(Map<Object, Object> simpleParameters)
-    {
-        this.simpleParameters = simpleParameters;
-    }
-
     public Map<Object, Object> getSimpleParameters()
     {
         return simpleParameters;
+    }
+
+    public void setSimpleParameters(Map<Object, Object> simpleParameters)
+    {
+        this.simpleParameters = simpleParameters;
     }
 
     public List<String> getSimpleTypeList()

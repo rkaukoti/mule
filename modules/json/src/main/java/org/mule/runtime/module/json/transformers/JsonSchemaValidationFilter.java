@@ -6,13 +6,14 @@
  */
 package org.mule.runtime.module.json.transformers;
 
-import static org.mule.runtime.module.xml.filters.SchemaValidationFilter.DEFAULT_SCHEMA_LANGUAGE;
-
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.module.json.validation.ValidateJsonSchemaMessageProcessor;
+import org.w3c.dom.ls.LSResourceResolver;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
 
 import java.util.Map;
 
@@ -20,9 +21,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
 
-import org.w3c.dom.ls.LSResourceResolver;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
+import static org.mule.runtime.module.xml.filters.SchemaValidationFilter.DEFAULT_SCHEMA_LANGUAGE;
 
 /**
  * Validate a JSON string against either an XML schema or Json schema depending on the schema location attribute.
@@ -101,6 +100,12 @@ public class JsonSchemaValidationFilter implements JsonSchemaFilter
     }
 
     @Override
+    public String getSchemaLocations()
+    {
+        return delegate.getSchemaLocations();
+    }
+
+    @Override
     public void setSchemaLocations(String schemaLocations)
     {
         this.schemaLocations = schemaLocations;
@@ -108,12 +113,6 @@ public class JsonSchemaValidationFilter implements JsonSchemaFilter
         {
             delegate.setSchemaLocations(schemaLocations);
         }
-    }
-
-    @Override
-    public String getSchemaLocations()
-    {
-        return delegate.getSchemaLocations();
     }
 
     @Override
@@ -126,6 +125,16 @@ public class JsonSchemaValidationFilter implements JsonSchemaFilter
     public String getSchemaLanguage()
     {
         return delegate.getSchemaLanguage();
+    }
+
+    @Override
+    public void setSchemaLanguage(String schemaLanguage)
+    {
+        this.schemaLanguage = schemaLanguage;
+        if (delegate != null)
+        {
+            delegate.setSchemaLanguage(schemaLanguage);
+        }
     }
 
     @Override
@@ -253,16 +262,6 @@ public class JsonSchemaValidationFilter implements JsonSchemaFilter
         if (delegate != null)
         {
             delegate.setReturnResult(returnResult);
-        }
-    }
-
-    @Override
-    public void setSchemaLanguage(String schemaLanguage)
-    {
-        this.schemaLanguage = schemaLanguage;
-        if (delegate != null)
-        {
-            delegate.setSchemaLanguage(schemaLanguage);
         }
     }
 }

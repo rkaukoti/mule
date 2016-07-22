@@ -30,24 +30,27 @@ public abstract class AbstractResourceConfigurationBuilder extends AbstractConfi
     protected ConfigResource[] artifactConfigResources;
 
     /**
-     * @param artifactConfigResources a comma separated list of configuration files to load,
-     *            this should be accessible on the classpath or filesystem
-     * @param artifactProperties map of properties that can be referenced from the {@code artifactConfigResources} as external configuration values
+     * @param artifactConfigResources a comma separated list of configuration files to load, this should be accessible on the classpath or
+     *                                filesystem
+     * @param artifactProperties      map of properties that can be referenced from the {@code artifactConfigResources} as external
+     *                                configuration values
      * @throws org.mule.runtime.core.api.config.ConfigurationException usually if the config resources cannot be loaded
      */
-    public AbstractResourceConfigurationBuilder(String artifactConfigResources, Map<String, String> artifactProperties) throws ConfigurationException
+    public AbstractResourceConfigurationBuilder(String artifactConfigResources, Map<String, String> artifactProperties)
+            throws ConfigurationException
     {
         this.artifactConfigResources = loadConfigResources(StringUtils.splitAndTrim(artifactConfigResources, ",; "));
         this.artifactProperties = artifactProperties;
     }
 
     /**
-     * @param artifactConfigResources an array of configuration files to load, this should be
-     *            accessible on the classpath or filesystem
-     * @param artifactProperties map of properties that can be referenced from the {@code artifactConfigResources} as external configuration values
+     * @param artifactConfigResources an array of configuration files to load, this should be accessible on the classpath or filesystem
+     * @param artifactProperties      map of properties that can be referenced from the {@code artifactConfigResources} as external
+     *                                configuration values
      * @throws org.mule.runtime.core.api.config.ConfigurationException usually if the config resources cannot be loaded
      */
-    public AbstractResourceConfigurationBuilder(String[] artifactConfigResources, Map<String, String> artifactProperties) throws ConfigurationException
+    public AbstractResourceConfigurationBuilder(String[] artifactConfigResources, Map<String, String> artifactProperties)
+            throws ConfigurationException
     {
         this.artifactConfigResources = loadConfigResources(artifactConfigResources);
         this.artifactProperties = artifactProperties;
@@ -55,7 +58,8 @@ public abstract class AbstractResourceConfigurationBuilder extends AbstractConfi
 
     /**
      * @param artifactConfigResources an array Reader oject that provides acces to a configuration either locally or remotely
-     * @param artifactProperties map of properties that can be referenced from the {@code artifactConfigResources} as external configuration values
+     * @param artifactProperties      map of properties that can be referenced from the {@code artifactConfigResources} as external
+     *                                configuration values
      */
     public AbstractResourceConfigurationBuilder(ConfigResource[] artifactConfigResources, Map<String, String> artifactProperties)
     {

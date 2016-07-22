@@ -12,7 +12,8 @@ import org.mule.runtime.core.context.notification.ComponentMessageNotification;
  * <code>ComponentMessageNotificationListener</code> is an observer interface that objects
  * can use to receive notifications about messages being processed by components
  */
-public interface ComponentMessageNotificationListener<T extends ComponentMessageNotification> extends ServerNotificationListener<ComponentMessageNotification>
+public interface ComponentMessageNotificationListener<T extends ComponentMessageNotification>
+        extends ServerNotificationListener<ComponentMessageNotification>
 {
     // no extra methods
 }

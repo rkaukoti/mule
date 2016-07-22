@@ -6,15 +6,15 @@
  */
 package org.mule.test.config.dsl;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.tck.junit4.rule.SystemProperty;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertThat;
 
 public class ConfigurationProcessingTestCase extends FunctionalTestCase
 {

@@ -6,15 +6,15 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.AUTHORIZATION;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.WWW_AUTHENTICATE;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.AUTHORIZATION;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.WWW_AUTHENTICATE;
 
 @RunWith(Parameterized.class)
 public class HttpRequestNtlmAuthTestCase extends AbstractNtlmTestCase

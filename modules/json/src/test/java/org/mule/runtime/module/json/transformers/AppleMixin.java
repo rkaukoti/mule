@@ -6,10 +6,9 @@
  */
 package org.mule.runtime.module.json.transformers;
 
-import org.mule.tck.testmodels.fruit.FruitCleaner;
-
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.mule.tck.testmodels.fruit.FruitCleaner;
 
 /**
  * TODO

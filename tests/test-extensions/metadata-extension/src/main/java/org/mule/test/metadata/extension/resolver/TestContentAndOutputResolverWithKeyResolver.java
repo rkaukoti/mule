@@ -17,7 +17,8 @@ import org.mule.runtime.api.metadata.resolving.MetadataOutputResolver;
 
 import java.util.Set;
 
-public class TestContentAndOutputResolverWithKeyResolver implements MetadataKeysResolver, MetadataContentResolver<String>, MetadataOutputResolver<String>
+public class TestContentAndOutputResolverWithKeyResolver
+        implements MetadataKeysResolver, MetadataContentResolver<String>, MetadataOutputResolver<String>
 {
 
     @Override

@@ -6,10 +6,15 @@
  */
 package org.mule.runtime.module.extension.internal.manager;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getParameterClasses;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
+
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.registry.MuleRegistry;
@@ -24,21 +29,17 @@ import org.mule.runtime.extension.api.runtime.ConfigurationInstance;
 import org.mule.runtime.extension.api.runtime.ConfigurationProvider;
 import org.mule.runtime.extension.api.runtime.ExpirableConfigurationProvider;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ListMultimap;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static java.lang.String.format;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getParameterClasses;
 
 /**
  * Hold the state related to registered {@link ExtensionModel extensionModels} and their instances.
@@ -53,20 +54,20 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class ExtensionRegistry
 {
 
-    private final LoadingCache<ExtensionModel, List<ConfigurationProvider>> providersByExtension = CacheBuilder.newBuilder().build(new CacheLoader<ExtensionModel, List<ConfigurationProvider>>()
-    {
-        @Override
-        public List<ConfigurationProvider> load(ExtensionModel key) throws Exception
-        {
-            return registry.lookupObjects(ConfigurationProvider.class).stream()
-                    .filter(provider -> provider.getModel().getExtensionModel() == key)
-                    .collect(new ImmutableListCollector<>());
-        }
-    });
-
     private final Map<ExtensionEntityKey, RuntimeExtensionModel> extensions = new ConcurrentHashMap<>();
     private final Set<Class<? extends Enum>> enumClasses = new HashSet<>();
     private final MuleRegistry registry;
+    private final LoadingCache<ExtensionModel, List<ConfigurationProvider>> providersByExtension =
+            CacheBuilder.newBuilder().build(new CacheLoader<ExtensionModel, List<ConfigurationProvider>>()
+            {
+                @Override
+                public List<ConfigurationProvider> load(ExtensionModel key) throws Exception
+                {
+                    return registry.lookupObjects(ConfigurationProvider.class).stream()
+                                   .filter(provider -> provider.getModel().getExtensionModel() == key)
+                                   .collect(new ImmutableListCollector<>());
+                }
+            });
 
     /**
      * Creates a new instance
@@ -89,21 +90,23 @@ public final class ExtensionRegistry
     {
         extensions.put(new ExtensionEntityKey(name, vendor), extensionModel);
         getParameterClasses(extensionModel).stream()
-                .filter(type -> Enum.class.isAssignableFrom(type))
-                .forEach(type -> {
-                    final Class<Enum> enumClass = (Class<Enum>) type;
-                    if (enumClasses.add(enumClass))
-                    {
-                        try
-                        {
-                            registry.registerTransformer(new StringToEnum(enumClass));
-                        }
-                        catch (MuleException e)
-                        {
-                            throw new MuleRuntimeException(createStaticMessage("Could not register transformer for enum " + enumClass.getName()), e);
-                        }
-                    }
-                });
+                                           .filter(type -> Enum.class.isAssignableFrom(type))
+                                           .forEach(type ->
+                                           {
+                                               final Class<Enum> enumClass = (Class<Enum>) type;
+                                               if (enumClasses.add(enumClass))
+                                               {
+                                                   try
+                                                   {
+                                                       registry.registerTransformer(new StringToEnum(enumClass));
+                                                   }
+                                                   catch (MuleException e)
+                                                   {
+                                                       throw new MuleRuntimeException(createStaticMessage(
+                                                               "Could not register transformer for enum " + enumClass.getName()), e);
+                                                   }
+                                               }
+                                           });
     }
 
     /**
@@ -115,20 +118,18 @@ public final class ExtensionRegistry
     }
 
     /**
-     * @return an immutable view of the currently registered {@link ExtensionModel extensionModels}
-     * which name equals {@code extensionName}
+     * @return an immutable view of the currently registered {@link ExtensionModel extensionModels} which name equals {@code extensionName}
      */
     Set<RuntimeExtensionModel> getExtensions(String extensionName)
     {
         return extensions.entrySet().stream()
-                .filter(entry -> entry.getKey().getName().equals(extensionName))
-                .map(Map.Entry::getValue)
-                .collect(new ImmutableSetCollector<>());
+                         .filter(entry -> entry.getKey().getName().equals(extensionName))
+                         .map(Map.Entry::getValue)
+                         .collect(new ImmutableSetCollector<>());
     }
 
     /**
-     * @return an {@link Optional} with the {@link ExtensionModel} which name and vendor equals
-     * {@code extensionName} and {@code vendor}
+     * @return an {@link Optional} with the {@link ExtensionModel} which name and vendor equals {@code extensionName} and {@code vendor}
      */
     Optional<RuntimeExtensionModel> getExtension(String extensionName, String vendor)
     {
@@ -209,8 +210,9 @@ public final class ExtensionRegistry
         for (ExtensionModel extensionModel : extensions.values())
         {
             getConfigurationProviders(extensionModel).stream()
-                    .filter(provider -> provider instanceof ExpirableConfigurationProvider)
-                    .forEach(provider -> expired.putAll(provider.getName(), ((ExpirableConfigurationProvider) provider).getExpired()));
+                                                     .filter(provider -> provider instanceof ExpirableConfigurationProvider)
+                                                     .forEach(provider -> expired.putAll(provider.getName(),
+                                                             ((ExpirableConfigurationProvider) provider).getExpired()));
         }
 
         return Multimaps.unmodifiableListMultimap(expired);

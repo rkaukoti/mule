@@ -31,12 +31,9 @@ public class TcpMessageRequester extends AbstractMessageRequester
     /**
      * Make a specific request to the underlying transport
      *
-     * @param timeout the maximum time the operation should block before returning.
-     *            The call should return immediately if there is data available. If
-     *            no data becomes available before the timeout elapses, null will be
-     *            returned
-     * @return the result of the request wrapped in a MuleMessage object. Null will be
-     *         returned if no data was available
+     * @param timeout the maximum time the operation should block before returning. The call should return immediately if there is data
+     *                available. If no data becomes available before the timeout elapses, null will be returned
+     * @return the result of the request wrapped in a MuleMessage object. Null will be returned if no data was available
      * @throws Exception if the call to the underlying protocal cuases an exception
      */
     @Override
@@ -49,7 +46,7 @@ public class TcpMessageRequester extends AbstractMessageRequester
         Socket socket = connector.getSocket(endpoint);
         try
         {
-            Object result = TcpMessageDispatcher.receiveFromSocket(socket, (int)timeout, endpoint);
+            Object result = TcpMessageDispatcher.receiveFromSocket(socket, (int) timeout, endpoint);
             if (result == null)
             {
                 return null;
@@ -62,7 +59,7 @@ public class TcpMessageRequester extends AbstractMessageRequester
             if (logger.isDebugEnabled())
             {
                 logger.debug("Socket timed out normally while doing a synchronous receive on endpointUri: "
-                    + endpoint.getEndpointURI());
+                             + endpoint.getEndpointURI());
             }
             return null;
         }

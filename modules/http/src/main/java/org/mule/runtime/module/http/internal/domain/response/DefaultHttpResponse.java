@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.module.http.internal.domain.response;
 
+import org.apache.commons.collections.MultiMap;
+import org.apache.commons.collections.map.MultiValueMap;
 import org.mule.runtime.module.http.internal.domain.BaseHttpMessage;
 import org.mule.runtime.module.http.internal.domain.HttpEntity;
 
 import java.util.Collection;
-
-import org.apache.commons.collections.MultiMap;
-import org.apache.commons.collections.map.MultiValueMap;
 
 public class DefaultHttpResponse extends BaseHttpMessage implements HttpResponse
 {
@@ -48,7 +47,7 @@ public class DefaultHttpResponse extends BaseHttpMessage implements HttpResponse
         {
             return null;
         }
-        return (String) ((Collection)value).iterator().next();
+        return (String) ((Collection) value).iterator().next();
     }
 
     @Override

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:mule="http://www.mulesoft.org/schema/mule/core"
-      xmlns:test="http://www.mulesoft.org/schema/mule/test"
       xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
-      xsi:schemaLocation="
-       http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
-       http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
+
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 
     <!--// START SNIPPET: full-config -->
@@ -19,14 +17,14 @@
         <script:component>
             <script:script engine="groovy">
                 if (message.getInboundProperty("foo") != null)
-                    return "foo header received"
+                return "foo header received"
                 else
-                    return null
+                return null
             </script:script>
         </script:component>
-                
-        <mule:echo-component />
+
+        <mule:echo-component/>
     </flow>
-    
+
     <!--// END SNIPPET: full-config -->
 </mule>

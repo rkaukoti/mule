@@ -6,9 +6,10 @@
  */
 package org.mule.runtime.module.xml.util;
 
-import static org.junit.Assert.assertEquals;
-import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.junit.Test;
 import org.mule.runtime.core.util.IOUtils;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.xml.sax.InputSource;
 
 import java.io.File;
 import java.io.InputStream;
@@ -17,8 +18,7 @@ import java.net.URL;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.Source;
 
-import org.junit.Test;
-import org.xml.sax.InputSource;
+import static org.junit.Assert.assertEquals;
 
 public class XmlUtilsTestCase extends AbstractMuleTestCase
 {

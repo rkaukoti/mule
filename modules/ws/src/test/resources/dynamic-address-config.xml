@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
       xmlns:ws="http://www.mulesoft.org/schema/mule/ws"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
@@ -13,7 +13,7 @@
     <http:listener-config name="listenerConfig" host="localhost" port="${port}"/>
 
     <ws:consumer-config serviceAddress="http://localhost:${port}/#[message.inboundProperties['pathInboundProperty']]" wsdlLocation="Test.wsdl"
-                        service="TestService" port="TestPort" name="globalConfigInboundProperty" />
+                        service="TestService" port="TestPort" name="globalConfigInboundProperty"/>
 
     <flow name="clientInboundProperty">
         <ws:consumer operation="echo" config-ref="globalConfigInboundProperty"/>
@@ -21,28 +21,28 @@
 
 
     <ws:consumer-config serviceAddress="http://localhost:${port}/#[message.outboundProperties['pathOutboundProperty']]" wsdlLocation="Test.wsdl"
-                        service="TestService" port="TestPort" name="globalConfigOutboundProperty" />
+                        service="TestService" port="TestPort" name="globalConfigOutboundProperty"/>
 
     <flow name="clientOutboundProperty">
-        <set-property propertyName="pathOutboundProperty" value="services/Test" />
+        <set-property propertyName="pathOutboundProperty" value="services/Test"/>
         <ws:consumer operation="echo" config-ref="globalConfigOutboundProperty"/>
     </flow>
 
 
     <ws:consumer-config serviceAddress="http://localhost:${port}/#[pathFlowVar]" wsdlLocation="Test.wsdl"
-                        service="TestService" port="TestPort" name="globalConfigFlowVar" />
+                        service="TestService" port="TestPort" name="globalConfigFlowVar"/>
 
     <flow name="clientFlowVar">
-        <set-variable variableName="pathFlowVar" value="services/Test" />
+        <set-variable variableName="pathFlowVar" value="services/Test"/>
         <ws:consumer operation="echo" config-ref="globalConfigFlowVar"/>
     </flow>
 
 
     <ws:consumer-config serviceAddress="http://localhost:${port}/#[pathSessionVar]" wsdlLocation="Test.wsdl"
-                        service="TestService" port="TestPort" name="globalConfigSessionVar" />
+                        service="TestService" port="TestPort" name="globalConfigSessionVar"/>
 
     <flow name="clientSessionVar">
-        <set-session-variable variableName="pathSessionVar" value="services/Test" />
+        <set-session-variable variableName="pathSessionVar" value="services/Test"/>
         <ws:consumer operation="echo" config-ref="globalConfigSessionVar"/>
     </flow>
 

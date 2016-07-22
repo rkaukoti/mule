@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.module.pgp;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.EncryptionStrategy;
 import org.mule.runtime.core.api.security.SecurityManager;
 import org.mule.runtime.core.api.security.SecurityProvider;
-import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class PgpNamespaceHandlerTestCase extends FunctionalTestCase
 {
@@ -29,7 +28,7 @@ public class PgpNamespaceHandlerTestCase extends FunctionalTestCase
     {
         knownProperties(getProvider("pgpSecurityProvider"));
     }
-    
+
     @Test
     public void testKeyBasedEncryptionStrategy()
     {
@@ -50,13 +49,13 @@ public class PgpNamespaceHandlerTestCase extends FunctionalTestCase
         assertNotNull(pgpProvider.getKeyManager());
         assertTrue(pgpProvider.getKeyManager() instanceof PGPKeyRingImpl);
     }
-    
+
     protected EncryptionStrategy getEncryptionStrategy(String encryptionStrategyName)
     {
         SecurityManager securityManager = muleContext.getSecurityManager();
         return securityManager.getEncryptionStrategy(encryptionStrategyName);
     }
-    
+
     protected void knownProperties(EncryptionStrategy encryptionStrategy)
     {
         assertNotNull(encryptionStrategy);

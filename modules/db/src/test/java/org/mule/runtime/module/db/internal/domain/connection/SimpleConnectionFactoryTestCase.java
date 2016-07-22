@@ -7,10 +7,7 @@
 
 package org.mule.runtime.module.db.internal.domain.connection;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
@@ -18,7 +15,10 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class SimpleConnectionFactoryTestCase extends AbstractMuleTestCase

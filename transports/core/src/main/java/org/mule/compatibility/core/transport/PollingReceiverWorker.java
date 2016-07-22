@@ -27,7 +27,7 @@ public class PollingReceiverWorker implements Work
     {
         return receiver;
     }
-    
+
     public boolean isRunning()
     {
         return running;

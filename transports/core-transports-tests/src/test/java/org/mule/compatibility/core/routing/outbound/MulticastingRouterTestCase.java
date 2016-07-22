@@ -6,15 +6,8 @@
  */
 package org.mule.compatibility.core.routing.outbound;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.junit.Test;
+import org.mockito.stubbing.Answer;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.compatibility.core.endpoint.outbound.EndpointMulticastingRouter;
 import org.mule.runtime.core.api.MuleEvent;
@@ -30,8 +23,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.Test;
-import org.mockito.stubbing.Answer;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class MulticastingRouterTestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -71,12 +70,12 @@ public class MulticastingRouterTestCase extends AbstractMuleContextEndpointTestC
     public void testMulticastingRouterSync() throws Exception
     {
         OutboundEndpoint endpoint1 = getTestOutboundEndpoint("Test1Provider",
-            "test://Test1Provider?exchangePattern=request-response");
+                "test://Test1Provider?exchangePattern=request-response");
         assertNotNull(endpoint1);
         OutboundEndpoint mockendpoint1 = RouterTestUtils.createMockEndpoint(endpoint1);
 
         OutboundEndpoint endpoint2 = getTestOutboundEndpoint("Test2Provider",
-            "test://Test2Provider?exchangePattern=request-response");
+                "test://Test2Provider?exchangePattern=request-response");
         assertNotNull(endpoint2);
         OutboundEndpoint mockendpoint2 = RouterTestUtils.createMockEndpoint(endpoint2);
 
@@ -112,12 +111,12 @@ public class MulticastingRouterTestCase extends AbstractMuleContextEndpointTestC
     public void testMulticastingRouterMixedSyncAsync() throws Exception
     {
         OutboundEndpoint endpoint1 = getTestOutboundEndpoint("Test1Provider",
-            "test://Test1Provider?exchangePattern=request-response");
+                "test://Test1Provider?exchangePattern=request-response");
         assertNotNull(endpoint1);
         OutboundEndpoint mockendpoint1 = RouterTestUtils.createMockEndpoint(endpoint1);
 
         OutboundEndpoint endpoint2 = getTestOutboundEndpoint("Test2Provider",
-            "test://Test2Provider?exchangePattern=request-response");
+                "test://Test2Provider?exchangePattern=request-response");
         assertNotNull(endpoint2);
         OutboundEndpoint mockendpoint2 = RouterTestUtils.createMockEndpoint(endpoint2);
 

@@ -6,13 +6,12 @@
  */
 package org.mule.extension.http.internal.listener.grizzly;
 
-import static org.glassfish.grizzly.http.util.HttpStatus.CONINTUE_100;
-import static org.glassfish.grizzly.http.util.HttpStatus.EXPECTATION_FAILED_417;
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.EXPECT;
-import static org.mule.runtime.module.http.api.HttpHeaders.Values.CONTINUE;
-import static org.mule.runtime.module.http.internal.listener.grizzly.MuleSslFilter.SSL_SESSION_ATTRIBUTE_KEY;
+import org.glassfish.grizzly.filterchain.BaseFilter;
+import org.glassfish.grizzly.filterchain.FilterChainContext;
+import org.glassfish.grizzly.filterchain.NextAction;
+import org.glassfish.grizzly.http.HttpContent;
+import org.glassfish.grizzly.http.HttpRequestPacket;
+import org.glassfish.grizzly.http.HttpResponsePacket;
 import org.mule.runtime.module.http.internal.domain.InputStreamHttpEntity;
 import org.mule.runtime.module.http.internal.domain.request.ClientConnection;
 import org.mule.runtime.module.http.internal.domain.request.HttpRequestContext;
@@ -30,12 +29,13 @@ import java.net.InetSocketAddress;
 
 import javax.net.ssl.SSLSession;
 
-import org.glassfish.grizzly.filterchain.BaseFilter;
-import org.glassfish.grizzly.filterchain.FilterChainContext;
-import org.glassfish.grizzly.filterchain.NextAction;
-import org.glassfish.grizzly.http.HttpContent;
-import org.glassfish.grizzly.http.HttpRequestPacket;
-import org.glassfish.grizzly.http.HttpResponsePacket;
+import static org.glassfish.grizzly.http.util.HttpStatus.CONINTUE_100;
+import static org.glassfish.grizzly.http.util.HttpStatus.EXPECTATION_FAILED_417;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.EXPECT;
+import static org.mule.runtime.module.http.api.HttpHeaders.Values.CONTINUE;
+import static org.mule.runtime.module.http.internal.listener.grizzly.MuleSslFilter.SSL_SESSION_ATTRIBUTE_KEY;
 
 /**
  * Grizzly filter that dispatches the request to the right request handler

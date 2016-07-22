@@ -9,13 +9,12 @@ package org.mule.runtime.module.spring.remoting;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.transformer.AbstractTransformer;
+import org.springframework.remoting.support.RemoteInvocation;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.nio.charset.Charset;
-
-import org.springframework.remoting.support.RemoteInvocation;
 
 /**
  * Transforms a byte[] into an ObjectInputStream and then into a Spring RemoteInvocation instance.
@@ -75,12 +74,12 @@ public class ObjectToRemoteInvocationTransformer extends AbstractTransformer
             for (int i = 0; i < ri.getArguments().length; i++)
             {
                 Object currentArgument = ri.getArguments()[i];
-                
+
                 StringBuilder buf = new StringBuilder(64);
                 buf.append("with argument (");
                 buf.append(currentArgument == null ? "<null>" : currentArgument.toString());
                 buf.append(")");
-                
+
                 logger.debug(buf.toString());
             }
         }

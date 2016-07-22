@@ -6,14 +6,6 @@
  */
 package org.mule.compatibility.module.client;
 
-import static java.util.Collections.EMPTY_MAP;
-import static org.mule.compatibility.core.api.config.MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY;
-import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
-import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
-import static org.mule.runtime.core.api.MuleEvent.TIMEOUT_NOT_SET_VALUE;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_USER_PROPERTY;
-import static org.mule.runtime.core.security.MuleCredentials.createHeader;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
@@ -43,6 +35,8 @@ import org.mule.runtime.core.context.DefaultMuleContextBuilder;
 import org.mule.runtime.core.context.DefaultMuleContextFactory;
 import org.mule.runtime.core.security.MuleCredentials;
 import org.mule.runtime.core.transformer.TransformerUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -52,8 +46,14 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.util.Collections.EMPTY_MAP;
+import static org.mule.compatibility.core.api.config.MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY;
+import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
+import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
+import static org.mule.runtime.core.api.MuleEvent.TIMEOUT_NOT_SET_VALUE;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_USER_PROPERTY;
+import static org.mule.runtime.core.security.MuleCredentials.createHeader;
 
 /**
  * <code>MuleClient</code> is a simple interface for Mule clients to send and
@@ -105,8 +105,6 @@ public class MuleClient implements Disposable
     /**
      * Creates a Mule client that will use the default serverEndpoint when connecting to a remote
      * server instance.
-     *
-     * @throws MuleException
      */
     protected MuleClient() throws MuleException
     {
@@ -128,11 +126,9 @@ public class MuleClient implements Disposable
      * Configures a Mule client instance using the the default
      * {@link SpringXmlConfigurationBuilder} to parse <code>configResources</code>.
      *
-     * @param configResources a config resource location to configure this client
-     *            with
-     * @throws ConfigurationException if there is a {@link MuleContext} instance already
-     *             running in this JVM or if the builder fails to configure the
-     *             Manager
+     * @param configResources a config resource location to configure this client with
+     * @throws ConfigurationException if there is a {@link MuleContext} instance already running in this JVM or if the builder fails to
+     *                                configure the Manager
      */
     public MuleClient(String configResources) throws MuleException
     {
@@ -143,9 +139,8 @@ public class MuleClient implements Disposable
      * Configures a new Mule client and either uses an existing Manager running in
      * this JVM or creates a new empty {@link MuleContext}
      *
-     * @param user the username to use when connecting to a remote server instance
+     * @param user     the username to use when connecting to a remote server instance
      * @param password the password for the user
-     * @throws MuleException
      */
     public MuleClient(String user, String password) throws MuleException
     {
@@ -156,16 +151,13 @@ public class MuleClient implements Disposable
     /**
      * Configures a Mule client instance
      *
-     * @param configResources a config resource location to configure this client
-     *            with
-     * @param builder the configuration builder to use
-     * @throws ConfigurationException is there is a {@link MuleContext} instance already
-     *             running in this JVM or if the builder fails to configure the
-     *             Manager
-     * @throws InitialisationException
+     * @param configResources a config resource location to configure this client with
+     * @param builder         the configuration builder to use
+     * @throws ConfigurationException is there is a {@link MuleContext} instance already running in this JVM or if the builder fails to
+     *                                configure the Manager
      */
     public MuleClient(String configResources, ConfigurationBuilder builder)
-        throws ConfigurationException, InitialisationException
+            throws ConfigurationException, InitialisationException
     {
         if (builder == null)
         {
@@ -180,18 +172,15 @@ public class MuleClient implements Disposable
     /**
      * Configures a Mule client instance
      *
-     * @param configResources a config resource location to configure this client
-     *            with
-     * @param builder the configuration builder to use
-     * @param user the username to use when connecting to a remote server instance
-     * @param password the password for the user
-     * @throws ConfigurationException is there is a {@link MuleContext} instance already
-     *             running in this JVM or if the builder fails to configure the
-     *             Manager
-     * @throws InitialisationException
+     * @param configResources a config resource location to configure this client with
+     * @param builder         the configuration builder to use
+     * @param user            the username to use when connecting to a remote server instance
+     * @param password        the password for the user
+     * @throws ConfigurationException is there is a {@link MuleContext} instance already running in this JVM or if the builder fails to
+     *                                configure the Manager
      */
     public MuleClient(String configResources, ConfigurationBuilder builder, String user, String password)
-        throws ConfigurationException, InitialisationException
+            throws ConfigurationException, InitialisationException
     {
         this(configResources, builder);
         this.user = new MuleCredentials(user, password.toCharArray());
@@ -201,7 +190,6 @@ public class MuleClient implements Disposable
      * Initialises a default {@link MuleContext} for use by the client.
      *
      * @param startManager start the Mule context if it has not yet been initialised
-     * @throws MuleException
      */
     private void init(boolean startManager) throws MuleException
     {
@@ -231,17 +219,14 @@ public class MuleClient implements Disposable
      * Dispatches an event asynchronously to a endpointUri via a Mule server. The URL
      * determines where to dispatch the event to.
      *
-     * @param url the Mule URL used to determine the destination and transport of the
-     *            message
-     * @param payload the object that is the payload of the event
-     * @param messageProperties any properties to be associated with the payload. In
-     *            the case of JMS you could set the JMSReplyTo property in these
-     *            properties.
-     * @throws org.mule.api.MuleException
+     * @param url               the Mule URL used to determine the destination and transport of the message
+     * @param payload           the object that is the payload of the event
+     * @param messageProperties any properties to be associated with the payload. In the case of JMS you could set the JMSReplyTo property
+     *                          in these properties.
      */
     public void dispatch(String url, Object payload, Map<String, Serializable> messageProperties) throws MuleException
     {
-        if(messageProperties == null)
+        if (messageProperties == null)
         {
             messageProperties = EMPTY_MAP;
         }
@@ -252,10 +237,8 @@ public class MuleClient implements Disposable
      * Dispatches an event asynchronously to a endpointUri via a Mule server. The URL
      * determines where to dispatch the event to.
      *
-     * @param url the Mule URL used to determine the destination and transport of the
-     *            message
+     * @param url     the Mule URL used to determine the destination and transport of the message
      * @param message the message to send
-     * @throws org.mule.api.MuleException
      */
     public void dispatch(String url, MuleMessage message) throws MuleException
     {
@@ -268,16 +251,14 @@ public class MuleClient implements Disposable
      * Sends an event request to a URL, making the result of the event trigger
      * available as a Future result that can be accessed later by client code.
      *
-     * @param url the url to make a request on
-     * @param payload the object that is the payload of the event
-     * @param messageProperties any properties to be associated with the payload. as
-     *            null
+     * @param url               the url to make a request on
+     * @param payload           the object that is the payload of the event
+     * @param messageProperties any properties to be associated with the payload. as null
      * @return the result message if any of the invocation
-     * @throws org.mule.api.MuleException if the dispatch fails or the components or
-     *             transfromers cannot be found
+     * @throws org.mule.api.MuleException if the dispatch fails or the components or transfromers cannot be found
      */
     public FutureMessageResult sendAsync(String url, Object payload, Map<String, Serializable> messageProperties)
-        throws MuleException
+            throws MuleException
     {
         return sendAsync(url, payload, messageProperties, 0);
     }
@@ -286,11 +267,10 @@ public class MuleClient implements Disposable
      * Sends an event request to a URL, making the result of the event trigger
      * available as a Future result that can be accessed later by client code.
      *
-     * @param url the URL to make a request on
+     * @param url     the URL to make a request on
      * @param message the message to send
      * @return the result message if any of the invocation
-     * @throws org.mule.api.MuleException if the dispatch fails or the components or
-     *             transfromers cannot be found
+     * @throws org.mule.api.MuleException if the dispatch fails or the components or transfromers cannot be found
      */
     public FutureMessageResult sendAsync(final String url, final MuleMessage message) throws MuleException
     {
@@ -301,14 +281,12 @@ public class MuleClient implements Disposable
      * Sends an event request to a URL, making the result of the event trigger
      * available as a Future result that can be accessed later by client code.
      *
-     * @param url the url to make a request on
-     * @param payload the object that is the payload of the event
-     * @param messageProperties any properties to be associated with the payload. as
-     *            null
-     * @param timeout how long to block in milliseconds waiting for a result
+     * @param url               the url to make a request on
+     * @param payload           the object that is the payload of the event
+     * @param messageProperties any properties to be associated with the payload. as null
+     * @param timeout           how long to block in milliseconds waiting for a result
      * @return the result message if any of the invocation
-     * @throws org.mule.api.MuleException if the dispatch fails or the components or
-     *             transfromers cannot be found
+     * @throws org.mule.api.MuleException if the dispatch fails or the components or transfromers cannot be found
      */
     public FutureMessageResult sendAsync(final String url,
                                          final Object payload,
@@ -327,15 +305,14 @@ public class MuleClient implements Disposable
      * Sends an event request to a URL, making the result of the event trigger
      * available as a Future result that can be accessed later by client code.
      *
-     * @param url the url to make a request on
+     * @param url     the url to make a request on
      * @param message the message to send
      * @param timeout how long to block in milliseconds waiting for a result
      * @return the result message if any of the invocation
-     * @throws org.mule.api.MuleException if the dispatch fails or the components or
-     *             transfromers cannot be found
+     * @throws org.mule.api.MuleException if the dispatch fails or the components or transfromers cannot be found
      */
     public FutureMessageResult sendAsync(final String url, final MuleMessage message, final int timeout)
-        throws MuleException
+            throws MuleException
     {
         Callable<Object> call = new Callable<Object>()
         {
@@ -361,15 +338,12 @@ public class MuleClient implements Disposable
      * Sends an event synchronously to a endpointUri via a Mule server and a
      * resulting message is returned.
      *
-     * @param url the Mule URL used to determine the destination and transport of the
-     *            message
-     * @param payload the object that is the payload of the event
-     * @param messageProperties any properties to be associated with the payload. In
-     *            the case of Jms you could set the JMSReplyTo property in these
-     *            properties.
-     * @return A return message, this could be <code>null</code> if the the components invoked
-     *         explicitly sets a return as <code>null</code>.
-     * @throws org.mule.api.MuleException
+     * @param url               the Mule URL used to determine the destination and transport of the message
+     * @param payload           the object that is the payload of the event
+     * @param messageProperties any properties to be associated with the payload. In the case of Jms you could set the JMSReplyTo property
+     *                          in these properties.
+     * @return A return message, this could be <code>null</code> if the the components invoked explicitly sets a return as
+     * <code>null</code>.
      */
     public MuleMessage send(String url, Object payload, Map<String, Serializable> messageProperties) throws MuleException
     {
@@ -380,12 +354,10 @@ public class MuleClient implements Disposable
      * Sends an event synchronously to a endpointUri via a Mule server and a
      * resulting message is returned.
      *
-     * @param url the Mule URL used to determine the destination and transport of the
-     *            message
+     * @param url     the Mule URL used to determine the destination and transport of the message
      * @param message the Message for the event
-     * @return A return message, this could be <code>null</code> if the the components invoked
-     *         explicitly sets a return as <code>null</code>.
-     * @throws org.mule.api.MuleException
+     * @return A return message, this could be <code>null</code> if the the components invoked explicitly sets a return as
+     * <code>null</code>.
      */
     public MuleMessage send(String url, MuleMessage message) throws MuleException
     {
@@ -396,20 +368,16 @@ public class MuleClient implements Disposable
      * Sends an event synchronously to a endpointUri via a mule server and a
      * resulting message is returned.
      *
-     * @param url the Mule URL used to determine the destination and transport of the
-     *            message
-     * @param payload the object that is the payload of the event
-     * @param messageProperties any properties to be associated with the payload. In
-     *            the case of Jms you could set the JMSReplyTo property in these
-     *            properties.
-     * @param timeout The time in milliseconds the the call should block waiting for
-     *            a response
-     * @return A return message, this could be <code>null</code> if the the components invoked
-     *         explicitly sets a return as <code>null</code>.
-     * @throws org.mule.api.MuleException
+     * @param url               the Mule URL used to determine the destination and transport of the message
+     * @param payload           the object that is the payload of the event
+     * @param messageProperties any properties to be associated with the payload. In the case of Jms you could set the JMSReplyTo property
+     *                          in these properties.
+     * @param timeout           The time in milliseconds the the call should block waiting for a response
+     * @return A return message, this could be <code>null</code> if the the components invoked explicitly sets a return as
+     * <code>null</code>.
      */
     public MuleMessage send(String url, Object payload, Map<String, Serializable> messageProperties, int timeout)
-        throws MuleException
+            throws MuleException
     {
         if (messageProperties == null)
         {
@@ -429,19 +397,16 @@ public class MuleClient implements Disposable
      * Sends an event synchronously to a endpointUri via a mule server and a
      * resulting message is returned.
      *
-     * @param url the Mule URL used to determine the destination and transport of the
-     *            message
+     * @param url     the Mule URL used to determine the destination and transport of the message
      * @param message The message to send
-     * @param timeout The time in milliseconds the the call should block waiting for
-     *            a response
-     * @return A return message, this could be <code>null</code> if the the components invoked
-     *         explicitly sets a return as <code>null</code>.
-     * @throws org.mule.api.MuleException
+     * @param timeout The time in milliseconds the the call should block waiting for a response
+     * @return A return message, this could be <code>null</code> if the the components invoked explicitly sets a return as
+     * <code>null</code>.
      */
     public MuleMessage send(String url, MuleMessage message, int timeout) throws MuleException
     {
         OutboundEndpoint endpoint =
-            getOutboundEndpoint(url, REQUEST_RESPONSE, timeout);
+                getOutboundEndpoint(url, REQUEST_RESPONSE, timeout);
 
         MuleEvent event = getEvent(message, REQUEST_RESPONSE);
 
@@ -459,13 +424,10 @@ public class MuleClient implements Disposable
     /**
      * Will receive an event from an endpointUri determined by the URL.
      *
-     * @param url the Mule URL used to determine the destination and transport of the
-     *            message
-     * @param timeout how long to block waiting to receive the event, if set to 0 the
-     *            receive will not wait at all and if set to -1 the receive will wait
-     *            forever
+     * @param url     the Mule URL used to determine the destination and transport of the message
+     * @param timeout how long to block waiting to receive the event, if set to 0 the receive will not wait at all and if set to -1 the
+     *                receive will wait forever
      * @return the message received or <code>null</code> if no message was received
-     * @throws org.mule.api.MuleException
      */
     public MuleMessage request(String url, long timeout) throws MuleException
     {
@@ -483,15 +445,11 @@ public class MuleClient implements Disposable
     /**
      * Will receive an event from an endpointUri determined by the URL
      *
-     * @param url the Mule URL used to determine the destination and transport of the
-     *            message
-     * @param transformers A comma separated list of transformers used to apply to
-     *            the result message
-     * @param timeout how long to block waiting to receive the event, if set to 0 the
-     *            receive will not wait at all and if set to -1 the receive will wait
-     *            forever
+     * @param url          the Mule URL used to determine the destination and transport of the message
+     * @param transformers A comma separated list of transformers used to apply to the result message
+     * @param timeout      how long to block waiting to receive the event, if set to 0 the receive will not wait at all and if set to -1 the
+     *                     receive will wait forever
      * @return the message received or <code>null</code> if no message was received
-     * @throws org.mule.api.MuleException
      */
     public MuleMessage request(String url, String transformers, long timeout) throws MuleException
     {
@@ -501,14 +459,11 @@ public class MuleClient implements Disposable
     /**
      * Will receive an event from an endpointUri determined by the URL
      *
-     * @param url the Mule URL used to determine the destination and transport of the
-     *            message
+     * @param url          the Mule URL used to determine the destination and transport of the message
      * @param transformers Transformers used to modify the result message
-     * @param timeout how long to block waiting to receive the event, if set to 0 the
-     *            receive will not wait at all and if set to -1 the receive will wait
-     *            forever
+     * @param timeout      how long to block waiting to receive the event, if set to 0 the receive will not wait at all and if set to -1 the
+     *                     receive will wait forever
      * @return the message received or <code>null</code> if no message was received
-     * @throws org.mule.api.MuleException
      */
     public MuleMessage request(String url, List<?> transformers, long timeout) throws MuleException
     {
@@ -516,11 +471,13 @@ public class MuleClient implements Disposable
     }
 
     protected MuleEvent getEvent(MuleMessage message, MessageExchangePattern exchangePattern)
-        throws MuleException
+            throws MuleException
     {
         if (user != null)
         {
-            message = MuleMessage.builder(message).addOutboundProperty(MULE_USER_PROPERTY, createHeader(user.getUsername(), user.getPassword())).build();
+            message = MuleMessage.builder(message)
+                                 .addOutboundProperty(MULE_USER_PROPERTY, createHeader(user.getUsername(), user.getPassword()))
+                                 .build();
         }
         return new DefaultMuleEvent(message, exchangePattern, new MuleClientFlowConstruct(muleContext));
     }
@@ -547,7 +504,7 @@ public class MuleClient implements Disposable
     }
 
     protected OutboundEndpoint getOutboundEndpoint(String uri, MessageExchangePattern exchangePattern,
-        Integer responseTimeout) throws MuleException
+                                                   Integer responseTimeout) throws MuleException
     {
         // There was a potential leak here between get() and putIfAbsent(). This
         // would cause the endpoint that was created to be used rather an endpoint
@@ -568,7 +525,7 @@ public class MuleClient implements Disposable
             }
             endpoint = getEndpointFactory().getOutboundEndpoint(endpointBuilder);
             OutboundEndpoint concurrentlyAddedEndpoint =
-                outboundEndpointCache.putIfAbsent(key, endpoint);
+                    outboundEndpointCache.putIfAbsent(key, endpoint);
             if (concurrentlyAddedEndpoint != null)
             {
                 return concurrentlyAddedEndpoint;
@@ -581,13 +538,10 @@ public class MuleClient implements Disposable
      * Sends an event synchronously to a endpointUri via a Mule server without
      * waiting for the result.
      *
-     * @param url the Mule URL used to determine the destination and transport of the
-     *            message
-     * @param payload the object that is the payload of the event
-     * @param messageProperties any properties to be associated with the payload. In
-     *            the case of Jms you could set the JMSReplyTo property in these
-     *            properties.
-     * @throws org.mule.api.MuleException
+     * @param url               the Mule URL used to determine the destination and transport of the message
+     * @param payload           the object that is the payload of the event
+     * @param messageProperties any properties to be associated with the payload. In the case of Jms you could set the JMSReplyTo property
+     *                          in these properties.
      */
     public void sendNoReceive(String url, Object payload, Map<String, Serializable> messageProperties) throws MuleException
     {
@@ -603,7 +557,7 @@ public class MuleClient implements Disposable
         MuleMessage message = MuleMessage.builder().payload(payload).outboundProperties(messageProperties).build();
 
         OutboundEndpoint endpoint =
-            getOutboundEndpoint(url, REQUEST_RESPONSE, null);
+                getOutboundEndpoint(url, REQUEST_RESPONSE, null);
         MuleEvent event = getEvent(message, REQUEST_RESPONSE);
         endpoint.process(event);
     }

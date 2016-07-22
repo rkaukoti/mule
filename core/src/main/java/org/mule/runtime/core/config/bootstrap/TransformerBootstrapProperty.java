@@ -7,8 +7,9 @@
 
 package org.mule.runtime.core.config.bootstrap;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.core.util.StringUtils;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Defines a bootstrap property for a transformer
@@ -26,14 +27,15 @@ public class TransformerBootstrapProperty extends AbstractBootstrapProperty
      *
      * @param service         service that provides the property. Not null.
      * @param artifactType    defines what is the artifact this bootstrap object applies to
-     * @param optional        indicates whether or not the bootstrapped transformer is optional. When a bootstrap
-     *                        object is optional, any error creating it will be ignored.
+     * @param optional        indicates whether or not the bootstrapped transformer is optional. When a bootstrap object is optional, any
+     *                        error creating it will be ignored.
      * @param name            name assigned to the transformer. Can be null.
      * @param className       className of the bootstrapped transformer. Not empty.
      * @param returnClassName name of the transformer return class. Can be null.
      * @param mimeType        transformer returned mimeType. Can be null
      */
-    public TransformerBootstrapProperty(BootstrapService service, ArtifactType artifactType, boolean optional, String name, String className, String returnClassName, String mimeType)
+    public TransformerBootstrapProperty(BootstrapService service, ArtifactType artifactType, boolean optional, String name,
+                                        String className, String returnClassName, String mimeType)
     {
         super(service, artifactType, optional);
         checkArgument(!StringUtils.isEmpty(className), "className cannot be empty");

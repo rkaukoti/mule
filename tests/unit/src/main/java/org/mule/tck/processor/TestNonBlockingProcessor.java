@@ -19,8 +19,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- *  Test implementation of {@link org.mule.runtime.core.processor.NonBlockingMessageProcessor} that simply uses a @{link Executor} to
- *  invoke the {@link org.mule.runtime.core.api.connector.ReplyToHandler} in another thread.
+ * Test implementation of {@link org.mule.runtime.core.processor.NonBlockingMessageProcessor} that simply uses a @{link Executor} to
+ * invoke the {@link org.mule.runtime.core.api.connector.ReplyToHandler} in another thread.
  */
 public class TestNonBlockingProcessor implements NonBlockingMessageProcessor, Initialisable, Disposable
 {

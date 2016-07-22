@@ -6,10 +6,8 @@
  */
 package org.mule.test.integration.domain.tls;
 
-import static java.lang.String.format;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.DomainFunctionalTestCase;
 import org.mule.functional.junit4.FlowRunner;
 import org.mule.runtime.api.tls.TlsContextFactory;
@@ -21,8 +19,9 @@ import org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder;
 import org.mule.runtime.module.http.api.requester.HttpRequesterConfig;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static java.lang.String.format;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class TlsSharedContextTestCase extends DomainFunctionalTestCase
 {
@@ -48,7 +47,7 @@ public class TlsSharedContextTestCase extends DomainFunctionalTestCase
     public ApplicationConfig[] getConfigResources()
     {
         return new ApplicationConfig[] {new ApplicationConfig(FIRST_APP, new String[] {"domain/tls/tls-first-app-config.xml"}),
-                new ApplicationConfig(SECOND_APP, new String[] {"domain/tls/tls-second-app-config.xml"})
+                                        new ApplicationConfig(SECOND_APP, new String[] {"domain/tls/tls-second-app-config.xml"})
         };
     }
 
@@ -85,7 +84,9 @@ public class TlsSharedContextTestCase extends DomainFunctionalTestCase
     private void testMuleClient(HttpRequestOptions operationOptions) throws Exception
     {
         MuleContext context = getMuleContextForApp(SECOND_APP);
-        MuleMessage response = context.getClient().send(format("https://localhost:%s/helloAll", port3.getValue()), MuleMessage.builder().payload(DATA).build(), operationOptions);
+        MuleMessage response = context.getClient()
+                                      .send(format("https://localhost:%s/helloAll", port3.getValue()),
+                                              MuleMessage.builder().payload(DATA).build(), operationOptions);
         assertThat(getPayloadAsString(response, context), is("hello all"));
     }
 

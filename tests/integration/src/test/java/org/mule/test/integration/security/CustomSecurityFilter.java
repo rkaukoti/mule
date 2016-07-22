@@ -29,8 +29,8 @@ public class CustomSecurityFilter extends AbstractOperationSecurityFilter
 
     @Override
     protected void authenticateInbound(MuleEvent event)
-        throws SecurityException, CryptoFailureException, SecurityProviderNotFoundException,
-        EncryptionStrategyNotFoundException, UnknownAuthenticationTypeException
+            throws SecurityException, CryptoFailureException, SecurityProviderNotFoundException,
+            EncryptionStrategyNotFoundException, UnknownAuthenticationTypeException
     {
         if (!isValid(event))
         {
@@ -40,7 +40,7 @@ public class CustomSecurityFilter extends AbstractOperationSecurityFilter
 
     @Override
     public void authenticate(MuleEvent event)
-        throws SecurityException, SecurityProviderNotFoundException, CryptoFailureException
+            throws SecurityException, SecurityProviderNotFoundException, CryptoFailureException
     {
         if (!isValid(event))
         {
@@ -52,7 +52,11 @@ public class CustomSecurityFilter extends AbstractOperationSecurityFilter
     {
         try
         {
-            return event.getMuleContext().getTransformationService().transform(event.getMessage(), DataType.STRING).getPayload().equals(FunctionalTestCase.TEST_MESSAGE);
+            return event.getMuleContext()
+                        .getTransformationService()
+                        .transform(event.getMessage(), DataType.STRING)
+                        .getPayload()
+                        .equals(FunctionalTestCase.TEST_MESSAGE);
         }
         catch (Exception e)
         {

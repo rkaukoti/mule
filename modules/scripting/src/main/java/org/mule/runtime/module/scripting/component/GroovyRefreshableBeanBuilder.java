@@ -6,21 +6,21 @@
  */
 package org.mule.runtime.module.scripting.component;
 
+import groovy.lang.GroovyObject;
+import groovy.lang.MetaMethod;
+
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.lifecycle.Callable;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.StringUtils;
 
-import groovy.lang.GroovyObject;
-import groovy.lang.MetaMethod;
-
 public class GroovyRefreshableBeanBuilder implements Callable
 {
+    private static final String ON_CALL = "onCall";
+    private static final Class[] MULE_EVENT_CONTEXT = new Class[] {MuleEventContext.class};
     private volatile Object refreshableBean;
     private String methodName;
-    private static final String ON_CALL = "onCall";
-    private static final Class[] MULE_EVENT_CONTEXT = new Class[]{MuleEventContext.class};
 
     public GroovyRefreshableBeanBuilder()
     {
@@ -31,7 +31,7 @@ public class GroovyRefreshableBeanBuilder implements Callable
     {
         if (refreshableBean instanceof GroovyObject)
         {
-            GroovyObject script = (GroovyObject)refreshableBean;
+            GroovyObject script = (GroovyObject) refreshableBean;
             MetaMethod onCall = script.getMetaClass().pickMethod("onCall", MULE_EVENT_CONTEXT);
 
             if (onCall != null)
@@ -44,12 +44,12 @@ public class GroovyRefreshableBeanBuilder implements Callable
                 {
                     throw new DefaultMuleException(CoreMessages.propertiesNotSet("methodName"));
                 }
-                
+
                 return script.invokeMethod(methodName, eventContext.getMessage().getPayload());
             }
-            
+
         }
-        
+
         throw new Exception(new DefaultMuleException("script engine not supported"));
     }
 
@@ -62,7 +62,7 @@ public class GroovyRefreshableBeanBuilder implements Callable
     {
         this.refreshableBean = refreshableBean;
     }
-    
+
     public String getMethodName()
     {
         return methodName;

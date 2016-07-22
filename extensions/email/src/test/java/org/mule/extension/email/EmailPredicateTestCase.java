@@ -6,6 +6,14 @@
  */
 package org.mule.extension.email;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.mule.extension.email.api.EmailAttributes;
+import org.mule.extension.email.api.EmailFlags;
+import org.mule.extension.email.api.EmailPredicateBuilder;
+
+import java.time.LocalDateTime;
+
 import static java.util.Collections.singletonList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -13,14 +21,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mule.extension.email.util.EmailTestUtils.EMAIL_SUBJECT;
 import static org.mule.extension.email.util.EmailTestUtils.JUANI_EMAIL;
-import org.mule.extension.email.api.EmailAttributes;
-import org.mule.extension.email.api.EmailPredicateBuilder;
-import org.mule.extension.email.api.EmailFlags;
-
-import java.time.LocalDateTime;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class EmailPredicateTestCase
 {

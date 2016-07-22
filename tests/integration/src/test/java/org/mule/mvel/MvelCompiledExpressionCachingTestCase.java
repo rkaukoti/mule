@@ -7,12 +7,12 @@
 
 package org.mule.mvel;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleMessage;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import org.junit.Test;
 
 public class MvelCompiledExpressionCachingTestCase extends FunctionalTestCase
 {

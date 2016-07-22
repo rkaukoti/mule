@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *  Fake {@link ClassLoader} for testing purposes
+ * Fake {@link ClassLoader} for testing purposes
  */
 public class TestClassLoader extends ClassLoader
 {

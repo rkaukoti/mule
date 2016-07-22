@@ -17,15 +17,14 @@ import org.mule.runtime.core.api.source.MessageSource;
  * <p>
  * Some implementations may not use the replyTo messageProcessor but rather use a
  * message property to determine what should be used for processing the async reply
- * 
+ *
  * @since 3.0
  */
 public interface RequestReplyReplierMessageProcessor extends InterceptingMessageProcessor
 {
 
     /**
-     * @param replyMessageProcessor the message processor that will be used to send
-     *            the reply message
+     * @param replyMessageProcessor the message processor that will be used to send the reply message
      */
     void setReplyProcessor(MessageProcessor replyMessageProcessor);
 }

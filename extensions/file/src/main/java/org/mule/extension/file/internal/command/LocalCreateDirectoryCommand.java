@@ -6,13 +6,14 @@
  */
 package org.mule.extension.file.internal.command;
 
-import static java.lang.String.format;
 import org.mule.extension.file.internal.LocalFileSystem;
 import org.mule.runtime.module.extension.file.api.FileConnectorConfig;
 import org.mule.runtime.module.extension.file.api.command.CreateDirectoryCommand;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+
+import static java.lang.String.format;
 
 /**
  * A {@link LocalFileCommand} which implements the {@link CreateDirectoryCommand} contract

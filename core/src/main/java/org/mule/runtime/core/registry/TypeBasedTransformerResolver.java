@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.registry;
 
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
@@ -25,6 +23,8 @@ import org.mule.runtime.core.transformer.TransformerWeighting;
 import org.mule.runtime.core.transformer.graph.GraphTransformerResolver;
 import org.mule.runtime.core.transformer.simple.ObjectToByteArray;
 import org.mule.runtime.core.transformer.simple.ObjectToString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,8 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
 
 /**
  * Will discover transformers based on type information only. It looks for transformers that support
@@ -48,15 +47,11 @@ public class TypeBasedTransformerResolver implements TransformerResolver, MuleCo
      * logger used by this class
      */
     protected transient final Logger logger = LoggerFactory.getLogger(TypeBasedTransformerResolver.class);
-
+    protected Map<String, Transformer> exactTransformerCache = new ConcurrentHashMap/*<String, Transformer>*/(8);
+    protected TransformerResolver graphTransformerResolver = new GraphTransformerResolver();
     private ObjectToString objectToString;
     private ObjectToByteArray objectToByteArray;
-
     private MuleContext muleContext;
-
-    protected Map<String, Transformer> exactTransformerCache = new ConcurrentHashMap/*<String, Transformer>*/(8);
-
-    protected TransformerResolver graphTransformerResolver = new GraphTransformerResolver();
 
     @Override
     public void setMuleContext(MuleContext context)
@@ -154,7 +149,9 @@ public class TypeBasedTransformerResolver implements TransformerResolver, MuleCo
         {
             if (logger.isDebugEnabled())
             {
-                logger.debug("Comparing transformers for best match: source = " + input + " target = " + output + " Possible transformers = " + trans);
+                logger.debug(
+                        "Comparing transformers for best match: source = " + input + " target = " + output + " Possible transformers = " +
+                        trans);
             }
 
             List<TransformerWeighting> weightings = calculateTransformerWeightings(trans, input, output);

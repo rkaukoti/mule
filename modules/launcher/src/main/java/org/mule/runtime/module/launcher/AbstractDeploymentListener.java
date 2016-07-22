@@ -9,14 +9,13 @@ package org.mule.runtime.module.launcher;
 import org.mule.runtime.core.api.MuleContext;
 
 /**
- * Convenience implementation of DeploymentListener.  Default 
- * method implementations are no-ops.  Sub-classes can implement 
- * the DeploymentListener interface without having to override 
+ * Convenience implementation of DeploymentListener.  Default
+ * method implementations are no-ops.  Sub-classes can implement
+ * the DeploymentListener interface without having to override
  * all methods.
- * 
- * This was implemented so that DeploymentStatusTracker would not need 
+ *
+ * This was implemented so that DeploymentStatusTracker would not need
  * to provide default implementations of undeployment events.
- * 
  */
 public class AbstractDeploymentListener implements DeploymentListener
 {

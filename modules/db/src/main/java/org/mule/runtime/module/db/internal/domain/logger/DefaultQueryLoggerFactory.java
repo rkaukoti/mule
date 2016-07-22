@@ -8,7 +8,6 @@
 package org.mule.runtime.module.db.internal.domain.logger;
 
 import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
-
 import org.slf4j.Logger;
 
 /**

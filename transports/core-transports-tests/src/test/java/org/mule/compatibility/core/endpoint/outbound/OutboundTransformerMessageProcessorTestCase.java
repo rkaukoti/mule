@@ -6,9 +6,8 @@
  */
 package org.mule.compatibility.core.endpoint.outbound;
 
-import org.mule.compatibility.core.processor.AbstractMessageProcessorTestCase;
-
 import org.junit.Test;
+import org.mule.compatibility.core.processor.AbstractMessageProcessorTestCase;
 
 public class OutboundTransformerMessageProcessorTestCase extends AbstractMessageProcessorTestCase
 {

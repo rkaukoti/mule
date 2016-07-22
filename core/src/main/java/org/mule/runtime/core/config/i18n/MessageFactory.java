@@ -6,7 +6,8 @@
  */
 package org.mule.runtime.core.config.i18n;
 
-import static org.apache.commons.collections.CollectionUtils.union;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -15,8 +16,7 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.apache.commons.collections.CollectionUtils.union;
 
 
 public abstract class MessageFactory
@@ -25,16 +25,6 @@ public abstract class MessageFactory
      * Default is {@link ReloadControl.Always}.
      */
     public static final ResourceBundle.Control DEFAULT_RELOAD_CONTROL = new ReloadControl.Always();
-
-    /**
-     * This error code is used for {@link Message} instances that are not read from a
-     * resource bundles but are created only with a string.
-     */
-    private static final int STATIC_ERROR_CODE = -1;
-    private static final transient Object[] EMPTY_ARGS = new Object[]{};
-
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
     /**
      * Do not use the default reload control to avoid loading the resource bundle upon each request.
      * Subclasses can override to provide a different default.
@@ -48,97 +38,28 @@ public abstract class MessageFactory
         public List<String> getFormats(String baseName)
         {
             return formats;
-        };
+        }
+
+        ;
     };
+    /**
+     * This error code is used for {@link Message} instances that are not read from a
+     * resource bundles but are created only with a string.
+     */
+    private static final int STATIC_ERROR_CODE = -1;
+    private static final transient Object[] EMPTY_ARGS = new Object[] {};
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
-     * Computes the bundle's full path 
+     * Computes the bundle's full path
      * (<code>META-INF/services/org/mule/i18n/&lt;bundleName&gt;-messages.properties</code>) from
      * <code>bundleName</code>.
-     * 
-     * @param bundleName Name of the bundle without the &quot;messages&quot; suffix and without
-     *          file extension.
+     *
+     * @param bundleName Name of the bundle without the &quot;messages&quot; suffix and without file extension.
      */
     protected static String getBundlePath(String bundleName)
     {
         return "META-INF/services/org/mule/runtime/core/i18n/" + bundleName + "-messages";
-    }
-    
-    /**
-     * Factory method to create a new {@link Message} instance that is filled with the formatted
-     * message with id <code>code</code> from the resource bundle <code>bundlePath</code>.
-     * 
-     * @param bundlePath complete path to the resource bundle for lookup
-     * @param code numeric code of the message
-     * @param arg
-     * @see #getBundlePath(String)
-     */
-    protected Message createMessage(String bundlePath, int code, Object arg)
-    {
-        return createMessage(bundlePath, code, new Object[] {arg});
-    }
-    
-    /**
-     * Factory method to create a new {@link Message} instance that is filled with the formatted
-     * message with id <code>code</code> from the resource bundle <code>bundlePath</code>.
-     * 
-     * @param bundlePath complete path to the resource bundle for lookup
-     * @param code numeric code of the message
-     * @param arg1
-     * @param arg2
-     * @see #getBundlePath(String)
-     */
-    protected Message createMessage(String bundlePath, int code, Object arg1, Object arg2)
-    {
-        return createMessage(bundlePath, code, new Object[] {arg1, arg2});
-    }
-    
-    /**
-     * Factory method to create a new {@link Message} instance that is filled with the formatted
-     * message with id <code>code</code> from the resource bundle <code>bundlePath</code>.
-     * 
-     * @param bundlePath complete path to the resource bundle for lookup
-     * @param code numeric code of the message
-     * @param arg1
-     * @param arg2
-     * @param arg3
-     * @see #getBundlePath(String)
-     */
-    protected Message createMessage(String bundlePath, int code, Object arg1, Object arg2, 
-        Object arg3)
-    {
-        return createMessage(bundlePath, code, new Object[] {arg1, arg2, arg3});
-    }
-    
-    /**
-     * Factory method to create a new {@link Message} instance that is filled with the formatted
-     * message with id <code>code</code> from the resource bundle <code>bundlePath</code>.
-     * 
-     * <b>Attention:</b> do not confuse this method with 
-     * <code>createMessage(String, int, Object)</code>.
-     * 
-     * @param bundlePath complete path to the resource bundle for lookup
-     * @param code numeric code of the message
-     * @param arguments
-     * @see #getBundlePath(String)
-     */
-    protected Message createMessage(String bundlePath, int code, Object... arguments)
-    {
-        String messageString = getString(bundlePath, code, arguments);
-        return new Message(messageString, code, arguments);
-    }
-
-    /**
-     * Factory method to create a new {@link Message} instance that is filled with the formatted
-     * message with id <code>code</code> from the resource bundle <code>bundlePath</code>.
-     * 
-     * @param bundlePath complete path to the resource bundle for lookup
-     * @param code numeric code of the message
-     */
-    protected Message createMessage(String bundlePath, int code)
-    {
-        String messageString = getString(bundlePath, code, null);
-        return new Message(messageString, code, EMPTY_ARGS);
     }
 
     /**
@@ -155,7 +76,7 @@ public abstract class MessageFactory
     /**
      * Factory method to create a {@link Message} instance that is not read from a resource bundle.
      *
-     * @param message Static message text that may contain format specifiers
+     * @param message   Static message text that may contain format specifiers
      * @param arguments Arguments referenced by the format specifiers in the message string.
      * @return a Messsage instance that has an error code of -1 and no arguments.
      */
@@ -165,23 +86,92 @@ public abstract class MessageFactory
     }
 
     /**
-     * Factory method to read the message with code <code>code</code> from the resource bundle.
-     * 
+     * Factory method to create a new {@link Message} instance that is filled with the formatted
+     * message with id <code>code</code> from the resource bundle <code>bundlePath</code>.
+     *
      * @param bundlePath complete path to the resource bundle for lookup
-     * @param code numeric code of the message
+     * @param code       numeric code of the message
+     * @see #getBundlePath(String)
+     */
+    protected Message createMessage(String bundlePath, int code, Object arg)
+    {
+        return createMessage(bundlePath, code, new Object[] {arg});
+    }
+
+    /**
+     * Factory method to create a new {@link Message} instance that is filled with the formatted
+     * message with id <code>code</code> from the resource bundle <code>bundlePath</code>.
+     *
+     * @param bundlePath complete path to the resource bundle for lookup
+     * @param code       numeric code of the message
+     * @see #getBundlePath(String)
+     */
+    protected Message createMessage(String bundlePath, int code, Object arg1, Object arg2)
+    {
+        return createMessage(bundlePath, code, new Object[] {arg1, arg2});
+    }
+
+    /**
+     * Factory method to create a new {@link Message} instance that is filled with the formatted
+     * message with id <code>code</code> from the resource bundle <code>bundlePath</code>.
+     *
+     * @param bundlePath complete path to the resource bundle for lookup
+     * @param code       numeric code of the message
+     * @see #getBundlePath(String)
+     */
+    protected Message createMessage(String bundlePath, int code, Object arg1, Object arg2,
+                                    Object arg3)
+    {
+        return createMessage(bundlePath, code, new Object[] {arg1, arg2, arg3});
+    }
+
+    /**
+     * Factory method to create a new {@link Message} instance that is filled with the formatted
+     * message with id <code>code</code> from the resource bundle <code>bundlePath</code>.
+     *
+     * <b>Attention:</b> do not confuse this method with
+     * <code>createMessage(String, int, Object)</code>.
+     *
+     * @param bundlePath complete path to the resource bundle for lookup
+     * @param code       numeric code of the message
+     * @see #getBundlePath(String)
+     */
+    protected Message createMessage(String bundlePath, int code, Object... arguments)
+    {
+        String messageString = getString(bundlePath, code, arguments);
+        return new Message(messageString, code, arguments);
+    }
+
+    /**
+     * Factory method to create a new {@link Message} instance that is filled with the formatted
+     * message with id <code>code</code> from the resource bundle <code>bundlePath</code>.
+     *
+     * @param bundlePath complete path to the resource bundle for lookup
+     * @param code       numeric code of the message
+     */
+    protected Message createMessage(String bundlePath, int code)
+    {
+        String messageString = getString(bundlePath, code, null);
+        return new Message(messageString, code, EMPTY_ARGS);
+    }
+
+    /**
+     * Factory method to read the message with code <code>code</code> from the resource bundle.
+     *
+     * @param bundlePath complete path to the resource bundle for lookup
+     * @param code       numeric code of the message
      * @return formatted error message as {@link String}
      */
     protected String getString(String bundlePath, int code)
     {
         return getString(bundlePath, code, null);
     }
-    
+
     /**
      * Factory method to read the message with code <code>code</code> from the resource bundle.
-     * 
+     *
      * @param bundlePath complete path to the resource bundle for lookup
-     * @param code numeric code of the message
-     * @param arg
+     * @param code       numeric code of the message
      * @return formatted error message as {@link String}
      */
     protected String getString(String bundlePath, int code, Object arg)
@@ -189,14 +179,12 @@ public abstract class MessageFactory
         Object[] arguments = new Object[] {arg};
         return getString(bundlePath, code, arguments);
     }
-    
+
     /**
      * Factory method to read the message with code <code>code</code> from the resource bundle.
-     * 
+     *
      * @param bundlePath complete path to the resource bundle for lookup
-     * @param code numeric code of the message
-     * @param arg1
-     * @param arg2
+     * @param code       numeric code of the message
      * @return formatted error message as {@link String}
      */
     protected String getString(String bundlePath, int code, Object arg1, Object arg2)
@@ -243,7 +231,7 @@ public abstract class MessageFactory
     }
 
     /**
-     * Override this method to return the classloader for the bundle/module which 
+     * Override this method to return the classloader for the bundle/module which
      * contains the needed resource files.
      */
     protected ClassLoader getClassLoader()

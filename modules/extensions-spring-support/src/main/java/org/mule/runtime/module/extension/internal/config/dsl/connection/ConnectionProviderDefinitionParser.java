@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.config.dsl.connection;
 
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromChildConfiguration;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromFixedValue;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromSimpleParameter;
-import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
 import org.mule.runtime.api.config.PoolingProfile;
 import org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinition.Builder;
 import org.mule.runtime.core.api.MuleContext;
@@ -21,6 +17,11 @@ import org.mule.runtime.extension.xml.dsl.api.resolver.DslElementResolver;
 import org.mule.runtime.module.extension.internal.config.dsl.ExtensionDefinitionParser;
 import org.mule.runtime.module.extension.internal.config.dsl.ExtensionParsingContext;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ConnectionProviderResolver;
+
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromChildConfiguration;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromFixedValue;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromSimpleParameter;
+import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
 
 /**
  * A {@link ExtensionDefinitionParser} for parsing {@link ConnectionProviderResolver}
@@ -35,7 +36,8 @@ public final class ConnectionProviderDefinitionParser extends ExtensionDefinitio
     private final MuleContext muleContext;
     private final DslElementDeclaration connectionDsl;
 
-    public ConnectionProviderDefinitionParser(Builder definition, ConnectionProviderModel providerModel, DslElementResolver dslElementResolver,
+    public ConnectionProviderDefinitionParser(Builder definition, ConnectionProviderModel providerModel,
+                                              DslElementResolver dslElementResolver,
                                               MuleContext muleContext, ExtensionParsingContext parsingContext)
     {
         super(definition, dslElementResolver, parsingContext);
@@ -48,13 +50,13 @@ public final class ConnectionProviderDefinitionParser extends ExtensionDefinitio
     protected void doParse(Builder definitionBuilder) throws ConfigurationException
     {
         definitionBuilder.withIdentifier(connectionDsl.getElementName())
-                .withTypeDefinition(fromType(ConnectionProviderResolver.class))
-                .withObjectFactoryType(ConnectionProviderObjectFactory.class)
-                .withConstructorParameterDefinition(fromFixedValue(providerModel).build())
-                .withConstructorParameterDefinition(fromFixedValue(muleContext).build())
-                .withSetterParameterDefinition("disableValidation", fromSimpleParameter("disableValidation").build())
-                .withSetterParameterDefinition("retryPolicyTemplate", fromChildConfiguration(RetryPolicyTemplate.class).build())
-                .withSetterParameterDefinition("poolingProfile", fromChildConfiguration(PoolingProfile.class).build());
+                         .withTypeDefinition(fromType(ConnectionProviderResolver.class))
+                         .withObjectFactoryType(ConnectionProviderObjectFactory.class)
+                         .withConstructorParameterDefinition(fromFixedValue(providerModel).build())
+                         .withConstructorParameterDefinition(fromFixedValue(muleContext).build())
+                         .withSetterParameterDefinition("disableValidation", fromSimpleParameter("disableValidation").build())
+                         .withSetterParameterDefinition("retryPolicyTemplate", fromChildConfiguration(RetryPolicyTemplate.class).build())
+                         .withSetterParameterDefinition("poolingProfile", fromChildConfiguration(PoolingProfile.class).build());
 
         parseParameters(providerModel.getParameterModels());
     }

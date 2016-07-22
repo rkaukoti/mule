@@ -13,7 +13,7 @@ import org.mule.runtime.core.config.i18n.Message;
 /**
  * <code>ConnectorException</code> Is thrown in the context of a Connector, usually some sort of transport level error
  * where the connection has failed. This exception maintains a reference to the connector.
- * 
+ *
  * @see Connector
  * @deprecated Transport infrastructure is deprecated.
  */
@@ -31,7 +31,7 @@ public class ConnectorException extends MuleException
     private transient Connector connector;
 
     /**
-     * @param message the exception message
+     * @param message   the exception message
      * @param connector where the exception occurred or is being thrown
      */
     public ConnectorException(Message message, Connector connector)
@@ -41,9 +41,9 @@ public class ConnectorException extends MuleException
     }
 
     /**
-     * @param message the exception message
+     * @param message   the exception message
      * @param connector where the exception occurred or is being thrown
-     * @param cause the exception that cause this exception to be thrown
+     * @param cause     the exception that cause this exception to be thrown
      */
     public ConnectorException(Message message, Connector connector, Throwable cause)
     {

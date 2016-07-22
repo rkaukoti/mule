@@ -23,7 +23,7 @@ import org.mule.runtime.core.construct.builder.AbstractFlowConstructBuilder;
 @Deprecated
 @SuppressWarnings("unchecked")
 public abstract class AbstractFlowConstructWithSingleInboundAndOutboundEndpointBuilder<T extends AbstractFlowConstructBuilder<?, ?>, F extends AbstractFlowConstruct>
-    extends AbstractFlowConstructWithSingleInboundEndpointBuilder<T, F>
+        extends AbstractFlowConstructWithSingleInboundEndpointBuilder<T, F>
 {
     private OutboundEndpoint outboundEndpoint;
     private EndpointBuilder outboundEndpointBuilder;

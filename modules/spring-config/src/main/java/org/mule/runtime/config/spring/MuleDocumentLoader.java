@@ -6,22 +6,10 @@
  */
 package org.mule.runtime.config.spring;
 
-import static org.mule.runtime.config.spring.parsers.XmlMetadataAnnotations.METADATA_ANNOTATIONS_KEY;
-
+import org.apache.commons.io.IOUtils;
 import org.mule.runtime.config.spring.parsers.DefaultXmlMetadataAnnotations;
 import org.mule.runtime.config.spring.parsers.XmlMetadataAnnotations;
 import org.mule.runtime.core.util.SystemUtils;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.util.LinkedHashMap;
-import java.util.Stack;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.xml.DefaultDocumentLoader;
 import org.springframework.beans.factory.xml.DocumentLoader;
 import org.w3c.dom.Document;
@@ -36,10 +24,21 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.LinkedHashMap;
+import java.util.Stack;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import static org.mule.runtime.config.spring.parsers.XmlMetadataAnnotations.METADATA_ANNOTATIONS_KEY;
+
 /**
  * Alternative to Spring's default document loader that uses <b>SAX</b> to add metadata to the <b>DOM</b> elements that
  * are the result of the default parser.
- * 
+ *
  * @since 3.8.0
  */
 final class MuleDocumentLoader implements DocumentLoader
@@ -101,17 +100,6 @@ final class MuleDocumentLoader implements DocumentLoader
         return documentReader;
     }
 
-    private final class DefaultXmlMetadataFactory implements XmlMetadataAnnotationsFactory
-    {
-        @Override
-        public XmlMetadataAnnotations create(Locator locator)
-        {
-            DefaultXmlMetadataAnnotations annotations = new DefaultXmlMetadataAnnotations();
-            annotations.setLineNumber(locator.getLineNumber());
-            return annotations;
-        }
-    }
-
     /**
      * SAX filter that builds the metadata that will annotate the built nodes.
      */
@@ -164,7 +152,9 @@ final class MuleDocumentLoader implements DocumentLoader
 
             if (!annotationsStack.isEmpty())
             {
-                annotationsStack.peek().appendElementBody(SystemUtils.LINE_SEPARATOR + metadataAnnotations.getElementString() + SystemUtils.LINE_SEPARATOR);
+                annotationsStack.peek()
+                                .appendElementBody(
+                                        SystemUtils.LINE_SEPARATOR + metadataAnnotations.getElementString() + SystemUtils.LINE_SEPARATOR);
             }
 
             walker.getParentNode().setUserData(METADATA_ANNOTATIONS_KEY, metadataAnnotations, COPY_METADATA_ANNOTATIONS_DATA_HANDLER);
@@ -217,6 +207,17 @@ final class MuleDocumentLoader implements DocumentLoader
         public Node getParentNode()
         {
             return parent.node;
+        }
+    }
+
+    private final class DefaultXmlMetadataFactory implements XmlMetadataAnnotationsFactory
+    {
+        @Override
+        public XmlMetadataAnnotations create(Locator locator)
+        {
+            DefaultXmlMetadataAnnotations annotations = new DefaultXmlMetadataAnnotations();
+            annotations.setLineNumber(locator.getLineNumber());
+            return annotations;
         }
     }
 }

@@ -6,17 +6,33 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
+import org.junit.Ignore;
+import org.junit.Test;
+
 import javax.jms.Connection;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.jms.Topic;
 
-import org.junit.Ignore;
-import org.junit.Test;
-
 public class JmsDurableTopicTestCase extends AbstractJmsFunctionalTestCase
 {
+    Scenario scenarioNonTx = new NonTransactedScenario()
+    {
+        @Override
+        public String getOutputDestinationName()
+        {
+            return getJmsConfig().getBroadcastDestinationName();
+        }
+    };
+    Scenario scenarioNotReceive = new ScenarioNotReceive()
+    {
+        @Override
+        public String getOutputDestinationName()
+        {
+            return getJmsConfig().getBroadcastDestinationName();
+        }
+    };
     private String clientId;
 
     @Override
@@ -44,24 +60,6 @@ public class JmsDurableTopicTestCase extends AbstractJmsFunctionalTestCase
         receive(scenarioNonTx);
         receive(scenarioNotReceive);
     }
-
-    Scenario scenarioNonTx = new NonTransactedScenario()
-    {
-        @Override
-        public String getOutputDestinationName()
-        {
-            return getJmsConfig().getBroadcastDestinationName();
-        }
-    };
-
-    Scenario scenarioNotReceive = new ScenarioNotReceive()
-    {
-        @Override
-        public String getOutputDestinationName()
-        {
-            return getJmsConfig().getBroadcastDestinationName();
-        }
-    };
 
     @Override
     public Message receive(Scenario scenario) throws Exception

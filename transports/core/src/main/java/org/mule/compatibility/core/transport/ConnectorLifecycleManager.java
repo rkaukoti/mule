@@ -93,6 +93,6 @@ public class ConnectorLifecycleManager extends SimpleLifecycleManager<Connector>
     protected void fireNotification(int action)
     {
         getLifecycleObject().getMuleContext().fireNotification(
-            new ConnectionNotification(getLifecycleObject(), getLifecycleObject().getName(), action));
+                new ConnectionNotification(getLifecycleObject(), getLifecycleObject().getName(), action));
     }
 }

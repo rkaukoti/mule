@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.connector;
 
-import static java.util.Collections.sort;
-
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
@@ -24,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static java.util.Collections.sort;
+
 /**
  * Default {@link org.mule.runtime.core.api.connector.ConnectorOperationLocator} that will search
  * in the mule registry for registered {@link org.mule.runtime.core.api.connector.ConnectorOperationLocator}
@@ -38,7 +38,8 @@ public class MuleConnectorOperationLocator implements ConnectorOperationLocator,
     @Override
     public void initialise() throws InitialisationException
     {
-        final List<ConnectorOperationProvider> providers = new ArrayList<>(muleContext.getRegistry().lookupObjects(ConnectorOperationProvider.class));
+        final List<ConnectorOperationProvider> providers =
+                new ArrayList<>(muleContext.getRegistry().lookupObjects(ConnectorOperationProvider.class));
         sort(providers, ((ConnectorOperationProvider p1, ConnectorOperationProvider p2) -> priority(p2) - priority(p1)));
 
         this.connectorOperationProviders = providers;
@@ -63,7 +64,8 @@ public class MuleConnectorOperationLocator implements ConnectorOperationLocator,
     }
 
     @Override
-    public MessageProcessor locateConnectorOperation(String url, OperationOptions operationOptions, MessageExchangePattern exchangePattern) throws MuleException
+    public MessageProcessor locateConnectorOperation(String url, OperationOptions operationOptions, MessageExchangePattern exchangePattern)
+            throws MuleException
     {
         for (ConnectorOperationProvider connectorOperationProvider : connectorOperationProviders)
         {

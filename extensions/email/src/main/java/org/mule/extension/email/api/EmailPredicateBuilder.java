@@ -6,8 +6,6 @@
  */
 package org.mule.extension.email.api;
 
-import static java.util.regex.Pattern.compile;
-
 import org.mule.runtime.core.api.util.TimeSinceFunction;
 import org.mule.runtime.core.api.util.TimeUntilFunction;
 import org.mule.runtime.extension.api.annotation.Alias;
@@ -16,6 +14,8 @@ import org.mule.runtime.extension.api.annotation.param.Optional;
 
 import java.time.LocalDateTime;
 import java.util.function.Predicate;
+
+import static java.util.regex.Pattern.compile;
 
 /**
  * Builds a {@link Predicate} which verifies that a {@link EmailAttributes} instance

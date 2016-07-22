@@ -33,8 +33,8 @@ public interface TcpProtocol
     /**
      * Write the specified message into the {@link OutputStream}.
      *
-     * @param os   the {@link OutputStream} in which the data is going to be written
-     * @param data data to be written
+     * @param os       the {@link OutputStream} in which the data is going to be written
+     * @param data     data to be written
      * @param encoding in which the {@code data} will be serialized if its type is {@link String}
      * @throws IOException if an exception occurs
      */

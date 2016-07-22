@@ -6,8 +6,7 @@
  */
 package org.mule.test.config.spring.flow;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.processor.MessageProcessor;
@@ -23,7 +22,7 @@ import org.mule.runtime.core.processor.strategy.SynchronousProcessingStrategy;
 
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class FlowProcessingStrategyConfigTestCase extends FunctionalTestCase
 {
@@ -37,28 +36,28 @@ public class FlowProcessingStrategyConfigTestCase extends FunctionalTestCase
     public void testDefault() throws Exception
     {
         assertEquals(DefaultFlowProcessingStrategy.class,
-            getFlowProcessingStrategy("defaultFlow").getClass());
+                getFlowProcessingStrategy("defaultFlow").getClass());
     }
 
     @Test
     public void testSynchronous() throws Exception
     {
         assertEquals(SynchronousProcessingStrategy.class,
-            getFlowProcessingStrategy("synchronousFlow").getClass());
+                getFlowProcessingStrategy("synchronousFlow").getClass());
     }
 
     @Test
     public void testAsynchronous() throws Exception
     {
         assertEquals(AsynchronousProcessingStrategy.class,
-            getFlowProcessingStrategy("asynchronousFlow").getClass());
+                getFlowProcessingStrategy("asynchronousFlow").getClass());
     }
 
     @Test
     public void testNonBlocking() throws Exception
     {
         assertEquals(NonBlockingProcessingStrategy.class,
-                     getFlowProcessingStrategy("nonBlockingFlow").getClass());
+                getFlowProcessingStrategy("nonBlockingFlow").getClass());
     }
 
     @Test
@@ -94,14 +93,14 @@ public class FlowProcessingStrategyConfigTestCase extends FunctionalTestCase
     public void testDefaultAsync() throws Exception
     {
         assertEquals(AsynchronousProcessingStrategy.class,
-            getAsyncProcessingStrategy("defaultAsync").getClass());
+                getAsyncProcessingStrategy("defaultAsync").getClass());
     }
 
     @Test
     public void testAsynchronousAsync() throws Exception
     {
         assertEquals(AsynchronousProcessingStrategy.class,
-            getAsyncProcessingStrategy("asynchronousAsync").getClass());
+                getAsyncProcessingStrategy("asynchronousAsync").getClass());
     }
 
     @Test

@@ -6,17 +6,16 @@
  */
 package org.mule.test.config.spring.parsers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.test.config.spring.parsers.beans.ChildBean;
 import org.mule.test.config.spring.parsers.beans.OrphanBean;
 
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class MapMule2478TestCase extends AbstractNamespaceTestCase
 {

@@ -6,6 +6,17 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
+import org.hamcrest.Matchers;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.tck.junit4.rule.SystemProperty;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.is;
@@ -18,17 +29,6 @@ import static org.mule.runtime.module.http.api.HttpHeaders.Names.HOST;
 import static org.mule.runtime.module.http.api.HttpHeaders.Names.TRANSFER_ENCODING;
 import static org.mule.runtime.module.http.api.HttpHeaders.Values.CHUNKED;
 import static org.mule.runtime.module.http.api.HttpHeaders.Values.CLOSE;
-import org.mule.tck.junit4.rule.SystemProperty;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.hamcrest.Matchers;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
 
 public class HttpRequestHeadersTestCase extends AbstractHttpRequestTestCase
 {
@@ -36,7 +36,7 @@ public class HttpRequestHeadersTestCase extends AbstractHttpRequestTestCase
     @Rule
     public SystemProperty host = new SystemProperty("host", "localhost");
     @Rule
-    public SystemProperty encoding = new SystemProperty("encoding" , CHUNKED);
+    public SystemProperty encoding = new SystemProperty("encoding", CHUNKED);
 
     @Override
     protected String getConfigFile()

@@ -55,7 +55,8 @@ public class UriParamFilter
         query = new StringBuilder(query.length() + 1).append('&').append(query).toString();
 
         int x = 0;
-        while ((x = addProperty(query, x, '&', props)) != -1);
+        while ((x = addProperty(query, x, '&', props)) != -1)
+            ;
 
         return props;
     }

@@ -6,13 +6,9 @@
  */
 package org.mule.runtime.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
@@ -24,34 +20,20 @@ import org.mule.runtime.core.transformer.builder.MockTransformerBuilder;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class TransformationServiceTestCase extends AbstractMuleTestCase
 {
 
-    private class A
-    {
-
-    }
-
-    private class B
-    {
-
-    }
-
-    private class C
-    {
-
-    }
-
-    private class D
-    {
-
-    }
-
+    private static final DataType dataTypeB = DataType.fromType(B.class);
+    private static final DataType dataTypeC = DataType.fromType(C.class);
+    private static final DataType dataTypeD = DataType.fromType(D.class);
     private MuleContext muleContext = mock(MuleContext.class, RETURNS_DEEP_STUBS);
     private DataTypeConversionResolver conversionResolver = mock(DataTypeConversionResolver.class);
     private TransformationService transformationService;
@@ -62,10 +44,6 @@ public class TransformationServiceTestCase extends AbstractMuleTestCase
         when(muleContext.getDataTypeConverterResolver()).thenReturn(conversionResolver);
         this.transformationService = new TransformationService(muleContext);
     }
-
-    private static final DataType dataTypeB = DataType.fromType(B.class);
-    private static final DataType dataTypeC = DataType.fromType(C.class);
-    private static final DataType dataTypeD = DataType.fromType(D.class);
 
     @Test
     public void failsOnConverterWhenSourceAndReturnTypeDoesNotMatchAndThereIsNoImplicitConversion() throws MuleException
@@ -504,7 +482,8 @@ public class TransformationServiceTestCase extends AbstractMuleTestCase
     public void appliesImplicitConversionWhenAvailable() throws MuleException
     {
         Transformer transformer = new MockTransformerBuilder().from(DataType.BYTE_ARRAY).to(DataType.STRING).returning("bar").build();
-        Transformer converter = new MockConverterBuilder().from(DataType.STRING).to(DataType.BYTE_ARRAY).returning("bar".getBytes()).build();
+        Transformer converter =
+                new MockConverterBuilder().from(DataType.STRING).to(DataType.BYTE_ARRAY).returning("bar".getBytes()).build();
 
         when(conversionResolver.resolve(Mockito.any(DataType.class), Mockito.anyList())).thenReturn(converter);
 
@@ -525,5 +504,25 @@ public class TransformationServiceTestCase extends AbstractMuleTestCase
     private void verifyTransformerExecuted(Transformer converter1) throws TransformerException
     {
         Mockito.verify(converter1, Mockito.times(1)).transform(Mockito.any(Object.class));
+    }
+
+    private class A
+    {
+
+    }
+
+    private class B
+    {
+
+    }
+
+    private class C
+    {
+
+    }
+
+    private class D
+    {
+
     }
 }

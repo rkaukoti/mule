@@ -6,17 +6,14 @@
  */
 package org.mule.test.routing;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-
+import org.apache.commons.lang.SerializationUtils;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.api.serialization.SerializationException;
 import org.mule.runtime.core.api.store.ObjectStoreException;
-import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.routing.EventGroup;
 import org.mule.runtime.core.util.store.SimpleMemoryObjectStore;
 
@@ -24,8 +21,10 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang.SerializationUtils;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 public class CollectionAggregatorRouterSerializationTestCase extends FunctionalTestCase
 {
@@ -40,7 +39,7 @@ public class CollectionAggregatorRouterSerializationTestCase extends FunctionalT
     public void eventGroupDeserialization() throws Exception
     {
         muleContext.getRegistry().registerObject(MuleProperties.OBJECT_STORE_DEFAULT_IN_MEMORY_NAME,
-                                                 new EventGroupSerializerObjectStore<Serializable>());
+                new EventGroupSerializerObjectStore<Serializable>());
         List<String> list = Arrays.asList("first", "second");
         flowRunner("splitter").withPayload(list).asynchronously().run();
 

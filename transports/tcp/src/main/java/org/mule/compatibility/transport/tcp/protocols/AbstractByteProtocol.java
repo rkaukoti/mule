@@ -14,6 +14,8 @@ import org.mule.runtime.core.api.serialization.DefaultObjectSerializer;
 import org.mule.runtime.core.api.serialization.ObjectSerializer;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,9 +26,6 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This Abstract class has been introduced so as to have the byte protocols (i.e. the
@@ -42,13 +41,12 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractByteProtocol implements TcpProtocol
 {
-    private static final Logger logger = LoggerFactory.getLogger(DirectProtocol.class);
-    private static final long PAUSE_PERIOD = 100;
     public static final int EOF = -1;
-
     // make this really clear in subclasses, because otherwise people will forget
     public static final boolean STREAM_OK = true;
     public static final boolean NO_STREAM = false;
+    private static final Logger logger = LoggerFactory.getLogger(DirectProtocol.class);
+    private static final long PAUSE_PERIOD = 100;
     private boolean streamOk;
     private boolean rethrowExceptionOnRead = false;
     private ObjectSerializer objectSerializer;
@@ -74,7 +72,7 @@ public abstract class AbstractByteProtocol implements TcpProtocol
             else
             {
                 throw new IOException("TCP protocol " + ClassUtils.getSimpleName(getClass())
-                        + " cannot handle streaming");
+                                      + " cannot handle streaming");
             }
         }
         else if (data instanceof MuleMessage)

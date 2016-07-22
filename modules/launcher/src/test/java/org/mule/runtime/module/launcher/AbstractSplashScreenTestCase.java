@@ -6,19 +6,19 @@
  */
 package org.mule.runtime.module.launcher;
 
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_HOME_DIRECTORY_PROPERTY;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.core.util.SplashScreen.RUNTIME_VERBOSE;
-import org.mule.runtime.core.util.SplashScreen;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.junit4.rule.SystemProperty;
-
 import org.hamcrest.Matcher;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.mule.runtime.core.util.SplashScreen;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.junit4.rule.SystemProperty;
+
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_HOME_DIRECTORY_PROPERTY;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.core.util.SplashScreen.RUNTIME_VERBOSE;
 
 public abstract class AbstractSplashScreenTestCase<S extends SplashScreen> extends AbstractMuleTestCase
 {
@@ -30,7 +30,9 @@ public abstract class AbstractSplashScreenTestCase<S extends SplashScreen> exten
     protected S splashScreen;
 
     protected abstract void setUpSplashScreen();
+
     protected abstract Matcher<String> getSimpleLogMatcher();
+
     protected abstract Matcher<String> getComplexLogMatcher();
 
     @Test

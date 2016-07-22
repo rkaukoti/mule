@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.module.tls.internal;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 import org.mule.runtime.api.tls.TlsContextFactory;
 import org.mule.runtime.api.tls.TlsContextFactoryBuilder;
 import org.mule.runtime.core.api.MuleContext;
@@ -18,13 +17,15 @@ import org.mule.runtime.module.tls.api.DefaultTlsContextFactoryBuilder;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+
 @DefaultTlsContextFactoryBuilder
 public class MuleTlsContextFactoryBuilder implements TlsContextFactoryBuilder, Initialisable, MuleContextAware
 {
 
+    private final AtomicBoolean initialised = new AtomicBoolean(false);
     private TlsContextFactory defaultTlsContextFactory;
     private MuleContext muleContext;
-    private final AtomicBoolean initialised = new AtomicBoolean(false);
 
     /**
      * Creates a default {@link TlsContextFactory} and registers it under key
@@ -47,7 +48,8 @@ public class MuleTlsContextFactoryBuilder implements TlsContextFactoryBuilder, I
         }
         catch (Exception e)
         {
-            throw new InitialisationException(createStaticMessage("Failed to create default " + TlsContextFactory.class.getSimpleName()), e, this);
+            throw new InitialisationException(createStaticMessage("Failed to create default " + TlsContextFactory.class.getSimpleName()), e,
+                    this);
         }
     }
 

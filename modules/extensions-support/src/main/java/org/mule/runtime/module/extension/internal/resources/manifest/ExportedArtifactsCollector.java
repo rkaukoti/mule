@@ -6,10 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.resources.manifest;
 
-import static java.util.stream.Collectors.toSet;
-import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
-import static org.mule.metadata.utils.MetadataTypeUtils.getSingleAnnotation;
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.EXTENSION_MANIFEST_FILE_NAME;
+import com.google.common.collect.ImmutableSet;
+
 import org.mule.metadata.api.annotation.EnumAnnotation;
 import org.mule.metadata.api.model.ArrayType;
 import org.mule.metadata.api.model.DictionaryType;
@@ -29,10 +27,13 @@ import org.mule.runtime.extension.api.introspection.source.HasSourceModels;
 import org.mule.runtime.extension.api.introspection.source.SourceModel;
 import org.mule.runtime.extension.xml.dsl.api.property.XmlModelProperty;
 
-import com.google.common.collect.ImmutableSet;
-
 import java.util.Optional;
 import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
+import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
+import static org.mule.metadata.utils.MetadataTypeUtils.getSingleAnnotation;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.EXTENSION_MANIFEST_FILE_NAME;
 
 /**
  * Utility class which calculates the default set of java package
@@ -85,9 +86,9 @@ final class ExportedArtifactsCollector
         collectManuallyExportedPackages();
 
         Set<String> exportedPackages = exportedClasses.build().stream()
-                .filter(type -> type.getPackage() != null)
-                .map(type -> type.getPackage().getName())
-                .collect(toSet());
+                                                      .filter(type -> type.getPackage() != null)
+                                                      .map(type -> type.getPackage().getName())
+                                                      .collect(toSet());
 
         return filterExportedPackages(exportedPackages);
     }
@@ -119,14 +120,14 @@ final class ExportedArtifactsCollector
     private Set<String> filterExportedPackages(Set<String> exportedPackages)
     {
         return exportedPackages.stream()
-                .filter(packageName -> filteredPackages.stream().noneMatch(filtered -> packageName.startsWith(filtered)))
-                .collect(toSet());
+                               .filter(packageName -> filteredPackages.stream().noneMatch(filtered -> packageName.startsWith(filtered)))
+                               .collect(toSet());
     }
 
     private void collectManuallyExportedPackages()
     {
         getExportModelProperty().map(ExportModelProperty::getExportedTypes)
-                .ifPresent(types -> types.forEach( c -> exportedClasses.add(getType(c))));
+                                .ifPresent(types -> types.forEach(c -> exportedClasses.add(getType(c))));
     }
 
     private Optional<ExportModelProperty> getExportModelProperty()

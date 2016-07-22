@@ -6,9 +6,25 @@
  */
 package org.mule.compatibility.transport.http.transformers;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.mule.compatibility.transport.http.HttpConnector.HTTP_PARAMS_PROPERTY;
-import static org.mule.compatibility.transport.http.HttpConstants.HEADER_CONTENT_TYPE;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.HttpVersion;
+import org.apache.commons.httpclient.methods.ByteArrayRequestEntity;
+import org.apache.commons.httpclient.methods.DeleteMethod;
+import org.apache.commons.httpclient.methods.EntityEnclosingMethod;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.HeadMethod;
+import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
+import org.apache.commons.httpclient.methods.OptionsMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.PutMethod;
+import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.commons.httpclient.methods.TraceMethod;
+import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
+import org.apache.commons.httpclient.methods.multipart.FilePart;
+import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
+import org.apache.commons.httpclient.methods.multipart.Part;
+import org.apache.commons.httpclient.methods.multipart.StringPart;
+import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
 import org.mule.compatibility.core.api.transformer.EndpointAwareTransformer;
 import org.mule.compatibility.transport.http.HttpConnector;
@@ -45,25 +61,9 @@ import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.activation.URLDataSource;
 
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.HttpVersion;
-import org.apache.commons.httpclient.methods.ByteArrayRequestEntity;
-import org.apache.commons.httpclient.methods.DeleteMethod;
-import org.apache.commons.httpclient.methods.EntityEnclosingMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.HeadMethod;
-import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
-import org.apache.commons.httpclient.methods.OptionsMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
-import org.apache.commons.httpclient.methods.TraceMethod;
-import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
-import org.apache.commons.httpclient.methods.multipart.FilePart;
-import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
-import org.apache.commons.httpclient.methods.multipart.Part;
-import org.apache.commons.httpclient.methods.multipart.StringPart;
-import org.apache.commons.httpclient.params.HttpMethodParams;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.mule.compatibility.transport.http.HttpConnector.HTTP_PARAMS_PROPERTY;
+import static org.mule.compatibility.transport.http.HttpConstants.HEADER_CONTENT_TYPE;
 
 /**
  * <code>ObjectToHttpClientMethodRequest</code> transforms a MuleMessage into a
@@ -71,6 +71,11 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
  */
 public class ObjectToHttpClientMethodRequest extends AbstractMessageTransformer implements EndpointAwareTransformer
 {
+    /**
+     * The endpoint that this transformer instance is configured on
+     */
+    protected ImmutableEndpoint endpoint = null;
+
     public ObjectToHttpClientMethodRequest()
     {
         setReturnDataType(DataType.fromType(HttpMethod.class));
@@ -140,7 +145,7 @@ public class ObjectToHttpClientMethodRequest extends AbstractMessageTransformer 
             {
                 // TODO we should probably set other properties here
                 final String httpVersion = msg.getOutboundProperty(HttpConnector.HTTP_VERSION_PROPERTY,
-                    HttpConstants.HTTP11);
+                        HttpConstants.HTTP11);
                 if (HttpConstants.HTTP10.equals(httpVersion))
                 {
                     httpMethod.getParams().setVersion(HttpVersion.HTTP_1_0);
@@ -311,8 +316,8 @@ public class ObjectToHttpClientMethodRequest extends AbstractMessageTransformer 
         if (endpointAddress == null)
         {
             throw new TransformerException(
-                HttpMessages.eventPropertyNotSetCannotProcessRequest(MuleProperties.MULE_ENDPOINT_PROPERTY),
-                this);
+                    HttpMessages.eventPropertyNotSetCannotProcessRequest(MuleProperties.MULE_ENDPOINT_PROPERTY),
+                    this);
         }
         return new URI(endpointAddress);
     }
@@ -321,7 +326,7 @@ public class ObjectToHttpClientMethodRequest extends AbstractMessageTransformer 
                                      Charset encoding,
                                      MuleEvent event,
                                      EntityEnclosingMethod postMethod)
-        throws UnsupportedEncodingException, TransformerException
+            throws UnsupportedEncodingException, TransformerException
     {
         final MuleMessage msg = event.getMessage();
         // Dont set a POST payload if the body is a Null Payload.
@@ -331,7 +336,8 @@ public class ObjectToHttpClientMethodRequest extends AbstractMessageTransformer 
             String outboundMimeType = msg.getDataType().getMediaType().toRfcString();
             if (outboundMimeType == null)
             {
-                outboundMimeType = (getEndpoint() != null && getEndpoint().getMimeType() != null ? getEndpoint().getMimeType().toRfcString() : null);
+                outboundMimeType =
+                        (getEndpoint() != null && getEndpoint().getMimeType() != null ? getEndpoint().getMimeType().toRfcString() : null);
             }
             if (outboundMimeType == null)
             {
@@ -358,7 +364,7 @@ public class ObjectToHttpClientMethodRequest extends AbstractMessageTransformer 
             // Ensure that we have a cached representation of the message if we're
             // using HTTP 1.0
             final String httpVersion = msg.getOutboundProperty(HttpConnector.HTTP_VERSION_PROPERTY,
-                HttpConstants.HTTP11);
+                    HttpConstants.HTTP11);
             if (HttpConstants.HTTP10.equals(httpVersion))
             {
                 try
@@ -446,7 +452,7 @@ public class ObjectToHttpClientMethodRequest extends AbstractMessageTransformer 
     }
 
     protected MultipartRequestEntity createMultiPart(MuleEvent event, EntityEnclosingMethod method)
-        throws Exception
+            throws Exception
     {
         final MuleMessage msg = event.getMessage();
         Part[] parts;
@@ -501,17 +507,12 @@ public class ObjectToHttpClientMethodRequest extends AbstractMessageTransformer 
                 }
 
                 parts[i] = new FilePart(attachmentName, new ByteArrayPartSource(StringUtils.defaultString(fileName, attachmentName),
-                    IOUtils.toByteArray(dh.getInputStream())), dh.getContentType(), null);
+                        IOUtils.toByteArray(dh.getInputStream())), dh.getContentType(), null);
             }
         }
 
         return new MultipartRequestEntity(parts, method.getParams());
     }
-
-    /**
-     * The endpoint that this transformer instance is configured on
-     */
-    protected ImmutableEndpoint endpoint = null;
 
     @Override
     public ImmutableEndpoint getEndpoint()

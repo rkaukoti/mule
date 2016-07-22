@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/transports"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:mule="http://www.mulesoft.org/schema/mule/core"
             xmlns:mule-cxf="http://www.mulesoft.org/schema/mule/cxf"
             xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
             xmlns:management="http://www.mulesoft.org/schema/mule/management"
-            xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
             xmlns:spring="http://www.springframework.org/schema/beans"
-            xmlns:spring-context="http://www.springframework.org/schema/context"
+            xmlns="http://www.mulesoft.org/schema/mule/transports"
             targetNamespace="http://www.mulesoft.org/schema/mule/transports"
             attributeFormDefault="unqualified"
             elementFormDefault="qualified">
@@ -76,21 +73,24 @@
                     <xsd:element name="default-dispatcher-threading-profile" type="mule:threadingProfileType" minOccurs="0">
                         <xsd:annotation>
                             <xsd:documentation>
-                                The default dispatching threading profile, which modifies the default-threading-profile values and is used by endpoints for dispatching messages. This can also be configured on connectors, in which case the connector configuration is used instead of this default.
+                                The default dispatching threading profile, which modifies the default-threading-profile values and is used by endpoints for dispatching messages. This can also be
+                                configured on connectors, in which case the connector configuration is used instead of this default.
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
                     <xsd:element name="default-receiver-threading-profile" type="mule:threadingProfileType" minOccurs="0">
                         <xsd:annotation>
                             <xsd:documentation>
-                                The default receiving threading profile, which modifies the default-threading-profile values and is used by endpoints for receiving messages. This can also be configured on connectors, in which case the connector configuration is used instead of this default.
+                                The default receiving threading profile, which modifies the default-threading-profile values and is used by endpoints for receiving messages. This can also be
+                                configured on connectors, in which case the connector configuration is used instead of this default.
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
                     <xsd:element name="default-service-threading-profile" type="mule:threadingProfileType" minOccurs="0">
                         <xsd:annotation>
                             <xsd:documentation>
-                                The default service threading profile, which modifies the default-threading-profile and is used by services for processing messages. This can also be configured on models or services, in which case these configurations will be used instead of this default.
+                                The default service threading profile, which modifies the default-threading-profile and is used by services for processing messages. This can also be configured on
+                                models or services, in which case these configurations will be used instead of this default.
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
@@ -102,7 +102,9 @@
     <xsd:element name="java-interface-binding" type="pojoBindingType" substitutionGroup="scripting:script-additional-config">
         <xsd:annotation>
             <xsd:documentation>
-                A binding associates a Mule endpoint with an injected Java interface (this is like using Spring to inject a bean, but instead of calling a method on the bean a message is sent to an endpoint). Script bindings will only work with Java-based scripting languages. Right now there is no validation on when languages support Java bindinngs because there are so many scripting languages.
+                A binding associates a Mule endpoint with an injected Java interface (this is like using Spring to inject a bean, but instead of calling a method on the bean a message is sent to an
+                endpoint). Script bindings will only work with Java-based scripting languages. Right now there is no validation on when languages support Java bindinngs because there are so many
+                scripting languages.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -133,7 +135,9 @@
     <xsd:element name="endpoint" type="globalEndpointType" substitutionGroup="mule:abstract-global-endpoint">
         <xsd:annotation>
             <xsd:documentation>
-                A global endpoint, which acts as a template that can be used to construct an inbound or outbound endpoint elsewhere in the configuration by referencing the global endpoint name. Each transport implements its own endpoint element, with a more friendly syntax, but this generic element can be used with any transport by supplying the correct address URI. For example, "vm://foo" describes a VM transport endpoint.
+                A global endpoint, which acts as a template that can be used to construct an inbound or outbound endpoint elsewhere in the configuration by referencing the global endpoint name. Each
+                transport implements its own endpoint element, with a more friendly syntax, but this generic element can be used with any transport by supplying the correct address URI. For example,
+                "vm://foo" describes a VM transport endpoint.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -237,7 +241,7 @@
     </xsd:element>
 
     <!-- these include option/repeats - should be embedded once -->
-        <!-- these include option/repeats - should be embedded once -->
+    <!-- these include option/repeats - should be embedded once -->
     <xsd:group name="commonDefaultEndpointElements">
         <xsd:sequence>
             <xsd:group ref="endpointMessageProcessorElements" minOccurs="0" maxOccurs="unbounded"/>
@@ -266,8 +270,8 @@
 
     <xsd:group name="endpointMessageProcessorElements">
         <xsd:choice>
-            <xsd:element ref="mule:abstract-transformer" />
-            <xsd:element ref="mule:abstract-filter" />
+            <xsd:element ref="mule:abstract-transformer"/>
+            <xsd:element ref="mule:abstract-filter"/>
             <xsd:element ref="mule:abstract-security-filter"/>
             <xsd:element ref="mule:abstract-intercepting-message-processor"/>
             <xsd:element ref="mule:abstract-observer-message-processor"/>
@@ -285,7 +289,8 @@
         <xsd:attribute name="ref" type="xsd:string">
             <xsd:annotation>
                 <xsd:documentation>
-                    A reference to a global endpoint, which is used as a template to construct this endpoint. A template fixes the address (protocol, path, host, etc.), and may specify initial values for various properties, but further properties can be defined locally (as long as they do not change the address in any way).
+                    A reference to a global endpoint, which is used as a template to construct this endpoint. A template fixes the address (protocol, path, host, etc.), and may specify initial values
+                    for various properties, but further properties can be defined locally (as long as they do not change the address in any way).
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
@@ -293,7 +298,8 @@
         <xsd:attribute name="address" type="xsd:string">
             <xsd:annotation>
                 <xsd:documentation>
-                    The generic address for this endpoint. If this attribute is used, the protocol must be specified as part of the URI. Alternatively, most transports provide their own attributes for specifying the address (path, host, etc.). Note that the address attribute cannot be combined with 'ref' or with the transport-provided alternative attributes.
+                    The generic address for this endpoint. If this attribute is used, the protocol must be specified as part of the URI. Alternatively, most transports provide their own attributes for
+                    specifying the address (path, host, etc.). Note that the address attribute cannot be combined with 'ref' or with the transport-provided alternative attributes.
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
@@ -356,7 +362,8 @@
         <xsd:attribute name="ref" type="xsd:string">
             <xsd:annotation>
                 <xsd:documentation>
-                    The reference name of a global endpoint to use. If this EndpointRef will be associated to a message such as a Reply-To address, this endpoint ref has to be available on the remote Mule instance that reads the Reply-To address.
+                    The reference name of a global endpoint to use. If this EndpointRef will be associated to a message such as a Reply-To address, this endpoint ref has to be available on the remote
+                    Mule instance that reads the Reply-To address.
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
@@ -435,14 +442,15 @@
     <xsd:element name="recipient-list" substitutionGroup="mule:abstract-routing-message-processor">
         <xsd:annotation>
             <xsd:documentation>
-                Sends the same message to multiple endpoints, over the same endpoint, or implements routing-slip behavior where the next destination for the message is determined from message properties or the payload. The recipients can be extracted from the message using an expression, or you can specify a static list of recipient endpoints. (As of version 2.1)
+                Sends the same message to multiple endpoints, over the same endpoint, or implements routing-slip behavior where the next destination for the message is determined from message
+                properties or the payload. The recipients can be extracted from the message using an expression, or you can specify a static list of recipient endpoints. (As of version 2.1)
             </xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
             <xsd:complexContent>
                 <xsd:extension base="mule:abstractRoutingMessageProcessorType">
                     <xsd:sequence>
-                       <xsd:element ref="mule:abstract-message-info-mapping" minOccurs="0"/>
+                        <xsd:element ref="mule:abstract-message-info-mapping" minOccurs="0"/>
                     </xsd:sequence>
                     <xsd:attributeGroup ref="mule:defaultCorrelationAttributes"/>
                     <xsd:attributeGroup ref="mule:expressionAttributes"/>
@@ -487,7 +495,8 @@
                     <xsd:element name="service-overrides" type="serviceOverridesType" minOccurs="0">
                         <xsd:annotation>
                             <xsd:documentation>
-                                Service overrides allow the connector to be further configured/customized by allowing parts of the transport implementation to be overridden, for example, the message receiver or dispatcher implementation, or the message adaptor that is used.
+                                Service overrides allow the connector to be further configured/customized by allowing parts of the transport implementation to be overridden, for example, the message
+                                receiver or dispatcher implementation, or the message adaptor that is used.
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
@@ -495,7 +504,8 @@
                 <xsd:attribute name="dynamicNotification" type="mule:substitutableBoolean" default="false">
                     <xsd:annotation>
                         <xsd:documentation>
-                            Enables dynamic notifications for notifications fired by this connector. This allows listeners to be registered dynamically at runtime via the MuleContext, and the configured notification can be changed. This overrides the default value defined in the 'configuration' element.
+                            Enables dynamic notifications for notifications fired by this connector. This allows listeners to be registered dynamically at runtime via the MuleContext, and the
+                            configured notification can be changed. This overrides the default value defined in the 'configuration' element.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -541,7 +551,8 @@
                 <xsd:attribute name="createMultipleTransactedReceivers" type="mule:substitutableBoolean">
                     <xsd:annotation>
                         <xsd:documentation>
-                            Whether to create multiple concurrent receivers for this connector. This property is used by transports that support transactions, specifically receivers that extend the TransactedPollingMessageReceiver, and provides better throughput.
+                            Whether to create multiple concurrent receivers for this connector. This property is used by transports that support transactions, specifically receivers that extend the
+                            TransactedPollingMessageReceiver, and provides better throughput.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -603,7 +614,8 @@
                 <xsd:attribute name="jndiUrlPkgPrefixes" type="xsd:string">
                     <xsd:annotation>
                         <xsd:documentation>
-                            The list of package prefixes to use when loading in URL context factories. The value of the property should be a colon-separated list of package prefixes for the class name of the factory class that will create a URL context factory.
+                            The list of package prefixes to use when loading in URL context factories. The value of the property should be a colon-separated list of package prefixes for the class name
+                            of the factory class that will create a URL context factory.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -612,11 +624,13 @@
     </xsd:complexType>
 
     <!-- Scripting -->
-    
+
     <xsd:element name="component" type="defaultJavaWithBindingsComponentType" substitutionGroup="mule:abstract-component">
         <xsd:annotation>
             <xsd:documentation>
-                A simple POJO (Plain Old Java Object) component that will be invoked by Mule when a message is received. The class or object instance to be used can be specified using a child object factory element, or via the 'class' attribute.  If the 'class' attribute is used, an object factory cannot be configured as well. Using the 'class' attribute is equivilant to using the propotype object factory ('prototype-object' child element).
+                A simple POJO (Plain Old Java Object) component that will be invoked by Mule when a message is received. The class or object instance to be used can be specified using a child object
+                factory element, or via the 'class' attribute. If the 'class' attribute is used, an object factory cannot be configured as well. Using the 'class' attribute is equivilant to using the
+                propotype object factory ('prototype-object' child element).
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -627,7 +641,8 @@
                     <xsd:element name="binding" type="pojoBindingType" minOccurs="0" maxOccurs="unbounded">
                         <xsd:annotation>
                             <xsd:documentation>
-                                A binding associates a Mule endpoint with an injected Java interface. This is like using Spring to inject a bean, but instead of calling a method on the bean, a message is sent to an endpoint.
+                                A binding associates a Mule endpoint with an injected Java interface. This is like using Spring to inject a bean, but instead of calling a method on the bean, a message
+                                is sent to an endpoint.
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
@@ -650,7 +665,8 @@
                     <xsd:element name="binding" type="pojoBindingType" minOccurs="0" maxOccurs="unbounded">
                         <xsd:annotation>
                             <xsd:documentation>
-                                A binding associates a Mule endpoint with an injected Java interface. This is like using Spring to inject a bean, but instead of calling a method on the bean, a message is sent to an endpoint.
+                                A binding associates a Mule endpoint with an injected Java interface. This is like using Spring to inject a bean, but instead of calling a method on the bean, a message
+                                is sent to an endpoint.
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
@@ -695,9 +711,9 @@
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    
+
     <!-- HTTP -->
-    
+
     <xsd:element name="config" type="httpConfigType" substitutionGroup="mule:abstract-configuration-extension">
         <xsd:annotation>
             <xsd:documentation>
@@ -712,7 +728,8 @@
                 <xsd:attribute name="useTransportForUris" type="mule:substitutableBoolean" default="false">
                     <xsd:annotation>
                         <xsd:documentation>
-                            Backwards Compatabilty Flag: Since Mule 3.6, default HTTP URIs are resolved with the new HTTP connector (for example when using MuleClient). If set to true, this behavior is changed so that the HTTP transport is used.
+                            Backwards Compatabilty Flag: Since Mule 3.6, default HTTP URIs are resolved with the new HTTP connector (for example when using MuleClient). If set to true, this behavior
+                            is changed so that the HTTP transport is used.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -721,7 +738,7 @@
     </xsd:complexType>
 
     <!-- CXF -->
-   
+
     <xsd:element name="jaxws-service" type="jaxWsServiceType" substitutionGroup="mule:abstract-intercepting-message-processor"/>
     <xsd:complexType name="jaxWsServiceType">
         <xsd:complexContent>
@@ -729,8 +746,8 @@
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    
-    
+
+
     <xsd:element name="proxy-service" type="proxyServiceType" substitutionGroup="mule:abstract-intercepting-message-processor"/>
     <xsd:complexType name="proxyServiceType">
         <xsd:complexContent>
@@ -739,7 +756,7 @@
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    
+
     <xsd:element name="simple-client" type="simpleClientTypeWithDecoupledEndpoint" substitutionGroup="mule:abstract-intercepting-message-processor"/>
 
     <xsd:complexType name="simpleClientTypeWithDecoupledEndpoint">
@@ -748,7 +765,7 @@
                 <xsd:attribute name="decoupledEndpoint" type="xsd:string">
                     <xsd:annotation>
                         <xsd:documentation>
-                            The reply to endpoint for clients which have WS-Addressing enabled. 
+                            The reply to endpoint for clients which have WS-Addressing enabled.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -764,7 +781,7 @@
                 <xsd:attribute name="decoupledEndpoint" type="xsd:string">
                     <xsd:annotation>
                         <xsd:documentation>
-                            The reply to endpoint for clients which have WS-Addressing enabled. 
+                            The reply to endpoint for clients which have WS-Addressing enabled.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -780,18 +797,18 @@
                 <xsd:attribute name="decoupledEndpoint" type="xsd:string">
                     <xsd:annotation>
                         <xsd:documentation>
-                            The reply to endpoint for clients which have WS-Addressing enabled. 
+                            The reply to endpoint for clients which have WS-Addressing enabled.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    
+
     <xsd:element name="wrapper-component" type="wrapperComponentType" substitutionGroup="mule:abstract-component">
         <xsd:annotation>
             <xsd:documentation>
-                The WebServiceWrapperComponent class allows you to send the result of a web service call to another endpoint. 
+                The WebServiceWrapperComponent class allows you to send the result of a web service call to another endpoint.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -817,7 +834,7 @@
                     <xsd:annotation>
                         <xsd:documentation>
                             The WSDL port you want to use to communicate to the service.
-                         </xsd:documentation>
+                        </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
                 <xsd:attribute name="operation" type="xsd:string">
@@ -830,7 +847,7 @@
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    
+
     <!-- Management -->
     <xsd:element name="jmx-default-config" type="management:jmxDefaultConfigType" substitutionGroup="mule:abstract-agent"/>
 
@@ -844,5 +861,5 @@
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    
+
 </xsd:schema>

@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
-
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.tck.size.SmallTest;
 
 import java.util.HashSet;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class RemovePropertyTransformerTestCase extends AbstractRemoveVariablePropertyTransformerTestCase

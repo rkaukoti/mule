@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:mule="http://www.mulesoft.org/schema/mule/core"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
       xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
        http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
@@ -19,14 +19,14 @@
         <script:component>
             <script:script engine="groovy">
                 if (message.getInboundProperty("foo"))
-                    return "foo header received"
+                return "foo header received"
                 else
-                    return null
+                return null
             </script:script>
         </script:component>
-        
+
         <logger level="ERROR" message="#[payload]"/>
-        
+
         <async>
             <mule:wildcard-filter pattern="* header received"/>
             <test:queue name="received"/>
@@ -36,6 +36,6 @@
             <test:queue name="notReceived"/>
         </async>
     </flow>
-    
+
     <!--// END SNIPPET: full-config -->
 </mule>

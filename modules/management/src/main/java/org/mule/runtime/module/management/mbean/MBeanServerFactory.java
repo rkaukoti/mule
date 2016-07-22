@@ -10,12 +10,12 @@ import java.util.List;
 
 import javax.management.MBeanServer;
 
-public class MBeanServerFactory 
+public class MBeanServerFactory
 {
     public static MBeanServer getOrCreateMBeanServer()
     {
         MBeanServer server;
-        
+
         List servers = javax.management.MBeanServerFactory.findMBeanServer(null);
         if (servers != null && servers.size() > 0)
         {

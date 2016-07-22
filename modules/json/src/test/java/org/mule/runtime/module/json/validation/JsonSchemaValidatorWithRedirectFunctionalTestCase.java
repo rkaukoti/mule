@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.module.json.validation;
 
+import org.junit.Test;
+
 import static org.mule.runtime.module.json.validation.JsonSchemaTestUtils.getBadFstab;
 import static org.mule.runtime.module.json.validation.JsonSchemaTestUtils.getBadFstab2;
 import static org.mule.runtime.module.json.validation.JsonSchemaTestUtils.getGoodFstab;
-
-import org.junit.Test;
 
 public class JsonSchemaValidatorWithRedirectFunctionalTestCase extends AbstractValidateSchemaFunctionalTestCase
 {

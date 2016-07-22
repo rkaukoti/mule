@@ -9,7 +9,7 @@ package org.mule.runtime.core.security;
 /**
  * A factory class for providing secret keys to an instance of
  * {@link SecretKeyEncryptionStrategy}.
- * 
+ *
  * @see SecretKeyEncryptionStrategy
  */
 public interface SecretKeyFactory

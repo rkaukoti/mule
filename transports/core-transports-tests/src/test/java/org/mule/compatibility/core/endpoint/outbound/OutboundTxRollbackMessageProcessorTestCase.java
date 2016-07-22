@@ -6,11 +6,8 @@
  */
 package org.mule.compatibility.core.endpoint.outbound;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointException;
-import org.mule.compatibility.core.endpoint.outbound.OutboundTxRollbackMessageProcessor;
 import org.mule.compatibility.core.processor.AbstractMessageProcessorTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -19,7 +16,8 @@ import org.mule.runtime.core.api.transaction.Transaction;
 import org.mule.runtime.core.transaction.TransactionCoordination;
 import org.mule.tck.testmodels.mule.TestTransaction;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 
 public class OutboundTxRollbackMessageProcessorTestCase extends AbstractMessageProcessorTestCase
 {

@@ -6,9 +6,10 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
+import org.eclipse.jetty.server.Request;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.module.http.api.HttpHeaders;
 
@@ -19,10 +20,8 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.Request;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
 public class HttpRequestEncodingTestCase extends AbstractHttpRequestTestCase

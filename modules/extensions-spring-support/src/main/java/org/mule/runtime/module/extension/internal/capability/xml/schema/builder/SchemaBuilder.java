@@ -6,55 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.capability.xml.schema.builder;
 
-import static java.math.BigInteger.ONE;
-import static java.math.BigInteger.ZERO;
-import static java.util.stream.Collectors.toList;
-import static org.apache.commons.lang.StringUtils.EMPTY;
-import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
-import static org.mule.metadata.utils.MetadataTypeUtils.getSingleAnnotation;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.REQUIRED;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.SUPPORTED;
-import static org.mule.runtime.extension.api.util.NameUtils.getTopLevelTypeName;
-import static org.mule.runtime.extension.api.util.NameUtils.hyphenize;
-import static org.mule.runtime.extension.api.util.NameUtils.itemize;
-import static org.mule.runtime.extension.api.util.NameUtils.pluralize;
-import static org.mule.runtime.extension.api.util.NameUtils.sanitizeName;
-import static org.mule.runtime.extension.api.util.NameUtils.singularize;
-import static org.mule.runtime.extension.xml.dsl.api.XmlModelUtils.createXmlModelProperty;
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.THREADING_PROFILE_ATTRIBUTE_NAME;
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.TLS_ATTRIBUTE_NAME;
-import static org.mule.runtime.module.extension.internal.introspection.describer.MuleExtensionAnnotationParser.parseRepeatableAnnotation;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getAnnotation;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getExposedFields;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.isInstantiable;
-import static org.mule.runtime.module.extension.internal.util.MetadataTypeUtils.getId;
-import static org.mule.runtime.module.extension.internal.util.MetadataTypeUtils.isExtensible;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.ATTRIBUTE_NAME_KEY;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.ATTRIBUTE_NAME_VALUE;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.CONFIG_ATTRIBUTE;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.CONFIG_ATTRIBUTE_DESCRIPTION;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.GROUP_SUFFIX;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_EXTENSION;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_EXTENSION_TYPE;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_MESSAGE_PROCESSOR;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_RECONNECTION_STRATEGY;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_THREADING_PROFILE;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_EXTENSION_NAMESPACE;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_EXTENSION_OPERATION_TRANSACTIONAL_ACTION_TYPE;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_EXTENSION_SCHEMA_LOCATION;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_MESSAGE_PROCESSOR_TYPE;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_NAMESPACE;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_SCHEMA_LOCATION;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_TLS_NAMESPACE;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_TLS_SCHEMA_LOCATION;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.OPERATION_SUBSTITUTION_GROUP_SUFFIX;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.SPRING_FRAMEWORK_NAMESPACE;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.SPRING_FRAMEWORK_SCHEMA_LOCATION;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.SUBSTITUTABLE_NAME;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.TLS_CONTEXT_TYPE;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.XML_NAMESPACE;
+import com.google.common.collect.ImmutableMap;
+
 import org.mule.metadata.api.ClassTypeLoader;
 import org.mule.metadata.api.annotation.EnumAnnotation;
 import org.mule.metadata.api.model.ArrayType;
@@ -117,8 +70,7 @@ import org.mule.runtime.module.extension.internal.exception.IllegalParameterMode
 import org.mule.runtime.module.extension.internal.model.property.InfrastructureParameterModelProperty;
 import org.mule.runtime.module.extension.internal.model.property.TypeRestrictionModelProperty;
 import org.mule.runtime.module.extension.internal.xml.SchemaConstants;
-
-import com.google.common.collect.ImmutableMap;
+import org.springframework.util.ClassUtils;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -133,7 +85,55 @@ import java.util.Set;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
-import org.springframework.util.ClassUtils;
+import static java.math.BigInteger.ONE;
+import static java.math.BigInteger.ZERO;
+import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang.StringUtils.EMPTY;
+import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
+import static org.mule.metadata.utils.MetadataTypeUtils.getSingleAnnotation;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.REQUIRED;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.SUPPORTED;
+import static org.mule.runtime.extension.api.util.NameUtils.getTopLevelTypeName;
+import static org.mule.runtime.extension.api.util.NameUtils.hyphenize;
+import static org.mule.runtime.extension.api.util.NameUtils.itemize;
+import static org.mule.runtime.extension.api.util.NameUtils.pluralize;
+import static org.mule.runtime.extension.api.util.NameUtils.sanitizeName;
+import static org.mule.runtime.extension.api.util.NameUtils.singularize;
+import static org.mule.runtime.extension.xml.dsl.api.XmlModelUtils.createXmlModelProperty;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.THREADING_PROFILE_ATTRIBUTE_NAME;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.TLS_ATTRIBUTE_NAME;
+import static org.mule.runtime.module.extension.internal.introspection.describer.MuleExtensionAnnotationParser.parseRepeatableAnnotation;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getAnnotation;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getExposedFields;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.isInstantiable;
+import static org.mule.runtime.module.extension.internal.util.MetadataTypeUtils.getId;
+import static org.mule.runtime.module.extension.internal.util.MetadataTypeUtils.isExtensible;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.ATTRIBUTE_NAME_KEY;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.ATTRIBUTE_NAME_VALUE;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.CONFIG_ATTRIBUTE;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.CONFIG_ATTRIBUTE_DESCRIPTION;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.GROUP_SUFFIX;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_EXTENSION;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_EXTENSION_TYPE;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_MESSAGE_PROCESSOR;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_RECONNECTION_STRATEGY;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_THREADING_PROFILE;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_EXTENSION_NAMESPACE;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_EXTENSION_OPERATION_TRANSACTIONAL_ACTION_TYPE;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_EXTENSION_SCHEMA_LOCATION;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_MESSAGE_PROCESSOR_TYPE;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_NAMESPACE;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_SCHEMA_LOCATION;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_TLS_NAMESPACE;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_TLS_SCHEMA_LOCATION;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.OPERATION_SUBSTITUTION_GROUP_SUFFIX;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.SPRING_FRAMEWORK_NAMESPACE;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.SPRING_FRAMEWORK_SCHEMA_LOCATION;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.SUBSTITUTABLE_NAME;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.TLS_CONTEXT_TYPE;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.XML_NAMESPACE;
 
 /**
  * Builder class to generate a XSD schema that describes a
@@ -171,12 +171,13 @@ public final class SchemaBuilder
         builder.schema.setElementFormDefault(FormChoice.QUALIFIED);
         builder.schema.setAttributeFormDefault(FormChoice.UNQUALIFIED);
         builder.importXmlNamespace()
-                .importSpringFrameworkNamespace()
-                .importMuleNamespace()
-                .importMuleExtensionNamespace();
+               .importSpringFrameworkNamespace()
+               .importMuleNamespace()
+               .importMuleExtensionNamespace();
         builder.withXmlDeclaration(xmlModelProperty);
 
-        Optional<Map<MetadataType, MetadataType>> importedTypes = extensionModel.getModelProperty(ImportedTypesModelProperty.class).map(ImportedTypesModelProperty::getImportedTypes);
+        Optional<Map<MetadataType, MetadataType>> importedTypes =
+                extensionModel.getModelProperty(ImportedTypesModelProperty.class).map(ImportedTypesModelProperty::getImportedTypes);
         builder.withImportedTypes(importedTypes.orElse(ImmutableMap.of()));
 
         Optional<SubTypesModelProperty> subTypesProperty = extensionModel.getModelProperty(SubTypesModelProperty.class);
@@ -204,8 +205,8 @@ public final class SchemaBuilder
     private SchemaBuilder withExportedTypes(List<MetadataType> exportedTypes)
     {
         exportedTypes.stream()
-                .filter(t -> isInstantiableWithParameters(getType(t)))
-                .forEach(t -> registerPojoType(t, t.getDescription().orElse(EMPTY)));
+                     .filter(t -> isInstantiableWithParameters(getType(t)))
+                     .forEach(t -> registerPojoType(t, t.getDescription().orElse(EMPTY)));
         return this;
     }
 
@@ -330,27 +331,27 @@ public final class SchemaBuilder
     {
         List<ParameterModel> sortedParameters = new ArrayList<>(parameterModels);
         sortedParameters.sort((left, right) ->
-                              {
-                                  boolean isLeftInfrastructure = left.getModelProperty(InfrastructureParameterModelProperty.class).isPresent();
-                                  boolean isRightInfrastructure = right.getModelProperty(InfrastructureParameterModelProperty.class).isPresent();
+        {
+            boolean isLeftInfrastructure = left.getModelProperty(InfrastructureParameterModelProperty.class).isPresent();
+            boolean isRightInfrastructure = right.getModelProperty(InfrastructureParameterModelProperty.class).isPresent();
 
-                                  if (!isLeftInfrastructure && !isRightInfrastructure)
-                                  {
-                                      return 0;
-                                  }
+            if (!isLeftInfrastructure && !isRightInfrastructure)
+            {
+                return 0;
+            }
 
-                                  if (!isLeftInfrastructure && isRightInfrastructure)
-                                  {
-                                      return 1;
-                                  }
+            if (!isLeftInfrastructure && isRightInfrastructure)
+            {
+                return 1;
+            }
 
-                                  if (isLeftInfrastructure && !isRightInfrastructure)
-                                  {
-                                      return -1;
-                                  }
+            if (isLeftInfrastructure && !isRightInfrastructure)
+            {
+                return -1;
+            }
 
-                                  return left.getName().compareTo(right.getName());
-                              });
+            return left.getName().compareTo(right.getName());
+        });
         return sortedParameters;
     }
 
@@ -407,7 +408,7 @@ public final class SchemaBuilder
 
             QName base = new QName(baseTypeXml.getNamespaceUri(), getBaseTypeName(baseType), baseTypeXml.getNamespace());
             Collection<ObjectFieldType> fields = metadataType.getFields().stream()
-                    .filter(f -> !baseType.getFields().contains(f)).collect(toList());
+                                                             .filter(f -> !baseType.getFields().contains(f)).collect(toList());
 
             complexType = declarePojoAsType(clazz, metadataType, base, description, fields);
         }
@@ -419,10 +420,11 @@ public final class SchemaBuilder
     private XmlModelProperty getTypeXmlProperties(MetadataType baseType)
     {
         return importedTypes.get(baseType) == null ? xmlProperties
-                                                   : registerExtensionImport(getType(importedTypes.get(baseType)));
+                : registerExtensionImport(getType(importedTypes.get(baseType)));
     }
 
-    private ComplexType declarePojoAsType(Class<?> clazz, ObjectType metadataType, QName base, String description, Collection<ObjectFieldType> fields)
+    private ComplexType declarePojoAsType(Class<?> clazz, ObjectType metadataType, QName base, String description,
+                                          Collection<ObjectFieldType> fields)
     {
         final TopLevelComplexType complexType = new TopLevelComplexType();
         registeredComplexTypesHolders.put(clazz, new ComplexTypeHolder(complexType, metadataType));
@@ -521,7 +523,7 @@ public final class SchemaBuilder
 
         XmlModelProperty baseTypeXml = getTypeXmlProperties(baseType);
         abstractElement.setSubstitutionGroup(baseType == null ? MULE_ABSTRACT_EXTENSION :
-                                             new QName(baseTypeXml.getNamespaceUri(), getTopLevelAbstractTypeName(baseType), baseTypeXml.getNamespace()));
+                new QName(baseTypeXml.getNamespaceUri(), getTopLevelAbstractTypeName(baseType), baseTypeXml.getNamespace()));
         abstractElement.setAbstract(true);
 
         schema.getSimpleTypeOrComplexTypeOrGroup().add(abstractElement);
@@ -535,11 +537,16 @@ public final class SchemaBuilder
         {
             TopLevelElement objectElement = new TopLevelElement();
             objectElement.setName(getTopLevelTypeName(metadataType));
-            objectElement.setSubstitutionGroup(new QName(xmlProperties.getNamespaceUri(), abstractElementName, xmlProperties.getNamespace()));
+            objectElement.setSubstitutionGroup(
+                    new QName(xmlProperties.getNamespaceUri(), abstractElementName, xmlProperties.getNamespace()));
             objectElement.setAnnotation(createDocAnnotation(description));
 
             objectElement.setComplexType(createLocalComplexTypeExtension(typeQName));
-            objectElement.getComplexType().getComplexContent().getExtension().getAttributeOrAttributeGroup().add(createNameAttribute(false));
+            objectElement.getComplexType()
+                         .getComplexContent()
+                         .getExtension()
+                         .getAttributeOrAttributeGroup()
+                         .add(createNameAttribute(false));
             schema.getSimpleTypeOrComplexTypeOrGroup().add(objectElement);
         }
     }
@@ -554,7 +561,8 @@ public final class SchemaBuilder
         return createAttribute(name, EMPTY, type, null, required, expressionSupport);
     }
 
-    private Attribute createAttribute(final String name, String description, final MetadataType type, Object defaultValue, boolean required, final ExpressionSupport expressionSupport)
+    private Attribute createAttribute(final String name, String description, final MetadataType type, Object defaultValue, boolean required,
+                                      final ExpressionSupport expressionSupport)
     {
         final Attribute attribute = new Attribute();
         attribute.setUse(required ? SchemaConstants.USE_REQUIRED : SchemaConstants.USE_OPTIONAL);
@@ -593,7 +601,8 @@ public final class SchemaBuilder
                 }
                 catch (Exception e)
                 {
-                    throw new IllegalParameterModelDefinitionException(String.format("Parameter '%s' refers to an enum class which couldn't be loaded.", name), e);
+                    throw new IllegalParameterModelDefinitionException(
+                            String.format("Parameter '%s' refers to an enum class which couldn't be loaded.", name), e);
                 }
 
                 if (OperationTransactionalAction.class.equals(enumType))
@@ -602,7 +611,8 @@ public final class SchemaBuilder
                 }
                 else
                 {
-                    attribute.setType(new QName(schema.getTargetNamespace(), sanitizeName(enumType.getName()) + SchemaConstants.ENUM_TYPE_SUFFIX));
+                    attribute.setType(
+                            new QName(schema.getTargetNamespace(), sanitizeName(enumType.getName()) + SchemaConstants.ENUM_TYPE_SUFFIX));
                     registeredEnums.add(enumType);
                 }
             }
@@ -670,7 +680,7 @@ public final class SchemaBuilder
     {
         //TODO MULE-10029 replace this logic with DslElementDeclaration
         XmlModelProperty baseTypeXml = xmlProperties;
-        if(importedTypes.get(type) != null)
+        if (importedTypes.get(type) != null)
         {
             baseTypeXml = registerExtensionImport(getType(importedTypes.get(type)));
         }
@@ -720,7 +730,8 @@ public final class SchemaBuilder
             {
                 final boolean shouldGenerateChildElement = shouldGenerateChildElement(objectType, SUPPORTED);
 
-                entryComplexType.getAttributeOrAttributeGroup().add(createAttribute(ATTRIBUTE_NAME_VALUE, valueType, !shouldGenerateChildElement, SUPPORTED));
+                entryComplexType.getAttributeOrAttributeGroup()
+                                .add(createAttribute(ATTRIBUTE_NAME_VALUE, valueType, !shouldGenerateChildElement, SUPPORTED));
 
                 if (shouldGenerateChildElement)
                 {
@@ -854,8 +865,8 @@ public final class SchemaBuilder
                                                                final ExplicitGroup all, final ParameterModel parameterModel)
     {
         return getParameterDeclarationVisitor(extensionType, all, parameterModel.getName(), parameterModel.getDescription(),
-                                              parameterModel.getExpressionSupport(), parameterModel.isRequired(),
-                                              parameterModel.getDefaultValue());
+                parameterModel.getExpressionSupport(), parameterModel.isRequired(),
+                parameterModel.getDefaultValue());
     }
 
     private MetadataTypeVisitor getParameterDeclarationVisitor(final ExtensionType extensionType,
@@ -866,7 +877,7 @@ public final class SchemaBuilder
         final ExpressionSupport expressionSupport = TypeUtils.getExpressionSupport(field);
 
         return getParameterDeclarationVisitor(extensionType, all, name, EMPTY,
-                                              expressionSupport, field.isRequired(), defaultValue);
+                expressionSupport, field.isRequired(), defaultValue);
     }
 
     private MetadataTypeVisitor getParameterDeclarationVisitor(final ExtensionType extensionType, final ExplicitGroup all,
@@ -883,7 +894,8 @@ public final class SchemaBuilder
                 MetadataType genericType = arrayType.getType();
                 final boolean supportsChildElement = shouldGenerateChildElement(genericType, expressionSupport);
 
-                forceOptional = !genericType.equals(typeLoader.load(Object.class)) && (supportsChildElement || shouldForceOptional(genericType));
+                forceOptional =
+                        !genericType.equals(typeLoader.load(Object.class)) && (supportsChildElement || shouldForceOptional(genericType));
                 defaultVisit(arrayType);
                 if (supportsChildElement)
                 {
@@ -963,7 +975,7 @@ public final class SchemaBuilder
             protected void defaultVisit(MetadataType metadataType)
             {
                 extensionType.getAttributeOrAttributeGroup().add(createAttribute(name, description, metadataType, defaultValue,
-                                                                                 isRequired(forceOptional, required), expressionSupport));
+                        isRequired(forceOptional, required), expressionSupport));
             }
 
             private boolean shouldForceOptional(MetadataType type)
@@ -1003,19 +1015,21 @@ public final class SchemaBuilder
                (!isPojo && isInstantiable(clazz));
     }
 
-    private void addImportedTypeElement(Class<?> extensionType, String name, String description, MetadataType metadataType, ExplicitGroup all)
+    private void addImportedTypeElement(Class<?> extensionType, String name, String description, MetadataType metadataType,
+                                        ExplicitGroup all)
     {
         XmlModelProperty baseTypeXml = registerExtensionImport(extensionType);
 
         //TODO review this when union types and annotations are added
         List<SubTypeMapping> ownerExtensionMappings = parseRepeatableAnnotation(extensionType, SubTypeMapping.class,
-                                                                                c -> ((SubTypesMapping) c).value());
+                c -> ((SubTypesMapping) c).value());
 
         String typeId = getId(metadataType);
         if (isExtensible(metadataType) ||
             ownerExtensionMappings.stream().anyMatch(m -> getId(typeLoader.load(m.baseType())).equals(typeId)))
         {
-            QName refQName = new QName(baseTypeXml.getNamespaceUri(), getTopLevelAbstractTypeName(metadataType), baseTypeXml.getNamespace());
+            QName refQName =
+                    new QName(baseTypeXml.getNamespaceUri(), getTopLevelAbstractTypeName(metadataType), baseTypeXml.getNamespace());
 
             TopLevelElement objectElement = createTopLevelElement(hyphenize(name), ZERO, "1");
             objectElement.setComplexType(new LocalComplexType());
@@ -1039,7 +1053,7 @@ public final class SchemaBuilder
     private XmlModelProperty registerExtensionImport(Class<?> extensionType)
     {
         XmlModelProperty importedExtensionXml = createXmlModelProperty(getAnnotation(extensionType, Xml.class),
-                                                                       getAnnotation(extensionType, Extension.class).name(), "");
+                getAnnotation(extensionType, Extension.class).name(), "");
 
         Import schemaImport = new Import();
         schemaImport.setNamespace(importedExtensionXml.getNamespaceUri());
@@ -1149,9 +1163,9 @@ public final class SchemaBuilder
     {
 
         extensionType.getAttributeOrAttributeGroup().add(createAttribute(attributeName,
-                                                                         load(String.class),
-                                                                         false,
-                                                                         ExpressionSupport.NOT_SUPPORTED));
+                load(String.class),
+                false,
+                ExpressionSupport.NOT_SUPPORTED));
 
         all.getParticle().add(objectFactory.createElement(createRefElement(elementRef, false)));
     }
@@ -1189,7 +1203,8 @@ public final class SchemaBuilder
     private GroupRef generateNestedProcessorGroup(ParameterModel parameterModel, String maxOccurs)
     {
         QName ref = MULE_MESSAGE_PROCESSOR_TYPE;
-        TypeRestrictionModelProperty restrictionCapability = parameterModel.getModelProperty(TypeRestrictionModelProperty.class).orElse(null);
+        TypeRestrictionModelProperty restrictionCapability =
+                parameterModel.getModelProperty(TypeRestrictionModelProperty.class).orElse(null);
         if (restrictionCapability != null)
         {
             ref = getSubstitutionGroup(restrictionCapability.getType());

@@ -7,14 +7,7 @@
 
 package org.mule.runtime.module.launcher.coreextension;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import static org.mule.runtime.module.launcher.coreextension.ClasspathMuleCoreExtensionDiscoverer.CORE_EXTENSION_RESOURCE_NAME;
+import org.junit.Test;
 import org.mule.runtime.container.api.MuleCoreExtension;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleException;
@@ -27,7 +20,14 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+import static org.mule.runtime.module.launcher.coreextension.ClasspathMuleCoreExtensionDiscoverer.CORE_EXTENSION_RESOURCE_NAME;
 
 public class ClasspathMuleCoreExtensionDiscovererTestCase extends AbstractMuleTestCase
 {
@@ -38,13 +38,15 @@ public class ClasspathMuleCoreExtensionDiscovererTestCase extends AbstractMuleTe
         final ArtifactClassLoader artifactClassLoader = mock(ArtifactClassLoader.class);
         final ClassLoader classLoader = mock(ClassLoader.class);
         final URL resource = getClass().getClassLoader().getResource("test-core-extension.properties");
-        when(classLoader.getResources(CORE_EXTENSION_RESOURCE_NAME)).thenReturn(new EnumerationAdapter<URL>(Collections.singleton(resource)));
+        when(classLoader.getResources(CORE_EXTENSION_RESOURCE_NAME)).thenReturn(
+                new EnumerationAdapter<URL>(Collections.singleton(resource)));
         when(artifactClassLoader.getClassLoader()).thenReturn(classLoader);
 
         final ClasspathMuleCoreExtensionDiscoverer discoverer = new ClasspathMuleCoreExtensionDiscoverer(artifactClassLoader);
 
         // Uses context classloader to force discovering of the test properties
-        final List<MuleCoreExtension> discover = withContextClassLoader(artifactClassLoader.getClassLoader(), () -> {
+        final List<MuleCoreExtension> discover = withContextClassLoader(artifactClassLoader.getClassLoader(), () ->
+        {
             try
             {
                 return discoverer.discover();

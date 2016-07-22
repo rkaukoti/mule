@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.beans.factory.support.ManagedMap;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Helper for {@link org.springframework.beans.factory.support.BeanDefinitionBuilder} to use the proper methods
@@ -92,14 +92,16 @@ class BeanDefinitionBuilderHelper
          */
         public void addValue(Object value)
         {
-            if (!isEmpty(value)) {
+            if (!isEmpty(value))
+            {
                 beanDefinitionBuilder.addPropertyValue(propertyName, value);
             }
         }
 
         private boolean isEmpty(Object value)
         {
-            return value == null || (value instanceof ManagedList && ((ManagedList) value).isEmpty()) || (value instanceof ManagedMap && ((ManagedMap) value).isEmpty());
+            return value == null || (value instanceof ManagedList && ((ManagedList) value).isEmpty()) ||
+                   (value instanceof ManagedMap && ((ManagedMap) value).isEmpty());
         }
     }
 }

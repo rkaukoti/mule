@@ -52,6 +52,19 @@ public class QueueFileProvider
         }
     }
 
+    private static String toHex(String filename)
+    {
+        try
+        {
+            return new BigInteger(filename.getBytes(UTF_8_ENCODING)).toString(16);
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            // This should never happen
+            return filename;
+        }
+    }
+
     /**
      * @return created random access file.
      */
@@ -69,19 +82,6 @@ public class QueueFileProvider
         queueFile = new RandomAccessFile(file, OPEN_FILE_OPTIONS);
     }
 
-    private static String toHex(String filename)
-    {
-        try
-        {
-            return new BigInteger(filename.getBytes(UTF_8_ENCODING)).toString(16);
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            // This should never happen
-            return filename;
-        }
-    }
-
     /**
      * @return file descriptor for the underlying file
      */
@@ -92,8 +92,6 @@ public class QueueFileProvider
 
     /**
      * recreates the file from scratch doing a delete then create.
-     *
-     * @throws IOException
      */
     public void recreate() throws IOException
     {
@@ -108,8 +106,6 @@ public class QueueFileProvider
 
     /**
      * closes the random access file.
-     *
-     * @throws IOException
      */
     public void close() throws IOException
     {

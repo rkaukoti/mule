@@ -6,7 +6,11 @@
  */
 package org.mule.tools.schemadocs;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.mule.runtime.core.util.IOUtils;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,11 +38,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-
 
 public class SchemaDocsMain
 {
@@ -48,31 +47,10 @@ public class SchemaDocsMain
     public static final String MULE = "mule";
     public static final String TAG = "tag";
     public static final String XSL_FILE = "rename-tag.xsl";
-    public static final List TARGET_PATH = Arrays.asList(new String[]{"tools", "schemadocs", "target"});
-    public static final String[] BLOCKED = new String[]{"wssecurity"};
+    public static final List TARGET_PATH = Arrays.asList(new String[] {"tools", "schemadocs", "target"});
+    public static final String[] BLOCKED = new String[] {"wssecurity"};
 
     protected final Log logger = LogFactory.getLog(getClass());
-
-    public static void main(String[] args) throws Exception
-    {
-        if (null == args || args.length != 3)
-        {
-            throw new IllegalArgumentException("Needs 3 arguments: prefix, postfix and destination");
-        }
-
-        try
-        {
-            new SchemaDocsMain(args[0], args[1], args[2]);
-        }
-        catch (Exception ex)
-        {
-            // using System.err on purpose here so that errors appear in the build
-            // process and are not swallowed by the logging config
-            ex.printStackTrace(System.err);
-
-            throw ex;
-        }
-    }
 
     public SchemaDocsMain(String prefix, String postfix, String normalizedPath)
             throws IOException, TransformerException, ParserConfigurationException
@@ -97,6 +75,62 @@ public class SchemaDocsMain
         out.flush();
         IOUtils.copy(IOUtils.getResourceAsStream(postfix, getClass()), outWriter);
         outWriter.close();
+    }
+
+    public static void main(String[] args) throws Exception
+    {
+        if (null == args || args.length != 3)
+        {
+            throw new IllegalArgumentException("Needs 3 arguments: prefix, postfix and destination");
+        }
+
+        try
+        {
+            new SchemaDocsMain(args[0], args[1], args[2]);
+        }
+        catch (Exception ex)
+        {
+            // using System.err on purpose here so that errors appear in the build
+            // process and are not swallowed by the logging config
+            ex.printStackTrace(System.err);
+
+            throw ex;
+        }
+    }
+
+    // this avoids using File objects since we may be dealing with classpath jars etc etc
+    protected static String tagFromFileName(String name)
+    {
+        String dropExtension = toLeftOf(name, ".", name);
+        String dropSlash = toRightOf(dropExtension, "/", dropExtension, true);
+        String dropBackslash = toRightOf(dropSlash, "\\", dropSlash, true);
+        return toRightOf(dropBackslash, "-", "mule", false);
+    }
+
+    protected static String toRightOf(String text, String delim, String deflt, boolean far)
+    {
+        int index = far ? text.lastIndexOf(delim) : text.indexOf(delim);
+        if (index > -1)
+        {
+            return text.substring(index + 1);
+        }
+        else
+        {
+            return deflt;
+        }
+    }
+
+    protected static String toLeftOf(String text, String delim, String deflt)
+    {
+        int index = text.lastIndexOf(delim);
+        if (index > -1)
+        {
+            return text.substring(0, index);
+        }
+        else
+        {
+            return deflt;
+        }
     }
 
     protected void create(File file, boolean dir) throws IOException
@@ -165,43 +199,8 @@ public class SchemaDocsMain
             xformer.setParameter(TAG, tag);
             Source source = new StreamSource(url.openStream());
             xformer.transform(source, new StreamResult(out));
-//            xformer.transform(source, new StreamResult(System.out));
+            //            xformer.transform(source, new StreamResult(System.out));
             out.flush();
-        }
-    }
-
-    // this avoids using File objects since we may be dealing with classpath jars etc etc
-    protected static String tagFromFileName(String name)
-    {
-        String dropExtension = toLeftOf(name, ".", name);
-        String dropSlash = toRightOf(dropExtension, "/", dropExtension, true);
-        String dropBackslash = toRightOf(dropSlash, "\\", dropSlash, true);
-        return toRightOf(dropBackslash, "-", "mule", false);
-    }
-
-    protected static String toRightOf(String text, String delim, String deflt, boolean far)
-    {
-        int index = far ? text.lastIndexOf(delim) : text.indexOf(delim);
-        if (index > -1)
-        {
-            return text.substring(index+1);
-        }
-        else
-        {
-            return deflt;
-        }
-    }
-
-    protected static String toLeftOf(String text, String delim, String deflt)
-    {
-        int index = text.lastIndexOf(delim);
-        if (index > -1)
-        {
-            return text.substring(0, index);
-        }
-        else
-        {
-            return deflt;
         }
     }
 
@@ -227,7 +226,8 @@ public class SchemaDocsMain
         List files = new LinkedList();
         Enumeration resources = loader.getResources("META-INF");
         FilenameFilter filter =
-                new FilenameFilter() {
+                new FilenameFilter()
+                {
                     public boolean accept(File dir, String name)
                     {
                         if (name.startsWith(MULE) && name.endsWith(XSD))
@@ -290,7 +290,7 @@ public class SchemaDocsMain
                 resources.add(new URL(jarUrl, entry.getName()));
             }
         }
-  }
+    }
 
     protected void backup(File file) throws IOException
     {

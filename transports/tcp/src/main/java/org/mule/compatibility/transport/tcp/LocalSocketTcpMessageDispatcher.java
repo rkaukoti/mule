@@ -20,7 +20,7 @@ import java.net.SocketTimeoutException;
 /**
  * <code>LocalSocketTcpMessageDispatcher</code> will send transformed Mule events
  * over TCP. It contains a local socket that reuses on each message dispatch
- * 
+ *
  * @since 2.2.6
  */
 public class LocalSocketTcpMessageDispatcher extends TcpMessageDispatcher

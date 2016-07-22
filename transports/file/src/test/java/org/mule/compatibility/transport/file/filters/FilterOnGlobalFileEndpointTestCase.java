@@ -6,10 +6,7 @@
  */
 package org.mule.compatibility.transport.file.filters;
 
-import static junit.framework.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.util.FileUtils;
@@ -17,7 +14,9 @@ import org.mule.runtime.core.util.FileUtils;
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class FilterOnGlobalFileEndpointTestCase extends FunctionalTestCase
 {
@@ -73,7 +72,7 @@ public class FilterOnGlobalFileEndpointTestCase extends FunctionalTestCase
 
     private void createFileInPollDirectory(String filename) throws IOException
     {
-        File file  = FileUtils.newFile(pollDirectory, filename);
+        File file = FileUtils.newFile(pollDirectory, filename);
 
         String path = file.getCanonicalPath();
 

@@ -6,13 +6,6 @@
  */
 package org.mule.runtime.core.streaming;
 
-import org.mule.runtime.core.api.DefaultMuleException;
-import org.mule.runtime.core.api.MuleException;
-import org.mule.tck.size.SmallTest;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import junit.framework.Assert;
 
 import org.junit.Before;
@@ -21,6 +14,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.DefaultMuleException;
+import org.mule.runtime.core.api.MuleException;
+import org.mule.tck.size.SmallTest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)

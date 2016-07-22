@@ -6,26 +6,6 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static org.hamcrest.CoreMatchers.anyOf;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
-import static org.mule.runtime.module.http.internal.listener.DefaultHttpListenerConfig.DEFAULT_MAX_THREADS;
-import org.mule.runtime.core.api.MuleEventContext;
-import org.mule.functional.functional.EventCallback;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-import org.mule.tck.junit4.rule.SystemProperty;
-import org.mule.runtime.core.util.concurrent.Latch;
-
-import java.io.IOException;
-import java.net.SocketException;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.NoHttpResponseException;
@@ -39,6 +19,26 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mule.functional.functional.EventCallback;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleEventContext;
+import org.mule.runtime.core.util.concurrent.Latch;
+import org.mule.tck.junit4.rule.DynamicPort;
+import org.mule.tck.junit4.rule.SystemProperty;
+
+import java.io.IOException;
+import java.net.SocketException;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
+import static org.mule.runtime.module.http.internal.listener.DefaultHttpListenerConfig.DEFAULT_MAX_THREADS;
 
 @Ignore("Not currently supported.")
 public class HttpListenerWorkerThreadingProfileTestCase extends FunctionalTestCase
@@ -103,7 +103,7 @@ public class HttpListenerWorkerThreadingProfileTestCase extends FunctionalTestCa
         // Due to differences in buffer sizes, the exception that is caused client side may be one of two different
         // exceptions.
         expectedException.expect(anyOf(instanceOf(NoHttpResponseException.class), instanceOf(SocketException
-                                                                                                     .class)));
+                .class)));
         try
         {
             httpClientExecutor.execute(Request.Get(url));
@@ -122,7 +122,8 @@ public class HttpListenerWorkerThreadingProfileTestCase extends FunctionalTestCa
         try
         {
             url = String.format("http://localhost:%s", listenPort3.getNumber());
-            final Response response = httpClientExecutor.execute(Request.Post(url).bodyByteArray(TEST_MESSAGE.getBytes()).connectTimeout(100).socketTimeout(100));
+            final Response response = httpClientExecutor.execute(
+                    Request.Post(url).bodyByteArray(TEST_MESSAGE.getBytes()).connectTimeout(100).socketTimeout(100));
             final HttpResponse httpResponse = response.returnResponse();
             assertThat(httpResponse.getStatusLine().getStatusCode(), is(OK.getStatusCode()));
             assertThat(IOUtils.toString(httpResponse.getEntity().getContent()), is(TEST_MESSAGE));

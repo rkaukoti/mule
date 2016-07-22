@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.core.security;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_USER_PROPERTY;
-
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.security.CredentialsAccessor;
 
 import java.io.Serializable;
+
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_USER_PROPERTY;
 
 /**
  * <code>MuleHeaderCredentialsAccessor</code> obtains and sets the user credentials

@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.module.scripting.transformer;
 
-import static org.mule.runtime.module.scripting.component.Scriptable.BINDING_MESSAGE;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -14,14 +13,15 @@ import org.mule.runtime.core.api.lifecycle.LifecycleUtils;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.transformer.AbstractMessageTransformer;
 import org.mule.runtime.module.scripting.component.Scriptable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 
 import javax.script.Bindings;
 import javax.script.ScriptException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.module.scripting.component.Scriptable.BINDING_MESSAGE;
 
 /**
  * Runs a script to perform transformation on an object.

@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.config.spring.util;
 
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 import org.mule.runtime.config.spring.OptionalObjectsController;
 import org.mule.runtime.config.spring.processors.DiscardedOptionalBeanPostProcessor;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.support.InstantiationStrategy;
 import org.springframework.beans.factory.support.RootBeanDefinition;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 
 /**
  * A {@link InstantiationStrategy} which doesn't fail if a bean
@@ -27,8 +27,8 @@ import org.springframework.beans.factory.support.RootBeanDefinition;
  * This object delegates actual instantiation into a {@code delegate} which
  * it wraps
  *
- * @since 3.7.0
  * @see DiscardedOptionalBeanPostProcessor
+ * @since 3.7.0
  */
 public class LaxInstantiationStrategyWrapper implements InstantiationStrategy
 {
@@ -46,7 +46,8 @@ public class LaxInstantiationStrategyWrapper implements InstantiationStrategy
     public Object instantiate(RootBeanDefinition bd, String beanName, BeanFactory owner) throws BeansException
     {
         //TODO MULE-10002 - review approach to load the internal classes of the extensions when using them in the parsers.
-        return withContextClassLoader(getClassLoader(bd), () -> {
+        return withContextClassLoader(getClassLoader(bd), () ->
+        {
             try
             {
                 return delegate.instantiate(bd, beanName, owner);
@@ -71,9 +72,11 @@ public class LaxInstantiationStrategyWrapper implements InstantiationStrategy
     }
 
     @Override
-    public Object instantiate(RootBeanDefinition bd, String beanName, BeanFactory owner, Constructor<?> ctor, Object... args) throws BeansException
+    public Object instantiate(RootBeanDefinition bd, String beanName, BeanFactory owner, Constructor<?> ctor, Object... args)
+            throws BeansException
     {
-        return withContextClassLoader(getClassLoader(bd), () -> {
+        return withContextClassLoader(getClassLoader(bd), () ->
+        {
             try
             {
                 return delegate.instantiate(bd, beanName, owner, ctor, args);
@@ -86,9 +89,11 @@ public class LaxInstantiationStrategyWrapper implements InstantiationStrategy
     }
 
     @Override
-    public Object instantiate(RootBeanDefinition bd, String beanName, BeanFactory owner, Object factoryBean, Method factoryMethod, Object... args) throws BeansException
+    public Object instantiate(RootBeanDefinition bd, String beanName, BeanFactory owner, Object factoryBean, Method factoryMethod,
+                              Object... args) throws BeansException
     {
-        return withContextClassLoader(getClassLoader(bd), () -> {
+        return withContextClassLoader(getClassLoader(bd), () ->
+        {
             try
             {
                 return delegate.instantiate(bd, beanName, owner, factoryBean, factoryMethod, args);

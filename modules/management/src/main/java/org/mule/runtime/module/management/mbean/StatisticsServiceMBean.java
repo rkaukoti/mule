@@ -16,9 +16,9 @@ public interface StatisticsServiceMBean extends Statistics
 {
     String DEFAULT_JMX_NAME = "type=Statistics,name=AllStatistics";
 
-    String printCSVSummary ();
+    String printCSVSummary();
 
-    String printHtmlSummary ();
+    String printHtmlSummary();
 
-    String printXmlSummary ();
+    String printXmlSummary();
 }

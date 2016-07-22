@@ -7,6 +7,9 @@
 
 package org.mule.runtime.module.db.integration.bulkexecute;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.TestDbConfig;
@@ -15,19 +18,15 @@ import org.mule.tck.junit4.rule.SystemProperty;
 
 import java.util.List;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
-
 public class BulkExecutePlaceholderTestCase extends AbstractBulkExecuteTestCase
 {
 
     @Rule
-    public SystemProperty bulkQuery = new SystemProperty("bulkQuery",  "update PLANET set NAME='Mercury' where POSITION=0;\n" +
-                                                                       "update PLANET set NAME='Mercury' where POSITION=4");
+    public SystemProperty bulkQuery = new SystemProperty("bulkQuery", "update PLANET set NAME='Mercury' where POSITION=0;\n" +
+                                                                      "update PLANET set NAME='Mercury' where POSITION=4");
 
     @Rule
-    public SystemProperty file = new SystemProperty("file",  "integration/bulkexecute/bulk-execute.sql");
+    public SystemProperty file = new SystemProperty("file", "integration/bulkexecute/bulk-execute.sql");
 
     public BulkExecutePlaceholderTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
     {

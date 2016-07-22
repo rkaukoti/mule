@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.connectivity;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionHandler;
 import org.mule.runtime.core.api.MuleException;
@@ -14,6 +13,8 @@ import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.internal.connection.ConnectionHandlerAdapter;
 import org.mule.runtime.extension.api.connectivity.TransactionalConnection;
 import org.mule.runtime.module.extension.internal.runtime.transaction.ExtensionTransactionalResource;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * A {@link ConnectionHandlerAdapter} to be used when a {@link TransactionalConnection}

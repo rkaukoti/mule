@@ -6,16 +6,13 @@
  */
 package org.mule.runtime.core.processor.chain;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
-
+import org.apache.commons.lang.RandomStringUtils;
+import org.hamcrest.Matcher;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.OptimizedRequestContext;
 import org.mule.runtime.core.RequestContext;
@@ -34,30 +31,29 @@ import org.mule.tck.size.SmallTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.RandomStringUtils;
-import org.hamcrest.Matcher;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
 public class BlockingProcessorExecutorTestCase extends AbstractMuleContextTestCase
 {
 
-    @Mock
-    protected MuleEvent event;
-
-    @Mock
-    protected MessageProcessorExecutionTemplate executionTemplate;
-
     protected static String A = "a";
     protected static String B = "b";
     protected static String C = "c";
     protected static String RESULT = A + B + C;
-
+    @Mock
+    protected MuleEvent event;
+    @Mock
+    protected MessageProcessorExecutionTemplate executionTemplate;
     protected SensingNullMessageProcessor processor1 = new SensingNullMessageProcessor(A);
     protected SensingNullMessageProcessor processor2 = new SensingNullMessageProcessor(B);
     protected SensingNullMessageProcessor processor3 = new SensingNullMessageProcessor(C);
@@ -71,7 +67,7 @@ public class BlockingProcessorExecutorTestCase extends AbstractMuleContextTestCa
         processors.add(processor3);
 
         OptimizedRequestContext.unsafeSetEvent(event);
-        
+
         when(event.getFlowConstruct()).thenReturn(getTestFlow());
         MuleMessage message = MuleMessage.builder().payload("").build();
         when(event.getId()).thenReturn(RandomStringUtils.randomNumeric(3));
@@ -117,7 +113,8 @@ public class BlockingProcessorExecutorTestCase extends AbstractMuleContextTestCa
         when(event.isSynchronous()).thenReturn(true);
     }
 
-    protected void assertBlockingExecution(List<MessageProcessor> processors, Matcher<MuleEvent> requestResponseMatcher) throws MuleException
+    protected void assertBlockingExecution(List<MessageProcessor> processors, Matcher<MuleEvent> requestResponseMatcher)
+            throws MuleException
     {
         ProcessorExecutor executor = createProcessorExecutor(processors);
 

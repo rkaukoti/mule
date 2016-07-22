@@ -7,8 +7,9 @@
 
 package org.mule.runtime.core.util;
 
-import static junit.framework.Assert.assertEquals;
-
+import org.apache.commons.lang.RandomStringUtils;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.tck.size.SmallTest;
 
 import java.util.ArrayList;
@@ -17,9 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.lang.RandomStringUtils;
-import org.junit.Before;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
 
 @SmallTest
 public class OrderedPropertiesTestCase

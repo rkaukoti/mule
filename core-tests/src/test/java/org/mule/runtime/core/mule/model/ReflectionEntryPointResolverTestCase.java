@@ -6,8 +6,10 @@
  */
 package org.mule.runtime.core.mule.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.mockito.cglib.proxy.Enhancer;
+import org.mockito.cglib.proxy.MethodInterceptor;
+import org.mockito.cglib.proxy.MethodProxy;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.model.InvocationResult;
@@ -24,10 +26,8 @@ import org.mule.tck.testmodels.fruit.WaterMelon;
 
 import java.lang.reflect.Method;
 
-import org.junit.Test;
-import org.mockito.cglib.proxy.Enhancer;
-import org.mockito.cglib.proxy.MethodInterceptor;
-import org.mockito.cglib.proxy.MethodProxy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ReflectionEntryPointResolverTestCase extends AbstractMuleContextTestCase
 {
@@ -52,7 +52,7 @@ public class ReflectionEntryPointResolverTestCase extends AbstractMuleContextTes
     public void testMethodMatchWithArguments() throws Exception
     {
         ReflectionEntryPointResolver resolver = new ReflectionEntryPointResolver();
-        InvocationResult result = resolver.invoke(new FruitBowl(), getTestEventContext(new Object[]{new Apple(), new Banana()}));
+        InvocationResult result = resolver.invoke(new FruitBowl(), getTestEventContext(new Object[] {new Apple(), new Banana()}));
         assertEquals(result.getState(), InvocationResult.State.SUCCESSFUL);
         assertTrue(result.getResult() instanceof Fruit[]);
         //test that the correct methd was called
@@ -60,7 +60,7 @@ public class ReflectionEntryPointResolverTestCase extends AbstractMuleContextTes
         assertTrue(((Fruit[]) result.getResult())[1] instanceof Banana);
         assertEquals("addAppleAndBanana", result.getMethodCalled());
 
-        result = resolver.invoke(new FruitBowl(), getTestEventContext(new Object[]{new Banana(), new Apple()}));
+        result = resolver.invoke(new FruitBowl(), getTestEventContext(new Object[] {new Banana(), new Apple()}));
         assertEquals(result.getState(), InvocationResult.State.SUCCESSFUL);
         assertTrue(result.getResult() instanceof Fruit[]);
         assertTrue(((Fruit[]) result.getResult())[0] instanceof Banana);
@@ -72,7 +72,7 @@ public class ReflectionEntryPointResolverTestCase extends AbstractMuleContextTes
     public void testExplicitMethodMatchSetArrayFail() throws Exception
     {
         ReflectionEntryPointResolver resolver = new ReflectionEntryPointResolver();
-        InvocationResult result = resolver.invoke(new FruitBowl(), getTestEventContext(new Fruit[]{new Apple(), new Orange()}));
+        InvocationResult result = resolver.invoke(new FruitBowl(), getTestEventContext(new Fruit[] {new Apple(), new Orange()}));
         assertEquals("Test should have failed because the arguments were not wrapped properly: ",
                 result.getState(), InvocationResult.State.FAILED);
     }
@@ -81,7 +81,8 @@ public class ReflectionEntryPointResolverTestCase extends AbstractMuleContextTes
     public void testExplicitMethodMatchSetArrayPass() throws Exception
     {
         ReflectionEntryPointResolver resolver = new ReflectionEntryPointResolver();
-        InvocationResult result = resolver.invoke(new FruitBowl(), getTestEventContext(new Object[]{new Fruit[]{new Apple(), new Orange()}}));
+        InvocationResult result =
+                resolver.invoke(new FruitBowl(), getTestEventContext(new Object[] {new Fruit[] {new Apple(), new Orange()}}));
         assertEquals(result.getState(), InvocationResult.State.SUCCESSFUL);
     }
 
@@ -134,7 +135,7 @@ public class ReflectionEntryPointResolverTestCase extends AbstractMuleContextTes
         {
             super();
         }
-        
+
         @Override
         public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable
         {

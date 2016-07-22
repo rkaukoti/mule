@@ -6,13 +6,6 @@
  */
 package org.mule.compatibility.transport.http.components;
 
-import static java.lang.String.valueOf;
-import static org.mule.compatibility.transport.http.HttpConnector.HTTP_REQUEST_PATH_PROPERTY;
-import static org.mule.compatibility.transport.http.HttpConstants.HEADER_CONTENT_LENGTH;
-import static org.mule.compatibility.transport.http.HttpConstants.HEADER_LOCATION;
-import static org.mule.compatibility.transport.http.HttpConstants.SC_MOVED_TEMPORARILY;
-import static org.mule.compatibility.transport.http.HttpConstants.SC_OK;
-import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
 import org.mule.compatibility.transport.http.HttpConnector;
 import org.mule.compatibility.transport.http.i18n.HttpMessages;
 import org.mule.runtime.api.metadata.MediaType;
@@ -34,6 +27,14 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.activation.MimetypesFileTypeMap;
+
+import static java.lang.String.valueOf;
+import static org.mule.compatibility.transport.http.HttpConnector.HTTP_REQUEST_PATH_PROPERTY;
+import static org.mule.compatibility.transport.http.HttpConstants.HEADER_CONTENT_LENGTH;
+import static org.mule.compatibility.transport.http.HttpConstants.HEADER_LOCATION;
+import static org.mule.compatibility.transport.http.HttpConstants.SC_MOVED_TEMPORARILY;
+import static org.mule.compatibility.transport.http.HttpConstants.SC_OK;
+import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
 
 /**
  * A MessageProcessor that can be used by HTTP endpoints to serve static files from a directory on the
@@ -68,7 +69,8 @@ public class StaticResourceMessageProcessor implements MessageProcessor, Initial
         }
 
         String path = event.getMessage().getInboundProperty(HttpConnector.HTTP_REQUEST_PATH_PROPERTY);
-        String contextPath = event.getMessage().getInboundProperty(org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_LISTENER_PATH);
+        String contextPath =
+                event.getMessage().getInboundProperty(org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_LISTENER_PATH);
         if (contextPath == null)
         {
             //If not found then try the transport property
@@ -98,18 +100,19 @@ public class StaticResourceMessageProcessor implements MessageProcessor, Initial
 
         if (file.isDirectory() && path.endsWith("/"))
         {
-            file = new File(resourceBase + path +  defaultFile);
+            file = new File(resourceBase + path + defaultFile);
         }
         else if (file.isDirectory())
         {
             // Return a 302 with the new location
             // Return a 302 with the new location
             MuleMessage message = MuleMessage.builder()
-                    .nullPayload()
-                    .addOutboundProperty(HTTP_STATUS_PROPERTY, valueOf(SC_MOVED_TEMPORARILY))
-                    .addOutboundProperty(HEADER_CONTENT_LENGTH, 0)
-                    .addOutboundProperty(HEADER_LOCATION, event.getMessage().getInboundProperty(HTTP_REQUEST_PATH_PROPERTY) + "/")
-                    .build();
+                                             .nullPayload()
+                                             .addOutboundProperty(HTTP_STATUS_PROPERTY, valueOf(SC_MOVED_TEMPORARILY))
+                                             .addOutboundProperty(HEADER_CONTENT_LENGTH, 0)
+                                             .addOutboundProperty(HEADER_LOCATION,
+                                                     event.getMessage().getInboundProperty(HTTP_REQUEST_PATH_PROPERTY) + "/")
+                                             .build();
             resultEvent = new DefaultMuleEvent(message, event);
             return resultEvent;
         }
@@ -131,11 +134,11 @@ public class StaticResourceMessageProcessor implements MessageProcessor, Initial
             }
 
             MuleMessage message = MuleMessage.builder()
-                    .payload(buffer)
-                    .mediaType(MediaType.parse(mimetype))
-                    .addOutboundProperty(HTTP_STATUS_PROPERTY, valueOf(SC_OK))
-                    .addOutboundProperty(HEADER_CONTENT_LENGTH, buffer.length)
-                    .build();
+                                             .payload(buffer)
+                                             .mediaType(MediaType.parse(mimetype))
+                                             .addOutboundProperty(HTTP_STATUS_PROPERTY, valueOf(SC_OK))
+                                             .addOutboundProperty(HEADER_CONTENT_LENGTH, buffer.length)
+                                             .build();
             resultEvent = new DefaultMuleEvent(message, event);
         }
         catch (IOException e)

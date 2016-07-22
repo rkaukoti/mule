@@ -6,11 +6,11 @@
  */
 package org.mule.test.integration.streaming;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.apache.commons.io.IOUtils;
 
 /**
  * A simple bridge service for testing entry point resolution

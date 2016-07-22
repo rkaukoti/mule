@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.module.extension.internal;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import org.apache.commons.lang.StringUtils;
 import org.mule.runtime.extension.api.introspection.declaration.DescribingContext;
 import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclarer;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Default implementation of {@link DescribingContext}.
@@ -75,9 +75,9 @@ public final class DefaultDescribingContext implements DescribingContext
         if (!expectedType.isInstance(parameter))
         {
             throw new IllegalArgumentException(String.format("Custom parameter '%s' was expected to be of class '%s' but got '%s' instead",
-                                                             key,
-                                                             expectedType.getName(),
-                                                             parameter.getClass().getName()));
+                    key,
+                    expectedType.getName(),
+                    parameter.getClass().getName()));
         }
 
         return (T) parameter;

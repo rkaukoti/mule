@@ -7,10 +7,7 @@
 
 package org.mule.runtime.module.db.internal.resolver.query;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.runtime.module.db.internal.domain.query.BulkQuery;
 import org.mule.runtime.module.db.internal.parser.QueryTemplateParser;
 import org.mule.runtime.module.db.internal.util.FileReader;
@@ -18,7 +15,10 @@ import org.mule.tck.size.SmallTest;
 
 import java.io.IOException;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class FileBulkQueryResolverTestCase extends AbstractBulkQueryResolverTestCase

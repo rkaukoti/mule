@@ -6,10 +6,7 @@
  */
 package org.mule.test.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupEndpointBuilder;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.functional.junit4.FunctionalTestCase;
@@ -26,7 +23,9 @@ import org.mule.runtime.core.security.filters.MuleEncryptionEndpointSecurityFilt
 
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupEndpointBuilder;
 
 /**
  * Test configuration of security filters
@@ -45,7 +44,7 @@ public class SecurityFilterTestCase extends FunctionalTestCase
         EndpointBuilder epb = lookupEndpointBuilder(muleContext.getRegistry(), "testEndpoint1");
         assertNotNull(epb);
         InboundEndpoint iep = epb.buildInboundEndpoint();
-        List<MessageProcessor> mps =iep.getMessageProcessors();
+        List<MessageProcessor> mps = iep.getMessageProcessors();
         int count = 0;
         SecurityFilterMessageProcessor securityMp = null;
         for (MessageProcessor mp : mps)
@@ -62,7 +61,7 @@ public class SecurityFilterTestCase extends FunctionalTestCase
         epb = lookupEndpointBuilder(muleContext.getRegistry(), "testEndpoint2");
         assertNotNull(epb);
         iep = epb.buildInboundEndpoint();
-        mps =iep.getMessageProcessors();
+        mps = iep.getMessageProcessors();
         count = 0;
         securityMp = null;
         for (MessageProcessor mp : mps)

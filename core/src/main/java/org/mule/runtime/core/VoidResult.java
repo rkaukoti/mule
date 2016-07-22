@@ -17,19 +17,14 @@ public final class VoidResult implements Serializable
      */
     private static final long serialVersionUID = -3828573682818093673L;
 
-    private static class VoidResultHolder
+    private VoidResult()
     {
-        private static final VoidResult instance = new VoidResult();
+        super();
     }
 
     public static VoidResult getInstance()
     {
         return VoidResultHolder.instance;
-    }
-
-    private VoidResult()
-    {
-        super();
     }
 
     private Object readResolve() throws ObjectStreamException
@@ -44,7 +39,7 @@ public final class VoidResult implements Serializable
     }
 
     @Override
-    public int hashCode ()
+    public int hashCode()
     {
         return 0;
     }
@@ -53,6 +48,11 @@ public final class VoidResult implements Serializable
     public String toString()
     {
         return "{VoidResult}";
+    }
+
+    private static class VoidResultHolder
+    {
+        private static final VoidResult instance = new VoidResult();
     }
 
 }

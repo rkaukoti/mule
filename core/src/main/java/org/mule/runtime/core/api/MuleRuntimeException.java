@@ -31,7 +31,7 @@ public class MuleRuntimeException extends RuntimeException
 
     /**
      * @param message the exception message
-     * @param cause the exception that triggered this exception
+     * @param cause   the exception that triggered this exception
      */
     public MuleRuntimeException(Message message, Throwable cause)
     {

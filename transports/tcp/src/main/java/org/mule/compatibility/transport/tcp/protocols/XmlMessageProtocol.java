@@ -47,7 +47,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class XmlMessageProtocol extends AbstractByteProtocol
 {
-    
+
     private static final String XML_PATTERN = "<?xml";
 
     private static final int READ_BUFFER_SIZE = 4096;
@@ -130,12 +130,12 @@ public class XmlMessageProtocol extends AbstractByteProtocol
     /**
      * Show we continue reading?  This class, following previous implementations, only
      * reads while input is saturated.
-     * @see XmlMessageEOFProtocol
      *
      * @param patternIndex The index of the xml tag (or -1 if the next message not found)
-     * @param len The amount of data read this loop (or -1 if EOF)
-     * @param available The amount of data available to read
+     * @param len          The amount of data read this loop (or -1 if EOF)
+     * @param available    The amount of data available to read
      * @return true if the read should continue
+     * @see XmlMessageEOFProtocol
      */
     protected boolean isRepeat(int patternIndex, int len, int available)
     {

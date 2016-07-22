@@ -6,19 +6,6 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.util.FileUtils;
-
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.eclipse.jetty.security.ConstraintMapping;
 import org.eclipse.jetty.security.ConstraintSecurityHandler;
 import org.eclipse.jetty.security.HashLoginService;
@@ -33,6 +20,18 @@ import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.util.security.Constraint;
 import org.junit.Test;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.util.FileUtils;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class HttpRequestAuthTestCase extends AbstractHttpRequestTestCase
 {
@@ -103,9 +102,11 @@ public class HttpRequestAuthTestCase extends AbstractHttpRequestTestCase
         basicConstraintMapping.setConstraint(basicConstraint);
         basicConstraintMapping.setPathSpec("/*");
 
-        ConstraintSecurityHandler basicSecurityHandler = new ConstraintSecurityHandler() {
+        ConstraintSecurityHandler basicSecurityHandler = new ConstraintSecurityHandler()
+        {
             @Override
-            public void handle(String pathInContext, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+            public void handle(String pathInContext, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
+                    throws IOException, ServletException
             {
                 requestCount++;
                 super.handle(pathInContext, baseRequest, request, response);

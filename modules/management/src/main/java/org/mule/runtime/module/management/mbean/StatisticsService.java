@@ -12,12 +12,11 @@ import org.mule.runtime.core.management.stats.FlowConstructStatistics;
 import org.mule.runtime.core.management.stats.printers.CSVPrinter;
 import org.mule.runtime.core.management.stats.printers.HtmlTablePrinter;
 import org.mule.runtime.core.management.stats.printers.XMLPrinter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.StringWriter;
 import java.util.Collection;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>StatisicsService</code> exposes Mule processing statistics
@@ -25,15 +24,13 @@ import org.slf4j.LoggerFactory;
 public class StatisticsService implements StatisticsServiceMBean
 {
     /**
-     * Serial version
-     */
-    private static final long serialVersionUID = -4949499389883146363L;
-
-    /**
      * logger used by this class
      */
     protected static final Logger logger = LoggerFactory.getLogger(StatisticsService.class);
-
+    /**
+     * Serial version
+     */
+    private static final long serialVersionUID = -4949499389883146363L;
     private AllStatistics stats = new AllStatistics();
     private MuleContext muleContext;
 
@@ -86,7 +83,7 @@ public class StatisticsService implements StatisticsServiceMBean
         stats.logSummary();
     }
 
-    public String printCSVSummary ()
+    public String printCSVSummary()
     {
         StringWriter w = new StringWriter(2048);
         CSVPrinter printer = new CSVPrinter(w);
@@ -95,7 +92,7 @@ public class StatisticsService implements StatisticsServiceMBean
         return w.toString();
     }
 
-    public String printHtmlSummary ()
+    public String printHtmlSummary()
     {
         StringWriter w = new StringWriter(8192);
         HtmlTablePrinter printer = new HtmlTablePrinter(w);

@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.util.queue;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.util.xa.ResourceManagerException;
 
@@ -14,8 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.collections.CollectionUtils;
 
 /**
  * Transaction context for transient queues
@@ -58,7 +57,8 @@ public class TransientQueueTransactionContext implements LocalQueueTransactionCo
     {
         this.initializeRemoved();
         List<Serializable> queueRemoved = this.lookupRemovedQueue(queue);
-        for (Serializable discardedItem = queue.poll(CLEAR_POLL_TIMEOUT); discardedItem != null; discardedItem = queue.poll(CLEAR_POLL_TIMEOUT))
+        for (Serializable discardedItem = queue.poll(CLEAR_POLL_TIMEOUT);
+             discardedItem != null; discardedItem = queue.poll(CLEAR_POLL_TIMEOUT))
         {
             queueRemoved.add(discardedItem);
         }

@@ -22,7 +22,7 @@ public class Breakpoint
     /**
      * It contains the location of where the execution needs to stop and the condition if any.
      *
-     * @param location The location. Must not be empty {@link String}
+     * @param location  The location. Must not be empty {@link String}
      * @param condition The condition script
      */
     public Breakpoint(String location, String condition)

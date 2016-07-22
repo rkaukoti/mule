@@ -12,7 +12,7 @@ import org.mule.runtime.core.config.i18n.Message;
 /**
  * <code>EndpointNotFoundException</code> is thrown when an endpoint name or protocol is specified but a matching
  * endpoint is not registered with the Mule server
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -38,7 +38,7 @@ public class EndpointNotFoundException extends EndpointException
 
     /**
      * @param message the exception message
-     * @param cause the exception that cause this exception to be thrown
+     * @param cause   the exception that cause this exception to be thrown
      */
     public EndpointNotFoundException(Message message, Throwable cause)
     {

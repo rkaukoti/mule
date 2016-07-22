@@ -7,10 +7,9 @@
 
 package org.mule.test.integration.watermark;
 
+import org.junit.Test;
 import org.mule.functional.junit4.ApplicationContextBuilder;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
-
-import org.junit.Test;
 
 public class WatermarkInvalidSelectorExpressionTestCase
 {
@@ -19,7 +18,8 @@ public class WatermarkInvalidSelectorExpressionTestCase
     public void invalidSelectorExpression() throws Exception
     {
         ApplicationContextBuilder builder = new ApplicationContextBuilder();
-        builder.setApplicationResources(new String[] {"org/mule/test/integration/watermark/watermark-invalid-selector-expression-config.xml"});
+        builder.setApplicationResources(
+                new String[] {"org/mule/test/integration/watermark/watermark-invalid-selector-expression-config.xml"});
         builder.build();
     }
 

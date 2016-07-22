@@ -16,7 +16,7 @@
     </flow>
 
     <flow name="readAndDo">
-        <ftp:read path="#[source]" />
+        <ftp:read path="#[source]"/>
         <ftp:move targetPath="#[target]" overwrite="#[overwrite]" createParentDirectories="#[createParent]"/>
     </flow>
 

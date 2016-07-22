@@ -49,7 +49,142 @@ public abstract class TemplateMessagingExceptionStrategy extends AbstractExcepti
         }
     }
 
-    private class ExceptionMessageProcessor extends AbstractRequestResponseMessageProcessor{
+    private void markExceptionAsHandledIfRequired(Exception exception)
+    {
+        if (handleException)
+        {
+            markExceptionAsHandled(exception);
+        }
+    }
+
+    protected void markExceptionAsHandled(Exception exception)
+    {
+        if (exception instanceof MessagingException)
+        {
+            ((MessagingException) exception).setHandled(true);
+        }
+    }
+
+    protected void processReplyTo(MuleEvent event, Exception e)
+    {
+        try
+        {
+            replyToMessageProcessor.process(event);
+        }
+        catch (MuleException ex)
+        {
+            logFatal(event, ex);
+        }
+    }
+
+    protected void nullifyExceptionPayloadIfRequired(MuleEvent event)
+    {
+        if (this.handleException)
+        {
+            event.setMessage(MuleMessage.builder(event.getMessage())
+                                        .exceptionPayload(null)
+                                        .build());
+        }
+    }
+
+    private void processStatistics(MuleEvent event)
+    {
+        FlowConstructStatistics statistics = event.getFlowConstruct().getStatistics();
+        if (statistics != null && statistics.isEnabled())
+        {
+            statistics.incExecutionError();
+        }
+    }
+
+    protected MuleEvent route(MuleEvent event, Exception t)
+    {
+        if (!getMessageProcessors().isEmpty())
+        {
+            try
+            {
+                event.setMessage(MuleMessage.builder(event.getMessage())
+                                            .exceptionPayload(new DefaultExceptionPayload(t))
+                                            .build());
+                MuleEvent result = configuredMessageProcessors.process(event);
+                return result;
+            }
+            catch (Exception e)
+            {
+                logFatal(event, e);
+            }
+        }
+        return event;
+    }
+
+    @Override
+    protected void doInitialise(MuleContext muleContext) throws InitialisationException
+    {
+        super.doInitialise(muleContext);
+        DefaultMessageProcessorChainBuilder defaultMessageProcessorChainBuilder =
+                new DefaultMessageProcessorChainBuilder(this.flowConstruct);
+        try
+        {
+            configuredMessageProcessors = defaultMessageProcessorChainBuilder.chain(getMessageProcessors()).build();
+        }
+        catch (MuleException e)
+        {
+            throw new InitialisationException(e, this);
+        }
+    }
+
+    public void setWhen(String when)
+    {
+        this.when = when;
+    }
+
+    @Override
+    public boolean accept(MuleEvent event)
+    {
+        return acceptsAll() || acceptsEvent(event) || muleContext.getExpressionManager().evaluateBoolean(when, event);
+    }
+
+    /**
+     * Determines if the exception strategy should process or not a message inside a choice exception strategy.
+     *
+     * Useful for exception strategies which ALWAYS must accept certain types of events despite when condition is not true.
+     *
+     * @param event The MuleEvent being processed
+     * @return true if it should process the exception for the current event, false otherwise.
+     */
+    protected boolean acceptsEvent(MuleEvent event)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean acceptsAll()
+    {
+        return when == null;
+    }
+
+    protected MuleEvent afterRouting(Exception exception, MuleEvent event)
+    {
+        return event;
+    }
+
+    protected MuleEvent beforeRouting(Exception exception, MuleEvent event)
+    {
+        return event;
+    }
+
+    @Override
+    public void setMessagingExceptionHandler(MessagingExceptionHandler messagingExceptionHandler)
+    {
+        return;
+    }
+
+    public void setHandleException(boolean handleException)
+    {
+        this.handleException = handleException;
+    }
+
+    private class ExceptionMessageProcessor extends AbstractRequestResponseMessageProcessor
+    {
 
         private Exception exception;
 
@@ -67,7 +202,8 @@ public abstract class TemplateMessagingExceptionStrategy extends AbstractExcepti
             {
                 request = new DefaultMuleEvent(request, request.getFlowConstruct(), null, null, true);
             }
-            muleContext.getNotificationManager().fireNotification(new ExceptionStrategyNotification(request, ExceptionStrategyNotification.PROCESS_START));
+            muleContext.getNotificationManager()
+                       .fireNotification(new ExceptionStrategyNotification(request, ExceptionStrategyNotification.PROCESS_START));
             fireNotification(exception);
             logException(exception, request);
             processStatistics(request);
@@ -127,142 +263,8 @@ public abstract class TemplateMessagingExceptionStrategy extends AbstractExcepti
         @Override
         protected void processFinally(MuleEvent event, MessagingException exception)
         {
-            muleContext.getNotificationManager().fireNotification(new ExceptionStrategyNotification(event, ExceptionStrategyNotification.PROCESS_END));
+            muleContext.getNotificationManager()
+                       .fireNotification(new ExceptionStrategyNotification(event, ExceptionStrategyNotification.PROCESS_END));
         }
-    }
-
-    private void markExceptionAsHandledIfRequired(Exception exception)
-    {
-        if (handleException)
-        {
-            markExceptionAsHandled(exception);
-        }
-    }
-
-    protected void markExceptionAsHandled(Exception exception)
-    {
-        if (exception instanceof MessagingException)
-        {
-            ((MessagingException)exception).setHandled(true);
-        }
-    }
-
-    protected void processReplyTo(MuleEvent event, Exception e)
-    {
-        try
-        {
-            replyToMessageProcessor.process(event);
-        }
-        catch (MuleException ex)
-        {
-            logFatal(event,ex);
-        }
-    }
-
-    protected void nullifyExceptionPayloadIfRequired(MuleEvent event)
-    {
-        if (this.handleException)
-        {
-            event.setMessage(MuleMessage.builder(event.getMessage())
-                                        .exceptionPayload(null)
-                                        .build());
-        }
-    }
-
-    private void processStatistics(MuleEvent event)
-    {
-        FlowConstructStatistics statistics = event.getFlowConstruct().getStatistics();
-        if (statistics != null && statistics.isEnabled())
-        {
-            statistics.incExecutionError();
-        }
-    }
-
-    protected MuleEvent route(MuleEvent event, Exception t)
-    {
-        if (!getMessageProcessors().isEmpty())
-        {
-            try
-            {
-                event.setMessage(MuleMessage.builder(event.getMessage())
-                                            .exceptionPayload(new DefaultExceptionPayload(t))
-                                            .build());
-                MuleEvent result = configuredMessageProcessors.process(event);
-                return result;
-            }
-            catch (Exception e)
-            {
-                logFatal(event, e);
-            }
-        }
-        return event;
-    }
-
-
-    @Override
-    protected void doInitialise(MuleContext muleContext) throws InitialisationException
-    {
-        super.doInitialise(muleContext);
-        DefaultMessageProcessorChainBuilder defaultMessageProcessorChainBuilder = new DefaultMessageProcessorChainBuilder(this.flowConstruct);
-        try
-        {
-            configuredMessageProcessors = defaultMessageProcessorChainBuilder.chain(getMessageProcessors()).build();
-        }
-        catch (MuleException e)
-        {
-            throw new InitialisationException(e, this);
-        }
-    }
-
-
-    public void setWhen(String when)
-    {
-        this.when = when;
-    }
-
-    @Override
-    public boolean accept(MuleEvent event)
-    {
-        return acceptsAll() || acceptsEvent(event) || muleContext.getExpressionManager().evaluateBoolean(when, event);
-    }
-
-    /**
-     * Determines if the exception strategy should process or not a message inside a choice exception strategy.
-     *
-     * Useful for exception strategies which ALWAYS must accept certain types of events despite when condition is not true.
-     *
-     * @param event   The MuleEvent being processed
-     * @return  true if it should process the exception for the current event, false otherwise.
-     */
-    protected boolean acceptsEvent(MuleEvent event)
-    {
-        return false;
-    }
-
-    @Override
-    public boolean acceptsAll()
-    {
-        return when == null;
-    }
-
-    protected MuleEvent afterRouting(Exception exception, MuleEvent event)
-    {
-        return event;
-    }
-
-    protected MuleEvent beforeRouting(Exception exception, MuleEvent event)
-    {
-        return event;
-    }
-
-    @Override
-    public void setMessagingExceptionHandler(MessagingExceptionHandler messagingExceptionHandler)
-    {
-        return;
-    }
-
-    public void setHandleException(boolean handleException)
-    {
-        this.handleException = handleException;
     }
 }

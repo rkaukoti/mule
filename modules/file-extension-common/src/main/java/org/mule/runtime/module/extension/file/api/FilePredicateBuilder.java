@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.module.extension.file.api;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
 import org.mule.runtime.core.api.util.TimeSinceFunction;
 import org.mule.runtime.core.api.util.TimeUntilFunction;
 import org.mule.runtime.extension.api.annotation.Parameter;
@@ -17,6 +14,9 @@ import org.mule.runtime.extension.api.annotation.param.display.Summary;
 import org.mule.runtime.module.extension.file.api.matcher.PathMatcherPredicate;
 
 import java.util.function.Predicate;
+
+import static java.lang.String.format;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Builds a {@link Predicate} which verifies that a {@link FileAttributes} instance
@@ -42,10 +42,10 @@ import java.util.function.Predicate;
 public abstract class FilePredicateBuilder<T extends FilePredicateBuilder, Attributes extends FileAttributes>
 {
 
-    private static final String SIZE_MUST_BE_GREATER_THAN_ZERO_MESSAGE = "Matcher attribute '%s' must be greater than zero but '%d' was received";
     protected static final TimeUntilFunction FILE_TIME_UNTIL = new TimeUntilFunction();
     protected static final TimeSinceFunction FILE_TIME_SINCE = new TimeSinceFunction();
-
+    private static final String SIZE_MUST_BE_GREATER_THAN_ZERO_MESSAGE =
+            "Matcher attribute '%s' must be greater than zero but '%d' was received";
     /**
      * A matching pattern to be applied on the file name. This pattern
      * needs to be consistent with the rules of {@link PathMatcherPredicate}

@@ -6,12 +6,11 @@
  */
 package org.mule.test.integration.exceptions;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.core.api.routing.filter.FilterUnacceptedException;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import org.junit.Test;
 
 public class ExceptionStrategyFilterMule5342TestCase extends FunctionalTestCase
 {

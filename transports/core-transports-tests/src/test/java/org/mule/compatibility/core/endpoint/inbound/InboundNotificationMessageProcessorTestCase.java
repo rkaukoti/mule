@@ -6,10 +6,7 @@
  */
 package org.mule.compatibility.core.endpoint.inbound;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.context.notification.EndpointMessageNotification;
 import org.mule.compatibility.core.processor.AbstractMessageProcessorTestCase;
@@ -19,7 +16,10 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class InboundNotificationMessageProcessorTestCase extends AbstractMessageProcessorTestCase
 {
@@ -37,7 +37,7 @@ public class InboundNotificationMessageProcessorTestCase extends AbstractMessage
         assertTrue(listener.latch.await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS));
         assertEquals(EndpointMessageNotification.MESSAGE_RECEIVED, listener.messageNotification.getAction());
         assertEquals(endpoint.getEndpointURI().getUri().toString(),
-            listener.messageNotification.getEndpoint());
+                listener.messageNotification.getEndpoint());
         assertTrue(listener.messageNotification.getSource() instanceof MuleMessage);
         assertThat(listener.messageNotification.getSource().getPayload(), equalTo(event.getMessage().getPayload()));
     }

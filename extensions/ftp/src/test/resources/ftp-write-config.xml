@@ -12,7 +12,7 @@
     </spring:beans>
 
     <flow name="write">
-        <ftp:write path="#[path]" mode="#[mode]" createParentDirectories="#[createParent]" encoding="#[encoding]" />
+        <ftp:write path="#[path]" mode="#[mode]" createParentDirectories="#[createParent]" encoding="#[encoding]"/>
     </flow>
 
     <flow name="writeStaticContent">
@@ -20,8 +20,8 @@
     </flow>
 
     <flow name="readAndWrite">
-        <ftp:read path="#[path]" />
-        <set-payload value="Hello World!" />
+        <ftp:read path="#[path]"/>
+        <set-payload value="Hello World!"/>
         <ftp:write mode="OVERWRITE"/>
     </flow>
 

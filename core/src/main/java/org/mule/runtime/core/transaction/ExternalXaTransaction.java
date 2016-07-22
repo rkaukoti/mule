@@ -57,13 +57,17 @@ public class ExternalXaTransaction extends XaTransaction
         {
             super(muleContext);
         }
-        
-        /** Nothing to do */
+
+        /**
+         * Nothing to do
+         */
         public void beforeCompletion()
         {
         }
 
-        /** Clean up mule resources */
+        /**
+         * Clean up mule resources
+         */
         public void afterCompletion(int status)
         {
             boolean commit = status == Status.STATUS_COMMITTED;
@@ -82,7 +86,7 @@ public class ExternalXaTransaction extends XaTransaction
             catch (TransactionException ex)
             {
                 logger.warn(MessageFormat.format(
-                    "Exception while {0} an external transaction {1}", commit ? "committing" : "rolling back", this), ex);
+                        "Exception while {0} an external transaction {1}", commit ? "committing" : "rolling back", this), ex);
             }
         }
 
@@ -136,7 +140,7 @@ public class ExternalXaTransaction extends XaTransaction
         @Override
         public boolean supports(Object key, Object resource)
         {
-            return ExternalXaTransaction.this.supports(key,resource);
+            return ExternalXaTransaction.this.supports(key, resource);
         }
 
         public void bindResource(Object key, Object resource) throws TransactionException

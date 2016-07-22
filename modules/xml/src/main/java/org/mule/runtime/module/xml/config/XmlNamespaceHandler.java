@@ -42,7 +42,8 @@ public class XmlNamespaceHandler extends AbstractMuleNamespaceHandler
 
         //Simple Xml transformers
         registerBeanDefinitionParser("dom-to-xml-transformer", new TransformerMessageProcessorDefinitionParser(DomDocumentToXml.class));
-        registerBeanDefinitionParser("dom-to-output-handler-transformer", new TransformerMessageProcessorDefinitionParser(XmlToOutputHandler.class));
+        registerBeanDefinitionParser("dom-to-output-handler-transformer",
+                new TransformerMessageProcessorDefinitionParser(XmlToOutputHandler.class));
 
 
         registerBeanDefinitionParser("xml-to-dom-transformer", new TransformerMessageProcessorDefinitionParser(XmlToDomDocument.class));
@@ -50,8 +51,10 @@ public class XmlNamespaceHandler extends AbstractMuleNamespaceHandler
         registerBeanDefinitionParser("xpath-extractor-transformer", new TransformerMessageProcessorDefinitionParser(XPathExtractor.class));
 
         //JAXB
-        registerBeanDefinitionParser("jaxb-object-to-xml-transformer", new TransformerMessageProcessorDefinitionParser(JAXBMarshallerTransformer.class));
-        registerBeanDefinitionParser("jaxb-xml-to-object-transformer", new TransformerMessageProcessorDefinitionParser(JAXBUnmarshallerTransformer.class));
+        registerBeanDefinitionParser("jaxb-object-to-xml-transformer",
+                new TransformerMessageProcessorDefinitionParser(JAXBMarshallerTransformer.class));
+        registerBeanDefinitionParser("jaxb-xml-to-object-transformer",
+                new TransformerMessageProcessorDefinitionParser(JAXBUnmarshallerTransformer.class));
         registerBeanDefinitionParser("jaxb-context", new OrphanDefinitionParser(JaxbContextFactoryBean.class, true));
 
         //XStream

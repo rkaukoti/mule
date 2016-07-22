@@ -24,8 +24,8 @@ public class AbstractBootstrapProperty
      *
      * @param service      service that provides the property. Not null.
      * @param artifactType defines what is the artifact this bootstrap object applies to
-     * @param optional     indicates whether or not the bootstrapped transformer is optional. When a bootstrap
-     *                     object is optional, any error creating it will be ignored.
+     * @param optional     indicates whether or not the bootstrapped transformer is optional. When a bootstrap object is optional, any error
+     *                     creating it will be ignored.
      */
     public AbstractBootstrapProperty(BootstrapService service, ArtifactType artifactType, Boolean optional)
     {

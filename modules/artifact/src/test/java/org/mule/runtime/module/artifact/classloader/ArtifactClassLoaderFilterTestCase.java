@@ -7,21 +7,22 @@
 
 package org.mule.runtime.module.artifact.classloader;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class ArtifactClassLoaderFilterTestCase extends AbstractMuleTestCase
 {
 
-    private ArtifactClassLoaderFilter filter = new ArtifactClassLoaderFilter(Collections.singleton("java.lang"), Collections.singleton("META-INF"));
+    private ArtifactClassLoaderFilter filter =
+            new ArtifactClassLoaderFilter(Collections.singleton("java.lang"), Collections.singleton("META-INF"));
 
     @Test
     public void filtersClassWhenPackageNotExported() throws Exception

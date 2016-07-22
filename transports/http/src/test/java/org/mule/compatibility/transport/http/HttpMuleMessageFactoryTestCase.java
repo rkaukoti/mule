@@ -6,18 +6,13 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.apache.commons.httpclient.Cookie;
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.HttpVersion;
+import org.apache.commons.httpclient.StatusLine;
+import org.apache.commons.httpclient.URI;
+import org.junit.Test;
 import org.mule.compatibility.core.api.transport.MessageTypeNotSupportedException;
 import org.mule.compatibility.core.api.transport.MuleMessageFactory;
 import org.mule.compatibility.core.transport.AbstractMuleMessageFactoryTestCase;
@@ -32,22 +27,27 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.httpclient.Cookie;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.HttpVersion;
-import org.apache.commons.httpclient.StatusLine;
-import org.apache.commons.httpclient.URI;
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class HttpMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTestCase
 {
-    private static final Header[] HEADERS = new Header[] { new Header("foo-header", "foo-value") };
+    private static final Header[] HEADERS = new Header[] {new Header("foo-header", "foo-value")};
     private static final String[] COOKIES = new String[] {"COOKIE1=HEY", "cookie2=ho", "COOKIE3=LETS", "cookie4=go"};
     private static final String REQUEST_LINE = "GET /services/Echo HTTP/1.1";
     private static final String MULTIPART_BOUNDARY = "------------------------------2eab2c5d5c7e";
-    private static final String MULTIPART_MESSAGE = MULTIPART_BOUNDARY + "\n" + "Content-Disposition: form-data; name=\"payload\"\n" + TEST_MESSAGE
-                                                    + "\n" + MULTIPART_BOUNDARY + "--";
+    private static final String MULTIPART_MESSAGE =
+            MULTIPART_BOUNDARY + "\n" + "Content-Disposition: form-data; name=\"payload\"\n" + TEST_MESSAGE
+            + "\n" + MULTIPART_BOUNDARY + "--";
     private static final String URI = "http://localhost/services/Echo";
     private static final String REQUEST = "/services/Echo?name=John&lastname=Galt";
 
@@ -64,7 +64,7 @@ public class HttpMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTe
         HttpRequest request = new HttpRequest(requestLine, HEADERS, null, encoding);
         return request;
     }
-    
+
     @Override
     protected Object getUnsupportedTransportMessage()
     {
@@ -75,7 +75,7 @@ public class HttpMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTe
     public void testValidPayload() throws Exception
     {
         MuleMessageFactory factory = createMuleMessageFactory();
-        
+
         Object payload = getValidTransportMessage();
         MuleMessage message = factory.create(payload, encoding);
         assertNotNull(message);
@@ -84,14 +84,14 @@ public class HttpMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTe
         assertEquals(HttpConstants.METHOD_GET, message.getInboundProperty(HttpConnector.HTTP_METHOD_PROPERTY));
         assertEquals("foo-value", message.getInboundProperty("foo-header"));
     }
-    
-    @Test(expected=MessageTypeNotSupportedException.class)
+
+    @Test(expected = MessageTypeNotSupportedException.class)
     public void testInvalidPayloadOnHttpMuleMessageFactory() throws Exception
     {
         HttpMuleMessageFactory factory = new HttpMuleMessageFactory();
         factory.extractPayload(getUnsupportedTransportMessage(), encoding);
     }
-    
+
     @Test
     public void testHttpRequestPostPayload() throws Exception
     {
@@ -113,7 +113,7 @@ public class HttpMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTe
         InputStream stream = new ByteArrayInputStream(TEST_MESSAGE.getBytes());
         return new HttpRequest(requestLine, HEADERS, stream, encoding);
     }
-    
+
     @Test
     public void testHttpRequestMultiPartPayload() throws Exception
     {
@@ -133,7 +133,7 @@ public class HttpMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTe
         String line = REQUEST_LINE.replace(HttpConstants.METHOD_GET, HttpConstants.METHOD_POST);
         RequestLine requestLine = RequestLine.parseLine(line);
         InputStream stream = new ByteArrayInputStream(MULTIPART_MESSAGE.getBytes());
-        Header[] headers = new Header[]{new Header("Content-Type", "multipart/form-data; boundary=" + MULTIPART_BOUNDARY.substring(2))};
+        Header[] headers = new Header[] {new Header("Content-Type", "multipart/form-data; boundary=" + MULTIPART_BOUNDARY.substring(2))};
         return new HttpRequest(requestLine, headers, stream, encoding);
     }
 
@@ -142,7 +142,7 @@ public class HttpMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTe
     {
         InputStream body = new ByteArrayInputStream("/services/Echo".getBytes());
         HttpMethod method = createMockHttpMethod(HttpConstants.METHOD_GET, body, URI, HEADERS);
-        
+
         MuleMessageFactory factory = createMuleMessageFactory();
         MuleMessage message = factory.create(method, encoding);
         assertNotNull(message);
@@ -151,7 +151,7 @@ public class HttpMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTe
         assertEquals(HttpVersion.HTTP_1_1.toString(), message.getInboundProperty(HttpConnector.HTTP_VERSION_PROPERTY));
         assertEquals("200", message.getInboundProperty(HttpConnector.HTTP_STATUS_PROPERTY));
     }
-    
+
     @Test
     public void testHttpMethodPost() throws Exception
     {
@@ -217,7 +217,7 @@ public class HttpMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTe
         when(httpMethod.getURI()).thenReturn(new URI(uri, false));
         when(httpMethod.getResponseHeaders()).thenReturn(headers);
         when(httpMethod.getResponseBodyAsStream()).thenReturn(body);
-        
+
         return httpMethod;
     }
 
@@ -269,17 +269,18 @@ public class HttpMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTe
     public void testProcessQueryParams() throws UnsupportedEncodingException
     {
         HttpMuleMessageFactory messageFactory = new HttpMuleMessageFactory();
-        
+
         String queryParams = "key1=value1&key2=value2&key1=value4&key3=value3&key1=value5";
-        Map<String, Serializable> processedParams = messageFactory.processQueryParams("http://localhost:8080/resources?" + queryParams, UTF_8);
+        Map<String, Serializable> processedParams =
+                messageFactory.processQueryParams("http://localhost:8080/resources?" + queryParams, UTF_8);
 
         Object value1 = processedParams.get("key1");
         assertNotNull(value1);
         assertTrue(value1 instanceof List);
-        assertTrue(((List)value1).contains("value1"));
-        assertTrue(((List)value1).contains("value4"));
-        assertTrue(((List)value1).contains("value5"));
-        
+        assertTrue(((List) value1).contains("value1"));
+        assertTrue(((List) value1).contains("value4"));
+        assertTrue(((List) value1).contains("value5"));
+
         Object value2 = processedParams.get("key2");
         assertNotNull(value2);
         assertEquals("value2", value2);
@@ -289,28 +290,29 @@ public class HttpMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTe
         assertEquals("value3", value3);
 
     }
-    
+
     @Test
     public void testProcessEscapedQueryParams() throws UnsupportedEncodingException
     {
         HttpMuleMessageFactory messageFactory = new HttpMuleMessageFactory();
-        
+
         String queryParams = "key1=value%201&key2=value2&key%203=value3&key%203=value4";
-        Map<String, Serializable> processedParams = messageFactory.processQueryParams("http://localhost:8080/resources?" + queryParams, UTF_8);
-        
+        Map<String, Serializable> processedParams =
+                messageFactory.processQueryParams("http://localhost:8080/resources?" + queryParams, UTF_8);
+
         Object value1 = processedParams.get("key1");
         assertNotNull(value1);
         assertEquals("value 1", value1);
-        
+
         Object value2 = processedParams.get("key2");
         assertNotNull(value2);
         assertEquals("value2", value2);
-        
+
         Object value3 = processedParams.get("key 3");
         assertNotNull(value3);
         assertTrue(value3 instanceof List);
-        assertTrue(((List)value3).contains("value3"));
-        assertTrue(((List)value3).contains("value4"));
+        assertTrue(((List) value3).contains("value3"));
+        assertTrue(((List) value3).contains("value4"));
 
     }
 

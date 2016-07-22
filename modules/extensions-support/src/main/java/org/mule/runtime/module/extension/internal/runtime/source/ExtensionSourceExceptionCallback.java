@@ -11,7 +11,8 @@ import org.mule.runtime.api.message.MuleEvent;
 import org.mule.runtime.core.execution.ResponseCompletionCallback;
 
 /**
- * Channels exceptions through the {@link ResponseCompletionCallback#responseSentWithFailure(Exception, org.mule.runtime.core.api.MuleEvent)}.
+ * Channels exceptions through the {@link ResponseCompletionCallback#responseSentWithFailure(Exception,
+ * org.mule.runtime.core.api.MuleEvent)}.
  *
  * @since 4.0
  */

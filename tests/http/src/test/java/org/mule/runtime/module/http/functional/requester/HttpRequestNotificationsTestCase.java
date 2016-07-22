@@ -6,6 +6,16 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
+import org.junit.Test;
+import org.mule.extension.http.api.HttpResponseAttributes;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.api.context.MuleContextBuilder;
+import org.mule.runtime.core.context.DefaultMuleContextBuilder;
+import org.mule.runtime.module.http.functional.TestConnectorMessageNotificationListener;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
@@ -16,16 +26,6 @@ import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
 import static org.mule.runtime.module.http.functional.TestConnectorMessageNotificationListener.register;
 import static org.mule.runtime.module.http.functional.matcher.HttpMessageAttributesMatchers.hasReasonPhrase;
 import static org.mule.runtime.module.http.functional.matcher.HttpMessageAttributesMatchers.hasStatusCode;
-import org.mule.extension.http.api.HttpResponseAttributes;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.context.MuleContextBuilder;
-import org.mule.runtime.core.context.DefaultMuleContextBuilder;
-import org.mule.runtime.module.http.functional.TestConnectorMessageNotificationListener;
-
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-
-import org.junit.Test;
 
 public class HttpRequestNotificationsTestCase extends AbstractHttpRequestTestCase
 {
@@ -47,14 +47,16 @@ public class HttpRequestNotificationsTestCase extends AbstractHttpRequestTestCas
     public void receiveNotification() throws Exception
     {
         CountDownLatch latch = new CountDownLatch(2);
-        TestConnectorMessageNotificationListener listener = new TestConnectorMessageNotificationListener(latch, "http://localhost:" + httpPort.getValue() + "/basePath/requestPath");
+        TestConnectorMessageNotificationListener listener =
+                new TestConnectorMessageNotificationListener(latch, "http://localhost:" + httpPort.getValue() + "/basePath/requestPath");
         muleContext.getNotificationManager().addListener(listener);
 
         MuleMessage response = flowRunner("requestFlow").withPayload(TEST_MESSAGE).run().getMessage();
 
         latch.await(1000, TimeUnit.MILLISECONDS);
 
-        assertThat(listener.getNotificationActionNames(), contains(getActionName(MESSAGE_REQUEST_BEGIN), getActionName(MESSAGE_REQUEST_END)));
+        assertThat(listener.getNotificationActionNames(),
+                contains(getActionName(MESSAGE_REQUEST_BEGIN), getActionName(MESSAGE_REQUEST_END)));
 
         // End event should have appended http.status and http.reason as inbound properties
         MuleMessage message = listener.getNotifications(getActionName(MESSAGE_REQUEST_END)).get(0).getSource();

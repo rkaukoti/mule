@@ -13,7 +13,7 @@ import org.mule.runtime.core.api.MuleMessage;
 /**
  * <code>MessageTypeNotSupportedException</code> is thrown when a {@link MuleMessage} instance is to be created with an
  * payload type that is not of supported type by that {@link MuleMessageFactory}.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated

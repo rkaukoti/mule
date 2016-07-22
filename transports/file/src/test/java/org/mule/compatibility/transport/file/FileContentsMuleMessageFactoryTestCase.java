@@ -6,12 +6,8 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.transport.MuleMessageFactory;
-import org.mule.compatibility.transport.file.FileContentsMuleMessageFactory;
-import org.mule.compatibility.transport.file.ReceiverFileInputStream;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.util.IOUtils;
 
@@ -20,7 +16,8 @@ import java.io.InputStream;
 import java.io.Writer;
 import java.util.Arrays;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class FileContentsMuleMessageFactoryTestCase extends AbstractFileMuleMessageFactoryTestCase
 {
@@ -48,25 +45,25 @@ public class FileContentsMuleMessageFactoryTestCase extends AbstractFileMuleMess
     public void testValidPayload() throws Exception
     {
         MuleMessageFactory factory = createMuleMessageFactory();
-        
+
         Object payload = getValidTransportMessage();
         MuleMessage message = factory.create(payload, encoding);
         assertNotNull(message);
         assertPayload(message);
     }
-    
+
     @Test
     public void testPayloadFromInputStream() throws Exception
     {
         MuleMessageFactory factory = createMuleMessageFactory();
-        
+
         InputStream stream = null;
         try
         {
             stream = new ReceiverFileInputStream(tempFile, false, null);
             MuleMessage message = factory.create(stream, encoding);
             assertNotNull(message);
-            
+
             // delete the file before accessing the payload to make sure it was properly converted
             // to byte[] by the message factory
             assertTrue(tempFile.delete());

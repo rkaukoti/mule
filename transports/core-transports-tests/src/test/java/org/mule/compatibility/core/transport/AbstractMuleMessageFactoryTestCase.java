@@ -6,10 +6,7 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
+import org.junit.Test;
 import org.mule.compatibility.core.api.transport.MessageTypeNotSupportedException;
 import org.mule.compatibility.core.api.transport.MuleMessageFactory;
 import org.mule.runtime.core.api.MuleMessage;
@@ -17,12 +14,15 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 public abstract class AbstractMuleMessageFactoryTestCase extends AbstractMuleContextTestCase
 {
     protected Charset encoding;
-    
+
     /**
      * Subclasses can set this flag to false, disabling the test for unsupported transport
      * message types.
@@ -34,19 +34,19 @@ public abstract class AbstractMuleMessageFactoryTestCase extends AbstractMuleCon
         super();
         setStartContext(false);
     }
-    
+
     @Override
     protected void doSetUp() throws Exception
     {
         super.doSetUp();
         encoding = getDefaultEncoding(muleContext);
     }
-    
+
     @Test
     public void testNullPayload() throws Exception
     {
         MuleMessageFactory factory = createMuleMessageFactory();
-        
+
         MuleMessage message = factory.create(null, encoding);
         assertNotNull(message);
         assertEquals(null, message.getPayload());
@@ -56,13 +56,13 @@ public abstract class AbstractMuleMessageFactoryTestCase extends AbstractMuleCon
     public void testValidPayload() throws Exception
     {
         MuleMessageFactory factory = createMuleMessageFactory();
-    
+
         Object payload = getValidTransportMessage();
         MuleMessage message = factory.create(payload, encoding);
         assertNotNull(message);
         assertEquals(payload, message.getPayload());
     }
-    
+
     @Test // this test cannot use expected=MessageTypeNotSupportedException as it is not always exectued
     public void testUnsupportedPayloadType() throws Exception
     {
@@ -70,14 +70,14 @@ public abstract class AbstractMuleMessageFactoryTestCase extends AbstractMuleCon
         {
             return;
         }
-        
+
         MuleMessageFactory factory = createMuleMessageFactory();
-        
+
         Object invalidPayload = getUnsupportedTransportMessage();
         try
         {
             factory.create(invalidPayload, encoding);
-            fail("Creating a MuleMessageFactory from an invalid transport message must fail"); 
+            fail("Creating a MuleMessageFactory from an invalid transport message must fail");
         }
         catch (MessageTypeNotSupportedException mtnse)
         {
@@ -98,6 +98,6 @@ public abstract class AbstractMuleMessageFactoryTestCase extends AbstractMuleCon
     }
 
     protected abstract MuleMessageFactory doCreateMuleMessageFactory();
-    
+
     protected abstract Object getValidTransportMessage() throws Exception;
 }

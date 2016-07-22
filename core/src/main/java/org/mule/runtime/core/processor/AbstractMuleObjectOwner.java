@@ -32,72 +32,80 @@ public abstract class AbstractMuleObjectOwner<T> implements Lifecycle, MuleConte
     protected FlowConstruct flowConstruct;
     protected MessagingExceptionHandler messagingExceptionHandler;
 
-    public void setMuleContext(MuleContext context) {
-        this.muleContext = context;
-    }
-
-    public void setFlowConstruct(FlowConstruct flowConstruct) {
-        this.flowConstruct = flowConstruct;
-    }
-
-    @Override
-    public void setMessagingExceptionHandler(MessagingExceptionHandler messagingExceptionHandler)
+    public MuleContext getMuleContext()
     {
-        if (this.messagingExceptionHandler == null)
-        {
-            this.messagingExceptionHandler = messagingExceptionHandler;
-        }
-    }
-
-    public MuleContext getMuleContext() {
         return muleContext;
     }
 
-    public FlowConstruct getFlowConstruct() {
+    public void setMuleContext(MuleContext context)
+    {
+        this.muleContext = context;
+    }
+
+    public FlowConstruct getFlowConstruct()
+    {
         return flowConstruct;
     }
 
-    public void initialise() throws InitialisationException {
-        for (T object : getOwnedObjects()) {
-            if (object instanceof MuleContextAware) {
+    public void setFlowConstruct(FlowConstruct flowConstruct)
+    {
+        this.flowConstruct = flowConstruct;
+    }
+
+    public void initialise() throws InitialisationException
+    {
+        for (T object : getOwnedObjects())
+        {
+            if (object instanceof MuleContextAware)
+            {
                 ((MuleContextAware) object).setMuleContext(muleContext);
             }
-            if (object instanceof FlowConstructAware) {
+            if (object instanceof FlowConstructAware)
+            {
                 ((FlowConstructAware) object).setFlowConstruct(flowConstruct);
             }
-            if (messagingExceptionHandler != null && object instanceof MessagingExceptionHandlerAware) {
+            if (messagingExceptionHandler != null && object instanceof MessagingExceptionHandlerAware)
+            {
                 ((MessagingExceptionHandlerAware) object).setMessagingExceptionHandler(messagingExceptionHandler);
             }
-            if (object instanceof Initialisable) {
+            if (object instanceof Initialisable)
+            {
                 ((Initialisable) object).initialise();
             }
         }
     }
 
-    public void dispose() {
-        for (T processor : getOwnedObjects()) {
+    public void dispose()
+    {
+        for (T processor : getOwnedObjects())
+        {
 
-            if (processor instanceof Disposable) {
+            if (processor instanceof Disposable)
+            {
                 ((Disposable) processor).dispose();
             }
         }
     }
 
+    public void start() throws MuleException
+    {
 
-    public void start() throws MuleException {
-
-        for (T processor : getOwnedObjects()) {
-            if (processor instanceof Startable) {
+        for (T processor : getOwnedObjects())
+        {
+            if (processor instanceof Startable)
+            {
                 ((Startable) processor).start();
             }
         }
     }
 
+    public void stop() throws MuleException
+    {
 
-    public void stop() throws MuleException {
-
-        for (T processor : getOwnedObjects()) {
-            if (processor instanceof Stoppable) {
+        for (T processor : getOwnedObjects())
+        {
+            if (processor instanceof Stoppable)
+            {
                 ((Stoppable) processor).stop();
             }
 
@@ -107,6 +115,15 @@ public abstract class AbstractMuleObjectOwner<T> implements Lifecycle, MuleConte
     protected MessagingExceptionHandler getMessagingExceptionHandler()
     {
         return messagingExceptionHandler;
+    }
+
+    @Override
+    public void setMessagingExceptionHandler(MessagingExceptionHandler messagingExceptionHandler)
+    {
+        if (this.messagingExceptionHandler == null)
+        {
+            this.messagingExceptionHandler = messagingExceptionHandler;
+        }
     }
 
     protected abstract List<T> getOwnedObjects();

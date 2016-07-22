@@ -10,7 +10,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
- * Same as ChildDefinitionParser but injects the child element into the grandparent object 
+ * Same as ChildDefinitionParser but injects the child element into the grandparent object
  * (2 levels up in the XML tree).
  */
 public class GrandchildDefinitionParser extends ChildDefinitionParser

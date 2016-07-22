@@ -6,6 +6,11 @@
  */
 package org.mule.runtime.module.cxf.support;
 
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.interceptor.StaxInInterceptor;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.AbstractPhaseInterceptor;
+import org.apache.cxf.phase.Phase;
 import org.mule.runtime.module.xml.stax.DelegateXMLStreamReader;
 
 import java.io.IOException;
@@ -13,12 +18,6 @@ import java.io.InputStream;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-
-import org.apache.cxf.interceptor.Fault;
-import org.apache.cxf.interceptor.StaxInInterceptor;
-import org.apache.cxf.message.Message;
-import org.apache.cxf.phase.AbstractPhaseInterceptor;
-import org.apache.cxf.phase.Phase;
 
 /**
  * Replaces the original XMLStreamReader with another one which
@@ -36,7 +35,8 @@ public class StreamClosingInterceptor extends AbstractPhaseInterceptor<Message>
     {
         XMLStreamReader xsr = message.getContent(XMLStreamReader.class);
         final InputStream is = message.getContent(InputStream.class);
-        DelegateXMLStreamReader xsr2 = new DelegateXMLStreamReader(xsr) {
+        DelegateXMLStreamReader xsr2 = new DelegateXMLStreamReader(xsr)
+        {
 
             @Override
             public void close() throws XMLStreamException

@@ -18,9 +18,9 @@ import java.util.Collection;
 
 public interface SecurityManager extends Initialisable
 {
-    
+
     Authentication authenticate(Authentication authentication)
-        throws SecurityException, SecurityProviderNotFoundException;
+            throws SecurityException, SecurityProviderNotFoundException;
 
     void addProvider(SecurityProvider provider);
 
@@ -33,7 +33,7 @@ public interface SecurityManager extends Initialisable
     void setProviders(Collection<SecurityProvider> providers);
 
     SecurityContext createSecurityContext(Authentication authentication)
-        throws UnknownAuthenticationTypeException;
+            throws UnknownAuthenticationTypeException;
 
     EncryptionStrategy getEncryptionStrategy(String name);
 

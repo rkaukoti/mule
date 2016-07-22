@@ -24,15 +24,14 @@ public class TransportGlobalEndpointDefinitionParser extends AddressedEndpointDe
 
     public TransportGlobalEndpointDefinitionParser(String metaOrProtocol, boolean isMeta, String[] requiredAddressAttributes)
     {
-        this(metaOrProtocol, isMeta, requiredAddressAttributes, new String[]{});
+        this(metaOrProtocol, isMeta, requiredAddressAttributes, new String[] {});
     }
 
     /**
-     * @param metaOrProtocol The transport metaOrProtocol ("tcp" etc)
-     * @param isMeta Whether transport is "meta" or not (eg cxf)
-     * @param requiredAddressAttributes A list of attribute names that are required if "address"
-     * isn't present
-     * @param requiredProperties A list of property names that are required if "address" isn't present
+     * @param metaOrProtocol            The transport metaOrProtocol ("tcp" etc)
+     * @param isMeta                    Whether transport is "meta" or not (eg cxf)
+     * @param requiredAddressAttributes A list of attribute names that are required if "address" isn't present
+     * @param requiredProperties        A list of property names that are required if "address" isn't present
      */
     public TransportGlobalEndpointDefinitionParser(String metaOrProtocol, boolean isMeta,
                                                    String[] requiredAddressAttributes, String[] requiredProperties)
@@ -42,11 +41,10 @@ public class TransportGlobalEndpointDefinitionParser extends AddressedEndpointDe
     }
 
     /**
-     * @param metaOrProtocol The transport metaOrProtocol ("tcp" etc)
-     * @param isMeta Whether transport is "meta" or not (eg cxf)
-     * @param requiredAddressAttributes A list of attribute names that are required if "address"
-     * isn't present
-     * @param requiredProperties A list of property names that are required if "address" isn't present
+     * @param metaOrProtocol            The transport metaOrProtocol ("tcp" etc)
+     * @param isMeta                    Whether transport is "meta" or not (eg cxf)
+     * @param requiredAddressAttributes A list of attribute names that are required if "address" isn't present
+     * @param requiredProperties        A list of property names that are required if "address" isn't present
      */
     public TransportGlobalEndpointDefinitionParser(String metaOrProtocol, boolean isMeta, Class clazz,
                                                    String[] requiredAddressAttributes, String[] requiredProperties)

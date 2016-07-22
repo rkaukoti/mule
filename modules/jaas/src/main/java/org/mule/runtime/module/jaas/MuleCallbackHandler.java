@@ -36,10 +36,6 @@ public class MuleCallbackHandler implements CallbackHandler
      * The handle() method handles the callbacks to be passed to the Jaas security.
      * It makes use of two types of callbacks: the NameCallback and the
      * PasswordCallback.
-     * 
-     * @param callbacks
-     * @throws IOException
-     * @throws UnsupportedCallbackException
      */
     public final void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException
     {

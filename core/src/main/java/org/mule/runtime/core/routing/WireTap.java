@@ -17,12 +17,11 @@ import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.core.processor.AbstractFilteringMessageProcessor;
 import org.mule.runtime.core.processor.AbstractMessageProcessorOwner;
 import org.mule.runtime.core.util.ObjectUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The <code>WireTap</code> MessageProcessor allows inspection of messages in a flow.
@@ -86,7 +85,7 @@ public class WireTap extends AbstractMessageProcessorOwner implements MessagePro
     {
         setTap(tap);
     }
-    
+
     public Filter getFilter()
     {
         return filter;
@@ -95,6 +94,18 @@ public class WireTap extends AbstractMessageProcessorOwner implements MessagePro
     public void setFilter(Filter filter)
     {
         this.filter = filter;
+    }
+
+    @Override
+    public String toString()
+    {
+        return ObjectUtils.toString(this);
+    }
+
+    @Override
+    protected List<MessageProcessor> getOwnedMessageProcessors()
+    {
+        return Collections.singletonList(tap);
     }
 
     private class WireTapFilter extends AbstractFilteringMessageProcessor
@@ -127,18 +138,6 @@ public class WireTap extends AbstractMessageProcessorOwner implements MessagePro
         {
             return ObjectUtils.toString(this);
         }
-    }
-
-    @Override
-    public String toString()
-    {
-        return ObjectUtils.toString(this);
-    }
-
-        @Override
-    protected List<MessageProcessor> getOwnedMessageProcessors()
-    {
-        return Collections.singletonList(tap);
     }
 
 }

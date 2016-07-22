@@ -18,21 +18,18 @@ import java.util.Map;
 
 /**
  * <code>RouterStatistics</code> TODO
- *
  */
 public class RouterStatistics implements Statistics
 {
-
-    /**
-     * Serial version
-     */
-    private static final long serialVersionUID = 4540482357430845065L;
 
     public static final int TYPE_INBOUND = 1;
     public static final int TYPE_OUTBOUND = 2;
     public static final int TYPE_RESPONSE = 3;
     public static final int TYPE_BINDING = 4;
-
+    /**
+     * Serial version
+     */
+    private static final long serialVersionUID = 4540482357430845065L;
     private boolean enabled;
     private long notRouted;
     private long caughtInCatchAll;
@@ -40,6 +37,16 @@ public class RouterStatistics implements Statistics
     private long totalReceived;
     private Map routed;
     private int type;
+
+    /**
+     * The constructor
+     */
+    public RouterStatistics(int type)
+    {
+        super();
+        this.type = type;
+        routed = new HashMap();
+    }
 
     public synchronized void clear()
     {
@@ -59,6 +66,11 @@ public class RouterStatistics implements Statistics
         return enabled;
     }
 
+    public synchronized void setEnabled(boolean b)
+    {
+        enabled = b;
+    }
+
     public void logSummary()
     {
         logSummary(new SimplePrinter(System.out));
@@ -67,21 +79,6 @@ public class RouterStatistics implements Statistics
     public void logSummary(PrintWriter printer)
     {
         printer.print(this);
-    }
-
-    public synchronized void setEnabled(boolean b)
-    {
-        enabled = b;
-    }
-
-    /**
-     * The constructor
-     */
-    public RouterStatistics(int type)
-    {
-        super();
-        this.type = type;
-        routed = new HashMap();
     }
 
     /**

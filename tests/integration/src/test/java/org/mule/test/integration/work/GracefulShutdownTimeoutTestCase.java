@@ -6,19 +6,18 @@
  */
 package org.mule.test.integration.work;
 
-import static org.junit.Assert.assertTrue;
-
-import org.mule.runtime.core.api.MuleEventContext;
-import org.mule.runtime.core.api.construct.FlowConstruct;
-import org.mule.runtime.core.construct.Flow;
+import org.junit.Test;
 import org.mule.functional.functional.EventCallback;
 import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleEventContext;
+import org.mule.runtime.core.api.construct.FlowConstruct;
+import org.mule.runtime.core.construct.Flow;
 import org.mule.runtime.core.util.concurrent.Latch;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 public class GracefulShutdownTimeoutTestCase extends FunctionalTestCase
 {
@@ -41,8 +40,6 @@ public class GracefulShutdownTimeoutTestCase extends FunctionalTestCase
      * in configuration so that component execution is not interrupted. This tests
      * services but the same applies to the graceful shutdown of
      * receivers/dispatchers etc.
-     *
-     * @throws Exception
      */
     @Test
     public void testGracefulShutdownTimeout() throws Exception

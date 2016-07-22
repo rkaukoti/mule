@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.module.launcher.log4j2;
 
-import static java.util.concurrent.Executors.newScheduledThreadPool;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.core.api.config.MuleProperties;
-import org.mule.runtime.core.api.lifecycle.Disposable;
-
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import com.google.common.collect.ImmutableList;
+
+import org.apache.logging.log4j.core.LifeCycle;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.core.api.config.MuleProperties;
+import org.mule.runtime.core.api.lifecycle.Disposable;
 
 import java.util.List;
 import java.util.Map;
@@ -27,8 +26,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.logging.log4j.core.LifeCycle;
-import org.apache.logging.log4j.core.LoggerContext;
+import static java.util.concurrent.Executors.newScheduledThreadPool;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * A cache which relates {@link ClassLoader} instances
@@ -81,18 +80,18 @@ final class LoggerContextCache implements Disposable
         activeContexts = CacheBuilder.newBuilder().build();
 
         disposedContexts = CacheBuilder.newBuilder()
-                .expireAfterWrite(disposeDelayInMillis, TimeUnit.MILLISECONDS)
-                .removalListener(new RemovalListener<Integer, LoggerContext>()
-                {
-                    @Override
-                    public void onRemoval(RemovalNotification<Integer, LoggerContext> notification)
-                    {
-                        stop(notification.getValue());
-                        activeContexts.invalidate(notification.getKey());
-                        builtContexts.remove(notification.getKey());
-                    }
-                })
-                .build();
+                                       .expireAfterWrite(disposeDelayInMillis, TimeUnit.MILLISECONDS)
+                                       .removalListener(new RemovalListener<Integer, LoggerContext>()
+                                       {
+                                           @Override
+                                           public void onRemoval(RemovalNotification<Integer, LoggerContext> notification)
+                                           {
+                                               stop(notification.getValue());
+                                               activeContexts.invalidate(notification.getKey());
+                                               builtContexts.remove(notification.getKey());
+                                           }
+                                       })
+                                       .build();
 
         executorService = newScheduledThreadPool(1, new LoggerContextReaperThreadFactory(reaperContextClassLoader));
     }
@@ -163,18 +162,13 @@ final class LoggerContextCache implements Disposable
 
     /**
      * The {@link Callable} passed to the guasa cache, because
-     * 
+     *
      * Guava cache will use its logging framework to log something, and that logger will end up calling here.
      * <p>
      * With the check in the {@link Callable} passed to the guava cache, we avoid building an extra context. We cannot
      * just use a map, because it may result in an eternal recurrent call, guava does a good job at handling that
      * situation. It is just the logging that guava tries to do that may disrupt thing when initializing the logging
      * infrastructure.
-     * 
-     * @param classLoader
-     * @param key
-     * @return
-     * @throws ExecutionException
      */
     protected LoggerContext doGetLoggerContext(final ClassLoader classLoader, final Integer key) throws ExecutionException
     {
@@ -244,7 +238,7 @@ final class LoggerContextCache implements Disposable
                         disposedContexts.cleanUp();
                     }
                 }, disposeDelayInMillis + 1, TimeUnit.MILLISECONDS); // add one millisecond to make sure entries will be
-                                                                     // expired
+                // expired
             }
         }
     }

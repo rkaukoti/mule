@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
-      xmlns="http://www.mulesoft.org/schema/mule/core"
       xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
@@ -15,7 +15,7 @@
     <flow name="proxy-body">
         <http:listener config-ref="httpConfig" path="body"/>
         <cxf:proxy-service payload="body" service="ArtistRegistryWebServicesService" namespace="http://example.cxf.module.runtime.mule.org/" port="ArtistRegistryWebServicesPort"
-                           wsdlLocation="artistregistry.wsdl" />
+                           wsdlLocation="artistregistry.wsdl"/>
         <cxf:proxy-client payload="body"/>
         <http:request path="artistRegistry" method="POST" config-ref="requestConfig"/>
     </flow>
@@ -23,14 +23,14 @@
     <flow name="proxy-envelope">
         <http:listener config-ref="httpConfig" path="envelope"/>
         <cxf:proxy-service payload="envelope" service="ArtistRegistryWebServicesService" namespace="http://example.cxf.module.runtime.mule.org/" port="ArtistRegistryWebServicesPort"
-                           wsdlLocation="artistregistry.wsdl" />
+                           wsdlLocation="artistregistry.wsdl"/>
         <cxf:proxy-client payload="envelope"/>
         <http:request path="artistRegistry" method="POST" config-ref="requestConfig"/>
     </flow>
 
     <flow name="greeter-service">
         <http:listener config-ref="httpConfig2" path="artistRegistry"/>
-        <cxf:jaxws-service serviceClass="org.mule.runtime.module.cxf.testmodels.artistregistry.ArtistRegistryWebServices" />
+        <cxf:jaxws-service serviceClass="org.mule.runtime.module.cxf.testmodels.artistregistry.ArtistRegistryWebServices"/>
         <component class="org.mule.runtime.module.cxf.testmodels.artistregistry.ArtistRegistry"/>
     </flow>
 

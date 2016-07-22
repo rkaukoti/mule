@@ -6,9 +6,7 @@
  */
 package org.mule.runtime.core.transformer.graph;
 
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.registry.ResolverException;
 import org.mule.runtime.core.api.transformer.Converter;
@@ -19,13 +17,14 @@ import org.mule.tck.size.SmallTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @SmallTest
 public class NameTransformerFilterTestCase extends AbstractMuleTestCase
 {
-    private NameConverterFilter filter = new NameConverterFilter();
     private static final DataType UNUSED_DATA_TYPE = null;
+    private NameConverterFilter filter = new NameConverterFilter();
 
     @Test
     public void filtersEmptyList() throws ResolverException

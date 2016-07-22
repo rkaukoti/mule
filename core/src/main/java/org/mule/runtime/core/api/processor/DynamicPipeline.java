@@ -13,7 +13,6 @@ package org.mule.runtime.core.api.processor;
  *
  * The injected message processors are executed before (pre) of after (post)
  * the ones defined in the flow in the specified order.
- *
  */
 public interface DynamicPipeline
 {

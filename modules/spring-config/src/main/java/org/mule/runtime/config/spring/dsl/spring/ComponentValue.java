@@ -26,8 +26,8 @@ class ComponentValue
 
     /**
      * @param componentModel the component for which the bean definition is provided
-     * @param type the type of the object to be created
-     * @param bean the bean definition
+     * @param type           the type of the object to be created
+     * @param bean           the bean definition
      */
     public ComponentValue(ComponentModel componentModel, Class<?> type, Object bean)
     {
@@ -45,7 +45,8 @@ class ComponentValue
     }
 
     /**
-     * @return the bean value definition. It may be a {@link org.springframework.beans.factory.config.RuntimeBeanReference} or a {@link org.springframework.beans.factory.config.BeanDefinition}
+     * @return the bean value definition. It may be a {@link org.springframework.beans.factory.config.RuntimeBeanReference} or a {@link
+     * org.springframework.beans.factory.config.BeanDefinition}
      */
     public Object getBean()
     {

@@ -6,22 +6,21 @@
  */
 package org.mule.runtime.core.transformer.graph;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-
+import org.junit.Test;
+import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.registry.ResolverException;
 import org.mule.runtime.core.api.transformer.Converter;
-import org.mule.runtime.api.metadata.DataType;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
 import org.mule.runtime.core.transformer.CompositeConverter;
 import org.mule.runtime.core.transformer.builder.MockConverterBuilder;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 @SmallTest
 public class ShortestTransformationLengthTransformerFilterTestCase extends AbstractMuleTestCase

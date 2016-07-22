@@ -11,40 +11,39 @@ import org.mule.runtime.core.api.construct.FlowConstructAware;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.runtime.core.object.AbstractObjectFactory;
-
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**
- * This is an implementation of the ObjectFactory interface which simply delegates to 
- * the Spring ApplicationContext.  Since the delegation happens each time a call to 
- * getOrCreate() is made, this will correctly handle Spring beans which are 
+ * This is an implementation of the ObjectFactory interface which simply delegates to
+ * the Spring ApplicationContext.  Since the delegation happens each time a call to
+ * getOrCreate() is made, this will correctly handle Spring beans which are
  * non-singletons (factory beans, etc.)
- * 
+ *
  * Singleton usage:
- * 
- *   <model>
- *       <service name="myOrangeService">
- *           <service>
- *               <spring-object bean="myBean"/>
- *           </service>
- *       </service>
- *   </model>
  *
- *   <spring:bean id="myBean" class="com.foo.Bar"/>
- *   
+ * <model>
+ * <service name="myOrangeService">
+ * <service>
+ * <spring-object bean="myBean"/>
+ * </service>
+ * </service>
+ * </model>
+ *
+ * <spring:bean id="myBean" class="com.foo.Bar"/>
+ *
  * Non-singleton usage:
- * 
- *   <model>
- *       <service name="myOrangeService">
- *           <service>
- *               <spring-object bean="myFactoryBean"/>
- *           </service>
- *       </service>
- *   </model>
  *
- *   <spring:bean id="myFactoryBean" class="com.foo.BarFactory" factory-method="getNewBar"/>
+ * <model>
+ * <service name="myOrangeService">
+ * <service>
+ * <spring-object bean="myFactoryBean"/>
+ * </service>
+ * </service>
+ * </model>
+ *
+ * <spring:bean id="myFactoryBean" class="com.foo.BarFactory" factory-method="getNewBar"/>
  */
 public class SpringBeanLookup extends AbstractObjectFactory implements ApplicationContextAware
 {
@@ -61,7 +60,7 @@ public class SpringBeanLookup extends AbstractObjectFactory implements Applicati
         if (applicationContext == null)
         {
             throw new InitialisationException(
-                MessageFactory.createStaticMessage("ApplicationContext has not been injected."), this);
+                    MessageFactory.createStaticMessage("ApplicationContext has not been injected."), this);
         }
 
         // Get instance of spring bean to determine bean type.
@@ -82,10 +81,10 @@ public class SpringBeanLookup extends AbstractObjectFactory implements Applicati
     public Object getInstance(MuleContext muleContext) throws Exception
     {
         Object instance = applicationContext.getBean(bean);
-        if(instance instanceof FlowConstructAware)
+        if (instance instanceof FlowConstructAware)
         {
             //The servie cannot be autowired from within Spring, so we do it here
-            ((FlowConstructAware)instance).setFlowConstruct(flowConstruct);
+            ((FlowConstructAware) instance).setFlowConstruct(flowConstruct);
         }
         fireInitialisationCallbacks(instance);
         return instance;
@@ -105,7 +104,7 @@ public class SpringBeanLookup extends AbstractObjectFactory implements Applicati
     {
         this.bean = bean;
     }
-    
+
     @Override
     public boolean isSingleton()
     {

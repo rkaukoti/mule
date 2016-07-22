@@ -6,21 +6,8 @@
  */
 package org.mule.runtime.module.cxf.support;
 
-import org.mule.runtime.api.metadata.DataType;
-import org.mule.runtime.core.TransformationService;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.transformer.TransformerException;
-import org.mule.runtime.module.xml.transformer.DelayedResult;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.transform.sax.SAXResult;
-
 import javanet.staxutils.ContentHandlerToXMLStreamWriter;
+
 import org.apache.cxf.databinding.stax.XMLStreamWriterCallback;
 import org.apache.cxf.interceptor.AbstractOutDatabindingInterceptor;
 import org.apache.cxf.interceptor.Fault;
@@ -30,7 +17,20 @@ import org.apache.cxf.phase.Phase;
 import org.apache.cxf.service.model.BindingOperationInfo;
 import org.apache.cxf.service.model.MessagePartInfo;
 import org.apache.cxf.staxutils.StaxUtils;
+import org.mule.runtime.api.metadata.DataType;
+import org.mule.runtime.core.TransformationService;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.api.transformer.TransformerException;
+import org.mule.runtime.module.xml.transformer.DelayedResult;
 import org.xml.sax.SAXException;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.transform.sax.SAXResult;
 
 public class OutputPayloadInterceptor extends AbstractOutDatabindingInterceptor
 {
@@ -59,27 +59,27 @@ public class OutputPayloadInterceptor extends AbstractOutDatabindingInterceptor
 
         for (Object o : originalParts)
         {
-            if (o instanceof MuleMessage) 
+            if (o instanceof MuleMessage)
             {
                 try
                 {
                     MuleMessage muleMsg = (MuleMessage) o;
                     final Object payload = cleanUpPayload(muleMsg.getPayload());
-                    
+
                     if (payload instanceof DelayedResult)
                     {
-                        o = getDelayedResultCallback((DelayedResult)payload);
+                        o = getDelayedResultCallback((DelayedResult) payload);
                     }
                     else if (payload instanceof XMLStreamReader)
                     {
                         o = (XMLStreamWriterCallback) writer ->
                         {
-                            XMLStreamReader xsr = (XMLStreamReader)payload;
-                            StaxUtils.copy(xsr, writer);      
+                            XMLStreamReader xsr = (XMLStreamReader) payload;
+                            StaxUtils.copy(xsr, writer);
                             writer.flush();
                             xsr.close();
                         };
-                    } 
+                    }
                     else if (payload == null)
                     {
                         break;
@@ -88,13 +88,13 @@ public class OutputPayloadInterceptor extends AbstractOutDatabindingInterceptor
                     {
                         o = transformationService.transform(muleMsg, DataType.fromType(XMLStreamReader.class)).getPayload();
                     }
-    
+
                     objs.add(o);
                 }
                 catch (TransformerException e)
                 {
                     throw new Fault(e);
-                } 
+                }
             }
             else
             {
@@ -200,7 +200,8 @@ public class OutputPayloadInterceptor extends AbstractOutDatabindingInterceptor
     {
         return (XMLStreamWriterCallback) writer ->
         {
-            ContentHandlerToXMLStreamWriter handler = new ContentHandlerToXMLStreamWriter(writer) {
+            ContentHandlerToXMLStreamWriter handler = new ContentHandlerToXMLStreamWriter(writer)
+            {
 
                 @Override
                 public void endDocument() throws SAXException
@@ -221,9 +222,9 @@ public class OutputPayloadInterceptor extends AbstractOutDatabindingInterceptor
                 public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException
                 {
                 }
-                
+
             };
-            
+
             try
             {
                 r.write(new SAXResult(handler));

@@ -6,11 +6,8 @@
  */
 package org.mule.test.config;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import org.junit.After;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.MuleConfiguration;
 import org.mule.runtime.core.api.config.MuleProperties;
@@ -20,14 +17,17 @@ import org.mule.runtime.core.context.DefaultMuleContextBuilder;
 import org.mule.runtime.core.context.DefaultMuleContextFactory;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
-import org.junit.After;
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class MuleConfigurationTestCase extends AbstractMuleTestCase
 {
 
-    private boolean failOnMessageScribbling;
     protected String workingDirectory = "target";
+    private boolean failOnMessageScribbling;
     private MuleContext muleContext;
 
     @After
@@ -36,8 +36,10 @@ public class MuleConfigurationTestCase extends AbstractMuleTestCase
         muleContext.dispose();
         muleContext = null;
     }
-    
-    /** Test for MULE-3092 */
+
+    /**
+     * Test for MULE-3092
+     */
     @Test
     public void testConfigureProgramatically() throws Exception
     {
@@ -55,17 +57,19 @@ public class MuleConfigurationTestCase extends AbstractMuleTestCase
         config.setEnableStreaming(false);
         config.setMaxQueueTransactionFilesSize(500);
         config.setAutoWrapMessageAwareTransform(false);
-        
+
         MuleContextBuilder contextBuilder = new DefaultMuleContextBuilder();
         contextBuilder.setMuleConfiguration(config);
         muleContext = new DefaultMuleContextFactory().createMuleContext(contextBuilder);
-        
+
         muleContext.start();
-        
+
         verifyConfiguration();
     }
 
-    /** Test for MULE-3092 */
+    /**
+     * Test for MULE-3092
+     */
     @Test
     public void testConfigureWithSystemProperties() throws Exception
     {
@@ -77,7 +81,7 @@ public class MuleConfigurationTestCase extends AbstractMuleTestCase
         System.setProperty(MuleProperties.SYSTEM_PROPERTY_PREFIX + "remoteSync", "true");
         System.setProperty(MuleProperties.SYSTEM_PROPERTY_PREFIX + "workingDirectory", workingDirectory);
         System.setProperty(MuleProperties.SYSTEM_PROPERTY_PREFIX + "clientMode", "true");
-        
+
         System.setProperty(MuleProperties.SYSTEM_PROPERTY_PREFIX + "serverId", "MY_SERVER");
         System.setProperty(MuleProperties.SYSTEM_PROPERTY_PREFIX + "domainId", "MY_DOMAIN");
         System.setProperty(MuleProperties.SYSTEM_PROPERTY_PREFIX + "message.cacheBytes", "false");
@@ -109,14 +113,16 @@ public class MuleConfigurationTestCase extends AbstractMuleTestCase
         System.clearProperty(MuleProperties.SYSTEM_PROPERTY_PREFIX + "transform.autoWrap");
     }
 
-    /** Test for MULE-3110 */
+    /**
+     * Test for MULE-3110
+     */
     @Test
     public void testConfigureAfterInitFails() throws Exception
     {
         muleContext = new DefaultMuleContextFactory().createMuleContext();
 
         DefaultMuleConfiguration mutableConfig = ((DefaultMuleConfiguration) muleContext.getConfiguration());
-        
+
         // These are OK to change after init but before start
         mutableConfig.setDefaultSynchronousEndpoints(true);
         mutableConfig.setSystemModelType("direct");
@@ -137,7 +143,7 @@ public class MuleConfigurationTestCase extends AbstractMuleTestCase
         assertEquals(30000, config.getDefaultResponseTimeout());
         assertEquals(60000, config.getDefaultTransactionTimeout());
         assertTrue(config.isClientMode());
-        
+
         // These are not OK to change after init
         assertFalse("UTF-16".equals(config.getDefaultEncoding()));
         assertFalse(workingDirectory.equals(config.getWorkingDirectory()));
@@ -145,7 +151,9 @@ public class MuleConfigurationTestCase extends AbstractMuleTestCase
         assertFalse("MY_DOMAIN".equals(config.getDomainId()));
     }
 
-    /** Test for MULE-3110 */
+    /**
+     * Test for MULE-3110
+     */
     @Test
     public void testConfigureAfterStartFails() throws Exception
     {

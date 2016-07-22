@@ -51,13 +51,14 @@ public interface PropertyConfiguration
     /**
      * A property can be explicitly registered as a bean reference via registerBeanReference()
      * or it can simply use the "-ref" suffix.
+     *
      * @param attributeName true if the name appears to correspond to a reference
      */
     boolean isReference(String attributeName);
 
     SingleProperty getSingleProperty(String propertyName);
 
-     /**
+    /**
      * Extract a JavaBean property name from the supplied attribute name.
      * <p>The default implementation uses the {@link org.springframework.core.Conventions#attributeNameToPropertyName(String)}
      * method to perform the extraction.

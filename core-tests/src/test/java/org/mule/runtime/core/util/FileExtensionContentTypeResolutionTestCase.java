@@ -7,14 +7,7 @@
 
 package org.mule.runtime.core.util;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mule.runtime.api.metadata.MediaType.BINARY;
-import static org.mule.runtime.api.metadata.MediaType.HTML;
-import static org.mule.runtime.api.metadata.MediaType.JSON;
-import static org.mule.runtime.api.metadata.MediaType.TEXT;
-import static org.mule.runtime.api.metadata.MediaType.XML;
-
+import org.junit.Test;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
@@ -25,7 +18,13 @@ import java.util.Map;
 
 import javax.activation.MimetypesFileTypeMap;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mule.runtime.api.metadata.MediaType.BINARY;
+import static org.mule.runtime.api.metadata.MediaType.HTML;
+import static org.mule.runtime.api.metadata.MediaType.JSON;
+import static org.mule.runtime.api.metadata.MediaType.TEXT;
+import static org.mule.runtime.api.metadata.MediaType.XML;
 
 /**
  * Ensures that some of the defined mimeTypes are properly mapped.
@@ -36,8 +35,8 @@ import org.junit.Test;
 public class FileExtensionContentTypeResolutionTestCase extends AbstractMuleTestCase
 {
 
-    private static final MimetypesFileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
     public static final MediaType DEFAULT_CONTENT_TYPE = BINARY;
+    private static final MimetypesFileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
 
     @Test
     public void resolvesFileMimeType() throws Exception

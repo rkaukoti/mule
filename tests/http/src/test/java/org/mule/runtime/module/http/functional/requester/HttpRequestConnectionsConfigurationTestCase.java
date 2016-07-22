@@ -6,11 +6,8 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.http.internal.request.DefaultHttpRequesterConfig.OBJECT_HTTP_CLIENT_FACTORY;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -19,8 +16,10 @@ import org.mule.runtime.module.http.internal.request.DefaultHttpRequesterConfig;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.http.internal.request.DefaultHttpRequesterConfig.OBJECT_HTTP_CLIENT_FACTORY;
 
 @SmallTest
 public class HttpRequestConnectionsConfigurationTestCase extends AbstractMuleTestCase
@@ -35,7 +34,7 @@ public class HttpRequestConnectionsConfigurationTestCase extends AbstractMuleTes
         when(mockMuleContext.getRegistry()).thenReturn(registry);
     }
 
-    @Test(expected=InitialisationException.class)
+    @Test(expected = InitialisationException.class)
     public void invalidMaxConnections() throws InitialisationException
     {
         DefaultHttpRequesterConfig httpRequesterConfig = createRequesterConfig();
@@ -43,7 +42,7 @@ public class HttpRequestConnectionsConfigurationTestCase extends AbstractMuleTes
         httpRequesterConfig.initialise();
     }
 
-    @Test(expected=InitialisationException.class)
+    @Test(expected = InitialisationException.class)
     public void invalidMaxConnections0() throws InitialisationException
     {
         DefaultHttpRequesterConfig httpRequesterConfig = createRequesterConfig();

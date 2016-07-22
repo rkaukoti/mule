@@ -11,11 +11,10 @@ import org.mule.runtime.core.api.store.ObjectDoesNotExistException;
 import org.mule.runtime.core.api.store.ObjectStore;
 import org.mule.runtime.core.api.store.ObjectStoreException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
-
-import java.io.Serializable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
 
 /**
  * This is an abstract superclass for {@link ObjectStore} implementations that conforms to the
@@ -54,7 +53,7 @@ public abstract class AbstractObjectStore<T extends Serializable> implements Obj
         doStore(key, value);
     }
 
-    protected  abstract void doStore(Serializable key, T value) throws ObjectStoreException;
+    protected abstract void doStore(Serializable key, T value) throws ObjectStoreException;
 
     @Override
     public T retrieve(Serializable key) throws ObjectStoreException

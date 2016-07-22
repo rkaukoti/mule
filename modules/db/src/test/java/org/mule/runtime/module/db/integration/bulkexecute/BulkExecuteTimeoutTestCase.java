@@ -21,6 +21,6 @@ public class BulkExecuteTimeoutTestCase extends AbstractQueryTimeoutTestCase
     @Override
     protected String[] getFlowConfigurationResources()
     {
-        return new String[]{"integration/bulkexecute/bulk-execute-timeout-config.xml"};
+        return new String[] {"integration/bulkexecute/bulk-execute-timeout-config.xml"};
     }
 }

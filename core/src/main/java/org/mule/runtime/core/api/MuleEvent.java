@@ -41,17 +41,19 @@ public interface MuleEvent extends org.mule.runtime.api.message.MuleEvent
 
     /**
      * Returns the message payload for this event
-     * 
+     *
      * @return the message payload for this event
      */
     @Override
     MuleMessage getMessage();
 
+    void setMessage(MuleMessage message);
+
     Credentials getCredentials();
 
     /**
      * Returns the contents of the message as a byte array.
-     * 
+     *
      * @return the contents of the message as a byte array
      * @throws MuleException if the message cannot be converted into an array of bytes
      */
@@ -60,7 +62,7 @@ public interface MuleEvent extends org.mule.runtime.api.message.MuleEvent
     /**
      * Transforms the message into the requested format. The transformer used is the one configured on the
      * endpoint through which this event was received.
-     * 
+     *
      * @param outputType The requested output type.
      * @return the message transformed into it's recognised or expected format.
      * @throws TransformerException if a failure occurs in the transformer
@@ -71,7 +73,7 @@ public interface MuleEvent extends org.mule.runtime.api.message.MuleEvent
     /**
      * Transforms the message into the requested format. The transformer used is the one configured on the
      * endpoint through which this event was received.
-     * 
+     *
      * @param outputType The requested output type.
      * @return the message transformed into it's recognised or expected format.
      * @throws TransformerException if a failure occurs in the transformer
@@ -83,7 +85,7 @@ public interface MuleEvent extends org.mule.runtime.api.message.MuleEvent
      * Returns the message transformed into it's recognised or expected format and then into a String. The
      * transformer used is the one configured on the endpoint through which this event was received. If
      * necessary this will use the encoding set on the event
-     * 
+     *
      * @return the message transformed into it's recognised or expected format as a Strings.
      * @throws TransformerException if a failure occurs in the transformer
      * @see org.mule.runtime.core.api.transformer.Transformer
@@ -92,7 +94,7 @@ public interface MuleEvent extends org.mule.runtime.api.message.MuleEvent
 
     /**
      * Returns the message contents as a string If necessary this will use the encoding set on the event
-     * 
+     *
      * @return the message contents as a string
      * @throws MuleException if the message cannot be converted into a string
      */
@@ -100,7 +102,7 @@ public interface MuleEvent extends org.mule.runtime.api.message.MuleEvent
 
     /**
      * Returns the message contents as a string
-     * 
+     *
      * @param encoding the encoding to use when converting the message to string
      * @return the message contents as a string
      * @throws MuleException if the message cannot be converted into a string
@@ -109,14 +111,14 @@ public interface MuleEvent extends org.mule.runtime.api.message.MuleEvent
 
     /**
      * Retrieves the service session for the current event
-     * 
+     *
      * @return the service session for the event
      */
     MuleSession getSession();
 
     /**
      * Retrieves the service for the current event
-     * 
+     *
      * @return the service for the event
      */
     FlowConstruct getFlowConstruct();
@@ -128,7 +130,7 @@ public interface MuleEvent extends org.mule.runtime.api.message.MuleEvent
      * <code>org.mule.runtime.core.api.lifecycle.Callable</code> or calling <code>RequestContext.getEventContext</code> to
      * obtain the MuleEventContext for the current thread. The user can programmatically control how events
      * are dispatched.
-     * 
+     *
      * @return Returns true is the user has set stopFurtherProcessing.
      * @see org.mule.runtime.core.api.MuleContext
      * @see MuleEventContext
@@ -143,7 +145,7 @@ public interface MuleEvent extends org.mule.runtime.api.message.MuleEvent
      * <code>org.mule.runtime.core.api.lifecycle.Callable</code> or calling <code>RequestContext.getEventContext</code> to
      * obtain the MuleEventContext for the current thread. The user can programmatically control how events
      * are dispached.
-     * 
+     *
      * @param stopFurtherProcessing the value to set.
      */
     void setStopFurtherProcessing(boolean stopFurtherProcessing);
@@ -151,7 +153,7 @@ public interface MuleEvent extends org.mule.runtime.api.message.MuleEvent
     /**
      * The number of milliseconds to wait for a return event when running synchronously. 0 wait forever -1 try
      * and receive, but do not wait or a positive millisecond value
-     * 
+     *
      * @return the event timeout in milliseconds
      */
     int getTimeout();
@@ -159,22 +161,21 @@ public interface MuleEvent extends org.mule.runtime.api.message.MuleEvent
     /**
      * The number of milliseconds to wait for a return event when running synchronously. 0 wait forever -1 try
      * and receive, but do not wait or a positive millisecod value
-     * 
+     *
      * @param timeout the event timeout in milliseconds
      */
     void setTimeout(int timeout);
 
     /**
      * An outputstream the can optionally be used write response data to an incoming message.
-     * 
-     * @return an output strem if one has been made available by the message receiver that received the
-     *         message
+     *
+     * @return an output strem if one has been made available by the message receiver that received the message
      */
     OutputStream getOutputStream();
 
     /**
      * Returns the muleContext for the Mule node that this event was received in
-     * 
+     *
      * @return the muleContext for the Mule node that this event was received in
      */
     MuleContext getMuleContext();
@@ -217,8 +218,6 @@ public interface MuleEvent extends org.mule.runtime.api.message.MuleEvent
 
     boolean isSynchronous();
 
-    void setMessage(MuleMessage message);
-
     /**
      * Gets the data type for a given flow variable
      *
@@ -240,8 +239,6 @@ public interface MuleEvent extends org.mule.runtime.api.message.MuleEvent
 
     /**
      * Enables the firing of notifications when processing the message.
-     *
-     * @param enabled
      */
     void setEnableNotifications(boolean enabled);
 
@@ -258,9 +255,8 @@ public interface MuleEvent extends org.mule.runtime.api.message.MuleEvent
      * <p/>
      * This will only be enabled if {@link DefaultMuleConfiguration#isFlowTrace()} is {@code true}. If {@code false},
      * the stack will always be empty.
-     * 
+     *
      * @return the flow stack associated to this event.
-     * 
      * @since 3.8.0
      */
     FlowCallStack getFlowCallStack();
@@ -271,9 +267,8 @@ public interface MuleEvent extends org.mule.runtime.api.message.MuleEvent
      * <p/>
      * This will only be enabled if {@link DefaultMuleConfiguration#isFlowTrace()} is {@code true}. If {@code false},
      * the list will always be empty.
-     * 
+     *
      * @return the message processors trace associated to this event.
-     * 
      * @since 3.8.0
      */
     ProcessorsTrace getProcessorsTrace();

@@ -6,26 +6,26 @@
  */
 package org.mule.runtime.core.el.context;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+import org.mule.mvel2.ImmutableElementException;
+import org.mule.mvel2.PropertyAccessException;
+import org.mule.mvel2.optimizers.OptimizerFactory;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.el.ExpressionLanguage;
 import org.mule.runtime.core.api.expression.ExpressionRuntimeException;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.el.mvel.MVELExpressionLanguage;
-import org.mule.mvel2.ImmutableElementException;
-import org.mule.mvel2.PropertyAccessException;
-import org.mule.mvel2.optimizers.OptimizerFactory;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import org.mule.runtime.core.util.ExceptionUtils;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 @RunWith(Parameterized.class)
 public abstract class AbstractELTestCase extends AbstractMuleContextTestCase
@@ -38,6 +38,18 @@ public abstract class AbstractELTestCase extends AbstractMuleContextTestCase
     {
         this.variant = variant;
         OptimizerFactory.setDefaultOptimizer(mvelOptimizer);
+    }
+
+    @Parameters
+    public static List<Object[]> parameters()
+    {
+        return Arrays.asList(new Object[][]
+                {
+                        {Variant.EVALUATOR_LANGUAGE, OptimizerFactory.DYNAMIC},
+                        {Variant.EVALUATOR_LANGUAGE, OptimizerFactory.SAFE_REFLECTIVE},
+                        {Variant.EXPRESSION_MANAGER, OptimizerFactory.DYNAMIC},
+                        {Variant.EXPRESSION_MANAGER, OptimizerFactory.SAFE_REFLECTIVE}
+                });
     }
 
     @Before
@@ -55,10 +67,10 @@ public abstract class AbstractELTestCase extends AbstractMuleContextTestCase
     {
         switch (variant)
         {
-            case EVALUATOR_LANGUAGE :
-                return expressionLanguage.evaluate(expression);
-            case EXPRESSION_MANAGER :
-                return muleContext.getExpressionManager().evaluate(expression, null);
+        case EVALUATOR_LANGUAGE:
+            return expressionLanguage.evaluate(expression);
+        case EXPRESSION_MANAGER:
+            return muleContext.getExpressionManager().evaluate(expression, null);
         }
         return null;
     }
@@ -68,29 +80,12 @@ public abstract class AbstractELTestCase extends AbstractMuleContextTestCase
     {
         switch (variant)
         {
-            case EVALUATOR_LANGUAGE :
-                return expressionLanguage.evaluate(expression, event);
-            case EXPRESSION_MANAGER :
-                return muleContext.getExpressionManager().evaluate(expression, event);
+        case EVALUATOR_LANGUAGE:
+            return expressionLanguage.evaluate(expression, event);
+        case EXPRESSION_MANAGER:
+            return muleContext.getExpressionManager().evaluate(expression, event);
         }
         return null;
-    }
-
-    public static enum Variant
-    {
-        EXPRESSION_MANAGER, EVALUATOR_LANGUAGE
-    }
-
-    @Parameters
-    public static List<Object[]> parameters()
-    {
-        return Arrays.asList(new Object[][]
-        {
-            {Variant.EVALUATOR_LANGUAGE, OptimizerFactory.DYNAMIC},
-            {Variant.EVALUATOR_LANGUAGE, OptimizerFactory.SAFE_REFLECTIVE},
-            {Variant.EXPRESSION_MANAGER, OptimizerFactory.DYNAMIC},
-            {Variant.EXPRESSION_MANAGER, OptimizerFactory.SAFE_REFLECTIVE}
-        });
     }
 
     protected ExpressionLanguage getExpressionLanguage() throws Exception
@@ -174,6 +169,11 @@ public abstract class AbstractELTestCase extends AbstractMuleContextTestCase
         {
             assertEquals(PropertyAccessException.class, ExceptionUtils.getRootCause(e).getClass());
         }
+    }
+
+    public static enum Variant
+    {
+        EXPRESSION_MANAGER, EVALUATOR_LANGUAGE
     }
 
 }

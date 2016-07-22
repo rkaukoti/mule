@@ -139,7 +139,7 @@ public class DelegateTransaction extends AbstractTransaction
 
     public boolean supportsInnerTransaction(Transaction transaction)
     {
-        return this.delegate instanceof NullTransaction ||  this.delegate == transaction;
+        return this.delegate instanceof NullTransaction || this.delegate == transaction;
     }
 
     @Override
@@ -199,7 +199,8 @@ public class DelegateTransaction extends AbstractTransaction
         }
 
         @Override
-        public int getTimeout() {
+        public int getTimeout()
+        {
             return timeout;
         }
 

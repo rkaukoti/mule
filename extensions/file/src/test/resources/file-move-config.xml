@@ -16,7 +16,7 @@
     </flow>
 
     <flow name="readAndDo">
-        <file:read path="#[source]" />
+        <file:read path="#[source]"/>
         <file:move targetPath="#[target]" overwrite="#[overwrite]" createParentDirectories="#[createParent]"/>
     </flow>
 

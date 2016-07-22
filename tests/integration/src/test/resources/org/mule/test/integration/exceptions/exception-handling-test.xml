@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
       xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
 
-    <spring:bean id="objectStore" class="org.mule.runtime.core.util.store.PartitionedPersistentObjectStore" />
-    <spring:bean id="objectStore2" class="org.mule.runtime.core.util.store.PartitionedPersistentObjectStore" />
+    <spring:bean id="objectStore" class="org.mule.runtime.core.util.store.PartitionedPersistentObjectStore"/>
+    <spring:bean id="objectStore2" class="org.mule.runtime.core.util.store.PartitionedPersistentObjectStore"/>
 
     <flow name="customProcessorInFlow">
-        <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor" />
+        <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor"/>
     </flow>
 
     <flow name="outboundEndpointInFlow" processingStrategy="asynchronous">
@@ -32,7 +32,7 @@
 
     <flow name="asyncInFlow">
         <async>
-            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor" />
+            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor"/>
             <test:component throwException="true"/>
         </async>
         <catch-exception-strategy>
@@ -42,7 +42,7 @@
 
     <flow name="untilSuccessfulInFlow">
         <until-successful objectStore-ref="objectStore" maxRetries="1" millisBetweenRetries="1000">
-            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor" />
+            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor"/>
         </until-successful>
         <until-successful objectStore-ref="objectStore" maxRetries="1" millisBetweenRetries="1000">
             <test:component throwException="true"/>
@@ -54,14 +54,14 @@
 
     <flow name="customProcessorInScope">
         <foreach>
-            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor" />
+            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor"/>
         </foreach>
         <rollback-exception-strategy/>
     </flow>
 
     <flow name="outboundEndpointInScope">
         <foreach>
-            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor" />
+            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor"/>
             <test:component throwException="true"/>
         </foreach>
         <rollback-exception-strategy>
@@ -72,7 +72,7 @@
 
     <flow name="outboundDynamicEndpointInScope">
         <foreach>
-            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor" />
+            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor"/>
             <test:component throwException="true"/>
         </foreach>
         <rollback-exception-strategy>
@@ -83,7 +83,7 @@
 
     <flow name="customProcessorInTransactionalScope">
         <transactional>
-            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor" />
+            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor"/>
             <test:component throwException="true"/>
             <catch-exception-strategy>
                 <test:assert expression="#[flowVars.expectedHandler == false]"/>
@@ -113,7 +113,7 @@
     <flow name="asyncInTransactionalScope">
         <transactional>
             <async>
-                <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor" />
+                <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor"/>
                 <test:component throwException="true"/>
             </async>
             <catch-exception-strategy>
@@ -125,7 +125,7 @@
     <flow name="untilSuccessfulInTransactionalScope">
         <transactional>
             <until-successful objectStore-ref="objectStore" maxRetries="1" millisBetweenRetries="1000">
-                <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor" />
+                <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor"/>
             </until-successful>
             <until-successful objectStore-ref="objectStore2" maxRetries="1" millisBetweenRetries="1000">
                 <test:component throwException="true"/>
@@ -139,7 +139,7 @@
     <flow name="customProcessorInExceptionStrategy">
         <test:component throwException="true"/>
         <catch-exception-strategy>
-            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor" />
+            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor"/>
             <test:assert expression="#[flowVars.expectedHandler == false]"/>
             <test:queue name="outStrategy1"/>
         </catch-exception-strategy>
@@ -148,7 +148,7 @@
     <flow name="outboundEndpointInExceptionStrategy">
         <test:component throwException="true"/>
         <catch-exception-strategy>
-            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExecutionCountProcessor" />
+            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExecutionCountProcessor"/>
             <test:component throwException="true"/>
         </catch-exception-strategy>
     </flow>
@@ -156,7 +156,7 @@
     <flow name="outboundDynamicEndpointInExceptionStrategy">
         <test:component throwException="true"/>
         <catch-exception-strategy>
-            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExecutionCountProcessor" />
+            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExecutionCountProcessor"/>
             <test:component throwException="true"/>
         </catch-exception-strategy>
     </flow>
@@ -164,9 +164,9 @@
     <flow name="asyncInExceptionStrategy">
         <test:component throwException="true"/>
         <catch-exception-strategy>
-            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExecutionCountProcessor" />
+            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExecutionCountProcessor"/>
             <async>
-                <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor" />
+                <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor"/>
                 <test:component throwException="true"/>
             </async>
         </catch-exception-strategy>
@@ -175,9 +175,9 @@
     <flow name="untilSuccessfulInExceptionStrategy">
         <test:component throwException="true"/>
         <catch-exception-strategy>
-            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExecutionCountProcessor" />
+            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExecutionCountProcessor"/>
             <until-successful objectStore-ref="objectStore" maxRetries="1" millisBetweenRetries="1000">
-                <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor" />
+                <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor"/>
             </until-successful>
             <until-successful objectStore-ref="objectStore" maxRetries="1" millisBetweenRetries="1000">
                 <test:component throwException="true"/>
@@ -188,9 +188,9 @@
     <flow name="untilSuccessfulInExceptionStrategyRollback">
         <test:component throwException="true"/>
         <rollback-exception-strategy>
-            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExecutionCountProcessor" />
+            <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExecutionCountProcessor"/>
             <until-successful objectStore-ref="objectStore" maxRetries="1" millisBetweenRetries="1000">
-                <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor" />
+                <custom-processor class="org.mule.test.integration.exceptions.ExceptionHandlingTestCase$ExceptionHandlerVerifierProcessor"/>
             </until-successful>
             <until-successful objectStore-ref="objectStore" maxRetries="1" millisBetweenRetries="1000">
                 <test:component throwException="true"/>

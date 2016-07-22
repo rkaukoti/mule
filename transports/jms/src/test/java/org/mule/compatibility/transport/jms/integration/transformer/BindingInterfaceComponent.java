@@ -15,20 +15,20 @@ public class BindingInterfaceComponent
     {
         s = binding.hello1(s);
         s = binding.hello2(s);
-//        s = binding.hello3(s);
-//        s = binding.hello4(s);
+        //        s = binding.hello3(s);
+        //        s = binding.hello4(s);
         return s;
-    }
-
-    public void setBinding(BindingInterface binding)
-    {
-        this.binding = binding;
     }
 
     public BindingInterface getBinding()
     {
         return binding;
 
+    }
+
+    public void setBinding(BindingInterface binding)
+    {
+        this.binding = binding;
     }
 
 }

@@ -6,14 +6,12 @@
  */
 package org.mule.test.routing;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.functional.functional.InvocationCountMessageProcessor.getNumberOfInvocationsFor;
-
+import org.apache.commons.lang.RandomStringUtils;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.mule.functional.functional.FunctionalTestComponent;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.ExceptionPayload;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -22,12 +20,10 @@ import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.routing.RoutingException;
 import org.mule.runtime.core.construct.Flow;
-import org.mule.functional.functional.FunctionalTestComponent;
-import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.retry.RetryPolicyExhaustedException;
+import org.mule.runtime.core.util.store.AbstractPartitionedObjectStore;
 import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
-import org.mule.runtime.core.util.store.AbstractPartitionedObjectStore;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,10 +31,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.lang.RandomStringUtils;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.functional.functional.InvocationCountMessageProcessor.getNumberOfInvocationsFor;
 
 @RunWith(Parameterized.class)
 public class UntilSuccessfulTestCase extends FunctionalTestCase
@@ -47,6 +46,11 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase
 
     private FunctionalTestComponent targetMessageProcessor;
 
+    public UntilSuccessfulTestCase(String configFile)
+    {
+        this.configFile = configFile;
+    }
+
     @Parameterized.Parameters
     public static Collection<Object[]> parameters()
     {
@@ -54,11 +58,6 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase
                 {"until-successful-test.xml"},
                 {"until-successful-seconds-test.xml"}
         });
-    }
-
-    public UntilSuccessfulTestCase(String configFile)
-    {
-        this.configFile = configFile;
     }
 
     @Override
@@ -75,7 +74,7 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase
         targetMessageProcessor = getFunctionalTestComponent("target-mp");
 
         final AbstractPartitionedObjectStore<Serializable> objectStore = muleContext.getRegistry()
-            .lookupObject("objectStore");
+                                                                                    .lookupObject("objectStore");
         objectStore.disposePartition("DEFAULT_PARTITION");
     }
 
@@ -110,7 +109,8 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase
         assertThat(dlqExceptionPayload, is(notNullValue()));
         assertThat(dlqExceptionPayload.getException(), instanceOf(RetryPolicyExhaustedException.class));
         assertThat(dlqExceptionPayload.getException().getMessage(),
-                containsString("until-successful retries exhausted. Last exception message was: Failure expression positive when processing event"));
+                containsString(
+                        "until-successful retries exhausted. Last exception message was: Failure expression positive when processing event"));
 
         assertThat(dlqExceptionPayload.getException().getCause(), instanceOf(MuleRuntimeException.class));
         assertThat(dlqExceptionPayload.getException().getMessage(),
@@ -151,7 +151,8 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase
      * Verifies that the synchronous wait time is consistent with that requested
      */
     @Test
-    public void measureSynchronousWait() throws Exception {
+    public void measureSynchronousWait() throws Exception
+    {
         final String payload = RandomStringUtils.randomAlphanumeric(20);
         flowRunner("measureSynchronousWait").withPayload(payload).runExpectingException();
         assertThat(WaitMeasure.totalWait >= 1000, is(true));
@@ -174,7 +175,8 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase
             {
                 executionOfCountInUntilSuccessful = getNumberOfInvocationsFor("untilSuccessful2");
                 executionOfCountInExceptionStrategy = getNumberOfInvocationsFor("exceptionStrategy2");
-                return executionOfCountInUntilSuccessful == expectedCounterExecutions && executionOfCountInExceptionStrategy == expectedCounterInExceptionStrategyExecutions;
+                return executionOfCountInUntilSuccessful == expectedCounterExecutions &&
+                       executionOfCountInExceptionStrategy == expectedCounterInExceptionStrategyExecutions;
             }
 
             @Override
@@ -182,7 +184,8 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase
             {
                 return String.format("Expecting %d executions of counter in until-successful and got %d \n " +
                                      "Expecting %d execution of counter in exception strategy and got %d",
-                                     expectedCounterExecutions, executionOfCountInUntilSuccessful, expectedCounterInExceptionStrategyExecutions, executionOfCountInExceptionStrategy);
+                        expectedCounterExecutions, executionOfCountInUntilSuccessful, expectedCounterInExceptionStrategyExecutions,
+                        executionOfCountInExceptionStrategy);
             }
         });
     }
@@ -198,14 +201,14 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase
     }
 
     private List<Object> ponderUntilMessageCountReceivedByTargetMessageProcessor(final int expectedCount)
-        throws InterruptedException
+            throws InterruptedException
     {
         return ponderUntilMessageCountReceived(expectedCount, targetMessageProcessor);
     }
 
     private List<Object> ponderUntilMessageCountReceived(final int expectedCount,
                                                          final FunctionalTestComponent ftc)
-        throws InterruptedException
+            throws InterruptedException
     {
         final List<Object> results = new ArrayList<Object>();
 
@@ -223,7 +226,7 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase
     }
 
     private void ponderUntilMessageCountReceivedByCustomMP(final int expectedCount)
-        throws InterruptedException
+            throws InterruptedException
     {
         while (CustomMP.getCount() < expectedCount)
         {
@@ -259,7 +262,8 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase
         }
     }
 
-    static class WaitMeasure implements MessageProcessor {
+    static class WaitMeasure implements MessageProcessor
+    {
 
         public static long totalWait;
         private long firstAttemptTime = 0;
@@ -267,9 +271,12 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase
         @Override
         public MuleEvent process(MuleEvent event) throws MuleException
         {
-            if (firstAttemptTime == 0) {
+            if (firstAttemptTime == 0)
+            {
                 firstAttemptTime = System.currentTimeMillis();
-            } else {
+            }
+            else
+            {
                 totalWait = System.currentTimeMillis() - firstAttemptTime;
             }
 

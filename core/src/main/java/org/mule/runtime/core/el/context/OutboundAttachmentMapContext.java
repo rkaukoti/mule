@@ -6,13 +6,14 @@
  */
 package org.mule.runtime.core.el.context;
 
-import static java.util.Collections.emptyMap;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 
 import java.util.Set;
 
 import javax.activation.DataHandler;
+
+import static java.util.Collections.emptyMap;
 
 public class OutboundAttachmentMapContext extends AbstractMapContext<DataHandler>
 {

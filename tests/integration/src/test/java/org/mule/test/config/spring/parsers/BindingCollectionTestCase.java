@@ -6,13 +6,12 @@
  */
 package org.mule.test.config.spring.parsers;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.test.config.spring.parsers.beans.OrphanBean;
 
 import java.util.Collection;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class BindingCollectionTestCase extends AbstractNamespaceTestCase
 {

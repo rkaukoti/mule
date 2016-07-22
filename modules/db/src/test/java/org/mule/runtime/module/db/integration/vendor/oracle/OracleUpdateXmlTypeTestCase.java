@@ -7,8 +7,8 @@
 
 package org.mule.runtime.module.db.integration.vendor.oracle;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.TestDbConfig;
@@ -21,8 +21,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class OracleUpdateXmlTypeTestCase extends AbstractOracleXmlTypeTestCase
 {

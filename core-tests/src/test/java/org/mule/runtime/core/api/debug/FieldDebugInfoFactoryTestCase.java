@@ -7,22 +7,22 @@
 
 package org.mule.runtime.core.api.debug;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.debug.FieldDebugInfoFactory.FieldEvaluator;
+import org.mule.runtime.core.util.AttributeEvaluator;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
-import org.mule.runtime.core.util.AttributeEvaluator;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
 
 @SmallTest
 public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase
@@ -52,7 +52,8 @@ public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase
     {
         when(attributeEvaluator.resolveBooleanValue(event)).thenReturn(true);
 
-        final FieldDebugInfo<?> debugInfo = FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Boolean.class, attributeEvaluator, event);
+        final FieldDebugInfo<?> debugInfo =
+                FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Boolean.class, attributeEvaluator, event);
 
         assertCreatedFieldDebugInfo(debugInfo, Boolean.class, true, SimpleFieldDebugInfo.class);
     }
@@ -62,7 +63,8 @@ public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase
     {
         when(attributeEvaluator.resolveIntegerValue(event)).thenReturn(1);
 
-        final FieldDebugInfo<?> debugInfo = FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Integer.class, attributeEvaluator, event);
+        final FieldDebugInfo<?> debugInfo =
+                FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Integer.class, attributeEvaluator, event);
 
         assertCreatedFieldDebugInfo(debugInfo, Integer.class, 1, SimpleFieldDebugInfo.class);
     }
@@ -93,7 +95,8 @@ public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase
     {
         when(attributeEvaluator.resolveBooleanValue(event)).thenThrow(EVALUATION_EXCEPTION);
 
-        final FieldDebugInfo<?> debugInfo = FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Boolean.class, attributeEvaluator, event);
+        final FieldDebugInfo<?> debugInfo =
+                FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Boolean.class, attributeEvaluator, event);
 
         assertCreatedFieldDebugInfo(debugInfo, Boolean.class, EVALUATION_EXCEPTION, ErrorFieldDebugInfo.class);
     }
@@ -103,7 +106,8 @@ public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase
     {
         when(attributeEvaluator.resolveIntegerValue(event)).thenThrow(EVALUATION_EXCEPTION);
 
-        final FieldDebugInfo<?> debugInfo = FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Integer.class, attributeEvaluator, event);
+        final FieldDebugInfo<?> debugInfo =
+                FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Integer.class, attributeEvaluator, event);
 
         assertCreatedFieldDebugInfo(debugInfo, Integer.class, EVALUATION_EXCEPTION, ErrorFieldDebugInfo.class);
     }
@@ -164,7 +168,8 @@ public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase
         assertCreatedFieldDebugInfo(debugInfo, Map.class, value, ObjectFieldDebugInfo.class);
     }
 
-    private void assertCreatedFieldDebugInfo(FieldDebugInfo<?> debugInfo, Class type, Object value, Class<? extends FieldDebugInfo> debugInfoClass)
+    private void assertCreatedFieldDebugInfo(FieldDebugInfo<?> debugInfo, Class type, Object value,
+                                             Class<? extends FieldDebugInfo> debugInfoClass)
     {
         assertThat(debugInfo, instanceOf(debugInfoClass));
         assertThat(debugInfo, fieldLike(FIELD_NAME, type, value));

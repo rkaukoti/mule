@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd">
@@ -62,17 +62,17 @@
     </flow>
 
     <flow name="childSyncFlow">
-        <test:assert-intercepting responseSameThread="true" responseExpression="#[assertPayload()]"  message="1"/>
+        <test:assert-intercepting responseSameThread="true" responseExpression="#[assertPayload()]" message="1"/>
         <expression-component>flowVars['requestThread'] = Thread.currentThread()</expression-component>
         <flow-ref name="childSyncFlowChild"/>
-        <test:assert expression="#[assertPayload()]"  message="2"/>
-        <test:assert expression="#[flowVars['requestThread'] == Thread.currentThread()]"  message="3"/>
+        <test:assert expression="#[assertPayload()]" message="2"/>
+        <test:assert expression="#[flowVars['requestThread'] == Thread.currentThread()]" message="3"/>
         <test:assert expression="#[flow.name=='childSyncFlow']"/>
     </flow>
     <flow name="childSyncFlowChild" processingStrategy="synchronous">
         <expression-component>flowVars['requestThreadChild'] = Thread.currentThread()</expression-component>
         <test:non-blocking-processor/>
-        <test:assert expression="#[flowVars['requestThreadChild'] == Thread.currentThread()]"  message="4"/>
+        <test:assert expression="#[flowVars['requestThreadChild'] == Thread.currentThread()]" message="4"/>
         <test:assert expression="#[assertPayload()]"/>
     </flow>
 
@@ -238,7 +238,7 @@
         </async>
         <test:non-blocking-processor/>
         <test:assert expression="#[flowVars['requestThread'] != Thread.currentThread()]"/>
-        <test:assert expression="#[assertPayload()]" />
+        <test:assert expression="#[assertPayload()]"/>
     </flow>
 
     <flow name="catchExceptionStrategy">

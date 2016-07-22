@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
       xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
             http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
             http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
@@ -12,7 +12,7 @@
     <http:listener-config name="listenerConfig" host="localhost" port="${port1}" usePersistentConnections="false"/>
 
     <flow name="26384076-3877-4b23-809d-14b7fd22535f">
-        <http:listener config-ref="listenerConfig" path="test" />
+        <http:listener config-ref="listenerConfig" path="test"/>
         <component class="org.mule.cxf.weatherservice.mycode.CreateZipQuery"/>
         <cxf:jaxws-client clientClass="org.mule.cxf.weatherservice.myweather.Weather" port="WeatherSoap"
                           operation="GetCityWeatherByZIP"/>

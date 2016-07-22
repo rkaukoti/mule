@@ -24,7 +24,7 @@ import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 
 /**
- *  This is the Provider for Mule's Jaas Security.
+ * This is the Provider for Mule's Jaas Security.
  */
 public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider
 {
@@ -40,16 +40,6 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider
     }
 
     /**
-     * Sets the login Configuration
-     *
-     * @param loginConfig
-     */
-    public final void setLoginConfig(String loginConfig)
-    {
-        this.loginConfig = loginConfig;
-    }
-
-    /**
      * Gets the Login Configuration
      *
      * @return loginConfig
@@ -60,13 +50,11 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider
     }
 
     /**
-     * Sets the Login Context name
-     *
-     * @param loginContextName
+     * Sets the login Configuration
      */
-    public final void setLoginContextName(String loginContextName)
+    public final void setLoginConfig(String loginConfig)
     {
-        this.loginContextName = loginContextName;
+        this.loginConfig = loginConfig;
     }
 
     /**
@@ -77,6 +65,14 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider
     public final String getLoginContextName()
     {
         return loginContextName;
+    }
+
+    /**
+     * Sets the Login Context name
+     */
+    public final void setLoginContextName(String loginContextName)
+    {
+        this.loginContextName = loginContextName;
     }
 
     /**
@@ -91,8 +87,6 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider
 
     /**
      * Sets the user's credentials.
-     *
-     * @param credentials
      */
     public final void setCredentials(String credentials)
     {
@@ -111,8 +105,6 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider
 
     /**
      * sets the login module name
-     *
-     * @param loginModule
      */
     public final void setLoginModule(String loginModule)
     {
@@ -122,15 +114,14 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider
     // ~ Methods ================================================================
 
     /**
-     * @throws IOException The configureJaas method gets the resource path of the
-     *                     jaas configuration file and constructs the URL for the login
-     *                     configuration.
+     * @throws IOException The configureJaas method gets the resource path of the jaas configuration file and constructs the URL for the
+     *                     login configuration.
      */
     private void configureJaas() throws IOException
     {
 
         String loginConfigUrl = "file://"
-                + org.mule.runtime.core.util.FileUtils.getResourcePath(loginConfig,
+                                + org.mule.runtime.core.util.FileUtils.getResourcePath(loginConfig,
                 JaasSimpleAuthenticationProvider.class);
 
         boolean alreadySet = false;
@@ -163,14 +154,12 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider
      * Login Context is successfully created, it will then attempt to login.
      *
      * @return Authentication
-     * @throws org.mule.runtime.core.api.security.SecurityException
-     *
      */
     public final Authentication authenticate(Authentication authentication)
             throws org.mule.runtime.core.api.security.SecurityException
     {
         LoginContext loginContext;
-        JaasAuthentication auth = (JaasAuthentication)authentication;
+        JaasAuthentication auth = (JaasAuthentication) authentication;
 
         // Create the Mule Callback Handler
         MuleCallbackHandler cbh = new MuleCallbackHandler(auth);
@@ -180,7 +169,7 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider
         {
             if (auth.getSubject() != null)
             {
-                loginContext = new LoginContext(loginContextName,auth.getSubject(), cbh);
+                loginContext = new LoginContext(loginContextName, auth.getSubject(), cbh);
             }
             else
             {
@@ -205,7 +194,7 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider
         }
 
         Subject subject = loginContext.getSubject();
-        JaasAuthentication finalAuth = new JaasAuthentication(auth.getPrincipal(), auth.getCredentials(),subject);
+        JaasAuthentication finalAuth = new JaasAuthentication(auth.getPrincipal(), auth.getCredentials(), subject);
         finalAuth.setAuthenticated(true);
         finalAuth.setEvent(authentication.getEvent());
 
@@ -218,8 +207,6 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider
      * that file. If such a configuration file is not present, it will then try to
      * configure jaas programmatically. It also attempts to create the
      * JaasSecurityContextFactory.
-     *
-     * @throws InitialisationException
      */
     protected void doInitialise() throws InitialisationException
     {
@@ -279,7 +266,9 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider
         private static Map appConfigEntries = new HashMap();
         private static JaasConfig jaasConfig;
 
-        /** Initializes and sets the Jaas Configuration */
+        /**
+         * Initializes and sets the Jaas Configuration
+         */
         public static void init()
         {
             jaasConfig = new JaasConfig();
@@ -298,9 +287,6 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider
 
         /**
          * Adds the Configuration Entries
-         *
-         * @param name
-         * @param entry
          */
         public static void addApplicationConfigEntry(String name, AppConfigurationEntry entry)
         {
@@ -309,8 +295,6 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider
 
         /**
          * Gets the configuration entries using the application Name
-         *
-         * @param applicationName
          */
         public final AppConfigurationEntry[] getAppConfigurationEntry(String applicationName)
         {
@@ -323,7 +307,7 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider
             AppConfigurationEntry entry = (AppConfigurationEntry) appConfigEntries.get(applicationName);
             if (entry == null)
             {
-                return new AppConfigurationEntry[]{};
+                return new AppConfigurationEntry[] {};
             }
             else
             {

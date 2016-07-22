@@ -9,8 +9,6 @@ package org.mule.compatibility.transport.tcp.protocols;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import org.mule.compatibility.transport.tcp.protocols.XmlMessageEOFProtocol;
-
 public class XmlMessageEOFProtocolTestCase extends XmlMessageProtocolTestCase
 {
 

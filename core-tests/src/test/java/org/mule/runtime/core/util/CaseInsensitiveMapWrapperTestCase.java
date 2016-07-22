@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.core.util;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
@@ -16,8 +15,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class CaseInsensitiveMapWrapperTestCase extends AbstractMuleTestCase
@@ -75,10 +75,10 @@ public class CaseInsensitiveMapWrapperTestCase extends AbstractMuleTestCase
         map.put("C", 3);
         assertThat(map.size(), is(3));
 
-        for(Iterator<String> it = map.keySet().iterator(); it.hasNext();)
+        for (Iterator<String> it = map.keySet().iterator(); it.hasNext(); )
         {
             String key = it.next();
-            if(key.equals("B"))
+            if (key.equals("B"))
             {
                 it.remove();
             }
@@ -98,10 +98,10 @@ public class CaseInsensitiveMapWrapperTestCase extends AbstractMuleTestCase
         map.put("C", 3);
         assertThat(map.size(), is(3));
 
-        for(Iterator<Map.Entry<String,Integer>> it = map.entrySet().iterator(); it.hasNext();)
+        for (Iterator<Map.Entry<String, Integer>> it = map.entrySet().iterator(); it.hasNext(); )
         {
             String key = it.next().getKey();
-            if(key.equals("B"))
+            if (key.equals("B"))
             {
                 it.remove();
             }

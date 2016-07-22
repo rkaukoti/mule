@@ -6,10 +6,7 @@
  */
 package org.mule.runtime.core.construct;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.construct.FlowConstruct;
@@ -18,31 +15,13 @@ import org.mule.runtime.core.api.source.MessageSource;
 import org.mule.runtime.core.util.ObjectUtils;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public abstract class AbstractFlowConstuctTestCase extends AbstractMuleContextTestCase
 {
-    public static class DirectInboundMessageSource implements MessageSource
-    {
-        private MessageProcessor listener;
-
-        public void setListener(MessageProcessor listener)
-        {
-            this.listener = listener;
-        }
-
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            return listener.process(event);
-        }
-
-        @Override
-        public String toString()
-        {
-            return ObjectUtils.toString(this);
-        }
-    }
-
     protected DirectInboundMessageSource directInboundMessageSource;
 
     @Override
@@ -190,6 +169,27 @@ public abstract class AbstractFlowConstuctTestCase extends AbstractMuleContextTe
         catch (final IllegalStateException e)
         {
             // expected
+        }
+    }
+
+    public static class DirectInboundMessageSource implements MessageSource
+    {
+        private MessageProcessor listener;
+
+        public void setListener(MessageProcessor listener)
+        {
+            this.listener = listener;
+        }
+
+        public MuleEvent process(MuleEvent event) throws MuleException
+        {
+            return listener.process(event);
+        }
+
+        @Override
+        public String toString()
+        {
+            return ObjectUtils.toString(this);
         }
     }
 

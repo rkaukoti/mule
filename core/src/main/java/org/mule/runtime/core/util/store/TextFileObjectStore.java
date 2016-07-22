@@ -105,7 +105,7 @@ public class TextFileObjectStore extends InMemoryObjectStore<String>
             throw new ObjectStoreException(iox);
         }
     }
-    
+
     @Override
     public void clear()
     {
@@ -137,7 +137,7 @@ public class TextFileObjectStore extends InMemoryObjectStore<String>
     {
         Properties props = new Properties();
 
-        for (Iterator<?> iterator = super.store.values().iterator(); iterator.hasNext();)
+        for (Iterator<?> iterator = super.store.values().iterator(); iterator.hasNext(); )
         {
             StoredObject<?> storedObject = (StoredObject<?>) iterator.next();
             props.put(storedObject.getId(), storedObject.getItem());

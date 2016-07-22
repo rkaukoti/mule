@@ -6,17 +6,7 @@
  */
 package org.mule.runtime.core;
 
-import static java.util.Collections.emptyMap;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.hamcrest.collection.IsEmptyCollection.empty;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mule.runtime.core.message.NullAttributes.NULL_ATTRIBUTES;
+import org.junit.Test;
 import org.mule.runtime.api.message.Attributes;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MuleMessage;
@@ -35,7 +25,17 @@ import java.util.Map;
 
 import javax.activation.DataHandler;
 
-import org.junit.Test;
+import static java.util.Collections.emptyMap;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.collection.IsEmptyCollection.empty;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mule.runtime.core.message.NullAttributes.NULL_ATTRIBUTES;
 
 public class DefaultMuleMessageTestCase extends AbstractMuleContextTestCase
 {
@@ -131,7 +131,9 @@ public class DefaultMuleMessageTestCase extends AbstractMuleContextTestCase
         assertEquals(0, message.getOutboundAttachmentNames().size());
 
         message = MuleMessage.builder(message)
-                             .addOutboundAttachment("spi-props", IOUtils.toDataHandler("spi-props", IOUtils.getResourceAsUrl("test-spi.properties", getClass()), MediaType.TEXT))
+                             .addOutboundAttachment("spi-props",
+                                     IOUtils.toDataHandler("spi-props", IOUtils.getResourceAsUrl("test-spi.properties", getClass()),
+                                             MediaType.TEXT))
                              .build();
 
 
@@ -142,7 +144,8 @@ public class DefaultMuleMessageTestCase extends AbstractMuleContextTestCase
         assertEquals(1, message.getOutboundAttachmentNames().size());
 
         message = MuleMessage.builder(message)
-                             .addOutboundAttachment("dummy", IOUtils.toDataHandler("dummy", IOUtils.getResourceAsUrl("dummy.xml", getClass()), null))
+                             .addOutboundAttachment("dummy",
+                                     IOUtils.toDataHandler("dummy", IOUtils.getResourceAsUrl("dummy.xml", getClass()), null))
                              .build();
         handler = message.getOutboundAttachment("dummy");
         assertEquals(MediaType.APPLICATION_XML.getPrimaryType(), handler.getContentType().split("/")[0]);
@@ -203,7 +206,11 @@ public class DefaultMuleMessageTestCase extends AbstractMuleContextTestCase
 
     private MuleMessage createMuleMessage()
     {
-        return MuleMessage.builder().payload(TEST_PAYLOAD).attributes(testAttributes).addOutboundProperty("MuleMessage", "MuleMessage").build();
+        return MuleMessage.builder()
+                          .payload(TEST_PAYLOAD)
+                          .attributes(testAttributes)
+                          .addOutboundProperty("MuleMessage", "MuleMessage")
+                          .build();
     }
 
     private void assertOutboundMessageProperty(String key, MuleMessage message)
@@ -211,22 +218,22 @@ public class DefaultMuleMessageTestCase extends AbstractMuleContextTestCase
         // taking advantage of the fact here that key and value are the same
         assertThat(message.getOutboundProperty(key), is(key));
     }
-    
-    @Test(expected=UnsupportedOperationException.class)
+
+    @Test(expected = UnsupportedOperationException.class)
     public void testPropertyNamesImmutable() throws Exception
     {
         MuleMessage message = createMuleMessage();
         message.getOutboundPropertyNames().add("other");
     }
 
-    @Test(expected=UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void testInboundPropertyNamesAddImmutable() throws Exception
     {
         MuleMessage message = createMuleMessage();
         message.getOutboundPropertyNames().add("other");
     }
 
-    @Test(expected=UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void testOutboundPropertyNamesImmutable() throws Exception
     {
         MuleMessage message = createMuleMessage();

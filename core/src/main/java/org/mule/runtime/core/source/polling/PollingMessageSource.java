@@ -34,24 +34,19 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.context.notification.ConnectorMessageNotification;
 import org.mule.runtime.core.execution.TransactionalErrorHandlingExecutionTemplate;
 import org.mule.runtime.core.util.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>
- * Polling {@link org.mule.runtime.core.api.source.MessageSource}.
- * </p>
- * <p>
- * The {@link PollingMessageSource} is responsible of creating a {@link org.mule.runtime.core.api.schedule.Scheduler}
- * at the initialization phase. This {@link org.mule.runtime.core.api.schedule.Scheduler} can be stopped/started and executed by using the {@link org.mule.runtime.core.api.registry.MuleRegistry}
- * interface, this way users can manipulate poll from outside mule server.
- * </p>
+ * <p> Polling {@link org.mule.runtime.core.api.source.MessageSource}. </p> <p> The {@link PollingMessageSource} is responsible of creating
+ * a {@link org.mule.runtime.core.api.schedule.Scheduler} at the initialization phase. This {@link
+ * org.mule.runtime.core.api.schedule.Scheduler} can be stopped/started and executed by using the {@link
+ * org.mule.runtime.core.api.registry.MuleRegistry} interface, this way users can manipulate poll from outside mule server. </p>
  */
-public class PollingMessageSource implements MessageSource, FlowConstructAware, Startable, Stoppable, MuleContextAware, Initialisable, Disposable
+public class PollingMessageSource
+        implements MessageSource, FlowConstructAware, Startable, Stoppable, MuleContextAware, Initialisable, Disposable
 {
 
-    private static Logger logger = LoggerFactory.getLogger(PollingMessageSource.class);
     /**
      * The Polling name identifier. Used to create the scheduler name
      */
@@ -60,16 +55,8 @@ public class PollingMessageSource implements MessageSource, FlowConstructAware, 
      * Format string for all the Polling Schedulers name.
      */
     private static final String POLLING_SCHEDULER_NAME_FORMAT = POLLING_SCHEME + "://%s/%s";
+    private static Logger logger = LoggerFactory.getLogger(PollingMessageSource.class);
     private final SchedulerFactory<Runnable> schedulerFactory;
-
-    /**
-     * The {@link org.mule.runtime.core.api.schedule.Scheduler} instance used to execute the scheduled jobs
-     */
-    private Scheduler scheduler;
-    private MessageProcessor listener;
-    private FlowConstruct flowConstruct;
-    private MuleContext muleContext;
-    private boolean started;
     /**
      * <p>
      * The poll message source, configured inside the poll element in the xml configuration. i.e.:
@@ -82,21 +69,29 @@ public class PollingMessageSource implements MessageSource, FlowConstructAware, 
      * </p>
      */
     protected MessageProcessor sourceMessageProcessor;
-
     /**
      * <p>
      * The {@link MessageProcessorPollingOverride} that affects the routing of the {@link MuleEvent}
      * </p>
      */
     protected MessageProcessorPollingOverride override;
+    /**
+     * The {@link org.mule.runtime.core.api.schedule.Scheduler} instance used to execute the scheduled jobs
+     */
+    private Scheduler scheduler;
+    private MessageProcessor listener;
+    private FlowConstruct flowConstruct;
+    private MuleContext muleContext;
+    private boolean started;
 
     /**
-     * @param muleContext application's context
+     * @param muleContext            application's context
      * @param sourceMessageProcessor message processor that should be triggered
-     * @param override interceptor for each triggered operation
-     * @param schedulerFactory factory for the scheduler
+     * @param override               interceptor for each triggered operation
+     * @param schedulerFactory       factory for the scheduler
      */
-    public PollingMessageSource(MuleContext muleContext, MessageProcessor sourceMessageProcessor, MessageProcessorPollingOverride override, SchedulerFactory<Runnable> schedulerFactory)
+    public PollingMessageSource(MuleContext muleContext, MessageProcessor sourceMessageProcessor, MessageProcessorPollingOverride override,
+                                SchedulerFactory<Runnable> schedulerFactory)
     {
         this.muleContext = muleContext;
         this.sourceMessageProcessor = sourceMessageProcessor;
@@ -200,8 +195,6 @@ public class PollingMessageSource implements MessageSource, FlowConstructAware, 
 
     /**
      * Triggers the forced execution of the polling message processor ignoring the configured scheduler.
-     *
-     * @throws Exception
      */
     public void poll() throws Exception
     {
@@ -211,7 +204,8 @@ public class PollingMessageSource implements MessageSource, FlowConstructAware, 
 
     private void pollWith(final MuleMessage request) throws Exception
     {
-        ExecutionTemplate<MuleEvent> executionTemplate = TransactionalErrorHandlingExecutionTemplate.createMainExecutionTemplate(muleContext, flowConstruct.getExceptionListener());
+        ExecutionTemplate<MuleEvent> executionTemplate =
+                TransactionalErrorHandlingExecutionTemplate.createMainExecutionTemplate(muleContext, flowConstruct.getExceptionListener());
         try
         {
             final MessageProcessorPollingInterceptor interceptor = override.interceptor();
@@ -228,7 +222,10 @@ public class PollingMessageSource implements MessageSource, FlowConstructAware, 
                     MuleEvent sourceEvent = sourceMessageProcessor.process(event);
                     if (isNewMessage(sourceEvent))
                     {
-                        muleContext.getNotificationManager().fireNotification(new ConnectorMessageNotification(this, sourceEvent.getMessage(), getPollingUniqueName(), flowConstruct, ConnectorMessageNotification.MESSAGE_RECEIVED));
+                        muleContext.getNotificationManager()
+                                   .fireNotification(
+                                           new ConnectorMessageNotification(this, sourceEvent.getMessage(), getPollingUniqueName(),
+                                                   flowConstruct, ConnectorMessageNotification.MESSAGE_RECEIVED));
                         event = interceptor.prepareRouting(sourceEvent, new DefaultMuleEvent(sourceEvent.getMessage(), sourceEvent));
                         listener.process(event);
                         interceptor.postProcessRouting(event);
@@ -306,7 +303,8 @@ public class PollingMessageSource implements MessageSource, FlowConstructAware, 
             }
             catch (Exception e)
             {
-                logger.warn(String.format("Could not dispose polling override of class %s. Message receiver will continue to dispose", override.getClass().getCanonicalName()), e);
+                logger.warn(String.format("Could not dispose polling override of class %s. Message receiver will continue to dispose",
+                        override.getClass().getCanonicalName()), e);
             }
         }
 

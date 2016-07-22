@@ -18,13 +18,13 @@ public class PGPSecurityContext implements SecurityContext
         this.setAuthentication(authentication);
     }
 
-    public void setAuthentication(Authentication authentication)
-    {
-        this.authentication = (PGPAuthentication)authentication;
-    }
-
     public Authentication getAuthentication()
     {
         return authentication;
+    }
+
+    public void setAuthentication(Authentication authentication)
+    {
+        this.authentication = (PGPAuthentication) authentication;
     }
 }

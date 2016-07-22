@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getField;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -25,20 +25,20 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getField;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultObjectBuilderTestCase extends AbstractMuleTestCase
 {
 
-    private static Class<?> PROTOTYPE_CLASS = ExtendedPersonalInfo.class;
     private static final String NAME = "heisenberg";
     private static final int AGE = 50;
+    private static Class<?> PROTOTYPE_CLASS = ExtendedPersonalInfo.class;
     private static LifetimeInfo LIFETIME_INFO = new LifetimeInfo();
 
     @Mock

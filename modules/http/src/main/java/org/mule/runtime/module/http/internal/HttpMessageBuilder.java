@@ -6,22 +6,22 @@
  */
 package org.mule.runtime.module.http.internal;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
+
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.lifecycle.LifecycleUtils;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
 
 import java.util.List;
 
 public class HttpMessageBuilder implements Initialisable
 {
 
-    private String name;
     protected Multimap<HttpParamType, HttpParam> params = ArrayListMultimap.create();
+    private String name;
 
     public void setParams(List<HttpParam> httpParams)
     {

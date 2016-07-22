@@ -24,10 +24,10 @@ import javax.xml.namespace.QName;
  * type definitions, element declarations and model
  * groups.  Factory methods for each of these are
  * provided in this class.
- *
  */
 @XmlRegistry
-public class ObjectFactory {
+public class ObjectFactory
+{
 
     private final static QName _WeatherReturn_QNAME = new QName("http://ws.cdyne.com/WeatherWS/", "WeatherReturn");
     private final static QName _ArrayOfWeatherDescription_QNAME = new QName("http://ws.cdyne.com/WeatherWS/", "ArrayOfWeatherDescription");
@@ -35,147 +35,147 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.myweather
-     *
      */
-    public ObjectFactory() {
+    public ObjectFactory()
+    {
     }
 
     /**
      * Create an instance of {@link org.mule.cxf.weatherservice.myweather.GetCityForecastByZIP }
-     *
      */
-    public GetCityForecastByZIP createGetCityForecastByZIP() {
+    public GetCityForecastByZIP createGetCityForecastByZIP()
+    {
         return new GetCityForecastByZIP();
     }
 
     /**
      * Create an instance of {@link GetCityForecastByZIPResponse }
-     *
      */
-    public GetCityForecastByZIPResponse createGetCityForecastByZIPResponse() {
+    public GetCityForecastByZIPResponse createGetCityForecastByZIPResponse()
+    {
         return new GetCityForecastByZIPResponse();
     }
 
     /**
      * Create an instance of {@link POP }
-     *
      */
-    public POP createPOP() {
+    public POP createPOP()
+    {
         return new POP();
     }
 
     /**
      * Create an instance of {@link WeatherDescription }
-     *
      */
-    public WeatherDescription createWeatherDescription() {
+    public WeatherDescription createWeatherDescription()
+    {
         return new WeatherDescription();
     }
 
     /**
      * Create an instance of {@link ArrayOfWeatherDescription }
-     *
      */
-    public ArrayOfWeatherDescription createArrayOfWeatherDescription() {
+    public ArrayOfWeatherDescription createArrayOfWeatherDescription()
+    {
         return new ArrayOfWeatherDescription();
     }
 
     /**
      * Create an instance of {@link GetWeatherInformation }
-     *
      */
-    public GetWeatherInformation createGetWeatherInformation() {
+    public GetWeatherInformation createGetWeatherInformation()
+    {
         return new GetWeatherInformation();
     }
 
     /**
      * Create an instance of {@link GetCityWeatherByZIPResponse }
-     *
      */
-    public GetCityWeatherByZIPResponse createGetCityWeatherByZIPResponse() {
+    public GetCityWeatherByZIPResponse createGetCityWeatherByZIPResponse()
+    {
         return new GetCityWeatherByZIPResponse();
     }
 
     /**
      * Create an instance of {@link WeatherReturn }
-     *
      */
-    public WeatherReturn createWeatherReturn() {
+    public WeatherReturn createWeatherReturn()
+    {
         return new WeatherReturn();
     }
 
     /**
      * Create an instance of {@link org.mule.cxf.weatherservice.myweather.GetCityWeatherByZIP }
-     *
      */
-    public GetCityWeatherByZIP createGetCityWeatherByZIP() {
+    public GetCityWeatherByZIP createGetCityWeatherByZIP()
+    {
         return new GetCityWeatherByZIP();
     }
 
     /**
      * Create an instance of {@link Forecast }
-     *
      */
-    public Forecast createForecast() {
+    public Forecast createForecast()
+    {
         return new Forecast();
     }
 
     /**
      * Create an instance of {@link Temp }
-     *
      */
-    public Temp createTemp() {
+    public Temp createTemp()
+    {
         return new Temp();
     }
 
     /**
      * Create an instance of {@link ForecastReturn }
-     *
      */
-    public ForecastReturn createForecastReturn() {
+    public ForecastReturn createForecastReturn()
+    {
         return new ForecastReturn();
     }
 
     /**
      * Create an instance of {@link ArrayOfForecast }
-     *
      */
-    public ArrayOfForecast createArrayOfForecast() {
+    public ArrayOfForecast createArrayOfForecast()
+    {
         return new ArrayOfForecast();
     }
 
     /**
      * Create an instance of {@link GetWeatherInformationResponse }
-     *
      */
-    public GetWeatherInformationResponse createGetWeatherInformationResponse() {
+    public GetWeatherInformationResponse createGetWeatherInformationResponse()
+    {
         return new GetWeatherInformationResponse();
     }
 
     /**
      * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link WeatherReturn }{@code >}}
-     *
      */
     @XmlElementDecl(namespace = "http://ws.cdyne.com/WeatherWS/", name = "WeatherReturn")
-    public JAXBElement<WeatherReturn> createWeatherReturn(WeatherReturn value) {
+    public JAXBElement<WeatherReturn> createWeatherReturn(WeatherReturn value)
+    {
         return new JAXBElement<WeatherReturn>(_WeatherReturn_QNAME, WeatherReturn.class, null, value);
     }
 
     /**
      * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link ArrayOfWeatherDescription }{@code >}}
-     *
      */
     @XmlElementDecl(namespace = "http://ws.cdyne.com/WeatherWS/", name = "ArrayOfWeatherDescription")
-    public JAXBElement<ArrayOfWeatherDescription> createArrayOfWeatherDescription(ArrayOfWeatherDescription value) {
+    public JAXBElement<ArrayOfWeatherDescription> createArrayOfWeatherDescription(ArrayOfWeatherDescription value)
+    {
         return new JAXBElement<ArrayOfWeatherDescription>(_ArrayOfWeatherDescription_QNAME, ArrayOfWeatherDescription.class, null, value);
     }
 
     /**
      * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link ForecastReturn }{@code >}}
-     *
      */
     @XmlElementDecl(namespace = "http://ws.cdyne.com/WeatherWS/", name = "ForecastReturn")
-    public JAXBElement<ForecastReturn> createForecastReturn(ForecastReturn value) {
+    public JAXBElement<ForecastReturn> createForecastReturn(ForecastReturn value)
+    {
         return new JAXBElement<ForecastReturn>(_ForecastReturn_QNAME, ForecastReturn.class, null, value);
     }
 

@@ -6,17 +6,17 @@
  */
 package org.mule.compatibility.transport.tcp;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.client.DefaultLocalMuleClient;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 public class TCPTimeoutsTest extends FunctionalTestCase
 {

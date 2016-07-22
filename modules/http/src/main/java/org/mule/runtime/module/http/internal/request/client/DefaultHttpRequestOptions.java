@@ -26,7 +26,9 @@ public class DefaultHttpRequestOptions implements HttpRequestOptions
     private final Long responseTimeout;
     private final TlsContextFactory tlsContextFactory;
 
-    public DefaultHttpRequestOptions(String method, Boolean followsRedirect, HttpStreamingType requestStreamingMode, HttpRequesterConfig requestConfig, boolean disableStatusCodeValidation, boolean disableParseResponse, TlsContextFactory tlsContextFactory, Long responseTimeout)
+    public DefaultHttpRequestOptions(String method, Boolean followsRedirect, HttpStreamingType requestStreamingMode,
+                                     HttpRequesterConfig requestConfig, boolean disableStatusCodeValidation, boolean disableParseResponse,
+                                     TlsContextFactory tlsContextFactory, Long responseTimeout)
     {
         this.method = method;
         this.followsRedirect = followsRedirect;

@@ -7,14 +7,13 @@
 
 package org.mule.runtime.core.routing.correlation;
 
+import org.junit.Test;
 import org.mule.runtime.core.routing.EventProcessingThread;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
 import org.mule.tck.probe.Prober;
 import org.mule.tck.size.SmallTest;
-
-import org.junit.Test;
 
 @SmallTest
 public class EventProcessingThreadTestCase extends AbstractMuleTestCase

@@ -6,6 +6,16 @@
  */
 package org.mule.runtime.module.cxf.builder;
 
+import org.apache.cxf.binding.soap.interceptor.MustUnderstandInterceptor;
+import org.apache.cxf.binding.soap.interceptor.RPCInInterceptor;
+import org.apache.cxf.binding.soap.interceptor.RPCOutInterceptor;
+import org.apache.cxf.binding.soap.interceptor.SoapOutInterceptor;
+import org.apache.cxf.databinding.stax.StaxDataBinding;
+import org.apache.cxf.databinding.stax.StaxDataBindingFeature;
+import org.apache.cxf.endpoint.Server;
+import org.apache.cxf.frontend.ServerFactoryBean;
+import org.apache.cxf.interceptor.BareOutInterceptor;
+import org.apache.cxf.transports.http.QueryHandler;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.module.cxf.CxfConstants;
 import org.mule.runtime.module.cxf.support.CopyAttachmentInInterceptor;
@@ -21,17 +31,6 @@ import org.mule.runtime.module.cxf.support.ResetStaxInterceptor;
 import org.mule.runtime.module.cxf.support.ReversibleStaxInInterceptor;
 import org.mule.runtime.module.cxf.support.ReversibleValidatingInterceptor;
 
-import org.apache.cxf.binding.soap.interceptor.MustUnderstandInterceptor;
-import org.apache.cxf.binding.soap.interceptor.RPCInInterceptor;
-import org.apache.cxf.binding.soap.interceptor.RPCOutInterceptor;
-import org.apache.cxf.binding.soap.interceptor.SoapOutInterceptor;
-import org.apache.cxf.databinding.stax.StaxDataBinding;
-import org.apache.cxf.databinding.stax.StaxDataBindingFeature;
-import org.apache.cxf.endpoint.Server;
-import org.apache.cxf.frontend.ServerFactoryBean;
-import org.apache.cxf.interceptor.BareOutInterceptor;
-import org.apache.cxf.transports.http.QueryHandler;
-
 /**
  * Creates an inbound proxy based on a specially configure CXF Server.
  * This allows you to send raw XML to your MessageProcessor and have it sent
@@ -39,7 +38,7 @@ import org.apache.cxf.transports.http.QueryHandler;
  * <p>
  * The input to the resulting MessageProcessor can be either a SOAP Body
  * or a SOAP Envelope depending on how the payload attribute is configured.
- * Valid values are "body" or "envelope". 
+ * Valid values are "body" or "envelope".
  */
 public class ProxyServiceMessageProcessorBuilder extends AbstractInboundMessageProcessorBuilder
 {
@@ -88,8 +87,10 @@ public class ProxyServiceMessageProcessorBuilder extends AbstractInboundMessageP
 
         if (isValidationEnabled())
         {
-            server.getEndpoint().getInInterceptors().add(new ProxySchemaValidationInInterceptor(getConfiguration().getCxfBus(), server.getEndpoint(),
-                    server.getEndpoint().getService().getServiceInfos().get(0)));
+            server.getEndpoint()
+                  .getInInterceptors()
+                  .add(new ProxySchemaValidationInInterceptor(getConfiguration().getCxfBus(), server.getEndpoint(),
+                          server.getEndpoint().getService().getServiceInfos().get(0)));
         }
     }
 
@@ -98,12 +99,12 @@ public class ProxyServiceMessageProcessorBuilder extends AbstractInboundMessageP
      */
     private void replaceRPCInterceptors(Server server)
     {
-        if(CxfUtils.removeInterceptor(server.getEndpoint().getBinding().getInInterceptors(), RPCInInterceptor.class.getName()))
+        if (CxfUtils.removeInterceptor(server.getEndpoint().getBinding().getInInterceptors(), RPCInInterceptor.class.getName()))
         {
             server.getEndpoint().getBinding().getInInterceptors().add(new ProxyRPCInInterceptor());
         }
 
-        if(CxfUtils.removeInterceptor(server.getEndpoint().getBinding().getOutInterceptors(), RPCOutInterceptor.class.getName()))
+        if (CxfUtils.removeInterceptor(server.getEndpoint().getBinding().getOutInterceptors(), RPCOutInterceptor.class.getName()))
         {
             server.getEndpoint().getBinding().getOutInterceptors().add(new BareOutInterceptor());
         }
@@ -129,7 +130,7 @@ public class ProxyServiceMessageProcessorBuilder extends AbstractInboundMessageP
         /* Even if the payload is body, if validation is enabled, then we need to use a ReversibleXMLStreamReader to
          * avoid the message from being consumed during schema validation.
          */
-        else if(isValidationEnabled())
+        else if (isValidationEnabled())
         {
             sfb.getInInterceptors().add(new ReversibleValidatingInterceptor());
             sfb.getInInterceptors().add(new ResetStaxInterceptor());

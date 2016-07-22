@@ -7,11 +7,12 @@
 package org.mule.runtime.module.extension.internal.model.property;
 
 
-import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.extension.api.connectivity.TransactionalConnection;
 import org.mule.runtime.extension.api.introspection.EnrichableModel;
 import org.mule.runtime.extension.api.introspection.ModelProperty;
+
+import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
 
 /**
  * An immutable  model property which specifies that the owning {@link EnrichableModel}
@@ -27,8 +28,6 @@ public final class ConnectivityModelProperty implements ModelProperty
 
     /**
      * Creates a new instance for the given {@code connectionType}
-     *
-     * @param connectionType
      */
     public ConnectivityModelProperty(MetadataType connectionType)
     {

@@ -6,17 +6,7 @@
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
-import static org.glassfish.grizzly.http.HttpServerFilter.RESPONSE_COMPLETE_EVENT;
-import org.mule.runtime.core.api.DefaultMuleException;
-import org.mule.runtime.core.config.i18n.CoreMessages;
-import org.mule.runtime.module.http.internal.domain.InputStreamHttpEntity;
-import org.mule.runtime.module.http.internal.domain.response.HttpResponse;
-import org.mule.runtime.module.http.internal.listener.async.ResponseStatusCallback;
-
 import com.google.common.base.Preconditions;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import org.glassfish.grizzly.Buffer;
 import org.glassfish.grizzly.WriteResult;
@@ -25,6 +15,16 @@ import org.glassfish.grizzly.http.HttpContent;
 import org.glassfish.grizzly.http.HttpRequestPacket;
 import org.glassfish.grizzly.http.HttpResponsePacket;
 import org.glassfish.grizzly.memory.MemoryManager;
+import org.mule.runtime.core.api.DefaultMuleException;
+import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.mule.runtime.module.http.internal.domain.InputStreamHttpEntity;
+import org.mule.runtime.module.http.internal.domain.response.HttpResponse;
+import org.mule.runtime.module.http.internal.listener.async.ResponseStatusCallback;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import static org.glassfish.grizzly.http.HttpServerFilter.RESPONSE_COMPLETE_EVENT;
 
 /**
  * {@link org.glassfish.grizzly.CompletionHandler}, responsible for asynchronous http response transferring
@@ -43,9 +43,11 @@ public class ResponseStreamingCompletionHandler
     private volatile boolean isDone;
 
     public ResponseStreamingCompletionHandler(final FilterChainContext ctx,
-                                              final HttpRequestPacket request, final HttpResponse httpResponse, ResponseStatusCallback responseStatusCallback)
+                                              final HttpRequestPacket request, final HttpResponse httpResponse,
+                                              ResponseStatusCallback responseStatusCallback)
     {
-        Preconditions.checkArgument((httpResponse.getEntity() instanceof InputStreamHttpEntity), "http response must have an input stream entity");
+        Preconditions.checkArgument((httpResponse.getEntity() instanceof InputStreamHttpEntity),
+                "http response must have an input stream entity");
         this.ctx = ctx;
         httpResponsePacket = buildHttpResponsePacket(request, httpResponse);
         inputStream = ((InputStreamHttpEntity) httpResponse.getEntity()).getInputStream();
@@ -130,7 +132,8 @@ public class ResponseStreamingCompletionHandler
     public void cancelled()
     {
         close();
-        responseStatusCallback.responseSendFailure(new DefaultMuleException(CoreMessages.createStaticMessage("Http response sending task was cancelled")));
+        responseStatusCallback.responseSendFailure(
+                new DefaultMuleException(CoreMessages.createStaticMessage("Http response sending task was cancelled")));
         resume();
     }
 

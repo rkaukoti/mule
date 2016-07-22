@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.module.scripting.filter;
 
-import static org.mule.runtime.module.scripting.component.Scriptable.BINDING_MESSAGE;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.MuleEvent;
@@ -17,13 +16,14 @@ import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.lifecycle.LifecycleUtils;
 import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.core.construct.Flow;
-import org.mule.runtime.module.scripting.component.Scriptable;
 import org.mule.runtime.core.processor.AbstractFilteringMessageProcessor;
+import org.mule.runtime.module.scripting.component.Scriptable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.script.Bindings;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.module.scripting.component.Scriptable.BINDING_MESSAGE;
 
 public class ScriptFilter extends AbstractFilteringMessageProcessor implements Filter, Initialisable, Disposable
 {
@@ -31,7 +31,7 @@ public class ScriptFilter extends AbstractFilteringMessageProcessor implements F
     private static final Logger LOGGER = LoggerFactory.getLogger(ScriptFilter.class);
 
     private Scriptable script;
-    
+
     private String name;
 
     @Override
@@ -66,7 +66,7 @@ public class ScriptFilter extends AbstractFilteringMessageProcessor implements F
             event.setMessage((MuleMessage) bindings.get(BINDING_MESSAGE));
         }
     }
-    
+
     @Override
     public boolean accept(MuleMessage message)
     {

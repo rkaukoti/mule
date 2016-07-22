@@ -13,11 +13,10 @@ import org.mule.runtime.core.message.Correlation;
 import org.mule.runtime.core.routing.AggregationException;
 import org.mule.runtime.core.routing.EventGroup;
 import org.mule.runtime.core.session.DefaultMuleSession;
-
-import java.text.MessageFormat;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.text.MessageFormat;
 
 /**
  * A Correlator that correlates messages based on Mule correlation settings
@@ -28,9 +27,8 @@ public class CollectionCorrelatorCallback implements EventCorrelatorCallback
      * logger used by this class
      */
     protected transient final Logger logger = LoggerFactory.getLogger(getClass());
-
-    protected MuleContext muleContext;
     private final String storePrefix;
+    protected MuleContext muleContext;
 
     public CollectionCorrelatorCallback(MuleContext muleContext, String storePrefix)
     {
@@ -41,11 +39,11 @@ public class CollectionCorrelatorCallback implements EventCorrelatorCallback
     /**
      * This method is invoked if the shouldAggregate method is called and returns true. Once this method
      * returns an aggregated message, the event group is removed from the router.
-     * 
+     *
      * @param events the event group for this request
      * @return an aggregated message
-     * @throws org.mule.runtime.core.routing.AggregationException if the aggregation fails. in this scenario the whole
-     *             event group is removed and passed to the exception handler for this componenet
+     * @throws org.mule.runtime.core.routing.AggregationException if the aggregation fails. in this scenario the whole event group is
+     *                                                            removed and passed to the exception handler for this componenet
      */
     @Override
     public MuleEvent aggregateEvents(EventGroup events) throws AggregationException
@@ -77,8 +75,7 @@ public class CollectionCorrelatorCallback implements EventCorrelatorCallback
     }
 
     /**
-     * @return <code>true</code> if the correlation size is not set or exactly the expected size of the event
-     *         group.
+     * @return <code>true</code> if the correlation size is not set or exactly the expected size of the event group.
      * @see org.mule.runtime.core.routing.correlation.EventCorrelatorCallback#shouldAggregateEvents(org.mule.runtime.core.routing.EventGroup)
      */
     @Override
@@ -96,8 +93,8 @@ public class CollectionCorrelatorCallback implements EventCorrelatorCallback
         if (logger.isDebugEnabled())
         {
             logger.debug(MessageFormat.format(
-                "Correlation group size is {0}. Current event group size is {1} for group ID: {2}", size,
-                events.size(), events.getGroupId()));
+                    "Correlation group size is {0}. Current event group size is {1} for group ID: {2}", size,
+                    events.size(), events.getGroupId()));
         }
 
         return size == events.size();

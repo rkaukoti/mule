@@ -6,6 +6,12 @@
  */
 package org.mule.test.spring;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.construct.Flow;
+import org.mule.test.config.dsl.LifecycleSensingMessageProcessor;
+import org.mule.test.config.dsl.LifecycleSensingObjectFactory;
+
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertThat;
 import static org.mule.test.config.dsl.LifecycleAction.DISPOSE;
@@ -13,12 +19,6 @@ import static org.mule.test.config.dsl.LifecycleAction.GET_OBJECT;
 import static org.mule.test.config.dsl.LifecycleAction.INITIALISE;
 import static org.mule.test.config.dsl.LifecycleAction.START;
 import static org.mule.test.config.dsl.LifecycleAction.STOP;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.test.config.dsl.LifecycleSensingMessageProcessor;
-import org.mule.test.config.dsl.LifecycleSensingObjectFactory;
-import org.mule.runtime.core.construct.Flow;
-
-import org.junit.Test;
 
 public class ComponentLifecycleTestCase extends FunctionalTestCase
 {
@@ -40,7 +40,8 @@ public class ComponentLifecycleTestCase extends FunctionalTestCase
     public void innerElementLifecycle()
     {
         Flow flow = muleContext.getRegistry().get("flow");
-        LifecycleSensingMessageProcessor lifecycleSensingMessageProcessor = (LifecycleSensingMessageProcessor) flow.getMessageProcessors().get(0);
+        LifecycleSensingMessageProcessor lifecycleSensingMessageProcessor =
+                (LifecycleSensingMessageProcessor) flow.getMessageProcessors().get(0);
         assertObjectFactoryAndMessageProcessorLifecycle(lifecycleSensingMessageProcessor);
     }
 

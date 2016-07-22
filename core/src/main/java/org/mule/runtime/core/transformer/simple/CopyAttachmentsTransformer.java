@@ -59,7 +59,7 @@ public class CopyAttachmentsTransformer extends AbstractMessageTransformer
         }
         catch (Exception e)
         {
-            throw new TransformerException(this,e);
+            throw new TransformerException(this, e);
         }
         return event.getMessage();
     }

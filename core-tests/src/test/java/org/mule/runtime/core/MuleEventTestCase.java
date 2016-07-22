@@ -6,11 +6,7 @@
  */
 package org.mule.runtime.core;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.core.api.security.Credentials;
@@ -29,13 +25,18 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 
 
 public class MuleEventTestCase extends AbstractMuleContextTestCase
 {
 
     private static final String TEST_PAYLOAD = "anyValuePayload";
+
     /*
      * See http://mule.mulesoft.org/jira/browse/MULE-384 for details.
      */
@@ -152,7 +153,7 @@ public class MuleEventTestCase extends AbstractMuleContextTestCase
         byte[] serializedEvent = muleContext.getObjectSerializer().serialize(testEvent);
         testEvent = muleContext.getObjectSerializer().deserialize(serializedEvent);
 
-        assertArrayEquals((byte[])testEvent.getMessage().getPayload(), payload.toString().getBytes());
+        assertArrayEquals((byte[]) testEvent.getMessage().getPayload(), payload.toString().getBytes());
     }
 
     private void createAndRegisterTransformersEndpointBuilderService() throws Exception
@@ -173,15 +174,15 @@ public class MuleEventTestCase extends AbstractMuleContextTestCase
         getTestFlow();
     }
 
-    
-    @Test(expected=UnsupportedOperationException.class)
+
+    @Test(expected = UnsupportedOperationException.class)
     public void testFlowVarNamesAddImmutable() throws Exception
     {
         MuleEvent event = getTestEvent("whatever");
         event.setFlowVariable("test", "val");
         event.getFlowVariableNames().add("other");
     }
-    
+
     public void testFlowVarNamesRemoveMutable() throws Exception
     {
         MuleEvent event = getTestEvent("whatever");

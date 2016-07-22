@@ -9,12 +9,11 @@ package org.mule.runtime.module.oauth2.internal;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.expression.ExpressionManager;
 import org.mule.runtime.module.oauth2.internal.authorizationcode.TokenResponseConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Process a token url response and extracts all the oauth context variables
@@ -23,30 +22,33 @@ import org.slf4j.LoggerFactory;
 public class TokenResponseProcessor
 {
 
-    protected Logger logger = LoggerFactory.getLogger(getClass());
     private final TokenResponseConfiguration tokenResponseConfiguration;
     private final ExpressionManager expressionManager;
     private final boolean retrieveRefreshToken;
+    protected Logger logger = LoggerFactory.getLogger(getClass());
     private String accessToken;
     private String refreshToken;
     private String expiresIn;
     private Map<String, Object> customResponseParameters;
 
-    public static TokenResponseProcessor createAuthorizationCodeProcessor(final TokenResponseConfiguration tokenResponseConfiguration, final ExpressionManager expressionManager)
-    {
-        return new TokenResponseProcessor(tokenResponseConfiguration, expressionManager, true);
-    }
-
-    public static TokenResponseProcessor createClientCredentialsProcessor(final TokenResponseConfiguration tokenResponseConfiguration, final ExpressionManager expressionManager)
-    {
-        return new TokenResponseProcessor(tokenResponseConfiguration, expressionManager, false);
-    }
-
-    private TokenResponseProcessor(final TokenResponseConfiguration tokenResponseConfiguration, final ExpressionManager expressionManager, boolean retrieveRefreshToken)
+    private TokenResponseProcessor(final TokenResponseConfiguration tokenResponseConfiguration, final ExpressionManager expressionManager,
+                                   boolean retrieveRefreshToken)
     {
         this.tokenResponseConfiguration = tokenResponseConfiguration;
         this.expressionManager = expressionManager;
         this.retrieveRefreshToken = retrieveRefreshToken;
+    }
+
+    public static TokenResponseProcessor createAuthorizationCodeProcessor(final TokenResponseConfiguration tokenResponseConfiguration,
+                                                                          final ExpressionManager expressionManager)
+    {
+        return new TokenResponseProcessor(tokenResponseConfiguration, expressionManager, true);
+    }
+
+    public static TokenResponseProcessor createClientCredentialsProcessor(final TokenResponseConfiguration tokenResponseConfiguration,
+                                                                          final ExpressionManager expressionManager)
+    {
+        return new TokenResponseProcessor(tokenResponseConfiguration, expressionManager, false);
     }
 
     public void process(final MuleEvent muleEvent)
@@ -55,7 +57,8 @@ public class TokenResponseProcessor
         accessToken = isEmpty(accessToken) ? null : accessToken;
         if (accessToken == null)
         {
-            logger.error("Could not extract access token from token URL. Expressions used to retrieve access token was " + tokenResponseConfiguration.getAccessToken());
+            logger.error("Could not extract access token from token URL. Expressions used to retrieve access token was " +
+                         tokenResponseConfiguration.getAccessToken());
         }
         if (retrieveRefreshToken)
         {
@@ -66,7 +69,8 @@ public class TokenResponseProcessor
         customResponseParameters = new HashMap<>();
         for (ParameterExtractor parameterExtractor : tokenResponseConfiguration.getParameterExtractors())
         {
-            customResponseParameters.put(parameterExtractor.getParamName(), expressionManager.evaluate(parameterExtractor.getValue(), muleEvent));
+            customResponseParameters.put(parameterExtractor.getParamName(),
+                    expressionManager.evaluate(parameterExtractor.getValue(), muleEvent));
         }
     }
 

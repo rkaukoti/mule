@@ -6,16 +6,14 @@
  */
 package org.mule.compatibility.transport.http.components;
 
-import static org.mockito.Mockito.mock;
-
+import org.junit.Before;
 import org.mule.compatibility.transport.http.AbstractDateHeaderTestCase;
 import org.mule.compatibility.transport.http.HttpResponse;
-import org.mule.compatibility.transport.http.components.HttpResponseBuilder;
 import org.mule.runtime.core.api.MuleContext;
 
 import java.util.Date;
 
-import org.junit.Before;
+import static org.mockito.Mockito.mock;
 
 public class HttpResponseBuilderDateHeaderTestCase extends AbstractDateHeaderTestCase
 {

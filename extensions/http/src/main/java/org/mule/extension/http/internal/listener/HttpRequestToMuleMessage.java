@@ -6,11 +6,6 @@
  */
 package org.mule.extension.http.internal.listener;
 
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
-import static org.mule.runtime.module.http.internal.HttpParser.decodeUrlEncodedBody;
-import static org.mule.runtime.module.http.internal.multipart.HttpPartDataSource.createDataHandlerFrom;
-import static org.mule.runtime.module.http.internal.util.HttpToMuleMessage.getMediaType;
 import org.mule.extension.http.api.HttpRequestAttributes;
 import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.api.metadata.MediaType;
@@ -25,14 +20,19 @@ import org.mule.runtime.module.http.internal.domain.request.HttpRequest;
 import org.mule.runtime.module.http.internal.domain.request.HttpRequestContext;
 import org.mule.runtime.module.http.internal.listener.HttpRequestParsingException;
 import org.mule.runtime.module.http.internal.listener.ListenerPath;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.activation.DataHandler;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
+import static org.mule.runtime.module.http.internal.HttpParser.decodeUrlEncodedBody;
+import static org.mule.runtime.module.http.internal.multipart.HttpPartDataSource.createDataHandlerFrom;
+import static org.mule.runtime.module.http.internal.util.HttpToMuleMessage.getMediaType;
 
 /**
  * Component that transforms an HTTP request to a proper {@link MuleMessage}.
@@ -43,7 +43,8 @@ public class HttpRequestToMuleMessage
 {
     private static Logger logger = LoggerFactory.getLogger(HttpRequestToMuleMessage.class);
 
-    public static MuleMessage transform(final HttpRequestContext requestContext, final MuleContext muleContext, Boolean parseRequest, ListenerPath listenerPath) throws HttpRequestParsingException
+    public static MuleMessage transform(final HttpRequestContext requestContext, final MuleContext muleContext, Boolean parseRequest,
+                                        ListenerPath listenerPath) throws HttpRequestParsingException
     {
         final HttpRequest request = requestContext.getRequest();
 
@@ -68,7 +69,8 @@ public class HttpRequestToMuleMessage
                         {
                             try
                             {
-                                payload = decodeUrlEncodedBody(IOUtils.toString(((InputStreamHttpEntity) entity).getInputStream()), mediaType.getCharset().get());
+                                payload = decodeUrlEncodedBody(IOUtils.toString(((InputStreamHttpEntity) entity).getInputStream()),
+                                        mediaType.getCharset().get());
                             }
                             catch (IllegalArgumentException e)
                             {
@@ -97,7 +99,7 @@ public class HttpRequestToMuleMessage
         }
 
         HttpRequestAttributes attributes = new HttpRequestAttributesBuilder().setRequestContext(requestContext)
-                .setListenerPath(listenerPath).setParts(parts).build();
+                                                                             .setListenerPath(listenerPath).setParts(parts).build();
         return MuleMessage.builder().payload(payload).mediaType(mediaType).attributes(attributes).build();
     }
 

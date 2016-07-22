@@ -6,10 +6,8 @@
  */
 package org.mule.test.core.security;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_USER_PROPERTY;
-
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.EncryptionStrategy;
 import org.mule.runtime.core.api.MuleMessage;
@@ -19,8 +17,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_USER_PROPERTY;
 
 /**
  * Tests multi-user security against a security provider which only authenticates

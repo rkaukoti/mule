@@ -6,12 +6,13 @@
  */
 package org.mule.compatibility.core.util;
 
-import static org.mule.runtime.core.config.ExceptionHelper.SERVICE_ROOT;
 import org.mule.compatibility.core.api.registry.LegacyServiceType;
 import org.mule.compatibility.core.transport.service.TransportFactory;
 import org.mule.runtime.core.api.registry.ServiceType;
 import org.mule.runtime.core.config.ExceptionHelper;
 import org.mule.runtime.core.util.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,8 +20,7 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.config.ExceptionHelper.SERVICE_ROOT;
 
 // TODO This will eventually use the OSGi Service Registry for locating services
 

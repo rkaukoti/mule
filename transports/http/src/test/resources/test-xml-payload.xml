@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
     <soap:Body>
         <MX_PURCHASE_ORDER xmlns="http://peoplesoft.com/MX_PURCHASE_ORDERSoapIn">
             <FieldTypes>

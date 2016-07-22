@@ -20,6 +20,7 @@ public interface ConfigurableDbConfigFactory extends DbConfigFactory
 
     /**
      * Sets the list of custom types available for the created {@link DbConfig}
+     *
      * @param customDataTypes list of custom types. Non null
      */
     void setCustomDataTypes(List<DbType> customDataTypes);

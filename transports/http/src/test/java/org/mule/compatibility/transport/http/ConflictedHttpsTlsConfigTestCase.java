@@ -6,8 +6,7 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.config.spring.parsers.processors.CheckExclusiveAttributes;
 import org.mule.runtime.core.api.MuleContext;
@@ -15,7 +14,7 @@ import org.mule.runtime.core.api.MuleContext;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Test;
+import static org.junit.Assert.fail;
 
 public class ConflictedHttpsTlsConfigTestCase extends FunctionalTestCase
 {
@@ -30,7 +29,7 @@ public class ConflictedHttpsTlsConfigTestCase extends FunctionalTestCase
     @Override
     protected String getConfigFile()
     {
-        return "conflicted-https-config-" + configNumber +".xml";
+        return "conflicted-https-config-" + configNumber + ".xml";
     }
 
     @Test

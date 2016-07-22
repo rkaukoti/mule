@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.core.processor;
 
-import static org.mule.runtime.core.util.ClassUtils.isConsumable;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.OptimizedRequestContext;
@@ -31,13 +30,14 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.processor.chain.DefaultMessageProcessorChainBuilder;
 import org.mule.runtime.core.util.NotificationUtils;
 import org.mule.runtime.core.work.MuleWorkManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.ClassUtils.isConsumable;
 
 /**
  * Processes {@link MuleEvent}'s asynchronously using a {@link MuleWorkManager} to schedule asynchronous
@@ -50,14 +50,11 @@ public class AsyncDelegateMessageProcessor extends AbstractMessageProcessorOwner
 {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
-    private AtomicBoolean consumablePayloadWarned = new AtomicBoolean(false);
-
     protected MessageProcessor delegate;
-
     protected List<MessageProcessor> processors;
     protected ProcessingStrategy processingStrategy;
     protected String name;
-
+    private AtomicBoolean consumablePayloadWarned = new AtomicBoolean(false);
     private MessageProcessor target;
 
     public AsyncDelegateMessageProcessor(MessageProcessor delegate,
@@ -96,7 +93,7 @@ public class AsyncDelegateMessageProcessor extends AbstractMessageProcessorOwner
 
         MessageProcessorChainBuilder builder = new DefaultMessageProcessorChainBuilder(flowConstruct);
         processingStrategy.configureProcessors(Collections.singletonList(delegate), nameSource, builder,
-                                               muleContext);
+                muleContext);
         try
         {
             target = builder.build();
@@ -110,13 +107,15 @@ public class AsyncDelegateMessageProcessor extends AbstractMessageProcessorOwner
 
     private void validateFlowConstruct()
     {
-        if (flowConstruct == null) {
+        if (flowConstruct == null)
+        {
             throw new IllegalArgumentException("FlowConstruct cannot be null");
         }
         else if (!(flowConstruct instanceof StageNameSourceProvider))
         {
-            throw new IllegalArgumentException(String.format("FlowConstuct must implement the %s interface. However, the type %s does not implement it",
-                                                             StageNameSourceProvider.class.getCanonicalName(), flowConstruct.getClass().getCanonicalName()));
+            throw new IllegalArgumentException(
+                    String.format("FlowConstuct must implement the %s interface. However, the type %s does not implement it",
+                            StageNameSourceProvider.class.getCanonicalName(), flowConstruct.getClass().getCanonicalName()));
         }
     }
 

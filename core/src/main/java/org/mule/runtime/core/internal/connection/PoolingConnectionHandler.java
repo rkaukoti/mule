@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.core.internal.connection;
 
-import org.mule.runtime.core.api.MuleException;
+import org.apache.commons.pool.ObjectPool;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.PoolingListener;
-
-import org.apache.commons.pool.ObjectPool;
+import org.mule.runtime.core.api.MuleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

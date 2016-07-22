@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.modules.schedulers.cron;
 
-import static java.lang.String.format;
-import static java.util.TimeZone.getDefault;
-import static java.util.TimeZone.getTimeZone;
 import org.mule.runtime.core.api.schedule.Scheduler;
 import org.mule.runtime.core.api.schedule.SchedulerFactory;
 import org.mule.runtime.core.source.polling.PollingWorker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.TimeZone;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static java.util.TimeZone.getDefault;
+import static java.util.TimeZone.getTimeZone;
 
 
 /**

@@ -6,11 +6,12 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.Lifecycle;
 import org.mule.runtime.module.extension.internal.runtime.ObjectBuilder;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * A {@link ValueResolver} which wraps an {@link ObjectBuilder}
@@ -39,7 +40,6 @@ public class ObjectBuilderValueResolver<T> implements ValueResolver<T>
      *
      * @param event a {@link MuleEvent}
      * @return the {@code builder}'s output object
-     * @throws MuleException
      */
     @Override
     public T resolve(MuleEvent event) throws MuleException

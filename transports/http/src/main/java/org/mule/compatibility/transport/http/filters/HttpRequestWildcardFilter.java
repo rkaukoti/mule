@@ -33,5 +33,5 @@ public class HttpRequestWildcardFilter extends WildcardFilter
         Object requestProperty = message.getInboundProperty(HttpConnector.HTTP_REQUEST_PROPERTY);
         return super.accept(requestProperty);
     }
-    
+
 }

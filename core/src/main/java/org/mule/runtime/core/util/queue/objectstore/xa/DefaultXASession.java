@@ -7,14 +7,13 @@
 package org.mule.runtime.core.util.queue.objectstore.xa;
 
 import org.mule.runtime.core.util.xa.ResourceManagerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.transaction.Status;
 import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 import javax.transaction.xa.Xid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @deprecated this class will be removed in Mule 4.0 in favor of the new queue implementation
@@ -57,12 +56,12 @@ public class DefaultXASession implements XAResource
         if (localXid != null)
         {
             throw new IllegalStateException(
-                "Cannot start local transaction. An XA transaction is already in progress.");
+                    "Cannot start local transaction. An XA transaction is already in progress.");
         }
         if (localContext != null)
         {
             throw new IllegalStateException(
-                "Cannot start local transaction. A local transaction already in progress.");
+                    "Cannot start local transaction. A local transaction already in progress.");
         }
         localContext = resourceManager.createTransactionContext(this);
         resourceManager.beginTransaction(localContext);
@@ -73,7 +72,7 @@ public class DefaultXASession implements XAResource
         if (localXid != null)
         {
             throw new IllegalStateException(
-                "Cannot commit local transaction as an XA transaction is in progress.");
+                    "Cannot commit local transaction as an XA transaction is in progress.");
         }
         if (localContext == null)
         {
@@ -88,7 +87,7 @@ public class DefaultXASession implements XAResource
         if (localXid != null)
         {
             throw new IllegalStateException(
-                "Cannot rollback local transaction as an XA transaction is in progress.");
+                    "Cannot rollback local transaction as an XA transaction is in progress.");
         }
         if (localContext == null)
         {
@@ -118,8 +117,8 @@ public class DefaultXASession implements XAResource
         if (logger.isDebugEnabled())
         {
             logger.debug(new StringBuilder(128).append("Thread ").append(Thread.currentThread()).append(
-                flags == TMNOFLAGS ? " starts" : flags == TMJOIN ? " joins" : " resumes").append(
-                " work on behalf of transaction branch ").append(xid).toString());
+                    flags == TMNOFLAGS ? " starts" : flags == TMJOIN ? " joins" : " resumes").append(
+                    " work on behalf of transaction branch ").append(xid).toString());
         }
         // A local transaction is already begun
         if (this.localContext != null)
@@ -133,31 +132,31 @@ public class DefaultXASession implements XAResource
         }
         switch (flags)
         {
-            // a new transaction
-            case TMNOFLAGS :
-            case TMJOIN :
-            default :
-                try
-                {
-                    localContext = resourceManager.createTransactionContext(this);
-                    resourceManager.beginTransaction(localContext);
-                }
-                catch (Exception e)
-                {
-                    // TODO MULE-863: Is logging necessary?
-                    logger.error("Could not create new transactional resource", e);
-                    throw (XAException) new XAException(e.getMessage()).initCause(e);
-                }
-                break;
-            case TMRESUME :
-                localContext = resourceManager.getSuspendedTransactionalResource(xid);
-                if (localContext == null)
-                {
-                    throw new XAException(XAException.XAER_NOTA);
-                }
-                // TODO: resume context
-                resourceManager.removeSuspendedTransactionalResource(xid);
-                break;
+        // a new transaction
+        case TMNOFLAGS:
+        case TMJOIN:
+        default:
+            try
+            {
+                localContext = resourceManager.createTransactionContext(this);
+                resourceManager.beginTransaction(localContext);
+            }
+            catch (Exception e)
+            {
+                // TODO MULE-863: Is logging necessary?
+                logger.error("Could not create new transactional resource", e);
+                throw (XAException) new XAException(e.getMessage()).initCause(e);
+            }
+            break;
+        case TMRESUME:
+            localContext = resourceManager.getSuspendedTransactionalResource(xid);
+            if (localContext == null)
+            {
+                throw new XAException(XAException.XAER_NOTA);
+            }
+            // TODO: resume context
+            resourceManager.removeSuspendedTransactionalResource(xid);
+            break;
         }
         localXid = xid;
         resourceManager.addActiveTransactionalResource(localXid, localContext);
@@ -168,8 +167,8 @@ public class DefaultXASession implements XAResource
         if (logger.isDebugEnabled())
         {
             logger.debug(new StringBuilder(128).append("Thread ").append(Thread.currentThread()).append(
-                flags == TMSUSPEND ? " suspends" : flags == TMFAIL ? " fails" : " ends").append(
-                " work on behalf of transaction branch ").append(xid).toString());
+                    flags == TMSUSPEND ? " suspends" : flags == TMFAIL ? " fails" : " ends").append(
+                    " work on behalf of transaction branch ").append(xid).toString());
         }
         // No transaction is already begun
         if (localContext == null)
@@ -186,17 +185,17 @@ public class DefaultXASession implements XAResource
         {
             switch (flags)
             {
-                case TMSUSPEND :
-                    // TODO: suspend context
-                    resourceManager.addSuspendedTransactionalResource(localXid, localContext);
-                    resourceManager.removeActiveTransactionalResource(localXid);
-                    break;
-                case TMFAIL :
-                    resourceManager.setTransactionRollbackOnly(localContext);
-                    break;
-                case TMSUCCESS : // no-op
-                default :        // no-op
-                    break;
+            case TMSUSPEND:
+                // TODO: suspend context
+                resourceManager.addSuspendedTransactionalResource(localXid, localContext);
+                resourceManager.removeActiveTransactionalResource(localXid);
+                break;
+            case TMFAIL:
+                resourceManager.setTransactionRollbackOnly(localContext);
+                break;
+            case TMSUCCESS: // no-op
+            default:        // no-op
+                break;
             }
         }
         catch (ResourceManagerException e)
@@ -329,7 +328,7 @@ public class DefaultXASession implements XAResource
 
     public int getTransactionTimeout() throws XAException
     {
-        return (int)(resourceManager.getDefaultTransactionTimeout() / 1000);
+        return (int) (resourceManager.getDefaultTransactionTimeout() / 1000);
     }
 
     public boolean setTransactionTimeout(int timeout) throws XAException

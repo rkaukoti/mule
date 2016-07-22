@@ -21,7 +21,7 @@ public class ArtifactPluginClassLoaderFactory implements ArtifactClassLoaderFact
 {
 
     /**
-     * @param parent parent for the new artifact classloader.
+     * @param parent     parent for the new artifact classloader.
      * @param descriptor descriptor of the artifact owner of the created classloader
      * @return an {@link ArtifactClassLoader} for the given {@link ArtifactPluginDescriptor}
      */

@@ -12,7 +12,7 @@ import org.mule.runtime.core.api.retry.RetryNotifier;
 public class TestRetryNotifier implements RetryNotifier
 {
     private String color = "blue";
-    
+
     public void onSuccess(RetryContext context)
     {
         // empty

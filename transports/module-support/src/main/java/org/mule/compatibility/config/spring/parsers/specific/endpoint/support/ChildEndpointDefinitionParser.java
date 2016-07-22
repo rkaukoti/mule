@@ -7,7 +7,6 @@
 package org.mule.compatibility.config.spring.parsers.specific.endpoint.support;
 
 import org.mule.runtime.config.spring.parsers.generic.ChildEmbeddedDefinitionParser;
-
 import org.w3c.dom.Element;
 
 /**

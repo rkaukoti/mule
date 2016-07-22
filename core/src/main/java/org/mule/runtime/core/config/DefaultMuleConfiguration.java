@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.core.config;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.BooleanUtils;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.ConfigurationExtension;
 import org.mule.runtime.core.api.config.MuleConfiguration;
@@ -23,6 +25,8 @@ import org.mule.runtime.core.util.NetworkUtils;
 import org.mule.runtime.core.util.NumberUtils;
 import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.core.util.UUID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,11 +39,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.SAXParserFactory;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.BooleanUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Configuration info. which can be set when creating the MuleContext but becomes
@@ -55,6 +54,7 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
 
     /**
      * When false (default), some internal Mule entries are removed from exception stacktraces for readability.
+     *
      * @see #stackTraceFilter
      */
     public static boolean fullStackTraces = false;
@@ -77,82 +77,70 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
     /**
      * A comma-separated list of internal packages/classes which are removed from sanitized stacktraces.
      * Matching is done via string.startsWith().
+     *
      * @see #fullStackTraces
      */
     public static String[] stackTraceFilter = DEFAULT_STACKTRACE_FILTER;
-
+    protected static transient Logger logger = LoggerFactory.getLogger(DefaultMuleConfiguration.class);
     private boolean synchronous = false;
-
     /**
      * The type of model used for the internal system model where system created
      * services are registered
      */
     private String systemModelType = "seda";
-
     private String encoding = "UTF-8";
-
     /**
      * When running sychronously, return events can be received over transports that
      * support ack or replyTo This property determines how long to wait for a receive
      */
     private int responseTimeout = 10000;
-
     /**
      * The default transaction timeout value used if no specific transaction time out
      * has been set on the transaction config
      */
     private int defaultTransactionTimeout = 30000;
-
     /**
      * The default queue timeout value used when polling queues.
      */
     private int defaultQueueTimeout = 200;
-
     /**
      * The default graceful shutdown timeout used when shutting stopping mule cleanly
      * without message loss.
      */
     private int shutdownTimeout = 5000;
-
     /**
      * Where Mule stores any runtime files to disk. Note that in container
      * mode each app will have its working dir set one level under this dir
      * (with app's name) in the {@link #setMuleContext} callback.
-     *
      */
     private String workingDirectory = "./.mule";
-
     /**
      * Whether the server instance is running in client mode, which means that some
      * services will not be started
      */
     private boolean clientMode = false;
-
-    /** the unique id for this Mule instance */
+    /**
+     * the unique id for this Mule instance
+     */
     private String id;
-
-    /** If this node is part of a cluster then this is the shared cluster Id */
+    /**
+     * If this node is part of a cluster then this is the shared cluster Id
+     */
     private String clusterId = "";
 
-    /** The domain name that this instance belongs to. */
-    private String domainId;
-
     // Debug options
-
+    /**
+     * The domain name that this instance belongs to.
+     */
+    private String domainId;
     private boolean cacheMessageAsBytes = true;
-
     private boolean enableStreaming = true;
-
     private boolean autoWrapMessageAwareTransform = true;
-
     /**
      * Whether transports and processors timeouts should be disabled in order
      * to allow step debugging of mule flows.
      */
     private boolean disableTimeouts = false;
-
-    protected static transient Logger logger = LoggerFactory.getLogger(DefaultMuleConfiguration.class);
-
     private MuleContext muleContext;
     private boolean containerMode;
 
@@ -244,6 +232,20 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
         }
     }
 
+    public static boolean isVerboseExceptions()
+    {
+        return verboseExceptions || logger.isDebugEnabled();
+    }
+
+    /**
+     * @return {@code true} if the log is set to debug or if the system property {@code mule.flowTrace} is set to {@code true}. {@code
+     * false} otherwise.
+     */
+    public static boolean isFlowTrace()
+    {
+        return flowTrace || logger.isDebugEnabled();
+    }
+
     @Override
     public void setMuleContext(MuleContext context)
     {
@@ -252,7 +254,8 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
         {
             final String muleHome = System.getProperty("mule.home");
             // in container mode the id is the app name, have each app isolate its work dir
-            if (!isStandalone()) {
+            if (!isStandalone())
+            {
                 // fallback to current dir as a parent
                 this.workingDirectory = String.format("%s/%s", getWorkingDirectory(), getId());
             }
@@ -374,20 +377,6 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
             disableTimeouts = Boolean.valueOf(p);
         }
     }
-    
-    public static boolean isVerboseExceptions()
-    {
-        return verboseExceptions || logger.isDebugEnabled();
-    }
-    
-    /**
-     * @return {@code true} if the log is set to debug or if the system property {@code mule.flowTrace} is set to
-     *         {@code true}. {@code false} otherwise.
-     */
-    public static boolean isFlowTrace()
-    {
-        return flowTrace || logger.isDebugEnabled();
-    }
 
     protected void validateEncoding() throws FatalException
     {
@@ -414,7 +403,7 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
         if (f == null || f.getClass().getName().indexOf("crimson") != -1)
         {
             throw new FatalException(CoreMessages.valueIsInvalidFor(f.getClass().getName(),
-                "javax.xml.parsers.SAXParserFactory"), this);
+                    "javax.xml.parsers.SAXParserFactory"), this);
         }
     }
 
@@ -446,12 +435,6 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
         return workingDirectory;
     }
 
-    @Override
-    public String getMuleHomeDirectory()
-    {
-        return System.getProperty(MuleProperties.MULE_HOME_DIRECTORY_PROPERTY);
-    }
-
     public void setWorkingDirectory(String workingDirectory)
     {
         if (verifyContextNotInitialized())
@@ -464,9 +447,15 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
             catch (IOException e)
             {
                 throw new IllegalArgumentException(CoreMessages.initialisationFailure(
-                    "Invalid working directory").getMessage(), e);
+                        "Invalid working directory").getMessage(), e);
             }
         }
+    }
+
+    @Override
+    public String getMuleHomeDirectory()
+    {
+        return System.getProperty(MuleProperties.MULE_HOME_DIRECTORY_PROPERTY);
     }
 
     @Override
@@ -493,6 +482,14 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
     public boolean isClientMode()
     {
         return clientMode;
+    }
+
+    public void setClientMode(boolean clientMode)
+    {
+        if (verifyContextNotStarted())
+        {
+            this.clientMode = clientMode;
+        }
     }
 
     @Override
@@ -557,14 +554,6 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
         if (verifyContextNotStarted())
         {
             this.systemModelType = systemModelType;
-        }
-    }
-
-    public void setClientMode(boolean clientMode)
-    {
-        if (verifyContextNotStarted())
-        {
-            this.clientMode = clientMode;
         }
     }
 
@@ -662,19 +651,18 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
         return shutdownTimeout;
     }
 
-
-    @Override
-    public int getMaxQueueTransactionFilesSizeInMegabytes()
-    {
-        return maxQueueTransactionFilesSizeInMegabytes;
-    }
-
     public void setShutdownTimeout(int shutdownTimeout)
     {
         if (verifyContextNotStarted())
         {
             this.shutdownTimeout = shutdownTimeout;
         }
+    }
+
+    @Override
+    public int getMaxQueueTransactionFilesSizeInMegabytes()
+    {
+        return maxQueueTransactionFilesSizeInMegabytes;
     }
 
     @Override
@@ -752,6 +740,11 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
         return defaultObjectSerializer;
     }
 
+    public void setDefaultObjectSerializer(ObjectSerializer defaultObjectSerializer)
+    {
+        this.defaultObjectSerializer = defaultObjectSerializer;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -764,11 +757,6 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
     public void setDefaultProcessingStrategy(ProcessingStrategy defaultProcessingStrategy)
     {
         this.defaultProcessingStrategy = defaultProcessingStrategy;
-    }
-
-    public void setDefaultObjectSerializer(ObjectSerializer defaultObjectSerializer)
-    {
-        this.defaultObjectSerializer = defaultObjectSerializer;
     }
 
     public void addExtensions(List<ConfigurationExtension> extensions)

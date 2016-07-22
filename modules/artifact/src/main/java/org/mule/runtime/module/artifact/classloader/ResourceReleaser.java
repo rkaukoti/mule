@@ -15,7 +15,8 @@ public interface ResourceReleaser
 {
 
     /**
-     * Attempts to release, during an {@link Artifact} undeployment, resources that were not explicitly released and could cause a memory leak.
+     * Attempts to release, during an {@link Artifact} undeployment, resources that were not explicitly released and could cause a memory
+     * leak.
      */
     void release();
 }

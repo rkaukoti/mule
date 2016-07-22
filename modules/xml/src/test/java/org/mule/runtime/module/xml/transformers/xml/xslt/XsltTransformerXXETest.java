@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.module.xml.transformers.xml.xslt;
 
-import static junit.framework.Assert.assertTrue;
-
-import org.mule.runtime.core.api.transformer.TransformerMessagingException;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.transformer.TransformerMessagingException;
 import org.mule.runtime.core.util.IOUtils;
 
 import java.io.ByteArrayInputStream;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * This test case validates that by default

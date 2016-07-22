@@ -6,6 +6,10 @@
  */
 package org.mule.test.integration;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.tck.junit4.rule.DynamicPort;
@@ -13,11 +17,6 @@ import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
 
 import java.util.concurrent.CountDownLatch;
-
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.junit.Rule;
-import org.junit.Test;
 
 public class CompositeSourceStartDelayTestCase extends FunctionalTestCase
 {

@@ -7,19 +7,20 @@
 package org.mule.runtime.core.api.schedule;
 
 
-import static org.mule.runtime.core.source.polling.PollingMessageSource.POLLING_SCHEME;
-
 import org.mule.runtime.core.util.Predicate;
+
+import static org.mule.runtime.core.source.polling.PollingMessageSource.POLLING_SCHEME;
 
 /**
  * <p>
- *     Utility class to create {@link Scheduler} predicates
+ * Utility class to create {@link Scheduler} predicates
  * </p>
  */
 public class Schedulers
 {
     /**
-     * @return Predicate used to request the  {@link org.mule.runtime.core.api.registry.MuleRegistry} all the polling {@link org.mule.runtime.core.api.schedule.Scheduler}
+     * @return Predicate used to request the  {@link org.mule.runtime.core.api.registry.MuleRegistry} all the polling {@link
+     * org.mule.runtime.core.api.schedule.Scheduler}
      */
     public static Predicate<String> allPollSchedulers()
     {
@@ -34,8 +35,8 @@ public class Schedulers
     }
 
     /**
-     * @return Predicate used to request the  {@link org.mule.runtime.core.api.registry.MuleRegistry} all the polling {@link org.mule.runtime.core.api.schedule.Scheduler}
-     *         for a particular {@link org.mule.runtime.core.api.construct.FlowConstruct}
+     * @return Predicate used to request the  {@link org.mule.runtime.core.api.registry.MuleRegistry} all the polling {@link
+     * org.mule.runtime.core.api.schedule.Scheduler} for a particular {@link org.mule.runtime.core.api.construct.FlowConstruct}
      */
     public static Predicate<String> flowConstructPollingSchedulers(final String flowConstruct)
     {

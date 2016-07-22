@@ -6,7 +6,6 @@
  */
 package org.mule.extension.socket.api.connection.udp;
 
-import static java.lang.String.format;
 import org.mule.extension.socket.api.ConnectionSettings;
 import org.mule.extension.socket.api.connection.AbstractSocketConnection;
 import org.mule.extension.socket.api.socket.udp.UdpSocketProperties;
@@ -19,6 +18,8 @@ import org.mule.runtime.core.api.serialization.ObjectSerializer;
 import java.net.DatagramSocket;
 
 import javax.inject.Inject;
+
+import static java.lang.String.format;
 
 /**
  * Provides fields and behaviour common to UDP connections

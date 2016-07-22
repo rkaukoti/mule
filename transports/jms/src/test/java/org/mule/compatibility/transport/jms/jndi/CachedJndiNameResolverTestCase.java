@@ -6,13 +6,8 @@
  */
 package org.mule.compatibility.transport.jms.jndi;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
-
-import org.mule.compatibility.transport.jms.jndi.CachedJndiNameResolver;
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
@@ -22,8 +17,11 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 
-import org.junit.Test;
-import org.mockito.Mockito;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 
 public class CachedJndiNameResolverTestCase extends AbstractMuleTestCase
 {

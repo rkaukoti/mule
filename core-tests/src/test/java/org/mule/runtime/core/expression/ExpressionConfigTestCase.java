@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.core.expression;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class ExpressionConfigTestCase extends AbstractMuleContextTestCase
 {

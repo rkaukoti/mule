@@ -6,15 +6,16 @@
  */
 package org.mule.runtime.module.jaas;
 
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.EncryptionStrategy;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.api.security.CryptoFailureException;
 import org.mule.runtime.core.api.security.UnauthorisedException;
-import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.security.MuleCredentials;
+
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertThat;
 
 public abstract class AbstractJaasFunctionalTestCase extends FunctionalTestCase
 {
@@ -23,7 +24,7 @@ public abstract class AbstractJaasFunctionalTestCase extends FunctionalTestCase
     protected static final String TEST_PAYLOAD = "Test";
 
     protected SecurityHeader createSecurityHeader(String username, String password)
-        throws CryptoFailureException
+            throws CryptoFailureException
     {
         String header = createEncryptedHeader(username, password);
         return new SecurityHeader(MuleProperties.MULE_USER_PROPERTY, header);
@@ -37,11 +38,14 @@ public abstract class AbstractJaasFunctionalTestCase extends FunctionalTestCase
 
     protected void runFlowAndExpectUnauthorizedException(SecurityHeader securityHeader) throws Exception
     {
-        MessagingException exception = flowRunner(TEST_FLOW_NAME).withInboundProperty(securityHeader.getKey(), securityHeader.getValue()).withPayload(TEST_PAYLOAD).runExpectingException();
+        MessagingException exception = flowRunner(TEST_FLOW_NAME).withInboundProperty(securityHeader.getKey(), securityHeader.getValue())
+                                                                 .withPayload(TEST_PAYLOAD)
+                                                                 .runExpectingException();
         assertThat(exception, instanceOf(UnauthorisedException.class));
     }
 
-    public static class SecurityHeader {
+    public static class SecurityHeader
+    {
 
         private String key;
         private String value;

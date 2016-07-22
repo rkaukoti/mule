@@ -6,18 +6,10 @@
  */
 package org.mule.runtime.module.launcher.domain;
 
-import static java.lang.String.format;
-import static java.util.Collections.emptyList;
-import static java.util.Collections.emptyMap;
-import static org.apache.commons.io.FileUtils.listFiles;
-import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_FIRST;
-import static org.mule.runtime.module.launcher.MuleFoldersUtil.getDomainLibFolder;
-import static org.mule.runtime.module.launcher.domain.Domain.DEFAULT_DOMAIN_NAME;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.Preconditions;
 import org.mule.runtime.core.util.SystemUtils;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
-import org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFactory;
 import org.mule.runtime.module.artifact.classloader.ClassLoaderLookupPolicy;
 import org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy;
 import org.mule.runtime.module.artifact.classloader.DeployableArtifactClassLoaderFactory;
@@ -29,6 +21,8 @@ import org.mule.runtime.module.launcher.application.FilePackageDiscoverer;
 import org.mule.runtime.module.launcher.application.PackageDiscoverer;
 import org.mule.runtime.module.launcher.descriptor.DomainDescriptor;
 import org.mule.runtime.module.reboot.MuleContainerBootstrapUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,8 +36,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
+import static org.apache.commons.io.FileUtils.listFiles;
+import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_FIRST;
+import static org.mule.runtime.module.launcher.MuleFoldersUtil.getDomainLibFolder;
+import static org.mule.runtime.module.launcher.domain.Domain.DEFAULT_DOMAIN_NAME;
 
 /**
  * Creates {@link ArtifactClassLoader} for domain artifacts.
@@ -72,7 +71,8 @@ public class DomainClassLoaderFactory implements DeployableArtifactClassLoaderFa
     }
 
     @Override
-    public ArtifactClassLoader create(ArtifactClassLoader parent, DomainDescriptor descriptor, List<ArtifactClassLoader> artifactClassLoaders)
+    public ArtifactClassLoader create(ArtifactClassLoader parent, DomainDescriptor descriptor,
+                                      List<ArtifactClassLoader> artifactClassLoaders)
     {
         String domain = descriptor.getName();
         Preconditions.checkArgument(domain != null, "Domain name cannot be null");
@@ -178,13 +178,14 @@ public class DomainClassLoaderFactory implements DeployableArtifactClassLoaderFa
 
     private ArtifactClassLoader getDefaultDomainClassLoader(ClassLoaderLookupPolicy containerLookupPolicy)
     {
-        return new MuleSharedDomainClassLoader(DEFAULT_DOMAIN_NAME, parentClassLoader, containerLookupPolicy.extend(emptyMap()), emptyList());
+        return new MuleSharedDomainClassLoader(DEFAULT_DOMAIN_NAME, parentClassLoader, containerLookupPolicy.extend(emptyMap()),
+                emptyList());
     }
 
     private void validateDomain(String domain)
     {
         File domainFolder = new File(MuleContainerBootstrapUtils.getMuleDomainsDir(), domain);
-        if (!(domainFolder.exists() && domainFolder.isDirectory()) )
+        if (!(domainFolder.exists() && domainFolder.isDirectory()))
         {
             throw new DeploymentException(CoreMessages.createStaticMessage(format("Domain %s does not exists", domain)));
         }

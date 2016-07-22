@@ -6,9 +6,8 @@
  */
 package org.mule.functional.junit4;
 
-import static org.mockito.Mockito.spy;
-import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
-import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
+import org.apache.commons.collections.Transformer;
+import org.mockito.Mockito;
 import org.mule.runtime.api.message.Attributes;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.DefaultMuleEvent;
@@ -31,8 +30,9 @@ import java.util.Map.Entry;
 
 import javax.activation.DataHandler;
 
-import org.apache.commons.collections.Transformer;
-import org.mockito.Mockito;
+import static org.mockito.Mockito.spy;
+import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
+import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
 
 /**
  * Provides a fluent API for building events for testing.
@@ -160,8 +160,8 @@ public class TestEventBuilder
      *
      * @param key         the key of the attachment to add
      * @param object      the content of the attachment to add
-     * @param contentType the content type of the attachment to add. Note that the charset attribute can be specifed too
-     *                    i.e. text/plain;charset=UTF-8
+     * @param contentType the content type of the attachment to add. Note that the charset attribute can be specifed too i.e.
+     *                    text/plain;charset=UTF-8
      * @return this {@link TestEventBuilder}
      */
     public TestEventBuilder withOutboundAttachment(String key, Object object, MediaType contentType)
@@ -299,7 +299,8 @@ public class TestEventBuilder
         final MuleMessage muleMessage = messageBuilder.build();
 
         DefaultMuleEvent event = new DefaultMuleEvent(
-                (MuleMessage) spyTransformer.transform(muleMessage), URI.create("none"), "none", exchangePattern, flow, new DefaultMuleSession(),
+                (MuleMessage) spyTransformer.transform(muleMessage), URI.create("none"), "none", exchangePattern, flow,
+                new DefaultMuleSession(),
                 muleContext.getConfiguration().getDefaultResponseTimeout(), null, null, transacted, null, replyToHandler);
 
         for (Entry<String, Attachment> outboundAttachmentEntry : outboundAttachments.entrySet())

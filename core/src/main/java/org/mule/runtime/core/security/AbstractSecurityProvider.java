@@ -47,7 +47,7 @@ public abstract class AbstractSecurityProvider implements SecurityProvider
 
     @Override
     public SecurityContext createSecurityContext(Authentication authentication)
-        throws UnknownAuthenticationTypeException
+            throws UnknownAuthenticationTypeException
     {
         return securityContextFactory.create(authentication);
     }

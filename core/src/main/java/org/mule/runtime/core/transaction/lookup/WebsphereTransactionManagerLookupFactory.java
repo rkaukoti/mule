@@ -11,13 +11,12 @@ import org.mule.runtime.core.api.config.MuleConfiguration;
 import org.mule.runtime.core.api.transaction.TransactionManagerFactory;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.ClassUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 
 import javax.transaction.TransactionManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The code borrowed from Spring's
@@ -74,24 +73,24 @@ public class WebsphereTransactionManagerLookupFactory implements TransactionMana
                 {
                     logger.debug("Could not find WebSphere 4 TransactionManager factory class", ex3);
                     throw new MuleRuntimeException(
-                        CoreMessages.createStaticMessage("Couldn't find any WebSphere TransactionManager factory class, "
-                                                         + "neither for WebSphere version 5.1 nor 5.0 nor 4"),
-                        ex);
+                            CoreMessages.createStaticMessage("Couldn't find any WebSphere TransactionManager factory class, "
+                                                             + "neither for WebSphere version 5.1 nor 5.0 nor 4"),
+                            ex);
                 }
             }
         }
         try
         {
-            Method method = clazz.getMethod("getTransactionManager", (Class[])null);
-            transactionManager = (TransactionManager) method.invoke(null, (Object[])null);
+            Method method = clazz.getMethod("getTransactionManager", (Class[]) null);
+            transactionManager = (TransactionManager) method.invoke(null, (Object[]) null);
         }
         catch (Exception ex)
         {
             throw new MuleRuntimeException(
-                CoreMessages.createStaticMessage("Found WebSphere TransactionManager factory class ["
-                                                 + clazz.getName()
-                                                 + "], but couldn't invoke its static 'getTransactionManager' method"),
-                ex);
+                    CoreMessages.createStaticMessage("Found WebSphere TransactionManager factory class ["
+                                                     + clazz.getName()
+                                                     + "], but couldn't invoke its static 'getTransactionManager' method"),
+                    ex);
         }
 
         return transactionManager;

@@ -8,7 +8,6 @@
 package org.mule.runtime.module.db.internal.resolver.query;
 
 import org.mule.runtime.core.api.MuleEvent;
-
 import org.mule.runtime.module.db.internal.domain.query.BulkQuery;
 
 /**

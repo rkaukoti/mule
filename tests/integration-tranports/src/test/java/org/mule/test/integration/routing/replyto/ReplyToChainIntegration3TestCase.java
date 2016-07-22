@@ -6,9 +6,7 @@
  */
 package org.mule.test.integration.routing.replyto;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -18,7 +16,8 @@ import org.mule.runtime.core.transformer.AbstractMessageTransformer;
 
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ReplyToChainIntegration3TestCase extends FunctionalTestCase
 {

@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.core.api.security.tls;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.util.ArrayUtils;
 
@@ -19,6 +18,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+
 /**
  * SSLSocketFactory decorator that restricts the available protocols and cipher suites
  * in the sockets that are created.
@@ -26,11 +27,11 @@ import javax.net.ssl.SSLSocketFactory;
 public class RestrictedSSLSocketFactory extends SSLSocketFactory
 {
 
+    private static RestrictedSSLSocketFactory defaultSocketFactory = null;
     private final SSLSocketFactory sslSocketFactory;
     private final String[] enabledCipherSuites;
     private final String[] enabledProtocols;
     private final String[] defaultCipherSuites;
-    private static RestrictedSSLSocketFactory defaultSocketFactory = null;
 
     public RestrictedSSLSocketFactory(SSLContext sslContext, String[] cipherSuites, String[] protocols)
     {
@@ -48,6 +49,25 @@ public class RestrictedSSLSocketFactory extends SSLSocketFactory
             protocols = sslContext.getDefaultSSLParameters().getProtocols();
         }
         this.enabledProtocols = ArrayUtils.intersection(protocols, sslContext.getSupportedSSLParameters().getProtocols());
+    }
+
+    public static synchronized SocketFactory getDefault()
+    {
+        if (defaultSocketFactory == null)
+        {
+            try
+            {
+                TlsConfiguration configuration = new TlsConfiguration(null);
+                configuration.initialise(true, null);
+                defaultSocketFactory = new RestrictedSSLSocketFactory(configuration.getSslContext(), configuration.getEnabledCipherSuites(),
+                        configuration.getEnabledProtocols());
+            }
+            catch (Exception e)
+            {
+                throw new MuleRuntimeException(createStaticMessage("Could not create the default RestrictedSSLSocketFactory"), e);
+            }
+        }
+        return defaultSocketFactory;
     }
 
     @Override
@@ -103,23 +123,5 @@ public class RestrictedSSLSocketFactory extends SSLSocketFactory
         socket.setEnabledCipherSuites(enabledCipherSuites);
         socket.setEnabledProtocols(enabledProtocols);
         return socket;
-    }
-
-    public static synchronized SocketFactory getDefault()
-    {
-        if(defaultSocketFactory == null)
-        {
-            try
-            {
-                TlsConfiguration configuration = new TlsConfiguration(null);
-                configuration.initialise(true, null);
-                defaultSocketFactory = new RestrictedSSLSocketFactory(configuration.getSslContext(), configuration.getEnabledCipherSuites(), configuration.getEnabledProtocols());
-            }
-            catch (Exception e)
-            {
-                throw new MuleRuntimeException(createStaticMessage("Could not create the default RestrictedSSLSocketFactory"), e);
-            }
-        }
-        return defaultSocketFactory;
     }
 }

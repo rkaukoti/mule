@@ -61,24 +61,22 @@ import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.SplashScreen;
 import org.mule.runtime.core.work.DefaultWorkListener;
 import org.mule.runtime.core.work.MuleWorkManager;
-
-import javax.resource.spi.work.WorkListener;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.resource.spi.work.WorkListener;
 
 /**
  * Implementation of {@link MuleContextBuilder} that uses {@link DefaultMuleContext}
  * as the default {@link MuleContext} implementation and builds it with defaults
- * values for {@link MuleConfiguration}, {@link LifecycleManager}, {@link WorkManager}, 
+ * values for {@link MuleConfiguration}, {@link LifecycleManager}, {@link WorkManager},
  * {@link WorkListener} and {@link ServerNotificationManager}.
  */
 public class DefaultMuleContextBuilder implements MuleContextBuilder
 {
 
-    protected static final Logger logger = LoggerFactory.getLogger(DefaultMuleContextBuilder.class);
     public static final String MULE_CONTEXT_WORKMANAGER_MAXTHREADSACTIVE = "mule.context.workmanager.maxthreadsactive";
-
+    protected static final Logger logger = LoggerFactory.getLogger(DefaultMuleContextBuilder.class);
     protected MuleConfiguration config;
 
     protected MuleContextLifecycleManager lifecycleManager;
@@ -96,6 +94,35 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder
     protected BootstrapServiceDiscoverer bootstrapDiscoverer;
 
     protected ClassLoader executionClassLoader;
+
+    public static ServerNotificationManager createDefaultNotificationManager()
+    {
+        ServerNotificationManager manager = new ServerNotificationManager();
+        manager.addInterfaceToType(MuleContextNotificationListener.class,
+                MuleContextNotification.class);
+        manager.addInterfaceToType(RoutingNotificationListener.class, RoutingNotification.class);
+        manager.addInterfaceToType(SecurityNotificationListener.class,
+                SecurityNotification.class);
+        manager.addInterfaceToType(ManagementNotificationListener.class,
+                ManagementNotification.class);
+        manager.addInterfaceToType(CustomNotificationListener.class, CustomNotification.class);
+        manager.addInterfaceToType(ConnectionNotificationListener.class,
+                ConnectionNotification.class);
+        manager.addInterfaceToType(RegistryNotificationListener.class,
+                RegistryNotification.class);
+        manager.addInterfaceToType(ExceptionNotificationListener.class,
+                ExceptionNotification.class);
+        manager.addInterfaceToType(ExceptionStrategyNotificationListener.class,
+                ExceptionStrategyNotification.class);
+        manager.addInterfaceToType(TransactionNotificationListener.class,
+                TransactionNotification.class);
+        manager.addInterfaceToType(PipelineMessageNotificationListener.class,
+                PipelineMessageNotification.class);
+        manager.addInterfaceToType(AsyncMessageNotificationListener.class,
+                AsyncMessageNotification.class);
+        manager.addInterfaceToType(ClusterNodeNotificationListener.class, ClusterNodeNotification.class);
+        return manager;
+    }
 
     /**
      * {@inheritDoc}
@@ -145,30 +172,6 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder
         return new DefaultMuleContext();
     }
 
-    @Override
-    public void setMuleConfiguration(MuleConfiguration config)
-    {
-        this.config = config;
-    }
-
-    @Override
-    public void setWorkManager(WorkManager workManager)
-    {
-        this.workManager = workManager;
-    }
-
-    @Override
-    public void setWorkListener(WorkListener workListener)
-    {
-        this.workListener = workListener;
-    }
-
-    @Override
-    public void setNotificationManager(ServerNotificationManager notificationManager)
-    {
-        this.notificationManager = notificationManager;
-    }
-
     protected MuleConfiguration getMuleConfiguration()
     {
         if (config != null)
@@ -182,9 +185,9 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder
     }
 
     @Override
-    public void setExecutionClassLoader(ClassLoader executionClassLoader)
+    public void setMuleConfiguration(MuleConfiguration config)
     {
-        this.executionClassLoader = executionClassLoader;
+        this.config = config;
     }
 
     protected ClassLoader getExecutionClassLoader()
@@ -197,6 +200,12 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder
         {
             return Thread.currentThread().getContextClassLoader();
         }
+    }
+
+    @Override
+    public void setExecutionClassLoader(ClassLoader executionClassLoader)
+    {
+        this.executionClassLoader = executionClassLoader;
     }
 
     public <T> T injectMuleContextIfRequired(T object, MuleContext muleContext)
@@ -245,6 +254,12 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder
         }
     }
 
+    @Override
+    public void setWorkManager(WorkManager workManager)
+    {
+        this.workManager = workManager;
+    }
+
     protected WorkListener getWorkListener()
     {
         if (workListener != null)
@@ -257,6 +272,12 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder
         }
     }
 
+    @Override
+    public void setWorkListener(WorkListener workListener)
+    {
+        this.workListener = workListener;
+    }
+
     protected ServerNotificationManager getNotificationManager()
     {
         if (notificationManager != null)
@@ -267,6 +288,12 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder
         {
             return createNotificationManager();
         }
+    }
+
+    @Override
+    public void setNotificationManager(ServerNotificationManager notificationManager)
+    {
+        this.notificationManager = notificationManager;
     }
 
     public SplashScreen getStartupScreen()
@@ -289,11 +316,6 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder
         this.shutdownScreen = shutdownScreen;
     }
 
-    public void setBootstrapPropertiesServiceDiscoverer(BootstrapServiceDiscoverer bootstrapDiscoverer)
-    {
-        this.bootstrapDiscoverer = bootstrapDiscoverer;
-    }
-
     public BootstrapServiceDiscoverer getBootstrapPropertiesServiceDiscoverer()
     {
         if (bootstrapDiscoverer != null)
@@ -304,6 +326,11 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder
         {
             return createBootstrapDiscoverer();
         }
+    }
+
+    public void setBootstrapPropertiesServiceDiscoverer(BootstrapServiceDiscoverer bootstrapDiscoverer)
+    {
+        this.bootstrapDiscoverer = bootstrapDiscoverer;
     }
 
     protected BootstrapServiceDiscoverer createBootstrapDiscoverer()
@@ -326,8 +353,8 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder
         final MuleConfiguration config = getMuleConfiguration();
         // still can be embedded, but in container mode, e.g. in a WAR
         final String threadPrefix = config.isContainerMode()
-                                    ? String.format("[%s].Mule", config.getId())
-                                    : "MuleServer";
+                ? String.format("[%s].Mule", config.getId())
+                : "MuleServer";
         ImmutableThreadingProfile threadingProfile = createMuleWorkManager();
         return new MuleWorkManager(threadingProfile, threadPrefix, config.getShutdownTimeout());
     }
@@ -335,7 +362,8 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder
     protected ImmutableThreadingProfile createMuleWorkManager()
     {
         return new ImmutableThreadingProfile(
-                Integer.valueOf(System.getProperty(MULE_CONTEXT_WORKMANAGER_MAXTHREADSACTIVE, String.valueOf(ThreadingProfile.DEFAULT_MAX_THREADS_ACTIVE))),
+                Integer.valueOf(System.getProperty(MULE_CONTEXT_WORKMANAGER_MAXTHREADSACTIVE,
+                        String.valueOf(ThreadingProfile.DEFAULT_MAX_THREADS_ACTIVE))),
                 ThreadingProfile.DEFAULT_MAX_THREADS_IDLE,
                 ThreadingProfile.DEFAULT_MAX_BUFFER_SIZE,
                 ThreadingProfile.DEFAULT_MAX_THREAD_TTL,
@@ -355,35 +383,6 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder
     protected ServerNotificationManager createNotificationManager()
     {
         return createDefaultNotificationManager();
-    }
-
-    public static ServerNotificationManager createDefaultNotificationManager()
-    {
-        ServerNotificationManager manager = new ServerNotificationManager();
-        manager.addInterfaceToType(MuleContextNotificationListener.class,
-                                   MuleContextNotification.class);
-        manager.addInterfaceToType(RoutingNotificationListener.class, RoutingNotification.class);
-        manager.addInterfaceToType(SecurityNotificationListener.class,
-                                   SecurityNotification.class);
-        manager.addInterfaceToType(ManagementNotificationListener.class,
-                                   ManagementNotification.class);
-        manager.addInterfaceToType(CustomNotificationListener.class, CustomNotification.class);
-        manager.addInterfaceToType(ConnectionNotificationListener.class,
-                                   ConnectionNotification.class);
-        manager.addInterfaceToType(RegistryNotificationListener.class,
-                                   RegistryNotification.class);
-        manager.addInterfaceToType(ExceptionNotificationListener.class,
-                                   ExceptionNotification.class);
-        manager.addInterfaceToType(ExceptionStrategyNotificationListener.class,
-                                   ExceptionStrategyNotification.class);
-        manager.addInterfaceToType(TransactionNotificationListener.class,
-                                   TransactionNotification.class);
-        manager.addInterfaceToType(PipelineMessageNotificationListener.class,
-                                   PipelineMessageNotification.class);
-        manager.addInterfaceToType(AsyncMessageNotificationListener.class,
-                                   AsyncMessageNotification.class);
-        manager.addInterfaceToType(ClusterNodeNotificationListener.class, ClusterNodeNotification.class);
-        return manager;
     }
 
     @Override

@@ -247,8 +247,8 @@ public class DelegateXMLStreamReader implements XMLStreamReader
     {
         return reader.standaloneSet();
     }
-    
-    public XMLStreamReader getDelegateReader() 
+
+    public XMLStreamReader getDelegateReader()
     {
         return reader;
     }

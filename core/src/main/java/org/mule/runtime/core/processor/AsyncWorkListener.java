@@ -9,12 +9,11 @@ package org.mule.runtime.core.processor;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.resource.spi.work.WorkEvent;
 import javax.resource.spi.work.WorkListener;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class AsyncWorkListener implements WorkListener
 {

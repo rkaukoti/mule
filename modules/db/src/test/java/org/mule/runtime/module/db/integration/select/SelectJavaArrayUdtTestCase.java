@@ -7,12 +7,8 @@
 
 package org.mule.runtime.module.db.integration.select;
 
-import static org.mule.runtime.module.db.integration.TestDbConfig.getOracleResource;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
-import static org.mule.runtime.module.db.integration.model.Contact.CONTACT1;
-import static org.mule.runtime.module.db.integration.model.Contact.CONTACT2;
-import static org.mule.runtime.module.db.integration.model.Region.NORTHWEST;
-import static org.mule.runtime.module.db.integration.model.Region.SOUTHWEST;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
@@ -24,8 +20,12 @@ import org.mule.runtime.module.db.integration.model.Record;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.mule.runtime.module.db.integration.TestDbConfig.getOracleResource;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
+import static org.mule.runtime.module.db.integration.model.Contact.CONTACT1;
+import static org.mule.runtime.module.db.integration.model.Contact.CONTACT2;
+import static org.mule.runtime.module.db.integration.model.Region.NORTHWEST;
+import static org.mule.runtime.module.db.integration.model.Region.SOUTHWEST;
 
 public class SelectJavaArrayUdtTestCase extends AbstractDbIntegrationTestCase
 {
@@ -59,8 +59,9 @@ public class SelectJavaArrayUdtTestCase extends AbstractDbIntegrationTestCase
         final MuleEvent responseEvent = flowRunner("returnsDefaultArray").withPayload(TEST_MESSAGE).run();
         final MuleMessage response = responseEvent.getMessage();
 
-        assertRecords(response.getPayload(), new Record(new Field("REGION_NAME", NORTHWEST.getName()), new Field("ZIPS", NORTHWEST.getZips())),
-                      new Record(new Field("REGION_NAME", SOUTHWEST.getName()), new Field("ZIPS", SOUTHWEST.getZips())));
+        assertRecords(response.getPayload(),
+                new Record(new Field("REGION_NAME", NORTHWEST.getName()), new Field("ZIPS", NORTHWEST.getZips())),
+                new Record(new Field("REGION_NAME", SOUTHWEST.getName()), new Field("ZIPS", SOUTHWEST.getZips())));
     }
 
     @Test
@@ -69,7 +70,8 @@ public class SelectJavaArrayUdtTestCase extends AbstractDbIntegrationTestCase
         final MuleEvent responseEvent = flowRunner("returnsCustomArray").withPayload(TEST_MESSAGE).run();
         final MuleMessage response = responseEvent.getMessage();
 
-        assertRecords(response.getPayload(), new Record(new Field("CONTACT_NAME", CONTACT1.getName()), new Field("DETAILS", CONTACT1.getDetails())),
-                      new Record(new Field("CONTACT_NAME", CONTACT2.getName()), new Field("DETAILS", CONTACT2.getDetails())));
+        assertRecords(response.getPayload(),
+                new Record(new Field("CONTACT_NAME", CONTACT1.getName()), new Field("DETAILS", CONTACT1.getDetails())),
+                new Record(new Field("CONTACT_NAME", CONTACT2.getName()), new Field("DETAILS", CONTACT2.getDetails())));
     }
 }

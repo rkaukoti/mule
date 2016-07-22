@@ -6,13 +6,14 @@
  */
 package org.mule.runtime.config.spring;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.context.notification.ServerNotificationListener;
 import org.mule.runtime.core.context.notification.ListenerSubscriptionPair;
 import org.mule.runtime.core.context.notification.ServerNotificationManager;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.SmartFactoryBean;
+import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,12 +24,11 @@ import java.util.function.BiConsumer;
 
 import javax.inject.Inject;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.SmartFactoryBean;
-import org.springframework.context.ApplicationContext;
+import static java.lang.String.format;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 public class ServerNotificationManagerConfigurator
-    implements SmartFactoryBean
+        implements SmartFactoryBean
 {
 
     @Inject
@@ -63,7 +63,7 @@ public class ServerNotificationManagerConfigurator
         for (ListenerSubscriptionPair sub : subs)
         {
             // Do this to avoid warnings when the Spring context is refreshed
-            if(!notificationManager.isListenerRegistered(sub.getListener()))
+            if (!notificationManager.isListenerRegistered(sub.getListener()))
             {
                 notificationManager.addListenerSubscriptionPair(sub);
             }
@@ -80,31 +80,34 @@ public class ServerNotificationManagerConfigurator
     {
         for (NotificationConfig disabledNotification : disabledNotifications)
         {
-            BiConsumer<DisableNotificationTask, Class> disableNotificationFunction = (disableFunction, type) -> {
+            BiConsumer<DisableNotificationTask, Class> disableNotificationFunction = (disableFunction, type) ->
+            {
                 try
                 {
                     disableFunction.run();
                 }
                 catch (Exception e)
                 {
-                    throw new MuleRuntimeException(createStaticMessage(format("Fail trying to disable a notification of type %s since such type does not exists", type)), e);
+                    throw new MuleRuntimeException(createStaticMessage(
+                            format("Fail trying to disable a notification of type %s since such type does not exists", type)), e);
                 }
             };
             if (disabledNotification.isInterfaceExplicitlyConfigured())
             {
-                disableNotificationFunction.accept(() -> {
+                disableNotificationFunction.accept(() ->
+                {
                     notificationManager.disableInterface(disabledNotification.getInterfaceClass().get());
                 }, disabledNotification.getInterfaceClass().get());
             }
             if (disabledNotification.isEventExplicitlyConfigured())
             {
-                disableNotificationFunction.accept(() -> {
+                disableNotificationFunction.accept(() ->
+                {
                     notificationManager.disableType(disabledNotification.getEventClass().get());
                 }, disabledNotification.getEventClass().get());
             }
         }
     }
-
 
 
     private void enableNotifications(ServerNotificationManager notificationManager)
@@ -122,12 +125,12 @@ public class ServerNotificationManagerConfigurator
         // Any singleton bean defined in spring that implements
         // ServerNotificationListener or a subclass.
         String[] listenerBeans = applicationContext.getBeanNamesForType(ServerNotificationListener.class,
-            false, true);
+                false, true);
         Set<ListenerSubscriptionPair> adhocListeners = new HashSet<ListenerSubscriptionPair>();
         for (String name : listenerBeans)
         {
             adhocListeners.add(new ListenerSubscriptionPair(
-                (ServerNotificationListener<?>) applicationContext.getBean(name), null));
+                    (ServerNotificationListener<?>) applicationContext.getBean(name), null));
         }
 
         if (notificationListeners != null)

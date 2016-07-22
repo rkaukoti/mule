@@ -18,11 +18,11 @@ public abstract class AbstractFlowConstructStatistics implements Statistics
     private static final long serialVersionUID = 5337576392583767442L;
 
     protected final String flowConstructType;
+    protected final AtomicLong receivedEventSync = new AtomicLong(0);
+    protected final AtomicLong receivedEventASync = new AtomicLong(0);
     protected String name;
     protected boolean enabled = false;
     private long samplePeriod = 0;
-    protected final AtomicLong receivedEventSync = new AtomicLong(0);
-    protected final AtomicLong receivedEventASync = new AtomicLong(0);
 
     public AbstractFlowConstructStatistics(String flowConstructType, String name)
     {
@@ -31,19 +31,19 @@ public abstract class AbstractFlowConstructStatistics implements Statistics
     }
 
     /**
-     * Enable statistics logs (this is a dynamic parameter)
-     */
-    public synchronized void setEnabled(boolean b)
-    {
-        enabled = b;
-    }
-
-    /**
      * Are statistics logged
      */
     public boolean isEnabled()
     {
         return enabled;
+    }
+
+    /**
+     * Enable statistics logs (this is a dynamic parameter)
+     */
+    public synchronized void setEnabled(boolean b)
+    {
+        enabled = b;
     }
 
     public synchronized String getName()

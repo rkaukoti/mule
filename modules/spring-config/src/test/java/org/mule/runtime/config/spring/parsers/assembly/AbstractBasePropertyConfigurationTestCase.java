@@ -33,12 +33,13 @@ public abstract class AbstractBasePropertyConfigurationTestCase extends Abstract
     public static final Map TO_CAPS;
     public static final String PREFIX = "prefix";
 
-    static {
+    static
+    {
         TO_CAPS = new HashMap();
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
         for (int i = 0; i < alphabet.length(); i++)
         {
-            String letter = alphabet.substring(i, i+1);
+            String letter = alphabet.substring(i, i + 1);
             TO_CAPS.put(letter.toLowerCase(), letter.toUpperCase());
         }
     }

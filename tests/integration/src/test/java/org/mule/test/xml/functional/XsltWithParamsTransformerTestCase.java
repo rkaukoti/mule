@@ -6,18 +6,17 @@
  */
 package org.mule.test.xml.functional;
 
-import static org.junit.Assert.assertNotNull;
-
+import org.custommonkey.xmlunit.XMLAssert;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.tck.junit4.rule.ForceXalanTransformerFactory;
 import org.mule.tck.junit4.rule.SystemProperty;
 
-import org.custommonkey.xmlunit.XMLAssert;
-import org.custommonkey.xmlunit.XMLUnit;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
 
 public class XsltWithParamsTransformerTestCase extends FunctionalTestCase
 {
@@ -39,6 +38,7 @@ public class XsltWithParamsTransformerTestCase extends FunctionalTestCase
         Object result = trans.transform(message);
         assertNotNull(result);
         XMLUnit.setIgnoreWhitespace(true);
-        XMLAssert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?><echo-value xmlns=\"http://test.com\">hello</echo-value>", result);
+        XMLAssert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?><echo-value xmlns=\"http://test.com\">hello</echo-value>",
+                result);
     }
 }

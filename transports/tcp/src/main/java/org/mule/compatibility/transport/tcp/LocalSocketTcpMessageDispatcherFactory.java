@@ -13,7 +13,7 @@ import org.mule.runtime.core.api.MuleException;
 
 /**
  * A factory for <code>LocalSocketTcpMessageDispatcher</code>
- * 
+ *
  * @since 2.2.6
  */
 public class LocalSocketTcpMessageDispatcherFactory extends AbstractMessageDispatcherFactory

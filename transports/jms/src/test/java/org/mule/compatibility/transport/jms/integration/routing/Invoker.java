@@ -21,14 +21,14 @@ public class Invoker
     {
         return hello.returnNull();
     }
-    
-    public void setHello(HelloInterface hello)
-    {
-        this.hello = hello;
-    }
 
     public HelloInterface getHello()
     {
         return hello;
+    }
+
+    public void setHello(HelloInterface hello)
+    {
+        this.hello = hello;
     }
 }

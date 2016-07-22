@@ -6,12 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.resources;
 
-import static com.google.common.collect.ImmutableList.copyOf;
-import static java.lang.String.format;
-import static java.util.stream.Collectors.toList;
-import static org.apache.commons.lang.exception.ExceptionUtils.getFullStackTrace;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import static org.mule.runtime.module.extension.internal.capability.xml.schema.AnnotationProcessorUtils.getTypeElementsAnnotatedWith;
+import com.google.common.base.Joiner;
+
 import org.mule.runtime.core.registry.SpiServiceRegistry;
 import org.mule.runtime.extension.api.annotation.Extension;
 import org.mule.runtime.extension.api.introspection.ExtensionFactory;
@@ -26,8 +22,6 @@ import org.mule.runtime.module.extension.internal.introspection.DefaultExtension
 import org.mule.runtime.module.extension.internal.introspection.describer.AnnotationsBasedDescriber;
 import org.mule.runtime.module.extension.internal.introspection.version.StaticVersionResolver;
 
-import com.google.common.base.Joiner;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -39,6 +33,13 @@ import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
+
+import static com.google.common.collect.ImmutableList.copyOf;
+import static java.lang.String.format;
+import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang.exception.ExceptionUtils.getFullStackTrace;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+import static org.mule.runtime.module.extension.internal.capability.xml.schema.AnnotationProcessorUtils.getTypeElementsAnnotatedWith;
 
 
 /**
@@ -76,9 +77,11 @@ public class ExtensionResourcesGeneratorAnnotationProcessor extends AbstractProc
 
         try
         {
-            getExtension(roundEnv).ifPresent(extensionElement -> {
+            getExtension(roundEnv).ifPresent(extensionElement ->
+            {
                 final Class<?> extensionClass = AnnotationProcessorUtils.classFor(extensionElement, processingEnv);
-                withContextClassLoader(extensionClass.getClassLoader(), () -> {
+                withContextClassLoader(extensionClass.getClassLoader(), () ->
+                {
                     ExtensionModel extensionModel = parseExtension(extensionElement, roundEnv);
                     generator.generateFor(extensionModel);
                 });
@@ -89,7 +92,7 @@ public class ExtensionResourcesGeneratorAnnotationProcessor extends AbstractProc
         catch (Exception e)
         {
             processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR,
-                                                     format("%s\n%s", e.getMessage(), getFullStackTrace(e)));
+                    format("%s\n%s", e.getMessage(), getFullStackTrace(e)));
             throw e;
         }
     }
@@ -113,9 +116,10 @@ public class ExtensionResourcesGeneratorAnnotationProcessor extends AbstractProc
         if (elements.size() > 1)
         {
 
-            String message = format("Only one extension is allowed per plugin, however several classes annotated with @%s were found. Offending classes are [%s]",
-                                    Extension.class.getSimpleName(),
-                                    Joiner.on(", ").join(elements.stream().map(TypeElement::getQualifiedName).collect(toList())));
+            String message =
+                    format("Only one extension is allowed per plugin, however several classes annotated with @%s were found. Offending classes are [%s]",
+                            Extension.class.getSimpleName(),
+                            Joiner.on(", ").join(elements.stream().map(TypeElement::getQualifiedName).collect(toList())));
 
             throw new RuntimeException(message);
         }

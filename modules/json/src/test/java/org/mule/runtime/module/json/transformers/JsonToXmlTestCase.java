@@ -6,14 +6,15 @@
  */
 package org.mule.runtime.module.json.transformers;
 
+import org.junit.Test;
 import org.mule.runtime.core.api.transformer.TransformerException;
-import org.mule.runtime.module.json.transformers.JsonToXml;
 
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class JsonToXmlTestCase
 {
@@ -21,24 +22,25 @@ public class JsonToXmlTestCase
     public void testConversion() throws Exception
     {
         String json = "{\n" +
-            "  \"customer\" : {\n" +
-            "    \"id\" : 112,\n" +
-            "    \"first-name\" : \"Jane\",\n" +
-            "    \"last-name\" : \"Doe\",\n" +
-            "    \"address\" : {\n" +
-            "      \"street\" : \"123 A Street\"\n" +
-            "    },\n" +
-            "    \"phone-number\" : [ {\n" +
-            "      \"@type\" : \"work\",\n" +
-            "      \"$\" : \"555-1111\"\n" +
-            "    }, {\n" +
-            "      \"@type\" : \"cell\",\n" +
-            "      \"$\" : \"555-2222\"\n" +
-            "    } ]\n" +
-            "  }\n" +
-            "}";
+                      "  \"customer\" : {\n" +
+                      "    \"id\" : 112,\n" +
+                      "    \"first-name\" : \"Jane\",\n" +
+                      "    \"last-name\" : \"Doe\",\n" +
+                      "    \"address\" : {\n" +
+                      "      \"street\" : \"123 A Street\"\n" +
+                      "    },\n" +
+                      "    \"phone-number\" : [ {\n" +
+                      "      \"@type\" : \"work\",\n" +
+                      "      \"$\" : \"555-1111\"\n" +
+                      "    }, {\n" +
+                      "      \"@type\" : \"cell\",\n" +
+                      "      \"$\" : \"555-2222\"\n" +
+                      "    } ]\n" +
+                      "  }\n" +
+                      "}";
 
-        String xml = "<?xml version='1.0'?><customer><id>112</id><first-name>Jane</first-name><last-name>Doe</last-name><address><street>123 A Street</street></address><phone-number type=\"work\">555-1111</phone-number><phone-number type=\"cell\">555-2222</phone-number></customer>";
+        String xml =
+                "<?xml version='1.0'?><customer><id>112</id><first-name>Jane</first-name><last-name>Doe</last-name><address><street>123 A Street</street></address><phone-number type=\"work\">555-1111</phone-number><phone-number type=\"cell\">555-2222</phone-number></customer>";
 
         JsonToXml jToX = new JsonToXml();
         String xmlResponse = (String) jToX.transform(json);

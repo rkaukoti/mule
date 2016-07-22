@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.module.pgp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Test;
 import org.mule.runtime.core.util.IOUtils;
 
 import java.io.FileInputStream;
 import java.net.URL;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class KeyBasedEncryptionStrategyTestCase extends AbstractEncryptionStrategyTestCase
 {
@@ -57,7 +57,7 @@ public class KeyBasedEncryptionStrategyTestCase extends AbstractEncryptionStrate
     {
         String msg = "Test Message";
         PGPCryptInfo cryptInfo = new PGPCryptInfo(kbStrategy.getKeyManager().getPublicKey(
-            "Mule client <mule_client@mule.com>"), true);
+                "Mule client <mule_client@mule.com>"), true);
 
         String result = new String(kbStrategy.encrypt(msg.getBytes(), cryptInfo));
         assertNotNull(result);

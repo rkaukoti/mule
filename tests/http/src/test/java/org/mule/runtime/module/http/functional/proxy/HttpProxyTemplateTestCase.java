@@ -6,38 +6,11 @@
  */
 package org.mule.runtime.module.http.functional.proxy;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.startsWith;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.X_FORWARDED_FOR;
-import org.mule.runtime.core.api.config.MuleProperties;
-import org.mule.runtime.config.spring.util.ProcessingStrategyUtils;
-import org.mule.runtime.module.http.api.HttpHeaders;
-import org.mule.runtime.module.http.functional.TestInputStream;
-import org.mule.runtime.module.http.functional.requester.AbstractHttpRequestTestCase;
-import org.mule.tck.SensingNullRequestResponseMessageProcessor;
-import org.mule.tck.junit4.rule.DynamicPort;
-import org.mule.tck.junit4.rule.SystemProperty;
-import org.mule.runtime.core.util.IOUtils;
-import org.mule.runtime.core.util.concurrent.Latch;
-
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.AsyncHttpClientConfig;
 import com.ning.http.client.ListenableFuture;
 import com.ning.http.client.generators.InputStreamBodyGenerator;
 import com.ning.http.client.providers.grizzly.GrizzlyAsyncHttpProvider;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -50,18 +23,43 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mule.runtime.config.spring.util.ProcessingStrategyUtils;
+import org.mule.runtime.core.api.config.MuleProperties;
+import org.mule.runtime.core.util.IOUtils;
+import org.mule.runtime.core.util.concurrent.Latch;
+import org.mule.runtime.module.http.api.HttpHeaders;
+import org.mule.runtime.module.http.functional.TestInputStream;
+import org.mule.runtime.module.http.functional.requester.AbstractHttpRequestTestCase;
+import org.mule.tck.SensingNullRequestResponseMessageProcessor;
+import org.mule.tck.junit4.rule.DynamicPort;
+import org.mule.tck.junit4.rule.SystemProperty;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.startsWith;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.X_FORWARDED_FOR;
 
 @RunWith(Parameterized.class)
 public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase
 {
 
+    private static String SENSING_REQUEST_RESPONSE_PROCESSOR_NAME = "sensingRequestResponseProcessor";
     @Rule
     public DynamicPort proxyPort = new DynamicPort("proxyPort");
-
     @Rule
     public SystemProperty systemProperty;
-
-    private static String SENSING_REQUEST_RESPONSE_PROCESSOR_NAME = "sensingRequestResponseProcessor";
     private RequestHandlerExtender handlerExtender;
     private boolean consumeAllRequest = true;
     private String configFile;
@@ -70,16 +68,8 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase
     private boolean nonBlocking;
 
 
-    @Parameterized.Parameters
-    public static Collection<Object[]> parameters()
-    {
-        return Arrays.asList(new Object[][] {
-                {"http-proxy-template-config.xml", "worker", "worker", false}//,
-                //{"http-proxy-template-config.xml", "worker", "proxyTemplate", true}
-        });
-    }
-
-    public HttpProxyTemplateTestCase(String configFile, String requestThreadNameSubString, String responeThreadNameSubString, boolean nonBlocking)
+    public HttpProxyTemplateTestCase(String configFile, String requestThreadNameSubString, String responeThreadNameSubString,
+                                     boolean nonBlocking)
     {
         this.configFile = configFile;
         this.requestThreadNameSubString = requestThreadNameSubString;
@@ -88,8 +78,17 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase
         if (nonBlocking)
         {
             systemProperty = new SystemProperty(MuleProperties.MULE_DEFAULT_PROCESSING_STRATEGY,
-                                                ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
+                    ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
         }
+    }
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> parameters()
+    {
+        return Arrays.asList(new Object[][] {
+                {"http-proxy-template-config.xml", "worker", "worker", false}//,
+                //{"http-proxy-template-config.xml", "worker", "proxyTemplate", true}
+        });
     }
 
     @Override
@@ -130,8 +129,8 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase
         assertRequestOk(getProxyUrl("test?parameterName=parameterValue"), "GET");
 
         Response response = Request.Post(getProxyUrl("test?parameterName=parameterValue"))
-                .bodyString("Some Text", ContentType.DEFAULT_TEXT)
-                .connectTimeout(RECEIVE_TIMEOUT).execute();
+                                   .bodyString("Some Text", ContentType.DEFAULT_TEXT)
+                                   .connectTimeout(RECEIVE_TIMEOUT).execute();
         HttpResponse httpResponse = response.returnResponse();
         assertThat(httpResponse.getStatusLine().getStatusCode(), is(200));
         assertThat(IOUtils.toString(httpResponse.getEntity().getContent()), is("POST"));
@@ -151,8 +150,8 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase
         };
 
         Response response = Request.Get(getProxyUrl("test?parameterName=parameterValue"))
-                .version(HttpVersion.HTTP_1_0)
-                .connectTimeout(RECEIVE_TIMEOUT).execute();
+                                   .version(HttpVersion.HTTP_1_0)
+                                   .connectTimeout(RECEIVE_TIMEOUT).execute();
         HttpResponse httpResponse = response.returnResponse();
         assertThat(httpResponse.getStatusLine().getStatusCode(), is(200));
         assertThat(IOUtils.toString(httpResponse.getEntity().getContent()), is("HTTP/1.0"));
@@ -180,7 +179,8 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase
         handlerExtender = new RequestHandlerExtender()
         {
             @Override
-            public void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException
+            public void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request,
+                                      HttpServletResponse response) throws IOException
             {
                 extractHeadersFromBaseRequest(baseRequest);
 
@@ -197,7 +197,8 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase
         AsyncHttpClientConfig config = configBuilder.build();
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient(new GrizzlyAsyncHttpProvider(config), config);
 
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = asyncHttpClient.preparePost(getProxyUrl("test?parameterName=parameterValue"));
+        AsyncHttpClient.BoundRequestBuilder boundRequestBuilder =
+                asyncHttpClient.preparePost(getProxyUrl("test?parameterName=parameterValue"));
         boundRequestBuilder.setBody(new InputStreamBodyGenerator(new TestInputStream(latch)));
         ListenableFuture<com.ning.http.client.Response> future = boundRequestBuilder.execute();
 
@@ -252,8 +253,8 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase
         };
 
         Response response = Request.Post(getProxyUrl("test"))
-            .bodyString("Some Text", ContentType.DEFAULT_TEXT)
-            .connectTimeout(RECEIVE_TIMEOUT).execute();
+                                   .bodyString("Some Text", ContentType.DEFAULT_TEXT)
+                                   .connectTimeout(RECEIVE_TIMEOUT).execute();
         HttpResponse httpResponse = response.returnResponse();
         assertThat(httpResponse.getStatusLine().getStatusCode(), is(200));
         assertThat(IOUtils.toString(httpResponse.getEntity().getContent()), is("Some Text"));
@@ -265,15 +266,15 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase
         handlerExtender = null;
 
         Response response = Request.Get(getProxyUrl("/test?name=value"))
-                .addHeader("MyCustomHeaderName", "MyCustomHeaderValue")
-                .connectTimeout(RECEIVE_TIMEOUT).execute();
+                                   .addHeader("MyCustomHeaderName", "MyCustomHeaderValue")
+                                   .connectTimeout(RECEIVE_TIMEOUT).execute();
         HttpResponse httpResponse = response.returnResponse();
         assertThat(httpResponse.getStatusLine().getStatusCode(), is(200));
 
         assertThat(getFirstReceivedHeader("MyCustomHeaderName"), is("MyCustomHeaderValue"));
 
         Set<String> lowerCaseHeaderNames = new HashSet<>();
-        for(Header header : httpResponse.getAllHeaders())
+        for (Header header : httpResponse.getAllHeaders())
         {
             lowerCaseHeaderNames.add(header.getName().toLowerCase());
             // Ensure no synthetic properties in headers
@@ -291,7 +292,7 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase
         handlerExtender = null;
 
         Response response = Request.Get(getProxyUrl(""))
-                .connectTimeout(RECEIVE_TIMEOUT).execute();
+                                   .connectTimeout(RECEIVE_TIMEOUT).execute();
         HttpResponse httpResponse = response.returnResponse();
         assertThat(httpResponse.getStatusLine().getStatusCode(), is(200));
 
@@ -332,7 +333,7 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase
         Response response = Request.Get(url).connectTimeout(RECEIVE_TIMEOUT).execute();
         HttpResponse httpResponse = response.returnResponse();
         assertThat(httpResponse.getStatusLine().getStatusCode(), is(200));
-        if(expectedResponse!=null)
+        if (expectedResponse != null)
         {
             assertThat(IOUtils.toString(httpResponse.getEntity().getContent()), is(expectedResponse));
         }
@@ -348,14 +349,15 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase
         return String.format("http://localhost:%s/%s", httpPort.getNumber(), path);
     }
 
-    protected void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException
+    protected void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request, HttpServletResponse response)
+            throws IOException
     {
-        if(consumeAllRequest)
+        if (consumeAllRequest)
         {
             extractBaseRequestParts(baseRequest);
         }
 
-        if( handlerExtender==null )
+        if (handlerExtender == null)
         {
             writeResponse(response);
         }
@@ -367,13 +369,15 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase
 
     private static interface RequestHandlerExtender
     {
-        void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException;
+        void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request, HttpServletResponse response)
+                throws IOException;
     }
 
     private static abstract class EchoRequestHandlerExtender implements RequestHandlerExtender
     {
         @Override
-        public void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException
+        public void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request, HttpServletResponse response)
+                throws IOException
         {
             response.setContentType(request.getContentType());
             response.setStatus(HttpServletResponse.SC_OK);

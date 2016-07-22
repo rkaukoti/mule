@@ -6,12 +6,11 @@
  */
 package org.mule.test.integration.transaction.xa;
 
-import static org.junit.Assert.assertThat;
-
+import org.hamcrest.core.Is;
 import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
 
-import org.hamcrest.core.Is;
+import static org.junit.Assert.assertThat;
 
 public class TransactionScenarios
 {
@@ -99,7 +98,8 @@ public class TransactionScenarios
                     {
                         try
                         {
-                            return String.format("Not all the messages arrived. Only %d of %s arrived", outboundMessagesVerifier.numberOfMessagesThatArrived(), numberOfMessagesCreated);
+                            return String.format("Not all the messages arrived. Only %d of %s arrived",
+                                    outboundMessagesVerifier.numberOfMessagesThatArrived(), numberOfMessagesCreated);
                         }
                         catch (Exception e)
                         {

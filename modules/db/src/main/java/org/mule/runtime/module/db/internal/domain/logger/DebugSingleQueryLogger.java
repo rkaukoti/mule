@@ -9,7 +9,6 @@ package org.mule.runtime.module.db.internal.domain.logger;
 
 import org.mule.runtime.module.db.internal.domain.param.InputQueryParam;
 import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
-
 import org.slf4j.Logger;
 
 /**
@@ -43,7 +42,7 @@ public class DebugSingleQueryLogger extends AbstractDebugQueryLogger implements 
     public void addParameter(InputQueryParam param, Object value)
     {
         builder.append("\n")
-                .append(param.getName() != null ? param.getName() : param.getIndex())
-                .append(" = ").append(value);
+               .append(param.getName() != null ? param.getName() : param.getIndex())
+               .append(" = ").append(value);
     }
 }

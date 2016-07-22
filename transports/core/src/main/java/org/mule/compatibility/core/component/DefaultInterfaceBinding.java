@@ -19,11 +19,10 @@ import org.mule.runtime.core.api.exception.MessagingExceptionHandler;
 import org.mule.runtime.core.api.exception.MessagingExceptionHandlerAware;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
-
-import java.lang.reflect.Proxy;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Proxy;
 
 /**
  * @deprecated Transport infrastructure is deprecated.
@@ -32,15 +31,11 @@ import org.slf4j.LoggerFactory;
 public class DefaultInterfaceBinding implements InterfaceBinding, MessagingExceptionHandlerAware, Initialisable
 {
     protected static final Logger logger = LoggerFactory.getLogger(DefaultInterfaceBinding.class);
-
-    private Class<?> interfaceClass;
-
-    private String methodName;
-
-    private MessagingExceptionHandler messagingExceptionHandler;
-
     // The router used to actually dispatch the message
     protected OutboundEndpoint endpoint;
+    private Class<?> interfaceClass;
+    private String methodName;
+    private MessagingExceptionHandler messagingExceptionHandler;
 
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException
@@ -50,15 +45,15 @@ public class DefaultInterfaceBinding implements InterfaceBinding, MessagingExcep
     }
 
     @Override
-    public void setInterface(Class<?> interfaceClass)
-    {
-        this.interfaceClass = interfaceClass;
-    }
-
-    @Override
     public Class<?> getInterface()
     {
         return interfaceClass;
+    }
+
+    @Override
+    public void setInterface(Class<?> interfaceClass)
+    {
+        this.interfaceClass = interfaceClass;
     }
 
     @Override
@@ -78,7 +73,7 @@ public class DefaultInterfaceBinding implements InterfaceBinding, MessagingExcep
     {
         try
         {
-            Object proxy = Proxy.newProxyInstance(getInterface().getClassLoader(), new Class[]{getInterface()},
+            Object proxy = Proxy.newProxyInstance(getInterface().getClassLoader(), new Class[] {getInterface()},
                     new BindingInvocationHandler(this));
             if (logger.isDebugEnabled())
             {
@@ -90,19 +85,6 @@ public class DefaultInterfaceBinding implements InterfaceBinding, MessagingExcep
         catch (Exception e)
         {
             throw new MuleRuntimeException(TransportCoreMessages.failedToCreateProxyFor(target), e);
-        }
-    }
-
-    @Override
-    public void setEndpoint(ImmutableEndpoint e) throws MuleException
-    {
-        if (e instanceof OutboundEndpoint)
-        {
-            endpoint = (OutboundEndpoint) e;
-        }
-        else
-        {
-            throw new IllegalArgumentException("An outbound endpoint is required for Interface binding");
         }
     }
 
@@ -132,6 +114,19 @@ public class DefaultInterfaceBinding implements InterfaceBinding, MessagingExcep
         else
         {
             return null;
+        }
+    }
+
+    @Override
+    public void setEndpoint(ImmutableEndpoint e) throws MuleException
+    {
+        if (e instanceof OutboundEndpoint)
+        {
+            endpoint = (OutboundEndpoint) e;
+        }
+        else
+        {
+            throw new IllegalArgumentException("An outbound endpoint is required for Interface binding");
         }
     }
 

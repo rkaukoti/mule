@@ -23,7 +23,6 @@ interface ArgumentResolverDelegate
      * of the given {@code operationContext}
      *
      * @param operationContext the {@link OperationContext context} of an {@link OperationModel} being currently executed
-     * @param parameterTypes
      * @return an object array
      */
     Object[] resolve(OperationContext operationContext, Class<?>[] parameterTypes);

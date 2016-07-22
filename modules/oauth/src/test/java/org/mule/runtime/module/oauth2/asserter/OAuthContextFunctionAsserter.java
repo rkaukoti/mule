@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.module.oauth2.asserter;
 
-import static org.junit.Assert.assertThat;
-
+import org.hamcrest.core.Is;
 import org.mule.runtime.core.api.el.ExpressionLanguage;
 
-import org.hamcrest.core.Is;
+import static org.junit.Assert.assertThat;
 
 public class OAuthContextFunctionAsserter
 {
@@ -40,11 +39,13 @@ public class OAuthContextFunctionAsserter
     {
         if (userId != null)
         {
-            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s','%s').accessToken", configName, userId)), Is.<Object>is(expectedAccessToken));
+            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s','%s').accessToken", configName, userId)),
+                    Is.<Object>is(expectedAccessToken));
         }
         else
         {
-            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').accessToken", configName)), Is.<Object>is(expectedAccessToken));
+            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').accessToken", configName)),
+                    Is.<Object>is(expectedAccessToken));
         }
         return this;
     }
@@ -53,11 +54,13 @@ public class OAuthContextFunctionAsserter
     {
         if (userId != null)
         {
-            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s','%s').refreshToken", configName, userId)), Is.<Object>is(expectedRefreshToken));
+            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s','%s').refreshToken", configName, userId)),
+                    Is.<Object>is(expectedRefreshToken));
         }
         else
         {
-            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').refreshToken", configName)), Is.<Object>is(expectedRefreshToken));
+            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').refreshToken", configName)),
+                    Is.<Object>is(expectedRefreshToken));
         }
         return this;
     }
@@ -66,7 +69,8 @@ public class OAuthContextFunctionAsserter
     {
         if (userId != null)
         {
-            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s','%s').state", configName, userId)), Is.<Object>is(expectedState));
+            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s','%s').state", configName, userId)),
+                    Is.<Object>is(expectedState));
         }
         else
         {
@@ -79,11 +83,13 @@ public class OAuthContextFunctionAsserter
     {
         if (userId != null)
         {
-            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s','%s').expiresIn", configName, userId)), Is.<Object>is(expectedExpiresIs));
+            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s','%s').expiresIn", configName, userId)),
+                    Is.<Object>is(expectedExpiresIs));
         }
         else
         {
-            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').expiresIn", configName)), Is.<Object>is(expectedExpiresIs));
+            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').expiresIn", configName)),
+                    Is.<Object>is(expectedExpiresIs));
         }
         return this;
     }
@@ -92,11 +98,15 @@ public class OAuthContextFunctionAsserter
     {
         if (userId != null)
         {
-            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s','%s').tokenResponseParameters['%s']", configName, userId, paramName)), Is.<Object>is(paramValue));
+            assertThat(expressionLanguage.evaluate(
+                    String.format("oauthContext('%s','%s').tokenResponseParameters['%s']", configName, userId, paramName)),
+                    Is.<Object>is(paramValue));
         }
         else
         {
-            assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').tokenResponseParameters['%s']", configName, paramName)), Is.<Object>is(paramValue));
+            assertThat(
+                    expressionLanguage.evaluate(String.format("oauthContext('%s').tokenResponseParameters['%s']", configName, paramName)),
+                    Is.<Object>is(paramValue));
         }
         return this;
     }

@@ -15,7 +15,7 @@ public class PollSchedulerFactoryPostProcessor implements SchedulerFactoryPostPr
 {
 
     @Override
-    public Scheduler process(Object job,final Scheduler scheduler)
+    public Scheduler process(Object job, final Scheduler scheduler)
     {
         return new Scheduler()
         {
@@ -39,15 +39,15 @@ public class PollSchedulerFactoryPostProcessor implements SchedulerFactoryPostPr
             }
 
             @Override
-            public void setName(String s)
-            {
-                scheduler.setName(s);
-            }
-
-            @Override
             public String getName()
             {
                 return scheduler.getName();
+            }
+
+            @Override
+            public void setName(String s)
+            {
+                scheduler.setName(s);
             }
 
             @Override

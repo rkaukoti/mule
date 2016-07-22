@@ -7,6 +7,9 @@
 
 package org.mule.runtime.module.ws.functional;
 
+import org.apache.ws.security.WSPasswordCallback;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.tck.junit4.rule.SystemProperty;
 
 import java.io.IOException;
@@ -14,10 +17,6 @@ import java.io.IOException;
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.UnsupportedCallbackException;
-
-import org.apache.ws.security.WSPasswordCallback;
-import org.junit.Rule;
-import org.junit.Test;
 
 
 public class UsernameTokenSecurityFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase

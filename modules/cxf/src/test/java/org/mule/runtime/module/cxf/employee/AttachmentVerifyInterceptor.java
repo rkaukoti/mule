@@ -14,7 +14,7 @@ import org.apache.cxf.phase.Phase;
 public class AttachmentVerifyInterceptor extends AbstractPhaseInterceptor<Message>
 {
     public static boolean HasAttachments;
-    
+
     public AttachmentVerifyInterceptor()
     {
         super(Phase.PRE_STREAM_ENDING);
@@ -24,7 +24,7 @@ public class AttachmentVerifyInterceptor extends AbstractPhaseInterceptor<Messag
     {
         HasAttachments = message.getAttachments() != null && message.getAttachments().size() > 0;
     }
-    
+
 
 }
 

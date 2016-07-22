@@ -7,6 +7,7 @@
 
 package org.mule.runtime.module.db.integration.xa;
 
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import org.mule.runtime.module.db.integration.model.DerbyTestDatabase;
@@ -15,8 +16,6 @@ import org.mule.runtime.module.db.internal.resolver.database.DbConfigResolver;
 
 import java.util.Collections;
 import java.util.List;
-
-import org.junit.runners.Parameterized;
 
 public abstract class AbstractDynamicXaTransactionalTestCase extends AbstractXaTransactionalTestCase
 {

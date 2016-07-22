@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.module.http.internal.request.grizzly;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-
 import com.ning.http.client.AsyncHandler;
 import com.ning.http.client.HttpResponseBodyPart;
 import com.ning.http.client.HttpResponseHeaders;
@@ -16,11 +14,13 @@ import com.ning.http.client.filter.FilterContext;
 import com.ning.http.client.filter.FilterException;
 import com.ning.http.client.filter.RequestFilter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
  * A {@link com.ning.http.client.filter.RequestFilter} that throttles requests and blocks when the number of permits
@@ -53,7 +53,7 @@ public class CustomTimeoutThrottleRequestFilter implements RequestFilter
             {
                 throw new FilterException(
                         String.format("No slot available for processing Request %s with AsyncHandler %s",
-                                      ctx.getRequest(), ctx.getAsyncHandler()));
+                                ctx.getRequest(), ctx.getAsyncHandler()));
             }
         }
         catch (InterruptedException e)

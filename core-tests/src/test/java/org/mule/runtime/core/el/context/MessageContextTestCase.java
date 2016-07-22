@@ -6,6 +6,15 @@
  */
 package org.mule.runtime.core.el.context;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.mule.runtime.api.message.Attributes;
+import org.mule.runtime.api.metadata.DataType;
+import org.mule.runtime.core.TransformationService;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.message.Correlation;
+
 import static java.util.Optional.of;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
@@ -19,15 +28,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.mule.runtime.core.message.NullAttributes.NULL_ATTRIBUTES;
-import org.mule.runtime.api.message.Attributes;
-import org.mule.runtime.api.metadata.DataType;
-import org.mule.runtime.core.TransformationService;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.message.Correlation;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class MessageContextTestCase extends AbstractELTestCase
 {
@@ -46,7 +46,8 @@ public class MessageContextTestCase extends AbstractELTestCase
         event = mock(MuleEvent.class);
         message = spy(MuleMessage.builder().nullPayload().build());
         when(message.getCorrelation()).thenReturn(mock(Correlation.class));
-        doAnswer(invocation -> {
+        doAnswer(invocation ->
+        {
             message = (MuleMessage) invocation.getArguments()[0];
             return null;
         }).when(event).setMessage(any(MuleMessage.class));

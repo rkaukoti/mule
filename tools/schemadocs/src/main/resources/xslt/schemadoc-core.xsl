@@ -1,8 +1,8 @@
 <xsl:stylesheet
-        version="2.0"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        >
+        version="2.0"
+>
 
     <!-- the table of pages for linking -->
     <xsl:key name="item-to-page" match="link" use="item"/>
@@ -18,7 +18,8 @@
                     </xsl:with-param>
                 </xsl:call-template>
             </xsl:attribute>
-            <h2>&lt;<xsl:value-of select="@name"/> ...&gt;</h2>
+            <h2>&lt;<xsl:value-of select="@name"/> ...&gt;
+            </h2>
         </a>
         <!-- p>
             <em>This documentation is automatically generated from the XML schema.
@@ -141,8 +142,10 @@
                     <xsl:when test="xsd:simpleType/xsd:restriction/xsd:enumeration">
                         <xsl:for-each select="xsd:simpleType/xsd:restriction/xsd:enumeration">
                             <xsl:if test="@value">
-                                <b><xsl:value-of select="@value"/></b>
-                                <xsl:if test="position()!=last()"> / </xsl:if>
+                                <b>
+                                    <xsl:value-of select="@value"/>
+                                </b>
+                                <xsl:if test="position()!=last()">/</xsl:if>
                             </xsl:if>
                         </xsl:for-each>
                     </xsl:when>
@@ -155,7 +158,9 @@
                 </xsl:choose>
             </td>
             <td class="confluenceTd" style="text-align: center">
-                <xsl:if test="@default"><xsl:value-of select="@default"/></xsl:if>
+                <xsl:if test="@default">
+                    <xsl:value-of select="@default"/>
+                </xsl:if>
             </td>
             <td class="confluenceTd">
                 <xsl:if test="xsd:annotation/xsd:documentation/text()|xsd:annotation/xsd:documentation/*">
@@ -234,7 +239,8 @@
                 <xsl:choose>
                     <xsl:when test="contains(@ref, ':abstract-')">
                         <xsl:variable name="name" select="substring-after(@ref, ':abstract-')"/>
-                        A <xsl:value-of select="$name"/> element
+                        A
+                        <xsl:value-of select="$name"/> element
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="link">
@@ -248,17 +254,27 @@
             <!-- cardinality i.e. minoccurs/maxoccurs -->
             <xsl:variable name="min">
                 <xsl:choose>
-                    <xsl:when test="@minOccurs"><xsl:value-of select="@minOccurs"/></xsl:when>
-                    <xsl:otherwise><xsl:text>1</xsl:text></xsl:otherwise>
+                    <xsl:when test="@minOccurs">
+                        <xsl:value-of select="@minOccurs"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>1</xsl:text>
+                    </xsl:otherwise>
                 </xsl:choose>
-           </xsl:variable>
+            </xsl:variable>
             <xsl:variable name="max">
                 <xsl:choose>
-                    <xsl:when test="@maxOccurs='unbounded'"><xsl:text>*</xsl:text></xsl:when>
-                    <xsl:when test="@maxOccurs"><xsl:value-of select="@maxOccurs"/></xsl:when>
-                    <xsl:otherwise><xsl:text>1</xsl:text></xsl:otherwise>
+                    <xsl:when test="@maxOccurs='unbounded'">
+                        <xsl:text>*</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="@maxOccurs">
+                        <xsl:value-of select="@maxOccurs"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>1</xsl:text>
+                    </xsl:otherwise>
                 </xsl:choose>
-           </xsl:variable>
+            </xsl:variable>
             <td class="confluenceTd">
                 <xsl:value-of select="$min"/>..<xsl:value-of select="$max"/>
             </td>
@@ -291,7 +307,7 @@
                 </xsl:when>
                 <xsl:otherwise>
                     This is an abstract element; another element with a compatible
-                    type must be used in its place.  However, no replacements were
+                    type must be used in its place. However, no replacements were
                     found when generating this documentation.
                 </xsl:otherwise>
             </xsl:choose>
@@ -351,17 +367,21 @@
             <!-- cardinality i.e. minoccurs/maxoccurs -->
             <xsl:variable name="min">
                 <xsl:choose>
-                    <xsl:when test="@minOccurs"><xsl:value-of select="@minOccurs"/></xsl:when>
+                    <xsl:when test="@minOccurs">
+                        <xsl:value-of select="@minOccurs"/>
+                    </xsl:when>
                     <xsl:otherwise>1</xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
             <xsl:variable name="max">
                 <xsl:choose>
                     <xsl:when test="@maxOccurs='unbounded'">*</xsl:when>
-                    <xsl:when test="@maxOccurs"><xsl:value-of select="@maxOccurs"/></xsl:when>
+                    <xsl:when test="@maxOccurs">
+                        <xsl:value-of select="@maxOccurs"/>
+                    </xsl:when>
                     <xsl:otherwise>1</xsl:otherwise>
                 </xsl:choose>
-           </xsl:variable>
+            </xsl:variable>
             <td class="confluenceTd">
                 <xsl:value-of select="$min"/>..<xsl:value-of select="$max"/>
             </td>
@@ -437,9 +457,15 @@
         <xsl:param name="type"/>
         <xsl:variable name="simpleType">
             <xsl:choose>
-                <xsl:when test="starts-with($type, 'mule:')"><xsl:value-of select="substring($type, 6)"/></xsl:when>
-                <xsl:when test="starts-with($type, 'xsd:')"><xsl:value-of select="substring($type, 5)"/></xsl:when>
-                <xsl:otherwise><xsl:value-of select="$type"/></xsl:otherwise>
+                <xsl:when test="starts-with($type, 'mule:')">
+                    <xsl:value-of select="substring($type, 6)"/>
+                </xsl:when>
+                <xsl:when test="starts-with($type, 'xsd:')">
+                    <xsl:value-of select="substring($type, 5)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$type"/>
+                </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:choose>
@@ -451,7 +477,9 @@
             <xsl:when test="$simpleType='substitutableName' or $simpleType='NMTOKEN' or $simpleType='IDREF'">name (no spaces)</xsl:when>
             <xsl:when test="$simpleType='nonBlankString'">name</xsl:when>
             <xsl:when test="$simpleType='NMTOKENS'">list of names</xsl:when>
-            <xsl:otherwise><xsl:value-of select="$simpleType"/></xsl:otherwise>
+            <xsl:otherwise>
+                <xsl:value-of select="$simpleType"/>
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 

@@ -11,7 +11,7 @@ package org.mule.runtime.module.management.mbean;
  * <code>FlowConstructStatsMBean</code> defines the management interface for a mule
  * managed flow.
  */
-public interface FlowConstructStatsMBean 
+public interface FlowConstructStatsMBean
 {
     void clearStatistics();
 

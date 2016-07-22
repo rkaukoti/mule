@@ -28,8 +28,6 @@ public interface ValidationPhaseTemplate extends MessageProcessTemplate
 
     /**
      * Discards the message because the validation failed
-     *
-     * @throws org.mule.runtime.core.api.MuleException
      */
     void discardInvalidMessage() throws MuleException;
 }

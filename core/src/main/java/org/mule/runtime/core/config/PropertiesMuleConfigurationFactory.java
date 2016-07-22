@@ -6,11 +6,14 @@
  */
 package org.mule.runtime.core.config;
 
+import org.apache.commons.io.IOUtils;
 import org.mule.runtime.core.MuleServer;
 import org.mule.runtime.core.api.config.MuleConfiguration;
 import org.mule.runtime.core.util.BeanUtils;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,24 +23,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class PropertiesMuleConfigurationFactory
 {
 
     private static Logger logger = LoggerFactory.getLogger(PropertiesMuleConfigurationFactory.class);
-    
+
     private Properties properties;
 
-    public static String getMuleAppConfiguration(String muleConfig)
-    {
-        String directory = FilenameUtils.getFullPath(muleConfig);
-        String muleAppConfiguration = directory + MuleServer.DEFAULT_APP_CONFIGURATION;
-        return muleAppConfiguration;
-    }
-    
     public PropertiesMuleConfigurationFactory(String muleAppConfiguration)
     {
         URL muleAppURL = ClassUtils.getResource(muleAppConfiguration, getClass());
@@ -61,21 +53,13 @@ public class PropertiesMuleConfigurationFactory
         }
     }
 
-    public DefaultMuleConfiguration createConfiguration()
+    public static String getMuleAppConfiguration(String muleConfig)
     {
-        DefaultMuleConfiguration configuration = new DefaultMuleConfiguration();
-        if (this.properties != null)
-        {
-            this.initializeFromProperties(configuration); 
-        }
-        return configuration;
+        String directory = FilenameUtils.getFullPath(muleConfig);
+        String muleAppConfiguration = directory + MuleServer.DEFAULT_APP_CONFIGURATION;
+        return muleAppConfiguration;
     }
 
-    private void initializeFromProperties(MuleConfiguration configuration)
-    {
-        initializeFromProperties(configuration, this.properties);
-    }
-    
     public static void initializeFromProperties(MuleConfiguration configuration, Map properties)
     {
         for (Object entryObject : properties.entrySet())
@@ -102,5 +86,20 @@ public class PropertiesMuleConfigurationFactory
                 }
             }
         }
+    }
+
+    public DefaultMuleConfiguration createConfiguration()
+    {
+        DefaultMuleConfiguration configuration = new DefaultMuleConfiguration();
+        if (this.properties != null)
+        {
+            this.initializeFromProperties(configuration);
+        }
+        return configuration;
+    }
+
+    private void initializeFromProperties(MuleConfiguration configuration)
+    {
+        initializeFromProperties(configuration, this.properties);
     }
 }

@@ -6,17 +6,18 @@
  */
 package org.mule.runtime.module.launcher;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mule.runtime.core.api.config.MuleProperties;
+import org.mule.runtime.core.util.FileUtils;
 import org.mule.runtime.module.artifact.classloader.ClassLoaderLookupPolicy;
 import org.mule.runtime.module.reboot.MuleContainerBootstrapUtils;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.junit4.rule.SystemProperty;
 import org.mule.tck.size.SmallTest;
-import org.mule.runtime.core.util.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,11 +25,10 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 @SmallTest
 public class MuleSharedDomainClassLoaderTestCase extends AbstractMuleTestCase
@@ -39,7 +39,8 @@ public class MuleSharedDomainClassLoaderTestCase extends AbstractMuleTestCase
     @ClassRule
     public static TemporaryFolder temporaryFolder = new TemporaryFolder();
     @Rule
-    public final SystemProperty muleHomeSystemProperty = new SystemProperty(MuleProperties.MULE_HOME_DIRECTORY_PROPERTY, temporaryFolder.getRoot().getCanonicalPath());
+    public final SystemProperty muleHomeSystemProperty =
+            new SystemProperty(MuleProperties.MULE_HOME_DIRECTORY_PROPERTY, temporaryFolder.getRoot().getCanonicalPath());
     private final File muleHomeFolder;
     private final ClassLoaderLookupPolicy lookupPolicy = mock(ClassLoaderLookupPolicy.class);
 
@@ -62,7 +63,8 @@ public class MuleSharedDomainClassLoaderTestCase extends AbstractMuleTestCase
         final File resourceFile = createDomainResource(DEFAULT_DOMAIN_NAME, RESOURCE_FILE_NAME);
         final List<URL> urls = Collections.singletonList(resourceFile.toURI().toURL());
 
-        MuleSharedDomainClassLoader classLoader = new MuleSharedDomainClassLoader(DEFAULT_DOMAIN_NAME, getClass().getClassLoader(), lookupPolicy, urls);
+        MuleSharedDomainClassLoader classLoader =
+                new MuleSharedDomainClassLoader(DEFAULT_DOMAIN_NAME, getClass().getClassLoader(), lookupPolicy, urls);
 
         assertThat(classLoader.findResource(RESOURCE_FILE_NAME), notNullValue());
     }
@@ -82,6 +84,7 @@ public class MuleSharedDomainClassLoaderTestCase extends AbstractMuleTestCase
 
     private File getDomainFolder(String domainName)
     {
-        return new File(muleHomeFolder, MuleContainerBootstrapUtils.MULE_DOMAIN_FOLDER + File.separator + domainName);  //To change body of created methods use File | Settings | File Templates.
+        return new File(muleHomeFolder, MuleContainerBootstrapUtils.MULE_DOMAIN_FOLDER + File.separator +
+                                        domainName);  //To change body of created methods use File | Settings | File Templates.
     }
 }

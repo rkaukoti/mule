@@ -16,13 +16,12 @@ import org.mule.runtime.module.http.api.listener.HttpListenerBuilder;
 import org.mule.runtime.module.oauth2.internal.AbstractTokenRequestHandler;
 import org.mule.runtime.module.oauth2.internal.DynamicFlowFactory;
 import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ResourceOwnerOAuthContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base class for token request handler.
@@ -47,7 +46,8 @@ public abstract class AbstractAuthorizationCodeTokenRequestHandler extends Abstr
         {
             logger.debug("Executing refresh token for user " + resourceOwnerId);
         }
-        final ResourceOwnerOAuthContext resourceOwnerOAuthContext = getOauthConfig().getUserOAuthContext().getContextForResourceOwner(resourceOwnerId);
+        final ResourceOwnerOAuthContext resourceOwnerOAuthContext =
+                getOauthConfig().getUserOAuthContext().getContextForResourceOwner(resourceOwnerId);
         final boolean lockWasAcquired = resourceOwnerOAuthContext.getRefreshUserOAuthContextLock().tryLock();
         try
         {
@@ -77,12 +77,18 @@ public abstract class AbstractAuthorizationCodeTokenRequestHandler extends Abstr
      * @param currentEvent              the event at the moment of the failure.
      * @param resourceOwnerOAuthContext user oauth context object.
      */
-    protected abstract void doRefreshToken(final MuleEvent currentEvent, final ResourceOwnerOAuthContext resourceOwnerOAuthContext) throws MuleException;
+    protected abstract void doRefreshToken(final MuleEvent currentEvent, final ResourceOwnerOAuthContext resourceOwnerOAuthContext)
+            throws MuleException;
 
     private void waitUntilLockGetsReleased(ResourceOwnerOAuthContext resourceOwnerOAuthContext)
     {
         resourceOwnerOAuthContext.getRefreshUserOAuthContextLock().lock();
         resourceOwnerOAuthContext.getRefreshUserOAuthContextLock().unlock();
+    }
+
+    public AuthorizationCodeGrantType getOauthConfig()
+    {
+        return oauthConfig;
     }
 
     /**
@@ -92,11 +98,6 @@ public abstract class AbstractAuthorizationCodeTokenRequestHandler extends Abstr
     {
         this.setTlsContextFactory(oauthConfig.getTlsContext());
         this.oauthConfig = oauthConfig;
-    }
-
-    public AuthorizationCodeGrantType getOauthConfig()
-    {
-        return oauthConfig;
     }
 
     /**
@@ -111,7 +112,8 @@ public abstract class AbstractAuthorizationCodeTokenRequestHandler extends Abstr
         try
         {
             final String flowName = "OAuthRedirectUrlFlow" + getOauthConfig().getRedirectionUrl();
-            final Flow redirectUrlFlow = DynamicFlowFactory.createDynamicFlow(getMuleContext(), flowName, Arrays.asList(createRedirectUrlProcessor()));
+            final Flow redirectUrlFlow =
+                    DynamicFlowFactory.createDynamicFlow(getMuleContext(), flowName, Arrays.asList(createRedirectUrlProcessor()));
             final HttpListenerBuilder httpListenerBuilder = new HttpListenerBuilder(getMuleContext())
                     .setUrl(new URL(getOauthConfig().getRedirectionUrl()))
                     .setFlow(redirectUrlFlow);

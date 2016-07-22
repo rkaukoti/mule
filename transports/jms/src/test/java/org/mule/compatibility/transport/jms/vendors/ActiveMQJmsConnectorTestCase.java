@@ -6,25 +6,24 @@
  */
 package org.mule.compatibility.transport.jms.vendors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.junit.Test;
 import org.mule.compatibility.transport.jms.DefaultJmsTopicResolver;
 import org.mule.compatibility.transport.jms.JmsConnector;
 import org.mule.compatibility.transport.jms.activemq.ActiveMQJmsConnector;
 import org.mule.compatibility.transport.jms.redelivery.JmsXRedeliveryHandler;
 import org.mule.compatibility.transport.jms.test.TestRedeliveryHandler;
 import org.mule.functional.junit4.FunctionalTestCase;
+import org.springframework.jms.connection.CachingConnectionFactory;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.Session;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
-import org.junit.Test;
-import org.springframework.jms.connection.CachingConnectionFactory;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class ActiveMQJmsConnectorTestCase extends FunctionalTestCase
 {
@@ -45,16 +44,16 @@ public class ActiveMQJmsConnectorTestCase extends FunctionalTestCase
         assertNotNull(c);
 
         assertFalse(c.isEagerConsumer());
-        
+
         ConnectionFactory cf = c.getConnectionFactory();
         assertTrue(cf instanceof ActiveMQConnectionFactory);
         assertEquals(ActiveMQJmsConnector.DEFAULT_BROKER_URL, ((ActiveMQConnectionFactory) cf).getBrokerURL());
-        
+
         assertNotNull(c.getTopicResolver());
         assertTrue("Wrong topic resolver configured on the connector.",
-                   c.getTopicResolver() instanceof DefaultJmsTopicResolver);
+                c.getTopicResolver() instanceof DefaultJmsTopicResolver);
     }
-    
+
     @Test
     public void testDefaultActiveMqConnectorConfig() throws Exception
     {
@@ -62,7 +61,7 @@ public class ActiveMQJmsConnectorTestCase extends FunctionalTestCase
 
         assertNotNull(c);
         assertTrue(c instanceof ActiveMQJmsConnector);
-        
+
         assertNotNull(c.getConnectionFactory());
         assertTrue(c.getConnectionFactory() instanceof ActiveMQConnectionFactory);
         assertEquals(Session.AUTO_ACKNOWLEDGE, c.getAcknowledgementMode());
@@ -71,7 +70,7 @@ public class ActiveMQJmsConnectorTestCase extends FunctionalTestCase
 
         assertNotNull(c.getRedeliveryHandlerFactory());
         assertTrue(c.getRedeliveryHandlerFactory().create() instanceof JmsXRedeliveryHandler);
-        
+
         assertFalse(c.isDurable());
         assertFalse(c.isNoLocal());
         assertFalse(c.isPersistentDelivery());
@@ -81,7 +80,7 @@ public class ActiveMQJmsConnectorTestCase extends FunctionalTestCase
 
         assertEquals("1.0.2b", c.getSpecification());
     }
-    
+
     @Test
     public void testCustomActiveMqConnectorConfig() throws Exception
     {

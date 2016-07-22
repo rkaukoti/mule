@@ -6,19 +6,18 @@
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode.state;
 
+import org.junit.Test;
+import org.mockito.Answers;
+import org.mockito.Mockito;
+import org.mule.runtime.core.api.store.ListableObjectStore;
+import org.mule.runtime.core.util.lock.LockFactory;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
-
-import org.mule.runtime.core.api.store.ListableObjectStore;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-import org.mule.runtime.core.util.lock.LockFactory;
-
-import org.junit.Test;
-import org.mockito.Answers;
-import org.mockito.Mockito;
 
 @SmallTest
 public class ConfigOAuthContextTestCase extends AbstractMuleTestCase
@@ -33,7 +32,8 @@ public class ConfigOAuthContextTestCase extends AbstractMuleTestCase
     public void nonExistentUserIdReturnNewConfig() throws Exception
     {
         Mockito.when(mockObjectStore.contains(anyString())).thenReturn(false);
-        assertThat(new ConfigOAuthContext(mockLockFactory, mockObjectStore, TEST_CONFIG_NAME).getContextForResourceOwner(USER_ID), notNullValue());
+        assertThat(new ConfigOAuthContext(mockLockFactory, mockObjectStore, TEST_CONFIG_NAME).getContextForResourceOwner(USER_ID),
+                notNullValue());
     }
 
 }

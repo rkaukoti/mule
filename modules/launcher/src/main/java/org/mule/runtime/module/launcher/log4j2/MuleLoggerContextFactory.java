@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.module.launcher.log4j2;
 
-import static java.util.Collections.emptyList;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
 import org.mule.runtime.module.artifact.classloader.DefaultArtifactClassLoaderFilterFactory;
@@ -31,21 +30,21 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 
-import org.apache.logging.log4j.core.LoggerContext;
+import static java.util.Collections.emptyList;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * Encapsulates the logic to get the proper log configuration.
- * 
+ *
  * @since 3.8.0
  */
 public class MuleLoggerContextFactory
 {
     /**
      * Builds a new {@link LoggerContext} for the given {@code classLoader} and {@code selector}
-     * 
+     *
      * @param classLoader the classloader of the artifact this logger context is for.
-     * @param selector the selector to bew used when building the loggers for the new context.
-     * @return
+     * @param selector    the selector to bew used when building the loggers for the new context.
      */
     public LoggerContext build(final ClassLoader classLoader, final ArtifactAwareContextSelector selector)
     {
@@ -112,7 +111,8 @@ public class MuleLoggerContextFactory
             }
             else if (!appDescriptor.getLogConfigFile().exists())
             {
-                ArtifactAwareContextSelector.logger.warn("Configured 'log.configFile' in app descriptor points to a non-existant file. Using default configuration.");
+                ArtifactAwareContextSelector.logger.warn(
+                        "Configured 'log.configFile' in app descriptor points to a non-existant file. Using default configuration.");
                 appLogConfig = getLogConfig(muleCL);
             }
             else
@@ -122,13 +122,16 @@ public class MuleLoggerContextFactory
         }
         catch (Exception e)
         {
-            ArtifactAwareContextSelector.logger.warn("{} while looking for 'log.configFile' entry in app descriptor: {}. Using default configuration.", e.getClass().getName(), e.getMessage());
+            ArtifactAwareContextSelector.logger.warn(
+                    "{} while looking for 'log.configFile' entry in app descriptor: {}. Using default configuration.",
+                    e.getClass().getName(), e.getMessage());
             appLogConfig = getLogConfig(muleCL);
         }
 
         if (appLogConfig != null && ArtifactAwareContextSelector.logger.isInfoEnabled())
         {
-            ArtifactAwareContextSelector.logger.info("Found logging config for application '{}' at '{}'", muleCL.getArtifactName(), appLogConfig);
+            ArtifactAwareContextSelector.logger.info("Found logging config for application '{}' at '{}'", muleCL.getArtifactName(),
+                    appLogConfig);
         }
 
         return appLogConfig;
@@ -147,9 +150,6 @@ public class MuleLoggerContextFactory
     /**
      * Checks if there's an app-specific logging configuration available, scope the lookup to this classloader only,
      * as getResource() will delegate to parents locate xml config first, fallback to properties format if not found
-     * 
-     * @param localResourceLocator
-     * @return
      */
     private URI getLogConfig(LocalResourceLocator localResourceLocator)
     {
@@ -188,14 +188,16 @@ public class MuleLoggerContextFactory
     public ApplicationDescriptor fetchApplicationDescriptor(ArtifactClassLoader muleCL) throws IOException
     {
         //TODO(pablo.kraan): MULE-9778 - MuleLoggerContextFactory should not create artifact descriptors
-        ArtifactDescriptorFactory<ApplicationDescriptor> applicationDescriptorFactory = new ApplicationDescriptorFactory(new ArtifactPluginDescriptorLoader(new ArtifactPluginDescriptorFactory(new DefaultArtifactClassLoaderFilterFactory())), new ArtifactPluginRepository()
-        {
-            public List<ArtifactPluginDescriptor> getContainerArtifactPluginDescriptors()
-            {
-                // Don't need plugins, just need to get the descriptor to access log configuration
-                return emptyList();
-            }
-        });
+        ArtifactDescriptorFactory<ApplicationDescriptor> applicationDescriptorFactory = new ApplicationDescriptorFactory(
+                new ArtifactPluginDescriptorLoader(new ArtifactPluginDescriptorFactory(new DefaultArtifactClassLoaderFilterFactory())),
+                new ArtifactPluginRepository()
+                {
+                    public List<ArtifactPluginDescriptor> getContainerArtifactPluginDescriptors()
+                    {
+                        // Don't need plugins, just need to get the descriptor to access log configuration
+                        return emptyList();
+                    }
+                });
         return applicationDescriptorFactory.create(new File(MuleContainerBootstrapUtils.getMuleAppsDir(), muleCL.getArtifactName()));
     }
 

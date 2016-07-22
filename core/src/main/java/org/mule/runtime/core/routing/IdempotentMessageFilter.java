@@ -24,11 +24,10 @@ import org.mule.runtime.core.api.store.ObjectStoreManager;
 import org.mule.runtime.core.api.store.ObjectStoreNotAvaliableException;
 import org.mule.runtime.core.processor.AbstractFilteringMessageProcessor;
 import org.mule.runtime.core.util.concurrent.ThreadNameHelper;
-
-import java.text.MessageFormat;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.text.MessageFormat;
 
 /**
  * <code>IdempotentMessageFilter</code> ensures that only unique messages are passed
@@ -49,10 +48,10 @@ public class IdempotentMessageFilter extends AbstractFilteringMessageProcessor i
     protected String storePrefix;
 
     protected String idExpression = MessageFormat.format("{0}message:id{1}",
-        ExpressionManager.DEFAULT_EXPRESSION_PREFIX, ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
+            ExpressionManager.DEFAULT_EXPRESSION_PREFIX, ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
 
     protected String valueExpression = MessageFormat.format("{0}message:id{1}",
-        ExpressionManager.DEFAULT_EXPRESSION_PREFIX, ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
+            ExpressionManager.DEFAULT_EXPRESSION_PREFIX, ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
 
     public IdempotentMessageFilter()
     {
@@ -65,7 +64,7 @@ public class IdempotentMessageFilter extends AbstractFilteringMessageProcessor i
         if (storePrefix == null)
         {
             storePrefix = String.format("%s.%s.%s", ThreadNameHelper.getPrefix(muleContext),
-                (flowConstruct == null ? "" : flowConstruct.getName()), this.getClass().getName());
+                    (flowConstruct == null ? "" : flowConstruct.getName()), this.getClass().getName());
         }
         if (store == null)
         {
@@ -84,7 +83,7 @@ public class IdempotentMessageFilter extends AbstractFilteringMessageProcessor i
     protected ObjectStore<String> createMessageIdStore() throws InitialisationException
     {
         ObjectStoreManager objectStoreManager = muleContext.getRegistry().get(MuleProperties.OBJECT_STORE_MANAGER);
-        return objectStoreManager.getObjectStore(storePrefix, false, -1,  60 * 5 * 1000, 6000 );
+        return objectStoreManager.getObjectStore(storePrefix, false, -1, 60 * 5 * 1000, 6000);
     }
 
     @Override
@@ -126,7 +125,7 @@ public class IdempotentMessageFilter extends AbstractFilteringMessageProcessor i
     @Override
     protected boolean accept(MuleEvent event)
     {
-        if(event != null && acceptMessageForFlowConstruct(event) && isNewMessage(event))
+        if (event != null && acceptMessageForFlowConstruct(event) && isNewMessage(event))
         {
             try
             {

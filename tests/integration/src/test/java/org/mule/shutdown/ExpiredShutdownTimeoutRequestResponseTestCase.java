@@ -6,9 +6,9 @@
  */
 package org.mule.shutdown;
 
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
-
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -16,9 +16,8 @@ import org.mule.runtime.core.api.connector.DispatchException;
 import org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder;
 import org.mule.tck.junit4.rule.SystemProperty;
 
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
 
 @Ignore("See MULE-9200")
 public class ExpiredShutdownTimeoutRequestResponseTestCase extends AbstractShutdownTimeoutRequestResponseTestCase
@@ -63,7 +62,8 @@ public class ExpiredShutdownTimeoutRequestResponseTestCase extends AbstractShutd
                 try
                 {
                     MuleMessage muleMessage = MuleMessage.builder().payload(TEST_MESSAGE).build();
-                    MuleMessage result = client.send(url, muleMessage, HttpRequestOptionsBuilder.newOptions().disableStatusCodeValidation().method(POST.name()).build());
+                    MuleMessage result = client.send(url, muleMessage,
+                            HttpRequestOptionsBuilder.newOptions().disableStatusCodeValidation().method(POST.name()).build());
                     results[0] = result.getExceptionPayload().getException() instanceof DispatchException;
                 }
                 catch (Exception e)

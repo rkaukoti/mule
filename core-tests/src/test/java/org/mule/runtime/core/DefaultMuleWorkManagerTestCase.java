@@ -6,20 +6,19 @@
  */
 package org.mule.runtime.core;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.context.DefaultMuleContextBuilder.MULE_CONTEXT_WORKMANAGER_MAXTHREADSACTIVE;
-
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.runtime.core.util.concurrent.Latch;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import org.mule.tck.junit4.rule.SystemProperty;
-import org.mule.runtime.core.util.concurrent.Latch;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.resource.spi.work.Work;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.context.DefaultMuleContextBuilder.MULE_CONTEXT_WORKMANAGER_MAXTHREADSACTIVE;
 
 public class DefaultMuleWorkManagerTestCase extends AbstractMuleContextTestCase
 {
@@ -27,7 +26,8 @@ public class DefaultMuleWorkManagerTestCase extends AbstractMuleContextTestCase
     private final static int MAX_NUMBER_OF_THREADS_ALLOWED = 2;
 
     @Rule
-    public SystemProperty systemProperty = new SystemProperty(MULE_CONTEXT_WORKMANAGER_MAXTHREADSACTIVE, String.valueOf(MAX_NUMBER_OF_THREADS_ALLOWED));
+    public SystemProperty systemProperty =
+            new SystemProperty(MULE_CONTEXT_WORKMANAGER_MAXTHREADSACTIVE, String.valueOf(MAX_NUMBER_OF_THREADS_ALLOWED));
 
     @Test
     public void contextWorkManagerCanBeConfiguredThroughSystemProperties() throws Exception

@@ -6,23 +6,23 @@
  */
 package org.mule.extension.ftp.internal.sftp.connection;
 
-import static java.lang.String.format;
-import static org.apache.commons.collections.CollectionUtils.isEmpty;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import org.mule.extension.ftp.api.sftp.SftpFileAttributes;
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.core.util.StringUtils;
-import org.mule.runtime.core.util.collection.ImmutableListCollector;
-import org.mule.runtime.module.extension.file.api.FileWriteMode;
-
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
+
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
+
+import org.mule.extension.ftp.api.sftp.SftpFileAttributes;
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.core.util.StringUtils;
+import org.mule.runtime.core.util.collection.ImmutableListCollector;
+import org.mule.runtime.module.extension.file.api.FileWriteMode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,8 +34,9 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static org.apache.commons.collections.CollectionUtils.isEmpty;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * Wrapper around jsch sftp library which provides access to basic sftp commands.
@@ -45,17 +46,14 @@ import org.slf4j.LoggerFactory;
 public class SftpClient
 {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(SftpClient.class);
-
     public static final String CHANNEL_SFTP = "sftp";
     public static final String STRICT_HOST_KEY_CHECKING = "StrictHostKeyChecking";
     public static final String PREFERRED_AUTHENTICATION_METHODS = "PreferredAuthentications";
-
-
+    private static Logger LOGGER = LoggerFactory.getLogger(SftpClient.class);
+    private final String host;
     private ChannelSftp sftp;
     private JSch jsch;
     private Session session;
-    private final String host;
     private int port = 22;
     private String password;
     private String identityFile;
@@ -312,8 +310,8 @@ public class SftpClient
         }
 
         return entries.stream()
-                .map(entry -> new SftpFileAttributes(Paths.get(path).resolve(entry.getFilename()), entry.getAttrs()))
-                .collect(new ImmutableListCollector<>());
+                      .map(entry -> new SftpFileAttributes(Paths.get(path).resolve(entry.getFilename()), entry.getAttrs()))
+                      .collect(new ImmutableListCollector<>());
     }
 
     /**
@@ -429,8 +427,8 @@ public class SftpClient
     public void setKnownHostsFile(String knownHostsFile)
     {
         this.knownHostsFile = !StringUtils.isEmpty(knownHostsFile)
-                              ? new File(knownHostsFile).getAbsolutePath()
-                              : knownHostsFile;
+                ? new File(knownHostsFile).getAbsolutePath()
+                : knownHostsFile;
     }
 
     public void setPassword(String password)

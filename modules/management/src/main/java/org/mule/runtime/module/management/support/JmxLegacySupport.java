@@ -41,8 +41,7 @@ public class JmxLegacySupport extends AbstractJmxSupport
      *
      * @param name object name
      * @return ObjectName for MBeanServer
-     * @throws javax.management.MalformedObjectNameException
-     *          for invalid names
+     * @throws javax.management.MalformedObjectNameException for invalid names
      */
     public ObjectName getObjectName(String name) throws MalformedObjectNameException
     {
@@ -50,13 +49,15 @@ public class JmxLegacySupport extends AbstractJmxSupport
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     protected Collection getDomains(final MBeanServer server)
     {
         // list all MBean names and collect unique domains
         Set set = server.queryNames(null, null);
         Set domains = new HashSet();
-        for (Iterator it = set.iterator(); it.hasNext();)
+        for (Iterator it = set.iterator(); it.hasNext(); )
         {
             ObjectName objectName = (ObjectName) it.next();
             domains.add(objectName.getDomain());

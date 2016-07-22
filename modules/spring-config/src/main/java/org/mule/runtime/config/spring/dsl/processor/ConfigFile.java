@@ -6,10 +6,9 @@
  */
 package org.mule.runtime.config.spring.dsl.processor;
 
-import static org.mule.runtime.core.util.Preconditions.checkState;
-import org.mule.runtime.core.util.Preconditions;
-
 import java.util.List;
+
+import static org.mule.runtime.core.util.Preconditions.checkState;
 
 /**
  * Represents an artifact configuration file and it's content in hierarchical format.
@@ -21,12 +20,14 @@ import java.util.List;
  *
  * @since 4.0
  */
-public class ConfigFile implements Comparable<ConfigFile> {
+public class ConfigFile implements Comparable<ConfigFile>
+{
 
     private String filename;
     private List<ConfigLine> configLines;
 
-    public ConfigFile(String filename, List<ConfigLine> configLines) {
+    public ConfigFile(String filename, List<ConfigLine> configLines)
+    {
         checkState(filename != null, "A config file must have a name");
         checkState(configLines != null, "A config file cannot have config lines");
         this.filename = filename;
@@ -36,19 +37,22 @@ public class ConfigFile implements Comparable<ConfigFile> {
     /**
      * @return the configuration file name
      */
-    public String getFilename() {
+    public String getFilename()
+    {
         return filename;
     }
 
     /**
      * @return the configuration file lines as a list in the same order as they appear in the file.
      */
-    public List<ConfigLine> getConfigLines() {
+    public List<ConfigLine> getConfigLines()
+    {
         return configLines;
     }
 
     @Override
-    public int compareTo(ConfigFile o) {
+    public int compareTo(ConfigFile o)
+    {
         return filename.compareTo(o.filename);
     }
 }

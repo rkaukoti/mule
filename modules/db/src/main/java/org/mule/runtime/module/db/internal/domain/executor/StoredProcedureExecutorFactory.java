@@ -7,8 +7,8 @@
 
 package org.mule.runtime.module.db.internal.domain.executor;
 
-import org.mule.runtime.module.db.internal.result.statement.StatementResultHandler;
 import org.mule.runtime.module.db.internal.domain.statement.StatementFactory;
+import org.mule.runtime.module.db.internal.result.statement.StatementResultHandler;
 
 /**
  * Creates {@link StoredProcedureExecutor} instances

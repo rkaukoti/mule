@@ -6,25 +6,8 @@
  */
 package org.mule.compatibility.core.endpoint.outbound;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_EVENT_TIMEOUT_PROPERTY;
+import org.hamcrest.CoreMatchers;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.core.api.transport.MessageDispatcher;
@@ -57,8 +40,25 @@ import org.mule.tck.testmodels.mule.TestMessageDispatcherFactory;
 
 import java.util.concurrent.TimeUnit;
 
-import org.hamcrest.CoreMatchers;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_EVENT_TIMEOUT_PROPERTY;
 
 /**
  * Tests flow of messages from {@link OutboundEndpoint#process(MuleEvent)} down to
@@ -77,8 +77,8 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
         when(reqTransformer.process(any(MuleEvent.class))).then(echoEventAnswer);
         Transformer resTransformer = mock(Transformer.class);
         when(resTransformer.process(any(MuleEvent.class))).then(echoEventAnswer);
-        
-        OutboundEndpoint endpoint = createOutboundEndpoint(null, null, reqTransformer, resTransformer, 
+
+        OutboundEndpoint endpoint = createOutboundEndpoint(null, null, reqTransformer, resTransformer,
                 REQUEST_RESPONSE, null);
 
         testOutboundEvent = createTestOutboundEvent();
@@ -86,7 +86,7 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
 
         verify(reqTransformer, times(1)).process(any(MuleEvent.class));
         verify(resTransformer, times(1)).process(any(MuleEvent.class));
-        
+
         assertMessageSentSame(true);
         assertEqualMessages(responseMessage, result.getMessage());
     }
@@ -106,7 +106,7 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
         MuleEvent event = getNonBlockingTestEventUsingFlow(TEST_MESSAGE, nullReplyToHandler);
 
         MuleEvent response = endpoint.process(event);
-        assertThat(response, CoreMatchers.<MuleEvent> equalTo(NonBlockingVoidMuleEvent.getInstance()));
+        assertThat(response, CoreMatchers.<MuleEvent>equalTo(NonBlockingVoidMuleEvent.getInstance()));
 
         assertThat(getNonBlockingResponse(nullReplyToHandler, response), equalTo(event));
         verify(reqTransformer, times(1)).process(event);
@@ -122,7 +122,7 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
         MuleEvent event = getNonBlockingTestEventUsingFlow(TEST_MESSAGE, nullReplyToHandler);
 
         MuleEvent response = endpoint.process(event);
-        assertThat(response, CoreMatchers.<MuleEvent> equalTo(NonBlockingVoidMuleEvent.getInstance()));
+        assertThat(response, CoreMatchers.<MuleEvent>equalTo(NonBlockingVoidMuleEvent.getInstance()));
 
         try
         {
@@ -166,12 +166,12 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
         Transformer resTransformer = mock(Transformer.class);
         when(resTransformer.process(any(MuleEvent.class))).then(echoEventAnswer);
 
-        OutboundEndpoint endpoint = createOutboundEndpoint(null, null, reqTransformer, resTransformer, 
-            MessageExchangePattern.ONE_WAY, null);
+        OutboundEndpoint endpoint = createOutboundEndpoint(null, null, reqTransformer, resTransformer,
+                MessageExchangePattern.ONE_WAY, null);
 
         testOutboundEvent = createTestOutboundEvent();
         MuleEvent result = endpoint.process(testOutboundEvent);
-        
+
         verify(reqTransformer, times(1)).process(any(MuleEvent.class));
         verify(resTransformer, never()).process(any(MuleEvent.class));
 
@@ -183,7 +183,7 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
     @Test
     public void testSecurityFilterAccept() throws Exception
     {
-        OutboundEndpoint endpoint = createOutboundEndpoint(null, new TestSecurityFilter(true), 
+        OutboundEndpoint endpoint = createOutboundEndpoint(null, new TestSecurityFilter(true),
                 null, null, REQUEST_RESPONSE, null);
 
         testOutboundEvent = createTestOutboundEvent();
@@ -199,7 +199,7 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
         TestSecurityNotificationListener securityNotificationListener = new TestSecurityNotificationListener();
         muleContext.registerListener(securityNotificationListener);
 
-        OutboundEndpoint endpoint = createOutboundEndpoint(null, new TestSecurityFilter(false), 
+        OutboundEndpoint endpoint = createOutboundEndpoint(null, new TestSecurityFilter(false),
                 null, null, REQUEST_RESPONSE, null);
 
         testOutboundEvent = createTestOutboundEvent();
@@ -218,9 +218,9 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
 
         assertTrue(securityNotificationListener.latch.await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS));
         assertEquals(SecurityNotification.SECURITY_AUTHENTICATION_FAILED,
-            securityNotificationListener.securityNotification.getAction());
+                securityNotificationListener.securityNotification.getAction());
         assertEquals(securityNotificationListener.securityNotification.getResourceIdentifier(),
-            TestSecurityFilter.StaticMessageUnauthorisedException.class.getName());
+                TestSecurityFilter.StaticMessageUnauthorisedException.class.getName());
     }
 
     @Test
@@ -229,7 +229,7 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
         TestEndpointMessageNotificationListener listener = new TestEndpointMessageNotificationListener(2);
         muleContext.registerListener(listener);
 
-        OutboundEndpoint endpoint = createOutboundEndpoint(null, null, null, null, 
+        OutboundEndpoint endpoint = createOutboundEndpoint(null, null, null, null,
                 REQUEST_RESPONSE, null);
         MuleEvent outboundEvent = createTestOutboundEvent();
         endpoint.process(outboundEvent);
@@ -239,14 +239,14 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
         assertEquals(EndpointMessageNotification.MESSAGE_SEND_BEGIN, listener.messageNotificationList.get(0).getAction());
         assertEquals(EndpointMessageNotification.MESSAGE_SEND_END, listener.messageNotificationList.get(1).getAction());
         assertEquals(endpoint.getEndpointURI().getUri().toString(),
-            listener.messageNotificationList.get(0).getEndpoint());
-                assertEquals(endpoint.getEndpointURI().getUri().toString(),
-            listener.messageNotificationList.get(1).getEndpoint());
+                listener.messageNotificationList.get(0).getEndpoint());
+        assertEquals(endpoint.getEndpointURI().getUri().toString(),
+                listener.messageNotificationList.get(1).getEndpoint());
         assertTrue(listener.messageNotificationList.get(0).getSource() instanceof MuleMessage);
         assertTrue(listener.messageNotificationList.get(1).getSource() instanceof MuleMessage);
         assertThat(listener.messageNotificationList.get(0).getSource().getPayload(), equalTo(outboundEvent.getMessage().getPayload()));
         assertEquals(RESPONSE_MESSAGE,
-            listener.messageNotificationList.get(1).getSource().getPayload());
+                listener.messageNotificationList.get(1).getSource().getPayload());
     }
 
     @Test
@@ -255,8 +255,8 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
         TestEndpointMessageNotificationListener listener = new TestEndpointMessageNotificationListener(2);
         muleContext.registerListener(listener);
 
-        OutboundEndpoint endpoint = createOutboundEndpoint(null, null, null, null, 
-            MessageExchangePattern.ONE_WAY, null);
+        OutboundEndpoint endpoint = createOutboundEndpoint(null, null, null, null,
+                MessageExchangePattern.ONE_WAY, null);
         MuleEvent outboundEvent = createTestOutboundEvent();
         endpoint.process(outboundEvent);
 
@@ -265,9 +265,9 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
         assertEquals(EndpointMessageNotification.MESSAGE_DISPATCH_BEGIN, listener.messageNotificationList.get(0).getAction());
         assertEquals(EndpointMessageNotification.MESSAGE_DISPATCH_END, listener.messageNotificationList.get(1).getAction());
         assertEquals(endpoint.getEndpointURI().getUri().toString(),
-            listener.messageNotificationList.get(0).getEndpoint());
-                assertEquals(endpoint.getEndpointURI().getUri().toString(),
-            listener.messageNotificationList.get(1).getEndpoint());
+                listener.messageNotificationList.get(0).getEndpoint());
+        assertEquals(endpoint.getEndpointURI().getUri().toString(),
+                listener.messageNotificationList.get(1).getEndpoint());
         assertTrue(listener.messageNotificationList.get(0).getSource() instanceof MuleMessage);
         assertTrue(listener.messageNotificationList.get(1).getSource() instanceof MuleMessage);
         assertThat(listener.messageNotificationList.get(0).getSource().getPayload(), equalTo(outboundEvent.getMessage().getPayload()));
@@ -285,7 +285,7 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
         assertMessageSent(true);
 
         assertEquals(TEST_MESSAGE + OutboundAppendTransformer.APPEND_STRING,
-        dispacher.sensedSendEvent.getMessageAsString());
+                dispacher.sensedSendEvent.getMessageAsString());
 
         assertNotNull(result);
         assertEquals(RESPONSE_MESSAGE + ResponseAppendTransformer.APPEND_STRING, result.getMessageAsString());
@@ -294,7 +294,7 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
     @Test
     public void testConnectorNotStarted() throws Exception
     {
-        OutboundEndpoint endpoint = createOutboundEndpoint(null, null, null, null, 
+        OutboundEndpoint endpoint = createOutboundEndpoint(null, null, null, null,
                 REQUEST_RESPONSE, null);
         testOutboundEvent = createTestOutboundEvent();
         endpoint.getConnector().stop();
@@ -316,18 +316,18 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
 
         int testTimeout = 999;
 
-        OutboundEndpoint endpoint = createOutboundEndpoint(null, null, null, null, 
+        OutboundEndpoint endpoint = createOutboundEndpoint(null, null, null, null,
                 REQUEST_RESPONSE, null);
         testOutboundEvent = createTestOutboundEvent();
         testOutboundEvent.setMessage(MuleMessage.builder(testOutboundEvent.getMessage())
-                                             .addOutboundProperty(MULE_EVENT_TIMEOUT_PROPERTY, testTimeout)
-                                             .build());
+                                                .addOutboundProperty(MULE_EVENT_TIMEOUT_PROPERTY, testTimeout)
+                                                .build());
 
         endpoint.process(testOutboundEvent);
 
         assertEquals(testTimeout, dispacher.sensedSendEvent.getTimeout());
     }
-    
+
     @Test
     public void testObjectAwareInjection() throws Exception
     {
@@ -336,9 +336,9 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
 
         OutboundEndpoint endpoint = endpointBuilder.buildOutboundEndpoint();
         endpoint.process(createTestOutboundEvent());
-        
+
         ObjectAwareProcessor objectAware = (ObjectAwareProcessor) endpoint.getMessageProcessors().get(0);
-        
+
         assertEquals(muleContext, objectAware.context);
         assertEquals(endpoint, objectAware.endpoint);
     }
@@ -398,7 +398,7 @@ public class OutboundEndpointTestCase extends AbstractMessageProcessorTestCase
     {
 
         OutboundEndpoint endpoint = createTestOutboundEndpoint(uri, filter, securityFilter, in, response,
-            exchangePattern, txConfig);
+                exchangePattern, txConfig);
         dispacher = new FakeMessageDispatcher(endpoint);
         Connector connector = endpoint.getConnector();
         connector.setDispatcherFactory(new TestMessageDispatcherFactory()

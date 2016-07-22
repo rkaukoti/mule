@@ -6,11 +6,12 @@
  */
 package org.mule.runtime.module.extension.internal.config.dsl.object;
 
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromChildConfiguration;
 import org.mule.metadata.api.model.ObjectType;
 import org.mule.runtime.config.spring.dsl.api.AttributeDefinition;
 import org.mule.runtime.extension.xml.dsl.api.DslElementDeclaration;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ValueResolver;
+
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromChildConfiguration;
 
 /**
  * Default {@link ObjectParsingDelegate} which accepts any {@link ObjectType}

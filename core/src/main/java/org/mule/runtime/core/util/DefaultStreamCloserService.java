@@ -11,6 +11,9 @@ import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.util.StreamCloser;
 import org.mule.runtime.core.api.util.StreamCloserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xml.sax.InputSource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,10 +21,6 @@ import java.util.Collection;
 
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.xml.sax.InputSource;
 
 /**
  * Closes streams of different types by looking up available {@link StreamCloser}'s
@@ -83,7 +82,6 @@ public class DefaultStreamCloserService implements StreamCloserService
      * {@link java.util.Map} guarded by a {@link java.util.concurrent.locks.ReadWriteLock}
      *
      * @return all {@link org.mule.runtime.core.api.util.StreamCloser} instances in the registry
-     * @throws Exception
      */
     private Collection<StreamCloser> getAllStreamClosers() throws Exception
     {
@@ -111,7 +109,7 @@ public class DefaultStreamCloserService implements StreamCloserService
                    || Closeable.class.isAssignableFrom(streamType)
                    || java.io.Closeable.class.isAssignableFrom(streamType)
                    || (SAXSource.class.isAssignableFrom(streamType) && !streamType.getName().endsWith(
-                       "StaxSource"));
+                    "StaxSource"));
         }
 
         public void close(Object stream) throws IOException

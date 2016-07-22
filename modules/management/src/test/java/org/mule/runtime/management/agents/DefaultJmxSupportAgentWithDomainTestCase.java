@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.management.agents;
 
-import static org.mule.runtime.management.agents.DefaultJmxSupportAgentTestCase.doTestHostPropertyEnablesClientSocketFactory;
+import org.junit.Test;
 import org.mule.functional.junit4.DomainFunctionalTestCase;
 
-import org.junit.Test;
+import static org.mule.runtime.management.agents.DefaultJmxSupportAgentTestCase.doTestHostPropertyEnablesClientSocketFactory;
 
 public class DefaultJmxSupportAgentWithDomainTestCase extends DomainFunctionalTestCase
 {
@@ -24,12 +24,12 @@ public class DefaultJmxSupportAgentWithDomainTestCase extends DomainFunctionalTe
     public ApplicationConfig[] getConfigResources()
     {
         return new ApplicationConfig[] {
-                                        new ApplicationConfig("app", new String[] {"agent/jmx-agent-app-config.xml"})
+                new ApplicationConfig("app", new String[] {"agent/jmx-agent-app-config.xml"})
         };
     }
 
     @Test
-    public void testHostPropertyEnablesClientSocketFactory () throws Exception
+    public void testHostPropertyEnablesClientSocketFactory() throws Exception
     {
         doTestHostPropertyEnablesClientSocketFactory(getMuleContextForApp("app"));
     }

@@ -19,11 +19,11 @@ import java.util.List;
  * event. One or more Outbound routers can be associated with an
  * <code>OutboundRouterCollection</code> and will be selected based on the filters
  * set on the individual Outbound Router.
- * 
+ *
  * @see OutboundRouterCollection
  */
 public interface OutboundRouter
-    extends MatchableMessageRouter, RouterStatisticsRecorder, Lifecycle, MuleContextAware, FlowConstructAware
+        extends MatchableMessageRouter, RouterStatisticsRecorder, Lifecycle, MuleContextAware, FlowConstructAware
 {
 
     void setTransactionConfig(TransactionConfig transactionConfig);
@@ -33,7 +33,7 @@ public interface OutboundRouter
      * other Mule routers to send replies back for this message. If the underlying
      * protocol supports replyTo messages, such as Jms, a Jms Destination will be
      * attached to the outbound message
-     * 
+     *
      * @param replyTo route string to use
      */
     void setReplyTo(String replyTo);
@@ -47,7 +47,7 @@ public interface OutboundRouter
 
     /**
      * Gets a list of MessageProcessor instances associated with this router
-     * 
+     *
      * @return a list of MessageProcessor instances
      */
     List<MessageProcessor> getRoutes();

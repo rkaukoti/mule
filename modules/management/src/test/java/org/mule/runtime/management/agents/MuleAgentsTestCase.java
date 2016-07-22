@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.management.agents;
 
+import org.junit.Test;
 import org.mule.runtime.module.management.agent.JmxApplicationAgent;
 import org.mule.runtime.module.management.agent.Mx4jAgent;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
@@ -14,8 +15,6 @@ import java.util.List;
 
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
-
-import org.junit.Test;
 
 public class MuleAgentsTestCase extends AbstractMuleContextTestCase
 {

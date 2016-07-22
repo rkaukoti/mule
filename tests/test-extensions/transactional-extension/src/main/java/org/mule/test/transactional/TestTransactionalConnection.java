@@ -47,7 +47,8 @@ public class TestTransactionalConnection implements TransactionalConnection
         return rolledback;
     }
 
-    public void disconnect() {
+    public void disconnect()
+    {
         connected = false;
     }
 

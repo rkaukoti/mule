@@ -6,11 +6,10 @@
  */
 package org.mule.extension.socket;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.runtime.api.message.MuleMessage;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class TcpSendAndReceivePojoTestCase extends ParameterizedProtocolTestCase
 {

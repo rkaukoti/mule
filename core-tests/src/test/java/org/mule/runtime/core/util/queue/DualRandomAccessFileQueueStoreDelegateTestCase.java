@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.core.util.queue;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.tck.SerializationTestUtils.addJavaSerializerToMockMuleContext;
+import org.hamcrest.core.Is;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.tck.MuleTestUtils;
 import org.mule.tck.junit4.AbstractMuleTestCase;
@@ -21,19 +20,19 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import org.hamcrest.core.Is;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsNot.not;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.tck.SerializationTestUtils.addJavaSerializerToMockMuleContext;
 
 @SmallTest
 public class DualRandomAccessFileQueueStoreDelegateTestCase extends AbstractMuleTestCase
 {
 
-    private static final int MAXIMUM_NUMBER_OF_BYTES = 100;
     public static final String TEST_QUEUE_NAME = "test-queue";
-
+    private static final int MAXIMUM_NUMBER_OF_BYTES = 100;
     @Rule
     public TemporaryFolder workingDirectory = new TemporaryFolder();
 
@@ -72,7 +71,7 @@ public class DualRandomAccessFileQueueStoreDelegateTestCase extends AbstractMule
     public void readQueueFileMessagesInOrder() throws Exception
     {
         MuleTestUtils.testWithSystemProperty(DualRandomAccessFileQueueStoreDelegate.MAX_LENGTH_PER_FILE_PROPERTY_KEY,
-                                             String.valueOf(MAXIMUM_NUMBER_OF_BYTES), new MuleTestUtils.TestCallback()
+                String.valueOf(MAXIMUM_NUMBER_OF_BYTES), new MuleTestUtils.TestCallback()
                 {
                     @Override
                     public void run() throws Exception
@@ -87,7 +86,7 @@ public class DualRandomAccessFileQueueStoreDelegateTestCase extends AbstractMule
     public void readQueueFileMessagesInOrderWhenControlFileIsCorrupted() throws Exception
     {
         MuleTestUtils.testWithSystemProperty(DualRandomAccessFileQueueStoreDelegate.MAX_LENGTH_PER_FILE_PROPERTY_KEY,
-                                             String.valueOf(MAXIMUM_NUMBER_OF_BYTES), new MuleTestUtils.TestCallback()
+                String.valueOf(MAXIMUM_NUMBER_OF_BYTES), new MuleTestUtils.TestCallback()
                 {
                     @Override
                     public void run() throws Exception
@@ -168,7 +167,8 @@ public class DualRandomAccessFileQueueStoreDelegateTestCase extends AbstractMule
 
     private void createAndDisposeQueue(String queueName) throws IOException
     {
-        DualRandomAccessFileQueueStoreDelegate queue = new DualRandomAccessFileQueueStoreDelegate(queueName, workingDirectory.getRoot().getAbsolutePath(), mockMuleContext, 1);
+        DualRandomAccessFileQueueStoreDelegate queue =
+                new DualRandomAccessFileQueueStoreDelegate(queueName, workingDirectory.getRoot().getAbsolutePath(), mockMuleContext, 1);
         queue.dispose();
     }
 
@@ -179,7 +179,8 @@ public class DualRandomAccessFileQueueStoreDelegateTestCase extends AbstractMule
 
     private DualRandomAccessFileQueueStoreDelegate createTestQueueStore()
     {
-        return new DualRandomAccessFileQueueStoreDelegate(TEST_QUEUE_NAME, workingDirectory.getRoot().getAbsolutePath(), mockMuleContext, 0);
+        return new DualRandomAccessFileQueueStoreDelegate(TEST_QUEUE_NAME, workingDirectory.getRoot().getAbsolutePath(), mockMuleContext,
+                0);
     }
 
 }

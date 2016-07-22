@@ -50,7 +50,7 @@ public class Alien
     {
         return "<Alien>" +
                "<Planet>" + getPlanet() + "</Planet>"
-               +"<Gender>" + getGender() + "</Gender>" +
+               + "<Gender>" + getGender() + "</Gender>" +
                "<Friendly>" + isFriendly() + "</Friendly>" +
                "</Alien>";
     }

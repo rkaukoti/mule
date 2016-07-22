@@ -35,20 +35,18 @@ public class XaTransaction extends AbstractTransaction
      * The inner JTA transaction
      */
     protected Transaction transaction = null;
-
+    protected TransactionManager txManager;
     /**
      * Map of enlisted resources
      */
     private Map<ResourceKey, Object> resources = new HashMap<ResourceKey, Object>();
-
-    protected TransactionManager txManager;
 
     public XaTransaction(MuleContext context)
     {
         super(context);
         this.txManager = context.getTransactionManager();
     }
-    
+
     protected void doBegin() throws TransactionException
     {
         if (txManager == null)
@@ -260,11 +258,11 @@ public class XaTransaction extends AbstractTransaction
     }
 
     /**
-     * @param key Must be the provider of the resource object. i.e. for JDBC it's the XADataSource, for JMS is the XAConnectionFactory.
-     *            It can be a wrapper in which case should be a {@link org.mule.runtime.core.util.xa.XaResourceFactoryHolder} to be able to determine
-     *            correctly if there's already a resource for that {@link javax.transaction.xa.XAResource} provider.
-     * @param resource the resource object. It must be an {@link javax.transaction.xa.XAResource} or a {@link org.mule.runtime.core.transaction.XaTransaction.MuleXaObject}
-     * @throws TransactionException
+     * @param key      Must be the provider of the resource object. i.e. for JDBC it's the XADataSource, for JMS is the XAConnectionFactory.
+     *                 It can be a wrapper in which case should be a {@link org.mule.runtime.core.util.xa.XaResourceFactoryHolder} to be
+     *                 able to determine correctly if there's already a resource for that {@link javax.transaction.xa.XAResource} provider.
+     * @param resource the resource object. It must be an {@link javax.transaction.xa.XAResource} or a {@link
+     *                 org.mule.runtime.core.transaction.XaTransaction.MuleXaObject}
      */
     public synchronized void bindResource(Object key, Object resource) throws TransactionException
     {
@@ -456,34 +454,6 @@ public class XaTransaction extends AbstractTransaction
         }
     }
 
-    public static interface MuleXaObject
-    {
-
-        void close() throws Exception;
-
-        void setReuseObject(boolean reuseObject);
-
-        boolean isReuseObject();
-
-        boolean enlist() throws TransactionException;
-        
-        boolean delist() throws Exception;
-
-        /**
-         * Get XAConnection or XASession from wrapper / proxy
-         *
-         * @return return javax.sql.XAConnection for jdbc or javax.jms.XASession for jms
-         */
-        Object getTargetObject();
-
-        String SET_REUSE_OBJECT_METHOD_NAME = "setReuseObject";
-        String IS_REUSE_OBJECT_METHOD_NAME = "isReuseObject";
-        String DELIST_METHOD_NAME = "delist";
-        String ENLIST_METHOD_NAME = "enlist";
-        String GET_TARGET_OBJECT_METHOD_NAME = "getTargetObject";
-        String CLOSE_METHOD_NAME = "close";
-    }
-
     @Override
     public boolean supports(Object key, Object resource)
     {
@@ -492,14 +462,46 @@ public class XaTransaction extends AbstractTransaction
 
     private ResourceKey getResourceEntry(Object resourceFactory)
     {
-        resourceFactory = (resourceFactory instanceof XaResourceFactoryHolder ? ((XaResourceFactoryHolder) resourceFactory).getHoldObject() : resourceFactory);
+        resourceFactory = (resourceFactory instanceof XaResourceFactoryHolder ?
+                ((XaResourceFactoryHolder) resourceFactory).getHoldObject() :
+                resourceFactory);
         return new ResourceKey(resourceFactory, null);
     }
 
     private ResourceKey getResourceEntry(Object resourceFactory, Object resource)
     {
-        resourceFactory = (resourceFactory instanceof XaResourceFactoryHolder ? ((XaResourceFactoryHolder) resourceFactory).getHoldObject() : resourceFactory);
+        resourceFactory = (resourceFactory instanceof XaResourceFactoryHolder ?
+                ((XaResourceFactoryHolder) resourceFactory).getHoldObject() :
+                resourceFactory);
         return new ResourceKey(resourceFactory, resource);
+    }
+
+    public static interface MuleXaObject
+    {
+
+        String SET_REUSE_OBJECT_METHOD_NAME = "setReuseObject";
+        String IS_REUSE_OBJECT_METHOD_NAME = "isReuseObject";
+        String DELIST_METHOD_NAME = "delist";
+        String ENLIST_METHOD_NAME = "enlist";
+        String GET_TARGET_OBJECT_METHOD_NAME = "getTargetObject";
+        String CLOSE_METHOD_NAME = "close";
+
+        void close() throws Exception;
+
+        boolean isReuseObject();
+
+        void setReuseObject(boolean reuseObject);
+
+        boolean enlist() throws TransactionException;
+
+        boolean delist() throws Exception;
+
+        /**
+         * Get XAConnection or XASession from wrapper / proxy
+         *
+         * @return return javax.sql.XAConnection for jdbc or javax.jms.XASession for jms
+         */
+        Object getTargetObject();
     }
 
     /**

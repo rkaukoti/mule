@@ -7,9 +7,8 @@
 
 package org.mule.runtime.module.ws.functional;
 
-import static org.apache.ws.security.WSPasswordCallback.DECRYPT;
-import static org.apache.ws.security.WSPasswordCallback.SIGNATURE;
-import static org.apache.ws.security.WSPasswordCallback.USERNAME_TOKEN;
+import org.apache.ws.security.WSPasswordCallback;
+import org.junit.Test;
 
 import java.io.IOException;
 
@@ -17,8 +16,9 @@ import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.UnsupportedCallbackException;
 
-import org.apache.ws.security.WSPasswordCallback;
-import org.junit.Test;
+import static org.apache.ws.security.WSPasswordCallback.DECRYPT;
+import static org.apache.ws.security.WSPasswordCallback.SIGNATURE;
+import static org.apache.ws.security.WSPasswordCallback.USERNAME_TOKEN;
 
 
 public class CombinedSecurityFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase

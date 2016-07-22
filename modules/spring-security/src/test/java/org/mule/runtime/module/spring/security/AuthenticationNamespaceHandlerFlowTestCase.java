@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.module.spring.security;
 
-import org.mule.tck.junit4.rule.DynamicPort;
-
 import org.junit.Rule;
+import org.mule.tck.junit4.rule.DynamicPort;
 
 public class AuthenticationNamespaceHandlerFlowTestCase extends AuthenticationNamespaceHandlerTestCase
 {
@@ -20,5 +19,5 @@ public class AuthenticationNamespaceHandlerFlowTestCase extends AuthenticationNa
     {
         return "authentication-config-flow.xml";
     }
- 
+
 }

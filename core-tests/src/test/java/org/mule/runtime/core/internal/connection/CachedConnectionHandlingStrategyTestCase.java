@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.core.internal.connection;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionExceptionCode;
 import org.mule.runtime.api.connection.ConnectionHandler;
@@ -22,11 +21,12 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 import org.mule.tck.testmodels.fruit.Banana;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -77,7 +77,9 @@ public class CachedConnectionHandlingStrategyTestCase extends AbstractMuleTestCa
     public void failDueToInvalidConnection() throws ConnectionException
     {
         String errorMessage = "Invalid username or password";
-        when(connectionProvider.validate(connection)).thenReturn(ConnectionValidationResult.failure(errorMessage, ConnectionExceptionCode.INCORRECT_CREDENTIALS, new Exception("401: UNAUTHORIZED")));
+        when(connectionProvider.validate(connection)).thenReturn(
+                ConnectionValidationResult.failure(errorMessage, ConnectionExceptionCode.INCORRECT_CREDENTIALS,
+                        new Exception("401: UNAUTHORIZED")));
         CachedConnectionHandler connectionHandler = (CachedConnectionHandler) connectionStrategy.getConnectionHandler();
         ConnectionValidationResult validationResult = connectionHandler.validateConnection(connection);
 

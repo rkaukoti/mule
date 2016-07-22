@@ -6,20 +6,20 @@
  */
 package org.mule.extension.validation.internal;
 
-import static org.mule.extension.validation.internal.ImmutableValidationResult.error;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.mule.extension.validation.api.ValidationException;
 import org.mule.extension.validation.api.ValidationExtension;
 import org.mule.extension.validation.api.ValidationOptions;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.extension.validation.api.ValidationException;
 import org.mule.extension.validation.api.ValidationResult;
 import org.mule.extension.validation.api.Validator;
+import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Locale;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.extension.validation.internal.ImmutableValidationResult.error;
 
 /**
  * Base class for validation operations with common
@@ -49,7 +49,7 @@ abstract class ValidationSupport
         }
         else
         {
-             logSuccessfulValidation(validator, event);
+            logSuccessfulValidation(validator, event);
         }
     }
 
@@ -58,7 +58,10 @@ abstract class ValidationSupport
         String customMessage = validationContext.getOptions().getMessage();
         if (!StringUtils.isBlank(customMessage))
         {
-            result = error(validationContext.getMuleEvent().getMuleContext().getExpressionManager().parse(customMessage, validationContext.getMuleEvent()));
+            result = error(validationContext.getMuleEvent()
+                                            .getMuleContext()
+                                            .getExpressionManager()
+                                            .parse(customMessage, validationContext.getMuleEvent()));
         }
 
         return result;

@@ -22,6 +22,28 @@ import org.mule.runtime.core.api.transformer.Transformer;
 public interface TransformerResolver
 {
     /**
+     * Responsible for finding a transformer with the given criteria. Note that if a
+     * transformer is not found null should be return, an exception must NOT be
+     * thrown.
+     *
+     * @param source information about the source object including the object iself
+     * @param result information about the result object to transform to
+     * @return a transformer from the registry that matches the criteria or null if a transformer was not found
+     * @throws ResolverException Only thrown if an exception is thrown during the search, this exception will just be a wrapper
+     */
+    Transformer resolve(DataType source, DataType result) throws ResolverException;
+
+    /**
+     * A callback that is called when a transformer is registered or unregistered
+     * from the registry. This is used in situations where the resolver caches
+     * transformers and the cache needs to be updated.
+     *
+     * @param transformer    the transformer that has changed
+     * @param registryAction whether the transformer was added or removed
+     */
+    void transformerChange(Transformer transformer, RegistryAction registryAction);
+
+    /**
      * Possible registry actions that occur that will trigger an event fired via
      * {@link #transformerChange(Transformer, RegistryAction)} method.
      */
@@ -36,28 +58,4 @@ public interface TransformerResolver
          */
         REMOVED
     }
-
-    /**
-     * Responsible for finding a transformer with the given criteria. Note that if a
-     * transformer is not found null should be return, an exception must NOT be
-     * thrown.
-     *
-     * @param source information about the source object including the object iself
-     * @param result information about the result object to transform to
-     * @return a transformer from the registry that matches the criteria or null if a
-     *         transformer was not found
-     * @throws ResolverException Only thrown if an exception is thrown during the
-     *             search, this exception will just be a wrapper
-     */
-    Transformer resolve(DataType source, DataType result) throws ResolverException;
-
-    /**
-     * A callback that is called when a transformer is registered or unregistered
-     * from the registry. This is used in situations where the resolver caches
-     * transformers and the cache needs to be updated.
-     *
-     * @param transformer the transformer that has changed
-     * @param registryAction whether the transformer was added or removed
-     */
-    void transformerChange(Transformer transformer, RegistryAction registryAction);
 }

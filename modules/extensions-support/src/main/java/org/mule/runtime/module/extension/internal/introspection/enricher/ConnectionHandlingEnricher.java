@@ -38,7 +38,8 @@ public final class ConnectionHandlingEnricher implements ModelEnricher
             @Override
             public void onConnectionProvider(ConnectedDeclaration owner, ConnectionProviderDeclaration providerDeclaration)
             {
-                providerDeclaration.addModelProperty(new ConnectionHandlingTypeModelProperty(providerDeclaration.getFactory().newInstance()));
+                providerDeclaration.addModelProperty(
+                        new ConnectionHandlingTypeModelProperty(providerDeclaration.getFactory().newInstance()));
             }
         }.walk(declaration);
     }

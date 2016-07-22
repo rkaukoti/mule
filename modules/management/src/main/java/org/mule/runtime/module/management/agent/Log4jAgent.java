@@ -9,7 +9,6 @@ package org.mule.runtime.module.management.agent;
 import org.mule.runtime.core.AbstractAgent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +16,8 @@ import org.slf4j.LoggerFactory;
  * <code>Log4jAgent</code> exposes the configuration of the Log4J instance running
  * in Mule for Jmx management
  *
- * @deprecated deprecated since Mule 3.6.0. This will no longer function since log4j2 supports JMX out of the box.
- * Check migration guide for more information
+ * @deprecated deprecated since Mule 3.6.0. This will no longer function since log4j2 supports JMX out of the box. Check migration guide for
+ * more information
  */
 @Deprecated
 public class Log4jAgent extends AbstractAgent

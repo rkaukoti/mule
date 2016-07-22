@@ -10,13 +10,12 @@ import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
 import org.mule.runtime.core.processor.InvokerMessageProcessor;
 import org.mule.runtime.core.util.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InvokerMessageProcessorDefinitionParser extends ChildDefinitionParser
 {
@@ -25,9 +24,9 @@ public class InvokerMessageProcessorDefinitionParser extends ChildDefinitionPars
     private final String[] parameterNames;
 
     public InvokerMessageProcessorDefinitionParser(String setterMethod,
-                                         Class<?> objectType,
-                                         String methodName,
-                                         String[] parameterNames)
+                                                   Class<?> objectType,
+                                                   String methodName,
+                                                   String[] parameterNames)
     {
         super(setterMethod, InvokerMessageProcessor.class);
         this.objectType = objectType;
@@ -45,10 +44,10 @@ public class InvokerMessageProcessorDefinitionParser extends ChildDefinitionPars
     protected void parseChild(Element element, ParserContext parserContext, BeanDefinitionBuilder builder)
     {
         if (!StringUtils.isEmpty(element.getAttribute(getTargetPropertyConfiguration().getAttributeAlias(
-            "config-ref"))))
+                "config-ref"))))
         {
             builder.addPropertyReference("object",
-                element.getAttribute(getTargetPropertyConfiguration().getAttributeAlias("config-ref")));
+                    element.getAttribute(getTargetPropertyConfiguration().getAttributeAlias("config-ref")));
         }
         else
         {

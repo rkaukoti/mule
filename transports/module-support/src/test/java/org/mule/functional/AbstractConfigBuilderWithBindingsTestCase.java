@@ -6,10 +6,7 @@
  */
 package org.mule.functional;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
@@ -22,7 +19,9 @@ import org.mule.runtime.core.interceptor.InterceptorStack;
 import org.mule.runtime.core.interceptor.LoggingInterceptor;
 import org.mule.runtime.core.interceptor.TimerInterceptor;
 
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public abstract class AbstractConfigBuilderWithBindingsTestCase extends AbstractScriptWithBindingsConfigBuilderTestCase
 {
@@ -30,6 +29,11 @@ public abstract class AbstractConfigBuilderWithBindingsTestCase extends Abstract
     public AbstractConfigBuilderWithBindingsTestCase(boolean legacy)
     {
         super(legacy);
+    }
+
+    private static EndpointFactory getEndpointFactory(MuleContext muleContext)
+    {
+        return (EndpointFactory) muleContext.getRegistry().lookupObject(MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY);
     }
 
     @Override
@@ -62,10 +66,5 @@ public abstract class AbstractConfigBuilderWithBindingsTestCase extends Abstract
 
         FlowConstruct service = muleContext.getRegistry().lookupFlowConstruct("appleComponent2");
         assertNotNull(service);
-    }
-
-    private static EndpointFactory getEndpointFactory(MuleContext muleContext)
-    {
-        return (EndpointFactory) muleContext.getRegistry().lookupObject(MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY);
     }
 }

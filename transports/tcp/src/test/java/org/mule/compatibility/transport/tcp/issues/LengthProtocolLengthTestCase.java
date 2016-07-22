@@ -6,10 +6,8 @@
  */
 package org.mule.compatibility.transport.tcp.issues;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -17,8 +15,9 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.util.Arrays;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class LengthProtocolLengthTestCase extends FunctionalTestCase
 {
@@ -54,7 +53,7 @@ public class LengthProtocolLengthTestCase extends FunctionalTestCase
         byte[] message = new byte[length];
         for (int i = 0; i < length; ++i)
         {
-            message[i] = (byte)(i % 255);
+            message[i] = (byte) (i % 255);
         }
 
         MuleClient client = muleContext.getClient();

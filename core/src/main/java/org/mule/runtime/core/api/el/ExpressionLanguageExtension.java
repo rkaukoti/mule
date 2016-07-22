@@ -13,7 +13,7 @@ package org.mule.runtime.core.api.el;
  * is a static context with no message context available. In order to work with per-evaluation context
  * including the message (including it's payload and properties) and flow/session variables then you should
  * implement {@link ExpressionLanguageFunction}'s and make these available in the context.
- * 
+ *
  * @since 3.3
  */
 public interface ExpressionLanguageExtension

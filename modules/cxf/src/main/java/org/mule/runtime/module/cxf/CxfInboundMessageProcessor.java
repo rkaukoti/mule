@@ -6,14 +6,24 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.mule.runtime.api.metadata.MediaType.ANY;
-import static org.mule.runtime.api.metadata.MediaType.TEXT;
-import static org.mule.runtime.api.metadata.MediaType.XML;
-import static org.mule.runtime.api.metadata.MediaType.parse;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.ACCEPTED;
-import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_METHOD_PROPERTY;
-import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
-
+import org.apache.cxf.Bus;
+import org.apache.cxf.binding.soap.SoapBindingConstants;
+import org.apache.cxf.binding.soap.jms.interceptor.SoapJMSConstants;
+import org.apache.cxf.continuations.SuspendedInvocationException;
+import org.apache.cxf.endpoint.Server;
+import org.apache.cxf.interceptor.StaxInEndingInterceptor;
+import org.apache.cxf.message.Exchange;
+import org.apache.cxf.message.ExchangeImpl;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.message.MessageImpl;
+import org.apache.cxf.service.model.BindingOperationInfo;
+import org.apache.cxf.service.model.EndpointInfo;
+import org.apache.cxf.staxutils.StaxUtils;
+import org.apache.cxf.transport.DestinationFactory;
+import org.apache.cxf.transport.DestinationFactoryManager;
+import org.apache.cxf.transport.local.LocalConduit;
+import org.apache.cxf.transports.http.QueryHandler;
+import org.apache.cxf.wsdl.http.AddressType;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.DefaultMuleEvent;
@@ -39,6 +49,10 @@ import org.mule.runtime.core.processor.AbstractInterceptingMessageProcessor;
 import org.mule.runtime.module.cxf.support.DelegatingOutputStream;
 import org.mule.runtime.module.cxf.transport.MuleUniversalDestination;
 import org.mule.runtime.module.xml.stax.StaxSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -58,28 +72,13 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 
-import org.apache.cxf.Bus;
-import org.apache.cxf.binding.soap.SoapBindingConstants;
-import org.apache.cxf.binding.soap.jms.interceptor.SoapJMSConstants;
-import org.apache.cxf.continuations.SuspendedInvocationException;
-import org.apache.cxf.endpoint.Server;
-import org.apache.cxf.interceptor.StaxInEndingInterceptor;
-import org.apache.cxf.message.Exchange;
-import org.apache.cxf.message.ExchangeImpl;
-import org.apache.cxf.message.Message;
-import org.apache.cxf.message.MessageImpl;
-import org.apache.cxf.service.model.BindingOperationInfo;
-import org.apache.cxf.service.model.EndpointInfo;
-import org.apache.cxf.staxutils.StaxUtils;
-import org.apache.cxf.transport.DestinationFactory;
-import org.apache.cxf.transport.DestinationFactoryManager;
-import org.apache.cxf.transport.local.LocalConduit;
-import org.apache.cxf.transports.http.QueryHandler;
-import org.apache.cxf.wsdl.http.AddressType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
+import static org.mule.runtime.api.metadata.MediaType.ANY;
+import static org.mule.runtime.api.metadata.MediaType.TEXT;
+import static org.mule.runtime.api.metadata.MediaType.XML;
+import static org.mule.runtime.api.metadata.MediaType.parse;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.ACCEPTED;
+import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_METHOD_PROPERTY;
+import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
 
 /**
  * The CxfInboundMessageProcessor performs inbound CXF processing, sending an event
@@ -90,10 +89,8 @@ import org.w3c.dom.Node;
 public class CxfInboundMessageProcessor extends AbstractInterceptingMessageProcessor implements Lifecycle, NonBlockingSupported
 {
 
-    private static final String HTTP_REQUEST_PROPERTY_MANAGER_KEY = "_cxfHttpRequestPropertyManager";
-
     public static final String JMS_TRANSPORT = "jms";
-
+    private static final String HTTP_REQUEST_PROPERTY_MANAGER_KEY = "_cxfHttpRequestPropertyManager";
     /**
      * logger used by this class
      */
@@ -120,8 +117,8 @@ public class CxfInboundMessageProcessor extends AbstractInterceptingMessageProce
         if (bus == null)
         {
             throw new InitialisationException(
-                MessageFactory.createStaticMessage("No CXF bus instance, this component has not been initialized properly."),
-                this);
+                    MessageFactory.createStaticMessage("No CXF bus instance, this component has not been initialized properly."),
+                    this);
         }
 
         final HttpRequestPropertyManager httpRequestPropertyManager = muleContext.getRegistry().get(HTTP_REQUEST_PROPERTY_MANAGER_KEY);
@@ -196,7 +193,7 @@ public class CxfInboundMessageProcessor extends AbstractInterceptingMessageProce
     }
 
     protected MuleEvent generateWSDLOrXSD(MuleEvent event, String req)
-        throws IOException
+            throws IOException
     {
         // TODO: Is there a way to make this not so ugly?
         String ctxUri = requestPropertyManager.getBasePath(event.getMessage());
@@ -390,7 +387,8 @@ public class CxfInboundMessageProcessor extends AbstractInterceptingMessageProce
             }
 
             String eventRequestUri = event.getMessageSourceURI().toString();
-            if (eventRequestUri.startsWith(JMS_TRANSPORT) || SoapJMSConstants.SOAP_JMS_NAMESPACE.equals(((MuleUniversalDestination) d).getEndpointInfo().getTransportId()))
+            if (eventRequestUri.startsWith(JMS_TRANSPORT) ||
+                SoapJMSConstants.SOAP_JMS_NAMESPACE.equals(((MuleUniversalDestination) d).getEndpointInfo().getTransportId()))
             {
                 String contentType = muleReqMsg.getInboundProperty(SoapJMSConstants.CONTENTTYPE_FIELD);
                 if (contentType == null)
@@ -506,8 +504,8 @@ public class CxfInboundMessageProcessor extends AbstractInterceptingMessageProce
         // Only add soap headers if we can validate the bindings. if not, cxf will throw a fault in SoapActionInInterceptor
         // we cannot validate the bindings if we're using mule's pass-through invoke proxy service 
         boolean isGenericProxy = "http://support.cxf.module.runtime.mule.org/"
-                .equals(getServer().getEndpoint().getService().getName().getNamespaceURI()) && 
-                "ProxyService".equals(getServer().getEndpoint().getService().getName().getLocalPart());
+                                         .equals(getServer().getEndpoint().getService().getName().getNamespaceURI()) &&
+                                 "ProxyService".equals(getServer().getEndpoint().getService().getName().getLocalPart());
         return !isGenericProxy;
     }
 
@@ -522,6 +520,7 @@ public class CxfInboundMessageProcessor extends AbstractInterceptingMessageProce
     {
         return getResponseOutputHandler(m);
     }
+
     protected OutputHandler getResponseOutputHandler(final MessageImpl m)
     {
         return getResponseOutputHandler(m.getExchange());
@@ -611,10 +610,9 @@ public class CxfInboundMessageProcessor extends AbstractInterceptingMessageProce
 
     /**
      * Gets the stream representation of the current message.
-     * 
+     *
      * @param context the event context
      * @return The inputstream for the current message
-     * @throws MuleException
      */
     protected InputStream getMessageStream(MuleEvent context) throws MuleException
     {
@@ -664,14 +662,14 @@ public class CxfInboundMessageProcessor extends AbstractInterceptingMessageProce
         this.server = server;
     }
 
-    public void setProxy(boolean proxy)
-    {
-        this.proxy = proxy;
-    }
-
     public boolean isProxy()
     {
         return proxy;
+    }
+
+    public void setProxy(boolean proxy)
+    {
+        this.proxy = proxy;
     }
 
     public void setWSDLQueryHandler(QueryHandler wsdlQueryHandler)

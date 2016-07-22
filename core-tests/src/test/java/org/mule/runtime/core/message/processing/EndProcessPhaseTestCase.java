@@ -6,10 +6,11 @@
  */
 package org.mule.runtime.core.message.processing;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.execution.EndPhaseTemplate;
 import org.mule.runtime.core.execution.EndProcessPhase;
 import org.mule.runtime.core.execution.MessageProcessContext;
@@ -18,11 +19,9 @@ import org.mule.runtime.core.execution.PhaseResultNotifier;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
@@ -47,7 +46,7 @@ public class EndProcessPhaseTestCase extends AbstractMuleTestCase
     @Test
     public void phaseExecution()
     {
-        endProcessPhase.runPhase(supportedTemplate,mockMessageContext,mockPhaseResultNotifier);
+        endProcessPhase.runPhase(supportedTemplate, mockMessageContext, mockPhaseResultNotifier);
         verify(mockPhaseResultNotifier, times(0)).phaseConsumedMessage();
         verify(mockPhaseResultNotifier, times(0)).phaseFailure(any(Exception.class));
         verify(mockPhaseResultNotifier, times(0)).phaseConsumedMessage();

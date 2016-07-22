@@ -6,16 +6,16 @@
  */
 package org.mule.runtime.module.launcher;
 
+import org.junit.Test;
+import org.mule.runtime.module.launcher.application.Application;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import org.mule.runtime.module.launcher.application.Application;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import org.junit.Test;
 
 @SmallTest
 public class DefaultMuleDeployerTestCase extends AbstractMuleTestCase

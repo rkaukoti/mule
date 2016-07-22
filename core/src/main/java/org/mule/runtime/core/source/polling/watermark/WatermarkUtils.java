@@ -19,13 +19,11 @@ public abstract class WatermarkUtils
     /**
      * Evaluates a mel expression. If the value is not an expression or if it is not
      * valid then returns the same value. The expression is expected to
-     * 
-     * @param expression The expression the user wrote in the xml. Can be an
-     *            expression or not
-     * @param event The mule event in which we need to evaluate the expression
+     *
+     * @param expression The expression the user wrote in the xml. Can be an expression or not
+     * @param event      The mule event in which we need to evaluate the expression
      * @return The evaluated value
-     * @throws NotSerializableException if the evaluated result is not
-     *             {@link Serializable}
+     * @throws NotSerializableException if the evaluated result is not {@link Serializable}
      */
     public static Serializable evaluate(String expression, MuleEvent event) throws NotSerializableException
     {
@@ -36,9 +34,9 @@ public abstract class WatermarkUtils
             if (evaluated != null && !(evaluated instanceof Serializable))
             {
                 throw new NotSerializableException(
-                    String.format(
-                        "Expression %s resolves to an object that is not serializable (%s). It can't be used as watermark.",
-                        expression, evaluated.getClass().getCanonicalName()));
+                        String.format(
+                                "Expression %s resolves to an object that is not serializable (%s). It can't be used as watermark.",
+                                expression, evaluated.getClass().getCanonicalName()));
             }
 
             return (Serializable) evaluated;

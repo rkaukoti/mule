@@ -6,9 +6,7 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
+import org.apache.commons.lang.StringUtils;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleContext;
@@ -23,7 +21,8 @@ import org.mule.runtime.core.util.ClassUtils;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import org.apache.commons.lang.StringUtils;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * A {@link ValueResolver} which evaluates a MEL expressions and tries
@@ -36,7 +35,6 @@ import org.apache.commons.lang.StringUtils;
  * It resolves the expressions by making use of the {@link AttributeEvaluator}
  * so that it's compatible with simple expressions and templates alike
  *
- * @param <T>
  * @since 3.7.0
  */
 public class TypeSafeExpressionValueResolver<T> implements ValueResolver<T>
@@ -93,7 +91,7 @@ public class TypeSafeExpressionValueResolver<T> implements ValueResolver<T>
                     evaluator.getRawValue(),
                     expectedType.getName(),
                     object.getClass().getName())),
-                                         event, e);
+                    event, e);
         }
 
         if (transformer instanceof MessageTransformer)

@@ -6,18 +6,9 @@
  */
 package org.mule.runtime.module.http.internal.request;
 
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_PREFIX;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONNECTION;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.COOKIE;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.HOST;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.TRANSFER_ENCODING;
-import static org.mule.runtime.module.http.api.HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED;
-import static org.mule.runtime.module.http.api.HttpHeaders.Values.CHUNKED;
-import static org.mule.runtime.module.http.internal.request.DefaultHttpRequester.DEFAULT_EMPTY_BODY_METHODS;
-import static org.mule.runtime.module.http.internal.request.DefaultHttpRequester.DEFAULT_PAYLOAD_EXPRESSION;
+import com.google.common.collect.Maps;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MessagingException;
@@ -36,8 +27,8 @@ import org.mule.runtime.module.http.internal.domain.InputStreamHttpEntity;
 import org.mule.runtime.module.http.internal.domain.MultipartHttpEntity;
 import org.mule.runtime.module.http.internal.domain.request.HttpRequestBuilder;
 import org.mule.runtime.module.http.internal.multipart.HttpPartDataSource;
-
-import com.google.common.collect.Maps;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -50,9 +41,18 @@ import java.util.Map;
 
 import javax.activation.DataHandler;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
+import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_PREFIX;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONNECTION;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.COOKIE;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.HOST;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.TRANSFER_ENCODING;
+import static org.mule.runtime.module.http.api.HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED;
+import static org.mule.runtime.module.http.api.HttpHeaders.Values.CHUNKED;
+import static org.mule.runtime.module.http.internal.request.DefaultHttpRequester.DEFAULT_EMPTY_BODY_METHODS;
+import static org.mule.runtime.module.http.internal.request.DefaultHttpRequester.DEFAULT_PAYLOAD_EXPRESSION;
 
 
 public class MuleEventToHttpRequest
@@ -67,7 +67,8 @@ public class MuleEventToHttpRequest
     private AttributeEvaluator sendBody;
 
 
-    public MuleEventToHttpRequest(DefaultHttpRequester requester, MuleContext muleContext, AttributeEvaluator requestStreamingMode, AttributeEvaluator sendBody)
+    public MuleEventToHttpRequest(DefaultHttpRequester requester, MuleContext muleContext, AttributeEvaluator requestStreamingMode,
+                                  AttributeEvaluator sendBody)
     {
         this.requester = requester;
         this.muleContext = muleContext;
@@ -104,7 +105,7 @@ public class MuleEventToHttpRequest
             try
             {
                 Map<String, List<String>> headers = requester.getConfig().getCookieManager().get(URI.create(resolvedUri),
-                                                                                                 Collections.<String, List<String>>emptyMap());
+                        Collections.<String, List<String>>emptyMap());
                 List<String> cookies = headers.get(COOKIE);
                 if (cookies != null)
                 {
@@ -136,7 +137,8 @@ public class MuleEventToHttpRequest
         return CollectionUtils.exists(ignoredProperties, propertyName -> outboundProperty.equalsIgnoreCase((String) propertyName));
     }
 
-    private HttpEntity createRequestEntity(HttpRequestBuilder requestBuilder, MuleEvent muleEvent, String resolvedMethod) throws MessagingException
+    private HttpEntity createRequestEntity(HttpRequestBuilder requestBuilder, MuleEvent muleEvent, String resolvedMethod)
+            throws MessagingException
     {
         boolean customSource = false;
         Object oldPayload = null;
@@ -235,7 +237,9 @@ public class MuleEventToHttpRequest
             {
                 if (muleEvent.getMessage().getPayload() instanceof Map)
                 {
-                    String body = HttpParser.encodeString(muleEvent.getMessage().getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(muleContext)), (Map) payload);
+                    String body = HttpParser.encodeString(
+                            muleEvent.getMessage().getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(muleContext)),
+                            (Map) payload);
                     requestBuilder.addHeader(CONTENT_TYPE, APPLICATION_X_WWW_FORM_URLENCODED.toRfcString());
                     return new ByteArrayHttpEntity(body.getBytes());
                 }

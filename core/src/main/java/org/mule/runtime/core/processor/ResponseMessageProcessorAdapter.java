@@ -56,25 +56,8 @@ public class ResponseMessageProcessorAdapter extends AbstractRequestResponseMess
         else
         {
             return new CopyOnNullNonBlockingProcessorExecutor(response, Collections.singletonList(responseProcessor),
-                                                              MessageProcessorExecutionTemplate
-                                                                      .createExecutionTemplate(), true).execute();
-        }
-    }
-
-    class CopyOnNullNonBlockingProcessorExecutor extends NonBlockingProcessorExecutor
-    {
-
-        public CopyOnNullNonBlockingProcessorExecutor(MuleEvent event, List<MessageProcessor> processors,
-                                                      MessageProcessorExecutionTemplate executionTemplate, boolean
-                copyOnVoidEvent)
-        {
-            super(event, processors, executionTemplate, copyOnVoidEvent);
-        }
-
-        @Override
-        protected boolean isUseEventCopy(MuleEvent result)
-        {
-            return super.isUseEventCopy(result) || result == null;
+                    MessageProcessorExecutionTemplate
+                            .createExecutionTemplate(), true).execute();
         }
     }
 
@@ -126,6 +109,23 @@ public class ResponseMessageProcessorAdapter extends AbstractRequestResponseMess
     public void setFlowConstruct(FlowConstruct flowConstruct)
     {
         this.flowConstruct = flowConstruct;
+    }
+
+    class CopyOnNullNonBlockingProcessorExecutor extends NonBlockingProcessorExecutor
+    {
+
+        public CopyOnNullNonBlockingProcessorExecutor(MuleEvent event, List<MessageProcessor> processors,
+                                                      MessageProcessorExecutionTemplate executionTemplate, boolean
+                                                              copyOnVoidEvent)
+        {
+            super(event, processors, executionTemplate, copyOnVoidEvent);
+        }
+
+        @Override
+        protected boolean isUseEventCopy(MuleEvent result)
+        {
+            return super.isUseEventCopy(result) || result == null;
+        }
     }
 
 }

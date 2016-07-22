@@ -8,10 +8,9 @@
 package org.mule.runtime.module.db.internal.config.domain.query;
 
 import org.mule.runtime.module.db.internal.util.FileReader;
+import org.springframework.beans.factory.FactoryBean;
 
 import java.io.IOException;
-
-import org.springframework.beans.factory.FactoryBean;
 
 /**
  * Creates a query text from a file
@@ -33,7 +32,7 @@ public class QueryFileFactoryBean implements FactoryBean<String>
     {
         try
         {
-            return  fileReader.getResourceAsString(fileName);
+            return fileReader.getResourceAsString(fileName);
         }
         catch (IOException e)
         {

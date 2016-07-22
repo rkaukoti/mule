@@ -18,9 +18,10 @@ public class SimpleConfigAttribute
     private final boolean valueFromSchema;
 
     /**
-     * @param name configuration attribute name as it appears in the configuration file.
-     * @param value configuration value as defined in the configuration file.
-     * @param valueFromSchema true if the configuration value was not explicitly defined by the user and was retrieved from the DSL schema, false otherwise.
+     * @param name            configuration attribute name as it appears in the configuration file.
+     * @param value           configuration value as defined in the configuration file.
+     * @param valueFromSchema true if the configuration value was not explicitly defined by the user and was retrieved from the DSL schema,
+     *                        false otherwise.
      */
     public SimpleConfigAttribute(String name, String value, boolean valueFromSchema)
     {

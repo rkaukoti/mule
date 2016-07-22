@@ -27,7 +27,6 @@ public interface AsyncResponseFlowProcessingPhaseTemplate extends MessageProcess
      *
      * @param muleEvent {@link org.mule.runtime.core.api.MuleEvent} created from the raw message of this context
      * @return the response {@link org.mule.runtime.core.api.MuleEvent}
-     * @throws org.mule.runtime.core.api.MuleException
      */
     MuleEvent routeEvent(MuleEvent muleEvent) throws MuleException;
 
@@ -36,20 +35,21 @@ public interface AsyncResponseFlowProcessingPhaseTemplate extends MessageProcess
      * <p/>
      * This method is executed within the flow so if it fails it will trigger the exception strategy.
      *
-     * @param muleEvent the event with the content of the response to be sent.
+     * @param muleEvent                  the event with the content of the response to be sent.
      * @param responseCompletionCallback callback to be used for notifying the result of the operation
-     * @throws MuleException exception thrown when processing the message to send the response. If there's a failure when writing the response
-     *                       using the underlying transport or connector then the exception to throw must be a {@link ResponseDispatchException}.
+     * @throws MuleException exception thrown when processing the message to send the response. If there's a failure when writing the
+     *                       response using the underlying transport or connector then the exception to throw must be a {@link
+     *                       ResponseDispatchException}.
      */
     void sendResponseToClient(MuleEvent muleEvent, ResponseCompletionCallback responseCompletionCallback) throws MuleException;
 
 
     /**
-     *
-     * @param exception exception thrown during the flow execution.
+     * @param exception                  exception thrown during the flow execution.
      * @param responseCompletionCallback callback to be used for notifying the result of the operation
      * @throws MuleException exception thrown when processing the message to send the response.
      */
-    void sendFailureResponseToClient(MessagingException exception, ResponseCompletionCallback responseCompletionCallback) throws MuleException;
+    void sendFailureResponseToClient(MessagingException exception, ResponseCompletionCallback responseCompletionCallback)
+            throws MuleException;
 
 }

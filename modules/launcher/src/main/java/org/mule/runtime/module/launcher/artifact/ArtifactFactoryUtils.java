@@ -6,12 +6,13 @@
  */
 package org.mule.runtime.module.launcher.artifact;
 
-import static org.mule.runtime.module.launcher.descriptor.DeployableArtifactDescriptor.DEFAULT_DEPLOY_PROPERTIES_RESOURCE;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.runtime.module.artifact.Artifact;
 
 import java.io.File;
+
+import static org.mule.runtime.module.launcher.descriptor.DeployableArtifactDescriptor.DEFAULT_DEPLOY_PROPERTIES_RESOURCE;
 
 /**
  * Utility class providing useful methods when creating {@link Artifact}s.

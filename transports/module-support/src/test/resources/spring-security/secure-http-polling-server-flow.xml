@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:spring="http://www.springframework.org/schema/beans"
-    xmlns:http="http://www.mulesoft.org/schema/mule/http"
-    xmlns:test="http://www.mulesoft.org/schema/mule/test"
-    xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
-    xmlns:mule-ss="http://www.mulesoft.org/schema/mule/spring-security"
-    xmlns:ss="http://www.springframework.org/schema/security"
-    xsi:schemaLocation="
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
+      xmlns:mule-ss="http://www.mulesoft.org/schema/mule/spring-security"
+      xmlns:ss="http://www.springframework.org/schema/security"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
@@ -20,7 +20,7 @@
             <ss:authentication-provider>
                 <ss:user-service id="userService">
                     <ss:user name="marie" password="marie"
-                        authorities="ROLE_ADMIN" />
+                             authorities="ROLE_ADMIN"/>
                 </ss:user-service>
             </ss:authentication-provider>
         </ss:authentication-manager>
@@ -28,14 +28,14 @@
 
     <mule-ss:security-manager>
         <mule-ss:delegate-security-provider
-            name="memory-dao" delegate-ref="authenticationManager" />
+                name="memory-dao" delegate-ref="authenticationManager"/>
     </mule-ss:security-manager>
 
     <http:listener-config name="listenerConfig" host="localhost" port="${port1}"/>
 
     <flow name="SecureUMO">
         <http:listener path="*" config-ref="listenerConfig"/>
-        <transports:http-security-filter realm="mule-realm" />
+        <transports:http-security-filter realm="mule-realm"/>
         <test:component>
             <test:return-data>foo</test:return-data>
         </test:component>

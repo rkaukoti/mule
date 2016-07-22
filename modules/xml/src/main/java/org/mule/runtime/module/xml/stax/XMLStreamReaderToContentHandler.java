@@ -38,22 +38,22 @@ import javanet.staxutils.DummyLocator;
 import javanet.staxutils.StAXReaderToContentHandler;
 import javanet.staxutils.helpers.XMLFilterImplEx;
 
+import org.xml.sax.Attributes;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.AttributesImpl;
+
 import javax.xml.namespace.QName;
 import javax.xml.stream.Location;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import org.xml.sax.Attributes;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.AttributesImpl;
-
 /**
  * This is a simple utility class that adapts StAX events from an
  * {@link javax.xml.stream.XMLStreamReader} to SAX events on a
  * {@link org.xml.sax.ContentHandler}, bridging between the two parser technologies.
- * 
+ *
  * @author Ryan.Shoemaker@Sun.COM
  * @version 1.0
  */
@@ -69,9 +69,9 @@ public class XMLStreamReaderToContentHandler implements StAXReaderToContentHandl
     /**
      * Construct a new StAX to SAX adapter that will convert a StAX event stream into
      * a SAX event stream.
-     * 
+     *
      * @param staxCore StAX event source
-     * @param filter SAX event sink
+     * @param filter   SAX event sink
      */
     public XMLStreamReaderToContentHandler(XMLStreamReader staxCore, XMLFilterImplEx filter)
     {
@@ -100,12 +100,12 @@ public class XMLStreamReaderToContentHandler implements StAXReaderToContentHandl
                 {
                     switch (event)
                     {
-                        case XMLStreamConstants.COMMENT :
-                            handleComment();
-                            break;
-                        case XMLStreamConstants.PROCESSING_INSTRUCTION :
-                            handlePI();
-                            break;
+                    case XMLStreamConstants.COMMENT:
+                        handleComment();
+                        break;
+                    case XMLStreamConstants.PROCESSING_INSTRUCTION:
+                        handlePI();
+                        break;
                     }
                     event = staxStreamReader.next();
                 }
@@ -121,49 +121,49 @@ public class XMLStreamReaderToContentHandler implements StAXReaderToContentHandl
                 // The spec only really describes 11 of them.
                 switch (event)
                 {
-                    case XMLStreamConstants.START_ELEMENT :
-                        depth++;
-                        handleStartElement();
-                        break;
-                    case XMLStreamConstants.END_ELEMENT :
-                        handleEndElement();
-                        depth--;
-                        break;
-                    case XMLStreamConstants.CHARACTERS :
-                        handleCharacters();
-                        break;
-                    case XMLStreamConstants.ENTITY_REFERENCE :
-                        handleEntityReference();
-                        break;
-                    case XMLStreamConstants.PROCESSING_INSTRUCTION :
-                        handlePI();
-                        break;
-                    case XMLStreamConstants.COMMENT :
-                        handleComment();
-                        break;
-                    case XMLStreamConstants.DTD :
-                        handleDTD();
-                        break;
-                    case XMLStreamConstants.ATTRIBUTE :
-                        handleAttribute();
-                        break;
-                    case XMLStreamConstants.NAMESPACE :
-                        handleNamespace();
-                        break;
-                    case XMLStreamConstants.CDATA :
-                        handleCDATA();
-                        break;
-                    case XMLStreamConstants.ENTITY_DECLARATION :
-                        handleEntityDecl();
-                        break;
-                    case XMLStreamConstants.NOTATION_DECLARATION :
-                        handleNotationDecl();
-                        break;
-                    case XMLStreamConstants.SPACE :
-                        handleSpace();
-                        break;
-                    default :
-                        throw new InternalError("processing event: " + event);
+                case XMLStreamConstants.START_ELEMENT:
+                    depth++;
+                    handleStartElement();
+                    break;
+                case XMLStreamConstants.END_ELEMENT:
+                    handleEndElement();
+                    depth--;
+                    break;
+                case XMLStreamConstants.CHARACTERS:
+                    handleCharacters();
+                    break;
+                case XMLStreamConstants.ENTITY_REFERENCE:
+                    handleEntityReference();
+                    break;
+                case XMLStreamConstants.PROCESSING_INSTRUCTION:
+                    handlePI();
+                    break;
+                case XMLStreamConstants.COMMENT:
+                    handleComment();
+                    break;
+                case XMLStreamConstants.DTD:
+                    handleDTD();
+                    break;
+                case XMLStreamConstants.ATTRIBUTE:
+                    handleAttribute();
+                    break;
+                case XMLStreamConstants.NAMESPACE:
+                    handleNamespace();
+                    break;
+                case XMLStreamConstants.CDATA:
+                    handleCDATA();
+                    break;
+                case XMLStreamConstants.ENTITY_DECLARATION:
+                    handleEntityDecl();
+                    break;
+                case XMLStreamConstants.NOTATION_DECLARATION:
+                    handleNotationDecl();
+                    break;
+                case XMLStreamConstants.SPACE:
+                    handleSpace();
+                    break;
+                default:
+                    throw new InternalError("processing event: " + event);
                 }
 
                 event = staxStreamReader.next();
@@ -177,12 +177,12 @@ public class XMLStreamReaderToContentHandler implements StAXReaderToContentHandl
                 {
                     switch (event)
                     {
-                        case XMLStreamConstants.COMMENT :
-                            handleComment();
-                            break;
-                        case XMLStreamConstants.PROCESSING_INSTRUCTION :
-                            handlePI();
-                            break;
+                    case XMLStreamConstants.COMMENT:
+                        handleComment();
+                        break;
+                    case XMLStreamConstants.PROCESSING_INSTRUCTION:
+                        handlePI();
+                        break;
                     }
                     event = staxStreamReader.next();
                 }
@@ -338,7 +338,7 @@ public class XMLStreamReaderToContentHandler implements StAXReaderToContentHandl
     /**
      * Get the attributes associated with the given START_ELEMENT or ATTRIBUTE
      * StAXevent.
-     * 
+     *
      * @return the StAX attributes converted to an org.xml.sax.Attributes
      */
     protected Attributes getAttributes()
@@ -357,10 +357,12 @@ public class XMLStreamReaderToContentHandler implements StAXReaderToContentHandl
             for (int i = 0; i < staxStreamReader.getNamespaceCount(); i++)
             {
                 String uri = staxStreamReader.getNamespaceURI(i);
-                if (uri == null) uri = "";
+                if (uri == null)
+                    uri = "";
 
                 String prefix = staxStreamReader.getNamespacePrefix(i);
-                if (prefix == null) prefix = "";
+                if (prefix == null)
+                    prefix = "";
 
                 String qName = "xmlns";
                 if (prefix.length() == 0)
@@ -379,7 +381,8 @@ public class XMLStreamReaderToContentHandler implements StAXReaderToContentHandl
         for (int i = 0; i < staxStreamReader.getAttributeCount(); i++)
         {
             String uri = staxStreamReader.getAttributeNamespace(i);
-            if (uri == null) uri = "";
+            if (uri == null)
+                uri = "";
             String localName = staxStreamReader.getAttributeLocalName(i);
             String prefix = staxStreamReader.getAttributePrefix(i);
             String qName;
@@ -419,7 +422,7 @@ public class XMLStreamReaderToContentHandler implements StAXReaderToContentHandl
     protected void handleComment() throws XMLStreamException
     {
         char[] chars = staxStreamReader.getText().toCharArray();
-        
+
         try
         {
             filter.comment(chars, 0, chars.length);
@@ -463,7 +466,7 @@ public class XMLStreamReaderToContentHandler implements StAXReaderToContentHandl
             filter.characters(chars, 0, chars.length);
             filter.endCDATA();
         }
-        catch(SAXException e)
+        catch (SAXException e)
         {
             throw new XMLStreamException(e);
         }

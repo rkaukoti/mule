@@ -24,7 +24,7 @@ public interface JavaComponent extends Component
     /**
      * A {@link JavaComponent} can have a custom entry-point resolver for its own object. By default this is null. When
      * set this resolver will override the resolver on the model
-     * 
+     *
      * @return Null is a resolver set has not been set otherwise the resolver to use on this service
      */
     EntryPointResolverSet getEntryPointResolverSet();
@@ -35,17 +35,15 @@ public interface JavaComponent extends Component
      */
     void setEntryPointResolverSet(EntryPointResolverSet entryPointResolverSet);
 
+    ObjectFactory getObjectFactory();
+
     /**
      * The object factory used to obtain the component object instance. Mule core provides two implementations:
      * {@link SingletonObjectFactory} and {@link PrototypeObjectFactory}.<br/>
      * The spring-config module provides an {@link ObjectFactory} implementation that delegates to spring. There is no
      * PooledObjectFactory, the {@link PooledJavaComponent} should be used for pooling.
-     * 
-     * @param objectFactory
      */
     void setObjectFactory(ObjectFactory objectFactory);
-
-    ObjectFactory getObjectFactory();
 
     Class<?> getObjectType();
 
@@ -58,8 +56,6 @@ public interface JavaComponent extends Component
     /**
      * Sets the factory used create life-cycle adaptors that are used to wrap
      * component instance.
-     * 
-     * @param lifecycleAdaptor
      */
     void setLifecycleAdapterFactory(LifecycleAdapterFactory lifecycleAdaptor);
 }

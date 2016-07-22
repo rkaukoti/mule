@@ -22,11 +22,13 @@ class CreateBeanDefinitionRequest
     private final ComponentBuildingDefinition componentBuildingDefinition;
 
     /**
-     * @param parentComponentModel the parent component model. Some language construct processing depends on the context.
-     * @param componentModel the holder for the configuration attributes defined by the user
+     * @param parentComponentModel        the parent component model. Some language construct processing depends on the context.
+     * @param componentModel              the holder for the configuration attributes defined by the user
      * @param componentBuildingDefinition the definition to build the domain object that will represent the configuration on runtime
      */
-    public CreateBeanDefinitionRequest(ComponentModel parentComponentModel, ComponentModel componentModel, ComponentBuildingDefinition componentBuildingDefinition) {
+    public CreateBeanDefinitionRequest(ComponentModel parentComponentModel, ComponentModel componentModel,
+                                       ComponentBuildingDefinition componentBuildingDefinition)
+    {
         this.parentComponentModel = parentComponentModel;
         this.componentModel = componentModel;
         this.componentBuildingDefinition = componentBuildingDefinition;

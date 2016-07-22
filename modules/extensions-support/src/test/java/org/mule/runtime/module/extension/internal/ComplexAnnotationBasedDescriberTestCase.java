@@ -6,6 +6,14 @@
  */
 package org.mule.runtime.module.extension.internal;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.mule.runtime.extension.api.introspection.declaration.fluent.ConfigurationDeclaration;
+import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclaration;
+import org.mule.runtime.extension.api.introspection.declaration.fluent.OperationDeclaration;
+import org.mule.tck.size.SmallTest;
+import org.mule.test.vegan.extension.VeganExtension;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
@@ -13,14 +21,6 @@ import static org.mule.test.vegan.extension.VeganExtension.APPLE;
 import static org.mule.test.vegan.extension.VeganExtension.BANANA;
 import static org.mule.test.vegan.extension.VeganExtension.KIWI;
 import static org.mule.test.vegan.extension.VeganExtension.VEGAN;
-import org.mule.runtime.extension.api.introspection.declaration.fluent.ConfigurationDeclaration;
-import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclaration;
-import org.mule.runtime.extension.api.introspection.declaration.fluent.OperationDeclaration;
-import org.mule.tck.size.SmallTest;
-import org.mule.test.vegan.extension.VeganExtension;
-
-import org.junit.Before;
-import org.junit.Test;
 
 @SmallTest
 public class ComplexAnnotationBasedDescriberTestCase extends AbstractAnnotationsBasedDescriberTestCase
@@ -48,14 +48,15 @@ public class ComplexAnnotationBasedDescriberTestCase extends AbstractAnnotations
     private void assertOperation(String configName, String operationName)
     {
         ConfigurationDeclaration config = extensionDeclaration.getConfigurations().stream()
-                .filter(c -> c.getName().equals(configName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No config with name " + configName));
+                                                              .filter(c -> c.getName().equals(configName))
+                                                              .findFirst()
+                                                              .orElseThrow(() -> new IllegalArgumentException(
+                                                                      "No config with name " + configName));
 
         OperationDeclaration operation = config.getOperations().stream()
-                .filter(model -> model.getName().equals(operationName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No operation with name " + operationName));
+                                               .filter(model -> model.getName().equals(operationName))
+                                               .findFirst()
+                                               .orElseThrow(() -> new IllegalArgumentException("No operation with name " + operationName));
 
         assertThat(operation.getName(), is(operationName));
     }

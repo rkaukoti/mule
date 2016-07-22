@@ -7,8 +7,9 @@
 
 package org.mule.runtime.module.launcher;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.tck.MuleTestUtils;
 import org.mule.tck.junit4.AbstractMuleTestCase;
@@ -16,9 +17,8 @@ import org.mule.tck.size.SmallTest;
 
 import java.io.File;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 
 @SmallTest
 public class MuleFoldersUtilTestCase extends AbstractMuleTestCase
@@ -30,14 +30,15 @@ public class MuleFoldersUtilTestCase extends AbstractMuleTestCase
     @Test
     public void getsMuleHome() throws Exception
     {
-        MuleTestUtils.testWithSystemProperty(MuleProperties.MULE_HOME_DIRECTORY_PROPERTY, muleHome.getRoot().getAbsolutePath(), new MuleTestUtils.TestCallback()
-        {
-            @Override
-            public void run() throws Exception
-            {
-                File folder = MuleFoldersUtil.getMuleHomeFolder();
-                assertThat(folder.getAbsolutePath(), equalTo(muleHome.getRoot().getAbsolutePath()));
-            }
-        });
+        MuleTestUtils.testWithSystemProperty(MuleProperties.MULE_HOME_DIRECTORY_PROPERTY, muleHome.getRoot().getAbsolutePath(),
+                new MuleTestUtils.TestCallback()
+                {
+                    @Override
+                    public void run() throws Exception
+                    {
+                        File folder = MuleFoldersUtil.getMuleHomeFolder();
+                        assertThat(folder.getAbsolutePath(), equalTo(muleHome.getRoot().getAbsolutePath()));
+                    }
+                });
     }
 }

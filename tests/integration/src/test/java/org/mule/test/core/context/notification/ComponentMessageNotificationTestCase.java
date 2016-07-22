@@ -6,9 +6,10 @@
  */
 package org.mule.test.core.context.notification;
 
-import static org.junit.Assert.assertNotNull;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.context.notification.ComponentMessageNotification;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Test ComponentNotifications/Listeners by sending events to a component. A pre and
@@ -36,23 +37,23 @@ public class ComponentMessageNotificationTestCase extends AbstractNotificationTe
     public RestrictedNode getSpecification()
     {
         return new Node().parallel(
-            new Node(ComponentMessageNotification.class, ComponentMessageNotification.COMPONENT_PRE_INVOKE))
-            .parallel(
-                new Node(ComponentMessageNotification.class,
-                    ComponentMessageNotification.COMPONENT_POST_INVOKE))
-            .parallel(
-                new Node(ComponentMessageNotification.class,
-                    ComponentMessageNotification.COMPONENT_PRE_INVOKE))
-            .parallel(
-                new Node(ComponentMessageNotification.class,
-                    ComponentMessageNotification.COMPONENT_POST_INVOKE));
+                new Node(ComponentMessageNotification.class, ComponentMessageNotification.COMPONENT_PRE_INVOKE))
+                         .parallel(
+                                 new Node(ComponentMessageNotification.class,
+                                         ComponentMessageNotification.COMPONENT_POST_INVOKE))
+                         .parallel(
+                                 new Node(ComponentMessageNotification.class,
+                                         ComponentMessageNotification.COMPONENT_PRE_INVOKE))
+                         .parallel(
+                                 new Node(ComponentMessageNotification.class,
+                                         ComponentMessageNotification.COMPONENT_POST_INVOKE));
     }
 
     @Override
     public void validateSpecification(RestrictedNode spec) throws Exception
     {
         verifyAllNotifications(spec, ComponentMessageNotification.class,
-            ComponentMessageNotification.COMPONENT_PRE_INVOKE,
-            ComponentMessageNotification.COMPONENT_POST_INVOKE);
+                ComponentMessageNotification.COMPONENT_PRE_INVOKE,
+                ComponentMessageNotification.COMPONENT_POST_INVOKE);
     }
 }

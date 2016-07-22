@@ -6,11 +6,11 @@
  */
 package org.mule.compatibility.transport.tcp.protocols;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Returns data one byte at a time.  By default the data are a 4 byte integer, value 1, and
@@ -20,11 +20,10 @@ public class SlowInputStream extends InputStream
 {
 
     public static final int EOF = -1;
-    public static int PAYLOAD = 255;
-    public static int[] CONTENTS = new int[]{0, 0, 0, 1, PAYLOAD};
-    public static final int FULL_LENGTH = CONTENTS.length;
     private static final Logger logger = LoggerFactory.getLogger(SlowInputStream.class);
-
+    public static int PAYLOAD = 255;
+    public static int[] CONTENTS = new int[] {0, 0, 0, 1, PAYLOAD};
+    public static final int FULL_LENGTH = CONTENTS.length;
     private int[] contents;
     private int next = 0;
     private int mark = 0;

@@ -6,10 +6,7 @@
  */
 package org.mule.runtime.core.registry;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.lifecycle.Lifecycle;
@@ -18,7 +15,9 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class RegisteredObjectLifecycleTestCase extends AbstractMuleContextTestCase
 {

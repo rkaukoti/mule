@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.module.cxf.testmodels;
 
+import org.junit.Assert;
+
 import javax.annotation.Resource;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
-
-import org.junit.Assert;
 
 @WebService
 public class Echo

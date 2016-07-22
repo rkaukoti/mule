@@ -7,7 +7,6 @@
 package org.mule.functional.testmodels.fruit;
 
 import org.mule.tck.testmodels.fruit.Orange;
-
 import org.springframework.beans.factory.FactoryBean;
 
 /**
@@ -17,7 +16,7 @@ public class FloridaSunnyOrangeFactoryBean implements FactoryBean
 {
     Integer segments = new Integer(10);
     Double radius = new Double(4.34);
-    
+
     public Object getObject() throws Exception
     {
         return new Orange(segments, radius, "Florida Sunny");

@@ -7,22 +7,22 @@
 
 package org.mule.runtime.module.db.internal.result;
 
+import org.junit.Test;
+import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
+import org.mule.runtime.module.db.internal.result.resultset.ResultSetIterator;
+import org.mule.runtime.module.db.internal.result.resultset.StreamingResultSetCloser;
+import org.mule.runtime.module.db.internal.result.row.RowHandler;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.sql.ResultSet;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
-import org.mule.runtime.module.db.internal.result.row.RowHandler;
-import org.mule.runtime.module.db.internal.result.resultset.ResultSetIterator;
-import org.mule.runtime.module.db.internal.result.resultset.StreamingResultSetCloser;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import java.sql.ResultSet;
-
-import org.junit.Test;
 
 @SmallTest
 public class ResultSetIteratorTestCase extends AbstractMuleTestCase

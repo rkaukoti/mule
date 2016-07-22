@@ -7,17 +7,16 @@
 
 package org.mule.runtime.module.cxf.support;
 
+import org.apache.cxf.interceptor.AttachmentInInterceptor;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.Phase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.module.cxf.CxfConstants;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
-
-import org.apache.cxf.interceptor.AttachmentInInterceptor;
-import org.apache.cxf.interceptor.Fault;
-import org.apache.cxf.message.Message;
-import org.apache.cxf.phase.Phase;
 
 /**
  * This interceptor is responsible for decompressing a message
@@ -44,7 +43,7 @@ public class ProxyGZIPInInterceptor extends AbstractProxyGZIPInterceptor
             return;
         }
 
-        if(isEncoded(event.getMessage()))
+        if (isEncoded(event.getMessage()))
         {
             InputStream is = message.getContent(InputStream.class);
             if (is == null)
@@ -57,7 +56,7 @@ public class ProxyGZIPInInterceptor extends AbstractProxyGZIPInterceptor
                 GZIPInputStream zipInput = new GZIPInputStream(is);
                 message.setContent(InputStream.class, zipInput);
             }
-            catch(IOException io)
+            catch (IOException io)
             {
                 throw new Fault(io);
             }

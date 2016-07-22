@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.client.fluent.Response;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.io.IOException;
 
-import org.apache.http.client.fluent.Request;
-import org.apache.http.client.fluent.Response;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class HttpAllInterfacesTestCase extends AbstractHttpTestCase
 {

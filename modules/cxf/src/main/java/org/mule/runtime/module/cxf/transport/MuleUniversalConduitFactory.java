@@ -6,16 +6,15 @@
  */
 package org.mule.runtime.module.cxf.transport;
 
-import org.mule.runtime.module.cxf.CxfConfiguration;
-
 import org.apache.cxf.service.model.EndpointInfo;
 import org.apache.cxf.ws.addressing.EndpointReferenceType;
+import org.mule.runtime.module.cxf.CxfConfiguration;
 
 public interface MuleUniversalConduitFactory
 {
     /**
      * @param ei The Endpoint being invoked by this destination.
-     * @param t The EPR associated with this Conduit - i.e. the reply destination.
+     * @param t  The EPR associated with this Conduit - i.e. the reply destination.
      */
     MuleUniversalConduit create(MuleUniversalTransport transport,
                                 CxfConfiguration configuration,

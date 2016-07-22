@@ -6,16 +6,15 @@
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
-import static org.apache.commons.lang.StringUtils.isNotEmpty;
-import static org.springframework.beans.factory.support.BeanDefinitionBuilder.genericBeanDefinition;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.DataTypeParamsBuilder;
-
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+
+import static org.apache.commons.lang.StringUtils.isNotEmpty;
+import static org.springframework.beans.factory.support.BeanDefinitionBuilder.genericBeanDefinition;
 
 /**
  * Wrapper for {@link DataType#builder()} to use form Spring parsers.
@@ -25,12 +24,20 @@ final class DataTypeFactoryBean implements FactoryBean<DataType>
 
     public static final String ENCODING = "encoding";
     public static final String MIME_TYPE = "mimeType";
+    private Class<?> type;
+    private String mimeType;
+    private String encoding;
+
+    public DataTypeFactoryBean(Class<?> type, String mimeType, String encoding)
+    {
+        this.type = type;
+        this.mimeType = mimeType;
+        this.encoding = encoding;
+    }
 
     /**
      * Builds a bean definition for a {@link DataType} with the given parameters.
-     * 
-     * @param typeName
-     * @param sourceProperties
+     *
      * @return the bean definition for a {@link DataType}.
      */
     public static AbstractBeanDefinition buildDataTypeDefinition(String typeName, PropertyValues sourceProperties)
@@ -51,17 +58,6 @@ final class DataTypeFactoryBean implements FactoryBean<DataType>
     private static String getEncoding(PropertyValues sourceProperties)
     {
         return sourceProperties.contains(ENCODING) ? (String) sourceProperties.getPropertyValue(ENCODING).getValue() : null;
-    }
-
-    private Class<?> type;
-    private String mimeType;
-    private String encoding;
-
-    public DataTypeFactoryBean(Class<?> type, String mimeType, String encoding)
-    {
-        this.type = type;
-        this.mimeType = mimeType;
-        this.encoding = encoding;
     }
 
     @Override

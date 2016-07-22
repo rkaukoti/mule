@@ -6,11 +6,7 @@
  */
 package org.mule.runtime.module.extension.internal;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mule.test.heisenberg.extension.HeisenbergExtension.EXTENSION_DESCRIPTION;
-import static org.mule.test.heisenberg.extension.HeisenbergExtension.HEISENBERG;
+import org.junit.Test;
 import org.mule.runtime.extension.api.annotation.Extensible;
 import org.mule.runtime.extension.api.annotation.Extension;
 import org.mule.runtime.extension.api.annotation.ExtensionOf;
@@ -19,7 +15,11 @@ import org.mule.runtime.extension.api.introspection.declaration.fluent.Extension
 import org.mule.runtime.extension.api.introspection.declaration.fluent.OperationDeclaration;
 import org.mule.runtime.module.extension.internal.model.property.ExtendingOperationModelProperty;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mule.test.heisenberg.extension.HeisenbergExtension.EXTENSION_DESCRIPTION;
+import static org.mule.test.heisenberg.extension.HeisenbergExtension.HEISENBERG;
 
 public class ExtensibleExtensionOperationsTestCase extends AbstractAnnotationsBasedDescriberTestCase
 {
@@ -52,10 +52,12 @@ public class ExtensibleExtensionOperationsTestCase extends AbstractAnnotationsBa
 
     private void assertOperationExtensionOf(String operationName, Class propertyType)
     {
-        ExtensionDeclaration extensionDeclaration = getDescriber().describe(new DefaultDescribingContext(getClass().getClassLoader())).getDeclaration();
+        ExtensionDeclaration extensionDeclaration =
+                getDescriber().describe(new DefaultDescribingContext(getClass().getClassLoader())).getDeclaration();
         OperationDeclaration operation = getOperation(extensionDeclaration, operationName);
 
-        ExtendingOperationModelProperty<ExtensibleExtension> modelProperty = operation.getModelProperty(ExtendingOperationModelProperty.class).get();
+        ExtendingOperationModelProperty<ExtensibleExtension> modelProperty =
+                operation.getModelProperty(ExtendingOperationModelProperty.class).get();
         assertThat(modelProperty.getType(), is(sameInstance(propertyType)));
     }
 

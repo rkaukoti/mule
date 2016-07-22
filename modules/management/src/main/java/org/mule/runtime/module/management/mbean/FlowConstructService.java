@@ -12,13 +12,12 @@ import org.mule.runtime.core.management.stats.FlowConstructStatistics;
 import org.mule.runtime.module.management.support.AutoDiscoveryJmxSupportFactory;
 import org.mule.runtime.module.management.support.JmxSupport;
 import org.mule.runtime.module.management.support.JmxSupportFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.management.MBeanRegistration;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>FlowConstructService</code> exposes service information about a Mule Managed
@@ -41,7 +40,7 @@ public class FlowConstructService implements FlowConstructServiceMBean, MBeanReg
     protected ObjectName objectName;
 
     protected MuleContext muleContext;
-    
+
     // JmxSupport in order to build MBean's ObjectNames properly.
     protected JmxSupportFactory jmxSupportFactory = AutoDiscoveryJmxSupportFactory.getInstance();
     protected JmxSupport jmxSupport = jmxSupportFactory.getJmxSupport();
@@ -60,7 +59,7 @@ public class FlowConstructService implements FlowConstructServiceMBean, MBeanReg
         this.type = type;
         this.name = name;
     }
-    
+
     public String getName()
     {
         return name;
@@ -90,7 +89,7 @@ public class FlowConstructService implements FlowConstructServiceMBean, MBeanReg
     {
         return statistics.getSyncEventsReceived();
     }
-   
+
     public long getTotalEventsReceived()
     {
         return statistics.getTotalEventsReceived();
@@ -145,9 +144,9 @@ public class FlowConstructService implements FlowConstructServiceMBean, MBeanReg
         {
             if (flow.getStatistics() != null)
             {
-                statsName = jmxSupport.getObjectName(String.format("%s:type=org.mule.Statistics,%s=%s", objectName.getDomain(), 
-                    flow.getConstructType(), jmxSupport.escape(getName())));
-                
+                statsName = jmxSupport.getObjectName(String.format("%s:type=org.mule.Statistics,%s=%s", objectName.getDomain(),
+                        flow.getConstructType(), jmxSupport.escape(getName())));
+
                 // unregister old version if exists
                 if (this.server.isRegistered(statsName))
                 {

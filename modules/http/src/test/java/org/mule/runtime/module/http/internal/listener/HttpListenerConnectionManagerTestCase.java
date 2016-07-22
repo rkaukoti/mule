@@ -6,9 +6,10 @@
  */
 package org.mule.runtime.module.http.internal.listener;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.mockito.Answers;
 import org.mule.compatibility.transport.socket.api.TcpServerSocketProperties;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
@@ -18,18 +19,15 @@ import org.mule.runtime.module.http.api.HttpConstants;
 import org.mule.runtime.module.http.api.HttpListenerConnectionManager;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.mockito.Answers;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class HttpListenerConnectionManagerTestCase extends AbstractMuleTestCase
 {
 
-    private static final String SPECIFIC_IP = "172.24.24.1";
     public static final int PORT = 5555;
     public static final int CONNECTION_IDLE_TIMEOUT = 1000;
-
+    private static final String SPECIFIC_IP = "172.24.24.1";
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
@@ -57,7 +55,8 @@ public class HttpListenerConnectionManagerTestCase extends AbstractMuleTestCase
         final MuleContext mockMuleContext = mock(MuleContext.class, Answers.RETURNS_DEEP_STUBS.get());
         connectionManager.setMuleContext(mockMuleContext);
         WorkManagerSource mockWorkManagerSource = mock(WorkManagerSource.class);
-        when((Object) (mockMuleContext.getRegistry().lookupObject(TcpServerSocketProperties.class))).thenReturn(mock(TcpServerSocketProperties.class));
+        when((Object) (mockMuleContext.getRegistry().lookupObject(TcpServerSocketProperties.class))).thenReturn(
+                mock(TcpServerSocketProperties.class));
 
         connectionManager.initialise();
         connectionManager.createServer(new ServerAddress(firstIp, PORT), mockWorkManagerSource, false, CONNECTION_IDLE_TIMEOUT);

@@ -6,16 +6,15 @@
  */
 package org.mule.issues;
 
-import static org.junit.Assert.assertNull;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertNull;
 
 public class InOutOutOnlyMessageCopyMule3007TestCase extends FunctionalTestCase
 {

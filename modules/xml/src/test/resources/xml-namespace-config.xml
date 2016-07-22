@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml"
+<mule xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
        http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
@@ -24,11 +24,11 @@
         <spring:constructor-arg value="org.mule.jaxb.model"/>
     </spring:bean>
     -->
-    
+
     <spring:bean name="resourceResolver" class="org.mule.runtime.module.xml.config.XmlNamespaceTestCase$MockResourceResolver"/>
     <spring:bean name="errorHandler" class="org.mule.runtime.module.xml.config.XmlNamespaceTestCase$MockErrorHandler"/>
-    
-    <mulexml:schema-validation-filter name="SchemaValidationWithResourceResolver" 
-        schemaLocations="schema1.xsd" resourceResolver-ref="resourceResolver" 
-        errorHandler-ref="errorHandler" returnResult="false"/>
+
+    <mulexml:schema-validation-filter name="SchemaValidationWithResourceResolver"
+                                      schemaLocations="schema1.xsd" resourceResolver-ref="resourceResolver"
+                                      errorHandler-ref="errorHandler" returnResult="false"/>
 </mule>

@@ -43,8 +43,7 @@ public interface ParsingDelegate<M extends MetadataType, T>
      *
      * @param key          the parsed entity key
      * @param metadataType a {@link MetadataType}
-     * @param elementDsl the {@link DslElementDeclaration} of the parsed element
-     * @return
+     * @param elementDsl   the {@link DslElementDeclaration} of the parsed element
      */
     T parse(String key, M metadataType, DslElementDeclaration elementDsl);
 }

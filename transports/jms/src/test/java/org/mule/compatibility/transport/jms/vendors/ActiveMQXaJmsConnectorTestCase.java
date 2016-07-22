@@ -6,9 +6,8 @@
  */
 package org.mule.compatibility.transport.jms.vendors;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.apache.activemq.ActiveMQXAConnectionFactory;
+import org.junit.Test;
 import org.mule.compatibility.transport.jms.JmsConnector;
 import org.mule.compatibility.transport.jms.xa.DefaultXAConnectionFactoryWrapper;
 import org.mule.functional.junit4.FunctionalTestCase;
@@ -20,8 +19,8 @@ import java.lang.reflect.Proxy;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 
-import org.apache.activemq.ActiveMQXAConnectionFactory;
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class ActiveMQXaJmsConnectorTestCase extends FunctionalTestCase
 {
@@ -36,7 +35,7 @@ public class ActiveMQXaJmsConnectorTestCase extends FunctionalTestCase
     {
         JmsConnector c = (JmsConnector) muleContext.getRegistry().lookupObject("jmsConnector");
         assertNotNull(c);
-        
+
         ConnectionFactory cf = c.getConnectionFactory();
         assertTrue(cf instanceof ActiveMQXAConnectionFactory);
 
@@ -57,17 +56,17 @@ public class ActiveMQXaJmsConnectorTestCase extends FunctionalTestCase
                 // this is really an XA connection
                 connection = (Connection) handler.getTargetObject();
                 Class realConnectionClass = connection.getClass();
-                cleanupMethod = realConnectionClass.getMethod("cleanup", (Class[])null);
+                cleanupMethod = realConnectionClass.getMethod("cleanup", (Class[]) null);
             }
             else
             {
-                cleanupMethod = clazz.getMethod("cleanup", (Class[])null);
+                cleanupMethod = clazz.getMethod("cleanup", (Class[]) null);
             }
 
 
             if (cleanupMethod != null)
             {
-                cleanupMethod.invoke(connection, (Object[])null);
+                cleanupMethod.invoke(connection, (Object[]) null);
             }
         }
         finally

@@ -6,20 +6,19 @@
  */
 package org.mule.runtime.module.cxf.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.apache.cxf.ws.security.SecurityConstants;
+import org.apache.ws.security.handler.WSHandlerConstants;
+import org.apache.ws.security.validate.NoOpValidator;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.module.cxf.wssec.ClientPasswordCallback;
 
 import java.util.Map;
 
-import org.apache.cxf.ws.security.SecurityConstants;
-import org.apache.ws.security.handler.WSHandlerConstants;
-import org.apache.ws.security.validate.NoOpValidator;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class WsSecurityDefinitionParserTestCase extends FunctionalTestCase
 {
@@ -60,9 +59,9 @@ public class WsSecurityDefinitionParserTestCase extends FunctionalTestCase
         assertNotNull(wsSecurity.getConfigProperties());
         assertFalse(wsSecurity.getConfigProperties().isEmpty());
         Map<String, Object> wsProperties = wsSecurity.getConfigProperties();
-        
+
         assertEquals(WSHandlerConstants.TIMESTAMP + " " + WSHandlerConstants.SIGNATURE + " "
-                + WSHandlerConstants.ENCRYPT, wsProperties.get(WSHandlerConstants.ACTION));
+                     + WSHandlerConstants.ENCRYPT, wsProperties.get(WSHandlerConstants.ACTION));
         assertEquals("joe", wsProperties.get(WSHandlerConstants.USER));
         assertEquals("org/mule/runtime/module/cxf/wssec/wssecurity.properties", wsProperties.get(WSHandlerConstants.SIG_PROP_FILE));
         assertEquals("org/mule/runtime/module/cxf/wssec/wssecurity.properties", wsProperties.get(WSHandlerConstants.ENC_PROP_FILE));

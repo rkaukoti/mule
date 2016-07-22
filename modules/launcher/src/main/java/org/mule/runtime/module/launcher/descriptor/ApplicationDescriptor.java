@@ -7,8 +7,6 @@
  */
 package org.mule.runtime.module.launcher.descriptor;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.module.launcher.domain.Domain.DEFAULT_DOMAIN_NAME;
 import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.module.launcher.plugin.ArtifactPluginDescriptor;
 
@@ -17,6 +15,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.module.launcher.domain.Domain.DEFAULT_DOMAIN_NAME;
 
 
 public class ApplicationDescriptor extends DeployableArtifactDescriptor
@@ -67,6 +68,7 @@ public class ApplicationDescriptor extends DeployableArtifactDescriptor
      * Config builder name. If the name not found among available builder shortcuts
      * (e.g. 'spring' for default xml-based Mule config), then a FQN of the class to
      * use.
+     *
      * @return null for defaults
      */
     public String getConfigurationBuilder()
@@ -110,24 +112,24 @@ public class ApplicationDescriptor extends DeployableArtifactDescriptor
         this.absoluteResourcePaths = absoluteResourcePaths;
     }
 
-    public void setConfigResourcesFile(File[] configResourcesFile)
-    {
-        this.configResourcesFile = configResourcesFile;
-    }
-
     public File[] getConfigResourcesFile()
     {
         return configResourcesFile;
     }
 
-    public void setLogConfigFile(File logConfigFile)
+    public void setConfigResourcesFile(File[] configResourcesFile)
     {
-        this.logConfigFile = logConfigFile;
+        this.configResourcesFile = configResourcesFile;
     }
 
     public File getLogConfigFile()
     {
         return logConfigFile;
+    }
+
+    public void setLogConfigFile(File logConfigFile)
+    {
+        this.logConfigFile = logConfigFile;
     }
 
     /**
@@ -147,18 +149,18 @@ public class ApplicationDescriptor extends DeployableArtifactDescriptor
     }
 
     /**
-     * @param sharedPluginFolder folder where the shared libraries between the application plugins are located
-     */
-    public void setSharedPluginFolder(File sharedPluginFolder)
-    {
-        this.sharedPluginFolder = sharedPluginFolder;
-    }
-
-    /**
      * @return the folder where the shared libraries between the application plugins are located
      */
     public File getSharedPluginFolder()
     {
         return sharedPluginFolder;
+    }
+
+    /**
+     * @param sharedPluginFolder folder where the shared libraries between the application plugins are located
+     */
+    public void setSharedPluginFolder(File sharedPluginFolder)
+    {
+        this.sharedPluginFolder = sharedPluginFolder;
     }
 }

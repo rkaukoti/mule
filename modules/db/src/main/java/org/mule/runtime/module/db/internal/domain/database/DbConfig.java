@@ -7,10 +7,10 @@
 
 package org.mule.runtime.module.db.internal.domain.database;
 
-import org.mule.runtime.api.meta.AnnotatedObject;
-import org.mule.runtime.api.meta.NamedObject;
 import org.mule.common.Testable;
 import org.mule.common.metadata.ConnectorMetaDataEnabled;
+import org.mule.runtime.api.meta.AnnotatedObject;
+import org.mule.runtime.api.meta.NamedObject;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnectionFactory;
 
 import javax.sql.DataSource;

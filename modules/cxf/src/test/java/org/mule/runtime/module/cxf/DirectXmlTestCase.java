@@ -6,13 +6,16 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.apache.cxf.helpers.DOMUtils;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.xml.stax.StaxSource;
 import org.mule.tck.junit4.rule.DynamicPort;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
 import java.io.InputStream;
 
@@ -21,12 +24,8 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXSource;
 
-import org.apache.cxf.helpers.DOMUtils;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class DirectXmlTestCase extends FunctionalTestCase
 {

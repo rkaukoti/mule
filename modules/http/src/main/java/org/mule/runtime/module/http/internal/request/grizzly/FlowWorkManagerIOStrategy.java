@@ -6,24 +6,22 @@
  */
 package org.mule.runtime.module.http.internal.request.grizzly;
 
-import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.core.api.context.WorkManager;
-import org.mule.runtime.core.api.context.WorkManagerSource;
-
-import com.ning.http.client.AsyncHandler;
 import com.ning.http.client.providers.grizzly.HttpTransactionContext;
-
-import java.io.IOException;
-import java.util.EnumSet;
-import java.util.concurrent.Executor;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.glassfish.grizzly.Connection;
 import org.glassfish.grizzly.Grizzly;
 import org.glassfish.grizzly.IOEvent;
 import org.glassfish.grizzly.IOEventLifeCycleListener;
 import org.glassfish.grizzly.strategies.AbstractIOStrategy;
+import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.api.context.WorkManager;
+import org.mule.runtime.core.api.context.WorkManagerSource;
+
+import java.io.IOException;
+import java.util.EnumSet;
+import java.util.concurrent.Executor;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Grizzly IO Strategy that will handle work using a Mule {@link org.mule.runtime.core.api.context.WorkManager}.
@@ -41,6 +39,20 @@ public class FlowWorkManagerIOStrategy extends AbstractIOStrategy
     protected FlowWorkManagerIOStrategy()
     {
         // Use getInstance() to obtain singleton instance.
+    }
+
+    private static void run0(final Connection connection,
+                             final IOEvent ioEvent,
+                             final IOEventLifeCycleListener lifeCycleListener)
+    {
+
+        fireIOEvent(connection, ioEvent, lifeCycleListener, logger);
+
+    }
+
+    public static FlowWorkManagerIOStrategy getInstance()
+    {
+        return INSTANCE;
     }
 
     @Override
@@ -97,7 +109,7 @@ public class FlowWorkManagerIOStrategy extends AbstractIOStrategy
             {
                 // ignore exception, log warning and fallback to using WorkerIOStrategy
             }
-            if(logger.isLoggable(Level.FINE))
+            if (logger.isLoggable(Level.FINE))
             {
                 logger.fine("Unable to obtain Mule WorkManager instance for worker thread IO. Grizzly " +
                             "WorkerIOStrategy will be used instead.");
@@ -126,15 +138,6 @@ public class FlowWorkManagerIOStrategy extends AbstractIOStrategy
         }
     }
 
-    private static void run0(final Connection connection,
-                             final IOEvent ioEvent,
-                             final IOEventLifeCycleListener lifeCycleListener)
-    {
-
-        fireIOEvent(connection, ioEvent, lifeCycleListener, logger);
-
-    }
-
     private static final class WorkerThreadRunnable implements Runnable
     {
 
@@ -156,11 +159,6 @@ public class FlowWorkManagerIOStrategy extends AbstractIOStrategy
         {
             run0(connection, ioEvent, lifeCycleListener);
         }
-    }
-
-    public static FlowWorkManagerIOStrategy getInstance()
-    {
-        return INSTANCE;
     }
 
 }

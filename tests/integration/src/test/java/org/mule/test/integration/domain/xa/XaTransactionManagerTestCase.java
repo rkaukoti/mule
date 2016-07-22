@@ -6,14 +6,6 @@
  */
 package org.mule.test.integration.domain.xa;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.internal.matchers.ThrowableMessageMatcher.hasMessage;
-import static org.mule.runtime.core.config.ExceptionHelper.getRootException;
-
-import org.mule.runtime.core.api.config.ConfigurationException;
-import org.mule.functional.junit4.DomainFunctionalTestCase;
-import org.mule.runtime.core.api.lifecycle.InitialisationException;
-
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
@@ -22,11 +14,19 @@ import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mule.functional.junit4.DomainFunctionalTestCase;
+import org.mule.runtime.core.api.config.ConfigurationException;
+import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.internal.matchers.ThrowableMessageMatcher.hasMessage;
+import static org.mule.runtime.core.config.ExceptionHelper.getRootException;
 
 public class XaTransactionManagerTestCase extends DomainFunctionalTestCase
 {
 
+    public static final String APPLICATION_NAME = "app";
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -34,12 +34,12 @@ public class XaTransactionManagerTestCase extends DomainFunctionalTestCase
     public void setUpMuleContexts() throws Exception
     {
         thrown.expect(InitialisationException.class);
-        thrown.expect(hasMessage(containsString("No qualifying bean of type [org.mule.runtime.core.api.transaction.TransactionManagerFactory] is defined: expected single matching bean but found 2:")));
-        thrown.expect(ThrowableRootCauseMatcher.hasRootCause(IsInstanceOf.<ConfigurationException> instanceOf(NoUniqueBeanDefinitionException.class)));
+        thrown.expect(hasMessage(containsString(
+                "No qualifying bean of type [org.mule.runtime.core.api.transaction.TransactionManagerFactory] is defined: expected single matching bean but found 2:")));
+        thrown.expect(ThrowableRootCauseMatcher.hasRootCause(
+                IsInstanceOf.<ConfigurationException>instanceOf(NoUniqueBeanDefinitionException.class)));
         super.setUpMuleContexts();
     }
-
-    public static final String APPLICATION_NAME = "app";
 
     @Override
     protected String getDomainConfig()
@@ -63,7 +63,7 @@ public class XaTransactionManagerTestCase extends DomainFunctionalTestCase
     }
 
     public static class ThrowableRootCauseMatcher<T extends Throwable> extends
-        TypeSafeMatcher<T>
+            TypeSafeMatcher<T>
     {
 
         private final Matcher<T> fMatcher;
@@ -71,6 +71,12 @@ public class XaTransactionManagerTestCase extends DomainFunctionalTestCase
         public ThrowableRootCauseMatcher(Matcher<T> matcher)
         {
             fMatcher = matcher;
+        }
+
+        @Factory
+        public static <T extends Throwable> Matcher<T> hasRootCause(final Matcher<T> matcher)
+        {
+            return new ThrowableRootCauseMatcher<T>(matcher);
         }
 
         @Override
@@ -91,12 +97,6 @@ public class XaTransactionManagerTestCase extends DomainFunctionalTestCase
         {
             description.appendText("root cause ");
             fMatcher.describeMismatch(getRootException(item), description);
-        }
-
-        @Factory
-        public static <T extends Throwable> Matcher<T> hasRootCause(final Matcher<T> matcher)
-        {
-            return new ThrowableRootCauseMatcher<T>(matcher);
         }
     }
 }

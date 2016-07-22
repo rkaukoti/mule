@@ -6,17 +6,16 @@
  */
 package org.mule.runtime.module.extension.internal.capability.xml.schema;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.core.util.Preconditions.checkState;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_NAMESPACE;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_PREFIX;
+import org.apache.commons.lang.StringUtils;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
 import org.mule.runtime.extension.api.introspection.config.ConfigurationModel;
 import org.mule.runtime.extension.api.introspection.config.RuntimeConfigurationModel;
 import org.mule.runtime.extension.api.introspection.connection.ConnectionProviderModel;
 import org.mule.runtime.extension.api.introspection.operation.OperationModel;
-import org.mule.runtime.extension.xml.dsl.api.property.XmlModelProperty;
 import org.mule.runtime.extension.api.introspection.source.SourceModel;
+import org.mule.runtime.extension.xml.dsl.api.property.XmlModelProperty;
 import org.mule.runtime.module.extension.internal.capability.xml.schema.builder.SchemaBuilder;
 import org.mule.runtime.module.extension.internal.capability.xml.schema.model.NamespaceFilter;
 import org.mule.runtime.module.extension.internal.capability.xml.schema.model.Schema;
@@ -28,9 +27,10 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import org.apache.commons.lang.StringUtils;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.core.util.Preconditions.checkState;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_NAMESPACE;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_PREFIX;
 
 /**
  * Generator class that takes a {@link ExtensionModel}

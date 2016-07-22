@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getParameter;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.context.MuleContextAware;
@@ -23,11 +23,11 @@ import org.mule.tck.size.SmallTest;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getParameter;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)

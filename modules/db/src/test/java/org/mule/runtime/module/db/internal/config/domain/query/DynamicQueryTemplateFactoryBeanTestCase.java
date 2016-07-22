@@ -7,16 +7,16 @@
 
 package org.mule.runtime.module.db.internal.config.domain.query;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
+import org.junit.Test;
 import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
 import org.mule.runtime.module.db.internal.domain.query.QueryType;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 
 @SmallTest
 public class DynamicQueryTemplateFactoryBeanTestCase extends AbstractMuleTestCase

@@ -6,14 +6,12 @@
  */
 package org.mule.runtime.module.http.internal;
 
-import static com.google.common.base.Charsets.UTF_8;
-import static org.mule.runtime.core.util.StringUtils.WHITE_SPACE;
+import com.google.common.collect.Lists;
 
+import org.apache.commons.io.IOUtils;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.module.http.internal.multipart.HttpPart;
-
-import com.google.common.collect.Lists;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,7 +34,8 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.ParseException;
 import javax.mail.util.ByteArrayDataSource;
 
-import org.apache.commons.io.IOUtils;
+import static com.google.common.base.Charsets.UTF_8;
+import static org.mule.runtime.core.util.StringUtils.WHITE_SPACE;
 
 public class HttpParser
 {
@@ -61,7 +60,7 @@ public class HttpParser
     {
         int i = uri.indexOf("?");
         String queryString = "";
-        if(i > -1)
+        if (i > -1)
         {
             queryString = uri.substring(i + 1);
         }
@@ -102,7 +101,8 @@ public class HttpParser
                         partName = partName.substring(0, partName.indexOf("\""));
                     }
                 }
-                HttpPart httpPart = new HttpPart(partName, filename, IOUtils.toByteArray(part.getInputStream()), part.getContentType(), part.getSize());
+                HttpPart httpPart =
+                        new HttpPart(partName, filename, IOUtils.toByteArray(part.getInputStream()), part.getContentType(), part.getSize());
 
                 Enumeration<Header> headers = part.getAllHeaders();
 
@@ -152,7 +152,8 @@ public class HttpParser
         if (!StringUtils.isBlank(encodedString))
         {
             String[] pairs = encodedString.split("&");
-            for (String pair : pairs) {
+            for (String pair : pairs)
+            {
                 int idx = pair.indexOf("=");
 
                 if (idx != -1)
@@ -179,7 +180,7 @@ public class HttpParser
     {
         String body;
         StringBuilder result = new StringBuilder();
-        for (Map.Entry<?,?> entry : (Set<Map.Entry<?,?>>)((parameters).entrySet()))
+        for (Map.Entry<?, ?> entry : (Set<Map.Entry<?, ?>>) ((parameters).entrySet()))
         {
             String paramName = entry.getKey().toString();
             Object paramValue = entry.getValue();
@@ -219,7 +220,7 @@ public class HttpParser
      * Decodes uri params from a request path
      *
      * @param pathWithUriParams path with uri param place holders
-     * @param requestPath request path
+     * @param requestPath       request path
      * @return a map with the uri params present in the request path with the values decoded.
      */
     public static ParameterMap decodeUriParams(String pathWithUriParams, String requestPath)
@@ -247,7 +248,7 @@ public class HttpParser
 
     private static String decode(String text, Charset encoding)
     {
-        if(text == null)
+        if (text == null)
         {
             return null;
         }
@@ -306,8 +307,8 @@ public class HttpParser
     /**
      * Appends a query parameter to an URL that may or may not contain query parameters already.
      *
-     * @param url base URL to apply the new query parameter
-     * @param queryParamName query parameter name
+     * @param url             base URL to apply the new query parameter
+     * @param queryParamName  query parameter name
      * @param queryParamValue query parameter value
      * @return a new string with the query parameter appended
      */
@@ -316,7 +317,8 @@ public class HttpParser
         try
         {
             String urlPreparedForNewParameter = url.contains("?") ? url + "&" : url + "?";
-            return urlPreparedForNewParameter + URLEncoder.encode(queryParamName, UTF_8.name()) + "=" + URLEncoder.encode(queryParamValue, UTF_8.name());
+            return urlPreparedForNewParameter + URLEncoder.encode(queryParamName, UTF_8.name()) + "=" +
+                   URLEncoder.encode(queryParamValue, UTF_8.name());
         }
         catch (UnsupportedEncodingException e)
         {

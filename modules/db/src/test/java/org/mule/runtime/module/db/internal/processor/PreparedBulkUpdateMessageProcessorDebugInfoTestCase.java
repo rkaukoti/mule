@@ -7,26 +7,8 @@
 
 package org.mule.runtime.module.db.internal.processor;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.db.integration.model.Planet.EARTH;
-import static org.mule.runtime.module.db.integration.model.Planet.MARS;
-import static org.mule.runtime.module.db.internal.domain.query.QueryType.UPDATE;
-import static org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction.NOT_SUPPORTED;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.INPUT_PARAMS_DEBUG_FIELD;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.PARAM_DEBUG_FIELD_PREFIX;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.PARAM_SET_DEBUG_FIELD_PREFIX;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERY_DEBUG_FIELD;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.SQL_TEXT_DEBUG_FIELD;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.TYPE_DEBUG_FIELD;
-import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
-import static org.mule.tck.junit4.matcher.ObjectDebugInfoMatcher.objectLike;
+import org.hamcrest.Matcher;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -50,15 +32,34 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.hamcrest.Matcher;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.db.integration.model.Planet.EARTH;
+import static org.mule.runtime.module.db.integration.model.Planet.MARS;
+import static org.mule.runtime.module.db.internal.domain.query.QueryType.UPDATE;
+import static org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction.NOT_SUPPORTED;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.INPUT_PARAMS_DEBUG_FIELD;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.PARAM_DEBUG_FIELD_PREFIX;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.PARAM_SET_DEBUG_FIELD_PREFIX;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERY_DEBUG_FIELD;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.SQL_TEXT_DEBUG_FIELD;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.TYPE_DEBUG_FIELD;
+import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
+import static org.mule.tck.junit4.matcher.ObjectDebugInfoMatcher.objectLike;
 
 @SmallTest
 public class PreparedBulkUpdateMessageProcessorDebugInfoTestCase extends AbstractMuleTestCase
 {
 
     public static final String QUERY_SQL = "update PLANET set NAME='Mercury' where NAME=?";
-    public static final QueryTemplate QUERY_TEMPLATE_WITH_NAMED_PARAM = new QueryTemplate(QUERY_SQL, UPDATE, Collections.<QueryParam>singletonList(new DefaultInputQueryParam(1, null, null)));
+    public static final QueryTemplate QUERY_TEMPLATE_WITH_NAMED_PARAM =
+            new QueryTemplate(QUERY_SQL, UPDATE, Collections.<QueryParam>singletonList(new DefaultInputQueryParam(1, null, null)));
     public static final String PARAM1 = PARAM_DEBUG_FIELD_PREFIX + 1;
     public static final String PARAM_SET1 = PARAM_SET_DEBUG_FIELD_PREFIX + 1;
     public static final String PARAM_SET2 = PARAM_SET_DEBUG_FIELD_PREFIX + 2;
@@ -87,12 +88,18 @@ public class PreparedBulkUpdateMessageProcessorDebugInfoTestCase extends Abstrac
         when(dbConfigResolver.resolve(event)).thenReturn(dbConfig);
         when(dbConfig.getConnectionFactory()).thenReturn(dbConnectionFactory);
 
-        when(queryResolver.resolve(argThat(equalTo(connection)), any(MuleEvent.class))).thenReturn(new Query(QUERY_TEMPLATE_WITH_NAMED_PARAM));
+        when(queryResolver.resolve(argThat(equalTo(connection)), any(MuleEvent.class))).thenReturn(
+                new Query(QUERY_TEMPLATE_WITH_NAMED_PARAM));
 
         final ParamValueResolver paramValueResolver = mock(ParamValueResolver.class);
-        when(paramValueResolver.resolveParams(any(MuleEvent.class), any(List.class))).thenReturn(Collections.singletonList(new QueryParamValue(null, EARTH.getName()))).thenReturn(Collections.singletonList(new QueryParamValue(null, MARS.getName())));
+        when(paramValueResolver.resolveParams(any(MuleEvent.class), any(List.class))).thenReturn(
+                Collections.singletonList(new QueryParamValue(null, EARTH.getName())))
+                                                                                     .thenReturn(Collections.singletonList(
+                                                                                             new QueryParamValue(null, MARS.getName())));
 
-        PreparedBulkUpdateMessageProcessor processor = new PreparedBulkUpdateMessageProcessor(dbConfigResolver, queryResolver, null, NOT_SUPPORTED, Collections.singletonList(UPDATE), paramValueResolver);
+        PreparedBulkUpdateMessageProcessor processor =
+                new PreparedBulkUpdateMessageProcessor(dbConfigResolver, queryResolver, null, NOT_SUPPORTED,
+                        Collections.singletonList(UPDATE), paramValueResolver);
         processor.setMuleContext(muleContext);
 
         final List<FieldDebugInfo<?>> debugInfo = processor.getDebugInfo(event);

@@ -6,10 +6,7 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.transport.Connector;
 
 import javax.jms.DeliveryMode;
@@ -24,34 +21,13 @@ import javax.jms.TopicConnection;
 import javax.jms.TopicPublisher;
 import javax.jms.TopicSession;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class JmsMuleSideDurableTopicTestCase extends AbstractJmsFunctionalTestCase
 {
     public static final String CONNECTOR1_NAME = "jmsConnectorC1";
-
-    @Override
-    protected String getConfigFile()
-    {
-        return "integration/jms-muleside-durable-topic.xml";
-    }
-
-    @Test
-    public void testMuleDurableSubscriber() throws Exception
-    {
-        send(scenarioNoTx);
-        receive(scenarioNoTx);
-        receive(scenarioNoTx);
-        ((Connector) muleContext.getRegistry().lookupObject(CONNECTOR1_NAME)).stop();
-        assertEquals(((Connector) muleContext.getRegistry().lookupObject(CONNECTOR1_NAME)).isStarted(), false);
-        log.info(CONNECTOR1_NAME + " is stopped");
-        send(scenarioNoTx);
-        ((Connector) muleContext.getRegistry().lookupObject(CONNECTOR1_NAME)).start();
-        log.info(CONNECTOR1_NAME + " is started");
-        receive(scenarioNoTx);
-        receive(scenarioNoTx);
-    }
-
     Scenario scenarioNoTx = new NonTransactedScenario()
     {
         @Override
@@ -78,6 +54,28 @@ public class JmsMuleSideDurableTopicTestCase extends AbstractJmsFunctionalTestCa
             return message;
         }
     };
+
+    @Override
+    protected String getConfigFile()
+    {
+        return "integration/jms-muleside-durable-topic.xml";
+    }
+
+    @Test
+    public void testMuleDurableSubscriber() throws Exception
+    {
+        send(scenarioNoTx);
+        receive(scenarioNoTx);
+        receive(scenarioNoTx);
+        ((Connector) muleContext.getRegistry().lookupObject(CONNECTOR1_NAME)).stop();
+        assertEquals(((Connector) muleContext.getRegistry().lookupObject(CONNECTOR1_NAME)).isStarted(), false);
+        log.info(CONNECTOR1_NAME + " is stopped");
+        send(scenarioNoTx);
+        ((Connector) muleContext.getRegistry().lookupObject(CONNECTOR1_NAME)).start();
+        log.info(CONNECTOR1_NAME + " is started");
+        receive(scenarioNoTx);
+        receive(scenarioNoTx);
+    }
 
     @Override
     public void send(Scenario scenario) throws Exception

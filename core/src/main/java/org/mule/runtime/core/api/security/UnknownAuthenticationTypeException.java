@@ -24,6 +24,6 @@ public class UnknownAuthenticationTypeException extends MuleException
     public UnknownAuthenticationTypeException(Authentication authentication)
     {
         super(CoreMessages.authTypeNotRecognised((authentication == null
-                        ? "null" : authentication.getClass().getName())));
+                ? "null" : authentication.getClass().getName())));
     }
 }

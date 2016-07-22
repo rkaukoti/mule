@@ -6,15 +6,6 @@
  */
 package org.mule.runtime.core;
 
-import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
-
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.construct.Flow;
-import org.mule.runtime.core.util.IOUtils;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-
-import java.io.IOException;
-
 import org.databene.contiperf.PerfTest;
 import org.databene.contiperf.junit.ContiPerfRule;
 import org.junit.Before;
@@ -23,6 +14,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.construct.Flow;
+import org.mule.runtime.core.util.IOUtils;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+
+import java.io.IOException;
+
+import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MuleEventCopyPerformanceTestCase extends AbstractMuleContextTestCase

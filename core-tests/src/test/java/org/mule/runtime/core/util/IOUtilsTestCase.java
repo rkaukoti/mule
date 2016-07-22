@@ -6,15 +6,7 @@
  */
 package org.mule.runtime.core.util;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mule.tck.MuleTestUtils.testWithSystemProperty;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
@@ -24,7 +16,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLClassLoader;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mule.tck.MuleTestUtils.testWithSystemProperty;
 
 @SmallTest
 public class IOUtilsTestCase extends AbstractMuleTestCase

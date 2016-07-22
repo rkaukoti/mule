@@ -6,10 +6,10 @@
  */
 package org.mule.functional.testmodels.services;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TestComponent implements ITestComponent
 {
@@ -25,10 +25,10 @@ public class TestComponent implements ITestComponent
                     + Thread.currentThread().getName());
         return "Received: " + message;
     }
-    
+
     public String receiveBytes(byte[] message) throws Exception
     {
-        return receive(new String(message)); 
+        return receive(new String(message));
     }
 
     public String throwsException(String message) throws Exception

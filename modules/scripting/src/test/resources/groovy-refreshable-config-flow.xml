@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:lang="http://www.springframework.org/schema/lang"
-       xmlns:spring="http://www.springframework.org/schema/beans"
-       xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
-    xsi:schemaLocation="
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:lang="http://www.springframework.org/schema/lang"
+      xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
        http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.1.xsd
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
@@ -36,7 +36,7 @@
         will need to set methodName attribute and the GroovyRefreshableBeanBuilder will execute this method
     -->
     <scripting:groovy-refreshable name="groovyRefreshableBean" refreshableBean-ref="groovy_class_bean"
-                                 methodName="receive"/>
+                                  methodName="receive"/>
 
     <!--
         The test case will set the script to a class which extends from the Callable inteface, and executes
@@ -45,7 +45,7 @@
         GroovyRefreshableBeanBuilder supports a change in the interfaces implemented by the refreshable bean.
     -->
     <scripting:groovy-refreshable name="groovyRefreshableBeanChangeInterfaces"
-                                 refreshableBean-ref="groovy_class_changeInterfaces" methodName="receive"/>
+                                  refreshableBean-ref="groovy_class_changeInterfaces" methodName="receive"/>
 
     <flow name="GroovyUMO_Callable">
         <component>

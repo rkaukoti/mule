@@ -43,7 +43,7 @@ public abstract class AbstractEnvelopeInterceptor extends AbstractRequestRespons
     public abstract MuleEvent after(MuleEvent event) throws MuleException;
 
     /**
-     *  This method is always invoked after the event has been processed,
+     * This method is always invoked after the event has been processed,
      */
     public abstract MuleEvent last(MuleEvent event, ProcessingTime time, long startTime, boolean exceptionWasThrown) throws MuleException;
 
@@ -116,7 +116,7 @@ public abstract class AbstractEnvelopeInterceptor extends AbstractRequestRespons
 
         @Override
         public void processReplyTo(final MuleEvent event, MuleMessage returnMessage, Object replyTo) throws
-                                                                                                     MuleException
+                MuleException
         {
             MuleEvent response = event;
             boolean exceptionWasThrown = true;

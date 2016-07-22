@@ -6,12 +6,7 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.message.ExceptionMessage;
 
@@ -23,7 +18,11 @@ import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests a transactional exception strategy.
@@ -31,6 +30,9 @@ import org.junit.Test;
 public class JmsDeadLetterQueueTestCase extends AbstractJmsFunctionalTestCase
 {
     public static final String DEADLETTER_QUEUE_NAME = "dlq";
+    Scenario scenarioDeadLetter = new ScenarioDeadLetter();
+    Scenario scenarioDeadLetterRollback = new ScenarioDeadLetterRollback();
+    Scenario scenarioDeadLetterNotReceive = new ScenarioDeadLetterNotReceive();
 
     @Override
     protected String getConfigFile()
@@ -59,8 +61,6 @@ public class JmsDeadLetterQueueTestCase extends AbstractJmsFunctionalTestCase
         // Verify there is no more message to receive.
         receive(scenarioDeadLetterNotReceive);
     }
-
-    Scenario scenarioDeadLetter = new ScenarioDeadLetter();
 
     class ScenarioDeadLetter extends ScenarioCommit
     {
@@ -130,8 +130,6 @@ public class JmsDeadLetterQueueTestCase extends AbstractJmsFunctionalTestCase
         }
     }
 
-    Scenario scenarioDeadLetterRollback = new ScenarioDeadLetterRollback();
-
     class ScenarioDeadLetterRollback extends ScenarioDeadLetter
     {
         // @Override
@@ -141,8 +139,6 @@ public class JmsDeadLetterQueueTestCase extends AbstractJmsFunctionalTestCase
             session.rollback();
         }
     }
-
-    Scenario scenarioDeadLetterNotReceive = new ScenarioDeadLetterNotReceive();
 
     class ScenarioDeadLetterNotReceive extends ScenarioDeadLetter
     {

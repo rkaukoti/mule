@@ -7,15 +7,14 @@
 
 package org.mule.runtime.module.db.integration.matcher;
 
-import org.mule.runtime.core.api.MuleMessage;
-
-import java.util.List;
-import java.util.Map;
-
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.junit.internal.matchers.TypeSafeMatcher;
+import org.mule.runtime.core.api.MuleMessage;
+
+import java.util.List;
+import java.util.Map;
 
 public class ContainsMessage extends TypeSafeMatcher<List<MuleMessage>>
 {
@@ -27,6 +26,12 @@ public class ContainsMessage extends TypeSafeMatcher<List<MuleMessage>>
     {
         this.key = key;
         this.value = value;
+    }
+
+    @Factory
+    public static Matcher<List<MuleMessage>> mapPayloadWith(String key, Object value)
+    {
+        return new ContainsMessage(key, value);
     }
 
     @Override
@@ -48,12 +53,6 @@ public class ContainsMessage extends TypeSafeMatcher<List<MuleMessage>>
     public void describeTo(Description description)
     {
         description.appendText("Does not contains a map payload with key = " + key + " and value = " + value);
-    }
-
-    @Factory
-    public static Matcher<List<MuleMessage>> mapPayloadWith(String key, Object value)
-    {
-        return new ContainsMessage(key, value);
     }
 
 }

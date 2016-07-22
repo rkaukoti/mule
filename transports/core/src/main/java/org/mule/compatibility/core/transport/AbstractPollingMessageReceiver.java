@@ -35,12 +35,10 @@ public abstract class AbstractPollingMessageReceiver extends AbstractMessageRece
     public static final TimeUnit DEFAULT_POLL_TIMEUNIT = TimeUnit.MILLISECONDS;
 
     public static final long DEFAULT_STARTUP_DELAY = 1000;
-
-    private long frequency = DEFAULT_POLL_FREQUENCY;
-    private TimeUnit timeUnit = DEFAULT_POLL_TIMEUNIT;
-
     // @GuardedBy(itself)
     protected final Map<ScheduledFuture, PollingReceiverWorker> schedules = new HashMap<ScheduledFuture, PollingReceiverWorker>();
+    private long frequency = DEFAULT_POLL_FREQUENCY;
+    private TimeUnit timeUnit = DEFAULT_POLL_TIMEUNIT;
 
     public AbstractPollingMessageReceiver(Connector connector,
                                           FlowConstruct flowConstruct,
@@ -75,9 +73,6 @@ public abstract class AbstractPollingMessageReceiver extends AbstractMessageRece
      * scheduler. Subclasses can override this in case they want to handle their polling
      * differently.
      *
-     * @throws RejectedExecutionException
-     * @throws NullPointerException
-     * @throws IllegalArgumentException
      * @see ScheduledExecutorService#scheduleWithFixedDelay(Runnable, long, long, TimeUnit)
      */
     protected void schedule()
@@ -114,7 +109,7 @@ public abstract class AbstractPollingMessageReceiver extends AbstractMessageRece
         synchronized (schedules)
         {
             // cancel our schedules gently: do not interrupt when polling is in progress
-            for (Iterator<ScheduledFuture> i = schedules.keySet().iterator(); i.hasNext();)
+            for (Iterator<ScheduledFuture> i = schedules.keySet().iterator(); i.hasNext(); )
             {
                 ScheduledFuture schedule = i.next();
                 schedule.cancel(false);
@@ -130,7 +125,8 @@ public abstract class AbstractPollingMessageReceiver extends AbstractMessageRece
                     catch (InterruptedException e)
                     {
                         logger.warn(
-                                ObjectUtils.identityToShortString(this) + "  interrupted while waiting for poll() to complete as part of message receiver stop.",
+                                ObjectUtils.identityToShortString(this) +
+                                "  interrupted while waiting for poll() to complete as part of message receiver stop.",
                                 e);
                         break;
                     }
@@ -184,7 +180,7 @@ public abstract class AbstractPollingMessageReceiver extends AbstractMessageRece
     {
         this.timeUnit = timeUnit;
     }
-    
+
     /**
      * The preferred number of messages to process in the current batch. We need to
      * drain the queue quickly, but not by slamming the workManager too hard. It is
@@ -192,7 +188,7 @@ public abstract class AbstractPollingMessageReceiver extends AbstractMessageRece
      * statistics/feedback or some kind of "event cost estimate". Therefore we just
      * try to use half of the receiver's workManager, since it is shared with
      * receivers for other endpoints. TODO make this user-settable
-     * 
+     *
      * @param available the number if messages currently available to be processed
      */
     protected int getBatchSize(int available)
@@ -213,7 +209,7 @@ public abstract class AbstractPollingMessageReceiver extends AbstractMessageRece
     {
         if (!pollOnPrimaryInstanceOnly() || flowConstruct.getMuleContext().isPrimaryPollingInstance())
         {
-            poll();   
+            poll();
         }
     }
 

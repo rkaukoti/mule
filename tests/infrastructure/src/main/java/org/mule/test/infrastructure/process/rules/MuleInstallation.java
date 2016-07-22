@@ -6,22 +6,22 @@
  */
 package org.mule.test.infrastructure.process.rules;
 
-import static java.lang.Boolean.parseBoolean;
-import static java.lang.System.getProperty;
-import static org.apache.commons.io.FileUtils.deleteDirectory;
-import static org.apache.commons.io.FileUtils.deleteQuietly;
-import static org.apache.commons.io.FileUtils.moveDirectory;
-import static org.apache.commons.lang.StringUtils.isEmpty;
-
-import java.io.File;
-import java.io.IOException;
-
 import org.apache.commons.lang.StringUtils;
 import org.junit.rules.ExternalResource;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+
+import static java.lang.Boolean.parseBoolean;
+import static java.lang.System.getProperty;
+import static org.apache.commons.io.FileUtils.deleteDirectory;
+import static org.apache.commons.io.FileUtils.deleteQuietly;
+import static org.apache.commons.io.FileUtils.moveDirectory;
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
 /**
  * This is a JUnit rule to install Mule Runtime during tests. Usage:

@@ -51,8 +51,6 @@ public class SimpleCallableJavaComponent extends AbstractJavaComponent
     /**
      * Create an SimpleCallableJavaComponent instance using an object instance that
      * implements {@link Callable}
-     * 
-     * @param callable
      */
     public SimpleCallableJavaComponent(Callable callable)
     {
@@ -62,10 +60,8 @@ public class SimpleCallableJavaComponent extends AbstractJavaComponent
     /**
      * Create an SimpleCallableJavaComponent instance using an object class. This
      * class should implement {@link Callable}.
-     * 
-     * @param callable
-     * @throws DefaultMuleException if the Class specified does not implement
-     *             {@link Callable}
+     *
+     * @throws DefaultMuleException if the Class specified does not implement {@link Callable}
      */
     public SimpleCallableJavaComponent(Class callable) throws DefaultMuleException
     {
@@ -81,7 +77,7 @@ public class SimpleCallableJavaComponent extends AbstractJavaComponent
         if (!(Callable.class.isAssignableFrom(objectFactory.getObjectClass())))
         {
             throw new DefaultMuleException(CoreMessages.objectNotOfCorrectType(objectFactory.getObjectClass(),
-                Callable.class));
+                    Callable.class));
         }
         this.objectFactory = objectFactory;
     }
@@ -197,7 +193,7 @@ public class SimpleCallableJavaComponent extends AbstractJavaComponent
         if (!(Callable.class.isAssignableFrom(objectFactory.getObjectClass())))
         {
             throw new MuleRuntimeException(CoreMessages.objectNotOfCorrectType(objectFactory.getObjectClass(),
-                Callable.class));
+                    Callable.class));
         }
         super.setObjectFactory(objectFactory);
     }

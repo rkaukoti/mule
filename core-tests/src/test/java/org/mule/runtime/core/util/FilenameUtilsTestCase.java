@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.core.util;
 
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.io.File;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -32,7 +31,7 @@ public class FilenameUtilsTestCase extends AbstractMuleTestCase
     {
         File tempDir = getBuidDirectory();
         File result = FilenameUtils.fileWithPathComponents(
-                            new String[] {tempDir.getAbsolutePath(), "tmp", null, "bar"});
+                new String[] {tempDir.getAbsolutePath(), "tmp", null, "bar"});
 
         // make sure that we can validate the test result on all platforms.
         String resultNormalized = result.getAbsolutePath().replace(File.separatorChar, '|');
@@ -45,7 +44,7 @@ public class FilenameUtilsTestCase extends AbstractMuleTestCase
     {
         String tempDirPath = getBuidDirectory().getAbsolutePath();
 
-        File result = FilenameUtils.fileWithPathComponents(new String[]{tempDirPath, "tmp", "foo", "bar"});
+        File result = FilenameUtils.fileWithPathComponents(new String[] {tempDirPath, "tmp", "foo", "bar"});
 
         // make sure that we can validate the test result on all platforms.
         String resultNormalized = result.getAbsolutePath().replace(File.separatorChar, '|');

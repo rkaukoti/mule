@@ -6,6 +6,12 @@
  */
 package org.mule.runtime.module.xml.util;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.commons.lang.StringUtils;
+import org.dom4j.DocumentException;
+import org.dom4j.io.DOMReader;
+import org.dom4j.io.DOMWriter;
+import org.dom4j.io.DocumentSource;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleContext;
@@ -16,6 +22,10 @@ import org.mule.runtime.module.xml.stax.DelegateXMLStreamReader;
 import org.mule.runtime.module.xml.stax.StaxSource;
 import org.mule.runtime.module.xml.transformer.DelayedResult;
 import org.mule.runtime.module.xml.transformer.XmlToDomDocument;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -49,17 +59,6 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.apache.commons.lang.StringUtils;
-import org.dom4j.DocumentException;
-import org.dom4j.io.DOMReader;
-import org.dom4j.io.DOMWriter;
-import org.dom4j.io.DocumentSource;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
 /**
  * General utility methods for working with XML.
  */
@@ -71,7 +70,8 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
 
     // xml parser feature names for optional XSD validation
     public static final String APACHE_XML_FEATURES_VALIDATION_SCHEMA = "http://apache.org/xml/features/validation/schema";
-    public static final String APACHE_XML_FEATURES_VALIDATION_SCHEMA_FULL_CHECKING = "http://apache.org/xml/features/validation/schema-full-checking";
+    public static final String APACHE_XML_FEATURES_VALIDATION_SCHEMA_FULL_CHECKING =
+            "http://apache.org/xml/features/validation/schema-full-checking";
 
     // JAXP property for specifying external XSD location
     public static final String JAXP_PROPERTIES_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
@@ -83,6 +83,7 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
 
     /**
      * Converts a DOM to an XML string.
+     *
      * @param dom the dome object to convert
      * @return A string representation of the document
      */
@@ -93,8 +94,7 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
 
     /**
      * @return a new XSLT transformer
-     * @throws TransformerConfigurationException if no TransformerFactory can be located in the
-     * runtime environment.
+     * @throws TransformerConfigurationException if no TransformerFactory can be located in the runtime environment.
      */
     public static Transformer getTransformer() throws TransformerConfigurationException
     {
@@ -122,9 +122,10 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
     {
         return toDocument(obj, null, muleContext);
     }
-    
+
     /**
      * Converts an object of unknown type to an org.dom4j.Document if possible.
+     *
      * @return null if object cannot be converted
      * @throws DocumentException if an error occurs while parsing
      */
@@ -136,17 +137,17 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
             reader.setValidation(true);
             reader.setFeature(APACHE_XML_FEATURES_VALIDATION_SCHEMA, true);
             reader.setFeature(APACHE_XML_FEATURES_VALIDATION_SCHEMA_FULL_CHECKING, true);
-            
+
             InputStream xsdAsStream = IOUtils.getResourceAsStream(externalSchemaLocation, XMLUtils.class);
             if (xsdAsStream == null)
             {
                 throw new IllegalArgumentException("Couldn't find schema at " + externalSchemaLocation);
             }
-    
+
             // Set schema language property (must be done before the schemaSource
             // is set)
             reader.setProperty(JAXP_PROPERTIES_SCHEMA_LANGUAGE, JAXP_PROPERTIES_SCHEMA_LANGUAGE_VALUE);
-    
+
             // Need this one to map schemaLocation to a physical location
             reader.setProperty(JAXP_PROPERTIES_SCHEMA_SOURCE, xsdAsStream);
         }
@@ -162,11 +163,11 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
             return domReader.read((org.w3c.dom.Document) obj);
         }
         else if (obj instanceof org.xml.sax.InputSource)
-        {                
+        {
             return reader.read((org.xml.sax.InputSource) obj);
         }
         else if (obj instanceof javax.xml.transform.Source || obj instanceof javax.xml.stream.XMLStreamReader)
-        {                
+        {
             // TODO Find a more direct way to do this
             XmlToDomDocument tr = new XmlToDomDocument();
             tr.setMuleContext(muleContext);
@@ -174,7 +175,7 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
             return (org.dom4j.Document) tr.transform(obj);
         }
         else if (obj instanceof java.io.InputStream)
-        {                
+        {
             return reader.read((java.io.InputStream) obj);
         }
         else if (obj instanceof String)
@@ -187,7 +188,7 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
             return reader.read(new StringReader(new String((byte[]) obj)));
         }
         else if (obj instanceof File)
-        {                
+        {
             return reader.read((File) obj);
         }
         else
@@ -225,7 +226,7 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
         {
             DOMResult result = new DOMResult();
             Transformer idTransformer = getTransformer();
-            Source source = (payload instanceof Source) ? (Source)payload : toXmlSource(null, true, payload);
+            Source source = (payload instanceof Source) ? (Source) payload : toXmlSource(null, true, payload);
             idTransformer.transform(source, result);
             return (Document) result.getNode();
         }
@@ -271,22 +272,25 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
 
     /**
      * Returns an XMLStreamReader for an object of unknown type if possible.
+     *
      * @return null if no XMLStreamReader can be created for the object type
-     * @throws XMLStreamException
-     * @deprecated As of 3.7.0, use {@link #toXMLStreamReader(javax.xml.stream.XMLInputFactory, org.mule.runtime.core.api.MuleEvent, Object)} instead.
+     * @deprecated As of 3.7.0, use {@link #toXMLStreamReader(javax.xml.stream.XMLInputFactory, org.mule.runtime.core.api.MuleEvent,
+     * Object)} instead.
      */
     @Deprecated
-    public static javax.xml.stream.XMLStreamReader toXMLStreamReader(javax.xml.stream.XMLInputFactory factory, Object obj) throws XMLStreamException
+    public static javax.xml.stream.XMLStreamReader toXMLStreamReader(javax.xml.stream.XMLInputFactory factory, Object obj)
+            throws XMLStreamException
     {
         return toXMLStreamReader(factory, RequestContext.getEvent(), obj);
     }
 
     /**
      * Returns an XMLStreamReader for an object of unknown type if possible.
+     *
      * @return null if no XMLStreamReader can be created for the object type
-     * @throws XMLStreamException
      */
-    public static javax.xml.stream.XMLStreamReader toXMLStreamReader(javax.xml.stream.XMLInputFactory factory, MuleEvent event, Object obj) throws XMLStreamException
+    public static javax.xml.stream.XMLStreamReader toXMLStreamReader(javax.xml.stream.XMLInputFactory factory, MuleEvent event, Object obj)
+            throws XMLStreamException
     {
         if (obj instanceof javax.xml.stream.XMLStreamReader)
         {
@@ -315,15 +319,15 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
         else if (obj instanceof java.io.InputStream)
         {
             final InputStream is = (java.io.InputStream) obj;
-            
+
             XMLStreamReader xsr = factory.createXMLStreamReader(is);
-            return new DelegateXMLStreamReader(xsr) 
+            return new DelegateXMLStreamReader(xsr)
             {
                 @Override
                 public void close() throws XMLStreamException
                 {
                     super.close();
-                    
+
                     try
                     {
                         is.close();
@@ -333,7 +337,7 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
                         throw new XMLStreamException(e);
                     }
                 }
-                
+
             };
         }
         else if (obj instanceof String)
@@ -350,7 +354,7 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             try
             {
-                ((OutputHandler)obj).write(event, outputStream);
+                ((OutputHandler) obj).write(event, outputStream);
             }
             catch (IOException e)
             {
@@ -364,7 +368,8 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
         }
     }
 
-    public static javax.xml.transform.Source toXmlSource(XMLStreamReader src) throws Exception {
+    public static javax.xml.transform.Source toXmlSource(XMLStreamReader src) throws Exception
+    {
         // StaxSource requires that we advance to a start element/document event
         if (!src.isStartElement() &&
             src.getEventType() != XMLStreamConstants.START_DOCUMENT)
@@ -377,8 +382,9 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
 
     /**
      * Convert our object to a Source type efficiently.
-     */ 
-    public static javax.xml.transform.Source toXmlSource(javax.xml.stream.XMLInputFactory xmlInputFactory, boolean useStaxSource, Object src) throws Exception
+     */
+    public static javax.xml.transform.Source toXmlSource(javax.xml.stream.XMLInputFactory xmlInputFactory, boolean useStaxSource,
+                                                         Object src) throws Exception
     {
         if (src instanceof javax.xml.transform.Source)
         {
@@ -421,20 +427,20 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
         {
             return new DOMSource((org.w3c.dom.Node) src);
         }
-        else if (src instanceof DelayedResult) 
+        else if (src instanceof DelayedResult)
         {
             DelayedResult result = ((DelayedResult) src);
             DOMResult domResult = new DOMResult();
             result.write(domResult);
             return new DOMSource(domResult.getNode());
         }
-        else if (src instanceof OutputHandler) 
+        else if (src instanceof OutputHandler)
         {
             OutputHandler handler = ((OutputHandler) src);
             ByteArrayOutputStream output = new ByteArrayOutputStream();
-            
+
             handler.write(RequestContext.getEvent(), output);
-            
+
             return toStreamSource(xmlInputFactory, useStaxSource, new ByteArrayInputStream(output.toByteArray()));
         }
         else
@@ -443,13 +449,14 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
         }
     }
 
-    public static javax.xml.transform.Source toStreamSource(javax.xml.stream.XMLInputFactory xmlInputFactory, boolean useStaxSource, InputStream stream) throws XMLStreamException
+    public static javax.xml.transform.Source toStreamSource(javax.xml.stream.XMLInputFactory xmlInputFactory, boolean useStaxSource,
+                                                            InputStream stream) throws XMLStreamException
     {
         if (useStaxSource)
         {
             return new org.mule.runtime.module.xml.stax.StaxSource(xmlInputFactory.createXMLStreamReader(stream));
         }
-        else 
+        else
         {
             return new javax.xml.transform.stream.StreamSource(stream);
         }
@@ -531,22 +538,23 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
      * be handled on the writer manually. TODO: if the namespace on the reader
      * has been declared previously to where we are in the stream, this probably
      * won't work.
-     * 
-     * @param reader
-     * @param writer
-     * @throws XMLStreamException
      */
-    public static void copy(XMLStreamReader reader, XMLStreamWriter writer) throws XMLStreamException {
+    public static void copy(XMLStreamReader reader, XMLStreamWriter writer) throws XMLStreamException
+    {
         copy(reader, writer, false);
     }
+
     public static void copy(XMLStreamReader reader, XMLStreamWriter writer,
-                            boolean fragment) throws XMLStreamException {
+                            boolean fragment) throws XMLStreamException
+    {
         // number of elements read in
         int read = 0;
         int event = reader.getEventType();
 
-        while (reader.hasNext()) {
-            switch (event) {
+        while (reader.hasNext())
+        {
+            switch (event)
+            {
             case XMLStreamConstants.START_ELEMENT:
                 read++;
                 writeStartElement(reader, writer);
@@ -554,7 +562,8 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
             case XMLStreamConstants.END_ELEMENT:
                 writer.writeEndElement();
                 read--;
-                if (read <= 0 && !fragment) {
+                if (read <= 0 && !fragment)
+                {
                     return;
                 }
                 break;
@@ -574,53 +583,69 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
     }
 
     private static void writeStartElement(XMLStreamReader reader, XMLStreamWriter writer)
-        throws XMLStreamException {
+            throws XMLStreamException
+    {
         String local = reader.getLocalName();
         String uri = reader.getNamespaceURI();
         String prefix = reader.getPrefix();
-        if (prefix == null) {
+        if (prefix == null)
+        {
             prefix = "";
         }
 
-        
-//        System.out.println("STAXUTILS:writeStartElement : node name : " + local +  " namespace URI" + uri);
+
+        //        System.out.println("STAXUTILS:writeStartElement : node name : " + local +  " namespace URI" + uri);
         boolean writeElementNS = false;
-        if (uri != null) {
+        if (uri != null)
+        {
             String boundPrefix = writer.getPrefix(uri);
-            if (boundPrefix == null || !prefix.equals(boundPrefix)) {
+            if (boundPrefix == null || !prefix.equals(boundPrefix))
+            {
                 writeElementNS = true;
             }
         }
 
         // Write out the element name
-        if (uri != null) {
-            if (prefix.length() == 0 && StringUtils.isEmpty(uri)) {
+        if (uri != null)
+        {
+            if (prefix.length() == 0 && StringUtils.isEmpty(uri))
+            {
                 writer.writeStartElement(local);
                 writer.setDefaultNamespace(uri);
 
-            } else {
+            }
+            else
+            {
                 writer.writeStartElement(prefix, local, uri);
                 writer.setPrefix(prefix, uri);
             }
-        } else {
+        }
+        else
+        {
             writer.writeStartElement(local);
         }
 
         // Write out the namespaces
-        for (int i = 0; i < reader.getNamespaceCount(); i++) {
+        for (int i = 0; i < reader.getNamespaceCount(); i++)
+        {
             String nsURI = reader.getNamespaceURI(i);
             String nsPrefix = reader.getNamespacePrefix(i);
-            if (nsPrefix == null) {
+            if (nsPrefix == null)
+            {
                 nsPrefix = "";
             }
 
-            if (nsPrefix.length() == 0) {
+            if (nsPrefix.length() == 0)
+            {
                 writer.writeDefaultNamespace(nsURI);
-            } else {
+            }
+            else
+            {
                 writer.writeNamespace(nsPrefix, nsURI);
             }
 
-            if (nsURI.equals(uri) && nsPrefix.equals(prefix)) {
+            if (nsURI.equals(uri) && nsPrefix.equals(prefix))
+            {
                 writeElementNS = false;
             }
         }
@@ -628,26 +653,36 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
         // Check if the namespace still needs to be written.
         // We need this check because namespace writing works
         // different on Woodstox and the RI.
-        if (writeElementNS) {
-            if (prefix.length() == 0) {
+        if (writeElementNS)
+        {
+            if (prefix.length() == 0)
+            {
                 writer.writeDefaultNamespace(uri);
-            } else {
+            }
+            else
+            {
                 writer.writeNamespace(prefix, uri);
             }
-        }        
-        
+        }
+
         // Write out attributes
-        for (int i = 0; i < reader.getAttributeCount(); i++) {
+        for (int i = 0; i < reader.getAttributeCount(); i++)
+        {
             String ns = reader.getAttributeNamespace(i);
             String nsPrefix = reader.getAttributePrefix(i);
-            if (ns == null || ns.length() == 0) {
+            if (ns == null || ns.length() == 0)
+            {
                 writer.writeAttribute(reader.getAttributeLocalName(i), reader.getAttributeValue(i));
-            } else if (nsPrefix == null || nsPrefix.length() == 0) {
+            }
+            else if (nsPrefix == null || nsPrefix.length() == 0)
+            {
                 writer.writeAttribute(reader.getAttributeNamespace(i), reader.getAttributeLocalName(i),
-                                      reader.getAttributeValue(i));
-            } else {
+                        reader.getAttributeValue(i));
+            }
+            else
+            {
                 writer.writeAttribute(reader.getAttributePrefix(i), reader.getAttributeNamespace(i), reader
-                    .getAttributeLocalName(i), reader.getAttributeValue(i));
+                        .getAttributeLocalName(i), reader.getAttributeValue(i));
             }
 
         }
@@ -655,6 +690,7 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
 
     /**
      * Creates an XPath object with a custom NamespaceContext given the Node to operate on
+     *
      * @param node the Node or document to operate on.  Note that namespace handling will not work if a Node fragment is passed in
      * @return a new XPath object
      */
@@ -670,49 +706,51 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils
 
     /**
      * Select a single XML node using an Xpath
+     *
      * @param xpath the XPath expression to evaluate
-     * @param node the node (or document) to exaluate on
+     * @param node  the node (or document) to exaluate on
      * @return the result of the evaluation.
      * @throws XPathExpressionException if the XPath expression is malformed and cannot be parsed
      */
     public static Node selectOne(String xpath, Node node) throws XPathExpressionException
     {
-            XPath xp = createXPath(node);
-            return (Node) xp.evaluate(xpath, node, XPathConstants.NODE);
+        XPath xp = createXPath(node);
+        return (Node) xp.evaluate(xpath, node, XPathConstants.NODE);
     }
 
     /**
      * Select a single XML String value using an Xpath
+     *
      * @param xpath the XPath expression to evaluate
-     * @param node the node (or document) to evaluate on
+     * @param node  the node (or document) to evaluate on
      * @return the result of the evaluation.
      * @throws XPathExpressionException if the XPath expression is malformed and cannot be parsed
      */
     public static String selectValue(String xpath, Node node) throws XPathExpressionException
     {
-            XPath xp = createXPath(node);
-            return (String) xp.evaluate(xpath, node, XPathConstants.STRING);
+        XPath xp = createXPath(node);
+        return (String) xp.evaluate(xpath, node, XPathConstants.STRING);
     }
 
     /**
      * Select a set of Node objects using the Xpath expression
+     *
      * @param xpath the XPath expression to evaluate
-     * @param node the node (or document) to evaluate on
-     * @return the result of the evaluation. 
+     * @param node  the node (or document) to evaluate on
+     * @return the result of the evaluation.
      * @throws XPathExpressionException if the XPath expression is malformed and cannot be parsed
      */
     public static List<Node> select(String xpath, Node node) throws XPathExpressionException
     {
-            XPath xp = createXPath(node);
-            NodeList nl = (NodeList) xp.evaluate(xpath, node, XPathConstants.NODESET);
-            List<Node> nodeList = new ArrayList<Node>(nl.getLength());
-            for (int i = 0; i < nl.getLength(); i++)
-            {
-                nodeList.add(nl.item(i));
-            }
-            return nodeList;
+        XPath xp = createXPath(node);
+        NodeList nl = (NodeList) xp.evaluate(xpath, node, XPathConstants.NODESET);
+        List<Node> nodeList = new ArrayList<Node>(nl.getLength());
+        for (int i = 0; i < nl.getLength(); i++)
+        {
+            nodeList.add(nl.item(i));
+        }
+        return nodeList;
     }
-
 
 
     /**

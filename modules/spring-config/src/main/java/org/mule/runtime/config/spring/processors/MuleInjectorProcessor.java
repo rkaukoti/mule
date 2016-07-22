@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.config.spring.processors;
 
-import javax.inject.Inject;
-
 import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.support.RootBeanDefinition;
+
+import javax.inject.Inject;
 
 /**
  * Specialization of {@link AutowiredAnnotationBeanPostProcessor}

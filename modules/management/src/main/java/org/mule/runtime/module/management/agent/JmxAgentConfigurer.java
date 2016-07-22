@@ -9,6 +9,8 @@ package org.mule.runtime.module.management.agent;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.registry.RegistrationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,9 +18,6 @@ import java.util.Map;
 
 import javax.management.MBeanServer;
 import javax.management.remote.rmi.RMIConnectorServer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Mule now binds to a platform mbeanserver by default and jmx agent is always registered via a
@@ -35,8 +34,14 @@ public class JmxAgentConfigurer implements MuleContextAware
      */
     protected static final Logger logger = LoggerFactory.getLogger(JmxAgentConfigurer.class);
 
-    protected MuleContext muleContext;
+    static
+    {
+        Map<String, Object> props = new HashMap<String, Object>(1);
+        props.put(RMIConnectorServer.JNDI_REBIND_ATTRIBUTE, "true");
+        DEFAULT_CONNECTOR_SERVER_PROPERTIES = Collections.unmodifiableMap(props);
+    }
 
+    protected MuleContext muleContext;
     /**
      * Should MBeanServer be discovered.
      */
@@ -48,18 +53,10 @@ public class JmxAgentConfigurer implements MuleContextAware
     private Map<String, Object> connectorServerProperties = null;
     private boolean enableStatistics = true;
     private boolean createRmiRegistry = true;
-
     /**
      * Username/password combinations for JMX Remoting authentication.
      */
     private Map<String, String> credentials = new HashMap<String, String>();
-
-    static
-    {
-        Map<String, Object> props = new HashMap<String, Object>(1);
-        props.put(RMIConnectorServer.JNDI_REBIND_ATTRIBUTE, "true");
-        DEFAULT_CONNECTOR_SERVER_PROPERTIES = Collections.unmodifiableMap(props);
-    }
 
     public JmxAgentConfigurer()
     {
@@ -126,8 +123,7 @@ public class JmxAgentConfigurer implements MuleContextAware
      * defaults ({@link #DEFAULT_CONNECTOR_SERVER_PROPERTIES}). Pass in an empty map
      * to use no parameters. Passing a non-empty map will replace defaults.
      *
-     * @param connectorServerProperties Value to set for property
-     *            'connectorServerProperties'.
+     * @param connectorServerProperties Value to set for property 'connectorServerProperties'.
      */
     public void setConnectorServerProperties(Map<String, Object> connectorServerProperties)
     {

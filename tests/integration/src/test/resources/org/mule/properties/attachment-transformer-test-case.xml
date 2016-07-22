@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd">
 
@@ -17,11 +17,11 @@
     <set-session-variable name="addSessionProperty2" variableName="sesPropKey2" value="sesPropValue2"/>
 
     <set-attachment name="setAttachGlobal" attachmentName="#[flowVars.invPropKey]" value="#[sessionVars.sesPropKey]" contentType="text/plain"/>
-    
+
     <remove-attachment name="remAttachGlobal" attachmentName="#['attach']"/>
-    
+
     <copy-attachments name="copyAttachGlobal" attachmentName="*2"/>
-   
+
     <flow name="addAttachment" processingStrategy="synchronous">
         <set-attachment attachmentName="attach" value="#['some value']" contentType="text/plain"/>
         <test:assert expression="#[message.outboundAttachments['attach'].getContentType().equals('text/plain')]"/>
@@ -43,7 +43,7 @@
     <flow name="removeAttachment" processingStrategy="synchronous">
         <set-attachment attachmentName="attach" value="#['some value']" contentType="text/plain"/>
         <set-attachment attachmentName="attach2" value="#['some value']" contentType="text/plain"/>
-        <remove-attachment attachmentName="attach" />
+        <remove-attachment attachmentName="attach"/>
         <test:assert expression="#[message.outboundAttachments['attach'] == null]"/>
         <test:assert expression="#[message.outboundAttachments['attach2'] != null]"/>
     </flow>
@@ -55,7 +55,7 @@
         <test:assert expression="#[message.outboundAttachments['attach'] == null]"/>
         <test:assert expression="#[message.outboundAttachments['attach2'] != null]"/>
     </flow>
-    
+
     <flow name="removeAttachmentUsingRegex" processingStrategy="synchronous">
         <set-attachment attachmentName="attach" value="#['some value']" contentType="text/plain"/>
         <set-attachment attachmentName="attach2" value="#['some value']" contentType="text/plain"/>
@@ -65,12 +65,12 @@
         <test:assert expression="#[message.outboundAttachments['attach2'] == null]"/>
         <test:assert expression="#[message.outboundAttachments['attach22'] == null]"/>
     </flow>
-    
+
     <flow name="removeAllAttachments" processingStrategy="synchronous">
         <set-attachment attachmentName="attach" value="#['some value']" contentType="text/plain"/>
         <set-attachment attachmentName="attach2" value="#['some value']" contentType="text/plain"/>
         <set-attachment attachmentName="attach22" value="#['some value']" contentType="text/plain"/>
-        <remove-attachment attachmentName="*" />
+        <remove-attachment attachmentName="*"/>
         <test:assert expression="#[message.outboundAttachments['attach'] == null]"/>
         <test:assert expression="#[message.outboundAttachments['attach2'] == null]"/>
         <test:assert expression="#[message.outboundAttachments['attach22'] == null]"/>

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
                   xmlns:tns="http://consumer.ws.module.runtime.mule.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
                   xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
                   name="TestService"

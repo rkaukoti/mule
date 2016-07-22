@@ -19,8 +19,8 @@ import java.util.Set;
 
 /**
  * An Entry-point resolver that allows the user to set one or more acceptable method names to look for.
- * For each method reflection will be used to see if the method accepts the current payload types 
- * (the results are cached to improve performance). There has to be at least one method name set 
+ * For each method reflection will be used to see if the method accepts the current payload types
+ * (the results are cached to improve performance). There has to be at least one method name set
  * on this resolver
  */
 public class ExplicitMethodEntryPointResolver extends AbstractEntryPointResolver
@@ -53,7 +53,7 @@ public class ExplicitMethodEntryPointResolver extends AbstractEntryPointResolver
         Object[] payload = getPayloadFromMessage(context);
         Class<?>[] classTypes = ClassUtils.getClassTypes(payload);
         Method method = null;
-        for (Iterator<String> iterator = methods.iterator(); iterator.hasNext();)
+        for (Iterator<String> iterator = methods.iterator(); iterator.hasNext(); )
         {
             String methodName = iterator.next();
             method = getMethodByName(component, methodName, context);
@@ -65,7 +65,7 @@ public class ExplicitMethodEntryPointResolver extends AbstractEntryPointResolver
             if (method != null)
             {
                 addMethodByName(component, method, context);
-                
+
                 // check if the current payload can be handled by this method
                 Class<?>[] parameterTypes = method.getParameterTypes();
                 if (ClassUtils.compare(parameterTypes, classTypes, false, true))

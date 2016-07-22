@@ -27,7 +27,7 @@ public class SubtypesSource extends Source<String, StringAttributes>
         {
             throw new RuntimeException("Expected HouseDoor");
         }
-        if (((HouseDoor)doorParam).isLocked())
+        if (((HouseDoor) doorParam).isLocked())
         {
             throw new RuntimeException("Expected unlocked door");
         }

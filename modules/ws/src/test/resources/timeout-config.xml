@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
       xmlns:ws="http://www.mulesoft.org/schema/mule/ws"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
@@ -14,22 +14,22 @@
 
     <flow name="server">
         <http:listener path="/services/Test" config-ref="listenerConfig"/>
-        <test:component />
+        <test:component/>
     </flow>
 
     <ws:consumer-config serviceAddress="http://localhost:${port}/services/Test" wsdlLocation="Test.wsdl"
-                        service="TestService" port="TestPort" name="globalConfig" />
+                        service="TestService" port="TestPort" name="globalConfig"/>
 
     <flow name="client" processingStrategy="synchronous">
 
-        <set-variable variableName="flowVarName" value="testFlowVar" />
-        <set-session-variable variableName="sessionVarName" value="testSessionVar" />
+        <set-variable variableName="flowVarName" value="testFlowVar"/>
+        <set-session-variable variableName="sessionVarName" value="testSessionVar"/>
 
         <ws:consumer operation="echo"/>
 
         <catch-exception-strategy>
-            <set-property propertyName="flowVar" value="#[flowVars['flowVarName']]" />
-            <set-property propertyName="sessionVar" value="#[sessionVars['sessionVarName']]" />
+            <set-property propertyName="flowVar" value="#[flowVars['flowVarName']]"/>
+            <set-property propertyName="sessionVar" value="#[sessionVars['sessionVarName']]"/>
             <test:queue name="out"/>
         </catch-exception-strategy>
     </flow>

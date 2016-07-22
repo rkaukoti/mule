@@ -27,33 +27,40 @@ public class JSR250LifecycleTrackerComponent implements Startable, Stoppable, Mu
 
     private final List<String> tracker = new ArrayList<String>();
 
-    public List<String> getTracker() {
+    public List<String> getTracker()
+    {
         return tracker;
     }
 
-    public void setProperty(final String value) {
+    public void setProperty(final String value)
+    {
         tracker.add("setProperty");
     }
 
-    public void setMuleContext(final MuleContext context) {
+    public void setMuleContext(final MuleContext context)
+    {
         tracker.add("setMuleContext");
     }
 
     @PostConstruct
-    public void initialise() {
+    public void initialise()
+    {
         tracker.add("jsr250 initialise");
     }
 
     @PreDestroy
-    public void dispose() {
+    public void dispose()
+    {
         tracker.add("jsr250 dispose");
     }
 
-    public void start() throws MuleException {
+    public void start() throws MuleException
+    {
         tracker.add("start");
     }
 
-    public void stop() throws MuleException {
+    public void stop() throws MuleException
+    {
         tracker.add("stop");
     }
 
@@ -62,7 +69,8 @@ public class JSR250LifecycleTrackerComponent implements Startable, Stoppable, Mu
         getTracker().add("setFlowConstruct");
     }
 
-    public Object onCall(final MuleEventContext eventContext) throws Exception {
+    public Object onCall(final MuleEventContext eventContext) throws Exception
+    {
         // dirty trick to get the component instance that was used for the
         // request
         return this;

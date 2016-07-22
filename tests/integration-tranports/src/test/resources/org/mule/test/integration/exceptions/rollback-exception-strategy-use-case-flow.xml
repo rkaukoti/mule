@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:jms="http://www.mulesoft.org/schema/mule/transport/jms"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
       xmlns:vm="http://www.mulesoft.org/schema/mule/transport/vm"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
       xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
@@ -22,31 +22,31 @@
 
 
     <flow name="alwaysRollback">
-      <vm:inbound-endpoint path="in">
-          <vm:transaction action="ALWAYS_BEGIN"/>
-      </vm:inbound-endpoint>
-      <test:component throwException="true"/>
-      <rollback-exception-strategy/>
+        <vm:inbound-endpoint path="in">
+            <vm:transaction action="ALWAYS_BEGIN"/>
+        </vm:inbound-endpoint>
+        <test:component throwException="true"/>
+        <rollback-exception-strategy/>
     </flow>
 
     <flow name="alwaysRollbackJmsNoTransaction" processingStrategy="synchronous">
-      <jms:inbound-endpoint queue="in" connector-ref="activeMq"/>
-      <test:component throwException="true"/>
-      <rollback-exception-strategy/>
+        <jms:inbound-endpoint queue="in" connector-ref="activeMq"/>
+        <test:component throwException="true"/>
+        <rollback-exception-strategy/>
     </flow>
-    
+
     <flow name="rollbackWithComponent">
-      <vm:inbound-endpoint path="in5">
-          <vm:transaction action="ALWAYS_BEGIN"/>
-      </vm:inbound-endpoint>
-      <test:component throwException="true"/>
-      <rollback-exception-strategy>
-        <script:component>
-            <script:script engine="groovy">
-                return "$payload Rolled Back"
-            </script:script>
-        </script:component>
-      </rollback-exception-strategy>
+        <vm:inbound-endpoint path="in5">
+            <vm:transaction action="ALWAYS_BEGIN"/>
+        </vm:inbound-endpoint>
+        <test:component throwException="true"/>
+        <rollback-exception-strategy>
+            <script:component>
+                <script:script engine="groovy">
+                    return "$payload Rolled Back"
+                </script:script>
+            </script:component>
+        </rollback-exception-strategy>
     </flow>
 
     <flow name="fullyDefinedRollbackExceptionStrategyWithComponent">
@@ -58,40 +58,40 @@
             <append-string-transformer message=" apt3"/>
             <on-redelivery-attempts-exceeded>
                 <append-string-transformer message=" apt4"/>
-		        <script:component>
-		            <script:script engine="groovy">
-		                return "$payload groovified"
-		            </script:script>
-		        </script:component>
+                <script:component>
+                    <script:script engine="groovy">
+                        return "$payload groovified"
+                    </script:script>
+                </script:component>
             </on-redelivery-attempts-exceeded>
         </rollback-exception-strategy>
     </flow>
 
     <flow name="redeliveryExhaustedTransactional">
-       <jms:inbound-endpoint queue="in2" connector-ref="activeMqRedelivery">
-          <jms:transaction action="ALWAYS_BEGIN"/>
-       </jms:inbound-endpoint>
-       <test:component throwException="true"/>
-       <rollback-exception-strategy>
-          <on-redelivery-attempts-exceeded>
-              <jms:jmsmessage-to-object-transformer/>
-              <append-string-transformer message=" consumed successfully"/>
-              <jms:outbound-endpoint queue="dlq" connector-ref="activeMqRedelivery">
-                  <jms:transaction action="ALWAYS_JOIN"/>
-              </jms:outbound-endpoint>
-          </on-redelivery-attempts-exceeded>
-       </rollback-exception-strategy>
+        <jms:inbound-endpoint queue="in2" connector-ref="activeMqRedelivery">
+            <jms:transaction action="ALWAYS_BEGIN"/>
+        </jms:inbound-endpoint>
+        <test:component throwException="true"/>
+        <rollback-exception-strategy>
+            <on-redelivery-attempts-exceeded>
+                <jms:jmsmessage-to-object-transformer/>
+                <append-string-transformer message=" consumed successfully"/>
+                <jms:outbound-endpoint queue="dlq" connector-ref="activeMqRedelivery">
+                    <jms:transaction action="ALWAYS_JOIN"/>
+                </jms:outbound-endpoint>
+            </on-redelivery-attempts-exceeded>
+        </rollback-exception-strategy>
     </flow>
 
     <flow name="redeliveryExhaustedNoTransaction">
-       <jms:inbound-endpoint queue="in3" connector-ref="activeMq"/>
-       <test:component throwException="true"/>
-       <rollback-exception-strategy maxRedeliveryAttempts="${maxRedelivery}">
-           <on-redelivery-attempts-exceeded>
-               <append-string-transformer message=" consumed successfully"/>
-               <jms:outbound-endpoint queue="dlq" connector-ref="activeMqRedelivery"/>
-           </on-redelivery-attempts-exceeded>
-       </rollback-exception-strategy>
+        <jms:inbound-endpoint queue="in3" connector-ref="activeMq"/>
+        <test:component throwException="true"/>
+        <rollback-exception-strategy maxRedeliveryAttempts="${maxRedelivery}">
+            <on-redelivery-attempts-exceeded>
+                <append-string-transformer message=" consumed successfully"/>
+                <jms:outbound-endpoint queue="dlq" connector-ref="activeMqRedelivery"/>
+            </on-redelivery-attempts-exceeded>
+        </rollback-exception-strategy>
     </flow>
 
     <flow name="httpRollbackOnly">
@@ -156,5 +156,5 @@
             <catch-exception-strategy/>
         </choice-exception-strategy>
     </flow>
-    
+
 </mule>

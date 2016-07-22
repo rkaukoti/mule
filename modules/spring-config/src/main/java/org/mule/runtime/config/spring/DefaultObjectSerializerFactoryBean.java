@@ -9,10 +9,9 @@ package org.mule.runtime.config.spring;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.serialization.DefaultObjectSerializer;
 import org.mule.runtime.core.api.serialization.ObjectSerializer;
+import org.springframework.beans.factory.SmartFactoryBean;
 
 import javax.inject.Inject;
-
-import org.springframework.beans.factory.SmartFactoryBean;
 
 /**
  * An eager {@link SmartFactoryBean} which returns the

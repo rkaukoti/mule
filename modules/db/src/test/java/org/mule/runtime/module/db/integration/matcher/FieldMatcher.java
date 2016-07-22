@@ -7,14 +7,14 @@
 
 package org.mule.runtime.module.db.integration.matcher;
 
-import static org.mule.runtime.module.db.integration.model.FieldUtils.getValueAsString;
-import org.mule.runtime.module.db.integration.model.Field;
-import org.mule.runtime.module.db.integration.model.Record;
-
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.junit.internal.matchers.TypeSafeMatcher;
+import org.mule.runtime.module.db.integration.model.Field;
+import org.mule.runtime.module.db.integration.model.Record;
+
+import static org.mule.runtime.module.db.integration.model.FieldUtils.getValueAsString;
 
 public class FieldMatcher extends TypeSafeMatcher<Record>
 {
@@ -26,6 +26,12 @@ public class FieldMatcher extends TypeSafeMatcher<Record>
         this.field = field;
     }
 
+    @Factory
+    public static Matcher<Record> containsField(Field field)
+    {
+        return new FieldMatcher(field);
+    }
+
     @Override
     public boolean matchesSafely(Record item)
     {
@@ -34,13 +40,8 @@ public class FieldMatcher extends TypeSafeMatcher<Record>
 
     public void describeTo(Description description)
     {
-        description.appendText("Does not contains a field with name = " + field.getName() + " with value = " + getValueAsString(field.getValue()));
-    }
-
-    @Factory
-    public static Matcher<Record> containsField(Field field)
-    {
-        return new FieldMatcher(field);
+        description.appendText(
+                "Does not contains a field with name = " + field.getName() + " with value = " + getValueAsString(field.getValue()));
     }
 
     @Override

@@ -6,17 +6,16 @@
  */
 package org.mule.runtime.module.json.transformers;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
+import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 
-import org.junit.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class JsonSchemaJsonValidationTestCase extends AbstractMuleContextTestCase
 {

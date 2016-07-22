@@ -6,15 +6,6 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertEquals;
-
-import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
-import org.mule.compatibility.transport.http.HttpConstants;
-import org.mule.compatibility.transport.http.PatchMethod;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.runtime.core.construct.Flow;
-import org.mule.tck.junit4.rule.DynamicPort;
-
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethodBase;
 import org.apache.commons.httpclient.HttpStatus;
@@ -25,6 +16,14 @@ import org.apache.commons.httpclient.methods.PutMethod;
 import org.apache.commons.httpclient.methods.TraceMethod;
 import org.junit.ClassRule;
 import org.junit.Test;
+import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
+import org.mule.compatibility.transport.http.HttpConstants;
+import org.mule.compatibility.transport.http.PatchMethod;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.construct.Flow;
+import org.mule.tck.junit4.rule.DynamicPort;
+
+import static org.junit.Assert.assertEquals;
 
 public class HttpMethodTestCase extends FunctionalTestCase
 {

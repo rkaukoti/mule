@@ -6,9 +6,7 @@
  */
 package org.mule.runtime.core.routing;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.routing.RoutePathNotFoundException;
 import org.mule.runtime.core.management.stats.RouterStatistics;
@@ -16,7 +14,9 @@ import org.mule.runtime.core.routing.filters.EqualsFilter;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import org.mule.tck.testmodels.mule.TestMessageProcessor;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class ChoiceRouterTestCase extends AbstractMuleContextTestCase
 {

@@ -6,15 +6,14 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.junit.Assert.assertThat;
-
+import org.hamcrest.core.Is;
+import org.hamcrest.core.IsNull;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 
-import org.hamcrest.core.Is;
-import org.hamcrest.core.IsNull;
-import org.junit.Test;
+import static org.junit.Assert.assertThat;
 
 public class ExceptionStrategyFlowRefTestCase extends FunctionalTestCase
 {

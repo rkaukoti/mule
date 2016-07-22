@@ -6,11 +6,7 @@
  */
 package org.mule.runtime.core.routing;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-
+import org.junit.Test;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
@@ -18,7 +14,10 @@ import org.mule.runtime.core.routing.filters.EqualsFilter;
 import org.mule.tck.SensingNullMessageProcessor;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 
 public class MessageFilterTestCase extends AbstractMuleContextTestCase
 {

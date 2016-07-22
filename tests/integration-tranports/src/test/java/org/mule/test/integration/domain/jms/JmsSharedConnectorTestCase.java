@@ -6,10 +6,10 @@
  */
 package org.mule.test.integration.domain.jms;
 
-import static java.lang.String.format;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.functional.junit4.DomainFunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
@@ -21,10 +21,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static java.lang.String.format;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
 public class JmsSharedConnectorTestCase extends DomainFunctionalTestCase
@@ -33,13 +32,11 @@ public class JmsSharedConnectorTestCase extends DomainFunctionalTestCase
     public static final String CLIENT_APP = "client";
     public static final String SERVER_APP = "server";
     public static final String CONNECTOR_PARAMETER = "connector=sharedJmsConnector";
-
+    private final String domainConfig;
     @Rule
     public SystemProperty transportScheme = new SystemProperty("scheme", getTransportScheme());
     @Rule
     public SystemProperty connectorParameter = new SystemProperty("connectorParameter", CONNECTOR_PARAMETER);
-
-    private final String domainConfig;
 
     public JmsSharedConnectorTestCase(String domainConfig)
     {
@@ -69,7 +66,7 @@ public class JmsSharedConnectorTestCase extends DomainFunctionalTestCase
         return new ApplicationConfig[] {
                 new ApplicationConfig(CLIENT_APP, new String[] {"domain/jms/jms-client-app.xml"}),
                 new ApplicationConfig(SERVER_APP, new String[] {"domain/jms/jms-server-app.xml"})
-            };
+        };
     }
 
     @Test
@@ -84,11 +81,11 @@ public class JmsSharedConnectorTestCase extends DomainFunctionalTestCase
         executeScenario("in2", "out5");
     }
 
-    private void executeScenario(final String inQueue,final String outQueue) throws Exception
+    private void executeScenario(final String inQueue, final String outQueue) throws Exception
     {
         getMuleContextForApp(CLIENT_APP).getClient().dispatch(queueAddress(inQueue), MuleMessage.builder().payload("test").build());
         final AtomicReference<MuleMessage> response = new AtomicReference<>();
-        new PollingProber(10000,100).check(new Probe()
+        new PollingProber(10000, 100).check(new Probe()
         {
             @Override
             public boolean isSatisfied()

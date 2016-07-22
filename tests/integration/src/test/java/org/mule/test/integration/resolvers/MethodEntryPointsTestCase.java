@@ -6,17 +6,16 @@
  */
 package org.mule.test.integration.resolvers;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.model.resolvers.EntryPointNotFoundException;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.model.resolvers.EntryPointNotFoundException;
-
-import org.junit.Test;
 
 public class MethodEntryPointsTestCase extends FunctionalTestCase
 {
@@ -65,7 +64,8 @@ public class MethodEntryPointsTestCase extends FunctionalTestCase
     @Test
     public void testValidCallToUpperCase() throws Exception
     {
-        MuleMessage message = flowRunner("Service").withPayload("hello").withInboundProperty("method", "upperCaseString").run().getMessage();
+        MuleMessage message =
+                flowRunner("Service").withPayload("hello").withInboundProperty("method", "upperCaseString").run().getMessage();
         assertNotNull(message);
         assertEquals("HELLO", getPayloadAsString(message));
     }

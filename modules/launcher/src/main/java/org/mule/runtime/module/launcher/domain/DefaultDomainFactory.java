@@ -6,12 +6,6 @@
  */
 package org.mule.runtime.module.launcher.domain;
 
-import static java.lang.String.format;
-import static java.util.Collections.emptyList;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.module.launcher.MuleFoldersUtil.getDomainFolder;
-import static org.mule.runtime.module.launcher.artifact.ArtifactFactoryUtils.getDeploymentFile;
-import static org.mule.runtime.module.launcher.domain.Domain.DEFAULT_DOMAIN_NAME;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
 import org.mule.runtime.module.artifact.classloader.DeployableArtifactClassLoaderFactory;
 import org.mule.runtime.module.launcher.DeploymentListener;
@@ -23,17 +17,24 @@ import org.mule.runtime.module.reboot.MuleContainerBootstrapUtils;
 import java.io.File;
 import java.io.IOException;
 
+import static java.lang.String.format;
+import static java.util.Collections.emptyList;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.module.launcher.MuleFoldersUtil.getDomainFolder;
+import static org.mule.runtime.module.launcher.artifact.ArtifactFactoryUtils.getDeploymentFile;
+import static org.mule.runtime.module.launcher.domain.Domain.DEFAULT_DOMAIN_NAME;
+
 public class DefaultDomainFactory implements DomainFactory
 {
 
     private final DeployableArtifactClassLoaderFactory<DomainDescriptor> domainClassLoaderFactory;
     private final DomainManager domainManager;
     private final DomainDescriptorParser domainDescriptorParser;
-
-    protected DeploymentListener deploymentListener;
     private final ArtifactClassLoader containerClassLoader;
+    protected DeploymentListener deploymentListener;
 
-    public DefaultDomainFactory(DeployableArtifactClassLoaderFactory<DomainDescriptor> domainClassLoaderFactory, DomainManager domainManager, ArtifactClassLoader containerClassLoader)
+    public DefaultDomainFactory(DeployableArtifactClassLoaderFactory<DomainDescriptor> domainClassLoaderFactory,
+                                DomainManager domainManager, ArtifactClassLoader containerClassLoader)
     {
         checkArgument(domainManager != null, "Domain manager cannot be null");
         checkArgument(containerClassLoader != null, "Container classLoader cannot be null");
@@ -62,7 +63,8 @@ public class DefaultDomainFactory implements DomainFactory
         }
         DomainDescriptor descriptor = findDomain(artifactName);
         //TODO MULE-9653 - use the plugins class loader maps when plugins are allowed in domains
-        DefaultMuleDomain defaultMuleDomain = new DefaultMuleDomain(descriptor, domainClassLoaderFactory.create(containerClassLoader, descriptor, emptyList()));
+        DefaultMuleDomain defaultMuleDomain =
+                new DefaultMuleDomain(descriptor, domainClassLoaderFactory.create(containerClassLoader, descriptor, emptyList()));
         defaultMuleDomain.setDeploymentListener(deploymentListener);
         DomainWrapper domainWrapper = new DomainWrapper(defaultMuleDomain, this);
         domainManager.addDomain(domainWrapper);

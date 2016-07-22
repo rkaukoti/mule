@@ -6,10 +6,10 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.mule.functional.listener.ConnectionListener;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.context.notification.ConnectionNotification;
@@ -20,10 +20,9 @@ import org.mule.tck.probe.Prober;
 import javax.jms.Connection;
 import javax.jms.JMSException;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * MULE-7534: JMS connector doesn't reconnect to ActiveMQ broker 5.6 when using blocking=true

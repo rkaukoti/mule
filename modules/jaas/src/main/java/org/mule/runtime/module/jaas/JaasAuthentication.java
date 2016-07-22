@@ -22,7 +22,7 @@ public class JaasAuthentication implements Authentication
     private Map<String, Object> properties;
     private Subject subject;
     transient private MuleEvent event;
-    
+
     public JaasAuthentication(Credentials credentials)
     {
         this.user = credentials.getUsername();
@@ -48,15 +48,15 @@ public class JaasAuthentication implements Authentication
     }
 
     @Override
-    public void setAuthenticated(boolean b)
-    {
-        authenticated = b;
-    }
-
-    @Override
     public boolean isAuthenticated()
     {
         return authenticated;
+    }
+
+    @Override
+    public void setAuthenticated(boolean b)
+    {
+        authenticated = b;
     }
 
     @Override

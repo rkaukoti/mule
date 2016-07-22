@@ -67,7 +67,7 @@ public class RemoveAttachmentTransformer extends AbstractMessageTransformer
         }
         catch (Exception e)
         {
-            throw new TransformerException(this,e);
+            throw new TransformerException(this, e);
         }
     }
 

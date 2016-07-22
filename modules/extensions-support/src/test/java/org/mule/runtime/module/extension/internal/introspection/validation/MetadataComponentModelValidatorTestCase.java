@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptySet;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.toMetadataType;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.metadata.api.model.DictionaryType;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.connection.ConnectionException;
@@ -30,11 +30,11 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 import org.mule.tck.testmodels.fruit.Apple;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptySet;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.toMetadataType;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -54,21 +54,6 @@ public class MetadataComponentModelValidatorTestCase extends AbstractMuleTestCas
     private RuntimeSourceModel sourceModel;
 
     private MetadataComponentModelValidator validator = new MetadataComponentModelValidator();
-
-    public static class SimpleOutputResolver implements MetadataOutputResolver<String>, MetadataAttributesResolver<String>
-    {
-        @Override
-        public MetadataType getOutputMetadata(MetadataContext context, String key) throws MetadataResolvingException, ConnectionException
-        {
-            return null;
-        }
-
-        @Override
-        public MetadataType getAttributesMetadata(MetadataContext context, String key) throws MetadataResolvingException, ConnectionException
-        {
-            return null;
-        }
-    }
 
     @Before
     public void before()
@@ -141,7 +126,8 @@ public class MetadataComponentModelValidatorTestCase extends AbstractMuleTestCas
     {
         when(sourceModel.getOutput()).thenReturn(new ImmutableOutputModel("", toMetadataType(Object.class), false, emptySet()));
         when(sourceModel.getMetadataResolverFactory())
-                .thenReturn(new DefaultMetadataResolverFactory(NullMetadataResolver.class, NullMetadataResolver.class, SimpleOutputResolver.class, SimpleOutputResolver.class));
+                .thenReturn(new DefaultMetadataResolverFactory(NullMetadataResolver.class, NullMetadataResolver.class,
+                        SimpleOutputResolver.class, SimpleOutputResolver.class));
         validator.validate(extensionModel);
     }
 
@@ -151,7 +137,24 @@ public class MetadataComponentModelValidatorTestCase extends AbstractMuleTestCas
         when(dictionaryType.getValueType()).thenReturn(toMetadataType(Object.class));
         when(sourceModel.getOutput()).thenReturn(new ImmutableOutputModel("", dictionaryType, false, emptySet()));
         when(sourceModel.getMetadataResolverFactory())
-                .thenReturn(new DefaultMetadataResolverFactory(NullMetadataResolver.class, NullMetadataResolver.class, SimpleOutputResolver.class, SimpleOutputResolver.class));
+                .thenReturn(new DefaultMetadataResolverFactory(NullMetadataResolver.class, NullMetadataResolver.class,
+                        SimpleOutputResolver.class, SimpleOutputResolver.class));
         validator.validate(extensionModel);
+    }
+
+    public static class SimpleOutputResolver implements MetadataOutputResolver<String>, MetadataAttributesResolver<String>
+    {
+        @Override
+        public MetadataType getOutputMetadata(MetadataContext context, String key) throws MetadataResolvingException, ConnectionException
+        {
+            return null;
+        }
+
+        @Override
+        public MetadataType getAttributesMetadata(MetadataContext context, String key)
+                throws MetadataResolvingException, ConnectionException
+        {
+            return null;
+        }
     }
 }

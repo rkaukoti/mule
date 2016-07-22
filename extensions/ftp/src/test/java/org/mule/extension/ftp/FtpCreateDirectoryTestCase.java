@@ -6,14 +6,14 @@
  */
 package org.mule.extension.ftp;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.extension.FtpTestHarness;
 
 import java.nio.file.Paths;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class FtpCreateDirectoryTestCase extends FtpConnectorTestCase
 {

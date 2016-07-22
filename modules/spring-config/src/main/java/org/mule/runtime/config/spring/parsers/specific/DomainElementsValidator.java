@@ -8,7 +8,6 @@ package org.mule.runtime.config.spring.parsers.specific;
 
 import org.mule.runtime.config.spring.ElementValidator;
 import org.mule.runtime.config.spring.parsers.PreProcessor;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -37,7 +36,8 @@ public class DomainElementsValidator implements ElementValidator
                 return;
             }
 
-            if (node.getNamespaceURI().contains("mule") && "beans".equals(parent.getLocalName()) && parent.getNamespaceURI().contains("spring"))
+            if (node.getNamespaceURI().contains("mule") && "beans".equals(parent.getLocalName()) &&
+                parent.getNamespaceURI().contains("spring"))
             {
                 throw new IllegalStateException("Mule elements are not allowed inside Spring elements when used in a domain");
             }

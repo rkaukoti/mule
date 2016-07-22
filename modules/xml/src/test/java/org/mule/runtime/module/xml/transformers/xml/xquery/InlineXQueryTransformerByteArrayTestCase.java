@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.module.xml.transformers.xml.xquery;
 
+import org.custommonkey.xmlunit.XMLUnit;
 import org.mule.runtime.core.util.IOUtils;
 
 import java.io.InputStream;
-
-import org.custommonkey.xmlunit.XMLUnit;
 
 public class InlineXQueryTransformerByteArrayTestCase extends InlineXQueryTransformerTestCase
 {
@@ -22,7 +21,7 @@ public class InlineXQueryTransformerByteArrayTestCase extends InlineXQueryTransf
     {
         XMLUnit.setIgnoreWhitespace(true);
         srcData = IOUtils.toByteArray(IOUtils.getResourceAsStream("cdcatalog-utf-8.xml", getClass()));
-        
+
         InputStream resourceStream = IOUtils.getResourceAsStream("cdcatalog-result-utf-8.xml", getClass());
         resultData = new String(IOUtils.toByteArray(resourceStream), "UTF-8");
     }

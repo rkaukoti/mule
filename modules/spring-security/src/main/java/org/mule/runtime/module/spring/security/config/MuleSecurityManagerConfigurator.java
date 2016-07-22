@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.module.spring.security.config;
 
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_SECURITY_MANAGER;
 import org.mule.runtime.config.spring.dsl.api.ObjectFactory;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.security.SecurityManager;
@@ -17,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_SECURITY_MANAGER;
 
 /**
  * {@code ObjectFactory} for a security manager configuration element.
@@ -62,8 +63,10 @@ public class MuleSecurityManagerConfigurator implements ObjectFactory<SecurityMa
             factorySecurityManager = new MuleSecurityManager();
             securityManagers.add(factorySecurityManager);
         }
-        providers.stream().forEach(provider -> {
-            securityManagers.stream().forEach(securityManager -> {
+        providers.stream().forEach(provider ->
+        {
+            securityManagers.stream().forEach(securityManager ->
+            {
                 securityManager.addProvider(provider);
             });
         });

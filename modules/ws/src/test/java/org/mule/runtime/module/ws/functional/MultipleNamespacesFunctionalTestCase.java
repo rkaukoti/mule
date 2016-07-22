@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.module.ws.functional;
 
-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
-import org.mule.runtime.core.api.MuleMessage;
-
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.Test;
+import org.mule.runtime.core.api.MuleMessage;
+
+import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
 
 /**
  * Tests that envelope body unwrapping works fine when multiple namespaces are used

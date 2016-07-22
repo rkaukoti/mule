@@ -17,7 +17,8 @@ import java.util.concurrent.locks.Lock;
 /**
  * Default {@link LocalQueueTransactionContext} implementation for a queue.
  */
-public class LocalTxQueueTransactionContext extends AbstractTransactionContext implements LocalQueueTransactionContext, QueueTransactionContextFactory<LocalQueueTransactionContext>
+public class LocalTxQueueTransactionContext extends AbstractTransactionContext
+        implements LocalQueueTransactionContext, QueueTransactionContextFactory<LocalQueueTransactionContext>
 {
 
     private final LocalTxQueueTransactionJournal localTxQueueTransactionJournal;
@@ -25,7 +26,8 @@ public class LocalTxQueueTransactionContext extends AbstractTransactionContext i
     private final QueueTypeTransactionContextAdapter<LocalQueueTransactionContext> delegate;
     private final Lock transactionContextAccessLock;
 
-    public LocalTxQueueTransactionContext(LocalTxQueueTransactionJournal localTxQueueTransactionJournal, QueueProvider queueProvider, Lock transactionContextAccessLock)
+    public LocalTxQueueTransactionContext(LocalTxQueueTransactionJournal localTxQueueTransactionJournal, QueueProvider queueProvider,
+                                          Lock transactionContextAccessLock)
     {
         this.localTxQueueTransactionJournal = localTxQueueTransactionJournal;
         this.queueProvider = queueProvider;

@@ -7,6 +7,13 @@
 
 package org.mule.runtime.module.db.internal.resolver.param;
 
+import org.junit.Test;
+import org.mule.runtime.core.api.expression.ExpressionManager;
+import org.mule.runtime.module.db.internal.domain.query.QueryParamValue;
+import org.mule.tck.size.SmallTest;
+
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
@@ -15,13 +22,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import org.mule.runtime.core.api.expression.ExpressionManager;
-import org.mule.runtime.module.db.internal.domain.query.QueryParamValue;
-import org.mule.tck.size.SmallTest;
-
-import java.util.List;
-
-import org.junit.Test;
 
 @SmallTest
 public class DynamicParamValueResolverTestCase extends AbstractQueryParamResolverTestCase

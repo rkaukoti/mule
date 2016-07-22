@@ -6,23 +6,23 @@
  */
 package org.mule.runtime.core.transformer.compression;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
 import org.mule.runtime.core.util.compression.GZipCompression;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests {@link GZipCompressTransformer} and its counterpart, the {@link GZipUncompressTransformer}.
  */
 public class GZipTransformerTestCase extends AbstractTransformerTestCase
 {
-    protected static final String TEST_DATA = "the quick brown fox jumped over the lazy dog the quick brown fox jumped over the lazy dog the quick brown fox jumped over the lazy dog";
+    protected static final String TEST_DATA =
+            "the quick brown fox jumped over the lazy dog the quick brown fox jumped over the lazy dog the quick brown fox jumped over the lazy dog";
     protected GZipCompression strat;
 
     @Override
@@ -91,6 +91,6 @@ public class GZipTransformerTestCase extends AbstractTransformerTestCase
         Object decompressedData = decompressorTransformer.transform(compressedData);
 
         assertTrue(String.format("Compress and decompress process failed. Expected '%s', but got '%s'", getTestData(), decompressedData),
-                   compareResults(getTestData(), decompressedData));
+                compareResults(getTestData(), decompressedData));
     }
 }

@@ -6,9 +6,7 @@
  */
 package org.mule.test.spring;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.MessageReceiver;
 import org.mule.compatibility.core.api.transport.MuleMessageFactory;
@@ -24,7 +22,8 @@ import org.mule.tck.testmodels.mule.TestMessageReceiver;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ConnectorServiceOverridesTestCase extends FunctionalTestCase
 {
@@ -38,18 +37,18 @@ public class ConnectorServiceOverridesTestCase extends FunctionalTestCase
     public void testOverrideMessageReceiver() throws Exception
     {
         TestConnector connector = lookupDummyConnector();
-        
+
         // create an xa-transacted endpoint (this triggers the cration of an
         // xaTransactedMessageReceiver in the service descriptor impl
         InboundEndpoint endpoint = MuleEndpointTestUtils.getTestInboundEndpoint("foo", muleContext);
         endpoint.getTransactionConfig().setAction(MuleTransactionConfig.ACTION_ALWAYS_BEGIN);
         endpoint.getTransactionConfig().setFactory(new XaTransactionFactory());
-        
+
         TransportServiceDescriptor serviceDescriptor = connector.getServiceDescriptor();
 
         // see if we get the overridden message receiver
         MessageReceiver receiver = serviceDescriptor.createMessageReceiver(connector,
-            getTestFlow(), endpoint);
+                getTestFlow(), endpoint);
         assertEquals(TestMessageReceiver.class, receiver.getClass());
     }
 
@@ -59,7 +58,7 @@ public class ConnectorServiceOverridesTestCase extends FunctionalTestCase
         assertNotNull(connector);
         return connector;
     }
-    
+
     @Test
     public void testOverrideMuleMessageFactory() throws Exception
     {
@@ -76,21 +75,21 @@ public class ConnectorServiceOverridesTestCase extends FunctionalTestCase
     {
         TestConnector connector = lookupDummyConnector();
         TransportServiceDescriptor serviceDescriptor = connector.getServiceDescriptor();
-        
+
         List<MessageExchangePattern> meps = serviceDescriptor.getInboundExchangePatterns();
-        
+
         List<MessageExchangePattern> expected = Arrays.asList(MessageExchangePattern.REQUEST_RESPONSE);
         assertEquals(expected, meps);
     }
-    
+
     @Test
     public void testOverrideOutboundExchangePatterns() throws Exception
     {
         TestConnector connector = lookupDummyConnector();
         TransportServiceDescriptor serviceDescriptor = connector.getServiceDescriptor();
-        
+
         List<MessageExchangePattern> meps = serviceDescriptor.getOutboundExchangePatterns();
-        
+
         List<MessageExchangePattern> expected = Arrays.asList(MessageExchangePattern.REQUEST_RESPONSE);
         assertEquals(expected, meps);
     }
@@ -100,9 +99,9 @@ public class ConnectorServiceOverridesTestCase extends FunctionalTestCase
     {
         TestConnector connector = lookupDummyConnector();
         TransportServiceDescriptor serviceDescriptor = connector.getServiceDescriptor();
-        
+
         MessageExchangePattern defaultMep = serviceDescriptor.getDefaultExchangePattern();
-        
+
         assertEquals(MessageExchangePattern.REQUEST_RESPONSE, defaultMep);
     }
 }

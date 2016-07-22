@@ -13,7 +13,6 @@ import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyCon
 import org.mule.runtime.config.spring.parsers.delegate.AbstractParallelDelegatingDefinitionParser;
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
 import org.mule.runtime.core.util.StringUtils;
-
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
@@ -25,13 +24,13 @@ import org.w3c.dom.Node;
  * different component parses depending on the existence of the class attribute. If
  * the class attribute is used then an embedded object factory element cannot be
  * used.
- * 
+ *
  * <pre>
  * &lt;component class=&quot;&quot;&gt;
  * </pre>
- * 
+ *
  * or one with an embedded object factory element.
- * 
+ *
  * <pre>
  * &lt;component&gt;
  *     &lt;singleon-object class=&quot;..&quot;/&gt;

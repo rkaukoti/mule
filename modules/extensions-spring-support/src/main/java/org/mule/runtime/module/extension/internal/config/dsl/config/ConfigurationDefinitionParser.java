@@ -6,11 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.config.dsl.config;
 
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromChildConfiguration;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromFixedValue;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromSimpleParameter;
-import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getConnectedComponents;
 import org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinition.Builder;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.ConfigurationException;
@@ -22,6 +17,12 @@ import org.mule.runtime.module.extension.internal.config.dsl.ExtensionDefinition
 import org.mule.runtime.module.extension.internal.config.dsl.ExtensionParsingContext;
 import org.mule.runtime.module.extension.internal.runtime.DynamicConfigPolicy;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ConnectionProviderResolver;
+
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromChildConfiguration;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromFixedValue;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromSimpleParameter;
+import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getConnectedComponents;
 
 /**
  * A {@link ExtensionDefinitionParser} for parsing {@link ConfigurationProvider}
@@ -49,12 +50,12 @@ public final class ConfigurationDefinitionParser extends ExtensionDefinitionPars
     protected void doParse(Builder definitionBuilder) throws ConfigurationException
     {
         definitionBuilder.withIdentifier(configDsl.getElementName())
-                .withTypeDefinition(fromType(ConfigurationProvider.class))
-                .withObjectFactoryType(ConfigurationProviderObjectFactory.class)
-                .withConstructorParameterDefinition(fromSimpleParameter("name").build())
-                .withConstructorParameterDefinition(fromFixedValue(configurationModel).build())
-                .withConstructorParameterDefinition(fromFixedValue(muleContext).build())
-                .withSetterParameterDefinition("dynamicConfigPolicy", fromChildConfiguration(DynamicConfigPolicy.class).build());
+                         .withTypeDefinition(fromType(ConfigurationProvider.class))
+                         .withObjectFactoryType(ConfigurationProviderObjectFactory.class)
+                         .withConstructorParameterDefinition(fromSimpleParameter("name").build())
+                         .withConstructorParameterDefinition(fromFixedValue(configurationModel).build())
+                         .withConstructorParameterDefinition(fromFixedValue(muleContext).build())
+                         .withSetterParameterDefinition("dynamicConfigPolicy", fromChildConfiguration(DynamicConfigPolicy.class).build());
 
         parseParameters(configurationModel.getParameterModels());
         parseConnectionProvider(definitionBuilder);
@@ -66,7 +67,8 @@ public final class ConfigurationDefinitionParser extends ExtensionDefinitionPars
         if (!getConnectedComponents(configurationModel).isEmpty())
         {
             definitionBuilder.withSetterParameterDefinition("requiresConnection", fromFixedValue(true).build());
-            definitionBuilder.withSetterParameterDefinition("connectionProviderResolver", fromChildConfiguration(ConnectionProviderResolver.class).build());
+            definitionBuilder.withSetterParameterDefinition("connectionProviderResolver",
+                    fromChildConfiguration(ConnectionProviderResolver.class).build());
         }
     }
 

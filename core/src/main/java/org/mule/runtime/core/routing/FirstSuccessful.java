@@ -23,14 +23,15 @@ import org.mule.runtime.core.routing.outbound.AbstractOutboundRouter;
 public class FirstSuccessful extends AbstractOutboundRouter
 {
 
-    private RoutingStrategy routingStrategy;
     protected String failureExpression;
+    private RoutingStrategy routingStrategy;
 
     @Override
     public void initialise() throws InitialisationException
     {
         super.initialise();
-        routingStrategy = new FirstSuccessfulRoutingStrategy(muleContext, failureExpression, (route, event) -> doProcessRoute(route, event));
+        routingStrategy =
+                new FirstSuccessfulRoutingStrategy(muleContext, failureExpression, (route, event) -> doProcessRoute(route, event));
     }
 
     /**
@@ -41,7 +42,7 @@ public class FirstSuccessful extends AbstractOutboundRouter
     {
         try
         {
-            return routingStrategy.route(event,getRoutes());
+            return routingStrategy.route(event, getRoutes());
         }
         catch (RoutingFailedMessagingException exception)
         {
@@ -59,7 +60,6 @@ public class FirstSuccessful extends AbstractOutboundRouter
      * Specifies an expression that when evaluated as determines if the processing of
      * one a route was a failure or not.
      *
-     * @param failureExpression
      * @see ExpressionFilter
      */
     public void setFailureExpression(String failureExpression)

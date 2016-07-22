@@ -7,12 +7,12 @@
 
 package org.mule.runtime.container.internal;
 
-import static java.util.Collections.unmodifiableSet;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
 import org.mule.runtime.core.util.StringUtils;
 
 import java.util.Set;
+
+import static java.util.Collections.unmodifiableSet;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Provides module definition information
@@ -27,9 +27,9 @@ public class MuleModule
     /**
      * Creates a new module
      *
-     * @param name module name. Not empty.
+     * @param name             module name. Not empty.
      * @param exportedPackages java packages exported by this module. Not null.
-     * @param exportedPaths java resources exported by this module. Not null;
+     * @param exportedPaths    java resources exported by this module. Not null;
      */
     public MuleModule(String name, Set<String> exportedPackages, Set<String> exportedPaths)
     {

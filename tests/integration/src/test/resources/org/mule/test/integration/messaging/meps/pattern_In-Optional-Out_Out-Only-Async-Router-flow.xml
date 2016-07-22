@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:mule="http://www.mulesoft.org/schema/mule/core"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
       xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
        http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
@@ -26,36 +26,36 @@
         Note: this fails with ActiveMQ because of an outstanding issue on the part of ActiveMQ for handling temporary
         destinations.
     </description>
-    
+
     <flow name="In-Out_Out-Only-Async-Service">
         <script:component>
             <script:script engine="groovy">
                 if (message.getInboundProperty("foo") != null)
-                    return message
+                return message
                 else
                 {
-                    //This shouldn't be needed but null does not stop the async-reply...
-                    eventContext.setStopFurtherProcessing(true)
-                    return null
+                //This shouldn't be needed but null does not stop the async-reply...
+                eventContext.setStopFurtherProcessing(true)
+                return null
                 }
             </script:script>
         </script:component>
-        
+
         <mule:message-filter>
             <mule:not-filter>
                 <mule:expression-filter expression="#[payload == null]"/>
             </mule:not-filter>
         </mule:message-filter>
-                
+
         <flow-ref name="ExternalApp"/>
-    </flow>    
-    
+    </flow>
+
 
     <flow name="ExternalApp">
         <test:component>
             <test:return-data>got it!</test:return-data>
         </test:component>
     </flow>
-    
+
     <!--// END SNIPPET: full-config -->
 </mule>

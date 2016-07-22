@@ -6,11 +6,14 @@
  */
 package org.mule.runtime.module.cxf.builder;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.apache.cxf.interceptor.Interceptor;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.ws.security.SecurityConstants;
+import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
+import org.apache.ws.security.handler.WSHandlerConstants;
+import org.apache.ws.security.validate.NoOpValidator;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.module.cxf.CxfInboundMessageProcessor;
 import org.mule.runtime.module.cxf.config.WsConfig;
@@ -25,21 +28,17 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
-import org.apache.cxf.interceptor.Interceptor;
-import org.apache.cxf.message.Message;
-import org.apache.cxf.ws.security.SecurityConstants;
-import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
-import org.apache.ws.security.handler.WSHandlerConstants;
-import org.apache.ws.security.validate.NoOpValidator;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 
 public class WebServiceMessageProcessorBuilderTestCase extends AbstractMuleContextTestCase
 {
-    private WebServiceMessageProcessorBuilder serviceMessageProcessorBuilder;
     private static final String SERVICE_NAME = "Echo";
     private static final String NAMESPACE = "http://cxf.apache.org/";
+    private WebServiceMessageProcessorBuilder serviceMessageProcessorBuilder;
 
     @Before
     public void setUp()
@@ -64,7 +63,7 @@ public class WebServiceMessageProcessorBuilderTestCase extends AbstractMuleConte
     @Test
     public void testWsSecurityConfig() throws MuleException
     {
-        WsSecurity wsSecurity = new WsSecurity();     
+        WsSecurity wsSecurity = new WsSecurity();
         addConfigProperties(wsSecurity);
         addSecurityManager(wsSecurity);
         addCustomValidator(wsSecurity);
@@ -79,15 +78,15 @@ public class WebServiceMessageProcessorBuilderTestCase extends AbstractMuleConte
         assertNotNull(messageProcessor);
         WSS4JInInterceptor wss4JInInterceptor = getInterceptor(messageProcessor.getServer().getEndpoint().getInInterceptors());
         assertNotNull(wss4JInInterceptor);
-        
+
         Map<String, Object> wss4jProperties = wss4JInInterceptor.getProperties();
         assertFalse(wss4jProperties.isEmpty());
-        
+
         assertEquals(WSHandlerConstants.USERNAME_TOKEN, wss4jProperties.get(WSHandlerConstants.ACTION));
-        
+
         Map<String, Object> properties = serviceMessageProcessorBuilder.getProperties();
         assertNotNull(properties);
-        
+
         assertTrue(properties.get(SecurityConstants.USERNAME_TOKEN_VALIDATOR) instanceof MuleSecurityManagerValidator);
         assertTrue(properties.get(SecurityConstants.TIMESTAMP_TOKEN_VALIDATOR) instanceof NoOpValidator);
 
@@ -95,11 +94,11 @@ public class WebServiceMessageProcessorBuilderTestCase extends AbstractMuleConte
 
     private WSS4JInInterceptor getInterceptor(List<Interceptor<? extends Message>> interceptors)
     {
-        for(Interceptor interceptor : interceptors)
+        for (Interceptor interceptor : interceptors)
         {
-            if(interceptor instanceof WSS4JInInterceptor)
+            if (interceptor instanceof WSS4JInInterceptor)
             {
-                return (WSS4JInInterceptor)interceptor;
+                return (WSS4JInInterceptor) interceptor;
             }
         }
         return null;
@@ -109,7 +108,7 @@ public class WebServiceMessageProcessorBuilderTestCase extends AbstractMuleConte
     {
         Map<String, Object> configProperties = new HashMap<>();
         configProperties.put(WSHandlerConstants.ACTION, WSHandlerConstants.USERNAME_TOKEN);
-        
+
         final WsConfig wsConfig = new WsConfig(configProperties);
         wsConfig.setMuleContext(muleContext);
         wsSecurity.setWsConfig(wsConfig);
@@ -119,7 +118,7 @@ public class WebServiceMessageProcessorBuilderTestCase extends AbstractMuleConte
     {
         wsSecurity.setSecurityManager(new MuleSecurityManagerValidator());
     }
-    
+
     private void addCustomValidator(WsSecurity wsSecurity)
     {
         Map<String, Object> customValidator = new HashMap<>();

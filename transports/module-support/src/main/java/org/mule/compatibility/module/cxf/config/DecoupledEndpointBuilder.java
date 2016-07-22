@@ -6,6 +6,7 @@
  */
 package org.mule.compatibility.module.cxf.config;
 
+import org.apache.cxf.Bus;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
@@ -19,12 +20,11 @@ import org.mule.runtime.module.cxf.CxfOutboundMessageProcessor;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.cxf.Bus;
-
 public class DecoupledEndpointBuilder
 {
 
-    public static void build(MuleContext muleContext, String decoupledEndpoint, CxfOutboundMessageProcessor processor, Bus bus) throws MuleException
+    public static void build(MuleContext muleContext, String decoupledEndpoint, CxfOutboundMessageProcessor processor, Bus bus)
+            throws MuleException
     {
         if (decoupledEndpoint != null)
         {

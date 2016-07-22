@@ -50,7 +50,7 @@ import java.util.List;
  */
 @Deprecated
 public class QueuePersistenceObjectStore<T extends Serializable> extends AbstractObjectStore<T>
-    implements ListableObjectStore<T>, MuleContextAware
+        implements ListableObjectStore<T>, MuleContextAware
 {
     /**
      * The default queueStore directory for persistence
@@ -118,7 +118,7 @@ public class QueuePersistenceObjectStore<T extends Serializable> extends Abstrac
         catch (IOException e)
         {
             throw new ObjectStoreException(
-                MessageFactory.createStaticMessage("Could not clear object store"), e);
+                    MessageFactory.createStaticMessage("Could not clear object store"), e);
         }
     }
 
@@ -197,7 +197,7 @@ public class QueuePersistenceObjectStore<T extends Serializable> extends Abstrac
     }
 
     protected void listStoredFiles(File directory, List<Serializable> keys)
-        throws IOException, ClassNotFoundException
+            throws IOException, ClassNotFoundException
     {
         File[] files = directory.listFiles();
         if (files == null)

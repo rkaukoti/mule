@@ -7,11 +7,9 @@
 
 package org.mule.runtime.module.artifact.classloader;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_FIRST;
-import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_ONLY;
-
 import org.mule.runtime.module.artifact.classloader.exception.CompositeClassNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,8 +24,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_FIRST;
+import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_ONLY;
 
 /**
  * Defines a classloader that delegates classes and resources resolution to
@@ -38,12 +37,12 @@ import org.slf4j.LoggerFactory;
  */
 public class CompositeClassLoader extends ClassLoader implements ClassLoaderLookupPolicyProvider
 {
+    protected static final Logger logger = LoggerFactory.getLogger(CompositeClassLoader.class);
+
     static
     {
         registerAsParallelCapable();
     }
-
-    protected static final Logger logger = LoggerFactory.getLogger(CompositeClassLoader.class);
 
     protected final List<ClassLoader> classLoaders;
     private final ClassLoaderLookupPolicy lookupPolicy;
@@ -51,7 +50,7 @@ public class CompositeClassLoader extends ClassLoader implements ClassLoaderLook
     /**
      * Creates a new instance
      *
-     * @param parent parent class loader used to delegate the lookup process. Can be null.
+     * @param parent       parent class loader used to delegate the lookup process. Can be null.
      * @param classLoaders class loaders to compose. Non empty.
      * @param lookupPolicy policy used to guide the lookup process. Non null
      */
@@ -271,12 +270,14 @@ public class CompositeClassLoader extends ClassLoader implements ClassLoaderLook
             }
         }
 
-        throw new NoSuchMethodException(String.format("Cannot find a method '%s' with the given parameter types '%s'", methodName, Arrays.toString(params)));
+        throw new NoSuchMethodException(
+                String.format("Cannot find a method '%s' with the given parameter types '%s'", methodName, Arrays.toString(params)));
     }
 
     protected void logReflectionLoadingError(String name, ClassLoader classLoader, Exception e, String type)
     {
-        if (e instanceof InvocationTargetException && ((InvocationTargetException) e).getTargetException() instanceof ClassNotFoundException)
+        if (e instanceof InvocationTargetException &&
+            ((InvocationTargetException) e).getTargetException() instanceof ClassNotFoundException)
         {
             logger.debug(String.format("'%s' '%s' not found in class loader '%s'", type, name, classLoader));
         }
@@ -292,7 +293,8 @@ public class CompositeClassLoader extends ClassLoader implements ClassLoaderLook
                 errorMessage = e.getMessage();
             }
 
-            logger.debug(String.format("Error loading '%s' '%s' from class loader '%s': '%s'", type.toLowerCase(), name, classLoader, errorMessage));
+            logger.debug(String.format("Error loading '%s' '%s' from class loader '%s': '%s'", type.toLowerCase(), name, classLoader,
+                    errorMessage));
         }
     }
 }

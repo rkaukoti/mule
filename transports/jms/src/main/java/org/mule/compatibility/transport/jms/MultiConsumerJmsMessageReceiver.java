@@ -27,6 +27,8 @@ import org.mule.runtime.core.api.transaction.Transaction;
 import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.transaction.TransactionCollection;
 import org.mule.runtime.core.util.ClassUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -40,9 +42,6 @@ import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
 import javax.jms.Session;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * In Mule an endpoint corresponds to a single receiver. It's up to the receiver to do multithreaded consumption and
  * resource allocation, if needed. This class honors the <code>numberOfConcurrentTransactedReceivers</code> strictly
@@ -53,11 +52,8 @@ public class MultiConsumerJmsMessageReceiver extends AbstractMessageReceiver
     protected final List<SubReceiver> consumers;
 
     protected final int receiversCount;
-
-    private final JmsConnector jmsConnector;
-
     final boolean isTopic;
-
+    private final JmsConnector jmsConnector;
     private final ReconnectWorkManager reconnectWorkManager;
     private boolean reconnecting = false;
     private boolean started = false;
@@ -75,7 +71,7 @@ public class MultiConsumerJmsMessageReceiver extends AbstractMessageReceiver
             if (logger.isInfoEnabled())
             {
                 logger.info("Destination " + getEndpoint().getEndpointURI() + " is a topic, but " + jmsConnector.getNumberOfConsumers() +
-                                " receivers have been requested. Will configure only 1.");
+                            " receivers have been requested. Will configure only 1.");
             }
             receiversCount = 1;
         }
@@ -125,7 +121,7 @@ public class MultiConsumerJmsMessageReceiver extends AbstractMessageReceiver
         if (consumers != null)
         {
             SubReceiver sub;
-            for (Iterator<SubReceiver> it = consumers.iterator(); it.hasNext();)
+            for (Iterator<SubReceiver> it = consumers.iterator(); it.hasNext(); )
             {
                 sub = it.next();
                 sub.doStop(true);
@@ -205,7 +201,7 @@ public class MultiConsumerJmsMessageReceiver extends AbstractMessageReceiver
         logger.debug("doDisconnect()");
 
         SubReceiver sub;
-        for (Iterator<SubReceiver> it = consumers.iterator(); it.hasNext();)
+        for (Iterator<SubReceiver> it = consumers.iterator(); it.hasNext(); )
         {
             sub = it.next();
             try
@@ -245,13 +241,11 @@ public class MultiConsumerJmsMessageReceiver extends AbstractMessageReceiver
     protected class SubReceiver implements MessageListener
     {
         private final Logger subLogger = LoggerFactory.getLogger(getClass());
-
-        private volatile Session session;
-        private volatile MessageConsumer consumer;
-
         protected volatile boolean connected;
         protected volatile boolean started;
         protected volatile boolean isProcessingMessage;
+        private volatile Session session;
+        private volatile MessageConsumer consumer;
 
         protected void doConnect() throws MuleException
         {
@@ -328,6 +322,7 @@ public class MultiConsumerJmsMessageReceiver extends AbstractMessageReceiver
 
         /**
          * Stop the subreceiver.
+         *
          * @param force - if true, any exceptions will be logged but the subreceiver will be considered stopped regardless
          * @throws MuleException only if force = false
          */
@@ -417,7 +412,7 @@ public class MultiConsumerJmsMessageReceiver extends AbstractMessageReceiver
                 {
                     // Create consumer
                     consumer = jmsSupport.createConsumer(session, dest, selector, jmsConnector.isNoLocal(), durableName,
-                                                                                          topic, endpoint);
+                            topic, endpoint);
                 }
                 catch (Exception e)
                 {

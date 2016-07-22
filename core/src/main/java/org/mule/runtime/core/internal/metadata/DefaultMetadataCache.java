@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.core.internal.metadata;
 
-import org.mule.runtime.api.metadata.MetadataCache;
-
 import com.google.common.collect.ImmutableMap;
+
+import org.mule.runtime.api.metadata.MetadataCache;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -49,7 +49,7 @@ public final class DefaultMetadataCache implements MetadataCache
     @Override
     public <T extends Serializable> Optional<T> get(Serializable key)
     {
-        return Optional.ofNullable((T)cache.get(key));
+        return Optional.ofNullable((T) cache.get(key));
     }
 
     public Map<Serializable, Serializable> asMap()

@@ -6,11 +6,9 @@
  */
 package org.mule.compatibility.core.transport;
 
-import org.mule.compatibility.core.transport.KeyedPoolMessageDispatcherFactoryAdapter;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
-
-import org.junit.Test;
 
 import static org.junit.Assert.fail;
 

@@ -16,7 +16,7 @@ import org.mule.runtime.core.config.i18n.Message;
 public class FilterUnacceptedException extends MessagingException
 {
     private static final long serialVersionUID = -1828111078295716525L;
-    
+
     private transient Filter filter;
 
     public FilterUnacceptedException(Message message, MuleEvent event, Filter filter, MessageProcessor failingMessageProcessor)

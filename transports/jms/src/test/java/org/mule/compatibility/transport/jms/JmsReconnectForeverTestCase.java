@@ -6,11 +6,8 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.junit.Test;
 import org.mule.compatibility.core.api.transport.MessageReceiver;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.tck.probe.PollingProber;
@@ -21,8 +18,10 @@ import java.util.Collection;
 
 import javax.jms.Connection;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
-import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class JmsReconnectForeverTestCase extends AbstractBrokerFunctionalTestCase
 {

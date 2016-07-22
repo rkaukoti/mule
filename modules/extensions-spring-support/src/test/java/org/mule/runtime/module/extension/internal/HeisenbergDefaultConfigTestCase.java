@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.module.extension.internal;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.test.heisenberg.extension.HeisenbergExtension;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class HeisenbergDefaultConfigTestCase extends ExtensionFunctionalTestCase
 {

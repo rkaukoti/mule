@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.config.spring;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
-
+import org.hamcrest.core.Is;
+import org.junit.Test;
 import org.mule.runtime.core.api.registry.Registry;
 import org.mule.runtime.core.registry.AbstractRegistryTestCase;
+import org.springframework.context.support.StaticApplicationContext;
 
 import java.util.Collection;
 
-import org.hamcrest.core.Is;
-import org.junit.Test;
-import org.springframework.context.support.StaticApplicationContext;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertThat;
 
 public class SpringRegistryTestCase extends AbstractRegistryTestCase
 {

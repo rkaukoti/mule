@@ -7,8 +7,8 @@
 package org.mule.runtime.module.extension.internal.capability.xml.schema;
 
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
-import org.mule.runtime.extension.xml.dsl.api.property.XmlModelProperty;
 import org.mule.runtime.extension.api.resources.GeneratedResource;
+import org.mule.runtime.extension.xml.dsl.api.property.XmlModelProperty;
 
 /**
  * Generates a Spring bundle file which links the extension's namespace to its schema file

@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.module.json.transformers;
 
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-
 import org.junit.Test;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

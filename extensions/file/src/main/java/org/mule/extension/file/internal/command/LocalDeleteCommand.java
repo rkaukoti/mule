@@ -6,13 +6,11 @@
  */
 package org.mule.extension.file.internal.command;
 
-import static java.lang.String.format;
-import static java.nio.file.FileVisitResult.CONTINUE;
-import static java.nio.file.Files.isDirectory;
-import static java.nio.file.Files.walkFileTree;
 import org.mule.extension.file.internal.LocalFileSystem;
 import org.mule.runtime.module.extension.file.api.FileConnectorConfig;
 import org.mule.runtime.module.extension.file.api.command.DeleteCommand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
@@ -22,8 +20,10 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static java.nio.file.FileVisitResult.CONTINUE;
+import static java.nio.file.Files.isDirectory;
+import static java.nio.file.Files.walkFileTree;
 
 /**
  * A {@link LocalFileCommand} which implements the {@link DeleteCommand} contract

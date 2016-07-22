@@ -7,15 +7,8 @@
 
 package org.mule.runtime.module.db.integration.update;
 
-import static org.hamcrest.CoreMatchers.anyOf;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
-import static org.mule.runtime.module.db.integration.model.Planet.EARTH;
-import static org.mule.runtime.module.db.integration.model.Planet.MARS;
-import static org.mule.runtime.module.db.integration.model.Planet.VENUS;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -32,8 +25,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
+import static org.mule.runtime.module.db.integration.model.Planet.EARTH;
+import static org.mule.runtime.module.db.integration.model.Planet.MARS;
+import static org.mule.runtime.module.db.integration.model.Planet.VENUS;
 
 public class UpdateBulkTestCase extends AbstractDbIntegrationTestCase
 {
@@ -107,7 +107,9 @@ public class UpdateBulkTestCase extends AbstractDbIntegrationTestCase
         assertThat(counters[2], anyOf(equalTo(1), equalTo(Statement.SUCCESS_NO_INFO)));
 
         List<Map<String, String>> result = selectData("select * from PLANET order by ID", getDefaultDataSource());
-        assertRecords(result, new Record(new Field("NAME", "Mercury"), new Field("POSITION", 2)), new Record(new Field("NAME", "Mercury"), new Field("POSITION", 3)), new Record(new Field("NAME", "Mercury"), new Field("POSITION", 4)));
+        assertRecords(result, new Record(new Field("NAME", "Mercury"), new Field("POSITION", 2)),
+                new Record(new Field("NAME", "Mercury"), new Field("POSITION", 3)),
+                new Record(new Field("NAME", "Mercury"), new Field("POSITION", 4)));
     }
 
     private List<String> getPlanetNames()

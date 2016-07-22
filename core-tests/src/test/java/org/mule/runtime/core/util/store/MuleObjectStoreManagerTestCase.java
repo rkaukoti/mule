@@ -7,17 +7,10 @@
 
 package org.mule.runtime.core.util.store;
 
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsCollectionContaining.hasItem;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.withSettings;
-import static org.mule.tck.SerializationTestUtils.addJavaSerializerToMockMuleContext;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+import org.mockito.Mockito;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.MuleConfiguration;
 import org.mule.runtime.core.api.config.MuleProperties;
@@ -35,10 +28,17 @@ import org.mule.tck.size.SmallTest;
 
 import java.io.Serializable;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import org.mockito.Mockito;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
+import static org.mule.tck.SerializationTestUtils.addJavaSerializerToMockMuleContext;
 
 @SmallTest
 public class MuleObjectStoreManagerTestCase extends AbstractMuleTestCase
@@ -49,11 +49,9 @@ public class MuleObjectStoreManagerTestCase extends AbstractMuleTestCase
     public static final int POLLING_DELAY = 60;
     public static final String TEST_KEY = "Some Key";
     public static final String TEST_VALUE = "Some Value";
-
-    private MuleObjectStoreManager storeManager = new MuleObjectStoreManager();
-
     @Rule
     public TemporaryFolder tempWorkDir = new TemporaryFolder();
+    private MuleObjectStoreManager storeManager = new MuleObjectStoreManager();
 
     @Test
     public void disposeDisposableStore() throws ObjectStoreException
@@ -73,9 +71,9 @@ public class MuleObjectStoreManagerTestCase extends AbstractMuleTestCase
     {
         @SuppressWarnings("unchecked")
         ObjectStorePartition<Serializable> store = mock(ObjectStorePartition.class,
-                                                        withSettings()
-                                                                .extraInterfaces(Disposable.class)
-                                                                .defaultAnswer(Mockito.RETURNS_DEEP_STUBS));
+                withSettings()
+                        .extraInterfaces(Disposable.class)
+                        .defaultAnswer(Mockito.RETURNS_DEEP_STUBS));
 
         when(store.getPartitionName()).thenReturn(TEST_PARTITION_NAME);
 
@@ -178,7 +176,8 @@ public class MuleObjectStoreManagerTestCase extends AbstractMuleTestCase
         });
     }
 
-    private ObjectStorePartition<Serializable> createStorePartition(String partitionName, boolean isPersistent) throws InitialisationException
+    private ObjectStorePartition<Serializable> createStorePartition(String partitionName, boolean isPersistent)
+            throws InitialisationException
     {
         MuleContext muleContext = mock(MuleContext.class);
         addJavaSerializerToMockMuleContext(muleContext);

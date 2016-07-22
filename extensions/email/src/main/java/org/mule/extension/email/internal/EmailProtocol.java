@@ -6,9 +6,9 @@
  */
 package org.mule.extension.email.internal;
 
-import static java.lang.String.format;
-
 import java.net.Socket;
+
+import static java.lang.String.format;
 
 /**
  * Email Protocols supported by the {@link EmailConnector}.

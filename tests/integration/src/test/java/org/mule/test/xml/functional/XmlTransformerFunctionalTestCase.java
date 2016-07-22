@@ -6,27 +6,26 @@
  */
 package org.mule.test.xml.functional;
 
+import org.custommonkey.xmlunit.XMLAssert;
+import org.junit.Test;
+import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.api.client.MuleClient;
+import org.w3c.dom.Document;
+
 import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.client.MuleClient;
-
-import org.custommonkey.xmlunit.XMLAssert;
-import org.junit.Test;
-import org.w3c.dom.Document;
-
 public class XmlTransformerFunctionalTestCase extends AbstractXmlFunctionalTestCase
 {
-	public static final String SIMPLE_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<parent><child name=\"poot\"/></parent>";
+    public static final String SIMPLE_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<parent><child name=\"poot\"/></parent>";
     public static final String CHILDLESS_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<parent/>";
     public static final String SERIALIZED = "<org.mule.test.xml.functional.XmlTransformerFunctionalTestCase_-Parent>\n" +
-            "  <child/>\n" +
-            "</org.mule.test.xml.functional.XmlTransformerFunctionalTestCase_-Parent>";
+                                            "  <child/>\n" +
+                                            "</org.mule.test.xml.functional.XmlTransformerFunctionalTestCase_-Parent>";
 
     @Override
     protected String getConfigFile()

@@ -6,8 +6,12 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.entity.ContentType;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
@@ -16,24 +20,18 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.apache.http.client.fluent.Request;
-import org.apache.http.entity.ContentType;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
 public class HttpListenerEncodingTestCase extends AbstractHttpTestCase
 {
-    @Rule
-    public DynamicPort port = new DynamicPort("port");
-
     private static final String JAPANESE_MESSAGE = "\u3042";
     private static final String ARABIC_MESSAGE = "\u0634";
     private static final String CYRILLIC_MESSAGE = "\u0416";
     private static final String SIMPLE_MESSAGE = "A";
-
+    @Rule
+    public DynamicPort port = new DynamicPort("port");
     @Parameterized.Parameter(0)
     public String encoding;
 

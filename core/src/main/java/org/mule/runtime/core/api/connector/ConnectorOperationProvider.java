@@ -31,12 +31,12 @@ public interface ConnectorOperationProvider
     /**
      * A {@link org.mule.runtime.core.api.processor.MessageProcessor} that contains the behaviour for the URL
      *
-     * @param url an URL for creating an operation
+     * @param url              an URL for creating an operation
      * @param operationOptions the operation options
-     * @param exchangePattern exchange pattern to use to execute the request.
+     * @param exchangePattern  exchange pattern to use to execute the request.
      * @return a {@link org.mule.runtime.core.api.processor.MessageProcessor} that fulfills the operation
-     * @throws MuleException
      */
-    MessageProcessor getMessageProcessor(String url, OperationOptions operationOptions, MessageExchangePattern exchangePattern) throws MuleException;
+    MessageProcessor getMessageProcessor(String url, OperationOptions operationOptions, MessageExchangePattern exchangePattern)
+            throws MuleException;
 
 }

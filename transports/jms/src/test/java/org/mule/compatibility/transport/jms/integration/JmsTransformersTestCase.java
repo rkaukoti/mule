@@ -6,9 +6,8 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.junit.Test;
 import org.mule.compatibility.transport.jms.transformers.AbstractJmsTransformer;
 import org.mule.compatibility.transport.jms.transformers.JMSMessageToObject;
 import org.mule.runtime.api.metadata.DataType;
@@ -32,8 +31,8 @@ import javax.jms.Session;
 import javax.jms.StreamMessage;
 import javax.jms.TextMessage;
 
-import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * <code>JmsTransformersTestCase</code> Tests the JMS transformer implementations.
@@ -114,7 +113,7 @@ public class JmsTransformersTestCase extends AbstractJmsFunctionalTestCase
 
         Map p = new HashMap();
         p.put("Key1", "Value1");
-        p.put("Key2", new byte[]{1,2,3});
+        p.put("Key2", new byte[] {1, 2, 3});
         p.put("Key3", new Double(99.999));
 
         AbstractJmsTransformer trans = new SessionEnabledObjectToJMSMessage(session);
@@ -129,9 +128,9 @@ public class JmsTransformersTestCase extends AbstractJmsFunctionalTestCase
         Object result = trans2.transform(mMsg);
         assertTrue("Transformed object should be a Map", result instanceof Map);
 
-        Map m = (Map)result;
+        Map m = (Map) result;
         assertEquals("Value1", m.get("Key1"));
-        assertTrue(Arrays.equals(new byte[]{1,2,3}, (byte[])m.get("Key2")));
+        assertTrue(Arrays.equals(new byte[] {1, 2, 3}, (byte[]) m.get("Key2")));
         assertEquals(new Double(99.999), m.get("Key3"));
     }
 
@@ -142,7 +141,7 @@ public class JmsTransformersTestCase extends AbstractJmsFunctionalTestCase
 
         Map p = new HashMap();
         p.put("Key1", "Value1");
-        p.put("Key2", new byte[]{1,2,3});
+        p.put("Key2", new byte[] {1, 2, 3});
         p.put("Key3", new Double(99.999));
         p.put("Key4", new Orange());
 
@@ -158,9 +157,9 @@ public class JmsTransformersTestCase extends AbstractJmsFunctionalTestCase
         Object result = trans2.transform(oMsg);
         assertTrue("Transformed object should be a Map", result instanceof Map);
 
-        Map m = (Map)result;
+        Map m = (Map) result;
         assertEquals("Value1", m.get("Key1"));
-        assertTrue(Arrays.equals(new byte[]{1,2,3}, (byte[])m.get("Key2")));
+        assertTrue(Arrays.equals(new byte[] {1, 2, 3}, (byte[]) m.get("Key2")));
         assertEquals(new Double(99.999), m.get("Key3"));
         assertEquals(new Orange(), m.get("Key4"));
     }
@@ -259,9 +258,9 @@ public class JmsTransformersTestCase extends AbstractJmsFunctionalTestCase
         int intermediateSize = intermediate.readBytes(intermediateBytes);
         assertTrue("Intermediate bytes must be compressed", compressor.isCompressed(intermediateBytes));
         assertTrue("Intermediate bytes must be equal to compressed source", Arrays.equals(compressedBytes,
-            intermediateBytes));
+                intermediateBytes));
         assertEquals("Intermediate bytes and compressed source must have same size", compressedBytes.length,
-            intermediateSize);
+                intermediateSize);
 
         // now test the other way around: getting the byte[] from a manually created
         // BytesMessage

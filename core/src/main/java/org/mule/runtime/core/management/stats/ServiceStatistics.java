@@ -10,6 +10,7 @@ import org.mule.runtime.core.management.stats.printers.SimplePrinter;
 
 import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicLong;
+
 @Deprecated
 public class ServiceStatistics extends FlowConstructStatistics implements QueueStatistics
 {

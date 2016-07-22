@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.module.extension.internal.config;
 
+import org.junit.Test;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.test.heisenberg.extension.HeisenbergExtension;
+import org.mule.test.heisenberg.extension.model.Ricin;
+
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.test.heisenberg.extension.HeisenbergExtension;
-import org.mule.test.heisenberg.extension.model.Ricin;
-
-import org.junit.Test;
 
 public class SingleConfigParserTestCase extends AbstractConfigParserTestCase
 {

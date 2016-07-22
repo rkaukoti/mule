@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.module.ws.consumer;
 
-import org.mule.runtime.module.cxf.SoapConstants;
-
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
 import org.apache.cxf.phase.Phase;
+import org.mule.runtime.module.cxf.SoapConstants;
 
 /**
  * CXF interceptor that adds the SOAP action to the message.

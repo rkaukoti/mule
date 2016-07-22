@@ -35,7 +35,8 @@ import java.util.concurrent.Executor;
 public class DefaultDbConnection extends AbstractDbConnection
 {
 
-    public DefaultDbConnection(Connection delegate, TransactionalAction transactionalAction, DefaultDbConnectionReleaser connectionReleaseListener, ParamTypeResolverFactory paramTypeResolverFactory)
+    public DefaultDbConnection(Connection delegate, TransactionalAction transactionalAction,
+                               DefaultDbConnectionReleaser connectionReleaseListener, ParamTypeResolverFactory paramTypeResolverFactory)
     {
         super(delegate, transactionalAction, connectionReleaseListener, paramTypeResolverFactory);
     }
@@ -65,15 +66,15 @@ public class DefaultDbConnection extends AbstractDbConnection
     }
 
     @Override
-    public void setAutoCommit(boolean autoCommit) throws SQLException
-    {
-        delegate.setAutoCommit(autoCommit);
-    }
-
-    @Override
     public boolean getAutoCommit() throws SQLException
     {
         return delegate.getAutoCommit();
+    }
+
+    @Override
+    public void setAutoCommit(boolean autoCommit) throws SQLException
+    {
+        delegate.setAutoCommit(autoCommit);
     }
 
     @Override
@@ -107,21 +108,15 @@ public class DefaultDbConnection extends AbstractDbConnection
     }
 
     @Override
-    public void setReadOnly(boolean readOnly) throws SQLException
-    {
-        delegate.setReadOnly(readOnly);
-    }
-
-    @Override
     public boolean isReadOnly() throws SQLException
     {
         return delegate.isReadOnly();
     }
 
     @Override
-    public void setCatalog(String catalog) throws SQLException
+    public void setReadOnly(boolean readOnly) throws SQLException
     {
-        delegate.setCatalog(catalog);
+        delegate.setReadOnly(readOnly);
     }
 
     @Override
@@ -131,15 +126,21 @@ public class DefaultDbConnection extends AbstractDbConnection
     }
 
     @Override
-    public void setTransactionIsolation(int level) throws SQLException
+    public void setCatalog(String catalog) throws SQLException
     {
-        delegate.setTransactionIsolation(level);
+        delegate.setCatalog(catalog);
     }
 
     @Override
     public int getTransactionIsolation() throws SQLException
     {
         return delegate.getTransactionIsolation();
+    }
+
+    @Override
+    public void setTransactionIsolation(int level) throws SQLException
+    {
+        delegate.setTransactionIsolation(level);
     }
 
     @Override
@@ -185,15 +186,15 @@ public class DefaultDbConnection extends AbstractDbConnection
     }
 
     @Override
-    public void setHoldability(int holdability) throws SQLException
-    {
-        delegate.setHoldability(holdability);
-    }
-
-    @Override
     public int getHoldability() throws SQLException
     {
         return delegate.getHoldability();
+    }
+
+    @Override
+    public void setHoldability(int holdability) throws SQLException
+    {
+        delegate.setHoldability(holdability);
     }
 
     @Override
@@ -227,13 +228,15 @@ public class DefaultDbConnection extends AbstractDbConnection
     }
 
     @Override
-    public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException
+    public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability)
+            throws SQLException
     {
         return delegate.prepareStatement(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
     }
 
     @Override
-    public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException
+    public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability)
+            throws SQLException
     {
         return delegate.prepareCall(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
     }
@@ -293,12 +296,6 @@ public class DefaultDbConnection extends AbstractDbConnection
     }
 
     @Override
-    public void setClientInfo(Properties properties) throws SQLClientInfoException
-    {
-        delegate.setClientInfo(properties);
-    }
-
-    @Override
     public String getClientInfo(String name) throws SQLException
     {
         return delegate.getClientInfo(name);
@@ -308,6 +305,12 @@ public class DefaultDbConnection extends AbstractDbConnection
     public Properties getClientInfo() throws SQLException
     {
         return delegate.getClientInfo();
+    }
+
+    @Override
+    public void setClientInfo(Properties properties) throws SQLClientInfoException
+    {
+        delegate.setClientInfo(properties);
     }
 
     @Override
@@ -335,15 +338,15 @@ public class DefaultDbConnection extends AbstractDbConnection
     }
 
     @Override
-    public void setSchema(String schema) throws SQLException
-    {
-        delegate.setSchema(schema);
-    }
-
-    @Override
     public String getSchema() throws SQLException
     {
         return delegate.getSchema();
+    }
+
+    @Override
+    public void setSchema(String schema) throws SQLException
+    {
+        delegate.setSchema(schema);
     }
 
     @Override

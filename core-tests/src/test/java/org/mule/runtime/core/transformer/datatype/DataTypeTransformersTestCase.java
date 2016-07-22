@@ -6,11 +6,9 @@
  */
 package org.mule.runtime.core.transformer.datatype;
 
-import static java.nio.charset.StandardCharsets.US_ASCII;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.tck.junit4.AbstractMuleTestCase;
@@ -18,9 +16,10 @@ import org.mule.tck.size.SmallTest;
 
 import java.nio.charset.UnsupportedCharsetException;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static java.nio.charset.StandardCharsets.US_ASCII;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class DataTypeTransformersTestCase extends AbstractMuleTestCase

@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
-import static org.mule.runtime.module.http.functional.matcher.HttpMessageAttributesMatchers.hasStatusCode;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.extension.http.api.HttpRequestAttributes;
 import org.mule.extension.http.api.HttpResponseAttributes;
 import org.mule.runtime.core.api.MuleEvent;
@@ -27,10 +27,10 @@ import java.net.Socket;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
+import static org.mule.runtime.module.http.functional.matcher.HttpMessageAttributesMatchers.hasStatusCode;
 
 
 @RunWith(Parameterized.class)
@@ -71,9 +71,11 @@ public class HttpRequestProxyTlsTestCase extends AbstractHttpTestCase
      * verification is performed using the host of the request, and not the one of the proxy.
      */
     @Parameterized.Parameters
-    public static Collection<Object[]> parameters() {
-        return Arrays.asList(new Object[][] {{"tls/ssltest-keystore-with-test-hostname.jks", "tls/ssltest-truststore-with-test-hostname.jks", "test"},
-                                             {"tls/ssltest-keystore.jks", "tls/ssltest-cacerts.jks", "localhost"}});
+    public static Collection<Object[]> parameters()
+    {
+        return Arrays.asList(
+                new Object[][] {{"tls/ssltest-keystore-with-test-hostname.jks", "tls/ssltest-truststore-with-test-hostname.jks", "test"},
+                                {"tls/ssltest-keystore.jks", "tls/ssltest-cacerts.jks", "localhost"}});
     }
 
     @Override
@@ -85,9 +87,10 @@ public class HttpRequestProxyTlsTestCase extends AbstractHttpTestCase
     @Test
     public void requestIsSentCorrectlyThroughHttpsProxy() throws Exception
     {
-        getFunctionalTestComponent("serverFlow").setEventCallback((context, component) -> {
+        getFunctionalTestComponent("serverFlow").setEventCallback((context, component) ->
+        {
             requestPayload = getPayloadAsString(context.getMessage());
-            requestURI =((HttpRequestAttributes) context.getMessage().getAttributes()).getRequestUri();
+            requestURI = ((HttpRequestAttributes) context.getMessage().getAttributes()).getRequestUri();
         });
 
         proxyServer.start();
@@ -129,7 +132,8 @@ public class HttpRequestProxyTlsTestCase extends AbstractHttpTestCase
         {
             serverSocket = new ServerSocket(proxyServerPort);
 
-            serverThread = new Thread(() -> {
+            serverThread = new Thread(() ->
+            {
                 try
                 {
                     Socket clientSocket = serverSocket.accept();

@@ -6,6 +6,11 @@
  */
 package org.mule.test.routing;
 
+import com.yourkit.util.Asserts;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.config.spring.SpringXmlConfigurationBuilder;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.ConfigurationException;
@@ -15,13 +20,7 @@ import org.mule.runtime.core.context.DefaultMuleContextFactory;
 import org.mule.runtime.core.routing.ScatterGatherRouter;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
-import com.yourkit.util.Asserts;
-
 import java.util.Collections;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 public class ScatterGatherOneRouteTest extends AbstractMuleTestCase
 {

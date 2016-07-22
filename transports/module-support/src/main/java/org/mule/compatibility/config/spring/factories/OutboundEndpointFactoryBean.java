@@ -6,8 +6,6 @@
  */
 package org.mule.compatibility.config.spring.factories;
 
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupServiceDescriptor;
-
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.EndpointException;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
@@ -16,6 +14,8 @@ import org.mule.compatibility.core.endpoint.AbstractEndpoint;
 import org.mule.compatibility.core.endpoint.EndpointURIEndpointBuilder;
 import org.mule.compatibility.core.transport.service.TransportServiceDescriptor;
 import org.mule.runtime.core.processor.AbstractRedeliveryPolicy;
+
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupServiceDescriptor;
 
 /**
  * Spring FactoryBean used to create concrete instances of outbound endpoints
@@ -32,7 +32,7 @@ public class OutboundEndpointFactoryBean extends AbstractEndpointFactoryBean
     {
         super();
     }
-    
+
     @Override
     public Class getObjectType()
     {
@@ -55,7 +55,6 @@ public class OutboundEndpointFactoryBean extends AbstractEndpointFactoryBean
         }
         return outboundEndpoint;
     }
-
 
 
     @Override

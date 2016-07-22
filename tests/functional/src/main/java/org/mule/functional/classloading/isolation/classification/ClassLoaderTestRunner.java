@@ -23,7 +23,8 @@ public final class ClassLoaderTestRunner
     private List<ArtifactClassLoader> pluginsArtifactClassLoaders;
     private ArtifactClassLoader applicationClassLoader;
 
-    public ClassLoaderTestRunner(ArtifactClassLoader containerClassLoader, List<ArtifactClassLoader> pluginsArtifactClassLoaders, ArtifactClassLoader applicationClassLoader)
+    public ClassLoaderTestRunner(ArtifactClassLoader containerClassLoader, List<ArtifactClassLoader> pluginsArtifactClassLoaders,
+                                 ArtifactClassLoader applicationClassLoader)
     {
         this.containerClassLoader = containerClassLoader;
         this.pluginsArtifactClassLoaders = pluginsArtifactClassLoaders;

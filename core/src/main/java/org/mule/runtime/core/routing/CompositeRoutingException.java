@@ -7,8 +7,6 @@
 
 package org.mule.runtime.core.routing;
 
-import static org.apache.commons.lang.SystemUtils.LINE_SEPARATOR;
-
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -22,11 +20,13 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import static org.apache.commons.lang.SystemUtils.LINE_SEPARATOR;
+
 /**
  * This is a {@link MessagingException} used to aggregate exceptions thrown by
  * several routes in the context of a single {@link MessageRouter} Exceptions are
  * correlated to each route through a sequential id
- * 
+ *
  * @since 3.5.0
  */
 public class CompositeRoutingException extends MessagingException
@@ -40,12 +40,11 @@ public class CompositeRoutingException extends MessagingException
 
     /**
      * Constructs a new {@link CompositeRoutingException}
-     * 
-     * @param message message describing the failure
-     * @param event the current {@link MuleEvent}
-     * @param exceptions a {@link Map} in which the key is an {@link Integer}
-     *            describing the index of the route that generated the error and the
-     *            value is the {@link Throwable} itself
+     *
+     * @param message    message describing the failure
+     * @param event      the current {@link MuleEvent}
+     * @param exceptions a {@link Map} in which the key is an {@link Integer} describing the index of the route that generated the error and
+     *                   the value is the {@link Throwable} itself
      */
     public CompositeRoutingException(Message message, MuleEvent event, Map<Integer, Throwable> exceptions)
     {
@@ -58,6 +57,22 @@ public class CompositeRoutingException extends MessagingException
         this(buildExceptionMessage(exceptions), event, exceptions);
     }
 
+    private static Message buildExceptionMessage(Map<Integer, Throwable> exceptions)
+    {
+        StringBuilder builder = new StringBuilder();
+        for (Integer route : exceptions.keySet())
+        {
+            Throwable routeException = exceptions.get(route);
+            builder.append(LINE_SEPARATOR + "\t")
+                   .append(route)
+                   .append(": ")
+                   .append(routeException.getCause() != null ? routeException.getCause().getMessage() : routeException.getMessage());
+        }
+
+        builder.insert(0, MESSAGE_TITLE);
+        return MessageFactory.createStaticMessage(builder.toString());
+    }
+
     @Override
     protected String generateMessage(Message message, MuleContext context)
     {
@@ -66,10 +81,9 @@ public class CompositeRoutingException extends MessagingException
 
     /**
      * Returns the {@link Exception} for the given route index
-     * 
+     *
      * @param index the index of a failing route
-     * @return an {@link Exception} or <code>null</code> if no {@link Exception} was
-     *         found for that index
+     * @return an {@link Exception} or <code>null</code> if no {@link Exception} was found for that index
      */
     public Throwable getExceptionForRouteIndex(Integer index)
     {
@@ -77,9 +91,8 @@ public class CompositeRoutingException extends MessagingException
     }
 
     /**
-     * @return a {@link Map} in which the key is an {@link Integer} describing the
-     *         number of the route that generated the error and the value is the
-     *         {@link Exception} itself
+     * @return a {@link Map} in which the key is an {@link Integer} describing the number of the route that generated the error and the
+     * value is the {@link Exception} itself
      */
     public Map<Integer, Throwable> getExceptions()
     {
@@ -106,22 +119,6 @@ public class CompositeRoutingException extends MessagingException
             }
         }
         return builder.toString();
-    }
-
-    private static Message buildExceptionMessage(Map<Integer, Throwable> exceptions)
-    {
-        StringBuilder builder = new StringBuilder();
-        for (Integer route : exceptions.keySet())
-        {
-            Throwable routeException = exceptions.get(route);
-            builder.append(LINE_SEPARATOR + "\t")
-                   .append(route)
-                   .append(": ")
-                   .append(routeException.getCause() != null ? routeException.getCause().getMessage() : routeException.getMessage());
-        }
-
-        builder.insert(0, MESSAGE_TITLE);
-        return MessageFactory.createStaticMessage(builder.toString());
     }
 
 }

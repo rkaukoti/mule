@@ -6,7 +6,8 @@
  */
 package org.mule.extension.socket.api.connection.tcp.protocol;
 
-import static java.lang.String.format;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.mule.extension.socket.api.exceptions.LengthExceededException;
 import org.mule.extension.socket.api.socket.tcp.TcpProtocol;
 import org.mule.runtime.extension.api.annotation.Parameter;
@@ -19,8 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import static java.lang.String.format;
 
 /**
  * This protocol is an application level {@link TcpProtocol} that can be used to
@@ -36,10 +36,9 @@ import org.apache.commons.logging.LogFactory;
 public class LengthProtocol extends DirectProtocol
 {
 
+    public static final String LENGTH_EXCEEDED = "Message length is '%d' and exceeds the limit '%d";
     private static final Log LOGGER = LogFactory.getLog(LengthProtocol.class);
     private static final int SIZE_INT = Integer.BYTES;
-    public static final String LENGTH_EXCEEDED = "Message length is '%d' and exceeds the limit '%d";
-
     @Parameter
     @Optional(defaultValue = "-1")
     private int maxMessageLength = NO_MAX_LENGTH;
@@ -59,9 +58,7 @@ public class LengthProtocol extends DirectProtocol
      * It consumes the socket {@link InputStream} according to {@link this#consume(InputStream)} and then
      * wraps the result into a {@link ByteArrayInputStream}.
      *
-     * @param socketIs
-     * @return {@code null} if {@link this#consume(InputStream)} throws an {@link IOException}
-     * and {@code rethrowExceptionOnRead} is not set
+     * @return {@code null} if {@link this#consume(InputStream)} throws an {@link IOException} and {@code rethrowExceptionOnRead} is not set
      * @throws IOException is thrown if {@code rethrowExceptionOnRead} is set
      */
     public InputStream read(InputStream socketIs) throws IOException

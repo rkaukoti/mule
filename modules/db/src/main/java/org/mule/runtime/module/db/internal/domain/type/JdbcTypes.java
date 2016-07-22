@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  Defines {@link DbType} for JDBC types defined in {@link java.sql.Types}
+ * Defines {@link DbType} for JDBC types defined in {@link java.sql.Types}
  */
 public class JdbcTypes
 {

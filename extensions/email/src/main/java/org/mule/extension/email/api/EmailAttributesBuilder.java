@@ -6,16 +6,6 @@
  */
 package org.mule.extension.email.api;
 
-import static javax.mail.Flags.Flag.ANSWERED;
-import static javax.mail.Flags.Flag.DELETED;
-import static javax.mail.Flags.Flag.DRAFT;
-import static javax.mail.Flags.Flag.RECENT;
-import static javax.mail.Flags.Flag.SEEN;
-import static javax.mail.Message.RecipientType.BCC;
-import static javax.mail.Message.RecipientType.CC;
-import static javax.mail.Message.RecipientType.TO;
-import static org.mule.extension.email.api.EmailContentProcessor.process;
-
 import org.mule.extension.email.api.exception.EmailException;
 
 import java.time.LocalDateTime;
@@ -32,6 +22,16 @@ import javax.mail.Address;
 import javax.mail.Flags;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+
+import static javax.mail.Flags.Flag.ANSWERED;
+import static javax.mail.Flags.Flag.DELETED;
+import static javax.mail.Flags.Flag.DRAFT;
+import static javax.mail.Flags.Flag.RECENT;
+import static javax.mail.Flags.Flag.SEEN;
+import static javax.mail.Message.RecipientType.BCC;
+import static javax.mail.Message.RecipientType.CC;
+import static javax.mail.Message.RecipientType.TO;
+import static org.mule.extension.email.api.EmailContentProcessor.process;
 
 /**
  * an implementation of the builder design pattern to create
@@ -81,23 +81,23 @@ public final class EmailAttributesBuilder
             Flags flags = msg.getFlags();
 
             EmailAttributesBuilder builder = EmailAttributesBuilder.newAttributes()
-                    .withId(msg.getMessageNumber())
-                    .withSubject(msg.getSubject())
-                    .fromAddresses(msg.getFrom())
-                    .toAddresses(msg.getRecipients(TO))
-                    .ccAddresses(msg.getRecipients(CC))
-                    .bccAddresses(msg.getRecipients(BCC))
-                    .seen(flags.contains(SEEN))
-                    .replyToAddress(msg.getReplyTo())
-                    .recent(flags.contains(RECENT))
-                    .sentDate(msg.getSentDate())
-                    .receivedDate(msg.getReceivedDate())
-                    .draft(flags.contains(DRAFT))
-                    .answered(flags.contains(ANSWERED))
-                    .deleted(flags.contains(DELETED));
+                                                                   .withId(msg.getMessageNumber())
+                                                                   .withSubject(msg.getSubject())
+                                                                   .fromAddresses(msg.getFrom())
+                                                                   .toAddresses(msg.getRecipients(TO))
+                                                                   .ccAddresses(msg.getRecipients(CC))
+                                                                   .bccAddresses(msg.getRecipients(BCC))
+                                                                   .seen(flags.contains(SEEN))
+                                                                   .replyToAddress(msg.getReplyTo())
+                                                                   .recent(flags.contains(RECENT))
+                                                                   .sentDate(msg.getSentDate())
+                                                                   .receivedDate(msg.getReceivedDate())
+                                                                   .draft(flags.contains(DRAFT))
+                                                                   .answered(flags.contains(ANSWERED))
+                                                                   .deleted(flags.contains(DELETED));
 
             return withAttachments ? builder.withAttachments(process(msg).getAttachments()).build()
-                                   : builder.build();
+                    : builder.build();
         }
         catch (MessagingException mse)
         {
@@ -236,7 +236,6 @@ public final class EmailAttributesBuilder
     /**
      * set the date when the message was received.
      *
-     * @param receivedDate
      * @return this {@link EmailAttributesBuilder}
      */
     public EmailAttributesBuilder receivedDate(Date receivedDate)
@@ -325,17 +324,17 @@ public final class EmailAttributesBuilder
     public EmailAttributes build()
     {
         return new EmailAttributes(id,
-                                   subject,
-                                   from,
-                                   to,
-                                   bcc,
-                                   cc,
-                                   replyTo,
-                                   headers,
-                                   attachments,
-                                   receivedDate,
-                                   sentDate,
-                                   new EmailFlags(answered, deleted, draft, recent, seen));
+                subject,
+                from,
+                to,
+                bcc,
+                cc,
+                replyTo,
+                headers,
+                attachments,
+                receivedDate,
+                sentDate,
+                new EmailFlags(answered, deleted, draft, recent, seen));
     }
 
     private void addArrayAddresses(Address[] toAddresses, List<String> addresses)

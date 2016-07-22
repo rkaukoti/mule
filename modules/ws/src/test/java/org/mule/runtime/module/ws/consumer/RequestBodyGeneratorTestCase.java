@@ -6,11 +6,12 @@
  */
 package org.mule.runtime.module.ws.consumer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.mule.runtime.core.util.IOUtils;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
-import org.mule.runtime.core.util.IOUtils;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -25,9 +26,8 @@ import javax.wsdl.factory.WSDLFactory;
 import javax.wsdl.xml.WSDLReader;
 import javax.xml.namespace.QName;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @SmallTest
 @RunWith(Parameterized.class)
@@ -51,7 +51,7 @@ public class RequestBodyGeneratorTestCase extends AbstractMuleTestCase
     public static Collection<Object[]> parameters()
     {
         return Arrays.asList(new Object[] {"TestParamsSoapPort"},
-                             new Object[] {"TestParamsSoap12Port"});
+                new Object[] {"TestParamsSoap12Port"});
     }
 
     @Test

@@ -27,6 +27,6 @@ public class MuleDomainBeanDefinitionDocumentReader extends MuleBeanDefinitionDo
     @Override
     protected ElementValidator[] getElementsValidator()
     {
-        return new ElementValidator[]{new DomainElementsValidator()};
+        return new ElementValidator[] {new DomainElementsValidator()};
     }
 }

@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.config.spring;
 
-import static java.util.Optional.of;
-import static java.util.Optional.ofNullable;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.context.notification.ClusterNodeNotificationListener;
 import org.mule.runtime.core.api.context.notification.ComponentMessageNotificationListener;
@@ -44,6 +42,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static java.util.Optional.of;
+import static java.util.Optional.ofNullable;
+
 /**
  * Notification helper object for creating notification manager configuration.
  *
@@ -57,8 +58,10 @@ import java.util.Optional;
 public class NotificationConfig
 {
 
-    private static final String ENDPOINT_MESSAGE_NOTIFICATION_CLASS = "org.mule.compatibility.core.context.notification.EndpointMessageNotification";
-    private static final String ENDPOINT_MESSAGE_NOTIFICATION_LISTENER_CLASS = "org.mule.compatibility.core.api.context.notification.EndpointMessageNotificationListener";
+    private static final String ENDPOINT_MESSAGE_NOTIFICATION_CLASS =
+            "org.mule.compatibility.core.context.notification.EndpointMessageNotification";
+    private static final String ENDPOINT_MESSAGE_NOTIFICATION_LISTENER_CLASS =
+            "org.mule.compatibility.core.api.context.notification.EndpointMessageNotificationListener";
     private static final Map<String, String> EVENT_MAP;
     private static final Map<String, String> INTERFACE_MAP;
 
@@ -106,23 +109,21 @@ public class NotificationConfig
         EVENT_MAP.put("MESSAGE", ENDPOINT_MESSAGE_NOTIFICATION_CLASS);
     }
 
-    public NotificationConfig(Class interfaceClass, Class eventClass)
-    {
-        this.interfaceClass = interfaceClass;
-        this.eventClass = eventClass;
-    }
-
-    public NotificationConfig()
-    {
-        //used by the parser builder.
-    }
-
     private String eventName;
     private Class eventClass;
     private String interfaseName;
     private Class interfaceClass;
     private boolean eventExplicitlyConfigured;
     private boolean interfaceExplicitlyConfigured;
+    public NotificationConfig(Class interfaceClass, Class eventClass)
+    {
+        this.interfaceClass = interfaceClass;
+        this.eventClass = eventClass;
+    }
+    public NotificationConfig()
+    {
+        //used by the parser builder.
+    }
 
     public void setInterfaseName(String interfaseName)
     {
@@ -130,22 +131,10 @@ public class NotificationConfig
         this.interfaseName = interfaseName;
     }
 
-    public void setEventClass(Class eventClass)
-    {
-        eventExplicitlyConfigured = true;
-        this.eventClass = eventClass;
-    }
-
     public void setEventName(String eventName)
     {
         eventExplicitlyConfigured = true;
         this.eventName = eventName;
-    }
-
-    public void setInterfaceClass(Class interfaceClass)
-    {
-        interfaceExplicitlyConfigured = true;
-        this.interfaceClass = interfaceClass;
     }
 
     public Optional<Class> getEventClass()
@@ -159,6 +148,12 @@ public class NotificationConfig
             return of(loadClass(EVENT_MAP.get(eventName)));
         }
         return ofNullable(loadClass(EVENT_MAP.get(interfaseName)));
+    }
+
+    public void setEventClass(Class eventClass)
+    {
+        eventExplicitlyConfigured = true;
+        this.eventClass = eventClass;
     }
 
     private Class loadClass(String className)
@@ -188,6 +183,12 @@ public class NotificationConfig
             return of(loadClass(INTERFACE_MAP.get(interfaseName)));
         }
         return ofNullable(loadClass(INTERFACE_MAP.get(eventName)));
+    }
+
+    public void setInterfaceClass(Class interfaceClass)
+    {
+        interfaceExplicitlyConfigured = true;
+        this.interfaceClass = interfaceClass;
     }
 
     public boolean isEventExplicitlyConfigured()

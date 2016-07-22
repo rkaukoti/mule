@@ -24,7 +24,7 @@ public class DefaultProcessorsTrace implements ProcessorsTrace
     /**
      * Adds a message processor path to the list of processors that were executed as part of the processing of this
      * event.
-     * 
+     *
      * @param processorPath the path to mask as executed.
      */
     public void addExecutedProcessors(String processorPath)

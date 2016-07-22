@@ -46,7 +46,7 @@ public class SimpleEndpointCache implements EndpointCache
         if (endpoint == null)
         {
             EndpointBuilder endpointBuilder = getEndpointFactory(muleContext.getRegistry())
-                .getEndpointBuilder(uri);
+                    .getEndpointBuilder(uri);
             endpointBuilder.setExchangePattern(mep);
             if (responseTimeout != null && responseTimeout > 0)
             {
@@ -70,7 +70,7 @@ public class SimpleEndpointCache implements EndpointCache
         if (endpoint == null)
         {
             EndpointBuilder endpointBuilder = getEndpointFactory(muleContext.getRegistry())
-                .getEndpointBuilder(uri);
+                    .getEndpointBuilder(uri);
             endpointBuilder.setExchangePattern(mep);
             endpoint = getEndpointFactory(muleContext.getRegistry()).getInboundEndpoint(endpointBuilder);
             InboundEndpoint concurrentlyAddedEndpoint = inboundEndpointCache.putIfAbsent(key, endpoint);

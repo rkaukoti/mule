@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.core.mule.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.runtime.core.api.model.InvocationResult;
 import org.mule.runtime.core.model.resolvers.AbstractArgumentEntryPointResolver;
 import org.mule.runtime.core.model.resolvers.NoArgumentsEntryPointResolver;
@@ -15,7 +14,8 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import org.mule.tck.testmodels.fruit.Apple;
 import org.mule.tck.testmodels.fruit.InvalidSatsuma;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class NoArgsEntryPointResolverTestCase extends AbstractMuleContextTestCase
 {
@@ -65,7 +65,9 @@ public class NoArgsEntryPointResolverTestCase extends AbstractMuleContextTestCas
                 result.getState(), InvocationResult.State.FAILED);
     }
 
-    /** Having a null payload should make no difference */
+    /**
+     * Having a null payload should make no difference
+     */
     @Test
     public void testExplicitMethodMatchAndNullPayload() throws Exception
     {

@@ -6,11 +6,8 @@
  */
 package org.mule.compatibility.transport.jms.integration.transactions.local;
 
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.compatibility.transport.jms.integration.AbstractJmsFunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -19,8 +16,10 @@ import org.mule.runtime.core.construct.Flow;
 
 import javax.jms.JMSException;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class JmsSingleTransactionTransactionalElementTestCase extends AbstractJmsFunctionalTestCase
 {
@@ -37,7 +36,7 @@ public class JmsSingleTransactionTransactionalElementTestCase extends AbstractJm
         purge("out2");
         purge("out3");
     }
-    
+
     @Test
     public void testTransactional() throws Exception
     {
@@ -59,7 +58,9 @@ public class JmsSingleTransactionTransactionalElementTestCase extends AbstractJm
         {
             flow.process(event);
         }
-        catch (Exception e) {}
+        catch (Exception e)
+        {
+        }
         MuleMessage message1 = muleContext.getClient().request("out1", 1000);
         MuleMessage message2 = muleContext.getClient().request("out2", 1000);
         assertThat(message1, nullValue());
@@ -75,7 +76,9 @@ public class JmsSingleTransactionTransactionalElementTestCase extends AbstractJm
         {
             flow.process(event);
         }
-        catch (Exception e) {}
+        catch (Exception e)
+        {
+        }
         MuleMessage message1 = muleContext.getClient().request("out1", 1000);
         MuleMessage message2 = muleContext.getClient().request("out2", 1000);
         assertThat(message1, nullValue());
@@ -91,7 +94,9 @@ public class JmsSingleTransactionTransactionalElementTestCase extends AbstractJm
         {
             flow.process(event);
         }
-        catch (Exception e) {}
+        catch (Exception e)
+        {
+        }
         MuleMessage message1 = muleContext.getClient().request("out1", 1000);
         MuleMessage message2 = muleContext.getClient().request("out2", 1000);
         assertThat(message1, notNullValue());
@@ -164,7 +169,9 @@ public class JmsSingleTransactionTransactionalElementTestCase extends AbstractJm
         {
             flow.process(event);
         }
-        catch (Exception e) {}
+        catch (Exception e)
+        {
+        }
         MuleMessage message1 = muleContext.getClient().request("out1", 1000);
         MuleMessage message2 = muleContext.getClient().request("out2", 1000);
         MuleMessage message3 = muleContext.getClient().request("out3", 1000);
@@ -173,7 +180,7 @@ public class JmsSingleTransactionTransactionalElementTestCase extends AbstractJm
         assertThat(message3, notNullValue());
     }
 
-@Test
+    @Test
     public void testNestedTransactional() throws Exception
     {
         Flow flow = (Flow) getFlowConstruct("nestedTransactional");
@@ -193,7 +200,8 @@ public class JmsSingleTransactionTransactionalElementTestCase extends AbstractJm
         try
         {
             flow.process(event);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
         }
         MuleMessage message1 = muleContext.getClient().request("out1", 1000);
@@ -213,7 +221,6 @@ public class JmsSingleTransactionTransactionalElementTestCase extends AbstractJm
         assertThat(message1, notNullValue());
         assertThat(message2, notNullValue());
     }
-
 
 
     @Test
@@ -236,7 +243,8 @@ public class JmsSingleTransactionTransactionalElementTestCase extends AbstractJm
         try
         {
             flow.process(event);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
         }
         MuleMessage message1 = muleContext.getClient().request("out1", 1000);

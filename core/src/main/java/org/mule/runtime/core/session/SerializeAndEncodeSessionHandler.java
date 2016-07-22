@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.session;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_SESSION_PROPERTY;
-
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
@@ -17,6 +15,8 @@ import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.runtime.core.util.Base64;
 
 import java.io.IOException;
+
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_SESSION_PROPERTY;
 
 /**
  * A session handler used to store and retrieve session information on an
@@ -32,7 +32,7 @@ public class SerializeAndEncodeSessionHandler extends SerializeOnlySessionHandle
     {
         MuleSession session = null;
         String serializedEncodedSession = message.getInboundProperty(MULE_SESSION_PROPERTY);
-        
+
         if (serializedEncodedSession != null)
         {
             byte[] serializedSession = Base64.decodeWithoutUnzipping(serializedEncodedSession);
@@ -46,7 +46,7 @@ public class SerializeAndEncodeSessionHandler extends SerializeOnlySessionHandle
 
     @Override
     public MuleMessage storeSessionInfoToMessage(MuleSession session, MuleMessage message, MuleContext context) throws MuleException
-    {        
+    {
         session = removeNonSerializableProperties(session, context);
         byte[] serializedSession = serialize(message, session, context);
 
@@ -59,7 +59,7 @@ public class SerializeAndEncodeSessionHandler extends SerializeOnlySessionHandle
         {
             throw new SessionException(MessageFactory.createStaticMessage("Unable to serialize MuleSession"), e);
         }
-        
+
         if (logger.isDebugEnabled())
         {
             logger.debug("Adding serialized and base64-encoded Session header to message: " + serializedEncodedSession);

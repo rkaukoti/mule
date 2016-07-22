@@ -6,21 +6,8 @@
  */
 package org.mule.extension.file.internal;
 
-import static com.sun.nio.file.SensitivityWatchEventModifier.HIGH;
-import static java.lang.String.format;
-import static java.nio.file.FileVisitResult.CONTINUE;
-import static java.nio.file.Files.walkFileTree;
-import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
-import static java.util.concurrent.Executors.newSingleThreadExecutor;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.stream.Collectors.toSet;
-import static org.mule.extension.file.api.FileEventType.CREATE;
-import static org.mule.extension.file.api.FileEventType.DELETE;
-import static org.mule.extension.file.api.FileEventType.UPDATE;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.concurrent.ThreadNameHelper.getPrefix;
-import static org.mule.runtime.module.extension.file.api.FileDisplayConstants.MATCHER;
-import static org.mule.runtime.module.extension.file.api.FileDisplayConstants.MATCH_WITH;
+import com.google.common.base.Supplier;
+import com.google.common.collect.ImmutableSet;
 
 import org.mule.extension.file.api.DeletedFileAttributes;
 import org.mule.extension.file.api.FileEventType;
@@ -48,9 +35,8 @@ import org.mule.runtime.module.extension.file.api.FilePredicateBuilder;
 import org.mule.runtime.module.extension.file.api.FileSystem;
 import org.mule.runtime.module.extension.file.api.lock.NullPathLock;
 import org.mule.runtime.module.extension.file.api.matcher.NullFilePayloadPredicate;
-
-import com.google.common.base.Supplier;
-import com.google.common.collect.ImmutableSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,8 +61,21 @@ import java.util.function.Predicate;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static com.sun.nio.file.SensitivityWatchEventModifier.HIGH;
+import static java.lang.String.format;
+import static java.nio.file.FileVisitResult.CONTINUE;
+import static java.nio.file.Files.walkFileTree;
+import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
+import static java.util.concurrent.Executors.newSingleThreadExecutor;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.stream.Collectors.toSet;
+import static org.mule.extension.file.api.FileEventType.CREATE;
+import static org.mule.extension.file.api.FileEventType.DELETE;
+import static org.mule.extension.file.api.FileEventType.UPDATE;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.concurrent.ThreadNameHelper.getPrefix;
+import static org.mule.runtime.module.extension.file.api.FileDisplayConstants.MATCHER;
+import static org.mule.runtime.module.extension.file.api.FileDisplayConstants.MATCH_WITH;
 
 /**
  * Listens for near real-time events that happens on files contained inside a directory or
@@ -142,40 +141,36 @@ import org.slf4j.LoggerFactory;
 public class DirectoryListener extends Source<InputStream, ListenerFileAttributes> implements FlowConstructAware
 {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DirectoryListener.class);
     static final String DIRECTORY_LISTENER = "directory-listener";
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(DirectoryListener.class);
+    private final Map<WatchKey, Path> keyPaths = new HashMap<>();
+    private final AtomicBoolean stopRequested = new AtomicBoolean(false);
     @UseConfig
     private FileConnector config;
-
     /**
      * The directory on which notifications are being listened to
      */
     @Parameter
     @Optional
     private String directory;
-
     /**
      * Whether to react to creation notifications. Defaults to true
      */
     @Parameter
     @Optional(defaultValue = "true")
     private boolean notifyOnCreate = true;
-
     /**
      * Whether to react to update notifications. Defaults to true
      */
     @Parameter
     @Optional(defaultValue = "true")
     private boolean notifyOnUpdate = true;
-
     /**
      * Whether to react to deletion notifications. Defaults to true
      */
     @Parameter
     @Optional(defaultValue = "false")
     private boolean notifyOnDelete = false;
-
     /**
      * Whether or not to also listen for notification which happen on
      * sub directories which are also contained on the main one.
@@ -190,7 +185,6 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
     @Summary("Whether or not to also listen for notification which happen on sub directories which are also contained " +
              "on the main one.")
     private boolean recursive = false;
-
     /**
      * A matcher used to filter events on files which do not meet
      * the matcher's criteria
@@ -201,22 +195,16 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
     @Placement(group = MATCHER)
     @DisplayName(MATCH_WITH)
     private FilePredicateBuilder<FilePredicateBuilder, FileAttributes> predicateBuilder;
-
     @Inject
     private MuleContext muleContext;
-
     @Connection
     private FileSystem fileSystem;
-
     private FlowConstruct flowConstruct;
     private WatchService watcher;
     private Predicate<FileAttributes> matcher;
     private Set<FileEventType> enabledEventTypes = new HashSet<>();
     private ExecutorService executorService;
     private PrimaryNodeLifecycleNotificationListener clusterListener;
-
-    private final Map<WatchKey, Path> keyPaths = new HashMap<>();
-    private final AtomicBoolean stopRequested = new AtomicBoolean(false);
     private boolean started = false;
 
     @Override
@@ -224,7 +212,8 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
     {
         if (!muleContext.isPrimaryPollingInstance())
         {
-            LOGGER.debug("{} source on flow {} not started because this is a secondary cluster node", DIRECTORY_LISTENER, flowConstruct.getName());
+            LOGGER.debug("{} source on flow {} not started because this is a secondary cluster node", DIRECTORY_LISTENER,
+                    flowConstruct.getName());
             initialiseClusterListener();
             return;
         }
@@ -233,7 +222,8 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
         createWatcherService();
 
         matcher = predicateBuilder != null ? predicateBuilder.build() : new NullFilePayloadPredicate();
-        executorService = newSingleThreadExecutor(r -> new Thread(r, format("%s%s.file.listener", getPrefix(muleContext), flowConstruct.getName())));
+        executorService =
+                newSingleThreadExecutor(r -> new Thread(r, format("%s%s.file.listener", getPrefix(muleContext), flowConstruct.getName())));
         started = true;
         stopRequested.set(false);
         executorService.execute(this::listen);
@@ -244,16 +234,16 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
         if (clusterListener == null)
         {
             clusterListener = new PrimaryNodeLifecycleNotificationListener(() ->
-                                                                           {
-                                                                               try
-                                                                               {
-                                                                                   start();
-                                                                               }
-                                                                               catch (Exception e)
-                                                                               {
-                                                                                   throw new MuleRuntimeException(e);
-                                                                               }
-                                                                           }, muleContext);
+            {
+                try
+                {
+                    start();
+                }
+                catch (Exception e)
+                {
+                    throw new MuleRuntimeException(e);
+                }
+            }, muleContext);
 
             clusterListener.register();
         }
@@ -329,8 +319,9 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
         {
             if (LOGGER.isDebugEnabled())
             {
-                LOGGER.debug(format("Detected a '%s' event on path '%s' but it will be skipped because it does not meet the matcher's criteria",
-                                    FileEventType.of(kind), path.toString()));
+                LOGGER.debug(
+                        format("Detected a '%s' event on path '%s' but it will be skipped because it does not meet the matcher's criteria",
+                                FileEventType.of(kind), path.toString()));
             }
             return;
         }
@@ -417,7 +408,8 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
         {
             if (LOGGER.isWarnEnabled())
             {
-                LOGGER.warn("Got interrupted while trying to terminate pending events for directory listener on flow " + flowConstruct.getName());
+                LOGGER.warn("Got interrupted while trying to terminate pending events for directory listener on flow " +
+                            flowConstruct.getName());
             }
         }
     }
@@ -463,7 +455,7 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
                 if (LOGGER.isWarnEnabled())
                 {
                     LOGGER.warn(format("Directory '%s' became unavailable and a new listener could not be established on it",
-                                       path.toString()));
+                            path.toString()));
                 }
             }
         }
@@ -523,7 +515,8 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
         if (enabledEventTypes.isEmpty())
         {
             throw new ConfigurationException(createStaticMessage(format(
-                    "File listener in flow '%s' has disabled all notification types. At least one should be enabled", flowConstruct.getName())));
+                    "File listener in flow '%s' has disabled all notification types. At least one should be enabled",
+                    flowConstruct.getName())));
         }
     }
 

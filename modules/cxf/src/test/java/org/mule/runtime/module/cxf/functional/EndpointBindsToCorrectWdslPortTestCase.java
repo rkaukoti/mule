@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.module.cxf.functional;
 
-import static org.junit.Assert.assertEquals;
-
+import org.apache.cxf.endpoint.Server;
+import org.apache.cxf.service.model.EndpointInfo;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.runtime.module.cxf.CxfInboundMessageProcessor;
 import org.mule.runtime.module.cxf.config.FlowConfiguringMessageProcessor;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.apache.cxf.endpoint.Server;
-import org.apache.cxf.service.model.EndpointInfo;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class EndpointBindsToCorrectWdslPortTestCase extends FunctionalTestCase
 {

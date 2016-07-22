@@ -6,13 +6,12 @@
  */
 package org.mule.extension.socket;
 
-import static org.junit.Assert.assertEquals;
-import static org.mule.extension.socket.TcpSendAndReceiveStringTestCase.RESPONSE_TEST_STRING;
+import org.junit.Test;
 import org.mule.runtime.core.util.IOUtils;
 
 import java.io.InputStream;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class UdpSendAndReceiveStringTestCase extends SocketExtensionTestCase
 {
@@ -26,8 +25,8 @@ public class UdpSendAndReceiveStringTestCase extends SocketExtensionTestCase
     public void sendStringAndReceiveModifiedString() throws Exception
     {
         InputStream inputStream = (InputStream) flowRunner("udp-send-and-receive").
-                withPayload(TEST_STRING).
-                run().getMessage().getPayload();
+                                                                                          withPayload(TEST_STRING).
+                                                                                          run().getMessage().getPayload();
 
         String response = IOUtils.toString(inputStream);
         assertEquals(response, RESPONSE_TEST_STRING);

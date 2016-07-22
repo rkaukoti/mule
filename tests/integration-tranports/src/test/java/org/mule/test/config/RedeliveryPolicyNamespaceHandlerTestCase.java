@@ -6,11 +6,7 @@
  */
 package org.mule.test.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.construct.FlowConstruct;
@@ -22,7 +18,10 @@ import org.mule.runtime.core.util.store.SimpleMemoryObjectStore;
 
 import java.io.Serializable;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for all object stores that can be configured on an {@link org.mule.routing.IdempotentMessageFilter}.
@@ -76,7 +75,7 @@ public class RedeliveryPolicyNamespaceHandlerTestCase extends FunctionalTestCase
 
         MessageSource source = ((Flow) flow).getMessageSource();
         assertTrue(source instanceof InboundEndpoint);
-        AbstractRedeliveryPolicy redeliveryPolicy = ((InboundEndpoint)source).getRedeliveryPolicy();
+        AbstractRedeliveryPolicy redeliveryPolicy = ((InboundEndpoint) source).getRedeliveryPolicy();
         assertTrue(redeliveryPolicy instanceof IdempotentRedeliveryPolicy);
         return (IdempotentRedeliveryPolicy) redeliveryPolicy;
     }

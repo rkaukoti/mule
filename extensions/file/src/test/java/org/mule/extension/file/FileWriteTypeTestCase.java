@@ -6,8 +6,9 @@
  */
 package org.mule.extension.file;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.mule.functional.junit4.runners.RunnerDelegateTo;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.message.OutputHandler;
@@ -19,13 +20,21 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 @RunnerDelegateTo(Parameterized.class)
 public class FileWriteTypeTestCase extends FileConnectorTestCase
 {
+
+    private final Object content;
+    private final String expected;
+    private String path;
+    public FileWriteTypeTestCase(String name, Object content, String expected)
+    {
+        this.content = content;
+        this.expected = expected;
+    }
 
     @Parameters(name = "{0}")
     public static Iterable<Object[]> data()
@@ -37,17 +46,7 @@ public class FileWriteTypeTestCase extends FileConnectorTestCase
                 {"byte[]", HELLO_WORLD.getBytes(), HELLO_WORLD},
                 {"OutputHandler", new TestOutputHandler(), HELLO_WORLD},
                 {"InputStream", new ByteArrayInputStream(HELLO_WORLD.getBytes()), HELLO_WORLD},
-        });
-    }
-
-    private final Object content;
-    private final String expected;
-    private String path;
-
-    public FileWriteTypeTestCase(String name, Object content, String expected)
-    {
-        this.content = content;
-        this.expected = expected;
+                });
     }
 
     @Override

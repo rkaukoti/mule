@@ -6,13 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.source;
 
-import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
-import static org.mule.runtime.core.util.ExceptionUtils.extractConnectionException;
-import static org.mule.runtime.core.util.concurrent.ThreadNameHelper.getPrefix;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getInitialiserEvent;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.execution.CompletionHandler;
 import org.mule.runtime.api.execution.ExceptionCallback;
@@ -50,13 +43,20 @@ import org.mule.runtime.module.extension.internal.runtime.ExtensionComponent;
 import org.mule.runtime.module.extension.internal.runtime.exception.ExceptionEnricherManager;
 import org.mule.runtime.module.extension.internal.runtime.operation.IllegalOperationException;
 import org.mule.runtime.module.extension.internal.runtime.operation.IllegalSourceException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
+import static org.mule.runtime.core.util.ExceptionUtils.extractConnectionException;
+import static org.mule.runtime.core.util.concurrent.ThreadNameHelper.getPrefix;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getInitialiserEvent;
 
 /**
  * A {@link MessageSource} which connects the Extensions API with the Mule runtime by
@@ -83,6 +83,9 @@ public class ExtensionMessageSource extends ExtensionComponent implements Messag
 
     private SourceWrapper source;
     private WorkManager workManager;
+    private MessageProcessor messageProcessor;
+    @Inject
+    private MessageProcessingManager messageProcessingManager;
 
     public ExtensionMessageSource(RuntimeExtensionModel extensionModel,
                                   RuntimeSourceModel sourceModel,
@@ -100,23 +103,21 @@ public class ExtensionMessageSource extends ExtensionComponent implements Messag
         this.exceptionEnricherManager = new ExceptionEnricherManager(extensionModel, sourceModel);
     }
 
-    private MessageProcessor messageProcessor;
-
-    @Inject
-    private MessageProcessingManager messageProcessingManager;
-
     @Override
-    public void handle(MuleMessage message, CompletionHandler<org.mule.runtime.api.message.MuleEvent, Exception, org.mule.runtime.api.message.MuleEvent> completionHandler)
+    public void handle(MuleMessage message,
+                       CompletionHandler<org.mule.runtime.api.message.MuleEvent, Exception, org.mule.runtime.api.message.MuleEvent> completionHandler)
     {
         MuleEvent event = new DefaultMuleEvent((org.mule.runtime.core.api.MuleMessage) message, REQUEST_RESPONSE, flowConstruct);
-        messageProcessingManager.processMessage(new ExtensionFlowProcessingTemplate(event, messageProcessor, downCast(completionHandler)), createProcessingContext());
+        messageProcessingManager.processMessage(new ExtensionFlowProcessingTemplate(event, messageProcessor, downCast(completionHandler)),
+                createProcessingContext());
     }
 
     @Override
     public void handle(MuleMessage message)
     {
         MuleEvent event = new DefaultMuleEvent((org.mule.runtime.core.api.MuleMessage) message, REQUEST_RESPONSE, flowConstruct);
-        messageProcessingManager.processMessage(new ExtensionFlowProcessingTemplate(event, messageProcessor, new NullCompletionHandler()), createProcessingContext());
+        messageProcessingManager.processMessage(new ExtensionFlowProcessingTemplate(event, messageProcessor, new NullCompletionHandler()),
+                createProcessingContext());
     }
 
     @Override
@@ -128,7 +129,8 @@ public class ExtensionMessageSource extends ExtensionComponent implements Messag
         {
             try
             {
-                LOGGER.warn(String.format("Message source '%s' on flow '%s' threw exception. Restarting...", source.getName(), flowConstruct.getName()), exception);
+                LOGGER.warn(String.format("Message source '%s' on flow '%s' threw exception. Restarting...", source.getName(),
+                        flowConstruct.getName()), exception);
                 stopSource();
                 disposeSource();
                 startSource();
@@ -232,7 +234,8 @@ public class ExtensionMessageSource extends ExtensionComponent implements Messag
             }
             catch (Exception e)
             {
-                throw new DefaultMuleException(String.format("Found exception stopping source '%s' of flow '%s'", source.getName(), flowConstruct.getName()), e);
+                throw new DefaultMuleException(
+                        String.format("Found exception stopping source '%s' of flow '%s'", source.getName(), flowConstruct.getName()), e);
             }
         }
     }
@@ -271,55 +274,11 @@ public class ExtensionMessageSource extends ExtensionComponent implements Messag
         }
     }
 
-    private class SourceRetryCallback implements RetryCallback
-    {
-
-        @Override
-        public void doWork(RetryContext context) throws Exception
-        {
-            try
-            {
-                if (source == null)
-                {
-                    createSource();
-                }
-                source.start();
-            }
-            catch (Exception e)
-            {
-                stopSource();
-                disposeSource();
-                Exception exception = exceptionEnricherManager.processException(e);
-                Optional<ConnectionException> connectionException = extractConnectionException(exception);
-                if (connectionException.isPresent())
-                {
-                    throw exception;
-                }
-                else
-                {
-                    context.setFailed(exception);
-                }
-            }
-        }
-
-        @Override
-        public String getWorkDescription()
-        {
-            return "Message Source Reconnection";
-        }
-
-        @Override
-        public Object getWorkOwner()
-        {
-            return this;
-        }
-    }
-
     //TODO: MULE-9320
     private WorkManager createWorkManager()
     {
         return threadingProfile.createWorkManager(String.format("%s%s.worker", getPrefix(muleContext), flowConstruct.getName()),
-                                                  muleContext.getConfiguration().getShutdownTimeout());
+                muleContext.getConfiguration().getShutdownTimeout());
     }
 
     private MessageProcessContext createProcessingContext()
@@ -372,7 +331,8 @@ public class ExtensionMessageSource extends ExtensionComponent implements Messag
 
     private void notifyExceptionAndShutDown(Throwable exception)
     {
-        LOGGER.error(String.format("Message source '%s' on flow '%s' threw exception. Shutting down it forever...", source.getName(), flowConstruct.getName()), exception);
+        LOGGER.error(String.format("Message source '%s' on flow '%s' threw exception. Shutting down it forever...", source.getName(),
+                flowConstruct.getName()), exception);
         shutdown();
     }
 
@@ -387,16 +347,62 @@ public class ExtensionMessageSource extends ExtensionComponent implements Messag
         if (!configurationModel.getSourceModel(sourceModel.getName()).isPresent() &&
             !configurationModel.getExtensionModel().getSourceModel(sourceModel.getName()).isPresent())
         {
-            throw new IllegalOperationException(String.format("Flow '%s' defines an usage of operation '%s' which points to configuration '%s'. " +
-                                                              "The selected config does not support that operation.",
-                                                              flowConstruct.getName(),
-                                                              sourceModel.getName(),
-                                                              configurationProvider.getName()));
+            throw new IllegalOperationException(
+                    String.format("Flow '%s' defines an usage of operation '%s' which points to configuration '%s'. " +
+                                  "The selected config does not support that operation.",
+                            flowConstruct.getName(),
+                            sourceModel.getName(),
+                            configurationProvider.getName()));
         }
     }
 
-    private CompletionHandler downCast(CompletionHandler<org.mule.runtime.api.message.MuleEvent, Exception, org.mule.runtime.api.message.MuleEvent> handler)
+    private CompletionHandler downCast(
+            CompletionHandler<org.mule.runtime.api.message.MuleEvent, Exception, org.mule.runtime.api.message.MuleEvent> handler)
     {
         return handler;
+    }
+
+    private class SourceRetryCallback implements RetryCallback
+    {
+
+        @Override
+        public void doWork(RetryContext context) throws Exception
+        {
+            try
+            {
+                if (source == null)
+                {
+                    createSource();
+                }
+                source.start();
+            }
+            catch (Exception e)
+            {
+                stopSource();
+                disposeSource();
+                Exception exception = exceptionEnricherManager.processException(e);
+                Optional<ConnectionException> connectionException = extractConnectionException(exception);
+                if (connectionException.isPresent())
+                {
+                    throw exception;
+                }
+                else
+                {
+                    context.setFailed(exception);
+                }
+            }
+        }
+
+        @Override
+        public String getWorkDescription()
+        {
+            return "Message Source Reconnection";
+        }
+
+        @Override
+        public Object getWorkOwner()
+        {
+            return this;
+        }
     }
 }

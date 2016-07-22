@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.core.context;
 
-import static java.util.Collections.emptyMap;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.ConfigurationBuilder;
 import org.mule.runtime.core.api.config.ConfigurationException;
@@ -20,14 +19,15 @@ import org.mule.runtime.core.config.DefaultMuleConfiguration;
 import org.mule.runtime.core.config.builders.AutoConfigurationBuilder;
 import org.mule.runtime.core.config.builders.DefaultsConfigurationBuilder;
 import org.mule.runtime.core.config.builders.SimpleConfigurationBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.util.Collections.emptyMap;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 
 /**
  * Default implementation that uses {@link DefaultMuleContextBuilder} to build new
@@ -123,8 +123,6 @@ public class DefaultMuleContextFactory implements MuleContextFactory
      * determine the {@link ConfigurationBuilder} that should be used.
      *
      * @param resource comma seperated list of configuration resources.
-     * @throws InitialisationException
-     * @throws ConfigurationException
      */
     public MuleContext createMuleContext(String resource)
             throws InitialisationException, ConfigurationException

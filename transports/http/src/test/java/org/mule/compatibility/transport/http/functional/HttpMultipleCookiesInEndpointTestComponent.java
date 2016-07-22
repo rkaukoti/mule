@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
+import org.apache.commons.httpclient.Cookie;
 import org.mule.compatibility.transport.http.CookieHelper;
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.lifecycle.Callable;
-
-import java.io.Serializable;
-
-import org.apache.commons.httpclient.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
 
 public class HttpMultipleCookiesInEndpointTestComponent implements Callable
 {

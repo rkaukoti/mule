@@ -6,16 +6,6 @@
  */
 package org.mule.runtime.module.http.internal.component;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.MOVED_TEMPORARILY;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
-import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_LISTENER_PATH;
-import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_REQUEST_PATH_PROPERTY;
-import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.LOCATION;
-
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
@@ -35,6 +25,16 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.activation.MimetypesFileTypeMap;
+
+import static java.lang.String.format;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.MOVED_TEMPORARILY;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
+import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_LISTENER_PATH;
+import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_REQUEST_PATH_PROPERTY;
+import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.LOCATION;
 
 /**
  * A MessageProcessor that can be used by HTTP endpoints to serve static files from a directory on the
@@ -65,7 +65,8 @@ public class StaticResourceMessageProcessor implements MessageProcessor, Initial
     {
         if (StringUtils.isEmpty(resourceBase))
         {
-            throw new ConfigurationException(createStaticMessage("No ResourceBase Defined as part of the static resource message processor."));
+            throw new ConfigurationException(
+                    createStaticMessage("No ResourceBase Defined as part of the static resource message processor."));
         }
 
         String path = event.getMessage().getInboundProperty(HTTP_REQUEST_PATH_PROPERTY);
@@ -92,16 +93,17 @@ public class StaticResourceMessageProcessor implements MessageProcessor, Initial
 
         if (file.isDirectory() && path.endsWith("/"))
         {
-            file = new File(resourceBase + path +  defaultFile);
+            file = new File(resourceBase + path + defaultFile);
         }
         else if (file.isDirectory())
         {
             // Return a 302 with the new location
             MuleMessage message = MuleMessage.builder().nullPayload()
-                    .addOutboundProperty(HTTP_STATUS_PROPERTY, String.valueOf(MOVED_TEMPORARILY.getStatusCode()))
-                    .addOutboundProperty(CONTENT_LENGTH, 0)
-                    .addOutboundProperty(LOCATION, event.getMessage().getInboundProperty(HTTP_REQUEST_PATH_PROPERTY)
-                                                   + "/").build();
+                                             .addOutboundProperty(HTTP_STATUS_PROPERTY, String.valueOf(MOVED_TEMPORARILY.getStatusCode()))
+                                             .addOutboundProperty(CONTENT_LENGTH, 0)
+                                             .addOutboundProperty(LOCATION,
+                                                     event.getMessage().getInboundProperty(HTTP_REQUEST_PATH_PROPERTY)
+                                                     + "/").build();
             resultEvent = new DefaultMuleEvent(message, event);
         }
 
@@ -131,7 +133,8 @@ public class StaticResourceMessageProcessor implements MessageProcessor, Initial
         }
         catch (IOException e)
         {
-            throw new ResourceNotFoundException(createStaticMessage(format("The file: %s was not found.", resourceBase + path)), event, this);
+            throw new ResourceNotFoundException(createStaticMessage(format("The file: %s was not found.", resourceBase + path)), event,
+                    this);
         }
         finally
         {

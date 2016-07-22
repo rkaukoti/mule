@@ -6,20 +6,21 @@
  */
 package org.mule.extension.socket.api.connection.tcp;
 
-import static java.lang.String.format;
-import static org.mule.extension.socket.internal.SocketUtils.configureConnection;
+import org.mule.extension.socket.api.ConnectionSettings;
+import org.mule.extension.socket.api.client.TcpClient;
 import org.mule.extension.socket.api.connection.RequesterConnection;
 import org.mule.extension.socket.api.socket.factory.SimpleSocketFactory;
-import org.mule.extension.socket.api.client.TcpClient;
-import org.mule.extension.socket.api.ConnectionSettings;
-import org.mule.extension.socket.api.socket.tcp.TcpProtocol;
 import org.mule.extension.socket.api.socket.tcp.TcpClientSocketProperties;
+import org.mule.extension.socket.api.socket.tcp.TcpProtocol;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionExceptionCode;
 import org.mule.runtime.api.connection.ConnectionValidationResult;
 
 import java.io.IOException;
 import java.net.Socket;
+
+import static java.lang.String.format;
+import static org.mule.extension.socket.internal.SocketUtils.configureConnection;
 
 /**
  * Implementation of {@link RequesterConnection} for establishing TCP connections.
@@ -29,10 +30,10 @@ import java.net.Socket;
 public class TcpRequesterConnection extends AbstractTcpConnection implements RequesterConnection
 {
 
-    private Socket socket;
     private final TcpClientSocketProperties socketProperties;
     private final ConnectionSettings localAddressSettings;
     private final SimpleSocketFactory socketFactory;
+    private Socket socket;
 
     public TcpRequesterConnection(ConnectionSettings connectionSettings, ConnectionSettings localAddressSettings,
                                   TcpProtocol protocol, TcpClientSocketProperties socketProperties,
@@ -77,11 +78,14 @@ public class TcpRequesterConnection extends AbstractTcpConnection implements Req
             socket = socketFactory.createSocket();
             configureConnection(socket, socketProperties);
             socket.bind(localAddressSettings.getInetSocketAddress());
-            socket.connect(getSocketAddress(connectionSettings, socketProperties.getFailOnUnresolvedHost()), socketProperties.getConnectionTimeout());
+            socket.connect(getSocketAddress(connectionSettings, socketProperties.getFailOnUnresolvedHost()),
+                    socketProperties.getConnectionTimeout());
         }
         catch (Exception e)
         {
-            throw new ConnectionException(format("Could not connect TCP requester socket to host '%s' on port '%d'", connectionSettings.getHost(), connectionSettings.getPort()), e);
+            throw new ConnectionException(
+                    format("Could not connect TCP requester socket to host '%s' on port '%d'", connectionSettings.getHost(),
+                            connectionSettings.getPort()), e);
         }
 
     }

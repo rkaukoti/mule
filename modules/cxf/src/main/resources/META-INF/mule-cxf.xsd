@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/cxf"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:mule="http://www.mulesoft.org/schema/mule/core"
             xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
             xmlns:beans="http://www.springframework.org/schema/beans"
+            xmlns="http://www.mulesoft.org/schema/mule/cxf"
             targetNamespace="http://www.mulesoft.org/schema/mule/cxf"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">
@@ -13,12 +13,14 @@
                 schemaLocation="http://www.springframework.org/schema/beans/spring-beans-3.1.xsd"/>
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/core"
                 schemaLocation="http://www.mulesoft.org/schema/mule/core/3.8/mule.xsd"/>
-    <xsd:import namespace = "http://www.mulesoft.org/schema/mule/schemadoc"
-                schemaLocation = "http://www.mulesoft.org/schema/mule/schemadoc/3.8/mule-schemadoc.xsd"/>
+    <xsd:import namespace="http://www.mulesoft.org/schema/mule/schemadoc"
+                schemaLocation="http://www.mulesoft.org/schema/mule/schemadoc/3.8/mule-schemadoc.xsd"/>
 
     <xsd:annotation>
         <xsd:documentation>
-            Apache CXF is an open source services framework. CXF helps you build and develop services using frontend programming APIs, like JAX-WS. These services can speak a variety of protocols such as SOAP, XML/HTTP, RESTful HTTP, or CORBA and work over a variety of transports such as HTTP, JMS or JBI. The Mule CXF Transport is an evolution of Mule's XFire transport, which provided support for the use of web service integration via Apache CXF. The Mule CXF connector also provides support for WS-Security, WS-Addressing, and WS-Reliable-Messaging.
+            Apache CXF is an open source services framework. CXF helps you build and develop services using frontend programming APIs, like JAX-WS. These services can speak a variety of protocols such
+            as SOAP, XML/HTTP, RESTful HTTP, or CORBA and work over a variety of transports such as HTTP, JMS or JBI. The Mule CXF Transport is an evolution of Mule's XFire transport, which provided
+            support for the use of web service integration via Apache CXF. The Mule CXF connector also provides support for WS-Security, WS-Addressing, and WS-Reliable-Messaging.
         </xsd:documentation>
 
         <xsd:appinfo>
@@ -39,36 +41,37 @@
             <xsd:extension base="mule:abstractExtensionType">
                 <xsd:attribute name="configurationLocation" type="xsd:string">
                     <xsd:annotation>
-                         <xsd:documentation>
-                             The location of a CXF configuration file, if any needs to be supplied.
-                         </xsd:documentation>
-                     </xsd:annotation>
+                        <xsd:documentation>
+                            The location of a CXF configuration file, if any needs to be supplied.
+                        </xsd:documentation>
+                    </xsd:annotation>
                 </xsd:attribute>
                 <xsd:attribute name="enableMuleSoapHeaders" type="mule:substitutableBoolean" default="true">
                     <xsd:annotation>
                         <xsd:documentation>
-                            Whether or not CXF should write Mule SOAP headers which pass along the correlation and ReplyTo information. This is true by default, but the Mule SOAP headers are only triggered in situations where there is an existing correlation ID and the ReplyTo header is set. (As of 2.2.1)
+                            Whether or not CXF should write Mule SOAP headers which pass along the correlation and ReplyTo information. This is true by default, but the Mule SOAP headers are only
+                            triggered in situations where there is an existing correlation ID and the ReplyTo header is set. (As of 2.2.1)
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
                 <xsd:attribute name="initializeStaticBusInstance" type="mule:substitutableBoolean" default="true">
                     <xsd:annotation>
-                         <xsd:documentation>
-                             Initialize the static CXF Bus with a Bus configured to use Mule for all transports. This will affect any CXF generated clients that you run standalone. Defaults to true.
-                         </xsd:documentation>
-                     </xsd:annotation>
+                        <xsd:documentation>
+                            Initialize the static CXF Bus with a Bus configured to use Mule for all transports. This will affect any CXF generated clients that you run standalone. Defaults to true.
+                        </xsd:documentation>
+                    </xsd:annotation>
                 </xsd:attribute>
                 <xsd:attribute name="name" type="xsd:string" default="_cxfConfiguration">
                     <xsd:annotation>
-                         <xsd:documentation>
-                             
-                         </xsd:documentation>
-                     </xsd:annotation>
+                        <xsd:documentation>
+
+                        </xsd:documentation>
+                    </xsd:annotation>
                 </xsd:attribute>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    
+
     <xsd:element name="simple-service" type="simpleServiceType" substitutionGroup="mule:abstract-intercepting-message-processor"/>
     <xsd:complexType name="simpleServiceType">
         <xsd:complexContent>
@@ -76,7 +79,7 @@
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    
+
     <xsd:element name="jaxws-service" type="jaxWsServiceType" substitutionGroup="mule:abstract-intercepting-message-processor"/>
     <xsd:complexType name="jaxWsServiceType">
         <xsd:complexContent>
@@ -84,8 +87,8 @@
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    
-    
+
+
     <xsd:element name="proxy-service" type="proxyServiceType" substitutionGroup="mule:abstract-intercepting-message-processor"/>
     <xsd:complexType name="proxyServiceType">
         <xsd:complexContent>
@@ -94,7 +97,7 @@
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    
+
     <xsd:complexType name="webServiceType">
         <xsd:complexContent>
             <xsd:extension base="mule:abstractInterceptingMessageProcessorType">
@@ -103,13 +106,13 @@
                     <xsd:element ref="ws-security" minOccurs="0" maxOccurs="1"/>
                     <xsd:group ref="commonConfiguration"/>
                 </xsd:sequence>
-            
+
                 <xsd:attributeGroup ref="inboundAttributes"/>
                 <xsd:attributeGroup ref="commonAttributes"/>
             </xsd:extension>
-            
+
         </xsd:complexContent>
-        
+
     </xsd:complexType>
 
     <xsd:element name="simple-client" type="simpleClientType" substitutionGroup="mule:abstract-intercepting-message-processor"/>
@@ -129,7 +132,8 @@
                 <xsd:attribute name="clientClass" type="xsd:string">
                     <xsd:annotation>
                         <xsd:documentation>
-                            The name of the client class that CXF generated using CXF's wsdl2java tool. You must use wsdl2java if you do not have both the client and the server in the same JVM. Otherwise, this can be optional if the endpoint address is the same in both cases.
+                            The name of the client class that CXF generated using CXF's wsdl2java tool. You must use wsdl2java if you do not have both the client and the server in the same JVM.
+                            Otherwise, this can be optional if the endpoint address is the same in both cases.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -160,7 +164,7 @@
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    
+
     <xsd:complexType name="clientType">
         <xsd:complexContent>
             <xsd:extension base="outboundType">
@@ -168,14 +172,14 @@
                 <xsd:attribute name="serviceClass" type="xsd:string">
                     <xsd:annotation>
                         <xsd:documentation>
-                            The class CXF should use to construct its service model for the client. 
+                            The class CXF should use to construct its service model for the client.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    
+
     <xsd:complexType name="outboundType">
         <xsd:complexContent>
             <xsd:extension base="mule:abstractInterceptingMessageProcessorType">
@@ -192,28 +196,29 @@
         <xsd:attribute name="payload">
             <xsd:annotation>
                 <xsd:documentation>
-                    Whether the whole SOAP Envelope, or just the body contents should be sent when in proxy mode.  
+                    Whether the whole SOAP Envelope, or just the body contents should be sent when in proxy mode.
                 </xsd:documentation>
             </xsd:annotation>
             <xsd:simpleType>
-               <xsd:restriction base="xsd:NMTOKEN">
+                <xsd:restriction base="xsd:NMTOKEN">
                     <xsd:enumeration value="envelope"/>
                     <xsd:enumeration value="body"/>
                 </xsd:restriction>
             </xsd:simpleType>
         </xsd:attribute>
     </xsd:attributeGroup>
-    
+
     <xsd:attributeGroup name="commonAttributes">
         <xsd:attribute name="soapVersion">
             <xsd:annotation>
                 <xsd:documentation>
-                    The soapVersion that is going to be used for this endpoint. The specified version is translated into the corresponding bindingId value. This attribute is useful when there's need to avoid the creation of the endpoint with the default binding.
+                    The soapVersion that is going to be used for this endpoint. The specified version is translated into the corresponding bindingId value. This attribute is useful when there's need
+                    to avoid the creation of the endpoint with the default binding.
                     In case the bindingId attribute is set this attribute will override it. If not set and not specified otherwise CXF defaults to SOAP 1.1 binding
                 </xsd:documentation>
             </xsd:annotation>
             <xsd:simpleType>
-               <xsd:restriction base="xsd:NMTOKEN">
+                <xsd:restriction base="xsd:NMTOKEN">
                     <xsd:enumeration value="1.1"/>
                     <xsd:enumeration value="1.2"/>
                 </xsd:restriction>
@@ -226,7 +231,7 @@
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
-        <xsd:attribute name="wsdlLocation" type="xsd:string" >
+        <xsd:attribute name="wsdlLocation" type="xsd:string">
             <xsd:annotation>
                 <xsd:documentation>
                     The location of the WSDL for your service. If this is a server side endpoint it will served to your users.
@@ -236,14 +241,15 @@
         <xsd:attribute name="enableMuleSoapHeaders" type="mule:substitutableBoolean" default="true">
             <xsd:annotation>
                 <xsd:documentation>
-                    Whether or not this endpoint should write Mule SOAP headers which pass along the correlation and ReplyTo information. This is true by default, but the Mule SOAP headers are only triggered in situations where there is an existing correlation ID and the ReplyTo header is set. (As of 2.2.1)
+                    Whether or not this endpoint should write Mule SOAP headers which pass along the correlation and ReplyTo information. This is true by default, but the Mule SOAP headers are only
+                    triggered in situations where there is an existing correlation ID and the ReplyTo header is set. (As of 2.2.1)
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
         <xsd:attribute name="configuration-ref" type="xsd:string">
             <xsd:annotation>
                 <xsd:documentation>
-                    The CXF configuration that should be used. 
+                    The CXF configuration that should be used.
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
@@ -281,19 +287,20 @@
         <xsd:attribute name="serviceClass" type="xsd:string">
             <xsd:annotation>
                 <xsd:documentation>
-                    The class CXF should use to construct its service model. This is optional, and by default it will use the implementation class of your component, on inbound cxf endpoint. But it is mandatory for outbound endpoint when using "aegis" frontend. 
+                    The class CXF should use to construct its service model. This is optional, and by default it will use the implementation class of your component, on inbound cxf endpoint. But it is
+                    mandatory for outbound endpoint when using "aegis" frontend.
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
         <xsd:attribute name="validationEnabled" type="mule:substitutableBoolean">
             <xsd:annotation>
                 <xsd:documentation>
-                    Whether or not validation should be enabled on this service. 
+                    Whether or not validation should be enabled on this service.
                     Validation only occurs on inbound server messages.
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
-        
+
     </xsd:attributeGroup>
 
     <xsd:group name="commonConfiguration">
@@ -305,20 +312,20 @@
                     </xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
-            <xsd:element ref="abstract-databinding"  minOccurs="0">
+            <xsd:element ref="abstract-databinding" minOccurs="0">
                 <xsd:annotation>
                     <xsd:documentation>
                         The databinding implementation that should be used. By default, this is JAXB for the JAX-WS frontend and Aegis for the simple frontend.
                     </xsd:documentation>
                 </xsd:annotation>
-            </xsd:element>       
+            </xsd:element>
             <xsd:element ref="features" minOccurs="0">
                 <xsd:annotation>
                     <xsd:documentation>
                         Any CXF features you want to apply to the client/server. See the CXF documentation for more information on features.
                     </xsd:documentation>
                 </xsd:annotation>
-            </xsd:element>         
+            </xsd:element>
             <xsd:element name="inInterceptors" type="interceptors" minOccurs="0">
                 <xsd:annotation>
                     <xsd:documentation>
@@ -382,7 +389,8 @@
     <xsd:element name="abstract-databinding" abstract="true" type="baseDataBinding">
         <xsd:annotation>
             <xsd:documentation>
-                A placeholder for arbitrary extensions as children of the 'mule' element. Other transports and modules can extend this if they need to add global elements to the configuration (but consider the more specific elements like abstract-connector first).
+                A placeholder for arbitrary extensions as children of the 'mule' element. Other transports and modules can extend this if they need to add global elements to the configuration (but
+                consider the more specific elements like abstract-connector first).
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -497,14 +505,14 @@
         <xsd:complexType>
             <xsd:complexContent>
                 <xsd:extension base="beans:identifiedType">
-                    <xsd:attribute name="xmlInputFactory" type="xsd:string" />
-                    <xsd:attribute name="xmlOutputFactory" type="xsd:string" />
+                    <xsd:attribute name="xmlInputFactory" type="xsd:string"/>
+                    <xsd:attribute name="xmlOutputFactory" type="xsd:string"/>
                 </xsd:extension>
             </xsd:complexContent>
         </xsd:complexType>
     </xsd:element>
 
-   <xsd:element name="mule-security-manager">
+    <xsd:element name="mule-security-manager">
         <xsd:annotation>
             <xsd:documentation>
                 A WSS4J Password validator which verifies username/password combinations
@@ -632,7 +640,7 @@
                 </xsd:extension>
             </xsd:complexContent>
         </xsd:complexType>
-    </xsd:element>    
+    </xsd:element>
 
     <xsd:element name="abstract-ws-custom-validator" abstract="true" type="baseWsCustomValidator">
         <xsd:annotation>

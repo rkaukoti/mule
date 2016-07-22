@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
-import static java.util.stream.Collectors.toList;
-import static org.mule.runtime.module.extension.internal.introspection.describer.MuleExtensionAnnotationParser.parseRepeatableAnnotation;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getMetadataType;
 import org.mule.metadata.api.ClassTypeLoader;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.core.util.collection.ImmutableMapCollector;
@@ -23,6 +20,10 @@ import org.mule.runtime.extension.api.introspection.property.ImportedTypesModelP
 
 import java.util.List;
 import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
+import static org.mule.runtime.module.extension.internal.introspection.describer.MuleExtensionAnnotationParser.parseRepeatableAnnotation;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getMetadataType;
 
 /**
  * Test the extension type to be annotated with {@link Import}, in which
@@ -57,13 +58,14 @@ public final class ImportedTypesModelEnricher extends AbstractAnnotatedModelEnri
 
         if (importTypes.stream().map(Import::type).distinct().collect(toList()).size() != importTypes.size())
         {
-            throw new IllegalModelDefinitionException(String.format("There should be only one Import declaration for any given type in extension [%s]." +
-                                                                    " Multiple imports of the same type are not allowed", name));
+            throw new IllegalModelDefinitionException(
+                    String.format("There should be only one Import declaration for any given type in extension [%s]." +
+                                  " Multiple imports of the same type are not allowed", name));
         }
 
         Map<MetadataType, MetadataType> importedTypes = importTypes.stream().collect(
                 new ImmutableMapCollector<>(imports -> getMetadataType(imports.type(), typeLoader),
-                                            imports -> getMetadataType(imports.from(), typeLoader)));
+                        imports -> getMetadataType(imports.from(), typeLoader)));
 
         return new ImportedTypesModelProperty(importedTypes);
     }

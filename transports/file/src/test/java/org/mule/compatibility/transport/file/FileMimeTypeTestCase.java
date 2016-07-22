@@ -7,15 +7,14 @@
 
 package org.mule.compatibility.transport.file;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mule.compatibility.transport.file.FileTestUtils.createDataFile;
-
+import org.junit.Test;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mule.compatibility.transport.file.FileTestUtils.createDataFile;
 
 public class FileMimeTypeTestCase extends AbstractFileFunctionalTestCase
 {
@@ -24,7 +23,7 @@ public class FileMimeTypeTestCase extends AbstractFileFunctionalTestCase
     @Override
     protected String getConfigFile()
     {
-        return  "file-mime-type.xml";
+        return "file-mime-type.xml";
     }
 
     @Test

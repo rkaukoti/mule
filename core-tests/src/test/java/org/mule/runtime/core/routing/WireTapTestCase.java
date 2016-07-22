@@ -6,16 +6,16 @@
  */
 package org.mule.runtime.core.routing;
 
+import org.junit.Test;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.tck.SensingNullMessageProcessor;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.tck.SensingNullMessageProcessor;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-
-import org.junit.Test;
 
 public class WireTapTestCase extends AbstractMuleContextTestCase
 {

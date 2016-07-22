@@ -1,28 +1,28 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<wsdl:definitions name="OnlineStoreService" targetNamespace="http://support.cxf.module.runtime.mule.org/"
-    xmlns="http://support.cxf.module.runtime.mule.org/"
-    xmlns:messages="http://www.nile-online.co.uk/schema/messages"
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:messages="http://www.nile-online.co.uk/schema/messages" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  name="OnlineStoreService"
+                  targetNamespace="http://support.cxf.module.runtime.mule.org/" xmlns="http://support.cxf.module.runtime.mule.org/">
     <wsdl:types>
-        <xsd:schema targetNamespace="http://www.nile-online.co.uk/schema/messages"
-            xmlns:messages="http://www.nile-online.co.uk/schema/messages"
-            xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <xsd:schema xmlns:messages="http://www.nile-online.co.uk/schema/messages"
+                    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                    targetNamespace="http://www.nile-online.co.uk/schema/messages">
             <xsd:element name="SearchItemRequest"/>
             <xsd:element name="SearchItemResponse"/>
         </xsd:schema>
     </wsdl:types>
     <wsdl:message name="SearchItemRequest">
-        <wsdl:part element="messages:SearchItemRequest" name="SearchItemRequest"> </wsdl:part>
+        <wsdl:part element="messages:SearchItemRequest" name="SearchItemRequest"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="SearchItemResponse">
-        <wsdl:part element="messages:SearchItemResponse" name="SearchItemResponse"> </wsdl:part>
+        <wsdl:part element="messages:SearchItemResponse" name="SearchItemResponse"></wsdl:part>
     </wsdl:message>
     <wsdl:portType name="OnlineStorePort">
         <wsdl:operation name="SearchItem">
-            <wsdl:input message="SearchItemRequest"> </wsdl:input>
-            <wsdl:output message="SearchItemResponse"> </wsdl:output>
+            <wsdl:input message="SearchItemRequest"></wsdl:input>
+            <wsdl:output message="SearchItemResponse"></wsdl:output>
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="OnlineStoreBinding" type="OnlineStorePort">

@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.transport.tcp.issues;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.transport.tcp.integration.AbstractStreamingCapacityTestCase;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public abstract class AbstractStreamingDownloadMule1389TestCase extends FunctionalTestCase
 {
@@ -26,7 +25,7 @@ public abstract class AbstractStreamingDownloadMule1389TestCase extends Function
         MuleClient client = muleContext.getClient();
         long now = System.currentTimeMillis();
         MuleMessage result = client.send(((InboundEndpoint) muleContext.getRegistry().lookupObject("inTestComponent")).getAddress(),
-            "request", null);
+                "request", null);
         assertNotNull(result);
         assertNotNull(result.getPayload());
         assertEquals(InputStreamSource.SIZE, getPayloadAsBytes(result).length);

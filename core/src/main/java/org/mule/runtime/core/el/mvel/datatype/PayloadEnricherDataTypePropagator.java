@@ -7,14 +7,14 @@
 
 package org.mule.runtime.core.el.mvel.datatype;
 
-import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.MESSAGE_PAYLOAD;
-import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.PAYLOAD;
-
 import org.mule.mvel2.ast.ASTNode;
 import org.mule.mvel2.ast.Assignment;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.metadata.TypedValue;
+
+import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.MESSAGE_PAYLOAD;
+import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.PAYLOAD;
 
 /**
  * Propagates data type when payload is used as enrichment target

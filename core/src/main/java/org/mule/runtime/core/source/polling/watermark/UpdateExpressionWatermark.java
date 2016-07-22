@@ -7,6 +7,7 @@
 
 package org.mule.runtime.core.source.polling.watermark;
 
+import org.apache.commons.lang.StringUtils;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.context.MuleContextAware;
@@ -19,8 +20,6 @@ import org.mule.runtime.core.source.polling.MessageProcessorPollingInterceptor;
 
 import java.io.NotSerializableException;
 import java.io.Serializable;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * Implementation of {@link Watermark} in which the value is updated through a MEL
@@ -61,7 +60,8 @@ public class UpdateExpressionWatermark extends Watermark implements Initialisabl
             {
                 throw new InitialisationException(
                         MessageFactory.createStaticMessage(
-                                String.format("update-expression requires a valid MEL expression. '%s' was found instead", this.updateExpression))
+                                String.format("update-expression requires a valid MEL expression. '%s' was found instead",
+                                        this.updateExpression))
                         , e, this);
             }
         }
@@ -70,9 +70,8 @@ public class UpdateExpressionWatermark extends Watermark implements Initialisabl
     /**
      * Returns the new watermark value by evaluating {@link #updateExpression} on the
      * flowVar of the given name
-     * 
-     * @param event the @{link {@link MuleEvent} in which the watermark is being
-     *            evaluated
+     *
+     * @param event the @{link {@link MuleEvent} in which the watermark is being evaluated
      * @return a {@link Serializable} value
      */
     @Override
@@ -81,9 +80,9 @@ public class UpdateExpressionWatermark extends Watermark implements Initialisabl
         try
         {
             return StringUtils.isEmpty(this.updateExpression)
-                   ? event.getFlowVariable(this.resolveVariable(event))
-                   : WatermarkUtils.evaluate(this.updateExpression,
-                                             event);
+                    ? event.getFlowVariable(this.resolveVariable(event))
+                    : WatermarkUtils.evaluate(this.updateExpression,
+                    event);
         }
         catch (NotSerializableException e)
         {

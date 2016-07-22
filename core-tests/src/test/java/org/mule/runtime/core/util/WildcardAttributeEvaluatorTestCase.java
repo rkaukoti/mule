@@ -6,15 +6,17 @@
  */
 package org.mule.runtime.core.util;
 
-import static org.junit.Assert.assertThat;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class WildcardAttributeEvaluatorTestCase extends AbstractMuleTestCase
@@ -22,42 +24,42 @@ public class WildcardAttributeEvaluatorTestCase extends AbstractMuleTestCase
     @Test
     public void testStartsWithWildcard()
     {
-        List<String> testValues = Arrays.asList("MULE", "MULEMAN", "EMULE","MULE\\*","\\*MULE");
-        List<String> expectedValues = Arrays.asList("MULE", "MULEMAN","MULE\\*");
-        testScenario("MULE*", testValues,expectedValues);
+        List<String> testValues = Arrays.asList("MULE", "MULEMAN", "EMULE", "MULE\\*", "\\*MULE");
+        List<String> expectedValues = Arrays.asList("MULE", "MULEMAN", "MULE\\*");
+        testScenario("MULE*", testValues, expectedValues);
     }
 
     @Test
     public void testEndsWithWildcard()
     {
-        List<String> testValues = Arrays.asList("MULE", "EMULE", "MAN-MULE-MAN","\\*MULE","MULE\\*");
-        List<String> expectedValues = Arrays.asList("MULE", "EMULE","\\*MULE");
-        testScenario("*MULE", testValues,expectedValues);
+        List<String> testValues = Arrays.asList("MULE", "EMULE", "MAN-MULE-MAN", "\\*MULE", "MULE\\*");
+        List<String> expectedValues = Arrays.asList("MULE", "EMULE", "\\*MULE");
+        testScenario("*MULE", testValues, expectedValues);
     }
 
     @Test
     public void testAllWildcard()
     {
-        List<String> testValues = Arrays.asList("MULE", "EMULE", "MAN-MULE-MAN","\\*MULE","MULE\\*");
-        List<String> expectedValues = Arrays.asList("MULE", "EMULE", "MAN-MULE-MAN","\\*MULE","MULE\\*");
-        testScenario("*", testValues,expectedValues);
+        List<String> testValues = Arrays.asList("MULE", "EMULE", "MAN-MULE-MAN", "\\*MULE", "MULE\\*");
+        List<String> expectedValues = Arrays.asList("MULE", "EMULE", "MAN-MULE-MAN", "\\*MULE", "MULE\\*");
+        testScenario("*", testValues, expectedValues);
     }
 
     @Test
     public void testWithEscapedCharactersOnly()
     {
         WildcardAttributeEvaluator wildcardAttributeEvaluator = new WildcardAttributeEvaluator("\\*");
-        Assert.assertThat(wildcardAttributeEvaluator.hasWildcards(),Is.is(false));
+        Assert.assertThat(wildcardAttributeEvaluator.hasWildcards(), Is.is(false));
     }
 
     @Test
     public void testWithEscapedCharactersAndWildcards()
     {
-        List<String> testValues = Arrays.asList("\\*MULE", "EMULE", "MAN-MULE-MAN","","MULE\\*","\\*MULE\\*");
+        List<String> testValues = Arrays.asList("\\*MULE", "EMULE", "MAN-MULE-MAN", "", "MULE\\*", "\\*MULE\\*");
         List<String> expectedValues = Arrays.asList("\\*MULE", "\\*MULE\\*");
-        testScenario("\\*MULE*",testValues, expectedValues);
+        testScenario("\\*MULE*", testValues, expectedValues);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void testCallConstructorWithNull()
     {
@@ -77,10 +79,10 @@ public class WildcardAttributeEvaluatorTestCase extends AbstractMuleTestCase
                 resultingValues.add(matchedValue);
             }
         });
-        assertThat(expectedValues.size(),Is.is(resultingValues.size()));
+        assertThat(expectedValues.size(), Is.is(resultingValues.size()));
         for (String expectedValue : expectedValues)
         {
-            assertThat(resultingValues.contains(expectedValue),Is.is(true));
+            assertThat(resultingValues.contains(expectedValue), Is.is(true));
         }
     }
 }

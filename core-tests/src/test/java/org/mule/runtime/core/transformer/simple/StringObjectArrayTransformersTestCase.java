@@ -31,7 +31,7 @@ public class StringObjectArrayTransformersTestCase extends AbstractTransformerTe
 
     public Object getResultData()
     {
-        return new String[]{"test1", "test2", "test3"};
+        return new String[] {"test1", "test2", "test3"};
     }
 
     @Override

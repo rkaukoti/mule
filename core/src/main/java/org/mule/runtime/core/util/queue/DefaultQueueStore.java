@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.core.util.queue;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.mule.runtime.core.api.MuleContext;
 
 import java.io.Serializable;
-
-import org.apache.commons.lang.NotImplementedException;
 
 /**
  * Internal queue implementation that will execute operations directly to the queue storage.
@@ -48,7 +47,9 @@ public class DefaultQueueStore implements RecoverableQueueStore
         }
         if (this.config.isPersistent())
         {
-            delegate = new DualRandomAccessFileQueueStoreDelegate(this.name, muleContext.getConfiguration().getWorkingDirectory(), muleContext, this.config.getCapacity());
+            delegate =
+                    new DualRandomAccessFileQueueStoreDelegate(this.name, muleContext.getConfiguration().getWorkingDirectory(), muleContext,
+                            this.config.getCapacity());
         }
         else
         {
@@ -79,7 +80,7 @@ public class DefaultQueueStore implements RecoverableQueueStore
     }
 
     public boolean offer(Serializable o, int room, long timeout)
-        throws InterruptedException
+            throws InterruptedException
     {
         return delegate.offer(o, room, timeout);
     }
@@ -127,7 +128,8 @@ public class DefaultQueueStore implements RecoverableQueueStore
         }
         else
         {
-            throw new NotImplementedException(String.format("Queue of type %s does not support remove", delegate.getClass().getCanonicalName()));
+            throw new NotImplementedException(
+                    String.format("Queue of type %s does not support remove", delegate.getClass().getCanonicalName()));
         }
     }
 
@@ -139,7 +141,8 @@ public class DefaultQueueStore implements RecoverableQueueStore
         }
         else
         {
-            throw new NotImplementedException(String.format("Queue of type %s does not support contains", delegate.getClass().getCanonicalName()));
+            throw new NotImplementedException(
+                    String.format("Queue of type %s does not support contains", delegate.getClass().getCanonicalName()));
         }
     }
 
@@ -151,7 +154,8 @@ public class DefaultQueueStore implements RecoverableQueueStore
         }
         else
         {
-            throw new NotImplementedException(String.format("Queue of type %s does not support close", delegate.getClass().getCanonicalName()));
+            throw new NotImplementedException(
+                    String.format("Queue of type %s does not support close", delegate.getClass().getCanonicalName()));
         }
     }
 

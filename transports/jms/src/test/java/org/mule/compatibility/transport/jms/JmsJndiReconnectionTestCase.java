@@ -6,30 +6,22 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
-import org.mule.compatibility.transport.jms.JmsConnector;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.mule.compatibility.transport.jms.test.JmsTestContextFactory;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 /**
  *
  */
 public class JmsJndiReconnectionTestCase extends FunctionalTestCase
 {
-    @Override
-    protected String getConfigFile()
-    {
-        return "jms-jndi-reconnection-config.xml";
-    }
-
     @BeforeClass
     public static void makeInitialContextFail()
     {
@@ -42,6 +34,12 @@ public class JmsJndiReconnectionTestCase extends FunctionalTestCase
         JmsTestContextFactory.failWhenRetrievingInitialContext = false;
     }
 
+    @Override
+    protected String getConfigFile()
+    {
+        return "jms-jndi-reconnection-config.xml";
+    }
+
     @Test
     public void testReconnectionWorksWhenInitialContextIsNotAvailable() throws Exception
     {
@@ -51,7 +49,7 @@ public class JmsJndiReconnectionTestCase extends FunctionalTestCase
             final JmsConnector jmsConnector = (JmsConnector) muleContext.getRegistry().lookupObject("jmsConnector");
             assertThat(jmsConnector.isConnected(), is(false));
             JmsTestContextFactory.failWhenRetrievingInitialContext = false;
-            PollingProber prober = new PollingProber(RECEIVE_TIMEOUT,100);
+            PollingProber prober = new PollingProber(RECEIVE_TIMEOUT, 100);
             prober.check(new Probe()
             {
                 @Override

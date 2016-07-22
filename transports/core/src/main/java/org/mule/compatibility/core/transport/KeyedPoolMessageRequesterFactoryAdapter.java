@@ -6,6 +6,7 @@
  */
 package org.mule.compatibility.core.transport;
 
+import org.apache.commons.pool.KeyedPoolableObjectFactory;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.MessageRequester;
 import org.mule.compatibility.core.api.transport.MessageRequesterFactory;
@@ -14,8 +15,6 @@ import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.lifecycle.Startable;
 import org.mule.runtime.core.api.lifecycle.Stoppable;
 import org.mule.runtime.core.config.i18n.CoreMessages;
-
-import org.apache.commons.pool.KeyedPoolableObjectFactory;
 
 /**
  * <code>KeyedPoolMessageRequesterFactoryAdapter</code> adapts a
@@ -26,7 +25,7 @@ import org.apache.commons.pool.KeyedPoolableObjectFactory;
  * @see org.mule.compatibility.core.transport.AbstractMessageRequesterFactory
  */
 public class KeyedPoolMessageRequesterFactoryAdapter
-    implements MessageRequesterFactory, KeyedPoolableObjectFactory
+        implements MessageRequesterFactory, KeyedPoolableObjectFactory
 {
     private final MessageRequesterFactory factory;
 
@@ -46,7 +45,7 @@ public class KeyedPoolMessageRequesterFactoryAdapter
     public void activateObject(Object key, Object obj) throws Exception
     {
         //Ensure requester has the same lifecycle as the connector
-        applyLifecycle((MessageRequester)obj, false);
+        applyLifecycle((MessageRequester) obj, false);
 
         factory.activate((InboundEndpoint) key, (MessageRequester) obj);
     }
@@ -61,7 +60,7 @@ public class KeyedPoolMessageRequesterFactoryAdapter
     public Object makeObject(Object key) throws Exception
     {
         Object obj = factory.create((InboundEndpoint) key);
-        applyLifecycle((MessageRequester)obj, true);
+        applyLifecycle((MessageRequester) obj, true);
         return obj;
     }
 
@@ -115,20 +114,20 @@ public class KeyedPoolMessageRequesterFactoryAdapter
 
     protected void applyLifecycle(MessageRequester requester, boolean created) throws MuleException
     {
-        String phase = ((AbstractConnector)requester.getConnector()).getLifecycleManager().getCurrentPhase();
-        if(phase.equals(Startable.PHASE_NAME) && !requester.getLifecycleState().isStarted())
+        String phase = ((AbstractConnector) requester.getConnector()).getLifecycleManager().getCurrentPhase();
+        if (phase.equals(Startable.PHASE_NAME) && !requester.getLifecycleState().isStarted())
         {
-            if(!requester.getLifecycleState().isInitialised())
+            if (!requester.getLifecycleState().isInitialised())
             {
                 requester.initialise();
             }
             requester.start();
         }
-        else if(phase.equals(Stoppable.PHASE_NAME) && requester.getLifecycleState().isStarted())
+        else if (phase.equals(Stoppable.PHASE_NAME) && requester.getLifecycleState().isStarted())
         {
             requester.stop();
         }
-        else if(Disposable.PHASE_NAME.equals(phase))
+        else if (Disposable.PHASE_NAME.equals(phase))
         {
             requester.dispose();
         }

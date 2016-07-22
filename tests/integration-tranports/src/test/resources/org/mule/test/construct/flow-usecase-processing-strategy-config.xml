@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"           
-      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:http="http://www.mulesoft.org/schema/mule/http"
       xmlns:file="http://www.mulesoft.org/schema/mule/transport/file"
       xmlns:vm="http://www.mulesoft.org/schema/mule/transport/vm"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="               
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd                              
                http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
@@ -21,7 +21,7 @@
 
     <flow name="FileSync" processingStrategy="synchronous">
         <file:inbound-endpoint path="${workingDirectory}">
-            <file:filename-wildcard-filter pattern="mule-file-test-sync-*"/> 
+            <file:filename-wildcard-filter pattern="mule-file-test-sync-*"/>
         </file:inbound-endpoint>
         <test:component throwException="true"/>
         <default-exception-strategy>
@@ -31,7 +31,7 @@
 
     <flow name="FileAsync">
         <file:inbound-endpoint path="${workingDirectory}">
-            <file:filename-wildcard-filter pattern="mule-file-test-async-*"/> 
+            <file:filename-wildcard-filter pattern="mule-file-test-async-*"/>
         </file:inbound-endpoint>
         <test:component throwException="true"/>
         <default-exception-strategy>

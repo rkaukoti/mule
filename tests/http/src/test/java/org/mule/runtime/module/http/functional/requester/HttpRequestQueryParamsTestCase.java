@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class HttpRequestQueryParamsTestCase extends AbstractHttpRequestTestCase
 {

@@ -35,24 +35,24 @@ public class GrapeFruit implements Fruit
         return brand;
     }
 
-    public Integer getSegments()
-    {
-        return segments;
-    }
-
-    public Double getRadius()
-    {
-        return radius;
-    }
-
     public void setBrand(String string)
     {
         brand = string;
     }
 
+    public Integer getSegments()
+    {
+        return segments;
+    }
+
     public void setSegments(Integer integer)
     {
         segments = integer;
+    }
+
+    public Double getRadius()
+    {
+        return radius;
     }
 
     public void setRadius(Double double1)

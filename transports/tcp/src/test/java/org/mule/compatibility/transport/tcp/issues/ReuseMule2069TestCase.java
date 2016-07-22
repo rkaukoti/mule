@@ -6,12 +6,11 @@
  */
 package org.mule.compatibility.transport.tcp.issues;
 
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.transport.tcp.TcpConnector;
 import org.mule.compatibility.transport.tcp.TcpFunctionalTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This is just to check that the Boolean (rather than boolean) doesn't cause any problems

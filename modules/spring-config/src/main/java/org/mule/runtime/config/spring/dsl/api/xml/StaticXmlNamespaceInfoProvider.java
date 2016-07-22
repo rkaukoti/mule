@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.config.spring.dsl.api.xml;
 
-import static com.google.common.collect.ImmutableList.copyOf;
-
 import java.util.Collection;
+
+import static com.google.common.collect.ImmutableList.copyOf;
 
 /**
  * A {@link XmlNamespaceInfoProvider} which provides a fixed set of {@link XmlNamespaceInfo}

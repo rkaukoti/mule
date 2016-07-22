@@ -6,19 +6,17 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.apache.commons.collections.IteratorUtils;
 import org.mule.compatibility.core.api.transport.MuleMessageFactory;
 import org.mule.compatibility.core.transport.AbstractMuleMessageFactoryTestCase;
-import org.mule.compatibility.transport.jms.JmsMuleMessageFactory;
 import org.mule.runtime.core.api.MuleMessage;
 
 import javax.jms.TextMessage;
 
-import org.apache.commons.collections.IteratorUtils;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class JmsMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTestCase
 {
@@ -46,7 +44,7 @@ public class JmsMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTes
         when(textMessage.getJMSTimestamp()).thenReturn(Long.valueOf(0));
         when(textMessage.getJMSType()).thenReturn(null);
         when(textMessage.getPropertyNames()).thenReturn(
-            IteratorUtils.asEnumeration(IteratorUtils.arrayIterator(new Object[] { "foo" })));
+                IteratorUtils.asEnumeration(IteratorUtils.arrayIterator(new Object[] {"foo"})));
         when(textMessage.getObjectProperty("foo")).thenReturn("bar");
         return textMessage;
     }

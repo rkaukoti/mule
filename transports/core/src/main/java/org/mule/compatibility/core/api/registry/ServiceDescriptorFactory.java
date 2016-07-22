@@ -6,7 +6,6 @@
  */
 package org.mule.compatibility.core.api.registry;
 
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupServiceDescriptor;
 import org.mule.compatibility.core.config.i18n.TransportCoreMessages;
 import org.mule.compatibility.core.transport.service.DefaultTransportServiceDescriptor;
 import org.mule.compatibility.core.transport.service.MetaTransportServiceDescriptor;
@@ -19,15 +18,16 @@ import org.mule.runtime.core.api.registry.ServiceType;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.StringUtils;
-
-import java.util.Properties;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Properties;
+
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupServiceDescriptor;
+
 /**
  * Factory used to create a new service descriptor.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -39,8 +39,8 @@ public class ServiceDescriptorFactory
      * Factory method to create a new service descriptor.
      *
      * @param type        the service type to create
-     * @param name        the name of the service.  In the case of a stransport service, the full endpoint sheme should be used here
-     *                    i.e. 'cxf:http'
+     * @param name        the name of the service.  In the case of a stransport service, the full endpoint sheme should be used here i.e.
+     *                    'cxf:http'
      * @param props       The properties defined by this service type
      * @param overrides   any overrides that should be configured on top of the standard propertiers for the service
      * @param muleContext the MuleContext for this mule instance
@@ -48,7 +48,8 @@ public class ServiceDescriptorFactory
      * @return a ServiceDescriptor instance that can be used to create the service objects associated with the service name
      * @throws ServiceException if the service cannot be located
      */
-    public static ServiceDescriptor create(ServiceType type, String name, Properties props, Properties overrides, MuleContext muleContext, ClassLoader classLoader) throws ServiceException
+    public static ServiceDescriptor create(ServiceType type, String name, Properties props, Properties overrides, MuleContext muleContext,
+                                           ClassLoader classLoader) throws ServiceException
     {
         if (overrides != null)
         {
@@ -136,11 +137,11 @@ public class ServiceDescriptorFactory
     protected static boolean isFilteredMetaScheme(String metaScheme)
     {
         if ("axis".equals(metaScheme) ||
-            "wsdl-axis".equals(metaScheme) || 
-            "cxf".equals(metaScheme) || 
-            "wsdl-cxf".equals(metaScheme) || 
-            "jms".equals(metaScheme) || 
-            "wmq".equals(metaScheme) || 
+            "wsdl-axis".equals(metaScheme) ||
+            "cxf".equals(metaScheme) ||
+            "wsdl-cxf".equals(metaScheme) ||
+            "jms".equals(metaScheme) ||
+            "wmq".equals(metaScheme) ||
             "ajax".equals(metaScheme))
         {
             return true;

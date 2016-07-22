@@ -9,9 +9,8 @@ package org.mule.runtime.core.routing;
 /**
  * An abstract implementation of a {@link MessageSequence}, that does not support
  * {@link #remove()}
- * 
+ *
  * @author flbulgarelli
- * @param <PayloadType>
  */
 public abstract class AbstractMessageSequence<PayloadType> implements MessageSequence<PayloadType>
 {

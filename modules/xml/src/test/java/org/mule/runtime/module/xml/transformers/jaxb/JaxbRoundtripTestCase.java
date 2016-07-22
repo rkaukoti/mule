@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.module.xml.transformers.jaxb;
 
-import static org.junit.Assert.fail;
-
+import org.custommonkey.xmlunit.XMLUnit;
 import org.mule.jaxb.model.EmailAddress;
 import org.mule.jaxb.model.Person;
 import org.mule.runtime.api.metadata.DataType;
@@ -20,7 +19,7 @@ import java.util.Arrays;
 
 import javax.xml.bind.JAXBContext;
 
-import org.custommonkey.xmlunit.XMLUnit;
+import static org.junit.Assert.fail;
 
 public class JaxbRoundtripTestCase extends AbstractTransformerTestCase
 {

@@ -33,9 +33,9 @@ public class AddressedEndpointDefinitionParser extends AbstractSingleParentFamil
     public static final boolean PROTOCOL = ChildAddressDefinitionParser.PROTOCOL;
     public static final String PROPERTIES = "properties";
     public static final String[] RESTRICTED_ENDPOINT_ATTRIBUTES =
-            new String[]{MuleProperties.EXCHANGE_PATTERN,
-                    AbstractEndpointBuilder.PROPERTY_RESPONSE_TIMEOUT, "encoding",
-                    "connector", "createConnector", "transformer", "responseTransformer", "disableTransportTransformer", "mimeType"};
+            new String[] {MuleProperties.EXCHANGE_PATTERN,
+                          AbstractEndpointBuilder.PROPERTY_RESPONSE_TIMEOUT, "encoding",
+                          "connector", "createConnector", "transformer", "responseTransformer", "disableTransportTransformer", "mimeType"};
 
     // this is an example of parsing a single element with several parsers.  in this case
     // (because we extend AbstractSingleParentFamilyDefinitionParser) the first parser is expected to
@@ -51,7 +51,7 @@ public class AddressedEndpointDefinitionParser extends AbstractSingleParentFamil
 
     public AddressedEndpointDefinitionParser(String metaOrProtocol, boolean isMeta, MuleDefinitionParser endpointParser)
     {
-        this(metaOrProtocol, isMeta, endpointParser, new String[]{}, new String[]{});
+        this(metaOrProtocol, isMeta, endpointParser, new String[] {}, new String[] {});
     }
 
     public AddressedEndpointDefinitionParser(String metaOrProtocol, boolean isMeta,
@@ -61,20 +61,17 @@ public class AddressedEndpointDefinitionParser extends AbstractSingleParentFamil
     {
         this(metaOrProtocol, isMeta, endpointParser,
                 RESTRICTED_ENDPOINT_ATTRIBUTES, URIBuilder.ALL_ATTRIBUTES,
-                new String[][]{requiredAddressAttributes}, new String[][]{requiredProperties});
+                new String[][] {requiredAddressAttributes}, new String[][] {requiredProperties});
     }
 
     /**
-     * @param metaOrProtocol The transport metaOrProtocol ("tcp" etc)
-     * @param isMeta Whether transport is "meta" or not (eg cxf)
-     * @param endpointParser The parser for the endpoint
-     * @param endpointAttributes A list of attribute names which will be set as properties on the
-     * endpoint builder
-     * @param addressAttributes A list of attribute names which will be set as properties on the
-     * endpoint URI builder
-     * @param requiredAddressAttributes A list of attribute names that are required if "address"
-     * isn't present
-     * @param requiredProperties A list of property names that are required if "address" isn't present
+     * @param metaOrProtocol            The transport metaOrProtocol ("tcp" etc)
+     * @param isMeta                    Whether transport is "meta" or not (eg cxf)
+     * @param endpointParser            The parser for the endpoint
+     * @param endpointAttributes        A list of attribute names which will be set as properties on the endpoint builder
+     * @param addressAttributes         A list of attribute names which will be set as properties on the endpoint URI builder
+     * @param requiredAddressAttributes A list of attribute names that are required if "address" isn't present
+     * @param requiredProperties        A list of property names that are required if "address" isn't present
      */
     public AddressedEndpointDefinitionParser(String metaOrProtocol, boolean isMeta,
                                              MuleDefinitionParser endpointParser,
@@ -123,9 +120,9 @@ public class AddressedEndpointDefinitionParser extends AbstractSingleParentFamil
             // we require either a reference, an address, or the attributes specified
             // (properties can be used in parallel with "address")
             String[][] addressAttributeSets =
-            new String[(null != requiredAddressAttributes ? requiredAddressAttributes.length : 0) + 2][];
-            addressAttributeSets[0] = new String[]{URIBuilder.ADDRESS};
-            addressAttributeSets[1] = new String[]{AbstractMuleBeanDefinitionParser.ATTRIBUTE_REF};
+                    new String[(null != requiredAddressAttributes ? requiredAddressAttributes.length : 0) + 2][];
+            addressAttributeSets[0] = new String[] {URIBuilder.ADDRESS};
+            addressAttributeSets[1] = new String[] {AbstractMuleBeanDefinitionParser.ATTRIBUTE_REF};
             if (null != requiredAddressAttributes)
             {
                 enableAttributes(this, requiredAddressAttributes);
@@ -142,7 +139,7 @@ public class AddressedEndpointDefinitionParser extends AbstractSingleParentFamil
     {
 
         public PropertiesParser(String setter,
-                String[] endpointAttributes, String[][] requiredAddressAttributes, String[][] requiredProperties)
+                                String[] endpointAttributes, String[][] requiredAddressAttributes, String[][] requiredProperties)
         {
             super(setter);
 
@@ -154,12 +151,12 @@ public class AddressedEndpointDefinitionParser extends AbstractSingleParentFamil
             disableAttribute(this, AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME);
             disableAttribute(this, AbstractMuleBeanDefinitionParser.ATTRIBUTE_REF);
             if (null != requiredProperties && requiredProperties.length > 0 &&
-                    null != requiredProperties[0] && requiredProperties[0].length > 0)
+                null != requiredProperties[0] && requiredProperties[0].length > 0)
             {
                 // if "ref" is present then we don't complain if required properties are missing, since they
                 // must have been provided on the global endpoint
                 String[][] requiredPropertiesSets = new String[requiredProperties.length + 1][];
-                requiredPropertiesSets[0] = new String[]{AbstractMuleBeanDefinitionParser.ATTRIBUTE_REF};
+                requiredPropertiesSets[0] = new String[] {AbstractMuleBeanDefinitionParser.ATTRIBUTE_REF};
                 System.arraycopy(requiredProperties, 0, requiredPropertiesSets, 1, requiredProperties.length);
                 registerPreProcessor(new CheckRequiredAttributes(requiredPropertiesSets));
             }

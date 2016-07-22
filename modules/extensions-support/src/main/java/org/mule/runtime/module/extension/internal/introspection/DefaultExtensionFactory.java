@@ -6,17 +6,10 @@
  */
 package org.mule.runtime.module.extension.internal.introspection;
 
-import static java.util.Collections.emptySet;
-import static java.util.stream.Collectors.toList;
-import static org.apache.commons.lang.StringUtils.EMPTY;
-import static org.mule.metadata.api.builder.BaseTypeBuilder.create;
-import static org.mule.metadata.api.model.MetadataFormat.JAVA;
-import static org.mule.runtime.core.api.expression.ExpressionManager.DEFAULT_EXPRESSION_POSTFIX;
-import static org.mule.runtime.core.api.expression.ExpressionManager.DEFAULT_EXPRESSION_PREFIX;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.REQUIRED;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.alphaSortDescribedList;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.createInterceptors;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.ImmutableList;
+import com.google.common.util.concurrent.UncheckedExecutionException;
 
 import org.mule.common.MuleVersion;
 import org.mule.runtime.core.api.MuleRuntimeException;
@@ -63,21 +56,28 @@ import org.mule.runtime.module.extension.internal.introspection.validation.Conne
 import org.mule.runtime.module.extension.internal.introspection.validation.MetadataComponentModelValidator;
 import org.mule.runtime.module.extension.internal.introspection.validation.ModelValidator;
 import org.mule.runtime.module.extension.internal.introspection.validation.NameClashModelValidator;
+import org.mule.runtime.module.extension.internal.introspection.validation.OperationParametersModelValidator;
 import org.mule.runtime.module.extension.internal.introspection.validation.OperationReturnTypeModelValidator;
 import org.mule.runtime.module.extension.internal.introspection.validation.ParameterModelValidator;
 import org.mule.runtime.module.extension.internal.introspection.validation.SubtypesModelValidator;
-import org.mule.runtime.module.extension.internal.introspection.validation.OperationParametersModelValidator;
 import org.mule.runtime.module.extension.internal.runtime.executor.OperationExecutorFactoryWrapper;
-
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.collect.ImmutableList;
-import com.google.common.util.concurrent.UncheckedExecutionException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;
+
+import static java.util.Collections.emptySet;
+import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang.StringUtils.EMPTY;
+import static org.mule.metadata.api.builder.BaseTypeBuilder.create;
+import static org.mule.metadata.api.model.MetadataFormat.JAVA;
+import static org.mule.runtime.core.api.expression.ExpressionManager.DEFAULT_EXPRESSION_POSTFIX;
+import static org.mule.runtime.core.api.expression.ExpressionManager.DEFAULT_EXPRESSION_PREFIX;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.REQUIRED;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.alphaSortDescribedList;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.createInterceptors;
 
 /**
  * Default implementation of {@link ExtensionFactory}.
@@ -143,7 +143,8 @@ public final class DefaultExtensionFactory implements ExtensionFactory
         }
         catch (IllegalArgumentException e)
         {
-            throw new IllegalArgumentException(String.format("Invalid version '%s' for extension '%s'", extensionDeclaration.getVersion(), extensionDeclaration.getName()));
+            throw new IllegalArgumentException(String.format("Invalid version '%s' for extension '%s'", extensionDeclaration.getVersion(),
+                    extensionDeclaration.getName()));
         }
     }
 
@@ -167,17 +168,17 @@ public final class DefaultExtensionFactory implements ExtensionFactory
             validateMuleVersion(extensionDeclaration);
             ValueHolder<RuntimeExtensionModel> extensionModelValueHolder = new ValueHolder<>();
             RuntimeExtensionModel extensionModel = new ImmutableRuntimeExtensionModel(extensionDeclaration.getName(),
-                                                                                      extensionDeclaration.getDescription(),
-                                                                                      extensionDeclaration.getVersion(),
-                                                                                      extensionDeclaration.getVendor(),
-                                                                                      extensionDeclaration.getCategory(),
-                                                                                      extensionDeclaration.getMinMuleVersion(),
-                                                                                      sortConfigurations(toConfigurations(extensionDeclaration.getConfigurations(), extensionModelValueHolder)),
-                                                                                      toOperations(extensionDeclaration.getOperations()),
-                                                                                      toConnectionProviders(extensionDeclaration.getConnectionProviders()),
-                                                                                      toMessageSources(extensionDeclaration.getMessageSources()),
-                                                                                      extensionDeclaration.getModelProperties(),
-                                                                                      extensionDeclaration.getExceptionEnricherFactory());
+                    extensionDeclaration.getDescription(),
+                    extensionDeclaration.getVersion(),
+                    extensionDeclaration.getVendor(),
+                    extensionDeclaration.getCategory(),
+                    extensionDeclaration.getMinMuleVersion(),
+                    sortConfigurations(toConfigurations(extensionDeclaration.getConfigurations(), extensionModelValueHolder)),
+                    toOperations(extensionDeclaration.getOperations()),
+                    toConnectionProviders(extensionDeclaration.getConnectionProviders()),
+                    toMessageSources(extensionDeclaration.getMessageSources()),
+                    extensionDeclaration.getModelProperties(),
+                    extensionDeclaration.getExceptionEnricherFactory());
 
             extensionModelValueHolder.set(extensionModel);
             return extensionModel;
@@ -204,11 +205,12 @@ public final class DefaultExtensionFactory implements ExtensionFactory
         }
 
 
-        private List<ConfigurationModel> toConfigurations(List<ConfigurationDeclaration> declarations, ValueHolder<RuntimeExtensionModel> extensionModelValueHolder)
+        private List<ConfigurationModel> toConfigurations(List<ConfigurationDeclaration> declarations,
+                                                          ValueHolder<RuntimeExtensionModel> extensionModelValueHolder)
         {
             return declarations.stream()
-                    .map(declaration -> toConfiguration(declaration, extensionModelValueHolder))
-                    .collect(toList());
+                               .map(declaration -> toConfiguration(declaration, extensionModelValueHolder))
+                               .collect(toList());
         }
 
         private <T extends ParameterizedModel> T fromCache(ParameterizedDeclaration declaration, Supplier<ParameterizedModel> supplier)
@@ -235,15 +237,15 @@ public final class DefaultExtensionFactory implements ExtensionFactory
         {
             return fromCache(declaration, () ->
                     new ImmutableRuntimeConfigurationModel(declaration.getName(),
-                                                           declaration.getDescription(),
-                                                           extensionModel::get,
-                                                           declaration.getConfigurationFactory(),
-                                                           toParameters(declaration.getParameters()),
-                                                           toOperations(declaration.getOperations()),
-                                                           toConnectionProviders(declaration.getConnectionProviders()),
-                                                           toMessageSources(declaration.getMessageSources()),
-                                                           declaration.getModelProperties(),
-                                                           declaration.getInterceptorFactories())
+                            declaration.getDescription(),
+                            extensionModel::get,
+                            declaration.getConfigurationFactory(),
+                            toParameters(declaration.getParameters()),
+                            toOperations(declaration.getOperations()),
+                            toConnectionProviders(declaration.getConnectionProviders()),
+                            toMessageSources(declaration.getMessageSources()),
+                            declaration.getModelProperties(),
+                            declaration.getInterceptorFactories())
             );
         }
 
@@ -256,15 +258,15 @@ public final class DefaultExtensionFactory implements ExtensionFactory
         {
             return fromCache(declaration, () ->
                     new ImmutableRuntimeSourceModel(declaration.getName(),
-                                                    declaration.getDescription(),
-                                                    toParameters(declaration.getParameters()),
-                                                    toOutputModel(declaration.getOutput()),
-                                                    toOutputModel(declaration.getOutputAttributes()),
-                                                    declaration.getSourceFactory(),
-                                                    declaration.getModelProperties(),
-                                                    declaration.getInterceptorFactories(),
-                                                    declaration.getExceptionEnricherFactory(),
-                                                    declaration.getMetadataResolverFactory())
+                            declaration.getDescription(),
+                            toParameters(declaration.getParameters()),
+                            toOutputModel(declaration.getOutput()),
+                            toOutputModel(declaration.getOutputAttributes()),
+                            declaration.getSourceFactory(),
+                            declaration.getModelProperties(),
+                            declaration.getInterceptorFactories(),
+                            declaration.getExceptionEnricherFactory(),
+                            declaration.getMetadataResolverFactory())
             );
         }
 
@@ -275,22 +277,24 @@ public final class DefaultExtensionFactory implements ExtensionFactory
 
         private RuntimeOperationModel toOperation(OperationDeclaration declaration)
         {
-            return fromCache(declaration, () -> {
+            return fromCache(declaration, () ->
+            {
                 List<ParameterModel> parameterModels = toOperationParameters(declaration.getParameters());
 
                 List<Interceptor> interceptors = createInterceptors(declaration.getInterceptorFactories());
-                OperationExecutorFactory executorFactory = new OperationExecutorFactoryWrapper(declaration.getExecutorFactory(), interceptors);
+                OperationExecutorFactory executorFactory =
+                        new OperationExecutorFactoryWrapper(declaration.getExecutorFactory(), interceptors);
 
                 return new ImmutableRuntimeOperationModel(declaration.getName(),
-                                                          declaration.getDescription(),
-                                                          executorFactory,
-                                                          parameterModels,
-                                                          toOutputModel(declaration.getOutput()),
-                                                          toOutputModel(declaration.getOutputAttributes()),
-                                                          declaration.getModelProperties(),
-                                                          declaration.getInterceptorFactories(),
-                                                          declaration.getExceptionEnricherFactory(),
-                                                          declaration.getMetadataResolverFactory());
+                        declaration.getDescription(),
+                        executorFactory,
+                        parameterModels,
+                        toOutputModel(declaration.getOutput()),
+                        toOutputModel(declaration.getOutputAttributes()),
+                        declaration.getModelProperties(),
+                        declaration.getInterceptorFactories(),
+                        declaration.getExceptionEnricherFactory(),
+                        declaration.getMetadataResolverFactory());
             });
         }
 
@@ -302,9 +306,9 @@ public final class DefaultExtensionFactory implements ExtensionFactory
         private OutputModel toOutputModel(OutputDeclaration declaration)
         {
             return declaration != null ? new ImmutableOutputModel(declaration.getDescription(),
-                                                                  declaration.getType(), declaration.hasDynamicType(),
-                                                                  declaration.getModelProperties())
-                                       : new ImmutableOutputModel(EMPTY, create(JAVA).nullType().build(), false, emptySet());
+                    declaration.getType(), declaration.hasDynamicType(),
+                    declaration.getModelProperties())
+                    : new ImmutableOutputModel(EMPTY, create(JAVA).nullType().build(), false, emptySet());
         }
 
         private RuntimeConnectionProviderModel toConnectionProvider(ConnectionProviderDeclaration declaration)
@@ -342,21 +346,25 @@ public final class DefaultExtensionFactory implements ExtensionFactory
             {
                 if (parameter.getExpressionSupport() == NOT_SUPPORTED && isExpression((String) defaultValue))
                 {
-                    throw new IllegalParameterModelDefinitionException(String.format("Parameter '%s' is marked as not supporting expressions yet it contains one as a default value. Please fix this", parameter.getName()));
+                    throw new IllegalParameterModelDefinitionException(String.format(
+                            "Parameter '%s' is marked as not supporting expressions yet it contains one as a default value. Please fix this",
+                            parameter.getName()));
                 }
                 else if (parameter.getExpressionSupport() == REQUIRED && !isExpression((String) defaultValue))
                 {
-                    throw new IllegalParameterModelDefinitionException(String.format("Parameter '%s' requires expressions yet it contains a constant as a default value. Please fix this", parameter.getName()));
+                    throw new IllegalParameterModelDefinitionException(String.format(
+                            "Parameter '%s' requires expressions yet it contains a constant as a default value. Please fix this",
+                            parameter.getName()));
                 }
             }
             return new ImmutableParameterModel(parameter.getName(),
-                                               parameter.getDescription(),
-                                               parameter.getType(),
-                                               parameter.hasDynamicType(),
-                                               parameter.isRequired(),
-                                               parameter.getExpressionSupport(),
-                                               parameter.getDefaultValue(),
-                                               parameter.getModelProperties());
+                    parameter.getDescription(),
+                    parameter.getType(),
+                    parameter.hasDynamicType(),
+                    parameter.isRequired(),
+                    parameter.getExpressionSupport(),
+                    parameter.getDefaultValue(),
+                    parameter.getModelProperties());
 
         }
     }

@@ -23,13 +23,13 @@ import java.util.Map;
 @Deprecated
 public class QueueInfo
 {
+    private static Map<Class<? extends ObjectStore>, QueueInfoDelegateFactory> delegateFactories =
+            new HashMap<Class<? extends ObjectStore>, QueueInfoDelegateFactory>();
     private QueueConfiguration config;
     private String name;
     private QueueInfoDelegate delegate;
     private MuleContext muleContext;
     private boolean delegateCanTake;
-
-    private static Map<Class<? extends ObjectStore>, QueueInfoDelegateFactory> delegateFactories = new HashMap<Class<? extends ObjectStore>, QueueInfoDelegateFactory>();
 
     public QueueInfo(String name, MuleContext muleContext, QueueConfiguration config)
     {
@@ -41,6 +41,12 @@ public class QueueInfo
     public QueueInfo(QueueInfo other)
     {
         this(other.name, other.muleContext, other.config);
+    }
+
+    public static synchronized void registerDelegateFactory(Class<? extends ObjectStore> storeType,
+                                                            QueueInfoDelegateFactory factory)
+    {
+        delegateFactories.put(storeType, factory);
     }
 
     public void setConfig(QueueConfiguration config)
@@ -62,8 +68,8 @@ public class QueueInfo
         if (delegate == null || (config != null && !hadConfig))
         {
             QueueInfoDelegate newDelegate = factory != null
-                                                           ? factory.createDelegate(this, muleContext)
-                                                           : new DefaultQueueInfoDelegate(capacity);
+                    ? factory.createDelegate(this, muleContext)
+                    : new DefaultQueueInfoDelegate(capacity);
             delegateCanTake = newDelegate instanceof TakingQueueStoreDelegate;
             if (delegate != null && delegate instanceof DefaultQueueInfoDelegate)
             {
@@ -96,7 +102,7 @@ public class QueueInfo
     }
 
     public boolean offer(Serializable o, int room, long timeout)
-        throws InterruptedException, ObjectStoreException
+            throws InterruptedException, ObjectStoreException
     {
         return delegate.offer(o, room, timeout);
     }
@@ -129,12 +135,6 @@ public class QueueInfo
     public ListableObjectStore<Serializable> getStore()
     {
         return config == null ? null : config.objectStore;
-    }
-
-    public static synchronized void registerDelegateFactory(Class<? extends ObjectStore> storeType,
-                                                            QueueInfoDelegateFactory factory)
-    {
-        delegateFactories.put(storeType, factory);
     }
 
     public int getCapacity()

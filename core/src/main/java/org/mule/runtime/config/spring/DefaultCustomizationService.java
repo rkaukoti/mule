@@ -6,13 +6,14 @@
  */
 package org.mule.runtime.config.spring;
 
-import static java.util.Optional.ofNullable;
 import org.mule.runtime.core.api.CustomService;
 import org.mule.runtime.core.api.CustomizationService;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import static java.util.Optional.ofNullable;
 
 /**
  * {@inheritDoc}

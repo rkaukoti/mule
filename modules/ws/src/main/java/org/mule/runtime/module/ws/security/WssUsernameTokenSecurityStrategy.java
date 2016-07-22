@@ -7,6 +7,13 @@
 
 package org.mule.runtime.module.ws.security;
 
+import org.apache.ws.security.WSPasswordCallback;
+import org.mule.runtime.core.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import static org.apache.ws.security.WSConstants.CREATED_LN;
 import static org.apache.ws.security.WSConstants.NONCE_LN;
 import static org.apache.ws.security.handler.WSHandlerConstants.ADD_UT_ELEMENTS;
@@ -15,13 +22,6 @@ import static org.apache.ws.security.handler.WSHandlerConstants.USER;
 import static org.apache.ws.security.handler.WSHandlerConstants.USERNAME_TOKEN;
 import static org.mule.runtime.module.ws.security.PasswordType.DIGEST;
 import static org.mule.runtime.module.ws.security.PasswordType.TEXT;
-import org.mule.runtime.core.util.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.ws.security.WSPasswordCallback;
 
 public class WssUsernameTokenSecurityStrategy extends AbstractSecurityStrategy implements SecurityStrategy
 {
@@ -74,14 +74,14 @@ public class WssUsernameTokenSecurityStrategy extends AbstractSecurityStrategy i
         });
     }
 
-    public void setUsername(String username)
-    {
-        this.username = username;
-    }
-
     public String getUsername()
     {
         return username;
+    }
+
+    public void setUsername(String username)
+    {
+        this.username = username;
     }
 
     public String getPassword()

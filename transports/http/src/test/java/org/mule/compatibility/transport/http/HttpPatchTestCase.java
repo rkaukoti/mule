@@ -6,17 +6,15 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.junit.Assert.assertEquals;
-
-import org.mule.compatibility.transport.http.PatchMethod;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
+
+import static org.junit.Assert.assertEquals;
 
 public class HttpPatchTestCase extends FunctionalTestCase
 {

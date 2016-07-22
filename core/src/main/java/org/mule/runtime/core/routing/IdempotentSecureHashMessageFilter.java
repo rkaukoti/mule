@@ -31,10 +31,9 @@ import java.security.NoSuchAlgorithmException;
 
 public class IdempotentSecureHashMessageFilter extends IdempotentMessageFilter
 {
-    private String messageDigestAlgorithm = "SHA-256";
-
     private final SerializableToByteArray objectToByteArray = new SerializableToByteArray();
     private final ByteArrayToHexString byteArrayToHexString = new ByteArrayToHexString();
+    private String messageDigestAlgorithm = "SHA-256";
 
     @Override
     protected String getIdForEvent(MuleEvent event) throws MessagingException
@@ -45,11 +44,11 @@ public class IdempotentSecureHashMessageFilter extends IdempotentMessageFilter
             byte[] bytes = (byte[]) objectToByteArray.transform(payload);
             MessageDigest md = MessageDigest.getInstance(messageDigestAlgorithm);
             byte[] digestedBytes = md.digest(bytes);
-            return (String)byteArrayToHexString.transform(digestedBytes);
+            return (String) byteArrayToHexString.transform(digestedBytes);
         }
         catch (NoSuchAlgorithmException nsa)
         {
-            throw new RoutingException(event,this, nsa);
+            throw new RoutingException(event, this, nsa);
         }
         catch (TransformerException te)
         {

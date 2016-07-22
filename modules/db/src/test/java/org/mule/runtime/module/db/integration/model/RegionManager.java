@@ -13,8 +13,10 @@ import static org.mule.runtime.module.db.integration.model.Region.SOUTHWEST;
 public class RegionManager
 {
 
-    public static final RegionManager SOUTHWEST_MANAGER = new RegionManager(SOUTHWEST.getName(), "Manager1", new ContactDetails("home", "1-111-111", "1@1111.com"));
-    public static final RegionManager NORTHWEST_MANAGER = new RegionManager(NORTHWEST.getName(), "Manager2", new ContactDetails("work", "2-222-222", "2@2222.com"));
+    public static final RegionManager SOUTHWEST_MANAGER =
+            new RegionManager(SOUTHWEST.getName(), "Manager1", new ContactDetails("home", "1-111-111", "1@1111.com"));
+    public static final RegionManager NORTHWEST_MANAGER =
+            new RegionManager(NORTHWEST.getName(), "Manager2", new ContactDetails("work", "2-222-222", "2@2222.com"));
 
     private String regionName;
     private String name;

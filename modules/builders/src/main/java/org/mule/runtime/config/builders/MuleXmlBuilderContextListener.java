@@ -21,17 +21,16 @@ import org.mule.runtime.core.context.DefaultMuleContextBuilder;
 import org.mule.runtime.core.context.DefaultMuleContextFactory;
 import org.mule.runtime.core.util.FilenameUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.io.File;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.WebApplicationContext;
 
 /**
  * <code>MuleXmlBuilderContextListener</code> is a bootstrap listener used to
@@ -43,7 +42,7 @@ import org.springframework.web.context.WebApplicationContext;
  * the classpath. If a config parameter is not specified a default <i>mule-config.xml</i>
  * will be used.
  * </p>
- * 
+ *
  * @see SpringXmlConfigurationBuilder
  */
 
@@ -60,10 +59,8 @@ public class MuleXmlBuilderContextListener implements ServletContextListener
      * Name of the temp dir param as per the servlet spec. The object will be a java.io.File.
      */
     public static final String ATTR_JAVAX_SERVLET_CONTEXT_TEMPDIR = "javax.servlet.context.tempdir";
-
-    protected MuleContext muleContext;
-
     protected transient final Logger logger = LoggerFactory.getLogger(MuleXmlBuilderContextListener.class);
+    protected MuleContext muleContext;
 
     public void contextInitialized(ServletContextEvent event)
     {
@@ -114,11 +111,11 @@ public class MuleXmlBuilderContextListener implements ServletContextListener
     }
 
     /**
-     * Creates the MuleContext based on the configuration resource(s) and possibly 
+     * Creates the MuleContext based on the configuration resource(s) and possibly
      * init parameters for the Servlet.
      */
     protected MuleContext createMuleContext(String configResource, ServletContext servletContext)
-        throws ConfigurationException, InitialisationException
+            throws ConfigurationException, InitialisationException
     {
         String serverId = StringUtils.defaultIfEmpty(servletContext.getInitParameter("mule.serverId"), null);
 
@@ -137,9 +134,9 @@ public class MuleXmlBuilderContextListener implements ServletContextListener
         MuleContextFactory muleContextFactory = new DefaultMuleContextFactory();
 
         String muleAppConfig = servletContext.getInitParameter(INIT_PARAMETER_MULE_APP_CONFIG) != null
-            ? servletContext.getInitParameter(INIT_PARAMETER_MULE_APP_CONFIG)
-            : PropertiesMuleConfigurationFactory.getMuleAppConfiguration(configResource);
-        
+                ? servletContext.getInitParameter(INIT_PARAMETER_MULE_APP_CONFIG)
+                : PropertiesMuleConfigurationFactory.getMuleAppConfiguration(configResource);
+
         DefaultMuleConfiguration muleConfiguration = new PropertiesMuleConfigurationFactory(muleAppConfig).createConfiguration();
 
         /*
@@ -157,7 +154,7 @@ public class MuleXmlBuilderContextListener implements ServletContextListener
 
         // Support Spring-first configuration in webapps
         final ApplicationContext parentContext = (ApplicationContext) servletContext.getAttribute(
-                                                        WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+                WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
         if (parentContext != null)
         {
             builder.setParentContext(parentContext);
@@ -168,7 +165,7 @@ public class MuleXmlBuilderContextListener implements ServletContextListener
     /**
      * If no config location resource is configured on the servlet context, the value
      * returned from this method will be used to initialise the MuleManager.
-     * 
+     *
      * @return the default config resource location
      */
     protected String getDefaultConfigResource()

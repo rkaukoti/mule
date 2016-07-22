@@ -7,27 +7,23 @@
 package org.mule.runtime.module.http.api.listener;
 
 import org.mule.runtime.api.meta.AnnotatedObject;
-import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.api.meta.NamedObject;
+import org.mule.runtime.api.tls.TlsContextFactory;
+import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.config.Config;
 import org.mule.runtime.core.api.lifecycle.Startable;
 import org.mule.runtime.core.api.lifecycle.Stoppable;
-import org.mule.runtime.api.tls.TlsContextFactory;
 
 public interface HttpListenerConfig extends Config, NamedObject, AnnotatedObject, Startable, Stoppable
 {
 
     /**
      * Stops listening for incoming request. No inbound connections will be accepted after stop.
-     *
-     * @throws MuleException
      */
     void stop() throws MuleException;
 
     /**
      * Starts the listening for incoming request.
-     *
-     * @throws MuleException
      */
     void start() throws MuleException;
 
@@ -37,7 +33,7 @@ public interface HttpListenerConfig extends Config, NamedObject, AnnotatedObject
     boolean hasTlsConfig();
 
     /**
-      * @return the port in which the config is listening for request.
+     * @return the port in which the config is listening for request.
      */
     public int getPort();
 

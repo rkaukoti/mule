@@ -52,7 +52,7 @@ public class JmsClientAcknowledgeTransaction extends AbstractSingleResourceTrans
             if (message == null)
             {
                 throw new IllegalTransactionStateException(
-                    JmsMessages.noMessageBoundForAck());
+                        JmsMessages.noMessageBoundForAck());
             }
             message.acknowledge();
         }
@@ -77,7 +77,7 @@ public class JmsClientAcknowledgeTransaction extends AbstractSingleResourceTrans
     {
         if (key instanceof Message)
         {
-            this.message = (Message)key;
+            this.message = (Message) key;
             return;
         }
         if (!(key instanceof Connection) || !(resource instanceof Session))
@@ -86,7 +86,7 @@ public class JmsClientAcknowledgeTransaction extends AbstractSingleResourceTrans
                     CoreMessages.transactionCanOnlyBindToResources("javax.jms.Connection/javax.jms.Session"));
         }
 
-        Session session = (Session)resource;
+        Session session = (Session) resource;
         try
         {
             if (session.getTransacted())

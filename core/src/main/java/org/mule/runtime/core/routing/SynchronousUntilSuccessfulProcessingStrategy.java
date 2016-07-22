@@ -16,11 +16,10 @@ import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.routing.RoutingException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
-
-import java.io.NotSerializableException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.NotSerializableException;
 
 /**
  * Until successful synchronous processing strategy.
@@ -97,15 +96,20 @@ public class SynchronousUntilSuccessfulProcessingStrategy extends AbstractUntilS
     {
         if (getUntilSuccessfulConfiguration().getThreadingProfile() != null)
         {
-            throw new InitialisationException(CoreMessages.createStaticMessage("Until successful cannot be configured to be synchronous and have a threading profile at the same time"), this);
+            throw new InitialisationException(CoreMessages.createStaticMessage(
+                    "Until successful cannot be configured to be synchronous and have a threading profile at the same time"), this);
         }
         if (getUntilSuccessfulConfiguration().getObjectStore() != null)
         {
-            throw new InitialisationException(CoreMessages.createStaticMessage("Until successful cannot be configured to be synchronous and use an object store."), this);
+            throw new InitialisationException(
+                    CoreMessages.createStaticMessage("Until successful cannot be configured to be synchronous and use an object store."),
+                    this);
         }
         if (getUntilSuccessfulConfiguration().getDlqMP() != null)
         {
-            throw new InitialisationException(CoreMessages.createStaticMessage("Until successful cannot be configured to be synchronous and use a dead letter queue. Failure must be processed with exception strategy"), this);
+            throw new InitialisationException(CoreMessages.createStaticMessage(
+                    "Until successful cannot be configured to be synchronous and use a dead letter queue. Failure must be processed with exception strategy"),
+                    this);
         }
     }
 

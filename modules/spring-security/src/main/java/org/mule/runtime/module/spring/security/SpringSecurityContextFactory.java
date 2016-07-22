@@ -9,7 +9,6 @@ package org.mule.runtime.module.spring.security;
 import org.mule.runtime.core.api.security.Authentication;
 import org.mule.runtime.core.api.security.SecurityContext;
 import org.mule.runtime.core.api.security.SecurityContextFactory;
-
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
 
@@ -23,13 +22,13 @@ public class SpringSecurityContextFactory implements SecurityContextFactory
     public SecurityContext create(Authentication authentication)
     {
         org.springframework.security.core.context.SecurityContext context = new SecurityContextImpl();
-        context.setAuthentication(((SpringAuthenticationAdapter)authentication).getDelegate());
+        context.setAuthentication(((SpringAuthenticationAdapter) authentication).getDelegate());
 
         if (authentication.getProperties() != null)
         {
             if (authentication.getProperties().containsKey("securityMode"))
             {
-                String securityMode = (String)authentication.getProperties().get("securityMode");
+                String securityMode = (String) authentication.getProperties().get("securityMode");
                 SecurityContextHolder.setStrategyName(securityMode);
             }
         }

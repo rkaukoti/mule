@@ -9,16 +9,13 @@ package org.mule.runtime.module.cxf.component;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.component.AbstractComponent;
 import org.mule.runtime.core.config.i18n.CoreMessages;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractWebServiceWrapperComponent extends AbstractComponent
 {
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
     public static final String WS_SERVICE_URL = "ws.service.url";
-
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
     protected String address;
     protected boolean addressFromMessage = false;
 

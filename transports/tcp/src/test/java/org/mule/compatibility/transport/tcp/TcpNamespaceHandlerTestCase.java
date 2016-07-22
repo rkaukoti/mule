@@ -6,22 +6,7 @@
  */
 package org.mule.compatibility.transport.tcp;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
-import org.mule.compatibility.transport.tcp.LocalSocketTcpMessageDispatcherFactory;
-import org.mule.compatibility.transport.tcp.PollingTcpConnector;
-import org.mule.compatibility.transport.tcp.TcpClientSocketProperties;
-import org.mule.compatibility.transport.tcp.TcpConnector;
-import org.mule.compatibility.transport.tcp.TcpProtocol;
-import org.mule.compatibility.transport.tcp.TcpServerSocketProperties;
-import org.mule.compatibility.transport.tcp.TcpSocketFactory;
+import org.junit.Test;
 import org.mule.compatibility.transport.tcp.protocols.AbstractByteProtocol;
 import org.mule.compatibility.transport.tcp.protocols.CustomClassLoadingLengthProtocol;
 import org.mule.functional.junit4.FunctionalTestCase;
@@ -32,7 +17,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class TcpNamespaceHandlerTestCase extends FunctionalTestCase
 {
@@ -64,7 +56,7 @@ public class TcpNamespaceHandlerTestCase extends FunctionalTestCase
         assertEquals(c.getSocketFactory().getClass(), TcpSocketFactory.class);
         assertFalse(((AbstractByteProtocol) c.getTcpProtocol()).isRethrowExceptionOnRead());
     }
-    
+
     @Test
     public void testSeparateTimeouts() throws Exception
     {
@@ -77,14 +69,14 @@ public class TcpNamespaceHandlerTestCase extends FunctionalTestCase
         assertTrue(c.isConnected());
         assertTrue(c.isStarted());
     }
-    
+
     @Test
     public void testTcpProtocolWithClass()
     {
         TcpConnector connector = lookupTcpConnector("connectorWithProtocolClass");
         assertTrue(connector.getTcpProtocol() instanceof MockTcpProtocol);
     }
-    
+
     @Test
     public void testTcpProtocolWithRef()
     {
@@ -98,28 +90,7 @@ public class TcpNamespaceHandlerTestCase extends FunctionalTestCase
         assertNotNull(connector);
         return connector;
     }
-    
-    public static class MockTcpProtocol implements TcpProtocol
-    {
-        @Override
-        public ResponseOutputStream createResponse(Socket socket) throws IOException
-        {
-            throw new UnsupportedOperationException("createResponse");
-        }
 
-        @Override
-        public Object read(InputStream is) throws IOException
-        {
-            throw new UnsupportedOperationException("read");
-        }
-
-        @Override
-        public void write(OutputStream os, Object data) throws IOException
-        {
-            throw new UnsupportedOperationException("write");
-        }
-    }
-    
     @Test
     public void testPollingConnector()
     {
@@ -131,7 +102,7 @@ public class TcpNamespaceHandlerTestCase extends FunctionalTestCase
         assertTrue(c.isConnected());
         assertTrue(c.isStarted());
     }
-    
+
     @Test
     public void testCustomClassLoadingProtocol() throws Exception
     {
@@ -142,9 +113,10 @@ public class TcpNamespaceHandlerTestCase extends FunctionalTestCase
         assertEquals(protocol.getClassLoader(), muleContext.getRegistry().get("classLoader"));
         assertTrue(((AbstractByteProtocol) c.getTcpProtocol()).isRethrowExceptionOnRead());
     }
-    
+
     @Test
-    public void testMessageDispatcherFactoryConnector() throws Exception {
+    public void testMessageDispatcherFactoryConnector() throws Exception
+    {
         TcpConnector c = (TcpConnector) muleContext.getRegistry().lookupObject("messageDispatcherFactoryConnector");
         assertNotNull(c);
         assertEquals(LocalSocketTcpMessageDispatcherFactory.class, c.getDispatcherFactory().getClass());
@@ -210,6 +182,26 @@ public class TcpNamespaceHandlerTestCase extends FunctionalTestCase
         assertThat(properties.getLinger(), equalTo(700));
     }
 
+    public static class MockTcpProtocol implements TcpProtocol
+    {
+        @Override
+        public ResponseOutputStream createResponse(Socket socket) throws IOException
+        {
+            throw new UnsupportedOperationException("createResponse");
+        }
+
+        @Override
+        public Object read(InputStream is) throws IOException
+        {
+            throw new UnsupportedOperationException("read");
+        }
+
+        @Override
+        public void write(OutputStream os, Object data) throws IOException
+        {
+            throw new UnsupportedOperationException("write");
+        }
+    }
 
     public static class FakeClassLoader extends ClassLoader
     {

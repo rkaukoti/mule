@@ -11,7 +11,6 @@ import org.mule.runtime.core.api.transaction.Transaction;
 import org.mule.runtime.core.api.transaction.TransactionConfig;
 import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.transaction.TransactionCoordination;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +32,7 @@ class ResolvePreviousTransactionInterceptor<T> implements ExecutionInterceptor<T
         byte action = transactionConfig.getAction();
         Transaction transactionBeforeTemplate = TransactionCoordination.getInstance().getTransaction();
         if ((action == TransactionConfig.ACTION_NONE || action == TransactionConfig.ACTION_ALWAYS_BEGIN)
-                && transactionBeforeTemplate != null)
+            && transactionBeforeTemplate != null)
         {
             if (logger.isDebugEnabled())
             {

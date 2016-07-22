@@ -7,11 +7,9 @@
 
 package org.mule.runtime.module.db.integration.storedprocedure;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.mule.runtime.module.db.integration.TestDbConfig.getOracleResource;
-import static org.mule.runtime.module.db.integration.model.Contact.CONTACT1;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
@@ -22,9 +20,11 @@ import java.sql.Struct;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.mule.runtime.module.db.integration.TestDbConfig.getOracleResource;
+import static org.mule.runtime.module.db.integration.model.Contact.CONTACT1;
 
 public class StoredProcedureStructArrayUdtTestCase extends AbstractDbIntegrationTestCase
 {
@@ -68,6 +68,6 @@ public class StoredProcedureStructArrayUdtTestCase extends AbstractDbIntegration
         final Object[] arrayPayload = (Object[]) response.getPayload();
         assertThat(arrayPayload.length, equalTo(1));
         assertThat(arrayPayload[0], instanceOf(Struct.class));
-        assertThat(((Struct) arrayPayload[0]).getAttributes(),  equalTo(CONTACT1.getDetailsAsObjectArray()[0]));
+        assertThat(((Struct) arrayPayload[0]).getAttributes(), equalTo(CONTACT1.getDetailsAsObjectArray()[0]));
     }
 }

@@ -6,14 +6,7 @@
  */
 package org.mule.runtime.module.spring.security.filters.http;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.AUTHORIZATION;
+import org.junit.Test;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -22,7 +15,14 @@ import org.mule.runtime.core.api.security.UnauthorisedException;
 import org.mule.runtime.module.http.internal.filter.HttpBasicAuthenticationFilter;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.AUTHORIZATION;
 
 public class HttpBasicAuthenticationFilterTestCase extends AbstractMuleContextTestCase
 {

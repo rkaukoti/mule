@@ -9,13 +9,12 @@ package org.mule.test.integration.schedule;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.schedule.Scheduler;
+import org.springframework.beans.factory.BeanNameAware;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import org.springframework.beans.factory.BeanNameAware;
 
 public class MockScheduler implements Scheduler, BeanNameAware
 {
@@ -32,15 +31,15 @@ public class MockScheduler implements Scheduler, BeanNameAware
     }
 
     @Override
-    public void setName(String name)
-    {
-        // Do Nothing
-    }
-
-    @Override
     public String getName()
     {
         return name;
+    }
+
+    @Override
+    public void setName(String name)
+    {
+        // Do Nothing
     }
 
     @Override

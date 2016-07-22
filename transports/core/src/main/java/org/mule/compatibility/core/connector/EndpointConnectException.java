@@ -11,21 +11,21 @@ import org.mule.compatibility.core.transport.AbstractTransportMessageHandler;
 import org.mule.runtime.core.api.connector.Connectable;
 import org.mule.runtime.core.config.i18n.Message;
 import org.mule.runtime.core.connector.ConnectException;
-
-import javax.resource.spi.work.Work;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** 
+import javax.resource.spi.work.Work;
+
+/**
  * When this exception is thrown it will trigger a retry (reconnection) policy to go into effect if one is configured.
  */
 public class EndpointConnectException extends ConnectException
 {
-    protected static Logger logger = LoggerFactory.getLogger(EndpointConnectException.class);
-
-    /** Serial version */
+    /**
+     * Serial version
+     */
     private static final long serialVersionUID = -7802483584780922653L;
+    protected static Logger logger = LoggerFactory.getLogger(EndpointConnectException.class);
 
     public EndpointConnectException(Message message, Connectable failed)
     {
@@ -41,7 +41,7 @@ public class EndpointConnectException extends ConnectException
     {
         super(cause, resolveFailed(failed));
     }
-    
+
     protected static Connectable resolveFailed(Connectable failed)
     {
         return failed instanceof AbstractTransportMessageHandler ? ((AbstractTransportMessageHandler) failed).getConnector() : failed;

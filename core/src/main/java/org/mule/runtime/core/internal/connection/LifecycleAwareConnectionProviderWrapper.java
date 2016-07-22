@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.core.internal.connection;
 
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_CONNECTION_MANAGER;
 import org.mule.runtime.api.config.PoolingProfile;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionProvider;
@@ -18,11 +17,12 @@ import org.mule.runtime.core.api.lifecycle.Startable;
 import org.mule.runtime.core.api.retry.RetryPolicy;
 import org.mule.runtime.core.api.retry.RetryPolicyTemplate;
 import org.mule.runtime.core.lifecycle.phases.NotInLifecyclePhase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_CONNECTION_MANAGER;
 
 /**
  * A {@link ConnectionProviderWrapper} which performs lifecycle and dependency injection
@@ -103,8 +103,8 @@ public class LifecycleAwareConnectionProviderWrapper<Connection> extends Connect
     }
 
     /**
-     * @return a {@link RetryPolicyTemplate} from the delegated {@link ConnectionProviderWrapper}, if the {@link #delegate}
-     * is a {@link ConnectionProvider} then a default {@link RetryPolicy} is returned from the {@link ConnectionProviderWrapper}
+     * @return a {@link RetryPolicyTemplate} from the delegated {@link ConnectionProviderWrapper}, if the {@link #delegate} is a {@link
+     * ConnectionProvider} then a default {@link RetryPolicy} is returned from the {@link ConnectionProviderWrapper}
      */
     @Override
     public RetryPolicyTemplate getRetryPolicyTemplate()
@@ -122,6 +122,8 @@ public class LifecycleAwareConnectionProviderWrapper<Connection> extends Connect
     public Optional<PoolingProfile> getPoolingProfile()
     {
         ConnectionProvider<Connection> delegate = getDelegate();
-        return delegate instanceof ConnectionProviderWrapper ? ((ConnectionProviderWrapper) delegate).getPoolingProfile() : Optional.empty();
+        return delegate instanceof ConnectionProviderWrapper ?
+                ((ConnectionProviderWrapper) delegate).getPoolingProfile() :
+                Optional.empty();
     }
 }

@@ -13,7 +13,7 @@ import java.nio.charset.Charset;
 /**
  * <code>MuleMessageFactory</code> is a factory for creating a {@link MuleMessage} from a transport's native message
  * format (e.g. JMS message).
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated

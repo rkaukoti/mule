@@ -34,7 +34,8 @@ public interface HttpRequest extends HttpMessage
     String getUri();
 
     /**
-     * @return the raw input stream from the body. if there's not body then returns null. After calling this method #getEntity should not be used.
+     * @return the raw input stream from the body. if there's not body then returns null. After calling this method #getEntity should not be
+     * used.
      */
     InputStreamHttpEntity getInputStreamEntity();
 }

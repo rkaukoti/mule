@@ -6,19 +6,19 @@
  */
 package org.mule.extension.ftp;
 
-import static java.lang.String.format;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.mule.extension.FtpTestHarness.HELLO_WORLD;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.extension.FtpTestHarness;
 import org.mule.runtime.core.api.MessagingException;
 
 import java.nio.file.Paths;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static java.lang.String.format;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertThat;
+import static org.mule.extension.FtpTestHarness.HELLO_WORLD;
 
 public class FtpCopyTestCase extends FtpConnectorTestCase
 {

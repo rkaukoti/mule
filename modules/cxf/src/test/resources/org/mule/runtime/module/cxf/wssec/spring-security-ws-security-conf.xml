@@ -1,9 +1,9 @@
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:spring="http://www.springframework.org/schema/beans"
       xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
       xmlns:mule-ss="http://www.mulesoft.org/schema/mule/spring-security"
       xmlns:ss="http://www.springframework.org/schema/security"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 
@@ -21,8 +21,8 @@
         <ss:authentication-manager alias="authenticationManager">
             <ss:authentication-provider>
                 <ss:user-service id="userService">
-                    <ss:user name="joe" password="secret" authorities="ROLE_ADMIN" />
-                    <ss:user name="anon" password="anon" authorities="ROLE_ANON" />
+                    <ss:user name="joe" password="secret" authorities="ROLE_ADMIN"/>
+                    <ss:user name="anon" password="anon" authorities="ROLE_ANON"/>
                 </ss:user-service>
             </ss:authentication-provider>
         </ss:authentication-manager>

@@ -6,12 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.introspection;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
-import static org.mule.test.vegan.extension.VeganExtension.APPLE;
-import static org.mule.test.vegan.extension.VeganExtension.BANANA;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.registry.SpiServiceRegistry;
 import org.mule.runtime.extension.api.introspection.ExtensionFactory;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
@@ -31,8 +27,12 @@ import org.mule.test.vegan.extension.VeganExtension;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
+import static org.mule.test.vegan.extension.VeganExtension.APPLE;
+import static org.mule.test.vegan.extension.VeganExtension.BANANA;
 
 @SmallTest
 public class DefaultExtensionFactoryTestCase extends AbstractMuleTestCase

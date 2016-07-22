@@ -7,6 +7,19 @@
 
 package org.mule.runtime.module.http.functional.listener;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.entity.StringEntity;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.runtime.core.util.IOUtils;
+import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
+import org.mule.tck.junit4.rule.SystemProperty;
+
+import java.io.IOException;
+
 import static org.apache.http.entity.ContentType.TEXT_PLAIN;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -16,19 +29,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.mule.runtime.core.api.config.MuleProperties.SYSTEM_PROPERTY_PREFIX;
 import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.BAD_REQUEST;
 import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
-import org.mule.runtime.core.util.IOUtils;
-import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-import org.mule.tck.junit4.rule.SystemProperty;
-
-import java.io.IOException;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.entity.StringEntity;
-import org.junit.Rule;
-import org.junit.Test;
 
 public class HttpListenerContentTypeTestCase extends AbstractHttpTestCase
 {
@@ -58,7 +58,8 @@ public class HttpListenerContentTypeTestCase extends AbstractHttpTestCase
     @Test
     public void returnsContentTypeInResponseFromBuilder() throws Exception
     {
-        HttpResponse response = Request.Post(getUrl("testBuilder")).body(new StringEntity(TEST_MESSAGE, TEXT_PLAIN)).execute().returnResponse();
+        HttpResponse response =
+                Request.Post(getUrl("testBuilder")).body(new StringEntity(TEST_MESSAGE, TEXT_PLAIN)).execute().returnResponse();
 
         assertContentTypeProperty(response, "text/plain");
     }

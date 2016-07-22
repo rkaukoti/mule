@@ -6,16 +6,15 @@
  */
 package org.mule.test.integration.transaction;
 
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 
 import javax.inject.Inject;
 import javax.transaction.TransactionManager;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 public class TransactionManagerInjectTestCase extends FunctionalTestCase
 {

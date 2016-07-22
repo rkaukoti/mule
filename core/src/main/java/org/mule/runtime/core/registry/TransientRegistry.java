@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.core.registry;
 
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.functors.InstanceofPredicate;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.agent.Agent;
@@ -24,6 +26,7 @@ import org.mule.runtime.core.lifecycle.phases.NotInLifecyclePhase;
 import org.mule.runtime.core.util.CollectionUtils;
 import org.mule.runtime.core.util.ExceptionUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -36,12 +39,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.functors.InstanceofPredicate;
-import org.slf4j.Logger;
-
 /**
  * Use the registryLock when reading/writing/iterating over the contents of the registry hashmap.
+ *
  * @deprecated as of 3.7.0. Use {@link SimpleRegistry instead}.
  */
 @Deprecated
@@ -253,9 +253,6 @@ public class TransientRegistry extends AbstractRegistry
 
     /**
      * Allows for arbitary registration of transient objects
-     *
-     * @param key
-     * @param value
      */
     @Override
     public void registerObject(String key, Object value) throws RegistrationException
@@ -325,7 +322,8 @@ public class TransientRegistry extends AbstractRegistry
     {
         if (getLifecycleManager().isPhaseComplete(Disposable.PHASE_NAME))
         {
-            throw new RegistrationException(MessageFactory.createStaticMessage("Cannot register objects on the registry as the context is disposed"));
+            throw new RegistrationException(
+                    MessageFactory.createStaticMessage("Cannot register objects on the registry as the context is disposed"));
         }
     }
 
@@ -434,7 +432,8 @@ public class TransientRegistry extends AbstractRegistry
                     // registry.put(key, value) would overwrite a previous entity with the same name.  Is this really what we want?
                     // Not sure whether to throw an exception or log a warning here.
                     //throw new RegistrationException("TransientRegistry already contains an object named '" + key + "'.  The previous object would be overwritten.");
-                    logger.warn("TransientRegistry already contains an object named '" + key + "'.  The previous object will be overwritten.");
+                    logger.warn(
+                            "TransientRegistry already contains an object named '" + key + "'.  The previous object will be overwritten.");
                 }
             }
             finally

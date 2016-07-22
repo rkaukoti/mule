@@ -10,7 +10,6 @@ import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.component.simple.LogService;
 import org.mule.runtime.core.api.lifecycle.Callable;
 import org.mule.runtime.core.util.StringMessageUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +26,7 @@ public class LogComponent implements Callable, LogService
         String contents = context.getMessageAsString();
         String msg = "Message received in service: " + context.getFlowConstruct().getName();
         msg = StringMessageUtils.getBoilerPlate(msg + ". Content is: '"
-                        + StringMessageUtils.truncate(contents, 100, true) + "'");
+                                                + StringMessageUtils.truncate(contents, 100, true) + "'");
         log(msg);
         return context.getMessage();
     }

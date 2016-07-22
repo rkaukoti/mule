@@ -25,7 +25,7 @@ public class DebuggerFrame
      * A new debugger frame with the list of variables and a given name for this frame.
      *
      * @param variables The list of visible variables in this frame. Non null
-     * @param name A name of the frame. Non empty
+     * @param name      A name of the frame. Non empty
      */
     public DebuggerFrame(List<FieldDebugInfo<?>> variables, String name)
     {

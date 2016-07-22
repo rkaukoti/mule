@@ -6,12 +6,7 @@
  */
 package org.mule.runtime.core.routing;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.DefaultMuleException;
@@ -28,7 +23,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 public class RoundRobinTestCase extends AbstractMuleContextTestCase
 {
@@ -90,6 +89,29 @@ public class RoundRobinTestCase extends AbstractMuleContextTestCase
         verify(route2, never()).process(any(MuleEvent.class));
     }
 
+    static class TestProcessor implements MessageProcessor
+    {
+        private int count;
+        private List<Object> payloads = new ArrayList<>();
+
+        @Override
+        public MuleEvent process(MuleEvent event) throws MuleException
+        {
+            payloads.add(event.getMessage().getPayload());
+            count++;
+            if (count % 3 == 0)
+            {
+                throw new DefaultMuleException("Mule Exception!");
+            }
+            return null;
+        }
+
+        public int getCount()
+        {
+            return count;
+        }
+    }
+
     class TestDriver implements Runnable
     {
         private MessageProcessor target;
@@ -112,7 +134,7 @@ public class RoundRobinTestCase extends AbstractMuleContextTestCase
             {
                 MuleMessage msg = MuleMessage.builder().payload(TEST_MESSAGE + messageNumber.getAndIncrement()).build();
                 MuleEvent event = new DefaultMuleEvent(msg, MessageExchangePattern.REQUEST_RESPONSE,
-                    flowConstruct, session);
+                        flowConstruct, session);
                 try
                 {
                     target.process(event);
@@ -122,29 +144,6 @@ public class RoundRobinTestCase extends AbstractMuleContextTestCase
                     // this is expected
                 }
             }
-        }
-    }
-
-    static class TestProcessor implements MessageProcessor
-    {
-        private int count;
-        private List<Object> payloads = new ArrayList<>();
-
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            payloads.add(event.getMessage().getPayload());
-            count++;
-            if (count % 3 == 0)
-            {
-                throw new DefaultMuleException("Mule Exception!");
-            }
-            return null;
-        }
-
-        public int getCount()
-        {
-            return count;
         }
     }
 }

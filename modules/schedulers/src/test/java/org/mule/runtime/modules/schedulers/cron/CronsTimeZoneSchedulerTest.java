@@ -6,20 +6,18 @@
  */
 package org.mule.runtime.modules.schedulers.cron;
 
-import static java.util.TimeZone.getTimeZone;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.schedule.Scheduler;
 import org.mule.runtime.core.api.schedule.Schedulers;
-import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.util.Collection;
 
-import org.junit.Test;
-
+import static java.util.TimeZone.getTimeZone;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.Assert.assertThat;
 
 public class CronsTimeZoneSchedulerTest extends FunctionalTestCase
 {
@@ -34,7 +32,7 @@ public class CronsTimeZoneSchedulerTest extends FunctionalTestCase
     {
         Collection<Scheduler> schedulers = muleContext.getRegistry().lookupScheduler(
                 Schedulers.flowConstructPollingSchedulers("pollWithTimeZone"));
-        
+
         assertThat(schedulers, hasSize(1));
         for (Scheduler scheduler : schedulers)
         {

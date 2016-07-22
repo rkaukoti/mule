@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.module.json.validation;
 
-import static org.mule.runtime.module.json.validation.JsonSchemaTestUtils.getGoodFstab;
-
 import org.junit.Test;
+
+import static org.mule.runtime.module.json.validation.JsonSchemaTestUtils.getGoodFstab;
 
 public class ValidateSchemaWithDifferentLocationStylesFunctionalTestCase extends AbstractValidateSchemaFunctionalTestCase
 {

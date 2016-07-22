@@ -65,7 +65,7 @@ public class WeblogicJmsTopicResolver extends DefaultJmsTopicResolver
             }
             catch (Exception e)
             {
-                logger.warn(e.getMessage()); 
+                logger.warn(e.getMessage());
             }
         }
         return topic;

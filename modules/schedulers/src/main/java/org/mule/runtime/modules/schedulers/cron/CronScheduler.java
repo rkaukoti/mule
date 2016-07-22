@@ -6,13 +6,6 @@
  */
 package org.mule.runtime.modules.schedulers.cron;
 
-import static org.mule.runtime.modules.schedulers.i18n.SchedulerMessages.couldNotCreateScheduler;
-import static org.mule.runtime.modules.schedulers.i18n.SchedulerMessages.couldNotPauseSchedulers;
-import static org.mule.runtime.modules.schedulers.i18n.SchedulerMessages.couldNotScheduleJob;
-import static org.mule.runtime.modules.schedulers.i18n.SchedulerMessages.couldNotShutdownScheduler;
-import static org.quartz.CronScheduleBuilder.cronSchedule;
-import static org.quartz.JobBuilder.newJob;
-import static org.quartz.TriggerBuilder.newTrigger;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
@@ -20,10 +13,6 @@ import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.source.polling.PollingWorker;
 import org.mule.runtime.core.source.polling.schedule.PollScheduler;
-
-import java.util.Properties;
-import java.util.TimeZone;
-
 import org.quartz.CronTrigger;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -36,6 +25,17 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Properties;
+import java.util.TimeZone;
+
+import static org.mule.runtime.modules.schedulers.i18n.SchedulerMessages.couldNotCreateScheduler;
+import static org.mule.runtime.modules.schedulers.i18n.SchedulerMessages.couldNotPauseSchedulers;
+import static org.mule.runtime.modules.schedulers.i18n.SchedulerMessages.couldNotScheduleJob;
+import static org.mule.runtime.modules.schedulers.i18n.SchedulerMessages.couldNotShutdownScheduler;
+import static org.quartz.CronScheduleBuilder.cronSchedule;
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.TriggerBuilder.newTrigger;
+
 /**
  * <p>
  * Cron {@link org.mule.runtime.core.api.schedule.Scheduler} implemented with Quartz.
@@ -46,14 +46,12 @@ import org.slf4j.LoggerFactory;
 public class CronScheduler extends PollScheduler<PollingWorker> implements MuleContextAware
 {
 
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
     public static final String THREAD_POLL_CLASS_PROPERTY = "org.quartz.threadPool.class";
     public static final String THREAD_POLL_CLASS = "org.quartz.simpl.SimpleThreadPool";
     public static final String THREAD_POOL_COUNT_PROPERTY = "org.quartz.threadPool.threadCount";
     public static final String POLL_CRON_SCHEDULER_JOB = "poll.scheduler.job";
     public static final String QUARTZ_INSTANCE_NAME_PROPERTY = "org.quartz.scheduler.instanceName";
-
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
     /**
      * <p>
      * The Quartz scheduler. The {@link CronScheduler} is a wrapper of this instance.
@@ -156,10 +154,10 @@ public class CronScheduler extends PollScheduler<PollingWorker> implements MuleC
                 if (quartzScheduler.getTrigger(TriggerKey.triggerKey(getName(), groupName)) == null)
                 {
                     CronTrigger cronTrigger = newTrigger()
-                        .withIdentity(getName(), groupName)
-                        .forJob(jobName, groupName)
-                        .withSchedule(cronSchedule(cronExpression).inTimeZone(timeZone))
-                        .build();
+                            .withIdentity(getName(), groupName)
+                            .forJob(jobName, groupName)
+                            .withSchedule(cronSchedule(cronExpression).inTimeZone(timeZone))
+                            .build();
                     quartzScheduler.scheduleJob(cronTrigger);
                 }
                 else
@@ -232,7 +230,8 @@ public class CronScheduler extends PollScheduler<PollingWorker> implements MuleC
 
         factoryProperties.setProperty(QUARTZ_INSTANCE_NAME_PROPERTY, context.getConfiguration().getId() + "-" + name);
         factoryProperties.setProperty(THREAD_POLL_CLASS_PROPERTY, THREAD_POLL_CLASS);
-        factoryProperties.setProperty(THREAD_POOL_COUNT_PROPERTY, String.valueOf(context.getDefaultMessageReceiverThreadingProfile().getMaxThreadsActive()));
+        factoryProperties.setProperty(THREAD_POOL_COUNT_PROPERTY,
+                String.valueOf(context.getDefaultMessageReceiverThreadingProfile().getMaxThreadsActive()));
         return factoryProperties;
     }
 

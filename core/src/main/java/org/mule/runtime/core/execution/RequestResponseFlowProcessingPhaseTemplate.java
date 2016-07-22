@@ -23,8 +23,9 @@ public interface RequestResponseFlowProcessingPhaseTemplate extends FlowProcessi
      * This method is executed within the flow so if it fails it will trigger the exception strategy.
      *
      * @param muleEvent the event with the content of the response to be sent.
-     * @throws MuleException exception thrown when processing the message to send the response. If there's a failure when writing the response
-     *                       using the underlying transport or connector then the exception to throw must be a {@link ResponseDispatchException}.
+     * @throws MuleException exception thrown when processing the message to send the response. If there's a failure when writing the
+     *                       response using the underlying transport or connector then the exception to throw must be a {@link
+     *                       ResponseDispatchException}.
      */
     void sendResponseToClient(MuleEvent muleEvent) throws MuleException;
 

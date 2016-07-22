@@ -16,7 +16,8 @@ import org.mule.runtime.api.metadata.resolving.MetadataOutputResolver;
 
 import java.util.Set;
 
-public class TestMetadataResolverRuntimeExceptionFailure implements MetadataKeysResolver, MetadataContentResolver<String>, MetadataOutputResolver<String>
+public class TestMetadataResolverRuntimeExceptionFailure
+        implements MetadataKeysResolver, MetadataContentResolver<String>, MetadataOutputResolver<String>
 {
 
     public Set<MetadataKey> getMetadataKeys(MetadataContext context) throws MetadataResolvingException

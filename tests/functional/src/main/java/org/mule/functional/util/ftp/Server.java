@@ -6,19 +6,18 @@
  */
 package org.mule.functional.util.ftp;
 
-import org.mule.runtime.core.util.IOUtils;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Map;
-
 import org.apache.ftpserver.FtpServer;
 import org.apache.ftpserver.FtpServerFactory;
 import org.apache.ftpserver.ftplet.Ftplet;
 import org.apache.ftpserver.ftplet.UserManager;
 import org.apache.ftpserver.listener.ListenerFactory;
 import org.apache.ftpserver.usermanager.PropertiesUserManagerFactory;
+import org.mule.runtime.core.util.IOUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Map;
 
 /**
  * A wrapper for the Apache ftpServer.  This will progress into a provider of its own,
@@ -32,11 +31,9 @@ public class Server
 
     /**
      * Initialize the ftp server on a given port
-     * 
-     * @param port The port to start the server on. Note, you need special
-     *            permissions on *nux to open port 22, so we usually choose a very
-     *            high port number.
-     * @throws Exception
+     *
+     * @param port The port to start the server on. Note, you need special permissions on *nux to open port 22, so we usually choose a very
+     *             high port number.
      */
     public Server(int port) throws Exception
     {
@@ -47,7 +44,7 @@ public class Server
     {
         FtpServerFactory serverFactory = new FtpServerFactory();
 
-        setupListenerFactory( serverFactory, port);
+        setupListenerFactory(serverFactory, port);
         setupUserManagerFactory(serverFactory);
         setupFtplet(serverFactory, ftplet);
         server = serverFactory.createServer();
@@ -89,7 +86,7 @@ public class Server
         {
             return;
         }
-        
+
         Map<String, Ftplet> ftplets = serverFactory.getFtplets();
         ftplets.put("MuleFtplet", ftplet);
         serverFactory.setFtplets(ftplets);
@@ -101,7 +98,7 @@ public class Server
      * to hold on to ports longer than it should.
      */
     public void stop()
-    {        
+    {
         server.stop();
     }
 }

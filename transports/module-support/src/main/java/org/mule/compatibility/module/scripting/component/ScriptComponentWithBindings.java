@@ -24,7 +24,7 @@ import javax.script.Bindings;
 
 /**
  * A Script service that supports java interface bindings.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -75,7 +75,7 @@ public class ScriptComponentWithBindings extends ScriptComponent
         // Proxy
         if (bindings != null && bindings.size() > 0)
         {
-            for (Iterator<?> it = bindings.iterator(); it.hasNext();)
+            for (Iterator<?> it = bindings.iterator(); it.hasNext(); )
             {
                 InterfaceBinding interfaceBinding = (InterfaceBinding) it.next();
                 String bindingName = ClassUtils.getSimpleName(interfaceBinding.getInterface());
@@ -88,7 +88,7 @@ public class ScriptComponentWithBindings extends ScriptComponent
                 else
                 {
                     Object proxy = Proxy.newProxyInstance(muleContext.getExecutionClassLoader(),
-                        new Class[]{interfaceBinding.getInterface()},
+                            new Class[] {interfaceBinding.getInterface()},
                             new BindingInvocationHandler(interfaceBinding));
                     // new BindingInvocationHandler(interfaceBinding, muleContext));
                     proxies.put(bindingName, proxy);

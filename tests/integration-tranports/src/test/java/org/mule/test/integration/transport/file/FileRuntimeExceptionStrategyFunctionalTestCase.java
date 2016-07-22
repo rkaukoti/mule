@@ -6,16 +6,15 @@
  */
 package org.mule.test.integration.transport.file;
 
-import static org.junit.Assert.fail;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.compatibility.transport.file.ExpressionFilenameParser;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.util.FileUtils;
 
 import java.io.File;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.fail;
 
 public class FileRuntimeExceptionStrategyFunctionalTestCase extends FunctionalTestCase
 {

@@ -10,10 +10,9 @@ package org.mule.runtime.module.db.internal.config.domain.query;
 import org.mule.runtime.module.db.internal.domain.param.QueryParam;
 import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
 import org.mule.runtime.module.db.internal.domain.query.QueryType;
+import org.springframework.beans.factory.FactoryBean;
 
 import java.util.Collections;
-
-import org.springframework.beans.factory.FactoryBean;
 
 /**
  * Creates a {@link QueryTemplate} for a dynamic query

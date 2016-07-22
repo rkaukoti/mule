@@ -21,9 +21,9 @@ import org.mule.runtime.core.util.collection.SplittingStrategy;
  */
 public class CollectionSplitter extends AbstractMessageSequenceSplitter
 {
-    
+
     private SplittingStrategy<MuleEvent, MessageSequence<?>> strategy = new EventToMessageSequenceSplittingStrategy();
-    
+
     protected MessageSequence<?> splitMessageIntoSequence(MuleEvent event)
     {
         return this.strategy.split(event);

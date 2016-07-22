@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.module.xml.transformers.xml.xslt;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mule.functional.junit4.FlowRunner;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.util.FileUtils;
@@ -17,9 +17,8 @@ import org.mule.runtime.core.util.UUID;
 
 import java.io.File;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class XsltResultDocumentTestCase extends FunctionalTestCase
 {
@@ -27,7 +26,8 @@ public class XsltResultDocumentTestCase extends FunctionalTestCase
     private static final String INPUT_FILE = "cities.xml";
     private static final String OUTPUT_FILE_PROPERTY = "outputFile";
     private static final String FLOW_NAME = "listCities";
-    private static final String EXPECTED_OUTPUT = "italy - milan - 5 | france - paris - 7 | germany - munich - 4 | france - lyon - 2 | italy - venice - 1 | ";
+    private static final String EXPECTED_OUTPUT =
+            "italy - milan - 5 | france - paris - 7 | germany - munich - 4 | france - lyon - 2 | italy - venice - 1 | ";
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
@@ -56,7 +56,8 @@ public class XsltResultDocumentTestCase extends FunctionalTestCase
         assertThat(FileUtils.readFileToString(outputFile), is(EXPECTED_OUTPUT));
     }
 
-    private FlowRunner withPayloadAndSessionProperty(FlowRunner runner, Object payload, String propertyName, Object propertyValue) throws Exception
+    private FlowRunner withPayloadAndSessionProperty(FlowRunner runner, Object payload, String propertyName, Object propertyValue)
+            throws Exception
     {
         return runner.withPayload(payload)
                      .withSessionProperty(propertyName, propertyValue);

@@ -18,7 +18,6 @@ import org.mule.runtime.core.routing.filters.ExpressionFilter;
 import java.util.List;
 
 /**
- *
  * Routing strategy that routes the message through a list of {@link MessageProcessor} until
  * one is successfully executed.
  *
@@ -32,7 +31,6 @@ public class FirstSuccessfulRoutingStrategy extends AbstractRoutingStrategy
     private RouteProcessor processor;
 
     /**
-     * @param muleContext
      * @param failureExpression Mule expression that validates if a {@link MessageProcessor} execution was successful or not.
      */
     public FirstSuccessfulRoutingStrategy(final MuleContext muleContext, final String failureExpression, RouteProcessor processor)
@@ -88,11 +86,14 @@ public class FirstSuccessfulRoutingStrategy extends AbstractRoutingStrategy
         {
             if (failExceptionCause != null)
             {
-                throw new RoutingFailedMessagingException(CoreMessages.createStaticMessage("all message processor failed during first successful routing strategy") ,event, failExceptionCause);
+                throw new RoutingFailedMessagingException(
+                        CoreMessages.createStaticMessage("all message processor failed during first successful routing strategy"), event,
+                        failExceptionCause);
             }
             else
             {
-                throw new RoutingFailedMessagingException(CoreMessages.createStaticMessage("all message processor failed during first successful routing strategy") ,event);
+                throw new RoutingFailedMessagingException(
+                        CoreMessages.createStaticMessage("all message processor failed during first successful routing strategy"), event);
             }
         }
 

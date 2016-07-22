@@ -9,16 +9,15 @@ package org.mule.runtime.module.management.config;
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.processors.ProvideDefaultNameFromElement;
-import org.mule.runtime.module.management.agent.JmxAgentConfigurer;
 import org.mule.runtime.core.util.StringUtils;
-
-import java.util.HashMap;
-import java.util.Map;
-
+import org.mule.runtime.module.management.agent.JmxAgentConfigurer;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class JmxAgentDefinitionParser extends AbstractMuleBeanDefinitionParser
 {

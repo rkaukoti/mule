@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.core.util.store;
 
+import org.apache.commons.collections.Factory;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.store.ObjectStore;
 import org.mule.runtime.core.api.store.ObjectStoreException;
 
 import java.io.Serializable;
-
-import org.apache.commons.collections.Factory;
 
 /**
  * Will wrap a provided object store or a newly created one with the provided factory, with the provided having
@@ -23,14 +22,14 @@ import org.apache.commons.collections.Factory;
  */
 public class ProvidedObjectStoreWrapper<T extends Serializable> implements ObjectStore<T>, Disposable
 {
-    private ObjectStore<T> wrapped;
     private final boolean provided;
+    private ObjectStore<T> wrapped;
 
     /**
      * Wraps the {@code providedObjectStore} if given, or uses the {@code objectStoreFactory} to create one.
-     * 
+     *
      * @param providedObjectStore the objectStroe provided through config to use. May be null.
-     * @param objectStoreFactory the factory to use to build an object store if {@code providedObjectStore} is null.
+     * @param objectStoreFactory  the factory to use to build an object store if {@code providedObjectStore} is null.
      */
     public ProvidedObjectStoreWrapper(ObjectStore<T> providedObjectStore, Factory objectStoreFactory)
     {
@@ -91,7 +90,7 @@ public class ProvidedObjectStoreWrapper<T extends Serializable> implements Objec
         }
         wrapped = null;
     }
-    
+
     protected ObjectStore<T> getWrapped()
     {
         return wrapped;

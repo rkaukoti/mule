@@ -7,12 +7,12 @@
 
 package org.mule.runtime.module.db.integration.template;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
-import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import org.junit.Test;
 
 public class CdataParameterizedQueryTemplateTestCase extends FunctionalTestCase
 {

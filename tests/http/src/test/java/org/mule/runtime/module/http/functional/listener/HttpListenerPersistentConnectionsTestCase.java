@@ -6,10 +6,12 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONNECTION;
-import static org.mule.runtime.module.http.api.HttpHeaders.Values.KEEP_ALIVE;
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.fluent.Request;
+import org.junit.Rule;
 import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
@@ -21,12 +23,10 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.Socket;
 
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.fluent.Request;
-import org.junit.Rule;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONNECTION;
+import static org.mule.runtime.module.http.api.HttpHeaders.Values.KEEP_ALIVE;
 
 public abstract class HttpListenerPersistentConnectionsTestCase extends AbstractHttpTestCase
 {
@@ -85,7 +85,8 @@ public abstract class HttpListenerPersistentConnectionsTestCase extends Abstract
         socket.close();
     }
 
-    protected void assertConnectionClosesWithRequestConnectionCloseHeader(DynamicPort port, HttpVersion httpVersion) throws IOException, InterruptedException
+    protected void assertConnectionClosesWithRequestConnectionCloseHeader(DynamicPort port, HttpVersion httpVersion)
+            throws IOException, InterruptedException
     {
         Socket socket = new Socket("localhost", port.getNumber());
         sendRequest(socket, httpVersion);

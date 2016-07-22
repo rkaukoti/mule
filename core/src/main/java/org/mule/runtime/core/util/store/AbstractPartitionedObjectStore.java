@@ -8,15 +8,14 @@ package org.mule.runtime.core.util.store;
 
 import org.mule.runtime.core.api.store.ObjectStoreException;
 import org.mule.runtime.core.api.store.PartitionableObjectStore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public abstract class AbstractPartitionedObjectStore<T extends Serializable>
-    implements PartitionableObjectStore<T>
+        implements PartitionableObjectStore<T>
 {
     protected final static String DEFAULT_PARTITION = "DEFAULT_PARTITION";
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -62,11 +61,11 @@ public abstract class AbstractPartitionedObjectStore<T extends Serializable>
     {
         return remove(key, DEFAULT_PARTITION);
     }
-    
+
     @Override
     public void clear() throws ObjectStoreException
     {
         this.clear(DEFAULT_PARTITION);
     }
-    
+
 }

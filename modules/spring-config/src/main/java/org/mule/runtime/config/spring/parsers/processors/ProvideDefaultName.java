@@ -6,16 +6,15 @@
  */
 package org.mule.runtime.config.spring.parsers.processors;
 
-import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
-import org.mule.runtime.config.spring.parsers.generic.AutoIdUtils;
+import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
-
+import org.mule.runtime.config.spring.parsers.generic.AutoIdUtils;
 import org.w3c.dom.Element;
 
 public class ProvideDefaultName implements PreProcessor
 {
-    
+
     private String prefix;
 
     public ProvideDefaultName(String prefix)

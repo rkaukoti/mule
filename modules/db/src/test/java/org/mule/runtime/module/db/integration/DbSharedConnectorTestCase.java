@@ -6,13 +6,14 @@
  */
 package org.mule.runtime.module.db.integration;
 
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.MuleMessage;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.functional.junit4.DomainFunctionalTestCase;
 import org.mule.functional.junit4.FlowRunner;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.model.DerbyTestDatabase;
 import org.mule.runtime.module.db.internal.domain.database.DbConfig;
 import org.mule.runtime.module.db.internal.resolver.database.DbConfigResolver;
@@ -23,10 +24,8 @@ import java.util.Collection;
 
 import javax.sql.DataSource;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
 public class DbSharedConnectorTestCase extends DomainFunctionalTestCase

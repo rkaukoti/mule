@@ -6,6 +6,7 @@
  */
 package org.mule.compatibility.core.processor;
 
+import org.mockito.stubbing.Answer;
 import org.mule.compatibility.core.DefaultMuleEventEndpointUtils;
 import org.mule.compatibility.core.api.context.notification.EndpointMessageNotificationListener;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
@@ -49,8 +50,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-
-import org.mockito.stubbing.Answer;
 
 public abstract class AbstractMessageProcessorTestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -117,11 +116,11 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
         }
         if (transformer != null)
         {
-            endpointBuilder.setMessageProcessors(Collections.<MessageProcessor> singletonList(transformer));
+            endpointBuilder.setMessageProcessors(Collections.<MessageProcessor>singletonList(transformer));
         }
         if (responseTransformer != null)
         {
-            endpointBuilder.setResponseMessageProcessors(Collections.<MessageProcessor> singletonList(responseTransformer));
+            endpointBuilder.setResponseMessageProcessors(Collections.<MessageProcessor>singletonList(responseTransformer));
         }
         endpointBuilder.setExchangePattern(exchangePattern);
         endpointBuilder.setTransactionConfig(txConfig);
@@ -131,8 +130,9 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
 
     protected MuleEvent createTestInboundEvent(InboundEndpoint endpoint) throws Exception
     {
-        final DefaultMuleEvent event = new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).addOutboundProperty("prop1", "value1").build(),
-                getTestFlow(), getTestSession(null, muleContext));
+        final DefaultMuleEvent event =
+                new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).addOutboundProperty("prop1", "value1").build(),
+                        getTestFlow(), getTestSession(null, muleContext));
         DefaultMuleEventEndpointUtils.populateFieldsFromInboundEndpoint(event, endpoint);
         return event;
     }
@@ -163,7 +163,8 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
                                                           TransactionConfig txConfig)
             throws EndpointException, InitialisationException
     {
-        return createTestOutboundEndpoint("test://test", filter, securityFilter, transformer, responseTransformer, exchangePattern, txConfig);
+        return createTestOutboundEndpoint("test://test", filter, securityFilter, transformer, responseTransformer, exchangePattern,
+                txConfig);
     }
 
     protected OutboundEndpoint createTestOutboundEndpoint(String uri, Filter filter,
@@ -186,11 +187,11 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
         }
         if (transformer != null)
         {
-            endpointBuilder.setMessageProcessors(Collections.<MessageProcessor> singletonList(transformer));
+            endpointBuilder.setMessageProcessors(Collections.<MessageProcessor>singletonList(transformer));
         }
         if (responseTransformer != null)
         {
-            endpointBuilder.setResponseMessageProcessors(Collections.<MessageProcessor> singletonList(responseTransformer));
+            endpointBuilder.setResponseMessageProcessors(Collections.<MessageProcessor>singletonList(responseTransformer));
         }
         endpointBuilder.setExchangePattern(exchangePattern);
         endpointBuilder.setTransactionConfig(txConfig);
@@ -221,7 +222,8 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
         }
         final DefaultMuleEvent event = new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).outboundProperties(props).build(),
                 flow, getTestSession(null, muleContext));
-        DefaultMuleEventEndpointUtils.populateFieldsFromInboundEndpoint(event, getTestInboundEndpoint(MessageExchangePattern.REQUEST_RESPONSE));
+        DefaultMuleEventEndpointUtils.populateFieldsFromInboundEndpoint(event,
+                getTestInboundEndpoint(MessageExchangePattern.REQUEST_RESPONSE));
         return event;
     }
 
@@ -273,23 +275,21 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
 
     public static class TestEndpointMessageNotificationListener implements EndpointMessageNotificationListener<EndpointMessageNotification>
     {
+        public EndpointMessageNotification messageNotification;
+        public List<EndpointMessageNotification> messageNotificationList = new ArrayList<>();
+        public CountDownLatch latchFirst;
+        public CountDownLatch latch;
+
         public TestEndpointMessageNotificationListener()
         {
             latchFirst = new CountDownLatch(1);
             latch = new CountDownLatch(1);
         }
-
         public TestEndpointMessageNotificationListener(int numExpected)
         {
             latchFirst = new CountDownLatch(1);
             latch = new CountDownLatch(numExpected);
         }
-
-        public EndpointMessageNotification messageNotification;
-        public List<EndpointMessageNotification> messageNotificationList = new ArrayList<>();
-
-        public CountDownLatch latchFirst;
-        public CountDownLatch latch;
 
         @Override
         public void onNotification(EndpointMessageNotification notification)
@@ -322,9 +322,9 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
         {
             sensedException = exception;
             event.setMessage(MuleMessage.builder(event.getMessage())
-                                     .nullPayload()
-                                     .exceptionPayload(new DefaultExceptionPayload(exception))
-                                     .build());
+                                        .nullPayload()
+                                        .exceptionPayload(new DefaultExceptionPayload(exception))
+                                        .build());
             return event;
         }
     }
@@ -342,15 +342,15 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
         }
 
         @Override
-        public void setEndpoint(ImmutableEndpoint endpoint)
-        {
-            this.endpoint = endpoint;
-        }
-
-        @Override
         public ImmutableEndpoint getEndpoint()
         {
             return endpoint;
+        }
+
+        @Override
+        public void setEndpoint(ImmutableEndpoint endpoint)
+        {
+            this.endpoint = endpoint;
         }
 
         @Override

@@ -6,29 +6,17 @@
  */
 package org.mule.test.infrastructure.process;
 
-import java.io.File;
-
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.junit.internal.matchers.TypeSafeMatcher;
 
+import java.io.File;
+
 public class VerifyLogWithMatcher extends TypeSafeMatcher<MuleProcessController>
 {
     private String app;
     private Matcher<File> fileMatcher;
-
-    @Factory
-    public static Matcher<MuleProcessController> log(Matcher<File> matcher)
-    {
-        return new VerifyLogWithMatcher(matcher);
-    }
-
-    @Factory
-    public static Matcher<MuleProcessController> log(String appName, Matcher<File> matcher)
-    {
-        return new VerifyLogWithMatcher(appName,matcher);
-    }
 
     private VerifyLogWithMatcher(Matcher<File> matcher)
     {
@@ -39,6 +27,18 @@ public class VerifyLogWithMatcher extends TypeSafeMatcher<MuleProcessController>
     {
         this.app = appName;
         fileMatcher = matcher;
+    }
+
+    @Factory
+    public static Matcher<MuleProcessController> log(Matcher<File> matcher)
+    {
+        return new VerifyLogWithMatcher(matcher);
+    }
+
+    @Factory
+    public static Matcher<MuleProcessController> log(String appName, Matcher<File> matcher)
+    {
+        return new VerifyLogWithMatcher(appName, matcher);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class VerifyLogWithMatcher extends TypeSafeMatcher<MuleProcessController>
     @Override
     public void describeTo(Description description)
     {
-        String message = (app == null) ? "mule log that has " : String.format("%s application log that have ",app);
+        String message = (app == null) ? "mule log that has " : String.format("%s application log that have ", app);
         description.appendText(message).appendDescriptionOf(fileMatcher);
     }
 }

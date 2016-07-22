@@ -6,11 +6,7 @@
  */
 package org.mule.test.xml.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.transformer.AbstractTransformer;
@@ -21,7 +17,10 @@ import org.mule.runtime.module.xml.transformer.XmlToDomDocument;
 import org.mule.runtime.module.xml.transformer.XmlToObject;
 import org.mule.runtime.module.xml.transformer.XsltTransformer;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class XmlTransformerNamespaceHandlerTestCase extends FunctionalTestCase
 {
@@ -74,7 +73,7 @@ public class XmlTransformerNamespaceHandlerTestCase extends FunctionalTestCase
     protected AbstractTransformer getAndTestTransformer(String name, Class clazz)
     {
         assertTrue(AbstractTransformer.class.isAssignableFrom(clazz));
-        Transformer object= muleContext.getRegistry().lookupTransformer(name);
+        Transformer object = muleContext.getRegistry().lookupTransformer(name);
 
         assertNotNull(object);
         assertTrue(clazz.isAssignableFrom(object.getClass()));
@@ -82,7 +81,7 @@ public class XmlTransformerNamespaceHandlerTestCase extends FunctionalTestCase
         assertAbstractTransformerOk(transformer, name);
         return transformer;
     }
-    
+
     protected void assertAbstractTransformerOk(AbstractTransformer transformer, String name)
     {
         assertTrue(transformer.isIgnoreBadInput());

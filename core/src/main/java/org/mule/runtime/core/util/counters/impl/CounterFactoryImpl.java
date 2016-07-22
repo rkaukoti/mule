@@ -20,8 +20,10 @@ public final class CounterFactoryImpl
     private static Map<String, AbstractCounter> counters = new HashMap<String, AbstractCounter>();
     private static List<AbstractCounter> publicCounters = new ArrayList<AbstractCounter>();
 
-    /** Do not instanciate. */
-    private CounterFactoryImpl ()
+    /**
+     * Do not instanciate.
+     */
+    private CounterFactoryImpl()
     {
         // no-op
     }

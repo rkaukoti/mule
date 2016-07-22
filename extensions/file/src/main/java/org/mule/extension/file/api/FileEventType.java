@@ -6,11 +6,11 @@
  */
 package org.mule.extension.file.api;
 
+import java.nio.file.WatchEvent.Kind;
+
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
-
-import java.nio.file.WatchEvent.Kind;
 
 /**
  * Enumerates types of events which can occur on a file
@@ -37,6 +37,11 @@ public enum FileEventType
 
     private final Kind kind;
 
+    FileEventType(Kind kind)
+    {
+        this.kind = kind;
+    }
+
     /**
      * Returns a {@Link FileEventType} which is equivalent to the given
      * {@code kind}
@@ -61,11 +66,6 @@ public enum FileEventType
         }
 
         throw new IllegalArgumentException("Invalid Event Kind: " + kind.name());
-    }
-
-    FileEventType(Kind kind)
-    {
-        this.kind = kind;
     }
 
     /**

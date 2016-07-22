@@ -6,17 +6,18 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
+import org.mule.runtime.api.connection.ConnectionProvider;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.extension.api.introspection.config.RuntimeConfigurationModel;
+import org.mule.runtime.extension.api.introspection.connection.RuntimeConnectionProviderModel;
+import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSet;
+
 import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_CONNECTION_MANAGER;
 import static org.mule.runtime.module.extension.internal.introspection.utils.ImplicitObjectUtils.buildImplicitResolverSet;
 import static org.mule.runtime.module.extension.internal.introspection.utils.ImplicitObjectUtils.getFirstImplicit;
 import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getAllConnectionProviders;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.api.connection.ConnectionProvider;
-import org.mule.runtime.extension.api.introspection.config.RuntimeConfigurationModel;
-import org.mule.runtime.extension.api.introspection.connection.RuntimeConnectionProviderModel;
-import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSet;
 
 /**
  * Default implementation of {@link ImplicitConnectionProviderFactory}
@@ -30,18 +31,23 @@ public final class DefaultImplicitConnectionProviderFactory implements ImplicitC
      * {@inheritDoc}
      */
     @Override
-    public <Connector> ConnectionProvider<Connector> createImplicitConnectionProvider(String configName, RuntimeConfigurationModel configurationModel, MuleEvent event)
+    public <Connector> ConnectionProvider<Connector> createImplicitConnectionProvider(String configName,
+                                                                                      RuntimeConfigurationModel configurationModel,
+                                                                                      MuleEvent event)
     {
-        RuntimeConnectionProviderModel implicitModel = (RuntimeConnectionProviderModel) getFirstImplicit(getAllConnectionProviders(configurationModel));
+        RuntimeConnectionProviderModel implicitModel =
+                (RuntimeConnectionProviderModel) getFirstImplicit(getAllConnectionProviders(configurationModel));
 
         if (implicitModel == null)
         {
-            throw new IllegalStateException(String.format("Configuration '%s' of extension '%s' does not define a connection provider and none can be created automatically. Please define one.",
-                                                          configName, configurationModel.getName()));
+            throw new IllegalStateException(String.format(
+                    "Configuration '%s' of extension '%s' does not define a connection provider and none can be created automatically. Please define one.",
+                    configName, configurationModel.getName()));
         }
 
         final ResolverSet resolverSet = buildImplicitResolverSet(implicitModel, event.getMuleContext().getExpressionManager());
-        ConnectionProviderObjectBuilder builder = new ConnectionProviderObjectBuilder(implicitModel, resolverSet, event.getMuleContext().getRegistry().get(OBJECT_CONNECTION_MANAGER));
+        ConnectionProviderObjectBuilder builder = new ConnectionProviderObjectBuilder(implicitModel, resolverSet,
+                event.getMuleContext().getRegistry().get(OBJECT_CONNECTION_MANAGER));
         builder.setOwnerConfigName(configName);
 
         try

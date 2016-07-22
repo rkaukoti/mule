@@ -7,13 +7,14 @@
 
 package org.mule.runtime.module.db.test.util;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
 
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Builds {@link DbConnection} mocks

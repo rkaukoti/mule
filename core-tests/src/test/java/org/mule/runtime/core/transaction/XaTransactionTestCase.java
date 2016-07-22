@@ -6,6 +6,24 @@
  */
 package org.mule.runtime.core.transaction;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.InOrder;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.transaction.Transaction;
+import org.mule.runtime.core.util.xa.XaResourceFactoryHolder;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.util.Random;
+
+import javax.transaction.TransactionManager;
+import javax.transaction.xa.XAResource;
+
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.core.Is.is;
@@ -14,24 +32,6 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.transaction.Transaction;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-import org.mule.runtime.core.util.xa.XaResourceFactoryHolder;
-
-import java.util.Random;
-
-import javax.transaction.TransactionManager;
-import javax.transaction.xa.XAResource;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.InOrder;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest

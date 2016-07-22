@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.module.pgp;
 
+import org.bouncycastle.openpgp.PGPPublicKey;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.security.Authentication;
 
 import java.util.Map;
-
-import org.bouncycastle.openpgp.PGPPublicKey;
 
 public class PGPAuthentication implements Authentication
 {
@@ -20,7 +19,7 @@ public class PGPAuthentication implements Authentication
     private Message message;
     private PGPPublicKey publicKey;
     transient private MuleEvent event;
-    
+
     public PGPAuthentication(String userName, Message message)
     {
         this(userName, message, null);
@@ -34,15 +33,15 @@ public class PGPAuthentication implements Authentication
     }
 
     @Override
-    public void setAuthenticated(boolean b)
-    {
-        authenticated = b;
-    }
-
-    @Override
     public boolean isAuthenticated()
     {
         return authenticated;
+    }
+
+    @Override
+    public void setAuthenticated(boolean b)
+    {
+        authenticated = b;
     }
 
     @Override

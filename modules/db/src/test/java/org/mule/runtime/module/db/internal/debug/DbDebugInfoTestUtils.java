@@ -7,10 +7,7 @@
 
 package org.mule.runtime.module.db.internal.debug;
 
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.SQL_TEXT_DEBUG_FIELD;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.TYPE_DEBUG_FIELD;
-import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
-import static org.mule.tck.junit4.matcher.ObjectDebugInfoMatcher.objectLike;
+import org.hamcrest.Matcher;
 import org.mule.runtime.core.api.debug.FieldDebugInfo;
 import org.mule.runtime.module.db.internal.domain.query.Query;
 import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
@@ -18,7 +15,10 @@ import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hamcrest.Matcher;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.SQL_TEXT_DEBUG_FIELD;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.TYPE_DEBUG_FIELD;
+import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
+import static org.mule.tck.junit4.matcher.ObjectDebugInfoMatcher.objectLike;
 
 /**
  * Provides utility methods for testing {@link FieldDebugInfo} on DB module
@@ -33,7 +33,7 @@ public class DbDebugInfoTestUtils
     /**
      * Creates a matcher to assert the debug info generated for a query
      *
-     * @param name expected query name
+     * @param name          expected query name
      * @param queryTemplate query to compare with the debug info
      * @return a non null matcher
      */

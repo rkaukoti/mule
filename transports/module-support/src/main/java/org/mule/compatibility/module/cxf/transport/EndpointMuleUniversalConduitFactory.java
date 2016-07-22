@@ -6,19 +6,19 @@
  */
 package org.mule.compatibility.module.cxf.transport;
 
+import org.apache.cxf.service.model.EndpointInfo;
+import org.apache.cxf.ws.addressing.EndpointReferenceType;
 import org.mule.runtime.module.cxf.CxfConfiguration;
 import org.mule.runtime.module.cxf.transport.MuleUniversalConduit;
 import org.mule.runtime.module.cxf.transport.MuleUniversalConduitFactory;
 import org.mule.runtime.module.cxf.transport.MuleUniversalTransport;
 
-import org.apache.cxf.service.model.EndpointInfo;
-import org.apache.cxf.ws.addressing.EndpointReferenceType;
-
 public class EndpointMuleUniversalConduitFactory implements MuleUniversalConduitFactory
 {
 
     @Override
-    public MuleUniversalConduit create(MuleUniversalTransport transport, CxfConfiguration configuration, EndpointInfo ei, EndpointReferenceType t)
+    public MuleUniversalConduit create(MuleUniversalTransport transport, CxfConfiguration configuration, EndpointInfo ei,
+                                       EndpointReferenceType t)
     {
         return new EndpointMuleUniversalConduit(transport, configuration, ei, t);
     }

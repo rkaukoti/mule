@@ -6,12 +6,11 @@
  */
 package org.mule.test.config.spring.parsers;
 
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.test.config.spring.parsers.beans.ChildBean;
 import org.mule.test.config.spring.parsers.beans.OrphanBean;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 public class IgnoredTestCase extends AbstractNamespaceTestCase
 {

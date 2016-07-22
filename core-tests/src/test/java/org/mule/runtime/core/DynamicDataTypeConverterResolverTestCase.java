@@ -6,10 +6,8 @@
  */
 package org.mule.runtime.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.registry.MuleRegistry;
@@ -22,8 +20,9 @@ import org.mule.tck.size.SmallTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import org.mockito.Mockito;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class DynamicDataTypeConverterResolverTestCase extends AbstractMuleTestCase

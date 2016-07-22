@@ -7,8 +7,6 @@
 
 package org.mule.runtime.module.db.internal.processor;
 
-import static org.mule.runtime.core.api.debug.FieldDebugInfoFactory.createFieldDebugInfo;
-import static org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction.NOT_SUPPORTED;
 import org.mule.common.Result;
 import org.mule.common.metadata.MetaData;
 import org.mule.common.metadata.OperationMetaDataEnabled;
@@ -39,10 +37,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mule.runtime.core.api.debug.FieldDebugInfoFactory.createFieldDebugInfo;
+import static org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction.NOT_SUPPORTED;
+
 /**
  * Base class for database message processors.
  */
-public abstract class AbstractDbMessageProcessor extends AbstractInterceptingMessageProcessor implements Initialisable, InterceptingMessageProcessor, OperationMetaDataEnabled, DebugInfoProvider
+public abstract class AbstractDbMessageProcessor extends AbstractInterceptingMessageProcessor
+        implements Initialisable, InterceptingMessageProcessor, OperationMetaDataEnabled, DebugInfoProvider
 {
 
     protected final DbConfigResolver dbConfigResolver;
@@ -140,14 +142,14 @@ public abstract class AbstractDbMessageProcessor extends AbstractInterceptingMes
     {
     }
 
-    public void setQueryMetadataProvider(QueryMetadataProvider queryMetadataProvider)
-    {
-        this.queryMetadataProvider = queryMetadataProvider;
-    }
-
     public QueryMetadataProvider getQueryMetadataProvider()
     {
         return queryMetadataProvider;
+    }
+
+    public void setQueryMetadataProvider(QueryMetadataProvider queryMetadataProvider)
+    {
+        this.queryMetadataProvider = queryMetadataProvider;
     }
 
     @Override
@@ -192,7 +194,8 @@ public abstract class AbstractDbMessageProcessor extends AbstractInterceptingMes
         List<QueryType> validTypes = getValidQueryTypes();
         if (validTypes == null || !validTypes.contains(queryTemplate.getType()))
         {
-            throw new IllegalArgumentException(String.format("Query type must be one of '%s' but was '%s'", validTypes, queryTemplate.getType()));
+            throw new IllegalArgumentException(
+                    String.format("Query type must be one of '%s' but was '%s'", validTypes, queryTemplate.getType()));
         }
     }
 

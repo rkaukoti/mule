@@ -6,13 +6,8 @@
  */
 package org.mule.runtime.module.xml.el;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import org.dom4j.DocumentHelper;
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -20,6 +15,9 @@ import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.expression.ExpressionRuntimeException;
 import org.mule.runtime.core.el.context.AbstractELTestCase;
 import org.mule.runtime.module.xml.xpath.XPathReturnType;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -29,11 +27,13 @@ import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.dom4j.DocumentHelper;
-import org.junit.Test;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 public class XPath3FunctionTestCase extends AbstractELTestCase
 {
@@ -128,8 +128,8 @@ public class XPath3FunctionTestCase extends AbstractELTestCase
     public void fromW3CDocument() throws Exception
     {
         org.w3c.dom.Document document = DocumentBuilderFactory.newInstance()
-                .newDocumentBuilder()
-                .parse(new InputSource(new StringReader(ROOT_FOO_BAR)));
+                                                              .newDocumentBuilder()
+                                                              .parse(new InputSource(new StringReader(ROOT_FOO_BAR)));
 
         evaluateFooFromPayload(document);
         evaluateFooFromFlowVar(document);

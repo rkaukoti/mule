@@ -6,10 +6,8 @@
  */
 package org.mule.extension.email.internal.commands;
 
-import static java.lang.String.format;
-import static javax.mail.Folder.READ_WRITE;
-import org.mule.extension.email.internal.retriever.RetrieverConnection;
 import org.mule.extension.email.api.exception.EmailException;
+import org.mule.extension.email.internal.retriever.RetrieverConnection;
 import org.mule.runtime.api.message.MuleMessage;
 
 import java.util.List;
@@ -19,6 +17,9 @@ import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 
+import static java.lang.String.format;
+import static javax.mail.Folder.READ_WRITE;
+
 /**
  * Represents the set flag operation. Sets on of the {@link Flag}s
  * on an email message.
@@ -27,9 +28,8 @@ import javax.mail.MessagingException;
  */
 public class SetFlagCommand
 {
-    private final EmailIdConsumerExecutor executor = new EmailIdConsumerExecutor();
-
     private static final String SET_FLAG_ERROR_MESSAGE_MASK = "Error while setting [%s] flag in email of id [%s]";
+    private final EmailIdConsumerExecutor executor = new EmailIdConsumerExecutor();
 
     /**
      * Sets the specified {@code flag} into the email of number {@code emailId}
@@ -43,7 +43,8 @@ public class SetFlagCommand
      * @param muleMessage the incoming {@link MuleMessage}.
      * @param connection  the associated {@link RetrieverConnection}.
      * @param folderName  the name of the folder where the email(s) is going to be fetched.
-     * @param emailId     the optional number of the email to be marked. for default the email is taken from the incoming {@link MuleMessage}.
+     * @param emailId     the optional number of the email to be marked. for default the email is taken from the incoming {@link
+     *                    MuleMessage}.
      * @param flag        the flag to be set.
      */
     public void set(MuleMessage muleMessage, RetrieverConnection connection, String folderName, Integer emailId, Flag flag)

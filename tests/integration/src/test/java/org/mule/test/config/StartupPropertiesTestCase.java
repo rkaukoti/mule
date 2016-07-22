@@ -6,14 +6,13 @@
  */
 package org.mule.test.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.util.Properties;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class StartupPropertiesTestCase extends FunctionalTestCase
 {

@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.module.launcher;
 
+import org.apache.logging.log4j.LogManager;
 import org.mule.runtime.container.internal.ContainerClassLoaderFactory;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleException;
@@ -25,17 +26,14 @@ import org.mule.runtime.module.launcher.coreextension.MuleCoreExtensionManagerSe
 import org.mule.runtime.module.launcher.coreextension.ReflectionMuleCoreExtensionDependencyResolver;
 import org.mule.runtime.module.launcher.log4j2.MuleLog4jContextFactory;
 import org.mule.runtime.module.repository.api.RepositoryService;
-import org.mule.runtime.module.repository.internal.DefaultRepositoryService;
 import org.mule.runtime.module.repository.internal.RepositoryServiceFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.logging.log4j.LogManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class MuleContainer
 {
@@ -68,10 +66,6 @@ public class MuleContainer
      */
     private static MuleShutdownHook muleShutdownHook;
 
-    protected final DeploymentService deploymentService;
-    private final RepositoryService repositoryService;
-    private final MuleCoreExtensionManagerServer coreExtensionManager;
-
     static
     {
         if (System.getProperty(MuleProperties.MULE_SIMPLE_LOG) == null)
@@ -82,7 +76,44 @@ public class MuleContainer
         logger = LoggerFactory.getLogger(MuleContainer.class);
     }
 
+    protected final DeploymentService deploymentService;
+    private final RepositoryService repositoryService;
+    private final MuleCoreExtensionManagerServer coreExtensionManager;
 
+
+    public MuleContainer(String[] args)
+    {
+        final ContainerClassLoaderFactory containerClassLoaderFactory = new ContainerClassLoaderFactory();
+        final ArtifactClassLoader containerClassLoader =
+                containerClassLoaderFactory.createContainerClassLoader(getClass().getClassLoader());
+
+        this.deploymentService = new MuleDeploymentService(containerClassLoader);
+        this.repositoryService = new RepositoryServiceFactory().createRepositoryService();
+        this.coreExtensionManager =
+                new DefaultMuleCoreExtensionManagerServer(new ClasspathMuleCoreExtensionDiscoverer(containerClassLoader),
+                        new ReflectionMuleCoreExtensionDependencyResolver());
+
+        init(args);
+    }
+
+    public MuleContainer(DeploymentService deploymentService, RepositoryService repositoryService,
+                         MuleCoreExtensionManagerServer coreExtensionManager)
+    {
+        this(new String[0], deploymentService, repositoryService, coreExtensionManager);
+    }
+
+    /**
+     * Configure the server with command-line arguments.
+     */
+    public MuleContainer(String[] args, DeploymentService deploymentService, RepositoryService repositoryService,
+                         MuleCoreExtensionManagerServer coreExtensionManager) throws IllegalArgumentException
+    {
+        //TODO(pablo.kraan): remove the args argument and use the already existing setters to set everything needed
+        this.deploymentService = deploymentService;
+        this.coreExtensionManager = coreExtensionManager;
+        this.repositoryService = repositoryService;
+        init(args);
+    }
 
     /**
      * Application entry point.
@@ -95,33 +126,14 @@ public class MuleContainer
         container.start(true);
     }
 
-    public MuleContainer(String[] args)
+    public static String getStartupPropertiesFile()
     {
-        final ContainerClassLoaderFactory containerClassLoaderFactory = new ContainerClassLoaderFactory();
-        final ArtifactClassLoader containerClassLoader = containerClassLoaderFactory.createContainerClassLoader(getClass().getClassLoader());
-
-        this.deploymentService = new MuleDeploymentService(containerClassLoader);
-        this.repositoryService = new RepositoryServiceFactory().createRepositoryService();
-        this.coreExtensionManager = new DefaultMuleCoreExtensionManagerServer(new ClasspathMuleCoreExtensionDiscoverer(containerClassLoader), new ReflectionMuleCoreExtensionDependencyResolver());
-
-        init(args);
+        return startupPropertiesFile;
     }
 
-    public MuleContainer(DeploymentService deploymentService, RepositoryService repositoryService, MuleCoreExtensionManagerServer coreExtensionManager)
+    public static void setStartupPropertiesFile(String startupPropertiesFile)
     {
-        this(new String[0], deploymentService, repositoryService, coreExtensionManager);
-    }
-
-    /**
-     * Configure the server with command-line arguments.
-     */
-    public MuleContainer(String[] args, DeploymentService deploymentService, RepositoryService repositoryService, MuleCoreExtensionManagerServer coreExtensionManager) throws IllegalArgumentException
-    {
-        //TODO(pablo.kraan): remove the args argument and use the already existing setters to set everything needed
-        this.deploymentService = deploymentService;
-        this.coreExtensionManager = coreExtensionManager;
-        this.repositoryService = repositoryService;
-        init(args);
+        MuleContainer.startupPropertiesFile = startupPropertiesFile;
     }
 
     protected void init(String[] args) throws IllegalArgumentException
@@ -159,7 +171,8 @@ public class MuleContainer
             if (!executionFolder.mkdirs())
             {
                 throw new MuleRuntimeException(CoreMessages.createStaticMessage(
-                        String.format("Could not create folder %s, validate that the process has permissions over that directory", executionFolder.getAbsolutePath())));
+                        String.format("Could not create folder %s, validate that the process has permissions over that directory",
+                                executionFolder.getAbsolutePath())));
             }
         }
     }
@@ -264,6 +277,10 @@ public class MuleContainer
         return logger;
     }
 
+    // /////////////////////////////////////////////////////////////////
+    // Getters and setters
+    // /////////////////////////////////////////////////////////////////
+
     public void registerShutdownHook()
     {
         if (muleShutdownHook == null)
@@ -283,21 +300,6 @@ public class MuleContainer
         {
             Runtime.getRuntime().removeShutdownHook(muleShutdownHook);
         }
-    }
-
-    // /////////////////////////////////////////////////////////////////
-    // Getters and setters
-    // /////////////////////////////////////////////////////////////////
-
-
-    public static String getStartupPropertiesFile()
-    {
-        return startupPropertiesFile;
-    }
-
-    public static void setStartupPropertiesFile(String startupPropertiesFile)
-    {
-        MuleContainer.startupPropertiesFile = startupPropertiesFile;
     }
 
     /**

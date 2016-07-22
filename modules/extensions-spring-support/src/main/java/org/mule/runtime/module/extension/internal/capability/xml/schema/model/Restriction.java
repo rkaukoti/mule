@@ -62,19 +62,19 @@ public class Restriction
 
     protected LocalSimpleType simpleType;
     @XmlElementRefs({
-                            @XmlElementRef(name = "minLength", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
-                            @XmlElementRef(name = "maxInclusive", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
-                            @XmlElementRef(name = "minInclusive", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
-                            @XmlElementRef(name = "totalDigits", namespace = "http://www.w3.org/2001/XMLSchema", type = TotalDigits.class),
-                            @XmlElementRef(name = "pattern", namespace = "http://www.w3.org/2001/XMLSchema", type = Pattern.class),
-                            @XmlElementRef(name = "minExclusive", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
-                            @XmlElementRef(name = "enumeration", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
-                            @XmlElementRef(name = "fractionDigits", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
-                            @XmlElementRef(name = "whiteSpace", namespace = "http://www.w3.org/2001/XMLSchema", type = WhiteSpace.class),
-                            @XmlElementRef(name = "maxLength", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
-                            @XmlElementRef(name = "length", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
-                            @XmlElementRef(name = "maxExclusive", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class)
-                    })
+            @XmlElementRef(name = "minLength", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
+            @XmlElementRef(name = "maxInclusive", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
+            @XmlElementRef(name = "minInclusive", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
+            @XmlElementRef(name = "totalDigits", namespace = "http://www.w3.org/2001/XMLSchema", type = TotalDigits.class),
+            @XmlElementRef(name = "pattern", namespace = "http://www.w3.org/2001/XMLSchema", type = Pattern.class),
+            @XmlElementRef(name = "minExclusive", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
+            @XmlElementRef(name = "enumeration", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
+            @XmlElementRef(name = "fractionDigits", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
+            @XmlElementRef(name = "whiteSpace", namespace = "http://www.w3.org/2001/XMLSchema", type = WhiteSpace.class),
+            @XmlElementRef(name = "maxLength", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
+            @XmlElementRef(name = "length", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
+            @XmlElementRef(name = "maxExclusive", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class)
+    })
     protected List<Object> facets;
     @XmlAttribute(name = "base")
     protected QName base;
@@ -82,8 +82,7 @@ public class Restriction
     /**
      * Gets the value of the simpleType property.
      *
-     * @return possible object is
-     * {@link LocalSimpleType }
+     * @return possible object is {@link LocalSimpleType }
      */
     public LocalSimpleType getSimpleType()
     {
@@ -93,8 +92,7 @@ public class Restriction
     /**
      * Sets the value of the simpleType property.
      *
-     * @param value allowed object is
-     *              {@link LocalSimpleType }
+     * @param value allowed object is {@link LocalSimpleType }
      */
     public void setSimpleType(LocalSimpleType value)
     {
@@ -144,8 +142,7 @@ public class Restriction
     /**
      * Gets the value of the base property.
      *
-     * @return possible object is
-     * {@link QName }
+     * @return possible object is {@link QName }
      */
     public QName getBase()
     {
@@ -155,8 +152,7 @@ public class Restriction
     /**
      * Sets the value of the base property.
      *
-     * @param value allowed object is
-     *              {@link QName }
+     * @param value allowed object is {@link QName }
      */
     public void setBase(QName value)
     {

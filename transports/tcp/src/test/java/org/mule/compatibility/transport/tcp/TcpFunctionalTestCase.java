@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.transport.tcp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class TcpFunctionalTestCase extends FunctionalTestCase
 {
@@ -49,7 +48,7 @@ public class TcpFunctionalTestCase extends FunctionalTestCase
         client.dispatch("asyncClientEndpoint", TEST_MESSAGE, null);
         // MULE-2754
         Thread.sleep(100);
-        MuleMessage result =  client.request("asyncClientEndpoint", 10000);
+        MuleMessage result = client.request("asyncClientEndpoint", 10000);
         assertNotNull(result);
         assertEquals(TEST_MESSAGE + " Received Async", getPayloadAsString(result));
     }

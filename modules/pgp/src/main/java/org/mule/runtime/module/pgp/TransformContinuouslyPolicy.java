@@ -16,7 +16,7 @@ public class TransformContinuouslyPolicy extends AbstractTransformPolicy
 {
 
     public static final long DEFAULT_CHUNK_SIZE = 1 << 24;
-    
+
     private long chunkSize;
 
     public TransformContinuouslyPolicy()
@@ -42,7 +42,7 @@ public class TransformContinuouslyPolicy extends AbstractTransformPolicy
          */
         startCopyingThread();
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -58,13 +58,13 @@ public class TransformContinuouslyPolicy extends AbstractTransformPolicy
         protected void execute() throws Exception
         {
             getTransformer().initialize(getInputStream().getOut());
-            
+
             boolean finishWriting = false;
             while (!finishWriting)
             {
                 getBytesRequested().addAndGet(chunkSize);
                 finishWriting = getTransformer().write(getInputStream().getOut(), getBytesRequested());
-            }            
+            }
         }
     }
 }

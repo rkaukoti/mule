@@ -6,15 +6,9 @@
  */
 package org.mule.runtime.core;
 
-import static junit.framework.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
-
+import org.junit.After;
+import org.junit.Test;
+import org.mockito.InOrder;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.ConfigurationBuilder;
 import org.mule.runtime.core.api.config.ConfigurationException;
@@ -34,20 +28,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.junit.After;
-import org.junit.Test;
-import org.mockito.InOrder;
+import static junit.framework.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 
 public class DefaultMuleContextFactoryTestCase extends AbstractMuleTestCase
 {
 
-    private DefaultMuleContextFactory muleContextFactory = new DefaultMuleContextFactory();
     private static String TEST_STRING_KEY = "test";
     private static String TEST_STRING_VALUE = "test_value";
     private static String TEST_STRING_KEY2 = "test2";
     private static String TEST_STRING_VALUE2 = "test_value2";
     private static String TEST_OBJECT_NAME = "testObject";
-
+    private DefaultMuleContextFactory muleContextFactory = new DefaultMuleContextFactory();
     private MuleContext context;
 
     @After
@@ -109,7 +107,7 @@ public class DefaultMuleContextFactoryTestCase extends AbstractMuleTestCase
     {
         TestMuleContextBuilder muleContextBuilder = new TestMuleContextBuilder();
         context = muleContextFactory.createMuleContext(new TestConfigurationBuilder2(),
-                                                       muleContextBuilder);
+                muleContextBuilder);
 
         assertCustomMuleContext(context);
         assertConfigurationBuilder2Objects(context);

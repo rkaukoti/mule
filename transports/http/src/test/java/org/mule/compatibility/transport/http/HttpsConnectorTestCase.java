@@ -6,13 +6,10 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.core.transport.AbstractConnectorTestCase;
-import org.mule.compatibility.transport.http.HttpsConnector;
 import org.mule.compatibility.transport.tcp.TcpConnector;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -20,20 +17,15 @@ import org.mule.runtime.core.construct.Flow;
 
 import java.io.IOException;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 
 public class HttpsConnectorTestCase extends AbstractConnectorTestCase
 {
 
-    @Override
-    public Connector createConnector() throws Exception
-    {
-        return createConnector(muleContext, false);
-    }
-
     public static HttpsConnector createConnector(MuleContext context, boolean initialised)
-        throws IOException, InitialisationException
+            throws IOException, InitialisationException
     {
         HttpsConnector cnn = new HttpsConnector(muleContext);
         cnn.setName("HttpsConnector");
@@ -54,6 +46,12 @@ public class HttpsConnectorTestCase extends AbstractConnectorTestCase
     }
 
     @Override
+    public Connector createConnector() throws Exception
+    {
+        return createConnector(muleContext, false);
+    }
+
+    @Override
     public String getTestEndpointURI()
     {
         return "https://localhost:60127";
@@ -69,7 +67,7 @@ public class HttpsConnectorTestCase extends AbstractConnectorTestCase
     public void testValidListener() throws Exception
     {
         InboundEndpoint endpoint = getEndpointFactory().getInboundEndpoint(
-            getTestEndpointURI());
+                getTestEndpointURI());
 
         getConnector().registerListener(endpoint, getSensingNullMessageProcessor(), mock(Flow.class));
     }
@@ -77,7 +75,7 @@ public class HttpsConnectorTestCase extends AbstractConnectorTestCase
     @Test
     public void testProperties() throws Exception
     {
-        HttpsConnector c = (HttpsConnector)getConnector();
+        HttpsConnector c = (HttpsConnector) getConnector();
 
         c.setSendBufferSize(1024);
         assertEquals(1024, c.getSendBufferSize());

@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import org.apache.commons.io.IOUtils;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.util.MultiPartWriter;
+import org.junit.Test;
 import org.mule.extension.http.api.HttpResponseAttributes;
 import org.mule.runtime.core.api.MuleEvent;
 
@@ -21,10 +20,11 @@ import javax.activation.DataHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.util.MultiPartWriter;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class HttpRequestInboundAttachmentsTestCase extends AbstractHttpRequestTestCase
 {
@@ -48,7 +48,8 @@ public class HttpRequestInboundAttachmentsTestCase extends AbstractHttpRequestTe
         assertAttachment(parts, "partName2", "Test part 2", "text/html");
     }
 
-    private void assertAttachment(Map<String, DataHandler> parts, String attachmentName, String attachmentContents, String contentType) throws IOException
+    private void assertAttachment(Map<String, DataHandler> parts, String attachmentName, String attachmentContents, String contentType)
+            throws IOException
     {
         assertTrue(parts.keySet().contains(attachmentName));
 
@@ -66,11 +67,11 @@ public class HttpRequestInboundAttachmentsTestCase extends AbstractHttpRequestTe
         response.setContentType("multipart/form-data; boundary=" + multiPartWriter.getBoundary());
         response.setStatus(HttpServletResponse.SC_OK);
 
-        multiPartWriter.startPart("text/plain", new String[] { "Content-Disposition: form-data; name=\"partName1\"" });
+        multiPartWriter.startPart("text/plain", new String[] {"Content-Disposition: form-data; name=\"partName1\""});
         multiPartWriter.write("Test part 1");
         multiPartWriter.endPart();
 
-        multiPartWriter.startPart("text/html", new String[] { "Content-Disposition: form-data; name=\"partName2\"" });
+        multiPartWriter.startPart("text/html", new String[] {"Content-Disposition: form-data; name=\"partName2\""});
         multiPartWriter.write("Test part 2");
         multiPartWriter.endPart();
 

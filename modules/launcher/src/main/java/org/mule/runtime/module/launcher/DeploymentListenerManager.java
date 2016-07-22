@@ -7,8 +7,8 @@
 package org.mule.runtime.module.launcher;
 
 /**
- *  Manages which {@link DeploymentListener} are listening for deployment
- *  notifications.
+ * Manages which {@link DeploymentListener} are listening for deployment
+ * notifications.
  */
 public interface DeploymentListenerManager
 {

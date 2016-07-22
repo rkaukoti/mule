@@ -6,7 +6,10 @@
  */
 package org.mule.compatibility.transport.file;
 
-import org.mule.compatibility.transport.file.FileConnector;
+import org.apache.commons.io.filefilter.TrueFileFilter;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.util.FileUtils;
@@ -19,12 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.io.filefilter.TrueFileFilter;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-
-public class FileMoveToFunctionalTestCase extends FunctionalTestCase {
+public class FileMoveToFunctionalTestCase extends FunctionalTestCase
+{
 
     private static final String INPUT_DIRECTORY_PROPERTY = "FileMoveToFunctionalTestCase-inputDirectory";
 
@@ -47,7 +46,8 @@ public class FileMoveToFunctionalTestCase extends FunctionalTestCase {
     public TemporaryFolder moveToTemporaryFolder = new TemporaryFolder();
 
     @Override
-    protected String getConfigFile() {
+    protected String getConfigFile()
+    {
         return "file-functional-move-to.xml";
     }
 
@@ -85,8 +85,9 @@ public class FileMoveToFunctionalTestCase extends FunctionalTestCase {
         connector.setStreaming(isStreaming);
     }
 
-    private void copyFiles() throws InterruptedException, IOException {
-        for (int i=1; i <= ITERATIONS; i++)
+    private void copyFiles() throws InterruptedException, IOException
+    {
+        for (int i = 1; i <= ITERATIONS; i++)
         {
             List<File> files = createFiles(inputTemporaryFolder, NUMBER_OF_FILES, FILE_SIZE);
             waitForFiles(moveToTemporaryFolder.getRoot(), i * NUMBER_OF_FILES);
@@ -97,7 +98,7 @@ public class FileMoveToFunctionalTestCase extends FunctionalTestCase {
     {
         List<File> files = new ArrayList<File>(size);
 
-        for (int i=0; i < amount; i++)
+        for (int i = 0; i < amount; i++)
         {
             File tempInputFile = createFile(folder, String.valueOf(i), size);
             files.add(tempInputFile);
@@ -111,7 +112,7 @@ public class FileMoveToFunctionalTestCase extends FunctionalTestCase {
         File tempInputFile = folder.newFile("input_file_" + name);
         tempInputFile.deleteOnExit();
         byte[] content = new byte[size];
-        Arrays.fill(content, (byte)0);
+        Arrays.fill(content, (byte) 0);
         FileUtils.writeByteArrayToFile(tempInputFile, content);
         return tempInputFile;
     }
@@ -120,17 +121,20 @@ public class FileMoveToFunctionalTestCase extends FunctionalTestCase {
     {
         PollingProber prober = new PollingProber(PROBER_TIMEOUT, PROBER_POLLING_INTERVAL);
 
-        prober.check(new Probe() {
+        prober.check(new Probe()
+        {
             int lastAmount = 0;
 
             @Override
-            public boolean isSatisfied() {
+            public boolean isSatisfied()
+            {
                 lastAmount = FileUtils.listFiles(folder, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE).size();
                 return lastAmount >= expectedAmount;
             }
 
             @Override
-            public String describeFailure() {
+            public String describeFailure()
+            {
                 return String.valueOf(expectedAmount) + " files were expected, but only " + String.valueOf(lastAmount) + " were present.";
             }
         });

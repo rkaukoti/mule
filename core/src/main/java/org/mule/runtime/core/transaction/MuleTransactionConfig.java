@@ -14,7 +14,6 @@ import org.mule.runtime.core.api.transaction.TransactionFactory;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.transaction.constraints.ConstraintFilter;
 import org.mule.runtime.core.util.ClassUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,11 +23,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MuleTransactionConfig implements TransactionConfig, MuleContextAware
 {
-    /**
-     * logger used by this class
-     */
-    protected static final Logger logger = LoggerFactory.getLogger(MuleTransactionConfig.class);
-
     public static final String ACTION_NONE_STRING = "NONE";
     public static final String ACTION_ALWAYS_BEGIN_STRING = "ALWAYS_BEGIN";
     public static final String ACTION_BEGIN_OR_JOIN_STRING = "BEGIN_OR_JOIN";
@@ -37,7 +31,10 @@ public class MuleTransactionConfig implements TransactionConfig, MuleContextAwar
     public static final String ACTION_NEVER_STRING = "NEVER";
     public static final String ACTION_INDIFFERENT_STRING = "INDIFFERENT";
     public static final String ACTION_NOT_SUPPORTED_STRING = "NOT_SUPPORTED";
-
+    /**
+     * logger used by this class
+     */
+    protected static final Logger logger = LoggerFactory.getLogger(MuleTransactionConfig.class);
     private TransactionFactory factory;
 
     private byte action = ACTION_DEFAULT;
@@ -101,6 +98,27 @@ public class MuleTransactionConfig implements TransactionConfig, MuleContextAwar
         this.interactWithExternal = interactWithExternal;
     }
 
+    public String getActionAsString()
+    {
+        switch (action)
+        {
+        case ACTION_ALWAYS_BEGIN:
+            return ACTION_ALWAYS_BEGIN_STRING;
+        case ACTION_BEGIN_OR_JOIN:
+            return ACTION_BEGIN_OR_JOIN_STRING;
+        case ACTION_ALWAYS_JOIN:
+            return ACTION_ALWAYS_JOIN_STRING;
+        case ACTION_JOIN_IF_POSSIBLE:
+            return ACTION_JOIN_IF_POSSIBLE_STRING;
+        case ACTION_NONE:
+            return ACTION_NONE_STRING;
+        case ACTION_INDIFFERENT:
+            return ACTION_INDIFFERENT_STRING;
+        default:
+            return ACTION_NEVER_STRING;
+        }
+    }
+
     public void setActionAsString(String action)
     {
         if (ACTION_ALWAYS_BEGIN_STRING.equals(action))
@@ -141,27 +159,6 @@ public class MuleTransactionConfig implements TransactionConfig, MuleContextAwar
         }
     }
 
-    public String getActionAsString()
-    {
-        switch (action)
-        {
-            case ACTION_ALWAYS_BEGIN:
-                return ACTION_ALWAYS_BEGIN_STRING;
-            case ACTION_BEGIN_OR_JOIN:
-                return ACTION_BEGIN_OR_JOIN_STRING; 
-            case ACTION_ALWAYS_JOIN:
-                return ACTION_ALWAYS_JOIN_STRING;
-            case ACTION_JOIN_IF_POSSIBLE:
-                return ACTION_JOIN_IF_POSSIBLE_STRING;
-            case ACTION_NONE:
-                return ACTION_NONE_STRING;
-            case ACTION_INDIFFERENT:
-                return ACTION_INDIFFERENT_STRING;
-            default :
-                return ACTION_NEVER_STRING;
-        }
-    }
-
     /**
      * Will the result, at the end of running the transaction template, be an active transaction?
      */
@@ -187,22 +184,22 @@ public class MuleTransactionConfig implements TransactionConfig, MuleContextAwar
 
         switch (action)
         {
-            case ACTION_ALWAYS_BEGIN:
-            case ACTION_ALWAYS_JOIN:
-            case ACTION_BEGIN_OR_JOIN:
-                return true;
+        case ACTION_ALWAYS_BEGIN:
+        case ACTION_ALWAYS_JOIN:
+        case ACTION_BEGIN_OR_JOIN:
+            return true;
 
-            case ACTION_JOIN_IF_POSSIBLE:
-            case ACTION_INDIFFERENT:
-                return TransactionCoordination.getInstance().getTransaction() != null;
+        case ACTION_JOIN_IF_POSSIBLE:
+        case ACTION_INDIFFERENT:
+            return TransactionCoordination.getInstance().getTransaction() != null;
 
-            default:
-                // should not happen
-                return false;
+        default:
+            // should not happen
+            return false;
 
         }
     }
-    
+
     public boolean isConfigured()
     {
         return factory != null;
@@ -244,24 +241,26 @@ public class MuleTransactionConfig implements TransactionConfig, MuleContextAwar
     {
         StringBuilder buf = new StringBuilder();
         buf.append("Transaction{factory=")
-            .append(factory)
-            .append(", action=")
-            .append(getActionAsString())
-            .append(", timeout=")
-            .append(timeout == null ? 0 : timeout)
-            .append("}");
+           .append(factory)
+           .append(", action=")
+           .append(getActionAsString())
+           .append(", timeout=")
+           .append(timeout == null ? 0 : timeout)
+           .append("}");
         return buf.toString();
     }
-    
+
     public int hashCode()
     {
-        return ClassUtils.hash(new Object[]{factory, action, constraint, timeout == null ? 0 : timeout});
+        return ClassUtils.hash(new Object[] {factory, action, constraint, timeout == null ? 0 : timeout});
     }
 
     public boolean equals(Object obj)
     {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
 
         final MuleTransactionConfig other = (MuleTransactionConfig) obj;
         return ClassUtils.equal(factory, other.factory)
@@ -270,5 +269,5 @@ public class MuleTransactionConfig implements TransactionConfig, MuleContextAwar
                && ClassUtils.equal(timeout, other.timeout);
 
     }
-    
+
 }

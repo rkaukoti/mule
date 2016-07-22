@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
+<mule xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                    http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                    http://www.mulesoft.org/schema/mule/transports http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd">

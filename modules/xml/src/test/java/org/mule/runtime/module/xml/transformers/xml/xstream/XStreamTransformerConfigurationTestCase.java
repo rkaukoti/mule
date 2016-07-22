@@ -6,23 +6,23 @@
  */
 package org.mule.runtime.module.xml.transformers.xml.xstream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import org.mule.runtime.core.api.transformer.TransformerException;
-import org.mule.runtime.module.xml.transformer.XStreamFactory;
-import org.mule.runtime.module.xml.transformer.XmlToObject;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mule.runtime.core.api.transformer.TransformerException;
+import org.mule.runtime.module.xml.transformer.XStreamFactory;
+import org.mule.runtime.module.xml.transformer.XmlToObject;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 
 /**
  * Tests configuration and creation of XStream-based transformers
@@ -31,16 +31,6 @@ public class XStreamTransformerConfigurationTestCase extends AbstractMuleTestCas
 {
 
     public static volatile boolean MyDriverDidInitialize;
-
-    protected static class MyDOMDriver extends DomDriver
-    {
-
-        public MyDOMDriver()
-        {
-            super();
-            XStreamTransformerConfigurationTestCase.MyDriverDidInitialize = true;
-        }
-    }
 
     @Before
     public void doSetUp()
@@ -98,7 +88,8 @@ public class XStreamTransformerConfigurationTestCase extends AbstractMuleTestCas
     public void testClassLoader()
     {
         TestClassLoader classLoader = new TestClassLoader();
-        withContextClassLoader(classLoader, () -> {
+        withContextClassLoader(classLoader, () ->
+        {
             try
             {
                 XmlToObject transformer = new XmlToObject();
@@ -110,6 +101,16 @@ public class XStreamTransformerConfigurationTestCase extends AbstractMuleTestCas
                 fail(e.getMessage());
             }
         });
+    }
+
+    protected static class MyDOMDriver extends DomDriver
+    {
+
+        public MyDOMDriver()
+        {
+            super();
+            XStreamTransformerConfigurationTestCase.MyDriverDidInitialize = true;
+        }
     }
 
     private static class TestClassLoader extends ClassLoader

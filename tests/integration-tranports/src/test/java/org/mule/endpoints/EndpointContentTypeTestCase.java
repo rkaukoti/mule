@@ -6,12 +6,7 @@
  */
 package org.mule.endpoints;
 
-import static java.nio.charset.StandardCharsets.ISO_8859_1;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupEndpointBuilder;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
@@ -20,20 +15,26 @@ import org.mule.runtime.core.construct.Flow;
 
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupEndpointBuilder;
 
-/** Test configuration of content-type in various endpoints */
-public class EndpointContentTypeTestCase  extends FunctionalTestCase
-{   
+/**
+ * Test configuration of content-type in various endpoints
+ */
+public class EndpointContentTypeTestCase extends FunctionalTestCase
+{
 
     @Override
     protected String getConfigFile()
     {
-        return  "content-type-setting-endpoint-configs-flow.xml";
+        return "content-type-setting-endpoint-configs-flow.xml";
     }
 
     @Test
-    public void testContentType()  throws Exception
+    public void testContentType() throws Exception
     {
         Flow flowService = muleContext.getRegistry().lookupObject("service");
         InboundEndpoint inbound = (InboundEndpoint) flowService.getMessageSource();

@@ -20,14 +20,13 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class StatementStreamingResultSetCloser extends AbstractStreamingResultSetCloser
 {
-    private final ConcurrentHashMap<DbConnection, Set<ResultSet>> connectionResultSets = new ConcurrentHashMap<DbConnection, Set<ResultSet>>();
+    private final ConcurrentHashMap<DbConnection, Set<ResultSet>> connectionResultSets =
+            new ConcurrentHashMap<DbConnection, Set<ResultSet>>();
 
     private final ConcurrentHashMap<DbConnection, Object> connectionLocks = new ConcurrentHashMap<DbConnection, Object>();
 
     /**
      * Closes all tracked {@link ResultSet}s for the passed {@code connection}.
-     * 
-     * @param connection
      */
     public void closeResultSets(DbConnection connection)
     {
@@ -78,7 +77,7 @@ public class StatementStreamingResultSetCloser extends AbstractStreamingResultSe
      * Adds a resultSet for tracking in order to be able to close it later
      *
      * @param connection connection that holds the resultSet
-     * @param resultSet resultSet to track
+     * @param resultSet  resultSet to track
      */
     public void trackResultSet(DbConnection connection, ResultSet resultSet)
     {

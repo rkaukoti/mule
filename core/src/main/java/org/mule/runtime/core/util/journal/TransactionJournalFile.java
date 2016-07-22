@@ -6,10 +6,13 @@
  */
 package org.mule.runtime.core.util.journal;
 
-import org.mule.runtime.core.api.MuleRuntimeException;
-
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
+
+import org.apache.commons.io.FileUtils;
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -23,10 +26,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-
-import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manages a transaction journal file.
@@ -42,25 +41,23 @@ class TransactionJournalFile<T, K extends JournalEntry<T>>
      * to clear the log file once there are no more transactions pending.
      */
     private static final int MINIMUM_ENTRIES_TO_CLEAR_FILE = 10000;
-
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
     private final File journalFile;
     private final JournalEntrySerializer<T, K> journalEntrySerializer;
     private final Long clearFileMinimumSizeInBytes;
-
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
     private Multimap<T, K> entries = LinkedHashMultimap.create();
 
     private DataOutputStream logFileOutputStream;
     private int journalOperations = 0;
 
     /**
-     * @param journalFile journal file to use. Will be created if it doesn't exists. If exists then transaction entries
-     *            will get loaded from it.
-     * @param journalEntrySerializer serializer for {@link JournalEntry}
+     * @param journalFile                  journal file to use. Will be created if it doesn't exists. If exists then transaction entries
+     *                                     will get loaded from it.
+     * @param journalEntrySerializer       serializer for {@link JournalEntry}
      * @param transactionCompletePredicate a callback to determine if a transaction is complete.
      */
-    public TransactionJournalFile(File journalFile, JournalEntrySerializer journalEntrySerializer, TransactionCompletePredicate transactionCompletePredicate, Long clearFileMinimumSizeInBytes)
+    public TransactionJournalFile(File journalFile, JournalEntrySerializer journalEntrySerializer,
+                                  TransactionCompletePredicate transactionCompletePredicate, Long clearFileMinimumSizeInBytes)
     {
         this.journalFile = journalFile;
         this.journalEntrySerializer = journalEntrySerializer;
@@ -74,6 +71,7 @@ class TransactionJournalFile<T, K extends JournalEntry<T>>
 
     /**
      * Adds a journal entry for an operation done over a transactional resource
+     *
      * @param journalEntry operation details
      */
     public synchronized void logOperation(K journalEntry)
@@ -164,9 +162,8 @@ class TransactionJournalFile<T, K extends JournalEntry<T>>
     }
 
     /**
-     * @return all journal entries exactly as stored in the journal.
-     * No modifications should be done to such collections and the journal file should not
-     * be access concurrently for other purposes while working with the collection.
+     * @return all journal entries exactly as stored in the journal. No modifications should be done to such collections and the journal
+     * file should not be access concurrently for other purposes while working with the collection.
      */
     public synchronized Multimap<T, K> getAllLogEntries()
     {
@@ -210,7 +207,7 @@ class TransactionJournalFile<T, K extends JournalEntry<T>>
     /**
      * This will NOT load transactions that are already complete, according to the given
      * {@code transactionCompletePredicate}.
-     * 
+     *
      * @param transactionCompletePredicate a callback to determine if a transaction is complete.
      */
     private void loadAllEntries(TransactionCompletePredicate transactionCompletePredicate)
@@ -247,12 +244,13 @@ class TransactionJournalFile<T, K extends JournalEntry<T>>
                 }
                 catch (EOFException e)
                 {
-                    logger.debug("Expected exception since there are no more log entries",e);
+                    logger.debug("Expected exception since there are no more log entries", e);
                     logEntryCreationFailed = true;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    logger.warn("Exception reading transaction content. This is normal if the mule server was shutdown due to a failure" + e.getMessage());
+                    logger.warn("Exception reading transaction content. This is normal if the mule server was shutdown due to a failure" +
+                                e.getMessage());
                     if (logger.isDebugEnabled())
                     {
                         logger.debug("Error reading transaction journal file", e);

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:oauth2="http://www.mulesoft.org/schema/mule/oauth2"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
       xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
@@ -19,7 +19,7 @@
                 redirectionUrl="${redirect.url}"
                 tokenManager-ref="tokenManagerConfig">
             <tls:context>
-                <tls:trust-store path="ssltest-cacerts.jks" password="changeit" />
+                <tls:trust-store path="ssltest-cacerts.jks" password="changeit"/>
                 <tls:key-store path="ssltest-keystore.jks" keyPassword="changeit" password="changeit"/>
             </tls:context>
             <oauth2:authorization-request

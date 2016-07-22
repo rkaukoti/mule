@@ -18,10 +18,9 @@ import org.mule.runtime.core.security.AbstractAuthenticationFilter;
 
 public class TestSecurityFilter extends AbstractAuthenticationFilter
 {
+    public static final String SECURITY_EXCEPTION_MESSAGE = "unauthorized!!";
     private boolean accept;
     private boolean called;
-
-    public static final String SECURITY_EXCEPTION_MESSAGE = "unauthorized!!";
 
     public TestSecurityFilter(boolean accept)
     {
@@ -30,8 +29,8 @@ public class TestSecurityFilter extends AbstractAuthenticationFilter
 
     @Override
     public void authenticate(MuleEvent event)
-        throws SecurityException, CryptoFailureException, SecurityProviderNotFoundException,
-        EncryptionStrategyNotFoundException, UnknownAuthenticationTypeException
+            throws SecurityException, CryptoFailureException, SecurityProviderNotFoundException,
+            EncryptionStrategyNotFoundException, UnknownAuthenticationTypeException
     {
         called = true;
         if (!accept)

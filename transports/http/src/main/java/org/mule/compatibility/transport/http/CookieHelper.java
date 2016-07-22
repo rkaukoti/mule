@@ -6,9 +6,22 @@
  */
 package org.mule.compatibility.transport.http;
 
+import org.apache.commons.httpclient.Cookie;
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.cookie.CookiePolicy;
+import org.apache.commons.httpclient.cookie.CookieSpec;
+import org.apache.commons.httpclient.cookie.MalformedCookieException;
+import org.apache.commons.httpclient.cookie.NetscapeDraftSpec;
+import org.apache.commons.httpclient.cookie.RFC2109Spec;
+import org.apache.tomcat.util.http.Cookies;
+import org.apache.tomcat.util.http.MimeHeaders;
+import org.apache.tomcat.util.http.ServerCookie;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.expression.ExpressionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,19 +36,360 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TimeZone;
 
-import org.apache.commons.httpclient.Cookie;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
-import org.apache.commons.httpclient.cookie.CookieSpec;
-import org.apache.commons.httpclient.cookie.MalformedCookieException;
-import org.apache.commons.httpclient.cookie.NetscapeDraftSpec;
-import org.apache.commons.httpclient.cookie.RFC2109Spec;
-import org.apache.tomcat.util.http.Cookies;
-import org.apache.tomcat.util.http.MimeHeaders;
-import org.apache.tomcat.util.http.ServerCookie;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+/**
+ * This enum type is here to distinguish and handle the two type of cookie storage
+ * that we have. The method
+ * {@link CookieStorageType#resolveCookieStorageType(Object)} allows you to select
+ * the appropriate {@link CookieStorageType} for the cookiesObject that you have.
+ */
+enum CookieStorageType
+{
+    /**
+     * <p>
+     * This corresponds to the storage of cookies as a Cookie[].
+     * </p>
+     * <p>
+     * All the parameters of type {@link Object} in the method of this object are
+     * assumed to be of type Cookie[] and won't be checked. They will be cast to
+     * Cookie[].
+     * </p>
+     */
+    ARRAY_OF_COOKIES
+            {
+                @Override
+                public Object putAndMergeCookie(Object preExistentCookies, String cookieName, String cookieValue)
+                {
+                    final Cookie[] preExistentCookiesArray = (Cookie[]) preExistentCookies;
+
+                    final int sessionIndex = getCookieIndexFromCookiesArray(cookieName, preExistentCookiesArray);
+
+                    // domain, path, secure (https) and expiry are handled in method
+                    // CookieHelper.addCookiesToClient()
+                    final Cookie newSessionCookie = new Cookie(null, cookieName, cookieValue);
+                    final Cookie[] mergedCookiesArray;
+                    if (sessionIndex >= 0)
+                    {
+                        preExistentCookiesArray[sessionIndex] = newSessionCookie;
+                        mergedCookiesArray = preExistentCookiesArray;
+                    }
+                    else
+                    {
+                        Cookie[] newSessionCookieArray = new Cookie[] {newSessionCookie};
+                        mergedCookiesArray = concatenateCookies(preExistentCookiesArray, newSessionCookieArray);
+                    }
+                    return mergedCookiesArray;
+                }
+
+                protected Cookie[] concatenateCookies(Cookie[] cookies1, Cookie[] cookies2)
+                {
+                    if (cookies1 == null)
+                    {
+                        return cookies2;
+                    }
+                    else if (cookies2 == null)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        Cookie[] mergedCookies = new Cookie[cookies1.length + cookies2.length];
+                        System.arraycopy(cookies1, 0, mergedCookies, 0, cookies1.length);
+                        System.arraycopy(cookies2, 0, mergedCookies, cookies1.length, cookies2.length);
+                        return mergedCookies;
+                    }
+                }
+
+                protected int getCookieIndexFromCookiesArray(String cookieName, Cookie[] preExistentCookies)
+                {
+                    if (preExistentCookies != null && cookieName != null)
+                    {
+                        for (int i = 0; i < preExistentCookies.length; i++)
+                        {
+                            if (cookieName.equals(preExistentCookies[i].getName()))
+                            {
+                                return i;
+                            }
+                        }
+                    }
+                    return -1;
+                }
+
+                @Override
+                public String getCookieValueFromCookies(Object cookiesObject, String cookieName)
+                {
+                    Cookie[] cookies = (Cookie[]) cookiesObject;
+
+                    int sessionIndex = getCookieIndexFromCookiesArray(cookieName, cookies);
+                    if (sessionIndex >= 0)
+                    {
+                        return cookies[sessionIndex].getValue();
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+
+                @Override
+                public void addCookiesToClient(HttpClient client,
+                                               Object cookiesObject,
+                                               String policy,
+                                               MuleEvent event,
+                                               URI destinationUri)
+                {
+                    Cookie[] cookies = (Cookie[]) cookiesObject;
+
+                    if (cookies != null && cookies.length > 0)
+                    {
+                        String host = destinationUri.getHost();
+                        String path = destinationUri.getRawPath();
+                        for (Cookie cookie : cookies)
+                        {
+                            client.getState().addCookie(
+                                    new Cookie(host, cookie.getName(), cookie.getValue(), path, cookie.getExpiryDate(),
+                                            cookie.getSecure()));
+                        }
+                        client.getParams().setCookiePolicy(CookieHelper.getCookiePolicy(policy));
+                    }
+                }
+
+                @Override
+                public Object putAndMergeCookie(Object preExistentCookies, Cookie[] newCookiesArray)
+                {
+                    if (newCookiesArray == null)
+                    {
+                        return preExistentCookies;
+                    }
+                    final List<Cookie> cookiesThatAreReallyNew = new ArrayList<Cookie>(newCookiesArray.length);
+                    final Cookie[] preExistentCookiesArray = (Cookie[]) preExistentCookies;
+                    for (Cookie newCookie : newCookiesArray)
+                    {
+                        int newCookieInPreExistentArrayIndex = getCookieIndexFromCookiesArray(newCookie.getName(),
+                                preExistentCookiesArray);
+                        if (newCookieInPreExistentArrayIndex >= 0)
+                        {
+                            // overwrite the old one
+                            preExistentCookiesArray[newCookieInPreExistentArrayIndex] = newCookie;
+                        }
+                        else
+                        {
+                            // needs to add it at the end
+                            cookiesThatAreReallyNew.add(newCookie);
+                        }
+                    }
+
+                    return concatenateCookies(preExistentCookiesArray,
+                            cookiesThatAreReallyNew.toArray(new Cookie[cookiesThatAreReallyNew.size()]));
+                }
+
+                @Override
+                public Object putAndMergeCookie(Object preExistentCookies, Map<String, String> newCookiesMap)
+                {
+                    if (newCookiesMap == null)
+                    {
+                        return putAndMergeCookie(preExistentCookies, (Cookie[]) null);
+                    }
+                    else
+                    {
+                        Cookie[] cookiesArray = new Cookie[newCookiesMap.size()];
+                        int i = 0;
+                        for (Entry<String, String> cookieEntry : newCookiesMap.entrySet())
+                        {
+                            Cookie cookie = new Cookie();
+                            cookie.setName(cookieEntry.getKey());
+                            cookie.setValue(cookieEntry.getValue());
+                            cookiesArray[i++] = cookie;
+                        }
+                        return putAndMergeCookie(preExistentCookies, cookiesArray);
+                    }
+                }
+
+                @Override
+                public Cookie[] asArrayOfCookies(Object cookiesObject)
+                {
+                    if (cookiesObject == null)
+                    {
+                        return ZERO_COOKIES;
+                    }
+                    else
+                    {
+                        return (Cookie[]) cookiesObject;
+                    }
+                }
+
+            },
+
+    /**
+     * <p>
+     * This corresponds to the storage of cookies as {@link Map<String, String>},
+     * where the keys are the cookie names and the values are the cookie values.
+     * </p>
+     * <p>
+     * All the parameters of type {@link Object} in the method of this object are
+     * assumed to be of type {@link Map<String, String>} and won't be checked. They
+     * will be cast to {@link Map} and used as if all the keys and values are of type
+     * {@link String}.
+     */
+    MAP_STRING_STRING
+            {
+                @Override
+                @SuppressWarnings("unchecked")
+                public Object putAndMergeCookie(Object preExistentCookies, String cookieName, String cookieValue)
+                {
+                    final Map<String, String> cookieMap = (Map<String, String>) preExistentCookies;
+
+                    cookieMap.put(cookieName, cookieValue);
+                    return cookieMap;
+                }
+
+                @Override
+                @SuppressWarnings("unchecked")
+                public String getCookieValueFromCookies(Object cookiesObject, String cookieName)
+                {
+                    return ((Map<String, String>) cookiesObject).get(cookieName);
+                }
+
+                @Override
+                @SuppressWarnings("unchecked")
+                public void addCookiesToClient(HttpClient client,
+                                               Object cookiesObject,
+                                               String policy,
+                                               MuleEvent event,
+                                               URI destinationUri)
+                {
+                    Map<String, String> cookieMap = (Map<String, String>) cookiesObject;
+
+                    client.getParams().setCookiePolicy(CookieHelper.getCookiePolicy(policy));
+
+                    String host = destinationUri.getHost();
+                    String path = destinationUri.getRawPath();
+                    Iterator<String> keyIter = cookieMap.keySet().iterator();
+                    while (keyIter.hasNext())
+                    {
+                        String key = keyIter.next();
+                        String cookieValue = cookieMap.get(key);
+
+                        final String value;
+                        if (event != null)
+                        {
+                            value = event.getMuleContext().getExpressionManager().parse(cookieValue, event);
+                        }
+                        else
+                        {
+                            value = cookieValue;
+                        }
+
+                        Cookie cookie = new Cookie(host, key, value, path, null, false);
+                        client.getState().addCookie(cookie);
+                    }
+
+                }
+
+                @Override
+                public Object putAndMergeCookie(Object preExistentCookies, Cookie[] newCookiesArray)
+                {
+                    if (newCookiesArray == null)
+                    {
+                        return preExistentCookies;
+                    }
+                    for (Cookie cookie : newCookiesArray)
+                    {
+                        preExistentCookies = putAndMergeCookie(preExistentCookies, cookie.getName(),
+                                cookie.getValue());
+                    }
+                    return preExistentCookies;
+                }
+
+                @Override
+                public Object putAndMergeCookie(Object preExistentCookies, Map<String, String> newCookiesMap)
+                {
+                    if (newCookiesMap == null)
+                    {
+                        return preExistentCookies;
+                    }
+                    for (Entry<String, String> cookieEntry : newCookiesMap.entrySet())
+                    {
+                        preExistentCookies = putAndMergeCookie(preExistentCookies, cookieEntry.getKey(),
+                                cookieEntry.getValue());
+                    }
+                    return preExistentCookies;
+                }
+
+                @Override
+                @SuppressWarnings("unchecked")
+                public Cookie[] asArrayOfCookies(Object cookiesObject)
+                {
+                    Map<String, String> cookieMap = (Map<String, String>) cookiesObject;
+                    Cookie[] arrayOfCookies = new Cookie[cookieMap.size()];
+                    int i = 0;
+                    for (Entry<String, String> cookieEntry : cookieMap.entrySet())
+                    {
+                        Cookie cookie = new Cookie();
+                        cookie.setName(cookieEntry.getKey());
+                        cookie.setValue(cookieEntry.getValue());
+                        arrayOfCookies[i++] = cookie;
+                    }
+                    return arrayOfCookies;
+                }
+
+            };
+
+    private static final Cookie[] ZERO_COOKIES = new Cookie[0];
+
+    /**
+     * Resolves the cookiesObject to the appropriate {@link CookieStorageType}.
+     */
+    public static CookieStorageType resolveCookieStorageType(Object cookiesObject)
+    {
+        if (cookiesObject == null || cookiesObject instanceof Cookie[])
+        {
+            return CookieStorageType.ARRAY_OF_COOKIES;
+        }
+        else if (cookiesObject instanceof Map)
+        {
+            return CookieStorageType.MAP_STRING_STRING;
+        }
+        else
+        {
+            throw new IllegalArgumentException("Invalid cookiesObject. Only " + Cookie.class + "[] and "
+                                               + Map.class + " are supported: " + cookiesObject);
+        }
+    }
+
+    /**
+     * @see CookieHelper#putAndMergeCookie(Object, String, String)
+     */
+    public abstract Object putAndMergeCookie(Object preExistentCookies, String cookieName, String cookieValue);
+
+    /**
+     * @see CookieHelper#putAndMergeCookie(Object, Cookie[])
+     */
+    public abstract Object putAndMergeCookie(Object preExistentCookies, Cookie[] newCookiesArray);
+
+    /**
+     * @see CookieHelper#putAndMergeCookie(Object, Map)
+     */
+    public abstract Object putAndMergeCookie(Object preExistentCookies, Map<String, String> newCookiesMap);
+
+    /**
+     * @see CookieHelper#getCookieValueFromCookies(Object, String)
+     */
+    public abstract String getCookieValueFromCookies(Object cookiesObject, String cookieName);
+
+    /**
+     * @see CookieHelper#addCookiesToClient(HttpClient, Object, String, MuleEvent, URI)
+     */
+    public abstract void addCookiesToClient(HttpClient client,
+                                            Object cookiesObject,
+                                            String policy,
+                                            MuleEvent event,
+                                            URI destinationUri);
+
+    /**
+     * @see CookieHelper#asArrayOfCookies(Object)
+     */
+    public abstract Cookie[] asArrayOfCookies(Object cookiesObject);
+}
 
 /**
  * <p>
@@ -99,19 +453,17 @@ import org.slf4j.LoggerFactory;
  */
 public class CookieHelper
 {
+    public static final String EXPIRE_PATTERN = "EEE, d-MMM-yyyy HH:mm:ss z";
+    /**
+     * logger used by this class
+     */
+    protected static final Logger logger = LoggerFactory.getLogger(CookieHelper.class);
     /**
      * This is used as the default {@link URI} for
      * {@link #parseCookiesAsAClient(String, String, URI)} and overloading methods
      * for when the {@link URI} supplied is null.
      */
     private static final String DEFAULT_URI_STRING = "http://localhost:80/";
-
-    /**
-     * logger used by this class
-     */
-    protected static final Logger logger = LoggerFactory.getLogger(CookieHelper.class);
-
-	public static final String EXPIRE_PATTERN = "EEE, d-MMM-yyyy HH:mm:ss z";
     private static final SimpleDateFormat EXPIRE_FORMATTER;
 
     static
@@ -129,8 +481,7 @@ public class CookieHelper
     }
 
     /**
-     * @return the {@link CookieSpec} (defaults to {@link RFC2109Spec} when spec is
-     *         null)
+     * @return the {@link CookieSpec} (defaults to {@link RFC2109Spec} when spec is null)
      */
     public static CookieSpec getCookieSpec(String spec)
     {
@@ -145,8 +496,7 @@ public class CookieHelper
     }
 
     /**
-     * @return the cookie policy (defaults to {@link CookiePolicy#RFC_2109} when spec
-     *         is null).
+     * @return the cookie policy (defaults to {@link CookiePolicy#RFC_2109} when spec is null).
      */
     public static String getCookiePolicy(String spec)
     {
@@ -164,7 +514,7 @@ public class CookieHelper
      * @see #parseCookiesAsAClient(String, String, URI)
      */
     public static Cookie[] parseCookiesAsAClient(Header cookieHeader, String spec)
-        throws MalformedCookieException
+            throws MalformedCookieException
     {
         return parseCookiesAsAClient(cookieHeader.getValue(), spec, null);
     }
@@ -173,7 +523,7 @@ public class CookieHelper
      * @see #parseCookiesAsAClient(String, String, URI)
      */
     public static Cookie[] parseCookiesAsAClient(String cookieHeaderValue, String spec)
-        throws MalformedCookieException
+            throws MalformedCookieException
     {
         return parseCookiesAsAClient(cookieHeaderValue, spec, null);
     }
@@ -182,7 +532,7 @@ public class CookieHelper
      * @see #parseCookiesAsAClient(String, String, URI)
      */
     public static Cookie[] parseCookiesAsAClient(Header cookieHeader, String spec, URI uri)
-        throws MalformedCookieException
+            throws MalformedCookieException
     {
         return parseCookiesAsAClient(cookieHeader.getValue(), spec, uri);
     }
@@ -194,13 +544,12 @@ public class CookieHelper
      * connection.
      *
      * @param cookieHeaderValue the value with the cookie/s to parse.
-     * @param spec the spec according to {@link #getCookieSpec(String)} (can be null)
-     * @param uri the uri information that will be use to complete Cookie information
-     *            (host, port and path). If null then the
-     *            <code>DEFAULT_URI_STRING</code> will be used.
+     * @param spec              the spec according to {@link #getCookieSpec(String)} (can be null)
+     * @param uri               the uri information that will be use to complete Cookie information (host, port and path). If null then the
+     *                          <code>DEFAULT_URI_STRING</code> will be used.
      */
     public static Cookie[] parseCookiesAsAClient(String cookieHeaderValue, String spec, URI uri)
-        throws MalformedCookieException
+            throws MalformedCookieException
     {
         if (uri == null)
         {
@@ -239,8 +588,8 @@ public class CookieHelper
             else
             {
                 String message = String.format(
-                    "The uri (%1s) does not specify a port and no default is available for its scheme (%2s).",
-                    uri, scheme);
+                        "The uri (%1s) does not specify a port and no default is available for its scheme (%2s).",
+                        uri, scheme);
                 throw new MalformedCookieException(message);
             }
         }
@@ -252,11 +601,9 @@ public class CookieHelper
      * {@linkplain HttpConstants#HEADER_COOKIE "Cookie"} header that comes from a
      * client to a server. It returns all the Cookies present in the header.
      *
-     * @param header the header from which the cookie will be parsed. Please not that
-     *            only the {@link Header#getValue() value} of this header will be
-     *            used. No validation will be made to make sure that the
-     *            {@linkplain Header#getName() headerName} is actually a
-     *            {@link HttpConstants#HEADER_COOKIE}.
+     * @param header the header from which the cookie will be parsed. Please not that only the {@link Header#getValue() value} of this
+     *               header will be used. No validation will be made to make sure that the {@linkplain Header#getName() headerName} is
+     *               actually a {@link HttpConstants#HEADER_COOKIE}.
      */
     public static Cookie[] parseCookiesAsAServer(Header header, URI uri)
     {
@@ -268,14 +615,13 @@ public class CookieHelper
      * "Cookie"} header that comes from a client to a server. It returns all the
      * Cookies present in the header.
      *
-     * @param headerValue the value of the header from which the cookie will be
-     *            parsed.
+     * @param headerValue the value of the header from which the cookie will be parsed.
      */
     public static Cookie[] parseCookiesAsAServer(String headerValue, URI uri)
     {
         MimeHeaders mimeHeaders = new MimeHeaders();
         mimeHeaders.addValue(HttpConstants.HEADER_COOKIE).setBytes(headerValue.getBytes(), 0,
-            headerValue.length());
+                headerValue.length());
 
         Cookies cs = new Cookies(mimeHeaders);
         Cookie[] cookies = new Cookie[cs.getCookieCount()];
@@ -302,8 +648,9 @@ public class CookieHelper
     protected static Cookie transformServerCookieToClientCookie(ServerCookie serverCookie)
     {
         Cookie clientCookie = new Cookie(serverCookie.getDomain().toString(), serverCookie.getName()
-            .toString(), serverCookie.getValue().toString(), serverCookie.getPath().toString(),
-            serverCookie.getMaxAge(), serverCookie.getSecure());
+                                                                                          .toString(), serverCookie.getValue().toString(),
+                serverCookie.getPath().toString(),
+                serverCookie.getMaxAge(), serverCookie.getSecure());
         clientCookie.setComment(serverCookie.getComment().toString());
         clientCookie.setVersion(serverCookie.getVersion());
         return clientCookie;
@@ -317,7 +664,7 @@ public class CookieHelper
     {
         StringBuffer sb = new StringBuffer();
         ServerCookie.appendCookieValue(sb, cookie.getVersion(), cookie.getName(), cookie.getValue(),
-            cookie.getPath(), cookie.getDomain(), cookie.getComment(), -1, cookie.getSecure(), false);
+                cookie.getPath(), cookie.getDomain(), cookie.getComment(), -1, cookie.getSecure(), false);
 
         Date expiryDate = cookie.getExpiryDate();
         if (expiryDate != null)
@@ -332,21 +679,19 @@ public class CookieHelper
     /**
      * Adds to the client all the cookies present in the cookiesObject.
      *
-     * @param cookiesObject this must be either a {@link Map Map&lt;String,
-     *            String&gt;} or a {@link Cookie Cookie[]}. It can be null.
-     * @param event this one is used only if the cookies are stored in a {@link Map}
-     *            in order to resolve expressions with the {@link ExpressionManager}.
-     * @param destinationUri the host, port and path of this {@link URI} will be used
-     *            as the data of the cookies that are added.
+     * @param cookiesObject  this must be either a {@link Map Map&lt;String, String&gt;} or a {@link Cookie Cookie[]}. It can be null.
+     * @param event          this one is used only if the cookies are stored in a {@link Map} in order to resolve expressions with the
+     *                       {@link ExpressionManager}.
+     * @param destinationUri the host, port and path of this {@link URI} will be used as the data of the cookies that are added.
      */
     public static void addCookiesToClient(HttpClient client,
                                           Object cookiesObject,
-                                             String policy,
-                                             MuleEvent event,
-                                             URI destinationUri)
+                                          String policy,
+                                          MuleEvent event,
+                                          URI destinationUri)
     {
         CookieStorageType.resolveCookieStorageType(cookiesObject).addCookiesToClient(client, cookiesObject,
-            policy, event, destinationUri);
+                policy, event, destinationUri);
     }
 
     /**
@@ -362,16 +707,15 @@ public class CookieHelper
      * Cookies (for example, on Cookie[]).
      * </p>
      *
-     * @param preExistentCookies this must be either a
-     *            <code>java.util.Map&lt;String, String&gt;</code> or a
-     *            <code>Cookie[]</code>. It can be null.
-     * @param cookieName the new cookie name to be added.
-     * @param cookieValue the new cookie value to be added.
+     * @param preExistentCookies this must be either a <code>java.util.Map&lt;String, String&gt;</code> or a <code>Cookie[]</code>. It can
+     *                           be null.
+     * @param cookieName         the new cookie name to be added.
+     * @param cookieValue        the new cookie value to be added.
      */
     public static Object putAndMergeCookie(Object preExistentCookies, String cookieName, String cookieValue)
     {
         return CookieStorageType.resolveCookieStorageType(preExistentCookies).putAndMergeCookie(
-            preExistentCookies, cookieName, cookieValue);
+                preExistentCookies, cookieName, cookieValue);
     }
 
     /**
@@ -389,7 +733,7 @@ public class CookieHelper
     public static Object putAndMergeCookie(Object preExistentCookies, Cookie[] newCookiesArray)
     {
         return CookieStorageType.resolveCookieStorageType(preExistentCookies).putAndMergeCookie(
-            preExistentCookies, newCookiesArray);
+                preExistentCookies, newCookiesArray);
     }
 
     /**
@@ -407,7 +751,7 @@ public class CookieHelper
     public static Object putAndMergeCookie(Object preExistentCookies, Map<String, String> newCookiesMap)
     {
         return CookieStorageType.resolveCookieStorageType(preExistentCookies).putAndMergeCookie(
-            preExistentCookies, newCookiesMap);
+                preExistentCookies, newCookiesMap);
     }
 
     /**
@@ -417,7 +761,7 @@ public class CookieHelper
     public static String getCookieValueFromCookies(Object cookiesObject, String cookieName)
     {
         return CookieStorageType.resolveCookieStorageType(cookiesObject).getCookieValueFromCookies(
-            cookiesObject, cookieName);
+                cookiesObject, cookieName);
     }
 
     /**
@@ -428,363 +772,4 @@ public class CookieHelper
         return CookieStorageType.resolveCookieStorageType(cookiesObject).asArrayOfCookies(cookiesObject);
     }
 
-}
-
-/**
- * This enum type is here to distinguish and handle the two type of cookie storage
- * that we have. The method
- * {@link CookieStorageType#resolveCookieStorageType(Object)} allows you to select
- * the appropriate {@link CookieStorageType} for the cookiesObject that you have.
- */
-enum CookieStorageType
-{
-    /**
-     * <p>
-     * This corresponds to the storage of cookies as a Cookie[].
-     * </p>
-     * <p>
-     * All the parameters of type {@link Object} in the method of this object are
-     * assumed to be of type Cookie[] and won't be checked. They will be cast to
-     * Cookie[].
-     * </p>
-     */
-    ARRAY_OF_COOKIES
-    {
-        @Override
-        public Object putAndMergeCookie(Object preExistentCookies, String cookieName, String cookieValue)
-        {
-            final Cookie[] preExistentCookiesArray = (Cookie[]) preExistentCookies;
-
-            final int sessionIndex = getCookieIndexFromCookiesArray(cookieName, preExistentCookiesArray);
-
-            // domain, path, secure (https) and expiry are handled in method
-            // CookieHelper.addCookiesToClient()
-            final Cookie newSessionCookie = new Cookie(null, cookieName, cookieValue);
-            final Cookie[] mergedCookiesArray;
-            if (sessionIndex >= 0)
-            {
-                preExistentCookiesArray[sessionIndex] = newSessionCookie;
-                mergedCookiesArray = preExistentCookiesArray;
-            }
-            else
-            {
-                Cookie[] newSessionCookieArray = new Cookie[]{newSessionCookie};
-                mergedCookiesArray = concatenateCookies(preExistentCookiesArray, newSessionCookieArray);
-            }
-            return mergedCookiesArray;
-        }
-
-        protected Cookie[] concatenateCookies(Cookie[] cookies1, Cookie[] cookies2)
-        {
-            if (cookies1 == null)
-            {
-                return cookies2;
-            }
-            else if (cookies2 == null)
-            {
-                return null;
-            }
-            else
-            {
-                Cookie[] mergedCookies = new Cookie[cookies1.length + cookies2.length];
-                System.arraycopy(cookies1, 0, mergedCookies, 0, cookies1.length);
-                System.arraycopy(cookies2, 0, mergedCookies, cookies1.length, cookies2.length);
-                return mergedCookies;
-            }
-        }
-
-        protected int getCookieIndexFromCookiesArray(String cookieName, Cookie[] preExistentCookies)
-        {
-            if (preExistentCookies != null && cookieName != null)
-            {
-                for (int i = 0; i < preExistentCookies.length; i++)
-                {
-                    if (cookieName.equals(preExistentCookies[i].getName()))
-                    {
-                        return i;
-                    }
-                }
-            }
-            return -1;
-        }
-
-        @Override
-        public String getCookieValueFromCookies(Object cookiesObject, String cookieName)
-        {
-            Cookie[] cookies = (Cookie[]) cookiesObject;
-
-            int sessionIndex = getCookieIndexFromCookiesArray(cookieName, cookies);
-            if (sessionIndex >= 0)
-            {
-                return cookies[sessionIndex].getValue();
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        @Override
-        public void addCookiesToClient(HttpClient client,
-                                       Object cookiesObject,
-                                       String policy,
-                                       MuleEvent event,
-                                       URI destinationUri)
-        {
-            Cookie[] cookies = (Cookie[]) cookiesObject;
-
-            if (cookies != null && cookies.length > 0)
-            {
-                String host = destinationUri.getHost();
-                String path = destinationUri.getRawPath();
-                for (Cookie cookie : cookies)
-                {
-                    client.getState().addCookie(
-                        new Cookie(host, cookie.getName(), cookie.getValue(), path, cookie.getExpiryDate(),
-                            cookie.getSecure()));
-                }
-                client.getParams().setCookiePolicy(CookieHelper.getCookiePolicy(policy));
-            }
-        }
-
-        @Override
-        public Object putAndMergeCookie(Object preExistentCookies, Cookie[] newCookiesArray)
-        {
-            if (newCookiesArray == null)
-            {
-                return preExistentCookies;
-            }
-            final List<Cookie> cookiesThatAreReallyNew = new ArrayList<Cookie>(newCookiesArray.length);
-            final Cookie[] preExistentCookiesArray = (Cookie[]) preExistentCookies;
-            for (Cookie newCookie : newCookiesArray)
-            {
-                int newCookieInPreExistentArrayIndex = getCookieIndexFromCookiesArray(newCookie.getName(),
-                    preExistentCookiesArray);
-                if (newCookieInPreExistentArrayIndex >= 0)
-                {
-                    // overwrite the old one
-                    preExistentCookiesArray[newCookieInPreExistentArrayIndex] = newCookie;
-                }
-                else
-                {
-                    // needs to add it at the end
-                    cookiesThatAreReallyNew.add(newCookie);
-                }
-            }
-
-            return concatenateCookies(preExistentCookiesArray,
-                cookiesThatAreReallyNew.toArray(new Cookie[cookiesThatAreReallyNew.size()]));
-        }
-
-        @Override
-        public Object putAndMergeCookie(Object preExistentCookies, Map<String, String> newCookiesMap)
-        {
-            if (newCookiesMap == null)
-            {
-                return putAndMergeCookie(preExistentCookies, (Cookie[]) null);
-            }
-            else
-            {
-                Cookie[] cookiesArray = new Cookie[newCookiesMap.size()];
-                int i = 0;
-                for (Entry<String, String> cookieEntry : newCookiesMap.entrySet())
-                {
-                    Cookie cookie = new Cookie();
-                    cookie.setName(cookieEntry.getKey());
-                    cookie.setValue(cookieEntry.getValue());
-                    cookiesArray[i++] = cookie;
-                }
-                return putAndMergeCookie(preExistentCookies, cookiesArray);
-            }
-        }
-
-        @Override
-        public Cookie[] asArrayOfCookies(Object cookiesObject)
-        {
-            if (cookiesObject == null)
-            {
-                return ZERO_COOKIES;
-            }
-            else
-            {
-                return (Cookie[]) cookiesObject;
-            }
-        }
-
-    },
-
-    /**
-     * <p>
-     * This corresponds to the storage of cookies as {@link Map<String, String>},
-     * where the keys are the cookie names and the values are the cookie values.
-     * </p>
-     * <p>
-     * All the parameters of type {@link Object} in the method of this object are
-     * assumed to be of type {@link Map<String, String>} and won't be checked. They
-     * will be cast to {@link Map} and used as if all the keys and values are of type
-     * {@link String}.
-     */
-    MAP_STRING_STRING
-    {
-        @Override
-        @SuppressWarnings("unchecked")
-        public Object putAndMergeCookie(Object preExistentCookies, String cookieName, String cookieValue)
-        {
-            final Map<String, String> cookieMap = (Map<String, String>) preExistentCookies;
-
-            cookieMap.put(cookieName, cookieValue);
-            return cookieMap;
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        public String getCookieValueFromCookies(Object cookiesObject, String cookieName)
-        {
-            return ((Map<String, String>) cookiesObject).get(cookieName);
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        public void addCookiesToClient(HttpClient client,
-                                       Object cookiesObject,
-                                       String policy,
-                                       MuleEvent event,
-                                       URI destinationUri)
-        {
-            Map<String, String> cookieMap = (Map<String, String>) cookiesObject;
-
-            client.getParams().setCookiePolicy(CookieHelper.getCookiePolicy(policy));
-
-            String host = destinationUri.getHost();
-            String path = destinationUri.getRawPath();
-            Iterator<String> keyIter = cookieMap.keySet().iterator();
-            while (keyIter.hasNext())
-            {
-                String key = keyIter.next();
-                String cookieValue = cookieMap.get(key);
-
-                final String value;
-                if (event != null)
-                {
-                    value = event.getMuleContext().getExpressionManager().parse(cookieValue, event);
-                }
-                else
-                {
-                    value = cookieValue;
-                }
-
-                Cookie cookie = new Cookie(host, key, value, path, null, false);
-                client.getState().addCookie(cookie);
-            }
-
-        }
-
-        @Override
-        public Object putAndMergeCookie(Object preExistentCookies, Cookie[] newCookiesArray)
-        {
-            if (newCookiesArray == null)
-            {
-                return preExistentCookies;
-            }
-            for (Cookie cookie : newCookiesArray)
-            {
-                preExistentCookies = putAndMergeCookie(preExistentCookies, cookie.getName(),
-                    cookie.getValue());
-            }
-            return preExistentCookies;
-        }
-
-        @Override
-        public Object putAndMergeCookie(Object preExistentCookies, Map<String, String> newCookiesMap)
-        {
-            if (newCookiesMap == null)
-            {
-                return preExistentCookies;
-            }
-            for (Entry<String, String> cookieEntry : newCookiesMap.entrySet())
-            {
-                preExistentCookies = putAndMergeCookie(preExistentCookies, cookieEntry.getKey(),
-                    cookieEntry.getValue());
-            }
-            return preExistentCookies;
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        public Cookie[] asArrayOfCookies(Object cookiesObject)
-        {
-            Map<String, String> cookieMap = (Map<String, String>) cookiesObject;
-            Cookie[] arrayOfCookies = new Cookie[cookieMap.size()];
-            int i = 0;
-            for (Entry<String, String> cookieEntry : cookieMap.entrySet())
-            {
-                Cookie cookie = new Cookie();
-                cookie.setName(cookieEntry.getKey());
-                cookie.setValue(cookieEntry.getValue());
-                arrayOfCookies[i++] = cookie;
-            }
-            return arrayOfCookies;
-        }
-
-    };
-
-    private static final Cookie[] ZERO_COOKIES = new Cookie[0];
-
-    /**
-     * Resolves the cookiesObject to the appropriate {@link CookieStorageType}.
-     *
-     * @param cookiesObject
-     * @return
-     */
-    public static CookieStorageType resolveCookieStorageType(Object cookiesObject)
-    {
-        if (cookiesObject == null || cookiesObject instanceof Cookie[])
-        {
-            return CookieStorageType.ARRAY_OF_COOKIES;
-        }
-        else if (cookiesObject instanceof Map)
-        {
-            return CookieStorageType.MAP_STRING_STRING;
-        }
-        else
-        {
-            throw new IllegalArgumentException("Invalid cookiesObject. Only " + Cookie.class + "[] and "
-                                               + Map.class + " are supported: " + cookiesObject);
-        }
-    }
-
-    /**
-     * @see CookieHelper#putAndMergeCookie(Object, String, String)
-     */
-    public abstract Object putAndMergeCookie(Object preExistentCookies, String cookieName, String cookieValue);
-
-    /**
-     * @see CookieHelper#putAndMergeCookie(Object, Cookie[])
-     */
-    public abstract Object putAndMergeCookie(Object preExistentCookies, Cookie[] newCookiesArray);
-
-    /**
-     * @see CookieHelper#putAndMergeCookie(Object, Map)
-     */
-    public abstract Object putAndMergeCookie(Object preExistentCookies, Map<String, String> newCookiesMap);
-
-    /**
-     * @see CookieHelper#getCookieValueFromCookies(Object, String)
-     */
-    public abstract String getCookieValueFromCookies(Object cookiesObject, String cookieName);
-
-    /**
-     * @see CookieHelper#addCookiesToClient(HttpClient, Object, String, MuleEvent,
-     *      URI)
-     */
-    public abstract void addCookiesToClient(HttpClient client,
-                                            Object cookiesObject,
-                                            String policy,
-                                            MuleEvent event,
-                                            URI destinationUri);
-
-    /**
-     * @see CookieHelper#asArrayOfCookies(Object)
-     */
-    public abstract Cookie[] asArrayOfCookies(Object cookiesObject);
 }

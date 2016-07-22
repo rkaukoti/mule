@@ -6,11 +6,7 @@
  */
 package org.mule.test.integration.message;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.functional.functional.EventCallback;
 import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.functional.junit4.FunctionalTestCase;
@@ -24,7 +20,10 @@ import java.util.Set;
 
 import javax.activation.DataHandler;
 
-import org.junit.Test;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertThat;
 
 public class AttachmentsPropagationTestCase extends FunctionalTestCase implements EventCallback
 {
@@ -101,12 +100,12 @@ public class AttachmentsPropagationTestCase extends FunctionalTestCase implement
 
         // don't check the attachments now - it seems they're not copied properly from inbound
         // to outbound on flow boundaries
-//        DataHandler attachment = result.getInboundAttachment("SINGLE");
-//        assertNotNull(attachment);
-//        assertEquals(ATTACHMENT_CONTENT, attachment.getContent().toString());
-//
-//        attachment = result.getInboundAttachment("CHAINED");
-//        assertNotNull(attachment);
-//        assertEquals(ATTACHMENT_CONTENT, attachment.getContent().toString());
+        //        DataHandler attachment = result.getInboundAttachment("SINGLE");
+        //        assertNotNull(attachment);
+        //        assertEquals(ATTACHMENT_CONTENT, attachment.getContent().toString());
+        //
+        //        attachment = result.getInboundAttachment("CHAINED");
+        //        assertNotNull(attachment);
+        //        assertEquals(ATTACHMENT_CONTENT, attachment.getContent().toString());
     }
 }

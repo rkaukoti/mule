@@ -9,6 +9,8 @@ package org.mule.runtime.core.util.queue;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.serialization.ObjectSerializer;
 import org.mule.runtime.core.util.Preconditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.Serializable;
@@ -19,9 +21,6 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * {@link TransactionalQueueStoreDelegate} implementation using two files for storing the
@@ -37,7 +36,8 @@ public class DualRandomAccessFileQueueStoreDelegate extends AbstractQueueStoreDe
     public static final String MAX_LENGTH_PER_FILE_PROPERTY_KEY = "mule.queue.maxlength";
     private static final int ONE_MEGABYTE = 1024 * 1024;
     private static final String QUEUE_STORE_DIRECTORY = "queuestore";
-    private static final Integer MAXIMUM_QUEUE_FILE_SIZE_IN_BYTES = Integer.valueOf(System.getProperty(MAX_LENGTH_PER_FILE_PROPERTY_KEY, Integer.valueOf(ONE_MEGABYTE).toString()));
+    private static final Integer MAXIMUM_QUEUE_FILE_SIZE_IN_BYTES =
+            Integer.valueOf(System.getProperty(MAX_LENGTH_PER_FILE_PROPERTY_KEY, Integer.valueOf(ONE_MEGABYTE).toString()));
     private static final String QUEUE_STORE_1_SUFFIX = "-1";
     private static final String QUEUE_STORE_2_SUFFIX = "-2";
     private static final Object QUEUE_DATA_CONTROL_SUFFIX = "-crl";
@@ -60,13 +60,25 @@ public class DualRandomAccessFileQueueStoreDelegate extends AbstractQueueStoreDe
         File queuesDirectory = getQueuesDirectory(workingDirectory);
         if (!queuesDirectory.exists())
         {
-            Preconditions.checkState(queuesDirectory.mkdirs(), "Could not create queue store directory " + queuesDirectory.getAbsolutePath());
+            Preconditions.checkState(queuesDirectory.mkdirs(),
+                    "Could not create queue store directory " + queuesDirectory.getAbsolutePath());
         }
-        randomAccessFileQueueStore1 = new RandomAccessFileQueueStore(new QueueFileProvider(queuesDirectory, queueName + QUEUE_STORE_1_SUFFIX));
-        randomAccessFileQueueStore2 = new RandomAccessFileQueueStore(new QueueFileProvider(queuesDirectory, queueName + QUEUE_STORE_2_SUFFIX));
-        queueControlDataFile = new QueueControlDataFile(new QueueFileProvider(queuesDirectory, queueName + QUEUE_DATA_CONTROL_SUFFIX), randomAccessFileQueueStore1.getFile(), randomAccessFileQueueStore2.getFile());
-        writeFile = queueControlDataFile.getCurrentWriteFile().getAbsolutePath().equals(randomAccessFileQueueStore1.getFile().getAbsolutePath()) ? randomAccessFileQueueStore1 : randomAccessFileQueueStore2;
-        readFile = queueControlDataFile.getCurrentReadFile().getAbsolutePath().equals(randomAccessFileQueueStore1.getFile().getAbsolutePath()) ? randomAccessFileQueueStore1 : randomAccessFileQueueStore2;
+        randomAccessFileQueueStore1 =
+                new RandomAccessFileQueueStore(new QueueFileProvider(queuesDirectory, queueName + QUEUE_STORE_1_SUFFIX));
+        randomAccessFileQueueStore2 =
+                new RandomAccessFileQueueStore(new QueueFileProvider(queuesDirectory, queueName + QUEUE_STORE_2_SUFFIX));
+        queueControlDataFile = new QueueControlDataFile(new QueueFileProvider(queuesDirectory, queueName + QUEUE_DATA_CONTROL_SUFFIX),
+                randomAccessFileQueueStore1.getFile(), randomAccessFileQueueStore2.getFile());
+        writeFile = queueControlDataFile.getCurrentWriteFile()
+                                        .getAbsolutePath()
+                                        .equals(randomAccessFileQueueStore1.getFile().getAbsolutePath()) ?
+                randomAccessFileQueueStore1 :
+                randomAccessFileQueueStore2;
+        readFile = queueControlDataFile.getCurrentReadFile()
+                                       .getAbsolutePath()
+                                       .equals(randomAccessFileQueueStore1.getFile().getAbsolutePath()) ?
+                randomAccessFileQueueStore1 :
+                randomAccessFileQueueStore2;
         filesLock = new ReentrantReadWriteLock();
 
         if (logger.isDebugEnabled())
@@ -75,21 +87,20 @@ public class DualRandomAccessFileQueueStoreDelegate extends AbstractQueueStoreDe
         }
     }
 
-    //only for testing.
-    QueueControlDataFile getQueueControlDataFile()
-    {
-        return queueControlDataFile;
-    }
-
     private static File getQueuesDirectory(String workingDirectory)
     {
         return new File(workingDirectory + File.separator + QUEUE_STORE_DIRECTORY);
     }
 
-
     public static File getFirstQueueFileForTesting(String queueName, String workingDirectory)
     {
         return new File(getQueuesDirectory(workingDirectory), queueName + QUEUE_STORE_1_SUFFIX);
+    }
+
+    //only for testing.
+    QueueControlDataFile getQueueControlDataFile()
+    {
+        return queueControlDataFile;
     }
 
     @Override
@@ -304,7 +315,8 @@ public class DualRandomAccessFileQueueStoreDelegate extends AbstractQueueStoreDe
     {
         if (logger.isDebugEnabled())
         {
-            logger.debug("switching read file. Random 1 size: " + randomAccessFileQueueStore1.getSize() + " , Random 2 size: " + randomAccessFileQueueStore2.getSize());
+            logger.debug("switching read file. Random 1 size: " + randomAccessFileQueueStore1.getSize() + " , Random 2 size: " +
+                         randomAccessFileQueueStore2.getSize());
         }
         readFile = nextReadFile();
         queueControlDataFile.writeControlData(writeFile.getFile(), readFile.getFile());
@@ -320,13 +332,16 @@ public class DualRandomAccessFileQueueStoreDelegate extends AbstractQueueStoreDe
             {
                 if (writeFile.getLength() >= MAXIMUM_QUEUE_FILE_SIZE_IN_BYTES)
                 {
-                    if (randomAccessFileQueueStore1.getLength() >= MAXIMUM_QUEUE_FILE_SIZE_IN_BYTES && randomAccessFileQueueStore2.getLength() >= MAXIMUM_QUEUE_FILE_SIZE_IN_BYTES)
+                    if (randomAccessFileQueueStore1.getLength() >= MAXIMUM_QUEUE_FILE_SIZE_IN_BYTES &&
+                        randomAccessFileQueueStore2.getLength() >= MAXIMUM_QUEUE_FILE_SIZE_IN_BYTES)
                     {
                         return;
                     }
                     if (logger.isDebugEnabled())
                     {
-                        logger.debug("switching write file. Random 1 size: " + randomAccessFileQueueStore1.getLength() + " , Random 2 size: " + randomAccessFileQueueStore2.getLength());
+                        logger.debug(
+                                "switching write file. Random 1 size: " + randomAccessFileQueueStore1.getLength() + " , Random 2 size: " +
+                                randomAccessFileQueueStore2.getLength());
                     }
                     writeFile = (writeFile == randomAccessFileQueueStore1 ? randomAccessFileQueueStore2 : randomAccessFileQueueStore1);
                     queueControlDataFile.writeControlData(writeFile.getFile(), readFile.getFile());

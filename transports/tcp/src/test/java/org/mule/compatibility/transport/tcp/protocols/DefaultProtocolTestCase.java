@@ -6,14 +6,12 @@
  */
 package org.mule.compatibility.transport.tcp.protocols;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.compatibility.transport.tcp.TcpProtocol;
-import org.mule.compatibility.transport.tcp.protocols.DirectProtocol;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 @SmallTest
 public class DefaultProtocolTestCase extends AbstractMuleTestCase
@@ -25,7 +23,7 @@ public class DefaultProtocolTestCase extends AbstractMuleTestCase
     public DefaultProtocolTestCase()
     {
         // for old (full buffer) condition in DefaultProtocol
-//        this(new DefaultProtocol(), 1);
+        //        this(new DefaultProtocol(), 1);
 
         this(new DirectProtocol(), SlowInputStream.FULL_LENGTH);
     }

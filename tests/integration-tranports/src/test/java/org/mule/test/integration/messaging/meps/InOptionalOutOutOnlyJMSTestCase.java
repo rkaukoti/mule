@@ -6,11 +6,12 @@
  */
 package org.mule.test.integration.messaging.meps;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import org.apache.activemq.broker.BrokerService;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -20,28 +21,19 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.activemq.broker.BrokerService;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 @Ignore("MULE-6926: Flaky test")
 public class InOptionalOutOutOnlyJMSTestCase extends FunctionalTestCase
 {
+    public static final long TIMEOUT = 3000;
     @ClassRule
     public static DynamicPort serverPort = new DynamicPort("serverPort");
-
-    public static final long TIMEOUT = 3000;
-
     private static BrokerService broker;
-
-    @Override
-    protected String getConfigFile()
-    {
-        return "org/mule/test/integration/messaging/meps/pattern_In-Optional-Out_Out-Only_JMS-flow.xml";
-    }
 
     @BeforeClass
     public static void startBroker() throws Exception
@@ -55,6 +47,12 @@ public class InOptionalOutOutOnlyJMSTestCase extends FunctionalTestCase
     public static void stopBroker() throws Exception
     {
         broker.stop();
+    }
+
+    @Override
+    protected String getConfigFile()
+    {
+        return "org/mule/test/integration/messaging/meps/pattern_In-Optional-Out_Out-Only_JMS-flow.xml";
     }
 
     @Test

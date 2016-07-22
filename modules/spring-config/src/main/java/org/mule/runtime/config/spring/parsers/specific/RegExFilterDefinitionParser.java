@@ -51,7 +51,7 @@ public class RegExFilterDefinitionParser extends FilterDefinitionParser
                 if (flag == null)
                 {
                     String message = String.format("Invalid flag '%1s'. Must be one of %2s", flagString,
-                        FlagsMapping.keySet().toString());
+                            FlagsMapping.keySet().toString());
                     throw new IllegalArgumentException(message);
                 }
 

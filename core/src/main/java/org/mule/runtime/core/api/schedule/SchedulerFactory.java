@@ -6,16 +6,16 @@
  */
 package org.mule.runtime.core.api.schedule;
 
-import static org.mule.runtime.core.config.i18n.CoreMessages.couldNotRegisterNewScheduler;
-import static org.mule.runtime.core.config.i18n.CoreMessages.objectIsNull;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.context.MuleContextAware;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.config.i18n.CoreMessages.couldNotRegisterNewScheduler;
+import static org.mule.runtime.core.config.i18n.CoreMessages.objectIsNull;
 
 /**
  * <p>
@@ -52,11 +52,11 @@ public abstract class SchedulerFactory<T extends Runnable> implements MuleContex
      * </p>
      *
      * @param job  The {@link Scheduler} job that has to be executed.
-     * @param name The {@link Scheduler} name. This name is the one that is going to be use to register the {@link Scheduler}
-     *             in the {@link org.mule.runtime.core.api.registry.MuleRegistry}
+     * @param name The {@link Scheduler} name. This name is the one that is going to be use to register the {@link Scheduler} in the {@link
+     *             org.mule.runtime.core.api.registry.MuleRegistry}
      * @return A new instance of a {@link Scheduler}. It must never be null.
-     * @throws SchedulerCreationException In case after creating and post processing the {@link Scheduler} it is null or
-     *                                    in case a {@link SchedulerFactoryPostProcessor} fails.
+     * @throws SchedulerCreationException In case after creating and post processing the {@link Scheduler} it is null or in case a {@link
+     *                                    SchedulerFactoryPostProcessor} fails.
      */
     public final Scheduler create(String name, T job) throws SchedulerCreationException
     {
@@ -65,7 +65,7 @@ public abstract class SchedulerFactory<T extends Runnable> implements MuleContex
         checkNull(scheduler);
 
 
-        Scheduler postProcessedScheduler = postProcess(job,scheduler);
+        Scheduler postProcessedScheduler = postProcess(job, scheduler);
 
         checkNull(postProcessedScheduler);
 
@@ -78,8 +78,7 @@ public abstract class SchedulerFactory<T extends Runnable> implements MuleContex
      * of a {@link Scheduler}. It should not Start/Stop it.
      * </p>
      *
-     * @param name
-     * @param job  The Job the {@link org.mule.runtime.core.api.schedule.Scheduler} is going to execute
+     * @param job The Job the {@link org.mule.runtime.core.api.schedule.Scheduler} is going to execute
      * @return The {@link Scheduler} instance
      */
     protected abstract Scheduler doCreate(String name, T job);
@@ -92,7 +91,7 @@ public abstract class SchedulerFactory<T extends Runnable> implements MuleContex
         }
 
         Map<String, SchedulerFactoryPostProcessor> postProcessors = context.getRegistry()
-                .lookupByType(SchedulerFactoryPostProcessor.class);
+                                                                           .lookupByType(SchedulerFactoryPostProcessor.class);
         for (SchedulerFactoryPostProcessor postProcessor : postProcessors.values())
         {
             scheduler = postProcessor.process(job, scheduler);

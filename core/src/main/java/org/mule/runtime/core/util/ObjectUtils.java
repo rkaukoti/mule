@@ -7,14 +7,15 @@
 package org.mule.runtime.core.util;
 
 import org.mule.runtime.api.meta.NameableObject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ObjectUtils extends org.apache.commons.lang.ObjectUtils
 {
 
-    /** logger used by this class */
+    /**
+     * logger used by this class
+     */
     protected static final Logger logger = LoggerFactory.getLogger(ObjectUtils.class);
 
     /**
@@ -22,8 +23,7 @@ public class ObjectUtils extends org.apache.commons.lang.ObjectUtils
      * name.
      *
      * @param obj the object for which the identity description is to be generated
-     * @return the object's identity description in the form of
-     *         "ClassName@IdentityCode" or "null" if the argument was null.
+     * @return the object's identity description in the form of "ClassName@IdentityCode" or "null" if the argument was null.
      */
     public static String identityToShortString(Object obj)
     {
@@ -35,9 +35,9 @@ public class ObjectUtils extends org.apache.commons.lang.ObjectUtils
         {
             return new StringBuilder(40).append(
                     ClassUtils.getSimpleName(obj.getClass()))
-                    .append('@')
-                    .append(Integer.toHexString(System.identityHashCode(obj))
-                    ).toString();
+                                        .append('@')
+                                        .append(Integer.toHexString(System.identityHashCode(obj))
+                                        ).toString();
         }
     }
 
@@ -93,7 +93,7 @@ public class ObjectUtils extends org.apache.commons.lang.ObjectUtils
                 if (logger.isWarnEnabled())
                 {
                     logger.warn("Value exists but cannot be converted to boolean: "
-                            + answer + ", returning default value: " + defaultValue);
+                                + answer + ", returning default value: " + defaultValue);
                 }
                 return defaultValue;
             }
@@ -133,7 +133,7 @@ public class ObjectUtils extends org.apache.commons.lang.ObjectUtils
         if (logger.isWarnEnabled())
         {
             logger.warn("Value exists but cannot be converted to byte: "
-                    + answer + ", returning default value: " + defaultValue);
+                        + answer + ", returning default value: " + defaultValue);
         }
         return defaultValue;
     }
@@ -170,7 +170,7 @@ public class ObjectUtils extends org.apache.commons.lang.ObjectUtils
         if (logger.isWarnEnabled())
         {
             logger.warn("Value exists but cannot be converted to short: "
-                    + answer + ", returning default value: " + defaultValue);
+                        + answer + ", returning default value: " + defaultValue);
         }
         return defaultValue;
     }
@@ -207,7 +207,7 @@ public class ObjectUtils extends org.apache.commons.lang.ObjectUtils
         if (logger.isWarnEnabled())
         {
             logger.warn("Value exists but cannot be converted to int: "
-                    + answer + ", returning default value: " + defaultValue);
+                        + answer + ", returning default value: " + defaultValue);
         }
         return defaultValue;
     }
@@ -245,7 +245,7 @@ public class ObjectUtils extends org.apache.commons.lang.ObjectUtils
         if (logger.isWarnEnabled())
         {
             logger.warn("Value exists but cannot be converted to long: "
-                    + answer + ", returning default value: " + defaultValue);
+                        + answer + ", returning default value: " + defaultValue);
         }
         return defaultValue;
     }
@@ -283,7 +283,7 @@ public class ObjectUtils extends org.apache.commons.lang.ObjectUtils
         if (logger.isWarnEnabled())
         {
             logger.warn("Value exists but cannot be converted to float: "
-                    + answer + ", returning default value: " + defaultValue);
+                        + answer + ", returning default value: " + defaultValue);
         }
         return defaultValue;
     }
@@ -320,7 +320,7 @@ public class ObjectUtils extends org.apache.commons.lang.ObjectUtils
         if (logger.isWarnEnabled())
         {
             logger.warn("Value exists but cannot be converted to double: "
-                    + answer + ", returning default value: " + defaultValue);
+                        + answer + ", returning default value: " + defaultValue);
         }
         return defaultValue;
     }

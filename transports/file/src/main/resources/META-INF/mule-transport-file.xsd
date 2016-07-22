@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/transport/file"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:mule="http://www.mulesoft.org/schema/mule/core"
             xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
             xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
+            xmlns="http://www.mulesoft.org/schema/mule/transport/file"
             targetNamespace="http://www.mulesoft.org/schema/mule/transport/file"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">
@@ -12,13 +12,14 @@
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/core"
                 schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd"/>
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/transports"
-                schemaLocation="http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd" />
-    <xsd:import namespace = "http://www.mulesoft.org/schema/mule/schemadoc"
-                schemaLocation = "http://www.mulesoft.org/schema/mule/schemadoc/current/mule-schemadoc.xsd"/>
+                schemaLocation="http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd"/>
+    <xsd:import namespace="http://www.mulesoft.org/schema/mule/schemadoc"
+                schemaLocation="http://www.mulesoft.org/schema/mule/schemadoc/current/mule-schemadoc.xsd"/>
 
     <xsd:annotation>
         <xsd:documentation>
-            The File transport allows files to be read and written to and from directories on the local file system. The connector can be configured to filter the file it reads and the way files are written, such as whether binary output is used or the file is appended.
+            The File transport allows files to be read and written to and from directories on the local file system. The connector can be configured to filter the file it reads and the way files are
+            written, such as whether binary output is used or the file is appended.
         </xsd:documentation>
         <xsd:appinfo>
             <schemadoc:short-name>File</schemadoc:short-name>
@@ -26,7 +27,8 @@
             <schemadoc:additional-documentation where="before-specific-elements">
                 h2. Filename Parsers
 
-                The filenameParser is set on the connector used when writing files to a directory. The parser will convert the outputPattern attribute to a string using the parser and the current message.
+                The filenameParser is set on the connector used when writing files to a directory. The parser will convert the outputPattern attribute to a string using the parser and the current
+                message.
             </schemadoc:additional-documentation>
             <schemadoc:transport-features receiveEvents="true" dispatchEvents="true"
                                           requestEvents="true"
@@ -39,7 +41,8 @@
     <xsd:element name="connector" type="fileConnectorType" substitutionGroup="mule:abstract-connector">
         <xsd:annotation>
             <xsd:documentation>
-                The File connector configures the default behavior for File endpoints that reference the connector. If there is only one File connector configured, all file endpoints will use that connector.
+                The File connector configures the default behavior for File endpoints that reference the connector. If there is only one File connector configured, all file endpoints will use that
+                connector.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -55,23 +58,28 @@
                 <xsd:attribute name="writeToDirectory" type="xsd:string">
                     <xsd:annotation>
                         <xsd:documentation>
-                            The directory path where the file should be written on dispatch. This path is usually set as the endpoint of the dispatch event, however this allows you to explicitly force a single directory for the connector.
+                            The directory path where the file should be written on dispatch. This path is usually set as the endpoint of the dispatch event, however this allows you to explicitly force
+                            a single directory for the connector.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
                 <xsd:attribute name="readFromDirectory" type="xsd:string">
                     <xsd:annotation>
                         <xsd:documentation>
-                            The directory path where the file should be read from. This path is usually set as the inbound endpoint, however this allows you to explicitly force a single directory for the connector.
+                            The directory path where the file should be read from. This path is usually set as the inbound endpoint, however this allows you to explicitly force a single directory for
+                            the connector.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
                 <xsd:attribute name="autoDelete" type="mule:substitutableBoolean" default="true">
                     <xsd:annotation>
                         <xsd:documentation>
-                            If set to true (the default), it will cause the file to be deleted once it is read. If streaming is turned on, this occurs when the InputStream for the file is closed. Otherwise the file will be read into memory and deleted immediately.
-                            
-                            To access the java.io.File object set this property to false and specify a NoActionTransformer transformer for the connector. Mule will not delete the file, so it is up to the component to delete it when it is done. If the moveToDirectory is set, the file is first moved, then the File object of the moved file is passed to the component. It is recommended that a moveToDirectory is specified when turning autoDelete off.
+                            If set to true (the default), it will cause the file to be deleted once it is read. If streaming is turned on, this occurs when the InputStream for the file is closed.
+                            Otherwise the file will be read into memory and deleted immediately.
+
+                            To access the java.io.File object set this property to false and specify a NoActionTransformer transformer for the connector. Mule will not delete the file, so it is up to
+                            the component to delete it when it is done. If the moveToDirectory is set, the file is first moved, then the File object of the moved file is passed to the component. It is
+                            recommended that a moveToDirectory is specified when turning autoDelete off.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -106,7 +114,8 @@
                 <xsd:attribute name="workFileNamePattern" type="xsd:string">
                     <xsd:annotation>
                         <xsd:documentation>
-                            (As of Mule 2.1.4) The pattern to use when moving a file to a new location determined by the workDirectory property. You can use the patterns supported by the filename parser configured for this connector.
+                            (As of Mule 2.1.4) The pattern to use when moving a file to a new location determined by the workDirectory property. You can use the patterns supported by the filename
+                            parser configured for this connector.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -125,14 +134,16 @@
                  substitutionGroup="mule:abstract-transformer">
         <xsd:annotation>
             <xsd:documentation>
-                The file-to-byte-array-transformer element configures a transformer that reads the contents of a java.io.File into a byte array (byte[]).</xsd:documentation>
+                The file-to-byte-array-transformer element configures a transformer that reads the contents of a java.io.File into a byte array (byte[]).
+            </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
     <xsd:element name="file-to-string-transformer" type="mule:abstractTransformerType"
                  substitutionGroup="mule:abstract-transformer">
         <xsd:annotation>
             <xsd:documentation>
-                The file-to-string-transformer element configures a transformer that reads the contents of a java.io.File into a java.lang.String.</xsd:documentation>
+                The file-to-string-transformer element configures a transformer that reads the contents of a java.io.File into a java.lang.String.
+            </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
 
@@ -140,7 +151,8 @@
                  substitutionGroup="mule:abstract-filter">
         <xsd:annotation>
             <xsd:documentation>
-                The filename-wildcard-filter element configures a filter that can be used to restrict the files being processed by applying wildcard expressions to the filename. For example, you can read only .xml and .txt files by entering the following: &lt;file:filename-wildcard-filter pattern="*.txt,*.xml"/&gt;
+                The filename-wildcard-filter element configures a filter that can be used to restrict the files being processed by applying wildcard expressions to the filename. For example, you can
+                read only .xml and .txt files by entering the following: &lt;file:filename-wildcard-filter pattern="*.txt,*.xml"/&gt;
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -149,7 +161,8 @@
                  substitutionGroup="mule:abstract-filter">
         <xsd:annotation>
             <xsd:documentation>
-                The filename-regex-filter element configures a filter that can be used to restrict the files being processed by applying Java regular expressions to the filename, such as pattern="myCustomerFile(.*)".
+                The filename-regex-filter element configures a filter that can be used to restrict the files being processed by applying Java regular expressions to the filename, such as
+                pattern="myCustomerFile(.*)".
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -191,7 +204,8 @@
     <xsd:complexType name="filenameParserType">
         <xsd:annotation>
             <xsd:documentation>
-                The filenameParser is used when writing files to a directory. The parser will convert the outputPattern attribute to a string using the parser and the current message. The default implmentation used is SimpleFilenameParser.
+                The filenameParser is used when writing files to a directory. The parser will convert the outputPattern attribute to a string using the parser and the current message. The default
+                implmentation used is SimpleFilenameParser.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:complexType>
@@ -207,14 +221,16 @@
         <xsd:attribute name="fileAge" type="mule:substitutableLong">
             <xsd:annotation>
                 <xsd:documentation>
-                    Miniumum age (ms) for a file to be processed. This can be useful when consuming large files. It tells Mule to wait for a period of time before consuming the file, allowing the file to be completely written before the file is processed.
+                    Miniumum age (ms) for a file to be processed. This can be useful when consuming large files. It tells Mule to wait for a period of time before consuming the file, allowing the file
+                    to be completely written before the file is processed.
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
         <xsd:attribute name="moveToPattern" type="xsd:string">
             <xsd:annotation>
                 <xsd:documentation>
-                    The pattern to use when moving a read file to a new location determined by the moveToDirectory property. This can use the patterns supported by the filename parser configured for this connector.
+                    The pattern to use when moving a read file to a new location determined by the moveToDirectory property. This can use the patterns supported by the filename parser configured for
+                    this connector.
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
@@ -228,10 +244,11 @@
     </xsd:attributeGroup>
 
     <xsd:attributeGroup name="inboundEndpointAttributes">
-            <xsd:attribute name="comparator" type="mule:substitutableClass">
+        <xsd:attribute name="comparator" type="mule:substitutableClass">
             <xsd:annotation>
                 <xsd:documentation>
-                    Sorts incoming files using the specified comparator, such as comparator="org.mule.compatibility.transport.file.comparator.OlderFirstComparator". The class must implement the java.util.Comparator interface.
+                    Sorts incoming files using the specified comparator, such as comparator="org.mule.compatibility.transport.file.comparator.OlderFirstComparator". The class must implement the
+                    java.util.Comparator interface.
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
@@ -268,7 +285,8 @@
                  substitutionGroup="abstract-filenameParser">
         <xsd:annotation>
             <xsd:documentation>
-                The expression-filename-parser element configures the ExpressionFilenameParser, which can use any expression language supported by Mule to construct a file name for the current message. Expressions can be xpath, xquery, mvel, header, function, and more.
+                The expression-filename-parser element configures the ExpressionFilenameParser, which can use any expression language supported by Mule to construct a file name for the current
+                message. Expressions can be xpath, xquery, mvel, header, function, and more.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -287,7 +305,7 @@
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
-    
+
     <xsd:complexType name="customFilenameParserType">
         <xsd:complexContent>
             <xsd:extension base="filenameParserType">
@@ -305,7 +323,9 @@
     <xsd:element name="abstract-filenameParser" abstract="true" type="filenameParserType">
         <xsd:annotation>
             <xsd:documentation>
-                The abstract-filenameParser element is a placeholder for filename parser elements. The filename parser is set on the connector used when writing files to a directory. The parser will convert the outputPattern attribute to a string using the parser and the current message. The default implmentation used is expression-filename-parser, but you can also specify a custom-filename-parser. 
+                The abstract-filenameParser element is a placeholder for filename parser elements. The filename parser is set on the connector used when writing files to a directory. The parser will
+                convert the outputPattern attribute to a string using the parser and the current message. The default implmentation used is expression-filename-parser, but you can also specify a
+                custom-filename-parser.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>

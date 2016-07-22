@@ -7,7 +7,6 @@
 package org.mule.runtime.config.spring.parsers.generic;
 
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
-
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;

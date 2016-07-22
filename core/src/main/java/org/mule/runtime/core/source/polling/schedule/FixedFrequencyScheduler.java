@@ -12,14 +12,13 @@ import org.mule.runtime.core.api.lifecycle.LifecycleCallback;
 import org.mule.runtime.core.api.schedule.Scheduler;
 import org.mule.runtime.core.lifecycle.DefaultLifecycleManager;
 import org.mule.runtime.core.lifecycle.SimpleLifecycleManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -32,37 +31,29 @@ import org.slf4j.LoggerFactory;
 public class FixedFrequencyScheduler<T extends Runnable> extends PollScheduler<T>
 {
 
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
-    /**
-     * <p>Thread executor service</p>
-     */
-    private ExecutorService executor;
-
-
-    /**
-     * <p>The {@link TimeUnit} of the scheduler</p>
-     */
-    private TimeUnit timeUnit;
-
-    /**
-     * <p>The frequency of the scheduler in timeUnit</p>
-     */
-    private long frequency;
-
-    /**
-     * <p>The time in timeUnit that it has to wait before executing the first task</p>
-     */
-    private long startDelay;
-
-
-
     /**
      * <p>
      * A {@link SimpleLifecycleManager} to manage the {@link Scheduler} lifecycle.
      * </p>
      */
     private final SimpleLifecycleManager<Scheduler> lifecycleManager;
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
+    /**
+     * <p>Thread executor service</p>
+     */
+    private ExecutorService executor;
+    /**
+     * <p>The {@link TimeUnit} of the scheduler</p>
+     */
+    private TimeUnit timeUnit;
+    /**
+     * <p>The frequency of the scheduler in timeUnit</p>
+     */
+    private long frequency;
+    /**
+     * <p>The time in timeUnit that it has to wait before executing the first task</p>
+     */
+    private long startDelay;
 
     public FixedFrequencyScheduler(String name, long frequency, long startDelay, T job, TimeUnit timeUnit)
     {

@@ -6,13 +6,12 @@
  */
 package org.mule.test.integration.domain.http;
 
+import org.junit.Test;
+import org.mule.functional.junit4.DomainFunctionalTestCase;
+import org.mule.runtime.module.http.internal.request.DefaultHttpRequester;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.module.http.internal.request.DefaultHttpRequester;
-import org.mule.functional.junit4.DomainFunctionalTestCase;
-
-import org.junit.Test;
 
 public class HttpSharedRequestConfigTestCase extends DomainFunctionalTestCase
 {
@@ -29,7 +28,7 @@ public class HttpSharedRequestConfigTestCase extends DomainFunctionalTestCase
     @Override
     public ApplicationConfig[] getConfigResources()
     {
-        return new ApplicationConfig[]{
+        return new ApplicationConfig[] {
                 new ApplicationConfig(FIRST_APP_NAME, new String[] {"domain/http/http-request-app.xml"}),
                 new ApplicationConfig(SECOND_APP_NAME, new String[] {"domain/http/http-request-app.xml"})
         };
@@ -38,8 +37,10 @@ public class HttpSharedRequestConfigTestCase extends DomainFunctionalTestCase
     @Test
     public void useSameRequestConfig() throws Exception
     {
-        final DefaultHttpRequester firstAppRequester = getMuleContextForApp(FIRST_APP_NAME).getRegistry().lookupObject(DefaultHttpRequester.class);
-        final DefaultHttpRequester secondAppRequester = getMuleContextForApp(FIRST_APP_NAME).getRegistry().lookupObject(DefaultHttpRequester.class);
+        final DefaultHttpRequester firstAppRequester =
+                getMuleContextForApp(FIRST_APP_NAME).getRegistry().lookupObject(DefaultHttpRequester.class);
+        final DefaultHttpRequester secondAppRequester =
+                getMuleContextForApp(FIRST_APP_NAME).getRegistry().lookupObject(DefaultHttpRequester.class);
         assertThat(firstAppRequester.getConfig(), is(secondAppRequester.getConfig()));
     }
 

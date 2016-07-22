@@ -6,15 +6,12 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.EXPECT;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.HOST;
-import static org.mule.runtime.module.http.api.HttpHeaders.Values.CONTINUE;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
@@ -30,12 +27,15 @@ import java.net.Socket;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.EXPECT;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.HOST;
+import static org.mule.runtime.module.http.api.HttpHeaders.Values.CONTINUE;
 
 @RunWith(Parameterized.class)
 public class HttpListenerExpectHeaderStreamingNeverTestCase extends AbstractHttpTestCase
@@ -56,21 +56,21 @@ public class HttpListenerExpectHeaderStreamingNeverTestCase extends AbstractHttp
     private InputStream inputStream;
     private OutputStream outputStream;
 
+    public HttpListenerExpectHeaderStreamingNeverTestCase(String persistentConnections)
+    {
+        this.persistentConnections = new SystemProperty("persistentConnections", persistentConnections);
+    }
+
     @Parameterized.Parameters
     public static Collection<Object[]> parameters()
     {
-        return Arrays.asList(new Object[][] {{TRUE.toString()},{FALSE.toString()}});
+        return Arrays.asList(new Object[][] {{TRUE.toString()}, {FALSE.toString()}});
     }
 
     @Override
     protected String getConfigFile()
     {
         return "http-listener-expect-header-streaming-never-config.xml";
-    }
-
-    public HttpListenerExpectHeaderStreamingNeverTestCase(String persistentConnections)
-    {
-        this.persistentConnections = new SystemProperty("persistentConnections", persistentConnections);
     }
 
     @Before

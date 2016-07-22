@@ -43,10 +43,10 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "facet")
 @XmlSeeAlso({
-                    NoFixedFacet.class,
-                    NumFacet.class,
-                    WhiteSpace.class
-            })
+        NoFixedFacet.class,
+        NumFacet.class,
+        WhiteSpace.class
+})
 public class Facet
         extends Annotated
 {
@@ -60,8 +60,7 @@ public class Facet
     /**
      * Gets the value of the value property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getValue()
     {
@@ -71,8 +70,7 @@ public class Facet
     /**
      * Sets the value of the value property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setValue(String value)
     {
@@ -82,8 +80,7 @@ public class Facet
     /**
      * Gets the value of the fixed property.
      *
-     * @return possible object is
-     * {@link Boolean }
+     * @return possible object is {@link Boolean }
      */
     public boolean isFixed()
     {
@@ -100,8 +97,7 @@ public class Facet
     /**
      * Sets the value of the fixed property.
      *
-     * @param value allowed object is
-     *              {@link Boolean }
+     * @param value allowed object is {@link Boolean }
      */
     public void setFixed(Boolean value)
     {

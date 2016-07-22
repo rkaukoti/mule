@@ -6,6 +6,11 @@
  */
 package org.mule.runtime.module.cxf.builder;
 
+import org.apache.cxf.aegis.databinding.AegisDatabinding;
+import org.apache.cxf.databinding.DataBinding;
+import org.apache.cxf.frontend.ServerFactoryBean;
+import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
+import org.apache.cxf.service.invoker.Invoker;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.api.construct.FlowConstructAware;
@@ -14,16 +19,10 @@ import org.mule.runtime.module.cxf.CxfConstants;
 import org.mule.runtime.module.cxf.CxfInboundMessageProcessor;
 import org.mule.runtime.module.cxf.MuleJAXWSInvoker;
 import org.mule.runtime.module.cxf.i18n.CxfMessages;
-
-import javax.xml.namespace.QName;
-
-import org.apache.cxf.aegis.databinding.AegisDatabinding;
-import org.apache.cxf.databinding.DataBinding;
-import org.apache.cxf.frontend.ServerFactoryBean;
-import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
-import org.apache.cxf.service.invoker.Invoker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.xml.namespace.QName;
 
 /**
  * Builds a CXF web service MessageProcessor using either the JAX-WS or
@@ -34,15 +33,14 @@ import org.slf4j.LoggerFactory;
  * <li>The builder will use the JAX-WS frontend by default.</li>
  */
 public class WebServiceMessageProcessorBuilder
-    extends AbstractInboundMessageProcessorBuilder implements FlowConstructAware
+        extends AbstractInboundMessageProcessorBuilder implements FlowConstructAware
 {
     protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
+    protected FlowConstruct flowConstruct;
     private DataBinding databinding;
     private String frontend = CxfConstants.JAX_WS_FRONTEND;
-    protected FlowConstruct flowConstruct;
     private Class<?> serviceClass;
-    
+
     @Override
     protected ServerFactoryBean createServerFactory() throws Exception
     {
@@ -75,7 +73,7 @@ public class WebServiceMessageProcessorBuilder
             sfb.setDataBinding(databinding);
         }
 
-        if(getService() != null && getNamespace() != null)
+        if (getService() != null && getNamespace() != null)
         {
             sfb.setServiceName(new QName(getNamespace(), getService()));
         }
@@ -91,7 +89,7 @@ public class WebServiceMessageProcessorBuilder
         {
             invoker = new MuleJAXWSInvoker(invoker);
         }
-        
+
         return invoker;
     }
 
@@ -123,6 +121,7 @@ public class WebServiceMessageProcessorBuilder
     {
         this.flowConstruct = flowConstruct;
     }
+
     public String getFrontend()
     {
         return frontend;
@@ -131,7 +130,6 @@ public class WebServiceMessageProcessorBuilder
     /**
      * Whether to use the simple frontend or JAX-WS frontend. Valid values
      * are "simple" or "jaxws".
-     * @param frontend
      */
     public void setFrontend(String frontend)
     {

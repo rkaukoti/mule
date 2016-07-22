@@ -6,12 +6,10 @@
  */
 package org.mule.runtime.module.http.internal.request;
 
-import static java.lang.String.format;
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
-
 import org.mule.compatibility.transport.socket.api.TcpClientSocketProperties;
 import org.mule.compatibility.transport.socket.internal.DefaultTcpClientSocketProperties;
+import org.mule.runtime.api.tls.TlsContextFactory;
+import org.mule.runtime.api.tls.TlsContextFactoryBuilder;
 import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
@@ -21,9 +19,8 @@ import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.lifecycle.LifecycleUtils;
 import org.mule.runtime.core.api.lifecycle.Startable;
 import org.mule.runtime.core.api.lifecycle.Stoppable;
-import org.mule.runtime.api.tls.TlsContextFactory;
-import org.mule.runtime.api.tls.TlsContextFactoryBuilder;
 import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.mule.runtime.core.util.concurrent.ThreadNameHelper;
 import org.mule.runtime.module.http.api.HttpAuthentication;
 import org.mule.runtime.module.http.api.HttpConstants;
 import org.mule.runtime.module.http.api.requester.HttpRequesterConfig;
@@ -32,14 +29,18 @@ import org.mule.runtime.module.http.api.requester.HttpStreamingType;
 import org.mule.runtime.module.http.api.requester.proxy.ProxyConfig;
 import org.mule.runtime.module.http.internal.request.grizzly.GrizzlyHttpClient;
 import org.mule.runtime.module.tls.api.DefaultTlsContextFactoryBuilder;
-import org.mule.runtime.core.util.concurrent.ThreadNameHelper;
 
 import java.net.CookieManager;
 
 import javax.inject.Inject;
 
+import static java.lang.String.format;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
 
-public class DefaultHttpRequesterConfig extends AbstractAnnotatedObject implements HttpRequesterConfig, Initialisable, Stoppable, Startable, MuleContextAware
+
+public class DefaultHttpRequesterConfig extends AbstractAnnotatedObject
+        implements HttpRequesterConfig, Initialisable, Stoppable, Startable, MuleContextAware
 {
     public static final String OBJECT_HTTP_CLIENT_FACTORY = "_httpClientFactory";
     private static final int UNLIMITED_CONNECTIONS = -1;
@@ -92,7 +93,8 @@ public class DefaultHttpRequesterConfig extends AbstractAnnotatedObject implemen
         if (protocol.equals(HTTP) && tlsContext != null)
         {
             throw new InitialisationException(CoreMessages.createStaticMessage("TlsContext cannot be configured with protocol HTTP, " +
-                   "when using tls:context you must set attribute protocol=\"HTTPS\""), this);
+                                                                               "when using tls:context you must set attribute protocol=\"HTTPS\""),
+                    this);
         }
 
         if (protocol.equals(HTTPS) && tlsContext == null)
@@ -135,7 +137,8 @@ public class DefaultHttpRequesterConfig extends AbstractAnnotatedObject implemen
     {
         if (maxConnections < UNLIMITED_CONNECTIONS || maxConnections == 0)
         {
-            throw new InitialisationException(CoreMessages.createStaticMessage("The maxConnections parameter only allows positive values or -1 for unlimited concurrent connections."), this);
+            throw new InitialisationException(CoreMessages.createStaticMessage(
+                    "The maxConnections parameter only allows positive values or -1 for unlimited concurrent connections."), this);
         }
 
         if (!usePersistentConnections)

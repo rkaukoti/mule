@@ -8,17 +8,16 @@
 package org.mule.runtime.core.streaming;
 
 import org.mule.runtime.core.api.MuleException;
-
-import java.util.NoSuchElementException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.NoSuchElementException;
 
 /**
  * Base implementation of {@link Consumer}. This template class takes care of the
  * contract's subtleties like returning fast when closed and throwing the correct
  * types of exceptions
- * 
+ *
  * @param <T> the type that the consumer will return
  * @param <P> the type that the producer generates
  * @since 3.5.0
@@ -40,16 +39,15 @@ public abstract class AbstractConsumer<T, P> implements Consumer<T>
      * Implement this method to actually consume the producer without worrying about
      * exception types or checking fo this consumer to be closed. If the producer is
      * consumed then simply return <code>null</code>
-     * 
+     *
      * @return a new item or <code>null</code>
-     * @throws NoSuchElementException
      */
     protected abstract T doConsume() throws NoSuchElementException;
 
     /**
      * Implement this method to actualy check for the {@link Producer} being fully
      * consumed without worrying about it being closed or throwing any exceptions
-     * 
+     *
      * @return whether the {@link Producer} has been consumed or not
      */
     protected abstract boolean checkConsumed();

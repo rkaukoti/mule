@@ -6,8 +6,13 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.apache.cxf.BusFactory;
+import org.apache.cxf.helpers.IOUtils;
+import org.apache.cxf.mime.TestMtom;
+import org.apache.cxf.mime.TestMtomService;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
 
@@ -22,13 +27,8 @@ import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Holder;
 import javax.xml.ws.soap.SOAPBinding;
 
-import org.apache.cxf.BusFactory;
-import org.apache.cxf.helpers.IOUtils;
-import org.apache.cxf.mime.TestMtom;
-import org.apache.cxf.mime.TestMtomService;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @Ignore("Broken on removing services")
 public class MtomTestCase extends FunctionalTestCase
@@ -59,7 +59,7 @@ public class MtomTestCase extends FunctionalTestCase
 
         BindingProvider bp = ((BindingProvider) port);
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY,
-            "http://localhost:" + dynamicPort.getNumber() + "/services/mtom");
+                "http://localhost:" + dynamicPort.getNumber() + "/services/mtom");
         ((SOAPBinding) bp.getBinding()).setMTOMEnabled(true);
         // Client client = ClientProxy.getClient(port);
         // new LoggingFeature().initialize(client, null);

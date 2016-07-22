@@ -33,7 +33,7 @@ public class TestContextFactory extends InMemoryContextFactory
         populateTestData(context);
         return context;
     }
-    
+
     protected void populateTestData(Context context) throws NamingException
     {
         context.bind("fruit/apple", new Apple());

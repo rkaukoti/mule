@@ -14,15 +14,14 @@ import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.ValueMap;
 import org.mule.runtime.config.spring.parsers.generic.AutoIdUtils;
 import org.mule.runtime.core.util.ArrayUtils;
-
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
+
+import java.util.Map;
 
 /**
  * This allows a definition parsers to be dynamically represented by different
@@ -34,11 +33,11 @@ import org.w3c.dom.Element;
  * same schema, for example.</p>
  */
 public abstract class AbstractDelegatingDefinitionParser extends AbstractBeanDefinitionParser
-    implements MuleDefinitionParser
+        implements MuleDefinitionParser
 {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
-    
+
     private MuleDefinitionParser[] delegates;
 
     protected AbstractDelegatingDefinitionParser()

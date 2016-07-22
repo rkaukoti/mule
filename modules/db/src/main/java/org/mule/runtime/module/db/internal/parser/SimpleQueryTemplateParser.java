@@ -13,14 +13,13 @@ import org.mule.runtime.module.db.internal.domain.param.QueryParam;
 import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
 import org.mule.runtime.module.db.internal.domain.query.QueryType;
 import org.mule.runtime.module.db.internal.domain.type.UnknownDbType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Simple SQL parser
@@ -61,6 +60,76 @@ public class SimpleQueryTemplateParser implements QueryTemplateParser
     private final Pattern deleteMatcher = Pattern.compile(DELETE);
     private final Pattern truncateMatcher = Pattern.compile(TRUNCATE);
     private final Pattern mergeMatcher = Pattern.compile(MERGE_REGEX);
+
+    private static boolean isParameterSeparator(char c)
+    {
+        if (Character.isWhitespace(c))
+        {
+            return true;
+        }
+        for (char separator : PARAMETER_SEPARATORS)
+        {
+            if (c == separator)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static int skipCommentsAndQuotes(char[] statement, int position)
+    {
+        for (int i = 0; i < BEGIN_SKIP.length; i++)
+        {
+            if (statement[position] == BEGIN_SKIP[i].charAt(0))
+            {
+                boolean match = true;
+                for (int j = 1; j < BEGIN_SKIP[i].length(); j++)
+                {
+                    if (!(statement[position + j] == BEGIN_SKIP[i].charAt(j)))
+                    {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match)
+                {
+                    int offset = BEGIN_SKIP[i].length();
+                    for (int m = position + offset; m < statement.length; m++)
+                    {
+                        if (statement[m] == END_SKIP[i].charAt(0))
+                        {
+                            boolean endMatch = true;
+                            int endPos = m;
+                            for (int n = 1; n < END_SKIP[i].length(); n++)
+                            {
+                                if (m + n >= statement.length)
+                                {
+                                    // last comment not closed properly
+                                    return statement.length;
+                                }
+                                if (!(statement[m + n] == END_SKIP[i].charAt(n)))
+                                {
+                                    endMatch = false;
+                                    break;
+                                }
+                                endPos = m + n;
+                            }
+                            if (endMatch)
+                            {
+                                // found character sequence ending comment or quote
+                                return endPos + 1;
+                            }
+                        }
+                    }
+                    // character sequence ending comment or quote not found
+                    return statement.length;
+                }
+
+            }
+        }
+        return position;
+    }
 
     @Override
     public QueryTemplate parse(String sql)
@@ -274,76 +343,6 @@ public class SimpleQueryTemplateParser implements QueryTemplateParser
         Matcher m = selectMatcher.matcher(sqlText);
 
         return m.matches();
-    }
-
-    private static boolean isParameterSeparator(char c)
-    {
-        if (Character.isWhitespace(c))
-        {
-            return true;
-        }
-        for (char separator : PARAMETER_SEPARATORS)
-        {
-            if (c == separator)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static int skipCommentsAndQuotes(char[] statement, int position)
-    {
-        for (int i = 0; i < BEGIN_SKIP.length; i++)
-        {
-            if (statement[position] == BEGIN_SKIP[i].charAt(0))
-            {
-                boolean match = true;
-                for (int j = 1; j < BEGIN_SKIP[i].length(); j++)
-                {
-                    if (!(statement[position + j] == BEGIN_SKIP[i].charAt(j)))
-                    {
-                        match = false;
-                        break;
-                    }
-                }
-                if (match)
-                {
-                    int offset = BEGIN_SKIP[i].length();
-                    for (int m = position + offset; m < statement.length; m++)
-                    {
-                        if (statement[m] == END_SKIP[i].charAt(0))
-                        {
-                            boolean endMatch = true;
-                            int endPos = m;
-                            for (int n = 1; n < END_SKIP[i].length(); n++)
-                            {
-                                if (m + n >= statement.length)
-                                {
-                                    // last comment not closed properly
-                                    return statement.length;
-                                }
-                                if (!(statement[m + n] == END_SKIP[i].charAt(n)))
-                                {
-                                    endMatch = false;
-                                    break;
-                                }
-                                endPos = m + n;
-                            }
-                            if (endMatch)
-                            {
-                                // found character sequence ending comment or quote
-                                return endPos + 1;
-                            }
-                        }
-                    }
-                    // character sequence ending comment or quote not found
-                    return statement.length;
-                }
-
-            }
-        }
-        return position;
     }
 
 }

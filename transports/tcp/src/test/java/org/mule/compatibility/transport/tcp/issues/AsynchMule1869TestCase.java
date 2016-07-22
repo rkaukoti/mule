@@ -6,9 +6,8 @@
  */
 package org.mule.compatibility.transport.tcp.issues;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -18,8 +17,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class AsynchMule1869TestCase extends FunctionalTestCase
 {
@@ -47,7 +46,7 @@ public class AsynchMule1869TestCase extends FunctionalTestCase
         // MULE-2754
         Thread.sleep(100);
 
-        MuleMessage result =  client.request("asyncClientEndpoint", 10000);
+        MuleMessage result = client.request("asyncClientEndpoint", 10000);
         assertNotNull("No message received", result);
         assertEquals(TEST_MESSAGE + " Received Async", getPayloadAsString(result));
     }

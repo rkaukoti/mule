@@ -6,16 +6,15 @@
  */
 package org.mule.test.integration.routing.outbound;
 
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.context.notification.ExceptionNotificationListener;
 import org.mule.runtime.core.context.notification.ExceptionNotification;
-import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.util.concurrent.Latch;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.junit.Assert.fail;
 
 public class UntilSuccessfulRetryExhaustedTestCase extends FunctionalTestCase
 {
@@ -24,12 +23,13 @@ public class UntilSuccessfulRetryExhaustedTestCase extends FunctionalTestCase
     {
         return "org/mule/test/integration/routing/outbound/until-successful-retry-exhausted.xml";
     }
-    
+
     @Test
     public void onRetryExhaustedCallExceptionStrategy() throws Exception
     {
         final Latch exceptionStrategyCalledLatch = new Latch();
-        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
+        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>()
+        {
             @Override
             public void onNotification(ExceptionNotification notification)
             {

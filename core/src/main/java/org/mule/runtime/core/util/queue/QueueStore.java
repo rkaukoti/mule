@@ -8,8 +8,6 @@ package org.mule.runtime.core.util.queue;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.NotImplementedException;
-
 /**
  * Internal queue interface that hold queue configuration that will execute operations directly to the queue storage.
  * Stores information about a Queue.

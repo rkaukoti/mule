@@ -9,11 +9,10 @@ package org.mule.runtime.config.spring.dsl.spring;
 import org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinition;
 import org.mule.runtime.config.spring.dsl.model.ComponentModel;
 import org.mule.runtime.config.spring.dsl.processor.ObjectTypeVisitor;
-
-import java.util.Map;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.ManagedList;
+
+import java.util.Map;
 
 /**
  * {@code BeanDefinitionCreator} that handles components that define a mp in the configuration.
@@ -51,9 +50,9 @@ public class MapBeanDefinitionCreator extends BeanDefinitionCreator
                 managedList.add(innerComponent.getBeanDefinition());
             }
             componentModel.setBeanDefinition(BeanDefinitionBuilder.genericBeanDefinition(MapFactoryBean.class)
-                                                     .addConstructorArgValue(managedList)
-                                                     .addConstructorArgValue(type)
-                                                     .getBeanDefinition()
+                                                                  .addConstructorArgValue(managedList)
+                                                                  .addConstructorArgValue(type)
+                                                                  .getBeanDefinition()
             );
             return true;
         }

@@ -6,6 +6,12 @@
  */
 package org.mule.runtime.config.spring.dsl.api;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
 import static java.lang.String.format;
 import static org.hamcrest.core.Is.is;
 import static org.junit.rules.ExpectedException.none;
@@ -14,12 +20,6 @@ import static org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinition
 import static org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinition.TYPE_CONVERTER_AND_UNKNOWN_TYPE_MESSAGE;
 import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromConfigurationAttribute;
 import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 @SmallTest
 public class ComponentBuildingDefinitionTestCase extends AbstractMuleTestCase

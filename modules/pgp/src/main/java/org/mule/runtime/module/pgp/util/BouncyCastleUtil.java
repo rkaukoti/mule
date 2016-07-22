@@ -10,12 +10,14 @@ import org.bouncycastle.openpgp.operator.bc.BcKeyFingerprintCalculator;
 import org.bouncycastle.openpgp.operator.bc.BcPBESecretKeyDecryptorBuilder;
 import org.bouncycastle.openpgp.operator.bc.BcPGPDigestCalculatorProvider;
 
-public class BouncyCastleUtil {
+public class BouncyCastleUtil
+{
 
     public static final BcKeyFingerprintCalculator KEY_FINGERPRINT_CALCULATOR = new BcKeyFingerprintCalculator();
 
     private static final BcPGPDigestCalculatorProvider PGP_DIGEST_CALCULATOR_PROVIDER = new BcPGPDigestCalculatorProvider();
 
-    public static final BcPBESecretKeyDecryptorBuilder PBE_SECRET_KEY_DECRYPTOR_BUILDER = new BcPBESecretKeyDecryptorBuilder(PGP_DIGEST_CALCULATOR_PROVIDER);
+    public static final BcPBESecretKeyDecryptorBuilder PBE_SECRET_KEY_DECRYPTOR_BUILDER =
+            new BcPBESecretKeyDecryptorBuilder(PGP_DIGEST_CALCULATOR_PROVIDER);
 
 }

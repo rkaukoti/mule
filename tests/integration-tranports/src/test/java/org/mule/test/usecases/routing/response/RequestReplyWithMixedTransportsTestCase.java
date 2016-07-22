@@ -6,10 +6,9 @@
  */
 package org.mule.test.usecases.routing.response;
 
-import org.mule.tck.junit4.rule.DynamicPort;
-
 import org.junit.Ignore;
 import org.junit.Rule;
+import org.mule.tck.junit4.rule.DynamicPort;
 
 @Ignore("See MULE-9198")
 public class RequestReplyWithMixedTransportsTestCase extends RequestReplyInFlowTestCase

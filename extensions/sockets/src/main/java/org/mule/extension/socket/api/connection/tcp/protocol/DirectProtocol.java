@@ -6,7 +6,9 @@
  */
 package org.mule.extension.socket.api.connection.tcp.protocol;
 
-import static org.mule.extension.socket.internal.SocketUtils.getByteArray;
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.mule.extension.socket.api.socket.tcp.TcpProtocol;
 import org.mule.runtime.extension.api.annotation.Parameter;
 import org.mule.runtime.extension.api.annotation.param.Optional;
@@ -15,9 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import static org.mule.extension.socket.internal.SocketUtils.getByteArray;
 
 /**
  * This protocol is an application level {@link TcpProtocol} that does nothing.
@@ -37,12 +37,10 @@ public class DirectProtocol extends AbstractByteProtocol
 
     private static final Log LOGGER = LogFactory.getLog(DirectProtocol.class);
     private static final int DEFAULT_BUFFER_SIZE = 8192;
-
+    protected int bufferSize;
     @Parameter
     @Optional(defaultValue = "true")
     private boolean payloadOnly = true;
-
-    protected int bufferSize;
 
     public DirectProtocol()
     {

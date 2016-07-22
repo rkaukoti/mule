@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.config.dsl.connection;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 import org.mule.runtime.api.config.PoolingProfile;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.ConfigurationException;
@@ -18,6 +17,8 @@ import org.mule.runtime.module.extension.internal.config.dsl.AbstractExtensionOb
 import org.mule.runtime.module.extension.internal.runtime.config.ConnectionProviderObjectBuilder;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ConnectionProviderResolver;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSet;
+
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * A {@link AbstractExtensionObjectFactory} that produces {@link ConnectionProviderResolver}
@@ -44,10 +45,13 @@ public class ConnectionProviderObjectFactory extends AbstractExtensionObjectFact
     public ConnectionProviderResolver getObject() throws Exception
     {
         ResolverSet resolverSet = getParametersAsResolverSet();
-        return new ConnectionProviderResolver(new ConnectionProviderObjectBuilder(providerModel, resolverSet, poolingProfile, disableValidation, retryPolicyTemplate, getConnectionManager()));
+        return new ConnectionProviderResolver(
+                new ConnectionProviderObjectBuilder(providerModel, resolverSet, poolingProfile, disableValidation, retryPolicyTemplate,
+                        getConnectionManager()));
     }
 
-    private ConnectionManagerAdapter getConnectionManager() throws ConfigurationException {
+    private ConnectionManagerAdapter getConnectionManager() throws ConfigurationException
+    {
         try
         {
             return muleContext.getRegistry().lookupObject(ConnectionManagerAdapter.class);

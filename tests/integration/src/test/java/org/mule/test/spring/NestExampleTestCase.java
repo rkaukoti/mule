@@ -6,9 +6,8 @@
  */
 package org.mule.test.spring;
 
-import org.mule.functional.junit4.FunctionalTestCase;
-
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 
 public class NestExampleTestCase extends FunctionalTestCase
 {

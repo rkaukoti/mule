@@ -6,12 +6,11 @@
  */
 package org.mule.test.infrastructure.process.matchers;
 
-import org.mule.test.infrastructure.process.MuleProcessController;
-
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.mule.test.infrastructure.process.MuleProcessController;
 
 public class Deployment extends TypeSafeMatcher<MuleProcessController>
 {
@@ -21,6 +20,12 @@ public class Deployment extends TypeSafeMatcher<MuleProcessController>
     public Deployment(String applicationName)
     {
         this.applicationName = applicationName;
+    }
+
+    @Factory
+    public static <T> Matcher<MuleProcessController> hasDeployed(String applicationName)
+    {
+        return new Deployment(applicationName);
     }
 
     @Override
@@ -33,12 +38,6 @@ public class Deployment extends TypeSafeMatcher<MuleProcessController>
     public void describeTo(Description description)
     {
         description.appendText("a Mule Standalone server that has successfully deployed: " + applicationName);
-    }
-
-    @Factory
-    public static <T> Matcher<MuleProcessController> hasDeployed(String applicationName)
-    {
-        return new Deployment(applicationName);
     }
 
 };

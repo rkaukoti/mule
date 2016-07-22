@@ -6,19 +6,18 @@
  */
 package org.mule.test.integration.filter;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.MuleEvent;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleEvent;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertThat;
 
 public class RegexFilterTestCase extends FunctionalTestCase
 {

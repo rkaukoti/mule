@@ -7,6 +7,15 @@
 
 package org.mule.tck.internal.client;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.mule.functional.client.TestConnectorConfig;
+import org.mule.functional.client.TestConnectorMessageProcessorProvider;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.client.SimpleOptionsBuilder;
+import org.mule.runtime.core.api.processor.MessageProcessor;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
@@ -17,15 +26,6 @@ import static org.mockito.Mockito.when;
 import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
 import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
 import static org.mule.runtime.core.api.client.SimpleOptionsBuilder.newOptions;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.client.SimpleOptionsBuilder;
-import org.mule.runtime.core.api.processor.MessageProcessor;
-import org.mule.functional.client.TestConnectorConfig;
-import org.mule.functional.client.TestConnectorMessageProcessorProvider;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class TestConnectorMessageProcessorProviderTestCase extends AbstractMuleTestCase
 {
@@ -47,7 +47,8 @@ public class TestConnectorMessageProcessorProviderTestCase extends AbstractMuleT
     @Test
     public void sameConfigReturnsSameInstanceUsingGenericOptions() throws Exception
     {
-        final MessageProcessor messageProcessor = messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), REQUEST_RESPONSE);
+        final MessageProcessor messageProcessor =
+                messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), REQUEST_RESPONSE);
 
         assertThat(messageProcessor, is(not(nullValue())));
         assertThat(messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), REQUEST_RESPONSE), is(messageProcessor));
@@ -56,9 +57,11 @@ public class TestConnectorMessageProcessorProviderTestCase extends AbstractMuleT
     @Test
     public void sameConfigReturnsDifferentInstanceUsingDifferentGenericOptions() throws Exception
     {
-        final MessageProcessor messageProcessor1 = messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), REQUEST_RESPONSE);
-        final MessageProcessor messageProcessor2 = messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().responseTimeout(1000).build(), REQUEST_RESPONSE);
-        
+        final MessageProcessor messageProcessor1 =
+                messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), REQUEST_RESPONSE);
+        final MessageProcessor messageProcessor2 =
+                messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().responseTimeout(1000).build(), REQUEST_RESPONSE);
+
         assertThat(messageProcessor2, not(is(messageProcessor1)));
     }
 
@@ -66,8 +69,9 @@ public class TestConnectorMessageProcessorProviderTestCase extends AbstractMuleT
     public void differentPathReturnsDifferentOperations() throws Exception
     {
         final MessageProcessor messageProcessor1 = messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), ONE_WAY);
-        final MessageProcessor messageProcessor2 = messageProcessorProvider.getMessageProcessor(ANOTHER_PATH, newOptions().build(), ONE_WAY);
-        
+        final MessageProcessor messageProcessor2 =
+                messageProcessorProvider.getMessageProcessor(ANOTHER_PATH, newOptions().build(), ONE_WAY);
+
         assertThat(messageProcessor2, not(is(messageProcessor1)));
     }
 
@@ -75,19 +79,22 @@ public class TestConnectorMessageProcessorProviderTestCase extends AbstractMuleT
     public void differentExchangePatternsReturnsDifferentOperations() throws Exception
     {
         final MessageProcessor messageProcessor1 = messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), ONE_WAY);
-        final MessageProcessor messageProcessor2 = messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), REQUEST_RESPONSE);
-        
+        final MessageProcessor messageProcessor2 =
+                messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), REQUEST_RESPONSE);
+
         assertThat(messageProcessor2, not(is(messageProcessor1)));
     }
 
     @Test
     public void disposeInvalidatesCache() throws Exception
     {
-        final MessageProcessor messageProcessor1 = messageProcessorProvider.getMessageProcessor(PATH_URL, SimpleOptionsBuilder.newOptions().build(), REQUEST_RESPONSE);
+        final MessageProcessor messageProcessor1 =
+                messageProcessorProvider.getMessageProcessor(PATH_URL, SimpleOptionsBuilder.newOptions().build(), REQUEST_RESPONSE);
         messageProcessorProvider.dispose();
-        
-        final MessageProcessor messageProcessor2 = messageProcessorProvider.getMessageProcessor(PATH_URL, SimpleOptionsBuilder.newOptions().build(), REQUEST_RESPONSE);
-        
+
+        final MessageProcessor messageProcessor2 =
+                messageProcessorProvider.getMessageProcessor(PATH_URL, SimpleOptionsBuilder.newOptions().build(), REQUEST_RESPONSE);
+
         assertThat(messageProcessor2, not(is(messageProcessor1)));
     }
 

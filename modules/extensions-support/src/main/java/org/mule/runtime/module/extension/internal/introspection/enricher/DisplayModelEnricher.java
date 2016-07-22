@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getAnnotation;
-
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Summary;
 import org.mule.runtime.extension.api.introspection.declaration.DescribingContext;
@@ -31,6 +29,8 @@ import org.mule.runtime.module.extension.internal.util.IdempotentDeclarationWalk
 
 import java.lang.reflect.AnnotatedElement;
 import java.util.Optional;
+
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getAnnotation;
 
 /**
  * Enriches the {@link ExtensionDeclarer} with a {@link DisplayModelProperty} from annotated elements with
@@ -80,8 +80,10 @@ public final class DisplayModelEnricher extends AbstractAnnotatedModelEnricher
 
     private void enrichParameter(ParameterDeclaration declaration)
     {
-        final Optional<DeclaringMemberModelProperty> declaringMemberProperty = declaration.getModelProperty(DeclaringMemberModelProperty.class);
-        final Optional<ImplementingParameterModelProperty> implementingParameterProperty = declaration.getModelProperty(ImplementingParameterModelProperty.class);
+        final Optional<DeclaringMemberModelProperty> declaringMemberProperty =
+                declaration.getModelProperty(DeclaringMemberModelProperty.class);
+        final Optional<ImplementingParameterModelProperty> implementingParameterProperty =
+                declaration.getModelProperty(ImplementingParameterModelProperty.class);
         AnnotatedElement annotatedElement = null;
 
         if (declaringMemberProperty.isPresent())

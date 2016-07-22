@@ -8,16 +8,15 @@ package org.mule.runtime.config.spring.parsers.assembly;
 
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.core.util.MapCombiner;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.beans.factory.support.ManagedMap;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public abstract class AbstractMapBeanAssembler extends DefaultBeanAssembler
 {
@@ -33,7 +32,7 @@ public abstract class AbstractMapBeanAssembler extends DefaultBeanAssembler
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(MapCombiner.class);
         Map map = new ManagedMap();
         for (Iterator pvs = getBean().getBeanDefinition().getPropertyValues().getPropertyValueList().iterator();
-             pvs.hasNext();)
+             pvs.hasNext(); )
         {
             PropertyValue pv = (PropertyValue) pvs.next();
             map.put(pv.getName(), pv.getValue());

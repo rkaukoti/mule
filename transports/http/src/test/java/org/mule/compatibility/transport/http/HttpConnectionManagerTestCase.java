@@ -6,17 +6,13 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.compatibility.core.api.endpoint.EndpointException;
 import org.mule.compatibility.core.endpoint.MuleEndpointURI;
-import org.mule.compatibility.transport.http.HttpConnectionManager;
-import org.mule.compatibility.transport.http.HttpConnector;
-import org.mule.compatibility.transport.http.HttpRequestDispatcher;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.context.WorkManager;
@@ -30,11 +26,11 @@ import java.net.URI;
 import javax.resource.spi.work.ExecutionContext;
 import javax.resource.spi.work.WorkListener;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
@@ -84,7 +80,8 @@ public class HttpConnectionManagerTestCase extends AbstractMuleTestCase
     public void addConnectionStartsSocketDispatcher() throws Exception
     {
         createConnectionManagerAndAddDefaultEndpointUri();
-        verify(mockWorkManager, times(1)).scheduleWork(any(HttpRequestDispatcher.class), anyLong(), any(ExecutionContext.class), any(WorkListener.class));
+        verify(mockWorkManager, times(1)).scheduleWork(any(HttpRequestDispatcher.class), anyLong(), any(ExecutionContext.class),
+                any(WorkListener.class));
     }
 
     @Test
@@ -93,7 +90,8 @@ public class HttpConnectionManagerTestCase extends AbstractMuleTestCase
         HttpConnectionManager connectionManager = createConnectionManagerAndAddDefaultEndpointUri();
         connectionManager.addConnection(createEndpointUri(NESTED_ENDPOINT_URI_1));
         connectionManager.addConnection(createEndpointUri(NESTED_ENDPOINT_URI_2));
-        verify(mockWorkManager, times(1)).scheduleWork(any(HttpRequestDispatcher.class), anyLong(), any(ExecutionContext.class), any(WorkListener.class));
+        verify(mockWorkManager, times(1)).scheduleWork(any(HttpRequestDispatcher.class), anyLong(), any(ExecutionContext.class),
+                any(WorkListener.class));
     }
 
     @Test
@@ -104,7 +102,8 @@ public class HttpConnectionManagerTestCase extends AbstractMuleTestCase
         connectionManager.addConnection(createEndpointUri(NESTED_ENDPOINT_URI_2));
         connectionManager.addConnection(createEndpointUri(ANOTHER_ENDPOINT_URI));
         connectionManager.addConnection(createEndpointUri(ANOTHER_NESTED_ENDPOINT_URI));
-        verify(mockWorkManager, times(2)).scheduleWork(any(HttpRequestDispatcher.class), anyLong(), any(ExecutionContext.class), any(WorkListener.class));
+        verify(mockWorkManager, times(2)).scheduleWork(any(HttpRequestDispatcher.class), anyLong(), any(ExecutionContext.class),
+                any(WorkListener.class));
     }
 
     @Test

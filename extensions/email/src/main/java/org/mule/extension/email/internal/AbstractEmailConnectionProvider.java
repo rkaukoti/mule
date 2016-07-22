@@ -6,9 +6,6 @@
  */
 package org.mule.extension.email.internal;
 
-import static org.mule.runtime.extension.api.annotation.param.display.Placement.ADVANCED;
-import static org.mule.runtime.extension.api.annotation.param.display.Placement.GENERAL;
-
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.extension.api.annotation.Parameter;
 import org.mule.runtime.extension.api.annotation.param.Optional;
@@ -17,6 +14,9 @@ import org.mule.runtime.extension.api.annotation.param.display.Summary;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import static org.mule.runtime.extension.api.annotation.param.display.Placement.ADVANCED;
+import static org.mule.runtime.extension.api.annotation.param.display.Placement.GENERAL;
 
 /**
  * Generic contract for all email configurations.

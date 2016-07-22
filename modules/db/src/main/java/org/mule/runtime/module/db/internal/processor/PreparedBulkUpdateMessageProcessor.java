@@ -7,11 +7,6 @@
 
 package org.mule.runtime.module.db.internal.processor;
 
-import static org.mule.runtime.core.api.debug.FieldDebugInfoFactory.createFieldDebugInfo;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.INPUT_PARAMS_DEBUG_FIELD;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.PARAM_DEBUG_FIELD_PREFIX;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.PARAM_SET_DEBUG_FIELD_PREFIX;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERY_DEBUG_FIELD;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -34,6 +29,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.mule.runtime.core.api.debug.FieldDebugInfoFactory.createFieldDebugInfo;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.INPUT_PARAMS_DEBUG_FIELD;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.PARAM_DEBUG_FIELD_PREFIX;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.PARAM_SET_DEBUG_FIELD_PREFIX;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERY_DEBUG_FIELD;
+
 /**
  * Executes an update query in bulk mode on a database
  * * <p/>
@@ -48,7 +49,9 @@ public class PreparedBulkUpdateMessageProcessor extends AbstractBulkUpdateMessag
 
     private final ParamValueResolver paramValueResolver;
 
-    public PreparedBulkUpdateMessageProcessor(DbConfigResolver dbConfigResolver, QueryResolver queryResolver, BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction, List<QueryType> validQueryTypes, ParamValueResolver paramValueResolver)
+    public PreparedBulkUpdateMessageProcessor(DbConfigResolver dbConfigResolver, QueryResolver queryResolver,
+                                              BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction,
+                                              List<QueryType> validQueryTypes, ParamValueResolver paramValueResolver)
     {
         super(dbConfigResolver, transactionalAction, validQueryTypes, queryResolver, bulkUpdateExecutorFactory);
         this.paramValueResolver = paramValueResolver;

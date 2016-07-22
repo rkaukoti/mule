@@ -6,12 +6,7 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
@@ -19,14 +14,17 @@ import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
 import org.mule.compatibility.core.endpoint.EndpointURIEndpointBuilder;
 import org.mule.compatibility.core.transport.AbstractConnector;
 import org.mule.compatibility.core.transport.service.DefaultEndpointAwareTransformer;
-import org.mule.compatibility.transport.file.FileConnector;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.transformer.TransformerUtils;
 import org.mule.runtime.core.transformer.simple.ByteArrayToSerializable;
 import org.mule.runtime.core.transformer.simple.SerializableToByteArray;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 public class ConnectorServiceOverridesTestCase extends FunctionalTestCase
 {
@@ -43,13 +41,16 @@ public class ConnectorServiceOverridesTestCase extends FunctionalTestCase
         assertNotNull(c);
         assertNotNull(c.getServiceOverrides());
         assertEquals("org.mule.runtime.core.transformer.simple.ByteArrayToSerializable", c.getServiceOverrides().get(
-            "inbound.transformer"));
+                "inbound.transformer"));
         assertNotNull(TransformerUtils.firstOrNull(c.getDefaultInboundTransformers(null)));
         assertNotNull(TransformerUtils.firstOrNull(c.getDefaultOutboundTransformers(null)));
         assertThat(TransformerUtils.firstOrNull(c.getDefaultInboundTransformers(null)), instanceOf(DefaultEndpointAwareTransformer.class));
-        assertThat(((DefaultEndpointAwareTransformer) TransformerUtils.firstOrNull(c.getDefaultInboundTransformers(null))).getTransformer(), instanceOf(ByteArrayToSerializable.class));
+        assertThat(((DefaultEndpointAwareTransformer) TransformerUtils.firstOrNull(c.getDefaultInboundTransformers(null))).getTransformer(),
+                instanceOf(ByteArrayToSerializable.class));
         assertThat(TransformerUtils.firstOrNull(c.getDefaultOutboundTransformers(null)), instanceOf(DefaultEndpointAwareTransformer.class));
-        assertThat(((DefaultEndpointAwareTransformer) TransformerUtils.firstOrNull(c.getDefaultOutboundTransformers(null))).getTransformer(), instanceOf(SerializableToByteArray.class));
+        assertThat(
+                ((DefaultEndpointAwareTransformer) TransformerUtils.firstOrNull(c.getDefaultOutboundTransformers(null))).getTransformer(),
+                instanceOf(SerializableToByteArray.class));
     }
 
     @Test
@@ -73,7 +74,7 @@ public class ConnectorServiceOverridesTestCase extends FunctionalTestCase
     {
         // EndpointURI uri = new MuleEndpointURI("file:///temp?connector=fileConnector1");
         ImmutableEndpoint endpoint = getEndpointFactory().getInboundEndpoint(
-            "file:///temp?connector=fileConnector1");
+                "file:///temp?connector=fileConnector1");
 
         assertNotNull(endpoint);
         assertNotNull(endpoint.getConnector());
@@ -84,19 +85,19 @@ public class ConnectorServiceOverridesTestCase extends FunctionalTestCase
         assertNotNull(c.getServiceOverrides());
 
         EndpointBuilder builder = new EndpointURIEndpointBuilder("file:///temp?connector=fileConnector1",
-            muleContext);
+                muleContext);
         builder.setConnector(c);
         endpoint = getEndpointFactory().getInboundEndpoint(builder);
         assertNotNull(((AbstractConnector) endpoint.getConnector()).getServiceOverrides());
 
         EndpointBuilder builder2 = new EndpointURIEndpointBuilder("file:///temp?connector=fileConnector3",
-            muleContext);
+                muleContext);
         builder.setConnector(c);
         endpoint = getEndpointFactory().getInboundEndpoint(builder2);
         assertNull(((AbstractConnector) endpoint.getConnector()).getServiceOverrides());
 
         EndpointBuilder builder3 = new EndpointURIEndpointBuilder("file:///temp?connector=fileConnector2",
-            muleContext);
+                muleContext);
         builder.setConnector(c);
         endpoint = getEndpointFactory().getInboundEndpoint(builder3);
         assertNotNull(((AbstractConnector) endpoint.getConnector()).getServiceOverrides());

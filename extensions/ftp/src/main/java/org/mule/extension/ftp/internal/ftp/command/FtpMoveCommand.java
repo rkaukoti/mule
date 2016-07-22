@@ -6,11 +6,10 @@
  */
 package org.mule.extension.ftp.internal.ftp.command;
 
+import org.apache.commons.net.ftp.FTPClient;
 import org.mule.extension.ftp.internal.ftp.connection.ClassicFtpFileSystem;
 import org.mule.runtime.module.extension.file.api.FileConnectorConfig;
 import org.mule.runtime.module.extension.file.api.command.MoveCommand;
-
-import org.apache.commons.net.ftp.FTPClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

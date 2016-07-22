@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.api.config;
 
+import org.apache.commons.collections.map.CaseInsensitiveMap;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.context.WorkManager;
@@ -18,8 +19,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
-
-import org.apache.commons.collections.map.CaseInsensitiveMap;
 
 /**
  * <p>
@@ -126,33 +125,33 @@ public interface ThreadingProfile extends MuleContextAware
                     DEFAULT_DO_THREADING,
                     null,
                     null
-                    );
+            );
 
     int getMaxThreadsActive();
 
-    int getMaxThreadsIdle();
-
-    long getThreadTTL();
-
-    long getThreadWaitTimeout();
-
-    int getPoolExhaustedAction();
-
-    RejectedExecutionHandler getRejectedExecutionHandler();
-
-    ThreadFactory getThreadFactory();
-
     void setMaxThreadsActive(int maxThreadsActive);
+
+    int getMaxThreadsIdle();
 
     void setMaxThreadsIdle(int maxThreadsIdle);
 
+    long getThreadTTL();
+
     void setThreadTTL(long threadTTL);
+
+    long getThreadWaitTimeout();
 
     void setThreadWaitTimeout(long threadWaitTimeout);
 
+    int getPoolExhaustedAction();
+
     void setPoolExhaustedAction(int poolExhaustPolicy);
 
+    RejectedExecutionHandler getRejectedExecutionHandler();
+
     void setRejectedExecutionHandler(RejectedExecutionHandler rejectedExecutionHandler);
+
+    ThreadFactory getThreadFactory();
 
     void setThreadFactory(ThreadFactory threadFactory);
 
@@ -178,10 +177,10 @@ public interface ThreadingProfile extends MuleContextAware
 
     ScheduledExecutorService createScheduledPool(String name);
 
+    MuleContext getMuleContext();
+
     interface WorkManagerFactory
     {
         WorkManager createWorkManager(ThreadingProfile profile, String name, int shutdownTimeout);
     }
-
-    MuleContext getMuleContext();
 }

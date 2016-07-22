@@ -7,18 +7,6 @@
 
 package org.mule.runtime.core.util.store;
 
-import static junit.framework.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.when;
-import static org.mule.tck.SerializationTestUtils.addJavaSerializerToMockMuleContext;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.store.ObjectDoesNotExistException;
-import org.mule.runtime.core.api.store.ObjectStoreException;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,6 +14,18 @@ import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.store.ObjectDoesNotExistException;
+import org.mule.runtime.core.api.store.ObjectStoreException;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import static junit.framework.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.when;
+import static org.mule.tck.SerializationTestUtils.addJavaSerializerToMockMuleContext;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)

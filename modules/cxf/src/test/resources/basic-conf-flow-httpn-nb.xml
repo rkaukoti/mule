@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:spring="http://www.springframework.org/schema/beans"
       xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
@@ -11,14 +11,14 @@
                http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
                ">
 
-    <spring:bean name="sensingRequestResponseProcessor" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton" />
+    <spring:bean name="sensingRequestResponseProcessor" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton"/>
 
     <http:listener-config name="listenerConfig" host="localhost" port="${port1}"/>
 
     <flow name="backToBlocking" processingStrategy="non-blocking">
         <http:listener path="services/Echo" config-ref="listenerConfig"/>
         <cxf:simple-service serviceClass="org.mule.runtime.core.component.simple.EchoComponent"/>
-        <processor ref="sensingRequestResponseProcessor" />
+        <processor ref="sensingRequestResponseProcessor"/>
         <component class="org.mule.runtime.core.component.simple.EchoComponent"/>
     </flow>
 

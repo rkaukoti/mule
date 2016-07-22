@@ -7,13 +7,14 @@
 package org.mule.test.petstore.extension;
 
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.core.util.Preconditions.checkState;
 import org.mule.runtime.api.tls.TlsContextFactory;
 import org.mule.runtime.core.api.config.ThreadingProfile;
 import org.mule.runtime.extension.api.connectivity.TransactionalConnection;
 
 import java.util.List;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.core.util.Preconditions.checkState;
 
 public class PetStoreClient implements TransactionalConnection
 {
@@ -26,7 +27,8 @@ public class PetStoreClient implements TransactionalConnection
     private boolean begun, commited, rolledback = false;
     private int disconnectCount;
 
-    public PetStoreClient(String username, String password, TlsContextFactory tlsContextFactory, ThreadingProfile threadingProfile, String configName)
+    public PetStoreClient(String username, String password, TlsContextFactory tlsContextFactory, ThreadingProfile threadingProfile,
+                          String configName)
     {
         this.username = username;
         this.password = password;

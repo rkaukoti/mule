@@ -30,7 +30,8 @@ import org.mule.runtime.core.transaction.MuleTransactionConfig;
  * the {@link org.mule.runtime.core.api.transaction.TransactionConfig} is null then no transaction is used and the next
  * {@link org.mule.runtime.core.api.processor.MessageProcessor} is invoked directly.
  */
-public class TransactionalInterceptingMessageProcessor extends AbstractInterceptingMessageProcessor implements Lifecycle, MuleContextAware, FlowConstructAware
+public class TransactionalInterceptingMessageProcessor extends AbstractInterceptingMessageProcessor
+        implements Lifecycle, MuleContextAware, FlowConstructAware
 {
     protected MessagingExceptionHandler exceptionListener;
     protected MuleTransactionConfig transactionConfig;
@@ -44,7 +45,9 @@ public class TransactionalInterceptingMessageProcessor extends AbstractIntercept
         }
         else
         {
-            ExecutionTemplate<MuleEvent> executionTemplate = TransactionalErrorHandlingExecutionTemplate.createScopeExecutionTemplate(muleContext, transactionConfig, exceptionListener);
+            ExecutionTemplate<MuleEvent> executionTemplate =
+                    TransactionalErrorHandlingExecutionTemplate.createScopeExecutionTemplate(muleContext, transactionConfig,
+                            exceptionListener);
             ExecutionCallback<MuleEvent> processingCallback = new ExecutionCallback<MuleEvent>()
             {
                 public MuleEvent process() throws Exception
@@ -64,7 +67,7 @@ public class TransactionalInterceptingMessageProcessor extends AbstractIntercept
             catch (Exception e)
             {
                 throw new DefaultMuleException(CoreMessages.errorInvokingMessageProcessorWithinTransaction(
-                    next, transactionConfig), e);
+                        next, transactionConfig), e);
             }
         }
     }
@@ -101,7 +104,7 @@ public class TransactionalInterceptingMessageProcessor extends AbstractIntercept
     {
         if (this.exceptionListener instanceof Disposable)
         {
-            ((Disposable)this.exceptionListener).dispose();
+            ((Disposable) this.exceptionListener).dispose();
         }
     }
 
@@ -110,7 +113,7 @@ public class TransactionalInterceptingMessageProcessor extends AbstractIntercept
     {
         if (this.exceptionListener instanceof Startable)
         {
-            ((Startable)this.exceptionListener).start();
+            ((Startable) this.exceptionListener).start();
         }
     }
 
@@ -119,7 +122,7 @@ public class TransactionalInterceptingMessageProcessor extends AbstractIntercept
     {
         if (this.exceptionListener instanceof Stoppable)
         {
-            ((Stoppable)this.exceptionListener).stop();
+            ((Stoppable) this.exceptionListener).stop();
         }
     }
 

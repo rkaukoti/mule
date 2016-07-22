@@ -6,12 +6,10 @@
  */
 package org.mule.runtime.module.xml.stax;
 
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-
 import javanet.staxutils.StAXReaderToContentHandler;
 import javanet.staxutils.StAXSource;
 import javanet.staxutils.helpers.XMLFilterImplEx;
+
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
 import org.xml.sax.EntityResolver;
@@ -24,6 +22,9 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.LexicalHandler;
 
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+
 /**
  * A StaxSource which gives us access to the underlying XMLStreamReader if we are
  * StaxCapable down the line.
@@ -31,18 +32,15 @@ import org.xml.sax.ext.LexicalHandler;
 public class StaxSource extends StAXSource
 {
 
-    private XMLStreamReader reader;
-
     // StAX to SAX converter that will read from StAX and produce SAX
     // this object will be wrapped by the XMLReader exposed to the client
     protected final StAXReaderToContentHandler handler;
-
+    protected final XMLReader pseudoParser = new PseudoReader();
     // SAX allows ContentHandler to be changed during the parsing,
     // but JAXB doesn't. So this repeater will sit between those
     // two components.
     protected XMLFilterImplEx repeater = new XMLFilterImplEx();
-
-    protected final XMLReader pseudoParser = new PseudoReader();
+    private XMLStreamReader reader;
 
     public StaxSource(XMLStreamReader reader)
     {
@@ -92,7 +90,7 @@ public class StaxSource extends StAXSource
         }
 
         public void setFeature(String name, boolean value)
-            throws SAXNotRecognizedException, SAXNotSupportedException
+                throws SAXNotRecognizedException, SAXNotSupportedException
         {
             if ("http://xml.org/sax/features/namespaces".equals(name))
             {
@@ -146,19 +144,14 @@ public class StaxSource extends StAXSource
             }
         }
 
-        public void setEntityResolver(EntityResolver resolver)
-        {
-            this.entityResolver = resolver;
-        }
-
         public EntityResolver getEntityResolver()
         {
             return entityResolver;
         }
 
-        public void setDTDHandler(DTDHandler handler)
+        public void setEntityResolver(EntityResolver resolver)
         {
-            this.dtdHandler = handler;
+            this.entityResolver = resolver;
         }
 
         public DTDHandler getDTDHandler()
@@ -166,9 +159,9 @@ public class StaxSource extends StAXSource
             return dtdHandler;
         }
 
-        public void setContentHandler(ContentHandler handler)
+        public void setDTDHandler(DTDHandler handler)
         {
-            repeater.setContentHandler(handler);
+            this.dtdHandler = handler;
         }
 
         public ContentHandler getContentHandler()
@@ -176,14 +169,19 @@ public class StaxSource extends StAXSource
             return repeater.getContentHandler();
         }
 
-        public void setErrorHandler(ErrorHandler handler)
+        public void setContentHandler(ContentHandler handler)
         {
-            this.errorHandler = handler;
+            repeater.setContentHandler(handler);
         }
 
         public ErrorHandler getErrorHandler()
         {
             return errorHandler;
+        }
+
+        public void setErrorHandler(ErrorHandler handler)
+        {
+            this.errorHandler = handler;
         }
 
         public void parse(InputSource input) throws SAXException
@@ -215,13 +213,14 @@ public class StaxSource extends StAXSource
                     lineNumber = e.getLocation().getLineNumber();
                     columnNumber = e.getLocation().getColumnNumber();
                 }
-                
+
                 // wrap it in a SAXException
                 SAXParseException se = new SAXParseException(e.getMessage(), null, null, lineNumber, columnNumber, e);
 
                 // if the consumer sets an error handler, it is our responsibility
                 // to notify it.
-                if (errorHandler != null) errorHandler.fatalError(se);
+                if (errorHandler != null)
+                    errorHandler.fatalError(se);
 
                 // this is a fatal error. Even if the error handler
                 // returns, we will abort anyway.

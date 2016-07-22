@@ -30,15 +30,12 @@ public class DefaultObjectStoreFactoryBean
      * Set a delegate to create the object stores in a non-default way
      */
     /**
-     * @deprecated to change object store implementations use the registry.
-     * You must replace the object under keys:
-     * - {@link org.mule.runtime.core.api.config.MuleProperties#OBJECT_STORE_DEFAULT_IN_MEMORY_NAME}
-     * - {@link org.mule.runtime.core.api.config.MuleProperties#OBJECT_STORE_DEFAULT_PERSISTENT_NAME}
-     * - {@link org.mule.runtime.core.api.config.MuleProperties#DEFAULT_USER_OBJECT_STORE_NAME}
-     * - {@link org.mule.runtime.core.api.config.MuleProperties#DEFAULT_USER_TRANSIENT_OBJECT_STORE_NAME}
-     * - {@link org.mule.runtime.core.api.config.MuleProperties#QUEUE_STORE_DEFAULT_IN_MEMORY_NAME}
-     * - {@link org.mule.runtime.core.api.config.MuleProperties#QUEUE_STORE_DEFAULT_PERSISTENT_NAME}
-     * @param factory
+     * @deprecated to change object store implementations use the registry. You must replace the object under keys: - {@link
+     * org.mule.runtime.core.api.config.MuleProperties#OBJECT_STORE_DEFAULT_IN_MEMORY_NAME} - {@link
+     * org.mule.runtime.core.api.config.MuleProperties#OBJECT_STORE_DEFAULT_PERSISTENT_NAME} - {@link
+     * org.mule.runtime.core.api.config.MuleProperties#DEFAULT_USER_OBJECT_STORE_NAME} - {@link org.mule.runtime.core.api.config.MuleProperties#DEFAULT_USER_TRANSIENT_OBJECT_STORE_NAME}
+     * - {@link org.mule.runtime.core.api.config.MuleProperties#QUEUE_STORE_DEFAULT_IN_MEMORY_NAME} - {@link
+     * org.mule.runtime.core.api.config.MuleProperties#QUEUE_STORE_DEFAULT_PERSISTENT_NAME}
      */
     public static void setDelegate(DefaultObjectStoreFactory factory)
     {

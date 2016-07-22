@@ -55,7 +55,8 @@ import javax.xml.namespace.QName;
         Annotation.class,
         Annotated.class
 })
-public class OpenAttrs {
+public class OpenAttrs
+{
 
     @XmlAnyAttribute
     private Map<QName, String> otherAttributes = new HashMap<QName, String>();
@@ -72,7 +73,8 @@ public class OpenAttrs {
      *
      * @return always non-null
      */
-    public Map<QName, String> getOtherAttributes() {
+    public Map<QName, String> getOtherAttributes()
+    {
         return otherAttributes;
     }
 

@@ -6,10 +6,8 @@
  */
 package org.mule.compatibility.transport.jms.reliability;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
+import org.hamcrest.core.IsNull;
+import org.junit.Test;
 import org.mule.compatibility.transport.jms.redelivery.MessageRedeliveredException;
 import org.mule.runtime.core.api.context.notification.ExceptionNotificationListener;
 import org.mule.runtime.core.context.notification.ExceptionNotification;
@@ -20,8 +18,9 @@ import org.mule.runtime.core.util.concurrent.Latch;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.hamcrest.core.IsNull;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Verify that no inbound messages are lost when exceptions occur.
@@ -33,8 +32,8 @@ import org.junit.Test;
  */
 public class InboundMessageLossTestCase extends AbstractJmsReliabilityTestCase
 {
-    protected Latch messageRedelivered;
     protected final int latchTimeout = 5000;
+    protected Latch messageRedelivered;
 
     @Override
     protected String[] getConfigFiles()
@@ -75,7 +74,7 @@ public class InboundMessageLossTestCase extends AbstractJmsReliabilityTestCase
 
         // Delivery was successful
         assertFalse("Message should not have been redelivered",
-            messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
+                messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
     }
 
     @Test
@@ -88,7 +87,7 @@ public class InboundMessageLossTestCase extends AbstractJmsReliabilityTestCase
         // Note that this behavior is different from services because the exception occurs before
         // the SEDA queue for services.
         assertFalse("Message should not have been redelivered",
-                    messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
+                messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
     }
 
     @Test
@@ -99,7 +98,7 @@ public class InboundMessageLossTestCase extends AbstractJmsReliabilityTestCase
         // Note that this behavior is different from services because the exception occurs before
         // the SEDA queue for services.
         assertFalse("Message should not have been redelivered",
-                    messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
+                messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
     }
 
     @Test
@@ -110,7 +109,7 @@ public class InboundMessageLossTestCase extends AbstractJmsReliabilityTestCase
         // Exception occurs after the SEDA queue for an asynchronous request, so from the client's
         // perspective, the message has been delivered successfully.
         assertFalse("Message should not have been redelivered",
-            messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
+                messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
     }
 
     @Test
@@ -120,14 +119,15 @@ public class InboundMessageLossTestCase extends AbstractJmsReliabilityTestCase
 
         // Exception occurs using catch-exception-strategy that will always consume the message
         assertFalse("Message should not have been redelivered",
-            messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
+                messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
     }
 
     @Test
     public void testRollbackExceptionStrategyConsumesMessage() throws Exception
     {
         final CountDownLatch exceptionStrategyListener = new CountDownLatch(4);
-        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
+        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>()
+        {
             @Override
             public void onNotification(ExceptionNotification notification)
             {
@@ -135,11 +135,12 @@ public class InboundMessageLossTestCase extends AbstractJmsReliabilityTestCase
             }
         });
         putMessageOnQueue("rollbackOnException");
-        if (!exceptionStrategyListener.await(RECEIVE_TIMEOUT,TimeUnit.MILLISECONDS))
+        if (!exceptionStrategyListener.await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS))
         {
             fail("Message should have been redelivered");
         }
-        assertThat(muleContext.getClient().request("jms://rollbackOnException?connector=jmsConnectorNoRedelivery", RECEIVE_TIMEOUT / 10), IsNull.<Object>nullValue());
+        assertThat(muleContext.getClient().request("jms://rollbackOnException?connector=jmsConnectorNoRedelivery", RECEIVE_TIMEOUT / 10),
+                IsNull.<Object>nullValue());
     }
 
     @Test
@@ -149,7 +150,7 @@ public class InboundMessageLossTestCase extends AbstractJmsReliabilityTestCase
 
         // Exception occurs using catch-exception-strategy that will always consume the message
         assertFalse("Message should not have been redelivered",
-            messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
+                messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
     }
 
 }

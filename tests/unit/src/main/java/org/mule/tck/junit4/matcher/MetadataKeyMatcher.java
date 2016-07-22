@@ -6,13 +6,12 @@
  */
 package org.mule.tck.junit4.matcher;
 
-import static java.lang.String.format;
-
-import org.mule.runtime.api.metadata.MetadataKey;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.mule.runtime.api.metadata.MetadataKey;
+
+import static java.lang.String.format;
 
 /**
  * {@link Matcher} implementation for {@link MetadataKey}

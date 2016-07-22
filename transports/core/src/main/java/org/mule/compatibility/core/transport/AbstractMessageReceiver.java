@@ -6,11 +6,6 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_ROOT_MESSAGE_ID_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_DEFAULT_MESSAGE_PROCESSING_MANAGER;
-import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_RESPONSE;
-
 import org.mule.compatibility.core.DefaultMuleEventEndpointUtils;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
@@ -50,6 +45,11 @@ import org.mule.runtime.core.work.TrackingWorkManager;
 import java.io.OutputStream;
 import java.util.List;
 
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_ROOT_MESSAGE_ID_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_DEFAULT_MESSAGE_PROCESSING_MANAGER;
+import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_RESPONSE;
+
 /**
  * <code>AbstractMessageReceiver</code> provides common methods for all Message
  * Receivers provided with Mule. A message receiver enables an endpoint to receive a
@@ -74,7 +74,9 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
      * receiver.
      */
     protected String receiverKey = null;
-
+    protected List<Transformer> defaultInboundTransformers;
+    protected List<Transformer> defaultResponseTransformers;
+    protected ReplyToHandler replyToHandler;
     /**
      * Stores the endpointUri that this receiver listens on. This enpoint can be
      * different to the endpointUri in the endpoint stored on the receiver as
@@ -82,11 +84,6 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
      * endpointUri such as jms.*
      */
     private EndpointURI endpointUri;
-
-    protected List<Transformer> defaultInboundTransformers;
-    protected List<Transformer> defaultResponseTransformers;
-
-    protected ReplyToHandler replyToHandler;
     private PrimaryNodeLifecycleNotificationListener primaryNodeLifecycleNotificationListener;
     private MessageProcessingManager messageProcessingManager;
 
@@ -95,17 +92,16 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
     /**
      * Creates the Message Receiver
      *
-     * @param connector the endpoint that created this listener
+     * @param connector     the endpoint that created this listener
      * @param flowConstruct the flow construct to associate with the receiver.
-     * @param endpoint the provider contains the endpointUri on which the receiver
-     *            will listen on. The endpointUri can be anything and is specific to
-     *            the receiver implementation i.e. an email address, a directory, a
-     *            jms destination or port address.
+     * @param endpoint      the provider contains the endpointUri on which the receiver will listen on. The endpointUri can be anything and
+     *                      is specific to the receiver implementation i.e. an email address, a directory, a jms destination or port
+     *                      address.
      * @see FlowConstruct
      * @see InboundEndpoint
      */
     public AbstractMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint)
-        throws CreateException
+            throws CreateException
     {
         super(endpoint);
 
@@ -132,10 +128,8 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
      * There is no guarantee that by throwing a Recoverable exception that the Mule
      * instance will not shut down.
      *
-     * @throws org.mule.api.lifecycle.InitialisationException if a fatal error occurs
-     *             causing the Mule instance to shutdown
-     * @throws org.mule.api.lifecycle.RecoverableException if an error occurs that
-     *             can be recovered from
+     * @throws org.mule.api.lifecycle.InitialisationException if a fatal error occurs causing the Mule instance to shutdown
+     * @throws org.mule.api.lifecycle.RecoverableException    if an error occurs that can be recovered from
      */
     @Override
     public final void initialise() throws InitialisationException
@@ -163,7 +157,7 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
                     }
                     AbstractMessageReceiver.this.doStart();
                 }
-            },flowConstruct.getMuleContext());
+            }, flowConstruct.getMuleContext());
             primaryNodeLifecycleNotificationListener.register();
         }
 
@@ -207,7 +201,7 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
     }
 
     public final MuleEvent routeMessage(MuleMessage message, MuleSession session, OutputStream outputStream)
-        throws MuleException
+            throws MuleException
     {
         message = warnIfMuleClientSendUsed(message);
         message = propagateRootMessageIdProperty(message);
@@ -273,7 +267,7 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
     }
 
     protected MuleEvent createMuleEvent(MuleMessage message, OutputStream outputStream)
-        throws MuleException
+            throws MuleException
     {
         MuleEvent event;
         ResponseOutputStream ros = null;
@@ -333,17 +327,17 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
         return connector.getName() + ".receiver (" + endpoint.getEndpointURI() + ")";
     }
 
+    @Override
+    public String getReceiverKey()
+    {
+        return receiverKey;
+    }
+
     // TODO MULE-4871 Receiver key should not be mutable
     @Override
     public void setReceiverKey(String receiverKey)
     {
         this.receiverKey = receiverKey;
-    }
-
-    @Override
-    public String getReceiverKey()
-    {
-        return receiverKey;
     }
 
     @Override
@@ -415,8 +409,9 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
 
     protected ExecutionTemplate<MuleEvent> createExecutionTemplate()
     {
-        return TransactionalErrorHandlingExecutionTemplate.createMainExecutionTemplate(endpoint.getMuleContext(), endpoint.getTransactionConfig(),
-                                                                                       flowConstruct.getExceptionListener());
+        return TransactionalErrorHandlingExecutionTemplate.createMainExecutionTemplate(endpoint.getMuleContext(),
+                endpoint.getTransactionConfig(),
+                flowConstruct.getExceptionListener());
     }
 
     /**
@@ -523,10 +518,10 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
             if (connector.isEnableMessageEvents(muleEvent))
             {
                 connector.fireNotification(new EndpointMessageNotification(resultEvent.getMessage(),
-                                                                           endpoint,
-                                                                           resultEvent.getFlowConstruct(),
-                                                                           MESSAGE_RESPONSE),
-                                           muleEvent);
+                                endpoint,
+                                resultEvent.getFlowConstruct(),
+                                MESSAGE_RESPONSE),
+                        muleEvent);
             }
         }
         return resultEvent;
@@ -534,7 +529,7 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
 
     protected void processMessage(final MessageProcessTemplate messageProcessTemplate, final MessageProcessContext messageProcessContext)
     {
-        messageProcessingManager.processMessage(messageProcessTemplate,messageProcessContext);
+        messageProcessingManager.processMessage(messageProcessTemplate, messageProcessContext);
     }
 
 }

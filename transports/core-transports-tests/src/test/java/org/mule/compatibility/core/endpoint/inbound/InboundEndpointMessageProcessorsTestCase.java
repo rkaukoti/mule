@@ -6,7 +6,7 @@
  */
 package org.mule.compatibility.core.endpoint.inbound;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 import org.mule.compatibility.core.DefaultMuleEventEndpointUtils;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.processor.AbstractMessageProcessorTestCase;
@@ -18,7 +18,7 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.processor.chain.DefaultMessageProcessorChainBuilder;
 import org.mule.tck.testmodels.mule.TestMessageProcessor;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Unit test for configuring message processors on an inbound endpoint.
@@ -37,8 +37,8 @@ public class InboundEndpointMessageProcessorsTestCase extends AbstractMessagePro
     {
         super.doSetUp();
         inMessage = createTestRequestMessage();
-        endpoint = createTestInboundEndpoint(null, null, null, null, 
-            MessageExchangePattern.REQUEST_RESPONSE, null);
+        endpoint = createTestInboundEndpoint(null, null, null, null,
+                MessageExchangePattern.REQUEST_RESPONSE, null);
         requestEvent = createTestRequestEvent(endpoint);
     }
 
@@ -48,7 +48,7 @@ public class InboundEndpointMessageProcessorsTestCase extends AbstractMessagePro
         DefaultMessageProcessorChainBuilder builder = new DefaultMessageProcessorChainBuilder();
         builder.chain(new TestMessageProcessor("1"), new TestMessageProcessor("2"), new TestMessageProcessor("3"));
         MessageProcessor mpChain = builder.build();
-        
+
         result = mpChain.process(requestEvent);
         assertEquals(TEST_MESSAGE + ":1:2:3", result.getMessage().getPayload());
     }
@@ -58,7 +58,7 @@ public class InboundEndpointMessageProcessorsTestCase extends AbstractMessagePro
     {
         DefaultMessageProcessorChainBuilder builder = new DefaultMessageProcessorChainBuilder();
         MessageProcessor mpChain = builder.build();
-        
+
         result = mpChain.process(requestEvent);
         assertEquals(TEST_MESSAGE, result.getMessage().getPayload());
     }
@@ -73,5 +73,5 @@ public class InboundEndpointMessageProcessorsTestCase extends AbstractMessagePro
         final DefaultMuleEvent event = new DefaultMuleEvent(inMessage, getTestFlow(), getTestSession(null, muleContext));
         DefaultMuleEventEndpointUtils.populateFieldsFromInboundEndpoint(event, endpoint);
         return event;
-    }    
+    }
 }

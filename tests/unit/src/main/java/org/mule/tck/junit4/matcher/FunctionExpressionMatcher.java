@@ -6,16 +6,16 @@
  */
 package org.mule.tck.junit4.matcher;
 
-import java.util.function.Function;
-
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
+import java.util.function.Function;
+
 /**
  * A matcher that will evaluate against the result of a given {@link Function}.
- * 
+ *
  * @param <T> the type of the object that provides the object to be matched.
  * @param <R> the type of the object to match against.
  */
@@ -33,18 +33,18 @@ public final class FunctionExpressionMatcher<T, R> extends TypeSafeMatcher<T>
     /**
      * Builds a matcher that lazily evaluates against the object returned by the given resolver
      * {@link Function}.
-     * 
+     *
      * @param resolver the function to use to get the object to run the matcher against.
-     * @param matcher the matcher to run against the resolved object.
+     * @param matcher  the matcher to run against the resolved object.
      * @return a matcher that lazily evaluates the object to match.
      */
     @Factory
     public static final <T, R> FunctionExpressionMatcher<T, R> expressionMatches(Function<T, R> resolver, Matcher<? extends R> matcher)
     {
         return new FunctionExpressionMatcher<>(resolver, matcher);
-        
+
     }
-    
+
     @Override
     protected boolean matchesSafely(T item)
     {

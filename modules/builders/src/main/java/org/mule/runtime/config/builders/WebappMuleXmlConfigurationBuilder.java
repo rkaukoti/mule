@@ -6,21 +6,12 @@
  */
 package org.mule.runtime.config.builders;
 
-import static java.util.Collections.emptyMap;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 import org.mule.runtime.config.spring.MuleArtifactContext;
 import org.mule.runtime.config.spring.OptionalObjectsController;
 import org.mule.runtime.config.spring.SpringXmlConfigurationBuilder;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.ConfigurationException;
 import org.mule.runtime.core.config.ConfigResource;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.servlet.ServletContext;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -36,6 +27,15 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.support.ServletContextResource;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.servlet.ServletContext;
+
+import static java.util.Collections.emptyMap;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
+
 /**
  * <code>WebappMuleXmlConfigurationBuilder</code> will first try and load config
  * resources using the ServletContext and if this fails then it will attempt to load
@@ -44,11 +44,11 @@ import org.springframework.web.context.support.ServletContextResource;
  * start with '/'.
  * <li> Classpath resources should be in the webapp classpath and should not start
  * with '/'.
- * 
+ *
  * @see org.mule.runtime.config.spring.SpringXmlConfigurationBuilder
  */
 public class WebappMuleXmlConfigurationBuilder extends SpringXmlConfigurationBuilder
-{    
+{
     /**
      * Logger used by this class
      */
@@ -57,14 +57,14 @@ public class WebappMuleXmlConfigurationBuilder extends SpringXmlConfigurationBui
     private ServletContext context;
 
     public WebappMuleXmlConfigurationBuilder(ServletContext servletContext, String configResources)
-        throws ConfigurationException
+            throws ConfigurationException
     {
         super(configResources, emptyMap(), APP);
         context = servletContext;
     }
 
     public WebappMuleXmlConfigurationBuilder(ServletContext servletContext, String[] configResources)
-        throws ConfigurationException
+            throws ConfigurationException
     {
         super(configResources, emptyMap(), APP);
         context = servletContext;
@@ -99,7 +99,8 @@ public class WebappMuleXmlConfigurationBuilder extends SpringXmlConfigurationBui
     }
 
     @Override
-    protected ApplicationContext doCreateApplicationContext(MuleContext muleContext, ConfigResource[] artifactConfigResources, OptionalObjectsController optionalObjectsController)
+    protected ApplicationContext doCreateApplicationContext(MuleContext muleContext, ConfigResource[] artifactConfigResources,
+                                                            OptionalObjectsController optionalObjectsController)
     {
         Resource[] artifactConfigServletContextResources = preProcessResources(artifactConfigResources);
         return new MuleArtifactContext(muleContext, artifactConfigServletContextResources, optionalObjectsController, emptyMap(), APP);
@@ -119,9 +120,6 @@ public class WebappMuleXmlConfigurationBuilder extends SpringXmlConfigurationBui
      * Used to lookup parent spring ApplicationContext. This allows a parent spring
      * ApplicatonContet to be provided in the same way you would configure a parent
      * ApplicationContext for a spring WebAppplicationContext
-     * 
-     * @param servletContext
-     * @throws BeansException
      */
     protected ApplicationContext loadParentContext(ServletContext servletContext) throws BeansException
     {

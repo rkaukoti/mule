@@ -6,19 +6,7 @@
  */
 package org.mule.runtime.module.extension.internal.util;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.Matchers.empty;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.TYPE_LOADER;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.arrayOf;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.dictionaryOf;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.objectTypeBuilder;
+import org.junit.Test;
 import org.mule.metadata.api.model.ArrayType;
 import org.mule.metadata.api.model.DictionaryType;
 import org.mule.metadata.api.model.MetadataType;
@@ -45,7 +33,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.Matchers.empty;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.TYPE_LOADER;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.arrayOf;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.dictionaryOf;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.objectTypeBuilder;
 
 @SmallTest
 public class IntrospectionUtilsTestCase extends AbstractMuleTestCase
@@ -77,7 +77,8 @@ public class IntrospectionUtilsTestCase extends AbstractMuleTestCase
     @Test
     public void getMethodArgumentTypes() throws Exception
     {
-        MetadataType[] types = IntrospectionUtils.getMethodArgumentTypes(getMethod("bar", String.class, Long.class, Apple.class, Map.class), TYPE_LOADER);
+        MetadataType[] types =
+                IntrospectionUtils.getMethodArgumentTypes(getMethod("bar", String.class, Long.class, Apple.class, Map.class), TYPE_LOADER);
         assertNotNull(types);
         assertEquals(4, types.length);
 
@@ -134,9 +135,11 @@ public class IntrospectionUtilsTestCase extends AbstractMuleTestCase
         assertField("fruitLikeList", arrayOf(List.class, objectTypeBuilder(Fruit.class)), exposedFields);
         assertField("wildCardList", arrayOf(List.class, objectTypeBuilder(Object.class)), exposedFields);
         assertField("rawList", arrayOf(List.class, objectTypeBuilder(Object.class)), exposedFields);
-        assertField("wildCardMap", dictionaryOf(Map.class, objectTypeBuilder(Object.class), objectTypeBuilder(Object.class)), exposedFields);
+        assertField("wildCardMap", dictionaryOf(Map.class, objectTypeBuilder(Object.class), objectTypeBuilder(Object.class)),
+                exposedFields);
         assertField("rawMap", dictionaryOf(Map.class, objectTypeBuilder(Object.class), objectTypeBuilder(Object.class)), exposedFields);
-        assertField("fruitLikeMap", dictionaryOf(Map.class, objectTypeBuilder(Object.class), objectTypeBuilder(Fruit.class)), exposedFields);
+        assertField("fruitLikeMap", dictionaryOf(Map.class, objectTypeBuilder(Object.class), objectTypeBuilder(Fruit.class)),
+                exposedFields);
     }
 
     private void assertField(String name, MetadataType metadataType, Collection<Field> fields)

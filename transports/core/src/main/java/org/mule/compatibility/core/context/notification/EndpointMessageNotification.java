@@ -22,6 +22,13 @@ public class EndpointMessageNotification extends ConnectorMessageNotification
     public static final int MESSAGE_SEND_BEGIN = MESSAGE_EVENT_ACTION_START_RANGE + 3;
     public static final int MESSAGE_DISPATCH_END = MESSAGE_EVENT_END_ACTION_START_RANGE + 1;
     public static final int MESSAGE_SEND_END = MESSAGE_EVENT_END_ACTION_START_RANGE + 2;
+    /**
+     * For backwards compatibility.  BEGIN is chosen where it contains the message sent, and END where it contains the message
+     * received, again for backwards compatibility.
+     */
+    public static final int MESSAGE_DISPATCHED = MESSAGE_DISPATCH_BEGIN;
+    public static final int MESSAGE_SENT = MESSAGE_SEND_BEGIN;
+    public static final int MESSAGE_REQUESTED = MESSAGE_REQUEST_END;
 
     static
     {
@@ -32,20 +39,12 @@ public class EndpointMessageNotification extends ConnectorMessageNotification
         registerAction("end send", MESSAGE_SEND_END);
     }
 
-    /**
-     * For backwards compatibility.  BEGIN is chosen where it contains the message sent, and END where it contains the message
-     * received, again for backwards compatibility.
-     */
-    public static final int MESSAGE_DISPATCHED = MESSAGE_DISPATCH_BEGIN;
-    public static final int MESSAGE_SENT = MESSAGE_SEND_BEGIN;
-    public static final int MESSAGE_REQUESTED = MESSAGE_REQUEST_END;
-
     private ImmutableEndpoint immutableEndpoint;
 
     public EndpointMessageNotification(MuleMessage resource,
-                               ImmutableEndpoint endpoint,
-                               FlowConstruct flowConstruct,
-                               int action)
+                                       ImmutableEndpoint endpoint,
+                                       FlowConstruct flowConstruct,
+                                       int action)
     {
         super(null, resource, endpoint.getEndpointURI().toString(), flowConstruct, action);
         this.immutableEndpoint = endpoint;

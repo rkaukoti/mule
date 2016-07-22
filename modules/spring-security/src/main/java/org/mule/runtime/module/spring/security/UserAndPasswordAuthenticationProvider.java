@@ -10,8 +10,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 
 /**
- * A spring authentication provider that return 
- * 
+ * A spring authentication provider that return
+ *
  * @author estebanroblesluna
  */
 public class UserAndPasswordAuthenticationProvider implements SpringAuthenticationProvider
@@ -22,7 +22,7 @@ public class UserAndPasswordAuthenticationProvider implements SpringAuthenticati
     public Authentication getAuthentication(org.mule.runtime.core.api.security.Authentication authentication)
     {
         return new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
-            authentication.getCredentials());
+                authentication.getCredentials());
     }
 }
 

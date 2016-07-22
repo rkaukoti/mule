@@ -10,15 +10,15 @@ import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.lifecycle.Callable;
 
 
-public class ClientMessageGenerator implements Callable 
+public class ClientMessageGenerator implements Callable
 {
-    
-    public Object onCall(MuleEventContext eventContext) throws Exception 
+
+    public Object onCall(MuleEventContext eventContext) throws Exception
     {
         return generate();
     }
 
-    public String generate() 
+    public String generate()
     {
         return "Dan";
     }

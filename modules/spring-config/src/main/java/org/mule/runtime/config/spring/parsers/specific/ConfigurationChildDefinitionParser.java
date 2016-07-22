@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
-import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
-
+import org.mule.runtime.core.api.config.MuleProperties;
 import org.w3c.dom.Element;
 
 /**
@@ -20,7 +19,9 @@ import org.w3c.dom.Element;
 public class ConfigurationChildDefinitionParser extends ChildDefinitionParser
 {
 
-    /** Name of the mule:configuration element **/
+    /**
+     * Name of the mule:configuration element
+     **/
     public static final String CONFIGURATION = "configuration";
 
     public ConfigurationChildDefinitionParser(String setterMethod, Class clazz)

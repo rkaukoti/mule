@@ -6,28 +6,28 @@
  */
 package org.mule.runtime.module.http.functional;
 
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder;
+import org.mule.runtime.module.tls.internal.DefaultTlsContextFactory;
+import org.mule.tck.junit4.rule.DynamicPort;
+import org.mule.tck.junit4.rule.SystemProperty;
+
+import java.io.IOException;
+
 import static java.lang.String.format;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.util.ClassUtils.getClassPathRoot;
 import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.NOT_FOUND;
 import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
 import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
 import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
 import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
-import static org.mule.runtime.core.util.ClassUtils.getClassPathRoot;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-import org.mule.tck.junit4.rule.SystemProperty;
-import org.mule.runtime.module.tls.internal.DefaultTlsContextFactory;
-
-import java.io.IOException;
-
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
 
 @Ignore("MULE-9699: Not currently supported.")
 public class HttpListenerStaticResourcesTestCase extends FunctionalTestCase
@@ -44,7 +44,8 @@ public class HttpListenerStaticResourcesTestCase extends FunctionalTestCase
     @Rule
     public DynamicPort port3 = new DynamicPort("port3");
     @Rule
-    public SystemProperty testRoot = new SystemProperty(TESTING_ROOT_FOLDER_SYSTEM_PROPERTY, getClassPathRoot(HttpListenerStaticResourcesTestCase.class).getPath());
+    public SystemProperty testRoot =
+            new SystemProperty(TESTING_ROOT_FOLDER_SYSTEM_PROPERTY, getClassPathRoot(HttpListenerStaticResourcesTestCase.class).getPath());
 
     private int responseCode;
     private String payload;

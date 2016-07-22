@@ -20,7 +20,7 @@ public class TlsConnector extends SslConnector
     {
         super(context);
     }
-    
+
     @Override
     public String getProtocol()
     {

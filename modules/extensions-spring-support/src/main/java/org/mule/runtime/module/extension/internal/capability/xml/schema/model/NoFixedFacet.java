@@ -42,8 +42,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "noFixedFacet")
 @XmlSeeAlso({
-                    Pattern.class
-            })
+        Pattern.class
+})
 public class NoFixedFacet extends Facet
 {
 

@@ -27,7 +27,7 @@ public class ConfigResource
     {
         this.resourceName = resourceName;
         url = IOUtils.getResourceAsUrl(resourceName, getClass(), true, true);
-        if(url == null)
+        if (url == null)
         {
             throw new FileNotFoundException(resourceName);
         }
@@ -47,7 +47,7 @@ public class ConfigResource
 
     public InputStream getInputStream() throws IOException
     {
-        if(inputStream==null && url !=null)
+        if (inputStream == null && url != null)
         {
             inputStream = url.openStream();
         }
@@ -66,7 +66,7 @@ public class ConfigResource
 
     public boolean isStreamOpen()
     {
-        return inputStream!=null;
+        return inputStream != null;
     }
 
     public boolean equals(Object o)

@@ -37,12 +37,6 @@ public class HttpRequestBuilder
         return this;
     }
 
-    public HttpRequestBuilder setHeaders(ParameterMap headers)
-    {
-        this.headers = new CaseInsensitiveParameterMap(headers);
-        return this;
-    }
-
     public HttpRequestBuilder addHeader(String headerName, String headerValue)
     {
         this.headers.put(headerName, headerValue);
@@ -61,6 +55,12 @@ public class HttpRequestBuilder
         return headers;
     }
 
+    public HttpRequestBuilder setHeaders(ParameterMap headers)
+    {
+        this.headers = new CaseInsensitiveParameterMap(headers);
+        return this;
+    }
+
     public HttpRequestBuilder setQueryParams(ParameterMap queryParams)
     {
         this.queryParams = queryParams;
@@ -75,7 +75,8 @@ public class HttpRequestBuilder
 
     public HttpRequest build()
     {
-        return new DefaultHttpRequest(uri, path, method, (headers == null) ? null : headers.toImmutableParameterMap(), queryParams == null ? queryParams : queryParams.toImmutableParameterMap(), entity);
+        return new DefaultHttpRequest(uri, path, method, (headers == null) ? null : headers.toImmutableParameterMap(),
+                queryParams == null ? queryParams : queryParams.toImmutableParameterMap(), entity);
 
     }
 

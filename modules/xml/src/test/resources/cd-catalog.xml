@@ -18,7 +18,7 @@
         <year>1988</year>
     </cd>
     <!-- ... </catalog> -->
-<!--// END SNIPPET: test-data -->
+    <!--// END SNIPPET: test-data -->
     <cd>
         <title>Greatest Hits</title>
         <artist>Dolly Parton</artist>

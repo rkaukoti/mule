@@ -6,6 +6,35 @@
  */
 package org.mule.compatibility.transport.http;
 
+import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
+import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
+import org.mule.compatibility.core.api.transport.Connector;
+import org.mule.compatibility.core.api.transport.ConnectorException;
+import org.mule.compatibility.core.api.transport.MessageDispatcher;
+import org.mule.compatibility.core.api.transport.MessageReceiver;
+import org.mule.compatibility.core.api.transport.NoReceiverForEndpointException;
+import org.mule.compatibility.core.endpoint.DefaultOutboundEndpoint;
+import org.mule.compatibility.core.transport.AbstractConnectorTestCase;
+import org.mule.compatibility.transport.tcp.TcpConnector;
+import org.mule.runtime.core.api.lifecycle.InitialisationException;
+import org.mule.runtime.core.construct.Flow;
+import org.mule.tck.MuleTestUtils.TestCallback;
+import org.mule.tck.testmodels.fruit.Orange;
+
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.hamcrest.Matchers.sameInstance;
 import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.core.Is.is;
@@ -20,51 +49,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mule.tck.MuleTestUtils.testWithSystemProperty;
 
-import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
-import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
-import org.mule.compatibility.core.api.transport.Connector;
-import org.mule.compatibility.core.api.transport.ConnectorException;
-import org.mule.compatibility.core.api.transport.MessageDispatcher;
-import org.mule.compatibility.core.api.transport.MessageReceiver;
-import org.mule.compatibility.core.api.transport.NoReceiverForEndpointException;
-import org.mule.compatibility.core.endpoint.DefaultOutboundEndpoint;
-import org.mule.compatibility.core.transport.AbstractConnectorTestCase;
-import org.mule.compatibility.transport.http.HttpConnector;
-import org.mule.compatibility.transport.http.HttpMessageReceiver;
-import org.mule.compatibility.transport.http.HttpRequest;
-import org.mule.compatibility.transport.http.RequestLine;
-import org.mule.compatibility.transport.tcp.TcpConnector;
-import org.mule.runtime.core.api.lifecycle.InitialisationException;
-import org.mule.runtime.core.construct.Flow;
-import org.mule.tck.MuleTestUtils.TestCallback;
-import org.mule.tck.testmodels.fruit.Orange;
-
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
 @RunWith(MockitoJUnitRunner.class)
 public class HttpConnectorTestCase extends AbstractConnectorTestCase
 {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     private static final String LISTENER_ALREADY_REGISTERED = "There is already a listener registered on this connector";
     private static final String ALL_INTERFACES_ENDPOINT_URI = "http://0.0.0.0:60127";
     private static final int MOCK_PORT = 5555;
-
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     private HttpMessageReceiver mockServiceOrderReceiverPort5555;
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
@@ -167,20 +160,37 @@ public class HttpConnectorTestCase extends AbstractConnectorTestCase
     {
         Map<Object, MessageReceiver> receiversMap = createTestReceivers();
         when(mockAllInterfacesReceiverPort5555.getEndpointURI().getHost()).thenReturn(HttpConnector.BIND_TO_ALL_INTERFACES_IP);
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:5555/"), is(mockReceiverPort5555));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:5555/extra"), is(mockReceiverPort5555));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:5555/service"), is(mockServiceReceiverPort5555));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:5555/serviceextra"), is(mockServiceReceiverPort5555));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:5555/service/order"), is(mockServiceOrderReceiverPort5555));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:5555/service/orderextra"), is(mockServiceOrderReceiverPort5555));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:7777/service/order"), is(mockServiceOrderReceiverPort7777));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:7777/service/orderextra"), is(mockServiceOrderReceiverPort7777));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:7777/service"), is(mockServiceReceiverPort7777));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:7777/serviceextra"), is(mockServiceReceiverPort7777));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://anotherhost:5555/"), is(mockServiceReceiverAnotherHost));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://anotherhost:5555/extra"), is(mockServiceReceiverAnotherHost));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:5555/a"), is(mockAllInterfacesReceiverPort5555));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:5555/all"), is(mockAllInterfacesReceiverPort5555));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:5555/"),
+                is(mockReceiverPort5555));
+        assertThat(
+                (HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:5555/extra"),
+                is(mockReceiverPort5555));
+        assertThat(
+                (HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:5555/service"),
+                is(mockServiceReceiverPort5555));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap,
+                "http://somehost:5555/serviceextra"), is(mockServiceReceiverPort5555));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap,
+                "http://somehost:5555/service/order"), is(mockServiceOrderReceiverPort5555));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap,
+                "http://somehost:5555/service/orderextra"), is(mockServiceOrderReceiverPort5555));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap,
+                "http://somehost:7777/service/order"), is(mockServiceOrderReceiverPort7777));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap,
+                "http://somehost:7777/service/orderextra"), is(mockServiceOrderReceiverPort7777));
+        assertThat(
+                (HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:7777/service"),
+                is(mockServiceReceiverPort7777));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap,
+                "http://somehost:7777/serviceextra"), is(mockServiceReceiverPort7777));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://anotherhost:5555/"),
+                is(mockServiceReceiverAnotherHost));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap,
+                "http://anotherhost:5555/extra"), is(mockServiceReceiverAnotherHost));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:5555/a"),
+                is(mockAllInterfacesReceiverPort5555));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStemConsideringMatchingHost(receiversMap, "http://somehost:5555/all"),
+                is(mockAllInterfacesReceiverPort5555));
     }
 
     @Test
@@ -188,11 +198,16 @@ public class HttpConnectorTestCase extends AbstractConnectorTestCase
     {
         Map<Object, MessageReceiver> receiversMap = createTestReceivers();
         assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStem(receiversMap, "http://somehost:5555/"), is(mockReceiverPort5555));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStem(receiversMap, "http://somehost:5555/service"), is(mockServiceReceiverPort5555));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStem(receiversMap, "http://somehost:5555/service/order"), is(mockServiceOrderReceiverPort5555));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStem(receiversMap, "http://somehost:7777/service/order"), is(mockServiceOrderReceiverPort7777));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStem(receiversMap, "http://somehost:7777/service"), is(mockServiceReceiverPort7777));
-        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStem(receiversMap, "http://anotherhost:5555/"), is(mockServiceReceiverAnotherHost));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStem(receiversMap, "http://somehost:5555/service"),
+                is(mockServiceReceiverPort5555));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStem(receiversMap, "http://somehost:5555/service/order"),
+                is(mockServiceOrderReceiverPort5555));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStem(receiversMap, "http://somehost:7777/service/order"),
+                is(mockServiceOrderReceiverPort7777));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStem(receiversMap, "http://somehost:7777/service"),
+                is(mockServiceReceiverPort7777));
+        assertThat((HttpMessageReceiver) HttpConnector.findReceiverByStem(receiversMap, "http://anotherhost:5555/"),
+                is(mockServiceReceiverAnotherHost));
     }
 
     private Map<Object, MessageReceiver> createTestReceivers()
@@ -328,7 +343,8 @@ public class HttpConnectorTestCase extends AbstractConnectorTestCase
         assertThat(httpConnector.lookupReceiver(mockSocket, mockHttpRequest), is(expectedMessageReceiver));
     }
 
-    private void testLookupReceiverByRequestLine(String host, int port, String path, HttpMessageReceiver expectedMessageReceiver) throws NoReceiverForEndpointException
+    private void testLookupReceiverByRequestLine(String host, int port, String path, HttpMessageReceiver expectedMessageReceiver)
+            throws NoReceiverForEndpointException
     {
         HttpConnector httpConnector = (HttpConnector) getConnector();
         httpConnector.getReceivers().putAll(createTestReceivers());
@@ -350,13 +366,13 @@ public class HttpConnectorTestCase extends AbstractConnectorTestCase
             }
         }
     }
-    
+
     @Test
     public void tcpNoDelayDefault() throws Exception
     {
         assertFalse(((TcpConnector) getConnector()).isSendTcpNoDelay());
     }
-    
+
     @Test
     public void tcpNoDelayDefaultSystemPropertyTrue() throws Exception
     {
@@ -384,7 +400,7 @@ public class HttpConnectorTestCase extends AbstractConnectorTestCase
             }
         });
     }
-    
+
     @Test
     public void tcpNoDelayHttpClientConnectionManagerConfiguration() throws Exception
     {
@@ -397,7 +413,7 @@ public class HttpConnectorTestCase extends AbstractConnectorTestCase
         httpConnector.initialise();
         assertTrue(httpConnector.clientConnectionManager.getParams().getTcpNoDelay());
     }
-    
+
     @Test
     public void httpClientDisableStaleConnectionDefault() throws Exception
     {
@@ -408,14 +424,14 @@ public class HttpConnectorTestCase extends AbstractConnectorTestCase
     public void httpClientDisableStaleConnectionSystemProperty() throws Exception
     {
         testWithSystemProperty(HttpConnector.DISABLE_STALE_CONNECTION_CHECK_SYSTEM_PROPERTY, "true",
-                               new TestCallback()
-                               {
-                                   @Override
-                                   public void run() throws Exception
-                                   {
-                                       assertHttpClientStaleConnectionCheck(getInitialisedHttpConnector(), false);
-                                   }
-                               });
+                new TestCallback()
+                {
+                    @Override
+                    public void run() throws Exception
+                    {
+                        assertHttpClientStaleConnectionCheck(getInitialisedHttpConnector(), false);
+                    }
+                });
     }
 
     protected HttpConnector getInitialisedHttpConnector() throws Exception, InitialisationException
@@ -426,7 +442,7 @@ public class HttpConnectorTestCase extends AbstractConnectorTestCase
     }
 
     protected void assertHttpClientStaleConnectionCheck(HttpConnector connector, boolean enabled)
-        throws Exception, InitialisationException
+            throws Exception, InitialisationException
     {
         assertEquals(enabled, connector.clientConnectionManager.getParams().isStaleCheckingEnabled());
     }
@@ -434,25 +450,25 @@ public class HttpConnectorTestCase extends AbstractConnectorTestCase
     public void singleDispatcherPerEndpointSyetemProperty() throws Exception
     {
         testWithSystemProperty(HttpConnector.SINGLE_DISPATCHER_PER_ENDPOINT_SYSTEM_PROPERTY, "true",
-                               new TestCallback()
-                               {
+                new TestCallback()
+                {
 
-                                   @Override
-                                   public void run() throws Exception
-                                   {
-                                       HttpConnector httpConnector = (HttpConnector) createConnector();
-                                       httpConnector.initialise();
+                    @Override
+                    public void run() throws Exception
+                    {
+                        HttpConnector httpConnector = (HttpConnector) createConnector();
+                        httpConnector.initialise();
 
                         OutboundEndpoint endpoint = getEndpointFactory().getOutboundEndpoint(
-                                               "http://localhost:8080");
-                                       httpConnector.createDispatcherMessageProcessor(endpoint);
+                                "http://localhost:8080");
+                        httpConnector.createDispatcherMessageProcessor(endpoint);
 
-                                       assertNotNull(httpConnector.borrowDispatcher(endpoint));
-                                       assertEquals(httpConnector.borrowDispatcher(endpoint),
-                                                    httpConnector.borrowDispatcher(endpoint));
-                                       assertEquals(0, httpConnector.getDispatchers().getNumIdle());
-                                   }
-                               });
+                        assertNotNull(httpConnector.borrowDispatcher(endpoint));
+                        assertEquals(httpConnector.borrowDispatcher(endpoint),
+                                httpConnector.borrowDispatcher(endpoint));
+                        assertEquals(0, httpConnector.getDispatchers().getNumIdle());
+                    }
+                });
     }
 
     @Test

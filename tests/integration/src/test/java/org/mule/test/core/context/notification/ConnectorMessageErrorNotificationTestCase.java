@@ -6,17 +6,17 @@
  */
 package org.mule.test.core.context.notification;
 
-import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_ERROR_RESPONSE;
-import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_RECEIVED;
-import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_REQUEST_BEGIN;
-import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_REQUEST_END;
+import org.junit.Rule;
 import org.mule.runtime.core.context.notification.ConnectorMessageNotification;
 import org.mule.runtime.module.http.api.HttpConstants;
 import org.mule.runtime.module.http.api.client.HttpRequestOptions;
 import org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Rule;
+import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_ERROR_RESPONSE;
+import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_RECEIVED;
+import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_REQUEST_BEGIN;
+import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_REQUEST_END;
 
 public class ConnectorMessageErrorNotificationTestCase extends AbstractNotificationTestCase
 {
@@ -24,7 +24,11 @@ public class ConnectorMessageErrorNotificationTestCase extends AbstractNotificat
     private static final String MULE_CLIENT_ID = "MuleClient";
 
     private static final int TIMEOUT = 1000;
-    private static final HttpRequestOptions GET_OPTIONS = HttpRequestOptionsBuilder.newOptions().method(HttpConstants.Methods.GET.name()).responseTimeout(TIMEOUT).disableStatusCodeValidation().build();
+    private static final HttpRequestOptions GET_OPTIONS = HttpRequestOptionsBuilder.newOptions()
+                                                                                   .method(HttpConstants.Methods.GET.name())
+                                                                                   .responseTimeout(TIMEOUT)
+                                                                                   .disableStatusCodeValidation()
+                                                                                   .build();
 
     @Rule
     public DynamicPort port = new DynamicPort("port");

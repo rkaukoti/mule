@@ -6,6 +6,31 @@
  */
 package org.mule.compatibility.core.transport;
 
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
+import org.mockito.Matchers;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.mule.runtime.core.api.context.WorkManager;
+import org.mule.runtime.core.work.TrackingWorkManager;
+import org.mule.runtime.core.work.WorkListenerWrapperFactory;
+import org.mule.runtime.core.work.WorkManagerHolder;
+import org.mule.runtime.core.work.WorkTracker;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.junit4.rule.SystemProperty;
+import org.mule.tck.size.SmallTest;
+
+import java.util.Collections;
+import java.util.List;
+
+import javax.resource.spi.work.ExecutionContext;
+import javax.resource.spi.work.Work;
+import javax.resource.spi.work.WorkException;
+import javax.resource.spi.work.WorkListener;
+
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -18,42 +43,15 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.mule.runtime.core.api.context.WorkManager;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.junit4.rule.SystemProperty;
-import org.mule.tck.size.SmallTest;
-import org.mule.runtime.core.work.TrackingWorkManager;
-import org.mule.runtime.core.work.WorkListenerWrapperFactory;
-import org.mule.runtime.core.work.WorkManagerHolder;
-import org.mule.runtime.core.work.WorkTracker;
-
-import java.util.Collections;
-import java.util.List;
-
-import javax.resource.spi.work.ExecutionContext;
-import javax.resource.spi.work.Work;
-import javax.resource.spi.work.WorkException;
-import javax.resource.spi.work.WorkListener;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InOrder;
-import org.mockito.Matchers;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
 @SmallTest
 public class TrackingWorkManagerTestCase extends AbstractMuleTestCase
 {
 
-    @Rule
-    public SystemProperty waitMillis = new SystemProperty(TrackingWorkManager.MULE_WAIT_MILLIS, "0");
-
     private final WorkManager delegateWorkManager = mock(WorkManager.class);
     private final WorkTracker workTracker = mock(WorkTracker.class);
     private final WorkManagerHolder workManagerHolder = mock(WorkManagerHolder.class);
+    @Rule
+    public SystemProperty waitMillis = new SystemProperty(TrackingWorkManager.MULE_WAIT_MILLIS, "0");
     private TrackingWorkManager trackingWorkManager;
 
     @Before
@@ -364,7 +362,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase
         ExecutionContext execContext = mock(ExecutionContext.class);
         WorkListener workListener = mock(WorkListener.class);
 
-        doThrow(new WorkException()).when(delegateWorkManager).startWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+        doThrow(new WorkException()).when(delegateWorkManager)
+                                    .startWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
 
         try
         {
@@ -378,7 +377,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase
 
         InOrder inOrder = inOrder(workTracker, delegateWorkManager);
         inOrder.verify(workTracker).addWork(work);
-        inOrder.verify(delegateWorkManager).startWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+        inOrder.verify(delegateWorkManager)
+               .startWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
         inOrder.verify(workTracker).removeWork(work);
     }
 
@@ -390,7 +390,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase
         ExecutionContext execContext = mock(ExecutionContext.class);
         WorkListener workListener = mock(WorkListener.class);
 
-        doThrow(new RuntimeException()).when(delegateWorkManager).startWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+        doThrow(new RuntimeException()).when(delegateWorkManager)
+                                       .startWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
 
         try
         {
@@ -404,7 +405,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase
 
         InOrder inOrder = inOrder(workTracker, delegateWorkManager);
         inOrder.verify(workTracker).addWork(work);
-        inOrder.verify(delegateWorkManager).startWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+        inOrder.verify(delegateWorkManager)
+               .startWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
         inOrder.verify(workTracker).removeWork(work);
     }
 
@@ -644,7 +646,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase
 
         InOrder inOrder = inOrder(workTracker, delegateWorkManager);
         inOrder.verify(workTracker).addWork(work);
-        inOrder.verify(delegateWorkManager).scheduleWork(argument.capture(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+        inOrder.verify(delegateWorkManager)
+               .scheduleWork(argument.capture(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
         inOrder.verify(workTracker).removeWork(work);
     }
 
@@ -656,7 +659,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase
         ExecutionContext execContext = mock(ExecutionContext.class);
         WorkListener workListener = mock(WorkListener.class);
 
-        doThrow(new WorkException()).when(delegateWorkManager).scheduleWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+        doThrow(new WorkException()).when(delegateWorkManager)
+                                    .scheduleWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
 
         try
         {
@@ -670,7 +674,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase
 
         InOrder inOrder = inOrder(workTracker, delegateWorkManager);
         inOrder.verify(workTracker).addWork(work);
-        inOrder.verify(delegateWorkManager).scheduleWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+        inOrder.verify(delegateWorkManager)
+               .scheduleWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
         inOrder.verify(workTracker).removeWork(work);
     }
 
@@ -682,7 +687,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase
         ExecutionContext execContext = mock(ExecutionContext.class);
         WorkListener workListener = mock(WorkListener.class);
 
-        doThrow(new RuntimeException()).when(delegateWorkManager).scheduleWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+        doThrow(new RuntimeException()).when(delegateWorkManager)
+                                       .scheduleWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
 
         try
         {
@@ -696,7 +702,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase
 
         InOrder inOrder = inOrder(workTracker, delegateWorkManager);
         inOrder.verify(workTracker).addWork(work);
-        inOrder.verify(delegateWorkManager).scheduleWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+        inOrder.verify(delegateWorkManager)
+               .scheduleWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
         inOrder.verify(workTracker).removeWork(work);
     }
 
@@ -737,7 +744,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase
 
         InOrder inOrder = inOrder(workTracker, delegateWorkManager);
         inOrder.verify(workTracker).addWork(work);
-        inOrder.verify(delegateWorkManager).scheduleWork(argument.capture(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+        inOrder.verify(delegateWorkManager)
+               .scheduleWork(argument.capture(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
         inOrder.verify(workTracker).removeWork(work);
     }
 
@@ -879,7 +887,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase
         inOrder.verify(workTracker).removeWork(work);
     }
 
-    private void assertParameterizedWorkWasTracked(Work work, int startTimeout, ExecutionContext execContext, WorkListener workListener) throws WorkException
+    private void assertParameterizedWorkWasTracked(Work work, int startTimeout, ExecutionContext execContext, WorkListener workListener)
+            throws WorkException
     {
         InOrder inOrder = inOrder(workTracker, delegateWorkManager);
         inOrder.verify(workTracker).addWork(work);

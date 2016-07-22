@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.config.spring;
 
-import static org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser.getConfigFileIdentifier;
 import org.mule.runtime.config.spring.dsl.model.ApplicationModel;
 import org.mule.runtime.config.spring.dsl.processor.ArtifactConfig;
 import org.mule.runtime.config.spring.dsl.processor.ConfigFile;
@@ -14,16 +13,17 @@ import org.mule.runtime.config.spring.dsl.processor.ConfigLine;
 import org.mule.runtime.config.spring.dsl.processor.xml.XmlApplicationParser;
 import org.mule.runtime.config.spring.dsl.spring.BeanDefinitionFactory;
 import org.mule.runtime.core.api.MuleRuntimeException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
-
 import org.springframework.beans.factory.xml.BeanDefinitionParserDelegate;
 import org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader;
 import org.springframework.beans.factory.xml.XmlReaderContext;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
+import static org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser.getConfigFileIdentifier;
 
 /**
  * Allows us to hook in our own Hierarchical Parser delegate. this enables the
@@ -44,7 +44,8 @@ public class MuleBeanDefinitionDocumentReader extends DefaultBeanDefinitionDocum
     }
 
     @Override
-    protected BeanDefinitionParserDelegate createDelegate(XmlReaderContext readerContext, Element root, BeanDefinitionParserDelegate parentDelegate)
+    protected BeanDefinitionParserDelegate createDelegate(XmlReaderContext readerContext, Element root,
+                                                          BeanDefinitionParserDelegate parentDelegate)
     {
         BeanDefinitionParserDelegate delegate = createBeanDefinitionParserDelegate(readerContext);
         delegate.initDefaults(root, parentDelegate);
@@ -53,7 +54,8 @@ public class MuleBeanDefinitionDocumentReader extends DefaultBeanDefinitionDocum
 
     protected MuleHierarchicalBeanDefinitionParserDelegate createBeanDefinitionParserDelegate(XmlReaderContext readerContext)
     {
-        return new MuleHierarchicalBeanDefinitionParserDelegate(readerContext, this, applicationModelStack::peek, beanDefinitionFactory, getElementsValidator());
+        return new MuleHierarchicalBeanDefinitionParserDelegate(readerContext, this, applicationModelStack::peek, beanDefinitionFactory,
+                getElementsValidator());
     }
 
     protected ElementValidator[] getElementsValidator()
@@ -85,7 +87,8 @@ public class MuleBeanDefinitionDocumentReader extends DefaultBeanDefinitionDocum
         {
             List<ConfigLine> configLines = new ArrayList<>();
             configLines.add(xmlApplicationParser.parse(root).get());
-            ArtifactConfig artifactConfig = new ArtifactConfig.Builder().addConfigFile(new ConfigFile(getConfigFileIdentifier(getReaderContext().getResource()), configLines)).build();
+            ArtifactConfig artifactConfig = new ArtifactConfig.Builder().addConfigFile(
+                    new ConfigFile(getConfigFileIdentifier(getReaderContext().getResource()), configLines)).build();
             applicationModelStack.push(new ApplicationModel(artifactConfig));
         }
         catch (Exception e)

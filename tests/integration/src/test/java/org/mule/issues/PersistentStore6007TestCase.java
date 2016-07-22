@@ -6,11 +6,7 @@
  */
 package org.mule.issues;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
-import static org.mule.runtime.core.routing.AsynchronousUntilSuccessfulProcessingStrategy.buildQueueKey;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleContext;
@@ -23,6 +19,8 @@ import org.mule.runtime.core.api.store.ListableObjectStore;
 import org.mule.runtime.core.api.store.ObjectStoreException;
 import org.mule.runtime.core.session.DefaultMuleSession;
 import org.mule.runtime.core.util.concurrent.Latch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,9 +31,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
+import static org.mule.runtime.core.routing.AsynchronousUntilSuccessfulProcessingStrategy.buildQueueKey;
 
 public class PersistentStore6007TestCase extends FunctionalTestCase
 {
@@ -69,7 +68,9 @@ public class PersistentStore6007TestCase extends FunctionalTestCase
         assertTrue(latch.await(5000, TimeUnit.MILLISECONDS));
     }
 
-    /** A store that "persists" events using keys that are not QueueEntry's */
+    /**
+     * A store that "persists" events using keys that are not QueueEntry's
+     */
     public static class PersistentObjectStore implements ListableObjectStore<Serializable>
     {
         private static Map<Serializable, Serializable> events = new HashMap<>();
@@ -78,7 +79,8 @@ public class PersistentStore6007TestCase extends FunctionalTestCase
         {
             for (String str : new String[] {"A", "B", "C"})
             {
-                MuleEvent event = new DefaultMuleEvent(MuleMessage.builder().payload(str).build(), ONE_WAY, getTestFlow(), new DefaultMuleSession());
+                MuleEvent event =
+                        new DefaultMuleEvent(MuleMessage.builder().payload(str).build(), ONE_WAY, getTestFlow(), new DefaultMuleSession());
                 events.put(buildQueueKey(event), event);
             }
         }
@@ -124,7 +126,7 @@ public class PersistentStore6007TestCase extends FunctionalTestCase
         {
             return events.remove(key);
         }
-        
+
         @Override
         public synchronized void clear() throws ObjectStoreException
         {

@@ -7,9 +7,9 @@
 package org.mule.compatibility.core.api.registry;
 
 
-import java.util.Properties;
-
 import org.mule.runtime.core.api.registry.ServiceException;
+
+import java.util.Properties;
 
 
 /**
@@ -17,7 +17,7 @@ import org.mule.runtime.core.api.registry.ServiceException;
  * Descriptor for a given service name. By default a service is looked up directly, however a generic service name might
  * be used where the real service implementation will depend on other modules/resources being available. For example, in
  * the case of a SOAP connector the finder could check the classpath for Axis or CXF and return the correct descriptor.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated

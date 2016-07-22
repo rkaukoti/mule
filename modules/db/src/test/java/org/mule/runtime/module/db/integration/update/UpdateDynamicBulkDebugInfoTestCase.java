@@ -7,17 +7,8 @@
 
 package org.mule.runtime.module.db.integration.update;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
-import static org.mule.runtime.module.db.internal.debug.DbDebugInfoTestUtils.createQueryFieldDebugInfoMatcher;
-import static org.mule.runtime.module.db.internal.domain.query.QueryType.UPDATE;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERIES_DEBUG_FIELD;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERY_DEBUG_FIELD;
-import static org.mule.tck.junit4.matcher.ObjectDebugInfoMatcher.objectLike;
+import org.hamcrest.Matcher;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.debug.FieldDebugInfo;
 import org.mule.runtime.core.api.processor.MessageProcessor;
@@ -31,8 +22,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.hamcrest.Matcher;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.mule.runtime.module.db.internal.debug.DbDebugInfoTestUtils.createQueryFieldDebugInfoMatcher;
+import static org.mule.runtime.module.db.internal.domain.query.QueryType.UPDATE;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERIES_DEBUG_FIELD;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERY_DEBUG_FIELD;
+import static org.mule.tck.junit4.matcher.ObjectDebugInfoMatcher.objectLike;
 
 public class UpdateDynamicBulkDebugInfoTestCase extends UpdateBulkTestCase
 {
@@ -75,8 +75,10 @@ public class UpdateDynamicBulkDebugInfoTestCase extends UpdateBulkTestCase
     private List<Matcher<FieldDebugInfo<?>>> createExpectedQueryMatchers()
     {
         final List<Matcher<FieldDebugInfo<?>>> queriesDebugInfo = new ArrayList<>();
-        queriesDebugInfo.add(createQueryFieldDebugInfoMatcher(QUERY1, new QueryTemplate("update PLANET set NAME='Mercury' where NAME='EARTH'", UPDATE, Collections.<QueryParam>emptyList())));
-        queriesDebugInfo.add(createQueryFieldDebugInfoMatcher(QUERY2, new QueryTemplate("update PLANET set NAME='Mercury' where NAME='MARS'", UPDATE, Collections.<QueryParam>emptyList())));
+        queriesDebugInfo.add(createQueryFieldDebugInfoMatcher(QUERY1,
+                new QueryTemplate("update PLANET set NAME='Mercury' where NAME='EARTH'", UPDATE, Collections.<QueryParam>emptyList())));
+        queriesDebugInfo.add(createQueryFieldDebugInfoMatcher(QUERY2,
+                new QueryTemplate("update PLANET set NAME='Mercury' where NAME='MARS'", UPDATE, Collections.<QueryParam>emptyList())));
 
         return queriesDebugInfo;
     }

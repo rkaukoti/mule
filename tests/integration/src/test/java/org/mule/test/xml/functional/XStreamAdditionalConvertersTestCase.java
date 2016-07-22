@@ -6,20 +6,20 @@
  */
 package org.mule.test.xml.functional;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import org.mule.runtime.core.api.MuleEventContext;
+import com.thoughtworks.xstream.converters.extended.ISO8601DateConverter;
+
+import org.junit.Test;
 import org.mule.functional.functional.EventCallback;
 import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.functional.junit4.FunctionalTestCase;
-
-import com.thoughtworks.xstream.converters.extended.ISO8601DateConverter;
+import org.mule.runtime.core.api.MuleEventContext;
 
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class XStreamAdditionalConvertersTestCase extends FunctionalTestCase
 {

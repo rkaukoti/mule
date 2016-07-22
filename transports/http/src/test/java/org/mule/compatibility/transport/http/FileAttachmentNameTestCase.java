@@ -7,8 +7,9 @@
 
 package org.mule.compatibility.transport.http;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MuleMessage;
@@ -18,9 +19,8 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import javax.activation.DataHandler;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class FileAttachmentNameTestCase extends FunctionalTestCase
 {

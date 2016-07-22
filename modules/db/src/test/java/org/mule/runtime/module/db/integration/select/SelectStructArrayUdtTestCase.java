@@ -8,10 +8,8 @@
 package org.mule.runtime.module.db.integration.select;
 
 
-import static org.mule.runtime.module.db.integration.TestDbConfig.getOracleResource;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
-import static org.mule.runtime.module.db.integration.model.Contact.CONTACT1;
-import static org.mule.runtime.module.db.integration.model.Contact.CONTACT2;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
@@ -23,8 +21,10 @@ import org.mule.runtime.module.db.integration.model.Record;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.mule.runtime.module.db.integration.TestDbConfig.getOracleResource;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
+import static org.mule.runtime.module.db.integration.model.Contact.CONTACT1;
+import static org.mule.runtime.module.db.integration.model.Contact.CONTACT2;
 
 public class SelectStructArrayUdtTestCase extends AbstractDbIntegrationTestCase
 {
@@ -58,7 +58,8 @@ public class SelectStructArrayUdtTestCase extends AbstractDbIntegrationTestCase
         final MuleEvent responseEvent = flowRunner("returnsCustomArray").withPayload(TEST_MESSAGE).run();
         final MuleMessage response = responseEvent.getMessage();
 
-        assertRecords(response.getPayload(), new Record(new Field("CONTACT_NAME", CONTACT1.getName()), new Field("DETAILS", CONTACT1.getDetailsAsObjectArray()[0])),
-                      new Record(new Field("CONTACT_NAME", CONTACT2.getName()), new Field("DETAILS", CONTACT2.getDetailsAsObjectArray()[0])));
+        assertRecords(response.getPayload(),
+                new Record(new Field("CONTACT_NAME", CONTACT1.getName()), new Field("DETAILS", CONTACT1.getDetailsAsObjectArray()[0])),
+                new Record(new Field("CONTACT_NAME", CONTACT2.getName()), new Field("DETAILS", CONTACT2.getDetailsAsObjectArray()[0])));
     }
 }

@@ -11,7 +11,7 @@ import org.mule.runtime.core.api.lifecycle.Callable;
 import org.mule.runtime.core.util.UUID;
 
 /**
- * Each instance of this service should contain a unique ID.  
+ * Each instance of this service should contain a unique ID.
  * Useful for testing object pools.
  */
 public class UniqueComponent implements Callable

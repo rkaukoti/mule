@@ -6,9 +6,10 @@
  */
 package org.mule.extension.ftp;
 
+import org.mule.extension.FtpTestHarness;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import org.mule.extension.FtpTestHarness;
 
 public class FtpMoveTestCase extends FtpCopyTestCase
 {

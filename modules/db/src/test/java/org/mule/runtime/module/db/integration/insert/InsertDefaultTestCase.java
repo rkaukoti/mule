@@ -7,8 +7,8 @@
 
 package org.mule.runtime.module.db.integration.insert;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -18,8 +18,8 @@ import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class InsertDefaultTestCase extends AbstractDbIntegrationTestCase
 {

@@ -7,11 +7,8 @@
 
 package org.mule.runtime.module.db.integration.insert;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.core.AnyOf.anyOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
@@ -22,8 +19,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.core.AnyOf.anyOf;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class InsertBulkSourceTestCase extends AbstractDbIntegrationTestCase
 {

@@ -8,10 +8,9 @@ package org.mule.runtime.module.xml.xpath;
 
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.module.xml.util.NamespaceManager;
+import org.w3c.dom.Node;
 
 import java.util.Map;
-
-import org.w3c.dom.Node;
 
 /**
  * A simple component of evaluation XPath expressions in full conformance of the XPath 2.0 spec
@@ -61,8 +60,7 @@ public interface XPathEvaluator
     /**
      * Registers the given namespaces so that they can be recognized during evaluation
      *
-     * @param namespaces a {@link Map} in which the key is a namespace prefix and the value is its URI as
-     *                   a {@link String}
+     * @param namespaces a {@link Map} in which the key is a namespace prefix and the value is its URI as a {@link String}
      */
     void registerNamespaces(Map<String, String> namespaces);
 

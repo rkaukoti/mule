@@ -16,7 +16,7 @@ public class TestExceptionStrategy extends AbstractMessagingExceptionStrategy
     {
         super(null);
     }
-    
+
     @Override
     public MuleEvent handleException(Exception exception, MuleEvent event)
     {

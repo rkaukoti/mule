@@ -33,14 +33,6 @@ public abstract class AbstractSingleResourceTransaction extends AbstractTransact
      */
     protected static Map<Integer, String> txStatusMappings = new HashMap<Integer, String>(10); // populated later
 
-    protected volatile Object key;
-    protected volatile Object resource;
-
-    protected final AtomicBoolean started = new AtomicBoolean(false);
-    protected final AtomicBoolean committed = new AtomicBoolean(false);
-    protected final AtomicBoolean rolledBack = new AtomicBoolean(false);
-    protected final AtomicBoolean rollbackOnly = new AtomicBoolean(false);
-
     static
     {
         Field[] fields = Status.class.getFields();
@@ -58,6 +50,13 @@ public abstract class AbstractSingleResourceTransaction extends AbstractTransact
 
         txStatusMappings = Collections.unmodifiableMap(txStatusMappings);
     }
+
+    protected final AtomicBoolean started = new AtomicBoolean(false);
+    protected final AtomicBoolean committed = new AtomicBoolean(false);
+    protected final AtomicBoolean rolledBack = new AtomicBoolean(false);
+    protected final AtomicBoolean rollbackOnly = new AtomicBoolean(false);
+    protected volatile Object key;
+    protected volatile Object resource;
 
     protected AbstractSingleResourceTransaction(MuleContext muleContext)
     {
@@ -127,12 +126,12 @@ public abstract class AbstractSingleResourceTransaction extends AbstractTransact
         {
             throw new IllegalTransactionStateException(CoreMessages.transactionSingleResourceOnly());
         }
-        
+
         if (logger.isDebugEnabled())
         {
             logger.debug("Binding " + resource + " to " + key);
         }
-        
+
         this.key = key;
         this.resource = resource;
     }
@@ -164,26 +163,30 @@ public abstract class AbstractSingleResourceTransaction extends AbstractTransact
         }
 
         return new StringBuilder().append(getClass().getName())
-                .append('@').append(id)
-                .append("[status=").append(statusName)
-                .append(", key=").append(key)
-                .append(", resource=").append(resource)
-                .append("]").toString();
+                                  .append('@').append(id)
+                                  .append("[status=").append(statusName)
+                                  .append(", key=").append(key)
+                                  .append(", resource=").append(resource)
+                                  .append("]").toString();
     }
 
     @Override
     public boolean supports(Object key, Object resource)
     {
-        return (this.key == null && (getKeyType().isAssignableFrom(key.getClass()) && getResourceType().isAssignableFrom(resource.getClass()))) || (this.key != null && (this.key == key && this.resource == resource));
+        return (this.key == null &&
+                (getKeyType().isAssignableFrom(key.getClass()) && getResourceType().isAssignableFrom(resource.getClass()))) ||
+               (this.key != null && (this.key == key && this.resource == resource));
     }
 
     protected Class getResourceType()
     {
-        throw new MuleRuntimeException(CoreMessages.createStaticMessage("Transaction type: " + this.getClass().getName() + " doesn't support supports(..) method"));
+        throw new MuleRuntimeException(CoreMessages.createStaticMessage(
+                "Transaction type: " + this.getClass().getName() + " doesn't support supports(..) method"));
     }
 
     protected Class getKeyType()
     {
-        throw new MuleRuntimeException(CoreMessages.createStaticMessage("Transaction type: " + this.getClass().getName() + " doesn't support supports(..) method"));
+        throw new MuleRuntimeException(CoreMessages.createStaticMessage(
+                "Transaction type: " + this.getClass().getName() + " doesn't support supports(..) method"));
     }
 }

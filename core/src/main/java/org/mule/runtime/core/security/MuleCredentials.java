@@ -51,7 +51,7 @@ public class MuleCredentials implements Credentials, Serializable
         if (i == -1)
         {
             throw new IllegalArgumentException(
-                CoreMessages.headerMalformedValueIs(MuleProperties.MULE_USER_PROPERTY, header).toString());
+                    CoreMessages.headerMalformedValueIs(MuleProperties.MULE_USER_PROPERTY, header).toString());
         }
 
         String scheme = header.substring(0, i);
@@ -77,6 +77,28 @@ public class MuleCredentials implements Credentials, Serializable
         {
             roles = st.nextToken();
         }
+    }
+
+    public static String createHeader(String username, char[] password)
+    {
+        StringBuilder buf = new StringBuilder(32);
+        buf.append("Plain ");
+        buf.append(username).append(TOKEN_DELIM);
+        buf.append(password).append(TOKEN_DELIM);
+        return buf.toString();
+    }
+
+    public static String createHeader(String username,
+                                      String password,
+                                      String encryptionName,
+                                      EncryptionStrategy es) throws CryptoFailureException
+    {
+        StringBuilder buf = new StringBuilder();
+        buf.append(encryptionName).append(" ");
+        String creds = username + TOKEN_DELIM + password;
+        byte[] encrypted = es.encrypt(creds.getBytes(), null);
+        buf.append(new String(encrypted));
+        return buf.toString();
     }
 
     public String getToken()
@@ -106,27 +128,5 @@ public class MuleCredentials implements Credentials, Serializable
     public Object getRoles()
     {
         return roles;
-    }
-
-    public static String createHeader(String username, char[] password)
-    {
-        StringBuilder buf = new StringBuilder(32);
-        buf.append("Plain ");
-        buf.append(username).append(TOKEN_DELIM);
-        buf.append(password).append(TOKEN_DELIM);
-        return buf.toString();
-    }
-
-    public static String createHeader(String username,
-                                      String password,
-                                      String encryptionName,
-                                      EncryptionStrategy es) throws CryptoFailureException
-    {
-        StringBuilder buf = new StringBuilder();
-        buf.append(encryptionName).append(" ");
-        String creds = username + TOKEN_DELIM + password;
-        byte[] encrypted = es.encrypt(creds.getBytes(), null);
-        buf.append(new String(encrypted));
-        return buf.toString();
     }
 }

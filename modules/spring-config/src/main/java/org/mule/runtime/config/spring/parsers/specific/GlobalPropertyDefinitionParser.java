@@ -8,7 +8,6 @@ package org.mule.runtime.config.spring.parsers.specific;
 
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.generic.MuleOrphanDefinitionParser;
-
 import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.util.SystemPropertyUtils;
 import org.w3c.dom.Element;
@@ -33,7 +32,7 @@ public class GlobalPropertyDefinitionParser extends MuleOrphanDefinitionParser
     protected void postProcess(ParserContext context, BeanAssembler assembler, Element element)
     {
         String name = element.getAttribute(NAME_ATTR);
-        if(name.indexOf(' ') != -1)
+        if (name.indexOf(' ') != -1)
         {
             logger.warn("Environment property name should not contain spaces: \"" + name + "\"");
         }

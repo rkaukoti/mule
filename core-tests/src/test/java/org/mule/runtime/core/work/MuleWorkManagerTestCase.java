@@ -6,27 +6,27 @@
  */
 package org.mule.runtime.core.work;
 
+import org.junit.Test;
+import org.mule.runtime.core.api.config.ThreadingProfile;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.resource.spi.work.Work;
+
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
-import org.mule.runtime.core.api.config.ThreadingProfile;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-
-import javax.resource.spi.work.Work;
-
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests the following behavior:
  * <ol>
- *  <li>ScheduleWorkExecutor - e.g. use the backing thread pool to execute work items asynchronously
- *  <li>StartWorkExecutor - block till the work is started, then async
- *  <li>SyncWorkExecutor - blocking executor, meaning we should be running in the very same thread.
- *</ol>
+ * <li>ScheduleWorkExecutor - e.g. use the backing thread pool to execute work items asynchronously
+ * <li>StartWorkExecutor - block till the work is started, then async
+ * <li>SyncWorkExecutor - blocking executor, meaning we should be running in the very same thread.
+ * </ol>
  * It's not really important to make a distinction between <code>scheduleWork()</code> and
  * <code>startWork()</code> for this test, thus they just check for async execution.
  */
@@ -41,11 +41,11 @@ public class MuleWorkManagerTestCase extends AbstractMuleContextTestCase
 
         MuleWorkManager wm = new MuleWorkManager(ThreadingProfile.DEFAULT_THREADING_PROFILE, null, 5000);
         wm.setMuleContext(muleContext);
-        
+
         try
         {
             wm.start();
-            
+
             wm.doWork(new Work()
             {
                 public void release()
@@ -57,7 +57,7 @@ public class MuleWorkManagerTestCase extends AbstractMuleContextTestCase
                 {
                     Thread calleeThread = Thread.currentThread();
                     assertEquals("WorkManager.doWork() should have been executed in the same thread.",
-                                 callerThread, calleeThread);
+                            callerThread, calleeThread);
                     if (logger.isDebugEnabled())
                     {
                         logger.debug("WORK: " + Thread.currentThread());
@@ -99,7 +99,7 @@ public class MuleWorkManagerTestCase extends AbstractMuleContextTestCase
                 {
                     Thread calleeThread = Thread.currentThread();
                     assertFalse("WorkManager.scheduleWork() should have been executed in a different thread.",
-                                callerThread.equals(calleeThread));
+                            callerThread.equals(calleeThread));
                     if (logger.isDebugEnabled())
                     {
                         logger.debug("WORK: " + Thread.currentThread());
@@ -141,7 +141,7 @@ public class MuleWorkManagerTestCase extends AbstractMuleContextTestCase
                 {
                     Thread calleeThread = Thread.currentThread();
                     assertFalse("WorkManager.startWork() should have been executed in a different thread.",
-                                callerThread.equals(calleeThread));
+                            callerThread.equals(calleeThread));
                     if (logger.isDebugEnabled())
                     {
                         logger.debug("WORK: " + Thread.currentThread());

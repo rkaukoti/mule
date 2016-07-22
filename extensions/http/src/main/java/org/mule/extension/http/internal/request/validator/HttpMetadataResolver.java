@@ -6,8 +6,6 @@
  */
 package org.mule.extension.http.internal.request.validator;
 
-import static org.mule.metadata.api.model.MetadataFormat.JAVA;
-import static org.mule.runtime.api.metadata.MetadataKeyBuilder.newKey;
 import org.mule.metadata.api.ClassTypeLoader;
 import org.mule.metadata.api.builder.BaseTypeBuilder;
 import org.mule.metadata.api.builder.UnionTypeBuilder;
@@ -28,6 +26,9 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
+import static org.mule.metadata.api.model.MetadataFormat.JAVA;
+import static org.mule.runtime.api.metadata.MetadataKeyBuilder.newKey;
+
 /**
  * Handles all metadata related operations for HTTP requests.
  *
@@ -35,10 +36,10 @@ import java.util.Set;
  */
 public class HttpMetadataResolver implements Initialisable, MetadataKeysResolver, MetadataOutputResolver<String>
 {
-    private static final ClassTypeLoader  TYPE_LOADER = ExtensionsTypeLoaderFactory.getDefault().createTypeLoader();
+    private static final ClassTypeLoader TYPE_LOADER = ExtensionsTypeLoaderFactory.getDefault().createTypeLoader();
     private static final String ANY = "ANY";
 
-    private Class[] classes = new Class[]{InputStream.class, ParameterMap.class};
+    private Class[] classes = new Class[] {InputStream.class, ParameterMap.class};
     private Map<String, MetadataType> types;
     private Set<MetadataKey> keys;
 
@@ -59,7 +60,8 @@ public class HttpMetadataResolver implements Initialisable, MetadataKeysResolver
     {
         UnionTypeBuilder builder = new BaseTypeBuilder<>(JAVA).unionType();
         //Create all MetadataTypes and store them by String key
-        Arrays.stream(classes).forEach(aClass -> {
+        Arrays.stream(classes).forEach(aClass ->
+        {
             MetadataType type = TYPE_LOADER.load(aClass);
             types.put(aClass.getSimpleName(), type);
             builder.of(type);

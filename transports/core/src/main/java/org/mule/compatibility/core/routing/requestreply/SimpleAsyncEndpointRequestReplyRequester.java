@@ -13,7 +13,7 @@ import org.mule.runtime.core.api.source.MessageSource;
 import org.mule.runtime.core.routing.requestreply.SimpleAsyncRequestReplyRequester;
 
 public class SimpleAsyncEndpointRequestReplyRequester extends SimpleAsyncRequestReplyRequester
-    implements Startable, Stoppable
+        implements Startable, Stoppable
 {
     @Override
     protected String getReplyTo()

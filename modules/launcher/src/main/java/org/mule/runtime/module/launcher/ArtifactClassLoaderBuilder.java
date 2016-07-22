@@ -7,7 +7,6 @@
 package org.mule.runtime.module.launcher;
 
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
-import org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFactory;
 import org.mule.runtime.module.artifact.classloader.DeployableArtifactClassLoaderFactory;
 import org.mule.runtime.module.launcher.application.ArtifactPluginFactory;
 import org.mule.runtime.module.launcher.plugin.ArtifactPluginDescriptorLoader;
@@ -29,9 +28,20 @@ public class ArtifactClassLoaderBuilder extends AbstractArtifactClassLoaderBuild
     /**
      * {@inheritDoc}
      */
-    public ArtifactClassLoaderBuilder(DeployableArtifactClassLoaderFactory artifactClassLoaderFactory, ArtifactPluginRepository artifactPluginRepository, ArtifactPluginFactory artifactPluginFactory, ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader)
+    public ArtifactClassLoaderBuilder(DeployableArtifactClassLoaderFactory artifactClassLoaderFactory,
+                                      ArtifactPluginRepository artifactPluginRepository, ArtifactPluginFactory artifactPluginFactory,
+                                      ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader)
     {
         super(artifactClassLoaderFactory, artifactPluginRepository, artifactPluginFactory, artifactPluginDescriptorLoader);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ArtifactClassLoader getParentClassLoader()
+    {
+        return parentClassLoader;
     }
 
     /**
@@ -42,14 +52,5 @@ public class ArtifactClassLoaderBuilder extends AbstractArtifactClassLoaderBuild
     {
         this.parentClassLoader = parentClassLoader;
         return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    ArtifactClassLoader getParentClassLoader()
-    {
-        return parentClassLoader;
     }
 }

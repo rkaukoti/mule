@@ -12,7 +12,7 @@ import org.mule.runtime.core.util.ClassUtils;
 
 public class LifecycleObject
 {
-    
+
     private Class type;
     private ServerNotification preNotification;
     private ServerNotification postNotification;
@@ -54,7 +54,7 @@ public class LifecycleObject
 
     public void firePreNotification(MuleContext context)
     {
-        if(preNotification!=null)
+        if (preNotification != null)
         {
             context.fireNotification(preNotification);
         }
@@ -62,7 +62,7 @@ public class LifecycleObject
 
     public void firePostNotification(MuleContext context)
     {
-        if(postNotification!=null)
+        if (postNotification != null)
         {
             context.fireNotification(postNotification);
         }
@@ -73,5 +73,5 @@ public class LifecycleObject
     {
         return super.toString() + " (" + ClassUtils.getSimpleName(type) + ")";
     }
-        
+
 }

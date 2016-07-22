@@ -6,16 +6,6 @@
  */
 package org.mule.extension.http.internal.request.validator;
 
-import static org.mule.extension.http.internal.HttpConnector.OTHER_SETTINGS;
-import static org.mule.extension.http.internal.HttpConnector.TLS;
-import static org.mule.extension.http.internal.HttpConnector.TLS_CONFIGURATION;
-import static org.mule.extension.http.internal.HttpConnector.URL_CONFIGURATION;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
-
 import org.mule.extension.http.api.request.client.HttpClient;
 import org.mule.extension.http.api.request.proxy.ProxyConfig;
 import org.mule.extension.http.internal.request.client.DefaultUriParameters;
@@ -49,6 +39,16 @@ import org.mule.runtime.module.tls.api.DefaultTlsContextFactoryBuilder;
 import java.util.function.Function;
 
 import javax.inject.Inject;
+
+import static org.mule.extension.http.internal.HttpConnector.OTHER_SETTINGS;
+import static org.mule.extension.http.internal.HttpConnector.TLS;
+import static org.mule.extension.http.internal.HttpConnector.TLS_CONFIGURATION;
+import static org.mule.extension.http.internal.HttpConnector.URL_CONFIGURATION;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
 
 /**
  * Connection provider for a HTTP request, handles the creation of {@link HttpClient} instances.
@@ -200,7 +200,8 @@ public class HttpRequesterProvider implements ConnectionProvider<HttpClient>, In
     }
 
     @Override
-    public ConnectionHandlingStrategy<HttpClient> getHandlingStrategy(ConnectionHandlingStrategyFactory<HttpClient> connectionHandlingStrategyFactory)
+    public ConnectionHandlingStrategy<HttpClient> getHandlingStrategy(
+            ConnectionHandlingStrategyFactory<HttpClient> connectionHandlingStrategyFactory)
     {
         return connectionHandlingStrategyFactory.cached();
     }
@@ -216,7 +217,8 @@ public class HttpRequesterProvider implements ConnectionProvider<HttpClient>, In
         if (protocol.equals(HTTP) && tlsContextFactory != null)
         {
             throw new InitialisationException(createStaticMessage("TlsContext cannot be configured with protocol HTTP, " +
-                                                                  "when using tls:context you must set attribute protocol=\"HTTPS\""), this);
+                                                                  "when using tls:context you must set attribute protocol=\"HTTPS\""),
+                    this);
         }
 
         if (protocol.equals(HTTPS) && tlsContextFactory == null)
@@ -237,7 +239,8 @@ public class HttpRequesterProvider implements ConnectionProvider<HttpClient>, In
     {
         if (maxConnections < UNLIMITED_CONNECTIONS || maxConnections == 0)
         {
-            throw new InitialisationException(createStaticMessage("The maxConnections parameter only allows positive values or -1 for unlimited concurrent connections."), this);
+            throw new InitialisationException(createStaticMessage(
+                    "The maxConnections parameter only allows positive values or -1 for unlimited concurrent connections."), this);
         }
 
         if (!usePersistentConnections)

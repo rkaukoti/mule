@@ -8,11 +8,12 @@
 package org.mule.runtime.module.db.internal.config.domain.database;
 
 import org.mule.runtime.api.meta.AnnotatedObject;
+import org.mule.runtime.config.spring.factories.AnnotatedObjectFactoryBean;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.retry.RetryPolicyTemplate;
-import org.mule.runtime.config.spring.factories.AnnotatedObjectFactoryBean;
+import org.mule.runtime.core.util.Preconditions;
 import org.mule.runtime.module.db.internal.domain.connection.DbPoolingProfile;
 import org.mule.runtime.module.db.internal.domain.database.ConfigurableDbConfigFactory;
 import org.mule.runtime.module.db.internal.domain.database.DataSourceConfig;
@@ -23,7 +24,6 @@ import org.mule.runtime.module.db.internal.domain.type.DbType;
 import org.mule.runtime.module.db.internal.resolver.database.DbConfigResolver;
 import org.mule.runtime.module.db.internal.resolver.database.DynamicDbConfigResolver;
 import org.mule.runtime.module.db.internal.resolver.database.StaticDbConfigResolver;
-import org.mule.runtime.core.util.Preconditions;
 
 import java.util.List;
 import java.util.Map;
@@ -33,16 +33,17 @@ import javax.sql.DataSource;
 /**
  * Creates {@link DbConfigResolver} instances
  */
-public class DbConfigResolverFactoryBean extends AnnotatedObjectFactoryBean<DbConfigResolver> implements AnnotatedObject, MuleContextAware, Disposable
+public class DbConfigResolverFactoryBean extends AnnotatedObjectFactoryBean<DbConfigResolver>
+        implements AnnotatedObject, MuleContextAware, Disposable
 {
 
+    private final DataSourceConfig dataSourceConfig = new DataSourceConfig();
+    private final ConfigurableDbConfigFactory dbConfigFactory;
     private MuleContext muleContext;
     private String name;
     private DataSource dataSource;
     private Map<String, String> connectionProperties;
     private DataSourceFactory dataSourceFactory;
-    private final DataSourceConfig dataSourceConfig = new DataSourceConfig();
-    private final ConfigurableDbConfigFactory dbConfigFactory;
 
     @SuppressWarnings("unused")
     public DbConfigResolverFactoryBean()
@@ -110,7 +111,8 @@ public class DbConfigResolverFactoryBean extends AnnotatedObjectFactoryBean<DbCo
     {
         if (dataSource != null)
         {
-            Preconditions.checkState(connectionProperties.isEmpty(), "connection-properties cannot be specified when a DataSource was provided");
+            Preconditions.checkState(connectionProperties.isEmpty(),
+                    "connection-properties cannot be specified when a DataSource was provided");
         }
     }
 

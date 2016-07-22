@@ -7,20 +7,13 @@
 package org.mule.compatibility.core.transport;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import junit.framework.Assert;
 
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.compatibility.core.api.transport.MessageDispatcher;
 import org.mule.compatibility.core.api.transport.MessageRequester;
-import org.mule.compatibility.core.transport.AbstractMessageDispatcher;
-import org.mule.compatibility.core.transport.AbstractMessageReceiver;
-import org.mule.compatibility.core.transport.AbstractMessageRequester;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.LifecycleException;
@@ -32,9 +25,12 @@ import org.mule.tck.testmodels.mule.TestConnector;
 import javax.resource.spi.work.Work;
 import javax.resource.spi.work.WorkException;
 
-import org.junit.Test;
-
-import junit.framework.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests that lifecycle methods on a connector are not processed more than once. (@see MULE-3062)
@@ -397,7 +393,7 @@ public class ConnectorLifecycleTestCase extends AbstractMuleContextEndpointTestC
 
         //using sync endpoint so that any calls to 'process()' will be blocking and avoid timing issues
         OutboundEndpoint out = getTestOutboundEndpoint("out",
-                                                       "test://out?exchangePattern=request-response", null, null, null, connector);
+                "test://out?exchangePattern=request-response", null, null, null, connector);
 
         // attempts to send/dispatch/request are made on a stopped/stopping connector
         // This should fail because the connector is not started!
@@ -421,7 +417,7 @@ public class ConnectorLifecycleTestCase extends AbstractMuleContextEndpointTestC
         assertDispatcherStartedConnected(out, true, true);
 
         OutboundEndpoint out2 = getTestOutboundEndpoint("out2",
-                                                        "test://out2?exchangePattern=request-response", null, null, null, connector);
+                "test://out2?exchangePattern=request-response", null, null, null, connector);
         //This causes the first instance out2 dispatcher to be created
         out2.process(getTestEvent("data"));
 

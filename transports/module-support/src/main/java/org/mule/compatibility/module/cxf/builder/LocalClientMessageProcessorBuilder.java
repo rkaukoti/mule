@@ -6,10 +6,6 @@
  */
 package org.mule.compatibility.module.cxf.builder;
 
-import org.mule.runtime.core.api.lifecycle.CreateException;
-import org.mule.runtime.module.cxf.CxfOutboundMessageProcessor;
-import org.mule.runtime.module.cxf.builder.AbstractOutboundMessageProcessorBuilder;
-
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.endpoint.ClientImpl;
 import org.apache.cxf.endpoint.Endpoint;
@@ -19,24 +15,26 @@ import org.apache.cxf.transport.Destination;
 import org.apache.cxf.transport.DestinationFactory;
 import org.apache.cxf.transport.DestinationFactoryManager;
 import org.apache.cxf.transport.MessageObserver;
+import org.mule.runtime.core.api.lifecycle.CreateException;
+import org.mule.runtime.module.cxf.CxfOutboundMessageProcessor;
+import org.mule.runtime.module.cxf.builder.AbstractOutboundMessageProcessorBuilder;
 
 /**
  * This builder uses a service that is already configured to build a CXF
  * client and it's corresponding MessageProcessor. Given the specified
- * <code>address</code> property, it will lookup the corresponding 
+ * <code>address</code> property, it will lookup the corresponding
  * inbound MessageProcessor. It will then use this processor's service model
- * to configure a CXF client. 
+ * to configure a CXF client.
  * <p>
  * This can be used via CXF meta endpoints. For instance, with MuleClient you can do:
  * <code>
  * MuleClient client = ...
  * client.send("cxf:http://host/yourService?method=remoteOperation", message);
  * </code>
- * This will find the remote service, configure the client appropriately, and 
- * invoke the remote service. 
+ * This will find the remote service, configure the client appropriately, and
+ * invoke the remote service.
  * <p>
  * This only works if the server and client are in the same Mule instance.
- * 
  */
 public class LocalClientMessageProcessorBuilder extends AbstractOutboundMessageProcessorBuilder
 {
@@ -54,7 +52,7 @@ public class LocalClientMessageProcessorBuilder extends AbstractOutboundMessageP
         {
             uri = uri.substring(0, idx);
         }
-        
+
         // remove username/password
         idx = uri.indexOf('@');
         int slashIdx = uri.indexOf("//");
@@ -62,7 +60,7 @@ public class LocalClientMessageProcessorBuilder extends AbstractOutboundMessageP
         {
             uri = uri.substring(0, slashIdx + 2) + uri.substring(idx + 1);
         }
-        
+
         EndpointInfo ei = new EndpointInfo();
         ei.setAddress(uri);
 
@@ -88,5 +86,5 @@ public class LocalClientMessageProcessorBuilder extends AbstractOutboundMessageP
                                 + uri);
         }
     }
-    
+
 }

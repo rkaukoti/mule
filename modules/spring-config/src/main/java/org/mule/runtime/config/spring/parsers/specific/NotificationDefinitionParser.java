@@ -40,17 +40,14 @@ import org.mule.runtime.core.context.notification.RegistryNotification;
 import org.mule.runtime.core.context.notification.RoutingNotification;
 import org.mule.runtime.core.context.notification.SecurityNotification;
 import org.mule.runtime.core.context.notification.TransactionNotification;
+import org.w3c.dom.Element;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.w3c.dom.Element;
-
 public class NotificationDefinitionParser extends ChildMapEntryDefinitionParser
 {
 
-    private static final String ENDPOINT_MESSAGE_NOTIFICATION_CLASS = "org.mule.compatibility.core.context.notification.EndpointMessageNotification";
-    private static final String ENDPOINT_MESSAGE_NOTIFICATION_LISTENER_CLASS = "org.mule.compatibility.core.api.context.notification.EndpointMessageNotificationListener";
     public static final Map EVENT_MAP;
     public static final Map INTERFACE_MAP;
     public static final String INTERFACE = "interface";
@@ -58,13 +55,17 @@ public class NotificationDefinitionParser extends ChildMapEntryDefinitionParser
     public static final String EVENT = "event";
     public static final String EVENT_CLASS = "event-class";
     public static final String[][] INTERFACE_ATTRIBUTES =
-            new String[][]{new String[]{INTERFACE}, new String[]{INTERFACE_CLASS}};
+            new String[][] {new String[] {INTERFACE}, new String[] {INTERFACE_CLASS}};
     public static final String[][] EVENT_ATTRIBUTES =
-            new String[][]{new String[]{EVENT}, new String[]{EVENT_CLASS}};
+            new String[][] {new String[] {EVENT}, new String[] {EVENT_CLASS}};
     public static final String[][] ALL_ATTRIBUTES =
-            new String[][]{
-                    new String[]{EVENT}, new String[]{EVENT_CLASS},
-                    new String[]{INTERFACE}, new String[]{INTERFACE_CLASS}};
+            new String[][] {
+                    new String[] {EVENT}, new String[] {EVENT_CLASS},
+                    new String[] {INTERFACE}, new String[] {INTERFACE_CLASS}};
+    private static final String ENDPOINT_MESSAGE_NOTIFICATION_CLASS =
+            "org.mule.compatibility.core.context.notification.EndpointMessageNotification";
+    private static final String ENDPOINT_MESSAGE_NOTIFICATION_LISTENER_CLASS =
+            "org.mule.compatibility.core.api.context.notification.EndpointMessageNotificationListener";
 
     static
     {

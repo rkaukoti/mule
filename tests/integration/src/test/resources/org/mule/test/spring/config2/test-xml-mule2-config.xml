@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mule xmlns:spring="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:test="http://www.mulesoft.org/schema/mule/test"
-       xmlns="http://www.mulesoft.org/schema/mule/core"
-       xsi:schemaLocation="
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
@@ -14,14 +14,14 @@
 
     <configuration defaultResponseTimeout="10" defaultTransactionTimeout="20" shutdownTimeout="30">
         <default-threading-profile maxBufferSize="42" maxThreadsActive="16"
-                                        maxThreadsIdle="3" poolExhaustedAction="WAIT" threadTTL="60001"/>
+                                   maxThreadsIdle="3" poolExhaustedAction="WAIT" threadTTL="60001"/>
     </configuration>
 
     <custom-transaction-manager class="org.mule.tck.testmodels.mule.TestTransactionManagerFactory"/>
 
     <custom-transformer name="TestCompressionTransformer"
-                             class="org.mule.tck.testmodels.mule.TestCompressionTransformer"
-                             returnClass="java.lang.String">
+                        class="org.mule.tck.testmodels.mule.TestCompressionTransformer"
+                        returnClass="java.lang.String">
         <spring:property name="beanProperty1" value="${beanProperty1}"/>
         <spring:property name="beanProperty2" value="12"/>
         <spring:property name="containerProperty" value="a string"/>

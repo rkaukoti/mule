@@ -7,10 +7,7 @@
 
 package org.mule.runtime.module.db.internal.domain.statement;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
 import org.mule.runtime.module.db.internal.domain.param.QueryParam;
 import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
@@ -22,7 +19,10 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.util.Collections;
 
-import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class QueryStatementFactoryTestCase extends AbstractMuleTestCase

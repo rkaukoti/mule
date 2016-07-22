@@ -7,6 +7,8 @@
 package org.mule.runtime.core.message;
 
 import org.mule.runtime.core.api.MuleEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.NotSerializableException;
@@ -18,9 +20,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>ExceptionMessage</code> is used by the DefaultServiceExceptionStrategy
@@ -34,13 +33,11 @@ public class ExceptionMessage implements Serializable
     private static final long serialVersionUID = -538516243574950621L;
 
     private static final Logger logger = LoggerFactory.getLogger(ExceptionMessage.class);
-
+    protected Map<String, Object> properties;
     // This object uses custom serialization via the writeObject() method
     private transient Object payload;
     // This object uses custom serialization via the writeObject() method
     private transient Throwable exception;
-
-    protected Map<String, Object> properties;
     private String componentName;
     private String endpointUri;
     private Date timeStamp;
@@ -60,7 +57,7 @@ public class ExceptionMessage implements Serializable
             this.endpointUri = endpointUri.toString();
         }
 
-        for (Iterator iterator = event.getMessage().getOutboundPropertyNames().iterator(); iterator.hasNext();)
+        for (Iterator iterator = event.getMessage().getOutboundPropertyNames().iterator(); iterator.hasNext(); )
         {
             String propertyKey = (String) iterator.next();
             setProperty(propertyKey, event.getMessage().getOutboundProperty(propertyKey));
@@ -76,7 +73,8 @@ public class ExceptionMessage implements Serializable
         }
         catch (NotSerializableException e)
         {
-            logger.warn("Exception " + exception.getClass().getName() + " is not serializable and will be lost when sending ExceptionMessage over the wire: " + e.getMessage());
+            logger.warn("Exception " + exception.getClass().getName() +
+                        " is not serializable and will be lost when sending ExceptionMessage over the wire: " + e.getMessage());
         }
         try
         {
@@ -84,7 +82,8 @@ public class ExceptionMessage implements Serializable
         }
         catch (NotSerializableException e)
         {
-            logger.warn("Payload " + payload.getClass().getName() + " is not serializable and will be lost when sending ExceptionMessage over the wire: " + e.getMessage());
+            logger.warn("Payload " + payload.getClass().getName() +
+                        " is not serializable and will be lost when sending ExceptionMessage over the wire: " + e.getMessage());
         }
     }
 
@@ -109,11 +108,6 @@ public class ExceptionMessage implements Serializable
         }
     }
 
-    public void setPayload(Object payload)
-    {
-        this.payload = payload;
-    }
-
     /**
      * @return the current message
      */
@@ -122,6 +116,10 @@ public class ExceptionMessage implements Serializable
         return payload;
     }
 
+    public void setPayload(Object payload)
+    {
+        this.payload = payload;
+    }
 
     /**
      * Adds a map of properties to associated with this message
@@ -185,7 +183,7 @@ public class ExceptionMessage implements Serializable
     public String toString()
     {
         return "ExceptionMessage{" + "payload=" + getPayload() + ", context=" + properties + "exception=" + exception
-                + ", componentName='" + componentName + "'" + ", endpointUri=" + endpointUri + ", timeStamp="
-                + timeStamp + "}";
+               + ", componentName='" + componentName + "'" + ", endpointUri=" + endpointUri + ", timeStamp="
+               + timeStamp + "}";
     }
 }

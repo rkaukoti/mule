@@ -6,17 +6,14 @@
  */
 package org.mule.extension.socket.api.connection.tcp;
 
-import static java.lang.String.format;
-import static org.mule.extension.socket.internal.SocketUtils.configureConnection;
-
-import org.mule.extension.socket.api.socket.factory.SimpleServerSocketFactory;
 import org.mule.extension.socket.api.ConnectionSettings;
+import org.mule.extension.socket.api.SocketAttributes;
 import org.mule.extension.socket.api.connection.ListenerConnection;
 import org.mule.extension.socket.api.connection.udp.UdpListenerConnection;
+import org.mule.extension.socket.api.socket.factory.SimpleServerSocketFactory;
 import org.mule.extension.socket.api.socket.tcp.TcpProtocol;
 import org.mule.extension.socket.api.socket.tcp.TcpServerSocketProperties;
 import org.mule.extension.socket.api.socket.tcp.TcpSocketProperties;
-import org.mule.extension.socket.api.SocketAttributes;
 import org.mule.extension.socket.api.worker.SocketWorker;
 import org.mule.extension.socket.api.worker.TcpWorker;
 import org.mule.runtime.api.connection.ConnectionException;
@@ -33,6 +30,9 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+
+import static java.lang.String.format;
+import static org.mule.extension.socket.internal.SocketUtils.configureConnection;
 
 /**
  * Implementation of {@link ListenerConnection} for receiving TCP connections.
@@ -61,8 +61,8 @@ public final class TcpListenerConnection extends AbstractTcpConnection implement
      * The new {@link Socket} used for responding has the same {@link TcpSocketProperties} settings as the
      * listener socket used in the {@link Source}.
      *
-     * @throws ConnectionException if the socket was close while blocked on {@link DatagramSocket#receive(DatagramPacket)} method
-     *                             and the close was not intentionally done by the {@link UdpListenerConnection#disconnect()} method.
+     * @throws ConnectionException if the socket was close while blocked on {@link DatagramSocket#receive(DatagramPacket)} method and the
+     *                             close was not intentionally done by the {@link UdpListenerConnection#disconnect()} method.
      * @throws IOException         if the socket was close while blocked on {@link DatagramSocket#receive(DatagramPacket)} method.
      */
     @Override
@@ -123,7 +123,9 @@ public final class TcpListenerConnection extends AbstractTcpConnection implement
         }
         catch (IOException e)
         {
-            throw new ConnectionException(format("Could not bind socket to host '%s' and port '%d'", connectionSettings.getHost(), connectionSettings.getPort()), e);
+            throw new ConnectionException(
+                    format("Could not bind socket to host '%s' and port '%d'", connectionSettings.getHost(), connectionSettings.getPort()),
+                    e);
         }
 
     }

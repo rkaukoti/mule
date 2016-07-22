@@ -6,9 +6,9 @@
  */
 package org.mule.test.integration.transaction;
 
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
+import org.hamcrest.core.IsNull;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.MuleMessage;
@@ -19,9 +19,8 @@ import org.mule.runtime.core.util.concurrent.Latch;
 
 import java.util.concurrent.TimeUnit;
 
-import org.hamcrest.core.IsNull;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /*
 EE-2430 - Check that JMS SubReceiver executes concurrently.
@@ -44,7 +43,7 @@ public class JmsConcurrentConsumerExecutionTestCase extends FunctionalTestCase
     }
 
     @Test
-    @Ignore("MULE-6926") 
+    @Ignore("MULE-6926")
     public void testTwoMessagesOneRollbackOneCommit() throws Exception
     {
         MuleClient muleClient = muleContext.getClient();
@@ -89,7 +88,7 @@ public class JmsConcurrentConsumerExecutionTestCase extends FunctionalTestCase
             finally
             {
                 messageFailureReceived.release();
-                messageSuccessfulReceived.await(TIMEOUT,TimeUnit.MILLISECONDS);
+                messageSuccessfulReceived.await(TIMEOUT, TimeUnit.MILLISECONDS);
             }
         }
     }

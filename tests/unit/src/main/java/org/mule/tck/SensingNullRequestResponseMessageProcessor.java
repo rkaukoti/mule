@@ -6,14 +6,14 @@
  */
 package org.mule.tck;
 
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.processor.AbstractRequestResponseMessageProcessor;
+
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.core.processor.AbstractRequestResponseMessageProcessor;
 
 /**
  * Can be used to sense request and response threads used during processing.

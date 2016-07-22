@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.module.extension.file.api;
 
-import static org.apache.commons.io.IOUtils.write;
 import org.mule.runtime.api.message.MuleEvent;
 import org.mule.runtime.core.message.OutputHandler;
 import org.mule.runtime.core.util.IOUtils;
@@ -14,6 +13,8 @@ import org.mule.runtime.core.util.IOUtils;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+
+import static org.apache.commons.io.IOUtils.write;
 
 /**
  * A {@link FileContentVisitor} which writes the received

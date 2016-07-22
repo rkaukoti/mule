@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.glassfish.grizzly.ReadResult;
 import org.glassfish.grizzly.filterchain.FilterChainContext;
 import org.glassfish.grizzly.http.HttpContent;
 import org.glassfish.grizzly.utils.BufferInputStream;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * {@link java.io.InputStream} to be used when the HTTP request

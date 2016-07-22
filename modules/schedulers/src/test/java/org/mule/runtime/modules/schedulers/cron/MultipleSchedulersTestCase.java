@@ -7,16 +7,15 @@
 
 package org.mule.runtime.modules.schedulers.cron;
 
-import org.mule.runtime.core.construct.Flow;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.construct.Flow;
+import org.mule.runtime.core.util.concurrent.Latch;
 import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
-import org.mule.runtime.core.util.concurrent.Latch;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-
-import org.junit.Test;
 
 public class MultipleSchedulersTestCase extends FunctionalTestCase
 {

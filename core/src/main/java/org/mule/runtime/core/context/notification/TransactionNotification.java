@@ -12,16 +12,14 @@ import org.mule.runtime.core.api.transaction.Transaction;
 
 public class TransactionNotification extends ServerNotification implements BlockingServerEvent
 {
+    public static final int TRANSACTION_BEGAN = TRANSACTION_EVENT_ACTION_START_RANGE + 1;
+    public static final int TRANSACTION_COMMITTED = TRANSACTION_EVENT_ACTION_START_RANGE + 2;
+    public static final int TRANSACTION_ROLLEDBACK = TRANSACTION_EVENT_ACTION_START_RANGE + 3;
     /**
      * Serial version
      */
     private static final long serialVersionUID = -3245036187011582121L;
-
     private static String UNKNOWN_APPLICATION_NAME = "unknown";
-
-    public static final int TRANSACTION_BEGAN = TRANSACTION_EVENT_ACTION_START_RANGE + 1;
-    public static final int TRANSACTION_COMMITTED = TRANSACTION_EVENT_ACTION_START_RANGE + 2;
-    public static final int TRANSACTION_ROLLEDBACK = TRANSACTION_EVENT_ACTION_START_RANGE + 3;
 
     static
     {

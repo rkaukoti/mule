@@ -6,21 +6,19 @@
  */
 package org.mule.runtime.core.routing.outbound;
 
+import org.apache.commons.lang.Validate;
 import org.mule.runtime.core.routing.AbstractMessageSequence;
 import org.mule.runtime.core.routing.MessageSequence;
 
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.commons.lang.Validate;
-
 /**
  * A {@link MessageSequence} that retrieves elements from a {@link Collection}. Its
  * estimated size is initially the size of the collection, and decreases when
  * elements are consumed using {@link #next()}
- * 
+ *
  * @author flbulgarelli
- * @param <T>
  */
 public final class CollectionMessageSequence<T> extends AbstractMessageSequence<T>
 {

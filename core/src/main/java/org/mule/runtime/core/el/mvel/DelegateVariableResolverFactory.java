@@ -26,9 +26,6 @@ public class DelegateVariableResolverFactory implements VariableResolverFactory
     /**
      * Convenience constructor to allow for more concise creation of VariableResolverFactory chains without
      * and performance overhead incurred by using a builder.
-     * 
-     * @param delegate
-     * @param next
      */
     public DelegateVariableResolverFactory(VariableResolverFactory delegate, VariableResolverFactory next)
     {

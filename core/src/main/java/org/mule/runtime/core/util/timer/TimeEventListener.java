@@ -16,7 +16,7 @@ public interface TimeEventListener extends EventListener
 {
     /**
      * Passes the TimeEvent to an object
-     * 
+     *
      * @param e the time event that occurred
      */
     void timeExpired(TimeEvent e);

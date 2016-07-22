@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.core.api.security.tls;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 
 import javax.net.ssl.SSLSocketFactory;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A socket factory that is configured via Properties, using a {@link TlsConfiguration}
@@ -41,13 +41,13 @@ public class TlsPropertiesSocketFactory extends SSLSocketFactory
         {
             logger.debug("creating factory");
             TlsPropertiesMapper propertiesMapper = new TlsPropertiesMapper(namespace);
-            TlsConfiguration configuration = new TlsConfiguration(TlsConfiguration.DEFAULT_KEYSTORE); 
+            TlsConfiguration configuration = new TlsConfiguration(TlsConfiguration.DEFAULT_KEYSTORE);
             propertiesMapper.readFromProperties(configuration, System.getProperties());
-            try 
+            try
             {
                 configuration.initialise(anon, namespace);
                 factory = configuration.getSocketFactory();
-            } 
+            }
             catch (Exception e)
             {
                 throw (IOException) new IOException(e.getMessage()).initCause(e);
@@ -65,7 +65,7 @@ public class TlsPropertiesSocketFactory extends SSLSocketFactory
     @Override
     public String[] getDefaultCipherSuites()
     {
-        try 
+        try
         {
             return getFactory().getDefaultCipherSuites();
         }
@@ -78,7 +78,7 @@ public class TlsPropertiesSocketFactory extends SSLSocketFactory
     @Override
     public String[] getSupportedCipherSuites()
     {
-        try 
+        try
         {
             return getFactory().getSupportedCipherSuites();
         }
@@ -117,8 +117,8 @@ public class TlsPropertiesSocketFactory extends SSLSocketFactory
     public Socket createSocket() throws IOException
     {
         return getFactory().createSocket();
-    } 
-    
+    }
+
 }
 
 

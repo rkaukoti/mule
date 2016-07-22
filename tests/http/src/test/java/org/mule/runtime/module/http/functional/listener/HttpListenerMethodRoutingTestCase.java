@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
-
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.extension.http.api.HttpResponseAttributes;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
@@ -20,34 +19,33 @@ import org.mule.tck.junit4.rule.SystemProperty;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
 
 @RunWith(Parameterized.class)
 public class HttpListenerMethodRoutingTestCase extends AbstractHttpTestCase
 {
 
-    @Rule
-    public DynamicPort listenPort = new DynamicPort("port");
-
-    @Rule
-    public SystemProperty path = new SystemProperty("path", "path");
-
     private final String method;
     private final String expectedContent;
-
-    @Parameterized.Parameters
-    public static Collection<Object[]> data()
-    {
-        return Arrays.asList(new Object[][] {{"GET", "GET"}, {"POST", "POST"}, {"OPTIONS", "OPTIONS-DELETE"}, {"DELETE", "OPTIONS-DELETE"}, {"PUT", "ALL"}});
-    }
+    @Rule
+    public DynamicPort listenPort = new DynamicPort("port");
+    @Rule
+    public SystemProperty path = new SystemProperty("path", "path");
 
     public HttpListenerMethodRoutingTestCase(String method, String expectedContent)
     {
         this.method = method;
         this.expectedContent = expectedContent;
+    }
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data()
+    {
+        return Arrays.asList(new Object[][] {{"GET", "GET"}, {"POST", "POST"}, {"OPTIONS", "OPTIONS-DELETE"}, {"DELETE", "OPTIONS-DELETE"},
+                                             {"PUT", "ALL"}});
     }
 
     @Override

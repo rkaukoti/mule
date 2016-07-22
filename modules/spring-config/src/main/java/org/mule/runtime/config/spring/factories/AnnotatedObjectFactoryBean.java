@@ -8,6 +8,7 @@
 package org.mule.runtime.config.spring.factories;
 
 import org.mule.runtime.api.meta.AnnotatedObject;
+import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 import java.util.Collections;
 import java.util.Map;
@@ -15,12 +16,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.namespace.QName;
 
-import org.springframework.beans.factory.config.AbstractFactoryBean;
-
 /**
  * Extends spring's {@link AbstractFactoryBean} by adding annotations. This will then be passed to the built bean.
  */
-public abstract class AnnotatedObjectFactoryBean<B extends AnnotatedObject> extends AbstractFactoryBean<B>implements AnnotatedObject
+public abstract class AnnotatedObjectFactoryBean<B extends AnnotatedObject> extends AbstractFactoryBean<B> implements AnnotatedObject
 {
 
     /*

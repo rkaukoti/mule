@@ -6,15 +6,6 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static java.util.Collections.emptyList;
-import static org.mule.compatibility.core.api.config.MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY;
-import static org.mule.compatibility.transport.http.HttpConnector.HTTP_METHOD_PROPERTY;
-import static org.mule.compatibility.transport.http.HttpConnector.HTTP_STATUS_PROPERTY;
-import static org.mule.compatibility.transport.http.HttpConstants.HEADER_CONTENT_LENGTH;
-import static org.mule.compatibility.transport.http.HttpConstants.HEADER_ETAG;
-import static org.mule.compatibility.transport.http.HttpConstants.HEADER_IF_NONE_MATCH;
-import static org.mule.compatibility.transport.http.HttpConstants.SC_NOT_MODIFIED;
-import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
@@ -32,6 +23,16 @@ import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.api.lifecycle.CreateException;
 import org.mule.runtime.core.util.MapUtils;
 import org.mule.runtime.core.util.StringUtils;
+
+import static java.util.Collections.emptyList;
+import static org.mule.compatibility.core.api.config.MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY;
+import static org.mule.compatibility.transport.http.HttpConnector.HTTP_METHOD_PROPERTY;
+import static org.mule.compatibility.transport.http.HttpConnector.HTTP_STATUS_PROPERTY;
+import static org.mule.compatibility.transport.http.HttpConstants.HEADER_CONTENT_LENGTH;
+import static org.mule.compatibility.transport.http.HttpConstants.HEADER_ETAG;
+import static org.mule.compatibility.transport.http.HttpConstants.HEADER_IF_NONE_MATCH;
+import static org.mule.compatibility.transport.http.HttpConstants.SC_NOT_MODIFIED;
+import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
 
 /**
  * Will poll an http URL and use the response as the input for a service request.
@@ -54,7 +55,8 @@ public class PollingHttpMessageReceiver extends AbstractPollingMessageReceiver
     }
 
     @Override
-    protected boolean pollOnPrimaryInstanceOnly() {
+    protected boolean pollOnPrimaryInstanceOnly()
+    {
         return true;
     }
 
@@ -74,7 +76,8 @@ public class PollingHttpMessageReceiver extends AbstractPollingMessageReceiver
         }
 
         checkEtag = MapUtils.getBooleanValue(endpoint.getProperties(), "checkEtag", pollingConnector.isCheckEtag());
-        discardEmptyContent = MapUtils.getBooleanValue(endpoint.getProperties(), "discardEmptyContent", pollingConnector.isDiscardEmptyContent());
+        discardEmptyContent =
+                MapUtils.getBooleanValue(endpoint.getProperties(), "discardEmptyContent", pollingConnector.isDiscardEmptyContent());
     }
 
     @Override
@@ -117,8 +120,8 @@ public class PollingHttpMessageReceiver extends AbstractPollingMessageReceiver
         }
 
         MuleMessage.Builder requestBuider = MuleMessage.builder()
-                .payload(StringUtils.EMPTY)
-                .inboundProperties(outboundEndpoint.getProperties());
+                                                       .payload(StringUtils.EMPTY)
+                                                       .inboundProperties(outboundEndpoint.getProperties());
         if (etag != null && checkEtag)
         {
             requestBuider.addOutboundProperty(HEADER_IF_NONE_MATCH, etag);

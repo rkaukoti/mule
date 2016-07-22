@@ -8,14 +8,13 @@ package org.mule.runtime.core.work;
 
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.context.WorkManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.resource.spi.work.ExecutionContext;
 import javax.resource.spi.work.Work;
 import javax.resource.spi.work.WorkException;
 import javax.resource.spi.work.WorkListener;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Wraps a {@link WorkManager} to track the work that in process.
@@ -23,11 +22,9 @@ import org.slf4j.LoggerFactory;
 public class TrackingWorkManager implements WorkManager
 {
 
-    protected static final Logger logger = LoggerFactory.getLogger(TrackingWorkManager.class);
-
     public static final int DEFAULT_SLEEP_MILLIS = 50;
     public static final String MULE_WAIT_MILLIS = "mule.transport.dispose.wait";
-
+    protected static final Logger logger = LoggerFactory.getLogger(TrackingWorkManager.class);
     private final WorkManagerHolder delegateHolder;
     private final int shutdownTimeout;
     private final int waitMillis;
@@ -41,6 +38,19 @@ public class TrackingWorkManager implements WorkManager
         this.shutdownTimeout = shutdownTimeout;
         this.workListenerWrapperFactory = new TrackerWorkListenerWrapperFactory();
         this.waitMillis = getWaitMillis();
+    }
+
+    private static int getWaitMillis()
+    {
+        try
+        {
+            String property = System.getProperty(MULE_WAIT_MILLIS);
+            return Integer.parseInt(property);
+        }
+        catch (NumberFormatException e)
+        {
+            return DEFAULT_SLEEP_MILLIS;
+        }
     }
 
     @Override
@@ -73,7 +83,8 @@ public class TrackingWorkManager implements WorkManager
 
         if (logger.isDebugEnabled())
         {
-            logger.debug(String.format("Stop waiting for works completion. There are %s works unfinished works", workTracker.pendingWorks().size()));
+            logger.debug(String.format("Stop waiting for works completion. There are %s works unfinished works",
+                    workTracker.pendingWorks().size()));
         }
 
         workTracker.dispose();
@@ -155,14 +166,17 @@ public class TrackingWorkManager implements WorkManager
     }
 
     @Override
-    public long startWork(final Work work, long startTimeout, ExecutionContext execContext, final WorkListener workListener) throws WorkException
+    public long startWork(final Work work, long startTimeout, ExecutionContext execContext, final WorkListener workListener)
+            throws WorkException
     {
         try
         {
             workTracker.addWork(work);
 
             TrackeableWork trackeableWork = new TrackeableWork(work);
-            return delegateHolder.getWorkManager().startWork(trackeableWork, startTimeout, execContext, workListenerWrapperFactory.create(work, workListener));
+            return delegateHolder.getWorkManager()
+                                 .startWork(trackeableWork, startTimeout, execContext,
+                                         workListenerWrapperFactory.create(work, workListener));
         }
         catch (WorkException e)
         {
@@ -208,7 +222,8 @@ public class TrackingWorkManager implements WorkManager
         {
             TrackeableWork trackeableWork = new TrackeableWork(work);
 
-            delegateHolder.getWorkManager().scheduleWork(trackeableWork, startTimeout, execContext, workListenerWrapperFactory.create(work, workListener));
+            delegateHolder.getWorkManager()
+                          .scheduleWork(trackeableWork, startTimeout, execContext, workListenerWrapperFactory.create(work, workListener));
         }
         catch (WorkException e)
         {
@@ -235,19 +250,6 @@ public class TrackingWorkManager implements WorkManager
     public void setWorkTracker(WorkTracker workTracker)
     {
         this.workTracker = workTracker;
-    }
-
-    private static int getWaitMillis()
-    {
-        try
-        {
-            String property = System.getProperty(MULE_WAIT_MILLIS);
-            return Integer.parseInt(property);
-        }
-        catch (NumberFormatException e)
-        {
-            return DEFAULT_SLEEP_MILLIS;
-        }
     }
 
     private class TrackeableWork implements Work

@@ -64,8 +64,7 @@ public class Notation extends Annotated
     /**
      * Gets the value of the name property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getName()
     {
@@ -75,8 +74,7 @@ public class Notation extends Annotated
     /**
      * Sets the value of the name property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setName(String value)
     {
@@ -86,8 +84,7 @@ public class Notation extends Annotated
     /**
      * Gets the value of the public property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getPublic()
     {
@@ -97,8 +94,7 @@ public class Notation extends Annotated
     /**
      * Sets the value of the public property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setPublic(String value)
     {
@@ -108,8 +104,7 @@ public class Notation extends Annotated
     /**
      * Gets the value of the system property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getSystem()
     {
@@ -119,8 +114,7 @@ public class Notation extends Annotated
     /**
      * Sets the value of the system property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setSystem(String value)
     {

@@ -8,18 +8,17 @@ package org.mule.runtime.config.spring.parsers.collection;
 
 import org.mule.runtime.config.spring.MuleHierarchicalBeanDefinitionParserDelegate;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.config.MapFactoryBean;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Creates a single Map and processes standard Spring sub elements.  The map is injected
- * into the parent object (the enclosing XML element). 
+ * into the parent object (the enclosing XML element).
  */
 public class ChildMapDefinitionParser extends ChildDefinitionParser
 {

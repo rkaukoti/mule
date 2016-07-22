@@ -6,16 +6,15 @@
  */
 package org.mule.shutdown;
 
+import org.junit.Before;
+import org.junit.Rule;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.processor.MessageProcessor;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.runtime.core.util.concurrent.Latch;
-
-import org.junit.Before;
-import org.junit.Rule;
+import org.mule.tck.junit4.rule.DynamicPort;
 
 public abstract class AbstractShutdownTimeoutRequestResponseTestCase extends FunctionalTestCase
 {

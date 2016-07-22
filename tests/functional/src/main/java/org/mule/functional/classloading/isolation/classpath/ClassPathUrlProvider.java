@@ -9,6 +9,9 @@ package org.mule.functional.classloading.isolation.classpath;
 
 import com.google.common.collect.Lists;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,9 +19,6 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Uses java system properties to get the classpath urls.

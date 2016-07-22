@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.core.util.queue;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class DualRandomAccessFileQueueStoreTestCase extends QueueStoreTestCase
 {
@@ -48,14 +47,14 @@ public class DualRandomAccessFileQueueStoreTestCase extends QueueStoreTestCase
             this.value = value;
         }
 
-        public int getValue()
-        {
-            return value;
-        }
-
         public static void clearNumberOfInstances()
         {
             numberOfInstances = 0;
+        }
+
+        public int getValue()
+        {
+            return value;
         }
 
         @Override

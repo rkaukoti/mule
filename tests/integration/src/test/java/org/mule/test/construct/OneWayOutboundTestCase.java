@@ -6,20 +6,19 @@
  */
 package org.mule.test.construct;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public abstract class OneWayOutboundTestCase extends FunctionalTestCase
 {
 
     private MuleClient client;
-    
+
     @Before
     public void setUp() throws Exception
     {
@@ -56,7 +55,7 @@ public abstract class OneWayOutboundTestCase extends FunctionalTestCase
         assertOneWayOutboundAfterComponentResponse(response);
     }
 
-    protected  abstract void assertOneWayOutboundAfterComponentResponse(MuleMessage response);
+    protected abstract void assertOneWayOutboundAfterComponentResponse(MuleMessage response);
 
     @Test
     public void oneWayOutboundBeforeComponent() throws Exception

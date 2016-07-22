@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.module.json.filters;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.routing.filter.Filter;
-
-import java.io.IOException;
-
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 
 /**
  * A filter that will determine if the current message payload is a JSON encoded message.
@@ -64,7 +63,7 @@ public class IsJsonFilter implements Filter, MuleContextAware
         {
             if (obj instanceof byte[])
             {
-                obj = new String((byte[])obj);
+                obj = new String((byte[]) obj);
             }
 
             if (obj instanceof String)
@@ -106,19 +105,15 @@ public class IsJsonFilter implements Filter, MuleContextAware
     /**
      * Tests if the String possibly represents a valid JSON String.
      *
-     * @param string Valid JSON strings are:
-     *               <ul>
-     *               <li>"null"</li>
-     *               <li>starts with "[" and ends with "]"</li>
-     *               <li>starts with "{" and ends with "}"</li>
-     *               </ul>
+     * @param string Valid JSON strings are: <ul> <li>"null"</li> <li>starts with "[" and ends with "]"</li> <li>starts with "{" and ends
+     *               with "}"</li> </ul>
      * @return true if the test string starts with one of the valid json characters
      */
     protected boolean mayBeJSON(String string)
     {
         return string != null
-                && ("null".equals(string)
-                || (string.startsWith("[") && string.endsWith("]")) || (string.startsWith("{") && string.endsWith("}")));
+               && ("null".equals(string)
+                   || (string.startsWith("[") && string.endsWith("]")) || (string.startsWith("{") && string.endsWith("}")));
     }
 
     @Override

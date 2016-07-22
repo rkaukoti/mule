@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * Constructs endpoints. Transport specific endpoints can easily resolve the Endpoint implementation to be uses, for
  * generic endpoints we can either resolve the transport from uri string or use a default implementation.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -32,27 +32,25 @@ public interface EndpointBuilder extends MuleContextAware, Cloneable
 {
     /**
      * Constructs inbound endpoints
-     *
-     * @throws EndpointException
-     * @throws InitialisationException
      */
     InboundEndpoint buildInboundEndpoint() throws EndpointException, InitialisationException;
 
     /**
      * Constructs outbound endpoints
-     *
-     * @throws EndpointException
-     * @throws InitialisationException
      */
     OutboundEndpoint buildOutboundEndpoint() throws EndpointException, InitialisationException;
 
     void setConnector(Connector connector);
 
-    /** @deprecated Use setMessageProcessors() */
+    /**
+     * @deprecated Use setMessageProcessors()
+     */
     @Deprecated
     void setTransformers(List<Transformer> transformers);
 
-    /** @deprecated Use setResponseMessageProcessors() */
+    /**
+     * @deprecated Use setResponseMessageProcessors()
+     */
     @Deprecated
     void setResponseTransformers(List<Transformer> responseTransformer);
 
@@ -78,11 +76,11 @@ public interface EndpointBuilder extends MuleContextAware, Cloneable
 
     void setRetryPolicyTemplate(RetryPolicyTemplate retryPolicyTemplate);
 
-    void setMessageProcessors(List <MessageProcessor> messageProcessors);
+    void setMessageProcessors(List<MessageProcessor> messageProcessors);
 
     void addMessageProcessor(MessageProcessor messageProcessor);
 
-    void setResponseMessageProcessors(List <MessageProcessor> responseMessageProcessors);
+    void setResponseMessageProcessors(List<MessageProcessor> responseMessageProcessors);
 
     void addResponseMessageProcessor(MessageProcessor responseMessageProcessor);
 

@@ -6,14 +6,12 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
-import org.mule.compatibility.transport.http.RequestLine;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
 import org.apache.commons.httpclient.HttpVersion;
 import org.junit.Test;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class RequestLineTestCase extends AbstractMuleTestCase
 {

@@ -10,11 +10,10 @@ import org.mule.runtime.core.api.context.WorkManager;
 import org.mule.runtime.core.api.retry.RetryCallback;
 import org.mule.runtime.core.api.retry.RetryPolicyTemplate;
 import org.mule.runtime.core.util.concurrent.Latch;
-
-import javax.resource.spi.work.Work;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.resource.spi.work.Work;
 
 /**
  * A {@link javax.resource.spi.work.Work} implementation used when executing a {@link RetryPolicyTemplate} in a separate
@@ -26,9 +25,9 @@ public class RetryWorker implements Work
 
     private final RetryCallback callback;
     private final WorkManager workManager;
-    private Exception exception = null;
     private final FutureRetryContext context = new FutureRetryContext();
     private final RetryPolicyTemplate delegate;
+    private Exception exception = null;
     private Latch startLatch;
 
     public RetryWorker(RetryPolicyTemplate delegate, RetryCallback callback, WorkManager workManager)

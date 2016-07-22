@@ -30,7 +30,7 @@ public class NotificationException extends MuleException
 
     /**
      * @param message the exception message
-     * @param cause the exception that cause this exception to be thrown
+     * @param cause   the exception that cause this exception to be thrown
      */
     public NotificationException(Message message, Throwable cause)
     {

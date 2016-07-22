@@ -6,17 +6,16 @@
  */
 package org.mule.runtime.core.context.notification;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.api.context.notification.ServerNotification;
 import org.mule.runtime.core.api.context.notification.ServerNotificationHandler;
-
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,26 +38,32 @@ public class NotificationHelper
     private final boolean dynamicNotifications;
     private final ServerNotificationHandler defaultNotificationHandler;
     private final LoadingCache<MuleContext, ServerNotificationHandler> serverNotificationHandlers = CacheBuilder.newBuilder()
-            .build(new CacheLoader<MuleContext, ServerNotificationHandler>()
-            {
-                @Override
-                public ServerNotificationHandler load(MuleContext muleContext) throws Exception
-                {
-                    return adaptNotificationHandler(muleContext.getNotificationManager());
-                }
-            });
+                                                                                                                .build(new CacheLoader<MuleContext, ServerNotificationHandler>()
+                                                                                                                {
+                                                                                                                    @Override
+                                                                                                                    public ServerNotificationHandler load(
+                                                                                                                            MuleContext muleContext)
+                                                                                                                            throws Exception
+                                                                                                                    {
+                                                                                                                        return adaptNotificationHandler(
+                                                                                                                                muleContext.getNotificationManager());
+                                                                                                                    }
+                                                                                                                });
 
 
     /**
      * Creates a new {@link NotificationHelper} that emits instances of {@code notificationClass}
      * class.
      *
-     * @param defaultNotificationHandler The {@link ServerNotificationHandler} to be used on notifications which don't relate to a {@link MuleEvent}
+     * @param defaultNotificationHandler The {@link ServerNotificationHandler} to be used on notifications which don't relate to a {@link
+     *                                   MuleEvent}
      * @param notificationClass          The {@link Class} of the notifications to be fired by this helper
-     * @param dynamicNotifications       If {@code true}, notifications will be fired directly to a {@link ServerNotificationHandler} responsible to
-     *                                   decide to emit it or not. If {@code false} the notification will be checked to be enable or not at creation time
+     * @param dynamicNotifications       If {@code true}, notifications will be fired directly to a {@link ServerNotificationHandler}
+     *                                   responsible to decide to emit it or not. If {@code false} the notification will be checked to be
+     *                                   enable or not at creation time
      */
-    public NotificationHelper(ServerNotificationHandler defaultNotificationHandler, Class<? extends ServerNotification> notificationClass, boolean dynamicNotifications)
+    public NotificationHelper(ServerNotificationHandler defaultNotificationHandler, Class<? extends ServerNotification> notificationClass,
+                              boolean dynamicNotifications)
     {
         this.notificationClass = notificationClass;
         this.dynamicNotifications = dynamicNotifications;
@@ -93,7 +98,6 @@ public class NotificationHelper
      * Fires a {@link ConnectorMessageNotification} for the given arguments
      * using the {@link ServerNotificationHandler} associated to the given {@code event}
      *
-     * @param source
      * @param event         a {@link org.mule.runtime.core.api.MuleEvent}
      * @param uri           the uri of the firing endpoint
      * @param flowConstruct the {@link org.mule.runtime.core.api.construct.FlowConstruct} that generated the notification
@@ -158,8 +162,8 @@ public class NotificationHelper
     private ServerNotificationHandler adaptNotificationHandler(ServerNotificationHandler serverNotificationHandler)
     {
         return dynamicNotifications
-               ? serverNotificationHandler
-               : new OptimisedNotificationHandler(serverNotificationHandler, notificationClass);
+                ? serverNotificationHandler
+                : new OptimisedNotificationHandler(serverNotificationHandler, notificationClass);
     }
 
     private ServerNotificationHandler getNotificationHandler(MuleEvent event)

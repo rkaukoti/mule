@@ -7,9 +7,9 @@
 
 package org.mule.tck.junit4.rule;
 
-import java.io.File;
-
 import org.junit.rules.TemporaryFolder;
+
+import java.io.File;
 
 /**
  * Sets up a temporary folder that is also set as a system property before a test

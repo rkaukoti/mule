@@ -7,14 +7,16 @@
 package org.mule.runtime.core.util.lock;
 
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.mockito.Answers;
+import org.mockito.Mockito;
+import org.mockito.internal.verification.VerificationModeFactory;
 import org.mule.runtime.core.api.store.ObjectAlreadyExistsException;
 import org.mule.runtime.core.api.store.ObjectStore;
 import org.mule.runtime.core.api.store.ObjectStoreException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
-import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.runtime.core.util.concurrent.Latch;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,10 +25,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
-import org.mockito.Answers;
-import org.mockito.Mockito;
-import org.mockito.internal.verification.VerificationModeFactory;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class InstanceLockGroupTestCase extends AbstractMuleTestCase
 {
@@ -36,7 +36,7 @@ public class InstanceLockGroupTestCase extends AbstractMuleTestCase
     private String sharedKeyA = "A";
     private String sharedKeyB = "B";
     private InstanceLockGroup instanceLockGroup = new InstanceLockGroup(new SingleServerLockProvider());
-    private InMemoryObjectStore objectStore  = new InMemoryObjectStore();
+    private InMemoryObjectStore objectStore = new InMemoryObjectStore();
     private LockProvider mockLockProvider;
 
     @Test
@@ -50,7 +50,7 @@ public class InstanceLockGroupTestCase extends AbstractMuleTestCase
     {
         testHighConcurrency(true);
     }
-    
+
     @Test
     public void testWhenUnlockThenDestroy() throws Exception
     {
@@ -76,13 +76,12 @@ public class InstanceLockGroupTestCase extends AbstractMuleTestCase
     }
 
 
-
     private void testHighConcurrency(boolean useTryLock) throws InterruptedException, ObjectStoreException
     {
         List<Thread> threads = new ArrayList<Thread>(THREAD_COUNT * 2);
         for (int i = 0; i < THREAD_COUNT; i++)
         {
-            IncrementKeyValueThread incrementKeyValueThread = new IncrementKeyValueThread(sharedKeyA,useTryLock);
+            IncrementKeyValueThread incrementKeyValueThread = new IncrementKeyValueThread(sharedKeyA, useTryLock);
             threads.add(incrementKeyValueThread);
             incrementKeyValueThread.start();
             incrementKeyValueThread = new IncrementKeyValueThread(sharedKeyB, useTryLock);
@@ -96,66 +95,6 @@ public class InstanceLockGroupTestCase extends AbstractMuleTestCase
         }
         assertThat(objectStore.retrieve(sharedKeyA), is(THREAD_COUNT * ITERATIONS_PER_THREAD));
         assertThat(objectStore.retrieve(sharedKeyB), is(THREAD_COUNT * ITERATIONS_PER_THREAD));
-    }
-
-    public class IncrementKeyValueThread extends Thread
-    {
-        private String key;
-        private boolean useTryLock;
-        
-
-        private IncrementKeyValueThread(String key, boolean useTryLock)
-        {
-            super("Thread-" + key);
-            this.key = key;
-            this.useTryLock = useTryLock;
-        }
-
-        @Override
-        public void run()
-        {
-            try
-            {
-                threadStartLatch.await(5000, TimeUnit.MILLISECONDS);
-                for (int i = 0; i < ITERATIONS_PER_THREAD; i ++)
-                {
-                    if (Thread.interrupted())
-                    {
-                        break;
-                    }
-                    if (useTryLock)
-                    {
-                        while (!instanceLockGroup.tryLock(key,100,TimeUnit.MILLISECONDS));
-                    }
-                    else 
-                    {
-                        instanceLockGroup.lock(key);
-                    }
-                    try
-                    {
-                        Integer value;
-                        if (objectStore.contains(key))
-                        {
-                            value = objectStore.retrieve(key);
-                            objectStore.remove(key);
-                        }
-                        else
-                        {
-                            value = 0;
-                        }
-                        objectStore.store(key,value + 1);
-                    }
-                    finally
-                    {
-                        instanceLockGroup.unlock(key);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                throw new RuntimeException(e);
-            }
-        }
     }
 
     public static class InMemoryObjectStore implements ObjectStore<Integer>
@@ -175,7 +114,7 @@ public class InstanceLockGroupTestCase extends AbstractMuleTestCase
             {
                 throw new ObjectAlreadyExistsException(CoreMessages.createStaticMessage(""));
             }
-            store.put(key,value);
+            store.put(key, value);
         }
 
         @Override
@@ -189,7 +128,7 @@ public class InstanceLockGroupTestCase extends AbstractMuleTestCase
         {
             return store.remove(key);
         }
-        
+
         @Override
         public void clear() throws ObjectStoreException
         {
@@ -200,6 +139,67 @@ public class InstanceLockGroupTestCase extends AbstractMuleTestCase
         public boolean isPersistent()
         {
             return false;
+        }
+    }
+
+    public class IncrementKeyValueThread extends Thread
+    {
+        private String key;
+        private boolean useTryLock;
+
+
+        private IncrementKeyValueThread(String key, boolean useTryLock)
+        {
+            super("Thread-" + key);
+            this.key = key;
+            this.useTryLock = useTryLock;
+        }
+
+        @Override
+        public void run()
+        {
+            try
+            {
+                threadStartLatch.await(5000, TimeUnit.MILLISECONDS);
+                for (int i = 0; i < ITERATIONS_PER_THREAD; i++)
+                {
+                    if (Thread.interrupted())
+                    {
+                        break;
+                    }
+                    if (useTryLock)
+                    {
+                        while (!instanceLockGroup.tryLock(key, 100, TimeUnit.MILLISECONDS))
+                            ;
+                    }
+                    else
+                    {
+                        instanceLockGroup.lock(key);
+                    }
+                    try
+                    {
+                        Integer value;
+                        if (objectStore.contains(key))
+                        {
+                            value = objectStore.retrieve(key);
+                            objectStore.remove(key);
+                        }
+                        else
+                        {
+                            value = 0;
+                        }
+                        objectStore.store(key, value + 1);
+                    }
+                    finally
+                    {
+                        instanceLockGroup.unlock(key);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new RuntimeException(e);
+            }
         }
     }
 

@@ -6,7 +6,7 @@
  */
 package org.mule.test.core.context.notification;
 
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.context.notification.ServerNotification;
 import org.mule.tck.probe.JUnitProbe;
@@ -14,7 +14,7 @@ import org.mule.tck.probe.PollingProber;
 
 import java.util.Iterator;
 
-import org.junit.Test;
+import static org.junit.Assert.fail;
 
 /**
  * Tests must define a "notificationLogger" listener
@@ -67,7 +67,7 @@ public abstract class AbstractNotificationTestCase extends FunctionalTestCase
     protected void logNotifications()
     {
         logger.info("Number of notifications: " + notificationLogger.getNotifications().size());
-        for (Iterator<?> iterator = notificationLogger.getNotifications().iterator(); iterator.hasNext();)
+        for (Iterator<?> iterator = notificationLogger.getNotifications().iterator(); iterator.hasNext(); )
         {
             ServerNotification notification = (ServerNotification) iterator.next();
             logger.info(notification.toString());
@@ -79,18 +79,18 @@ public abstract class AbstractNotificationTestCase extends FunctionalTestCase
      */
     protected void assertExpectedNotifications(RestrictedNode spec)
     {
-        for (Iterator<?> iterator = notificationLogger.getNotifications().iterator(); iterator.hasNext();)
+        for (Iterator<?> iterator = notificationLogger.getNotifications().iterator(); iterator.hasNext(); )
         {
             ServerNotification notification = (ServerNotification) iterator.next();
             switch (spec.match(notification))
             {
-                case Node.SUCCESS :
-                    break;
-                case Node.FAILURE :
-                    fail("Could not match " + notification);
-                    break;
-                case Node.EMPTY :
-                    fail("Extra notification: " + notification);
+            case Node.SUCCESS:
+                break;
+            case Node.FAILURE:
+                fail("Could not match " + notification);
+                break;
+            case Node.EMPTY:
+                fail("Extra notification: " + notification);
             }
         }
         if (!spec.isExhausted())

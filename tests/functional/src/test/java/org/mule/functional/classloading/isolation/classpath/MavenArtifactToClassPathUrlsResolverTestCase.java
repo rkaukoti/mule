@@ -7,6 +7,22 @@
 
 package org.mule.functional.classloading.isolation.classpath;
 
+import com.google.common.collect.Lists;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.mule.functional.classloading.isolation.maven.MavenArtifact;
+import org.mule.functional.classloading.isolation.maven.MavenMultiModuleArtifactMapping;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.rules.ExpectedException.none;
@@ -14,22 +30,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
-import org.mule.functional.classloading.isolation.maven.MavenArtifact;
-import org.mule.functional.classloading.isolation.maven.MavenMultiModuleArtifactMapping;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import com.google.common.collect.Lists;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 @SmallTest
 public class MavenArtifactToClassPathUrlsResolverTestCase extends AbstractMuleTestCase
@@ -37,19 +37,15 @@ public class MavenArtifactToClassPathUrlsResolverTestCase extends AbstractMuleTe
 
     public static final String PARENT_PROJECT_FOLDER = "/parent-project/";
     public static final String UTILS_CORE_MODULE_FOLDER = PARENT_PROJECT_FOLDER + "utils/";
-
+    @Rule
+    public ExpectedException expectedException = none();
     private MavenArtifactToClassPathUrlsResolver urlsResolver;
     private MavenMultiModuleArtifactMapping mapping;
-
     private MavenArtifact coreArtifact;
     private MavenArtifact utilsCoreArtifact;
     private URL coreArtifactMavenRepoURL;
     private URL utilsCoreArtifactMultiModuleURL;
-
     private MavenArtifact commonCliArtifact;
-
-    @Rule
-    public ExpectedException expectedException = none();
 
     @Before
     public void before() throws Exception
@@ -57,18 +53,37 @@ public class MavenArtifactToClassPathUrlsResolverTestCase extends AbstractMuleTe
         mapping = mock(MavenMultiModuleArtifactMapping.class);
         urlsResolver = new MavenArtifactToClassPathUrlsResolver(mapping);
 
-        commonCliArtifact = MavenArtifact.builder().withGroupId("commons-cli").withArtifactId("commons-cli").withType("jar").withVersion("1.2").withScope("provided").build();
-        coreArtifact = MavenArtifact.builder().withGroupId("org.my.company").withArtifactId("core-artifact").withType("jar").withVersion("1.0.0").withScope("compile").build();
+        commonCliArtifact = MavenArtifact.builder()
+                                         .withGroupId("commons-cli")
+                                         .withArtifactId("commons-cli")
+                                         .withType("jar")
+                                         .withVersion("1.2")
+                                         .withScope("provided")
+                                         .build();
+        coreArtifact = MavenArtifact.builder()
+                                    .withGroupId("org.my.company")
+                                    .withArtifactId("core-artifact")
+                                    .withType("jar")
+                                    .withVersion("1.0.0")
+                                    .withScope("compile")
+                                    .build();
         coreArtifactMavenRepoURL = buildArtifactUrlMock(coreArtifact);
 
-        utilsCoreArtifact = MavenArtifact.builder().withGroupId("org.my.company").withArtifactId("utils").withType("jar").withVersion("1.0.0").withScope("compile").build();
+        utilsCoreArtifact = MavenArtifact.builder()
+                                         .withGroupId("org.my.company")
+                                         .withArtifactId("utils")
+                                         .withType("jar")
+                                         .withVersion("1.0.0")
+                                         .withScope("compile")
+                                         .build();
         utilsCoreArtifactMultiModuleURL = buildMultiModuleUrlMock(UTILS_CORE_MODULE_FOLDER);
     }
 
     @Test
     public void resolveURLUsingGroupIdArtifactId() throws Exception
     {
-        assertURL(coreArtifact, Lists.newArrayList(buildArtifactUrlMock(commonCliArtifact), coreArtifactMavenRepoURL), coreArtifactMavenRepoURL);
+        assertURL(coreArtifact, Lists.newArrayList(buildArtifactUrlMock(commonCliArtifact), coreArtifactMavenRepoURL),
+                coreArtifactMavenRepoURL);
         verifyZeroInteractions(mapping);
     }
 
@@ -76,7 +91,9 @@ public class MavenArtifactToClassPathUrlsResolverTestCase extends AbstractMuleTe
     public void resolveUrlMultiModuleMapping() throws Exception
     {
         when(mapping.getFolderName(utilsCoreArtifact.getArtifactId())).thenReturn(UTILS_CORE_MODULE_FOLDER);
-        assertURL(utilsCoreArtifact, Lists.newArrayList(buildArtifactUrlMock(commonCliArtifact), coreArtifactMavenRepoURL, utilsCoreArtifactMultiModuleURL), utilsCoreArtifactMultiModuleURL);
+        assertURL(utilsCoreArtifact,
+                Lists.newArrayList(buildArtifactUrlMock(commonCliArtifact), coreArtifactMavenRepoURL, utilsCoreArtifactMultiModuleURL),
+                utilsCoreArtifactMultiModuleURL);
         verify(mapping);
     }
 

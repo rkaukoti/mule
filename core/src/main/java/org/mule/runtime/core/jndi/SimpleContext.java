@@ -26,10 +26,14 @@ import javax.naming.OperationNotSupportedException;
 
 public class SimpleContext implements Context
 {
-    /** What holds the bindings. */
+    /**
+     * What holds the bindings.
+     */
     protected Map<String, Object> bindings = new HashMap<String, Object>();
 
-    /** Context's environment. */
+    /**
+     * Context's environment.
+     */
     private Hashtable<String, Object> environment;
 
     public SimpleContext()

@@ -6,21 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.executor;
 
-import static java.util.Collections.emptyList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.api.metadata.DataType.STRING;
-import static org.mule.test.heisenberg.extension.HeisenbergExtension.HEISENBERG;
-import static org.mule.test.heisenberg.extension.model.HealthStatus.DEAD;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -46,11 +36,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.util.Collections.emptyList;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.api.metadata.DataType.STRING;
+import static org.mule.test.heisenberg.extension.HeisenbergExtension.HEISENBERG;
+import static org.mule.test.heisenberg.extension.model.HealthStatus.DEAD;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -93,7 +92,8 @@ public class ReflectiveMethodOperationExecutorTestCase extends AbstractMuleTestC
     public void init() throws Exception
     {
         initHeisenberg();
-        configurationInstance = new LifecycleAwareConfigurationInstance<>(CONFIG_NAME, configurationModel, config, emptyList(), Optional.empty());
+        configurationInstance =
+                new LifecycleAwareConfigurationInstance<>(CONFIG_NAME, configurationModel, config, emptyList(), Optional.empty());
         when(muleEvent.getMessage().getDataType()).thenReturn(DATA_TYPE);
         operationContext = new DefaultOperationContext(configurationInstance, parameters, operationModel, muleEvent, muleContext);
         operationContext = spy(operationContext);
@@ -172,7 +172,8 @@ public class ReflectiveMethodOperationExecutorTestCase extends AbstractMuleTestC
         };
         for (Object[] primitiveOperation : primitiveOperations)
         {
-            Method method = ClassUtils.getMethod(PrimitiveTypesTestOperations.class, (String) primitiveOperation[0], new Class<?>[] {(Class<?>) primitiveOperation[1]});
+            Method method = ClassUtils.getMethod(PrimitiveTypesTestOperations.class, (String) primitiveOperation[0],
+                    new Class<?>[] {(Class<?>) primitiveOperation[1]});
             executor = new ReflectiveMethodOperationExecutor(method, primitiveTypesTestOperations);
             executor.execute(operationContext);
         }

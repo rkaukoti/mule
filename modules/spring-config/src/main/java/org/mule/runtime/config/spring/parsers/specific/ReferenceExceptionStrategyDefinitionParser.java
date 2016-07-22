@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
-import static org.mule.runtime.config.spring.parsers.specific.ExceptionStrategyDefinitionParser.createNoNameAttributePreProcessor;
-
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.generic.ParentDefinitionParser;
-
 import org.w3c.dom.Attr;
+
+import static org.mule.runtime.config.spring.parsers.specific.ExceptionStrategyDefinitionParser.createNoNameAttributePreProcessor;
 
 public class ReferenceExceptionStrategyDefinitionParser extends ParentDefinitionParser
 {

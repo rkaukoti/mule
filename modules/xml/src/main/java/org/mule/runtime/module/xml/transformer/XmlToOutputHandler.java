@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.module.xml.transformer;
 
+import org.dom4j.Document;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.transformer.DiscoverableTransformer;
@@ -21,8 +22,6 @@ import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.stream.StreamResult;
-
-import org.dom4j.Document;
 
 public class XmlToOutputHandler extends AbstractXmlTransformer implements DiscoverableTransformer
 {
@@ -59,7 +58,7 @@ public class XmlToOutputHandler extends AbstractXmlTransformer implements Discov
     }
 
     protected void writeXml(final Object src, final Charset encoding, OutputStream out)
-        throws TransformerFactoryConfigurationError, IOException
+            throws TransformerFactoryConfigurationError, IOException
     {
         try
         {
@@ -67,14 +66,17 @@ public class XmlToOutputHandler extends AbstractXmlTransformer implements Discov
             {
                 // Unfortunately, the StAX source doesn't copy/serialize correctly so
                 // we have to do this little hack.
-                XMLStreamReader reader = (XMLStreamReader)src;
+                XMLStreamReader reader = (XMLStreamReader) src;
                 XMLStreamWriter writer = getXMLOutputFactory().createXMLStreamWriter(out);
-                
-                try {
+
+                try
+                {
                     writer.writeStartDocument();
                     XMLUtils.copy(reader, writer);
                     writer.writeEndDocument();
-                } finally {
+                }
+                finally
+                {
                     writer.close();
                     reader.close();
                 }
@@ -82,7 +84,7 @@ public class XmlToOutputHandler extends AbstractXmlTransformer implements Discov
             else if (src instanceof DelayedResult)
             {
                 DelayedResult result = (DelayedResult) src;
-                
+
                 StreamResult streamResult = new StreamResult(out);
                 result.write(streamResult);
             }
@@ -110,5 +112,5 @@ public class XmlToOutputHandler extends AbstractXmlTransformer implements Discov
     {
         this.priorityWeighting = priorityWeighting;
     }
-    
+
 }

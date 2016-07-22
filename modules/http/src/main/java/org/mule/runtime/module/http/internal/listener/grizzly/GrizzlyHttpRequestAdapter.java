@@ -6,13 +6,16 @@
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
-import org.mule.runtime.module.http.internal.domain.BaseHttpMessage;
+import org.glassfish.grizzly.filterchain.FilterChainContext;
+import org.glassfish.grizzly.http.HttpContent;
+import org.glassfish.grizzly.http.HttpRequestPacket;
+import org.glassfish.grizzly.http.Protocol;
+import org.glassfish.grizzly.utils.BufferInputStream;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.module.http.internal.HttpParser;
 import org.mule.runtime.module.http.internal.ParameterMap;
+import org.mule.runtime.module.http.internal.domain.BaseHttpMessage;
 import org.mule.runtime.module.http.internal.domain.EmptyHttpEntity;
 import org.mule.runtime.module.http.internal.domain.HttpEntity;
 import org.mule.runtime.module.http.internal.domain.HttpProtocol;
@@ -24,11 +27,8 @@ import org.mule.runtime.module.http.internal.multipart.HttpPart;
 import java.io.InputStream;
 import java.util.Collection;
 
-import org.glassfish.grizzly.filterchain.FilterChainContext;
-import org.glassfish.grizzly.http.HttpContent;
-import org.glassfish.grizzly.http.HttpRequestPacket;
-import org.glassfish.grizzly.http.Protocol;
-import org.glassfish.grizzly.utils.BufferInputStream;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
 
 public class GrizzlyHttpRequestAdapter extends BaseHttpMessage implements HttpRequest
 {
@@ -183,7 +183,8 @@ public class GrizzlyHttpRequestAdapter extends BaseHttpMessage implements HttpRe
     {
         if (this.uri == null)
         {
-            this.uri = requestPacket.getRequestURI() + (StringUtils.isEmpty(requestPacket.getQueryString()) ? "" : "?" + requestPacket.getQueryString());
+            this.uri = requestPacket.getRequestURI() +
+                       (StringUtils.isEmpty(requestPacket.getQueryString()) ? "" : "?" + requestPacket.getQueryString());
         }
         return this.uri;
     }

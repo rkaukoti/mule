@@ -66,12 +66,12 @@ public class CxfEndpointBuilder extends AbstractMetaEndpointBuilder
         LocalClientMessageProcessorBuilder builder = new LocalClientMessageProcessorBuilder();
         builder.setMuleContext(muleContext);
         builder.setAddress(getEndpointBuilder().getEndpoint().toString());
-        
+
         try
         {
             ArrayList<MessageProcessor> processors = new ArrayList<MessageProcessor>();
             processors.add(builder.build());
-            if (messageProcessors != null) 
+            if (messageProcessors != null)
             {
                 processors.addAll(messageProcessors);
             }

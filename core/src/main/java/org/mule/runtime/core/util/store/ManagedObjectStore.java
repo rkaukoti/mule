@@ -100,7 +100,7 @@ public class ManagedObjectStore<T extends Serializable> implements ListableObjec
     {
         return getStore().remove(key);
     }
-    
+
     @Override
     public void clear() throws ObjectStoreException
     {
@@ -143,7 +143,7 @@ public class ManagedObjectStore<T extends Serializable> implements ListableObjec
         if (store == null)
         {
             ObjectStoreManager objectStoreManager = (ObjectStoreManager) context.getRegistry().lookupObject(
-                MuleProperties.OBJECT_STORE_MANAGER);
+                    MuleProperties.OBJECT_STORE_MANAGER);
             if (objectStoreManager == null)
             {
                 return null;
@@ -151,7 +151,7 @@ public class ManagedObjectStore<T extends Serializable> implements ListableObjec
             if (maxEntries != 0)
             {
                 store = (ListableObjectStore<T>) objectStoreManager.getObjectStore(storeName, isPersistent,
-                    maxEntries, entryTTL, expirationInterval);
+                        maxEntries, entryTTL, expirationInterval);
             }
             else
             {

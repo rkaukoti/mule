@@ -6,9 +6,7 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.runtime.core.util.ExceptionUtils;
 import org.mule.tck.testmodels.mule.TestExceptionStrategy;
 import org.mule.tck.testmodels.mule.TestExceptionStrategy.ExceptionCallback;
@@ -17,7 +15,8 @@ import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This tests single resource transactions through a single service definition (even
@@ -134,8 +133,6 @@ public abstract class AbstractJmsSingleTransactionSingleServiceTestCase extends 
 
     /**
      * Call this when you expect the transaction to fail
-     * @param serviceName
-     * @throws Exception
      */
     protected void runTransactionFail(String serviceName) throws Exception
     {
@@ -151,14 +148,14 @@ public abstract class AbstractJmsSingleTransactionSingleServiceTestCase extends 
                 assertTrue(ExceptionUtils.containsType(t,
                         org.mule.runtime.core.transaction.IllegalTransactionStateException.class));
                 assertEquals(1, exceptionLatch.getCount()); // make sure this
-                                                            // exception doesn't
-                                                            // happen more than once
+                // exception doesn't
+                // happen more than once
                 exceptionLatch.countDown();
             }
         };
         TestExceptionStrategy exceptionStrategy = (TestExceptionStrategy) muleContext.getRegistry()
-            .lookupFlowConstruct(serviceName)
-            .getExceptionListener();
+                                                                                     .lookupFlowConstruct(serviceName)
+                                                                                     .getExceptionListener();
         exceptionStrategy.setExceptionCallback(exceptionCallback);
 
         TestExceptionStrategy globalExceptionStrategy = (TestExceptionStrategy) muleContext.getExceptionListener();
@@ -170,7 +167,6 @@ public abstract class AbstractJmsSingleTransactionSingleServiceTestCase extends 
 
     /**
      * Call this when you expect the message to make it to the outbound endpoint
-     * @throws Exception
      */
     protected void runTransactionPass() throws Exception
     {

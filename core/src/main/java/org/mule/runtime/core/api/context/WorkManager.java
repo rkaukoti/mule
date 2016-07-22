@@ -17,7 +17,9 @@ import java.util.concurrent.Executor;
  */
 public interface WorkManager extends javax.resource.spi.work.WorkManager, Startable, Disposable, Executor
 {
-    /** Is the WorkManager ready to accept work? */
+    /**
+     * Is the WorkManager ready to accept work?
+     */
     public boolean isStarted();
-    
+
 }

@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
-import static java.util.stream.Collectors.toList;
-import static org.reflections.ReflectionUtils.getAllFields;
-import static org.reflections.ReflectionUtils.withAnnotation;
+import com.google.common.base.Joiner;
+
 import org.mule.runtime.core.util.CollectionUtils;
 import org.mule.runtime.extension.api.annotation.param.ConfigName;
 import org.mule.runtime.extension.api.introspection.declaration.DescribingContext;
@@ -21,10 +20,12 @@ import org.mule.runtime.module.extension.internal.model.property.ImplementingTyp
 import org.mule.runtime.module.extension.internal.model.property.RequireNameField;
 import org.mule.runtime.module.extension.internal.util.IdempotentDeclarationWalker;
 
-import com.google.common.base.Joiner;
-
 import java.lang.reflect.Field;
 import java.util.Collection;
+
+import static java.util.stream.Collectors.toList;
+import static org.reflections.ReflectionUtils.getAllFields;
+import static org.reflections.ReflectionUtils.withAnnotation;
 
 /**
  * A {@link ModelEnricher} which looks for configurations with fields
@@ -64,7 +65,8 @@ public final class ConfigNameModelEnricher implements ModelEnricher
     private void doEnrich(BaseDeclaration declaration)
     {
 
-        declaration.getModelProperty(ImplementingTypeModelProperty.class).ifPresent(p -> {
+        declaration.getModelProperty(ImplementingTypeModelProperty.class).ifPresent(p ->
+        {
             ImplementingTypeModelProperty typeProperty = (ImplementingTypeModelProperty) p;
             Collection<Field> fields = getAllFields(typeProperty.getType(), withAnnotation(ConfigName.class));
             if (CollectionUtils.isEmpty(fields))

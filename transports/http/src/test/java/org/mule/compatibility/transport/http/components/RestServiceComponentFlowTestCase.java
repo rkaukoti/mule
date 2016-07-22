@@ -6,11 +6,7 @@
  */
 package org.mule.compatibility.transport.http.components;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import org.mule.compatibility.transport.http.components.RestServiceWrapper;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.component.Component;
 import org.mule.runtime.core.api.expression.ExpressionManager;
@@ -20,14 +16,16 @@ import org.mule.runtime.core.routing.filters.logic.NotFilter;
 
 import java.text.MessageFormat;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class RestServiceComponentFlowTestCase extends FunctionalTestCase
 {
     public static final String FLOW_NAME = "WORMS";
     public static final String FLOW_URL = MessageFormat.format("{0}header:serviceUrl{1}",
-                                                                  ExpressionManager.DEFAULT_EXPRESSION_PREFIX,
-                                                                  ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
+            ExpressionManager.DEFAULT_EXPRESSION_PREFIX,
+            ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
 
     @Override
     protected String getConfigFile()
@@ -39,9 +37,9 @@ public class RestServiceComponentFlowTestCase extends FunctionalTestCase
     public void testResetServiceNamespaceHandler() throws Exception
     {
         Flow f = (Flow) muleContext.getRegistry().lookupFlowConstruct(FLOW_NAME);
-        
+
         Component component = (Component) f.getMessageProcessors().get(0);
-        
+
         assertTrue(component instanceof RestServiceWrapper);
         RestServiceWrapper restServiceWrapper = (RestServiceWrapper) component;
         assertEquals(restServiceWrapper.getServiceUrl(), FLOW_URL);

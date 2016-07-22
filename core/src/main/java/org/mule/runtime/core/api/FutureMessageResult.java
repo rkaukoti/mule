@@ -47,15 +47,12 @@ public class FutureMessageResult extends FutureTask
      * </ul>
      */
     private static final Executor DefaultExecutor = Executors.newSingleThreadExecutor(
-        new DaemonThreadFactory("MuleDefaultFutureMessageExecutor"));
-
+            new DaemonThreadFactory("MuleDefaultFutureMessageExecutor"));
+    protected MuleContext muleContext;
     // @GuardedBy(this)
     private Executor executor;
-
     // @GuardedBy(this)
     private List transformers;
-
-    protected MuleContext muleContext;
 
     public FutureMessageResult(Callable callable, MuleContext muleContext)
     {
@@ -66,7 +63,7 @@ public class FutureMessageResult extends FutureTask
 
     /**
      * Set an ExecutorService to run this invocation.
-     * 
+     *
      * @param e the executor to be used.
      * @throws IllegalArgumentException when the executor is null or shutdown.
      */
@@ -85,9 +82,8 @@ public class FutureMessageResult extends FutureTask
 
     /**
      * Set a post-invocation transformer.
-     * 
-     * @param t Transformers to be applied to the result of this invocation. May be
-     *            null.
+     *
+     * @param t Transformers to be applied to the result of this invocation. May be null.
      */
     public void setTransformers(List t)
     {
@@ -103,7 +99,7 @@ public class FutureMessageResult extends FutureTask
     }
 
     public MuleMessage getMessage(long timeout)
-        throws InterruptedException, ExecutionException, TimeoutException, MuleException
+            throws InterruptedException, ExecutionException, TimeoutException, MuleException
     {
         return this.getMessage(this.get(timeout, TimeUnit.MILLISECONDS));
     }
@@ -115,7 +111,7 @@ public class FutureMessageResult extends FutureTask
         {
             if (obj instanceof MuleMessage)
             {
-                result = (MuleMessage)obj;
+                result = (MuleMessage) obj;
             }
             else
             {

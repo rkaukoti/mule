@@ -16,11 +16,11 @@
 
     <!--TODO(gfernandes) MULE-10117 remove this when support for accessing resources is added to runner -->
     <spring:bean id="jsonAttachmentResource" class="org.springframework.core.io.UrlResource">
-        <spring:constructor-arg value="classpath:attachment.json" type="java.net.URL" />
+        <spring:constructor-arg value="classpath:attachment.json" type="java.net.URL"/>
     </spring:bean>
 
     <flow name="sendEmailWithAttachment">
-        <email:send config-ref="config" subject="Email Subject" content="emailContent" >
+        <email:send config-ref="config" subject="Email Subject" content="emailContent">
             <email:to-addresses>
                 <email:to-address value="pablo.musumeci@mulesoft.com"/>
             </email:to-addresses>

@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.module.xml.transformers.xml;
 
+import org.dom4j.DocumentHelper;
+import org.dom4j.io.DOMReader;
+import org.dom4j.io.DOMWriter;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.xml.transformer.DomDocumentToXml;
 import org.mule.runtime.module.xml.transformer.XmlToDomDocument;
-
-import org.dom4j.DocumentHelper;
-import org.dom4j.io.DOMReader;
-import org.dom4j.io.DOMWriter;
 import org.w3c.dom.Document;
 
 public class DomXmlTransformerEncodingTestCase extends AbstractXmlTransformerTestCase
@@ -26,10 +25,10 @@ public class DomXmlTransformerEncodingTestCase extends AbstractXmlTransformerTes
     protected void doSetUp() throws Exception
     {
         org.dom4j.Document dom4jDoc = DocumentHelper.parseText(IOUtils.toString(IOUtils.getResourceAsStream(
-            "cdcatalog-utf-8.xml", getClass()), "UTF-8"));
+                "cdcatalog-utf-8.xml", getClass()), "UTF-8"));
         srcData = new DOMWriter().write(dom4jDoc);
         resultData = IOUtils.toString(IOUtils.getResourceAsStream("cdcatalog-us-ascii.xml", getClass()),
-            "US-ASCII");
+                "US-ASCII");
     }
 
     @Override
@@ -68,8 +67,8 @@ public class DomXmlTransformerEncodingTestCase extends AbstractXmlTransformerTes
         // instances
         if (expected instanceof Document)
         {
-            expected = new DOMReader().read((Document)expected).asXML();
-            result = new DOMReader().read((Document)result).asXML();
+            expected = new DOMReader().read((Document) expected).asXML();
+            result = new DOMReader().read((Document) result).asXML();
         }
 
         return super.compareResults(expected, result);

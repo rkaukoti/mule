@@ -6,15 +6,8 @@
  */
 package org.mule.runtime.core.routing;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleContext;
@@ -31,8 +24,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class DefaultRouterResultsHandlerTestCase extends AbstractMuleTestCase
 {
@@ -54,7 +53,7 @@ public class DefaultRouterResultsHandlerTestCase extends AbstractMuleTestCase
     @Test
     public void aggregateNoEvent()
     {
-        MuleEvent result = resultsHandler.aggregateResults(Collections.<MuleEvent> singletonList(null),
+        MuleEvent result = resultsHandler.aggregateResults(Collections.<MuleEvent>singletonList(null),
                 mock(MuleEvent.class));
         assertNull(result);
     }
@@ -74,7 +73,7 @@ public class DefaultRouterResultsHandlerTestCase extends AbstractMuleTestCase
         event2.getSession().setProperty("key", "valueNEW");
         event2.getSession().setProperty("key1", "value1");
 
-        MuleEvent result = resultsHandler.aggregateResults(Collections.<MuleEvent> singletonList(event2),
+        MuleEvent result = resultsHandler.aggregateResults(Collections.<MuleEvent>singletonList(event2),
                 event1);
         assertSame(event2, result);
 
@@ -175,7 +174,7 @@ public class DefaultRouterResultsHandlerTestCase extends AbstractMuleTestCase
         MuleEvent event2 = new DefaultMuleEvent(messageCollection, flow);
         event2.setFlowVariable("key2", "value2");
 
-        MuleEvent result = resultsHandler.aggregateResults(Collections.<MuleEvent> singletonList(event2),
+        MuleEvent result = resultsHandler.aggregateResults(Collections.<MuleEvent>singletonList(event2),
                 event1);
         assertSame(event2, result);
 

@@ -6,11 +6,9 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleEventContext;
@@ -24,9 +22,10 @@ import org.mule.tck.junit4.rule.DynamicPort;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 @Ignore("Session properties are not supported anymore")
 public class SessionPropertiesWithMessageCollectionTestCase extends FunctionalTestCase
@@ -59,7 +58,7 @@ public class SessionPropertiesWithMessageCollectionTestCase extends FunctionalTe
             inputData.add(String.valueOf(i));
         }
         MuleEvent responseEvent = flow.process(getTestEvent(inputData));
-        assertThat(((List<String>) responseEvent.getSession().<List> getProperty("recordsToUpdate")).size(), is(numberOfElements));
+        assertThat(((List<String>) responseEvent.getSession().<List>getProperty("recordsToUpdate")).size(), is(numberOfElements));
     }
 
     private void assertNotNullAndNotExceptionResponse(MuleMessage response)
@@ -77,7 +76,7 @@ public class SessionPropertiesWithMessageCollectionTestCase extends FunctionalTe
         public Object onCall(MuleEventContext eventContext) throws Exception
         {
             ArrayList<String> elements = new ArrayList<>();
-            for(int index = 0; index < 5; index++)
+            for (int index = 0; index < 5; index++)
             {
                 elements.add("Element N" + index);
             }

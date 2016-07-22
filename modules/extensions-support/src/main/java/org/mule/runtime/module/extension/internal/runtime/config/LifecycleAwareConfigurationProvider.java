@@ -6,12 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.startIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getClassLoader;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
@@ -26,14 +20,20 @@ import org.mule.runtime.core.lifecycle.SimpleLifecycleManager;
 import org.mule.runtime.extension.api.introspection.config.RuntimeConfigurationModel;
 import org.mule.runtime.extension.api.runtime.ConfigurationInstance;
 import org.mule.runtime.extension.api.runtime.ConfigurationProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.startIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getClassLoader;
 
 /**
  * Base class for implementations of {@link ConfigurationProvider} which keep track of the
@@ -54,7 +54,8 @@ public abstract class LifecycleAwareConfigurationProvider<T> implements Configur
     private final RuntimeConfigurationModel configurationModel;
     private final List<ConfigurationInstance<T>> configurationInstances = new LinkedList<>();
     private final ClassLoader extensionClassLoader;
-    protected SimpleLifecycleManager lifecycleManager = new DefaultLifecycleManager<>(String.format("%s-%s", getClass().getName(), getName()), this);
+    protected SimpleLifecycleManager lifecycleManager =
+            new DefaultLifecycleManager<>(String.format("%s-%s", getClass().getName(), getName()), this);
 
     @Inject
     protected MuleContext muleContext;
@@ -76,8 +77,10 @@ public abstract class LifecycleAwareConfigurationProvider<T> implements Configur
     public void initialise() throws InitialisationException
     {
         withContextClassLoader(
-                extensionClassLoader, () -> {
-                    lifecycleManager.fireInitialisePhase((phaseName, object) -> {
+                extensionClassLoader, () ->
+                {
+                    lifecycleManager.fireInitialisePhase((phaseName, object) ->
+                    {
                         for (ConfigurationInstance<T> configurationInstance : configurationInstances)
                         {
                             initialiseIfNeeded(configurationInstance, true, muleContext);
@@ -85,7 +88,8 @@ public abstract class LifecycleAwareConfigurationProvider<T> implements Configur
                     });
                     return null;
                 },
-                InitialisationException.class, e -> {
+                InitialisationException.class, e ->
+                {
                     throw new InitialisationException(e, this);
                 });
     }
@@ -99,15 +103,18 @@ public abstract class LifecycleAwareConfigurationProvider<T> implements Configur
     public void start() throws MuleException
     {
         withContextClassLoader(
-                extensionClassLoader, () -> {
-                    lifecycleManager.fireStartPhase((phaseName, object) -> {
+                extensionClassLoader, () ->
+                {
+                    lifecycleManager.fireStartPhase((phaseName, object) ->
+                    {
                         for (ConfigurationInstance<T> configurationInstance : configurationInstances)
                         {
                             startConfig(configurationInstance);
                         }
                     });
                     return null;
-                }, MuleException.class, e -> {
+                }, MuleException.class, e ->
+                {
                     throw new DefaultMuleException(e);
                 });
     }
@@ -121,15 +128,18 @@ public abstract class LifecycleAwareConfigurationProvider<T> implements Configur
     public void stop() throws MuleException
     {
         withContextClassLoader(extensionClassLoader,
-                               () -> {
-                                   lifecycleManager.fireStopPhase((phaseName, object) -> {
-                                       for (ConfigurationInstance<T> configurationInstance : configurationInstances)
-                                       {
-                                           stopIfNeeded(configurationInstance);
-                                       }
-                                   });
-                                   return null;
-                               }, MuleException.class, e -> {
+                () ->
+                {
+                    lifecycleManager.fireStopPhase((phaseName, object) ->
+                    {
+                        for (ConfigurationInstance<T> configurationInstance : configurationInstances)
+                        {
+                            stopIfNeeded(configurationInstance);
+                        }
+                    });
+                    return null;
+                }, MuleException.class, e ->
+                {
                     throw new DefaultMuleException(e);
                 });
     }
@@ -142,8 +152,10 @@ public abstract class LifecycleAwareConfigurationProvider<T> implements Configur
     {
         try
         {
-            withContextClassLoader(extensionClassLoader, () -> {
-                lifecycleManager.fireDisposePhase((phaseName, object) -> {
+            withContextClassLoader(extensionClassLoader, () ->
+            {
+                lifecycleManager.fireDisposePhase((phaseName, object) ->
+                {
                     for (ConfigurationInstance<T> configurationInstance : configurationInstances)
                     {
                         disposeIfNeeded(configurationInstance, LOGGER);

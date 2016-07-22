@@ -6,12 +6,6 @@
  */
 package org.mule.extension.socket.api.worker;
 
-import static java.lang.String.format;
-import static java.util.Arrays.copyOf;
-import static org.mule.extension.socket.internal.SocketUtils.createMuleMessage;
-import static org.mule.extension.socket.internal.SocketUtils.createPacket;
-import static org.mule.extension.socket.internal.SocketUtils.getUdpAllowedByteArray;
-
 import org.mule.extension.socket.api.ImmutableSocketAttributes;
 import org.mule.extension.socket.api.SocketAttributes;
 import org.mule.runtime.api.execution.CompletionHandler;
@@ -19,6 +13,8 @@ import org.mule.runtime.api.execution.ExceptionCallback;
 import org.mule.runtime.api.message.MuleEvent;
 import org.mule.runtime.core.api.serialization.ObjectSerializer;
 import org.mule.runtime.extension.api.runtime.MessageHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -26,8 +22,11 @@ import java.io.InputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static java.util.Arrays.copyOf;
+import static org.mule.extension.socket.internal.SocketUtils.createMuleMessage;
+import static org.mule.extension.socket.internal.SocketUtils.createPacket;
+import static org.mule.extension.socket.internal.SocketUtils.getUdpAllowedByteArray;
 
 /**
  * One worker is created per received package. If the other end of the connection is awaiting
@@ -42,7 +41,8 @@ public final class UdpWorker extends SocketWorker
     private final DatagramPacket packet;
     private final ObjectSerializer objectSerializer;
 
-    public UdpWorker(DatagramSocket socket, DatagramPacket packet, ObjectSerializer objectSerializer, MessageHandler<InputStream, SocketAttributes> messageHandler)
+    public UdpWorker(DatagramSocket socket, DatagramPacket packet, ObjectSerializer objectSerializer,
+                     MessageHandler<InputStream, SocketAttributes> messageHandler)
     {
         super(messageHandler);
         this.socket = socket;
@@ -71,7 +71,7 @@ public final class UdpWorker extends SocketWorker
                 {
                     exceptionCallback.onException(new IOException(
                             format("An error occurred while sending UDP packet to address '%s'",
-                                   packet.getSocketAddress().toString(), e))
+                                    packet.getSocketAddress().toString(), e))
                     );
                 }
             }

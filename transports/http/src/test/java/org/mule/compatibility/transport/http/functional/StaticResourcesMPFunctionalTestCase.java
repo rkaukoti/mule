@@ -6,20 +6,19 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.mule.runtime.core.api.security.tls.TlsConfiguration.DISABLE_SYSTEM_PROPERTIES_MAPPING_PROPERTY;
-
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.junit.ClassRule;
+import org.junit.Test;
 import org.mule.compatibility.transport.http.HttpConstants;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.tck.junit4.rule.SystemProperty;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.junit.ClassRule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.mule.runtime.core.api.security.tls.TlsConfiguration.DISABLE_SYSTEM_PROPERTIES_MAPPING_PROPERTY;
 
 public class StaticResourcesMPFunctionalTestCase extends FunctionalTestCase
 {
@@ -42,7 +41,7 @@ public class StaticResourcesMPFunctionalTestCase extends FunctionalTestCase
     public StaticResourcesMPFunctionalTestCase()
     {
         System.setProperty("test.root",
-            ClassUtils.getClassPathRoot(StaticResourcesMPFunctionalTestCase.class).getPath());
+                ClassUtils.getClassPathRoot(StaticResourcesMPFunctionalTestCase.class).getPath());
         setDisposeContextPerClass(true);
     }
 

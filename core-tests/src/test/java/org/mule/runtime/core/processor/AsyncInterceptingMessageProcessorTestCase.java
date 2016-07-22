@@ -6,13 +6,7 @@
  */
 package org.mule.runtime.core.processor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.DefaultMuleException;
@@ -34,13 +28,20 @@ import org.mule.tck.testmodels.mule.TestTransaction;
 import java.beans.ExceptionListener;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class AsyncInterceptingMessageProcessorTestCase extends AbstractMuleContextTestCase
-    implements ExceptionListener
+        implements ExceptionListener
 {
 
-    public static final String EXPECTING_SYNCHRONOUS_EVENT_ERROR = "Exception expected: '" + AsyncInterceptingMessageProcessor.SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE + "'";
+    public static final String EXPECTING_SYNCHRONOUS_EVENT_ERROR =
+            "Exception expected: '" + AsyncInterceptingMessageProcessor.SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE + "'";
 
     protected AsyncInterceptingMessageProcessor messageProcessor;
     protected TestListener target = new TestListener();
@@ -175,7 +176,7 @@ public class AsyncInterceptingMessageProcessorTestCase extends AbstractMuleConte
         messageProcessor.setMuleContext(muleContext);
         messageProcessor.process(event);
 
-        assertTrue(exceptionListener.latch .await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS));
+        assertTrue(exceptionListener.latch.await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS));
     }
 
     protected void assertSync(MessageProcessor processor, MuleEvent event) throws MuleException
@@ -188,7 +189,7 @@ public class AsyncInterceptingMessageProcessorTestCase extends AbstractMuleConte
     }
 
     protected void assertAsync(MessageProcessor processor, MuleEvent event)
-        throws MuleException, InterruptedException
+            throws MuleException, InterruptedException
     {
         MuleEvent result = processor.process(event);
 
@@ -205,43 +206,19 @@ public class AsyncInterceptingMessageProcessorTestCase extends AbstractMuleConte
     }
 
     protected AsyncInterceptingMessageProcessor createAsyncInterceptingMessageProcessor(MessageProcessor listener)
-        throws Exception
+            throws Exception
     {
         AsyncInterceptingMessageProcessor mp = new AsyncInterceptingMessageProcessor(
-            new TestWorkManagerSource());
+                new TestWorkManagerSource());
         mp.setMuleContext(muleContext);
         mp.setListener(listener);
         return mp;
-    }
-
-    class TestListener implements MessageProcessor
-    {
-        MuleEvent sensedEvent;
-        Thread thread;
-
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            thread = Thread.currentThread();
-            sensedEvent = event;
-            latch.countDown();
-            return event;
-        }
     }
 
     @Override
     public void exceptionThrown(Exception e)
     {
         exceptionThrown = e;
-    }
-
-    class TestWorkManagerSource implements WorkManagerSource
-    {
-        @Override
-        public WorkManager getWorkManager() throws MuleException
-        {
-            return muleContext.getWorkManager();
-        }
     }
 
     private static class LatchedExceptionListener implements MessagingExceptionHandler
@@ -266,5 +243,29 @@ public class AsyncInterceptingMessageProcessorTestCase extends AbstractMuleConte
             return null;
         }
 
+    }
+
+    class TestListener implements MessageProcessor
+    {
+        MuleEvent sensedEvent;
+        Thread thread;
+
+        @Override
+        public MuleEvent process(MuleEvent event) throws MuleException
+        {
+            thread = Thread.currentThread();
+            sensedEvent = event;
+            latch.countDown();
+            return event;
+        }
+    }
+
+    class TestWorkManagerSource implements WorkManagerSource
+    {
+        @Override
+        public WorkManager getWorkManager() throws MuleException
+        {
+            return muleContext.getWorkManager();
+        }
     }
 }

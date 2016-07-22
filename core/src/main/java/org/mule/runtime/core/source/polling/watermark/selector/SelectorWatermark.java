@@ -23,7 +23,7 @@ import java.io.Serializable;
 /**
  * Implementation of {@link Watermark} that relies on a {@link WatermarkSelector} to
  * update its values
- * 
+ *
  * @since 3.5.0
  */
 public class SelectorWatermark extends Watermark implements Initialisable, MuleContextAware
@@ -56,7 +56,8 @@ public class SelectorWatermark extends Watermark implements Initialisable, MuleC
         {
             throw new InitialisationException(
                     MessageFactory.createStaticMessage(
-                            String.format("selector-expression requires a valid MEL expression. '%s' was found instead", this.selectorExpression))
+                            String.format("selector-expression requires a valid MEL expression. '%s' was found instead",
+                                    this.selectorExpression))
                     , e, this);
         }
     }
@@ -75,6 +76,7 @@ public class SelectorWatermark extends Watermark implements Initialisable, MuleC
 
     /**
      * {@inheritDoc}
+     *
      * @return a new {@link SelectorWatermarkPollingInterceptor}
      */
     @Override

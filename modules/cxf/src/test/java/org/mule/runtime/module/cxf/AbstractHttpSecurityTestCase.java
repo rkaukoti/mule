@@ -6,7 +6,10 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
+import org.apache.commons.httpclient.params.HttpConnectionParams;
+import org.apache.commons.httpclient.protocol.Protocol;
+import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
+import org.junit.Before;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.module.tls.internal.DefaultTlsContextFactory;
 
@@ -16,26 +19,10 @@ import java.net.Socket;
 
 import javax.net.ssl.SSLSocketFactory;
 
-import org.apache.commons.httpclient.params.HttpConnectionParams;
-import org.apache.commons.httpclient.protocol.Protocol;
-import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
-import org.junit.Before;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
 
 public class AbstractHttpSecurityTestCase extends FunctionalTestCase
 {
-
-    @Before
-    public void setUp() throws Exception
-    {
-        DefaultTlsContextFactory tlsContextFactory = new DefaultTlsContextFactory();
-        tlsContextFactory.setTrustStorePath("trustStore");
-        tlsContextFactory.setTrustStorePassword("mulepassword");
-        tlsContextFactory.initialise();
-
-        SSLSocketFactory factory = tlsContextFactory.createSslContext().getSocketFactory();
-        Protocol httpsWithTrustStore = new Protocol(HTTPS.getScheme(), getSocketFactory(factory),  HTTPS.getDefaultPort());
-        Protocol.registerProtocol(HTTPS.getScheme(), httpsWithTrustStore);
-    }
 
     private static ProtocolSocketFactory getSocketFactory(final SSLSocketFactory factory)
     {
@@ -61,5 +48,18 @@ public class AbstractHttpSecurityTestCase extends FunctionalTestCase
             }
 
         };
+    }
+
+    @Before
+    public void setUp() throws Exception
+    {
+        DefaultTlsContextFactory tlsContextFactory = new DefaultTlsContextFactory();
+        tlsContextFactory.setTrustStorePath("trustStore");
+        tlsContextFactory.setTrustStorePassword("mulepassword");
+        tlsContextFactory.initialise();
+
+        SSLSocketFactory factory = tlsContextFactory.createSslContext().getSocketFactory();
+        Protocol httpsWithTrustStore = new Protocol(HTTPS.getScheme(), getSocketFactory(factory), HTTPS.getDefaultPort());
+        Protocol.registerProtocol(HTTPS.getScheme(), httpsWithTrustStore);
     }
 }

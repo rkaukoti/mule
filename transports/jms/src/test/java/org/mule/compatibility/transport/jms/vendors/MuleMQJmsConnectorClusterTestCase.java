@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.transport.jms.vendors;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.transport.jms.DefaultJmsTopicResolver;
 import org.mule.compatibility.transport.jms.JmsConnector;
 import org.mule.compatibility.transport.jms.JmsTopicResolver;
 import org.mule.compatibility.transport.jms.mulemq.MuleMQJmsConnector;
 import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class MuleMQJmsConnectorClusterTestCase extends FunctionalTestCase
 {
@@ -31,12 +30,12 @@ public class MuleMQJmsConnectorClusterTestCase extends FunctionalTestCase
         JmsConnector c = (JmsConnector) muleContext.getRegistry().lookupObject("jmsConnector");
         assertNotNull(c);
         assertTrue(c instanceof MuleMQJmsConnector);
-        MuleMQJmsConnector mqc = (MuleMQJmsConnector)c;
+        MuleMQJmsConnector mqc = (MuleMQJmsConnector) c;
         assertTrue(mqc.isInCluster());
         assertTrue(c.isEagerConsumer());
         JmsTopicResolver resolver = c.getTopicResolver();
         assertNotNull("Topic resolver must not be null.", resolver);
         assertTrue("Wrong topic resolver configured on the connector.",
-                   resolver instanceof DefaultJmsTopicResolver);
+                resolver instanceof DefaultJmsTopicResolver);
     }
 }

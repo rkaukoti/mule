@@ -6,16 +6,13 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
-import org.mule.compatibility.core.transport.AbstractTransportMessageHandler;
-import org.mule.compatibility.core.transport.ConnectableLifecycleManager;
 import org.mule.runtime.core.api.connector.Connectable;
 import org.mule.runtime.core.api.context.WorkManager;
 import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.fail;
 
 public class ConnectableTestCase extends AbstractMuleContextEndpointTestCase
 {

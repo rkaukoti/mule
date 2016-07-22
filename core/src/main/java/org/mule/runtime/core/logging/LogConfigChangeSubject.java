@@ -15,14 +15,14 @@ public interface LogConfigChangeSubject
 {
     /**
      * Register a listener to be called when log config is changed.
-     * 
+     *
      * @param logConfigChangeListener the listener to register.
      */
     void registerLogConfigChangeListener(PropertyChangeListener logConfigChangeListener);
 
     /**
      * Unregister a listener to no longer be called when log config is changed.
-     * 
+     *
      * @param logConfigChangeListener the listener to unregister.
      */
     void unregisterLogConfigChangeListener(PropertyChangeListener logConfigChangeListener);

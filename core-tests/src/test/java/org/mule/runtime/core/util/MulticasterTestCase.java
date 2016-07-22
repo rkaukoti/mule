@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.core.util;
 
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 import org.mule.tck.testmodels.fruit.Apple;
@@ -18,7 +17,7 @@ import org.mule.tck.testmodels.fruit.WaterMelon;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 @SmallTest
 public class MulticasterTestCase extends AbstractMuleTestCase
@@ -34,7 +33,7 @@ public class MulticasterTestCase extends AbstractMuleTestCase
         fruit.add(banana);
         fruit.add(melon);
 
-        Fruit caster = (Fruit)Multicaster.create(Fruit.class, fruit);
+        Fruit caster = (Fruit) Multicaster.create(Fruit.class, fruit);
         caster.bite();
 
         assertTrue(apple.isBitten());

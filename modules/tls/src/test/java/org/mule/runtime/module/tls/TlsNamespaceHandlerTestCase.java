@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.module.tls;
 
-import static org.hamcrest.CoreMatchers.endsWith;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.api.tls.TlsContextFactory;
 import org.mule.runtime.api.tls.TlsContextKeyStoreConfiguration;
 import org.mule.runtime.api.tls.TlsContextTrustStoreConfiguration;
 import org.mule.runtime.module.tls.internal.DefaultTlsContextFactory;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.endsWith;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class TlsNamespaceHandlerTestCase extends FunctionalTestCase
 {
@@ -36,8 +36,8 @@ public class TlsNamespaceHandlerTestCase extends FunctionalTestCase
     {
         DefaultTlsContextFactory tlsContextFactory = muleContext.getRegistry().get("tlsContext");
 
-        assertThat(tlsContextFactory.getEnabledProtocols(), is(new String[]{"TLSv1"}));
-        assertThat(tlsContextFactory.getEnabledCipherSuites(), is(new String[]{"TLS_DHE_DSS_WITH_AES_128_CBC_SHA"}));
+        assertThat(tlsContextFactory.getEnabledProtocols(), is(new String[] {"TLSv1"}));
+        assertThat(tlsContextFactory.getEnabledCipherSuites(), is(new String[] {"TLS_DHE_DSS_WITH_AES_128_CBC_SHA"}));
         assertThat(tlsContextFactory.getTrustStorePath(), endsWith("trustStore"));
         assertThat(tlsContextFactory.getTrustStorePassword(), equalTo(PASSWORD));
         assertThat(tlsContextFactory.getTrustStoreType(), equalTo(TYPE));

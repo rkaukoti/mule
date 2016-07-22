@@ -7,10 +7,10 @@
 package org.mule.runtime.core.util;
 
 
+import org.junit.Test;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
-
-import org.junit.Test;
 
 public class PreconditionsTest
 {

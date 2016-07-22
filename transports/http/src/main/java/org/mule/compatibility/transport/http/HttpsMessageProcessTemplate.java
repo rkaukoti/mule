@@ -6,10 +6,6 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static org.mule.compatibility.transport.http.HttpsConnector.LOCAL_CERTIFICATES;
-import static org.mule.compatibility.transport.http.HttpsConnector.PEER_CERTIFICATES;
-
 import org.mule.compatibility.transport.http.i18n.HttpMessages;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
@@ -17,12 +13,17 @@ import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.context.WorkManager;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static org.mule.compatibility.transport.http.HttpsConnector.LOCAL_CERTIFICATES;
+import static org.mule.compatibility.transport.http.HttpsConnector.PEER_CERTIFICATES;
+
 public class HttpsMessageProcessTemplate extends HttpMessageProcessTemplate
 {
 
-    public HttpsMessageProcessTemplate(final HttpMessageReceiver messageReceiver, final HttpServerConnection httpServerConnection, final WorkManager flowExecutionWorkManager)
+    public HttpsMessageProcessTemplate(final HttpMessageReceiver messageReceiver, final HttpServerConnection httpServerConnection,
+                                       final WorkManager flowExecutionWorkManager)
     {
-        super(messageReceiver,httpServerConnection);
+        super(messageReceiver, httpServerConnection);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class HttpsMessageProcessTemplate extends HttpMessageProcessTemplate
         catch (InterruptedException e)
         {
             throw new MessagingException(HttpMessages.sslHandshakeDidNotComplete(),
-                                         muleEvent, e);
+                    muleEvent, e);
         }
         MuleMessage.Builder messageBuilder = MuleMessage.builder(muleEvent.getMessage());
         if (getHttpServerConnection().getPeerCertificateChain() != null)

@@ -6,8 +6,6 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static java.lang.Thread.currentThread;
-
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MessagingException;
@@ -29,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.resource.spi.work.Work;
+
+import static java.lang.Thread.currentThread;
 
 
 /**
@@ -56,8 +56,7 @@ public abstract class AbstractReceiverWorker implements Work
 
     /**
      * This will run the receiver logic and call {@link #release()} once {@link #doRun()} completes.
-    *
-    */
+     */
     @Override
     public final void run()
     {
@@ -89,7 +88,9 @@ public abstract class AbstractReceiverWorker implements Work
     public void processMessages() throws Exception
     {
         //No need to do error handling. It will be done by inner TransactionTemplate per Message
-        ExecutionTemplate<List<MuleEvent>> executionTemplate = TransactionalExecutionTemplate.createTransactionalExecutionTemplate(receiver.getEndpoint().getMuleContext(), endpoint.getTransactionConfig());
+        ExecutionTemplate<List<MuleEvent>> executionTemplate =
+                TransactionalExecutionTemplate.createTransactionalExecutionTemplate(receiver.getEndpoint().getMuleContext(),
+                        endpoint.getTransactionConfig());
 
         // Receive messages and process them in a single transaction
         // Do not enable threading here, but serveral workers
@@ -105,7 +106,9 @@ public abstract class AbstractReceiverWorker implements Work
 
             for (final Object payload : messages)
             {
-                ExecutionTemplate<MuleEvent> perMessageExecutionTemplate = TransactionalErrorHandlingExecutionTemplate.createMainExecutionTemplate(endpoint.getMuleContext(), receiver.flowConstruct.getExceptionListener());
+                ExecutionTemplate<MuleEvent> perMessageExecutionTemplate =
+                        TransactionalErrorHandlingExecutionTemplate.createMainExecutionTemplate(endpoint.getMuleContext(),
+                                receiver.flowConstruct.getExceptionListener());
                 MuleEvent resultEvent;
                 try
                 {
@@ -121,7 +124,8 @@ public abstract class AbstractReceiverWorker implements Work
                             if (endpoint.getConnector() instanceof AbstractConnector)
                             {
                                 handler = ((AbstractConnector) endpoint.getConnector()).getSessionHandler();
-                            } else
+                            }
+                            else
                             {
                                 handler = new SerializeAndEncodeSessionHandler();
                             }
@@ -131,7 +135,8 @@ public abstract class AbstractReceiverWorker implements Work
                             if (session != null)
                             {
                                 resultEvent1 = receiver.routeMessage(muleMessage, session, tx, out);
-                            } else
+                            }
+                            else
                             {
                                 resultEvent1 = receiver.routeMessage(muleMessage, tx, out);
                             }
@@ -181,7 +186,7 @@ public abstract class AbstractReceiverWorker implements Work
         List<Object> payloads = new ArrayList<Object>(events.size());
         for (MuleEvent muleEvent : events)
         {
-            MuleMessage result = muleEvent == null ?  null : muleEvent.getMessage();
+            MuleMessage result = muleEvent == null ? null : muleEvent.getMessage();
             if (result != null)
             {
                 Object payload = postProcessMessage(result);
@@ -199,27 +204,26 @@ public abstract class AbstractReceiverWorker implements Work
      * specific properties to message before it gets routed
      *
      * @param message the next message to be processed
-     * @throws Exception
      */
     protected MuleMessage preRouteMuleMessage(MuleMessage message) throws Exception
     {
         //no op
-        return  message;
+        return message;
     }
 
     /**
      * Template method used to bind the resources of this receiver to the transaction.  Only transactional
      * transports need implment this method
+     *
      * @param tx the current transaction or null if there is no transaction
-     * @throws TransactionException
      */
     protected abstract void bindTransaction(Transaction tx) throws TransactionException;
 
     /**
      * When Mule has finished processing the current messages, there may be zero or more messages to process
      * by the receiver if request/response messaging is being used. The result(s) should be passed back to the callee.
+     *
      * @param messages a list of messages.  This argument will not be null
-     * @throws Exception
      */
     protected void handleResults(List messages) throws Exception
     {
@@ -229,9 +233,9 @@ public abstract class AbstractReceiverWorker implements Work
     /**
      * Before a message is passed into Mule this callback is called and can be used by the worker to inspect the
      * message before it gets sent to Mule
+     *
      * @param message the next message to be processed
      * @return the message to be processed. If Null is returned the message will not get processed.
-     * @throws Exception
      */
     protected Object preProcessMessage(Object message) throws Exception
     {
@@ -242,10 +246,9 @@ public abstract class AbstractReceiverWorker implements Work
     /**
      * If a result is returned back this method will get called before the message is added to te list of
      * results (these are later passed to {@link #handleResults(java.util.List)})
+     *
      * @param message the result message, this will never be null
-     * @return the message to add to the list of results. If null is returned nothing is added to the
-     * list of results
-     * @throws Exception
+     * @return the message to add to the list of results. If null is returned nothing is added to the list of results
      */
     protected MuleMessage postProcessMessage(MuleMessage message) throws Exception
     {

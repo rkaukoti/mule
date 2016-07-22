@@ -21,7 +21,6 @@ public interface XmlNamespaceInfo
      * and no other extension can have that prefix. Mule core has http://www.mulesoft.org/schema/mule/core/
      * as prefix for all the possible versions of the namespace.
      *
-     *
      * @return the xml namespace uri prefix for the xml extensions configuration.
      */
     String getNamespaceUriPrefix();

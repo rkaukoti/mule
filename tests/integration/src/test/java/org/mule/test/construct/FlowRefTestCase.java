@@ -6,14 +6,13 @@
  */
 package org.mule.test.construct;
 
-import static java.util.stream.Collectors.toList;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.processor.AsyncInterceptingMessageProcessor.SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.client.fluent.Response;
+import org.apache.http.entity.ContentType;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
@@ -28,24 +27,24 @@ import org.mule.tck.junit4.rule.DynamicPort;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.client.fluent.Response;
-import org.apache.http.entity.ContentType;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import static java.util.stream.Collectors.toList;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.processor.AsyncInterceptingMessageProcessor.SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE;
 
 public class FlowRefTestCase extends FunctionalTestCase
 {
-    @Rule
-    public DynamicPort port = new DynamicPort("port");
-
     private static String FLOW1_SENSING_PROCESSOR_NAME = "NonBlockingFlow1SensingProcessor";
     private static String FLOW2_SENSING_PROCESSOR_NAME = "NonBlockingFlow2SensingProcessor";
     private static String TO_SYNC_FLOW1_SENSING_PROCESSOR_NAME = "NonBlockingToSyncFlow1SensingProcessor";
     private static String TO_SYNC_FLOW2_SENSING_PROCESSOR_NAME = "NonBlockingToSyncFlow2SensingProcessor";
     private static String ERROR_MESSAGE = "ERROR";
+    @Rule
+    public DynamicPort port = new DynamicPort("port");
 
     @Override
     protected String getConfigFile()
@@ -77,19 +76,6 @@ public class FlowRefTestCase extends FunctionalTestCase
                                               .withFlowVariable("letter", "B")
                                               .run()
                                               .getMessageAsString());
-    }
-
-    public static class ProcessorPathAssertingProcessor implements MessageProcessor
-    {
-
-        private static List<String> traversedProcessorPaths = new ArrayList<>();
-
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            traversedProcessorPaths.add(((Flow) muleContext.getRegistry().lookupFlowConstruct(event.getFlowConstruct().getName())).getProcessorPath(this));
-            return event;
-        }
     }
 
     @Test
@@ -155,7 +141,7 @@ public class FlowRefTestCase extends FunctionalTestCase
         assertEquals("0B", payloads.get(1));
     }
 
-    @Test(expected=MessagingException.class)
+    @Test(expected = MessagingException.class)
     public void flowRefNotFound() throws Exception
     {
         assertEquals("0C", flowRunner("flow2").withPayload("0")
@@ -168,25 +154,25 @@ public class FlowRefTestCase extends FunctionalTestCase
     public void nonBlockingFlowRef() throws Exception
     {
         Response response = Request.Post(String.format("http://localhost:%s/%s", port.getNumber(), "nonBlockingFlowRefBasic"))
-                .connectTimeout(RECEIVE_TIMEOUT).bodyString(TEST_MESSAGE, ContentType.TEXT_PLAIN).execute();
+                                   .connectTimeout(RECEIVE_TIMEOUT).bodyString(TEST_MESSAGE, ContentType.TEXT_PLAIN).execute();
         HttpResponse httpResponse = response.returnResponse();
         assertThat(httpResponse.getStatusLine().getStatusCode(), is(200));
         assertThat(IOUtils.toString(httpResponse.getEntity().getContent()), is(TEST_MESSAGE));
 
         SensingNullRequestResponseMessageProcessor flow1RequestResponseProcessor = muleContext.getRegistry()
-                .lookupObject(FLOW1_SENSING_PROCESSOR_NAME);
+                                                                                              .lookupObject(FLOW1_SENSING_PROCESSOR_NAME);
         SensingNullRequestResponseMessageProcessor flow2RequestResponseProcessor = muleContext.getRegistry()
-                .lookupObject(FLOW2_SENSING_PROCESSOR_NAME);
+                                                                                              .lookupObject(FLOW2_SENSING_PROCESSOR_NAME);
         assertThat(flow1RequestResponseProcessor.requestThread, not(equalTo(flow1RequestResponseProcessor.responseThread)));
         assertThat(flow2RequestResponseProcessor.requestThread, not(equalTo(flow2RequestResponseProcessor
-                                                                                    .responseThread)));
+                .responseThread)));
     }
 
     @Test
     public void nonBlockingFlowRefToAsyncFlow() throws Exception
     {
         Response response = Request.Post(String.format("http://localhost:%s/%s", port.getNumber(), "nonBlockingFlowRefToAsyncFlow"))
-                .connectTimeout(RECEIVE_TIMEOUT).bodyString(TEST_MESSAGE, ContentType.TEXT_PLAIN).execute();
+                                   .connectTimeout(RECEIVE_TIMEOUT).bodyString(TEST_MESSAGE, ContentType.TEXT_PLAIN).execute();
         HttpResponse httpResponse = response.returnResponse();
         assertThat(httpResponse.getStatusLine().getStatusCode(), is(500));
         assertThat(IOUtils.toString(httpResponse.getEntity().getContent()), containsString(SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE));
@@ -196,29 +182,44 @@ public class FlowRefTestCase extends FunctionalTestCase
     public void nonBlockingFlowRefToSyncFlow() throws Exception
     {
         Response response = Request.Post(String.format("http://localhost:%s/%s", port.getNumber(), "nonBlockingFlowRefToSyncFlow"))
-                .connectTimeout(RECEIVE_TIMEOUT).bodyString(TEST_MESSAGE, ContentType.TEXT_PLAIN).execute();
+                                   .connectTimeout(RECEIVE_TIMEOUT).bodyString(TEST_MESSAGE, ContentType.TEXT_PLAIN).execute();
         HttpResponse httpResponse = response.returnResponse();
         assertThat(httpResponse.getStatusLine().getStatusCode(), is(200));
         assertThat(IOUtils.toString(httpResponse.getEntity().getContent()), is(TEST_MESSAGE));
 
         SensingNullRequestResponseMessageProcessor flow1RequestResponseProcessor = muleContext.getRegistry()
-                .lookupObject(TO_SYNC_FLOW1_SENSING_PROCESSOR_NAME);
+                                                                                              .lookupObject(
+                                                                                                      TO_SYNC_FLOW1_SENSING_PROCESSOR_NAME);
         SensingNullRequestResponseMessageProcessor flow2RequestResponseProcessor = muleContext.getRegistry()
-                .lookupObject(TO_SYNC_FLOW2_SENSING_PROCESSOR_NAME);
+                                                                                              .lookupObject(
+                                                                                                      TO_SYNC_FLOW2_SENSING_PROCESSOR_NAME);
         assertThat(flow1RequestResponseProcessor.requestThread, equalTo(flow1RequestResponseProcessor.responseThread));
         assertThat(flow2RequestResponseProcessor.requestThread, equalTo(flow2RequestResponseProcessor.responseThread));
     }
-
 
     @Test
     public void nonBlockingFlowRefErrorHandling() throws Exception
     {
         Response response = Request.Post(String.format("http://localhost:%s/%s", port.getNumber(), "nonBlockingFlowRefErrorHandling"))
-                .connectTimeout(RECEIVE_TIMEOUT).bodyString(TEST_MESSAGE, ContentType.TEXT_PLAIN).execute();
+                                   .connectTimeout(RECEIVE_TIMEOUT).bodyString(TEST_MESSAGE, ContentType.TEXT_PLAIN).execute();
         HttpResponse httpResponse = response.returnResponse();
 
         assertThat(httpResponse.getStatusLine().getStatusCode(), is(200));
         assertThat(IOUtils.toString(httpResponse.getEntity().getContent()), is(ERROR_MESSAGE));
+    }
+
+    public static class ProcessorPathAssertingProcessor implements MessageProcessor
+    {
+
+        private static List<String> traversedProcessorPaths = new ArrayList<>();
+
+        @Override
+        public MuleEvent process(MuleEvent event) throws MuleException
+        {
+            traversedProcessorPaths.add(
+                    ((Flow) muleContext.getRegistry().lookupFlowConstruct(event.getFlowConstruct().getName())).getProcessorPath(this));
+            return event;
+        }
     }
 
 }

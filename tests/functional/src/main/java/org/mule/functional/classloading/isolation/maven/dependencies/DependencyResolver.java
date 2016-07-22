@@ -7,14 +7,13 @@
 package org.mule.functional.classloading.isolation.maven.dependencies;
 
 import org.mule.functional.classloading.isolation.maven.MavenArtifact;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Responsible of filtering, traversing and selectDependencies a list of URLs with different conditions and patterns in order to
@@ -32,8 +31,6 @@ public class DependencyResolver
 
     /**
      * Creates a dependency resolver with the given configuration that defines the resolution strategy.
-     *
-     * @param configuration
      */
     public DependencyResolver(Configuration configuration)
     {
@@ -48,8 +45,11 @@ public class DependencyResolver
     public Set<MavenArtifact> resolveDependencies()
     {
         MavenArtifact rootMavenArtifact = configuration.getDependencyGraph().getRootArtifact();
-        Set<MavenArtifact> dependencies = configuration.getDependencyGraph().getDependencies()
-                .stream().filter(key -> configuration.getDependenciesFilter().getPredicate().test(key)).collect(Collectors.toSet());
+        Set<MavenArtifact> dependencies = configuration.getDependencyGraph()
+                                                       .getDependencies()
+                                                       .stream()
+                                                       .filter(key -> configuration.getDependenciesFilter().getPredicate().test(key))
+                                                       .collect(Collectors.toSet());
 
         Set<MavenArtifact> resolvedDependencies = new HashSet<>();
         if (!configuration.getDependenciesFilter().isOnlyCollectTransitiveDependencies())
@@ -57,9 +57,10 @@ public class DependencyResolver
             resolvedDependencies.addAll(dependencies);
         }
 
-        dependencies.stream().map(artifact -> collectTransitiveDependencies(artifact, configuration.getTransitiveDependencyFilter().getPredicate(),
-                                                                            configuration.getTransitiveDependencyFilter().isTraverseWhenNoMatch()))
-                .forEach(resolvedDependencies::addAll);
+        dependencies.stream()
+                    .map(artifact -> collectTransitiveDependencies(artifact, configuration.getTransitiveDependencyFilter().getPredicate(),
+                            configuration.getTransitiveDependencyFilter().isTraverseWhenNoMatch()))
+                    .forEach(resolvedDependencies::addAll);
 
         Predicate<MavenArtifact> includeRootArtifactPredicate = configuration.getIncludeRootArtifactPredicate();
         if ((includeRootArtifactPredicate != null && includeRootArtifactPredicate.test(rootMavenArtifact)) ||
@@ -74,16 +75,19 @@ public class DependencyResolver
     /**
      * Builds a list of {@link MavenArtifact} representing the transitive dependencies of the provided dependency {@link MavenArtifact}.
      *
-     * @param dependency a {@link MavenArtifact} for which we want to know its dependencies.
-     * @param predicate a filter to be applied for each transitive dependency, if the filter passes the dependency is added and recursively collected its dependencies using the same filter.
+     * @param dependency          a {@link MavenArtifact} for which we want to know its dependencies.
+     * @param predicate           a filter to be applied for each transitive dependency, if the filter passes the dependency is added and
+     *                            recursively collected its dependencies using the same filter.
      * @param traverseWhenNoMatch traverse to transitive dependencies no matter if the current one doesn't match
      * @return recursively gets the dependencies for the given artifact.
      */
-    private Set<MavenArtifact> collectTransitiveDependencies(final MavenArtifact dependency, final Predicate<MavenArtifact> predicate, final boolean traverseWhenNoMatch)
+    private Set<MavenArtifact> collectTransitiveDependencies(final MavenArtifact dependency, final Predicate<MavenArtifact> predicate,
+                                                             final boolean traverseWhenNoMatch)
     {
         Set<MavenArtifact> transitiveDependencies = new HashSet<>();
 
-        configuration.getDependencyGraph().getTransitiveDependencies(dependency).stream().forEach(transitiveDependency -> {
+        configuration.getDependencyGraph().getTransitiveDependencies(dependency).stream().forEach(transitiveDependency ->
+        {
             if (predicate.test(transitiveDependency))
             {
                 transitiveDependencies.add(transitiveDependency);

@@ -25,13 +25,11 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
 @XmlRootElement(name = "GetWeatherInformation", namespace = "http://ws.cdyne.com/WeatherWS/")
-public class GetWeatherInformation 
+public class GetWeatherInformation
 {
     // no custom methods
 }

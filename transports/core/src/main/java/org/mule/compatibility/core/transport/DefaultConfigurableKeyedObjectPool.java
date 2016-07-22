@@ -6,10 +6,10 @@
  */
 package org.mule.compatibility.core.transport;
 
-import java.util.NoSuchElementException;
-
 import org.apache.commons.pool.KeyedPoolableObjectFactory;
 import org.apache.commons.pool.impl.GenericKeyedObjectPool;
+
+import java.util.NoSuchElementException;
 
 /**
  * Implements {@link ConfigurableKeyedObjectPool} as a delegate of a {@link KeyedPoolableObjectFactory}
@@ -96,24 +96,14 @@ public class DefaultConfigurableKeyedObjectPool implements ConfigurableKeyedObje
         return pool.getMaxActive();
     }
 
-    public int getMaxTotal()
-    {
-        return pool.getMaxTotal();
-    }
-
-    public void setMaxWait(long maxWait)
-    {
-        pool.setMaxWait(maxWait);
-    }
-
     public void setMaxActive(int maxActive)
     {
         pool.setMaxActive(maxActive);
     }
 
-    public void setMaxIdle(int maxIdle)
+    public int getMaxTotal()
     {
-        pool.setMaxIdle(maxIdle);
+        return pool.getMaxTotal();
     }
 
     public void setMaxTotal(int maxTotal)
@@ -126,9 +116,9 @@ public class DefaultConfigurableKeyedObjectPool implements ConfigurableKeyedObje
         return pool.getMaxIdle();
     }
 
-    public void setWhenExhaustedAction(byte whenExhaustedAction)
+    public void setMaxIdle(int maxIdle)
     {
-        pool.setWhenExhaustedAction(whenExhaustedAction);
+        pool.setMaxIdle(maxIdle);
     }
 
     public byte getWhenExhaustedAction()
@@ -136,8 +126,18 @@ public class DefaultConfigurableKeyedObjectPool implements ConfigurableKeyedObje
         return pool.getWhenExhaustedAction();
     }
 
+    public void setWhenExhaustedAction(byte whenExhaustedAction)
+    {
+        pool.setWhenExhaustedAction(whenExhaustedAction);
+    }
+
     public long getMaxWait()
     {
         return pool.getMaxWait();
+    }
+
+    public void setMaxWait(long maxWait)
+    {
+        pool.setMaxWait(maxWait);
     }
 }

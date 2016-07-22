@@ -35,7 +35,7 @@ public class AsynchronousProcessingStrategy extends AbstractThreadingProfileProc
         {
             chainBuilder.chain(createAsyncMessageProcessor(nameSource, muleContext));
             synchronousProcessingStrategy.configureProcessors(processors, nameSource, chainBuilder,
-                muleContext);
+                    muleContext);
         }
     }
 
@@ -43,7 +43,7 @@ public class AsynchronousProcessingStrategy extends AbstractThreadingProfileProc
                                                                             MuleContext muleContext)
     {
         return new AsyncInterceptingMessageProcessor(createThreadingProfile(muleContext), getThreadPoolName(
-            nameSource.getName(), muleContext), muleContext.getConfiguration().getShutdownTimeout());
+                nameSource.getName(), muleContext), muleContext.getConfiguration().getShutdownTimeout());
     }
 
 }

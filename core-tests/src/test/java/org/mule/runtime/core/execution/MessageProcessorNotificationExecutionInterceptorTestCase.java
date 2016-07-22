@@ -6,12 +6,17 @@
  */
 package org.mule.runtime.core.execution;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
+import org.hamcrest.core.Is;
+import org.hamcrest.core.IsNull;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 import org.mule.runtime.core.OptimizedRequestContext;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MessagingException;
@@ -31,17 +36,11 @@ import org.mule.tck.size.SmallTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hamcrest.core.Is;
-import org.hamcrest.core.IsNull;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -133,7 +132,7 @@ public class MessageProcessorNotificationExecutionInterceptorTestCase extends Ab
         assertThat(result, is(mockResultMuleEvent));
         assertThat(serverNotifications.size(), Is.is(0));
     }
-    
+
     /**
      * Validates that event to be processed is set to RequestContext for those cases whenever a messageProcessor
      * modifies the RC during its execution.
@@ -180,7 +179,8 @@ public class MessageProcessorNotificationExecutionInterceptorTestCase extends Ab
 
         Mockito.when(mockMessageProcessor.process(mockMuleEvent)).thenReturn(mockResultMuleEvent);
         Mockito.when(mockMuleEvent.getMuleContext().getNotificationManager()).thenReturn(mockNotificationManager);
-        Mockito.when(mockNextInterceptor.execute(Mockito.eq(mockMessageProcessor), Mockito.any(MuleEvent.class))).thenReturn(mockResultMuleEvent);
+        Mockito.when(mockNextInterceptor.execute(Mockito.eq(mockMessageProcessor), Mockito.any(MuleEvent.class)))
+               .thenReturn(mockResultMuleEvent);
 
         String muleEventIdToProcess = UUID.getUUID();
         Mockito.when(mockMuleEvent.isAllowNonBlocking()).thenReturn(true);

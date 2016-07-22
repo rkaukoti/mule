@@ -6,6 +6,13 @@
  */
 package org.mule.runtime.module.management.agent;
 
+import mx4j.log.CommonsLogger;
+import mx4j.log.Log;
+import mx4j.tools.adaptor.http.HttpAdaptor;
+import mx4j.tools.adaptor.http.XSLTProcessor;
+import mx4j.tools.adaptor.ssl.SSLAdaptorServerSocketFactory;
+import mx4j.tools.adaptor.ssl.SSLAdaptorServerSocketFactoryMBean;
+
 import org.mule.runtime.core.AbstractAgent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -20,6 +27,8 @@ import org.mule.runtime.module.management.support.AutoDiscoveryJmxSupportFactory
 import org.mule.runtime.module.management.support.JmxSupport;
 import org.mule.runtime.module.management.support.JmxSupportFactory;
 import org.mule.runtime.module.xml.util.XMLUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.HashMap;
@@ -34,15 +43,6 @@ import javax.management.ObjectName;
 import javax.management.ReflectionException;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
-import mx4j.log.CommonsLogger;
-import mx4j.log.Log;
-import mx4j.tools.adaptor.http.HttpAdaptor;
-import mx4j.tools.adaptor.http.XSLTProcessor;
-import mx4j.tools.adaptor.ssl.SSLAdaptorServerSocketFactory;
-import mx4j.tools.adaptor.ssl.SSLAdaptorServerSocketFactoryMBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * <code>Mx4jAgent</code> configures an Mx4J Http Adaptor for Jmx management,
  * statistics and configuration viewing of a Mule instance.
@@ -50,15 +50,12 @@ import org.slf4j.LoggerFactory;
 public class Mx4jAgent extends AbstractAgent
 {
     public static final String HTTP_ADAPTER_OBJECT_NAME = "name=Mx4jHttpAdapter";
-
-    protected static final String DEFAULT_PATH_IN_JAR = 
-        StringUtils.replaceChars(ClassUtils.getPackageName(Mx4jAgent.class), '.', '/') + "/http/xsl";
-
-    private static final Logger logger = LoggerFactory.getLogger(Mx4jAgent.class);
-
-    private static final String PROTOCOL_PREFIX = "http://";
     public static final String DEFAULT_HOSTNAME = "localhost";
     public static final int DEFAULT_PORT = 9999;
+    protected static final String DEFAULT_PATH_IN_JAR =
+            StringUtils.replaceChars(ClassUtils.getPackageName(Mx4jAgent.class), '.', '/') + "/http/xsl";
+    private static final Logger logger = LoggerFactory.getLogger(Mx4jAgent.class);
+    private static final String PROTOCOL_PREFIX = "http://";
     public static final String DEFAULT_JMX_ADAPTOR_URL = PROTOCOL_PREFIX + DEFAULT_HOSTNAME + ":" + DEFAULT_PORT;
 
     private String jmxAdaptorUrl;
@@ -78,7 +75,7 @@ public class Mx4jAgent extends AbstractAgent
 
     // TODO AH check how an embedded scenario can be handled (no mule home) 
     private String xslFilePath = System.getProperty("mule.home") + "/lib/mule/mule-module-management-" +
-            MuleManifest.getProductVersion() + ".jar";
+                                 MuleManifest.getProductVersion() + ".jar";
 
     private String pathInJar = DEFAULT_PATH_IN_JAR;
 
@@ -182,7 +179,7 @@ public class Mx4jAgent extends AbstractAgent
         {
             throw new InitialisationException(MessageFactory.createStaticMessage("mBeanServer has not yet been created"), this);
         }
-        
+
         try
         {
             mBeanServer.invoke(adaptorName, "start", null, null);
@@ -190,12 +187,12 @@ public class Mx4jAgent extends AbstractAgent
         catch (InstanceNotFoundException e)
         {
             throw new JmxManagementException(
-                CoreMessages.failedToStart("Mx4j agent"), adaptorName, e);
+                    CoreMessages.failedToStart("Mx4j agent"), adaptorName, e);
         }
         catch (MBeanException e)
         {
             throw new JmxManagementException(
-                CoreMessages.failedToStart("Mx4j agent"), adaptorName, e);
+                    CoreMessages.failedToStart("Mx4j agent"), adaptorName, e);
         }
         catch (ReflectionException e)
         {
@@ -216,12 +213,12 @@ public class Mx4jAgent extends AbstractAgent
         catch (InstanceNotFoundException e)
         {
             throw new JmxManagementException(
-                CoreMessages.failedToStop("Mx4j agent"), adaptorName, e);
+                    CoreMessages.failedToStop("Mx4j agent"), adaptorName, e);
         }
         catch (MBeanException e)
         {
             throw new JmxManagementException(
-                CoreMessages.failedToStop("Mx4j agent"), adaptorName, e);
+                    CoreMessages.failedToStop("Mx4j agent"), adaptorName, e);
         }
         catch (ReflectionException e)
         {
@@ -233,7 +230,7 @@ public class Mx4jAgent extends AbstractAgent
      * Unregister all Mx4j MBeans if there are any left over the old deployment
      */
     protected void unregisterMBeansIfNecessary()
-        throws MalformedObjectNameException, InstanceNotFoundException, MBeanRegistrationException
+            throws MalformedObjectNameException, InstanceNotFoundException, MBeanRegistrationException
     {
         if (mBeanServer != null && mBeanServer.isRegistered(adaptorName))
         {

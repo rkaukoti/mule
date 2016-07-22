@@ -18,8 +18,8 @@ public interface SimpleServerSocketFactory
 {
     /**
      * Creates a {@link ServerSocket}
+     *
      * @return a new instance of a {@link ServerSocket} implementation
-     * @throws IOException
      */
     ServerSocket createServerSocket() throws IOException;
 }

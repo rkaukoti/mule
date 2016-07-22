@@ -6,12 +6,11 @@
  */
 package org.mule.extension.socket.internal;
 
+import org.apache.commons.io.input.ProxyInputStream;
 import org.mule.extension.socket.api.socket.tcp.TcpProtocol;
 import org.mule.extension.socket.api.worker.TcpWorker;
 
 import java.io.InputStream;
-
-import org.apache.commons.io.input.ProxyInputStream;
 
 /**
  * Used in {@link TcpWorker} as the input parameter for the read() method on the {@link TcpProtocol}
@@ -25,7 +24,7 @@ import org.apache.commons.io.input.ProxyInputStream;
 public class TcpInputStream extends ProxyInputStream
 {
     private boolean streaming = false;
-    
+
     public TcpInputStream(InputStream inputStream)
     {
         super(inputStream);

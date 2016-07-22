@@ -19,7 +19,7 @@ public class SecurityProperty
     private String value;
 
     /**
-     * @param name property name
+     * @param name  property name
      * @param value property value
      */
     public SecurityProperty(String name, String value)

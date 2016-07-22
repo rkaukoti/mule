@@ -7,22 +7,8 @@
 
 package org.mule.runtime.module.db.internal.processor;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.db.internal.debug.DbDebugInfoTestUtils.createQueryFieldDebugInfoMatcher;
-import static org.mule.runtime.module.db.internal.domain.query.QueryType.UPDATE;
-import static org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction.NOT_SUPPORTED;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERIES_DEBUG_FIELD;
-import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
-import static org.mule.tck.junit4.matcher.ObjectDebugInfoMatcher.objectLike;
+import org.hamcrest.Matcher;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -45,26 +31,51 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.hamcrest.Matcher;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.db.internal.debug.DbDebugInfoTestUtils.createQueryFieldDebugInfoMatcher;
+import static org.mule.runtime.module.db.internal.domain.query.QueryType.UPDATE;
+import static org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction.NOT_SUPPORTED;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERIES_DEBUG_FIELD;
+import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
+import static org.mule.tck.junit4.matcher.ObjectDebugInfoMatcher.objectLike;
 
 @SmallTest
 public class DynamicBulkUpdateMessageProcessorTestCase extends AbstractMuleTestCase
 {
 
-    public static final QueryTemplate QUERY_TEMPLATE1 = new QueryTemplate("update PLANET set NAME='Mercury' where NAME='EARTH'", UPDATE, Collections.<QueryParam>emptyList());
-    public static final QueryTemplate QUERY_TEMPLATE2 = new QueryTemplate("update PLANET set NAME='Mercury' where NAME='MARS'", UPDATE, Collections.<QueryParam>emptyList());
+    public static final QueryTemplate QUERY_TEMPLATE1 =
+            new QueryTemplate("update PLANET set NAME='Mercury' where NAME='EARTH'", UPDATE, Collections.<QueryParam>emptyList());
+    public static final QueryTemplate QUERY_TEMPLATE2 =
+            new QueryTemplate("update PLANET set NAME='Mercury' where NAME='MARS'", UPDATE, Collections.<QueryParam>emptyList());
     public static final String QUERY1 = DbDebugInfoUtils.QUERY_DEBUG_FIELD + 1;
     public static final String QUERY2 = DbDebugInfoUtils.QUERY_DEBUG_FIELD + 2;
 
     private final MuleEvent event = mock(MuleEvent.class);
-    private final MuleMessage message= mock(MuleMessage.class);
+    private final MuleMessage message = mock(MuleMessage.class);
     private final DbConnection connection = mock(DbConnection.class);
     private final DbConnectionFactory dbConnectionFactory = mock(DbConnectionFactory.class);
     private final DbConfigResolver dbConfigResolver = mock(DbConfigResolver.class);
     private final DbConfig dbConfig = mock(DbConfig.class);
     private final QueryResolver queryResolver = mock(QueryResolver.class);
     private final MuleContext muleContext = mock(MuleContext.class, RETURNS_DEEP_STUBS);
+
+    private static List<String> getPlanetNames()
+    {
+        List<String> planetNames = new ArrayList<>();
+        planetNames.add("EARTH");
+        planetNames.add("MARS");
+
+        return planetNames;
+    }
 
     @Test
     public void returnsDebugInfo() throws Exception
@@ -77,9 +88,12 @@ public class DynamicBulkUpdateMessageProcessorTestCase extends AbstractMuleTestC
         when(dbConfigResolver.resolve(event)).thenReturn(dbConfig);
         when(dbConfig.getConnectionFactory()).thenReturn(dbConnectionFactory);
 
-        when(queryResolver.resolve(any(DbConnection.class), any(MuleEvent.class))).thenReturn(new Query(QUERY_TEMPLATE1)).thenReturn(new Query(QUERY_TEMPLATE2));
+        when(queryResolver.resolve(any(DbConnection.class), any(MuleEvent.class))).thenReturn(new Query(QUERY_TEMPLATE1))
+                                                                                  .thenReturn(new Query(QUERY_TEMPLATE2));
 
-        final DynamicBulkUpdateMessageProcessor dynamicBulkUpdateMessageProcessor = new DynamicBulkUpdateMessageProcessor(dbConfigResolver, queryResolver, null, NOT_SUPPORTED, Collections.singletonList(QueryType.UPDATE));
+        final DynamicBulkUpdateMessageProcessor dynamicBulkUpdateMessageProcessor =
+                new DynamicBulkUpdateMessageProcessor(dbConfigResolver, queryResolver, null, NOT_SUPPORTED,
+                        Collections.singletonList(QueryType.UPDATE));
         dynamicBulkUpdateMessageProcessor.setMuleContext(muleContext);
 
         final List<FieldDebugInfo<?>> debugInfo = dynamicBulkUpdateMessageProcessor.getDebugInfo(event);
@@ -104,7 +118,9 @@ public class DynamicBulkUpdateMessageProcessorTestCase extends AbstractMuleTestC
         final QueryResolutionException queryResolutionException = new QueryResolutionException("Error");
         when(queryResolver.resolve(any(DbConnection.class), any(MuleEvent.class))).thenThrow(queryResolutionException);
 
-        final DynamicBulkUpdateMessageProcessor dynamicBulkUpdateMessageProcessor = new DynamicBulkUpdateMessageProcessor(dbConfigResolver, queryResolver, null, NOT_SUPPORTED, Collections.singletonList(QueryType.UPDATE));
+        final DynamicBulkUpdateMessageProcessor dynamicBulkUpdateMessageProcessor =
+                new DynamicBulkUpdateMessageProcessor(dbConfigResolver, queryResolver, null, NOT_SUPPORTED,
+                        Collections.singletonList(QueryType.UPDATE));
         dynamicBulkUpdateMessageProcessor.setMuleContext(muleContext);
 
         final List<FieldDebugInfo<?>> debugInfo = dynamicBulkUpdateMessageProcessor.getDebugInfo(event);
@@ -120,14 +136,5 @@ public class DynamicBulkUpdateMessageProcessorTestCase extends AbstractMuleTestC
         queryMatchers.add(createQueryFieldDebugInfoMatcher(QUERY2, QUERY_TEMPLATE2));
 
         return queryMatchers;
-    }
-
-    private static List<String> getPlanetNames()
-    {
-        List<String> planetNames = new ArrayList<>();
-        planetNames.add("EARTH");
-        planetNames.add("MARS");
-
-        return planetNames;
     }
 }

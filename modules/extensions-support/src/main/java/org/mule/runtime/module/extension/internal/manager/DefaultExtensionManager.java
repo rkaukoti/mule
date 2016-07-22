@@ -7,12 +7,7 @@
 
 package org.mule.runtime.module.extension.internal.manager;
 
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.module.extension.internal.manager.DefaultConfigurationExpirationMonitor.Builder.newBuilder;
+import org.apache.commons.io.IOUtils;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -40,6 +35,8 @@ import org.mule.runtime.module.extension.internal.config.ExtensionConfig;
 import org.mule.runtime.module.extension.internal.introspection.DefaultExtensionFactory;
 import org.mule.runtime.module.extension.internal.runtime.config.DefaultImplicitConfigurationProviderFactory;
 import org.mule.runtime.module.extension.internal.runtime.config.ImplicitConfigurationProviderFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,9 +46,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.module.extension.internal.manager.DefaultConfigurationExpirationMonitor.Builder.newBuilder;
 
 
 /**
@@ -71,7 +71,8 @@ public final class DefaultExtensionManager implements ExtensionManagerAdapter, M
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultExtensionManager.class);
 
     private final ServiceRegistry serviceRegistry = new SpiServiceRegistry();
-    private final ImplicitConfigurationProviderFactory implicitConfigurationProviderFactory = new DefaultImplicitConfigurationProviderFactory();
+    private final ImplicitConfigurationProviderFactory implicitConfigurationProviderFactory =
+            new DefaultImplicitConfigurationProviderFactory();
     private final DescriberResolver describerResolver = new DescriberResolver();
 
     private MuleContext muleContext;
@@ -126,7 +127,7 @@ public final class DefaultExtensionManager implements ExtensionManagerAdapter, M
             if (LOGGER.isDebugEnabled())
             {
                 LOGGER.debug("A extension of name '{}' (version: {} vendor {}) is already registered. Skipping...",
-                             extensionName, extensionVersion, extensionVendor);
+                        extensionName, extensionVersion, extensionVendor);
             }
         }
         else
@@ -168,7 +169,8 @@ public final class DefaultExtensionManager implements ExtensionManagerAdapter, M
     {
         return (ConfigurationInstance<C>) getConfigurationProvider(configurationProviderName)
                 .map(provider -> provider.get(muleEvent))
-                .orElseThrow(() -> new IllegalArgumentException(String.format("There is no registered configurationProvider under name '%s'", configurationProviderName)));
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("There is no registered configurationProvider under name '%s'", configurationProviderName)));
     }
 
     /**
@@ -200,9 +202,10 @@ public final class DefaultExtensionManager implements ExtensionManagerAdapter, M
         }
         else if (matches > 1)
         {
-            throw new IllegalStateException(String.format("No config-ref was specified for operation of extension '%s', but %d are registered. Please specify which to use",
-                                                          extensionModel.getName(),
-                                                          matches));
+            throw new IllegalStateException(String.format(
+                    "No config-ref was specified for operation of extension '%s', but %d are registered. Please specify which to use",
+                    extensionModel.getName(),
+                    matches));
         }
 
         return Optional.empty();
@@ -221,7 +224,8 @@ public final class DefaultExtensionManager implements ExtensionManagerAdapter, M
             //check that another thread didn't beat us to create the instance
             if (extensionRegistry.getConfigurationProviders(extensionModel).isEmpty())
             {
-                registerConfigurationProvider(implicitConfigurationProviderFactory.createImplicitConfigurationProvider(extensionModel, muleEvent));
+                registerConfigurationProvider(
+                        implicitConfigurationProviderFactory.createImplicitConfigurationProvider(extensionModel, muleEvent));
             }
         }
     }
@@ -287,7 +291,8 @@ public final class DefaultExtensionManager implements ExtensionManagerAdapter, M
         }
         catch (Exception e)
         {
-            LOGGER.error(String.format("Could not dispose expired dynamic config of key '%s' and type %s", key, configuration.getClass().getName()), e);
+            LOGGER.error(String.format("Could not dispose expired dynamic config of key '%s' and type %s", key,
+                    configuration.getClass().getName()), e);
         }
     }
 

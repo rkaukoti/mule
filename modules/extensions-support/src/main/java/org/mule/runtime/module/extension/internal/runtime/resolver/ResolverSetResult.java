@@ -6,15 +6,16 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
-
 import com.google.common.base.Objects;
+
+import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * This class represents the outcome of the evaluation of a {@link ResolverSet}.
@@ -31,6 +32,81 @@ import java.util.Map;
  */
 public class ResolverSetResult
 {
+
+    private final Map<String, Object> evaluationResult;
+    private final int hashCode;
+
+    private ResolverSetResult(Map<String, Object> evaluationResult, int hashCode)
+    {
+        this.evaluationResult = new HashMap<>(evaluationResult);
+        this.hashCode = hashCode;
+    }
+
+    /**
+     * Creates a new {@link Builder} instance. You should use a new builder
+     * per each instance you want to create
+     *
+     * @return a {@link Builder}
+     */
+    public static Builder newBuilder()
+    {
+        return new Builder();
+    }
+
+    /**
+     * Returns the value associated with the {@link ParameterModel} of the given {@code parameterName}
+     *
+     * @param parameterName the name of the {@link ParameterModel} which value you seek
+     * @return the value associated to that {@code parameterName} or {@code null} if no such association exists
+     */
+    public Object get(String parameterName)
+    {
+        return evaluationResult.get(parameterName);
+    }
+
+    public Map<String, Object> asMap()
+    {
+        return evaluationResult;
+    }
+
+    /**
+     * Defines equivalence by comparing the values in both objects. To consider that
+     * two instances are equal, they both must have equivalent results for every
+     * registered {@link ParameterModel}. Values will be tested for equality using
+     * their own implementation of {@link Object#equals(Object)}. For the case of a
+     * {@code null} value, equality requires the other one to be {@code null} as well.
+     * <p/>
+     * This implementation fails fast. Evaluation is finished at the first non equal
+     * value, returning {@code false}
+     *
+     * @param obj the object to test for equality
+     * @return whether the two objects are equal
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj instanceof ResolverSetResult)
+        {
+            ResolverSetResult other = (ResolverSetResult) obj;
+            return !evaluationResult.entrySet().stream()
+                                    .filter(entry -> !Objects.equal(entry.getValue(), other.get(entry.getKey())))
+                                    .findFirst()
+                                    .isPresent();
+        }
+
+        return false;
+    }
+
+    /**
+     * A hashCode calculated based on the results
+     *
+     * @return a hashCode
+     */
+    @Override
+    public int hashCode()
+    {
+        return hashCode;
+    }
 
     /**
      * A builder for creating instances of {@link ResolverSetResult}. You should use a new
@@ -73,80 +149,5 @@ public class ResolverSetResult
         {
             return new ResolverSetResult(Collections.unmodifiableMap(values), hashCode);
         }
-    }
-
-    /**
-     * Creates a new {@link Builder} instance. You should use a new builder
-     * per each instance you want to create
-     *
-     * @return a {@link Builder}
-     */
-    public static Builder newBuilder()
-    {
-        return new Builder();
-    }
-
-    private final Map<String, Object> evaluationResult;
-    private final int hashCode;
-
-    private ResolverSetResult(Map<String, Object> evaluationResult, int hashCode)
-    {
-        this.evaluationResult = new HashMap<>(evaluationResult);
-        this.hashCode = hashCode;
-    }
-
-    /**
-     * Returns the value associated with the {@link ParameterModel} of the given {@code parameterName}
-     *
-     * @param parameterName the name of the {@link ParameterModel} which value you seek
-     * @return the value associated to that {@code parameterName} or {@code null} if no such association exists
-     */
-    public Object get(String parameterName)
-    {
-        return evaluationResult.get(parameterName);
-    }
-
-    public Map<String, Object> asMap()
-    {
-        return evaluationResult;
-    }
-
-    /**
-     * Defines equivalence by comparing the values in both objects. To consider that
-     * two instances are equal, they both must have equivalent results for every
-     * registered {@link ParameterModel}. Values will be tested for equality using
-     * their own implementation of {@link Object#equals(Object)}. For the case of a
-     * {@code null} value, equality requires the other one to be {@code null} as well.
-     * <p/>
-     * This implementation fails fast. Evaluation is finished at the first non equal
-     * value, returning {@code false}
-     *
-     * @param obj the object to test for equality
-     * @return whether the two objects are equal
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (obj instanceof ResolverSetResult)
-        {
-            ResolverSetResult other = (ResolverSetResult) obj;
-            return !evaluationResult.entrySet().stream()
-                    .filter(entry -> !Objects.equal(entry.getValue(), other.get(entry.getKey())))
-                    .findFirst()
-                    .isPresent();
-        }
-
-        return false;
-    }
-
-    /**
-     * A hashCode calculated based on the results
-     *
-     * @return a hashCode
-     */
-    @Override
-    public int hashCode()
-    {
-        return hashCode;
     }
 }

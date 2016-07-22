@@ -6,9 +6,7 @@
  */
 package org.mule.runtime.core.management;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.runtime.core.api.context.notification.CustomNotificationListener;
 import org.mule.runtime.core.api.context.notification.MuleContextNotificationListener;
 import org.mule.runtime.core.api.context.notification.ServerNotification;
@@ -21,7 +19,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ServerNotificationsTestCase extends AbstractMuleContextTestCase
         implements MuleContextNotificationListener
@@ -36,7 +36,7 @@ public class ServerNotificationsTestCase extends AbstractMuleContextTestCase
     {
         setStartContext(true);
     }
-    
+
     @Override
     protected void doTearDown() throws Exception
     {
@@ -133,7 +133,7 @@ public class ServerNotificationsTestCase extends AbstractMuleContextTestCase
         }, "* quick brown*");
 
         muleContext.fireNotification(new DummyNotification("the quick brown fox jumped over the lazy dog",
-                                                                 DummyNotification.EVENT_RECEIVED));
+                DummyNotification.EVENT_RECEIVED));
         muleContext.fireNotification(new DummyNotification("e quick bro", DummyNotification.EVENT_RECEIVED));
         muleContext.fireNotification(new DummyNotification(" quick brown", DummyNotification.EVENT_RECEIVED));
 
@@ -158,12 +158,11 @@ public class ServerNotificationsTestCase extends AbstractMuleContextTestCase
 
     public class DummyNotification extends CustomNotification
     {
+        public static final int EVENT_RECEIVED = -999999;
         /**
          * Serial version
          */
         private static final long serialVersionUID = -1117307108932589331L;
-
-        public static final int EVENT_RECEIVED = -999999;
 
         public DummyNotification(String message, int action)
         {

@@ -6,14 +6,12 @@
  */
 package org.mule.compatibility.transport.tcp;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import org.mule.compatibility.transport.tcp.TcpConnector;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import org.junit.Test;
 
 public class TcpSendNoDelayConfigurationTestCase extends FunctionalTestCase
 {

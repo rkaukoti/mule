@@ -10,13 +10,12 @@ import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.api.transformer.TransformerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Resolves data type conversion finding an appropriate converter that is able
@@ -29,7 +28,7 @@ public class DynamicDataTypeConversionResolver implements DataTypeConversionReso
 
     private static final Logger logger = LoggerFactory.getLogger(DynamicDataTypeConversionResolver.class);
 
-    private final  MuleContext muleContext;
+    private final MuleContext muleContext;
 
     @Inject
     public DynamicDataTypeConversionResolver(MuleContext muleContext)

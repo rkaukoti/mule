@@ -15,12 +15,11 @@ import org.mule.runtime.core.routing.outbound.ArrayMessageSequence;
 import org.mule.runtime.core.routing.outbound.CollectionMessageSequence;
 import org.mule.runtime.core.routing.outbound.IteratorMessageSequence;
 import org.mule.runtime.core.routing.outbound.NodeListMessageSequence;
+import org.w3c.dom.NodeList;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
-
-import org.w3c.dom.NodeList;
 
 public class EventToMessageSequenceSplittingStrategy
         implements SplittingStrategy<MuleEvent, MessageSequence<?>>
@@ -58,16 +57,16 @@ public class EventToMessageSequenceSplittingStrategy
         else
         {
             throw new IllegalArgumentException(CoreMessages.objectNotOfCorrectType(payload.getClass(),
-                                                                                   new Class[] {Iterable.class, Iterator.class, MessageSequence.class, Collection.class})
-                                                       .getMessage());
+                    new Class[] {Iterable.class, Iterator.class, MessageSequence.class, Collection.class})
+                                                           .getMessage());
         }
     }
 
     private Collection copyCollection(Collection payload)
     {
         return payload instanceof Copiable
-               ? ((Copiable<Collection>) payload).copy()
-               : new LinkedList(payload);
+                ? ((Copiable<Collection>) payload).copy()
+                : new LinkedList(payload);
     }
 
 

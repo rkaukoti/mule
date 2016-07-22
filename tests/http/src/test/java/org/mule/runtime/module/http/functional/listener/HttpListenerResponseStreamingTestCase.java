@@ -6,6 +6,19 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
+import org.apache.http.client.fluent.Response;
+import org.junit.Rule;
+import org.mule.runtime.core.util.IOUtils;
+import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
+import org.mule.tck.junit4.rule.SystemProperty;
+
+import java.io.IOException;
+
 import static org.apache.http.client.fluent.Request.Get;
 import static org.apache.http.client.fluent.Request.Post;
 import static org.hamcrest.CoreMatchers.is;
@@ -15,26 +28,12 @@ import static org.junit.Assert.assertThat;
 import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
 import static org.mule.runtime.module.http.api.HttpHeaders.Names.TRANSFER_ENCODING;
 import static org.mule.runtime.module.http.api.HttpHeaders.Values.CHUNKED;
-import org.mule.runtime.core.util.IOUtils;
-import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-import org.mule.tck.junit4.rule.SystemProperty;
-
-import java.io.IOException;
-
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
-import org.apache.http.client.fluent.Response;
-import org.junit.Rule;
 
 public abstract class HttpListenerResponseStreamingTestCase extends AbstractHttpTestCase
 {
 
+    public static final String TEST_BODY = RandomStringUtils.randomAlphabetic(100 * 1024);
     private static final int DEFAULT_TIMEOUT = 1000;
-
-    public static final String TEST_BODY = RandomStringUtils.randomAlphabetic(100*1024);
     @Rule
     public SystemProperty stringPayloadLength = new SystemProperty("stringPayloadLength", String.valueOf(TEST_BODY.length()));
     @Rule

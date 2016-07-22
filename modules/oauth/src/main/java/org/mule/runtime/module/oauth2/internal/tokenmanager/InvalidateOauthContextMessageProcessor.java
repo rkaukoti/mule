@@ -15,8 +15,8 @@ import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.config.i18n.CoreMessages;
-import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ResourceOwnerOAuthContext;
 import org.mule.runtime.core.util.AttributeEvaluator;
+import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ResourceOwnerOAuthContext;
 
 /**
  * Clears the oauth context for a token manager and a resource owner id.

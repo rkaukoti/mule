@@ -25,7 +25,7 @@ public interface ReplyToHandler
      * they should only send a reply message in the sucess case.
      *
      * @param exception the exception thrown by processing
-     * @param replyTo name of the channel that exception message should be sent if relevant
+     * @param replyTo   name of the channel that exception message should be sent if relevant
      */
     void processExceptionReplyTo(MessagingException exception, Object replyTo);
 

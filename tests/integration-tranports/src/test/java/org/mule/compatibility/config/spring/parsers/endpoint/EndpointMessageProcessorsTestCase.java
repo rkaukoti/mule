@@ -6,10 +6,7 @@
  */
 package org.mule.compatibility.config.spring.parsers.endpoint;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
@@ -22,7 +19,9 @@ import org.mule.tck.testmodels.mule.TestMessageProcessor;
 
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class EndpointMessageProcessorsTestCase extends FunctionalTestCase
 {

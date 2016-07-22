@@ -7,7 +7,7 @@
 package org.mule.runtime.core.api.client;
 
 /**
- *  Common configuration options for all operations
+ * Common configuration options for all operations
  */
 public interface OperationOptionsConfig<BuilderType>
 {

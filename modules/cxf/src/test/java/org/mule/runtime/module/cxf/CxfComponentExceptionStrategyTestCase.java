@@ -6,16 +6,16 @@
  */
 package org.mule.runtime.module.cxf;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.module.http.api.client.HttpRequestOptions;
+import org.mule.tck.junit4.rule.DynamicPort;
+
 import static org.junit.Assert.assertEquals;
 import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
 import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.module.http.api.client.HttpRequestOptions;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-
-import org.junit.Rule;
-import org.junit.Test;
 
 public class CxfComponentExceptionStrategyTestCase extends FunctionalTestCase
 {
@@ -57,7 +57,7 @@ public class CxfComponentExceptionStrategyTestCase extends FunctionalTestCase
             "</soap:Fault>" +
             "</soap:Body>" +
             "</soap:Envelope>";
-    
+
     @Rule
     public DynamicPort dynamicPort = new DynamicPort("port1");
 

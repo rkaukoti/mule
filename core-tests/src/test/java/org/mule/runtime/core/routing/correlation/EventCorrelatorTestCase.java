@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.core.routing.correlation;
 
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -33,16 +33,15 @@ import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
 import org.mule.tck.probe.Prober;
 import org.mule.tck.size.SmallTest;
-
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -153,7 +152,8 @@ public class EventCorrelatorTestCase extends AbstractMuleTestCase
         try
         {
             Prober prober = new PollingProber(1000, 50);
-            prober.check(new Probe() {
+            prober.check(new Probe()
+            {
                 @Override
                 public boolean isSatisfied()
                 {
@@ -198,7 +198,8 @@ public class EventCorrelatorTestCase extends AbstractMuleTestCase
         when(mockEventGroup.getGroupId()).thenReturn(TEST_GROUP_ID);
         when(mockEventGroup.getMessageCollectionEvent()).thenReturn(mock(MuleEvent.class));
         when(mockFlowConstruct.getName()).thenReturn("flowName");
-        return new EventCorrelator(mockEventCorrelatorCallback, mockTimeoutMessageProcessor, mockMessagingInfoMapping, mockMuleContext, mockFlowConstruct, memoryObjectStore,
+        return new EventCorrelator(mockEventCorrelatorCallback, mockTimeoutMessageProcessor, mockMessagingInfoMapping, mockMuleContext,
+                mockFlowConstruct, memoryObjectStore,
                 "prefix", mockProcessedGroups);
     }
 

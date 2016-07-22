@@ -6,11 +6,15 @@
  */
 package org.mule.runtime.module.launcher;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.NotImplementedException;
 import org.mule.runtime.core.util.Preconditions;
 import org.mule.runtime.module.launcher.application.Application;
 import org.mule.runtime.module.launcher.artifact.ArtifactFactory;
 import org.mule.runtime.module.launcher.domain.Domain;
 import org.mule.runtime.module.reboot.MuleContainerBootstrapUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -18,11 +22,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Map;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.NotImplementedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Archive deployer for domains.
@@ -32,14 +31,14 @@ import org.slf4j.LoggerFactory;
 public class DomainArchiveDeployer implements ArchiveDeployer<Domain>
 {
 
-    private transient final Logger logger = LoggerFactory.getLogger(getClass());
-
     public static final String DOMAIN_BUNDLE_APPS_FOLDER = "apps";
+    private transient final Logger logger = LoggerFactory.getLogger(getClass());
     private final ArchiveDeployer<Domain> domainDeployer;
     private final DeploymentService deploymentService;
     private final ArchiveDeployer<Application> applicationDeployer;
 
-    public DomainArchiveDeployer(ArchiveDeployer<Domain> domainDeployer, ArchiveDeployer<Application> applicationDeployer, DeploymentService deploymentService)
+    public DomainArchiveDeployer(ArchiveDeployer<Domain> domainDeployer, ArchiveDeployer<Application> applicationDeployer,
+                                 DeploymentService deploymentService)
     {
         this.domainDeployer = domainDeployer;
         this.applicationDeployer = applicationDeployer;
@@ -127,7 +126,8 @@ public class DomainArchiveDeployer implements ArchiveDeployer<Domain>
         }
         catch (DeploymentException e)
         {
-            logger.warn(String.format("Failure during redeployment of domain %s, domain applications deployment will be skipped", artifact.getArtifactName()));
+            logger.warn(String.format("Failure during redeployment of domain %s, domain applications deployment will be skipped",
+                    artifact.getArtifactName()));
             throw e;
         }
         for (Application domainApplication : domainApplications)

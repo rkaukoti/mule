@@ -7,11 +7,7 @@
 package org.mule.test.config;
 
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.api.meta.AnnotatedObject;
 import org.mule.runtime.core.api.construct.FlowConstruct;
@@ -21,7 +17,10 @@ import org.mule.runtime.core.util.SystemUtils;
 
 import javax.xml.namespace.QName;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 /**
  * Test that configuration-based annotations are propagated to the appropriate runtime objects
@@ -33,8 +32,8 @@ public class ConfigurationAnnotationsTestCase extends FunctionalTestCase
     protected String[] getConfigFiles()
     {
         return new String[] {
-                             "org/mule/config/spring/annotations.xml",
-                             "org/mule/config/spring/annotations-config.xml"};
+                "org/mule/config/spring/annotations.xml",
+                "org/mule/config/spring/annotations-config.xml"};
     }
 
     @Test
@@ -46,9 +45,11 @@ public class ConfigurationAnnotationsTestCase extends FunctionalTestCase
         assertThat(getDocDescription(stb), is("Convert a String to a Byte Array"));
         assertThat(getSourceFile(stb), is("annotations-config.xml"));
         assertThat(getSourceFileLine(stb), is(10));
-        assertThat(getSourceElement(stb), is("<string-to-byte-array-transformer name=\"StringtoByteArray\" doc:name=\"stb-transformer\">" + SystemUtils.LINE_SEPARATOR +
+        assertThat(getSourceElement(stb), is("<string-to-byte-array-transformer name=\"StringtoByteArray\" doc:name=\"stb-transformer\">" +
+                                             SystemUtils.LINE_SEPARATOR +
                                              "<annotations>" + SystemUtils.LINE_SEPARATOR +
-                                             "<doc:description>Convert a String to a Byte Array</doc:description>" + SystemUtils.LINE_SEPARATOR +
+                                             "<doc:description>Convert a String to a Byte Array</doc:description>" +
+                                             SystemUtils.LINE_SEPARATOR +
                                              "</annotations>" + SystemUtils.LINE_SEPARATOR +
                                              "</string-to-byte-array-transformer>"));
     }
@@ -131,7 +132,8 @@ public class ConfigurationAnnotationsTestCase extends FunctionalTestCase
         assertThat(getDocName(stb), is("manzi-transformer"));
         assertThat(getSourceFile(stb), is("annotations-config.xml"));
         assertThat(getSourceFileLine(stb), is(18));
-        assertThat(getSourceElement(stb), is("<append-string-transformer message=\"Manzi\" name=\"ManziTransformer\" doc:name=\"manzi-transformer\"></append-string-transformer>"));
+        assertThat(getSourceElement(stb),
+                is("<append-string-transformer message=\"Manzi\" name=\"ManziTransformer\" doc:name=\"manzi-transformer\"></append-string-transformer>"));
     }
 
     protected String getDocName(Object obj)
@@ -141,21 +143,25 @@ public class ConfigurationAnnotationsTestCase extends FunctionalTestCase
 
     protected String getDocDescription(Object obj)
     {
-        return (String) ((AnnotatedObject) obj).getAnnotation(new QName("http://www.mulesoft.org/schema/mule/documentation", "description"));
+        return (String) ((AnnotatedObject) obj).getAnnotation(
+                new QName("http://www.mulesoft.org/schema/mule/documentation", "description"));
     }
 
     protected String getSourceFile(Object obj)
     {
-        return (String) ((AnnotatedObject) obj).getAnnotation(new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceFileName"));
+        return (String) ((AnnotatedObject) obj).getAnnotation(
+                new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceFileName"));
     }
 
     protected Integer getSourceFileLine(Object obj)
     {
-        return (Integer) ((AnnotatedObject) obj).getAnnotation(new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceFileLine"));
+        return (Integer) ((AnnotatedObject) obj).getAnnotation(
+                new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceFileLine"));
     }
 
     protected String getSourceElement(Object obj)
     {
-        return (String) ((AnnotatedObject) obj).getAnnotation(new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceElement"));
+        return (String) ((AnnotatedObject) obj).getAnnotation(
+                new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceElement"));
     }
 }

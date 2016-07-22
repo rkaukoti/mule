@@ -9,15 +9,14 @@ package org.mule.runtime.config.spring.parsers.processors;
 import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 
 /**
  * Attributes from two different sets cannot appear together
@@ -29,13 +28,13 @@ public class CheckExclusiveAttributes implements PreProcessor
     public CheckExclusiveAttributes(String[][] attributeNames)
     {
         super();
-        
+
         attributeSets = new ArrayList<AttributeSet>();
         for (int i = 0; i < attributeNames.length; i++)
         {
             String[] attributes = attributeNames[i];
             attributeSets.add(new AttributeSet(attributes));
-        }            
+        }
     }
 
     public void preProcess(PropertyConfiguration config, Element element)
@@ -57,24 +56,24 @@ public class CheckExclusiveAttributes implements PreProcessor
             allMatchingSets = filterMatchingSets(allMatchingSets, alias);
             atLeastOneAttributeDidMatch = true;
         }
-        
+
         if (atLeastOneAttributeDidMatch && allMatchingSets.size() == 0)
         {
-            CheckExclusiveAttributesException ex = 
-                CheckExclusiveAttributesException.createForDisjunctGroups(element, attributeSets);
-          throw ex;
+            CheckExclusiveAttributesException ex =
+                    CheckExclusiveAttributesException.createForDisjunctGroups(element, attributeSets);
+            throw ex;
 
         }
         else if (atLeastOneAttributeDidMatch && allMatchingSets.size() > 1)
         {
-            CheckExclusiveAttributesException ex = 
-                CheckExclusiveAttributesException.createForInsufficientAttributes(element, allMatchingSets);
+            CheckExclusiveAttributesException ex =
+                    CheckExclusiveAttributesException.createForInsufficientAttributes(element, allMatchingSets);
             throw ex;
         }
     }
 
-    private Collection<AttributeSet> filterMatchingSets(Collection<AttributeSet> allMatchingSets, 
-        String attributeName)
+    private Collection<AttributeSet> filterMatchingSets(Collection<AttributeSet> allMatchingSets,
+                                                        String attributeName)
     {
         Collection<AttributeSet> newMatchingSets = new ArrayList<AttributeSet>();
         for (AttributeSet currentSet : allMatchingSets)
@@ -134,11 +133,16 @@ public class CheckExclusiveAttributes implements PreProcessor
             return Arrays.toString(attributeNames);
         }
     }
-    
+
     public static class CheckExclusiveAttributesException extends IllegalStateException
     {
+        private CheckExclusiveAttributesException(String message)
+        {
+            super(message);
+        }
+
         public static CheckExclusiveAttributesException createForDisjunctGroups(Element element,
-            Collection<AttributeSet> allMatchingSets)
+                                                                                Collection<AttributeSet> allMatchingSets)
         {
             String message = createMessage(element, allMatchingSets);
             return new CheckExclusiveAttributesException(message);
@@ -149,36 +153,31 @@ public class CheckExclusiveAttributes implements PreProcessor
             StringBuilder buf = new StringBuilder("The attributes of Element ");
             buf.append(SpringXMLUtils.elementToString(element));
             buf.append(" do not match the exclusive groups");
-            
+
             for (AttributeSet match : allMatchingSets)
             {
                 buf.append(" ");
                 buf.append(match.toString());
             }
-            
+
             return buf.toString();
         }
-        
+
         public static CheckExclusiveAttributesException createForInsufficientAttributes(Element element,
-            Collection<AttributeSet> attributeSets)
+                                                                                        Collection<AttributeSet> attributeSets)
         {
             StringBuilder buf = new StringBuilder("Attributes of Element ");
             buf.append(SpringXMLUtils.elementToString(element));
             buf.append(" do not satisfy the exclusive groups");
-            
+
             for (AttributeSet attributeSet : attributeSets)
             {
                 buf.append(" ");
                 buf.append(attributeSet);
             }
             buf.append(".");
-            
+
             return new CheckExclusiveAttributesException(buf.toString());
-        }
-        
-        private CheckExclusiveAttributesException(String message)
-        {
-            super(message);
         }
     }
 }

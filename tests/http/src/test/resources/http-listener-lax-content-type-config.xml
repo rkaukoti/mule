@@ -10,13 +10,13 @@
         <httpn:listener-connection host="localhost" port="${httpPort}"/>
     </httpn:listener-config>
 
-    <flow name="listenerContentType" >
+    <flow name="listenerContentType">
         <httpn:listener config-ref="httpConf" path="testInput"/>
 
         <set-payload value="{ &quot;key1&quot; : &quot;value, &quot;key2&quot; : 2 }" mimeType="application/json" encoding="UTF-8"/>
     </flow>
 
-    <flow name="listenerInvalidContentType" >
+    <flow name="listenerInvalidContentType">
         <httpn:listener config-ref="httpConf" path="testInputInvalid">
             <httpn:response-builder>
                 <httpn:headers>

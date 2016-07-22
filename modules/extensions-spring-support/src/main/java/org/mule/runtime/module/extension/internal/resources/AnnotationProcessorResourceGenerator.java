@@ -7,8 +7,6 @@
 package org.mule.runtime.module.extension.internal.resources;
 
 
-import static javax.tools.StandardLocation.SOURCE_OUTPUT;
-import static org.apache.commons.lang.StringUtils.EMPTY;
 import org.mule.runtime.extension.api.resources.GeneratedResource;
 import org.mule.runtime.extension.api.resources.ResourcesGenerator;
 import org.mule.runtime.extension.api.resources.spi.GeneratedResourceFactory;
@@ -19,6 +17,9 @@ import java.util.List;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.tools.FileObject;
+
+import static javax.tools.StandardLocation.SOURCE_OUTPUT;
+import static org.apache.commons.lang.StringUtils.EMPTY;
 
 /**
  * Implementation of {@link ResourcesGenerator}

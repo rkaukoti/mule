@@ -6,9 +6,9 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 
 public class JmsCachingDisposeTestCase extends AbstractBrokerFunctionalTestCase

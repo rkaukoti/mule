@@ -9,13 +9,12 @@ package org.mule.runtime.config.spring.parsers.processors;
 import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
-
-import java.util.LinkedList;
-import java.util.List;
-
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * If this attribute is present, no other can be

@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.transport.ssl;
 
-import static org.hamcrest.Matchers.containsString;
-
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.runtime.module.tls.internal.DefaultTlsContextFactory;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.io.IOException;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.Matchers.containsString;
 
 public class DefaultTlsContextFactoryTestCase extends AbstractMuleTestCase
 {

@@ -7,13 +7,12 @@
 package org.mule.runtime.config.spring.processors;
 
 import org.mule.runtime.config.spring.OptionalObjectsController;
-
-import java.beans.PropertyDescriptor;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+
+import java.beans.PropertyDescriptor;
 
 /**
  * A {@link InstantiationAwareBeanPostProcessor} which suspends
@@ -46,7 +45,8 @@ public class DiscardedOptionalBeanPostProcessor implements InstantiationAwareBea
     }
 
     @Override
-    public PropertyValues postProcessPropertyValues(PropertyValues pvs, PropertyDescriptor[] pds, Object bean, String beanName) throws BeansException
+    public PropertyValues postProcessPropertyValues(PropertyValues pvs, PropertyDescriptor[] pds, Object bean, String beanName)
+            throws BeansException
     {
         return optionalObjectsController.isDiscarded(beanName) ? null : pvs;
     }

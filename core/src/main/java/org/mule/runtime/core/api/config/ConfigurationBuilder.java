@@ -31,8 +31,7 @@ public interface ConfigurationBuilder
      * has been called.
      *
      * @param muleContext The current {@link org.mule.runtime.core.api.MuleContext}
-     * @throws ConfigurationException if the configuration fails i.e. an object cannot be created or
-     * initialised properly
+     * @throws ConfigurationException if the configuration fails i.e. an object cannot be created or initialised properly
      */
     void configure(MuleContext muleContext) throws ConfigurationException;
 

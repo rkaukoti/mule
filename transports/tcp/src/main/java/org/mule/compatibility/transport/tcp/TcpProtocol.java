@@ -24,7 +24,7 @@ public interface TcpProtocol
 
     /**
      * Reads the input stream and returns a whole message.
-     * 
+     *
      * @param is the input stream
      * @return an array of byte containing a full message
      * @throws IOException if an exception occurs
@@ -33,8 +33,8 @@ public interface TcpProtocol
 
     /**
      * Write the specified message to the output stream.
-     * 
-     * @param os the output stream to write to
+     *
+     * @param os   the output stream to write to
      * @param data the data to write
      * @throws IOException if an exception occurs
      */
@@ -47,7 +47,6 @@ public interface TcpProtocol
      *
      * @param socket The destination to write to
      * @return A stream whose output will be encoded
-     * @throws IOException
      */
     ResponseOutputStream createResponse(Socket socket) throws IOException;
 

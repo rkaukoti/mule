@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.api.processor;
 
+import org.apache.log4j.Level;
 import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -15,8 +16,6 @@ import org.mule.runtime.core.api.expression.ExpressionManager;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.util.StringUtils;
-
-import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,7 +75,7 @@ public class LoggerMessageProcessor extends AbstractAnnotatedObject implements M
             else
             {
                 LogLevel logLevel = LogLevel.valueOf(level);
-                if (LogLevel.valueOf(level).isEnabled(logger)) 
+                if (LogLevel.valueOf(level).isEnabled(logger))
                 {
                     logLevel.log(logger, expressionManager.parse(message, event));
                 }
@@ -87,7 +86,7 @@ public class LoggerMessageProcessor extends AbstractAnnotatedObject implements M
     protected void logWithLevel(Object object)
     {
         LogLevel logLevel = LogLevel.valueOf(level);
-        if (logLevel.isEnabled(logger)) 
+        if (logLevel.isEnabled(logger))
         {
             logLevel.log(logger, object);
         }
@@ -115,78 +114,79 @@ public class LoggerMessageProcessor extends AbstractAnnotatedObject implements M
 
     public enum LogLevel
     {
-        ERROR 
-        {
-            @Override
-            public void log(Logger logger, Object object)
-            {
-                logger.error(object == null ?  null : object.toString());
-            }
+        ERROR
+                {
+                    @Override
+                    public void log(Logger logger, Object object)
+                    {
+                        logger.error(object == null ? null : object.toString());
+                    }
 
-            @Override
-            public boolean isEnabled(Logger logger)
-            {
-                return logger.isErrorEnabled();
-            }
-        },
-        WARN 
-        {
-            @Override
-            public void log(Logger logger, Object object)
-            {
-                logger.warn(object == null ? null : object.toString());
-            }
-            
-            @Override
-            public boolean isEnabled(Logger logger)
-            {
-                return logger.isWarnEnabled();
-            }
-        },
+                    @Override
+                    public boolean isEnabled(Logger logger)
+                    {
+                        return logger.isErrorEnabled();
+                    }
+                },
+        WARN
+                {
+                    @Override
+                    public void log(Logger logger, Object object)
+                    {
+                        logger.warn(object == null ? null : object.toString());
+                    }
+
+                    @Override
+                    public boolean isEnabled(Logger logger)
+                    {
+                        return logger.isWarnEnabled();
+                    }
+                },
         INFO
-        {
-            @Override
-            public void log(Logger logger, Object object)
-            {
-                logger.info(object == null ? null : object.toString());
-            }
-            
-            @Override
-            public boolean isEnabled(Logger logger)
-            {
-                return logger.isInfoEnabled();
-            }
-        },
+                {
+                    @Override
+                    public void log(Logger logger, Object object)
+                    {
+                        logger.info(object == null ? null : object.toString());
+                    }
+
+                    @Override
+                    public boolean isEnabled(Logger logger)
+                    {
+                        return logger.isInfoEnabled();
+                    }
+                },
         DEBUG
-        {
-            @Override
-            public void log(Logger logger, Object object)
-            {
-                logger.debug(object == null ? null : object.toString());
-            }
-            
-            @Override
-            public boolean isEnabled(Logger logger)
-            {
-                return logger.isDebugEnabled();
-            }
-        },
+                {
+                    @Override
+                    public void log(Logger logger, Object object)
+                    {
+                        logger.debug(object == null ? null : object.toString());
+                    }
+
+                    @Override
+                    public boolean isEnabled(Logger logger)
+                    {
+                        return logger.isDebugEnabled();
+                    }
+                },
         TRACE
-        {
-            @Override
-            public void log(Logger logger, Object object)
-            {
-                logger.trace(object == null ? null : object.toString());
-            }
-            
-            @Override
-            public boolean isEnabled(Logger logger)
-            {
-                return logger.isTraceEnabled();
-            }
-        };
-        
+                {
+                    @Override
+                    public void log(Logger logger, Object object)
+                    {
+                        logger.trace(object == null ? null : object.toString());
+                    }
+
+                    @Override
+                    public boolean isEnabled(Logger logger)
+                    {
+                        return logger.isTraceEnabled();
+                    }
+                };
+
         public abstract void log(Logger logger, Object object);
+
         public abstract boolean isEnabled(Logger logger);
     }
 }

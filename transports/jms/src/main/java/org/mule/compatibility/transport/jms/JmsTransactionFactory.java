@@ -18,7 +18,7 @@ import org.mule.runtime.core.api.transaction.UniversalTransactionFactory;
 public class JmsTransactionFactory implements UniversalTransactionFactory
 {
     private String name;
-    
+
     @Override
     public Transaction beginTransaction(MuleContext muleContext) throws TransactionException
     {

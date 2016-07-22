@@ -9,13 +9,12 @@ package org.mule.compatibility.transport.http;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.context.WorkManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manager {@link HttpRequestDispatcher} connections and disconnections to {@link EndpointURI}.
@@ -59,7 +58,8 @@ class HttpConnectionManager
             else
             {
                 ServerSocket serverSocket = connector.getServerSocket(endpointURI.getUri());
-                HttpRequestDispatcher httpRequestDispatcher = new HttpRequestDispatcher(connector, connector.getRetryPolicyTemplate(), serverSocket, workManager);
+                HttpRequestDispatcher httpRequestDispatcher =
+                        new HttpRequestDispatcher(connector, connector.getRetryPolicyTemplate(), serverSocket, workManager);
                 socketDispatchers.put(endpointKey, httpRequestDispatcher);
                 socketDispatcherCount.put(endpointKey, new Integer(1));
                 workManager.scheduleWork(httpRequestDispatcher, WorkManager.INDEFINITE, null, connector);
@@ -76,7 +76,8 @@ class HttpConnectionManager
         String endpointKey = getKeyForEndpointUri(endpointURI);
         if (!socketDispatchers.containsKey(endpointKey))
         {
-            logger.warn("Trying to disconnect endpoint with uri " + endpointKey + " but " + HttpRequestDispatcher.class.getName() + " does not exists for that uri");
+            logger.warn("Trying to disconnect endpoint with uri " + endpointKey + " but " + HttpRequestDispatcher.class.getName() +
+                        " does not exists for that uri");
             return;
         }
         Integer connectionsRequested = socketDispatcherCount.get(endpointKey);

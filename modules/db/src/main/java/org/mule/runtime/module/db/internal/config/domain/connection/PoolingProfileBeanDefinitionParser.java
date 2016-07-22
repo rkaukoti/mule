@@ -9,7 +9,6 @@ package org.mule.runtime.module.db.internal.config.domain.connection;
 
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
 import org.mule.runtime.module.db.internal.domain.connection.DbPoolingProfile;
-
 import org.w3c.dom.Element;
 
 public class PoolingProfileBeanDefinitionParser extends ChildDefinitionParser

@@ -13,15 +13,14 @@ import org.mule.runtime.core.api.transaction.TransactionManagerFactory;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.JndiContextHelper;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.transaction.TransactionManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A factory performing a JNDI lookup for TransactionManager. <p/> NOTE: Java EE 1.4
@@ -83,8 +82,9 @@ public class GenericTransactionManagerLookupFactory implements TransactionManage
         this.context = context;
     }
 
-    /** @see org.mule.runtime.core.api.transaction.TransactionManagerFactory#create(MuleConfiguration)
-     * @param config */
+    /**
+     * @see org.mule.runtime.core.api.transaction.TransactionManagerFactory#create(MuleConfiguration)
+     */
     public TransactionManager create(MuleConfiguration config) throws Exception
     {
         // implementing the Initilisable interface does not call it??
@@ -105,9 +105,7 @@ public class GenericTransactionManagerLookupFactory implements TransactionManage
      * There is no guarantee that by throwing a Recoverable exception that the Mule
      * instance will not shut down.
      *
-     * @throws org.mule.runtime.core.api.lifecycle.InitialisationException
-     *          if a fatal error occurs
-     *          causing the Mule instance to shutdown
+     * @throws org.mule.runtime.core.api.lifecycle.InitialisationException if a fatal error occurs causing the Mule instance to shutdown
      */
     public void initialise() throws InitialisationException
     {

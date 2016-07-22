@@ -13,6 +13,7 @@ import org.mule.runtime.core.api.expression.ExpressionManager;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.expression.ExpressionConfig;
+import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,8 +24,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.w3c.dom.NodeList;
-
 /**
  * Splits a message using the expression provided invoking the next message processor
  * one for each split part.
@@ -32,7 +31,7 @@ import org.w3c.dom.NodeList;
  * <b>EIP Reference:</b> <a href="http://www.eaipatterns.com/Sequencer.html">http://www.eaipatterns.com/Sequencer.html</a>
  */
 public class ExpressionSplitter extends AbstractSplitter
-    implements Initialisable
+        implements Initialisable
 {
 
     protected ExpressionManager expressionManager;
@@ -59,8 +58,8 @@ public class ExpressionSplitter extends AbstractSplitter
     protected List<MuleEvent> splitMessage(MuleEvent event)
     {
         Object result = event.getMuleContext()
-            .getExpressionManager()
-            .evaluate(config.getFullExpression(expressionManager), event);
+                             .getExpressionManager()
+                             .evaluate(config.getFullExpression(expressionManager), event);
         if (result instanceof Object[])
         {
             result = Arrays.asList((Object[]) result);
@@ -68,7 +67,9 @@ public class ExpressionSplitter extends AbstractSplitter
         if (result instanceof Iterable<?>)
         {
             List<MuleEvent> messages = new ArrayList<>();
-            ((Iterable<?>) result).iterator().forEachRemaining(value -> messages.add(new DefaultMuleEvent(MuleMessage.builder().payload(value).build(), event)));
+            ((Iterable<?>) result).iterator()
+                                  .forEachRemaining(
+                                          value -> messages.add(new DefaultMuleEvent(MuleMessage.builder().payload(value).build(), event)));
             return messages;
         }
         else if (result instanceof Map<?, ?>)
@@ -104,7 +105,7 @@ public class ExpressionSplitter extends AbstractSplitter
         else
         {
             logger.info("The expression does not evaluate to a type that can be split: " + result.getClass().getName());
-            return Collections.<MuleEvent> singletonList(new DefaultMuleEvent(MuleMessage.builder().payload(result).build(), event));
+            return Collections.<MuleEvent>singletonList(new DefaultMuleEvent(MuleMessage.builder().payload(result).build(), event));
         }
     }
 

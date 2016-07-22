@@ -102,8 +102,7 @@ public abstract class AbstractSequenceRouter extends FilteringOutboundRouter
      *
      * @param response the last received response
      * @return true if must continue and false otherwise.
-     * @throws MuleException when the router should stop processing throwing an
-     *                       exception without returning any results to the caller.
+     * @throws MuleException when the router should stop processing throwing an exception without returning any results to the caller.
      */
     protected abstract boolean continueRoutingMessageAfter(MuleEvent response) throws MuleException;
 }

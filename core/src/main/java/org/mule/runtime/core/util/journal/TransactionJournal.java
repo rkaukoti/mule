@@ -6,17 +6,16 @@
  */
 package org.mule.runtime.core.util.journal;
 
-import org.mule.runtime.core.util.Preconditions;
-
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
+
+import org.mule.runtime.core.util.Preconditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Keeps track of transactional operation made over a transactional resource.
@@ -36,11 +35,8 @@ public class TransactionJournal<T, K extends JournalEntry<T>>
 
     private static final int MAXIMUM_LOG_FILE_ENTRIES = 50000;
     private static final int ONE_MEGABYTE_IN_BYTES = 1024 * 1024;
-
-    private transient Logger logger = LoggerFactory.getLogger(getClass());
-
     private final TransactionCompletePredicate transactionCompletePredicate;
-
+    private transient Logger logger = LoggerFactory.getLogger(getClass());
     /**
      * Log file in which we are currently writing new entries.
      */
@@ -63,20 +59,24 @@ public class TransactionJournal<T, K extends JournalEntry<T>>
     /**
      * @param logFilesDirectory directory used to store the journal files.
      */
-    public TransactionJournal(String logFilesDirectory, TransactionCompletePredicate transactionCompletePredicate, JournalEntrySerializer journalEntrySerializer, Integer maximumFileSizeInMegabytes)
+    public TransactionJournal(String logFilesDirectory, TransactionCompletePredicate transactionCompletePredicate,
+                              JournalEntrySerializer journalEntrySerializer, Integer maximumFileSizeInMegabytes)
     {
         File logFileDirectory = new File(logFilesDirectory);
         if (!logFileDirectory.exists())
         {
-            Preconditions.checkState(logFileDirectory.mkdirs(), "Could not create directory for queue transaction logger " + logFileDirectory);
+            Preconditions.checkState(logFileDirectory.mkdirs(),
+                    "Could not create directory for queue transaction logger " + logFileDirectory);
         }
         calculateJournalFileSize(maximumFileSizeInMegabytes);
         File logFile1 = new File(logFileDirectory, TX1_LOG_FILE_NAME);
         File logFile2 = new File(logFileDirectory, TX2_LOG_FILE_NAME);
         logger.info(String.format("Using files for tx logs %s and %s", logFile1.getAbsolutePath(), logFile2.getAbsolutePath()));
 
-        this.currentLogFile = new TransactionJournalFile(logFile1, journalEntrySerializer, transactionCompletePredicate, clearFileMinimumSizeInBytes);
-        this.notCurrentLogFile = new TransactionJournalFile(logFile2, journalEntrySerializer, transactionCompletePredicate, clearFileMinimumSizeInBytes);
+        this.currentLogFile =
+                new TransactionJournalFile(logFile1, journalEntrySerializer, transactionCompletePredicate, clearFileMinimumSizeInBytes);
+        this.notCurrentLogFile =
+                new TransactionJournalFile(logFile2, journalEntrySerializer, transactionCompletePredicate, clearFileMinimumSizeInBytes);
         this.transactionCompletePredicate = transactionCompletePredicate;
 
     }
@@ -192,7 +192,8 @@ public class TransactionJournal<T, K extends JournalEntry<T>>
     {
         if (logger.isDebugEnabled())
         {
-            logger.debug("Changing files, current file size: " + currentLogFile.fileLength() + " other file size: " + notCurrentLogFile.fileLength());
+            logger.debug("Changing files, current file size: " + currentLogFile.fileLength() + " other file size: " +
+                         notCurrentLogFile.fileLength());
         }
     }
 

@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
  * or stream, following the Producer-Consumer design pattern. Implementing this
  * interface does not guarantee thread safeness. Check each particular implementation
  * for information about that
- * 
+ *
  * @since 3.5.0
  */
 public interface Consumer<T> extends Closeable, ProvidesTotalHint
@@ -24,7 +24,7 @@ public interface Consumer<T> extends Closeable, ProvidesTotalHint
 
     /**
      * Retrieves the next available item.
-     * 
+     *
      * @return an object of type T if available. <code>null</code> otherwise
      * @throws {@link ClosedConsumerException} if the consumer is already closed
      */
@@ -37,9 +37,8 @@ public interface Consumer<T> extends Closeable, ProvidesTotalHint
      * returning in order to release resources as quickly as possible. Users of this
      * component who no longer need this require before it is fully consumed are also
      * required to close it.
-     * 
-     * @return <code>true</code> if no more items are available. <code>false</code>
-     *         otherwise
+     *
+     * @return <code>true</code> if no more items are available. <code>false</code> otherwise
      */
     public boolean isConsumed();
 

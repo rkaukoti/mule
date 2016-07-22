@@ -12,12 +12,11 @@ package org.mule.functional.functional;
 public interface Receiveable
 {
     /**
-     * This method is used by some WebServices tests where you don' want to be introducing the {@link org.mule.runtime.core.api.MuleEventContext} as
-     * a complex type.
+     * This method is used by some WebServices tests where you don' want to be introducing the {@link
+     * org.mule.runtime.core.api.MuleEventContext} as a complex type.
      *
      * @param data the event data received
      * @return the processed message
-     * @throws Exception
      */
     public Object onReceive(Object data) throws Exception;
 }

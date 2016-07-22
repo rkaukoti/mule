@@ -15,12 +15,12 @@ import java.io.InputStream;
  * class as the input parameter to the read() method on the {@link TcpProtocol}
  * interface. If you wish to simply use the InputStream as the message payload
  * that you're reading in, you just call tcpInputStream.setStreaming(true) so
- * that Mule knows to stop listening for more messages on that stream. 
+ * that Mule knows to stop listening for more messages on that stream.
  */
 public class TcpInputStream extends DelegatingInputStream
 {
     private boolean streaming;
-    
+
     public TcpInputStream(InputStream delegate)
     {
         super(delegate);

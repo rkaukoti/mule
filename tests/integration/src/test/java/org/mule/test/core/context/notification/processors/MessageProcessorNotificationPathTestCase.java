@@ -6,10 +6,7 @@
  */
 package org.mule.test.core.context.notification.processors;
 
-import static org.hamcrest.core.IsCollectionContaining.hasItems;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.util.NotificationUtils.buildPathResolver;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.api.construct.Pipeline;
@@ -19,9 +16,10 @@ import org.mule.runtime.core.util.NotificationUtils.FlowMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.junit.Test;
-
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.IsCollectionContaining.hasItems;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.util.NotificationUtils.buildPathResolver;
 
 /**
  *
@@ -38,8 +36,8 @@ public class MessageProcessorNotificationPathTestCase extends FunctionalTestCase
     public void components() throws Exception
     {
         testFlowPaths("singleMP", "/0");
-        testFlowPaths("singleMP2", "/0","/1");
-        testFlowPaths("singleMP3", "/0","/1","/2");
+        testFlowPaths("singleMP2", "/0", "/1");
+        testFlowPaths("singleMP3", "/0", "/1", "/2");
         testFlowPaths("processorChain2", "/0", "/0/0", "/0/1", "/0/2");
         testFlowPaths("processorChain3", "/0", "/0/0", "/0/1");
         testFlowPaths("processorChain4", "/0", "/0/0", "/0/1", "/1");
@@ -51,8 +49,8 @@ public class MessageProcessorNotificationPathTestCase extends FunctionalTestCase
     public void routers() throws Exception
     {
         testFlowPaths("choice", "/0", "/0/0", "/0/0/0", "/0/1", "/0/1/0", "/0/2", "/0/2/0");
-        testFlowPaths("all2", "/0", "/0/0", "/0/0/0","/0/0/1", "/0/1", "/0/1/0","/0/1/1", "/1");
-        testFlowPaths("choice2", "/0", "/0/0", "/0/0/0","/0/0/1", "/0/1", "/0/1/0", "/0/2", "/0/2/0","/0/2/1");
+        testFlowPaths("all2", "/0", "/0/0", "/0/0/0", "/0/0/1", "/0/1", "/0/1/0", "/0/1/1", "/1");
+        testFlowPaths("choice2", "/0", "/0/0", "/0/0/0", "/0/0/1", "/0/1", "/0/1/0", "/0/2", "/0/2/0", "/0/2/1");
         testFlowPaths("all", "/0", "/0/0", "/0/0/0", "/0/1", "/0/1/0", "/1");
         testFlowPaths("scatterGather", "/0", "/0/0", "/0/0/0", "/0/1", "/0/1/0", "/0/1/1");
     }
@@ -60,7 +58,7 @@ public class MessageProcessorNotificationPathTestCase extends FunctionalTestCase
     @Test
     public void interceptors() throws Exception
     {
-         testFlowPaths("cxfMP","/0","/1","/2");
+        testFlowPaths("cxfMP", "/0", "/1", "/2");
     }
 
     @Test
@@ -78,16 +76,16 @@ public class MessageProcessorNotificationPathTestCase extends FunctionalTestCase
     public void filters() throws Exception
     {
         testFlowPaths("filters", "/0", "/1");
-        testFlowPaths("idempotent-msg-filter", "/0", "/1" );
-        testFlowPaths("idempotent-secure-hash-msg-filter", "/0", "/1" );
+        testFlowPaths("idempotent-msg-filter", "/0", "/1");
+        testFlowPaths("idempotent-secure-hash-msg-filter", "/0", "/1");
     }
 
     @Test
     public void flowRefs() throws Exception
     {
         testFlowPaths("subflow", "/0", "/1", "/1/subflow-call/subprocessors/0", "/1/subflow-call/subprocessors/1");
-        testFlowPaths("subflow2", "/0", "/1", "/1/subflow-call/subprocessors/0", "/1/subflow-call/subprocessors/1","/2");
-        testFlowPaths("subflow\\/With\\/Slash", "/0", "/1", "/1/subflow\\/call/subprocessors/0", "/1/subflow\\/call/subprocessors/1","/2");
+        testFlowPaths("subflow2", "/0", "/1", "/1/subflow-call/subprocessors/0", "/1/subflow-call/subprocessors/1", "/2");
+        testFlowPaths("subflow\\/With\\/Slash", "/0", "/1", "/1/subflow\\/call/subprocessors/0", "/1/subflow\\/call/subprocessors/1", "/2");
     }
 
     @Test
@@ -103,8 +101,8 @@ public class MessageProcessorNotificationPathTestCase extends FunctionalTestCase
     @Test
     public void multipleEndpoints() throws Exception
     {
-        testFlowPaths("composite-source", "/0" );
-        testFlowPaths("first-successful", "/0", "/1", "/1/0", "/1/1", "/1/2", "/1/3" );
+        testFlowPaths("composite-source", "/0");
+        testFlowPaths("first-successful", "/0", "/1", "/1/0", "/1/1", "/1/2", "/1/3");
         testFlowPaths("round-robin", "/0", "/0/0", "/0/1", "/0/2", "/1");
     }
 

@@ -6,32 +6,19 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.processor.MessageProcessor;
-import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 public class CatchExceptionStrategyEnricherTestCase extends FunctionalTestCase
 {
-    public static class ErrorProcessor implements MessageProcessor
-    {
-        private static Throwable handled;
-
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            handled = event.getMessage().getExceptionPayload().getException();
-            return event;
-        }
-    }
-
     @Override
     protected String getConfigFile()
     {
@@ -44,5 +31,17 @@ public class CatchExceptionStrategyEnricherTestCase extends FunctionalTestCase
         MuleMessage response = flowRunner("enricherExceptionFlow").withPayload(getTestMuleMessage()).run().getMessage();
         assertThat(ErrorProcessor.handled, not(nullValue()));
         assertThat(response.getExceptionPayload(), nullValue());
+    }
+
+    public static class ErrorProcessor implements MessageProcessor
+    {
+        private static Throwable handled;
+
+        @Override
+        public MuleEvent process(MuleEvent event) throws MuleException
+        {
+            handled = event.getMessage().getExceptionPayload().getException();
+            return event;
+        }
     }
 }

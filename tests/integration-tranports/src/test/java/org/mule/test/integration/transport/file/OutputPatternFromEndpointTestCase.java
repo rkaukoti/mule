@@ -6,9 +6,9 @@
  */
 package org.mule.test.integration.transport.file;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import junit.framework.AssertionFailedError;
 
+import org.junit.Test;
 import org.mule.compatibility.core.api.context.notification.EndpointMessageNotificationListener;
 import org.mule.compatibility.core.context.notification.EndpointMessageNotification;
 import org.mule.functional.junit4.FunctionalTestCase;
@@ -22,11 +22,11 @@ import java.io.File;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import junit.framework.AssertionFailedError;
-
-public class OutputPatternFromEndpointTestCase extends FunctionalTestCase implements EndpointMessageNotificationListener<EndpointMessageNotification>
+public class OutputPatternFromEndpointTestCase extends FunctionalTestCase
+        implements EndpointMessageNotificationListener<EndpointMessageNotification>
 {
     protected CountDownLatch fileReceiveLatch;
 
@@ -98,7 +98,7 @@ public class OutputPatternFromEndpointTestCase extends FunctionalTestCase implem
                 @Override
                 public boolean isSatisfied()
                 {
-                  return FileUtils.newFile(myDir, myFileName1).exists() && FileUtils.newFile(myDir2, myFileName2).exists();
+                    return FileUtils.newFile(myDir, myFileName1).exists() && FileUtils.newFile(myDir2, myFileName2).exists();
                 }
 
                 @Override

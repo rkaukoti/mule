@@ -6,20 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.util;
 
-import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
-import static org.apache.commons.lang.StringUtils.EMPTY;
-import static org.mule.metadata.java.api.JavaTypeLoader.JAVA;
-import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.SUPPORTED;
-import static org.mule.runtime.module.extension.internal.util.MetadataTypeUtils.isObjectType;
-import static org.reflections.ReflectionUtils.getAllFields;
-import static org.reflections.ReflectionUtils.getAllMethods;
-import static org.reflections.ReflectionUtils.withAnnotation;
-import static org.reflections.ReflectionUtils.withModifier;
-import static org.reflections.ReflectionUtils.withName;
+import com.google.common.base.Predicates;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+
+import org.apache.commons.lang.StringUtils;
 import org.mule.metadata.api.ClassTypeLoader;
 import org.mule.metadata.api.builder.BaseTypeBuilder;
 import org.mule.metadata.api.model.AnyType;
@@ -51,10 +42,7 @@ import org.mule.runtime.extension.api.runtime.operation.OperationResult;
 import org.mule.runtime.extension.api.runtime.source.Source;
 import org.mule.runtime.module.extension.internal.introspection.describer.MuleExtensionAnnotationParser;
 import org.mule.runtime.module.extension.internal.model.property.DeclaringMemberModelProperty;
-
-import com.google.common.base.Predicates;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
+import org.springframework.core.ResolvableType;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -73,8 +61,20 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import org.apache.commons.lang.StringUtils;
-import org.springframework.core.ResolvableType;
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
+import static org.apache.commons.lang.StringUtils.EMPTY;
+import static org.mule.metadata.java.api.JavaTypeLoader.JAVA;
+import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.SUPPORTED;
+import static org.mule.runtime.module.extension.internal.util.MetadataTypeUtils.isObjectType;
+import static org.reflections.ReflectionUtils.getAllFields;
+import static org.reflections.ReflectionUtils.getAllMethods;
+import static org.reflections.ReflectionUtils.withAnnotation;
+import static org.reflections.ReflectionUtils.withModifier;
+import static org.reflections.ReflectionUtils.withName;
 
 /**
  * Set of utility operations to get insights about objects and their components
@@ -113,11 +113,12 @@ public final class IntrospectionUtils
      */
     public static MetadataType getMethodReturnType(Method method, ClassTypeLoader typeLoader)
     {
-        return getMethodType(method, typeLoader, 0, () -> {
+        return getMethodType(method, typeLoader, 0, () ->
+        {
             ResolvableType methodType = getMethodResolvableType(method);
             return methodType.getRawClass().equals(OperationResult.class)
-                   ? typeBuilder().anyType().build()
-                   : typeLoader.load(methodType.getType());
+                    ? typeBuilder().anyType().build()
+                    : typeLoader.load(methodType.getType());
         });
     }
 
@@ -175,8 +176,8 @@ public final class IntrospectionUtils
      *
      * @param method     a not {@code null} {@link Method}
      * @param typeLoader a {@link ClassTypeLoader} to be used to create the returned {@link MetadataType}s
-     * @return an array of {@link MetadataType} matching
-     * the method's arguments. If the method doesn't take any, then the array will be empty
+     * @return an array of {@link MetadataType} matching the method's arguments. If the method doesn't take any, then the array will be
+     * empty
      * @throws IllegalArgumentException is method is {@code null}
      */
     public static MetadataType[] getMethodArgumentTypes(Method method, ClassTypeLoader typeLoader)
@@ -232,14 +233,16 @@ public final class IntrospectionUtils
     {
         Collection<Field> candidates = getAllFields(clazz, withAnnotation(Alias.class));
         return candidates.stream()
-                .filter(f -> alias.equals(f.getAnnotation(Alias.class).value()))
-                .findFirst()
-                .orElseGet(() -> getField(clazz, alias));
+                         .filter(f -> alias.equals(f.getAnnotation(Alias.class).value()))
+                         .findFirst()
+                         .orElseGet(() -> getField(clazz, alias));
     }
 
     public static String getMemberName(EnrichableModel enrichableModel, String defaultName)
     {
-        return enrichableModel.getModelProperty(DeclaringMemberModelProperty.class).map(p -> p.getDeclaringField().getName()).orElse(defaultName);
+        return enrichableModel.getModelProperty(DeclaringMemberModelProperty.class)
+                              .map(p -> p.getDeclaringField().getName())
+                              .orElse(defaultName);
     }
 
     public static boolean hasDefaultConstructor(Class<?> clazz)
@@ -275,7 +278,8 @@ public final class IntrospectionUtils
 
         if (interfaceType == null)
         {
-            throw new IllegalArgumentException(String.format("Class '%s' does not implement the '%s' interface", type.getName(), implementedInterface.getName()));
+            throw new IllegalArgumentException(
+                    String.format("Class '%s' does not implement the '%s' interface", type.getName(), implementedInterface.getName()));
         }
 
         List<? super Class<?>> generics = toRawClasses(interfaceType.getGenerics());
@@ -315,7 +319,8 @@ public final class IntrospectionUtils
     {
         Class<?> searchClass = type;
 
-        checkArgument(searchClass.getSuperclass().equals(superClass), String.format("Class '%s' does not extend the '%s' class", type.getName(), superClass.getName()));
+        checkArgument(searchClass.getSuperclass().equals(superClass),
+                String.format("Class '%s' does not extend the '%s' class", type.getName(), superClass.getName()));
 
         while (!Object.class.equals(searchClass))
         {
@@ -401,9 +406,9 @@ public final class IntrospectionUtils
     public static List<Field> getAnnotatedFields(Class<?> clazz, Class<? extends Annotation> annotationType)
     {
         return getDescendingHierarchy(clazz).stream()
-                .flatMap(type -> stream(type.getDeclaredFields()))
-                .filter(field -> field.getAnnotation(annotationType) != null)
-                .collect(new ImmutableListCollector<>());
+                                            .flatMap(type -> stream(type.getDeclaredFields()))
+                                            .filter(field -> field.getAnnotation(annotationType) != null)
+                                            .collect(new ImmutableListCollector<>());
     }
 
     private static List<Class<?>> getDescendingHierarchy(Class<?> type)
@@ -481,15 +486,15 @@ public final class IntrospectionUtils
     public static java.util.Optional<ParameterModel> getContentParameter(ComponentModel component)
     {
         return component.getParameterModels().stream()
-                .filter(p -> p.getModelProperty(MetadataContentModelProperty.class).isPresent())
-                .findFirst();
+                        .filter(p -> p.getModelProperty(MetadataContentModelProperty.class).isPresent())
+                        .findFirst();
     }
 
     public static List<ParameterModel> getMetadataKeyParts(ComponentModel component)
     {
         return component.getParameterModels().stream()
-                .filter(p -> p.getModelProperty(MetadataKeyPartModelProperty.class).isPresent())
-                .collect(toList());
+                        .filter(p -> p.getModelProperty(MetadataKeyPartModelProperty.class).isPresent())
+                        .collect(toList());
     }
 
     /**

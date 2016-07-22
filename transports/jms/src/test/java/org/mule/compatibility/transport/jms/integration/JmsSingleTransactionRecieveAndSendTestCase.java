@@ -6,14 +6,14 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 import javax.jms.Message;
 import javax.jms.TextMessage;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class JmsSingleTransactionRecieveAndSendTestCase extends AbstractJmsFunctionalTestCase
 {

@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.util;
 
-import static java.util.Collections.synchronizedSet;
-
 import org.mule.runtime.core.api.processor.InternalMessageProcessor;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.processor.MessageProcessorContainer;
@@ -23,64 +21,13 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static java.util.Collections.synchronizedSet;
+
 /**
  * Contains useful methods for the generation of message processor identifiers used by the notification system
  */
 public class NotificationUtils
 {
-    public interface PathResolver
-    {
-        String resolvePath(MessageProcessor processor);
-    }
-
-    public static class FlowMap implements PathResolver
-    {
-        private Map<MessageProcessor, String> flowMap = new ConcurrentHashMap<MessageProcessor, String>();
-        // This set allows for dynamic containers to not be analyzed more than once. Dynamic containers cannot be removed because as a container it also must have a path.
-        private Set<MessageProcessor> resolvedDynamicContainers = synchronizedSet(new HashSet<MessageProcessor>());
-
-        public FlowMap(Map<MessageProcessor, String> paths)
-        {
-            flowMap.putAll(paths);
-        }
-
-        @Override
-        public String resolvePath(MessageProcessor processor)
-        {
-            String path = flowMap.get(processor);
-            if (path != null)
-            {
-                return path;
-            }
-            else
-            {
-                for (Entry<MessageProcessor, String> flowMapEntries : flowMap.entrySet())
-                {
-                    if (flowMapEntries.getKey() instanceof DynamicMessageProcessorContainer && !resolvedDynamicContainers.contains(flowMapEntries.getKey()))
-                    {
-                        FlowMap resolvedInnerPaths = ((DynamicMessageProcessorContainer) flowMapEntries.getKey()).buildInnerPaths();
-                        if (resolvedInnerPaths != null)
-                        {
-                            flowMap.putAll(resolvedInnerPaths.getFlowMap());
-                            resolvedDynamicContainers.add(flowMapEntries.getKey());
-                        }
-                    }
-                }
-                return flowMap.get(processor);
-            }
-        }
-
-        public Collection<String> getAllPaths()
-        {
-            return flowMap.values();
-        }
-
-        public Map<MessageProcessor, String> getFlowMap()
-        {
-            return flowMap;
-        }
-    }
-
     private NotificationUtils()
     {
     }
@@ -117,9 +64,9 @@ public class NotificationUtils
     }
 
     /**
-     * @deprecated Use {@link #buildPathResolver(MessageProcessorPathElement)} instead.
      * @param element where to get the paths from.
      * @return the element paths corresponding to <b>element</b>.
+     * @deprecated Use {@link #buildPathResolver(MessageProcessorPathElement)} instead.
      */
     @Deprecated
     public static Map<MessageProcessor, String> buildPaths(MessageProcessorPathElement element)
@@ -139,6 +86,60 @@ public class NotificationUtils
             buildPaths(child, elements);
         }
         return elements;
+    }
+
+    public interface PathResolver
+    {
+        String resolvePath(MessageProcessor processor);
+    }
+
+    public static class FlowMap implements PathResolver
+    {
+        private Map<MessageProcessor, String> flowMap = new ConcurrentHashMap<MessageProcessor, String>();
+        // This set allows for dynamic containers to not be analyzed more than once. Dynamic containers cannot be removed because as a container it also must have a path.
+        private Set<MessageProcessor> resolvedDynamicContainers = synchronizedSet(new HashSet<MessageProcessor>());
+
+        public FlowMap(Map<MessageProcessor, String> paths)
+        {
+            flowMap.putAll(paths);
+        }
+
+        @Override
+        public String resolvePath(MessageProcessor processor)
+        {
+            String path = flowMap.get(processor);
+            if (path != null)
+            {
+                return path;
+            }
+            else
+            {
+                for (Entry<MessageProcessor, String> flowMapEntries : flowMap.entrySet())
+                {
+                    if (flowMapEntries.getKey() instanceof DynamicMessageProcessorContainer &&
+                        !resolvedDynamicContainers.contains(flowMapEntries.getKey()))
+                    {
+                        FlowMap resolvedInnerPaths = ((DynamicMessageProcessorContainer) flowMapEntries.getKey()).buildInnerPaths();
+                        if (resolvedInnerPaths != null)
+                        {
+                            flowMap.putAll(resolvedInnerPaths.getFlowMap());
+                            resolvedDynamicContainers.add(flowMapEntries.getKey());
+                        }
+                    }
+                }
+                return flowMap.get(processor);
+            }
+        }
+
+        public Collection<String> getAllPaths()
+        {
+            return flowMap.values();
+        }
+
+        public Map<MessageProcessor, String> getFlowMap()
+        {
+            return flowMap;
+        }
     }
 
 

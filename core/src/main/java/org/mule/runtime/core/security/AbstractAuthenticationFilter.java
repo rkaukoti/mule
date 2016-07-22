@@ -34,6 +34,7 @@ public abstract class AbstractAuthenticationFilter extends AbstractSecurityFilte
     {
         this.credentialsAccessor = credentialsAccessor;
     }
+
     public boolean isAuthenticate()
     {
         return authenticate;
@@ -46,8 +47,8 @@ public abstract class AbstractAuthenticationFilter extends AbstractSecurityFilte
 
     @Override
     public void doFilter(MuleEvent event)
-        throws SecurityException, UnknownAuthenticationTypeException, CryptoFailureException,
-        SecurityProviderNotFoundException, EncryptionStrategyNotFoundException, InitialisationException
+            throws SecurityException, UnknownAuthenticationTypeException, CryptoFailureException,
+            SecurityProviderNotFoundException, EncryptionStrategyNotFoundException, InitialisationException
     {
         authenticate(event);
     }

@@ -6,9 +6,6 @@
  */
 package org.mule.test.metadata.extension.resolver;
 
-import static java.util.stream.Collectors.toSet;
-import static org.mule.metadata.api.model.MetadataFormat.JAVA;
-import static org.mule.runtime.api.metadata.resolving.FailureCode.INVALID_METADATA_KEY;
 import org.mule.metadata.api.builder.BaseTypeBuilder;
 import org.mule.metadata.api.builder.ObjectTypeBuilder;
 import org.mule.metadata.api.model.MetadataType;
@@ -20,6 +17,10 @@ import org.mule.runtime.api.metadata.MetadataResolvingException;
 import org.mule.test.metadata.extension.MetadataConnection;
 
 import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
+import static org.mule.metadata.api.model.MetadataFormat.JAVA;
+import static org.mule.runtime.api.metadata.resolving.FailureCode.INVALID_METADATA_KEY;
 
 public class TestMetadataResolverUtils
 {
@@ -37,8 +38,8 @@ public class TestMetadataResolverUtils
         MetadataConnection connection = (MetadataConnection) context.getConnection().get();
 
         return connection.getEntities().stream()
-                .map(e -> MetadataKeyBuilder.newKey(e).build())
-                .collect(toSet());
+                         .map(e -> MetadataKeyBuilder.newKey(e).build())
+                         .collect(toSet());
     }
 
     public static MetadataType getMetadata(String key) throws MetadataResolvingException
@@ -47,20 +48,20 @@ public class TestMetadataResolverUtils
 
         switch (key)
         {
-            case MetadataConnection.CAR:
-                objectBuilder.addField().key(TIRES).value().numberType();
-                objectBuilder.addField().key(BRAND).value().stringType();
-                break;
-            case MetadataConnection.HOUSE:
-                objectBuilder.addField().key(DIRECTION).value().stringType();
-                objectBuilder.addField().key(SIZE).value().numberType();
-                break;
-            case MetadataConnection.PERSON:
-                objectBuilder.addField().key(NAME).value().stringType();
-                objectBuilder.addField().key(AGE).value().numberType();
-                break;
-            default:
-                throw new MetadataResolvingException("Unknown key " + key, INVALID_METADATA_KEY);
+        case MetadataConnection.CAR:
+            objectBuilder.addField().key(TIRES).value().numberType();
+            objectBuilder.addField().key(BRAND).value().stringType();
+            break;
+        case MetadataConnection.HOUSE:
+            objectBuilder.addField().key(DIRECTION).value().stringType();
+            objectBuilder.addField().key(SIZE).value().numberType();
+            break;
+        case MetadataConnection.PERSON:
+            objectBuilder.addField().key(NAME).value().stringType();
+            objectBuilder.addField().key(AGE).value().numberType();
+            break;
+        default:
+            throw new MetadataResolvingException("Unknown key " + key, INVALID_METADATA_KEY);
         }
 
         return objectBuilder.build();

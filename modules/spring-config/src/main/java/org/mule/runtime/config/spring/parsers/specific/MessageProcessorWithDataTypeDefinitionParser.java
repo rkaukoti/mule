@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
-import static org.mule.runtime.config.spring.parsers.specific.DataTypeFactoryBean.buildDataTypeDefinition;
-
 import org.mule.runtime.api.metadata.DataType;
-
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
+
+import static org.mule.runtime.config.spring.parsers.specific.DataTypeFactoryBean.buildDataTypeDefinition;
 
 /**
  * Gives parses support to map data type attributes to a {@link DataType}

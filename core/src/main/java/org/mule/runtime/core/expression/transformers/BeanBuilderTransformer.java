@@ -54,27 +54,25 @@ public class BeanBuilderTransformer extends AbstractExpressionTransformer
     /**
      * Template method were deriving classes can do any initialisation after the
      * properties have been set on this transformer
-     *
-     * @throws org.mule.runtime.core.api.lifecycle.InitialisationException
      */
     @Override
     public void initialise() throws InitialisationException
     {
         super.initialise();
 
-        if(getBeanFactory()==null && getBeanClass()==null)
+        if (getBeanFactory() == null && getBeanClass() == null)
         {
             throw new InitialisationException(CoreMessages.objectIsNull("beanFactory"), this);
         }
-        else if(getBeanClass()!=null)
+        else if (getBeanClass() != null)
         {
             setBeanFactory(new PrototypeObjectFactory(getBeanClass()));
         }
         setReturnDataType(DataType.fromType(getBeanFactory().getObjectClass()));
         //We need to set the MuleContext if we create the factory here
-        if(getBeanFactory() instanceof MuleContextAware)
+        if (getBeanFactory() instanceof MuleContextAware)
         {
-            ((MuleContextAware)getBeanFactory()).setMuleContext(muleContext);
+            ((MuleContextAware) getBeanFactory()).setMuleContext(muleContext);
         }
     }
 

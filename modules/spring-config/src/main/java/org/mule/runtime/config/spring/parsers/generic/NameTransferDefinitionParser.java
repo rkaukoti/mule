@@ -11,7 +11,6 @@ import org.mule.runtime.config.spring.parsers.assembly.BeanAssemblerFactory;
 import org.mule.runtime.config.spring.parsers.assembly.DefaultBeanAssembler;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.SingleProperty;
-
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -26,15 +25,15 @@ import org.w3c.dom.Element;
  * <p>It's easier to understand with an example. Consider a custom security provider, set with the
  * following XML:</p>
  * <pre>
- &lt;mule:security-manager&gt;
-     &lt;mule:custom-security-provider name="dummySecurityProvider"
-                                    provider-ref="dummySecurityProvider"/&gt;
- &lt;/mule:security-manager&gt;</pre>
+ * &lt;mule:security-manager&gt;
+ * &lt;mule:custom-security-provider name="dummySecurityProvider"
+ * provider-ref="dummySecurityProvider"/&gt;
+ * &lt;/mule:security-manager&gt;</pre>
  * <p>What is happening here?  First, the custom-security-provider is being handled by this class.
  * Since this class extends ParentDefinitionParser, the provider value is set on the parent (the
  * security manager).  But we want the name attribute to be set on the provider (the referenced
  * bean).  So the "name" is set on the provider, not on the manager.  Then the provider is set on
- * the manager.</p> 
+ * the manager.</p>
  */
 public class NameTransferDefinitionParser extends ParentDefinitionParser
 {
@@ -44,8 +43,8 @@ public class NameTransferDefinitionParser extends ParentDefinitionParser
     private String componentAttributeName;
 
     /**
-     * @param componentAttributeName The attribute name (after processing, which will strip "-ref",
-     * add plurals, etc) that identifies the service which will receive the "name".
+     * @param componentAttributeName The attribute name (after processing, which will strip "-ref", add plurals, etc) that identifies the
+     *                               service which will receive the "name".
      */
     public NameTransferDefinitionParser(String componentAttributeName)
     {
@@ -62,7 +61,7 @@ public class NameTransferDefinitionParser extends ParentDefinitionParser
         componentAttributeValue = null;
         AbstractBeanDefinition bd = super.parseInternal(element, parserContext);
         element.removeAttribute(ATTRIBUTE_NAME);
-        return bd; 
+        return bd;
     }
 
 
@@ -79,7 +78,7 @@ public class NameTransferDefinitionParser extends ParentDefinitionParser
         else
         {
             logger.debug("Not setting " + ATTRIBUTE_NAME + " on " + componentAttributeValue +
-                    " as already " + propertyValues.getPropertyValue(ATTRIBUTE_NAME));
+                         " as already " + propertyValues.getPropertyValue(ATTRIBUTE_NAME));
         }
     }
 
@@ -87,7 +86,7 @@ public class NameTransferDefinitionParser extends ParentDefinitionParser
     {
 
         public LocalBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-                                      PropertyConfiguration targetConfig, BeanDefinition target)
+                                  PropertyConfiguration targetConfig, BeanDefinition target)
         {
             super(beanConfig, bean, targetConfig, target);
         }
@@ -126,7 +125,7 @@ public class NameTransferDefinitionParser extends ParentDefinitionParser
     {
 
         public BeanAssembler newBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-                                                      PropertyConfiguration targetConfig, BeanDefinition target)
+                                              PropertyConfiguration targetConfig, BeanDefinition target)
         {
             return new LocalBeanAssembler(beanConfig, bean, targetConfig, target);
         }

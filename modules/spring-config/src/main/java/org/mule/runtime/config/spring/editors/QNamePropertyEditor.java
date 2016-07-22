@@ -31,6 +31,13 @@ public class QNamePropertyEditor extends PropertyEditorSupport
         this.explicit = explicit;
     }
 
+    public static QName convert(String value)
+    {
+        QNamePropertyEditor editor = new QNamePropertyEditor();
+        editor.setAsText(value);
+        return (QName) editor.getValue();
+    }
+
     @Override
     public void setAsText(String text) throws IllegalArgumentException
     {
@@ -61,39 +68,32 @@ public class QNamePropertyEditor extends PropertyEditorSupport
 
         switch (elements.size())
         {
-            case 0 :
-            {
-                return null;
-            }
-            case 1 :
-            {
-                return new QName(elements.get(0));
-            }
-            case 2 :
-            {
-                return new QName(elements.get(0), elements.get(1));
-            }
-            case 3 :
-            {
-                return new QName(elements.get(1) + ":" + elements.get(2), elements.get(0));
-            }
-            default :
-            {
-                String prefix = elements.get(0);
-                String local = elements.get(1);
-                // namespace can have multiple colons in it, so just assume the rest
-                // is a namespace
-                String ns = val.substring(prefix.length() + local.length() + 2);
-                return new QName(ns, local, prefix);
-            }
+        case 0:
+        {
+            return null;
         }
-    }
-
-    public static QName convert(String value)
-    {
-        QNamePropertyEditor editor = new QNamePropertyEditor();
-        editor.setAsText(value);
-        return (QName) editor.getValue();
+        case 1:
+        {
+            return new QName(elements.get(0));
+        }
+        case 2:
+        {
+            return new QName(elements.get(0), elements.get(1));
+        }
+        case 3:
+        {
+            return new QName(elements.get(1) + ":" + elements.get(2), elements.get(0));
+        }
+        default:
+        {
+            String prefix = elements.get(0);
+            String local = elements.get(1);
+            // namespace can have multiple colons in it, so just assume the rest
+            // is a namespace
+            String ns = val.substring(prefix.length() + local.length() + 2);
+            return new QName(ns, local, prefix);
+        }
+        }
     }
 
 }

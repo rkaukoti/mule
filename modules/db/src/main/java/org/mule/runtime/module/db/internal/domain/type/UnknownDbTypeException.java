@@ -17,7 +17,7 @@ public class UnknownDbTypeException extends RuntimeException
      * Creates an exception for a given unknown type
      *
      * @param typeId type ID
-     * @param name type name
+     * @param name   type name
      */
     public UnknownDbTypeException(int typeId, String name)
     {

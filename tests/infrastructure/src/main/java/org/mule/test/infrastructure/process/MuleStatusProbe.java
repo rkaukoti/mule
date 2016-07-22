@@ -20,16 +20,6 @@ public class MuleStatusProbe implements Probe
         this.check = isRunning;
     }
 
-    public boolean isSatisfied()
-    {
-        return check == controller.isRunning();
-    }
-
-    public String describeFailure()
-    {
-        return "Mule is " + (check ? "not " : "") + "running";
-    }
-
     public static Probe isRunning(MuleProcessController controller)
     {
         return new MuleStatusProbe(controller, true);
@@ -38,6 +28,16 @@ public class MuleStatusProbe implements Probe
     public static Probe isNotRunning(MuleProcessController controller)
     {
         return new MuleStatusProbe(controller, false);
+    }
+
+    public boolean isSatisfied()
+    {
+        return check == controller.isRunning();
+    }
+
+    public String describeFailure()
+    {
+        return "Mule is " + (check ? "not " : "") + "running";
     }
 
 }

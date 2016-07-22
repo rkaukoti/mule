@@ -6,9 +6,10 @@
  */
 package org.mule.runtime.module.extension.internal.config;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.tck.testmodels.fruit.Apple;
 import org.mule.tck.testmodels.fruit.Banana;
@@ -19,14 +20,20 @@ import org.mule.test.vegan.extension.VeganExtension;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
 public class ConfigLevelOperationTestCase extends ExtensionFunctionalTestCase
 {
+
+    private final Class<? extends Fruit> fruitType;
+
+    public ConfigLevelOperationTestCase(Class<? extends Fruit> fruitType)
+    {
+        this.fruitType = fruitType;
+    }
 
     @Parameters
     public static Collection<Object[]> data()
@@ -34,13 +41,6 @@ public class ConfigLevelOperationTestCase extends ExtensionFunctionalTestCase
         return Arrays.asList(new Object[][] {
                 {Apple.class}, {Banana.class}, {Kiwi.class}
         });
-    }
-
-    private final Class<? extends Fruit> fruitType;
-
-    public ConfigLevelOperationTestCase(Class<? extends Fruit> fruitType)
-    {
-        this.fruitType = fruitType;
     }
 
     @Override

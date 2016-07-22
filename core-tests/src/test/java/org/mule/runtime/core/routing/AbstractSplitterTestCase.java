@@ -6,12 +6,7 @@
  */
 package org.mule.runtime.core.routing;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -29,7 +24,11 @@ import org.mule.tck.testmodels.fruit.Orange;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class AbstractSplitterTestCase extends AbstractMuleContextTestCase
 {
@@ -51,7 +50,7 @@ public class AbstractSplitterTestCase extends AbstractMuleContextTestCase
         fruitBowl.addFruit(orange);
 
         MuleEvent inEvent = new DefaultMuleEvent(MuleMessage.builder().payload(fruitBowl).build(),
-            getTestEvent(""));
+                getTestEvent(""));
 
         MuleEvent resultEvent = splitter.process(inEvent);
 

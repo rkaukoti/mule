@@ -6,9 +6,6 @@
  */
 package org.mule.extension.email.internal.commands;
 
-import static javax.mail.Folder.READ_ONLY;
-import static org.mule.extension.email.api.EmailAttributesBuilder.fromMessage;
-
 import org.mule.extension.email.api.EmailAttributes;
 import org.mule.extension.email.api.EmailContentProcessor;
 import org.mule.extension.email.api.exception.EmailRetrieverException;
@@ -22,6 +19,9 @@ import java.util.function.Predicate;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+
+import static javax.mail.Folder.READ_ONLY;
+import static org.mule.extension.email.api.EmailAttributesBuilder.fromMessage;
 
 /**
  * Represents the list emails operation.
@@ -44,7 +44,8 @@ public final class ListCommand
      * @param connection  the associated {@link RetrieverConnection}.
      * @param folderName  the name of the folder where the emails are stored.
      * @param readContent if should read the email content or not.
-     * @param matcher     a {@link Predicate} of {@link EmailAttributes} used to filter the output list  @return a {@link List} of {@link MuleMessage} carrying all the emails and it's corresponding attributes.
+     * @param matcher     a {@link Predicate} of {@link EmailAttributes} used to filter the output list  @return a {@link List} of {@link
+     *                    MuleMessage} carrying all the emails and it's corresponding attributes.
      */
     public List<MuleMessage> list(RetrieverConnection connection,
                                   String folderName,

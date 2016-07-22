@@ -22,8 +22,7 @@ public interface ArtifactDescriptorFactory<T extends ArtifactDescriptor>
      *
      * @param artifactFolder an existing folder containing artifact files
      * @return a non null descriptor
-     * @throws ArtifactDescriptorCreateException if the factory is not able to create a
-     *                                  descriptor from the folder.
+     * @throws ArtifactDescriptorCreateException if the factory is not able to create a descriptor from the folder.
      */
     T create(File artifactFolder) throws ArtifactDescriptorCreateException;
 }

@@ -10,15 +10,14 @@ import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.util.concurrent.ThreadNameHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class DefaultProcessingTimeWatcher implements ProcessingTimeWatcher, MuleContextAware
 {
@@ -61,6 +60,33 @@ public class DefaultProcessingTimeWatcher implements ProcessingTimeWatcher, Mule
         this.muleContext = muleContext;
     }
 
+    /**
+     * Weak reference that includes flow statistics to be updated
+     */
+    static class ProcessingTimeReference extends WeakReference<ProcessingTime>
+    {
+
+        private FlowConstructStatistics statistics;
+        private AtomicLong accumulator;
+
+        ProcessingTimeReference(ProcessingTime time, ReferenceQueue<ProcessingTime> queue)
+        {
+            super(time, queue);
+            this.statistics = time.getStatistics();
+            this.accumulator = time.getAccumulator();
+        }
+
+        public AtomicLong getAccumulator()
+        {
+            return accumulator;
+        }
+
+        public FlowConstructStatistics getStatistics()
+        {
+            return statistics;
+        }
+    }
+
     private class ProcessingTimeChecker implements Runnable
     {
 
@@ -93,33 +119,6 @@ public class DefaultProcessingTimeWatcher implements ProcessingTimeWatcher, Mule
                     logger.error("Error running {}. Thread will be stopped", this, ex);
                 }
             }
-        }
-    }
-
-    /**
-     * Weak reference that includes flow statistics to be updated
-     */
-    static class ProcessingTimeReference extends WeakReference<ProcessingTime>
-    {
-
-        private FlowConstructStatistics statistics;
-        private AtomicLong accumulator;
-
-        ProcessingTimeReference(ProcessingTime time, ReferenceQueue<ProcessingTime> queue)
-        {
-            super(time, queue);
-            this.statistics = time.getStatistics();
-            this.accumulator = time.getAccumulator();
-        }
-
-        public AtomicLong getAccumulator()
-        {
-            return accumulator;
-        }
-
-        public FlowConstructStatistics getStatistics()
-        {
-            return statistics;
         }
     }
 }

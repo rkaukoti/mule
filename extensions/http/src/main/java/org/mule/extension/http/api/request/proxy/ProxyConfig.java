@@ -7,9 +7,9 @@
 package org.mule.extension.http.api.request.proxy;
 
 /**
- *  HTTP proxy configuration for making http requests.
+ * HTTP proxy configuration for making http requests.
  *
- *  @since 4.0
+ * @since 4.0
  */
 public interface ProxyConfig
 {

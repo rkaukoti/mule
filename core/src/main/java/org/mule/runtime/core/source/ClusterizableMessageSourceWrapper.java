@@ -21,7 +21,6 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.source.ClusterizableMessageSource;
 import org.mule.runtime.core.api.source.MessageSource;
 import org.mule.runtime.core.lifecycle.PrimaryNodeLifecycleNotificationListener;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,16 +29,15 @@ import org.slf4j.LoggerFactory;
  * of the wrapped instance differently depending if the node is primary or not
  * inside a cluster. Non clustered nodes are always primary.
  */
-public class ClusterizableMessageSourceWrapper implements MessageSource, Lifecycle,  MuleContextAware, FlowConstructAware
+public class ClusterizableMessageSourceWrapper implements MessageSource, Lifecycle, MuleContextAware, FlowConstructAware
 {
 
     protected static final Logger logger = LoggerFactory.getLogger(ClusterizableMessageSourceWrapper.class);
-
-    private PrimaryNodeLifecycleNotificationListener primaryNodeLifecycleNotificationListener;
     private final ClusterizableMessageSource messageSource;
+    private final Object lock = new Object();
+    private PrimaryNodeLifecycleNotificationListener primaryNodeLifecycleNotificationListener;
     private MuleContext muleContext;
     private FlowConstruct flowConstruct;
-    private final Object lock = new Object();
     private boolean started;
     private boolean messageSourceStarted;
 
@@ -64,15 +62,17 @@ public class ClusterizableMessageSourceWrapper implements MessageSource, Lifecyc
     @Override
     public void initialise() throws InitialisationException
     {
-        primaryNodeLifecycleNotificationListener = new PrimaryNodeLifecycleNotificationListener(new Startable() {
+        primaryNodeLifecycleNotificationListener = new PrimaryNodeLifecycleNotificationListener(new Startable()
+        {
             @Override
-            public void start() throws MuleException {
+            public void start() throws MuleException
+            {
                 if (ClusterizableMessageSourceWrapper.this.isStarted())
                 {
                     ClusterizableMessageSourceWrapper.this.start();
                 }
             }
-        },muleContext);
+        }, muleContext);
 
         primaryNodeLifecycleNotificationListener.register();
 

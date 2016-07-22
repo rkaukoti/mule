@@ -7,18 +7,18 @@
 
 package org.mule.runtime.module.db.integration.template;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.module.db.internal.domain.param.InputQueryParam;
 import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
 import org.mule.runtime.module.db.internal.domain.query.QueryType;
 import org.mule.runtime.module.db.internal.domain.type.UnknownDbType;
-import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.junit4.rule.SystemProperty;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class TemplateQueryConfigTestCase extends FunctionalTestCase
 {
@@ -30,10 +30,10 @@ public class TemplateQueryConfigTestCase extends FunctionalTestCase
     public SystemProperty query = new SystemProperty("query", "SELECT * FROM PLANET WHERE POSITION = :position");
 
     @Rule
-    public SystemProperty dynamicQuery= new SystemProperty("dynamicQuery", "SELECT * FROM PLANET WHERE POSITION = #[position]");
+    public SystemProperty dynamicQuery = new SystemProperty("dynamicQuery", "SELECT * FROM PLANET WHERE POSITION = #[position]");
 
     @Rule
-    public SystemProperty param= new SystemProperty("param", "1");
+    public SystemProperty param = new SystemProperty("param", "1");
 
     @Override
     protected String getConfigFile()

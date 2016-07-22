@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.module.scripting;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleMessage;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import org.junit.Test;
 
 public class GroovyRegistryLookupTestCase extends FunctionalTestCase
 {

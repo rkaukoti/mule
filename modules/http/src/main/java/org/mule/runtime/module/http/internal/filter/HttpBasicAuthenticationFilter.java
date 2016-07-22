@@ -6,12 +6,6 @@
  */
 package org.mule.runtime.module.http.internal.filter;
 
-import static com.google.common.net.HttpHeaders.AUTHORIZATION;
-import static com.google.common.net.HttpHeaders.WWW_AUTHENTICATE;
-import static org.apache.commons.codec.binary.Base64.decodeBase64;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.UNAUTHORIZED;
-import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -28,9 +22,15 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.security.AbstractAuthenticationFilter;
 import org.mule.runtime.core.security.DefaultMuleAuthentication;
 import org.mule.runtime.core.security.MuleCredentials;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.google.common.net.HttpHeaders.AUTHORIZATION;
+import static com.google.common.net.HttpHeaders.WWW_AUTHENTICATE;
+import static org.apache.commons.codec.binary.Base64.decodeBase64;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.UNAUTHORIZED;
+import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
 
 /**
  * Filter for basic authentication over an HTTP request
@@ -102,7 +102,7 @@ public class HttpBasicAuthenticationFilter extends AbstractAuthenticationFilter
         }
         String finalRealmHeader = realmHeader;
         event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty(WWW_AUTHENTICATE, finalRealmHeader)
-                                 .addOutboundProperty(HTTP_STATUS_PROPERTY, UNAUTHORIZED.getStatusCode()).build());
+                                    .addOutboundProperty(HTTP_STATUS_PROPERTY, UNAUTHORIZED.getStatusCode()).build());
     }
 
     /**
@@ -113,7 +113,9 @@ public class HttpBasicAuthenticationFilter extends AbstractAuthenticationFilter
      * @throws org.mule.runtime.core.api.security.SecurityException if authentication fails
      */
     @Override
-    public void authenticate(MuleEvent event) throws SecurityException, UnknownAuthenticationTypeException, CryptoFailureException, SecurityProviderNotFoundException, EncryptionStrategyNotFoundException, InitialisationException
+    public void authenticate(MuleEvent event)
+            throws SecurityException, UnknownAuthenticationTypeException, CryptoFailureException, SecurityProviderNotFoundException,
+            EncryptionStrategyNotFoundException, InitialisationException
     {
         String header = event.getMessage().getInboundProperty(AUTHORIZATION);
 
@@ -173,7 +175,8 @@ public class HttpBasicAuthenticationFilter extends AbstractAuthenticationFilter
         else
         {
             setUnauthenticated(event);
-            throw new UnsupportedAuthenticationSchemeException(createStaticMessage("Http Basic filter doesn't know how to handle header " + header), event);
+            throw new UnsupportedAuthenticationSchemeException(
+                    createStaticMessage("Http Basic filter doesn't know how to handle header " + header), event);
         }
     }
 }

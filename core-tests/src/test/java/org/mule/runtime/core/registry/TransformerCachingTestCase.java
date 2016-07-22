@@ -6,9 +6,7 @@
  */
 package org.mule.runtime.core.registry;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.DiscoverableTransformer;
 import org.mule.runtime.core.api.transformer.Transformer;
@@ -20,7 +18,8 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import java.io.FilterInputStream;
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class TransformerCachingTestCase extends AbstractMuleContextTestCase
 {

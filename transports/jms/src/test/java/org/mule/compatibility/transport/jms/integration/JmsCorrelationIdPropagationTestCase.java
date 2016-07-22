@@ -6,8 +6,7 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
-import static org.mule.functional.functional.FlowAssert.verify;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.transformer.TransformerException;
@@ -15,7 +14,7 @@ import org.mule.runtime.core.transformer.AbstractMessageTransformer;
 
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import static org.mule.functional.functional.FlowAssert.verify;
 
 /**
  * Tests the correct propagation of the correlation id property within the JMS transport. This test is related to MULE-6577.

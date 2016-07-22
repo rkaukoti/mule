@@ -19,9 +19,9 @@ import javax.resource.spi.work.Work;
  * The worker is responsible of:
  * <p/>
  * <ul>
- *     <li>Stops the task if the worker get's interrupted</li>
- *     <li>Does not run the task if the worker is stopped</li>
- *     <li>calls {@link SystemExceptionHandler} in case the task throws an exception</li>
+ * <li>Stops the task if the worker get's interrupted</li>
+ * <li>Does not run the task if the worker is stopped</li>
+ * <li>calls {@link SystemExceptionHandler} in case the task throws an exception</li>
  * </ul>
  */
 public class PollingWorker implements Work
@@ -31,7 +31,7 @@ public class PollingWorker implements Work
     protected volatile boolean running = false;
 
     /**
-     * @param task task to be executed by the worker
+     * @param task                   task to be executed by the worker
      * @param systemExceptionHandler exception handler for task exceptions
      */
     public PollingWorker(PollingTask task, SystemExceptionHandler systemExceptionHandler)

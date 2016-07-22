@@ -7,7 +7,6 @@
 package org.mule.runtime.config.spring.parsers.assembly;
 
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 

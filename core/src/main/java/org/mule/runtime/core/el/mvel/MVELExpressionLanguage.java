@@ -6,8 +6,15 @@
  */
 package org.mule.runtime.core.el.mvel;
 
-import static org.mule.runtime.core.expression.DefaultExpressionManager.OBJECT_FOR_ENRICHMENT;
-import static org.mule.runtime.core.expression.DefaultExpressionManager.removeExpressionMarker;
+import org.mule.mvel2.CompileException;
+import org.mule.mvel2.ParserConfiguration;
+import org.mule.mvel2.ast.Function;
+import org.mule.mvel2.compiler.ExpressionCompiler;
+import org.mule.mvel2.integration.VariableResolverFactory;
+import org.mule.mvel2.integration.impl.CachedMapVariableResolverFactory;
+import org.mule.mvel2.util.CompilerTools;
+import org.mule.runtime.api.metadata.AbstractDataTypeBuilderFactory;
+import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.el.ExpressionLanguage;
@@ -16,19 +23,10 @@ import org.mule.runtime.core.api.expression.ExpressionRuntimeException;
 import org.mule.runtime.core.api.expression.InvalidExpressionException;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
-import org.mule.runtime.api.metadata.DataType;
-import org.mule.runtime.api.metadata.AbstractDataTypeBuilderFactory;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.el.mvel.datatype.MvelDataTypeResolver;
 import org.mule.runtime.core.el.mvel.datatype.MvelEnricherDataTypePropagator;
 import org.mule.runtime.core.metadata.TypedValue;
-import org.mule.mvel2.CompileException;
-import org.mule.mvel2.ParserConfiguration;
-import org.mule.mvel2.ast.Function;
-import org.mule.mvel2.compiler.ExpressionCompiler;
-import org.mule.mvel2.integration.VariableResolverFactory;
-import org.mule.mvel2.integration.impl.CachedMapVariableResolverFactory;
-import org.mule.mvel2.util.CompilerTools;
 import org.mule.runtime.core.util.IOUtils;
 
 import java.io.IOException;
@@ -43,6 +41,9 @@ import java.util.regex.Pattern;
 
 import javax.activation.DataHandler;
 import javax.activation.MimeType;
+
+import static org.mule.runtime.core.expression.DefaultExpressionManager.OBJECT_FOR_ENRICHMENT;
+import static org.mule.runtime.core.expression.DefaultExpressionManager.removeExpressionMarker;
 
 /**
  * Expression language that uses MVEL (http://mvel.codehaus.org/).
@@ -71,6 +72,41 @@ public class MVELExpressionLanguage implements ExpressionLanguage, Initialisable
         this.muleContext = muleContext;
     }
 
+    public static ParserConfiguration createParserConfiguration(Map<String, Class<?>> imports)
+    {
+        ParserConfiguration ParserConfiguration = new ParserConfiguration();
+        configureParserConfiguration(ParserConfiguration, imports);
+        return ParserConfiguration;
+    }
+
+    protected static void configureParserConfiguration(ParserConfiguration parserConfiguration, Map<String, Class<?>> imports)
+    {
+        // defaults imports
+
+        // JRE
+        parserConfiguration.addPackageImport("java.io");
+        parserConfiguration.addPackageImport("java.lang");
+        parserConfiguration.addPackageImport("java.net");
+        parserConfiguration.addPackageImport("java.util");
+
+        parserConfiguration.addImport(BigDecimal.class);
+        parserConfiguration.addImport(BigInteger.class);
+        parserConfiguration.addImport(DataHandler.class);
+        parserConfiguration.addImport(MimeType.class);
+        parserConfiguration.addImport(Pattern.class);
+
+        // Mule
+        parserConfiguration.addImport(DataType.class);
+        parserConfiguration.addImport(AbstractDataTypeBuilderFactory.class);
+
+        // Global imports
+        for (Entry<String, Class<?>> importEntry : imports.entrySet())
+        {
+            parserConfiguration.addImport(importEntry.getKey(), importEntry.getValue());
+        }
+
+    }
+
     @Override
     public void initialise() throws InitialisationException
     {
@@ -85,7 +121,7 @@ public class MVELExpressionLanguage implements ExpressionLanguage, Initialisable
     {
         staticContext = new StaticVariableResolverFactory(parserConfiguration, muleContext);
         globalContext = new GlobalVariableResolverFactory(getAliases(), getGlobalFunctions(),
-            parserConfiguration, muleContext);
+                parserConfiguration, muleContext);
     }
 
     protected void loadGlobalFunctions() throws InitialisationException
@@ -96,7 +132,7 @@ public class MVELExpressionLanguage implements ExpressionLanguage, Initialisable
             try
             {
                 globalFunctions.putAll(CompilerTools.extractAllDeclaredFunctions(new ExpressionCompiler(
-                    IOUtils.getResourceAsString(globalFunctionsFile, getClass())).compile()));
+                        IOUtils.getResourceAsString(globalFunctionsFile, getClass())).compile()));
             }
             catch (IOException e)
             {
@@ -124,7 +160,7 @@ public class MVELExpressionLanguage implements ExpressionLanguage, Initialisable
         if (vars != null)
         {
             context.setNextFactory(new CachedMapVariableResolverFactory(vars,
-                new DelegateVariableResolverFactory(staticContext, globalContext)));
+                    new DelegateVariableResolverFactory(staticContext, globalContext)));
         }
         else
         {
@@ -151,16 +187,16 @@ public class MVELExpressionLanguage implements ExpressionLanguage, Initialisable
         if (vars != null)
         {
             context.setNextFactory(new CachedMapVariableResolverFactory(vars,
-                new DelegateVariableResolverFactory(staticContext, new EventVariableResolverFactory(
-                    parserConfiguration, muleContext, event, new DelegateVariableResolverFactory(
-                        globalContext, createVariableVariableResolverFactory(event))))));
+                    new DelegateVariableResolverFactory(staticContext, new EventVariableResolverFactory(
+                            parserConfiguration, muleContext, event, new DelegateVariableResolverFactory(
+                            globalContext, createVariableVariableResolverFactory(event))))));
         }
         else
         {
             context.setNextFactory(new DelegateVariableResolverFactory(staticContext,
-                new EventVariableResolverFactory(parserConfiguration, muleContext, event,
-                    new DelegateVariableResolverFactory(globalContext,
-                        createVariableVariableResolverFactory(event)))));
+                    new EventVariableResolverFactory(parserConfiguration, muleContext, event,
+                            new DelegateVariableResolverFactory(globalContext,
+                                    createVariableVariableResolverFactory(event)))));
         }
         return evaluateInternal(expression, context);
     }
@@ -247,49 +283,9 @@ public class MVELExpressionLanguage implements ExpressionLanguage, Initialisable
         return new MVELExpressionLanguageContext(parserConfiguration, muleContext);
     }
 
-    public static ParserConfiguration createParserConfiguration(Map<String, Class<?>> imports)
-    {
-        ParserConfiguration ParserConfiguration = new ParserConfiguration();
-        configureParserConfiguration(ParserConfiguration, imports);
-        return ParserConfiguration;
-    }
-
-    protected static void configureParserConfiguration(ParserConfiguration parserConfiguration, Map<String, Class<?>> imports)
-    {
-        // defaults imports
-
-        // JRE
-        parserConfiguration.addPackageImport("java.io");
-        parserConfiguration.addPackageImport("java.lang");
-        parserConfiguration.addPackageImport("java.net");
-        parserConfiguration.addPackageImport("java.util");
-
-        parserConfiguration.addImport(BigDecimal.class);
-        parserConfiguration.addImport(BigInteger.class);
-        parserConfiguration.addImport(DataHandler.class);
-        parserConfiguration.addImport(MimeType.class);
-        parserConfiguration.addImport(Pattern.class);
-
-        // Mule
-        parserConfiguration.addImport(DataType.class);
-        parserConfiguration.addImport(AbstractDataTypeBuilderFactory.class);
-
-        // Global imports
-        for (Entry<String, Class<?>> importEntry : imports.entrySet())
-        {
-            parserConfiguration.addImport(importEntry.getKey(), importEntry.getValue());
-        }
-
-    }
-
     public void setGlobalFunctionsString(String globalFunctionsString)
     {
         this.globalFunctionsString = globalFunctionsString;
-    }
-
-    public void setAliases(Map<String, String> aliases)
-    {
-        this.aliases = aliases;
     }
 
     public void setImports(Map<String, Class<?>> imports)
@@ -344,6 +340,11 @@ public class MVELExpressionLanguage implements ExpressionLanguage, Initialisable
         return aliases;
     }
 
+    public void setAliases(Map<String, String> aliases)
+    {
+        this.aliases = aliases;
+    }
+
     public Map<String, Function> getGlobalFunctions()
     {
         return globalFunctions;
@@ -353,7 +354,6 @@ public class MVELExpressionLanguage implements ExpressionLanguage, Initialisable
     {
         return parserConfiguration;
     }
-
 
 
 }

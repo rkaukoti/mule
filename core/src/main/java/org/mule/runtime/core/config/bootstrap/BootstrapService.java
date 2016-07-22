@@ -27,13 +27,9 @@ public interface BootstrapService
      * @param name            fully qualified class name to instantiate
      * @param constructorArgs constructor arguments
      * @return a non null instance of the given class
-     * @throws ClassNotFoundException
-     * @throws NoSuchMethodException
-     * @throws InvocationTargetException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
      */
-    Object instantiateClass(String name, Object... constructorArgs) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException;
+    Object instantiateClass(String name, Object... constructorArgs)
+            throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException;
 
     /**
      * Searches for a class in the service's class loader

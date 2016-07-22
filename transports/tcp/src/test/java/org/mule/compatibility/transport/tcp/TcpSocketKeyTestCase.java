@@ -6,6 +6,11 @@
  */
 package org.mule.compatibility.transport.tcp;
 
+import org.junit.Test;
+import org.mule.compatibility.core.api.endpoint.EndpointURI;
+import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
+import org.mule.runtime.core.api.MuleException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -13,15 +18,7 @@ import static org.junit.Assert.assertNotSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.mule.compatibility.core.api.endpoint.EndpointURI;
-import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
-import org.mule.compatibility.transport.tcp.TcpConnector;
-import org.mule.compatibility.transport.tcp.TcpSocketKey;
-import org.mule.runtime.core.api.MuleException;
-
-import org.junit.Test;
-
-public class TcpSocketKeyTestCase 
+public class TcpSocketKeyTestCase
 {
 
     @Test
@@ -46,12 +43,12 @@ public class TcpSocketKeyTestCase
         assertFalse(key1in.hashCode() == key2in.hashCode());
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testUnresolvedHost()
     {
         final TcpConnector tcpConnector = mock(TcpConnector.class);
         when(tcpConnector.isFailOnUnresolvedHost()).thenReturn(Boolean.TRUE);
-        
+
         final ImmutableEndpoint endpoint = createEndpoint(tcpConnector, "some.invented.host_abc", 8080);
         @SuppressWarnings("unused")
         final TcpSocketKey key = new TcpSocketKey(endpoint);
@@ -62,7 +59,7 @@ public class TcpSocketKeyTestCase
     {
         final TcpConnector tcpConnector = mock(TcpConnector.class);
         when(tcpConnector.isFailOnUnresolvedHost()).thenReturn(Boolean.TRUE);
-        
+
         final ImmutableEndpoint endpoint = createEndpoint(tcpConnector, "localhost", 8080);
         final TcpSocketKey key = new TcpSocketKey(endpoint);
         assertNotNull(key);

@@ -6,9 +6,6 @@
  */
 package org.mule.functional.junit4;
 
-import static java.util.Collections.emptyMap;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.DOMAIN;
-
 import org.mule.runtime.config.spring.SpringXmlConfigurationBuilder;
 import org.mule.runtime.core.DefaultMuleContext;
 import org.mule.runtime.core.api.MuleContext;
@@ -19,6 +16,9 @@ import org.mule.runtime.core.context.DefaultMuleContextFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Collections.emptyMap;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.DOMAIN;
 
 public class DomainContextBuilder
 {

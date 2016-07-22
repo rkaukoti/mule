@@ -174,7 +174,7 @@ public class NumberUtils extends org.apache.commons.lang.math.NumberUtils
 
     @SuppressWarnings("unchecked")
     public static <T extends Number> T convertNumberToTargetClass(Number number, Class<T> targetClass)
-        throws IllegalArgumentException
+            throws IllegalArgumentException
     {
 
         if (targetClass.isInstance(number))
@@ -250,8 +250,8 @@ public class NumberUtils extends org.apache.commons.lang.math.NumberUtils
 
     /**
      * Raise an overflow exception for the given number and target class.
-     * 
-     * @param number the number we tried to convert
+     *
+     * @param number      the number we tried to convert
      * @param targetClass the target class we tried to convert to
      */
     private static void raiseOverflowException(Number number, Class targetClass)

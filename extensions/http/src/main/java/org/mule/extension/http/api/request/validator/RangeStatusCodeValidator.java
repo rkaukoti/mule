@@ -32,7 +32,7 @@ public abstract class RangeStatusCodeValidator implements ResponseValidator
             {
                 String[] limits = valuePart.split("\\.\\.");
                 int lower = Integer.parseInt(limits[0]);
-                int upper = Integer.parseInt(limits[1]) ;
+                int upper = Integer.parseInt(limits[1]);
 
                 if (value >= lower && value <= upper)
                 {

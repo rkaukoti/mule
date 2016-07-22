@@ -17,5 +17,5 @@
                        monthlyIncomes="monthlyIncomes"
                        finalHealth="DEAD"
                        candidateDoors="candidateDoors"
-                       firstEndevour="#['random company']" />
+                       firstEndevour="#['random company']"/>
 </mule>

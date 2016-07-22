@@ -17,7 +17,6 @@ import org.mule.runtime.module.db.internal.resolver.query.DynamicQueryResolver;
 import org.mule.runtime.module.db.internal.resolver.query.ParametrizedQueryResolver;
 import org.mule.runtime.module.db.internal.resolver.query.QueryResolver;
 import org.mule.runtime.module.db.internal.resolver.query.StaticQueryResolver;
-
 import org.springframework.beans.factory.FactoryBean;
 
 public class QueryResolverFactoryBean implements FactoryBean<QueryResolver>, MuleContextAware

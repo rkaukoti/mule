@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/schedulers"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:mule="http://www.mulesoft.org/schema/mule/core"
-            xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
-            xmlns:beans="http://www.springframework.org/schema/beans"
+            xmlns="http://www.mulesoft.org/schema/mule/schedulers"
             targetNamespace="http://www.mulesoft.org/schema/mule/schedulers"
             elementFormDefault="qualified" attributeFormDefault="unqualified">
 
@@ -29,7 +27,8 @@
                 <xsd:attribute name="timeZone" type="xsd:string">
                     <xsd:annotation>
                         <xsd:documentation>
-                            The ID of the time zone in which the expression will be based. Refer to <a href="https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html">java.util.TimeZone</a> for the format and possible values of the timeZone ID.
+                            The ID of the time zone in which the expression will be based. Refer to <a href="https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html">java.util.TimeZone</a> for
+                            the format and possible values of the timeZone ID.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>

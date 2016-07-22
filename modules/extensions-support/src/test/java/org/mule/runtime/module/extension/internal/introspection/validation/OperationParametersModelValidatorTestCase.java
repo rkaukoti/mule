@@ -6,18 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
-import static java.util.Arrays.asList;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.TARGET_ATTRIBUTE;
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.TRANSACTIONAL_ACTION_PARAMETER_NAME;
-import org.mule.runtime.extension.api.introspection.ExtensionModel;
-import org.mule.runtime.extension.api.introspection.operation.OperationModel;
-import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
-import org.mule.runtime.module.extension.internal.exception.IllegalOperationModelDefinitionException;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
 import com.google.common.collect.ImmutableList;
 
 import org.junit.Before;
@@ -25,6 +13,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.extension.api.introspection.ExtensionModel;
+import org.mule.runtime.extension.api.introspection.operation.OperationModel;
+import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
+import org.mule.runtime.module.extension.internal.exception.IllegalOperationModelDefinitionException;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import static java.util.Arrays.asList;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.TARGET_ATTRIBUTE;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.TRANSACTIONAL_ACTION_PARAMETER_NAME;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)

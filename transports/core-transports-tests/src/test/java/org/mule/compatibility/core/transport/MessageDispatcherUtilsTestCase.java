@@ -6,14 +6,12 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.compatibility.core.api.transport.MessageDispatcher;
-import org.mule.compatibility.core.transport.AbstractConnector;
-import org.mule.compatibility.core.transport.ConnectorLifecycleManager;
-import org.mule.compatibility.core.transport.MessageDispatcherUtils;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.lifecycle.LifecycleState;
@@ -22,11 +20,9 @@ import org.mule.runtime.core.api.lifecycle.Stoppable;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)

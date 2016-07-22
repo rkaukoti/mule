@@ -7,15 +7,14 @@
 package org.mule.runtime.module.http.internal.domain.request;
 
 import org.mule.runtime.core.util.Preconditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 import java.security.cert.Certificate;
 
 import javax.net.ssl.SSLPeerUnverifiedException;
 import javax.net.ssl.SSLSession;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides information about the client connection
@@ -35,8 +34,7 @@ public class ClientConnection
     }
 
     /**
-     * @param sslSession        the SSL session
-     * @param remoteHostAddress
+     * @param sslSession the SSL session
      */
     public ClientConnection(SSLSession sslSession, InetSocketAddress remoteHostAddress)
     {
@@ -55,8 +53,8 @@ public class ClientConnection
     }
 
     /**
-     * @return the client certificate provided during the TLS client authentication, returns null if the TLS connection
-     * didn't require client authentication or if the connection is not using TLS.
+     * @return the client certificate provided during the TLS client authentication, returns null if the TLS connection didn't require
+     * client authentication or if the connection is not using TLS.
      */
     public Certificate getClientCertificate()
     {

@@ -33,7 +33,7 @@ public class NotificationLifecycleObject extends LifecycleObject
     {
         super(type);
 
-        if (notificationClass==null)
+        if (notificationClass == null)
         {
             throw new IllegalArgumentException(CoreMessages.objectIsNull("notificationClass").toString());
         }
@@ -43,13 +43,16 @@ public class NotificationLifecycleObject extends LifecycleObject
 
         if (!ServerNotification.class.isAssignableFrom(notificationClass))
         {
-            throw new ClassCastException("Notification class must be of type: " + ServerNotification.class.getName() + ". Offending class is: " + notificationClass.getName());
+            throw new ClassCastException(
+                    "Notification class must be of type: " + ServerNotification.class.getName() + ". Offending class is: " +
+                    notificationClass.getName());
         }
 
-        ctor = ClassUtils.getConstructor(notificationClass, new Class[]{Object.class, String.class});
-        if(ctor==null)
+        ctor = ClassUtils.getConstructor(notificationClass, new Class[] {Object.class, String.class});
+        if (ctor == null)
         {
-            throw new IllegalArgumentException("No constructor defined in Notification class: " + notificationClass + " with arguments (Object.class, String.class)");
+            throw new IllegalArgumentException(
+                    "No constructor defined in Notification class: " + notificationClass + " with arguments (Object.class, String.class)");
         }
     }
 
@@ -83,7 +86,7 @@ public class NotificationLifecycleObject extends LifecycleObject
     @Override
     public void firePreNotification(MuleContext context)
     {
-        if(getPreNotificationName()!=null)
+        if (getPreNotificationName() != null)
         {
             setPreNotification(createNotification(context, getPreNotificationName()));
         }
@@ -94,7 +97,7 @@ public class NotificationLifecycleObject extends LifecycleObject
     @Override
     public void firePostNotification(MuleContext context)
     {
-        if(getPostNotificationName()!=null)
+        if (getPostNotificationName() != null)
         {
             setPostNotification(createNotification(context, getPostNotificationName()));
         }
@@ -105,11 +108,11 @@ public class NotificationLifecycleObject extends LifecycleObject
     {
         try
         {
-            return (ServerNotification)ctor.newInstance(context, action);
+            return (ServerNotification) ctor.newInstance(context, action);
         }
         catch (Exception e)
         {
-            throw new MuleRuntimeException(CoreMessages.failedToCreate("Notification:" + action) ,e);
+            throw new MuleRuntimeException(CoreMessages.failedToCreate("Notification:" + action), e);
         }
     }
 }

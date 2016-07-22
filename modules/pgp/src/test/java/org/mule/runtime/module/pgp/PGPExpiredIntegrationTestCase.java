@@ -6,19 +6,19 @@
  */
 package org.mule.runtime.module.pgp;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.ExceptionPayload;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.api.processor.MessageProcessor;
-import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.util.ExceptionUtils;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class PGPExpiredIntegrationTestCase extends FunctionalTestCase
 {
@@ -43,7 +43,7 @@ public class PGPExpiredIntegrationTestCase extends FunctionalTestCase
 
         assertNotNull("flow's exception strategy should have caught an exception", exceptionFromFlow);
         InvalidPublicKeyException ipke =
-            ExceptionUtils.getDeepestOccurenceOfType(exceptionFromFlow, InvalidPublicKeyException.class);
+                ExceptionUtils.getDeepestOccurenceOfType(exceptionFromFlow, InvalidPublicKeyException.class);
         assertNotNull("root cause must be a InvalidPublicKeyException", ipke);
         assertTrue(ipke.getMessage().contains("has expired"));
     }

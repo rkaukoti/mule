@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
  * Implementation of {@link org.mule.runtime.core.streaming.Consumer} that obains a {@link List}
  * from a {@link Producer} and returns the elements one by one. This implementation
  * is not thread-safe.
- * 
+ *
  * @since 3.5.0
  */
 public class ListConsumer<T> extends AbstractConsumer<T, List<T>>

@@ -7,19 +7,10 @@
 package org.mule.runtime.config.spring;
 
 
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.runtime.core.util.IOUtils;
-import org.w3c.dom.Document;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import org.junit.Test;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.fail;
-
+import org.mule.runtime.core.util.IOUtils;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -27,17 +18,26 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 /**
  * Check that all top-level elements (direct children of Mule) are instances of
  * "annotatedType"
  */
 public class CheckAnnotatedTestCase extends AbstractMuleTestCase
 {
-    private Document schema;
-    private Element  top;
-    private Set<String> annotated = new HashSet<String>();
     private static final String annotatedType = "annotatedType";
     private static final String annotatedMixedContentType = "annotatedMixedContentType";
+    private Document schema;
+    private Element top;
+    private Set<String> annotated = new HashSet<String>();
+    // Stdio will never support services or models
+    private Set<String> allowedExceptions = new HashSet<String>();
 
     // Add base annotated types
     {
@@ -45,8 +45,6 @@ public class CheckAnnotatedTestCase extends AbstractMuleTestCase
         annotated.add(annotatedMixedContentType);
     }
 
-    // Stdio will never support services or models
-    private Set<String> allowedExceptions = new HashSet<String>();
     {
         allowedExceptions.add("abstractModelType");
     }
@@ -133,9 +131,9 @@ public class CheckAnnotatedTestCase extends AbstractMuleTestCase
         for (Node node = parent.getFirstChild(); node != null; node = node.getNextSibling())
         {
             if (node instanceof Element && type.equals(node.getLocalName()) &&
-                ((Element)node).getAttribute("name").equals(name))
+                ((Element) node).getAttribute("name").equals(name))
             {
-                return (Element)node;
+                return (Element) node;
             }
         }
         return null;
@@ -167,19 +165,19 @@ public class CheckAnnotatedTestCase extends AbstractMuleTestCase
             if (node instanceof Element)
             {
                 Element elm = (Element) node;
-                if("element".equals(node.getLocalName()))
+                if ("element".equals(node.getLocalName()))
                 {
                     children.add(findElement(elm));
                 }
                 else if ("sequence".equals(node.getLocalName()) ||
-                    "choice".equals(node.getLocalName()) ||
-                    "group".equals(node.getLocalName()))
+                         "choice".equals(node.getLocalName()) ||
+                         "group".equals(node.getLocalName()))
                 {
                     Set<Element> elms = collectElementChildren(elm);
-                     for (Element e : elms)
-                     {
-                         children.add(findElement(e));
-                     }
+                    for (Element e : elms)
+                    {
+                        children.add(findElement(e));
+                    }
                 }
             }
         }

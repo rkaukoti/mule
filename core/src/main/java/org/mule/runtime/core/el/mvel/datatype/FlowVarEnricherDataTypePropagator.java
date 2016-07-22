@@ -7,9 +7,10 @@
 
 package org.mule.runtime.core.el.mvel.datatype;
 
-import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.FLOW_VARS;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.metadata.TypedValue;
+
+import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.FLOW_VARS;
 
 /**
  * Propagates data type for flow vars used for enrichment target

@@ -6,67 +6,66 @@
  */
 package org.mule.runtime.module.json.transformers;
 
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.transformer.TransformerMessagingException;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
+import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 
-import org.junit.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
-
 public class JsonXsltTestCase extends AbstractMuleContextTestCase
 {
     private static final String JSON_INPUT =
-        "{\n" +
-        "  \"customer\" : {\n" +
-        "    \"id\" : 112,\n" +
-        "    \"first-name\" : \"Jane\",\n" +
-        "    \"last-name\" : \"Doe\",\n" +
-        "    \"address\" : {\n" +
-        "      \"street\" : \"123 A Street\"\n" +
-        "    },\n" +
-        "    \"phone-number\" : [ {\n" +
-        "      \"@type\" : \"work\",\n" +
-        "      \"$\" : \"555-1111\"\n" +
-        "    }, {\n" +
-        "      \"@type\" : \"cell\",\n" +
-        "      \"$\" : \"555-2222\"\n" +
-        "    } ]\n" +
-        "  }\n" +
-        "}";
+            "{\n" +
+            "  \"customer\" : {\n" +
+            "    \"id\" : 112,\n" +
+            "    \"first-name\" : \"Jane\",\n" +
+            "    \"last-name\" : \"Doe\",\n" +
+            "    \"address\" : {\n" +
+            "      \"street\" : \"123 A Street\"\n" +
+            "    },\n" +
+            "    \"phone-number\" : [ {\n" +
+            "      \"@type\" : \"work\",\n" +
+            "      \"$\" : \"555-1111\"\n" +
+            "    }, {\n" +
+            "      \"@type\" : \"cell\",\n" +
+            "      \"$\" : \"555-2222\"\n" +
+            "    } ]\n" +
+            "  }\n" +
+            "}";
 
     private static final String EXPECTED_JSON =
-        "{" +
-        "    \"customer\" : {" +
-        "        \"id\" : \"112\"," +
-        "        \"first-name\" : \"Bill\"," +
-        "        \"last-name\" : \"Doe\"," +
-        "        \"address\" : {" +
-        "            \"street\" : \"123 A Street\"" +
-        "        }," +
-        "        \"phone-number\" : [ {" +
-        "            \"@type\" : \"work\"," +
-        "            \"$\" : \"555-1111\"" +
-        "        }, {" +
-        "            \"@type\" : \"cell\"," +
-        "            \"$\" : \"555-2222\"" +
-        "        } ]" +
-        "    }" +
-        "}";
+            "{" +
+            "    \"customer\" : {" +
+            "        \"id\" : \"112\"," +
+            "        \"first-name\" : \"Bill\"," +
+            "        \"last-name\" : \"Doe\"," +
+            "        \"address\" : {" +
+            "            \"street\" : \"123 A Street\"" +
+            "        }," +
+            "        \"phone-number\" : [ {" +
+            "            \"@type\" : \"work\"," +
+            "            \"$\" : \"555-1111\"" +
+            "        }, {" +
+            "            \"@type\" : \"cell\"," +
+            "            \"$\" : \"555-2222\"" +
+            "        } ]" +
+            "    }" +
+            "}";
 
     private static final String XSLT =
-        "<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\n" +
-        "  <xsl:template match=\"first-name\">\n" +
-        "    <first-name>Bill</first-name>\n" +
-        "  </xsl:template>\n" +
-        "  <xsl:template match=\"@*|node()\">\n" +
-        "    <xsl:copy>\n" +
-        "      <xsl:apply-templates select=\"@*|node()\"/>\n" +
-        "    </xsl:copy>\n" +
-        "  </xsl:template>\n" +
-        "</xsl:stylesheet>";
+            "<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\n" +
+            "  <xsl:template match=\"first-name\">\n" +
+            "    <first-name>Bill</first-name>\n" +
+            "  </xsl:template>\n" +
+            "  <xsl:template match=\"@*|node()\">\n" +
+            "    <xsl:copy>\n" +
+            "      <xsl:apply-templates select=\"@*|node()\"/>\n" +
+            "    </xsl:copy>\n" +
+            "  </xsl:template>\n" +
+            "</xsl:stylesheet>";
 
     private JsonXsltTransformer transformer;
 

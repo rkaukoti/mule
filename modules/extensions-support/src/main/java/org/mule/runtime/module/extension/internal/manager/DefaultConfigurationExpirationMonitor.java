@@ -6,23 +6,23 @@
  */
 package org.mule.runtime.module.extension.internal.manager;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.core.util.concurrent.ThreadNameHelper.getPrefix;
+import com.google.common.collect.Multimap;
+
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.extension.api.runtime.ConfigurationInstance;
-
-import com.google.common.collect.Multimap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.core.util.concurrent.ThreadNameHelper.getPrefix;
 
 /**
  * Default implementation of {@link ConfigurationExpirationMonitor} which schedules tasks that run
@@ -38,12 +38,108 @@ public final class DefaultConfigurationExpirationMonitor implements Configuratio
 {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultConfigurationExpirationMonitor.class);
+    private ExtensionRegistry extensionRegistry;
+    private MuleContext muleContext;
+    private long frequency;
+    private TimeUnit timeUnit;
+    private BiConsumer<String, ConfigurationInstance<Object>> expirationHandler;
+    private ScheduledExecutorService executor;
+
+    private DefaultConfigurationExpirationMonitor()
+    {
+    }
+
+    /**
+     * Starts a scheduler which fires expiration tasks on the given {@link #frequency} and executes
+     * the {@link #expirationHandler} on each matching configuration instance
+     */
+    @Override
+    public void beginMonitoring()
+    {
+        //TODO: Change the executor type when MULE-8870 is implemented
+        executor = Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, getPrefix(muleContext) + "extension.expiration.manager"));
+        executor.scheduleWithFixedDelay(() -> expire(), frequency, frequency, timeUnit);
+    }
+
+    private void expire()
+    {
+        if (stopChecking())
+        {
+            return;
+        }
+
+        LOGGER.debug("Running configuration expiration cycle");
+        try
+        {
+            Multimap<String, ConfigurationInstance<Object>> expired = extensionRegistry.getExpiredConfigs();
+            if (LOGGER.isDebugEnabled())
+            {
+                LOGGER.debug(expired.isEmpty()
+                        ? "No expired configuration instances were found"
+                        : "Found {} expired configurations", expired.size());
+            }
+
+            expired.entries().stream().forEach(entry -> handleExpiration(entry.getKey(), entry.getValue()));
+        }
+        catch (Exception e)
+        {
+            LOGGER.error("Found exception trying to expire idle configurations. Will try again on next cycle", e);
+        }
+
+    }
+
+    private void handleExpiration(String key, ConfigurationInstance<Object> config)
+    {
+        if (stopChecking())
+        {
+            return;
+        }
+
+        try
+        {
+            expirationHandler.accept(key, config);
+            LOGGER.debug("Configuration of key {} was expired", key);
+        }
+        catch (Exception e)
+        {
+            LOGGER.error(String.format("Could not process expiration for dynamic config '%s' of type '%s'. Will try again on next cycle",
+                    key, config.getClass().getName()), e);
+        }
+    }
+
+    /**
+     * Shutdowns the scheduler that executes the expiration tasks. It waits up to 30 seconds
+     * for it to shutdown and it throws a {@link MuleException} if it could not be stopped
+     */
+    public void stopMonitoring()
+    {
+        executor.shutdown();
+        try
+        {
+            executor.awaitTermination(30, TimeUnit.SECONDS);
+        }
+        catch (InterruptedException e)
+        {
+            throw new MuleRuntimeException(createStaticMessage("Exception found while waiting for expiration thread to finish"), e);
+        }
+    }
+
+    private boolean stopChecking()
+    {
+        return muleContext.isStopping() || muleContext.isStopped();
+    }
 
     /**
      * A builder object for instances of {@link DefaultConfigurationExpirationMonitor}
      */
     public static class Builder
     {
+
+        private DefaultConfigurationExpirationMonitor manager = new DefaultConfigurationExpirationMonitor();
+
+        private Builder()
+        {
+        }
 
         /**
          * Creates a new builder instance
@@ -59,12 +155,6 @@ public final class DefaultConfigurationExpirationMonitor implements Configuratio
             builder.manager.muleContext = muleContext;
 
             return builder;
-        }
-
-        private DefaultConfigurationExpirationMonitor manager = new DefaultConfigurationExpirationMonitor();
-
-        private Builder()
-        {
         }
 
         /**
@@ -111,98 +201,5 @@ public final class DefaultConfigurationExpirationMonitor implements Configuratio
             return manager;
         }
 
-    }
-
-    private ExtensionRegistry extensionRegistry;
-    private MuleContext muleContext;
-    private long frequency;
-    private TimeUnit timeUnit;
-    private BiConsumer<String, ConfigurationInstance<Object>> expirationHandler;
-
-    private ScheduledExecutorService executor;
-
-    private DefaultConfigurationExpirationMonitor()
-    {
-    }
-
-    /**
-     * Starts a scheduler which fires expiration tasks on the given {@link #frequency} and executes
-     * the {@link #expirationHandler} on each matching configuration instance
-     *
-     */
-    @Override
-    public void beginMonitoring()
-    {
-        //TODO: Change the executor type when MULE-8870 is implemented
-        executor = Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, getPrefix(muleContext) + "extension.expiration.manager"));
-        executor.scheduleWithFixedDelay(() -> expire(), frequency, frequency, timeUnit);
-    }
-
-    private void expire()
-    {
-        if (stopChecking())
-        {
-            return;
-        }
-
-        LOGGER.debug("Running configuration expiration cycle");
-        try
-        {
-            Multimap<String, ConfigurationInstance<Object>> expired = extensionRegistry.getExpiredConfigs();
-            if (LOGGER.isDebugEnabled())
-            {
-                LOGGER.debug(expired.isEmpty()
-                             ? "No expired configuration instances were found"
-                             : "Found {} expired configurations", expired.size());
-            }
-
-            expired.entries().stream().forEach(entry -> handleExpiration(entry.getKey(), entry.getValue()));
-        }
-        catch (Exception e)
-        {
-            LOGGER.error("Found exception trying to expire idle configurations. Will try again on next cycle", e);
-        }
-
-    }
-
-    private void handleExpiration(String key, ConfigurationInstance<Object> config)
-    {
-        if (stopChecking())
-        {
-            return;
-        }
-
-        try
-        {
-            expirationHandler.accept(key, config);
-            LOGGER.debug("Configuration of key {} was expired", key);
-        }
-        catch (Exception e)
-        {
-            LOGGER.error(String.format("Could not process expiration for dynamic config '%s' of type '%s'. Will try again on next cycle",
-                                       key, config.getClass().getName()), e);
-        }
-    }
-
-    /**
-     * Shutdowns the scheduler that executes the expiration tasks. It waits up to 30 seconds
-     * for it to shutdown and it throws a {@link MuleException} if it could not be stopped
-     */
-    public void stopMonitoring()
-    {
-        executor.shutdown();
-        try
-        {
-            executor.awaitTermination(30, TimeUnit.SECONDS);
-        }
-        catch (InterruptedException e)
-        {
-            throw new MuleRuntimeException(createStaticMessage("Exception found while waiting for expiration thread to finish"), e);
-        }
-    }
-
-    private boolean stopChecking()
-    {
-        return muleContext.isStopping() || muleContext.isStopped();
     }
 }

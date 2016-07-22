@@ -6,12 +6,11 @@
  */
 package org.mule.test.infrastructure.process.matchers;
 
-import org.mule.test.infrastructure.process.MuleProcessController;
-
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.mule.test.infrastructure.process.MuleProcessController;
 
 public class Running extends TypeSafeMatcher<MuleProcessController>
 {
@@ -21,6 +20,18 @@ public class Running extends TypeSafeMatcher<MuleProcessController>
     public Running(boolean status)
     {
         this.isRunning = status;
+    }
+
+    @Factory
+    public static <T> Matcher<MuleProcessController> isRunning()
+    {
+        return new Running(true);
+    }
+
+    @Factory
+    public static <T> Matcher<MuleProcessController> notRunning()
+    {
+        return new Running(false);
     }
 
     @Override
@@ -39,19 +50,7 @@ public class Running extends TypeSafeMatcher<MuleProcessController>
     @Override
     public void describeTo(Description description)
     {
-        description.appendText("a Mule Standalone server that is " + (isRunning ? "": "not ") + "running");
-    }
-
-    @Factory
-    public static <T> Matcher<MuleProcessController> isRunning()
-    {
-        return new Running(true);
-    }
-
-    @Factory
-    public static <T> Matcher<MuleProcessController> notRunning()
-    {
-        return new Running(false);
+        description.appendText("a Mule Standalone server that is " + (isRunning ? "" : "not ") + "running");
     }
 
 };

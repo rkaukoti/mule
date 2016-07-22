@@ -6,13 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.mule.test.heisenberg.extension.HeisenbergExtension.PERSONAL_INFORMATION_GROUP_NAME;
-import static org.mule.test.heisenberg.extension.HeisenbergExtension.RICIN_GROUP_NAME;
-import static org.mule.test.heisenberg.extension.HeisenbergOperations.KILL_WITH_GROUP;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclaration;
 import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclarer;
 import org.mule.runtime.extension.api.introspection.declaration.fluent.OperationDeclaration;
@@ -23,8 +18,12 @@ import org.mule.test.heisenberg.extension.HeisenbergExtension;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.mule.test.heisenberg.extension.HeisenbergExtension.PERSONAL_INFORMATION_GROUP_NAME;
+import static org.mule.test.heisenberg.extension.HeisenbergExtension.RICIN_GROUP_NAME;
+import static org.mule.test.heisenberg.extension.HeisenbergOperations.KILL_WITH_GROUP;
 
 @SmallTest
 public class LayoutModelPropertyTestCase extends AbstractAnnotationsBasedDescriberTestCase

@@ -9,13 +9,12 @@ package org.mule.tck.testmodels.fruit;
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.Callable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Orange implements Callable, OrangeInterface
 {
@@ -90,27 +89,27 @@ public class Orange implements Callable, OrangeInterface
     }
 
     @Override
-    public Integer getSegments()
-    {
-        return segments;
-    }
-
-    @Override
-    public Double getRadius()
-    {
-        return radius;
-    }
-
-    @Override
     public void setBrand(String string)
     {
         brand = string;
     }
 
     @Override
+    public Integer getSegments()
+    {
+        return segments;
+    }
+
+    @Override
     public void setSegments(Integer integer)
     {
         segments = integer;
+    }
+
+    @Override
+    public Double getRadius()
+    {
+        return radius;
     }
 
     @Override

@@ -6,11 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.config.dsl.parameter;
 
-import static org.mule.metadata.utils.MetadataTypeUtils.getDefaultValue;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromFixedValue;
-import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
-import static org.mule.runtime.extension.api.introspection.declaration.type.TypeUtils.acceptsReferences;
-import static org.mule.runtime.extension.api.introspection.declaration.type.TypeUtils.getExpressionSupport;
 import org.mule.metadata.api.model.ArrayType;
 import org.mule.metadata.api.model.DictionaryType;
 import org.mule.metadata.api.model.MetadataType;
@@ -25,6 +20,12 @@ import org.mule.runtime.extension.xml.dsl.api.resolver.DslElementResolver;
 import org.mule.runtime.module.extension.internal.config.dsl.ExtensionDefinitionParser;
 import org.mule.runtime.module.extension.internal.config.dsl.ExtensionParsingContext;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ValueResolver;
+
+import static org.mule.metadata.utils.MetadataTypeUtils.getDefaultValue;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromFixedValue;
+import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
+import static org.mule.runtime.extension.api.introspection.declaration.type.TypeUtils.acceptsReferences;
+import static org.mule.runtime.extension.api.introspection.declaration.type.TypeUtils.getExpressionSupport;
 
 /**
  * A {@link ExtensionDefinitionParser} for parsing extension objects that can
@@ -70,11 +71,11 @@ public class ObjectTypeParameterParser extends ExtensionDefinitionParser
     protected void doParse(Builder definitionBuilder) throws ConfigurationException
     {
         definitionBuilder.withIdentifier(name)
-                .withNamespace(namespace)
-                .withTypeDefinition(fromType(ValueResolver.class))
-                .withObjectFactoryType(TopLevelParameterObjectFactory.class)
-                .withConstructorParameterDefinition(fromFixedValue(type).build())
-                .withConstructorParameterDefinition(fromFixedValue(classLoader).build());
+                         .withNamespace(namespace)
+                         .withTypeDefinition(fromType(ValueResolver.class))
+                         .withObjectFactoryType(TopLevelParameterObjectFactory.class)
+                         .withConstructorParameterDefinition(fromFixedValue(type).build())
+                         .withConstructorParameterDefinition(fromFixedValue(classLoader).build());
 
         for (ObjectFieldType objectField : type.getFields())
         {
@@ -100,7 +101,8 @@ public class ObjectTypeParameterParser extends ExtensionDefinitionParser
                     if (!parsingContext.isRegistered(childDsl.getElementName(), childDsl.getElementNamespace()))
                     {
                         parsingContext.registerObjectType(name, namespace, type);
-                        parseObjectParameter(fieldName, fieldName, objectType, defaultValue, expressionSupport, false, acceptsReferences, childDsl);
+                        parseObjectParameter(fieldName, fieldName, objectType, defaultValue, expressionSupport, false, acceptsReferences,
+                                childDsl);
                     }
                     else
                     {

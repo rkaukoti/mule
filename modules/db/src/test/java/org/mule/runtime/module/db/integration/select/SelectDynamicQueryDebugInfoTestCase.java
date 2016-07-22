@@ -7,17 +7,8 @@
 
 package org.mule.runtime.module.db.integration.select;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.INPUT_PARAMS_DEBUG_FIELD;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.SQL_TEXT_DEBUG_FIELD;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.TYPE_DEBUG_FIELD;
-import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.debug.FieldDebugInfo;
 import org.mule.runtime.core.api.processor.MessageProcessor;
@@ -29,8 +20,17 @@ import org.mule.runtime.module.db.internal.processor.AbstractSingleQueryDbMessag
 
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.INPUT_PARAMS_DEBUG_FIELD;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.SQL_TEXT_DEBUG_FIELD;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.TYPE_DEBUG_FIELD;
+import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
 
 public class SelectDynamicQueryDebugInfoTestCase extends AbstractDbIntegrationTestCase
 {
@@ -49,7 +49,7 @@ public class SelectDynamicQueryDebugInfoTestCase extends AbstractDbIntegrationTe
     @Override
     protected String[] getFlowConfigurationResources()
     {
-        return new String[] { "integration/select/select-dynamic-query-config.xml" };
+        return new String[] {"integration/select/select-dynamic-query-config.xml"};
     }
 
     @Test

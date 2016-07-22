@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.module.json.transformers;
 
-import org.mule.tck.testmodels.fruit.FruitCleaner;
-
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.mule.tck.testmodels.fruit.FruitCleaner;
 
 /**
  * TODO
@@ -16,12 +15,12 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 public interface OrangeMixin
 {
- @JsonIgnore
- FruitCleaner getCleaner();
+    @JsonIgnore
+    FruitCleaner getCleaner();
 
-        @JsonIgnore
-        boolean isBitten();
+    @JsonIgnore
+    void setCleaner(FruitCleaner fc);
 
-        @JsonIgnore
-        void setCleaner(FruitCleaner fc);
-    }
+    @JsonIgnore
+    boolean isBitten();
+}

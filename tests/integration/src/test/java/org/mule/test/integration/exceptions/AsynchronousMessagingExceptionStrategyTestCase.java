@@ -6,11 +6,11 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class AsynchronousMessagingExceptionStrategyTestCase extends AbstractExceptionStrategyTestCase
 {
@@ -19,7 +19,7 @@ public class AsynchronousMessagingExceptionStrategyTestCase extends AbstractExce
     {
         return "org/mule/test/integration/exceptions/asynch-messaging-exception-strategy.xml";
     }
-    
+
     @Test
     public void testTransformerException() throws Exception
     {

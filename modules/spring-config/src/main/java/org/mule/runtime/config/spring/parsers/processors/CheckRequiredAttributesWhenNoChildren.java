@@ -7,7 +7,6 @@
 package org.mule.runtime.config.spring.parsers.processors;
 
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
-
 import org.w3c.dom.Element;
 
 /**

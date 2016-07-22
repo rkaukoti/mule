@@ -6,12 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
-import static org.mule.runtime.core.api.config.ConfigurationInstanceNotification.CONFIGURATION_STOPPED;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.startIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
-import static org.mule.runtime.core.util.Preconditions.checkState;
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
@@ -26,14 +20,20 @@ import org.mule.runtime.extension.api.runtime.ConfigurationInstance;
 import org.mule.runtime.extension.api.runtime.ConfigurationStats;
 import org.mule.runtime.extension.api.runtime.operation.Interceptor;
 import org.mule.runtime.module.extension.internal.introspection.AbstractInterceptable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.config.ConfigurationInstanceNotification.CONFIGURATION_STOPPED;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.startIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
+import static org.mule.runtime.core.util.Preconditions.checkState;
 
 /**
  * Implementation of {@link ConfigurationInstance} which propagates dependency injection

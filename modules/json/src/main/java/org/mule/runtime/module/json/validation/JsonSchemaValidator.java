@@ -6,17 +6,6 @@
  */
 package org.mule.runtime.module.json.validation;
 
-import static org.apache.commons.lang.StringUtils.isBlank;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.core.util.Preconditions.checkState;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.core.config.i18n.MessageFactory;
-import org.mule.runtime.core.util.StringUtils;
-import org.mule.runtime.module.json.DefaultJsonParser;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.fge.jsonschema.core.load.Dereferencing;
 import com.github.fge.jsonschema.core.load.configuration.LoadingConfiguration;
@@ -27,12 +16,24 @@ import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
 
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.core.config.i18n.MessageFactory;
+import org.mule.runtime.core.util.StringUtils;
+import org.mule.runtime.module.json.DefaultJsonParser;
+
 import java.io.InputStream;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.core.util.Preconditions.checkState;
 
 /**
  * Validates json payloads against json schemas compliant with drafts v3 and v4.
@@ -44,6 +45,67 @@ import java.util.Map;
  */
 public class JsonSchemaValidator
 {
+
+    private final JsonSchema schema;
+
+    private JsonSchemaValidator(JsonSchema schema)
+    {
+        this.schema = schema;
+    }
+
+    /**
+     * Returns a new {@link Builder}
+     *
+     * @return a {@link Builder}
+     */
+    public static Builder builder()
+    {
+        return new Builder();
+    }
+
+    /**
+     * Parses the {@code event}'s payload as a Json by the rules of
+     * {@link DefaultJsonParser#asJsonNode(Object)}. Then it validates it
+     * against the given schema.
+     * <p/>
+     * If the validation fails, a {@link JsonSchemaValidationException} is thrown.
+     * <p/>
+     * Notice that if the message payload is a {@link Reader} or {@link InputStream}
+     * then it will be consumed in order to perform the validation. As a result,
+     * the message payload will be changed to the {@link String} representation
+     * of the json.
+     *
+     * @param event the current {@link MuleEvent}
+     */
+    public void validate(MuleEvent event) throws MuleException
+    {
+        Object input = event.getMessage().getPayload();
+        ProcessingReport report;
+        JsonNode jsonNode = null;
+
+        try
+        {
+            jsonNode = new DefaultJsonParser(event.getMuleContext()).asJsonNode(input);
+
+            if ((input instanceof Reader) || (input instanceof InputStream))
+            {
+                event.setMessage(MuleMessage.builder().payload(jsonNode.toString()).build());
+            }
+
+            report = schema.validate(jsonNode);
+        }
+        catch (Exception e)
+        {
+            throw new JsonSchemaValidationException("Exception was found while trying to validate json schema",
+                    jsonNode == null ? StringUtils.EMPTY : jsonNode.toString(),
+                    e);
+        }
+
+        if (!report.isSuccess())
+        {
+            throw new JsonSchemaValidationException("Json content is not compliant with schema\n" + report.toString(), jsonNode.toString());
+        }
+    }
 
     /**
      * An implementation of the builder design pattern to create
@@ -60,22 +122,18 @@ public class JsonSchemaValidator
     {
 
         private static final String RESOURCE_PREFIX = "resource:/";
+        private final Map<String, String> schemaRedirects = new HashMap<>();
         private String schemaLocation;
         private JsonSchemaDereferencing dereferencing = JsonSchemaDereferencing.CANONICAL;
-        private final Map<String, String> schemaRedirects = new HashMap<>();
 
         private Builder()
         {
         }
 
         /**
-         * A location in which the json schema is present. It allows both local and external resources. For example, all of the following are valid:
-         * <li>
-         * <ul>schemas/schema.json</ul>
-         * <ul>/schemas/schema.json</ul>
-         * <ul>resource:/schemas/schema.json</ul>
-         * <ul>http://mule.org/schemas/schema.json</ul>
-         * </li>
+         * A location in which the json schema is present. It allows both local and external resources. For example, all of the following
+         * are valid: <li> <ul>schemas/schema.json</ul> <ul>/schemas/schema.json</ul> <ul>resource:/schemas/schema.json</ul>
+         * <ul>http://mule.org/schemas/schema.json</ul> </li>
          *
          * @param schemaLocation the location of the schema to validate against
          * @return this builder
@@ -159,15 +217,17 @@ public class JsonSchemaValidator
             }
 
             final LoadingConfigurationBuilder loadingConfigurationBuilder = LoadingConfiguration.newBuilder()
-                    .dereferencing(dereferencing == JsonSchemaDereferencing.CANONICAL
-                                   ? Dereferencing.CANONICAL
-                                   : Dereferencing.INLINE)
-                    .setURITranslatorConfiguration(translatorConfigurationBuilder.freeze());
+                                                                                                .dereferencing(dereferencing ==
+                                                                                                               JsonSchemaDereferencing.CANONICAL
+                                                                                                        ? Dereferencing.CANONICAL
+                                                                                                        : Dereferencing.INLINE)
+                                                                                                .setURITranslatorConfiguration(
+                                                                                                        translatorConfigurationBuilder.freeze());
 
             LoadingConfiguration loadingConfiguration = loadingConfigurationBuilder.freeze();
             JsonSchemaFactory factory = JsonSchemaFactory.newBuilder()
-                    .setLoadingConfiguration(loadingConfiguration)
-                    .freeze();
+                                                         .setLoadingConfiguration(loadingConfiguration)
+                                                         .freeze();
 
             try
             {
@@ -224,67 +284,6 @@ public class JsonSchemaValidator
             }
 
             return location;
-        }
-    }
-
-    /**
-     * Returns a new {@link Builder}
-     *
-     * @return a {@link Builder}
-     */
-    public static Builder builder()
-    {
-        return new Builder();
-    }
-
-    private final JsonSchema schema;
-
-    private JsonSchemaValidator(JsonSchema schema)
-    {
-        this.schema = schema;
-    }
-
-    /**
-     * Parses the {@code event}'s payload as a Json by the rules of
-     * {@link DefaultJsonParser#asJsonNode(Object)}. Then it validates it
-     * against the given schema.
-     * <p/>
-     * If the validation fails, a {@link JsonSchemaValidationException} is thrown.
-     * <p/>
-     * Notice that if the message payload is a {@link Reader} or {@link InputStream}
-     * then it will be consumed in order to perform the validation. As a result,
-     * the message payload will be changed to the {@link String} representation
-     * of the json.
-     *
-     * @param event the current {@link MuleEvent}
-     */
-    public void validate(MuleEvent event) throws MuleException
-    {
-        Object input = event.getMessage().getPayload();
-        ProcessingReport report;
-        JsonNode jsonNode = null;
-
-        try
-        {
-            jsonNode = new DefaultJsonParser(event.getMuleContext()).asJsonNode(input);
-
-            if ((input instanceof Reader) || (input instanceof InputStream))
-            {
-                event.setMessage(MuleMessage.builder().payload(jsonNode.toString()).build());
-            }
-
-            report = schema.validate(jsonNode);
-        }
-        catch (Exception e)
-        {
-            throw new JsonSchemaValidationException("Exception was found while trying to validate json schema",
-                                                    jsonNode == null ? StringUtils.EMPTY : jsonNode.toString(),
-                                                    e);
-        }
-
-        if (!report.isSuccess())
-        {
-            throw new JsonSchemaValidationException("Json content is not compliant with schema\n" + report.toString(), jsonNode.toString());
         }
     }
 }

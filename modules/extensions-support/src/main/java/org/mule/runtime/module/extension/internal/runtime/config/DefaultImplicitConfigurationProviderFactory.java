@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
-import static org.mule.runtime.module.extension.internal.introspection.utils.ImplicitObjectUtils.buildImplicitResolverSet;
-import static org.mule.runtime.module.extension.internal.introspection.utils.ImplicitObjectUtils.getFirstImplicit;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleRuntimeException;
@@ -20,6 +18,9 @@ import org.mule.runtime.extension.api.runtime.ConfigurationProvider;
 import org.mule.runtime.module.extension.internal.runtime.ImmutableExpirationPolicy;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ImplicitConnectionProviderValueResolver;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSet;
+
+import static org.mule.runtime.module.extension.internal.introspection.utils.ImplicitObjectUtils.buildImplicitResolverSet;
+import static org.mule.runtime.module.extension.internal.introspection.utils.ImplicitObjectUtils.getFirstImplicit;
 
 /**
  * Default implementation of {@link ImplicitConfigurationProviderFactory}.
@@ -36,26 +37,30 @@ public final class DefaultImplicitConfigurationProviderFactory implements Implic
     @Override
     public <C> ConfigurationProvider<C> createImplicitConfigurationProvider(ExtensionModel extensionModel, MuleEvent event)
     {
-        RuntimeConfigurationModel implicitConfigurationModel = (RuntimeConfigurationModel) getFirstImplicit(extensionModel.getConfigurationModels());
+        RuntimeConfigurationModel implicitConfigurationModel =
+                (RuntimeConfigurationModel) getFirstImplicit(extensionModel.getConfigurationModels());
 
         if (implicitConfigurationModel == null)
         {
-            throw new IllegalStateException(String.format("Could not find a config for extension '%s' and none can be created automatically. Please define one", extensionModel.getName()));
+            throw new IllegalStateException(
+                    String.format("Could not find a config for extension '%s' and none can be created automatically. Please define one",
+                            extensionModel.getName()));
         }
 
         final String providerName = String.format("%s-%s", extensionModel.getName(), implicitConfigurationModel.getName());
         final ResolverSet resolverSet = buildImplicitResolverSet(implicitConfigurationModel, event.getMuleContext().getExpressionManager());
         try
         {
-            ConfigurationInstance<C> configurationInstance = new ConfigurationInstanceFactory<C>(implicitConfigurationModel, resolverSet).createConfiguration(providerName, event);
+            ConfigurationInstance<C> configurationInstance =
+                    new ConfigurationInstanceFactory<C>(implicitConfigurationModel, resolverSet).createConfiguration(providerName, event);
             String configName = configurationInstance.getName();
             RuntimeConfigurationModel configurationModel = configurationInstance.getModel();
 
             if (resolverSet.isDynamic())
             {
                 return new DynamicConfigurationProvider<>(configName, configurationModel, resolverSet,
-                                                          new ImplicitConnectionProviderValueResolver(configName, configurationModel),
-                                                          ImmutableExpirationPolicy.getDefault(new TimeSupplier()));
+                        new ImplicitConnectionProviderValueResolver(configName, configurationModel),
+                        ImmutableExpirationPolicy.getDefault(new TimeSupplier()));
             }
 
             return new StaticConfigurationProvider<>(configName, configurationModel, configurationInstance);

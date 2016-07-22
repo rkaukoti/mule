@@ -48,7 +48,7 @@ public abstract class MuleException extends Exception
 
     /**
      * @param message the exception message
-     * @param cause the exception that cause this exception to be thrown
+     * @param cause   the exception that cause this exception to be thrown
      */
     public MuleException(Message message, Throwable cause)
     {
@@ -83,19 +83,14 @@ public abstract class MuleException extends Exception
         i18nMessage = message;
     }
 
-    protected void setMessage(String message)
-    {
-        initialise();
-        this.message = message;
-        if (i18nMessage == null)
-        {
-            i18nMessage = MessageFactory.createStaticMessage(message);
-        }
-    }
-
     public int getExceptionCode()
     {
         return errorCode;
+    }
+
+    protected void setExceptionCode(int code)
+    {
+        errorCode = code;
     }
 
     public Message getI18nMessage()
@@ -123,15 +118,20 @@ public abstract class MuleException extends Exception
         message = message + ". " + s;
     }
 
-    protected void setExceptionCode(int code)
-    {
-        errorCode = code;
-    }
-
     @Override
     public final String getMessage()
     {
         return message;
+    }
+
+    protected void setMessage(String message)
+    {
+        initialise();
+        this.message = message;
+        if (i18nMessage == null)
+        {
+            i18nMessage = MessageFactory.createStaticMessage(message);
+        }
     }
 
     protected void initialise()
@@ -163,7 +163,7 @@ public abstract class MuleException extends Exception
         buf.append("Message               : ").append(message).append(SystemUtils.LINE_SEPARATOR);
 
         Map info = ExceptionHelper.getExceptionInfo(this);
-        for( Map.Entry entry : (Set<Map.Entry>)info.entrySet() )
+        for (Map.Entry entry : (Set<Map.Entry>) info.entrySet())
         {
             String s = (String) entry.getKey();
             int pad = 22 - s.length();
@@ -173,7 +173,11 @@ public abstract class MuleException extends Exception
                 buf.append(StringUtils.repeat(' ', pad));
             }
             buf.append(": ");
-            buf.append((entry.getValue() == null ? "null" : entry.getValue().toString().replaceAll(SystemUtils.LINE_SEPARATOR, SystemUtils.LINE_SEPARATOR + StringUtils.repeat(' ', 24))))
+            buf.append((entry.getValue() == null ?
+                    "null" :
+                    entry.getValue()
+                         .toString()
+                         .replaceAll(SystemUtils.LINE_SEPARATOR, SystemUtils.LINE_SEPARATOR + StringUtils.repeat(' ', 24))))
                .append(SystemUtils.LINE_SEPARATOR);
         }
 
@@ -200,8 +204,10 @@ public abstract class MuleException extends Exception
         StringBuilder buf = new StringBuilder(1024);
         buf.append(SystemUtils.LINE_SEPARATOR).append(EXCEPTION_MESSAGE_DELIMITER);
         buf.append("Message               : ").append(message).append(SystemUtils.LINE_SEPARATOR);
-        buf.append("Element               : ").append(ExceptionHelper.getExceptionInfo(this).get(LocatedMuleException.INFO_LOCATION_KEY)).append(SystemUtils.LINE_SEPARATOR);
-        
+        buf.append("Element               : ")
+           .append(ExceptionHelper.getExceptionInfo(this).get(LocatedMuleException.INFO_LOCATION_KEY))
+           .append(SystemUtils.LINE_SEPARATOR);
+
         // print exception stack
         buf.append(EXCEPTION_MESSAGE_SECTION_DELIMITER);
         buf.append(CoreMessages.exceptionStackIs()).append(SystemUtils.LINE_SEPARATOR);

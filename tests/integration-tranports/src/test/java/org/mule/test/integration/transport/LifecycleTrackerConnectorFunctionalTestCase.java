@@ -6,12 +6,11 @@
  */
 package org.mule.test.integration.transport;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class LifecycleTrackerConnectorFunctionalTestCase extends FunctionalTestCase
 {
@@ -28,18 +27,17 @@ public class LifecycleTrackerConnectorFunctionalTestCase extends FunctionalTestC
      * - Spring lifecycle methods invoked
      * - Service and muleContext injected (Component implements ServiceAware/MuleContextAware)
      * NOTE: muleContext is injected twice, once by registry and once by lifecycleAdaptor
-     * @throws Exception
      */
     @Test
     public void testConnectorLifecycle() throws Exception
     {
         testComponentLifecycle(
-            "test1",
-            "[setProperty, initialise, connect, start, stop, disconnect, dispose]");
+                "test1",
+                "[setProperty, initialise, connect, start, stop, disconnect, dispose]");
     }
 
     private void testComponentLifecycle(final String connectorName, final String expectedLifeCycle)
-        throws Exception
+            throws Exception
     {
 
         final ConnectorLifecycleTracker tracker = getConnector(connectorName);

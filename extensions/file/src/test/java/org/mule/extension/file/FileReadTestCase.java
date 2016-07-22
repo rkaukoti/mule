@@ -6,12 +6,7 @@
  */
 package org.mule.extension.file;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.api.metadata.MediaType.JSON;
-
+import org.junit.Test;
 import org.mule.extension.file.api.LocalFileAttributes;
 import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.api.metadata.MediaType;
@@ -29,7 +24,11 @@ import java.nio.file.attribute.FileTime;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.api.metadata.MediaType.JSON;
 
 public class FileReadTestCase extends FileConnectorTestCase
 {

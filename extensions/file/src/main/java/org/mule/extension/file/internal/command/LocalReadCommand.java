@@ -64,6 +64,9 @@ public final class LocalReadCommand extends LocalFileCommand implements ReadComm
         InputStream payload = new FileInputStream(path, pathLock);
         FileAttributes fileAttributes = new LocalFileAttributes(path);
         MediaType fileMediaType = fileSystem.getFileMessageMediaType(message.getDataType().getMediaType(), fileAttributes);
-        return OperationResult.<InputStream, FileAttributes>builder().output(payload).mediaType(fileMediaType).attributes(fileAttributes).build();
+        return OperationResult.<InputStream, FileAttributes>builder().output(payload)
+                                                                     .mediaType(fileMediaType)
+                                                                     .attributes(fileAttributes)
+                                                                     .build();
     }
 }

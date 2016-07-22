@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.transformer.wire;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleContext;
@@ -15,15 +16,13 @@ import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.api.transformer.wire.WireFormat;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-
-import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A pairing of an outbound transformer and an inbound transformer that can be used to serialize and deserialize data.
@@ -88,7 +87,7 @@ public class TransformerPairWireFormat implements WireFormat
             if (returnClass.equals(Object.class))
             {
                 logger.warn("No return class was set on transformer: " + outboundTransformer
-                                + ". Attempting to work out how to treat the result transformation");
+                            + ". Attempting to work out how to treat the result transformation");
 
                 Object result = outboundTransformer.transform(o);
 

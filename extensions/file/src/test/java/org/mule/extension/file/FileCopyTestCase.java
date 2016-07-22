@@ -6,19 +6,19 @@
  */
 package org.mule.extension.file;
 
-import static java.lang.String.format;
-import static org.apache.commons.io.FileUtils.write;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertThat;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.runtime.core.api.MessagingException;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static java.lang.String.format;
+import static org.apache.commons.io.FileUtils.write;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertThat;
 
 public class FileCopyTestCase extends FileConnectorTestCase
 {

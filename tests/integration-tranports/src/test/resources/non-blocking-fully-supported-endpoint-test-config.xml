@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
       xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
@@ -27,19 +27,19 @@
             </transports:response>
             <property key="responseProperties" value="foo"/>
         </transports:outbound-endpoint>
-        <test:assert expression="#[assertPayload()]" />
-        <test:assert expression="#[flowVars['endpointRequestMPInvoked'] == 'true']" />
-        <test:assert expression="#[flowVars['endpointResponseMPInvoked'] == 'true']" />
-        <test:assert expression="#[message.outboundProperties['foo'] == 'bar']" />
+        <test:assert expression="#[assertPayload()]"/>
+        <test:assert expression="#[flowVars['endpointRequestMPInvoked'] == 'true']"/>
+        <test:assert expression="#[flowVars['endpointResponseMPInvoked'] == 'true']"/>
+        <test:assert expression="#[message.outboundProperties['foo'] == 'bar']"/>
         <test:assert expression="#[flowVars['requestThread'] != Thread.currentThread]"/>
-     </flow>
+    </flow>
 
     <flow name="testOutboundEndpointError">
         <expression-component>flowVars['requestThread'] = Thread.currentThread()</expression-component>
-        <transports:outbound-endpoint address="test://AlwaysFail" exchange-pattern="request-response" />
+        <transports:outbound-endpoint address="test://AlwaysFail" exchange-pattern="request-response"/>
         <catch-exception-strategy>
-            <test:assert expression="#[assertPayload()]" />
-            <test:assert expression="#[exception.causedBy(org.mule.runtime.core.api.routing.RoutingException)]" />
+            <test:assert expression="#[assertPayload()]"/>
+            <test:assert expression="#[exception.causedBy(org.mule.runtime.core.api.routing.RoutingException)]"/>
             <test:assert expression="#[flowVars['requestThread'] != Thread.currentThread]"/>
         </catch-exception-strategy>
     </flow>

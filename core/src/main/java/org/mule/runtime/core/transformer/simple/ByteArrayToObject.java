@@ -30,7 +30,7 @@ public class ByteArrayToObject extends ByteArrayToSerializable
     {
         if (src instanceof byte[])
         {
-            byte[] bytes = (byte[])src;
+            byte[] bytes = (byte[]) src;
 
             if (this.checkStreamHeader(bytes[0]))
             {
@@ -45,11 +45,11 @@ public class ByteArrayToObject extends ByteArrayToSerializable
         {
             try
             {
-                PushbackInputStream pushbackStream = new PushbackInputStream((InputStream)src);
+                PushbackInputStream pushbackStream = new PushbackInputStream((InputStream) src);
                 int firstByte = pushbackStream.read();
-                pushbackStream.unread((byte)firstByte);
-                
-                if (this.checkStreamHeader((byte)firstByte))
+                pushbackStream.unread((byte) firstByte);
+
+                if (this.checkStreamHeader((byte) firstByte))
                 {
                     return super.doTransform(pushbackStream, encoding);
                 }
@@ -80,6 +80,6 @@ public class ByteArrayToObject extends ByteArrayToSerializable
 
     private boolean checkStreamHeader(byte firstByte)
     {
-        return (firstByte == (byte)((ObjectStreamConstants.STREAM_MAGIC >>> 8) & 0xFF));
+        return (firstByte == (byte) ((ObjectStreamConstants.STREAM_MAGIC >>> 8) & 0xFF));
     }
 }

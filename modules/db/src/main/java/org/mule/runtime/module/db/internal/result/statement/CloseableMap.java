@@ -9,24 +9,23 @@ package org.mule.runtime.module.db.internal.result.statement;
 
 import org.mule.runtime.core.api.Closeable;
 import org.mule.runtime.core.api.MuleException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Defines a {@link Map} that will close any contained {@link Closeable} value
  */
-public class CloseableMap<K, V> implements Map<K,V>, Closeable
+public class CloseableMap<K, V> implements Map<K, V>, Closeable
 {
 
     protected static final Logger logger = LoggerFactory.getLogger(CloseableMap.class);
 
-    private Map<K,V> delegate = new HashMap<K, V>();
+    private Map<K, V> delegate = new HashMap<K, V>();
 
     @Override
     public void close() throws MuleException

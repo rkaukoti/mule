@@ -7,7 +7,8 @@
 
 package org.mule.runtime.core.util.store;
 
-import static org.mule.runtime.core.api.store.ObjectStoreManager.UNBOUNDED;
+import org.apache.commons.collections.BidiMap;
+import org.apache.commons.collections.bidimap.TreeBidiMap;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.serialization.ObjectSerializer;
@@ -21,6 +22,8 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.config.i18n.Message;
 import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.runtime.core.util.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -38,13 +41,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.commons.collections.BidiMap;
-import org.apache.commons.collections.bidimap.TreeBidiMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.store.ObjectStoreManager.UNBOUNDED;
 
 public class PersistentObjectStorePartition<T extends Serializable>
-    implements ListableObjectStore<T>, ExpirableObjectStore<T>
+        implements ListableObjectStore<T>, ExpirableObjectStore<T>
 {
 
     private static final String OBJECT_FILE_EXTENSION = ".obj";
@@ -52,13 +52,10 @@ public class PersistentObjectStorePartition<T extends Serializable>
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final MuleContext muleContext;
     private final ObjectSerializer serializer;
-
+    private final BidiMap realKeyToUUIDIndex = new TreeBidiMap();
     private boolean loaded = false;
-
-
     private File partitionDirectory;
     private String partitionName;
-    private final BidiMap realKeyToUUIDIndex = new TreeBidiMap();
 
     PersistentObjectStorePartition(MuleContext muleContext, String partitionName, File partitionDirectory)
     {
@@ -69,7 +66,7 @@ public class PersistentObjectStorePartition<T extends Serializable>
     }
 
     PersistentObjectStorePartition(MuleContext muleContext, File partitionDirectory)
-        throws ObjectStoreNotAvaliableException
+            throws ObjectStoreNotAvaliableException
     {
         this.muleContext = muleContext;
         serializer = muleContext.getObjectSerializer();
@@ -275,7 +272,7 @@ public class PersistentObjectStorePartition<T extends Serializable>
         catch (Exception e)
         {
             String message = String.format("Could not restore object store data from %1s",
-                partitionDirectory.getAbsolutePath());
+                    partitionDirectory.getAbsolutePath());
             throw new ObjectStoreException(CoreMessages.createStaticMessage(message));
         }
     }

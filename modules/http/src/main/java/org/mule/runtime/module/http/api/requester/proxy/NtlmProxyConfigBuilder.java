@@ -6,10 +6,9 @@
  */
 package org.mule.runtime.module.http.api.requester.proxy;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
-import org.mule.runtime.module.http.internal.request.DefaultProxyConfig;
 import org.mule.runtime.module.http.internal.request.NtlmProxyConfig;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Builder for an http proxy using NTLM.
@@ -63,7 +62,8 @@ public class NtlmProxyConfigBuilder
     public ProxyConfig build()
     {
         checkArgument(ntlmProxyConfig.getHost() != null, "Host must be not null");
-        checkArgument(ntlmProxyConfig.getPort() <= MAXIMUM_PORT_NUMBER, "Port was not configured or configured with a value greater than " + MAXIMUM_PORT_NUMBER);
+        checkArgument(ntlmProxyConfig.getPort() <= MAXIMUM_PORT_NUMBER,
+                "Port was not configured or configured with a value greater than " + MAXIMUM_PORT_NUMBER);
         checkArgument(ntlmProxyConfig.getNtlmDomain() != null, "Ntlm domain must be not null");
         return ntlmProxyConfig;
     }

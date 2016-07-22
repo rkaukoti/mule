@@ -13,6 +13,8 @@ import org.mule.runtime.core.api.store.ObjectStore;
 import org.mule.runtime.core.api.store.ObjectStoreException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.source.polling.MessageProcessorPollingOverride;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.NotSerializableException;
 import java.io.Serializable;
@@ -20,9 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.namespace.QName;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Poll override that provides watermarking functionality: It enriches the event
@@ -34,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * A limitation of this implementation is that the poll must be embedded into a
  * synchronous flow. An exception will be thrown if this is not the case.
  * </p>
- * 
+ *
  * @since 3.5.0
  */
 public abstract class Watermark extends MessageProcessorPollingOverride
@@ -109,8 +108,8 @@ public abstract class Watermark extends MessageProcessorPollingOverride
             catch (NotSerializableException nse)
             {
                 logger.warn(String.format(
-                    "Default watermark expression '%s' returned not serializable value",
-                    this.defaultExpression), nse);
+                        "Default watermark expression '%s' returned not serializable value",
+                        this.defaultExpression), nse);
             }
         }
         if (watermarkValue != null)
@@ -166,7 +165,7 @@ public abstract class Watermark extends MessageProcessorPollingOverride
             else
             {
                 throw new IllegalArgumentException(CoreMessages.notSerializableWatermark(this.resolveVariable(event))
-                                                           .getMessage());
+                                                               .getMessage());
             }
         }
         catch (Exception e)
@@ -178,7 +177,7 @@ public abstract class Watermark extends MessageProcessorPollingOverride
     /**
      * This method is executed once the flow containing the poll has been executed.
      * This method must return the watermark's new value
-     * 
+     *
      * @param event the {@link MuleEvent} that was returned by the owning flow
      * @return the new watermark value
      */

@@ -7,10 +7,9 @@
 package org.mule.runtime.module.xml.config;
 
 import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 import javax.xml.bind.JAXBContext;
-
-import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 /**
  * TODO

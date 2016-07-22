@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.management;
 
+import org.junit.Test;
 import org.mule.runtime.module.management.agent.RmiRegistryAgent;
 import org.mule.runtime.module.management.support.AutoDiscoveryJmxSupportFactory;
 import org.mule.runtime.module.management.support.JmxSupport;
@@ -17,8 +18,6 @@ import java.util.Set;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectInstance;
-
-import org.junit.Test;
 
 /**
  * This base test case will create a new <code>MBean Server</code> if necessary,

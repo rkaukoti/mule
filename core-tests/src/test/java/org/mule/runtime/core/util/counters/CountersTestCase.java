@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.core.util.counters;
 
-import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.junit.Test;
 import org.mule.runtime.core.util.counters.CounterFactory.Type;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.util.Iterator;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -37,9 +36,9 @@ public class CountersTestCase extends AbstractMuleTestCase
         assertNotNull(CounterFactory.getCounter("create1"));
         assertNull(CounterFactory.getCounter("zzz"));
 
-        for (Iterator it = CounterFactory.getCounters(); it.hasNext();)
+        for (Iterator it = CounterFactory.getCounters(); it.hasNext(); )
         {
-            Counter ct = (Counter)it.next();
+            Counter ct = (Counter) it.next();
             assertNotNull(ct);
         }
 
@@ -140,8 +139,6 @@ public class CountersTestCase extends AbstractMuleTestCase
 
     /**
      * Serious non-portable timing issues :(
-     * 
-     * @throws InterruptedException
      */
     public void _disabled_testInstantRate() throws InterruptedException
     {
@@ -170,11 +167,11 @@ public class CountersTestCase extends AbstractMuleTestCase
         assertNotNull(ct);
 
         Counter rsec = CounterFactory.createCounter("testRatePerUnit.rate.sec", "testRatePerUnit",
-            Type.RATE_PER_SECOND);
+                Type.RATE_PER_SECOND);
         assertNotNull(rsec);
 
         Counter rmin = CounterFactory.createCounter("testRatePerUnit.rate.min", "testRatePerUnit",
-            Type.RATE_PER_MINUTE);
+                Type.RATE_PER_MINUTE);
         assertNotNull(rmin);
 
         assertEquals("Rate", 0.0, rsec.nextValue(), delta);

@@ -6,10 +6,10 @@
  */
 package org.mule.extension.file;
 
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-
-import java.io.File;
 
 public class FileMoveTestCase extends FileCopyTestCase
 {

@@ -6,33 +6,34 @@
  */
 package org.mule.runtime.module.artifact.classloader;
 
-import static java.lang.Integer.toHexString;
-import static java.lang.String.format;
-import static java.lang.System.identityHashCode;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.Integer.toHexString;
+import static java.lang.String.format;
+import static java.lang.System.identityHashCode;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Abstract implementation of the ArtifactClassLoader interface, that manages shutdown listeners.
  */
 public class MuleArtifactClassLoader extends FineGrainedControlClassLoader implements ArtifactClassLoader
 {
+    private static final String DEFAULT_RESOURCE_RELEASER_CLASS_LOCATION =
+            "/org/mule/runtime/module/artifact/classloader/DefaultResourceReleaser.class";
+
     static
     {
         registerAsParallelCapable();
     }
 
-    private static final String DEFAULT_RESOURCE_RELEASER_CLASS_LOCATION = "/org/mule/runtime/module/artifact/classloader/DefaultResourceReleaser.class";
     private final String name;
 
     protected Logger logger = LoggerFactory.getLogger(getClass());

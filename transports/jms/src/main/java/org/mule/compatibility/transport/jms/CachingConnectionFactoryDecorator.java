@@ -7,10 +7,9 @@
 package org.mule.compatibility.transport.jms;
 
 import org.mule.runtime.core.api.MuleContext;
+import org.springframework.jms.connection.CachingConnectionFactory;
 
 import javax.jms.ConnectionFactory;
-
-import org.springframework.jms.connection.CachingConnectionFactory;
 
 /**
  * Decorates the JMS {@link javax.jms.ConnectionFactory} with a {@link org.mule.compatibility.transport.jms.CustomCachingConnectionFactory}
@@ -29,7 +28,7 @@ public class CachingConnectionFactoryDecorator extends AbstractConnectionFactory
         if (resolveReuseSessionsEnabled(jmsConnector))
         {
             cachingConnectionFactory = new CustomCachingConnectionFactory(connectionFactory, jmsConnector.getUsername(),
-                                                                          jmsConnector.getPassword());
+                    jmsConnector.getPassword());
             cachingConnectionFactory.setCacheConsumers(false);
             cachingConnectionFactory.setCacheProducers(true);
             cachingConnectionFactory.setSessionCacheSize(Integer.MAX_VALUE);

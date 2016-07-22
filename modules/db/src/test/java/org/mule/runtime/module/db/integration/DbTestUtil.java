@@ -7,9 +7,10 @@
 
 package org.mule.runtime.module.db.integration;
 
-import static org.junit.Assert.assertTrue;
-
 import com.mysql.jdbc.Statement;
+
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -17,8 +18,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.MapListHandler;
+import static org.junit.Assert.assertTrue;
 
 public class DbTestUtil
 {
@@ -36,6 +36,6 @@ public class DbTestUtil
     public static void assertExpectedUpdateCount(int expected, int actual)
     {
         assertTrue(String.format("Update count is neither the expected one %s nor Statement.SUCCESS_NO_INFO", expected),
-                   expected == actual || Statement.SUCCESS_NO_INFO == actual);
+                expected == actual || Statement.SUCCESS_NO_INFO == actual);
     }
 }

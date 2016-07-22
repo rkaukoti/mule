@@ -6,11 +6,6 @@
  */
 package org.mule.test.metadata.extension.resolver;
 
-import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.AGE;
-import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.APPLICATION_JAVA_MIME_TYPE;
-import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.BRAND;
-import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.NAME;
-import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.getKeys;
 import org.mule.metadata.api.builder.BaseTypeBuilder;
 import org.mule.metadata.api.model.MetadataFormat;
 import org.mule.metadata.api.model.MetadataType;
@@ -28,10 +23,17 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.AGE;
+import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.APPLICATION_JAVA_MIME_TYPE;
+import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.BRAND;
+import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.NAME;
+import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.getKeys;
+
 public class TestResolverWithCache implements MetadataContentResolver<String>, MetadataOutputResolver<String>, MetadataKeysResolver
 {
 
-    public static final String MISSING_ELEMENT_ERROR_MESSAGE = "Missing element in the cache. There was no element in the cache for the key: " + BRAND;
+    public static final String MISSING_ELEMENT_ERROR_MESSAGE =
+            "Missing element in the cache. There was no element in the cache for the key: " + BRAND;
     public static final int AGE_VALUE = 16;
     public static final String NAME_VALUE = "Juan";
     public static final String BRAND_VALUE = "Nikdidas";

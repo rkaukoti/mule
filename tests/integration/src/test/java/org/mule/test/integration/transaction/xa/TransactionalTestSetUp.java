@@ -11,15 +11,11 @@ public interface TransactionalTestSetUp
 
     /**
      * Creates resources required by the test
-     *
-     * @throws Exception
      */
     void initialize() throws Exception;
 
     /**
      * Destroy resources created for the test
-     *
-     * @throws Exception
      */
     void finalice() throws Exception;
 }

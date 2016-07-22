@@ -9,7 +9,6 @@ package org.mule.runtime.module.db.internal.config.processor;
 
 import org.mule.runtime.module.db.internal.config.domain.param.DefaultSqlParamResolverFactoryBean;
 import org.mule.runtime.module.db.internal.config.resolver.query.QueryResolverFactoryBean;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
@@ -59,7 +58,8 @@ public abstract class AbstractSingleQueryProcessorDefinitionParser extends Abstr
 
     protected BeanDefinition getParamResolverBeanDefinition()
     {
-        BeanDefinitionBuilder sqlParamResolverFactory = BeanDefinitionBuilder.genericBeanDefinition(DefaultSqlParamResolverFactoryBean.class);
+        BeanDefinitionBuilder sqlParamResolverFactory =
+                BeanDefinitionBuilder.genericBeanDefinition(DefaultSqlParamResolverFactoryBean.class);
         return sqlParamResolverFactory.getBeanDefinition();
     }
 

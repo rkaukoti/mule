@@ -6,20 +6,19 @@
  */
 package org.mule.runtime.module.xml.config;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
 import org.mule.runtime.module.xml.util.XMLUtils;
+import org.springframework.beans.factory.xml.ParserContext;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.springframework.beans.factory.xml.ParserContext;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * TODO

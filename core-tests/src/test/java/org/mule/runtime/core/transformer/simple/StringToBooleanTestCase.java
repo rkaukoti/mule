@@ -6,15 +6,15 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.util.stream.Stream;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class StringToBooleanTestCase extends AbstractMuleTestCase
@@ -38,15 +38,15 @@ public class StringToBooleanTestCase extends AbstractMuleTestCase
     private void assertBoolean(boolean expected, String... values)
     {
         Stream.of(values).forEach(value ->
-                                  {
-                                      try
-                                      {
-                                          assertThat(transformer.transform(value), is(expected));
-                                      }
-                                      catch (TransformerException e)
-                                      {
-                                          throw new RuntimeException(e);
-                                      }
-                                  });
+        {
+            try
+            {
+                assertThat(transformer.transform(value), is(expected));
+            }
+            catch (TransformerException e)
+            {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

@@ -8,19 +8,18 @@ package org.mule.runtime.config.spring.parsers.collection;
 
 import org.mule.runtime.config.spring.MuleHierarchicalBeanDefinitionParserDelegate;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.config.MapFactoryBean;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
-* Creates a single Map and processes standard Spring sub elements.  The map is injected
-* into the parent object (the enclosing XML element).
-*/
+ * Creates a single Map and processes standard Spring sub elements.  The map is injected
+ * into the parent object (the enclosing XML element).
+ */
 public class GenericChildMapDefinitionParser extends ChildDefinitionParser
 {
 
@@ -28,7 +27,8 @@ public class GenericChildMapDefinitionParser extends ChildDefinitionParser
     private final String childElementKeyAttribute;
     private final String childElementValueAttribute;
 
-    public GenericChildMapDefinitionParser(String setterMethod, String childElementName, String childElementKeyAttribute, String childElementValueAttribute)
+    public GenericChildMapDefinitionParser(String setterMethod, String childElementName, String childElementKeyAttribute,
+                                           String childElementValueAttribute)
     {
         super(setterMethod, HashMap.class);
         addBeanFlag(MuleHierarchicalBeanDefinitionParserDelegate.MULE_NO_RECURSE);
@@ -45,7 +45,9 @@ public class GenericChildMapDefinitionParser extends ChildDefinitionParser
     protected void parseChild(Element element, ParserContext parserContext, BeanDefinitionBuilder builder)
     {
         super.parseChild(element, parserContext, builder);
-        final Map parseMap = ((MuleHierarchicalBeanDefinitionParserDelegate) parserContext.getDelegate()).parseMapElement(element, childElementName, childElementKeyAttribute, childElementValueAttribute);
+        final Map parseMap =
+                ((MuleHierarchicalBeanDefinitionParserDelegate) parserContext.getDelegate()).parseMapElement(element, childElementName,
+                        childElementKeyAttribute, childElementValueAttribute);
         builder.addPropertyValue("sourceMap", parseMap);
         builder.addPropertyValue("targetMapClass", super.getBeanClass(element));
     }

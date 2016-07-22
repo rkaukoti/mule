@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.module.extension.internal.introspection;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.runners.Parameterized.Parameters;
-import static org.mule.metadata.java.api.JavaTypeLoader.JAVA;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.metadata.api.builder.BaseTypeBuilder;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.tck.junit4.AbstractMuleTestCase;
@@ -18,10 +18,10 @@ import org.mule.tck.size.SmallTest;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.runners.Parameterized.Parameters;
+import static org.mule.metadata.java.api.JavaTypeLoader.JAVA;
 
 @SmallTest
 @RunWith(Parameterized.class)
@@ -29,26 +29,12 @@ public class BasicTypeMetadataVisitorTestCase extends AbstractMuleTestCase
 {
 
     private static final BaseTypeBuilder<?> BUILDER = BaseTypeBuilder.create(JAVA);
-
-    @Parameters(name = "isSimpleType({0})")
-    public static Collection<Object[]> data()
-    {
-        return Arrays.asList(new Object[][] {
-                {BUILDER.stringType().build(), true},
-                {BUILDER.numberType().build(), true},
-                {BUILDER.booleanType().build(), true},
-                {BUILDER.objectType().build(), false},
-                {BUILDER.arrayType().of(BUILDER.stringType()).build(), false},
-                {BUILDER.dateTimeType().build(), false}
-        });
-    }
-
     @Parameterized.Parameter(0)
     public MetadataType metadataType;
-
     @Parameterized.Parameter(1)
     public boolean expectedSimple;
-
+    private boolean simpleType;
+    private boolean complexType;
     private BasicTypeMetadataVisitor visitor = new BasicTypeMetadataVisitor()
     {
         @Override
@@ -64,8 +50,18 @@ public class BasicTypeMetadataVisitorTestCase extends AbstractMuleTestCase
         }
     };
 
-    private boolean simpleType;
-    private boolean complexType;
+    @Parameters(name = "isSimpleType({0})")
+    public static Collection<Object[]> data()
+    {
+        return Arrays.asList(new Object[][] {
+                {BUILDER.stringType().build(), true},
+                {BUILDER.numberType().build(), true},
+                {BUILDER.booleanType().build(), true},
+                {BUILDER.objectType().build(), false},
+                {BUILDER.arrayType().of(BUILDER.stringType()).build(), false},
+                {BUILDER.dateTimeType().build(), false}
+        });
+    }
 
     @Before
     public void before()

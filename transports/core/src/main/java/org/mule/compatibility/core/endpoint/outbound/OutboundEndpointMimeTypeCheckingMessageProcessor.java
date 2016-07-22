@@ -47,14 +47,15 @@ public class OutboundEndpointMimeTypeCheckingMessageProcessor implements Message
                 if (!dataType.getMediaType().matches(endpointMimeType))
                 {
                     throw new MessagingException(
-                            CoreMessages.unexpectedMIMEType(dataType.getMediaType().toRfcString(), endpointMimeType.toRfcString()), event, this);
+                            CoreMessages.unexpectedMIMEType(dataType.getMediaType().toRfcString(), endpointMimeType.toRfcString()), event,
+                            this);
                 }
             }
         }
 
         return event;
     }
-    
+
     @Override
     public String toString()
     {

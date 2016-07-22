@@ -7,11 +7,7 @@
 
 package org.mule.runtime.module.db.internal.domain.connection;
 
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.runtime.core.api.transaction.Transaction;
 import org.mule.runtime.module.db.internal.domain.transaction.DbTransactionManager;
 import org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction;
@@ -23,7 +19,11 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.junit.Test;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class TransactionalDbConnectionFactoryTestCase extends AbstractMuleTestCase

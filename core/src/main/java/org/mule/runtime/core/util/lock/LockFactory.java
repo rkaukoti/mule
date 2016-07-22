@@ -28,5 +28,5 @@ public interface LockFactory
      * @return a {@link Lock} instance associated to the lockId
      */
     Lock createLock(String lockId);
-    
+
 }

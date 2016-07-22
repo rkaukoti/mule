@@ -6,15 +6,13 @@
  */
 package org.mule.compatibility.transport.http;
 
+import org.junit.Test;
+import org.mule.compatibility.core.api.transport.Connector;
+import org.mule.functional.junit4.FunctionalTestCase;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
-import org.mule.compatibility.core.api.transport.Connector;
-import org.mule.compatibility.transport.http.HttpsConnector;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import org.junit.Test;
 
 public class HttpsTlsTestCase extends FunctionalTestCase
 {

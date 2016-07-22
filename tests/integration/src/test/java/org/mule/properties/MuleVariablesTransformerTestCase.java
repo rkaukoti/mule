@@ -6,9 +6,8 @@
  */
 package org.mule.properties;
 
-import org.mule.functional.junit4.FunctionalTestCase;
-
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 
 public class MuleVariablesTransformerTestCase extends FunctionalTestCase
 {

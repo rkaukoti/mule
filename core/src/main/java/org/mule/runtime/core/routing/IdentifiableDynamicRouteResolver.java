@@ -20,7 +20,6 @@ public interface IdentifiableDynamicRouteResolver extends DynamicRouteResolver
      *
      * @param event the event holding the message to route
      * @return an identifier of {@link org.mule.runtime.core.routing.DynamicRouteResolver}
-     * @throws MessagingException
      */
     String getRouteIdentifier(MuleEvent event) throws MessagingException;
 }

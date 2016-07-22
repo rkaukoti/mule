@@ -6,6 +6,8 @@
  */
 package org.mule.compatibility.transport.jms.integration.activemq;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.ActiveMQXAConnectionFactory;
 import org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration;
 
 import java.util.Collections;
@@ -13,9 +15,6 @@ import java.util.Map;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
-
-import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.activemq.ActiveMQXAConnectionFactory;
 
 /**
  * Abstracts all the Jms Vendor specific configuration.  This is the implementation for ActiveMQ.
@@ -28,7 +27,7 @@ public class ActiveMQJmsConfiguration implements JmsVendorConfiguration
     {
         // empty
     }
-    
+
     public Connection getConnection(boolean topic, boolean xa) throws Exception
     {
         if (xa)
@@ -125,9 +124,9 @@ public class ActiveMQJmsConfiguration implements JmsVendorConfiguration
 
     public ConnectionFactory getTestConnectionFactory()
     {
-        return new ActiveMQTestReconnectionConnectionFactoryWrapper();       
+        return new ActiveMQTestReconnectionConnectionFactoryWrapper();
     }
-    
+
     public boolean isEnabled()
     {
         return true;

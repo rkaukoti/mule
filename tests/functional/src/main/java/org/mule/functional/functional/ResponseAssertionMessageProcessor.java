@@ -6,6 +6,7 @@
  */
 package org.mule.functional.functional;
 
+import org.junit.Assert;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.NonBlockingVoidMuleEvent;
 import org.mule.runtime.core.VoidMuleEvent;
@@ -27,8 +28,6 @@ import org.mule.runtime.core.processor.chain.ProcessorExecutorFactory;
 import java.util.Collections;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-
-import org.junit.Assert;
 
 public class ResponseAssertionMessageProcessor extends AssertionMessageProcessor implements
         InterceptingMessageProcessor, FlowConstructAware, Startable, NonBlockingSupported
@@ -70,7 +69,7 @@ public class ResponseAssertionMessageProcessor extends AssertionMessageProcessor
             {
                 @Override
                 public void processReplyTo(MuleEvent event, MuleMessage returnMessage, Object replyTo) throws
-                                                                                                       MuleException
+                        MuleException
                 {
                     originalReplyToHandler.processReplyTo(processResponse(event), null, null);
                 }
@@ -120,8 +119,8 @@ public class ResponseAssertionMessageProcessor extends AssertionMessageProcessor
             try
             {
                 return new ProcessorExecutorFactory().createProcessorExecutor(event, Collections.singletonList(next),
-                                                                              MessageProcessorExecutionTemplate
-                                                                                      .createExceptionTransformerExecutionTemplate(), false).execute();
+                        MessageProcessorExecutionTemplate
+                                .createExceptionTransformerExecutionTemplate(), false).execute();
             }
             catch (MessagingException e)
             {
@@ -200,9 +199,6 @@ public class ResponseAssertionMessageProcessor extends AssertionMessageProcessor
      * - count was set & count processes were done => ok
      * - count was set & count processes were not done => fail
      * - count was not set & at least one processing were done => ok
-     *
-     * @return
-     * @throws InterruptedException
      */
     synchronized private boolean isResponseProcessesCountCorrect() throws InterruptedException
     {

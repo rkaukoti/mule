@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.core.registry;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.OptimizedRequestContext;
@@ -34,7 +33,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class RequestContextTestCase extends AbstractMuleTestCase
 {
@@ -110,6 +109,11 @@ public class RequestContextTestCase extends AbstractMuleTestCase
         public MuleMessage getMessage()
         {
             return message;
+        }
+
+        @Override
+        public void setMessage(MuleMessage message)
+        {
         }
 
         @Override
@@ -254,11 +258,6 @@ public class RequestContextTestCase extends AbstractMuleTestCase
         public boolean isSynchronous()
         {
             return false;
-        }
-
-        @Override
-        public void setMessage(MuleMessage message)
-        {
         }
 
         @Override

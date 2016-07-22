@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.core.util;
 
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-
 import org.junit.Test;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -23,15 +22,15 @@ public class SplashScreenTestCase extends AbstractMuleContextTestCase
         SplashScreen serverStartupSplashScreen = new ServerStartupSplashScreen();
         assertNotNull(serverStartupSplashScreen);
         assertTrue(serverStartupSplashScreen.toString().length() > 0);
-        
+
         muleContext.start();
         muleContext.stop();
         String initialStartBoilerPlate = serverStartupSplashScreen.toString();
-        
+
         muleContext.start();
         muleContext.stop();
         String subsequentStartBoilerPlate = serverStartupSplashScreen.toString();
-        
+
         // Only lightly validate on size because content changes, e.g. server start time-stamp
         assertEquals("Splash-screen sizes differ, ", initialStartBoilerPlate.length(), subsequentStartBoilerPlate.length());
     }

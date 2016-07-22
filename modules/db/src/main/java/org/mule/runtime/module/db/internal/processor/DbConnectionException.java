@@ -14,7 +14,6 @@ import java.sql.SQLException;
 
 /**
  * <code>DbConnectionException</code> is an exception thrown when an error connecting to a DB occurs, regardless of the message.
- *
  */
 public class DbConnectionException extends LocatedMuleException
 {

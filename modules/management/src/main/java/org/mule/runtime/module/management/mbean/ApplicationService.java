@@ -8,7 +8,6 @@ package org.mule.runtime.module.management.mbean;
 
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.management.stats.FlowConstructStatistics;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +28,9 @@ public class ApplicationService extends FlowConstructService implements FlowCons
     {
         try
         {
-            statsName = jmxSupport.getObjectName(String.format("%s:type=org.mule.Statistics,%s=%s", objectName.getDomain(), 
-                statistics.getFlowConstructType(), jmxSupport.escape(getName())));
-            
+            statsName = jmxSupport.getObjectName(String.format("%s:type=org.mule.Statistics,%s=%s", objectName.getDomain(),
+                    statistics.getFlowConstructType(), jmxSupport.escape(getName())));
+
             // unregister old version if exists
             if (this.server.isRegistered(statsName))
             {

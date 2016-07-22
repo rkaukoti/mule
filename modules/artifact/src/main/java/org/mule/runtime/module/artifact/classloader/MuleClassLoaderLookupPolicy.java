@@ -7,15 +7,15 @@
 
 package org.mule.runtime.module.artifact.classloader;
 
-import static org.apache.commons.lang.ClassUtils.getPackageName;
-import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.CHILD_FIRST;
-import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_ONLY;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import static org.apache.commons.lang.ClassUtils.getPackageName;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.CHILD_FIRST;
+import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_ONLY;
 
 /**
  * Defines which resources in a class loader should be looked up
@@ -37,9 +37,9 @@ public class MuleClassLoaderLookupPolicy implements ClassLoaderLookupPolicy
     /**
      * Creates a new lookup policy based on the provided configuration.
      *
-     * @param lookupStrategies      lookup strategy to use with specific packages. Non null.
-     * @param rootSystemPackages packages that must use {@link ClassLoaderLookupStrategy#PARENT_ONLY}. Any
-     *                           inner package extending from a system package root will use the same approach.
+     * @param lookupStrategies   lookup strategy to use with specific packages. Non null.
+     * @param rootSystemPackages packages that must use {@link ClassLoaderLookupStrategy#PARENT_ONLY}. Any inner package extending from a
+     *                           system package root will use the same approach.
      */
     public MuleClassLoaderLookupPolicy(Map<String, ClassLoaderLookupStrategy> lookupStrategies, Set<String> rootSystemPackages)
     {
@@ -141,7 +141,8 @@ public class MuleClassLoaderLookupPolicy implements ClassLoaderLookupPolicy
             }
         }
 
-        final MuleClassLoaderLookupPolicy muleClassLoaderLookupPolicy = new MuleClassLoaderLookupPolicy(newLookupStraetgies, rootSystemPackages);
+        final MuleClassLoaderLookupPolicy muleClassLoaderLookupPolicy =
+                new MuleClassLoaderLookupPolicy(newLookupStraetgies, rootSystemPackages);
 
         return muleClassLoaderLookupPolicy;
     }

@@ -25,6 +25,7 @@ public abstract class AbstractJmxSupport implements JmxSupport
      * 'Mule.TradeProcessor.2' and so on.
      * <p/>
      * If no clash detected, returns the domain name unmodified.
+     *
      * @param domain domain name causing a conflict
      * @return resolved non-conflicting domain name
      */
@@ -56,12 +57,15 @@ public abstract class AbstractJmxSupport implements JmxSupport
 
     /**
      * List all domains of this MBean server.
+     *
      * @param server server to contact
      * @return a collection of unique JMX domains
      */
     protected abstract Collection getDomains(MBeanServer server);
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public String getDomainName(MuleContext context)
     {
         return getDomainName(context, true);

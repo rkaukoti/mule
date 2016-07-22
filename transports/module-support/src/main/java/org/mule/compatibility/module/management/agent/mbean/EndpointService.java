@@ -13,7 +13,6 @@ import org.mule.compatibility.core.api.transport.MessageReceiver;
 import org.mule.compatibility.core.util.TransportObjectNameHelper;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.config.i18n.CoreMessages;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +59,7 @@ public class EndpointService implements EndpointServiceMBean
         if (receiver == null && endpoint instanceof InboundEndpoint)
         {
             throw new IllegalArgumentException(
-                "Recevier is null for Endpoint MBean but the endpoint itself is a receiving endpoint");
+                    "Recevier is null for Endpoint MBean but the endpoint itself is a receiving endpoint");
         }
 
         name = new TransportObjectNameHelper(endpoint.getMuleContext()).getEndpointName(endpoint.getEndpointURI());
@@ -127,7 +126,7 @@ public class EndpointService implements EndpointServiceMBean
     {
         return endpoint.getExchangePattern();
     }
-    
+
     @Override
     public String getComponentName()
     {

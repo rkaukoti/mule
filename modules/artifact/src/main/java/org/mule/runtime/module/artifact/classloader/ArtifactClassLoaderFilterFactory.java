@@ -16,7 +16,7 @@ public interface ArtifactClassLoaderFilterFactory
     /**
      * Creates a filter based on the provided configuration
      *
-     * @param exportedClassPackages comma separated list of class packages to export. Can be null
+     * @param exportedClassPackages    comma separated list of class packages to export. Can be null
      * @param exportedResourcePackages comma separated list of resource packages to export. Can be null
      * @return a class loader filter that matches the provided configuration
      */

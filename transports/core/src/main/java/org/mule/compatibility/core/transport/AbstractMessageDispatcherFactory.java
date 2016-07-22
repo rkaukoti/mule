@@ -16,7 +16,7 @@ import org.mule.runtime.core.util.ClassUtils;
  * <code>AbstractMessageDispatcherFactory</code> is a base implementation of the
  * <code>MessageDispatcherFactory</code> interface for managing the lifecycle of
  * message dispatchers.
- * 
+ *
  * @see MessageDispatcherFactory
  */
 public abstract class AbstractMessageDispatcherFactory implements MessageDispatcherFactory
@@ -32,7 +32,7 @@ public abstract class AbstractMessageDispatcherFactory implements MessageDispatc
      * {@link MessageDispatcherFactory#isCreateDispatcherPerRequest()} returns
      * <code>false</code>, which means that dispatchers are pooled according to
      * their lifecycle as described in {@link MessageDispatcher}.
-     * 
+     *
      * @return <code>false</code> by default, unless overwritten by a subclass.
      */
     @Override

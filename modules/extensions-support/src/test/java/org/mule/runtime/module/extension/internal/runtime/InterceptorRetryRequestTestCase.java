@@ -6,19 +6,19 @@
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import org.mule.runtime.extension.api.runtime.operation.Interceptor;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.extension.api.runtime.operation.Interceptor;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -78,7 +78,8 @@ public class InterceptorRetryRequestTestCase extends AbstractMuleTestCase
         requestAndFail();
     }
 
-    private void requestAndFail() {
+    private void requestAndFail()
+    {
         try
         {
             request();

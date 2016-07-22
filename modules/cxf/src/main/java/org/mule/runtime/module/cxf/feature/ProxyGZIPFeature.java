@@ -7,13 +7,12 @@
 
 package org.mule.runtime.module.cxf.feature;
 
-import org.mule.runtime.module.cxf.support.ProxyGZIPInInterceptor;
-import org.mule.runtime.module.cxf.support.ProxyGZIPOutInterceptor;
-
 import org.apache.cxf.Bus;
 import org.apache.cxf.common.injection.NoJSR250Annotations;
 import org.apache.cxf.feature.AbstractFeature;
 import org.apache.cxf.interceptor.InterceptorProvider;
+import org.mule.runtime.module.cxf.support.ProxyGZIPInInterceptor;
+import org.mule.runtime.module.cxf.support.ProxyGZIPOutInterceptor;
 
 
 /**
@@ -30,7 +29,6 @@ import org.apache.cxf.interceptor.InterceptorProvider;
  *
  * In each case the property being verified is the Content-Encoding of the request
  * and the response.
- *
  */
 @NoJSR250Annotations
 public class ProxyGZIPFeature extends AbstractFeature

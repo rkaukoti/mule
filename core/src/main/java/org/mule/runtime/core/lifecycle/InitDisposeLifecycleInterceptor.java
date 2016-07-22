@@ -10,12 +10,11 @@ import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.LifecycleInterceptor;
 import org.mule.runtime.core.api.lifecycle.LifecyclePhase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A {@link LifecycleInterceptor} which tracks the completion of the {@link Initialisable}

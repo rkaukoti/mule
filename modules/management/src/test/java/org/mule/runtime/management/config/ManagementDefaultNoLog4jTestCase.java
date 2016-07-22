@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.management.config;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.agent.Agent;
+
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-
-import org.mule.runtime.core.api.agent.Agent;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import org.junit.Test;
 
 public class ManagementDefaultNoLog4jTestCase extends FunctionalTestCase
 {

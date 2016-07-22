@@ -46,7 +46,7 @@ public class PooledJavaComponent extends AbstractJavaComponent
 
     public PooledJavaComponent(ObjectFactory objectFactory,
                                PoolingProfile poolingProfile,
-            EntryPointResolverSet entryPointResolverSet)
+                               EntryPointResolverSet entryPointResolverSet)
     {
         super(objectFactory, entryPointResolverSet);
         this.poolingProfile = poolingProfile;
@@ -87,17 +87,17 @@ public class PooledJavaComponent extends AbstractJavaComponent
         }
     }
 
+    public PoolingProfile getPoolingProfile()
+    {
+        return poolingProfile;
+    }
+
     public void setPoolingProfile(PoolingProfile poolingProfile)
     {
         // TODO What happens if this is set while component is started? Should we i)
         // do nothing ii) issue warning iii) stop/start the pool
         // (!!) iv) throw exception?
         this.poolingProfile = poolingProfile;
-    }
-
-    public PoolingProfile getPoolingProfile()
-    {
-        return poolingProfile;
     }
 
     /**

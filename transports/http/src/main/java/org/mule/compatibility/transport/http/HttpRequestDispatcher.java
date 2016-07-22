@@ -15,6 +15,8 @@ import org.mule.runtime.core.api.retry.RetryPolicyTemplate;
 import org.mule.runtime.core.config.MutableThreadingProfile;
 import org.mule.runtime.core.connector.ConnectException;
 import org.mule.runtime.core.util.concurrent.ThreadNameHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -25,9 +27,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.resource.spi.work.Work;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Manage a ServerSocket.
  * <p/>
@@ -37,15 +36,15 @@ class HttpRequestDispatcher implements Work
 {
 
     private static Logger logger = LoggerFactory.getLogger(HttpRequestDispatcher.class);
-
+    private final AtomicBoolean disconnect = new AtomicBoolean(false);
+    protected ExecutorService requestHandOffExecutor;
     private ServerSocket serverSocket;
     private HttpConnector httpConnector;
     private RetryPolicyTemplate retryTemplate;
-    protected ExecutorService requestHandOffExecutor;
     private WorkManager workManager;
-    private final AtomicBoolean disconnect = new AtomicBoolean(false);
 
-    public HttpRequestDispatcher(final HttpConnector httpConnector, final RetryPolicyTemplate retryPolicyTemplate, final ServerSocket serverSocket, final WorkManager workManager)
+    public HttpRequestDispatcher(final HttpConnector httpConnector, final RetryPolicyTemplate retryPolicyTemplate,
+                                 final ServerSocket serverSocket, final WorkManager workManager)
     {
         if (httpConnector == null)
         {
@@ -76,7 +75,8 @@ class HttpRequestDispatcher implements Work
         MutableThreadingProfile dispatcherThreadingProfile = new MutableThreadingProfile(receiverThreadingProfile);
         dispatcherThreadingProfile.setThreadFactory(null);
         dispatcherThreadingProfile.setMaxThreadsActive(dispatcherThreadingProfile.getMaxThreadsActive() * 2);
-        String threadNamePrefix = ThreadNameHelper.getPrefix(httpConnector.getMuleContext()) + "http.request.dispatch." + serverSocket.getLocalPort();
+        String threadNamePrefix =
+                ThreadNameHelper.getPrefix(httpConnector.getMuleContext()) + "http.request.dispatch." + serverSocket.getLocalPort();
         ExecutorService executorService = dispatcherThreadingProfile.createPool(threadNamePrefix);
         return executorService;
     }

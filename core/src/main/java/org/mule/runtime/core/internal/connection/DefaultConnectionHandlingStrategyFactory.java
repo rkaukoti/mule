@@ -68,8 +68,9 @@ final class DefaultConnectionHandlingStrategyFactory<Connection> implements Conn
     {
         if (poolingProfile.isDisabled())
         {
-            throw new IllegalArgumentException("The selected connection management strategy requires pooling but the supplied pooling profile " +
-                                               "is attempting to disable pooling. Supply a valid PoolingProfile or choose a different management strategy.");
+            throw new IllegalArgumentException(
+                    "The selected connection management strategy requires pooling but the supplied pooling profile " +
+                    "is attempting to disable pooling. Supply a valid PoolingProfile or choose a different management strategy.");
         }
 
         return requiresPooling(new NullPoolingListener<>());

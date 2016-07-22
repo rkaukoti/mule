@@ -10,7 +10,8 @@ package org.mule.runtime.core.api.config;
 public class DefaultThreadingProfileConfig
 {
 
-    public static final String MAX_THREADS_ACTIVE_PROPERTY = MuleProperties.SYSTEM_PROPERTY_PREFIX + "defaultThreadingProfile.maxThreadsActive";
+    public static final String MAX_THREADS_ACTIVE_PROPERTY =
+            MuleProperties.SYSTEM_PROPERTY_PREFIX + "defaultThreadingProfile.maxThreadsActive";
     public static final String MAX_THREADS_IDLE_PROPERTY = MuleProperties.SYSTEM_PROPERTY_PREFIX + "defaultThreadingProfile.maxThreadsIdle";
     public static final String MAX_BUFFER_SIZE_PROPERTY = MuleProperties.SYSTEM_PROPERTY_PREFIX + "defaultThreadingProfile.maxBufferSize";
     public static final String MAX_THREAD_TTL_PROPERTY = MuleProperties.SYSTEM_PROPERTY_PREFIX + "defaultThreadingProfile.maxThreadTTL";

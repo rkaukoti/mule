@@ -71,7 +71,8 @@ public class BulkUpdateExecutor extends AbstractExecutor implements BulkExecutor
         }
 
         PreparedStatement preparedStatement = (PreparedStatement) statement;
-        PreparedBulkQueryLogger queryLogger = queryLoggerFactory.createBulkQueryLogger(logger, query.getQueryTemplate(), paramValues.size());
+        PreparedBulkQueryLogger queryLogger =
+                queryLoggerFactory.createBulkQueryLogger(logger, query.getQueryTemplate(), paramValues.size());
         try
         {
             for (List<QueryParamValue> params : paramValues)

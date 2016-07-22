@@ -6,19 +6,18 @@
  */
 package org.mule.runtime.module.xml.transformers.xml.xquery;
 
+import org.custommonkey.xmlunit.XMLUnit;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.xml.transformer.XQueryTransformer;
+import org.w3c.dom.Document;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.custommonkey.xmlunit.XMLUnit;
-import org.w3c.dom.Document;
 
 public class InlineXQueryTransformerWithParamsTestCase extends AbstractTransformerTestCase
 {
@@ -92,14 +91,14 @@ public class InlineXQueryTransformerWithParamsTestCase extends AbstractTransform
     {
         if (expected instanceof Document && result instanceof Document)
         {
-            return XMLUnit.compareXML((Document)expected, (Document)result).similar();
+            return XMLUnit.compareXML((Document) expected, (Document) result).similar();
         }
         else if (expected instanceof String && result instanceof String)
         {
             try
             {
-                String expectedString = this.normalizeString((String)expected);
-                String resultString = this.normalizeString((String)result);
+                String expectedString = this.normalizeString((String) expected);
+                String resultString = this.normalizeString((String) result);
                 return XMLUnit.compareXML(expectedString, resultString).similar();
             }
             catch (Exception ex)

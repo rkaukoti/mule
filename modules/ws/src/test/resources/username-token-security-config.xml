@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
       xmlns:ws="http://www.mulesoft.org/schema/mule/ws"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
@@ -21,7 +21,7 @@
     </ws:consumer-config>
 
     <flow name="clientWithValidCredentialsText">
-        <ws:consumer  operation="echo" config-ref="configValidCredentialsText" />
+        <ws:consumer operation="echo" config-ref="configValidCredentialsText"/>
     </flow>
 
     <ws:consumer-config serviceAddress="http://localhost:${port}/services/Test" wsdlLocation="Test.wsdl"
@@ -34,7 +34,7 @@
 
 
     <flow name="clientWithValidCredentialsDigest">
-        <ws:consumer operation="echo" config-ref="configValidCredentialsDigest" />
+        <ws:consumer operation="echo" config-ref="configValidCredentialsDigest"/>
     </flow>
 
 
@@ -46,15 +46,15 @@
     </ws:consumer-config>
 
     <flow name="clientWithInvalidCredentials">
-        <ws:consumer operation="echo" config-ref="configInvalidCredentials" />
+        <ws:consumer operation="echo" config-ref="configInvalidCredentials"/>
     </flow>
 
 
     <ws:consumer-config serviceAddress="http://localhost:${port}/services/Test" wsdlLocation="Test.wsdl"
-                        service="TestService" port="TestPort" name="configWithoutCredentials" />
+                        service="TestService" port="TestPort" name="configWithoutCredentials"/>
 
     <flow name="clientWithoutCredentials">
-        <ws:consumer operation="echo" config-ref="configWithoutCredentials" />
+        <ws:consumer operation="echo" config-ref="configWithoutCredentials"/>
     </flow>
 
 

@@ -6,9 +6,10 @@
  */
 package org.mule.extension.file.internal.lock;
 
-import static java.lang.String.format;
-import org.mule.runtime.module.extension.file.api.lock.PathLock;
 import org.mule.runtime.core.util.IOUtils;
+import org.mule.runtime.module.extension.file.api.lock.PathLock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.channels.FileChannel;
@@ -17,8 +18,7 @@ import java.nio.file.AccessDeniedException;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
 
 /**
  * A {@link PathLock} backed by a {@link FileLock} obtained
@@ -68,7 +68,8 @@ public final class LocalPathLock implements PathLock
         catch (AccessDeniedException e)
         {
             release();
-            throw new IllegalArgumentException(format("Could not obtain lock on path ''%s'' because access was denied by the operating system", path));
+            throw new IllegalArgumentException(
+                    format("Could not obtain lock on path ''%s'' because access was denied by the operating system", path));
         }
         catch (Exception e)
         {

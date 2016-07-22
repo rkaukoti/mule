@@ -7,19 +7,18 @@
 
 package org.mule.runtime.config.spring.parsers.specific;
 
-import static org.mule.runtime.config.spring.parsers.specific.DataTypeFactoryBean.buildDataTypeDefinition;
-
 import org.mule.runtime.api.metadata.DataType;
-
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 
+import static org.mule.runtime.config.spring.parsers.specific.DataTypeFactoryBean.buildDataTypeDefinition;
+
 /**
- *  Parses transformers message processors to map data type attributes
- *  to a {@link DataType}
+ * Parses transformers message processors to map data type attributes
+ * to a {@link DataType}
  *
- *  @since 4.0.0
+ * @since 4.0.0
  */
 public class TransformerMessageProcessorDefinitionParser extends MessageProcessorWithDataTypeDefinitionParser
 {
@@ -52,13 +51,15 @@ public class TransformerMessageProcessorDefinitionParser extends MessageProcesso
         }
         else
         {
-             return null;
+            return null;
         }
     }
 
     private String getClassName(PropertyValues sourceProperties)
     {
-        return (String) (sourceProperties.contains(RETURN_CLASS) ? sourceProperties.getPropertyValue(RETURN_CLASS).getValue() : Object.class.getName());
+        return (String) (sourceProperties.contains(RETURN_CLASS) ?
+                sourceProperties.getPropertyValue(RETURN_CLASS).getValue() :
+                Object.class.getName());
     }
 
 }

@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.module.oauth2.asserter;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 
 import org.mule.runtime.module.http.internal.HttpParser;
 import org.mule.runtime.module.http.internal.ParameterMap;
 import org.mule.runtime.module.oauth2.internal.OAuthConstants;
 
-import com.github.tomakehurst.wiremock.verification.LoggedRequest;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class AuthorizationRequestAsserter
 {
@@ -21,15 +21,15 @@ public class AuthorizationRequestAsserter
     private final LoggedRequest loggedRequest;
     private final ParameterMap queryParameters;
 
-    public static AuthorizationRequestAsserter create(LoggedRequest loggedRequest)
-    {
-        return new AuthorizationRequestAsserter(loggedRequest);
-    }
-
     private AuthorizationRequestAsserter(LoggedRequest loggedRequest)
     {
         this.loggedRequest = loggedRequest;
         queryParameters = HttpParser.decodeQueryString(HttpParser.extractQueryParams(loggedRequest.getUrl()));
+    }
+
+    public static AuthorizationRequestAsserter create(LoggedRequest loggedRequest)
+    {
+        return new AuthorizationRequestAsserter(loggedRequest);
     }
 
     public AuthorizationRequestAsserter assertMethodIsGet()

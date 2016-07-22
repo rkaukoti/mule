@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:mule-xml="http://www.mulesoft.org/schema/mule/xml"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
                http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
@@ -14,26 +14,26 @@
     </mule-xml:namespace-manager>
 
     <custom-transformer
-        class="org.mule.runtime.module.xml.transformer.XmlToDomDocument"
-        name="InputStreamToDOM"
-        returnClass="org.w3c.dom.Document" />
+            class="org.mule.runtime.module.xml.transformer.XmlToDomDocument"
+            name="InputStreamToDOM"
+            returnClass="org.w3c.dom.Document"/>
 
     <mule-xml:xslt-transformer
-        xsl-file="org/mule/test/integration/xml/test.xsl"
-        name="TestXslTransformer"
-        returnClass="org.w3c.dom.Document"/>
+            xsl-file="org/mule/test/integration/xml/test.xsl"
+            name="TestXslTransformer"
+            returnClass="org.w3c.dom.Document"/>
 
     <mule-xml:xpath-filter name="XPathFilter"
-        pattern="/soap:Envelope/soap:Body/simple:echo/simple:echo"
-        expectedValue="Hello!">
-        <mule-xml:namespace prefix="soap" uri="http://schemas.xmlsoap.org/soap/envelope/" />
+                           pattern="/soap:Envelope/soap:Body/simple:echo/simple:echo"
+                           expectedValue="Hello!">
+        <mule-xml:namespace prefix="soap" uri="http://schemas.xmlsoap.org/soap/envelope/"/>
     </mule-xml:xpath-filter>
 
     <flow name="xmlParseFlow">
         <http:listener path="xml-parse" config-ref="listenerConfig"/>
         <transformer ref="InputStreamToDOM"/>
         <message-filter throwOnUnaccepted="true">
-            <filter ref="XPathFilter" />
+            <filter ref="XPathFilter"/>
         </message-filter>
         <echo-component/>
     </flow>
@@ -46,7 +46,7 @@
                 xsl-file="org/mule/test/integration/xml/test.xsl"
                 returnClass="org.w3c.dom.Document"/>
         <message-filter throwOnUnaccepted="true">
-            <filter ref="XPathFilter" />
+            <filter ref="XPathFilter"/>
         </message-filter>
         <echo-component/>
     </flow>
@@ -61,7 +61,7 @@
     </flow>
 
     <flow name="extractor">
-        <http:listener path="extract" config-ref="listenerConfig" />
+        <http:listener path="extract" config-ref="listenerConfig"/>
         <transformer ref="InputStreamToDOM"/>
         <mule-xml:xpath-extractor-transformer expression="/this/is" resultType="STRING"/>
     </flow>

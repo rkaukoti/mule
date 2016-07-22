@@ -7,5 +7,5 @@
         <property name="secretAliasId" value="6247672658342245276"/>
         <property name="secretPassphrase" value="TestingPassphrase"/>
     </bean>
-    <bean id="fakeCredentialAccessor" class="org.mule.runtime.module.pgp.FakeCredentialAccessor" />
+    <bean id="fakeCredentialAccessor" class="org.mule.runtime.module.pgp.FakeCredentialAccessor"/>
 </beans>

@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.module.http.internal.listener;
 
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
-import static org.slf4j.LoggerFactory.getLogger;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -22,16 +19,20 @@ import org.mule.runtime.module.http.internal.domain.InputStreamHttpEntity;
 import org.mule.runtime.module.http.internal.domain.response.HttpResponse;
 import org.mule.runtime.module.http.internal.listener.async.HttpResponseReadyCallback;
 import org.mule.runtime.module.http.internal.listener.async.ResponseStatusCallback;
+import org.slf4j.Logger;
 
 import java.io.ByteArrayInputStream;
 import java.util.Map;
 
-import org.slf4j.Logger;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class HttpMessageProcessorTemplate implements AsyncResponseFlowProcessingPhaseTemplate, ThrottlingPhaseTemplate
 {
 
-    public static final int MESSAGE_DISCARD_STATUS_CODE = Integer.valueOf(System.getProperty("mule.transport.http.throttling.discardstatuscode","429"));
+    public static final int MESSAGE_DISCARD_STATUS_CODE =
+            Integer.valueOf(System.getProperty("mule.transport.http.throttling.discardstatuscode", "429"));
     public static final String MESSAGE_DISCARD_MESSAGE_BODY = "API calls exceeded";
     public static final String MESSAGE_DISCARD_REASON_PHRASE = "Too Many Requests";
     public static final String X_RATE_LIMIT_LIMIT_HEADER = "X-RateLimit-Limit";
@@ -76,21 +77,24 @@ public class HttpMessageProcessorTemplate implements AsyncResponseFlowProcessing
     @Override
     public void sendResponseToClient(MuleEvent muleEvent, ResponseCompletionCallback responseCompletationCallback) throws MuleException
     {
-        final org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder responseBuilder = new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder();
+        final org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder responseBuilder =
+                new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder();
         final HttpResponse httpResponse = buildResponse(muleEvent, responseBuilder, responseCompletationCallback);
         responseReadyCallback.responseReady(httpResponse, getResponseFailureCallback(responseCompletationCallback, muleEvent));
     }
 
     protected HttpResponse buildErrorResponse()
     {
-        final org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder errorResponseBuilder = new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder();
+        final org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder errorResponseBuilder =
+                new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder();
         final HttpResponse errorResponse = errorResponseBuilder.setStatusCode(INTERNAL_SERVER_ERROR.getStatusCode())
                                                                .setReasonPhrase(INTERNAL_SERVER_ERROR.getReasonPhrase())
                                                                .build();
         return errorResponse;
     }
 
-    protected HttpResponse buildResponse(MuleEvent muleEvent, final org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder responseBuilder,
+    protected HttpResponse buildResponse(MuleEvent muleEvent,
+                                         final org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder responseBuilder,
                                          ResponseCompletionCallback responseCompletationCallback)
     {
         addThrottlingHeaders(responseBuilder);
@@ -108,7 +112,8 @@ public class HttpMessageProcessorTemplate implements AsyncResponseFlowProcessing
         return httpResponse;
     }
 
-    protected HttpResponse doBuildResponse(MuleEvent muleEvent, final org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder responseBuilder,
+    protected HttpResponse doBuildResponse(MuleEvent muleEvent,
+                                           final org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder responseBuilder,
                                            ResponseCompletionCallback responseCompletationCallback)
     {
         try
@@ -132,7 +137,8 @@ public class HttpMessageProcessorTemplate implements AsyncResponseFlowProcessing
         }
     }
 
-    private ResponseStatusCallback getResponseFailureCallback(final ResponseCompletionCallback responseCompletationCallback, final MuleEvent muleEvent)
+    private ResponseStatusCallback getResponseFailureCallback(final ResponseCompletionCallback responseCompletationCallback,
+                                                              final MuleEvent muleEvent)
     {
         return new ResponseStatusCallback()
         {
@@ -151,28 +157,34 @@ public class HttpMessageProcessorTemplate implements AsyncResponseFlowProcessing
     }
 
     @Override
-    public void sendFailureResponseToClient(MessagingException messagingException, ResponseCompletionCallback responseCompletationCallback) throws MuleException
+    public void sendFailureResponseToClient(MessagingException messagingException, ResponseCompletionCallback responseCompletationCallback)
+            throws MuleException
     {
         //For now let's use the HTTP transport exception mapping since makes sense and the gateway depends on it.
-        String exceptionStatusCode = ExceptionHelper.getTransportErrorMapping(HTTP.getScheme(), messagingException.getClass(), sourceMuleEvent.getMuleContext());
-        Integer statusCodeFromException = exceptionStatusCode != null ? Integer.valueOf(exceptionStatusCode) : INTERNAL_SERVER_ERROR_STATUS_CODE;
-        final org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder failureResponseBuilder = new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder()
-                .setStatusCode(statusCodeFromException)
-                .setReasonPhrase(messagingException.getMessage());
+        String exceptionStatusCode =
+                ExceptionHelper.getTransportErrorMapping(HTTP.getScheme(), messagingException.getClass(), sourceMuleEvent.getMuleContext());
+        Integer statusCodeFromException =
+                exceptionStatusCode != null ? Integer.valueOf(exceptionStatusCode) : INTERNAL_SERVER_ERROR_STATUS_CODE;
+        final org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder failureResponseBuilder =
+                new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder()
+                        .setStatusCode(statusCodeFromException)
+                        .setReasonPhrase(messagingException.getMessage());
         addThrottlingHeaders(failureResponseBuilder);
         MuleEvent event = messagingException.getEvent();
         event.setMessage(MuleMessage.builder(event.getMessage()).payload(messagingException.getMessage()).build());
         final HttpResponse response = errorResponseBuilder.build(failureResponseBuilder, event);
-        responseReadyCallback.responseReady(response, getResponseFailureCallback(responseCompletationCallback, messagingException.getEvent()));
+        responseReadyCallback.responseReady(response,
+                getResponseFailureCallback(responseCompletationCallback, messagingException.getEvent()));
     }
 
     @Override
     public void discardMessageOnThrottlingExceeded() throws MuleException
     {
-        final org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder throttledResponseBuilder = new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder()
-                .setStatusCode(MESSAGE_DISCARD_STATUS_CODE)
-                .setReasonPhrase(MESSAGE_DISCARD_REASON_PHRASE)
-                .setEntity(new InputStreamHttpEntity(new ByteArrayInputStream(MESSAGE_DISCARD_MESSAGE_BODY.getBytes())));
+        final org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder throttledResponseBuilder =
+                new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder()
+                        .setStatusCode(MESSAGE_DISCARD_STATUS_CODE)
+                        .setReasonPhrase(MESSAGE_DISCARD_REASON_PHRASE)
+                        .setEntity(new InputStreamHttpEntity(new ByteArrayInputStream(MESSAGE_DISCARD_MESSAGE_BODY.getBytes())));
         addThrottlingHeaders(throttledResponseBuilder);
         responseReadyCallback.responseReady(throttledResponseBuilder.build(), getLogCompletionCallback());
     }
@@ -212,12 +224,14 @@ public class HttpMessageProcessorTemplate implements AsyncResponseFlowProcessing
     }
 
     @Override
-    public void setThrottlingPolicyStatistics(long remainingRequestInCurrentPeriod, long maximumRequestAllowedPerPeriod, long timeUntilNextPeriodInMillis)
+    public void setThrottlingPolicyStatistics(long remainingRequestInCurrentPeriod, long maximumRequestAllowedPerPeriod,
+                                              long timeUntilNextPeriodInMillis)
     {
-        httpThrottlingHeadersMapBuilder.setThrottlingPolicyStatistics(remainingRequestInCurrentPeriod, maximumRequestAllowedPerPeriod, timeUntilNextPeriodInMillis);
+        httpThrottlingHeadersMapBuilder.setThrottlingPolicyStatistics(remainingRequestInCurrentPeriod, maximumRequestAllowedPerPeriod,
+                timeUntilNextPeriodInMillis);
     }
 
-    private Map<String,String> getThrottlingHeaders()
+    private Map<String, String> getThrottlingHeaders()
     {
         return httpThrottlingHeadersMapBuilder.build();
     }

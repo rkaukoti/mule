@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.core.transport;
 
+import org.apache.commons.lang.SerializationUtils;
+import org.junit.Test;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import org.apache.commons.lang.SerializationUtils;
-import org.hamcrest.CoreMatchers;
-import org.junit.Test;
 
 @SmallTest
 public class NullPayloadTestCase extends AbstractMuleTestCase

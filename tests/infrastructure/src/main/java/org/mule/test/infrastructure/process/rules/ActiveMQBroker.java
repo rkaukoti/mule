@@ -13,7 +13,6 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 import org.mule.tck.junit4.rule.DynamicPort;
-import org.mule.tck.junit4.rule.SystemProperty;
 
 /**
  * A {@link TestRule} which starts an {@link BrokerService}.
@@ -27,11 +26,11 @@ public class ActiveMQBroker extends ExternalResource
 {
 
     protected final DynamicPort dynamicPort;
-    
+
     private final String connectorUrl;
     private BrokerService broker;
     private TransportConnector transportConnector;
-    
+
     /**
      * Creates a new instance
      *
@@ -54,7 +53,7 @@ public class ActiveMQBroker extends ExternalResource
     public void start()
     {
         broker = new BrokerService();
-        
+
         try
         {
             broker.setUseJmx(false);
@@ -68,7 +67,7 @@ public class ActiveMQBroker extends ExternalResource
             throw new RuntimeException(e);
         }
     }
-    
+
     public void stop()
     {
         try
@@ -86,7 +85,7 @@ public class ActiveMQBroker extends ExternalResource
     {
         return connectorUrl;
     }
-    
+
     public int getConnectionsCount()
     {
         return transportConnector.getConnections().size();

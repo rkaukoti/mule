@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.core.util.pool;
 
+import org.junit.Test;
 import org.mule.runtime.core.api.object.ObjectFactory;
 import org.mule.runtime.core.config.PoolingProfile;
 import org.mule.runtime.core.object.PrototypeObjectFactory;
 import org.mule.tck.testmodels.fruit.WaterMelon;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,15 +29,15 @@ public class DefaultLifecycleEnabledObjectPoolTestCase extends AbstractPoolingTe
         pool.start();
         assertEquals("started", borrowed.getState());
     }
-    
+
     @Test
     public void testPoolStop() throws Exception
     {
         DefaultLifecycleEnabledObjectPool pool = createObjectPool();
         pool.start();
-        
+
         WaterMelon borrowed = borrow(pool);
-        
+
         pool.stop();
         assertEquals("stopped", borrowed.getState());
     }
@@ -48,10 +47,10 @@ public class DefaultLifecycleEnabledObjectPoolTestCase extends AbstractPoolingTe
         PoolingProfile poolingProfile = createDefaultPoolingProfile();
         ObjectFactory objectFactory = createDefaultObjectFactory();
         DefaultLifecycleEnabledObjectPool pool =
-            new DefaultLifecycleEnabledObjectPool(objectFactory, poolingProfile, muleContext);
-        
+                new DefaultLifecycleEnabledObjectPool(objectFactory, poolingProfile, muleContext);
+
         pool.initialise();
-        
+
         return pool;
     }
 
@@ -61,7 +60,7 @@ public class DefaultLifecycleEnabledObjectPoolTestCase extends AbstractPoolingTe
         PrototypeObjectFactory factory = new PrototypeObjectFactory(WaterMelon.class);
         return factory;
     }
-    
+
     private WaterMelon borrow(DefaultLifecycleEnabledObjectPool pool) throws Exception
     {
         return (WaterMelon) pool.borrowObject();

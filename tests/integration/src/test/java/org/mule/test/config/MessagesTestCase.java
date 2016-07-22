@@ -6,13 +6,12 @@
  */
 package org.mule.test.config;
 
+import org.junit.Test;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.config.i18n.Message;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.util.MissingResourceException;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

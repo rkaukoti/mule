@@ -6,22 +6,21 @@
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
-import static org.mule.runtime.config.spring.parsers.specific.NameConstants.MULE_ABSTRACT_MESSAGE_SOURCE_TYPE;
-import static org.mule.runtime.config.spring.parsers.specific.NameConstants.MULE_EXTENSION_CONNECTION_PROVIDER_TYPE;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_DEFAULT_RETRY_POLICY_TEMPLATE;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_MULE_CONFIGURATION;
-import static org.w3c.dom.TypeInfo.DERIVATION_EXTENSION;
-
+import org.apache.commons.lang.StringUtils;
 import org.mule.runtime.config.spring.parsers.generic.OptionalChildDefinitionParser;
 import org.mule.runtime.core.retry.async.AsynchronousRetryTemplate;
-
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
+
+import static org.mule.runtime.config.spring.parsers.specific.NameConstants.MULE_ABSTRACT_MESSAGE_SOURCE_TYPE;
+import static org.mule.runtime.config.spring.parsers.specific.NameConstants.MULE_EXTENSION_CONNECTION_PROVIDER_TYPE;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_DEFAULT_RETRY_POLICY_TEMPLATE;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_MULE_CONFIGURATION;
+import static org.w3c.dom.TypeInfo.DERIVATION_EXTENSION;
 
 /**
  * Allows retry policies to be children of connector elements <i>or</i> the <mule-configuration> element.
@@ -49,11 +48,15 @@ public class RetryPolicyDefinitionParser extends OptionalChildDefinitionParser
             element.setAttribute(ATTRIBUTE_ID, OBJECT_DEFAULT_RETRY_POLICY_TEMPLATE);
             return false;
         }
-        else if (getParentElement(element).getSchemaTypeInfo().isDerivedFrom(MULE_EXTENSION_CONNECTION_PROVIDER_TYPE.getNamespaceURI(), MULE_EXTENSION_CONNECTION_PROVIDER_TYPE.getLocalPart(), DERIVATION_EXTENSION))
+        else if (getParentElement(element).getSchemaTypeInfo()
+                                          .isDerivedFrom(MULE_EXTENSION_CONNECTION_PROVIDER_TYPE.getNamespaceURI(),
+                                                  MULE_EXTENSION_CONNECTION_PROVIDER_TYPE.getLocalPart(), DERIVATION_EXTENSION))
         {
             return false;
         }
-        else if (getParentElement(element).getSchemaTypeInfo().isDerivedFrom(MULE_ABSTRACT_MESSAGE_SOURCE_TYPE.getNamespaceURI(), MULE_ABSTRACT_MESSAGE_SOURCE_TYPE.getLocalPart(), DERIVATION_EXTENSION))
+        else if (getParentElement(element).getSchemaTypeInfo()
+                                          .isDerivedFrom(MULE_ABSTRACT_MESSAGE_SOURCE_TYPE.getNamespaceURI(),
+                                                  MULE_ABSTRACT_MESSAGE_SOURCE_TYPE.getLocalPart(), DERIVATION_EXTENSION))
         {
             return false;
         }
@@ -147,7 +150,8 @@ public class RetryPolicyDefinitionParser extends OptionalChildDefinitionParser
         }
     }
 
-    protected void wrapDelegateRetryPolicy(Element element, ParserContext parserContext, BeanDefinitionBuilder bdb, String asynchWrapperName)
+    protected void wrapDelegateRetryPolicy(Element element, ParserContext parserContext, BeanDefinitionBuilder bdb,
+                                           String asynchWrapperName)
     {
         // Pass in the retry policy as a constructor argument
         bdb.addConstructorArgReference(getBeanName(element));

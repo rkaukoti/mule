@@ -6,14 +6,15 @@
  */
 package org.mule.runtime.module.ws.security;
 
-import static org.apache.ws.security.handler.WSHandlerConstants.SIGNATURE;
-import static org.apache.ws.security.handler.WSHandlerConstants.SIG_PROP_REF_ID;
-import static org.mule.runtime.module.ws.security.WSCryptoUtils.createDefaultTrustStoreProperties;
-import static org.mule.runtime.module.ws.security.WSCryptoUtils.createTrustStoreProperties;
 import org.mule.runtime.api.tls.TlsContextFactory;
 
 import java.util.Map;
 import java.util.Properties;
+
+import static org.apache.ws.security.handler.WSHandlerConstants.SIGNATURE;
+import static org.apache.ws.security.handler.WSHandlerConstants.SIG_PROP_REF_ID;
+import static org.mule.runtime.module.ws.security.WSCryptoUtils.createDefaultTrustStoreProperties;
+import static org.mule.runtime.module.ws.security.WSCryptoUtils.createTrustStoreProperties;
 
 /**
  * Verifies the signature of a SOAP response, using certificates of the trust-store in the provided TLS context.

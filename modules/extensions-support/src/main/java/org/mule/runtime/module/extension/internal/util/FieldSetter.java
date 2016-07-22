@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.module.extension.internal.util;
 
-import java.lang.reflect.Field;
-
 import org.springframework.util.ReflectionUtils;
+
+import java.lang.reflect.Field;
 
 /**
  * Utility class which allows setting the value of a {@link Field} on random

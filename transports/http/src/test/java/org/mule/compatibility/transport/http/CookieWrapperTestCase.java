@@ -6,15 +6,12 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import org.mule.compatibility.transport.http.CookieWrapper;
-import org.mule.compatibility.transport.http.HttpConstants;
+import org.apache.commons.httpclient.Cookie;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.expression.ExpressionManager;
@@ -27,12 +24,12 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.apache.commons.httpclient.Cookie;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class CookieWrapperTestCase extends AbstractMuleTestCase
@@ -176,17 +173,16 @@ public class CookieWrapperTestCase extends AbstractMuleTestCase
     private void mockParse()
     {
         when(mockExpressionManager.parse(anyString(), Mockito.any(MuleEvent.class))).thenAnswer(
-             new Answer<Object>()
-             {
-                 @Override
-                 public Object answer(InvocationOnMock invocation) throws Throwable
-                 {
-                     return invocation.getArguments()[0];
-                 }
-             }
-         );
+                new Answer<Object>()
+                {
+                    @Override
+                    public Object answer(InvocationOnMock invocation) throws Throwable
+                    {
+                        return invocation.getArguments()[0];
+                    }
+                }
+        );
     }
-
 
 
 }

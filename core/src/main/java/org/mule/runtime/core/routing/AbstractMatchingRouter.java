@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.core.routing;
 
-import static org.mule.runtime.core.util.ClassUtils.isConsumable;
 import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.runtime.core.OptimizedRequestContext;
 import org.mule.runtime.core.api.MessagingException;
@@ -21,13 +20,14 @@ import org.mule.runtime.core.api.routing.MatchableMessageProcessor;
 import org.mule.runtime.core.api.routing.MatchingRouter;
 import org.mule.runtime.core.api.routing.TransformingMatchable;
 import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.ClassUtils.isConsumable;
 
 /**
  * <code>AbstractRouterCollection</code> provides common method implementations of router collections for in
@@ -52,7 +52,7 @@ public class AbstractMatchingRouter extends AbstractAnnotatedObject implements M
         MuleEvent result;
         boolean matchfound = false;
 
-        for (Iterator<MatchableMessageProcessor> iterator = matchableRoutes.iterator(); iterator.hasNext();)
+        for (Iterator<MatchableMessageProcessor> iterator = matchableRoutes.iterator(); iterator.hasNext(); )
         {
             MatchableMessageProcessor outboundRouter = iterator.next();
 
@@ -78,7 +78,8 @@ public class AbstractMatchingRouter extends AbstractAnnotatedObject implements M
             {
                 if (isConsumable(message.getDataType().getType()))
                 {
-                    throw new MessagingException(CoreMessages.cannotCopyStreamPayload(message.getDataType().getType().getName()), event, this);
+                    throw new MessagingException(CoreMessages.cannotCopyStreamPayload(message.getDataType().getType().getName()), event,
+                            this);
                 }
                 eventToRoute = OptimizedRequestContext.criticalSetEvent(event);
             }
@@ -144,11 +145,6 @@ public class AbstractMatchingRouter extends AbstractAnnotatedObject implements M
         matchableRoutes.remove(matchable);
     }
 
-    public void setDefaultRoute(MessageProcessor defaultRoute)
-    {
-        this.defaultRoute = defaultRoute;
-    }
-
     public List<MatchableMessageProcessor> getRoutes()
     {
         return matchableRoutes;
@@ -157,6 +153,11 @@ public class AbstractMatchingRouter extends AbstractAnnotatedObject implements M
     public MessageProcessor getDefaultRoute()
     {
         return defaultRoute;
+    }
+
+    public void setDefaultRoute(MessageProcessor defaultRoute)
+    {
+        this.defaultRoute = defaultRoute;
     }
 
     public void initialise() throws InitialisationException

@@ -6,16 +6,15 @@
  */
 package org.mule.test.integration.transaction.xa;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.client.MuleClient;
+import org.mule.runtime.core.transaction.XaTransactionFactory;
+
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mule.functional.junit4.TransactionConfigEnum.ACTION_ALWAYS_BEGIN;
-
-import org.mule.runtime.core.api.client.MuleClient;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.runtime.core.transaction.XaTransactionFactory;
-
-import org.junit.Test;
 
 public class XaTransactionsPersistentQueueTestCase extends FunctionalTestCase
 {
@@ -32,7 +31,11 @@ public class XaTransactionsPersistentQueueTestCase extends FunctionalTestCase
     {
         MuleClient client = muleContext.getClient();
 
-        flowRunner("XaTestService").withPayload(TEST_MESSAGE).asynchronously().transactionally(ACTION_ALWAYS_BEGIN, new XaTransactionFactory()).run().getMessage();
+        flowRunner("XaTestService").withPayload(TEST_MESSAGE)
+                                   .asynchronously()
+                                   .transactionally(ACTION_ALWAYS_BEGIN, new XaTransactionFactory())
+                                   .run()
+                                   .getMessage();
 
         assertThat(client.request("test://finish", RECEIVE_TIMEOUT), not(nullValue()));
     }

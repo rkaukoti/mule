@@ -15,8 +15,7 @@
  * $Id$
  */
 
-if (args.length == 0)
-{
+if (args.length == 0) {
     usage()
 }
 
@@ -25,47 +24,37 @@ removedBlock = new Block()
 insertedBlock = new Block()
 diffedFile = null
 file.eachLine
-{
-    line ->
+        {
+            line ->
 
-    if (line.startsWith("diff"))
-    {
-        compareDifference()
+                if (line.startsWith("diff")) {
+                    compareDifference()
 
-        diffedFile = line
-        removedBlock = new Block()
-        insertedBlock = new Block()
-    }
-    else if (line.startsWith("<"))
-    {
-        removedBlock.addLine(line)
-    }
-    else if (line.startsWith(">"))
-    {
-        insertedBlock.addLine(line)
-    }
-}
+                    diffedFile = line
+                    removedBlock = new Block()
+                    insertedBlock = new Block()
+                } else if (line.startsWith("<")) {
+                    removedBlock.addLine(line)
+                } else if (line.startsWith(">")) {
+                    insertedBlock.addLine(line)
+                }
+        }
 compareDifference()
 
-def compareDifference()
-{
-    if (diffedFile == null)
-    {
+def compareDifference() {
+    if (diffedFile == null) {
         return
     }
 
-    if (!removedBlockMatchesSvnId() || !insertedBlockMatchesSvnId())
-    {
+    if (!removedBlockMatchesSvnId() || !insertedBlockMatchesSvnId()) {
         println(diffedFile)
         println(removedBlock.content)
         println(insertedBlock.content)
     }
 }
 
-def removedBlockMatchesSvnId()
-{
-    if (removedBlock.lineCount > 1)
-    {
+def removedBlockMatchesSvnId() {
+    if (removedBlock.lineCount > 1) {
         return false
     }
 
@@ -74,10 +63,8 @@ def removedBlockMatchesSvnId()
     return matcher.matches()
 }
 
-def insertedBlockMatchesSvnId()
-{
-    if (insertedBlock.lineCount > 1)
-    {
+def insertedBlockMatchesSvnId() {
+    if (insertedBlock.lineCount > 1) {
         return false
     }
 
@@ -86,25 +73,21 @@ def insertedBlockMatchesSvnId()
     return matcher.matches()
 }
 
-def usage()
-{
+def usage() {
     println("Usage: CheckReintegratedWorkingCopy <diff output>")
     System.exit(1)
 }
 
-class Block
-{
+class Block {
     String content
     int lineCount
 
-    Block()
-    {
+    Block() {
         content = ""
         lineCount = 0
     }
 
-    void addLine(String line)
-    {
+    void addLine(String line) {
         content = content + line + "\n"
         lineCount++;
     }

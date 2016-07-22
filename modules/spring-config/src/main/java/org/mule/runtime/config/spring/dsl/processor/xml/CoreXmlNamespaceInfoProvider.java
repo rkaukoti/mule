@@ -6,11 +6,12 @@
  */
 package org.mule.runtime.config.spring.dsl.processor.xml;
 
-import static java.util.Arrays.asList;
 import org.mule.runtime.config.spring.dsl.api.xml.XmlNamespaceInfo;
 import org.mule.runtime.config.spring.dsl.api.xml.XmlNamespaceInfoProvider;
 
 import java.util.Collection;
+
+import static java.util.Arrays.asList;
 
 /**
  * Provides the core namespace XML information.

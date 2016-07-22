@@ -7,12 +7,13 @@
 
 package org.mule.functional.client;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.util.StringUtils;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Reads {@link MuleEvent} from a test connector's queue.
@@ -29,7 +30,7 @@ public class QueueReaderMessageProcessor implements MessageProcessor
      *
      * @param muleContext application's mule context. Not null.
      * @param queueName   name of the queue to use. Non empty
-     * @param timeout number of milliseconds to wait for an available event. Non negative. Null means no timeout required.
+     * @param timeout     number of milliseconds to wait for an available event. Non negative. Null means no timeout required.
      */
     public QueueReaderMessageProcessor(MuleContext muleContext, String queueName, Long timeout)
     {

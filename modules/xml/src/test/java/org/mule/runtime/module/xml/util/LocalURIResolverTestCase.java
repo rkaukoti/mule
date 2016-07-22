@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.module.xml.util;
 
+import org.junit.Test;
 import org.mule.tck.size.SmallTest;
 
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -23,7 +22,7 @@ public class LocalURIResolverTestCase
     {
         // Original functionality
         LocalURIResolver resolver = new LocalURIResolver();
-        StreamSource source = (StreamSource)resolver.resolve("xsl/include.xsl", null);
+        StreamSource source = (StreamSource) resolver.resolve("xsl/include.xsl", null);
         assertNotNull("No input stream", source.getInputStream());
     }
 
@@ -34,7 +33,7 @@ public class LocalURIResolverTestCase
         LocalURIResolver resolver = new LocalURIResolver("xsl/include.xsl");
 
         // Relative resource path
-        StreamSource source = (StreamSource)resolver.resolve("include.xsl", null);
+        StreamSource source = (StreamSource) resolver.resolve("include.xsl", null);
         assertNotNull("No input stream", source.getInputStream());
     }
 
@@ -45,7 +44,7 @@ public class LocalURIResolverTestCase
         LocalURIResolver resolver = new LocalURIResolver("xsl/include.xsl");
 
         // Relative resource path
-        StreamSource source = (StreamSource)resolver.resolve("../test.xsl", null);
+        StreamSource source = (StreamSource) resolver.resolve("../test.xsl", null);
         assertNotNull("No input stream", source.getInputStream());
     }
 }

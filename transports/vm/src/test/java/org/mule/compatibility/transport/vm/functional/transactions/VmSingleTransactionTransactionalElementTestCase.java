@@ -6,11 +6,10 @@
  */
 package org.mule.compatibility.transport.vm.functional.transactions;
 
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
+import org.hamcrest.core.Is;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -19,10 +18,10 @@ import org.mule.runtime.core.api.connector.DispatchException;
 import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.construct.Flow;
 
-import org.hamcrest.core.Is;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class VmSingleTransactionTransactionalElementTestCase extends FunctionalTestCase
 {
@@ -42,7 +41,8 @@ public class VmSingleTransactionTransactionalElementTestCase extends FunctionalT
 
     private void purge(String endpoint) throws MuleException
     {
-        while (muleContext.getClient().request(endpoint,10) != null);
+        while (muleContext.getClient().request(endpoint, 10) != null)
+            ;
     }
 
     @Test
@@ -65,7 +65,8 @@ public class VmSingleTransactionTransactionalElementTestCase extends FunctionalT
         try
         {
             flow.process(event);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
         }
         MuleMessage message1 = muleContext.getClient().request("vm://out1?connector=vmConnector1", 1000);
@@ -82,7 +83,8 @@ public class VmSingleTransactionTransactionalElementTestCase extends FunctionalT
         try
         {
             flow.process(event);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
         }
         MuleMessage message1 = muleContext.getClient().request("vm://out1?connector=vmConnector1", 1000);
@@ -99,7 +101,8 @@ public class VmSingleTransactionTransactionalElementTestCase extends FunctionalT
         try
         {
             flow.process(event);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
         }
         MuleMessage message1 = muleContext.getClient().request("vm://out1?connector=vmConnector1", 1000);
@@ -142,7 +145,8 @@ public class VmSingleTransactionTransactionalElementTestCase extends FunctionalT
         {
             flow.process(event);
             fail("DispatchException should be thrown");
-        } catch (DispatchException e)
+        }
+        catch (DispatchException e)
         {
             assertThat(e.getCause() instanceof TransactionException, Is.is(true));
         }
@@ -174,7 +178,8 @@ public class VmSingleTransactionTransactionalElementTestCase extends FunctionalT
         try
         {
             flow.process(event);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
         }
         MuleMessage message1 = muleContext.getClient().request("vm://out1?connector=vmConnector1", 1000);
@@ -205,7 +210,8 @@ public class VmSingleTransactionTransactionalElementTestCase extends FunctionalT
         try
         {
             flow.process(event);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
         }
         MuleMessage message1 = muleContext.getClient().request("vm://out1?connector=vmConnector1", 1000);
@@ -247,7 +253,8 @@ public class VmSingleTransactionTransactionalElementTestCase extends FunctionalT
         try
         {
             flow.process(event);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
         }
         MuleMessage message1 = muleContext.getClient().request("vm://out1?connector=vmConnector1", 1000);

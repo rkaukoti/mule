@@ -13,6 +13,8 @@ import org.mule.runtime.module.management.support.JmxSupportFactory;
 import org.tanukisoftware.wrapper.jmx.WrapperManager;
 import org.tanukisoftware.wrapper.jmx.WrapperManagerMBean;
 
+import java.lang.management.ManagementFactory;
+
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.MBeanRegistrationException;
 import javax.management.MBeanServer;
@@ -20,7 +22,6 @@ import javax.management.MBeanServerInvocationHandler;
 import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
-import java.lang.management.ManagementFactory;
 
 public class ManagementUtils
 {
@@ -31,7 +32,8 @@ public class ManagementUtils
     public static void restart() throws Exception
     {
         WrapperManagerMBean proxy = getProxy();
-        if (proxy != null) {
+        if (proxy != null)
+        {
             proxy.restart();
         }
         else
@@ -41,7 +43,8 @@ public class ManagementUtils
     }
 
 
-    protected synchronized static WrapperManagerMBean getProxy() throws MalformedObjectNameException, MBeanRegistrationException, InstanceAlreadyExistsException, NotCompliantMBeanException
+    protected synchronized static WrapperManagerMBean getProxy()
+            throws MalformedObjectNameException, MBeanRegistrationException, InstanceAlreadyExistsException, NotCompliantMBeanException
     {
         if (jmxSupport == null)
         {
@@ -58,7 +61,7 @@ public class ManagementUtils
         }
 
         WrapperManagerMBean proxy = MBeanServerInvocationHandler.newProxyInstance(
-            mBeanServer, on, WrapperManagerMBean.class, false);
+                mBeanServer, on, WrapperManagerMBean.class, false);
         return proxy;
     }
 

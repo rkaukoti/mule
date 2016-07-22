@@ -7,13 +7,9 @@
 
 package org.mule.compatibility.transport.jms;
 
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.Connector;
-import org.mule.compatibility.transport.jms.XaTransactedJmsMessageReceiver;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.api.lifecycle.CreateException;
@@ -22,7 +18,9 @@ import org.mule.tck.probe.Probe;
 
 import javax.jms.MessageConsumer;
 
-import org.junit.Test;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class XaPollingTimeoutTestCase extends FunctionalTestCase
 {
@@ -67,7 +65,8 @@ public class XaPollingTimeoutTestCase extends FunctionalTestCase
     public static class TestXaTransactedJmsMessageReceiver extends XaTransactedJmsMessageReceiver
     {
 
-        public TestXaTransactedJmsMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint) throws CreateException
+        public TestXaTransactedJmsMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint)
+                throws CreateException
         {
             super(connector, flowConstruct, endpoint);
         }

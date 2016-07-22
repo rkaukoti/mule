@@ -7,14 +7,15 @@
 
 package org.mule.runtime.module.db.internal.config.processor;
 
-import static org.mule.runtime.module.db.internal.domain.query.QueryType.MERGE;
-import static org.mule.runtime.module.db.internal.domain.query.QueryType.STORE_PROCEDURE_CALL;
-import static org.mule.runtime.module.db.internal.domain.query.QueryType.TRUNCATE;
-import static org.mule.runtime.module.db.internal.domain.query.QueryType.UPDATE;
 import org.mule.runtime.module.db.internal.domain.query.QueryType;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static org.mule.runtime.module.db.internal.domain.query.QueryType.MERGE;
+import static org.mule.runtime.module.db.internal.domain.query.QueryType.STORE_PROCEDURE_CALL;
+import static org.mule.runtime.module.db.internal.domain.query.QueryType.TRUNCATE;
+import static org.mule.runtime.module.db.internal.domain.query.QueryType.UPDATE;
 
 public class UpdateProcessorBeanDefinitionParser extends AbstractUpdateProcessorBeanDefinitionParser
 {

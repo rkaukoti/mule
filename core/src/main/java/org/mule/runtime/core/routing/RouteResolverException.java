@@ -7,11 +7,7 @@
 package org.mule.runtime.core.routing;
 
 import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.config.i18n.Message;
-import org.mule.runtime.core.routing.RoutingFailedMessagingException;
-
-import java.lang.Throwable;
 
 /**
  * Exception thrown when a route for an event can not be found

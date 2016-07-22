@@ -6,20 +6,20 @@
  */
 package org.mule.runtime.core.mule.security;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-
+import org.apache.commons.lang.RandomStringUtils;
+import org.junit.Test;
 import org.mule.runtime.core.security.SecretKeyEncryptionStrategy;
 import org.mule.runtime.core.security.SecretKeyFactory;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
-import org.apache.commons.lang.RandomStringUtils;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 public class SecretKeyEncryptionStrategyTestCase extends AbstractMuleTestCase
 {
 
     private static final String TRIPLE_DES_KEY = RandomStringUtils.randomAlphabetic(24);
+
     @Test
     public void testRoundTripEncryptionBlowfish() throws Exception
     {

@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.module.pgp;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.openpgp.PGPPublicKey;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -14,15 +16,12 @@ import org.mule.runtime.core.api.security.CryptoFailureException;
 import org.mule.runtime.core.security.AbstractNamedEncryptionStrategy;
 import org.mule.runtime.core.util.SecurityUtils;
 import org.mule.runtime.module.pgp.i18n.PGPMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.security.Provider;
 import java.util.Calendar;
-
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.openpgp.PGPPublicKey;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class KeyBasedEncryptionStrategy extends AbstractNamedEncryptionStrategy
 {
@@ -67,7 +66,7 @@ public class KeyBasedEncryptionStrategy extends AbstractNamedEncryptionStrategy
             PGPCryptInfo pgpCryptInfo = this.safeGetCryptInfo(cryptInfo);
             PGPPublicKey publicKey = pgpCryptInfo.getPublicKey();
             StreamTransformer transformer = new DecryptStreamTransformer(data, publicKey,
-                this.keyManager.getSecretKey(), this.keyManager.getSecretPassphrase(), provider);
+                    this.keyManager.getSecretKey(), this.keyManager.getSecretPassphrase(), provider);
             return new LazyTransformedInputStream(new TransformContinuouslyPolicy(), transformer);
         }
         catch (Exception e)

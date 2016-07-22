@@ -7,7 +7,19 @@
 
 package org.mule.runtime.module.cxf.support;
 
+import org.apache.cxf.Bus;
+import org.apache.cxf.catalog.CatalogWSDLLocator;
+import org.apache.cxf.common.WSDLConstants;
+import org.apache.cxf.helpers.DOMUtils;
+import org.apache.cxf.service.model.EndpointInfo;
+import org.apache.cxf.staxutils.StaxUtils;
+import org.apache.cxf.wsdl.WSDLManager;
+import org.apache.cxf.wsdl11.ResourceManagerWSDLLocator;
+import org.apache.cxf.wsdl11.ServiceWSDLBuilder;
 import org.mule.runtime.module.cxf.CxfConstants;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -18,19 +30,6 @@ import javax.wsdl.WSDLException;
 import javax.wsdl.extensions.schema.SchemaReference;
 import javax.wsdl.xml.WSDLReader;
 import javax.xml.stream.XMLStreamReader;
-
-import org.apache.cxf.Bus;
-import org.apache.cxf.catalog.CatalogWSDLLocator;
-import org.apache.cxf.common.WSDLConstants;
-import org.apache.cxf.helpers.DOMUtils;
-import org.apache.cxf.service.model.EndpointInfo;
-import org.apache.cxf.staxutils.StaxUtils;
-import org.apache.cxf.wsdl.WSDLManager;
-import org.apache.cxf.wsdl11.ResourceManagerWSDLLocator;
-import org.apache.cxf.wsdl11.ServiceWSDLBuilder;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.InputSource;
 
 public class ProxyWSDLQueryHandler extends WSDLQueryHandler
 {
@@ -48,8 +47,8 @@ public class ProxyWSDLQueryHandler extends WSDLQueryHandler
     protected void rewriteOperationAddress(EndpointInfo ei, Document doc, String base)
     {
         List<Element> serviceList = DOMUtils.findAllElementsByTagNameNS(doc.getDocumentElement(),
-                                                                        "http://schemas.xmlsoap.org/wsdl/",
-                                                                        "service");
+                "http://schemas.xmlsoap.org/wsdl/",
+                "service");
 
         for (Element serviceEl : serviceList)
         {
@@ -57,28 +56,28 @@ public class ProxyWSDLQueryHandler extends WSDLQueryHandler
             if (serviceName.equals(ei.getService().getName().getLocalPart()))
             {
                 List<Element> elementList = DOMUtils.findAllElementsByTagNameNS(doc.getDocumentElement(),
-                                                                  "http://schemas.xmlsoap.org/wsdl/",
-                                                                  "port");
+                        "http://schemas.xmlsoap.org/wsdl/",
+                        "port");
                 for (Element el : elementList)
                 {
-                     if(rewritePortAddress(el))
-                     {
-                         List<Element> addresses = findAddresses(el, WSDLConstants.NS_SOAP);
-                         if(addresses.isEmpty())
-                         {
-                             addresses = findAddresses(el, WSDLConstants.NS_SOAP12);
-                         }
-                         if(addresses.isEmpty())
-                         {
-                             addresses = findAddresses(el, WSDLConstants.QNAME_XMLHTTP_BINDING_ADDRESS.getNamespaceURI());
-                         }
+                    if (rewritePortAddress(el))
+                    {
+                        List<Element> addresses = findAddresses(el, WSDLConstants.NS_SOAP);
+                        if (addresses.isEmpty())
+                        {
+                            addresses = findAddresses(el, WSDLConstants.NS_SOAP12);
+                        }
+                        if (addresses.isEmpty())
+                        {
+                            addresses = findAddresses(el, WSDLConstants.QNAME_XMLHTTP_BINDING_ADDRESS.getNamespaceURI());
+                        }
 
-                         if(!addresses.isEmpty())
-                         {
-                             Element address = addresses.iterator().next();
-                             address.setAttribute("location", base);
-                         }
-                     }
+                        if (!addresses.isEmpty())
+                        {
+                            Element address = addresses.iterator().next();
+                            address.setAttribute("location", base);
+                        }
+                    }
                 }
             }
         }
@@ -91,7 +90,7 @@ public class ProxyWSDLQueryHandler extends WSDLQueryHandler
         if (wsdlManager != null)
         {
             String wsdlLocation = endpointInfo.getService().getProperty(CxfConstants.WSDL_LOCATION, String.class);
-            if(wsdlLocation != null)
+            if (wsdlLocation != null)
             {
                 return loadDefinition(wsdlManager, wsdlLocation);
             }
@@ -103,7 +102,8 @@ public class ProxyWSDLQueryHandler extends WSDLQueryHandler
 
     // Make sure we have a new WSDL definition loaded and not the cached that the WSDLManager
     // would return because it might have unwanted changes that will impact the resulting WSDL
-    private Definition loadDefinition(WSDLManager wsdlManager, String url) throws WSDLException {
+    private Definition loadDefinition(WSDLManager wsdlManager, String url) throws WSDLException
+    {
         WSDLReader reader = wsdlManager.getWSDLFactory().newWSDLReader();
         reader.setFeature("javax.wsdl.verbose", false);
         reader.setFeature("javax.wsdl.importDocuments", true);
@@ -163,12 +163,13 @@ public class ProxyWSDLQueryHandler extends WSDLQueryHandler
     }
 
     @Override
-    protected void checkSchemaUrl(Map<String, SchemaReference> doneSchemas, String start, String decodedStart, SchemaReference imp) throws MalformedURLException
+    protected void checkSchemaUrl(Map<String, SchemaReference> doneSchemas, String start, String decodedStart, SchemaReference imp)
+            throws MalformedURLException
     {
         super.checkSchemaUrl(doneSchemas, start, decodedStart, imp);
         doneSchemas.put(decodedStart, imp);
         String xsdParameterValue = getXsdParameterValue(decodedStart);
-        if( xsdParameterValue != null )
+        if (xsdParameterValue != null)
         {
             doneSchemas.put(xsdParameterValue, imp);
         }
@@ -178,9 +179,9 @@ public class ProxyWSDLQueryHandler extends WSDLQueryHandler
     protected String rewriteSchemaLocation(String base, String schemaLocation)
     {
         String xsdParameterValue = getXsdParameterValue(schemaLocation);
-        if( xsdParameterValue != null )
+        if (xsdParameterValue != null)
         {
-            schemaLocation =  xsdParameterValue;
+            schemaLocation = xsdParameterValue;
         }
         return super.rewriteSchemaLocation(base, schemaLocation);
     }
@@ -188,7 +189,7 @@ public class ProxyWSDLQueryHandler extends WSDLQueryHandler
     private String getXsdParameterValue(String schemaLocation)
     {
         int position = schemaLocation.indexOf(XSD_PARAMETER_NAME);
-        if( position > -1 )
+        if (position > -1)
         {
             return schemaLocation.substring(position + XSD_PARAMETER_NAME.length());
         }

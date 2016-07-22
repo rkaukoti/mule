@@ -6,19 +6,19 @@
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
-import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.FILTER_REFERENCE_ELEMENT;
-import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.MESSAGE_FILTER_ELEMENT;
-import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.REFERENCE_ATTRIBUTE;
-import static org.mule.runtime.config.spring.dsl.processor.xml.CoreXmlNamespaceInfoProvider.CORE_NAMESPACE_NAME;
-import static org.mule.runtime.config.spring.dsl.processor.xml.XmlCustomAttributeHandler.from;
 import org.mule.runtime.config.spring.dsl.model.ComponentIdentifier;
 import org.mule.runtime.config.spring.dsl.model.ComponentModel;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.core.routing.MessageFilter;
-
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+
+import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.FILTER_REFERENCE_ELEMENT;
+import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.MESSAGE_FILTER_ELEMENT;
+import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.REFERENCE_ATTRIBUTE;
+import static org.mule.runtime.config.spring.dsl.processor.xml.CoreXmlNamespaceInfoProvider.CORE_NAMESPACE_NAME;
+import static org.mule.runtime.config.spring.dsl.processor.xml.XmlCustomAttributeHandler.from;
 
 /**
  * Processor of the chain of responsibility that knows how to create the {@link org.springframework.beans.factory.config.BeanDefinition}
@@ -28,7 +28,8 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
  */
 class FilterReferenceBeanDefinitionCreator extends BeanDefinitionCreator
 {
-    private static final ComponentIdentifier FILTER_REFERENCE_IDENTIFIER = new ComponentIdentifier.Builder().withNamespace(CORE_NAMESPACE_NAME).withName(FILTER_REFERENCE_ELEMENT).build();
+    private static final ComponentIdentifier FILTER_REFERENCE_IDENTIFIER =
+            new ComponentIdentifier.Builder().withNamespace(CORE_NAMESPACE_NAME).withName(FILTER_REFERENCE_ELEMENT).build();
 
     @Override
     public boolean handleRequest(CreateBeanDefinitionRequest createBeanDefinitionRequest)
@@ -44,7 +45,8 @@ class FilterReferenceBeanDefinitionCreator extends BeanDefinitionCreator
             else
             {
                 componentModel.setType(MessageProcessor.class);
-                BeanDefinitionBuilder beanDefinitionBuilder = org.springframework.beans.factory.support.BeanDefinitionBuilder.genericBeanDefinition(MessageFilter.class);
+                BeanDefinitionBuilder beanDefinitionBuilder =
+                        org.springframework.beans.factory.support.BeanDefinitionBuilder.genericBeanDefinition(MessageFilter.class);
                 beanDefinitionBuilder.addConstructorArgReference(componentModel.getParameters().get(REFERENCE_ATTRIBUTE));
                 componentModel.setBeanDefinition(beanDefinitionBuilder.getBeanDefinition());
             }

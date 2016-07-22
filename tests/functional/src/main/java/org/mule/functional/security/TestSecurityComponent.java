@@ -11,14 +11,13 @@ import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.lifecycle.Callable;
 import org.mule.runtime.core.api.security.Authentication;
 import org.mule.runtime.core.api.security.SecurityContext;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TestSecurityComponent implements Callable
 {
     protected static final Logger logger = LoggerFactory.getLogger(TestSecurityComponent.class);
-    
+
     public Object onCall(MuleEventContext eventContext) throws Exception
     {
         SecurityContext securityContext = eventContext.getSession().getSecurityContext();

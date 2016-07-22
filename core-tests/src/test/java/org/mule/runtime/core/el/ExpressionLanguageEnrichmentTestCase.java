@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.core.el;
 
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.MuleContext;
@@ -17,7 +17,6 @@ import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.el.ExpressionLanguage;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
-import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.registry.MuleRegistry;
 import org.mule.runtime.core.config.DefaultMuleConfiguration;
 import org.mule.runtime.core.construct.Flow;
@@ -32,22 +31,20 @@ import java.util.Collections;
 
 import javax.activation.DataHandler;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class ExpressionLanguageEnrichmentTestCase extends AbstractELTestCase
 {
 
+    protected DefaultExpressionManager expressionManager;
+    protected MuleContext muleContext;
     public ExpressionLanguageEnrichmentTestCase(Variant variant, String mvelOptimizer)
     {
         super(variant, mvelOptimizer);
     }
-
-    protected DefaultExpressionManager expressionManager;
-    protected MuleContext muleContext;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -65,7 +62,7 @@ public class ExpressionLanguageEnrichmentTestCase extends AbstractELTestCase
         }
         when(muleContext.getExpressionLanguage()).thenReturn(expressionLanguage);
         when(muleRegistry.lookupObjectsForLifecycle(Mockito.any(Class.class))).thenReturn(
-            Collections.<Object> emptyList());
+                Collections.<Object>emptyList());
         expressionManager.setMuleContext(muleContext);
         expressionManager.initialise();
     }

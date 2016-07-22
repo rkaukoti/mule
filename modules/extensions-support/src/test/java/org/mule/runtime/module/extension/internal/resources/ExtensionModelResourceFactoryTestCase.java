@@ -6,10 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.resources;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.EXTENSION_MODEL_JSON_FILE_NAME;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.registry.SpiServiceRegistry;
 import org.mule.runtime.extension.api.introspection.ExtensionFactory;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
@@ -25,8 +23,10 @@ import org.mule.runtime.module.extension.internal.introspection.version.StaticVe
 import org.mule.tck.size.SmallTest;
 import org.mule.test.heisenberg.extension.HeisenbergExtension;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.EXTENSION_MODEL_JSON_FILE_NAME;
 
 @SmallTest
 public class ExtensionModelResourceFactoryTestCase extends AbstractGeneratedResourceFactoryTestCase

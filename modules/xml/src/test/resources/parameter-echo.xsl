@@ -4,6 +4,8 @@
     <xsl:param name="echo"/>
 
     <xsl:template match="/">
-        <echo-value><xsl:value-of select="$echo"/></echo-value>
+        <echo-value>
+            <xsl:value-of select="$echo"/>
+        </echo-value>
     </xsl:template>
 </xsl:stylesheet>

@@ -8,7 +8,6 @@ package org.mule.runtime.config.spring.parsers.assembly;
 
 import org.mule.runtime.config.spring.MuleHierarchicalBeanDefinitionParserDelegate;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 
@@ -26,8 +25,8 @@ public class TwoStageMapBeanAssembler extends AbstractMapBeanAssembler
     private TwoStageMapBeanAssemblerFactory.BeanAssemblerStore store;
 
     public TwoStageMapBeanAssembler(TwoStageMapBeanAssemblerFactory.BeanAssemblerStore store,
-            PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-            PropertyConfiguration targetConfig, BeanDefinition target)
+                                    PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
+                                    PropertyConfiguration targetConfig, BeanDefinition target)
     {
         super(beanConfig, bean, targetConfig, target);
         this.store = store;

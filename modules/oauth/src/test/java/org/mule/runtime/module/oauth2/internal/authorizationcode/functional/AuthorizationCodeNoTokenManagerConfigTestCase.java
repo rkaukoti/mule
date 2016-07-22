@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode.functional;
 
-import static org.junit.Assert.assertThat;
-
+import org.apache.http.client.fluent.Request;
+import org.hamcrest.core.Is;
+import org.junit.Test;
 import org.mule.runtime.module.oauth2.internal.OAuthConstants;
 import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ResourceOwnerOAuthContext;
 import org.mule.runtime.module.oauth2.internal.tokenmanager.TokenManagerConfig;
 
-import org.apache.http.client.fluent.Request;
-import org.hamcrest.core.Is;
-import org.junit.Test;
+import static org.junit.Assert.assertThat;
 
 public class AuthorizationCodeNoTokenManagerConfigTestCase extends AbstractAuthorizationCodeBasicTestCase
 {
@@ -32,15 +31,16 @@ public class AuthorizationCodeNoTokenManagerConfigTestCase extends AbstractAutho
         configureWireMockToExpectTokenPathRequestForAuthorizationCodeGrantType();
 
         Request.Get(redirectUrl.getValue() + "?" + OAuthConstants.CODE_PARAMETER + "=" + AUTHENTICATION_CODE)
-                .connectTimeout(REQUEST_TIMEOUT)
-                .socketTimeout(REQUEST_TIMEOUT)
-                .execute();
+               .connectTimeout(REQUEST_TIMEOUT)
+               .socketTimeout(REQUEST_TIMEOUT)
+               .execute();
 
         verifyRequestDoneToTokenUrlForAuthorizationCode();
 
         TokenManagerConfig tokenManagerConfig = muleContext.getRegistry().lookupObject(TokenManagerConfig.class);
 
-        final ResourceOwnerOAuthContext oauthContext = tokenManagerConfig.getConfigOAuthContext().getContextForResourceOwner(ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID);
+        final ResourceOwnerOAuthContext oauthContext =
+                tokenManagerConfig.getConfigOAuthContext().getContextForResourceOwner(ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID);
 
         assertThat(oauthContext.getAccessToken(), Is.is(ACCESS_TOKEN));
         assertThat(oauthContext.getRefreshToken(), Is.is(REFRESH_TOKEN));

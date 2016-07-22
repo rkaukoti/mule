@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.management.support;
 
+import org.junit.Test;
 import org.mule.runtime.core.api.context.MuleContextBuilder;
 import org.mule.runtime.core.config.DefaultMuleConfiguration;
 import org.mule.runtime.management.AbstractMuleJmxTestCase;
@@ -16,8 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.management.ObjectName;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -67,18 +66,18 @@ public class JmxSupportTestCase extends AbstractMuleJmxTestCase
         mBeanServer.registerMBean(new StatisticsService(), name);
 
         assertEquals("Wrong number of domains created.",
-                     numOriginalDomains + 2, mBeanServer.getDomains().length);
+                numOriginalDomains + 2, mBeanServer.getDomains().length);
 
         muleContext.start();
 
         List<String> domains = Arrays.asList(mBeanServer.getDomains());
         // one extra domain created by Mule's clash resolution
         assertEquals("Wrong number of domains created.",
-                     numOriginalDomains + 3, domains.size());
+                numOriginalDomains + 3, domains.size());
 
         assertTrue("Should have contained an original domain.", domains.contains(TEST_DOMAIN));
         assertTrue("Should have contained an original suffixed domain.", domains.contains(TEST_DOMAIN + ".1"));
         assertTrue("Should have contained a new domain.", domains.contains(TEST_DOMAIN + ".2"));
     }
-    
+
 }

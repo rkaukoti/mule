@@ -34,16 +34,16 @@ public class EmployeeDirectoryImpl implements EmployeeDirectory
         try
         {
             InputStream is = employee.getPicture().getInputStream();
-            
-            while (is.read() != -1);
+
+            while (is.read() != -1)
+                ;
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
-        
-        
-        
+
+
         System.out.println("Added " + employee.getName() + " in division " + employee.getDivision()
                            + " with a picture " + employee.getPicture());
         employees.add(employee);

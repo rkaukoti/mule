@@ -24,8 +24,6 @@ public final class ConfigTypeModelProperty implements ModelProperty
 
     /**
      * Creates a new instance for the given {@code configType}
-     *
-     * @param configType
      */
     public ConfigTypeModelProperty(MetadataType configType)
     {

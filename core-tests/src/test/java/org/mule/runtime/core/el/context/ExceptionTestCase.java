@@ -6,9 +6,7 @@
  */
 package org.mule.runtime.core.el.context;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.MessagingException;
@@ -17,7 +15,8 @@ import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.message.DefaultExceptionPayload;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ExceptionTestCase extends AbstractELTestCase
 {
@@ -40,7 +39,8 @@ public class ExceptionTestCase extends AbstractELTestCase
     public void assignException() throws Exception
     {
         MuleEvent event = getTestEvent("");
-        event.setMessage(MuleMessage.builder(event.getMessage()).exceptionPayload(new DefaultExceptionPayload(new RuntimeException())).build());
+        event.setMessage(
+                MuleMessage.builder(event.getMessage()).exceptionPayload(new DefaultExceptionPayload(new RuntimeException())).build());
         assertImmutableVariable("exception='other'", event);
     }
 
@@ -50,8 +50,8 @@ public class ExceptionTestCase extends AbstractELTestCase
         MuleEvent event = getTestEvent("");
         MuleMessage message = event.getMessage();
         MessagingException me = new MessagingException(CoreMessages.createStaticMessage(""),
-            new DefaultMuleEvent(message, MessageExchangePattern.ONE_WAY, getTestFlow()),
-            new IllegalAccessException());
+                new DefaultMuleEvent(message, MessageExchangePattern.ONE_WAY, getTestFlow()),
+                new IllegalAccessException());
         event.setMessage(MuleMessage.builder(event.getMessage()).exceptionPayload(new DefaultExceptionPayload(me)).build());
         assertTrue((Boolean) evaluate("exception.causedBy(java.lang.IllegalAccessException)", event));
     }

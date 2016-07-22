@@ -6,7 +6,12 @@
  */
 package org.mule.runtime.module.xml.util;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
 import org.mule.runtime.core.util.IOUtils;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,12 +24,6 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.Source;
-
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 public class XMLTestUtils
 {

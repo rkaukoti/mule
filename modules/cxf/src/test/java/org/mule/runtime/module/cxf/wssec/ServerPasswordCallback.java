@@ -6,24 +6,25 @@
  */
 package org.mule.runtime.module.cxf.wssec;
 
+import org.apache.ws.security.WSPasswordCallback;
+
 import java.io.IOException;
 
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.UnsupportedCallbackException;
 
-import org.apache.ws.security.WSPasswordCallback;
-
 /**
  * Trivial security which simply returns the password for user "joe".
  */
 public class ServerPasswordCallback implements CallbackHandler
 {
-    public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
+    public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException
+    {
 
         WSPasswordCallback pc = (WSPasswordCallback) callbacks[0];
 
-        if (pc.getIdentifier().equals("joe")) 
+        if (pc.getIdentifier().equals("joe"))
         {
             // set the password on the callback. This will be compared to the
             // password which was sent from the client.

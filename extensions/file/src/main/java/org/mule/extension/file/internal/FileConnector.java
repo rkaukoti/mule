@@ -6,8 +6,6 @@
  */
 package org.mule.extension.file.internal;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 import org.mule.extension.file.api.DeletedFileAttributes;
 import org.mule.extension.file.api.EventedFileAttributes;
 import org.mule.extension.file.api.FileEventType;
@@ -28,13 +26,15 @@ import org.mule.runtime.extension.api.annotation.param.display.Summary;
 import org.mule.runtime.module.extension.file.api.FileConnectorConfig;
 import org.mule.runtime.module.extension.file.api.FilePredicateBuilder;
 import org.mule.runtime.module.extension.file.api.StandardFileSystemOperations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * File connector used to manipulate file systems mounted on the host
@@ -50,7 +50,8 @@ import org.slf4j.LoggerFactory;
 @SubTypeMapping(baseType = FilePredicateBuilder.class, subTypes = LocalFilePredicateBuilder.class)
 @Providers(LocalFileConnectionProvider.class)
 @Sources(DirectoryListener.class)
-@Export(classes = {LocalFileAttributes.class, FileEventType.class, ListenerFileAttributes.class, EventedFileAttributes.class, DeletedFileAttributes.class})
+@Export(classes = {LocalFileAttributes.class, FileEventType.class, ListenerFileAttributes.class, EventedFileAttributes.class,
+                   DeletedFileAttributes.class})
 public class FileConnector extends FileConnectorConfig
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileConnector.class);
@@ -81,7 +82,8 @@ public class FileConnector extends FileConnectorConfig
             baseDir = System.getProperty("user.home");
             if (baseDir == null)
             {
-                throw new InitialisationException(createStaticMessage("Could not obtain user's home directory. Please provide a explicit value for the baseDir parameter"), this);
+                throw new InitialisationException(createStaticMessage(
+                        "Could not obtain user's home directory. Please provide a explicit value for the baseDir parameter"), this);
             }
 
             LOGGER.warn("File connector '{}' does not specify the baseDir property. Defaulting to '{}'", getConfigName(), baseDir);
@@ -89,11 +91,13 @@ public class FileConnector extends FileConnectorConfig
         Path baseDirPath = Paths.get(baseDir);
         if (Files.notExists(baseDirPath))
         {
-            throw new InitialisationException(createStaticMessage(format("Provided baseDir '%s' does not exists", baseDirPath.toAbsolutePath())), this);
+            throw new InitialisationException(
+                    createStaticMessage(format("Provided baseDir '%s' does not exists", baseDirPath.toAbsolutePath())), this);
         }
         if (!Files.isDirectory(baseDirPath))
         {
-            throw new InitialisationException(createStaticMessage(format("Provided baseDir '%s' is not a directory", baseDirPath.toAbsolutePath())), this);
+            throw new InitialisationException(
+                    createStaticMessage(format("Provided baseDir '%s' is not a directory", baseDirPath.toAbsolutePath())), this);
         }
     }
 

@@ -12,7 +12,8 @@ public class DefaultRequestHandlerManager implements RequestHandlerManager
     private final HttpListenerRegistry.PathMap requestHandlerOwner;
     private final HttpListenerRegistry.RequestHandlerMatcherPair requestHandlerMatcherPair;
 
-    public DefaultRequestHandlerManager(HttpListenerRegistry.PathMap requestHandlerOwner, HttpListenerRegistry.RequestHandlerMatcherPair requestHandlerMatcherPair)
+    public DefaultRequestHandlerManager(HttpListenerRegistry.PathMap requestHandlerOwner,
+                                        HttpListenerRegistry.RequestHandlerMatcherPair requestHandlerMatcherPair)
     {
         this.requestHandlerOwner = requestHandlerOwner;
         this.requestHandlerMatcherPair = requestHandlerMatcherPair;

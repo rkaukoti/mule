@@ -34,8 +34,8 @@ public class FilenameWildcardFilter extends WildcardFilter implements FilenameFi
      * Filter condition decider method. <p/> Returns
      * <code>boolean</code> <code>TRUE</code> if the file conforms to an
      * acceptable pattern or <code>FALSE</code> otherwise.
-     * 
-     * @param dir The directory to apply the filter to.
+     *
+     * @param dir  The directory to apply the filter to.
      * @param name The name of the file to apply the filter to.
      * @return indication of acceptance as boolean.
      */

@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.module.xml.filters;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.xml.util.XMLTestUtils;
@@ -17,8 +16,9 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 import java.io.InputStream;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class IsXmlFilterTestCase extends AbstractMuleTestCase
 {
@@ -40,7 +40,7 @@ public class IsXmlFilterTestCase extends AbstractMuleTestCase
     public void testFilterFalse2() throws Exception
     {
         assertFalse(filter.accept(MuleMessage.builder().payload(
-            "<line>This is almost XML</line><line>This is almost XML</line>").build()));
+                "<line>This is almost XML</line><line>This is almost XML</line>").build()));
     }
 
     @Test

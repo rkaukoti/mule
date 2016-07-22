@@ -6,18 +6,6 @@
  */
 package org.mule.runtime.core.execution;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import org.mule.runtime.core.api.MessagingException;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.exception.MessagingExceptionHandler;
-import org.mule.tck.SensingNullReplyToHandler;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +14,18 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
+import org.mule.runtime.core.api.MessagingException;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.exception.MessagingExceptionHandler;
+import org.mule.tck.SensingNullReplyToHandler;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest

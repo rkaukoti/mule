@@ -6,21 +6,21 @@
  */
 package org.mule.runtime.module.launcher.log4j2;
 
-import static java.lang.System.getProperty;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import org.apache.logging.log4j.core.config.xml.XmlConfigurationFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.logging.log4j.core.config.xml.XmlConfigurationFactory;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static java.lang.System.getProperty;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 @SmallTest
 public class MuleLog4jContextFactoryTestCase extends AbstractMuleTestCase

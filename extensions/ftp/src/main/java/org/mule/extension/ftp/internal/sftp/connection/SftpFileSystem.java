@@ -6,9 +6,7 @@
  */
 package org.mule.extension.ftp.internal.sftp.connection;
 
-import static org.apache.commons.lang.StringUtils.EMPTY;
-import static org.mule.extension.ftp.internal.FtpConnector.FTP_PROTOCOL;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import org.apache.commons.net.ftp.FTPClient;
 import org.mule.extension.ftp.internal.ftp.connection.FtpFileSystem;
 import org.mule.extension.ftp.internal.sftp.command.SftpCopyCommand;
 import org.mule.extension.ftp.internal.sftp.command.SftpCreateDirectoryCommand;
@@ -41,7 +39,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
 
-import org.apache.commons.net.ftp.FTPClient;
+import static org.apache.commons.lang.StringUtils.EMPTY;
+import static org.mule.extension.ftp.internal.FtpConnector.FTP_PROTOCOL;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * Implementation of {@link FtpFileSystem} for files residing on a SFTP server
@@ -51,7 +51,6 @@ import org.apache.commons.net.ftp.FTPClient;
 public class SftpFileSystem extends AbstractFileSystem implements FtpFileSystem
 {
 
-    private final MuleContext muleContext;
     protected final SftpClient client;
     protected final CopyCommand copyCommand;
     protected final CreateDirectoryCommand createDirectoryCommand;
@@ -61,6 +60,7 @@ public class SftpFileSystem extends AbstractFileSystem implements FtpFileSystem
     protected final ReadCommand readCommand;
     protected final RenameCommand renameCommand;
     protected final WriteCommand writeCommand;
+    private final MuleContext muleContext;
 
 
     /**
@@ -117,8 +117,8 @@ public class SftpFileSystem extends AbstractFileSystem implements FtpFileSystem
     public ConnectionValidationResult validateConnection()
     {
         return client.isConnected()
-               ? ConnectionValidationResult.success()
-               : ConnectionValidationResult.failure("Connection is stale", ConnectionExceptionCode.UNKNOWN, null);
+                ? ConnectionValidationResult.success()
+                : ConnectionValidationResult.failure("Connection is stale", ConnectionExceptionCode.UNKNOWN, null);
     }
 
     /**

@@ -23,14 +23,13 @@ import javax.net.ssl.KeyManagerFactory;
 public interface TlsDirectKeyStore
 {
     /**
-     * @return The location (resolved relative to the current classpath and file system, if possible)
-     * of the keystore that contains public certificates and private keys for identification.
+     * @return The location (resolved relative to the current classpath and file system, if possible) of the keystore that contains public
+     * certificates and private keys for identification.
      */
     String getKeyStore();
 
     /**
-     * @param name The location of the keystore that contains public certificates  and private keys
-     * for identification.
+     * @param name The location of the keystore that contains public certificates  and private keys for identification.
      * @throws IOException If the location cannot be resolved via the file system or classpath
      */
     void setKeyStore(String name) throws IOException;

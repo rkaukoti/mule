@@ -62,8 +62,8 @@ public interface MuleConfiguration
     /**
      * A container mode implies multiple Mule apps running. When true, Mule changes behavior in some areas, e.g.:
      * <ul>
-     *     <li>Splash screens</li>
-     *     <li>Thread names have app name in the prefix to guarantee uniqueness</li>
+     * <li>Splash screens</li>
+     * <li>Thread names have app name in the prefix to guarantee uniqueness</li>
      * </ul>
      * etc.
      *
@@ -86,8 +86,7 @@ public interface MuleConfiguration
     boolean isStandalone();
 
     /**
-     * @return default exception strategy to be used on flows and services if there's no exception strategy
-     * configured explicitly.
+     * @return default exception strategy to be used on flows and services if there's no exception strategy configured explicitly.
      */
     String getDefaultExceptionStrategyName();
 
@@ -95,7 +94,7 @@ public interface MuleConfiguration
 
     /**
      * @param extensionType class instance of the extension type
-     * @param <T> type of the extension
+     * @param <T>           type of the extension
      * @return extension configured of type extensionType, if there's no such extension then null.
      */
     <T> T getExtension(final Class<T> extensionType);

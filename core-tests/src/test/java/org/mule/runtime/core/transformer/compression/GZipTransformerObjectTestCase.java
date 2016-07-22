@@ -6,11 +6,12 @@
  */
 package org.mule.runtime.core.transformer.compression;
 
-import static org.junit.Assert.fail;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.transformer.Transformer;
 
 import java.io.Serializable;
+
+import static org.junit.Assert.fail;
 
 /**
  * Tests {@link GZipCompressTransformer} and its counterpart, the {@link GZipUncompressTransformer} with an object as an input.

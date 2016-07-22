@@ -6,9 +6,9 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
-import java.util.Properties;
-
 import org.junit.Test;
+
+import java.util.Properties;
 
 public class JmsSingleTransactionAlwaysBeginConfigurationTestCase extends AbstractJmsFunctionalTestCase
 {

@@ -8,11 +8,10 @@ package org.mule.test.config.spring;
 
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.util.concurrent.Latch;
+import org.springframework.aop.MethodBeforeAdvice;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
-
-import org.springframework.aop.MethodBeforeAdvice;
 
 public class FunctionalTestAdvice implements MethodBeforeAdvice
 {

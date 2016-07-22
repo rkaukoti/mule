@@ -11,10 +11,9 @@ import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.store.QueueStore;
 import org.mule.runtime.core.config.QueueProfile;
+import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 import java.io.Serializable;
-
-import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 public class QueueProfileFactoryBean extends AbstractFactoryBean<QueueProfile> implements MuleContextAware
 {
@@ -56,14 +55,14 @@ public class QueueProfileFactoryBean extends AbstractFactoryBean<QueueProfile> i
         this.maxOutstandingMessages = maxOutstandingMessages;
     }
 
-    public void setQueueStore(QueueStore<Serializable> queueStore)
-    {
-        this.queueStore = queueStore;
-    }
-
     public QueueStore<Serializable> getQueueStore()
     {
         return queueStore;
+    }
+
+    public void setQueueStore(QueueStore<Serializable> queueStore)
+    {
+        this.queueStore = queueStore;
     }
 }
 

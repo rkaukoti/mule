@@ -58,11 +58,11 @@ public class ObjectToByteArray extends SerializableToByteArray
             else if (src instanceof OutputHandler)
             {
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                
+
                 try
                 {
                     ((OutputHandler) src).write(RequestContext.getEvent(), bytes);
-                    
+
                     return bytes.toByteArray();
                 }
                 catch (IOException e)

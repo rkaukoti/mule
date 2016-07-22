@@ -6,12 +6,6 @@
  */
 package org.mule.runtime.module.launcher.artifact;
 
-import static org.mule.runtime.core.api.config.MuleProperties.APP_HOME_DIRECTORY_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.APP_NAME_PROPERTY;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.core.util.Preconditions.checkState;
-import static org.mule.runtime.core.util.UUID.getUUID;
 import org.mule.runtime.config.spring.SpringXmlConfigurationBuilder;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.ConfigurationBuilder;
@@ -34,6 +28,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static org.mule.runtime.core.api.config.MuleProperties.APP_HOME_DIRECTORY_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.APP_NAME_PROPERTY;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.core.util.Preconditions.checkState;
+import static org.mule.runtime.core.util.UUID.getUUID;
+
 /**
  * Builder for creating a {@code MuleContext}. This is the prefered mechanism to create a {@code MuleContext}
  *
@@ -45,7 +46,8 @@ public class ArtifactMuleContextBuilder
     protected static final String EXECUTION_CLASSLOADER_WAS_NOT_SET = "Execution classloader was not set";
     protected static final String MULE_CONTEXT_ARTIFACT_PROPERTIES_CANNOT_BE_NULL = "MuleContext artifact properties cannot be null";
     protected static final String INSTALLATION_DIRECTORY_MUST_BE_A_DIRECTORY = "installation directory must be a directory";
-    protected static final String ONLY_APPLICATIONS_ARE_ALLOWED_TO_HAVE_A_PARENT_CONTEXT = "Only applications are allowed to have a parent context";
+    protected static final String ONLY_APPLICATIONS_ARE_ALLOWED_TO_HAVE_A_PARENT_CONTEXT =
+            "Only applications are allowed to have a parent context";
 
     private List<ArtifactPlugin> artifactPlugins = new ArrayList<>();
     private ArtifactType artifactType = APP;
@@ -182,7 +184,6 @@ public class ArtifactMuleContextBuilder
      * the {@code MuleContext} to be created. It may also be that the configuration files make use of this extensions.
      *
      * @param artifactPlugins collection of artifact extensions that define resources as part of the {@code MuleContext} to be created.
-     * @return
      */
     public ArtifactMuleContextBuilder setArtifactPlugins(List<ArtifactPlugin> artifactPlugins)
     {

@@ -13,6 +13,9 @@
       "$ref": "fstab.json#/definitions/mntent"
     }
   },
-  "required": [ "/", "swap" ],
+  "required": [
+    "/",
+    "swap"
+  ],
   "additionalProperties": false
 }

@@ -75,9 +75,8 @@ public class EmailFlags
     }
 
     /**
-     * @return if this message is isRecent. Folder implementations set this flag
-     * to indicate that this message is new to this folder, that is,
-     * it has arrived since the last time this folder was opened.
+     * @return if this message is isRecent. Folder implementations set this flag to indicate that this message is new to this folder, that
+     * is, it has arrived since the last time this folder was opened.
      */
     public boolean isRecent()
     {
@@ -85,9 +84,8 @@ public class EmailFlags
     }
 
     /**
-     * @return if this message has been isSeen. This flag is implicitly set by the
-     * implementation when the the email content is returned
-     * to the client in some form.
+     * @return if this message has been isSeen. This flag is implicitly set by the implementation when the the email content is returned to
+     * the client in some form.
      */
     public boolean isSeen()
     {

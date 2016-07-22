@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Implementation of {@link Producer} that uses an instance of {@link PagingDelegate}
  * to get its results
- * 
+ *
  * @since 3.5.0
  */
 public class PagingDelegateProducer<T> implements Producer<List<T>>

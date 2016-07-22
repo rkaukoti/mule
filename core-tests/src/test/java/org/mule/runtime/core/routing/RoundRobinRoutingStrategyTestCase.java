@@ -7,10 +7,8 @@
 package org.mule.runtime.core.routing;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
@@ -20,8 +18,9 @@ import org.mule.runtime.core.api.routing.RoutePathNotFoundException;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 public class RoundRobinRoutingStrategyTestCase extends AbstractDynamicRoundRobinTestCase
 {

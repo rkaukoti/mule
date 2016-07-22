@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.core.api.processor;
 
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.tck.size.SmallTest;
 
 import java.util.Collections;
@@ -17,8 +16,8 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @SmallTest
 public class SequentialStageNameSourceTest

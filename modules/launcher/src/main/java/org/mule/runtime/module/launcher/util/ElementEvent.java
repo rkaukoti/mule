@@ -9,8 +9,8 @@ package org.mule.runtime.module.launcher.util;
 import java.beans.PropertyChangeEvent;
 
 /**
-*
-*/
+ *
+ */
 public abstract class ElementEvent<E> extends PropertyChangeEvent
 {
     public static final int ADDED = 0;
@@ -19,11 +19,9 @@ public abstract class ElementEvent<E> extends PropertyChangeEvent
     public static final int CLEARED = 3;
     public static final int MULTI_ADD = 4;
     public static final int MULTI_REMOVE = 5;
-
-    private static final String PROPERTY_NAME = "ObservableList__element";
     protected static final Object OLDVALUE = new Object();
     protected static final Object NEWVALUE = new Object();
-
+    private static final String PROPERTY_NAME = "ObservableList__element";
     private int type;
     private int index;
 
@@ -32,17 +30,17 @@ public abstract class ElementEvent<E> extends PropertyChangeEvent
         super(source, PROPERTY_NAME, oldValue, newValue);
         switch (type)
         {
-            case ADDED :
-            case UPDATED :
-            case REMOVED :
-            case CLEARED :
-            case MULTI_ADD :
-            case MULTI_REMOVE :
-                this.type = type;
-                break;
-            default :
-                this.type = UPDATED;
-                break;
+        case ADDED:
+        case UPDATED:
+        case REMOVED:
+        case CLEARED:
+        case MULTI_ADD:
+        case MULTI_REMOVE:
+            this.type = type;
+            break;
+        default:
+            this.type = UPDATED;
+            break;
         }
         this.index = index;
     }
@@ -61,20 +59,20 @@ public abstract class ElementEvent<E> extends PropertyChangeEvent
     {
         switch (type)
         {
-            case ADDED :
-                return "ADDED";
-            case UPDATED :
-                return "UPDATED";
-            case REMOVED :
-                return "REMOVED";
-            case CLEARED :
-                return "CLEARED";
-            case MULTI_ADD :
-                return "MULTI_ADD";
-            case MULTI_REMOVE :
-                return "MULTI_REMOVE";
-            default :
-                return "UPDATED";
+        case ADDED:
+            return "ADDED";
+        case UPDATED:
+            return "UPDATED";
+        case REMOVED:
+            return "REMOVED";
+        case CLEARED:
+            return "CLEARED";
+        case MULTI_ADD:
+            return "MULTI_ADD";
+        case MULTI_REMOVE:
+            return "MULTI_REMOVE";
+        default:
+            return "UPDATED";
         }
     }
 }

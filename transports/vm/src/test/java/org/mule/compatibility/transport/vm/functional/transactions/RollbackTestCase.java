@@ -6,6 +6,8 @@
  */
 package org.mule.compatibility.transport.vm.functional.transactions;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.util.concurrent.Latch;
@@ -15,9 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class RollbackTestCase extends FunctionalTestCase
 {

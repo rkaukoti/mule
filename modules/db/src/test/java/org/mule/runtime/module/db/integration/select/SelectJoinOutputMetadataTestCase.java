@@ -7,17 +7,13 @@
 
 package org.mule.runtime.module.db.integration.select;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.isNull;
-import static org.mule.runtime.module.db.internal.metadata.SelectMetadataProvider.DUPLICATE_COLUMN_LABEL_ERROR;
-import org.mule.runtime.core.api.processor.MessageProcessor;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.common.Result;
 import org.mule.common.metadata.DefaultListMetaDataModel;
 import org.mule.common.metadata.DefinedMapMetaDataModel;
 import org.mule.common.metadata.MetaData;
+import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
 import org.mule.runtime.module.db.integration.TestDbConfig;
@@ -27,8 +23,12 @@ import org.mule.runtime.module.db.internal.processor.AbstractSingleQueryDbMessag
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.isNull;
+import static org.mule.runtime.module.db.internal.metadata.SelectMetadataProvider.DUPLICATE_COLUMN_LABEL_ERROR;
 
 public class SelectJoinOutputMetadataTestCase extends AbstractDbIntegrationTestCase
 {

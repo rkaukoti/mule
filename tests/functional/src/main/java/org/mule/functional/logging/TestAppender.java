@@ -6,12 +6,6 @@
  */
 package org.mule.functional.logging;
 
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -20,6 +14,12 @@ import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
 
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Allows to check log events occurrences in a test case.
  */
@@ -27,6 +27,16 @@ public class TestAppender extends AbstractAppender
 {
 
     private Set<Expectation> expectations = new HashSet<>();
+
+    public TestAppender(String name, Filter filter, Layout<? extends Serializable> layout)
+    {
+        super(name, filter, layout);
+    }
+
+    public TestAppender(String name, Filter filter, Layout<? extends Serializable> layout, boolean ignoreExceptions)
+    {
+        super(name, filter, layout, ignoreExceptions);
+    }
 
     public void clear()
     {
@@ -66,16 +76,6 @@ public class TestAppender extends AbstractAppender
                 builder.append('\n').append(item);
             }
         }
-    }
-
-    public TestAppender(String name, Filter filter, Layout<? extends Serializable> layout)
-    {
-        super(name, filter, layout);
-    }
-
-    public TestAppender(String name, Filter filter, Layout<? extends Serializable> layout, boolean ignoreExceptions)
-    {
-        super(name, filter, layout, ignoreExceptions);
     }
 
     @Override

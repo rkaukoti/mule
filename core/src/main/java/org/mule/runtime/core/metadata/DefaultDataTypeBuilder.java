@@ -6,20 +6,15 @@
  */
 package org.mule.runtime.core.metadata;
 
-import static com.google.common.cache.CacheBuilder.newBuilder;
-import static java.util.Objects.requireNonNull;
-import static java.util.Optional.of;
-import static org.mule.runtime.core.util.Preconditions.checkNotNull;
-import static org.mule.runtime.core.util.generics.GenericsUtils.getCollectionType;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
 import org.mule.runtime.api.metadata.CollectionDataType;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.DataTypeBuilder;
 import org.mule.runtime.api.metadata.DataTypeParamsBuilder;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.util.StringUtils;
-
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Proxy;
@@ -32,6 +27,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 
+import static com.google.common.cache.CacheBuilder.newBuilder;
+import static java.util.Objects.requireNonNull;
+import static java.util.Optional.of;
+import static org.mule.runtime.core.util.Preconditions.checkNotNull;
+import static org.mule.runtime.core.util.generics.GenericsUtils.getCollectionType;
+
 /**
  * Provides a way to build immutable {@link DataType} objects.
  *
@@ -41,14 +42,15 @@ public class DefaultDataTypeBuilder implements DataTypeBuilder, DataTypeBuilder.
 {
     private static ConcurrentHashMap<String, ProxyIndicator> proxyClassCache = new ConcurrentHashMap<>();
 
-    private static LoadingCache<DefaultDataTypeBuilder, DataType> dataTypeCache = newBuilder().softValues().build(new CacheLoader<DefaultDataTypeBuilder, DataType>()
-    {
-        @Override
-        public DataType load(DefaultDataTypeBuilder key) throws Exception
-        {
-            return key.doBuild();
-        }
-    });
+    private static LoadingCache<DefaultDataTypeBuilder, DataType> dataTypeCache =
+            newBuilder().softValues().build(new CacheLoader<DefaultDataTypeBuilder, DataType>()
+            {
+                @Override
+                public DataType load(DefaultDataTypeBuilder key) throws Exception
+                {
+                    return key.doBuild();
+                }
+            });
 
     private Class<?> type = Object.class;
     private DataTypeBuilder itemTypeBuilder;
@@ -73,38 +75,6 @@ public class DefaultDataTypeBuilder implements DataTypeBuilder, DataTypeBuilder.
             this.type = dataType.getType();
         }
         this.mediaType = dataType.getMediaType();
-    }
-
-    /**
-     * Sets the given type for the {@link DataType} to be built. See {@link DataType#getType()}.
-     * 
-     * @param type the java type to set.
-     * @return this builder.
-     */
-    @Override
-    public DataTypeParamsBuilder type(Class<?> type)
-    {
-        validateAlreadyBuilt();
-
-        checkNotNull(type, "'type' cannot be null.");
-        this.type = handleProxy(type);
-
-        return this;
-    }
-
-    /*
-     * Special case where proxies are used for testing.
-     */
-    protected Class<?> handleProxy(Class<?> type)
-    {
-        if (isProxyClass(type))
-        {
-            return type.getInterfaces()[0];
-        }
-        else
-        {
-            return type;
-        }
     }
 
     /**
@@ -135,38 +105,44 @@ public class DefaultDataTypeBuilder implements DataTypeBuilder, DataTypeBuilder.
     }
 
     /**
-     * map value
+     * Sets the given type for the {@link DataType} to be built. See {@link DataType#getType()}.
+     *
+     * @param type the java type to set.
+     * @return this builder.
      */
-    private static final class ProxyIndicator
+    @Override
+    public DataTypeParamsBuilder type(Class<?> type)
     {
-        private final WeakReference<Class> targetClassRef;
-        private final boolean isProxy;
+        validateAlreadyBuilt();
 
-        ProxyIndicator(Class targetClass, boolean proxy)
+        checkNotNull(type, "'type' cannot be null.");
+        this.type = handleProxy(type);
+
+        return this;
+    }
+
+    /*
+     * Special case where proxies are used for testing.
+     */
+    protected Class<?> handleProxy(Class<?> type)
+    {
+        if (isProxyClass(type))
         {
-            this.targetClassRef = new WeakReference<>(targetClass);
-            isProxy = proxy;
+            return type.getInterfaces()[0];
         }
-
-        public Class getTargetClass()
+        else
         {
-            return targetClassRef.get();
-        }
-
-        public boolean isProxy()
-        {
-            return isProxy;
+            return type;
         }
     }
 
     /**
      * Sets the given type for the {@link DefaultCollectionDataType} to be built. See
      * {@link DefaultCollectionDataType#getType()}.
-     * 
+     *
      * @param collectionType the java collection type to set.
      * @return this builder.
-     * @throws IllegalArgumentException if the given collectionType is not a descendant of
-     *             {@link Collection}.
+     * @throws IllegalArgumentException if the given collectionType is not a descendant of {@link Collection}.
      */
     @Override
     public DataTypeCollectionTypeBuilder collectionType(Class<? extends Collection> collectionType)
@@ -203,7 +179,7 @@ public class DefaultDataTypeBuilder implements DataTypeBuilder, DataTypeBuilder.
     /**
      * Sets the given types for the {@link DefaultCollectionDataType} to be built. See
      * {@link DefaultCollectionDataType#getType()} and {@link DefaultCollectionDataType#getItemDataType()}.
-     * 
+     *
      * @param itemType the java type to set.
      * @return this builder.
      * @throws IllegalArgumentException if the given collectionType is not a descendant of {@link Collection}.
@@ -229,7 +205,7 @@ public class DefaultDataTypeBuilder implements DataTypeBuilder, DataTypeBuilder.
      * If the media type for the given string has a {@code charset} parameter, that will be set as
      * the charset for the {@link DataType} being built. That charset can be overridden by calling
      * {@link #charset(String)}.
-     * 
+     *
      * @param mediaType the media type string to set
      * @return this builder.
      * @throws IllegalArgumentException if the given media type string is invalid.
@@ -283,7 +259,7 @@ public class DefaultDataTypeBuilder implements DataTypeBuilder, DataTypeBuilder.
     {
         validateAlreadyBuilt();
 
-        if(StringUtils.isNotEmpty(charset))
+        if (StringUtils.isNotEmpty(charset))
         {
             mediaType = mediaType.withCharset(Charset.forName(charset));
         }
@@ -308,7 +284,7 @@ public class DefaultDataTypeBuilder implements DataTypeBuilder, DataTypeBuilder.
     {
         validateAlreadyBuilt();
 
-        if(value == null)
+        if (value == null)
         {
             return type(Object.class);
         }
@@ -337,7 +313,7 @@ public class DefaultDataTypeBuilder implements DataTypeBuilder, DataTypeBuilder.
 
     /**
      * Builds a new {@link DataType} with the values set in this builder.
-     * 
+     *
      * @return a newly built {@link DataType}.
      */
     @Override
@@ -356,7 +332,8 @@ public class DefaultDataTypeBuilder implements DataTypeBuilder, DataTypeBuilder.
     {
         if (Collection.class.isAssignableFrom(type))
         {
-            return new DefaultCollectionDataType((Class<? extends Collection>) type, itemTypeBuilder != null ? itemTypeBuilder.build() : DataType.OBJECT, mediaType);
+            return new DefaultCollectionDataType((Class<? extends Collection>) type,
+                    itemTypeBuilder != null ? itemTypeBuilder.build() : DataType.OBJECT, mediaType);
         }
         else
         {
@@ -403,5 +380,30 @@ public class DefaultDataTypeBuilder implements DataTypeBuilder, DataTypeBuilder.
         return Objects.equals(type, other.type)
                && Objects.equals(itemTypeBuilder, other.itemTypeBuilder)
                && Objects.equals(mediaType, other.mediaType);
+    }
+
+    /**
+     * map value
+     */
+    private static final class ProxyIndicator
+    {
+        private final WeakReference<Class> targetClassRef;
+        private final boolean isProxy;
+
+        ProxyIndicator(Class targetClass, boolean proxy)
+        {
+            this.targetClassRef = new WeakReference<>(targetClass);
+            isProxy = proxy;
+        }
+
+        public Class getTargetClass()
+        {
+            return targetClassRef.get();
+        }
+
+        public boolean isProxy()
+        {
+            return isProxy;
+        }
     }
 }

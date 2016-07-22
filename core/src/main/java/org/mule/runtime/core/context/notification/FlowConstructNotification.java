@@ -17,13 +17,13 @@ import org.mule.runtime.core.api.context.notification.ServerNotification;
  */
 public class FlowConstructNotification extends ServerNotification implements BlockingServerEvent
 {
-    private static final long serialVersionUID = 6658641434183647952L;
     public static final int FLOW_CONSTRUCT_INITIALISED = FLOW_CONSTRUCT_EVENT_ACTION_START_RANGE + 1;
     public static final int FLOW_CONSTRUCT_STARTED = FLOW_CONSTRUCT_EVENT_ACTION_START_RANGE + 2;
     public static final int FLOW_CONSTRUCT_STOPPED = FLOW_CONSTRUCT_EVENT_ACTION_START_RANGE + 3;
     public static final int FLOW_CONSTRUCT_PAUSED = FLOW_CONSTRUCT_EVENT_ACTION_START_RANGE + 4;
     public static final int FLOW_CONSTRUCT_RESUMED = FLOW_CONSTRUCT_EVENT_ACTION_START_RANGE + 5;
     public static final int FLOW_CONSTRUCT_DISPOSED = FLOW_CONSTRUCT_EVENT_ACTION_START_RANGE + 6;
+    private static final long serialVersionUID = 6658641434183647952L;
 
     static
     {

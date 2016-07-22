@@ -6,12 +6,9 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.COOKIE;
-
 import com.google.common.collect.Sets;
+
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -20,7 +17,10 @@ import java.util.Set;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.COOKIE;
 
 public class HttpRequestCookiesTestCase extends AbstractHttpRequestTestCase
 {

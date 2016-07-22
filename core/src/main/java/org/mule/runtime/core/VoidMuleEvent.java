@@ -35,18 +35,24 @@ public class VoidMuleEvent implements MuleEvent
 
     private static final VoidMuleEvent instance = new VoidMuleEvent();
 
-    public static VoidMuleEvent getInstance()
-    {
-        return instance;
-    }
-
     protected VoidMuleEvent()
     {
         super();
     }
 
+    public static VoidMuleEvent getInstance()
+    {
+        return instance;
+    }
+
     @Override
     public MuleMessage getMessage()
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setMessage(MuleMessage message)
     {
         throw new UnsupportedOperationException();
     }
@@ -192,12 +198,6 @@ public class VoidMuleEvent implements MuleEvent
 
     @Override
     public boolean isSynchronous()
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setMessage(MuleMessage message)
     {
         throw new UnsupportedOperationException();
     }

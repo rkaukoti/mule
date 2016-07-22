@@ -6,10 +6,8 @@
  */
 package org.mule.runtime.module.pgp;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.apache.commons.io.IOUtils;
+import org.junit.Test;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.transformer.encryption.EncryptionTransformer;
@@ -18,8 +16,9 @@ import org.mule.tck.testmodels.fruit.Orange;
 
 import java.io.InputStream;
 
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class KBEStrategyUsingEncryptionTransformerTestCase extends AbstractEncryptionStrategyTestCase
 {

@@ -12,7 +12,6 @@ import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.ClassUtils;
-
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.remoting.support.RemoteInvocation;
 import org.springframework.remoting.support.RemoteInvocationBasedExporter;
@@ -28,29 +27,6 @@ public class SpringRemoteInvokerComponent implements Initialisable, Callable
     private boolean registerTraceInterceptor = false;
     private RemoteInvocationExecutor remoteInvocationExecutor;
 
-    private class Delegate extends RemoteInvocationBasedExporter implements InitializingBean
-    {
-        private Object proxy;
-
-        public void afterPropertiesSet()
-        {
-            this.proxy = getProxyForService();
-        }
-
-        public Object execute(RemoteInvocation invocation)
-        {
-            try
-            {
-                Object value = invoke(invocation, proxy);
-                return value;
-            }
-            catch (Throwable ex)
-            {
-                return new RemoteInvocationResult(ex);
-            }
-        }
-    }
-
     public SpringRemoteInvokerComponent()
     {
         delegate = new Delegate();
@@ -61,7 +37,7 @@ public class SpringRemoteInvokerComponent implements Initialisable, Callable
         if (serviceClass == null && serviceBean == null)
         {
             throw new InitialisationException(CoreMessages.propertiesNotSet("serviceClass or serviceBean"),
-                this);
+                    this);
         }
         if (serviceInterface == null)
         {
@@ -150,5 +126,28 @@ public class SpringRemoteInvokerComponent implements Initialisable, Callable
         RemoteInvocation ri = (RemoteInvocation) payload;
         Object rval = delegate.execute(ri);
         return rval;
+    }
+
+    private class Delegate extends RemoteInvocationBasedExporter implements InitializingBean
+    {
+        private Object proxy;
+
+        public void afterPropertiesSet()
+        {
+            this.proxy = getProxyForService();
+        }
+
+        public Object execute(RemoteInvocation invocation)
+        {
+            try
+            {
+                Object value = invoke(invocation, proxy);
+                return value;
+            }
+            catch (Throwable ex)
+            {
+                return new RemoteInvocationResult(ex);
+            }
+        }
     }
 }

@@ -11,19 +11,18 @@ import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.store.ListableObjectStore;
 import org.mule.runtime.core.api.store.ObjectDoesNotExistException;
 import org.mule.runtime.core.api.store.ObjectStoreException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Implementation of {@link Producer} to stream the contents of a
  * {@link ListableObjectStore}
- * 
+ *
  * @since 3.5.0
  */
 public class ListableObjectStoreProducer<T extends Serializable> implements Producer<T>
@@ -52,7 +51,7 @@ public class ListableObjectStoreProducer<T extends Serializable> implements Prod
         catch (ObjectStoreException e)
         {
             throw new RuntimeException(
-                "Could not construct producer because exception was found retrieving keys", e);
+                    "Could not construct producer because exception was found retrieving keys", e);
         }
     }
 
@@ -74,8 +73,8 @@ public class ListableObjectStoreProducer<T extends Serializable> implements Prod
             if (logger.isDebugEnabled())
             {
                 logger.debug(String.format(
-                    "key %s no longer available in objectstore. This is likely due to a concurrency issue. Will continue with next key if available",
-                    key));
+                        "key %s no longer available in objectstore. This is likely due to a concurrency issue. Will continue with next key if available",
+                        key));
             }
 
             return this.produce();

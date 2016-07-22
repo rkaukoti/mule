@@ -6,15 +6,11 @@
  */
 package org.mule.runtime.module.launcher.domain;
 
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.DOMAIN;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import static org.mule.runtime.core.util.SplashScreen.miniSplash;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.config.ConfigurationBuilder;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
-import org.mule.runtime.core.config.bootstrap.ArtifactType;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.ExceptionUtils;
@@ -29,6 +25,8 @@ import org.mule.runtime.module.launcher.artifact.ArtifactMuleContextBuilder;
 import org.mule.runtime.module.launcher.artifact.MuleContextDeploymentListener;
 import org.mule.runtime.module.launcher.descriptor.DomainDescriptor;
 import org.mule.runtime.module.reboot.MuleContainerBootstrapUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,8 +35,9 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Scanner;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.DOMAIN;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+import static org.mule.runtime.core.util.SplashScreen.miniSplash;
 
 public class DefaultMuleDomain implements Domain
 {
@@ -61,7 +60,8 @@ public class DefaultMuleDomain implements Domain
         refreshClassLoaderAndLoadConfigResourceFile();
     }
 
-    private void refreshClassLoaderAndLoadConfigResourceFile(){
+    private void refreshClassLoaderAndLoadConfigResourceFile()
+    {
         URL resource = deploymentClassLoader.findLocalResource(DOMAIN_CONFIG_FILE_LOCATION);
         if (resource != null)
         {
@@ -121,7 +121,7 @@ public class DefaultMuleDomain implements Domain
                         .setArtifactName(getArtifactName())
                         .setExecutionClassloader(deploymentClassLoader.getClassLoader())
                         .setArtifactInstallationDirectory(new File(MuleContainerBootstrapUtils.getMuleDomainsDir(), getArtifactName()))
-                        .setConfigurationFiles(new String[]{this.configResourceFile.getAbsolutePath()})
+                        .setConfigurationFiles(new String[] {this.configResourceFile.getAbsolutePath()})
                         .setArtifactType(DOMAIN);
 
                 if (deploymentListener != null)
@@ -150,7 +150,8 @@ public class DefaultMuleDomain implements Domain
                 final String lineFromFile = scanner.nextLine();
                 if (lineFromFile.contains("<mule "))
                 {
-                    throw new MuleRuntimeException(CoreMessages.createStaticMessage("Domain configuration file can not be created using core namespace. Use mule-domain namespace instead."));
+                    throw new MuleRuntimeException(CoreMessages.createStaticMessage(
+                            "Domain configuration file can not be created using core namespace. Use mule-domain namespace instead."));
                 }
             }
         }
@@ -168,7 +169,7 @@ public class DefaultMuleDomain implements Domain
         try
         {
             return (ConfigurationBuilder) ClassUtils.instanciateClass("org.mule.runtime.config.spring.SpringXmlDomainConfigurationBuilder",
-                                                                      new Object[] {getResourceFiles()[0].getName()}, deploymentClassLoader.getClassLoader());
+                    new Object[] {getResourceFiles()[0].getName()}, deploymentClassLoader.getClassLoader());
         }
         catch (Exception e)
         {
@@ -195,7 +196,8 @@ public class DefaultMuleDomain implements Domain
             }
             // null CCL ensures we log at 'system' level
             // TODO create a more usable wrapper for any logger to be logged at sys level
-            withContextClassLoader(null, () -> {
+            withContextClassLoader(null, () ->
+            {
                 DomainStartedSplashScreen splashScreen = new DomainStartedSplashScreen();
                 splashScreen.createMessage(descriptor);
                 deployLogger.info(splashScreen.toString());
@@ -276,7 +278,8 @@ public class DefaultMuleDomain implements Domain
         }
         catch (InitialisationException e)
         {
-            throw new DeploymentInitException(CoreMessages.createStaticMessage("Failure trying to initialise domain " + getArtifactName()), e);
+            throw new DeploymentInitException(CoreMessages.createStaticMessage("Failure trying to initialise domain " + getArtifactName()),
+                    e);
         }
     }
 

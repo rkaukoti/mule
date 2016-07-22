@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.module.artifact.classloader.exception;
 
+import org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy;
+
+import java.util.List;
+
 import static com.google.common.collect.ImmutableList.copyOf;
 import static java.lang.String.format;
 import static java.lang.System.lineSeparator;
 import static java.util.stream.Collectors.toList;
-
-import org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy;
-
-import java.util.List;
 
 /**
  * Extends {@link ClassNotFoundException}, composing the individual exceptions of each place where
@@ -30,15 +30,16 @@ public class CompositeClassNotFoundException extends ClassNotFoundException
 
     /**
      * Builds the exception.
-     * 
-     * @param className the name of the class that was trying to be loaded.
+     *
+     * @param className      the name of the class that was trying to be loaded.
      * @param lookupStrategy the lookupStrategy that was used to load the class.
-     * @param exceptions the exceptions thrown by each individual classloader that was used for the
-     *            loading.
+     * @param exceptions     the exceptions thrown by each individual classloader that was used for the loading.
      */
-    public CompositeClassNotFoundException(String className, ClassLoaderLookupStrategy lookupStrategy, List<ClassNotFoundException> exceptions)
+    public CompositeClassNotFoundException(String className, ClassLoaderLookupStrategy lookupStrategy,
+                                           List<ClassNotFoundException> exceptions)
     {
-        super(format("Cannot load class '%s': %s", className, exceptions.stream().map((e) -> e.getMessage() + lineSeparator()).collect(toList())));
+        super(format("Cannot load class '%s': %s", className,
+                exceptions.stream().map((e) -> e.getMessage() + lineSeparator()).collect(toList())));
         this.className = className;
         this.lookupStrategy = lookupStrategy;
         this.exceptions = copyOf(exceptions);

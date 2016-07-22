@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.routing;
 
-import static org.mule.runtime.core.util.ClassUtils.isConsumable;
-
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MessagingException;
@@ -21,12 +19,13 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.routing.RoutingException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.StringMessageUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.mule.runtime.core.util.ClassUtils.isConsumable;
+
 /**
- *  Abstract routing strategy with utility methods to be reused by routing strategies
+ * Abstract routing strategy with utility methods to be reused by routing strategies
  */
 public abstract class AbstractRoutingStrategy implements RoutingStrategy
 {
@@ -43,106 +42,10 @@ public abstract class AbstractRoutingStrategy implements RoutingStrategy
         this.muleContext = muleContext;
     }
 
-
-    /**
-     * Send message event to destination.
-     *
-     * Creates a new event that will be used to process the route.
-     *
-     * @param routedEvent event to route
-     * @param message message to route
-     * @param route message processor to be executed
-     * @param awaitResponse if the
-     * @return
-     * @throws MuleException
-     */
-    protected final MuleEvent sendRequest(final MuleEvent routedEvent,
-                                          final MuleMessage message,
-                                          final MessageProcessor route,
-                                          boolean awaitResponse) throws MuleException
-    {
-        MuleEvent result;
-        try
-        {
-            result = sendRequestEvent(routedEvent, message, route, awaitResponse);
-        }
-        catch (MessagingException me)
-        {
-            throw me;
-        }
-        catch (Exception e)
-        {
-            throw new RoutingException(routedEvent, null, e);
-        }
-
-        if (result != null && !VoidMuleEvent.getInstance().equals(result))
-        {
-            MuleMessage resultMessage = result.getMessage();
-            if (logger.isTraceEnabled())
-            {
-                if (resultMessage != null)
-                {
-                    try
-                    {
-                        logger.trace("Response payload: \n"
-                                     + StringMessageUtils.truncate(muleContext.getTransformationService().getPayloadForLogging(resultMessage), 100,
-                                                                   false));
-                    }
-                    catch (Exception e)
-                    {
-                        logger.trace("Response payload: \n(unable to retrieve payload: " + e.getMessage());
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-    private MuleEvent sendRequestEvent(MuleEvent routedEvent,
-                                         MuleMessage message,
-                                         MessageProcessor route,
-                                         boolean awaitResponse) throws MuleException
-    {
-        if (route == null)
-        {
-            throw new DispatchException(CoreMessages.objectIsNull("route"), routedEvent, null);
-        }
-
-        MuleEvent event = createEventToRoute(routedEvent, message, route);
-
-        if (awaitResponse)
-        {
-            int timeout = message.getOutboundProperty(MuleProperties.MULE_EVENT_TIMEOUT_PROPERTY, -1);
-            if (timeout >= 0)
-            {
-                event.setTimeout(timeout);
-            }
-        }
-
-        return route.process(event);
-    }
-
-    /**
-     * Create a new event to be routed to the target MP
-     */
-    protected MuleEvent createEventToRoute(MuleEvent routedEvent, MuleMessage message, MessageProcessor route)
-    {
-        return new DefaultMuleEvent(message, routedEvent, true);
-    }
-
-    protected MuleContext getMuleContext()
-    {
-        return muleContext;
-    }
-
     /**
      * Validates that the payload is not consumable so it can be copied.
      *
      * If validation fails then throws a MessagingException
-     *
-     * @param event
-     * @param message
-     * @throws MessagingException
      */
     public static void validateMessageIsNotConsumable(MuleEvent event, MuleMessage message) throws MessagingException
     {
@@ -174,5 +77,96 @@ public abstract class AbstractRoutingStrategy implements RoutingStrategy
         {
             throw new MessagingException(CoreMessages.cannotCopyStreamPayload(message.getDataType().getType().getName()), event);
         }
+    }
+
+    /**
+     * Send message event to destination.
+     *
+     * Creates a new event that will be used to process the route.
+     *
+     * @param routedEvent   event to route
+     * @param message       message to route
+     * @param route         message processor to be executed
+     * @param awaitResponse if the
+     */
+    protected final MuleEvent sendRequest(final MuleEvent routedEvent,
+                                          final MuleMessage message,
+                                          final MessageProcessor route,
+                                          boolean awaitResponse) throws MuleException
+    {
+        MuleEvent result;
+        try
+        {
+            result = sendRequestEvent(routedEvent, message, route, awaitResponse);
+        }
+        catch (MessagingException me)
+        {
+            throw me;
+        }
+        catch (Exception e)
+        {
+            throw new RoutingException(routedEvent, null, e);
+        }
+
+        if (result != null && !VoidMuleEvent.getInstance().equals(result))
+        {
+            MuleMessage resultMessage = result.getMessage();
+            if (logger.isTraceEnabled())
+            {
+                if (resultMessage != null)
+                {
+                    try
+                    {
+                        logger.trace("Response payload: \n"
+                                     +
+                                     StringMessageUtils.truncate(muleContext.getTransformationService().getPayloadForLogging(resultMessage),
+                                             100,
+                                             false));
+                    }
+                    catch (Exception e)
+                    {
+                        logger.trace("Response payload: \n(unable to retrieve payload: " + e.getMessage());
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    private MuleEvent sendRequestEvent(MuleEvent routedEvent,
+                                       MuleMessage message,
+                                       MessageProcessor route,
+                                       boolean awaitResponse) throws MuleException
+    {
+        if (route == null)
+        {
+            throw new DispatchException(CoreMessages.objectIsNull("route"), routedEvent, null);
+        }
+
+        MuleEvent event = createEventToRoute(routedEvent, message, route);
+
+        if (awaitResponse)
+        {
+            int timeout = message.getOutboundProperty(MuleProperties.MULE_EVENT_TIMEOUT_PROPERTY, -1);
+            if (timeout >= 0)
+            {
+                event.setTimeout(timeout);
+            }
+        }
+
+        return route.process(event);
+    }
+
+    /**
+     * Create a new event to be routed to the target MP
+     */
+    protected MuleEvent createEventToRoute(MuleEvent routedEvent, MuleMessage message, MessageProcessor route)
+    {
+        return new DefaultMuleEvent(message, routedEvent, true);
+    }
+
+    protected MuleContext getMuleContext()
+    {
+        return muleContext;
     }
 }

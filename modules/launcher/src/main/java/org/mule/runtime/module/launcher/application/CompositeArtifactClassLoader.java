@@ -7,8 +7,6 @@
 
 package org.mule.runtime.module.launcher.application;
 
-import static java.util.stream.Collectors.toCollection;
-
 import org.mule.runtime.module.artifact.Artifact;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
 import org.mule.runtime.module.artifact.classloader.ClassLoaderLookupPolicy;
@@ -17,6 +15,8 @@ import org.mule.runtime.module.artifact.classloader.DisposableClassLoader;
 import org.mule.runtime.module.artifact.classloader.EnumerationAdapter;
 import org.mule.runtime.module.artifact.classloader.ShutdownListener;
 import org.mule.runtime.module.launcher.MuleApplicationClassLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,31 +26,33 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.util.stream.Collectors.toCollection;
 
 /**
  * Composite classloader to use on {@link Artifact}
  */
 public class CompositeArtifactClassLoader extends CompositeClassLoader implements ArtifactClassLoader
 {
+    protected static final Logger logger = LoggerFactory.getLogger(CompositeApplicationClassLoader.class);
+
     static
     {
         registerAsParallelCapable();
     }
 
-    protected static final Logger logger = LoggerFactory.getLogger(CompositeApplicationClassLoader.class);
     private final String artifactName;
     private final List<ArtifactClassLoader> artifactClassLoaders;
 
     /**
      * Creates a new instance
-     *  @param artifactName         name of the artifact owning the created instance.
+     *
+     * @param artifactName         name of the artifact owning the created instance.
      * @param parent               parent class loader used to delegate the lookup process. Can be null.
      * @param artifactClassLoaders artifact class loaders to compose. Non empty.
      * @param lookupPolicy         policy used to guide the lookup process. Non null
      */
-    public CompositeArtifactClassLoader(String artifactName, ClassLoader parent, List<ArtifactClassLoader> artifactClassLoaders, ClassLoaderLookupPolicy lookupPolicy)
+    public CompositeArtifactClassLoader(String artifactName, ClassLoader parent, List<ArtifactClassLoader> artifactClassLoaders,
+                                        ClassLoaderLookupPolicy lookupPolicy)
     {
         super(parent, getClassLoaders(artifactClassLoaders), lookupPolicy);
         this.artifactName = artifactName;

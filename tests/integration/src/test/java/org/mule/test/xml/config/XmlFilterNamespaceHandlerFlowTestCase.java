@@ -6,20 +6,20 @@
  */
 package org.mule.test.xml.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.processor.MessageProcessorChain;
 import org.mule.runtime.core.construct.Flow;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.runtime.module.xml.filters.IsXmlFilter;
 import org.mule.runtime.core.routing.MessageFilter;
 import org.mule.runtime.core.routing.filters.logic.NotFilter;
+import org.mule.runtime.module.xml.filters.IsXmlFilter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class XmlFilterNamespaceHandlerFlowTestCase extends FunctionalTestCase
 {

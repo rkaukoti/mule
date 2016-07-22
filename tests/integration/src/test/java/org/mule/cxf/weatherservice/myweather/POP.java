@@ -29,15 +29,14 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "POP", namespace = "http://ws.cdyne.com/WeatherWS/", propOrder = {
-    "nighttime",
-    "daytime"
+        "nighttime",
+        "daytime"
 })
-public class POP {
+public class POP
+{
 
     @XmlElement(name = "Nighttime", namespace = "http://ws.cdyne.com/WeatherWS/")
     protected String nighttime;
@@ -47,48 +46,40 @@ public class POP {
     /**
      * Gets the value of the nighttime property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getNighttime() {
+    public String getNighttime()
+    {
         return nighttime;
     }
 
     /**
      * Sets the value of the nighttime property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setNighttime(String value) {
+    public void setNighttime(String value)
+    {
         this.nighttime = value;
     }
 
     /**
      * Gets the value of the daytime property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getDaytime() {
+    public String getDaytime()
+    {
         return daytime;
     }
 
     /**
      * Sets the value of the daytime property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setDaytime(String value) {
+    public void setDaytime(String value)
+    {
         this.daytime = value;
     }
 

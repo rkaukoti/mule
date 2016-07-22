@@ -8,7 +8,6 @@ package org.mule.runtime.core.processor;
 
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.core.processor.AbstractInterceptingMessageProcessor;
 
 public class StopFurtherMessageProcessingMessageProcessor extends AbstractInterceptingMessageProcessor
 {

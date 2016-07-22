@@ -6,19 +6,18 @@
  */
 package org.mule.runtime.module.repository.internal;
 
-import org.mule.runtime.module.reboot.MuleContainerBootstrapUtils;
-import org.mule.runtime.module.repository.api.RepositoryService;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.RepositorySystem;
 import org.eclipse.aether.repository.LocalRepository;
 import org.eclipse.aether.repository.RemoteRepository;
+import org.mule.runtime.module.reboot.MuleContainerBootstrapUtils;
+import org.mule.runtime.module.repository.api.RepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RepositoryServiceFactory
 {
@@ -47,7 +46,8 @@ public class RepositoryServiceFactory
         File repositoryFolder = createRepositoryFolderIfDoesNotExists();
         List<RemoteRepository> remoteRepositories = collectRemoteRepositories();
         DefaultRepositorySystemSession repositorySystemSession = new DefaultRepositorySystemSession();
-        repositorySystemSession.setLocalRepositoryManager(repositorySystem.newLocalRepositoryManager(repositorySystemSession, new LocalRepository(repositoryFolder)));
+        repositorySystemSession.setLocalRepositoryManager(
+                repositorySystem.newLocalRepositoryManager(repositorySystemSession, new LocalRepository(repositoryFolder)));
         return new DefaultRepositoryService(repositorySystem, repositorySystemSession, remoteRepositories);
     }
 
@@ -59,7 +59,8 @@ public class RepositoryServiceFactory
         {
             if (!remoteRepository.trim().equals(""))
             {
-                remoteRepositories.add(new RemoteRepository.Builder(remoteRepository, DEFAULT_REPOSITORY_TYPE, remoteRepository.trim()).build());
+                remoteRepositories.add(
+                        new RemoteRepository.Builder(remoteRepository, DEFAULT_REPOSITORY_TYPE, remoteRepository.trim()).build());
             }
         }
         return remoteRepositories;

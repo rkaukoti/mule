@@ -50,11 +50,14 @@ public abstract class AbstractMuleTransportsNamespaceHandler extends AbstractMul
         public TransportRegisteredMdps(String protocol, boolean isMeta, String[] requiredAttributes)
         {
             registerBeanDefinitionParser("endpoint",
-                    add(new TransportGlobalEndpointDefinitionParser(protocol, isMeta, getGlobalEndpointBuilderBeanClass(), requiredAttributes, new String[] {})));
+                    add(new TransportGlobalEndpointDefinitionParser(protocol, isMeta, getGlobalEndpointBuilderBeanClass(),
+                            requiredAttributes, new String[] {})));
             registerBeanDefinitionParser("inbound-endpoint",
-                    add(new TransportEndpointDefinitionParser(protocol, isMeta, getInboundEndpointFactoryBeanClass(), requiredAttributes, new String[] {})));
+                    add(new TransportEndpointDefinitionParser(protocol, isMeta, getInboundEndpointFactoryBeanClass(), requiredAttributes,
+                            new String[] {})));
             registerBeanDefinitionParser("outbound-endpoint",
-                    add(new TransportEndpointDefinitionParser(protocol, isMeta, getOutboundEndpointFactoryBeanClass(), requiredAttributes, new String[] {})));
+                    add(new TransportEndpointDefinitionParser(protocol, isMeta, getOutboundEndpointFactoryBeanClass(), requiredAttributes,
+                            new String[] {})));
         }
     }
 

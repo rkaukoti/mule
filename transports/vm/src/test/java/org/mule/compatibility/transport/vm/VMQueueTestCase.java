@@ -6,10 +6,7 @@
  */
 package org.mule.compatibility.transport.vm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -20,7 +17,9 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class VMQueueTestCase extends FunctionalTestCase
 {
@@ -47,7 +46,7 @@ public class VMQueueTestCase extends FunctionalTestCase
     public void testMultipleMessages() throws Exception
     {
         MuleClient client = muleContext.getClient();
-        Set<String> polos = new HashSet<String>(Arrays.asList(new String[]{"Marco", "Niccolo", "Maffeo"}));
+        Set<String> polos = new HashSet<String>(Arrays.asList(new String[] {"Marco", "Niccolo", "Maffeo"}));
         Iterator<String> people = polos.iterator();
         while (people.hasNext())
         {
@@ -68,7 +67,7 @@ public class VMQueueTestCase extends FunctionalTestCase
     public void testPassThrough() throws Exception
     {
         MuleClient client = muleContext.getClient();
-        Set<String> polos = new HashSet<String>(Arrays.asList(new String[]{"Marco", "Niccolo", "Maffeo"}));
+        Set<String> polos = new HashSet<String>(Arrays.asList(new String[] {"Marco", "Niccolo", "Maffeo"}));
         Iterator<String> people = polos.iterator();
         while (people.hasNext())
         {
@@ -90,7 +89,7 @@ public class VMQueueTestCase extends FunctionalTestCase
     public void testNamedEndpoint() throws Exception
     {
         MuleClient client = muleContext.getClient();
-        Set<String> polos = new HashSet<String>(Arrays.asList(new String[]{"Marco", "Niccolo", "Maffeo"}));
+        Set<String> polos = new HashSet<String>(Arrays.asList(new String[] {"Marco", "Niccolo", "Maffeo"}));
         Iterator<String> people = polos.iterator();
         while (people.hasNext())
         {

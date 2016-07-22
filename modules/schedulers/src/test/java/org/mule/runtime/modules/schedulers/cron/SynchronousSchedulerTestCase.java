@@ -7,14 +7,13 @@
 package org.mule.runtime.modules.schedulers.cron;
 
 
-import static junit.framework.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
 
 /**
  * <p>

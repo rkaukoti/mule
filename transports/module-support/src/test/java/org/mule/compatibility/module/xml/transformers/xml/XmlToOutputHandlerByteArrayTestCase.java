@@ -6,9 +6,8 @@
  */
 package org.mule.compatibility.module.xml.transformers.xml;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.Assert.fail;
-
+import org.dom4j.DocumentHelper;
+import org.dom4j.io.DOMWriter;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
@@ -29,8 +28,8 @@ import org.mule.runtime.module.xml.transformers.xml.AbstractXmlTransformerTestCa
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-import org.dom4j.DocumentHelper;
-import org.dom4j.io.DOMWriter;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.junit.Assert.fail;
 
 public class XmlToOutputHandlerByteArrayTestCase extends AbstractXmlTransformerTestCase
 {
@@ -42,14 +41,15 @@ public class XmlToOutputHandlerByteArrayTestCase extends AbstractXmlTransformerT
     {
         InputStream resourceStream = IOUtils.getResourceAsStream("cdcatalog-utf-8.xml", getClass());
         resultData = IOUtils.toString(resourceStream, "UTF-8");
-        
+
         srcData = resultData.getBytes("UTF-8");
     }
 
     @Override
     public Transformer getTransformer() throws Exception
     {
-        EndpointAwareTransformer trans = new DefaultEndpointAwareTransformer(createObject(XmlToOutputHandler.class), SystemUtils.getDefaultEncoding(muleContext));
+        EndpointAwareTransformer trans =
+                new DefaultEndpointAwareTransformer(createObject(XmlToOutputHandler.class), SystemUtils.getDefaultEncoding(muleContext));
         trans.setReturnDataType(DataType.fromType(OutputHandler.class));
 
         EndpointBuilder builder = new EndpointURIEndpointBuilder("test://test", muleContext);
@@ -83,13 +83,13 @@ public class XmlToOutputHandlerByteArrayTestCase extends AbstractXmlTransformerT
     {
         if (result instanceof OutputHandler)
         {
-            OutputHandler handler = (OutputHandler)result;
+            OutputHandler handler = (OutputHandler) result;
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             try
             {
                 handler.write(null, bos);
                 org.dom4j.Document dom4jDoc = null;
-                dom4jDoc = DocumentHelper.parseText((String)expected);
+                dom4jDoc = DocumentHelper.parseText((String) expected);
                 expected = new DOMWriter().write(dom4jDoc);
                 dom4jDoc = DocumentHelper.parseText(new String(bos.toByteArray(), "UTF-8"));
                 result = new DOMWriter().write(dom4jDoc);

@@ -120,7 +120,7 @@ public class DefaultQueueInfoDelegate implements TransientQueueInfoDelegate
             list.addFirst(item);
         }
     }
-    
+
     @Override
     public void clear() throws InterruptedException
     {

@@ -7,6 +7,8 @@
 package org.mule.compatibility.transport.http;
 
 
+import org.apache.commons.httpclient.Cookie;
+import org.apache.commons.httpclient.NameValuePair;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.expression.ExpressionManager;
 
@@ -15,9 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import org.apache.commons.httpclient.Cookie;
-import org.apache.commons.httpclient.NameValuePair;
 
 public class CookieWrapper extends NameValuePair
 {
@@ -34,7 +33,7 @@ public class CookieWrapper extends NameValuePair
         setValue(parse(getValue(), event, expressionManager));
         this.domain = parse(domain, event, expressionManager);
         this.path = parse(path, event, expressionManager);
-        if(expiryDate != null)
+        if (expiryDate != null)
         {
             this.expiryDate = evaluateDate(expiryDate, event, expressionManager);
         }
@@ -45,7 +44,7 @@ public class CookieWrapper extends NameValuePair
 
     private String parse(String value, MuleEvent event, ExpressionManager expressionManager)
     {
-        if(value != null)
+        if (value != null)
         {
             return expressionManager.parse(value, event);
         }
@@ -55,7 +54,7 @@ public class CookieWrapper extends NameValuePair
     private Object evaluateDate(Object date, MuleEvent event, ExpressionManager expressionManager)
     {
 
-        if(date != null && date instanceof String && expressionManager.isExpression(date.toString()))
+        if (date != null && date instanceof String && expressionManager.isExpression(date.toString()))
         {
             return expressionManager.evaluate(date.toString(), event);
         }
@@ -70,21 +69,21 @@ public class CookieWrapper extends NameValuePair
         cookie.setDomain(domain);
         cookie.setPath(path);
 
-        if(expiryDate != null)
+        if (expiryDate != null)
         {
             cookie.setExpiryDate(formatExpiryDate(expiryDate));
         }
 
-        if(maxAge != null && expiryDate == null)
+        if (maxAge != null && expiryDate == null)
         {
             cookie.setExpiryDate(new Date(System.currentTimeMillis() + Integer.valueOf(maxAge) * 1000L));
         }
 
-        if(secure != null)
+        if (secure != null)
         {
             cookie.setSecure(Boolean.valueOf(secure));
         }
-        if(version != null)
+        if (version != null)
         {
             cookie.setVersion(Integer.valueOf(version));
         }
@@ -94,7 +93,7 @@ public class CookieWrapper extends NameValuePair
 
     private Date formatExpiryDate(Object expiryDate) throws ParseException
     {
-        if(expiryDate instanceof String)
+        if (expiryDate instanceof String)
         {
             SimpleDateFormat format = new SimpleDateFormat(HttpConstants.DATE_FORMAT_RFC822, Locale.US);
             format.setTimeZone(TimeZone.getTimeZone("GMT"));

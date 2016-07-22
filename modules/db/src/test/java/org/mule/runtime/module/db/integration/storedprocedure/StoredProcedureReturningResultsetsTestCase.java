@@ -7,14 +7,14 @@
 
 package org.mule.runtime.module.db.integration.storedprocedure;
 
-import static org.junit.Assume.assumeThat;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.module.db.integration.TestDbConfig;
 import org.mule.runtime.module.db.integration.matcher.SupportsReturningStoredProcedureResultsWithoutParameters;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 
 import java.util.List;
 
-import org.junit.runners.Parameterized;
+import static org.junit.Assume.assumeThat;
 
 public class StoredProcedureReturningResultsetsTestCase extends AbstractStoredProcedureReturningResultsetsTestCase
 {

@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.config;
 
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getConfigurationFromRegistry;
-import static org.mule.test.heisenberg.extension.model.types.WeaponType.FIRE_WEAPON;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.util.ArrayUtils;
@@ -19,6 +17,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getConfigurationFromRegistry;
+import static org.mule.test.heisenberg.extension.model.types.WeaponType.FIRE_WEAPON;
 
 public class AbstractConfigParserTestCase extends ExtensionFunctionalTestCase
 {

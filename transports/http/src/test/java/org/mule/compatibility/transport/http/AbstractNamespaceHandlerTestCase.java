@@ -6,11 +6,10 @@
  */
 package org.mule.compatibility.transport.http;
 
+import org.mule.functional.junit4.FunctionalTestCase;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
-import org.mule.compatibility.transport.http.HttpConnector;
-import org.mule.functional.junit4.FunctionalTestCase;
 
 public abstract class AbstractNamespaceHandlerTestCase extends FunctionalTestCase
 {

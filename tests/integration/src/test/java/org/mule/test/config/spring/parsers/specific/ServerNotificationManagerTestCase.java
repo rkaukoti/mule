@@ -6,11 +6,7 @@
  */
 package org.mule.test.config.spring.parsers.specific;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleContext;
@@ -28,7 +24,10 @@ import org.mule.tck.probe.Probe;
 
 import java.util.Collection;
 
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
 
 public class ServerNotificationManagerTestCase extends FunctionalTestCase
 {
@@ -80,17 +79,17 @@ public class ServerNotificationManagerTestCase extends FunctionalTestCase
     {
         ServerNotificationManager manager = muleContext.getNotificationManager();
         assertTrue(manager.getListeners().contains(
-            new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject(
-                "listener"), null)));
+                new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject(
+                        "listener"), null)));
         assertTrue(manager.getListeners().contains(
-            new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject(
-                "listener2"), null)));
+                new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject(
+                        "listener2"), null)));
         assertTrue(manager.getListeners().contains(
-            new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject(
-                "securityListener"), null)));
+                new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject(
+                        "securityListener"), null)));
         assertTrue(manager.getListeners().contains(
-            new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject(
-                "listener3"), "*")));
+                new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject(
+                        "listener3"), "*")));
     }
 
     @Test
@@ -101,13 +100,13 @@ public class ServerNotificationManagerTestCase extends FunctionalTestCase
         // Not registered as ad-hoc listener with null subscription as this is defined
         // explicitly.
         assertFalse(manager.getListeners().contains(
-            new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject(
-                "listener3"), null)));
+                new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject(
+                        "listener3"), null)));
 
         // Registered as configured
         assertTrue(manager.getListeners().contains(
-            new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject(
-                "listener4"), null)));
+                new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject(
+                        "listener4"), null)));
     }
 
     @Test
@@ -121,7 +120,7 @@ public class ServerNotificationManagerTestCase extends FunctionalTestCase
         assertNotNull(listener2);
         assertFalse(listener2.isCalled());
         TestSecurityListener adminListener = (TestSecurityListener) muleContext.getRegistry().lookupObject(
-            "securityListener");
+                "securityListener");
         assertNotNull(adminListener);
         assertFalse(adminListener.isCalled());
         manager.fireNotification(new TestSecurityEvent(muleContext));
@@ -222,9 +221,9 @@ public class ServerNotificationManagerTestCase extends FunctionalTestCase
         public TestSecurityEvent(MuleContext muleContext) throws Exception
         {
             super(
-                new UnauthorisedException(CoreMessages.createStaticMessage("dummy"), new DefaultMuleEvent(
-                        MuleMessage.builder().nullPayload().build(), REQUEST_RESPONSE,
-                    getTestFlow(), getTestSession(null, muleContext))), 0);
+                    new UnauthorisedException(CoreMessages.createStaticMessage("dummy"), new DefaultMuleEvent(
+                            MuleMessage.builder().nullPayload().build(), REQUEST_RESPONSE,
+                            getTestFlow(), getTestSession(null, muleContext))), 0);
         }
 
     }

@@ -7,7 +7,6 @@
 package org.mule.runtime.core.routing.outbound;
 
 import org.mule.runtime.core.routing.AbstractMessageSequence;
-
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 

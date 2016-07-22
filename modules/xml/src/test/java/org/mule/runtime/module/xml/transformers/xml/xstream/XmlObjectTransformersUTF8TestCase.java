@@ -7,9 +7,9 @@
 package org.mule.runtime.module.xml.transformers.xml.xstream;
 
 import org.mule.runtime.core.api.transformer.Transformer;
-import org.mule.runtime.module.xml.transformer.XmlToObject;
 import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
 import org.mule.runtime.core.util.ArrayUtils;
+import org.mule.runtime.module.xml.transformer.XmlToObject;
 
 import java.io.UnsupportedEncodingException;
 
@@ -26,7 +26,7 @@ public class XmlObjectTransformersUTF8TestCase extends AbstractTransformerTestCa
         super();
 
         testXml = ArrayUtils.addAll("<string>".getBytes("ASCII"), ArrayUtils.addAll(
-            TEST_STRING.getBytes("UTF-8"), "</string>".getBytes("ASCII")));
+                TEST_STRING.getBytes("UTF-8"), "</string>".getBytes("ASCII")));
     }
 
     public Transformer getTransformer() throws Exception

@@ -6,6 +6,6 @@
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/jbossts http://www.mulesoft.org/schema/mule/jbossts/current/mule-jbossts.xsd">
 
-    <jbossts:transaction-manager />
+    <jbossts:transaction-manager/>
 
 </mule>

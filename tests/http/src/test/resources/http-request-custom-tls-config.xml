@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:httpn="http://www.mulesoft.org/schema/mule/httpn"
       xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
                http://www.mulesoft.org/schema/mule/httpn http://www.mulesoft.org/schema/mule/httpn/current/mule-httpn.xsd">
 
 
-    <tls:context name="globalTlsContext" >
+    <tls:context name="globalTlsContext">
         <tls:trust-store path="tls/trustStore" password="mulepassword"/>
         <tls:key-store path="tls/clientKeystore" keyPassword="mulepassword" password="mulepassword"/>
     </tls:context>
@@ -29,10 +29,10 @@
 
 
     <flow name="testFlowGlobalContext">
-        <httpn:request config-ref="globalConfig" path="requestPath" method="POST"  key="ANY"/>
+        <httpn:request config-ref="globalConfig" path="requestPath" method="POST" key="ANY"/>
     </flow>
     <flow name="testFlowNestedContext">
-        <httpn:request config-ref="nestedConfig" path="requestPath" method="POST"  key="ANY"/>
+        <httpn:request config-ref="nestedConfig" path="requestPath" method="POST" key="ANY"/>
     </flow>
 
 </mule>

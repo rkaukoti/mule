@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.module.http.internal.config;
 
-import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.config.spring.handlers.AbstractMuleNamespaceHandler;
 import org.mule.runtime.config.spring.parsers.delegate.RootOrNestedElementBeanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.MuleOrphanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.specific.MessageProcessorDefinitionParser;
+import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.module.http.internal.HttpMapParam;
 import org.mule.runtime.module.http.internal.HttpMessageBuilderRef;
 import org.mule.runtime.module.http.internal.HttpParamType;
@@ -35,7 +35,8 @@ public class HttpNamespaceHandler extends AbstractMuleNamespaceHandler
     {
         final ChildDefinitionParser listenerDefinitionParser = new ChildDefinitionParser("messageSource", DefaultHttpListener.class);
         registerBeanDefinitionParser("listener", listenerDefinitionParser);
-        final MuleOrphanDefinitionParser listenerConfigDefinitionParser = new MuleOrphanDefinitionParser(DefaultHttpListenerConfig.class, true);
+        final MuleOrphanDefinitionParser listenerConfigDefinitionParser =
+                new MuleOrphanDefinitionParser(DefaultHttpListenerConfig.class, true);
         registerBeanDefinitionParser("listener-config", listenerConfigDefinitionParser);
 
         registerBeanDefinitionParser("response-builder", new HttpResponseBuilderDefinitionParser("responseBuilder"));
@@ -46,10 +47,13 @@ public class HttpNamespaceHandler extends AbstractMuleNamespaceHandler
 
         registerBeanDefinitionParser("builder", new ChildDefinitionParser("builder", HttpMessageBuilderRef.class));
 
-        registerBeanDefinitionParser("query-param", new HttpMessageSingleParamDefinitionParser(HttpSingleParam.class, HttpParamType.QUERY_PARAM));
-        registerBeanDefinitionParser("query-params", new HttpMessageSingleParamDefinitionParser(HttpMapParam.class, HttpParamType.QUERY_PARAM));
+        registerBeanDefinitionParser("query-param",
+                new HttpMessageSingleParamDefinitionParser(HttpSingleParam.class, HttpParamType.QUERY_PARAM));
+        registerBeanDefinitionParser("query-params",
+                new HttpMessageSingleParamDefinitionParser(HttpMapParam.class, HttpParamType.QUERY_PARAM));
 
-        registerBeanDefinitionParser("uri-param", new HttpMessageSingleParamDefinitionParser(HttpSingleParam.class, HttpParamType.URI_PARAM));
+        registerBeanDefinitionParser("uri-param",
+                new HttpMessageSingleParamDefinitionParser(HttpSingleParam.class, HttpParamType.URI_PARAM));
         registerBeanDefinitionParser("uri-params", new HttpMessageSingleParamDefinitionParser(HttpMapParam.class, HttpParamType.URI_PARAM));
 
         // No bean definition parser is registered for the "header" element because it already exists in the HTTP transport.
@@ -67,14 +71,18 @@ public class HttpNamespaceHandler extends AbstractMuleNamespaceHandler
 
         registerMuleBeanDefinitionParser("basic-security-filter", new SecurityFilterDefinitionParser(HttpBasicAuthenticationFilter.class));
 
-        registerBeanDefinitionParser("success-status-code-validator", new ChildDefinitionParser("responseValidator", SuccessStatusCodeValidator.class));
-        registerBeanDefinitionParser("failure-status-code-validator", new ChildDefinitionParser("responseValidator", FailureStatusCodeValidator.class));
+        registerBeanDefinitionParser("success-status-code-validator",
+                new ChildDefinitionParser("responseValidator", SuccessStatusCodeValidator.class));
+        registerBeanDefinitionParser("failure-status-code-validator",
+                new ChildDefinitionParser("responseValidator", FailureStatusCodeValidator.class));
 
         registerBeanDefinitionParser("raml-api-configuration", new ChildDefinitionParser("apiConfiguration", RamlApiConfiguration.class));
-        registerBeanDefinitionParser("worker-threading-profile", new HttpThreadingProfileDefinitionParser("workerThreadingProfile",  MuleProperties.OBJECT_DEFAULT_MESSAGE_RECEIVER_THREADING_PROFILE));
+        registerBeanDefinitionParser("worker-threading-profile", new HttpThreadingProfileDefinitionParser("workerThreadingProfile",
+                MuleProperties.OBJECT_DEFAULT_MESSAGE_RECEIVER_THREADING_PROFILE));
 
         registerMuleBeanDefinitionParser("header", new HttpHeaderDefinitionParser()).addCollection("headers");
 
-        registerMuleBeanDefinitionParser("static-resource-handler", new MessageProcessorDefinitionParser(StaticResourceMessageProcessor.class));
+        registerMuleBeanDefinitionParser("static-resource-handler",
+                new MessageProcessorDefinitionParser(StaticResourceMessageProcessor.class));
     }
 }

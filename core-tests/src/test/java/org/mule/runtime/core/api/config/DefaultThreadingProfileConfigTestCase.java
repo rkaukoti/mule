@@ -7,9 +7,7 @@
 
 package org.mule.runtime.core.api.config;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mule.tck.MuleTestUtils.testWithSystemProperty;
+import org.junit.Test;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.tck.MuleTestUtils;
 import org.mule.tck.junit4.AbstractMuleTestCase;
@@ -18,7 +16,9 @@ import org.mule.tck.size.SmallTest;
 import java.lang.reflect.Field;
 import java.net.URLClassLoader;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mule.tck.MuleTestUtils.testWithSystemProperty;
 
 @SmallTest
 public class DefaultThreadingProfileConfigTestCase extends AbstractMuleTestCase
@@ -43,26 +43,27 @@ public class DefaultThreadingProfileConfigTestCase extends AbstractMuleTestCase
         final int customValue = MAX_THREADS_ACTIVE + 1;
 
         testWithSystemProperty(DefaultThreadingProfileConfig.MAX_THREADS_ACTIVE_PROPERTY, Integer.toString(customValue),
-                               new MuleTestUtils.TestCallback()
-                               {
-                                   @Override
-                                   public void run() throws Exception
-                                   {
-                                       checkMaxThreadsActive(customValue);
-                                   }
-                               });
+                new MuleTestUtils.TestCallback()
+                {
+                    @Override
+                    public void run() throws Exception
+                    {
+                        checkMaxThreadsActive(customValue);
+                    }
+                });
     }
 
     @Test(expected = ExceptionInInitializerError.class)
     public void failsOnInvalidCustomMaxThreadsActive() throws Exception
     {
-        testWithSystemProperty(DefaultThreadingProfileConfig.MAX_THREADS_ACTIVE_PROPERTY, INVALID_PROPERTY_VALUE, new MuleTestUtils.TestCallback()
-        {
-            public void run() throws Exception
-            {
-                getMaxThreadsActive();
-            }
-        });
+        testWithSystemProperty(DefaultThreadingProfileConfig.MAX_THREADS_ACTIVE_PROPERTY, INVALID_PROPERTY_VALUE,
+                new MuleTestUtils.TestCallback()
+                {
+                    public void run() throws Exception
+                    {
+                        getMaxThreadsActive();
+                    }
+                });
     }
 
     @Test
@@ -77,26 +78,27 @@ public class DefaultThreadingProfileConfigTestCase extends AbstractMuleTestCase
         final int customValue = MAX_THREADS_IDLE + 1;
 
         testWithSystemProperty(DefaultThreadingProfileConfig.MAX_THREADS_IDLE_PROPERTY, Integer.toString(customValue),
-                               new MuleTestUtils.TestCallback()
-                               {
-                                   @Override
-                                   public void run() throws Exception
-                                   {
-                                       checkMaxThreadsIdle(customValue);
-                                   }
-                               });
+                new MuleTestUtils.TestCallback()
+                {
+                    @Override
+                    public void run() throws Exception
+                    {
+                        checkMaxThreadsIdle(customValue);
+                    }
+                });
     }
 
     @Test(expected = ExceptionInInitializerError.class)
     public void failsOnInvalidCustomMaxThreadsIdle() throws Exception
     {
-        testWithSystemProperty(DefaultThreadingProfileConfig.MAX_THREADS_IDLE_PROPERTY, INVALID_PROPERTY_VALUE, new MuleTestUtils.TestCallback()
-        {
-            public void run() throws Exception
-            {
-                getMaxThreadsIdle();
-            }
-        });
+        testWithSystemProperty(DefaultThreadingProfileConfig.MAX_THREADS_IDLE_PROPERTY, INVALID_PROPERTY_VALUE,
+                new MuleTestUtils.TestCallback()
+                {
+                    public void run() throws Exception
+                    {
+                        getMaxThreadsIdle();
+                    }
+                });
     }
 
     @Test
@@ -111,26 +113,27 @@ public class DefaultThreadingProfileConfigTestCase extends AbstractMuleTestCase
         final int customValue = MAX_BUFFER_SIZE + 1;
 
         testWithSystemProperty(DefaultThreadingProfileConfig.MAX_BUFFER_SIZE_PROPERTY, Integer.toString(customValue),
-                               new MuleTestUtils.TestCallback()
-                               {
-                                   @Override
-                                   public void run() throws Exception
-                                   {
-                                       checkMaxBufferSize(customValue);
-                                   }
-                               });
+                new MuleTestUtils.TestCallback()
+                {
+                    @Override
+                    public void run() throws Exception
+                    {
+                        checkMaxBufferSize(customValue);
+                    }
+                });
     }
 
     @Test(expected = ExceptionInInitializerError.class)
     public void failsOnInvalidCustomMaxBufferSize() throws Exception
     {
-        testWithSystemProperty(DefaultThreadingProfileConfig.MAX_BUFFER_SIZE_PROPERTY, INVALID_PROPERTY_VALUE, new MuleTestUtils.TestCallback()
-        {
-            public void run() throws Exception
-            {
-                getMaxBufferSize();
-            }
-        });
+        testWithSystemProperty(DefaultThreadingProfileConfig.MAX_BUFFER_SIZE_PROPERTY, INVALID_PROPERTY_VALUE,
+                new MuleTestUtils.TestCallback()
+                {
+                    public void run() throws Exception
+                    {
+                        getMaxBufferSize();
+                    }
+                });
     }
 
     @Test
@@ -145,26 +148,27 @@ public class DefaultThreadingProfileConfigTestCase extends AbstractMuleTestCase
         final long customValue = MAX_THREAD_TTL + 1;
 
         testWithSystemProperty(DefaultThreadingProfileConfig.MAX_THREAD_TTL_PROPERTY, Long.toString(customValue),
-                               new MuleTestUtils.TestCallback()
-                               {
-                                   @Override
-                                   public void run() throws Exception
-                                   {
-                                       checkMaxThreadTTL(customValue);
-                                   }
-                               });
+                new MuleTestUtils.TestCallback()
+                {
+                    @Override
+                    public void run() throws Exception
+                    {
+                        checkMaxThreadTTL(customValue);
+                    }
+                });
     }
 
     @Test(expected = ExceptionInInitializerError.class)
     public void failsOnInvalidCustomMaxThreadsTTL() throws Exception
     {
-        testWithSystemProperty(DefaultThreadingProfileConfig.MAX_THREAD_TTL_PROPERTY, INVALID_PROPERTY_VALUE, new MuleTestUtils.TestCallback()
-        {
-            public void run() throws Exception
-            {
-                getMaxThreadTTL();
-            }
-        });
+        testWithSystemProperty(DefaultThreadingProfileConfig.MAX_THREAD_TTL_PROPERTY, INVALID_PROPERTY_VALUE,
+                new MuleTestUtils.TestCallback()
+                {
+                    public void run() throws Exception
+                    {
+                        getMaxThreadTTL();
+                    }
+                });
     }
 
     @Test
@@ -179,26 +183,27 @@ public class DefaultThreadingProfileConfigTestCase extends AbstractMuleTestCase
         final long customValue = THREAD_WAIT_TIMEOUT + 1;
 
         testWithSystemProperty(DefaultThreadingProfileConfig.MAX_WAIT_TIMEOUT_PROPERTY, Long.toString(customValue),
-                               new MuleTestUtils.TestCallback()
-                               {
-                                   @Override
-                                   public void run() throws Exception
-                                   {
-                                       checkThreadWaitTimeout(customValue);
-                                   }
-                               });
+                new MuleTestUtils.TestCallback()
+                {
+                    @Override
+                    public void run() throws Exception
+                    {
+                        checkThreadWaitTimeout(customValue);
+                    }
+                });
     }
 
     @Test(expected = ExceptionInInitializerError.class)
     public void failsOnInvalidCustomThreadWaitTimeout() throws Exception
     {
-        testWithSystemProperty(DefaultThreadingProfileConfig.MAX_WAIT_TIMEOUT_PROPERTY, INVALID_PROPERTY_VALUE, new MuleTestUtils.TestCallback()
-        {
-            public void run() throws Exception
-            {
-                getThreadWaitTimeout();
-            }
-        });
+        testWithSystemProperty(DefaultThreadingProfileConfig.MAX_WAIT_TIMEOUT_PROPERTY, INVALID_PROPERTY_VALUE,
+                new MuleTestUtils.TestCallback()
+                {
+                    public void run() throws Exception
+                    {
+                        getThreadWaitTimeout();
+                    }
+                });
     }
 
     private void checkMaxThreadsActive(int expected) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException

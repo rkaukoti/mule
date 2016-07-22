@@ -6,17 +6,17 @@
  */
 package org.mule.extension.validation;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
-import static org.mule.extension.validation.internal.ImmutableValidationResult.ok;
-import org.mule.runtime.core.api.MuleEvent;
+import org.junit.Test;
 import org.mule.extension.validation.api.ValidationResult;
 import org.mule.extension.validation.api.Validator;
+import org.mule.runtime.core.api.MuleEvent;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Test;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
+import static org.mule.extension.validation.internal.ImmutableValidationResult.ok;
 
 public class CustomValidatorInstanceReusedTestCase extends ValidationTestCase
 {

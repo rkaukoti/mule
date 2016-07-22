@@ -6,13 +6,10 @@
  */
 package org.mule.runtime.core.context;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mule.tck.MuleAssert.assertTrue;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.context.MuleContextBuilder;
@@ -27,10 +24,10 @@ import org.mule.runtime.core.api.security.SecurityManager;
 import org.mule.runtime.core.config.builders.DefaultsConfigurationBuilder;
 import org.mule.runtime.core.context.notification.MuleContextNotification;
 import org.mule.runtime.core.lifecycle.MuleContextLifecycleManager;
-import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.runtime.core.util.JdkVersionUtils;
 import org.mule.runtime.core.util.UUID;
 import org.mule.runtime.core.util.queue.QueueManager;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,10 +35,13 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mule.tck.MuleAssert.assertTrue;
 
 public class MuleContextLifecycleTestCase extends AbstractMuleTestCase
 {
@@ -392,62 +392,6 @@ public class MuleContextLifecycleTestCase extends AbstractMuleTestCase
                 Disposable.PHASE_NAME);
     }
 
-    private static class SensingLifecycleManager extends MuleContextLifecycleManager
-    {
-
-        private List<String> appliedLifecyclePhases;
-
-        public SensingLifecycleManager()
-        {
-            super();
-            appliedLifecyclePhases = new ArrayList<String>();
-        }
-
-        public boolean didApplyPhases(String... phaseNames)
-        {
-            List<String> expectedPhases = Arrays.asList(phaseNames);
-            return expectedPhases.equals(appliedLifecyclePhases);
-        }
-
-        @Override
-        public void fireLifecycle(String phase) throws LifecycleException
-        {
-            appliedLifecyclePhases.add(phase);
-            super.fireLifecycle(phase);
-        }
-    }
-
-    static class NotificationListener implements MuleContextNotificationListener<MuleContextNotification>
-    {
-
-        final AtomicBoolean startingNotificationFired = new AtomicBoolean(false);
-        final AtomicBoolean startedNotificationFired = new AtomicBoolean(false);
-        final AtomicBoolean stoppingNotificationFired = new AtomicBoolean(false);
-        final AtomicBoolean stoppedNotificationFired = new AtomicBoolean(false);
-
-        public void onNotification(MuleContextNotification notification)
-        {
-            switch (notification.getAction())
-            {
-                case MuleContextNotification.CONTEXT_STARTING:
-                    startingNotificationFired.set(true);
-                    break;
-
-                case MuleContextNotification.CONTEXT_STARTED:
-                    startedNotificationFired.set(true);
-                    break;
-
-                case MuleContextNotification.CONTEXT_STOPPING:
-                    stoppingNotificationFired.set(true);
-                    break;
-
-                case MuleContextNotification.CONTEXT_STOPPED:
-                    stoppedNotificationFired.set(true);
-                    break;
-            }
-        }
-    }
-
     @Test(expected = InitialisationException.class)
     public void testIsInValidJdk() throws InitialisationException
     {
@@ -485,6 +429,62 @@ public class MuleContextLifecycleTestCase extends AbstractMuleTestCase
         finally
         {
             System.setProperty("java.version", javaVersion);
+        }
+    }
+
+    private static class SensingLifecycleManager extends MuleContextLifecycleManager
+    {
+
+        private List<String> appliedLifecyclePhases;
+
+        public SensingLifecycleManager()
+        {
+            super();
+            appliedLifecyclePhases = new ArrayList<String>();
+        }
+
+        public boolean didApplyPhases(String... phaseNames)
+        {
+            List<String> expectedPhases = Arrays.asList(phaseNames);
+            return expectedPhases.equals(appliedLifecyclePhases);
+        }
+
+        @Override
+        public void fireLifecycle(String phase) throws LifecycleException
+        {
+            appliedLifecyclePhases.add(phase);
+            super.fireLifecycle(phase);
+        }
+    }
+
+    static class NotificationListener implements MuleContextNotificationListener<MuleContextNotification>
+    {
+
+        final AtomicBoolean startingNotificationFired = new AtomicBoolean(false);
+        final AtomicBoolean startedNotificationFired = new AtomicBoolean(false);
+        final AtomicBoolean stoppingNotificationFired = new AtomicBoolean(false);
+        final AtomicBoolean stoppedNotificationFired = new AtomicBoolean(false);
+
+        public void onNotification(MuleContextNotification notification)
+        {
+            switch (notification.getAction())
+            {
+            case MuleContextNotification.CONTEXT_STARTING:
+                startingNotificationFired.set(true);
+                break;
+
+            case MuleContextNotification.CONTEXT_STARTED:
+                startedNotificationFired.set(true);
+                break;
+
+            case MuleContextNotification.CONTEXT_STOPPING:
+                stoppingNotificationFired.set(true);
+                break;
+
+            case MuleContextNotification.CONTEXT_STOPPED:
+                stoppedNotificationFired.set(true);
+                break;
+            }
         }
     }
 }

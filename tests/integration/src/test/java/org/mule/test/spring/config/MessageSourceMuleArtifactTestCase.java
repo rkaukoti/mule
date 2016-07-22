@@ -6,20 +6,6 @@
  */
 package org.mule.test.spring.config;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import org.mule.common.MuleArtifact;
-import org.mule.common.MuleArtifactFactoryException;
-import org.mule.common.Testable;
-import org.mule.common.config.XmlConfigurationCallback;
-import org.mule.runtime.config.spring.SpringXmlConfigurationMuleArtifactFactory;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
-import java.util.HashMap;
-
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Namespace;
@@ -28,8 +14,21 @@ import org.dom4j.io.DOMWriter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mule.common.MuleArtifact;
+import org.mule.common.MuleArtifactFactoryException;
+import org.mule.common.Testable;
+import org.mule.common.config.XmlConfigurationCallback;
+import org.mule.runtime.config.spring.SpringXmlConfigurationMuleArtifactFactory;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import java.util.HashMap;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class MessageSourceMuleArtifactTestCase extends AbstractMuleTestCase

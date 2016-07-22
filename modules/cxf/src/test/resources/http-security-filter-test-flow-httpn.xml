@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:spring="http://www.springframework.org/schema/beans"
       xmlns:ss="http://www.springframework.org/schema/security"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
       xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
       xmlns:mule-ss="http://www.mulesoft.org/schema/mule/spring-security"
       xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
@@ -26,8 +26,8 @@
         <ss:authentication-manager alias="authenticationManager">
             <ss:authentication-provider>
                 <ss:user-service id="userService">
-                    <ss:user name="ross" password="ross" authorities="ROLE_ADMIN" />
-                    <ss:user name="anon" password="anon" authorities="ROLE_ANONYMOUS" />
+                    <ss:user name="ross" password="ross" authorities="ROLE_ADMIN"/>
+                    <ss:user name="anon" password="anon" authorities="ROLE_ANONYMOUS"/>
                 </ss:user-service>
             </ss:authentication-provider>
         </ss:authentication-manager>

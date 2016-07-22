@@ -9,15 +9,14 @@ package org.mule.runtime.module.launcher;
 import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.runtime.core.util.FileUtils;
 import org.mule.runtime.core.util.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.Introspector;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Installer for mule artifacts inside the mule container directories.
@@ -115,6 +114,7 @@ public class ArtifactArchiveInstaller
      * Desintalls an artifact from the mule container installation.
      *
      * It will remove the artifact folder and the anchor file related
+     *
      * @param artifactName name of the artifact to be uninstall.
      */
     public void desinstallArtifact(final String artifactName)

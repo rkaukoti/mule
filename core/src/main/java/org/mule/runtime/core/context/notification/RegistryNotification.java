@@ -19,17 +19,17 @@ import org.mule.runtime.core.api.registry.Registry;
  */
 public class RegistryNotification extends ServerNotification
 {
+    public static final int REGISTRY_INITIALISING = REGISTRY_EVENT_ACTION_START_RANGE + 1;
+    public static final int REGISTRY_INITIALISED = REGISTRY_EVENT_ACTION_START_RANGE + 2;
+    public static final int REGISTRY_DISPOSING = REGISTRY_EVENT_ACTION_START_RANGE + 3;
+    public static final int REGISTRY_DISPOSED = REGISTRY_EVENT_ACTION_START_RANGE + 4;
     /**
      * Serial version
      */
     private static final long serialVersionUID = -3246036188021581121L;
 
-    public static final int REGISTRY_INITIALISING = REGISTRY_EVENT_ACTION_START_RANGE + 1;
-    public static final int REGISTRY_INITIALISED = REGISTRY_EVENT_ACTION_START_RANGE + 2;
-    public static final int REGISTRY_DISPOSING = REGISTRY_EVENT_ACTION_START_RANGE + 3;
-    public static final int REGISTRY_DISPOSED = REGISTRY_EVENT_ACTION_START_RANGE + 4;
-
-    static {
+    static
+    {
         registerAction("registry initialising", REGISTRY_INITIALISING);
         registerAction("registry initialised", REGISTRY_INITIALISED);
         registerAction("registry disposing", REGISTRY_DISPOSING);
@@ -52,6 +52,6 @@ public class RegistryNotification extends ServerNotification
     public String toString()
     {
         return EVENT_NAME + "{" + "action=" + getActionName(action) + ", resourceId=" + resourceIdentifier
-                + ", timestamp=" + timestamp + "}";
+               + ", timestamp=" + timestamp + "}";
     }
 }

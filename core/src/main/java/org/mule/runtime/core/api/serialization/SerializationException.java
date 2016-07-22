@@ -12,7 +12,7 @@ import org.mule.runtime.core.config.i18n.MessageFactory;
 
 /**
  * Exception to signal an error during serialization/deserialization process
- * 
+ *
  * @since 3.7.0
  */
 public class SerializationException extends MuleRuntimeException

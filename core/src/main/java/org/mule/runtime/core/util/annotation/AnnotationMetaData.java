@@ -65,11 +65,11 @@ public class AnnotationMetaData
     public String toString()
     {
         return "AnnotationMetaData{" +
-                "type=" + type +
-                ", member=" + member +
-                ", clazz=" + clazz +
-                ", annotation=" + annotation +
-                '}';
+               "type=" + type +
+               ", member=" + member +
+               ", clazz=" + clazz +
+               ", annotation=" + annotation +
+               '}';
     }
 
     @Override

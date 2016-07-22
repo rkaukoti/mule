@@ -6,14 +6,15 @@
  */
 package org.mule.test.integration.domain.classloader;
 
-import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleException;
+import org.hamcrest.core.Is;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.listener.Callback;
 import org.mule.functional.listener.FlowExecutionListener;
 import org.mule.rule.UseMuleLog4jContextFactory;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.MuleException;
 import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.tck.junit4.rule.SystemProperty;
 import org.mule.test.infrastructure.deployment.AbstractFakeMuleServerTestCase;
@@ -21,9 +22,7 @@ import org.mule.test.infrastructure.deployment.FakeMuleServer;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.hamcrest.core.Is;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertThat;
 
 public class ConnectorLevelMessageDispatchingTestCase extends AbstractFakeMuleServerTestCase
 {
@@ -48,7 +47,8 @@ public class ConnectorLevelMessageDispatchingTestCase extends AbstractFakeMuleSe
         verifyAppProcessMessageWithAppClassLoader(muleServer, HELLO_WORLD_APP, "http://localhost:%d/service/helloWorld");
     }
 
-    private void verifyAppProcessMessageWithAppClassLoader(FakeMuleServer fakeMuleServer, String appName, String requestUrl) throws MuleException
+    private void verifyAppProcessMessageWithAppClassLoader(FakeMuleServer fakeMuleServer, String appName, String requestUrl)
+            throws MuleException
     {
         MuleContext applicationContext = fakeMuleServer.findApplication(appName).getMuleContext();
         final AtomicReference<ClassLoader> executionClassLoader = new AtomicReference<ClassLoader>();

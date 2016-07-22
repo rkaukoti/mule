@@ -23,9 +23,7 @@ public interface JsonParser
      * Parses the given {@code input} into a {@link JsonNode}.
      *
      * @param input the input to be transformed into a {@link JsonNode}
-     * @return a {@link JsonNode} if the input could be parsed. {@code null}
-     * if it's not possible to transform
-     * @throws IOException
+     * @return a {@link JsonNode} if the input could be parsed. {@code null} if it's not possible to transform
      */
     JsonNode asJsonNode(Object input) throws IOException;
 }

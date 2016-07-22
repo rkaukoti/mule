@@ -8,7 +8,6 @@ package org.mule.compatibility.transport.http.builder;
 
 import org.mule.runtime.config.spring.parsers.generic.AutoIdUtils;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
-
 import org.w3c.dom.Element;
 
 public class HttpCookiesDefinitionParser extends ChildDefinitionParser

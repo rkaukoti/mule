@@ -6,10 +6,15 @@
  */
 package org.mule.runtime.module.http.functional;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.eclipse.jetty.util.ssl.SslContextFactory;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.security.tls.TlsConfiguration;
 import org.mule.runtime.core.util.ClassUtils;
@@ -25,15 +30,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.server.handler.AbstractHandler;
-import org.eclipse.jetty.util.ssl.SslContextFactory;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public abstract class AbstractClientTlsRestrictedTlsProtocolsAndCiphersTestCase extends AbstractHttpTestCase
 {
@@ -143,7 +143,8 @@ public abstract class AbstractClientTlsRestrictedTlsProtocolsAndCiphersTestCase 
         server.setHandler(new AbstractHandler()
         {
             @Override
-            public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+            public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
+                    throws IOException, ServletException
             {
                 body = IOUtils.toString(baseRequest.getInputStream());
                 response.setContentType("text/html");

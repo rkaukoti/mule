@@ -11,13 +11,12 @@ import org.mule.runtime.config.spring.parsers.MuleDefinitionParserConfiguration;
 import org.mule.runtime.config.spring.parsers.PostProcessor;
 import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.ValueMap;
+import org.springframework.beans.factory.xml.ParserContext;
+import org.w3c.dom.Element;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
-
-import org.springframework.beans.factory.xml.ParserContext;
-import org.w3c.dom.Element;
 
 /**
  * This encapsulates several definition parsers, selected depending on the parent

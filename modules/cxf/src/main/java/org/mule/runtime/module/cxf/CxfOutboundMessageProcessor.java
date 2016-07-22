@@ -6,7 +6,15 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
+import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.endpoint.ClientCallback;
+import org.apache.cxf.endpoint.Endpoint;
+import org.apache.cxf.frontend.MethodDispatcher;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.interceptor.StaxInEndingInterceptor;
+import org.apache.cxf.message.ExchangeImpl;
+import org.apache.cxf.service.model.BindingOperationInfo;
+import org.apache.cxf.ws.addressing.WSAContextUtils;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.NonBlockingVoidMuleEvent;
 import org.mule.runtime.core.VoidMuleEvent;
@@ -41,21 +49,14 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Holder;
 
-import org.apache.cxf.endpoint.Client;
-import org.apache.cxf.endpoint.ClientCallback;
-import org.apache.cxf.endpoint.Endpoint;
-import org.apache.cxf.frontend.MethodDispatcher;
-import org.apache.cxf.interceptor.Fault;
-import org.apache.cxf.interceptor.StaxInEndingInterceptor;
-import org.apache.cxf.message.ExchangeImpl;
-import org.apache.cxf.service.model.BindingOperationInfo;
-import org.apache.cxf.ws.addressing.WSAContextUtils;
+import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
 
 /**
  * The CxfOutboundMessageProcessor performs outbound CXF processing, sending an event
  * through the CXF client, then on to the next MessageProcessor.
  */
-public class CxfOutboundMessageProcessor extends AbstractInterceptingMessageProcessor implements CloneableMessageProcessor, NonBlockingSupported
+public class CxfOutboundMessageProcessor extends AbstractInterceptingMessageProcessor
+        implements CloneableMessageProcessor, NonBlockingSupported
 {
 
     private CxfPayloadToArguments payloadToArguments = CxfPayloadToArguments.NULL_PAYLOAD_AS_PARAMETER;
@@ -89,7 +90,7 @@ public class CxfOutboundMessageProcessor extends AbstractInterceptingMessageProc
 
         if (proxy)
         {
-            return new Object[]{ event.getMessage() };
+            return new Object[] {event.getMessage()};
         }
 
         Object[] args = payloadToArguments.payloadToArrayOfArguments(payload);
@@ -101,7 +102,7 @@ public class CxfOutboundMessageProcessor extends AbstractInterceptingMessageProc
             List<DataHandler> attachments = new ArrayList<DataHandler>();
             for (Object attachmentName : attachmentNames)
             {
-                attachments.add(message.getInboundAttachment((String)attachmentName));
+                attachments.add(message.getInboundAttachment((String) attachmentName));
             }
             List<Object> temp = new ArrayList<Object>(Arrays.asList(args));
             temp.add(attachments.toArray(new DataHandler[attachments.size()]));
@@ -151,14 +152,15 @@ public class CxfOutboundMessageProcessor extends AbstractInterceptingMessageProc
         {
             // Because of CXF API, MuleExceptions can be wrapped in a Fault, in that case we should return the mule exception
             Fault fault = (Fault) ex;
-            if(fault.getCause() instanceof MuleException)
+            if (fault.getCause() instanceof MuleException)
             {
                 MuleException muleException = (MuleException) fault.getCause();
                 return alwaysReturnMessagingException ? new MessagingException(event, muleException, this) : muleException;
             }
             return new DispatchException(MessageFactory.createStaticMessage(fault.getMessage()), event, this, fault);
         }
-        return new DispatchException(MessageFactory.createStaticMessage(ExceptionHelper.getRootException(ex).getMessage()), event, this, ex);
+        return new DispatchException(MessageFactory.createStaticMessage(ExceptionHelper.getRootException(ex).getMessage()), event, this,
+                ex);
     }
 
     private MessagingException wrapException(MuleEvent event, Throwable ex)
@@ -239,13 +241,13 @@ public class CxfOutboundMessageProcessor extends AbstractInterceptingMessageProc
 
         for (Object element : arr)
         {
-            head = (String)element;
+            head = (String) element;
             if ((head != null) && (!head.startsWith("MULE")))
             {
-                props.put((String)element, event.getMessage().getOutboundProperty((String)element));
+                props.put((String) element, event.getMessage().getOutboundProperty((String) element));
             }
         }
-        
+
         ExchangeImpl exchange = new ExchangeImpl();
         // mule will close the stream so don't let cxf, otherwise cxf will close it too early
         exchange.put(StaxInEndingInterceptor.STAX_IN_NOCLOSE, Boolean.TRUE);
@@ -285,7 +287,7 @@ public class CxfOutboundMessageProcessor extends AbstractInterceptingMessageProc
     public Method getMethod(MuleEvent event) throws Exception
     {
         Method method = null;
-        String opName = (String)event.getMessage().getOutboundProperty(CxfConstants.OPERATION);
+        String opName = (String) event.getMessage().getOutboundProperty(CxfConstants.OPERATION);
         if (opName != null)
         {
             method = getMethodFromOperation(opName);
@@ -360,9 +362,9 @@ public class CxfOutboundMessageProcessor extends AbstractInterceptingMessageProc
     private Method getMethodFromOperation(String op) throws Exception
     {
         BindingOperationInfo bop = getOperation(op);
-        MethodDispatcher md = (MethodDispatcher)client.getEndpoint()
-            .getService()
-            .get(MethodDispatcher.class.getName());
+        MethodDispatcher md = (MethodDispatcher) client.getEndpoint()
+                                                       .getService()
+                                                       .get(MethodDispatcher.class.getName());
         return md.getMethod(bop);
     }
 
@@ -476,11 +478,11 @@ public class CxfOutboundMessageProcessor extends AbstractInterceptingMessageProc
         List<Object> responseWithHolders = new ArrayList<Object>();
         responseWithHolders.add(response);
 
-        if(args != null)
+        if (args != null)
         {
-            for(Object arg : args)
+            for (Object arg : args)
             {
-                if(arg instanceof Holder)
+                if (arg instanceof Holder)
                 {
                     responseWithHolders.add(arg);
                 }
@@ -488,11 +490,6 @@ public class CxfOutboundMessageProcessor extends AbstractInterceptingMessageProc
         }
 
         return responseWithHolders.toArray();
-    }
-
-    public void setPayloadToArguments(CxfPayloadToArguments payloadToArguments)
-    {
-        this.payloadToArguments = payloadToArguments;
     }
 
     protected boolean isClientProxyAvailable()
@@ -528,6 +525,11 @@ public class CxfOutboundMessageProcessor extends AbstractInterceptingMessageProc
     public CxfPayloadToArguments getPayloadToArguments()
     {
         return payloadToArguments;
+    }
+
+    public void setPayloadToArguments(CxfPayloadToArguments payloadToArguments)
+    {
+        this.payloadToArguments = payloadToArguments;
     }
 
     public Client getClient()

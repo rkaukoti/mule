@@ -9,7 +9,6 @@ package org.mule.compatibility.module.cxf.config;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.module.cxf.CxfOutboundMessageProcessor;
 import org.mule.runtime.module.cxf.builder.JaxWsClientMessageProcessorBuilder;
-
 import org.springframework.beans.factory.FactoryBean;
 
 public class JaxWsClientWithDecoupledEndpointFactoryBean extends JaxWsClientMessageProcessorBuilder implements FactoryBean

@@ -7,8 +7,7 @@
 
 package org.mule.runtime.module.launcher.application;
 
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.Startable;
@@ -17,7 +16,8 @@ import org.mule.runtime.core.lifecycle.phases.NotInLifecyclePhase;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class ApplicationStatusMapperTestCase extends AbstractMuleTestCase

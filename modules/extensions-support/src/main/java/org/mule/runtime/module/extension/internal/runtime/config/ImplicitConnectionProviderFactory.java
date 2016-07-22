@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
-import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.api.connection.ConnectionProvider;
-import org.mule.runtime.extension.api.introspection.connection.ConnectionProviderModel;
+import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
 import org.mule.runtime.extension.api.introspection.config.RuntimeConfigurationModel;
+import org.mule.runtime.extension.api.introspection.connection.ConnectionProviderModel;
 import org.mule.runtime.module.extension.internal.introspection.utils.ImplicitObjectUtils;
 import org.mule.runtime.module.extension.internal.util.MuleExtensionUtils;
 
@@ -33,10 +33,14 @@ public interface ImplicitConnectionProviderFactory
      *
      * @param configName         the name of the configuration that will own the returned {@link ConnectionProvider}
      * @param configurationModel the model that represents the selected config
-     * @param event              the {@link MuleEvent} that will be used to evaluate any default parameters that requires resolving an expression
+     * @param event              the {@link MuleEvent} that will be used to evaluate any default parameters that requires resolving an
+     *                           expression
      * @param <Connector>        the generic type of the connections that the returned provider produces
      * @return a {@link ConnectionProvider}
-     * @throws IllegalArgumentException if the {@code extensionModel} doesn't have any {@link ConnectionProviderModel} which can be used implicitly
+     * @throws IllegalArgumentException if the {@code extensionModel} doesn't have any {@link ConnectionProviderModel} which can be used
+     *                                  implicitly
      */
-    <Connector> ConnectionProvider<Connector> createImplicitConnectionProvider(String configName, RuntimeConfigurationModel configurationModel, MuleEvent event);
+    <Connector> ConnectionProvider<Connector> createImplicitConnectionProvider(String configName,
+                                                                               RuntimeConfigurationModel configurationModel,
+                                                                               MuleEvent event);
 }

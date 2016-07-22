@@ -7,14 +7,11 @@
 
 package org.mule.compatibility.core.processor.chain;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.withSettings;
+import org.apache.commons.lang.RandomStringUtils;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.VoidMuleEvent;
@@ -38,11 +35,14 @@ import java.util.Collection;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import org.apache.commons.lang.RandomStringUtils;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
 
 @RunWith(Parameterized.class)
 @SmallTest
@@ -59,6 +59,14 @@ public class DefaultMessageProcessorChainTestCase extends AbstractMuleTestCase
 
     private Executor executor = Executors.newCachedThreadPool();
 
+    public DefaultMessageProcessorChainTestCase(MessageExchangePattern exchangePattern, boolean nonBlocking, boolean
+            synchronous)
+    {
+        this.exchangePattern = exchangePattern;
+        this.nonBlocking = nonBlocking;
+        this.synchronous = synchronous;
+    }
+
     @Parameterized.Parameters
     public static Collection<Object[]> parameters()
     {
@@ -71,14 +79,6 @@ public class DefaultMessageProcessorChainTestCase extends AbstractMuleTestCase
                 {MessageExchangePattern.ONE_WAY, false, false},
                 {MessageExchangePattern.ONE_WAY, true, true}
         });
-    }
-
-    public DefaultMessageProcessorChainTestCase(MessageExchangePattern exchangePattern, boolean nonBlocking, boolean
-            synchronous)
-    {
-        this.exchangePattern = exchangePattern;
-        this.nonBlocking = nonBlocking;
-        this.synchronous = synchronous;
     }
 
     @Before

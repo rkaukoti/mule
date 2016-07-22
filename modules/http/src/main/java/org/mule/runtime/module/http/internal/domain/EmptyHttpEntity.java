@@ -7,7 +7,7 @@
 package org.mule.runtime.module.http.internal.domain;
 
 /**
- *  Represents a http empty body
+ * Represents a http empty body
  */
 public class EmptyHttpEntity implements HttpEntity
 {

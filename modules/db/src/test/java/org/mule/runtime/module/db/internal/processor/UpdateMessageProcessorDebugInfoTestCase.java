@@ -7,11 +7,12 @@
 
 package org.mule.runtime.module.db.internal.processor;
 
-import static org.mule.runtime.module.db.internal.domain.query.QueryType.UPDATE;
 import org.mule.runtime.module.db.internal.domain.query.QueryType;
 import org.mule.tck.size.SmallTest;
 
 import java.util.Collections;
+
+import static org.mule.runtime.module.db.internal.domain.query.QueryType.UPDATE;
 
 @SmallTest
 public class UpdateMessageProcessorDebugInfoTestCase extends AbstractParameterizedSingleQueryMessageProcessorDebugInfoTestCase

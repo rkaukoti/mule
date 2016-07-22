@@ -9,7 +9,6 @@ package org.mule.runtime.core.interceptor;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.management.stats.ProcessingTime;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

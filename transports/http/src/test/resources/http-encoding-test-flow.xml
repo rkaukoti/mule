@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:spring="http://www.springframework.org/schema/beans"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:http="http://www.mulesoft.org/schema/mule/transport/http"
       xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
-      xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
-        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
         http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
         http://www.mulesoft.org/schema/mule/transport/http http://www.mulesoft.org/schema/mule/transport/http/current/mule-transport-http.xsd
         http://www.mulesoft.org/schema/mule/transports http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd">
 
     <http:connector name="httpConnector" reuseAddress="true"/>
-    
+
     <http:endpoint name="clientEndpoint" host="localhost" port="${port1}" exchange-pattern="request-response"/>
-    
+
     <http:endpoint name="clientEndpoint.US-ASCII" path="US-ASCII" host="localhost" port="${port1}" exchange-pattern="request-response"/>
-    
+
     <http:endpoint name="clientEndpoint.UTF-8" path="UTF-8" host="localhost" port="${port1}" exchange-pattern="request-response"/>
-    
+
     <http:endpoint name="clientEndpoint.Shift_JIS" path="Shift_JIS" host="localhost" port="${port1}" exchange-pattern="request-response"/>
 
     <http:endpoint name="clientEndpoint.Windows-31J" path="Windows-31J" host="localhost" port="${port1}" exchange-pattern="request-response"/>
@@ -80,5 +77,5 @@
         </http:inbound-endpoint>
         <test:component appendString=" Received"/>
     </flow>
-    
+
 </mule>

@@ -42,8 +42,8 @@ public class Operator extends AggregateCounter
         else if (type == Type.DIVIDE)
         {
             return val2 == 0.0
-                            ? (val1 >= 0 ? Double.POSITIVE_INFINITY : Double.NEGATIVE_INFINITY)
-                            : (val1 / val2);
+                    ? (val1 >= 0 ? Double.POSITIVE_INFINITY : Double.NEGATIVE_INFINITY)
+                    : (val1 / val2);
         }
         else
         {

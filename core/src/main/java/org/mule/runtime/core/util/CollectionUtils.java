@@ -24,18 +24,15 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
      * <code>Class</code> as element type. Useful for arrays of objects that
      * implement multiple interfaces and a "typed view" onto these objects is
      * required.
-     * 
+     *
      * @param objects a Collection of objects
-     * @param clazz the desired service type of the new array
-     * @return <code>null</code> when objects is <code>null</code>, or a new
-     *         array containing the elements of the source array which is typed to
-     *         the given <code>clazz</code> parameter.
-     * @throws IllegalArgumentException if the <code>clazz</code> argument is
-     *             <code>null</code>.
-     * @throws ArrayStoreException if the elements in <code>objects</code> cannot
-     *             be cast to <code>clazz</code>.
+     * @param clazz   the desired service type of the new array
+     * @return <code>null</code> when objects is <code>null</code>, or a new array containing the elements of the source array which is
+     * typed to the given <code>clazz</code> parameter.
+     * @throws IllegalArgumentException if the <code>clazz</code> argument is <code>null</code>.
+     * @throws ArrayStoreException      if the elements in <code>objects</code> cannot be cast to <code>clazz</code>.
      */
-    public static <T>T[] toArrayOfComponentType(Collection objects, Class<T> clazz)
+    public static <T> T[] toArrayOfComponentType(Collection objects, Class<T> clazz)
     {
         if (objects == null)
         {
@@ -58,7 +55,7 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
 
         while (i < size && iter.hasNext())
         {
-            result[i++] = (T)iter.next();
+            result[i++] = (T) iter.next();
         }
 
         return result;
@@ -67,8 +64,8 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
     /**
      * Creates a String representation of the given Collection, with optional
      * newlines between elements. Class objects are represented by their full names.
-     * 
-     * @param c the Collection to format
+     *
+     * @param c       the Collection to format
      * @param newline indicates whether elements are to be split across lines
      * @return the formatted String
      */
@@ -96,10 +93,10 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
      * newlines between elements. Class objects are represented by their full names.
      * Considers at most <code>maxElements</code> values; overflow is indicated by
      * an appended "[..]" ellipsis.
-     * 
-     * @param c the Collection to format
+     *
+     * @param c           the Collection to format
      * @param maxElements the maximum number of elements to take into account
-     * @param newline indicates whether elements are to be split across lines
+     * @param newline     indicates whether elements are to be split across lines
      * @return the formatted String
      */
     public static String toString(Collection c, int maxElements, boolean newline)
@@ -176,7 +173,7 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
         list.add(value);
         return list;
     }
-    
+
     public static boolean containsType(Collection<?> collection, final Class<?> type)
     {
         if (type == null)
@@ -185,7 +182,7 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
         }
         return exists(collection, object -> object != null && type.isAssignableFrom(object.getClass()));
     }
-    
+
     public static void removeType(Collection<?> collection, final Class<?> type)
     {
         if (type == null)

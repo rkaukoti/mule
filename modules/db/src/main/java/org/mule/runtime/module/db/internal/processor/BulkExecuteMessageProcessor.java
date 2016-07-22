@@ -7,10 +7,6 @@
 
 package org.mule.runtime.module.db.internal.processor;
 
-import static org.mule.runtime.core.api.debug.FieldDebugInfoFactory.createFieldDebugInfo;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERIES_DEBUG_FIELD;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERY_DEBUG_FIELD;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.createQueryFieldDebugInfo;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.debug.FieldDebugInfo;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
@@ -28,6 +24,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mule.runtime.core.api.debug.FieldDebugInfoFactory.createFieldDebugInfo;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERIES_DEBUG_FIELD;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERY_DEBUG_FIELD;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.createQueryFieldDebugInfo;
+
 /**
  * Executes an queries in bulk mode on a database
  * * <p/>
@@ -43,7 +44,8 @@ public class BulkExecuteMessageProcessor extends AbstractDbMessageProcessor
     private final BulkQueryExecutorFactory bulkUpdateExecutorFactory;
     private final List<QueryType> validQueryTypes;
 
-    public BulkExecuteMessageProcessor(DbConfigResolver dbConfigResolver, BulkQueryResolver bulkQueryResolver, BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction)
+    public BulkExecuteMessageProcessor(DbConfigResolver dbConfigResolver, BulkQueryResolver bulkQueryResolver,
+                                       BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction)
     {
         super(dbConfigResolver, transactionalAction);
         this.bulkQueryResolver = bulkQueryResolver;

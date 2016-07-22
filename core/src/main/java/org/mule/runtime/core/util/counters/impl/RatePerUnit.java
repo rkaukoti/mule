@@ -14,39 +14,10 @@ import java.util.LinkedList;
 
 public class RatePerUnit extends AggregateCounter
 {
-    private static class Sample
-    {
-        private double value;
-        private long time;
-
-        public Sample(double value, long time)
-        {
-            this.value = value;
-            this.time = time;
-        }
-
-        /**
-         * @return the time of the sample
-         */
-        public long getTime()
-        {
-            return time;
-        }
-
-        /**
-         * @return the value of the sample
-         */
-        public double getValue()
-        {
-            return value;
-        }
-    }
-
     private final LinkedList<Sample> samples;
     private final long unit;
     private final long length;
     private final long baseTime;
-
     public RatePerUnit(String name, String p, Type type, AbstractCounter base)
     {
         super(name, type, base);
@@ -141,5 +112,33 @@ public class RatePerUnit extends AggregateCounter
     protected long getTime()
     {
         return (System.currentTimeMillis() - baseTime) / unit;
+    }
+
+    private static class Sample
+    {
+        private double value;
+        private long time;
+
+        public Sample(double value, long time)
+        {
+            this.value = value;
+            this.time = time;
+        }
+
+        /**
+         * @return the time of the sample
+         */
+        public long getTime()
+        {
+            return time;
+        }
+
+        /**
+         * @return the value of the sample
+         */
+        public double getValue()
+        {
+            return value;
+        }
     }
 }

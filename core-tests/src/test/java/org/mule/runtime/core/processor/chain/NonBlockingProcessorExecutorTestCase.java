@@ -6,17 +6,10 @@
  */
 package org.mule.runtime.core.processor.chain;
 
-import static java.lang.Thread.currentThread;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.hamcrest.CoreMatchers;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.NonBlockingVoidMuleEvent;
 import org.mule.runtime.core.VoidMuleEvent;
@@ -36,10 +29,16 @@ import org.mule.tck.SensingNullReplyToHandler;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.hamcrest.CoreMatchers;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.lang.Thread.currentThread;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class NonBlockingProcessorExecutorTestCase extends BlockingProcessorExecutorTestCase
@@ -143,22 +142,6 @@ public class NonBlockingProcessorExecutorTestCase extends BlockingProcessorExecu
         assertNonBlockingExecutionWithReplyTo(processors);
     }
 
-    private class TestContainerMessageProcessor implements  MessageProcessor, MessageProcessorContainer{
-
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            return processor1.process(event);
-        }
-
-        @Override
-        public void addMessageProcessorPathElements(MessageProcessorPathElement pathElement)
-        {
-
-        }
-    }
-
-
     @Override
     protected ProcessorExecutor createProcessorExecutor(List<MessageProcessor> processors)
     {
@@ -209,6 +192,22 @@ public class NonBlockingProcessorExecutorTestCase extends BlockingProcessorExecu
         when(event.isSynchronous()).thenReturn(false);
         when(event.isAllowNonBlocking()).thenReturn(true);
         when(event.getReplyToHandler()).thenReturn(nullReplyToHandler);
+    }
+
+    private class TestContainerMessageProcessor implements MessageProcessor, MessageProcessorContainer
+    {
+
+        @Override
+        public MuleEvent process(MuleEvent event) throws MuleException
+        {
+            return processor1.process(event);
+        }
+
+        @Override
+        public void addMessageProcessorPathElements(MessageProcessorPathElement pathElement)
+        {
+
+        }
     }
 
 }

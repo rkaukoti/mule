@@ -6,16 +6,8 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_IGNORE_METHOD_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_METHOD_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_USER_PROPERTY;
-import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.functional.FunctionalTestNotification;
 import org.mule.functional.functional.FunctionalTestNotificationListener;
 import org.mule.functional.junit4.FunctionalTestCase;
@@ -31,8 +23,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_IGNORE_METHOD_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_METHOD_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_USER_PROPERTY;
+import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class CxfCustomHttpHeaderTestCase extends FunctionalTestCase implements FunctionalTestNotificationListener
 {
@@ -40,7 +40,7 @@ public class CxfCustomHttpHeaderTestCase extends FunctionalTestCase implements F
     private static final HttpRequestOptions HTTP_REQUEST_OPTIONS = newOptions().method(POST.name()).disableStatusCodeValidation().build();
 
     private static final String REQUEST_PAYLOAD =
-        "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+            "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
             "<soap:Body>\n" +
             "<ns1:onReceive xmlns:ns1=\"http://functional.functional.mule.org/\">\n" +
             "    <ns1:arg0 xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xsd:string\">Test String</ns1:arg0>\n" +
@@ -48,13 +48,12 @@ public class CxfCustomHttpHeaderTestCase extends FunctionalTestCase implements F
             "</soap:Body>\n" +
             "</soap:Envelope>";
 
-    private static final String SOAP_RESPONSE = "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body><ns1:onReceiveResponse xmlns:ns1=\"http://functional.functional.mule.org/\"><ns1:return xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xsd:string\">Test String Received</ns1:return></ns1:onReceiveResponse></soap:Body></soap:Envelope>";
-
-    private List<MuleMessage> notificationMsgList = new ArrayList<>();
-    private Latch latch = new Latch();
-
+    private static final String SOAP_RESPONSE =
+            "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body><ns1:onReceiveResponse xmlns:ns1=\"http://functional.functional.mule.org/\"><ns1:return xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"xsd:string\">Test String Received</ns1:return></ns1:onReceiveResponse></soap:Body></soap:Envelope>";
     @Rule
     public DynamicPort dynamicPort = new DynamicPort("port1");
+    private List<MuleMessage> notificationMsgList = new ArrayList<>();
+    private Latch latch = new Latch();
 
     @Override
     protected String getConfigFile()

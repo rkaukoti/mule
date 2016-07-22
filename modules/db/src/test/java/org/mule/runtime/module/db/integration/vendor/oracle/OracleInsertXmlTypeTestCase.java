@@ -6,23 +6,17 @@
  */
 package org.mule.runtime.module.db.integration.vendor.oracle;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
-
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.db.integration.TestDbConfig;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import org.mule.runtime.module.db.integration.model.Alien;
 import org.mule.runtime.module.db.integration.model.Field;
 import org.mule.runtime.module.db.integration.model.Record;
 import org.mule.runtime.module.db.internal.domain.type.oracle.OracleXmlType;
-import org.mule.runtime.core.util.IOUtils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -31,8 +25,13 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
 
 public class OracleInsertXmlTypeTestCase extends AbstractOracleXmlTypeTestCase
 {
@@ -77,7 +76,8 @@ public class OracleInsertXmlTypeTestCase extends AbstractOracleXmlTypeTestCase
                     @Override
                     public Object build(Connection connection) throws Exception
                     {
-                        return IOUtils.getResourceAsStream("integration/vendor/oracle/oracle-insert-xml-type-large-sample.xml", this.getClass());
+                        return IOUtils.getResourceAsStream("integration/vendor/oracle/oracle-insert-xml-type-large-sample.xml",
+                                this.getClass());
                     }
                 }));
     }
@@ -128,11 +128,6 @@ public class OracleInsertXmlTypeTestCase extends AbstractOracleXmlTypeTestCase
         assertRecords(result, new Record(new Field("NAME", Alien.ET.getName())));
     }
 
-    private interface XmlContentBuilder
-    {
-         Object build(Connection connection) throws Exception;
-    }
-
     private MuleMessage doTest(XmlContentBuilder builder) throws Exception
     {
         DataSource defaultDataSource = getDefaultDataSource();
@@ -155,5 +150,10 @@ public class OracleInsertXmlTypeTestCase extends AbstractOracleXmlTypeTestCase
                 connection.close();
             }
         }
+    }
+
+    private interface XmlContentBuilder
+    {
+        Object build(Connection connection) throws Exception;
     }
 }

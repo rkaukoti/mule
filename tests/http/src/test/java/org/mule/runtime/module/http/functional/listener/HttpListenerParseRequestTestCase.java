@@ -6,8 +6,10 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.message.BasicNameValuePair;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
@@ -16,10 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-import org.apache.http.client.fluent.Request;
-import org.apache.http.message.BasicNameValuePair;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertThat;
 
 public class HttpListenerParseRequestTestCase extends AbstractHttpTestCase
 {
@@ -58,7 +58,11 @@ public class HttpListenerParseRequestTestCase extends AbstractHttpTestCase
 
     private void sendUrlEncodedPost(String path, int port) throws IOException
     {
-        Request.Post(getUrl(path, port)).bodyForm(new BasicNameValuePair("key", "value")).connectTimeout(RECEIVE_TIMEOUT).socketTimeout(RECEIVE_TIMEOUT).execute();
+        Request.Post(getUrl(path, port))
+               .bodyForm(new BasicNameValuePair("key", "value"))
+               .connectTimeout(RECEIVE_TIMEOUT)
+               .socketTimeout(RECEIVE_TIMEOUT)
+               .execute();
     }
 
     private void assertMessageContains(Class type) throws Exception

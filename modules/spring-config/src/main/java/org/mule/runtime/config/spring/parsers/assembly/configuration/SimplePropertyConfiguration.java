@@ -7,6 +7,7 @@
 package org.mule.runtime.config.spring.parsers.assembly.configuration;
 
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-
-import org.springframework.util.StringUtils;
 
 /**
  * A direct implementation of {@link PropertyConfiguration}
@@ -94,10 +93,10 @@ public class SimplePropertyConfiguration implements PropertyConfiguration
     @Override
     public String getAttributeAlias(String name)
     {
-        for (Iterator<?> iterator = nameMappings.entrySet().iterator(); iterator.hasNext();)
+        for (Iterator<?> iterator = nameMappings.entrySet().iterator(); iterator.hasNext(); )
         {
-            Map.Entry<?, ?> entry = (Map.Entry<?, ?>)iterator.next();
-            if(entry.getValue().equals(name))
+            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) iterator.next();
+            if (entry.getValue().equals(name))
             {
                 return entry.getKey().toString();
             }
@@ -133,6 +132,7 @@ public class SimplePropertyConfiguration implements PropertyConfiguration
     /**
      * A property can be explicitly registered as a bean reference via registerBeanReference()
      * or it can simply use the "-ref" suffix.
+     *
      * @param attributeName true if the name appears to correspond to a reference
      */
     @Override
@@ -150,7 +150,7 @@ public class SimplePropertyConfiguration implements PropertyConfiguration
         return new SinglePropertyWrapper(name, this);
     }
 
-     /**
+    /**
      * Extract a JavaBean property name from the supplied attribute name.
      * <p>The default implementation uses the {@link org.springframework.core.Conventions#attributeNameToPropertyName(String)}
      * method to perform the extraction.
@@ -256,7 +256,7 @@ public class SimplePropertyConfiguration implements PropertyConfiguration
                 {
                     throw new IllegalArgumentException("Mappings string not properly defined: " + definition);
                 }
-                map.put(value.substring(0, x), value.substring(x+1));
+                map.put(value.substring(0, x), value.substring(x + 1));
             }
 
         }

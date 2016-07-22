@@ -6,11 +6,10 @@
  */
 package org.mule.test.transformers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+import groovyjarjarasm.asm.ClassWriter;
+import groovyjarjarasm.asm.Opcodes;
+
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.transformer.TransformerException;
@@ -19,9 +18,11 @@ import org.mule.runtime.core.expression.transformers.ExpressionArgument;
 import org.mule.runtime.core.expression.transformers.ExpressionTransformer;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import groovyjarjarasm.asm.ClassWriter;
-import groovyjarjarasm.asm.Opcodes;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 
 public class ExpressionTransformerTestCase extends AbstractMuleContextTestCase
 {
@@ -33,7 +34,8 @@ public class ExpressionTransformerTestCase extends AbstractMuleContextTestCase
         transformer.setMuleContext(muleContext);
         transformer.addArgument(new ExpressionArgument("test", new ExpressionConfig("payload is org.MyClass"), false));
 
-        withContextClassLoader(new MyClassClassLoader(), () -> {
+        withContextClassLoader(new MyClassClassLoader(), () ->
+        {
             try
             {
                 transformer.initialise();

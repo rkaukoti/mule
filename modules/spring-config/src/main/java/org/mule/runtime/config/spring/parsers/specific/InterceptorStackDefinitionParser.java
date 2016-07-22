@@ -29,10 +29,10 @@ public class InterceptorStackDefinitionParser extends ParentContextDefinitionPar
     {
         // Interceptor stacks get next message processor etc. set in their chains and thus
         // cannot be singletons
-        super(MuleOrphanDefinitionParser.ROOT_ELEMENT, 
-            new MuleOrphanDefinitionParser(InterceptorStack.class, false));
+        super(MuleOrphanDefinitionParser.ROOT_ELEMENT,
+                new MuleOrphanDefinitionParser(InterceptorStack.class, false));
         otherwise(addAlias(new ParentDefinitionParser(), AbstractMuleBeanDefinitionParser.ATTRIBUTE_REF,
-            INTERCEPTOR_STACK));
+                INTERCEPTOR_STACK));
         super.addIgnored(ATTRIBUTE_NAME);
     }
 

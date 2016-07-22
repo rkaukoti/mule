@@ -6,12 +6,6 @@
  */
 package org.mule.runtime.module.launcher.application;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.DOMAIN;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import static org.mule.runtime.core.util.SplashScreen.miniSplash;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.config.ConfigurationBuilder;
@@ -19,7 +13,6 @@ import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.api.context.notification.MuleContextNotificationListener;
 import org.mule.runtime.core.api.context.notification.ServerNotificationListener;
 import org.mule.runtime.core.api.lifecycle.Stoppable;
-import org.mule.runtime.core.config.bootstrap.ArtifactType;
 import org.mule.runtime.core.config.builders.SimpleConfigurationBuilder;
 import org.mule.runtime.core.context.notification.MuleContextNotification;
 import org.mule.runtime.core.context.notification.NotificationException;
@@ -40,13 +33,18 @@ import org.mule.runtime.module.launcher.descriptor.ApplicationDescriptor;
 import org.mule.runtime.module.launcher.domain.Domain;
 import org.mule.runtime.module.launcher.domain.DomainRepository;
 import org.mule.runtime.module.reboot.MuleContainerBootstrapUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+import static org.mule.runtime.core.util.SplashScreen.miniSplash;
 
 public class DefaultMuleApplication implements Application
 {
@@ -57,14 +55,14 @@ public class DefaultMuleApplication implements Application
     protected final ApplicationDescriptor descriptor;
     private final DomainRepository domainRepository;
     private final List<ArtifactPlugin> artifactPlugins;
-    private ApplicationStatus status;
-
     protected MuleContext muleContext;
     protected ArtifactClassLoader deploymentClassLoader;
     protected DeploymentListener deploymentListener;
+    private ApplicationStatus status;
     private ServerNotificationListener<MuleContextNotification> statusListener;
 
-    public DefaultMuleApplication(ApplicationDescriptor descriptor, MuleApplicationClassLoader deploymentClassLoader, List<ArtifactPlugin> artifactPlugins, DomainRepository domainRepository)
+    public DefaultMuleApplication(ApplicationDescriptor descriptor, MuleApplicationClassLoader deploymentClassLoader,
+                                  List<ArtifactPlugin> artifactPlugins, DomainRepository domainRepository)
     {
         this.descriptor = descriptor;
         this.domainRepository = domainRepository;
@@ -141,7 +139,8 @@ public class DefaultMuleApplication implements Application
 
             // null CCL ensures we log at 'system' level
             // TODO getDomainClassLoader a more usable wrapper for any logger to be logged at sys level
-            withContextClassLoader(null, () -> {
+            withContextClassLoader(null, () ->
+            {
                 ApplicationStartedSplashScreen splashScreen = new ApplicationStartedSplashScreen();
                 splashScreen.createMessage(descriptor);
                 deployLogger.info(splashScreen.toString());
@@ -205,28 +204,6 @@ public class DefaultMuleApplication implements Application
         }
     }
 
-    protected void setMuleContext(final MuleContext muleContext) throws NotificationException
-    {
-        statusListener = new MuleContextNotificationListener<MuleContextNotification>()
-        {
-            @Override
-            public void onNotification(MuleContextNotification notification)
-            {
-                int action = notification.getAction();
-                if (action == MuleContextNotification.CONTEXT_INITIALISED ||
-                    action == MuleContextNotification.CONTEXT_STARTED ||
-                    action == MuleContextNotification.CONTEXT_STOPPED ||
-                    action == MuleContextNotification.CONTEXT_DISPOSED)
-                {
-                    updateStatusFor(muleContext.getLifecycleManager().getCurrentPhase());
-                }
-            }
-        };
-
-        muleContext.registerListener(statusListener);
-        this.muleContext = muleContext;
-    }
-
     private void updateStatusFor(String phase)
     {
         status = ApplicationStatusMapper.getApplicationStatus(phase);
@@ -260,6 +237,28 @@ public class DefaultMuleApplication implements Application
     public MuleContext getMuleContext()
     {
         return muleContext;
+    }
+
+    protected void setMuleContext(final MuleContext muleContext) throws NotificationException
+    {
+        statusListener = new MuleContextNotificationListener<MuleContextNotification>()
+        {
+            @Override
+            public void onNotification(MuleContextNotification notification)
+            {
+                int action = notification.getAction();
+                if (action == MuleContextNotification.CONTEXT_INITIALISED ||
+                    action == MuleContextNotification.CONTEXT_STARTED ||
+                    action == MuleContextNotification.CONTEXT_STOPPED ||
+                    action == MuleContextNotification.CONTEXT_DISPOSED)
+                {
+                    updateStatusFor(muleContext.getLifecycleManager().getCurrentPhase());
+                }
+            }
+        };
+
+        muleContext.registerListener(statusListener);
+        this.muleContext = muleContext;
     }
 
     @Override
@@ -364,8 +363,8 @@ public class DefaultMuleApplication implements Application
     public String toString()
     {
         return format("%s[%s]@%s", getClass().getName(),
-                      descriptor.getName(),
-                      Integer.toHexString(System.identityHashCode(this)));
+                descriptor.getName(),
+                Integer.toHexString(System.identityHashCode(this)));
     }
 
     protected void doDispose()

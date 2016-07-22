@@ -29,15 +29,14 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "getCityForecastByZIPResult"
+        "getCityForecastByZIPResult"
 })
 @XmlRootElement(name = "GetCityForecastByZIPResponse", namespace = "http://ws.cdyne.com/WeatherWS/")
-public class GetCityForecastByZIPResponse {
+public class GetCityForecastByZIPResponse
+{
 
     @XmlElement(name = "GetCityForecastByZIPResult", namespace = "http://ws.cdyne.com/WeatherWS/")
     protected ForecastReturn getCityForecastByZIPResult;
@@ -45,24 +44,20 @@ public class GetCityForecastByZIPResponse {
     /**
      * Gets the value of the getCityForecastByZIPResult property.
      *
-     * @return
-     *     possible object is
-     *     {@link ForecastReturn }
-     *
+     * @return possible object is {@link ForecastReturn }
      */
-    public ForecastReturn getGetCityForecastByZIPResult() {
+    public ForecastReturn getGetCityForecastByZIPResult()
+    {
         return getCityForecastByZIPResult;
     }
 
     /**
      * Sets the value of the getCityForecastByZIPResult property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link ForecastReturn }
-     *
+     * @param value allowed object is {@link ForecastReturn }
      */
-    public void setGetCityForecastByZIPResult(ForecastReturn value) {
+    public void setGetCityForecastByZIPResult(ForecastReturn value)
+    {
         this.getCityForecastByZIPResult = value;
     }
 

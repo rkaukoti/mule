@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/schemadoc"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.mulesoft.org/schema/mule/schemadoc"
             targetNamespace="http://www.mulesoft.org/schema/mule/schemadoc"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">
@@ -189,7 +189,8 @@
         </xsd:attribute>
         <xsd:attribute name="retries" type="xsd:boolean" use="optional">
             <xsd:annotation>
-                <xsd:documentation>Whether the transport support retry policies. Note most transports can be configured with retry policies, but this flag marks the transports that MuleSoft explicitly test and support.
+                <xsd:documentation>Whether the transport support retry policies. Note most transports can be configured with retry policies, but this flag marks the transports that MuleSoft explicitly
+                    test and support.
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>

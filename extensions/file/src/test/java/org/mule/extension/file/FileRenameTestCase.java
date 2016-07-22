@@ -6,16 +6,15 @@
  */
 package org.mule.extension.file;
 
-import static java.lang.String.format;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleRuntimeException;
 
 import java.io.File;
 
-import org.junit.Test;
+import static java.lang.String.format;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class FileRenameTestCase extends FileConnectorTestCase
 {

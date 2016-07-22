@@ -7,7 +7,6 @@
 package org.mule.runtime.core.execution;
 
 /**
- *
  * Defines a phase that process a message using a {@link MessageProcessTemplate}
  *
  * The phase will be part of a chain of responsibility were the phase can define
@@ -22,7 +21,6 @@ package org.mule.runtime.core.execution;
  *
  * Optionally a {@link MessageProcessPhase} can implement {@link Comparable<MessageProcessPhase>}
  * to define the order in which it must be positioned in the {@link MessageProcessPhase} chain
- *
  */
 public interface MessageProcessPhase<Template extends MessageProcessTemplate>
 {
@@ -40,11 +38,12 @@ public interface MessageProcessPhase<Template extends MessageProcessTemplate>
     /**
      * Process the template through the phase.
      *
-     * The phase execution can not throw an exception. In case of exception {@link PhaseResultNotifier#phaseFailure(Exception)} must be call.
+     * The phase execution can not throw an exception. In case of exception {@link PhaseResultNotifier#phaseFailure(Exception)} must be
+     * call.
      *
      * @param messageProcessTemplate template containing message source specific behavior
-     * @param messageProcessContext provides context information for executing the message
-     * @param phaseResultNotifier notifier that must be advice under certain scenarios
+     * @param messageProcessContext  provides context information for executing the message
+     * @param phaseResultNotifier    notifier that must be advice under certain scenarios
      */
     void runPhase(Template messageProcessTemplate, MessageProcessContext messageProcessContext, PhaseResultNotifier phaseResultNotifier);
 

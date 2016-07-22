@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.module.scripting.filter;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.api.client.MuleClient;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.client.MuleClient;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import org.junit.Test;
 
 public class GroovyScriptFilterFunctionalTestCase extends FunctionalTestCase
 {

@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.transport.jms.integration.transactions.local;
 
-import org.mule.compatibility.transport.jms.integration.AbstractJmsSingleTransactionSingleServiceTestCase;
-
 import org.junit.Test;
+import org.mule.compatibility.transport.jms.integration.AbstractJmsSingleTransactionSingleServiceTestCase;
 
 /**
  * Test all combinations of (inbound) JOIN_IF_POSSIBLE. They should all pass, except
  * for ALWAYS_JOIN on the outbound endpoint, since no transaction should be created by JOIN_IF_POSSIBLE.
  */
 public class JmsSingleTransactionSingleServiceJoinIfPossibleConfigurationTestCase extends
-    AbstractJmsSingleTransactionSingleServiceTestCase
+        AbstractJmsSingleTransactionSingleServiceTestCase
 {
 
     @Override

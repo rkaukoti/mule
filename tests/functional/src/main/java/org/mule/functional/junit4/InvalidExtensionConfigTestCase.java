@@ -6,13 +6,11 @@
  */
 package org.mule.functional.junit4;
 
-import org.mule.runtime.core.api.config.ConfigurationException;
-import org.mule.runtime.core.api.lifecycle.InitialisationException;
-
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mule.runtime.core.api.lifecycle.InitialisationException;
 
 /**
  * An {@link ExtensionFunctionalTestCase} which is expected to point to a

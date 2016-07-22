@@ -7,15 +7,18 @@
 
 package org.mule.mvel;
 
-public class Bar {
+public class Bar
+{
 
     private BarDetails stuff;
 
-    public BarDetails getStuff() {
+    public BarDetails getStuff()
+    {
         return stuff;
     }
 
-    public void setStuff(BarDetails stuff) {
+    public void setStuff(BarDetails stuff)
+    {
         this.stuff = stuff;
     }
 }

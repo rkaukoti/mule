@@ -6,15 +6,15 @@
  */
 package org.mule.runtime.module.jaas;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class JaasAuthenticationNoJaasConfigFileTestCase extends AbstractJaasFunctionalTestCase
 {
@@ -77,7 +77,7 @@ public class JaasAuthenticationNoJaasConfigFileTestCase extends AbstractJaasFunc
         @Override
         public MuleEvent process(MuleEvent event) throws MuleException
         {
-            event.setFlowVariable("notSerializableProperty",new Object());
+            event.setFlowVariable("notSerializableProperty", new Object());
             return event;
         }
     }

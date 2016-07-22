@@ -6,8 +6,8 @@
  */
 package org.mule.runtime.core.api.transport;
 
-import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.api.meta.NameableObject;
+import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.connector.Connectable;
 import org.mule.runtime.core.api.lifecycle.Lifecycle;
 import org.mule.runtime.core.api.lifecycle.LifecycleStateEnabled;
@@ -23,9 +23,8 @@ public interface LegacyConnector extends Lifecycle, NameableObject, Connectable,
      * Only use this method to use the Connector's MuleContext. Otherwise you can be used the wrong MuleContext because
      * a Connector can be defined at the domain level or de app level.
      *
-     * @return MuleContext in which this connector has been created. If the Connector was defined in a Domain then it
-     *         will return the MuleContext of the domain. If the Connector was defined in a Mule app then it will return
-     *         the MuleContext of the Mule app.
+     * @return MuleContext in which this connector has been created. If the Connector was defined in a Domain then it will return the
+     * MuleContext of the domain. If the Connector was defined in a Mule app then it will return the MuleContext of the Mule app.
      */
     MuleContext getMuleContext();
 

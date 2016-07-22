@@ -16,8 +16,6 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.processor.MessageProcessorBuilder;
 import org.mule.runtime.core.api.processor.MessageProcessorChain;
 import org.mule.runtime.core.api.transaction.TransactionFactory;
-import org.mule.runtime.core.processor.DelegateTransactionFactory;
-import org.mule.runtime.core.processor.TransactionalInterceptingMessageProcessor;
 import org.mule.runtime.core.processor.chain.DefaultMessageProcessorChainBuilder;
 import org.mule.runtime.core.transaction.MuleTransactionConfig;
 
@@ -67,7 +65,7 @@ public class TransactionalMessageProcessor extends TransactionalInterceptingMess
             else
             {
                 throw new IllegalArgumentException(
-                    "MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
+                        "MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
             }
             if (processor instanceof MessagingExceptionHandlerAware)
             {

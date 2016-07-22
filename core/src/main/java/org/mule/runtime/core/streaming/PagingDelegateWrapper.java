@@ -8,18 +8,17 @@ package org.mule.runtime.core.streaming;
 
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.util.CollectionUtils;
-
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * This implementation of {@link PagingDelegate} takes care of enforcing some basic
  * behaviour of the delegate contract so that users don't have to. Concerns such as
  * logging, auto closing the delegate if the consumer has been fully consumed, etc
  * are addressed here
- * 
+ *
  * @since 3.5.0
  */
 public class PagingDelegateWrapper<T> extends PagingDelegate<T>

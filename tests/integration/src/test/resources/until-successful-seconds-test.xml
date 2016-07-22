@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:spring="http://www.springframework.org/schema/beans"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd">
 
     <!-- use a persistent object store to pinpoint any MuleEvent de/serialization issue -->
-    <spring:bean id="objectStore" class="org.mule.runtime.core.util.store.PartitionedPersistentObjectStore" />
+    <spring:bean id="objectStore" class="org.mule.runtime.core.util.store.PartitionedPersistentObjectStore"/>
 
     <custom-processor name="dlq-mp" class="org.mule.test.routing.UntilSuccessfulTestCase$CustomMP"/>
 
     <flow name="minimal-config">
         <!-- with this configuration, the response from target MP won't be considered an error (no failureExpression) -->
         <until-successful objectStore-ref="objectStore">
-            <flow-ref name="target-mp" />
+            <flow-ref name="target-mp"/>
         </until-successful>
     </flow>
 
@@ -27,7 +27,7 @@
                           maxRetries="2"
                           secondsBetweenRetries="1"
                           deadLetterQueue-ref="dlq-mp">
-            <flow-ref name="target-mp" />
+            <flow-ref name="target-mp"/>
         </until-successful>
     </flow>
 
@@ -41,11 +41,11 @@
     </flow>
 
     <flow name="target-mp">
-        <test:component appendString="ERROR" />
+        <test:component appendString="ERROR"/>
     </flow>
 
     <flow name="target-flow">
-        <flow-ref name="target-mp" />
+        <flow-ref name="target-mp"/>
     </flow>
 
     <flow name="synchronous">
@@ -69,7 +69,7 @@
     <flow name="measureSynchronousWait">
         <until-successful maxRetries="1" secondsBetweenRetries="1" synchronous="true">
             <processor-chain>
-                <custom-processor class="org.mule.test.routing.UntilSuccessfulTestCase$WaitMeasure" />
+                <custom-processor class="org.mule.test.routing.UntilSuccessfulTestCase$WaitMeasure"/>
                 <test:component throwException="true"/>
             </processor-chain>
         </until-successful>

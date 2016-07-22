@@ -6,11 +6,14 @@
  */
 package org.mule.compatibility.transport.jms;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.mule.runtime.core.message.OutputHandler;
 import org.mule.runtime.core.util.ArrayUtils;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,10 +40,6 @@ import javax.jms.Session;
 import javax.jms.StreamMessage;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
-
-import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>JmsMessageUtils</code> contains helper method for dealing with JMS
@@ -97,8 +96,8 @@ public class JmsMessageUtils
             {
                 logger.warn(MessageFormat.format(
                         "Header: {0} is not compliant with JMS specification (sec. 3.5.1, 3.8.1.1). It will cause " +
-                                "problems in your and other applications. Please update your application code to correct this. " +
-                                "Mule renamed it to {1}", name, sb.toString()));
+                        "problems in your and other applications. Please update your application code to correct this. " +
+                        "Mule renamed it to {1}", name, sb.toString()));
             }
 
             return sb.toString();
@@ -119,7 +118,7 @@ public class JmsMessageUtils
         {
             return stringToMessage((String) object, session);
         }
-        else if (object instanceof Map<?, ?> && validateMapMessageType((Map<?, ?>)object))
+        else if (object instanceof Map<?, ?> && validateMapMessageType((Map<?, ?>) object))
         {
             return mapToMessage((Map<?, ?>) object, session);
         }
@@ -146,8 +145,8 @@ public class JmsMessageUtils
         else
         {
             throw new JMSException(
-                "Source was not of a supported type. Valid types are Message, String, Map, InputStream, List, byte[], Serializable or OutputHandler, "
-                                + "but was " + ClassUtils.getShortClassName(object, "<null>"));
+                    "Source was not of a supported type. Valid types are Message, String, Map, InputStream, List, byte[], Serializable or OutputHandler, "
+                    + "but was " + ClassUtils.getShortClassName(object, "<null>"));
         }
     }
 
@@ -195,7 +194,7 @@ public class JmsMessageUtils
     }
 
     private static Message listToMessage(List<?> value, Session session)
-        throws JMSException
+            throws JMSException
     {
         StreamMessage sMsg = session.createStreamMessage();
 
@@ -208,9 +207,9 @@ public class JmsMessageUtils
             else
             {
                 throw new MessageFormatException(String.format(
-                    "Invalid type passed to StreamMessage: %s . Allowed types are: "
-                                    + "Boolean, Byte, Short, Character, Integer, Long, Float, Double,"
-                                    + "String and byte[]", ClassUtils.getShortClassName(o, "null")));
+                        "Invalid type passed to StreamMessage: %s . Allowed types are: "
+                        + "Boolean, Byte, Short, Character, Integer, Long, Float, Double,"
+                        + "String and byte[]", ClassUtils.getShortClassName(o, "null")));
             }
         }
         return sMsg;
@@ -263,7 +262,7 @@ public class JmsMessageUtils
             Map<String, Object> map = new HashMap<>();
             MapMessage m = (MapMessage) source;
 
-            for (Enumeration<?> e = m.getMapNames(); e.hasMoreElements();)
+            for (Enumeration<?> e = m.getMapNames(); e.hasMoreElements(); )
             {
                 String name = (String) e.nextElement();
                 Object obj = m.getObject(name);
@@ -308,18 +307,14 @@ public class JmsMessageUtils
     }
 
     /**
-     * @param message the message to receive the bytes from. Note this only works for
-     *                TextMessge, ObjectMessage, StreamMessage and BytesMessage.
-     * @param jmsSpec indicates the JMS API version, either
-     *                {@link JmsConstants#JMS_SPECIFICATION_102B} or
-     *                {@link JmsConstants#JMS_SPECIFICATION_11}. Any other value
-     *                including <code>null</code> is treated as fallback to
-     *                {@link JmsConstants#JMS_SPECIFICATION_102B}.
+     * @param message the message to receive the bytes from. Note this only works for TextMessge, ObjectMessage, StreamMessage and
+     *                BytesMessage.
+     * @param jmsSpec indicates the JMS API version, either {@link JmsConstants#JMS_SPECIFICATION_102B} or {@link
+     *                JmsConstants#JMS_SPECIFICATION_11}. Any other value including <code>null</code> is treated as fallback to {@link
+     *                JmsConstants#JMS_SPECIFICATION_102B}.
      * @return a byte array corresponding with the message payload
-     * @throws JMSException        if the message can't be read or if the message passed is
-     *                             a MapMessage
-     * @throws java.io.IOException if a failure occurs while reading the stream and
-     *                             converting the message data
+     * @throws JMSException        if the message can't be read or if the message passed is a MapMessage
+     * @throws java.io.IOException if a failure occurs while reading the stream and converting the message data
      */
     public static byte[] toByteArray(Message message, String jmsSpec, Charset encoding) throws JMSException, IOException
     {
@@ -334,7 +329,7 @@ public class JmsMessageUtils
                 if (bmBodyLength > Integer.MAX_VALUE)
                 {
                     throw new JMSException("Size of BytesMessage exceeds Integer.MAX_VALUE; "
-                            + "please consider using JMS StreamMessage instead");
+                                           + "please consider using JMS StreamMessage instead");
                 }
 
                 if (bmBodyLength > 0)
@@ -491,16 +486,16 @@ public class JmsMessageUtils
     protected static boolean validateStreamMessageType(Object candidate)
     {
         if (candidate == null ||
-                candidate instanceof Boolean ||
-                candidate instanceof Byte ||
-                candidate instanceof Short ||
-                candidate instanceof Character ||
-                candidate instanceof Integer ||
-                candidate instanceof Long ||
-                candidate instanceof Float ||
-                candidate instanceof Double ||
-                candidate instanceof String ||
-                candidate instanceof byte[])
+            candidate instanceof Boolean ||
+            candidate instanceof Byte ||
+            candidate instanceof Short ||
+            candidate instanceof Character ||
+            candidate instanceof Integer ||
+            candidate instanceof Long ||
+            candidate instanceof Float ||
+            candidate instanceof Double ||
+            candidate instanceof String ||
+            candidate instanceof byte[])
         {
             return true;
         }
@@ -524,7 +519,7 @@ public class JmsMessageUtils
         {
             if (!validateStreamMessageType(o))
             {
-                    return false;
+                return false;
             }
         }
         return true;

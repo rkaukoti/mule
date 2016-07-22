@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.module.xml.transformer;
 
-import org.mule.runtime.core.util.ClassUtils;
-
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.SingleValueConverter;
@@ -15,11 +13,12 @@ import com.thoughtworks.xstream.converters.collections.MapConverter;
 import com.thoughtworks.xstream.io.HierarchicalStreamDriver;
 import com.thoughtworks.xstream.mapper.Mapper;
 
-import java.util.Map;
-import java.util.Set;
-
+import org.mule.runtime.core.util.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Initializes the XStream utility for converting Objects to XML and XML to Objects.
@@ -42,8 +41,8 @@ public class XStreamFactory
         this(XSTREAM_XPP_DRIVER, null, null);
     }
 
-    public XStreamFactory(String driverClassName, Map<String, Class<?>> aliases, Set<Class <? extends Converter>> converters)
-        throws ClassNotFoundException, InstantiationException, IllegalAccessException
+    public XStreamFactory(String driverClassName, Map<String, Class<?>> aliases, Set<Class<? extends Converter>> converters)
+            throws ClassNotFoundException, InstantiationException, IllegalAccessException
     {
         Class<?> driverClass = ClassUtils.loadClass(driverClassName, this.getClass());
         xstream = new XStream((HierarchicalStreamDriver) driverClass.newInstance());
@@ -68,7 +67,7 @@ public class XStreamFactory
         }
     }
 
-    private void registerConverters(Set<Class <? extends Converter>> converters) throws InstantiationException, IllegalAccessException
+    private void registerConverters(Set<Class<? extends Converter>> converters) throws InstantiationException, IllegalAccessException
     {
         if (converters != null)
         {

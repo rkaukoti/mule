@@ -59,11 +59,6 @@ public enum DerivationControl
         value = v;
     }
 
-    public String value()
-    {
-        return value;
-    }
-
     public static DerivationControl fromValue(String v)
     {
         for (DerivationControl c : DerivationControl.values())
@@ -74,6 +69,11 @@ public enum DerivationControl
             }
         }
         throw new IllegalArgumentException(v);
+    }
+
+    public String value()
+    {
+        return value;
     }
 
 }

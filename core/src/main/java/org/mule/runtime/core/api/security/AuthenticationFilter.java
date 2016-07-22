@@ -14,9 +14,9 @@ import org.mule.runtime.core.api.lifecycle.InitialisationException;
  */
 public interface AuthenticationFilter extends SecurityFilter
 {
-    void setCredentialsAccessor(CredentialsAccessor accessor);
-
     CredentialsAccessor getCredentialsAccessor();
+
+    void setCredentialsAccessor(CredentialsAccessor accessor);
 
     void authenticate(MuleEvent event)
             throws SecurityException, UnknownAuthenticationTypeException, CryptoFailureException,

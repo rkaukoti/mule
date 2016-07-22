@@ -6,8 +6,11 @@
  */
 package org.mule.runtime.core.util.concurrent;
 
-import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.util.StringUtils;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,10 +25,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
@@ -33,16 +32,16 @@ import static org.junit.Assert.assertTrue;
 
 public class WaitPolicyTestCase extends AbstractMuleTestCase
 {
-    private ExceptionCollectingThreadGroup threadGroup;
     ThreadPoolExecutor executor;
     ReentrantLock executorLock;
+    private ExceptionCollectingThreadGroup threadGroup;
 
     @Before
     public void startExecutor()
     {
         // allow 1 active & 1 queued Thread
         executor = new ThreadPoolExecutor(1, 1, 10000L, TimeUnit.MILLISECONDS,
-            new LinkedBlockingQueue<Runnable>(1));
+                new LinkedBlockingQueue<Runnable>(1));
         executor.prestartAllCoreThreads();
 
         // the lock must be fair to guarantee FIFO access to the executor;
@@ -82,7 +81,7 @@ public class WaitPolicyTestCase extends AbstractMuleTestCase
 
         executorLock.lock();
 
-        for (Iterator<Runnable> i = tasks.iterator(); i.hasNext();)
+        for (Iterator<Runnable> i = tasks.iterator(); i.hasNext(); )
         {
             final Runnable task = i.next();
 
@@ -236,7 +235,7 @@ public class WaitPolicyTestCase extends AbstractMuleTestCase
         Thread.sleep(failureInterval * 10);
 
         // make sure there was one failure
-        LinkedList<Map<Thread, Throwable>>  exceptions = threadGroup.collectedExceptions();
+        LinkedList<Map<Thread, Throwable>> exceptions = threadGroup.collectedExceptions();
         assertEquals(1, exceptions.size());
 
         // make sure the failed task was the right one

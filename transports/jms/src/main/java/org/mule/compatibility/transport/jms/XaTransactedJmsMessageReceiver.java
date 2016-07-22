@@ -44,48 +44,17 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
     public static final TimeUnit DEFAULT_JMS_POLL_TIMEUNIT = TimeUnit.MILLISECONDS;
 
     protected final JmsConnector connector;
-    private final long localTimeout;
-    protected boolean reuseConsumer;
-    protected boolean reuseSession;
     protected final ThreadContextLocal context = new ThreadContextLocal();
     protected final Set<JmsThreadContext> allContexts = new CopyOnWriteArraySet<>();
     protected final long timeout;
+    private final long localTimeout;
     private final AtomicReference<RedeliveryHandler> redeliveryHandler = new AtomicReference<>();
     private final boolean topic;
-
-    @Override
-    public boolean shouldConsumeInEveryNode() {
-        return !this.topic;
-    }
-
-    /**
-     * Holder receiving the session and consumer for this thread.
-     */
-    protected static class JmsThreadContext
-    {
-        public Session session;
-        public MessageConsumer consumer;
-    }
-
-    /**
-     * Strongly typed ThreadLocal for ThreadContext.
-     */
-    protected static class ThreadContextLocal extends ThreadLocal<JmsThreadContext>
-    {
-        public JmsThreadContext getContext()
-        {
-            return get();
-        }
-
-        @Override
-        protected JmsThreadContext initialValue()
-        {
-            return new JmsThreadContext();
-        }
-    }
+    protected boolean reuseConsumer;
+    protected boolean reuseSession;
 
     public XaTransactedJmsMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint)
-        throws CreateException
+            throws CreateException
     {
         super(connector, flowConstruct, endpoint);
         // TODO AP: find appropriate value for polling frequency with the scheduler;
@@ -108,9 +77,9 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
         // User may override reuse strategy if necessary. This is available for legacy reasons,
         // but this approach is not recommended and should never be set when using XA.
         this.reuseConsumer = MapUtils.getBooleanValue(endpoint.getProperties(), "reuseConsumer",
-            this.reuseConsumer);
+                this.reuseConsumer);
         this.reuseSession = MapUtils.getBooleanValue(endpoint.getProperties(), "reuseSession",
-            this.reuseSession);
+                this.reuseSession);
 
         // Do extra validation, XA Topic & reuse are incompatible. See MULE-2622
         topic = this.connector.getTopicResolver().isTopic(getEndpoint());
@@ -132,6 +101,12 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
         // the same message multiple times
         this.setUseMultipleTransactedReceivers(!topic);
         this.localTimeout = resolveReceiveTimeout();
+    }
+
+    @Override
+    public boolean shouldConsumeInEveryNode()
+    {
+        return !this.topic;
     }
 
     @Override
@@ -285,7 +260,7 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
         if (logger.isDebugEnabled())
         {
             logger.debug("Message received it is of type: " +
-                    ClassUtils.getSimpleName(message.getClass()));
+                         ClassUtils.getSimpleName(message.getClass()));
             if (message.getJMSDestination() != null)
             {
                 logger.debug("Message received on " + message.getJMSDestination() + " ("
@@ -322,7 +297,9 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
 
         if (localTimeout > timeout)
         {
-            logger.warn(String.format("Transaction timeout ('%s') must be greater than the timeout used for polling messages ('%s'). Using transaction timeout", localTimeout, timeout));
+            logger.warn(String.format(
+                    "Transaction timeout ('%s') must be greater than the timeout used for polling messages ('%s'). Using transaction timeout",
+                    localTimeout, timeout));
             localTimeout = timeout;
         }
 
@@ -393,8 +370,6 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
 
     /**
      * Create a consumer for the jms destination
-     *
-     * @throws Exception
      */
     protected MessageConsumer createConsumer() throws Exception
     {
@@ -452,9 +427,9 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
             {
                 // still allow the selector to be set as a property on the endpoint
                 // to be backward compatible
-                selector = (String)endpoint.getProperties().get(JmsConstants.JMS_SELECTOR_PROPERTY);
+                selector = (String) endpoint.getProperties().get(JmsConstants.JMS_SELECTOR_PROPERTY);
             }
-            String tempDurable = (String)endpoint.getProperties().get("durable");
+            String tempDurable = (String) endpoint.getProperties().get("durable");
             boolean durable = connector.isDurable();
             if (tempDurable != null)
             {
@@ -462,7 +437,7 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
             }
 
             // Get the durable subscriber name if there is one
-            String durableName = (String)endpoint.getProperties().get("durableName");
+            String durableName = (String) endpoint.getProperties().get("durableName");
             if (durableName == null && durable && topic)
             {
                 durableName = "mule." + connector.getName() + "." + endpoint.getEndpointURI().getAddress();
@@ -472,13 +447,39 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
 
             // Create consumer
             MessageConsumer consumer = jmsSupport.createConsumer(session, dest, selector, connector.isNoLocal(),
-                durableName, topic, endpoint);
+                    durableName, topic, endpoint);
             ctx.consumer = consumer;
             return consumer;
         }
         catch (JMSException e)
         {
             throw new EndpointConnectException(e, this);
+        }
+    }
+
+    /**
+     * Holder receiving the session and consumer for this thread.
+     */
+    protected static class JmsThreadContext
+    {
+        public Session session;
+        public MessageConsumer consumer;
+    }
+
+    /**
+     * Strongly typed ThreadLocal for ThreadContext.
+     */
+    protected static class ThreadContextLocal extends ThreadLocal<JmsThreadContext>
+    {
+        public JmsThreadContext getContext()
+        {
+            return get();
+        }
+
+        @Override
+        protected JmsThreadContext initialValue()
+        {
+            return new JmsThreadContext();
         }
     }
 }

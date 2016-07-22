@@ -7,13 +7,7 @@
 
 package org.mule.runtime.core.transformer.types;
 
-import static java.lang.String.format;
-import static java.nio.charset.StandardCharsets.UTF_16;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.metadata.DefaultCollectionDataType;
@@ -23,7 +17,13 @@ import org.mule.tck.size.SmallTest;
 import java.nio.charset.Charset;
 import java.util.List;
 
-import org.junit.Test;
+import static java.lang.String.format;
+import static java.nio.charset.StandardCharsets.UTF_16;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
 
 @SmallTest
 public class DataTypeFactoryTestCase extends AbstractMuleTestCase

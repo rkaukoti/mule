@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
       xmlns:transport-tls="http://www.mulesoft.org/schema/mule/transport/tls"
       xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
@@ -20,13 +20,13 @@
     </transport-tls:connector>
 
     <transport-tls:endpoint name="sendEndpoint" connector-ref="tlsConnector" address="tls://localhost:${port3}"
-                  exchange-pattern="request-response"/>
+                            exchange-pattern="request-response"/>
 
     <transports:endpoint name="sendManyEndpoint" connector-ref="tlsConnector" address="tls://localhost:${port2}"
-              exchange-pattern="request-response"/>
+                         exchange-pattern="request-response"/>
 
     <transport-tls:endpoint name="asyncEndpoint" connector-ref="tlsConnector" host="localhost" port="${port1}"
-                  exchange-pattern="one-way"/>
+                            exchange-pattern="one-way"/>
 
     <flow name="testComponent1">
         <transport-tls:inbound-endpoint ref="sendEndpoint"/>

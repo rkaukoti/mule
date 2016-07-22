@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.config.spring.dsl.processor;
 
-import static org.apache.commons.lang.StringUtils.isNotEmpty;
-import static org.mule.runtime.core.util.ClassUtils.instanciateClass;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.DataTypeParamsBuilder;
 import org.mule.runtime.config.spring.dsl.api.ObjectFactory;
@@ -18,16 +14,19 @@ import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.transformer.AbstractTransformer;
 import org.mule.runtime.core.util.ClassUtils;
 
+import static org.apache.commons.lang.StringUtils.isNotEmpty;
+import static org.mule.runtime.core.util.ClassUtils.instanciateClass;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+
 /**
  * {@link ObjectFactory} for transformer in Mules.
  *
- * The transformer class that will be created need to be provided by setting the
- * {@code transformerClass} attribute. The recommended approach is to make use of
- * {@link org.mule.runtime.config.spring.dsl.model.CoreComponentBuildingDefinitionProvider#getTransformerBaseBuilderForClass(Class)}
+ * The transformer class that will be created need to be provided by setting the {@code transformerClass} attribute. The recommended
+ * approach is to make use of {@link org.mule.runtime.config.spring.dsl.model.CoreComponentBuildingDefinitionProvider#getTransformerBaseBuilderForClass(Class)}
  * or {@code CoreComponentBuildingDefinitionProvider#getTransformerBaseBuilder()}.
  *
- * This class can also be used as the base class for other {@code ObjectFactory}s that need to inject additional field to the
- * created transformer. The {@code createInstance} method can be override to create the transformer instance and the {@code postProcessInstance}
+ * This class can also be used as the base class for other {@code ObjectFactory}s that need to inject additional field to the created
+ * transformer. The {@code createInstance} method can be override to create the transformer instance and the {@code postProcessInstance}
  * method can be used to do additional stuff over the transformer instance like doing additional parameter configuration.
  */
 public class TransformerObjectFactory implements ObjectFactory<Transformer>
@@ -72,10 +71,6 @@ public class TransformerObjectFactory implements ObjectFactory<Transformer>
      * Template method for creating the transformer instance.
      *
      * @return a transformer instance
-     * @throws NoSuchMethodException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws java.lang.reflect.InvocationTargetException
      */
     protected AbstractTransformer createInstance()
     {

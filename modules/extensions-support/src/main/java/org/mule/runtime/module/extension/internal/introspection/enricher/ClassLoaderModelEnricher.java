@@ -6,14 +6,15 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.EXTENSION_CLASSLOADER;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.noClassLoaderException;
 import org.mule.runtime.extension.api.exception.IllegalModelDefinitionException;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
 import org.mule.runtime.extension.api.introspection.declaration.DescribingContext;
 import org.mule.runtime.extension.api.introspection.declaration.spi.ModelEnricher;
 import org.mule.runtime.extension.api.introspection.property.ClassLoaderModelProperty;
 import org.mule.runtime.module.extension.internal.ExtensionProperties;
+
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.EXTENSION_CLASSLOADER;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.noClassLoaderException;
 
 /**
  * If the {@link ExtensionProperties#EXTENSION_CLASSLOADER} parameter is set on

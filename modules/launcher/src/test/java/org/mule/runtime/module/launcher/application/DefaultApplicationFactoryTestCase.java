@@ -7,15 +7,10 @@
 
 package org.mule.runtime.module.launcher.application;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyMap;
-import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.rules.TemporaryFolder;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter;
@@ -38,10 +33,15 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.rules.TemporaryFolder;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyMap;
+import static org.mockito.Matchers.same;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class DefaultApplicationFactoryTestCase extends AbstractMuleTestCase
 {
@@ -50,12 +50,15 @@ public class DefaultApplicationFactoryTestCase extends AbstractMuleTestCase
     private static final String APP_NAME = "test-app";
     private static final String FAKE_ARTIFACT_PLUGIN = "fake-artifact-plugin";
 
-    private final ApplicationClassLoaderBuilderFactory applicationClassLoaderBuilderFactory = mock(ApplicationClassLoaderBuilderFactory.class);
+    private final ApplicationClassLoaderBuilderFactory applicationClassLoaderBuilderFactory =
+            mock(ApplicationClassLoaderBuilderFactory.class);
     private final DomainRepository domainRepository = mock(DomainRepository.class);
     private final ArtifactPluginRepository applicationPluginRepository = mock(ArtifactPluginRepository.class);
     private final ApplicationDescriptorFactory applicationDescriptorFactory = mock(ApplicationDescriptorFactory.class);
     private final ArtifactPluginFactory artifactPluginFactory = mock(ArtifactPluginFactory.class);
-    private final DefaultApplicationFactory applicationFactory = new DefaultApplicationFactory(applicationClassLoaderBuilderFactory, applicationDescriptorFactory, applicationPluginRepository, domainRepository);
+    private final DefaultApplicationFactory applicationFactory =
+            new DefaultApplicationFactory(applicationClassLoaderBuilderFactory, applicationDescriptorFactory, applicationPluginRepository,
+                    domainRepository);
 
     @Rule
     public TemporaryFolder muleHome = new SystemPropertyTemporaryFolder(MuleProperties.MULE_HOME_DIRECTORY_PROPERTY);
@@ -99,7 +102,8 @@ public class DefaultApplicationFactoryTestCase extends AbstractMuleTestCase
         when(applicationClassLoaderBuilderMock.setArtifactDescriptor(any())).thenReturn(applicationClassLoaderBuilderMock);
         when(applicationClassLoaderBuilderMock.setArtifactId(any())).thenReturn(applicationClassLoaderBuilderMock);
         when(applicationClassLoaderBuilderMock.setPluginsSharedLibFolder(any())).thenReturn(applicationClassLoaderBuilderMock);
-        when(applicationClassLoaderBuilderMock.addArtifactPluginDescriptors(descriptor.getPlugins().toArray(new ArtifactPluginDescriptor[0]))).thenReturn(applicationClassLoaderBuilderMock);
+        when(applicationClassLoaderBuilderMock.addArtifactPluginDescriptors(
+                descriptor.getPlugins().toArray(new ArtifactPluginDescriptor[0]))).thenReturn(applicationClassLoaderBuilderMock);
         when(applicationClassLoaderBuilderMock.build()).thenReturn(applicationArtifactClassLoader);
         when(applicationClassLoaderBuilderFactory.createArtifactClassLoaderBuilder()).thenReturn(applicationClassLoaderBuilderMock);
 
@@ -118,7 +122,8 @@ public class DefaultApplicationFactoryTestCase extends AbstractMuleTestCase
         verify(domainRepository, times(2)).getDomain(DOMAIN_NAME);
         verify(applicationClassLoaderBuilderMock).setDomain(domain);
         verify(applicationClassLoaderBuilderMock).setPluginsSharedLibFolder(any());
-        verify(applicationClassLoaderBuilderMock).addArtifactPluginDescriptors(descriptor.getPlugins().toArray(new ArtifactPluginDescriptor[0]));
+        verify(applicationClassLoaderBuilderMock).addArtifactPluginDescriptors(
+                descriptor.getPlugins().toArray(new ArtifactPluginDescriptor[0]));
         verify(applicationClassLoaderBuilderMock).setArtifactDescriptor(descriptor);
         verify(applicationClassLoaderBuilderMock).setArtifactId(APP_NAME);
     }

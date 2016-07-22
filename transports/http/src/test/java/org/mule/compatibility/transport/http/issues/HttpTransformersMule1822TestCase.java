@@ -6,9 +6,8 @@
  */
 package org.mule.compatibility.transport.http.issues;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.functional.StringAppendTestTransformer;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
@@ -16,8 +15,8 @@ import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class HttpTransformersMule1822TestCase extends FunctionalTestCase
 {
@@ -52,7 +51,7 @@ public class HttpTransformersMule1822TestCase extends FunctionalTestCase
     @Test
     public void testBase() throws Exception
     {
-        assertEquals(OUTBOUND_MESSAGE  + " Received", getPayloadAsString(sendTo("base")));
+        assertEquals(OUTBOUND_MESSAGE + " Received", getPayloadAsString(sendTo("base")));
     }
 
     /**
@@ -64,7 +63,7 @@ public class HttpTransformersMule1822TestCase extends FunctionalTestCase
         assertEquals(
                 StringAppendTestTransformer.append(" response",
                         StringAppendTestTransformer.append(" response 2",
-                                        OUTBOUND_MESSAGE + " Received")),
+                                OUTBOUND_MESSAGE + " Received")),
                 getPayloadAsString(sendTo("response")));
     }
 
@@ -75,11 +74,11 @@ public class HttpTransformersMule1822TestCase extends FunctionalTestCase
     public void testBoth() throws Exception
     {
         assertEquals(
-            StringAppendTestTransformer.append(" response",
-                StringAppendTestTransformer.append(" response 2",
-                    StringAppendTestTransformer.append(" transformed 2",
-                        StringAppendTestTransformer.appendDefault(OUTBOUND_MESSAGE)) + " Received")),
-                    getPayloadAsString(sendTo("both")));
+                StringAppendTestTransformer.append(" response",
+                        StringAppendTestTransformer.append(" response 2",
+                                StringAppendTestTransformer.append(" transformed 2",
+                                        StringAppendTestTransformer.appendDefault(OUTBOUND_MESSAGE)) + " Received")),
+                getPayloadAsString(sendTo("both")));
     }
 
 }

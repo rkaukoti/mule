@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.core.el.mvel;
 
+import org.mule.mvel2.ImmutableElementException;
 import org.mule.runtime.core.api.el.VariableAssignmentCallback;
 import org.mule.runtime.core.config.i18n.CoreMessages;
-import org.mule.mvel2.ImmutableElementException;
 
 @SuppressWarnings("serial")
 public class MuleImmutableVariableResolver<T> extends MuleVariableResolver<T>
@@ -21,7 +21,7 @@ public class MuleImmutableVariableResolver<T> extends MuleVariableResolver<T>
             public void assignValue(String name, T value, T newValue)
             {
                 throw new ImmutableElementException(
-                    CoreMessages.expressionFinalVariableCannotBeAssignedValue(name).getMessage());
+                        CoreMessages.expressionFinalVariableCannotBeAssignedValue(name).getMessage());
             }
         });
     }

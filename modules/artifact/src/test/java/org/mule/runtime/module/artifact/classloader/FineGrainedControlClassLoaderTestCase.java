@@ -6,6 +6,19 @@
  */
 package org.mule.runtime.module.artifact.classloader;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.mule.runtime.core.util.ClassUtils;
+import org.mule.runtime.module.artifact.classloader.TestClassLoader.TestClassNotFoundException;
+import org.mule.runtime.module.artifact.classloader.exception.CompositeClassNotFoundException;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
+
 import static java.lang.System.lineSeparator;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
@@ -19,20 +32,6 @@ import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStra
 import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_FIRST;
 import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_ONLY;
 import static org.mule.tck.junit4.matcher.FunctionExpressionMatcher.expressionMatches;
-
-import org.mule.runtime.core.util.ClassUtils;
-import org.mule.runtime.module.artifact.classloader.TestClassLoader.TestClassNotFoundException;
-import org.mule.runtime.module.artifact.classloader.exception.CompositeClassNotFoundException;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLClassLoader;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 @SmallTest
 public class FineGrainedControlClassLoaderTestCase extends AbstractMuleTestCase
@@ -70,7 +69,8 @@ public class FineGrainedControlClassLoaderTestCase extends AbstractMuleTestCase
 
         expected.expect(CompositeClassNotFoundException.class);
         expected.expectMessage(startsWith("Cannot load class '" + TEST_CLASS_NAME + "': [ERROR" + lineSeparator() + "]"));
-        expected.expect(expressionMatches((e) -> ((CompositeClassNotFoundException) e).getExceptions(), contains(sameInstance(thrownException))));
+        expected.expect(
+                expressionMatches((e) -> ((CompositeClassNotFoundException) e).getExceptions(), contains(sameInstance(thrownException))));
 
         FineGrainedControlClassLoader ext = new FineGrainedControlClassLoader(new URL[] {getChildFileResource()}, parent, lookupPolicy);
 
@@ -107,19 +107,19 @@ public class FineGrainedControlClassLoaderTestCase extends AbstractMuleTestCase
     public void usesParentFirstAndChildLookupAndFails() throws Exception
     {
         ClassLoader parent = Thread.currentThread().getContextClassLoader();
-        
+
         final ClassLoaderLookupPolicy lookupPolicy = mock(ClassLoaderLookupPolicy.class);
         when(lookupPolicy.getLookupStrategy(TEST_CLASS_NAME)).thenReturn(PARENT_FIRST);
-        
+
         expected.expect(CompositeClassNotFoundException.class);
         expected.expectMessage(startsWith("Cannot load class '" + TEST_CLASS_NAME + "': ["));
-        
+
         FineGrainedControlClassLoader ext = buildFineGrainedControlClassLoader(parent, lookupPolicy);
-        
+
         expected.expect(expressionMatches((e) -> ((CompositeClassNotFoundException) e).getExceptions(), contains(
                 hasMessage(is(TEST_CLASS_NAME)),
                 expressionMatches((e) -> ((TestClassNotFoundException) e).getClassLoader(), is((ClassLoader) ext)))));
-        
+
         invokeTestClassMethod(ext);
     }
 
@@ -169,7 +169,8 @@ public class FineGrainedControlClassLoaderTestCase extends AbstractMuleTestCase
         invokeTestClassMethod(ext);
     }
 
-    protected FineGrainedControlClassLoader buildFineGrainedControlClassLoader(ClassLoader parent, final ClassLoaderLookupPolicy lookupPolicy)
+    protected FineGrainedControlClassLoader buildFineGrainedControlClassLoader(ClassLoader parent,
+                                                                               final ClassLoaderLookupPolicy lookupPolicy)
     {
         return new FineGrainedControlClassLoader(new URL[0], parent, lookupPolicy)
         {

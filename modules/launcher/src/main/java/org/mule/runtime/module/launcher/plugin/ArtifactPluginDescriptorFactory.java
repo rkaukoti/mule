@@ -7,9 +7,7 @@
 
 package org.mule.runtime.module.launcher.plugin;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter.EXPORTED_CLASS_PACKAGES_PROPERTY;
-import static org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter.EXPORTED_RESOURCE_PACKAGES_PROPERTY;
+import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilterFactory;
 import org.mule.runtime.module.artifact.descriptor.ArtifactDescriptorCreateException;
@@ -23,7 +21,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
-import org.apache.commons.io.filefilter.SuffixFileFilter;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter.EXPORTED_CLASS_PACKAGES_PROPERTY;
+import static org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter.EXPORTED_RESOURCE_PACKAGES_PROPERTY;
 
 public class ArtifactPluginDescriptorFactory implements ArtifactDescriptorFactory<ArtifactPluginDescriptor>
 {
@@ -35,7 +35,8 @@ public class ArtifactPluginDescriptorFactory implements ArtifactDescriptorFactor
 
     /**
      * Creates a new instance
-     *  @param classLoaderFilterFactory creates classloader filters for the created descriptors. Not null.
+     *
+     * @param classLoaderFilterFactory creates classloader filters for the created descriptors. Not null.
      */
     public ArtifactPluginDescriptorFactory(ArtifactClassLoaderFilterFactory classLoaderFilterFactory)
     {

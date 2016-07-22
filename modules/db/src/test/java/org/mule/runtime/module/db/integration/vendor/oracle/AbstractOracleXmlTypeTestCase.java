@@ -7,9 +7,9 @@
 
 package org.mule.runtime.module.db.integration.vendor.oracle;
 
-import static org.junit.Assume.assumeThat;
-import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
+import org.hamcrest.Description;
+import org.junit.Before;
+import org.junit.internal.matchers.TypeSafeMatcher;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import org.mule.runtime.module.db.integration.model.Alien;
@@ -21,9 +21,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import org.hamcrest.Description;
-import org.junit.Before;
-import org.junit.internal.matchers.TypeSafeMatcher;
+import static org.junit.Assume.assumeThat;
+import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
 
 /**
  * Base class for test that use oracle.xdb.XMLType values.
@@ -65,14 +65,17 @@ public abstract class AbstractOracleXmlTypeTestCase extends AbstractDbIntegratio
             @Override
             public void describeTo(Description description)
             {
-                description.appendText(String.format("Cannot find class %s. Check that required libraries are available", OracleXmlType.ORACLE_XMLTYPE_CLASS));
+                description.appendText(String.format("Cannot find class %s. Check that required libraries are available",
+                        OracleXmlType.ORACLE_XMLTYPE_CLASS));
             }
         });
     }
 
     protected void assertUpdatedAlienDscription() throws SQLException
     {
-        List<Map<String, String>> result = selectData("SELECT name FROM Alien a where a.DESCRIPTION.extract('/Alien/Planet/text()').getStringVal() = 'Mars' ORDER BY NAME", getDefaultDataSource());
+        List<Map<String, String>> result = selectData(
+                "SELECT name FROM Alien a where a.DESCRIPTION.extract('/Alien/Planet/text()').getStringVal() = 'Mars' ORDER BY NAME",
+                getDefaultDataSource());
         assertRecords(result, new Record(new Field("NAME", Alien.ET.getName())), new Record(new Field("NAME", Alien.MONGUITO.getName())));
     }
 }

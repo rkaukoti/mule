@@ -6,13 +6,8 @@
  */
 package org.mule.runtime.core.config.bootstrap;
 
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APPLY_TO_ARTIFACT_TYPE_PARAMETER_KEY;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.DOMAIN;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleContext;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.transaction.TransactionFactory;
@@ -22,15 +17,19 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.APPLY_TO_ARTIFACT_TYPE_PARAMETER_KEY;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.DOMAIN;
 
 public class SimpleRegistryBootstrapTestCase extends AbstractMuleContextTestCase
 {
 
     public static final String TEST_TRANSACTION_FACTORY_CLASS = "javax.jms.Connection";
 
-    @Test(expected=ClassNotFoundException.class)
+    @Test(expected = ClassNotFoundException.class)
     public void registeringOptionalTransaction() throws Exception
     {
         createTestRegistryBootstrap(APP);
@@ -41,7 +40,8 @@ public class SimpleRegistryBootstrapTestCase extends AbstractMuleContextTestCase
     public void existingNotOptionalTransaction() throws Exception
     {
         createTestRegistryBootstrap(APP);
-        TransactionFactory transactionFactoryFor = muleContext.getTransactionFactoryManager().getTransactionFactoryFor(FakeTransactionResource.class);
+        TransactionFactory transactionFactoryFor =
+                muleContext.getTransactionFactoryManager().getTransactionFactoryFor(FakeTransactionResource.class);
         Assert.assertNotNull(transactionFactoryFor);
     }
 
@@ -68,7 +68,8 @@ public class SimpleRegistryBootstrapTestCase extends AbstractMuleContextTestCase
         final Properties properties = new Properties();
         properties.put("1", String.format("java.lang.String,%s=%s", APPLY_TO_ARTIFACT_TYPE_PARAMETER_KEY, APP.getAsString()));
         properties.put("2", String.format("java.util.Properties,%s=%s", APPLY_TO_ARTIFACT_TYPE_PARAMETER_KEY, DOMAIN.getAsString()));
-        properties.put("3", String.format("java.util.ArrayList,%s=%s", APPLY_TO_ARTIFACT_TYPE_PARAMETER_KEY, ArtifactType.ALL.getAsString()));
+        properties.put("3",
+                String.format("java.util.ArrayList,%s=%s", APPLY_TO_ARTIFACT_TYPE_PARAMETER_KEY, ArtifactType.ALL.getAsString()));
         properties.put("jms.singletx.transaction.resource1", String.format("%s,optional)", TEST_TRANSACTION_FACTORY_CLASS));
         properties.put("test.singletx.transaction.factory1", FakeTransactionFactory.class.getName());
         properties.put("test.singletx.transaction.resource1", FakeTransactionResource.class.getName());

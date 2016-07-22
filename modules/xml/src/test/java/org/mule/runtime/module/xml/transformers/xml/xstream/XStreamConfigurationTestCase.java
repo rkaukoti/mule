@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.module.xml.transformers.xml.xstream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.module.xml.transformer.AbstractXStreamTransformer;
 import org.mule.tck.testmodels.fruit.Apple;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class XStreamConfigurationTestCase extends FunctionalTestCase
 {
@@ -28,7 +27,7 @@ public class XStreamConfigurationTestCase extends FunctionalTestCase
     public void testConfig() throws Exception
     {
         AbstractXStreamTransformer transformer =
-            (AbstractXStreamTransformer)muleContext.getRegistry().lookupTransformer("ObjectToXml");
+                (AbstractXStreamTransformer) muleContext.getRegistry().lookupTransformer("ObjectToXml");
 
         assertNotNull(transformer);
         assertNotNull(transformer.getAliases());

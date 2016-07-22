@@ -6,14 +6,13 @@
  */
 package org.mule.runtime.core.util;
 
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -86,8 +85,8 @@ public class SystemUtilsTestCase extends AbstractMuleTestCase
         expected = Collections.singletonMap("key", "quoted");
         assertEquals(expected, SystemUtils.parsePropertyDefinitions("-Dkey=\"quoted\""));
 
-        expected = MapUtils.mapWithKeysAndValues(HashMap.class, new String[]{"key", "foo"}, new String[]{
-            "-Dvalue", "bar"});
+        expected = MapUtils.mapWithKeysAndValues(HashMap.class, new String[] {"key", "foo"}, new String[] {
+                "-Dvalue", "bar"});
         assertEquals(expected, SystemUtils.parsePropertyDefinitions("-Dkey=-Dvalue -Dfoo=bar"));
 
         assertEquals(Collections.EMPTY_MAP, SystemUtils.parsePropertyDefinitions("-D=-Dfoo-D== =foo"));
@@ -95,8 +94,8 @@ public class SystemUtilsTestCase extends AbstractMuleTestCase
         expected = Collections.singletonMap("key", "split value");
         assertEquals(expected, SystemUtils.parsePropertyDefinitions("-Dkey=\"split value\""));
 
-        expected = MapUtils.mapWithKeysAndValues(HashMap.class, new String[]{"key1", "key2"}, new String[]{
-            "split one", "split two"});
+        expected = MapUtils.mapWithKeysAndValues(HashMap.class, new String[] {"key1", "key2"}, new String[] {
+                "split one", "split two"});
         input = "-Dkey1=\"split one\" -Dkey2=\"split two\" ";
         assertEquals(expected, SystemUtils.parsePropertyDefinitions(input));
 
@@ -104,8 +103,8 @@ public class SystemUtilsTestCase extends AbstractMuleTestCase
         input = "-Dkey=\"open end";
         assertEquals(expected, SystemUtils.parsePropertyDefinitions(input));
 
-        expected = MapUtils.mapWithKeysAndValues(HashMap.class, new String[]{"keyOnly", "mule.foo",
-            "mule.bar"}, new String[]{"true", "xfoo", "xbar"});
+        expected = MapUtils.mapWithKeysAndValues(HashMap.class, new String[] {"keyOnly", "mule.foo",
+                                                                              "mule.bar"}, new String[] {"true", "xfoo", "xbar"});
         input = "  standalone key=value -D -D= -DkeyOnly -D=noKey -Dmule.foo=xfoo -Dmule.bar=xbar ";
         assertEquals(expected, SystemUtils.parsePropertyDefinitions(input));
     }

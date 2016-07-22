@@ -15,13 +15,12 @@ import org.mule.runtime.core.api.object.ObjectFactory;
 import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.runtime.core.util.BeanUtils;
 import org.mule.runtime.core.util.ClassUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Creates object instances based on the class and sets any properties.  This factory is also responsible for applying
@@ -115,8 +114,8 @@ public abstract class AbstractObjectFactory implements ObjectFactory, FlowConstr
      * Creates an initialized object instance based on the class and sets any properties.
      * This method handles all injection of properties for the resulting object
      *
-     * @param muleContext the current {@link org.mule.runtime.core.api.MuleContext} instance. This can be used for performing registry lookups
-     *                    applying processors to newly created objects or even firing custom notifications
+     * @param muleContext the current {@link org.mule.runtime.core.api.MuleContext} instance. This can be used for performing registry
+     *                    lookups applying processors to newly created objects or even firing custom notifications
      * @throws Exception Can throw any type of exception while creating a new object
      */
     public Object getInstance(MuleContext muleContext) throws Exception

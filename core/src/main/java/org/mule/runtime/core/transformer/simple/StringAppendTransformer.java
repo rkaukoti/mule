@@ -33,6 +33,11 @@ public class StringAppendTransformer extends AbstractTransformer
         setReturnDataType(DataType.STRING);
     }
 
+    public static String append(String append, String msg)
+    {
+        return msg + append;
+    }
+
     @Override
     protected Object doTransform(Object src, Charset encoding) throws TransformerException
     {
@@ -59,11 +64,6 @@ public class StringAppendTransformer extends AbstractTransformer
         }
 
         return append(message, string);
-    }
-
-    public static String append(String append, String msg)
-    {
-        return msg + append;
     }
 
     public String getMessage()

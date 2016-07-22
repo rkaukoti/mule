@@ -23,8 +23,6 @@ public interface ThrottlingPhaseTemplate extends MessageProcessTemplate
 
     /**
      * Discards the message due to ThrottlingPolicy configured for the {@link org.mule.runtime.core.api.source.MessageSource} is exceeded
-     *
-     * @throws MuleException
      */
     void discardMessageOnThrottlingExceeded() throws MuleException;
 
@@ -35,13 +33,14 @@ public interface ThrottlingPhaseTemplate extends MessageProcessTemplate
      * Not all throttling policy supports statistics so this method may not be called
      *
      * @param remainingRequestInCurrentPeriod the remaining allowed messages in the current period
-     * @param maximumRequestAllowedPerPeriod the maximum allowed messages in a period
-     * @param timeUntilNextPeriodInMillis time in milliseconds until the next period starts
+     * @param maximumRequestAllowedPerPeriod  the maximum allowed messages in a period
+     * @param timeUntilNextPeriodInMillis     time in milliseconds until the next period starts
      */
     /*
        This should no change in the future. The other option was to send the ThrottlingPolicyStatistics object but
        as CE transports are using this behavior it would involve moving the ThrottlingPolicyStatistics to CE.
     */
-    void setThrottlingPolicyStatistics(long remainingRequestInCurrentPeriod, long maximumRequestAllowedPerPeriod, long timeUntilNextPeriodInMillis);
+    void setThrottlingPolicyStatistics(long remainingRequestInCurrentPeriod, long maximumRequestAllowedPerPeriod,
+                                       long timeUntilNextPeriodInMillis);
 
 }

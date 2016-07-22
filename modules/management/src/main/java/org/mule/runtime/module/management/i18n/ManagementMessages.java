@@ -12,7 +12,7 @@ import org.mule.runtime.core.config.i18n.MessageFactory;
 public class ManagementMessages extends MessageFactory
 {
     private static final ManagementMessages factory = new ManagementMessages();
-    
+
     private static final String BUNDLE_PATH = getBundlePath("management");
 
     public static Message createOrLocateShouldBeSet()

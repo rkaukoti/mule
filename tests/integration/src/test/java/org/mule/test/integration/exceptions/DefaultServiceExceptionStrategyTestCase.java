@@ -6,13 +6,7 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.functional.exceptions.FunctionalTestException;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
@@ -29,7 +23,13 @@ import org.mule.tck.probe.Prober;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class DefaultServiceExceptionStrategyTestCase extends FunctionalTestCase
 {
@@ -49,8 +49,8 @@ public class DefaultServiceExceptionStrategyTestCase extends FunctionalTestCase
         assertNotNull(flowConstruct.getExceptionListener());
         assertTrue(flowConstruct.getExceptionListener() instanceof DefaultMessagingExceptionStrategy);
         assertEquals(1,
-            ((DefaultMessagingExceptionStrategy) flowConstruct.getExceptionListener()).getMessageProcessors()
-                .size());
+                ((DefaultMessagingExceptionStrategy) flowConstruct.getExceptionListener()).getMessageProcessors()
+                                                                                          .size());
 
         flowRunner("testService1").withPayload(getTestMuleMessage()).asynchronously().run();
 
@@ -63,7 +63,7 @@ public class DefaultServiceExceptionStrategyTestCase extends FunctionalTestCase
     @Test
     public void testDefaultExceptionStrategyMultipleEndpoints() throws Exception
     {
-        FlowConstruct flowConstruct =  muleContext.getRegistry().lookupFlowConstruct("testService2");
+        FlowConstruct flowConstruct = muleContext.getRegistry().lookupFlowConstruct("testService2");
 
         assertNotNull(flowConstruct);
         assertNotNull(flowConstruct.getExceptionListener());
@@ -111,7 +111,7 @@ public class DefaultServiceExceptionStrategyTestCase extends FunctionalTestCase
         assertTrue(message.getPayload() instanceof ExceptionMessage);
         Object payload = ((ExceptionMessage) message.getPayload()).getPayload();
         assertTrue("payload shoud be a Map, but is " + payload.getClass().getName(),
-            payload instanceof Map<?, ?>);
+                payload instanceof Map<?, ?>);
         Map<?, ?> payloadMap = (Map<?, ?>) payload;
         assertEquals("value1", payloadMap.get("key1"));
         assertEquals("value2", payloadMap.get("key2"));

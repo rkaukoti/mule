@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.core.transformer.graph;
 
+import org.jgrapht.DirectedGraph;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Converter;
 import org.mule.runtime.core.transformer.CompositeConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
-import org.jgrapht.DirectedGraph;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Looks for available conversion paths inside a transformation graph.
@@ -39,8 +38,7 @@ public class TransformationGraphLookupStrategy
      *
      * @param source data type to be converted
      * @param target data type to be converted to
-     * @return a list of {@link Converter} that are able to convert from the
-     *         source to the target data types.
+     * @return a list of {@link Converter} that are able to convert from the source to the target data types.
      */
     public List<Converter> lookupConverters(DataType source, DataType target)
     {

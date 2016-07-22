@@ -19,7 +19,7 @@ import java.util.Map;
  * expression can be used to access, and optionally mutate, both Mule configuration and the current message
  * being processed via expression variables. Runtime exceptions should be caught and wrapped in a Mule
  * {@link ExpressionRuntimeException} before being re-thrown.
- * 
+ *
  * @since 3.3.0
  */
 public interface ExpressionLanguage
@@ -28,8 +28,8 @@ public interface ExpressionLanguage
     /**
      * Execute the expression returning the result. The expression will be executed by the expression language
      * implementation without making any event or message context available.
-     * 
-     * @param <T> the return type expected
+     *
+     * @param <T>        the return type expected
      * @param expression the expression to be executed
      * @return the result of execution of the expression.
      */
@@ -41,10 +41,10 @@ public interface ExpressionLanguage
      * provided that will be able to the expression when executed. Variable provided in the map will only be
      * available if there are no conflicts with context variables provided by the expression language
      * implementation.
-     * 
-     * @param <T> the return type expected
+     *
+     * @param <T>        the return type expected
      * @param expression the expression to be executed
-     * @param vars a map of expression variables
+     * @param vars       a map of expression variables
      * @return the result of execution of the expression.
      */
     <T> T evaluate(String expression, Map<String, Object> vars);
@@ -52,10 +52,10 @@ public interface ExpressionLanguage
     /**
      * Execute the expression returning the result. The expression will be executed with MuleEvent context,
      * meaning the expression language implementation should provided access to the message.
-     * 
-     * @param <T> the return type expected
+     *
+     * @param <T>        the return type expected
      * @param expression the expression to be executed
-     * @param event the current event being processed
+     * @param event      the current event being processed
      * @return the result of execution of the expression.
      */
     <T> T evaluate(String expression, MuleEvent event);
@@ -66,11 +66,11 @@ public interface ExpressionLanguage
      * variables can be provided that will be able to the expression when executed. Variable provided in the
      * map will only be available if there are no conflict with context variables provided by the expression
      * language implementation.
-     * 
-     * @param <T> the return type expected
+     *
+     * @param <T>        the return type expected
      * @param expression the expression to be executed
-     * @param event the current event being processed
-     * @param vars a map of expression variables
+     * @param event      the current event being processed
+     * @param vars       a map of expression variables
      * @return the result of execution of the expression.
      */
     <T> T evaluate(String expression, MuleEvent event, Map<String, Object> vars);
@@ -78,18 +78,12 @@ public interface ExpressionLanguage
     /**
      * Validates the expression returning true is the expression is valid, false otherwise.. All implementors
      * should should validate expression syntactically. Semantic validation is optional.
-     * 
-     * @param expression
-     * @return
      */
     boolean isValid(String expression);
 
     /**
      * Validates the expression returning. An {@link InvalidExpressionException} will be thrown is the All
      * implementors should should validate expression syntactically. Semantic validation is optional.
-     * 
-     * @param expression
-     * @return
      */
     void validate(String expression) throws InvalidExpressionException;
 
@@ -97,8 +91,8 @@ public interface ExpressionLanguage
      * Enriches a message
      *
      * @param expression a single expression i.e. header://foo that defines how the message should be enriched
-     * @param event The event to be enriched
-     * @param value The typed value used for enrichment
+     * @param event      The event to be enriched
+     * @param value      The typed value used for enrichment
      */
     void enrich(String expression, MuleEvent event, TypedValue value);
 

@@ -6,16 +6,11 @@
  */
 package org.mule.runtime.module.launcher;
 
-import static java.util.Collections.emptyList;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mule.runtime.module.launcher.MuleFoldersUtil.getAppClassesFolder;
-import static org.mule.runtime.module.launcher.MuleFoldersUtil.getAppLibFolder;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.util.FileUtils;
 import org.mule.runtime.module.artifact.classloader.ClassLoaderLookupPolicy;
@@ -28,11 +23,16 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import static java.util.Collections.emptyList;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mule.runtime.module.launcher.MuleFoldersUtil.getAppClassesFolder;
+import static org.mule.runtime.module.launcher.MuleFoldersUtil.getAppLibFolder;
 
 @SmallTest
 public class MuleApplicationClassLoaderTestCase extends AbstractMuleTestCase
@@ -89,7 +89,8 @@ public class MuleApplicationClassLoaderTestCase extends AbstractMuleTestCase
         FileUtils.stringToFile(new File(domainDir, RESOURCE_JUST_IN_DOMAIN).getAbsolutePath(), "Some text");
 
         // Create app class loader
-        domainCL = new MuleSharedDomainClassLoader(DOMAIN_NAME, Thread.currentThread().getContextClassLoader(), mock(ClassLoaderLookupPolicy.class), emptyList());
+        domainCL = new MuleSharedDomainClassLoader(DOMAIN_NAME, Thread.currentThread().getContextClassLoader(),
+                mock(ClassLoaderLookupPolicy.class), emptyList());
 
         appCL = new MuleApplicationClassLoader(APP_NAME, domainCL, null, urls, mock(ClassLoaderLookupPolicy.class), emptyList());
     }

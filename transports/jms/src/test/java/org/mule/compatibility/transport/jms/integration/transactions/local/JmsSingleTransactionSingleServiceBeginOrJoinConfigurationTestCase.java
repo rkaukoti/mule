@@ -12,7 +12,7 @@ import org.mule.compatibility.transport.jms.integration.AbstractJmsSingleTransac
  * Test all combinations of (inbound) BEGIN_OR_JOIN.  They should all pass.
  */
 public class JmsSingleTransactionSingleServiceBeginOrJoinConfigurationTestCase extends
-    AbstractJmsSingleTransactionSingleServiceTestCase
+        AbstractJmsSingleTransactionSingleServiceTestCase
 {
     @Override
     protected String getConfigFile()

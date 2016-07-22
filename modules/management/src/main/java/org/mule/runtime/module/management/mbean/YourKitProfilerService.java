@@ -6,24 +6,22 @@
  */
 package org.mule.runtime.module.management.mbean;
 
-import org.mule.runtime.module.management.i18n.ManagementMessages;
-
 import com.yourkit.api.Controller;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
+import org.mule.runtime.module.management.i18n.ManagementMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class YourKitProfilerService implements YourKitProfilerServiceMBean
 {
+    private final Controller controller;
+    private final AtomicBoolean capturing = new AtomicBoolean(false);
     /**
      * logger used by this class
      */
     protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
-    private final Controller controller;
-    private final AtomicBoolean capturing = new AtomicBoolean(false);
 
     public YourKitProfilerService() throws Exception
     {
@@ -185,8 +183,8 @@ public class YourKitProfilerService implements YourKitProfilerServiceMBean
     public long getStatus() throws java.lang.Exception
     {
         return (this.capturing.get())
-                                     ? (controller.getStatus() | SNAPSHOT_CAPTURING)
-                                     : controller.getStatus();
+                ? (controller.getStatus() | SNAPSHOT_CAPTURING)
+                : controller.getStatus();
     }
 
 }

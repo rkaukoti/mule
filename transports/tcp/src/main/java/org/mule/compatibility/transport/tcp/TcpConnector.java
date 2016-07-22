@@ -6,6 +6,7 @@
  */
 package org.mule.compatibility.transport.tcp;
 
+import org.apache.commons.pool.impl.GenericKeyedObjectPool;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.core.api.transport.MessageDispatcherFactory;
@@ -32,8 +33,6 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.URI;
 
-import org.apache.commons.pool.impl.GenericKeyedObjectPool;
-
 /**
  * <code>TcpConnector</code> can bind or sent to a given TCP port on a given host.
  * Other socket-based transports can be built on top of this class by providing the
@@ -46,7 +45,9 @@ public class TcpConnector extends AbstractConnector
     public static final String SEND_TCP_NO_DELAY_SYSTEM_PROPERTY = MuleProperties.SYSTEM_PROPERTY_PREFIX
                                                                    + "transport.tcp.defaultSendTcpNoDelay";
 
-    /** Property can be set on the endpoint to configure how the socket is managed */
+    /**
+     * Property can be set on the endpoint to configure how the socket is managed
+     */
     public static final String KEEP_SEND_SOCKET_OPEN_PROPERTY = "keepSendSocketOpen";
     public static final int DEFAULT_SOCKET_TIMEOUT = INT_VALUE_NOT_SET;
     public static final int DEFAULT_SO_LINGER = INT_VALUE_NOT_SET;
@@ -76,17 +77,17 @@ public class TcpConnector extends AbstractConnector
     private ExpiryMonitor keepAliveMonitor;
     private Boolean failOnUnresolvedHost = Boolean.TRUE;
 
-    /** 
-     * If set, the socket is not closed after sending a message.  This attribute 
+    /**
+     * If set, the socket is not closed after sending a message.  This attribute
      * only applies when sending data over a socket (Client).
      */
     private boolean keepSendSocketOpen = false;
 
     /**
-     * Enables SO_KEEPALIVE behavior on open sockets. This automatically checks 
-     * socket connections that are open but unused for long periods and closes 
-     * them if the connection becomes unavailable.  This is a property on the 
-     * socket itself and is used by a server socket to control whether 
+     * Enables SO_KEEPALIVE behavior on open sockets. This automatically checks
+     * socket connections that are open but unused for long periods and closes
+     * them if the connection becomes unavailable.  This is a property on the
+     * socket itself and is used by a server socket to control whether
      * connections to the server are kept alive before they are recycled.
      */
     private boolean keepAlive = false;
@@ -102,6 +103,18 @@ public class TcpConnector extends AbstractConnector
         setSocketFactory(new TcpSocketFactory());
         setServerSocketFactory(new TcpServerSocketFactory());
         setTcpProtocol(new SafeProtocol());
+    }
+
+    private static int valueOrDefault(int value, int threshhold, int deflt)
+    {
+        if (value < threshhold)
+        {
+            return deflt;
+        }
+        else
+        {
+            return value;
+        }
     }
 
     public void configureSocket(boolean client, Socket socket) throws SocketException
@@ -179,8 +192,8 @@ public class TcpConnector extends AbstractConnector
         // Use connector's classloader so that other temporary classloaders
         // aren't used when things are started lazily or from elsewhere.
         final String monitorName = String.format("%s%s.socket",
-                                                 ThreadNameHelper.getPrefix(muleContext),
-                                                 getName());
+                ThreadNameHelper.getPrefix(muleContext),
+                getName());
         keepAliveMonitor = new ExpiryMonitor(monitorName, 1000, this.getClass().getClassLoader(), muleContext, false);
     }
 
@@ -196,7 +209,7 @@ public class TcpConnector extends AbstractConnector
         {
             logger.warn("Failed to close dispatcher socket pool: " + e.getMessage());
         }
-        
+
         keepAliveMonitor.dispose();
     }
 
@@ -219,8 +232,8 @@ public class TcpConnector extends AbstractConnector
         if (logger.isDebugEnabled())
         {
             logger.debug("borrowed socket, "
-                    + (socket.isClosed() ? "closed" : "open") 
-                    + "; debt " + socketsPool.getNumActive());
+                         + (socket.isClosed() ? "closed" : "open")
+                         + "; debt " + socketsPool.getNumActive());
         }
         return socket;
     }
@@ -253,7 +266,7 @@ public class TcpConnector extends AbstractConnector
         {
             // This shouldn't happen
             throw new IllegalStateException("could not get socket for endpoint: "
-                    + endpoint.getEndpointURI().getAddress());
+                                            + endpoint.getEndpointURI().getAddress());
         }
         try
         {
@@ -291,13 +304,13 @@ public class TcpConnector extends AbstractConnector
         // template method
     }
 
+    // getters and setters ---------------------------------------------------------
+
     @Override
     public String getProtocol()
     {
         return TCP;
     }
-
-    // getters and setters ---------------------------------------------------------
 
     public boolean isKeepSendSocketOpen()
     {
@@ -338,7 +351,7 @@ public class TcpConnector extends AbstractConnector
 
     public void setConnectionTimeout(int timeout)
     {
-        this.connectionTimeout= valueOrDefault(timeout, 0, DEFAULT_SOCKET_TIMEOUT);
+        this.connectionTimeout = valueOrDefault(timeout, 0, DEFAULT_SOCKET_TIMEOUT);
     }
 
     public int getServerSoTimeout()
@@ -361,14 +374,18 @@ public class TcpConnector extends AbstractConnector
         this.socketMaxWait = valueOrDefault(timeout, 0, DEFAULT_WAIT_TIMEOUT);
     }
 
-    /** @deprecated Should use {@link #getSendBufferSize()} or {@link #getReceiveBufferSize()} */
+    /**
+     * @deprecated Should use {@link #getSendBufferSize()} or {@link #getReceiveBufferSize()}
+     */
     @Deprecated
     public int getBufferSize()
     {
         return sendBufferSize;
     }
 
-    /** @deprecated Should use {@link #setSendBufferSize(int)} or {@link #setReceiveBufferSize(int)} */
+    /**
+     * @deprecated Should use {@link #setSendBufferSize(int)} or {@link #setReceiveBufferSize(int)}
+     */
     @Deprecated
     public void setBufferSize(int bufferSize)
     {
@@ -425,7 +442,6 @@ public class TcpConnector extends AbstractConnector
     }
 
     /**
-     * @param backlog
      * @deprecated should use {@link #setReceiveBacklog(int)}
      */
     @Deprecated
@@ -470,14 +486,14 @@ public class TcpConnector extends AbstractConnector
         this.sendTcpNoDelay = sendTcpNoDelay;
     }
 
-    protected void setSocketFactory(AbstractTcpSocketFactory socketFactory)
-    {
-        this.socketFactory = socketFactory;
-    }
-
     protected AbstractTcpSocketFactory getSocketFactory()
     {
         return socketFactory;
+    }
+
+    protected void setSocketFactory(AbstractTcpSocketFactory socketFactory)
+    {
+        this.socketFactory = socketFactory;
     }
 
     public SimpleServerSocketFactory getServerSocketFactory()
@@ -493,18 +509,6 @@ public class TcpConnector extends AbstractConnector
     protected ServerSocket getServerSocket(URI uri) throws IOException
     {
         return getServerSocketFactory().createServerSocket(uri, getReceiveBacklog(), isReuseAddress());
-    }
-
-    private static int valueOrDefault(int value, int threshhold, int deflt)
-    {
-        if (value < threshhold)
-        {
-            return deflt;
-        }
-        else
-        {
-            return value;
-        }
     }
 
     /**
@@ -529,7 +533,7 @@ public class TcpConnector extends AbstractConnector
     {
         return keepAliveMonitor;
     }
-    
+
     /**
      * @return keep alive timeout in Milliseconds
      */
@@ -537,7 +541,7 @@ public class TcpConnector extends AbstractConnector
     {
         return keepAliveTimeout;
     }
-    
+
     /**
      * Sets the keep alive timeout (in Milliseconds)
      */
@@ -545,11 +549,12 @@ public class TcpConnector extends AbstractConnector
     {
         this.keepAliveTimeout = keepAliveTimeout;
     }
-    
+
     @Override
     public void setDispatcherFactory(MessageDispatcherFactory dispatcherFactory)
     {
-        if (this.dispatcherFactory == null) {
+        if (this.dispatcherFactory == null)
+        {
             super.setDispatcherFactory(dispatcherFactory);
         }
     }
@@ -579,12 +584,12 @@ public class TcpConnector extends AbstractConnector
         return socketsPool.getMaxWait();
     }
 
-    public Boolean isFailOnUnresolvedHost() 
+    public Boolean isFailOnUnresolvedHost()
     {
         return failOnUnresolvedHost;
     }
 
-    public void setFailOnUnresolvedHost(Boolean failOnUnresolvedHost) 
+    public void setFailOnUnresolvedHost(Boolean failOnUnresolvedHost)
     {
         this.failOnUnresolvedHost = failOnUnresolvedHost;
     }

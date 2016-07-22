@@ -40,7 +40,8 @@ public class EndpointTransactionalInterceptingMessageProcessor extends AbstractI
         }
         else
         {
-            ExecutionTemplate<MuleEvent> executionTemplate = TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, transactionConfig);
+            ExecutionTemplate<MuleEvent> executionTemplate =
+                    TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, transactionConfig);
             ExecutionCallback<MuleEvent> processingCallback = new ExecutionCallback<MuleEvent>()
             {
                 @Override
@@ -61,7 +62,7 @@ public class EndpointTransactionalInterceptingMessageProcessor extends AbstractI
             catch (Exception e)
             {
                 throw new DefaultMuleException(CoreMessages.errorInvokingMessageProcessorWithinTransaction(
-                    next, transactionConfig), e);
+                        next, transactionConfig), e);
             }
         }
     }

@@ -7,8 +7,8 @@
 
 package org.mule.runtime.module.db.internal.domain.database;
 
-import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.runtime.api.meta.NamedObject;
+import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.runtime.core.api.retry.RetryPolicyTemplate;
 import org.mule.runtime.module.db.internal.domain.connection.ConnectionCreationException;
 import org.mule.runtime.module.db.internal.domain.connection.ConnectionFactory;
@@ -40,33 +40,6 @@ import javax.xml.namespace.QName;
  */
 public class GenericDbConfigFactory implements ConfigurableDbConfigFactory
 {
-    private class AnnotatedConnectionFactory extends AbstractAnnotatedObject implements ConnectionFactory, NamedObject
-    {
-
-        private String name;
-        private ConnectionFactory inner;
-
-        public AnnotatedConnectionFactory(String name, ConnectionFactory inner, Map<QName, Object> annotations)
-        {
-            this.name = name;
-            this.inner = inner;
-            setAnnotations(annotations);
-        }
-
-        @Override
-        public String getName()
-        {
-            return name;
-        }
-
-        @Override
-        public Connection create(DataSource dataSource) throws ConnectionCreationException
-        {
-            return inner.create(dataSource);
-        }
-
-    }
-
     private List<DbType> customDataTypes;
     private RetryPolicyTemplate retryPolicyTemplate;
 
@@ -82,12 +55,15 @@ public class GenericDbConfigFactory implements ConfigurableDbConfigFactory
         }
         else
         {
-            connectionFactory = new RetryConnectionFactory(retryPolicyTemplate, new AnnotatedConnectionFactory(name, simpleConnectionFactory, annotations));
+            connectionFactory = new RetryConnectionFactory(retryPolicyTemplate,
+                    new AnnotatedConnectionFactory(name, simpleConnectionFactory, annotations));
         }
 
         DbTypeManager dbTypeManager = doCreateTypeManager();
 
-        DbConnectionFactory dbConnectionFactory = new TransactionalDbConnectionFactory(new TransactionCoordinationDbTransactionManager(), dbTypeManager, connectionFactory, dataSource);
+        DbConnectionFactory dbConnectionFactory =
+                new TransactionalDbConnectionFactory(new TransactionCoordinationDbTransactionManager(), dbTypeManager, connectionFactory,
+                        dataSource);
 
         return doCreateDbConfig(dataSource, dbTypeManager, dbConnectionFactory, name);
     }
@@ -111,7 +87,8 @@ public class GenericDbConfigFactory implements ConfigurableDbConfigFactory
         return typeMapping;
     }
 
-    protected DbConfig doCreateDbConfig(DataSource datasource, DbTypeManager dbTypeManager, DbConnectionFactory dbConnectionFactory, String name)
+    protected DbConfig doCreateDbConfig(DataSource datasource, DbTypeManager dbTypeManager, DbConnectionFactory dbConnectionFactory,
+                                        String name)
     {
         return new GenericDbConfig(datasource, name, dbTypeManager, dbConnectionFactory);
     }
@@ -151,5 +128,32 @@ public class GenericDbConfigFactory implements ConfigurableDbConfigFactory
     public void setRetryPolicyTemplate(RetryPolicyTemplate retryPolicyTemplate)
     {
         this.retryPolicyTemplate = retryPolicyTemplate;
+    }
+
+    private class AnnotatedConnectionFactory extends AbstractAnnotatedObject implements ConnectionFactory, NamedObject
+    {
+
+        private String name;
+        private ConnectionFactory inner;
+
+        public AnnotatedConnectionFactory(String name, ConnectionFactory inner, Map<QName, Object> annotations)
+        {
+            this.name = name;
+            this.inner = inner;
+            setAnnotations(annotations);
+        }
+
+        @Override
+        public String getName()
+        {
+            return name;
+        }
+
+        @Override
+        public Connection create(DataSource dataSource) throws ConnectionCreationException
+        {
+            return inner.create(dataSource);
+        }
+
     }
 }

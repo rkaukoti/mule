@@ -6,13 +6,14 @@
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
-import static org.mule.runtime.config.spring.dsl.spring.DslSimpleType.SIMPLE_TYPE_VALUE_PARAMETER_NAME;
-import static org.mule.runtime.config.spring.dsl.spring.DslSimpleType.isSimpleType;
 import org.mule.runtime.config.spring.dsl.api.TypeConverter;
 import org.mule.runtime.config.spring.dsl.model.ComponentModel;
 import org.mule.runtime.config.spring.dsl.processor.ObjectTypeVisitor;
 
 import java.util.Optional;
+
+import static org.mule.runtime.config.spring.dsl.spring.DslSimpleType.SIMPLE_TYPE_VALUE_PARAMETER_NAME;
+import static org.mule.runtime.config.spring.dsl.spring.DslSimpleType.isSimpleType;
 
 /**
  * Bean definition creator for elements that end up representing simple types.

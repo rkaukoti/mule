@@ -1,5 +1,5 @@
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
           http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 
@@ -43,9 +43,9 @@
     </flow>
 
     <asynchronous-processing-strategy name="Service9ProcessingStrategy"
-        maxBufferSize="5" maxThreads="20" minThreads="5" poolExhaustedAction="RUN" threadTTL="500"
-        threadWaitTimeout="500" />
-    
+                                      maxBufferSize="5" maxThreads="20" minThreads="5" poolExhaustedAction="RUN" threadTTL="500"
+                                      threadWaitTimeout="500"/>
+
     <flow name="Service10">
         <collection-aggregator timeout="60000" failOnTimeout="false"/>
     </flow>

@@ -6,11 +6,18 @@
  */
 package org.mule.compatibility.transport.http;
 
+import org.apache.commons.httpclient.ChunkedOutputStream;
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpParser;
+import org.apache.commons.httpclient.StatusLine;
+import org.apache.commons.io.IOUtils;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.message.OutputHandler;
 import org.mule.runtime.core.util.SystemUtils;
 import org.mule.runtime.core.util.concurrent.Latch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
@@ -33,14 +40,6 @@ import javax.net.ssl.HandshakeCompletedListener;
 import javax.net.ssl.SSLPeerUnverifiedException;
 import javax.net.ssl.SSLSocket;
 
-import org.apache.commons.httpclient.ChunkedOutputStream;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpParser;
-import org.apache.commons.httpclient.StatusLine;
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * A connection to the SimpleHttpServer.
  */
@@ -48,13 +47,12 @@ public class HttpServerConnection implements HandshakeCompletedListener
 {
 
     private static final Logger logger = LoggerFactory.getLogger(HttpServerConnection.class);
-
-    private Socket socket;
     private final InputStream in;
     private final OutputStream out;
+    private final Charset encoding;
+    private Socket socket;
     // this should rather be isKeepSocketOpen as this is the main purpose of this flag
     private boolean keepAlive = false;
-    private final Charset encoding;
     private HttpRequest cachedRequest;
     private Latch sslSocketHandshakeComplete = new Latch();
     private Certificate[] peerCertificateChain;
@@ -94,31 +92,6 @@ public class HttpServerConnection implements HandshakeCompletedListener
         this.in = new BufferedInputStream(socket.getInputStream());
         this.out = new DataOutputStream(socket.getOutputStream());
         this.encoding = encoding;
-    }
-
-    private void setSocketTcpNoDelay(boolean tcpNoDelay) throws IOException
-    {
-        try
-        {
-            socket.setTcpNoDelay(tcpNoDelay);
-        }
-        catch (SocketException se)
-        {
-            if (SystemUtils.IS_OS_SOLARIS || SystemUtils.IS_OS_SUN_OS)
-            {
-                // this is a known Solaris bug, see
-                // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6378870
-
-                if (logger.isDebugEnabled())
-                {
-                    logger.debug("Failed to set tcpNoDelay on socket", se);
-                }
-            }
-            else
-            {
-                throw se;
-            }
-        }
     }
 
     public synchronized void close()
@@ -170,14 +143,14 @@ public class HttpServerConnection implements HandshakeCompletedListener
         return this.socket != null;
     }
 
-    public void setKeepAlive(boolean b)
-    {
-        this.keepAlive = b;
-    }
-
     public boolean isKeepAlive()
     {
         return this.keepAlive;
+    }
+
+    public void setKeepAlive(boolean b)
+    {
+        this.keepAlive = b;
     }
 
     public InputStream getInputStream()
@@ -300,17 +273,16 @@ public class HttpServerConnection implements HandshakeCompletedListener
 
     public void writeResponse(final HttpResponse response) throws IOException
     {
-        writeResponse(response, new HashMap<String,String>());
+        writeResponse(response, new HashMap<String, String>());
     }
 
     /**
      * Write an HttpResponse and add the map entries as headers
      *
      * @param response http response with the content of the response
-     * @param headers headers to add to the http response besides the one already contained in the HttpResponse object
-     * @throws IOException
+     * @param headers  headers to add to the http response besides the one already contained in the HttpResponse object
      */
-    public void writeResponse(final HttpResponse response, Map<String,String> headers) throws IOException
+    public void writeResponse(final HttpResponse response, Map<String, String> headers) throws IOException
     {
         if (response == null)
         {
@@ -364,9 +336,6 @@ public class HttpServerConnection implements HandshakeCompletedListener
 
     /**
      * Returns the path of the http request without the http parameters encoded in the URL
-     *
-     * @return
-     * @throws IOException
      */
     public String getUrlWithoutRequestParams() throws IOException
     {
@@ -392,17 +361,15 @@ public class HttpServerConnection implements HandshakeCompletedListener
      */
     public void writeFailureResponse(int statusCode, String description) throws IOException
     {
-        writeFailureResponse(statusCode, description, new HashMap<String,String>());
+        writeFailureResponse(statusCode, description, new HashMap<String, String>());
     }
-
 
     /**
      * Sends a customer a failure response but also adds the headers in the headers map
      *
-     * @param statusCode status code of the failure response
+     * @param statusCode  status code of the failure response
      * @param description message to be send as the body
-     * @param headers headers to send with the failure response
-     * @throws IOException
+     * @param headers     headers to send with the failure response
      */
     public void writeFailureResponse(int statusCode, String description, Map<String, String> headers) throws IOException
     {
@@ -423,7 +390,6 @@ public class HttpServerConnection implements HandshakeCompletedListener
 
     /**
      * @return the uri for the request including scheme, host, port and path. i.e: http://192.168.1.1:7777/service/orders
-     * @throws IOException
      */
     public String getFullUri() throws IOException
     {
@@ -433,7 +399,8 @@ public class HttpServerConnection implements HandshakeCompletedListener
             scheme = "https";
         }
         InetSocketAddress localSocketAddress = (InetSocketAddress) socket.getLocalSocketAddress();
-        return String.format("%s://%s:%d%s", scheme, localSocketAddress.getHostName(), localSocketAddress.getPort(), readRequest().getUrlWithoutParams());
+        return String.format("%s://%s:%d%s", scheme, localSocketAddress.getHostName(), localSocketAddress.getPort(),
+                readRequest().getUrlWithoutParams());
     }
 
     /**
@@ -472,6 +439,31 @@ public class HttpServerConnection implements HandshakeCompletedListener
     public boolean isSocketTcpNoDelay() throws SocketException
     {
         return socket.getTcpNoDelay();
+    }
+
+    private void setSocketTcpNoDelay(boolean tcpNoDelay) throws IOException
+    {
+        try
+        {
+            socket.setTcpNoDelay(tcpNoDelay);
+        }
+        catch (SocketException se)
+        {
+            if (SystemUtils.IS_OS_SOLARIS || SystemUtils.IS_OS_SUN_OS)
+            {
+                // this is a known Solaris bug, see
+                // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6378870
+
+                if (logger.isDebugEnabled())
+                {
+                    logger.debug("Failed to set tcpNoDelay on socket", se);
+                }
+            }
+            else
+            {
+                throw se;
+            }
+        }
     }
 
     /**

@@ -6,12 +6,13 @@
  */
 package org.mule.runtime.module.extension.internal;
 
-import static org.mule.runtime.core.api.config.MuleProperties.PROPERTY_PREFIX;
+import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.api.tls.TlsContextFactory;
 import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.core.api.config.ThreadingProfile;
 import org.mule.runtime.extension.api.manifest.ExtensionManifest;
+
+import static org.mule.runtime.core.api.config.MuleProperties.PROPERTY_PREFIX;
 
 /**
  * Constants for the Extensions Framework
@@ -77,7 +78,8 @@ public class ExtensionProperties
     /**
      * The description of the parameter for configuring transactional actions
      */
-    public static final String TRANSACTIONAL_ACTION_PARAMETER_DESCRIPTION = "The type of joining action that operations can take regarding transactions.";
+    public static final String TRANSACTIONAL_ACTION_PARAMETER_DESCRIPTION =
+            "The type of joining action that operations can take regarding transactions.";
 
     private ExtensionProperties()
     {

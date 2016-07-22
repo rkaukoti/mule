@@ -6,9 +6,7 @@
  */
 package org.mule.compatibility.management.mbeans;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.module.management.agent.TransportsJmxApplicationAgent;
 import org.mule.compatibility.module.management.agent.mbean.ConnectorService;
 import org.mule.compatibility.module.management.agent.mbean.EndpointService;
@@ -24,7 +22,8 @@ import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectInstance;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Verify that expected MBeans are registered based on the config.
@@ -46,7 +45,8 @@ public class MBeansRegistrationTestCase extends FunctionalTestCase
     protected void doSetUp() throws Exception
     {
         super.doSetUp();
-        TransportsJmxApplicationAgent jmxAgent = (TransportsJmxApplicationAgent) muleContext.getRegistry().lookupAgent("transports-jmx-agent");
+        TransportsJmxApplicationAgent jmxAgent =
+                (TransportsJmxApplicationAgent) muleContext.getRegistry().lookupAgent("transports-jmx-agent");
         jmxSupport = jmxAgent.getJmxSupportFactory().getJmxSupport();
         domainName = jmxSupport.getDomainName(muleContext);
         mBeanServer = jmxAgent.getMBeanServer();
@@ -73,7 +73,7 @@ public class MBeansRegistrationTestCase extends FunctionalTestCase
     {
         muleContext.dispose();
         assertEquals("No MBeans should be registered after disposal of MuleContext", 0,
-            getMBeanClasses().size());
+                getMBeanClasses().size());
     }
 
     protected List<String> getMBeanClasses() throws MalformedObjectNameException

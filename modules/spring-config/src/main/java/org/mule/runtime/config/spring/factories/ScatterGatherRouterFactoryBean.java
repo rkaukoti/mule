@@ -16,12 +16,12 @@ import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.routing.AggregationStrategy;
 import org.mule.runtime.core.routing.ScatterGatherRouter;
+import org.springframework.beans.factory.FactoryBean;
 
 import java.util.List;
 
-import org.springframework.beans.factory.FactoryBean;
-
-public class ScatterGatherRouterFactoryBean extends AbstractAnnotatedObject implements FactoryBean<ScatterGatherRouter>, MuleContextAware, FlowConstructAware
+public class ScatterGatherRouterFactoryBean extends AbstractAnnotatedObject
+        implements FactoryBean<ScatterGatherRouter>, MuleContextAware, FlowConstructAware
 {
 
     private long timeout = 0;

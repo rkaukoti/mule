@@ -9,8 +9,8 @@ package org.mule.runtime.core.api;
 import org.mule.runtime.api.message.Attributes;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.MediaType;
-import org.mule.runtime.core.message.DefaultMuleMessageBuilderFactory;
 import org.mule.runtime.core.message.Correlation;
+import org.mule.runtime.core.message.DefaultMuleMessageBuilderFactory;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -65,9 +65,8 @@ public interface MuleMessage extends org.mule.runtime.api.message.MuleMessage, M
      * gets the unique identifier for the message. It's up to the implementation to
      * ensure a unique id
      *
-     * @return a unique message id. The Id should never be null. If the underlying
-     * transport does not have the notion of a message Id, one should be
-     * generated. The generated Id should be a UUID.
+     * @return a unique message id. The Id should never be null. If the underlying transport does not have the notion of a message Id, one
+     * should be generated. The generated Id should be a UUID.
      */
     String getUniqueId();
 
@@ -80,7 +79,7 @@ public interface MuleMessage extends org.mule.runtime.api.message.MuleMessage, M
 
     /**
      * Returns the correlation metadata of this message. See {@link Correlation}.
-     * 
+     *
      * @return the correlation metadata of this message.
      */
     Correlation getCorrelation();
@@ -126,25 +125,21 @@ public interface MuleMessage extends org.mule.runtime.api.message.MuleMessage, M
         Builder attributes(Attributes value);
 
         /**
-         * @param correlationId
          * @return this builder.
          */
         Builder correlationId(String correlationId);
 
         /**
-         * @param correlationSequence
          * @return this builder.
          */
         Builder correlationSequence(Integer correlationSequence);
 
         /**
-         * @param correlationGroupSize
          * @return this builder.
          */
         Builder correlationGroupSize(Integer correlationGroupSize);
 
         /**
-         * @param exceptionPayload
          * @return this builder.
          */
         Builder exceptionPayload(ExceptionPayload exceptionPayload);

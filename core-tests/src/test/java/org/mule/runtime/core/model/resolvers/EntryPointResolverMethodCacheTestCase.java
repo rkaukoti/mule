@@ -6,27 +6,28 @@
  */
 package org.mule.runtime.core.model.resolvers;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
+import junit.framework.AssertionFailedError;
+
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.model.InvocationResult;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.lang.reflect.Method;
 
-import junit.framework.AssertionFailedError;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 public class EntryPointResolverMethodCacheTestCase extends AbstractMuleTestCase
 {
-    
+
     private static final String METHOD = "aMethod";
-    
+
     @Test
     public void testMethodCaching() throws Exception
     {
-        Method method = this.getClass().getMethod(METHOD, new Class[] { String.class});
-        Method anotherMethod = AnotherClass.class.getMethod(METHOD, new Class[] { String.class});
+        Method method = this.getClass().getMethod(METHOD, new Class[] {String.class});
+        Method anotherMethod = AnotherClass.class.getMethod(METHOD, new Class[] {String.class});
 
         MuleEventContext eventContext = mock(MuleEventContext.class);
         MockEntryPointResolver epResolver = new MockEntryPointResolver();
@@ -43,12 +44,12 @@ public class EntryPointResolverMethodCacheTestCase extends AbstractMuleTestCase
         assertEquals(AnotherClass.class, anotherMethod.getDeclaringClass());
 
     }
-    
+
     public void aMethod(String payload)
     {
         // this method exists only for being cached in the test
     }
-    
+
     private static class MockEntryPointResolver extends AbstractEntryPointResolver
     {
         public InvocationResult invoke(Object component, MuleEventContext context) throws Exception
@@ -64,7 +65,7 @@ public class EntryPointResolverMethodCacheTestCase extends AbstractMuleTestCase
             // this method exists only for being cached in the test
         }
     }
-    
+
 }
 
 

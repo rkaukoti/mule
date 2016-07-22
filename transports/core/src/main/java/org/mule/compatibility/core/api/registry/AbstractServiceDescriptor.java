@@ -8,12 +8,11 @@ package org.mule.compatibility.core.api.registry;
 
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Properties;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @deprecated Transport infrastructure is deprecated.
@@ -42,7 +41,7 @@ public abstract class AbstractServiceDescriptor implements ServiceDescriptor
 
     protected String removeProperty(String name, Properties properties)
     {
-        String temp = (String)properties.remove(name);
+        String temp = (String) properties.remove(name);
         if (StringUtils.isEmpty(StringUtils.trim(temp)))
         {
             return null;
@@ -67,7 +66,6 @@ public abstract class AbstractServiceDescriptor implements ServiceDescriptor
     }
 
 
-
     /**
      * Unique key used to cache the service descriptors.  This uses the service and the
      * overrides, but since it is generated externally by the factory that instantiates
@@ -75,7 +73,7 @@ public abstract class AbstractServiceDescriptor implements ServiceDescriptor
      */
     public static class Key
     {
-        
+
         private final Map<?, ?> overrides;
         private final String service;
 
@@ -97,7 +95,7 @@ public abstract class AbstractServiceDescriptor implements ServiceDescriptor
                 return false;
             }
 
-            final Key key = (Key)o;
+            final Key key = (Key) o;
 
             if (overrides != null ? !overrides.equals(key.overrides) : key.overrides != null)
             {
@@ -114,12 +112,12 @@ public abstract class AbstractServiceDescriptor implements ServiceDescriptor
         @Override
         public int hashCode()
         {
-            return 29 * (overrides != null ? overrides.hashCode() : 0) + (service != null ? service.hashCode(): 0);
+            return 29 * (overrides != null ? overrides.hashCode() : 0) + (service != null ? service.hashCode() : 0);
         }
 
         public String getKey()
         {
-            return service + ":" + Integer.toString(hashCode()); 
+            return service + ":" + Integer.toString(hashCode());
         }
 
     }

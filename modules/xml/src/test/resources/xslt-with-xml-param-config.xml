@@ -11,7 +11,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 
     <flow name="xmlSourceParam">
         <mulexml:xml-to-dom-transformer returnClass="javax.xml.transform.Source"/>
-        <flow-ref name="transform" />
+        <flow-ref name="transform"/>
     </flow>
 
     <flow name="xmlStringParam">
@@ -24,7 +24,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
             </processor-chain>
         </enricher>
 
-        <flow-ref name="transform" />
+        <flow-ref name="transform"/>
     </flow>
 
     <sub-flow name="transform">

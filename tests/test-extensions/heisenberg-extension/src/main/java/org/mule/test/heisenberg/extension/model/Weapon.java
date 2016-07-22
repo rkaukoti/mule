@@ -12,8 +12,12 @@ import org.mule.runtime.extension.api.annotation.Extensible;
 public interface Weapon
 {
 
+    String kill();
+
     class WeaponAttributes
     {
+
+        public String brand;
 
         public String getBrand()
         {
@@ -24,9 +28,5 @@ public interface Weapon
         {
             this.brand = brand;
         }
-
-        public String brand;
     }
-
-    String kill();
 }

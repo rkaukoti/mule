@@ -54,17 +54,17 @@ import javax.xml.namespace.QName;
         "anyAttribute"
 })
 @XmlSeeAlso({
-                    NamedAttributeGroup.class,
-                    AttributeGroupRef.class
-            })
+        NamedAttributeGroup.class,
+        AttributeGroupRef.class
+})
 public abstract class AttributeGroup
         extends Annotated
 {
 
     @XmlElements({
-                         @XmlElement(name = "attributeGroup", type = AttributeGroupRef.class),
-                         @XmlElement(name = "attribute", type = Attribute.class)
-                 })
+            @XmlElement(name = "attributeGroup", type = AttributeGroupRef.class),
+            @XmlElement(name = "attribute", type = Attribute.class)
+    })
     protected List<Annotated> attributeOrAttributeGroup;
     protected Wildcard anyAttribute;
     @XmlAttribute(name = "name")
@@ -107,8 +107,7 @@ public abstract class AttributeGroup
     /**
      * Gets the value of the anyAttribute property.
      *
-     * @return possible object is
-     * {@link Wildcard }
+     * @return possible object is {@link Wildcard }
      */
     public Wildcard getAnyAttribute()
     {
@@ -118,8 +117,7 @@ public abstract class AttributeGroup
     /**
      * Sets the value of the anyAttribute property.
      *
-     * @param value allowed object is
-     *              {@link Wildcard }
+     * @param value allowed object is {@link Wildcard }
      */
     public void setAnyAttribute(Wildcard value)
     {
@@ -129,8 +127,7 @@ public abstract class AttributeGroup
     /**
      * Gets the value of the name property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getName()
     {
@@ -140,8 +137,7 @@ public abstract class AttributeGroup
     /**
      * Sets the value of the name property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setName(String value)
     {
@@ -151,8 +147,7 @@ public abstract class AttributeGroup
     /**
      * Gets the value of the ref property.
      *
-     * @return possible object is
-     * {@link QName }
+     * @return possible object is {@link QName }
      */
     public QName getRef()
     {
@@ -162,8 +157,7 @@ public abstract class AttributeGroup
     /**
      * Sets the value of the ref property.
      *
-     * @param value allowed object is
-     *              {@link QName }
+     * @param value allowed object is {@link QName }
      */
     public void setRef(QName value)
     {

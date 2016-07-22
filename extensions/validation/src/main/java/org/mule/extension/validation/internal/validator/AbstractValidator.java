@@ -6,12 +6,13 @@
  */
 package org.mule.extension.validation.internal.validator;
 
-import static org.mule.extension.validation.internal.ImmutableValidationResult.error;
-import org.mule.runtime.core.config.i18n.Message;
 import org.mule.extension.validation.api.ValidationResult;
 import org.mule.extension.validation.api.Validator;
 import org.mule.extension.validation.internal.ValidationContext;
 import org.mule.extension.validation.internal.ValidationMessages;
+import org.mule.runtime.core.config.i18n.Message;
+
+import static org.mule.extension.validation.internal.ImmutableValidationResult.error;
 
 /**
  * Base class for all {@link Validator}s provided out of the box.

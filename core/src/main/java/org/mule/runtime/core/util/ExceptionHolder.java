@@ -6,14 +6,16 @@
  */
 package org.mule.runtime.core.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.beans.ExceptionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-/** TODO */
+/**
+ * TODO
+ */
 public class ExceptionHolder implements ExceptionListener
 {
     protected final Logger logger = LoggerFactory.getLogger(getClass());

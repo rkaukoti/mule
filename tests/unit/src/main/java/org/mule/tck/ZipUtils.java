@@ -28,22 +28,6 @@ public class ZipUtils
     }
 
     /**
-     * Describes a resource that can be compressed in a ZIP file
-     */
-    public static class ZipResource
-    {
-
-        private final String file;
-        private final String alias;
-
-        public ZipResource(String file, String alias)
-        {
-            this.file = file;
-            this.alias = alias;
-        }
-    }
-
-    /**
      * Compress a set of resource files into a ZIP file
      *
      * @param targetFile file that will contain the zipped files
@@ -83,6 +67,22 @@ public class ZipUtils
         catch (Exception e)
         {
             throw new IOException("Error compressing file " + targetFile.getName(), e);
+        }
+    }
+
+    /**
+     * Describes a resource that can be compressed in a ZIP file
+     */
+    public static class ZipResource
+    {
+
+        private final String file;
+        private final String alias;
+
+        public ZipResource(String file, String alias)
+        {
+            this.file = file;
+            this.alias = alias;
         }
     }
 }

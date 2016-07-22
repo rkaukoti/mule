@@ -31,7 +31,7 @@ import javax.net.ssl.TrustManagerFactory;
  * already provided with the Mule {@link org.mule.compatibility.transport.http.HttpConnector}.
  */
 public class HttpsConnector extends HttpConnector implements TlsDirectKeyStore,
-    TlsIndirectKeyStore, TlsDirectTrustStore
+        TlsIndirectKeyStore, TlsDirectTrustStore
 {
 
     public static final String HTTPS = "https";
@@ -92,9 +92,21 @@ public class HttpsConnector extends HttpConnector implements TlsDirectKeyStore,
     }
 
     @Override
+    public void setClientKeyStore(String clientKeyStore) throws IOException
+    {
+        tls.setClientKeyStore(clientKeyStore);
+    }
+
+    @Override
     public String getClientKeyStorePassword()
     {
         return tls.getClientKeyStorePassword();
+    }
+
+    @Override
+    public void setClientKeyStorePassword(String clientKeyStorePassword)
+    {
+        tls.setClientKeyStorePassword(clientKeyStorePassword);
     }
 
     @Override
@@ -104,9 +116,21 @@ public class HttpsConnector extends HttpConnector implements TlsDirectKeyStore,
     }
 
     @Override
+    public void setClientKeyStoreType(String clientKeyStoreType)
+    {
+        this.tls.setClientKeyStoreType(clientKeyStoreType);
+    }
+
+    @Override
     public String getKeyManagerAlgorithm()
     {
         return tls.getKeyManagerAlgorithm();
+    }
+
+    @Override
+    public void setKeyManagerAlgorithm(String keyManagerAlgorithm)
+    {
+        tls.setKeyManagerAlgorithm(keyManagerAlgorithm);
     }
 
     @Override
@@ -122,110 +146,15 @@ public class HttpsConnector extends HttpConnector implements TlsDirectKeyStore,
     }
 
     @Override
-    public String getKeyAlias()
-    {
-        return tls.getKeyAlias();
-    }
-
-    @Override
-    public String getKeyStore()
-    {
-        return tls.getKeyStore();
-    }
-
-    @Override
-    public String getKeyStoreType()
-    {
-        return tls.getKeyStoreType();
-    }
-
-    public String getSslType()
-    {
-        return tls.getSslType();
-    }
-
-    @Override
-    public String getKeyStorePassword()
-    {
-        return tls.getKeyStorePassword();
-    }
-
-    @Override
-    public String getTrustManagerAlgorithm()
-    {
-        return tls.getTrustManagerAlgorithm();
-    }
-
-    @Override
-    public TrustManagerFactory getTrustManagerFactory()
-    {
-        return tls.getTrustManagerFactory();
-    }
-
-    @Override
-    public String getTrustStore()
-    {
-        return tls.getTrustStore();
-    }
-
-    @Override
-    public String getTrustStorePassword()
-    {
-        return tls.getTrustStorePassword();
-    }
-
-    @Override
-    public String getTrustStoreType()
-    {
-        return tls.getTrustStoreType();
-    }
-
-    @Override
-    public boolean isExplicitTrustStoreOnly()
-    {
-        return tls.isExplicitTrustStoreOnly();
-    }
-
-    @Override
-    public boolean isRequireClientAuthentication()
-    {
-        return tls.isRequireClientAuthentication();
-    }
-
-    @Override
-    public void setClientKeyStore(String clientKeyStore) throws IOException
-    {
-        tls.setClientKeyStore(clientKeyStore);
-    }
-
-    @Override
-    public void setClientKeyStorePassword(String clientKeyStorePassword)
-    {
-        tls.setClientKeyStorePassword(clientKeyStorePassword);
-    }
-
-    @Override
-    public void setClientKeyStoreType(String clientKeyStoreType)
-    {
-        this.tls.setClientKeyStoreType(clientKeyStoreType);
-    }
-
-    @Override
-    public void setExplicitTrustStoreOnly(boolean explicitTrustStoreOnly)
-    {
-        tls.setExplicitTrustStoreOnly(explicitTrustStoreOnly);
-    }
-
-    @Override
-    public void setKeyManagerAlgorithm(String keyManagerAlgorithm)
-    {
-        tls.setKeyManagerAlgorithm(keyManagerAlgorithm);
-    }
-
-    @Override
     public void setKeyPassword(String keyPassword)
     {
         tls.setKeyPassword(keyPassword);
+    }
+
+    @Override
+    public String getKeyAlias()
+    {
+        return tls.getKeyAlias();
     }
 
     @Override
@@ -235,9 +164,21 @@ public class HttpsConnector extends HttpConnector implements TlsDirectKeyStore,
     }
 
     @Override
+    public String getKeyStore()
+    {
+        return tls.getKeyStore();
+    }
+
+    @Override
     public void setKeyStore(String keyStore) throws IOException
     {
         tls.setKeyStore(keyStore);
+    }
+
+    @Override
+    public String getKeyStoreType()
+    {
+        return tls.getKeyStoreType();
     }
 
     @Override
@@ -246,15 +187,20 @@ public class HttpsConnector extends HttpConnector implements TlsDirectKeyStore,
         tls.setKeyStoreType(keystoreType);
     }
 
-    @Override
-    public void setRequireClientAuthentication(boolean requireClientAuthentication)
+    public String getSslType()
     {
-        tls.setRequireClientAuthentication(requireClientAuthentication);
+        return tls.getSslType();
     }
 
     public void setSslType(String sslType)
     {
         tls.setSslType(sslType);
+    }
+
+    @Override
+    public String getKeyStorePassword()
+    {
+        return tls.getKeyStorePassword();
     }
 
     @Override
@@ -264,9 +210,21 @@ public class HttpsConnector extends HttpConnector implements TlsDirectKeyStore,
     }
 
     @Override
+    public String getTrustManagerAlgorithm()
+    {
+        return tls.getTrustManagerAlgorithm();
+    }
+
+    @Override
     public void setTrustManagerAlgorithm(String trustManagerAlgorithm)
     {
         tls.setTrustManagerAlgorithm(trustManagerAlgorithm);
+    }
+
+    @Override
+    public TrustManagerFactory getTrustManagerFactory()
+    {
+        return tls.getTrustManagerFactory();
     }
 
     @Override
@@ -276,9 +234,21 @@ public class HttpsConnector extends HttpConnector implements TlsDirectKeyStore,
     }
 
     @Override
+    public String getTrustStore()
+    {
+        return tls.getTrustStore();
+    }
+
+    @Override
     public void setTrustStore(String trustStore) throws IOException
     {
         tls.setTrustStore(trustStore);
+    }
+
+    @Override
+    public String getTrustStorePassword()
+    {
+        return tls.getTrustStorePassword();
     }
 
     @Override
@@ -288,9 +258,39 @@ public class HttpsConnector extends HttpConnector implements TlsDirectKeyStore,
     }
 
     @Override
+    public String getTrustStoreType()
+    {
+        return tls.getTrustStoreType();
+    }
+
+    @Override
     public void setTrustStoreType(String trustStoreType)
     {
         tls.setTrustStoreType(trustStoreType);
+    }
+
+    @Override
+    public boolean isExplicitTrustStoreOnly()
+    {
+        return tls.isExplicitTrustStoreOnly();
+    }
+
+    @Override
+    public void setExplicitTrustStoreOnly(boolean explicitTrustStoreOnly)
+    {
+        tls.setExplicitTrustStoreOnly(explicitTrustStoreOnly);
+    }
+
+    @Override
+    public boolean isRequireClientAuthentication()
+    {
+        return tls.isRequireClientAuthentication();
+    }
+
+    @Override
+    public void setRequireClientAuthentication(boolean requireClientAuthentication)
+    {
+        tls.setRequireClientAuthentication(requireClientAuthentication);
     }
 
     public long getSslHandshakeTimeout()

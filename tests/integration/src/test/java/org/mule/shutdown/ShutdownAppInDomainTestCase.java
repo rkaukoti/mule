@@ -6,9 +6,10 @@
  */
 package org.mule.shutdown;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.DomainFunctionalTestCase;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleContext;
@@ -25,10 +26,8 @@ import java.lang.ref.ReferenceQueue;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * Tests that threads in pools defined in a domain do not hold references to objects of the application in their thread
@@ -42,26 +41,14 @@ public class ShutdownAppInDomainTestCase extends DomainFunctionalTestCase
     private static final int MESSAGE_TIMEOUT = 2000;
 
     private static final Set<PhantomReference<MuleEvent>> requestContextRefs = new HashSet<>();
-
-    public static class RetrieveRequestContext implements MessageProcessor
-    {
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            requestContextRefs.add(new PhantomReference<>(RequestContext.getEvent(),
-                    new ReferenceQueue<MuleEvent>()));
-            return event;
-        }
-    }
+    @Rule
+    public DynamicPort httpPort = new DynamicPort("httpPort");
 
     @Before
     public void before()
     {
         requestContextRefs.clear();
     }
-
-    @Rule
-    public DynamicPort httpPort = new DynamicPort("httpPort");
 
     @Override
     protected String getDomainConfig()
@@ -73,7 +60,7 @@ public class ShutdownAppInDomainTestCase extends DomainFunctionalTestCase
     public ApplicationConfig[] getConfigResources()
     {
         return new ApplicationConfig[] {
-                                        new ApplicationConfig("app-with-flows", new String[] {"org/mule/shutdown/app-with-flows.xml"})
+                new ApplicationConfig("app-with-flows", new String[] {"org/mule/shutdown/app-with-flows.xml"})
         };
     }
 
@@ -139,5 +126,16 @@ public class ShutdownAppInDomainTestCase extends DomainFunctionalTestCase
                 return true;
             }
         });
+    }
+
+    public static class RetrieveRequestContext implements MessageProcessor
+    {
+        @Override
+        public MuleEvent process(MuleEvent event) throws MuleException
+        {
+            requestContextRefs.add(new PhantomReference<>(RequestContext.getEvent(),
+                    new ReferenceQueue<MuleEvent>()));
+            return event;
+        }
     }
 }

@@ -6,6 +6,19 @@
  */
 package org.mule.runtime.core.transformer.graph;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.mule.runtime.api.metadata.DataType;
+import org.mule.runtime.core.api.registry.ResolverException;
+import org.mule.runtime.core.api.registry.TransformerResolver;
+import org.mule.runtime.core.api.transformer.Converter;
+import org.mule.runtime.core.api.transformer.Transformer;
+import org.mule.runtime.core.transformer.CompositeConverter;
+import org.mule.runtime.core.transformer.builder.MockConverterBuilder;
+import org.mule.runtime.core.transformer.builder.MockTransformerBuilder;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
@@ -15,20 +28,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
-import org.mule.runtime.core.api.registry.ResolverException;
-import org.mule.runtime.core.api.registry.TransformerResolver;
-import org.mule.runtime.core.api.transformer.Converter;
-import org.mule.runtime.api.metadata.DataType;
-import org.mule.runtime.core.api.transformer.Transformer;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-import org.mule.runtime.core.transformer.CompositeConverter;
-import org.mule.runtime.core.transformer.builder.MockConverterBuilder;
-import org.mule.runtime.core.transformer.builder.MockTransformerBuilder;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 @SmallTest
 public class GraphTransformerResolverTestCase extends AbstractMuleTestCase
 {
@@ -36,26 +35,7 @@ public class GraphTransformerResolverTestCase extends AbstractMuleTestCase
     private static final DataType JSON_DATA_TYPE = mock(DataType.class, "JSON_DATA_TYPE");
     private static final DataType INPUT_STREAM_DATA_TYPE = mock(DataType.class, "INPUT_STREAM_DATA_TYPE");
     private static final DataType STRING_DATA_TYPE = mock(DataType.class, "STRING_DATA_TYPE");
-
-    private static class XML_CLASS
-    {
-
-    }
-
-    private static class JSON_CLASS
-    {
-
-    }
-
-    private static class INPUT_STREAM_CLASS
-    {
-
-    }
-
-    private static class STRING_CLASS
-    {
-
-    }
+    private GraphTransformerResolver graphResolver = new GraphTransformerResolver();
 
     @BeforeClass
     public static void setupDataTypes()
@@ -69,8 +49,6 @@ public class GraphTransformerResolverTestCase extends AbstractMuleTestCase
         doReturn(true).when(STRING_DATA_TYPE).isCompatibleWith(STRING_DATA_TYPE);
         doReturn(STRING_CLASS.class).when(STRING_DATA_TYPE).getType();
     }
-
-    private GraphTransformerResolver graphResolver = new GraphTransformerResolver();
 
     @Test
     public void cachesResolvedTransformer() throws ResolverException
@@ -91,7 +69,8 @@ public class GraphTransformerResolverTestCase extends AbstractMuleTestCase
     public void clearsCacheWhenAddsConverter() throws ResolverException
     {
         Converter xmlToJson = new MockConverterBuilder().named("xmlToJson").from(XML_DATA_TYPE).to(JSON_DATA_TYPE).build();
-        Converter inputStreamToXml = new MockConverterBuilder().named("inputStreamToXml").from(INPUT_STREAM_DATA_TYPE).to(XML_DATA_TYPE).build();
+        Converter inputStreamToXml =
+                new MockConverterBuilder().named("inputStreamToXml").from(INPUT_STREAM_DATA_TYPE).to(XML_DATA_TYPE).build();
 
         graphResolver.transformerChange(inputStreamToXml, TransformerResolver.RegistryAction.ADDED);
         graphResolver.transformerChange(xmlToJson, TransformerResolver.RegistryAction.ADDED);
@@ -110,7 +89,8 @@ public class GraphTransformerResolverTestCase extends AbstractMuleTestCase
     public void ignoresAddedTransformer() throws ResolverException
     {
         Converter xmlToJson = new MockConverterBuilder().named("xmlToJson").from(XML_DATA_TYPE).to(JSON_DATA_TYPE).build();
-        Converter inputStreamToXml = new MockConverterBuilder().named("inputStreamToXml").from(INPUT_STREAM_DATA_TYPE).to(XML_DATA_TYPE).build();
+        Converter inputStreamToXml =
+                new MockConverterBuilder().named("inputStreamToXml").from(INPUT_STREAM_DATA_TYPE).to(XML_DATA_TYPE).build();
 
         graphResolver.transformerChange(inputStreamToXml, TransformerResolver.RegistryAction.ADDED);
         graphResolver.transformerChange(xmlToJson, TransformerResolver.RegistryAction.ADDED);
@@ -129,7 +109,8 @@ public class GraphTransformerResolverTestCase extends AbstractMuleTestCase
     public void ignoresRemovedTransformer() throws ResolverException
     {
         Converter xmlToJson = new MockConverterBuilder().named("xmlToJson").from(XML_DATA_TYPE).to(JSON_DATA_TYPE).build();
-        Converter inputStreamToXml = new MockConverterBuilder().named("inputStreamToXml").from(INPUT_STREAM_DATA_TYPE).to(XML_DATA_TYPE).build();
+        Converter inputStreamToXml =
+                new MockConverterBuilder().named("inputStreamToXml").from(INPUT_STREAM_DATA_TYPE).to(XML_DATA_TYPE).build();
 
         graphResolver.transformerChange(inputStreamToXml, TransformerResolver.RegistryAction.ADDED);
         graphResolver.transformerChange(xmlToJson, TransformerResolver.RegistryAction.ADDED);
@@ -166,9 +147,11 @@ public class GraphTransformerResolverTestCase extends AbstractMuleTestCase
     @Test
     public void resolvesTransformersWithDifferentLength() throws ResolverException
     {
-        Converter xmlToInputStream = new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
+        Converter xmlToInputStream =
+                new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
         Converter xmlToJson = new MockConverterBuilder().named("xmlToJson").from(XML_DATA_TYPE).to(JSON_DATA_TYPE).weighting(1).build();
-        Converter inputStreamToJson = new MockConverterBuilder().named("inputStreamToJson").from(INPUT_STREAM_DATA_TYPE).to(JSON_DATA_TYPE).weighting(1).build();
+        Converter inputStreamToJson =
+                new MockConverterBuilder().named("inputStreamToJson").from(INPUT_STREAM_DATA_TYPE).to(JSON_DATA_TYPE).weighting(1).build();
 
         graphResolver.transformerChange(xmlToInputStream, TransformerResolver.RegistryAction.ADDED);
         graphResolver.transformerChange(xmlToJson, TransformerResolver.RegistryAction.ADDED);
@@ -182,10 +165,14 @@ public class GraphTransformerResolverTestCase extends AbstractMuleTestCase
     @Test
     public void resolvesTransformersWithSameLengthAndDifferentWeight() throws ResolverException
     {
-        Converter xmlToInputStream = new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
-        Converter xmlToString = new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
-        Converter inputStreamToJson = new MockConverterBuilder().named("inputStreamToJson").from(INPUT_STREAM_DATA_TYPE).to(JSON_DATA_TYPE).weighting(2).build();
-        Converter stringToJson = new MockConverterBuilder().named("stringToJson").from(STRING_DATA_TYPE).to(JSON_DATA_TYPE).weighting(1).build();
+        Converter xmlToInputStream =
+                new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
+        Converter xmlToString =
+                new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
+        Converter inputStreamToJson =
+                new MockConverterBuilder().named("inputStreamToJson").from(INPUT_STREAM_DATA_TYPE).to(JSON_DATA_TYPE).weighting(2).build();
+        Converter stringToJson =
+                new MockConverterBuilder().named("stringToJson").from(STRING_DATA_TYPE).to(JSON_DATA_TYPE).weighting(1).build();
 
         graphResolver.transformerChange(xmlToInputStream, TransformerResolver.RegistryAction.ADDED);
         graphResolver.transformerChange(xmlToString, TransformerResolver.RegistryAction.ADDED);
@@ -204,10 +191,14 @@ public class GraphTransformerResolverTestCase extends AbstractMuleTestCase
     @Test
     public void resolvesTransformerWithSameLengthAndSameWeight() throws ResolverException
     {
-        Converter xmlToInputStream = new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
-        Converter xmlToString = new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
-        Converter inputStreamToJson = new MockConverterBuilder().named("inputStreamToJson").from(INPUT_STREAM_DATA_TYPE).to(JSON_DATA_TYPE).weighting(1).build();
-        Converter stringToJson = new MockConverterBuilder().named("stringToJson").from(STRING_DATA_TYPE).to(JSON_DATA_TYPE).weighting(1).build();
+        Converter xmlToInputStream =
+                new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
+        Converter xmlToString =
+                new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
+        Converter inputStreamToJson =
+                new MockConverterBuilder().named("inputStreamToJson").from(INPUT_STREAM_DATA_TYPE).to(JSON_DATA_TYPE).weighting(1).build();
+        Converter stringToJson =
+                new MockConverterBuilder().named("stringToJson").from(STRING_DATA_TYPE).to(JSON_DATA_TYPE).weighting(1).build();
 
         graphResolver.transformerChange(xmlToInputStream, TransformerResolver.RegistryAction.ADDED);
         graphResolver.transformerChange(xmlToString, TransformerResolver.RegistryAction.ADDED);
@@ -226,12 +217,34 @@ public class GraphTransformerResolverTestCase extends AbstractMuleTestCase
     @Test(expected = ResolverException.class)
     public void cannotResolveTransformerWithSameLengthAndSameWeightAndSameName() throws ResolverException
     {
-        Converter xmlToInputStream1 = new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
-        Converter xmlToInputStream2 = new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
+        Converter xmlToInputStream1 =
+                new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
+        Converter xmlToInputStream2 =
+                new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
 
         graphResolver.transformerChange(xmlToInputStream1, TransformerResolver.RegistryAction.ADDED);
         graphResolver.transformerChange(xmlToInputStream2, TransformerResolver.RegistryAction.ADDED);
 
         graphResolver.resolve(XML_DATA_TYPE, INPUT_STREAM_DATA_TYPE);
+    }
+
+    private static class XML_CLASS
+    {
+
+    }
+
+    private static class JSON_CLASS
+    {
+
+    }
+
+    private static class INPUT_STREAM_CLASS
+    {
+
+    }
+
+    private static class STRING_CLASS
+    {
+
     }
 }

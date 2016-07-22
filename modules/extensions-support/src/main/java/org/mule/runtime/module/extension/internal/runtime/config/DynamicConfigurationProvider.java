@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -35,6 +32,10 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+
 /**
  * A {@link ConfigurationProvider} which continuously evaluates the same
  * {@link ResolverSet} and then uses the resulting {@link ResolverSetResult}
@@ -48,7 +49,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * @param <T> the generic type of the provided {@link ConfigurationInstance}
  * @since 4.0.0
  */
-public final class DynamicConfigurationProvider<T> extends LifecycleAwareConfigurationProvider<T> implements ExpirableConfigurationProvider<T>
+public final class DynamicConfigurationProvider<T> extends LifecycleAwareConfigurationProvider<T>
+        implements ExpirableConfigurationProvider<T>
 {
 
     private final ConfigurationInstanceFactory<T> configurationInstanceFactory;
@@ -94,7 +96,8 @@ public final class DynamicConfigurationProvider<T> extends LifecycleAwareConfigu
     @Override
     public ConfigurationInstance<T> get(Object muleEvent)
     {
-        return withContextClassLoader(getExtensionClassLoader(), () -> {
+        return withContextClassLoader(getExtensionClassLoader(), () ->
+        {
             ResolverSetResult result = resolverSet.resolve((MuleEvent) muleEvent);
             return getConfiguration(result, (MuleEvent) muleEvent);
         });
@@ -163,7 +166,8 @@ public final class DynamicConfigurationProvider<T> extends LifecycleAwareConfigu
     {
         try
         {
-            withContextClassLoader(getExtensionClassLoader(), () -> {
+            withContextClassLoader(getExtensionClassLoader(), () ->
+            {
                 if (lifecycleManager.isPhaseComplete(Initialisable.PHASE_NAME))
                 {
                     initialiseIfNeeded(configuration, true, muleContext);
@@ -192,12 +196,13 @@ public final class DynamicConfigurationProvider<T> extends LifecycleAwareConfigu
         try
         {
             return cache.entrySet()
-                    .stream()
-                    .filter(entry -> isExpired(entry.getValue()))
-                    .map(entry -> {
-                        cache.remove(entry.getKey());
-                        return entry.getValue();
-                    }).collect(new ImmutableListCollector<>());
+                        .stream()
+                        .filter(entry -> isExpired(entry.getValue()))
+                        .map(entry ->
+                        {
+                            cache.remove(entry.getKey());
+                            return entry.getValue();
+                        }).collect(new ImmutableListCollector<>());
         }
         finally
         {

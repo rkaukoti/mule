@@ -6,13 +6,12 @@
  */
 package org.mule.test.infrastructure.client.ftp;
 
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 import org.mule.runtime.core.util.ArrayUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
 
 /**
  * Ftp client wrapper for working with an FTP server.
@@ -48,7 +47,6 @@ public class FTPTestClient
      * Get a list of file names in a given directory for admin
      *
      * @return List of files/directories
-     * @throws IOException
      */
     public String[] getFileList(String path) throws IOException
     {
@@ -64,9 +62,7 @@ public class FTPTestClient
     /**
      * Create a directory
      *
-     * @param dir
      * @return true if successful, false if not
-     * @throws IOException
      */
     public boolean makeDir(String dir) throws IOException
     {
@@ -110,7 +106,6 @@ public class FTPTestClient
      * @param path    the path to write in
      * @param content the file's content
      * @return true if successful, false if not
-     * @throws IOException
      */
     public boolean putFile(String path, String content) throws IOException
     {
@@ -123,7 +118,6 @@ public class FTPTestClient
      * @param path    the path to write in
      * @param content the file's binary content
      * @return true if successful, false if not
-     * @throws IOException
      */
     public boolean putFile(String path, byte[] content) throws IOException
     {
@@ -136,7 +130,6 @@ public class FTPTestClient
      *
      * @param path The directory to try
      * @return True if the directory exists, false if not
-     * @throws IOException
      */
     public boolean dirExists(String path) throws IOException
     {
@@ -149,8 +142,6 @@ public class FTPTestClient
 
     /**
      * Initiate a connection to the ftp server
-     *
-     * @throws IOException
      */
     protected void connect() throws IOException
     {
@@ -175,8 +166,6 @@ public class FTPTestClient
 
     /**
      * Disconnect the ftp client
-     *
-     * @throws IOException
      */
     public void disconnect() throws IOException
     {
@@ -188,7 +177,6 @@ public class FTPTestClient
      *
      * @param file The name of the file to check
      * @return true if file exists, false if not
-     * @throws IOException
      */
     public boolean fileExists(String file) throws IOException
     {

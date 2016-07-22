@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
-import static org.mule.runtime.config.spring.util.ProcessingStrategyUtils.DEFAULT_PROCESSING_STRATEGY;
-import org.mule.runtime.core.api.config.MuleConfiguration;
-import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.config.spring.parsers.generic.NamedDefinitionParser;
 import org.mule.runtime.config.spring.util.ProcessingStrategyUtils;
-
+import org.mule.runtime.core.api.config.MuleConfiguration;
+import org.mule.runtime.core.api.config.MuleProperties;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
+
+import static org.mule.runtime.config.spring.util.ProcessingStrategyUtils.DEFAULT_PROCESSING_STRATEGY;
 
 /**
  * Parses the <mule:configuration> element. If this element appears in multiple Xml config files each will its configuration
@@ -34,7 +34,7 @@ public class ConfigurationDefinitionParser extends NamedDefinitionParser
     {
         super(MuleProperties.OBJECT_MULE_CONFIGURATION);
         addIgnored(DEFAULT_EXCEPTION_STRATEGY_ATTRIBUTE);
-        singleton=true;
+        singleton = true;
     }
 
     protected Class getBeanClass(Element element)
@@ -49,7 +49,7 @@ public class ConfigurationDefinitionParser extends NamedDefinitionParser
         parseObjectSerializer(element, builder);
         ProcessingStrategyUtils.configureProcessingStrategy(element, builder, DEFAULT_PROCESSING_STRATEGY);
 
-        super.doParse(element,context,builder);
+        super.doParse(element, context, builder);
     }
 
     private void parseExceptionStrategy(Element element, BeanDefinitionBuilder builder)
@@ -69,7 +69,8 @@ public class ConfigurationDefinitionParser extends NamedDefinitionParser
     }
 
     @Override
-    protected String resolveId(Element element, AbstractBeanDefinition definition, ParserContext parserContext) throws BeanDefinitionStoreException
+    protected String resolveId(Element element, AbstractBeanDefinition definition, ParserContext parserContext)
+            throws BeanDefinitionStoreException
     {
         return MuleProperties.OBJECT_MULE_CONFIGURATION;
     }

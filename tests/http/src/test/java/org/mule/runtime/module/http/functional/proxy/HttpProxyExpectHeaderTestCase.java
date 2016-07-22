@@ -6,20 +6,20 @@
  */
 package org.mule.runtime.module.http.functional.proxy;
 
-import static org.apache.http.entity.ContentType.DEFAULT_TEXT;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.client.fluent.Response;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.module.http.functional.AbstractHttpExpectHeaderServerTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.io.IOException;
 
-import org.apache.http.client.fluent.Request;
-import org.apache.http.client.fluent.Response;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.apache.http.entity.ContentType.DEFAULT_TEXT;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR;
 
 
 public class HttpProxyExpectHeaderTestCase extends AbstractHttpExpectHeaderServerTestCase
@@ -55,9 +55,9 @@ public class HttpProxyExpectHeaderTestCase extends AbstractHttpExpectHeaderServe
     private Response sendRequest() throws IOException
     {
         return Request.Post(String.format("http://localhost:%s", proxyPort.getNumber()))
-                .useExpectContinue()
-                .bodyString(TEST_MESSAGE, DEFAULT_TEXT)
-                .connectTimeout(RECEIVE_TIMEOUT).execute();
+                      .useExpectContinue()
+                      .bodyString(TEST_MESSAGE, DEFAULT_TEXT)
+                      .connectTimeout(RECEIVE_TIMEOUT).execute();
     }
 
 }

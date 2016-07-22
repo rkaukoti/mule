@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.core.component;
 
+import org.junit.Test;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.object.PrototypeObjectFactory;
 import org.mule.tck.testmodels.fruit.Apple;
 import org.mule.tck.testmodels.fruit.Orange;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -25,12 +24,12 @@ public class SimpleCallableJavaComponentTestCase extends AbstractComponentTestCa
     public void testComponentCreationWithObjectFactory() throws Exception
     {
         PrototypeObjectFactory objectFactory = new PrototypeObjectFactory(
-            Apple.class);
+                Apple.class);
         objectFactory.setObjectClass(Apple.class);
         objectFactory.initialise();
 
         SimpleCallableJavaComponent component = new SimpleCallableJavaComponent(
-            objectFactory);
+                objectFactory);
 
         assertNotNull(component.getObjectFactory());
         assertEquals(objectFactory, component.getObjectFactory());
@@ -74,7 +73,7 @@ public class SimpleCallableJavaComponentTestCase extends AbstractComponentTestCa
     public void testSimpleComponentCreation() throws Exception
     {
         SimpleCallableJavaComponent component = new SimpleCallableJavaComponent(
-            new Apple());
+                new Apple());
 
         assertNotNull(component.getObjectFactory());
         assertEquals(Apple.class, component.getObjectFactory().getObjectClass());
@@ -94,7 +93,7 @@ public class SimpleCallableJavaComponentTestCase extends AbstractComponentTestCa
     public void testLifecycle() throws Exception
     {
         SimpleCallableJavaComponent component = new SimpleCallableJavaComponent(
-            new Apple());
+                new Apple());
         component.setFlowConstruct(getTestFlow());
         component.setMuleContext(muleContext);
         component.initialise();
@@ -107,14 +106,14 @@ public class SimpleCallableJavaComponentTestCase extends AbstractComponentTestCa
 
         component.stop();
         component.dispose();
-//        try
-//        {
-//            component.checkDisposed();
-//        }
-//        catch (Exception e)
-//        {
-//            assertSame(DisposeException.class, e.getClass());
-//        }
+        //        try
+        //        {
+        //            component.checkDisposed();
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            assertSame(DisposeException.class, e.getClass());
+        //        }
 
     }
 

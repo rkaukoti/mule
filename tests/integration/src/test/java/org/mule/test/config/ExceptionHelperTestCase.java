@@ -6,30 +6,6 @@
  */
 package org.mule.test.config;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.hamcrest.collection.IsMapContaining.hasEntry;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
-import org.mule.runtime.core.api.DefaultMuleException;
-import org.mule.runtime.core.api.config.ConfigurationException;
-import org.mule.runtime.core.api.registry.ResolverException;
-import org.mule.runtime.core.config.ExceptionHelper;
-import org.mule.runtime.core.config.i18n.CoreMessages;
-import org.mule.runtime.core.config.i18n.MessageFactory;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-import org.mule.runtime.core.util.SystemUtils;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.collections.Closure;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.comparators.ComparableComparator;
@@ -38,9 +14,29 @@ import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsInstanceOf;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
+import org.mule.runtime.core.api.DefaultMuleException;
+import org.mule.runtime.core.api.config.ConfigurationException;
+import org.mule.runtime.core.api.registry.ResolverException;
+import org.mule.runtime.core.config.ExceptionHelper;
+import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.mule.runtime.core.config.i18n.MessageFactory;
+import org.mule.runtime.core.util.SystemUtils;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsMapContaining.hasEntry;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 @SmallTest
 public class ExceptionHelperTestCase extends AbstractMuleTestCase
@@ -81,16 +77,19 @@ public class ExceptionHelperTestCase extends AbstractMuleTestCase
     @Test
     public void getNonMuleExceptionCause()
     {
-        assertThat(ExceptionHelper.getNonMuleException(new ResolverException(CoreMessages.failedToBuildMessage(), null)), IsNull.<Object>nullValue());
+        assertThat(ExceptionHelper.getNonMuleException(new ResolverException(CoreMessages.failedToBuildMessage(), null)),
+                IsNull.<Object>nullValue());
         assertThat(ExceptionHelper.getNonMuleException(new ResolverException(CoreMessages.failedToBuildMessage(),
                 new ConfigurationException(CoreMessages.failedToBuildMessage(), null))), IsNull.<Object>nullValue());
         assertThat(ExceptionHelper.getNonMuleException(new ResolverException(CoreMessages.failedToBuildMessage(),
                 new ConfigurationException(CoreMessages.failedToBuildMessage(),
                         new IllegalArgumentException()))), IsInstanceOf.instanceOf(IllegalArgumentException.class));
         assertThat(ExceptionHelper.getNonMuleException(new ResolverException(CoreMessages.failedToBuildMessage(),
-                new ConfigurationException(CoreMessages.failedToBuildMessage(),
-                        new IllegalArgumentException(new NullPointerException())))), IsInstanceOf.instanceOf(IllegalArgumentException.class));
-        assertThat(ExceptionHelper.getNonMuleException(new IllegalArgumentException()),IsInstanceOf.instanceOf(IllegalArgumentException.class));
+                        new ConfigurationException(CoreMessages.failedToBuildMessage(),
+                                new IllegalArgumentException(new NullPointerException())))),
+                IsInstanceOf.instanceOf(IllegalArgumentException.class));
+        assertThat(ExceptionHelper.getNonMuleException(new IllegalArgumentException()),
+                IsInstanceOf.instanceOf(IllegalArgumentException.class));
     }
 
     @Test
@@ -131,29 +130,30 @@ public class ExceptionHelperTestCase extends AbstractMuleTestCase
     @Test
     public void filteredStackIncludingMixedNonMuleCode()
     {
-    	int calls = 5;
-    	try
-    	{
-    		generateStackEntries(calls, new Closure()
-    		{
-    			@Override
-    			public void execute(Object input)
-    			{
-    				Comparable exceptionComparable = new Comparable()
-    				{
-    					@Override
-    					public int compareTo(Object o) {
-    						throw new RuntimeException(new DefaultMuleException(MessageFactory.createStaticMessage("foo")));
-    					}
-    				};
-					Collections.sort(Arrays.asList(exceptionComparable, exceptionComparable), ComparableComparator.getInstance());
-    			}
-    		});
-    		fail("Expected exception");
-    	}
-    	catch (Exception e)
-    	{
-    		assertThat(ExceptionHelper.getExceptionStack(e), StringByLineMatcher.matchesLineByLine(
+        int calls = 5;
+        try
+        {
+            generateStackEntries(calls, new Closure()
+            {
+                @Override
+                public void execute(Object input)
+                {
+                    Comparable exceptionComparable = new Comparable()
+                    {
+                        @Override
+                        public int compareTo(Object o)
+                        {
+                            throw new RuntimeException(new DefaultMuleException(MessageFactory.createStaticMessage("foo")));
+                        }
+                    };
+                    Collections.sort(Arrays.asList(exceptionComparable, exceptionComparable), ComparableComparator.getInstance());
+                }
+            });
+            fail("Expected exception");
+        }
+        catch (Exception e)
+        {
+            assertThat(ExceptionHelper.getExceptionStack(e), StringByLineMatcher.matchesLineByLine(
                     "foo \\(org.mule.runtime.core.api.DefaultMuleException\\)",
                     "  org.mule.test.config.ExceptionHelperTestCase\\$2\\$1.compareTo\\(ExceptionHelperTestCase.java:[0-9]+\\)",
                     "  org.apache.commons.collections.comparators.ComparableComparator.compare\\(ComparableComparator.java:[0-9]+\\)",
@@ -165,24 +165,24 @@ public class ExceptionHelperTestCase extends AbstractMuleTestCase
                     "  org.mule.test.config.ExceptionHelperTestCase\\$2.execute\\(ExceptionHelperTestCase.java:[0-9]+\\)",
                     "  org.mule.test.config.ExceptionHelperTestCase.generateStackEntries\\(ExceptionHelperTestCase.java:[0-9]+\\)",
                     "  \\(" + (calls + 13) + " more...\\)")); // recursive
-    	}
+        }
     }
-    
+
     @Test
     public void filteredStackAllMuleCode()
     {
-    	int calls = 5;
+        int calls = 5;
         try
         {
-			generateStackEntries(calls, new Closure() 
-			{
-				@Override
-				public void execute(Object input)
-				{
-					throw new RuntimeException(new DefaultMuleException(MessageFactory.createStaticMessage("foo")));
+            generateStackEntries(calls, new Closure()
+            {
+                @Override
+                public void execute(Object input)
+                {
+                    throw new RuntimeException(new DefaultMuleException(MessageFactory.createStaticMessage("foo")));
 
-				}
-			});
+                }
+            });
         }
         catch (Exception e)
         {
@@ -207,6 +207,21 @@ public class ExceptionHelperTestCase extends AbstractMuleTestCase
         }
     }
 
+    private Exception getException()
+    {
+        DefaultMuleException innerMuleException =
+                new DefaultMuleException(MessageFactory.createStaticMessage("bar"), new Exception("blah"));
+
+        innerMuleException.addInfo("info_1", "Imma in!");
+
+        DefaultMuleException outerMuleException = new DefaultMuleException(MessageFactory.createStaticMessage("foo"), innerMuleException);
+
+        outerMuleException.addInfo("info_1", "Imma out!");
+        outerMuleException.addInfo("info_2", "Imma out!");
+
+        return outerMuleException;
+    }
+
     private static final class StringByLineMatcher extends TypeSafeMatcher<String>
     {
         private final String[] expectedEntries;
@@ -217,12 +232,17 @@ public class ExceptionHelperTestCase extends AbstractMuleTestCase
             this.expectedEntries = expectedEntries;
         }
 
+        public static StringByLineMatcher matchesLineByLine(String... expectedEntries)
+        {
+            return new StringByLineMatcher(expectedEntries);
+        }
+
         @Override
         public void describeTo(Description description)
         {
             description.appendText(String.format("line %d matches \"%s\"", i, expectedEntries[i]));
         }
-        
+
         @Override
         protected boolean matchesSafely(String item)
         {
@@ -244,24 +264,5 @@ public class ExceptionHelperTestCase extends AbstractMuleTestCase
 
             return true;
         }
-
-        public static StringByLineMatcher matchesLineByLine(String... expectedEntries)
-        {
-            return new StringByLineMatcher(expectedEntries);
-        }
-    }
-
-    private Exception getException()
-    {
-        DefaultMuleException innerMuleException = new DefaultMuleException(MessageFactory.createStaticMessage("bar"), new Exception("blah"));
-
-        innerMuleException.addInfo("info_1", "Imma in!");
-
-        DefaultMuleException outerMuleException = new DefaultMuleException(MessageFactory.createStaticMessage("foo"), innerMuleException);
-
-        outerMuleException.addInfo("info_1", "Imma out!");
-        outerMuleException.addInfo("info_2", "Imma out!");
-
-        return outerMuleException;
     }
 }

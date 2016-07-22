@@ -10,16 +10,15 @@ import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.module.json.validation.JsonSchemaValidator;
+import org.w3c.dom.ls.LSResourceResolver;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
 
 import java.util.Map;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
-
-import org.w3c.dom.ls.LSResourceResolver;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
 
 /**
  * @deprecated This class is deprecated and will be removed in Mule 4.0. Use {@link JsonSchemaValidator} instead
@@ -32,11 +31,11 @@ public interface JsonSchemaFilter extends Filter, Initialisable, MuleContextAwar
 
     public String getSchemaLanguage();
 
-    void setSchemaLocations(String schemaLocations);
+    public void setSchemaLanguage(String schemaLanguage);
 
     String getSchemaLocations();
 
-    public void setSchemaLanguage(String schemaLanguage);
+    void setSchemaLocations(String schemaLocations);
 
     public Schema getSchemaObject();
 

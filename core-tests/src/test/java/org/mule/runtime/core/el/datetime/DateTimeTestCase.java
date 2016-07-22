@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.core.el.datetime;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import junit.framework.Assert;
 
+import org.junit.Test;
 import org.mule.runtime.core.api.store.ObjectStore;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
@@ -24,9 +24,8 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import junit.framework.Assert;
-
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class DateTimeTestCase extends AbstractMuleContextTestCase
 {
@@ -75,7 +74,7 @@ public class DateTimeTestCase extends AbstractMuleContextTestCase
     public void plusSeconds()
     {
         Assert.assertEquals((currentCalendar.get(Calendar.SECOND) + 1) % 60, now.plusSeconds(1)
-            .getSeconds());
+                                                                                .getSeconds());
     }
 
     @Test
@@ -242,7 +241,7 @@ public class DateTimeTestCase extends AbstractMuleContextTestCase
     public void fromXMLCalendar() throws DatatypeConfigurationException
     {
         XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(
-            new GregorianCalendar());
+                new GregorianCalendar());
         xmlCal.setYear(1900);
         xmlCal.setMonth(1);
         xmlCal.setDay(1);
@@ -250,13 +249,13 @@ public class DateTimeTestCase extends AbstractMuleContextTestCase
         assertEquals(1, new DateTime(xmlCal).getMonth());
         assertEquals(1, new DateTime(xmlCal).getDayOfMonth());
     }
-    
+
     @Test
     public void serialization() throws Exception
     {
         final String key = "key";
         ObjectStore<DateTime> os = muleContext.getObjectStoreManager().getObjectStore("DateTimeTestCase",
-            true);
+                true);
         try
         {
             os.store(key, now);
@@ -267,6 +266,6 @@ public class DateTimeTestCase extends AbstractMuleContextTestCase
         {
             os.clear();
         }
-    }                    
+    }
 
 }

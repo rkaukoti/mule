@@ -47,9 +47,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "realGroup")
 @XmlSeeAlso({
-                    NamedGroup.class,
-                    GroupRef.class
-            })
+        NamedGroup.class,
+        GroupRef.class
+})
 public class RealGroup extends Group
 {
 

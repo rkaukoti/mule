@@ -6,10 +6,7 @@
  */
 package org.mule.runtime.module.xml.transformers.xml;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.api.registry.RegistrationException;
 import org.mule.runtime.core.api.transformer.TransformerException;
@@ -17,6 +14,10 @@ import org.mule.runtime.module.xml.transformer.XPathExtractor;
 import org.mule.runtime.module.xml.util.NamespaceManager;
 import org.mule.runtime.module.xml.xpath.XPathReturnType;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
@@ -30,11 +31,10 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 public class XPathExtractorTestCase extends AbstractMuleContextTestCase
 {
@@ -59,21 +59,22 @@ public class XPathExtractorTestCase extends AbstractMuleContextTestCase
                                                            + "<root>" + "<node>value1</node>"
                                                            + "<node2>2</node2>" + "</root>";
 
-    protected static final String TEST_XML_WITH_NAMESPACES = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root xmlns:f=\"http://www.w3schools.com/furniture\">"
-                                                             + "<f:table>"
-                                                             + "<f:name>African Coffee Table</f:name>"
-                                                             + "<f:width>80</f:width>"
-                                                             + "<f:length>120</f:length>"
-                                                             + "</f:table>"
-                                                             + "</root>";
+    protected static final String TEST_XML_WITH_NAMESPACES =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root xmlns:f=\"http://www.w3schools.com/furniture\">"
+            + "<f:table>"
+            + "<f:name>African Coffee Table</f:name>"
+            + "<f:width>80</f:width>"
+            + "<f:length>120</f:length>"
+            + "</f:table>"
+            + "</root>";
 
-    @Test(expected=RegistrationException.class)
+    @Test(expected = RegistrationException.class)
     public void expressionIsRequired() throws Exception
     {
         createObject(XPathExtractor.class);
     }
 
-    @Test(expected=TransformerException.class)
+    @Test(expected = TransformerException.class)
     public void badExpression() throws Exception
     {
         final String badExpression = "/$@�%$�&�$$�%";
@@ -97,7 +98,7 @@ public class XPathExtractorTestCase extends AbstractMuleContextTestCase
         final Object objResult = extractor.transform(doc);
         assertNotNull(objResult);
 
-        final String result = (String)objResult;
+        final String result = (String) objResult;
         assertEquals("Wrong value extracted.", "value1", result);
     }
 
@@ -113,7 +114,7 @@ public class XPathExtractorTestCase extends AbstractMuleContextTestCase
         final Object objResult = extractor.transform(source);
         assertNotNull(objResult);
 
-        final String result = (String)objResult;
+        final String result = (String) objResult;
         assertEquals("Wrong value extracted.", "value1", result);
     }
 
@@ -143,7 +144,7 @@ public class XPathExtractorTestCase extends AbstractMuleContextTestCase
         final Object objResult = extractor.transform(doc);
         assertNotNull(objResult);
 
-        final Boolean result = (Boolean)objResult;
+        final Boolean result = (Boolean) objResult;
         assertEquals("Wrong value extracted.", Boolean.TRUE, result);
     }
 
@@ -158,7 +159,7 @@ public class XPathExtractorTestCase extends AbstractMuleContextTestCase
         final Object objResult = extractor.transform(doc);
         assertNotNull(objResult);
 
-        final Node result = (Node)objResult;
+        final Node result = (Node) objResult;
         assertEquals("Wrong value extracted.", "node2", result.getNodeName());
     }
 
@@ -192,7 +193,7 @@ public class XPathExtractorTestCase extends AbstractMuleContextTestCase
         final Object objResult = extractor.transform(doc);
         assertNotNull(objResult);
 
-        final String result = (String)objResult;
+        final String result = (String) objResult;
         assertEquals("Wrong value extracted.", "80", result);
     }
 
@@ -231,11 +232,11 @@ public class XPathExtractorTestCase extends AbstractMuleContextTestCase
         namespaceManager.setNamespaces(namespaces);
         muleContext.getRegistry().unregisterObject(MuleProperties.OBJECT_MULE_NAMESPACE_MANAGER);
         muleContext.getRegistry().registerObject(MuleProperties.OBJECT_MULE_NAMESPACE_MANAGER,
-            namespaceManager);
+                namespaceManager);
     }
 
     private XPathExtractor initialiseExtractor(final String expression, XPathReturnType resultType)
-        throws RegistrationException
+            throws RegistrationException
     {
         final XPathExtractor extractor = new XPathExtractor();
         extractor.setExpression(expression);

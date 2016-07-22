@@ -6,10 +6,6 @@
  */
 package org.mule.extension.email.internal.sender;
 
-import static org.mule.extension.email.internal.EmailProtocol.SMTP;
-import static org.mule.extension.email.internal.util.EmailConnectorUtils.SMTP_PORT;
-import static org.mule.runtime.extension.api.annotation.param.display.Placement.CONNECTION;
-
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.extension.api.annotation.Alias;
@@ -17,6 +13,10 @@ import org.mule.runtime.extension.api.annotation.Parameter;
 import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
+
+import static org.mule.extension.email.internal.EmailProtocol.SMTP;
+import static org.mule.extension.email.internal.util.EmailConnectorUtils.SMTP_PORT;
+import static org.mule.runtime.extension.api.annotation.param.display.Placement.CONNECTION;
 
 /**
  * A {@link ConnectionProvider} that returns instances of smtp based {@link SenderConnection}s.
@@ -43,13 +43,13 @@ public class SMTPProvider extends AbstractSenderProvider
     public SenderConnection connect() throws ConnectionException
     {
         return new SenderConnection(SMTP,
-                                    settings.getUser(),
-                                    settings.getPassword(),
-                                    settings.getHost(),
-                                    port,
-                                    getConnectionTimeout(),
-                                    getReadTimeout(),
-                                    getWriteTimeout(),
-                                    getProperties());
+                settings.getUser(),
+                settings.getPassword(),
+                settings.getHost(),
+                port,
+                getConnectionTimeout(),
+                getReadTimeout(),
+                getWriteTimeout(),
+                getProperties());
     }
 }

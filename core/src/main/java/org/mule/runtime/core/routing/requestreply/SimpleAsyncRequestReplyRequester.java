@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.routing.requestreply;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_REQUESTOR_PROPERTY;
-
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -22,8 +20,10 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.source.MessageSource;
 import org.mule.runtime.core.api.transport.LegacyInboundEndpoint;
 
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_REQUESTOR_PROPERTY;
+
 public class SimpleAsyncRequestReplyRequester extends AbstractAsyncRequestReplyRequester
-    implements Startable, Stoppable
+        implements Startable, Stoppable
 {
 
     protected MessageProcessor requestMessageProcessor;
@@ -129,7 +129,7 @@ public class SimpleAsyncRequestReplyRequester extends AbstractAsyncRequestReplyR
         super.setMuleContext(context);
         if (requestMessageProcessor instanceof MuleContextAware)
         {
-            ((MuleContextAware)requestMessageProcessor).setMuleContext(context);
+            ((MuleContextAware) requestMessageProcessor).setMuleContext(context);
         }
     }
 

@@ -6,12 +6,12 @@
  */
 package org.mule.extension.socket;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 import org.mule.runtime.core.util.IOUtils;
 
 import java.io.InputStream;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class TcpSendAndReceiveStringTestCase extends ParameterizedProtocolTestCase
 {
@@ -25,10 +25,10 @@ public class TcpSendAndReceiveStringTestCase extends ParameterizedProtocolTestCa
     public void sendStringAndReceiveModifiedString() throws Exception
     {
         InputStream inputStream = (InputStream) flowRunner("tcp-send-and-receive").
-                withPayload(TEST_STRING)
-                .run()
-                .getMessage()
-                .getPayload();
+                                                                                          withPayload(TEST_STRING)
+                                                                                  .run()
+                                                                                  .getMessage()
+                                                                                  .getPayload();
 
         String response = IOUtils.toString(inputStream);
         assertEquals(response, RESPONSE_TEST_STRING);

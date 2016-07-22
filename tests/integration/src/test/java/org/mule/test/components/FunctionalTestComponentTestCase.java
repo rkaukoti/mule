@@ -6,14 +6,13 @@
  */
 package org.mule.test.components;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.functional.exceptions.FunctionalTestException;
 import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.io.IOException;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -21,29 +20,29 @@ import static org.junit.Assert.assertTrue;
 public class FunctionalTestComponentTestCase extends AbstractMuleTestCase
 {
     FunctionalTestComponent ftc;
-    
+
     @Before
     public void initFunctionaTestComponent()
     {
         ftc = new FunctionalTestComponent();
         ftc.setThrowException(true);
     }
-    
+
     @Test
     public void defaultExceptionWithDefaultText() throws Exception
     {
         checkExceptionThrown(FunctionalTestException.class, FunctionalTestException.EXCEPTION_MESSAGE);
     }
-    
+
     @Test
     public void defaultExceptionWithCustomText() throws Exception
     {
         String exceptionText = "BOOM";
         ftc.setExceptionText(exceptionText);
-        
+
         checkExceptionThrown(FunctionalTestException.class, exceptionText);
     }
-    
+
     @Test
     public void customExceptionWithoutText() throws Exception
     {

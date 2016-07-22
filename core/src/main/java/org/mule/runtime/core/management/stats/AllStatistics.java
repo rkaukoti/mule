@@ -25,7 +25,7 @@ public class AllStatistics
     private Map<String, FlowConstructStatistics> flowConstructStats = new HashMap<String, FlowConstructStatistics>();
 
     /**
-     * 
+     *
      */
     public AllStatistics()
     {

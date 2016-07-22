@@ -35,7 +35,7 @@ public interface DeserializationPostInitialisable
             try
             {
                 final Method m = object.getClass().getDeclaredMethod("initAfterDeserialisation",
-                    MuleContext.class);
+                        MuleContext.class);
 
                 Object o = AccessController.doPrivileged(new PrivilegedAction<Object>()
                 {
@@ -65,8 +65,8 @@ public interface DeserializationPostInitialisable
             catch (NoSuchMethodException e)
             {
                 throw new IllegalArgumentException("Object " + object.getClass() + " implements " +
-                        DeserializationPostInitialisable.class + " but does not have a method " +
-                        "private void initAfterDeserialisation(MuleContext) defined", e);
+                                                   DeserializationPostInitialisable.class + " but does not have a method " +
+                                                   "private void initAfterDeserialisation(MuleContext) defined", e);
             }
         }
     }

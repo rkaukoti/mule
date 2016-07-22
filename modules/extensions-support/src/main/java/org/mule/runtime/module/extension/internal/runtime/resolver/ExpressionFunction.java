@@ -6,7 +6,7 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
-import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -14,7 +14,7 @@ import org.mule.runtime.core.api.MuleRuntimeException;
 
 import java.util.function.Function;
 
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
 
 /**
  * Represents a function that accepts a {@link MuleEvent}

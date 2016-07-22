@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:mule="http://www.mulesoft.org/schema/mule/core"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
       xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
        http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
@@ -20,23 +20,23 @@
         <script:component>
             <script:script engine="groovy">
                 if (message.getInboundProperty("foo")!=null)
-                    return "foo header received"
+                return "foo header received"
                 else
-                    return "foo header not received"
+                return "foo header not received"
             </script:script>
-        </script:component>            
-        
+        </script:component>
+
         <async>
-            <mule:wildcard-filter pattern="* header received" />
+            <mule:wildcard-filter pattern="* header received"/>
             <test:queue name="received"/>
         </async>
         <async>
-            <mule:wildcard-filter pattern="* header not received" />
+            <mule:wildcard-filter pattern="* header not received"/>
             <test:queue name="notReceived"/>
         </async>
-        
-        <mule:echo-component />
+
+        <mule:echo-component/>
     </flow>
-    
+
     <!--// END SNIPPET: full-config -->
 </mule>

@@ -23,11 +23,10 @@ import org.mule.runtime.module.xml.util.XMLUtils;
 import org.mule.runtime.module.xml.xpath.SaxonXpathEvaluator;
 import org.mule.runtime.module.xml.xpath.XPathEvaluator;
 import org.mule.runtime.module.xml.xpath.XPathReturnType;
+import org.xml.sax.InputSource;
 
 import java.nio.charset.Charset;
 import java.util.Map;
-
-import org.xml.sax.InputSource;
 
 /**
  * Simple transformer for using the JAXP XPath library to extract an XPath value from
@@ -71,8 +70,8 @@ public class XPathExtractor extends AbstractTransformer implements MuleContextAw
         if (expression == null)
         {
             throw new InitialisationException(
-                MessageFactory.createStaticMessage("An expression must be supplied to the StandardXPathExtractor"),
-                this);
+                    MessageFactory.createStaticMessage("An expression must be supplied to the StandardXPathExtractor"),
+                    this);
         }
 
         if (xpathEvaluator == null)

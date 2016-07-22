@@ -50,11 +50,6 @@ public enum FormChoice
         value = v;
     }
 
-    public String value()
-    {
-        return value;
-    }
-
     public static FormChoice fromValue(String v)
     {
         for (FormChoice c : FormChoice.values())
@@ -65,6 +60,11 @@ public enum FormChoice
             }
         }
         throw new IllegalArgumentException(v);
+    }
+
+    public String value()
+    {
+        return value;
     }
 
 }

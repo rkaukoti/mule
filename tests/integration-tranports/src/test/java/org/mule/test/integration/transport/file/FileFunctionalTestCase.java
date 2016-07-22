@@ -6,11 +6,8 @@
  */
 package org.mule.test.integration.transport.file;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.ClassRule;
+import org.junit.Test;
 import org.mule.compatibility.transport.file.FileMessageReceiver;
 import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.functional.functional.FunctionalTestNotification;
@@ -29,13 +26,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.junit.ClassRule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class FileFunctionalTestCase extends FunctionalTestCase implements FunctionalTestNotificationListener
 {
     @ClassRule
-    public static SystemProperty filePollOnlyOnPrimaryNode = new SystemProperty(FileMessageReceiver.MULE_TRANSPORT_FILE_SINGLEPOLLINSTANCE,"true");
+    public static SystemProperty filePollOnlyOnPrimaryNode =
+            new SystemProperty(FileMessageReceiver.MULE_TRANSPORT_FILE_SINGLEPOLLINSTANCE, "true");
 
     private Object receivedData = null;
     private boolean shouldPoll;

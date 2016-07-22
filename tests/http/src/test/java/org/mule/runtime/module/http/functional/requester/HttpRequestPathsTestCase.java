@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
+import org.junit.Test;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
-
-import org.junit.Test;
 
 public class HttpRequestPathsTestCase extends AbstractHttpRequestTestCase
 {
@@ -96,7 +96,8 @@ public class HttpRequestPathsTestCase extends AbstractHttpRequestTestCase
     public void customPathWithSpaceAndEncodedCharacter() throws Exception
     {
         // Spaces should be replaced by "%20", but any other encoded character must not be modified.
-        assertRequestUri("requestWithBasePath", "base Path%25", "test Path%25?k1=v%25&k2=v2", "/base%20Path%25/test%20Path%25?k1=v%25&k2=v2");
+        assertRequestUri("requestWithBasePath", "base Path%25", "test Path%25?k1=v%25&k2=v2",
+                "/base%20Path%25/test%20Path%25?k1=v%25&k2=v2");
     }
 
     private void assertRequestUri(String flowName, String basePath, String requestPath, String expectedUri) throws Exception

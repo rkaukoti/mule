@@ -6,8 +6,10 @@
  */
 package org.mule.runtime.module.ws.consumer;
 
-import org.mule.runtime.module.xml.stax.DelegateXMLStreamReader;
+import javanet.staxutils.events.EventAllocator;
+
 import org.mule.runtime.core.util.Preconditions;
+import org.mule.runtime.module.xml.stax.DelegateXMLStreamReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +19,6 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import javax.xml.stream.util.XMLEventAllocator;
-
-import javanet.staxutils.events.EventAllocator;
 
 /**
  * XMLStreamReader decorator that saves the scope and allows accesing to information about all the parent XMLEvent elements
@@ -48,17 +48,17 @@ public class ScopeSaverXMLStreamReader extends DelegateXMLStreamReader
             }
         }
         int res = super.next();
-        switch(res)
+        switch (res)
         {
-            case XMLStreamReader.START_ELEMENT:
-                XMLEvent evt = allocator.allocate(this);
-                scope.add(evt.asStartElement());
-                break;
-            case XMLStreamReader.END_ELEMENT:
-                scope.remove(scope.size() - 1);
-                break;
-            default:
-                break;
+        case XMLStreamReader.START_ELEMENT:
+            XMLEvent evt = allocator.allocate(this);
+            scope.add(evt.asStartElement());
+            break;
+        case XMLStreamReader.END_ELEMENT:
+            scope.remove(scope.size() - 1);
+            break;
+        default:
+            break;
         }
         return res;
     }
@@ -69,7 +69,8 @@ public class ScopeSaverXMLStreamReader extends DelegateXMLStreamReader
         return scope.get(scope.size() - 1);
     }
 
-    public List<StartElement> scopes() {
+    public List<StartElement> scopes()
+    {
         return scope;
     }
 

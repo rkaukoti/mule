@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getInitialiserEvent;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.withExtensionClassLoader;
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
@@ -20,6 +17,10 @@ import org.mule.runtime.module.extension.internal.runtime.DynamicConfigPolicy;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ConnectionProviderResolver;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSet;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ValueResolver;
+
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getInitialiserEvent;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.withExtensionClassLoader;
 
 /**
  * Default implementation of {@link ConfigurationProviderFactory}
@@ -42,10 +43,10 @@ public final class DefaultConfigurationProviderFactory implements ConfigurationP
     {
         configureConnectionProviderResolver(name, connectionProviderResolver);
         return new DynamicConfigurationProvider<>(name,
-                                                  configurationModel,
-                                                  resolverSet,
-                                                  connectionProviderResolver,
-                                                  dynamicConfigPolicy.getExpirationPolicy());
+                configurationModel,
+                resolverSet,
+                connectionProviderResolver,
+                dynamicConfigPolicy.getExpirationPolicy());
     }
 
     /**
@@ -59,21 +60,23 @@ public final class DefaultConfigurationProviderFactory implements ConfigurationP
             ValueResolver<ConnectionProvider> connectionProviderResolver,
             MuleContext muleContext) throws Exception
     {
-        return withExtensionClassLoader(configurationModel.getExtensionModel(), () -> {
-                                            configureConnectionProviderResolver(name, connectionProviderResolver);
-                                            ConfigurationInstance<T> configuration;
-                                            try
-                                            {
-                                                configuration = new ConfigurationInstanceFactory<T>(configurationModel, resolverSet).createConfiguration(name, getInitialiserEvent(muleContext), connectionProviderResolver);
-                                            }
-                                            catch (MuleException e)
-                                            {
-                                                throw new ConfigurationException(createStaticMessage(String.format("Could not create configuration '%s' for the '%s'",
-                                                                                                                   name, configurationModel.getExtensionModel().getName())), e);
-                                            }
+        return withExtensionClassLoader(configurationModel.getExtensionModel(), () ->
+                {
+                    configureConnectionProviderResolver(name, connectionProviderResolver);
+                    ConfigurationInstance<T> configuration;
+                    try
+                    {
+                        configuration = new ConfigurationInstanceFactory<T>(configurationModel, resolverSet).createConfiguration(name,
+                                getInitialiserEvent(muleContext), connectionProviderResolver);
+                    }
+                    catch (MuleException e)
+                    {
+                        throw new ConfigurationException(createStaticMessage(String.format("Could not create configuration '%s' for the '%s'",
+                                name, configurationModel.getExtensionModel().getName())), e);
+                    }
 
-                                            return new StaticConfigurationProvider<>(name, configurationModel, configuration);
-                                        }
+                    return new StaticConfigurationProvider<>(name, configurationModel, configuration);
+                }
         );
     }
 

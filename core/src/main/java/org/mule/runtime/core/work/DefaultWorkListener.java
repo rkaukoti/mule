@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.core.work;
 
-import javax.resource.spi.work.WorkEvent;
-import javax.resource.spi.work.WorkListener;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.resource.spi.work.WorkEvent;
+import javax.resource.spi.work.WorkListener;
 
 /**
  * Default exception Handler used when executing work in the work manager

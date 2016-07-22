@@ -6,6 +6,10 @@
  */
 package org.mule.runtime.module.spring.security.editors;
 
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
+import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
+
 import java.beans.PropertyEditorSupport;
 import java.io.StringReader;
 import java.text.MessageFormat;
@@ -15,23 +19,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.access.SecurityConfig;
-import org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource;
-
-
 
 /**
  * Property editor to assist with the setup of a {@link org.springframework.security.access.method.MethodSecurityMetadataSource}.
  */
-public class MethodSecurityMetadataSourceEditor extends PropertyEditorSupport 
+public class MethodSecurityMetadataSourceEditor extends PropertyEditorSupport
 {
     /**
      * Create a MapBasedMethodSecurityMetadataSource from configured text
      * The syntax expected is a set of Java properties, eachof the form
-     *     fully-qualified-method-name=comma-separated-list-of-ConfigAttributes
+     * fully-qualified-method-name=comma-separated-list-of-ConfigAttributes
      */
-    public void setAsText(String text) throws IllegalArgumentException 
+    public void setAsText(String text) throws IllegalArgumentException
     {
         try
         {
@@ -64,7 +63,7 @@ public class MethodSecurityMetadataSourceEditor extends PropertyEditorSupport
                 setValue(new MapBasedMethodSecurityMetadataSource(mappings));
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             throw new IllegalArgumentException(MessageFormat.format("Error parsing {0}", text), ex);
         }

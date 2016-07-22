@@ -6,19 +6,16 @@
  */
 package org.mule.compatibility.transport.http;
 
-import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
-import org.mule.compatibility.core.api.transport.Connector;
-import org.mule.compatibility.transport.http.HttpsClientMessageDispatcher;
-import org.mule.compatibility.transport.http.HttpsConnector;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import java.net.URI;
-
 import org.apache.commons.httpclient.HostConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
+import org.mule.compatibility.core.api.transport.Connector;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.net.URI;
 
 @SmallTest
 public class HttpsClientMessageDispatcherTestCase extends AbstractMuleTestCase

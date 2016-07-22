@@ -6,9 +6,8 @@
  */
 package org.mule.compatibility.transport.http.components;
 
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.compatibility.transport.http.HttpConstants;
 import org.mule.compatibility.transport.http.HttpRequest;
 import org.mule.compatibility.transport.http.functional.AbstractMockHttpServerTestCase;
@@ -20,16 +19,15 @@ import org.mule.tck.junit4.rule.DynamicPort;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 public class RestServiceComponentDeleteTestCase extends AbstractMockHttpServerTestCase
 {
-    private CountDownLatch serverRequestCompleteLatch = new CountDownLatch(1);
-    private boolean deleteRequestFound = false;
-
     @Rule
     public DynamicPort dynamicPort = new DynamicPort("port1");
+    private CountDownLatch serverRequestCompleteLatch = new CountDownLatch(1);
+    private boolean deleteRequestFound = false;
 
     @Override
     protected String getConfigFile()

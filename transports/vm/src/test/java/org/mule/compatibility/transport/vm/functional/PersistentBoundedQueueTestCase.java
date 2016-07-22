@@ -6,10 +6,7 @@
  */
 package org.mule.compatibility.transport.vm.functional;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -17,7 +14,9 @@ import org.mule.runtime.core.api.client.MuleClient;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class PersistentBoundedQueueTestCase extends FunctionalTestCase
 {

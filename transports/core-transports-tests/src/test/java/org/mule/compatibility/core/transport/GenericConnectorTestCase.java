@@ -6,11 +6,7 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import org.mule.compatibility.core.transport.AbstractConnector;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
 
@@ -18,7 +14,9 @@ import javax.resource.spi.work.Work;
 import javax.resource.spi.work.WorkEvent;
 import javax.resource.spi.work.WorkException;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * The test is not there in AbstractConnector, because we need to call a protected
@@ -29,8 +27,6 @@ public class GenericConnectorTestCase extends AbstractMuleContextEndpointTestCas
 
     /**
      * Throwable should not cause a ClassCastException (MULE-802).
-     * 
-     * @throws Exception
      */
     @Test
     public void testSpiWorkThrowableHandling() throws Exception
@@ -51,7 +47,7 @@ public class GenericConnectorTestCase extends AbstractMuleContextEndpointTestCas
     private WorkEvent getTestWorkEvent()
     {
         WorkEvent event = new WorkEvent(this, // source
-            WorkEvent.WORK_REJECTED, getTestWork(), new WorkException(new Throwable("testThrowable")));
+                WorkEvent.WORK_REJECTED, getTestWork(), new WorkException(new Throwable("testThrowable")));
         return event;
     }
 

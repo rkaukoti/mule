@@ -7,16 +7,16 @@
 
 package org.mule.test.transformers;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
-import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.test.transformers.GraphTransformerResolutionTestCase.A;
 import org.mule.test.transformers.GraphTransformerResolutionTestCase.B;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
 
 public class SpringPrototypesLifecycleTestCase extends FunctionalTestCase
 {

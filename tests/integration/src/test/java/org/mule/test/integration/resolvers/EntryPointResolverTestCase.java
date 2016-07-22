@@ -6,10 +6,10 @@
  */
 package org.mule.test.integration.resolvers;
 
+import org.junit.Test;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import org.junit.Test;
 
 public class EntryPointResolverTestCase extends AbstractEntryPointResolverTestCase
 {
@@ -23,7 +23,7 @@ public class EntryPointResolverTestCase extends AbstractEntryPointResolverTestCa
     @Test
     public void testArrayEntryPointResolverOnComponent() throws Exception
     {
-        doTest("Array2", new String[]{"hello", "world"}, "array");
+        doTest("Array2", new String[] {"hello", "world"}, "array");
     }
 
     @Test
@@ -62,7 +62,7 @@ public class EntryPointResolverTestCase extends AbstractEntryPointResolverTestCa
     @Test
     public void testReflectionEntryPointResolverOnComponent() throws Exception
     {
-        doTest("Reflection2", new Object[]{new Integer(0), new String("String")}, "reflection");
+        doTest("Reflection2", new Object[] {new Integer(0), new String("String")}, "reflection");
     }
 
     @Test
@@ -78,7 +78,7 @@ public class EntryPointResolverTestCase extends AbstractEntryPointResolverTestCa
 
         try
         {
-            doTest("Reflection2", new Object[]{new Integer(42), null}, "{NullPayload}");
+            doTest("Reflection2", new Object[] {new Integer(42), null}, "{NullPayload}");
         }
         catch (Exception e)
         {
@@ -88,6 +88,6 @@ public class EntryPointResolverTestCase extends AbstractEntryPointResolverTestCa
             // handle the null as class
         }
 
-        doTest("Array2", new String[]{"hello", null, "world"}, "array");
+        doTest("Array2", new String[] {"hello", null, "world"}, "array");
     }
 }

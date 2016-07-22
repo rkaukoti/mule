@@ -7,11 +7,9 @@
 
 package org.mule.runtime.core.agent.registry;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.registry.TransformerResolver;
@@ -26,9 +24,10 @@ import org.mule.tck.testmodels.fruit.Orange;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class MuleRegistryHelperTransformerLookupTestCase extends AbstractMuleTestCase

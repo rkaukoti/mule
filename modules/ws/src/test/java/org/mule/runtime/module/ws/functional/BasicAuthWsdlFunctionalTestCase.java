@@ -7,16 +7,6 @@
 package org.mule.runtime.module.ws.functional;
 
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.construct.Flow;
-import org.mule.tck.junit4.rule.DynamicPort;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
 import org.eclipse.jetty.security.ConstraintMapping;
 import org.eclipse.jetty.security.ConstraintSecurityHandler;
 import org.eclipse.jetty.security.HashLoginService;
@@ -32,9 +22,29 @@ import org.eclipse.jetty.util.security.Password;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runners.Parameterized;
+import org.mule.runtime.core.construct.Flow;
+import org.mule.tck.junit4.rule.DynamicPort;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class BasicAuthWsdlFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase
 {
+
+    @Rule
+    public DynamicPort httpServerPort = new DynamicPort("httpServerPort");
+    private Server httpServer;
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> parameters()
+    {
+        // Change default behavior of AbstractWSConsumerFunctionalTestCase as this test only uses the new connector.
+        return Arrays.asList(new Object[][] {new Object[] {false}});
+    }
 
     @Override
     protected String getConfigFile()
@@ -42,23 +52,9 @@ public class BasicAuthWsdlFunctionalTestCase extends AbstractWSConsumerFunctiona
         return "basic-auth-wsdl-config.xml";
     }
 
-    @Parameterized.Parameters
-    public static Collection<Object[]> parameters()
-    {
-        // Change default behavior of AbstractWSConsumerFunctionalTestCase as this test only uses the new connector.
-        return Arrays.asList(new Object[][] { new Object[]{false} });
-    }
-
-    @Rule
-    public DynamicPort httpServerPort = new DynamicPort("httpServerPort");
-
-    private Server httpServer;
-
     /**
      * Since the fetching of the WSDL occurs during init, we cannot tie the server of the WSDL the the startup pf the
      * context.
-     * 
-     * @throws Exception
      */
     @Override
     protected void doSetUpBeforeMuleContextCreation() throws Exception

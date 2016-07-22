@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.core.util.xa;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.transaction.Status;
 import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 import javax.transaction.xa.Xid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base class for an XAResource implementation.
@@ -59,8 +59,8 @@ public abstract class DefaultXASession<T extends AbstractXaTransactionContext> i
         if (logger.isDebugEnabled())
         {
             logger.debug(new StringBuilder(128).append("Thread ").append(Thread.currentThread()).append(
-                flags == TMNOFLAGS ? " starts" : flags == TMJOIN ? " joins" : " resumes").append(
-                " work on behalf of transaction branch ").append(xid).toString());
+                    flags == TMNOFLAGS ? " starts" : flags == TMJOIN ? " joins" : " resumes").append(
+                    " work on behalf of transaction branch ").append(xid).toString());
         }
         // A local transaction is already begun
         if (this.localContext != null)
@@ -74,31 +74,31 @@ public abstract class DefaultXASession<T extends AbstractXaTransactionContext> i
         }
         switch (flags)
         {
-            // a new transaction
-            case TMNOFLAGS :
-            case TMJOIN :
-            default :
-                try
-                {
-                    localContext = createTransactionContext(xid);
-                    resourceManager.beginTransaction(localContext);
-                }
-                catch (Exception e)
-                {
-                    // TODO MULE-863: Is logging necessary?
-                    logger.error("Could not create new transactional resource", e);
-                    throw (XAException) new XAException(e.getMessage()).initCause(e);
-                }
-                break;
-            case TMRESUME :
-                localContext = resourceManager.getSuspendedTransactionalResource(xid);
-                if (localContext == null)
-                {
-                    throw new XAException(XAException.XAER_NOTA);
-                }
-                // TODO: resume context
-                resourceManager.removeSuspendedTransactionalResource(xid);
-                break;
+        // a new transaction
+        case TMNOFLAGS:
+        case TMJOIN:
+        default:
+            try
+            {
+                localContext = createTransactionContext(xid);
+                resourceManager.beginTransaction(localContext);
+            }
+            catch (Exception e)
+            {
+                // TODO MULE-863: Is logging necessary?
+                logger.error("Could not create new transactional resource", e);
+                throw (XAException) new XAException(e.getMessage()).initCause(e);
+            }
+            break;
+        case TMRESUME:
+            localContext = resourceManager.getSuspendedTransactionalResource(xid);
+            if (localContext == null)
+            {
+                throw new XAException(XAException.XAER_NOTA);
+            }
+            // TODO: resume context
+            resourceManager.removeSuspendedTransactionalResource(xid);
+            break;
         }
         localXid = xid;
         resourceManager.addActiveTransactionalResource(localXid, localContext);
@@ -109,8 +109,8 @@ public abstract class DefaultXASession<T extends AbstractXaTransactionContext> i
         if (logger.isDebugEnabled())
         {
             logger.debug(new StringBuilder(128).append("Thread ").append(Thread.currentThread()).append(
-                flags == TMSUSPEND ? " suspends" : flags == TMFAIL ? " fails" : " ends").append(
-                " work on behalf of transaction branch ").append(xid).toString());
+                    flags == TMSUSPEND ? " suspends" : flags == TMFAIL ? " fails" : " ends").append(
+                    " work on behalf of transaction branch ").append(xid).toString());
         }
         // No transaction is already begun
         if (localContext == null)
@@ -127,17 +127,17 @@ public abstract class DefaultXASession<T extends AbstractXaTransactionContext> i
         {
             switch (flags)
             {
-                case TMSUSPEND :
-                    // TODO: suspend context
-                    resourceManager.addSuspendedTransactionalResource(localXid, localContext);
-                    resourceManager.removeActiveTransactionalResource(localXid);
-                    break;
-                case TMFAIL :
-                    resourceManager.setTransactionRollbackOnly(localContext);
-                    break;
-                case TMSUCCESS : // no-op
-                default :        // no-op
-                    break;
+            case TMSUSPEND:
+                // TODO: suspend context
+                resourceManager.addSuspendedTransactionalResource(localXid, localContext);
+                resourceManager.removeActiveTransactionalResource(localXid);
+                break;
+            case TMFAIL:
+                resourceManager.setTransactionRollbackOnly(localContext);
+                break;
+            case TMSUCCESS: // no-op
+            default:        // no-op
+                break;
             }
         }
         catch (ResourceManagerException e)
@@ -280,7 +280,7 @@ public abstract class DefaultXASession<T extends AbstractXaTransactionContext> i
 
     public int getTransactionTimeout() throws XAException
     {
-        return (int)(resourceManager.getDefaultTransactionTimeout() / 1000);
+        return (int) (resourceManager.getDefaultTransactionTimeout() / 1000);
     }
 
     public boolean setTransactionTimeout(int timeout) throws XAException
@@ -298,9 +298,8 @@ public abstract class DefaultXASession<T extends AbstractXaTransactionContext> i
      * Commits a dangling transaction that can be caused by the failure of one
      * of the XAResource involved in the transaction or a crash of the transaction manager.
      *
-     * @param xid transaction identifier
+     * @param xid      transaction identifier
      * @param onePhase if the commit should be done using only one phase commit
-     * @throws XAException
      */
     protected abstract void commitDanglingTransaction(Xid xid, boolean onePhase) throws XAException;
 
@@ -309,7 +308,6 @@ public abstract class DefaultXASession<T extends AbstractXaTransactionContext> i
      * of the XAResource involved in the transaction or a crash of the transaction manager.
      *
      * @param xid transaction identifier
-     * @throws XAException
      */
     protected abstract void rollbackDandlingTransaction(Xid xid) throws XAException;
 

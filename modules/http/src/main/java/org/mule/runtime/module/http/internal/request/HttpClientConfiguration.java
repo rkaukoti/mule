@@ -22,8 +22,10 @@ public class HttpClientConfiguration
     private final String threadNamePrefix;
     private final String ownerName;
 
-    private HttpClientConfiguration(TlsContextFactory tlsContextFactory, ProxyConfig proxyConfig, TcpClientSocketProperties clientSocketProperties,
-                                           int maxConnections, boolean usePersistentConnections, int connectionIdleTimeout, String threadNamePrefix, String ownerName)
+    private HttpClientConfiguration(TlsContextFactory tlsContextFactory, ProxyConfig proxyConfig,
+                                    TcpClientSocketProperties clientSocketProperties,
+                                    int maxConnections, boolean usePersistentConnections, int connectionIdleTimeout,
+                                    String threadNamePrefix, String ownerName)
     {
         this.tlsContextFactory = tlsContextFactory;
         this.proxyConfig = proxyConfig;
@@ -137,7 +139,7 @@ public class HttpClientConfiguration
         public HttpClientConfiguration build()
         {
             return new HttpClientConfiguration(tlsContextFactory, proxyConfig, clientSocketProperties, maxConnections,
-                                                      usePersistentConnections, connectionIdleTimeout, threadNamePrefix, ownerName);
+                    usePersistentConnections, connectionIdleTimeout, threadNamePrefix, ownerName);
         }
     }
 }

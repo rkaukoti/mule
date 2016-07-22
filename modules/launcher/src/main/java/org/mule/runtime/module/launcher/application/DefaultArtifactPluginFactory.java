@@ -7,9 +7,10 @@
 
 package org.mule.runtime.module.launcher.application;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
 import org.mule.runtime.module.launcher.plugin.ArtifactPluginDescriptor;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Default implementation for creating an {@link ArtifactPlugin} with the corresponding classloader.

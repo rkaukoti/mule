@@ -6,6 +6,12 @@
  */
 package org.mule.runtime.module.json.transformers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.github.fge.jackson.JsonLoader;
+import com.github.fge.jsonschema.core.report.ProcessingReport;
+import com.github.fge.jsonschema.main.JsonSchema;
+import com.github.fge.jsonschema.main.JsonSchemaFactory;
+
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -15,12 +21,11 @@ import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.json.JsonData;
 import org.mule.runtime.module.json.validation.ValidateJsonSchemaMessageProcessor;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.github.fge.jackson.JsonLoader;
-import com.github.fge.jsonschema.core.report.ProcessingReport;
-import com.github.fge.jsonschema.main.JsonSchema;
-import com.github.fge.jsonschema.main.JsonSchemaFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.ls.LSResourceResolver;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -32,12 +37,6 @@ import java.util.Map;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.ls.LSResourceResolver;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
 
 /**
  * @deprecated This class is deprecated and will be removed in Mule 4.0. Use {@link ValidateJsonSchemaMessageProcessor} instead
@@ -54,7 +53,8 @@ public class JsonSchemaJsonValidationFilter implements JsonSchemaFilter
     @Override
     public boolean accept(MuleMessage message)
     {
-        throw new UnsupportedOperationException("MULE-9341 Remove Filters that are not needed.  This method will be removed when filters are cleaned up.");
+        throw new UnsupportedOperationException(
+                "MULE-9341 Remove Filters that are not needed.  This method will be removed when filters are cleaned up.");
     }
 
     @Override
@@ -142,15 +142,15 @@ public class JsonSchemaJsonValidationFilter implements JsonSchemaFilter
     }
 
     @Override
-    public void setSchemaLocations(String schemaLocations)
-    {
-        this.schemaLocations = schemaLocations;
-    }
-
-    @Override
     public String getSchemaLocations()
     {
         return schemaLocations;
+    }
+
+    @Override
+    public void setSchemaLocations(String schemaLocations)
+    {
+        this.schemaLocations = schemaLocations;
     }
 
     @Override

@@ -6,17 +6,16 @@
  */
 package org.mule.runtime.module.pgp;
 
+import org.apache.commons.io.IOUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.atomic.AtomicLong;
-
-import org.apache.commons.io.IOUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -44,7 +43,7 @@ public class LazyTransformedInputStreamTestCase extends AbstractMuleTestCase
     public void testTransformPerRequestPolicy() throws Exception
     {
         transformedInputStream = new LazyTransformedInputStream(new TransformPerRequestPolicy(),
-            simpleTransformer);
+                simpleTransformer);
 
         for (int i = 0; i < message.length(); i++)
         {
@@ -62,7 +61,7 @@ public class LazyTransformedInputStreamTestCase extends AbstractMuleTestCase
     {
         int chunkSize = 4;
         LazyTransformedInputStream transformedInputStream = new LazyTransformedInputStream(
-            new TransformPerRequestInChunksPolicy(chunkSize), simpleTransformer);
+                new TransformPerRequestInChunksPolicy(chunkSize), simpleTransformer);
 
         for (int i = 0; i < message.length(); i++)
         {
@@ -70,7 +69,7 @@ public class LazyTransformedInputStreamTestCase extends AbstractMuleTestCase
             assertEquals(message.charAt(i) + 1, read);
             // only one byte more should be consumed at this point
             int shouldBeTransformed = (int) Math.min(message.length(),
-                Math.ceil((double) simpleTransformer.bytesRead / (double) chunkSize) * chunkSize);
+                    Math.ceil((double) simpleTransformer.bytesRead / (double) chunkSize) * chunkSize);
             assertEquals(shouldBeTransformed, simpleTransformer.bytesRead);
             Thread.sleep(50);
             assertEquals(shouldBeTransformed, simpleTransformer.bytesRead);
@@ -81,7 +80,7 @@ public class LazyTransformedInputStreamTestCase extends AbstractMuleTestCase
     public void testTransformContinuouslyPolicy() throws Exception
     {
         LazyTransformedInputStream transformedInputStream = new LazyTransformedInputStream(
-            new TransformContinuouslyPolicy(), simpleTransformer);
+                new TransformContinuouslyPolicy(), simpleTransformer);
 
         int i = 0;
         int read = transformedInputStream.read();

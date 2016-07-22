@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.core.util.annotation;
 
-import static java.lang.annotation.ElementType.METHOD;
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
-
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
@@ -17,6 +13,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.annotation.ElementType.METHOD;
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 
 /**
  * A helper class for reading annotations.
@@ -44,7 +44,7 @@ public class AnnotationUtils
             for (int j = 0; j < method.getParameterAnnotations()[i].length; j++)
             {
                 Annotation annotation = method.getParameterAnnotations()[i][j];
-                if(metaAnnotation==null || annotation.annotationType().isAnnotationPresent(metaAnnotation))
+                if (metaAnnotation == null || annotation.annotationType().isAnnotationPresent(metaAnnotation))
                 {
                     annos.add(new AnnotationMetaData(method.getDeclaringClass(), method, ElementType.PARAMETER, annotation));
                 }

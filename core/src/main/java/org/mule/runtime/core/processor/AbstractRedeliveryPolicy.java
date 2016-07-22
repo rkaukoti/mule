@@ -29,13 +29,14 @@ import org.mule.runtime.core.routing.MessageProcessorFilterPair;
  * fails too often, the message is sent to the failedMessageProcessor MP, whence success is force to be returned, to allow
  * the message to be considered "consumed".
  */
-public abstract class AbstractRedeliveryPolicy extends AbstractInterceptingMessageProcessor implements MessageProcessor, Lifecycle, MuleContextAware, FlowConstructAware, MessagingExceptionHandlerAware
+public abstract class AbstractRedeliveryPolicy extends AbstractInterceptingMessageProcessor
+        implements MessageProcessor, Lifecycle, MuleContextAware, FlowConstructAware, MessagingExceptionHandlerAware
 {
 
+    public static final int REDELIVERY_FAIL_ON_FIRST = 0;
     protected FlowConstruct flowConstruct;
     protected int maxRedeliveryCount;
     protected MessageProcessor deadLetterQueue;
-    public static final int REDELIVERY_FAIL_ON_FIRST = 0;
     private MessagingExceptionHandler messagingExceptionHandler;
 
     @Override
@@ -54,8 +55,8 @@ public abstract class AbstractRedeliveryPolicy extends AbstractInterceptingMessa
         if (maxRedeliveryCount < 0)
         {
             throw new InitialisationException(
-                CoreMessages.initialisationFailure(
-                    "maxRedeliveryCount must be positive"), this);
+                    CoreMessages.initialisationFailure(
+                            "maxRedeliveryCount must be positive"), this);
         }
 
         if (deadLetterQueue instanceof Initialisable)

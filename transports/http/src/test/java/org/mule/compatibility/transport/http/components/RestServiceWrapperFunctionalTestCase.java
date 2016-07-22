@@ -6,8 +6,8 @@
  */
 package org.mule.compatibility.transport.http.components;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MuleEventContext;
@@ -20,8 +20,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class RestServiceWrapperFunctionalTestCase extends FunctionalTestCase
 {
@@ -57,7 +57,7 @@ public class RestServiceWrapperFunctionalTestCase extends FunctionalTestCase
     public void testErrorExpressionOnRegexFilterPass() throws Exception
     {
         MuleMessage result = muleContext.getClient().send("restServiceEndpoint2", MuleMessage.builder().payload(TEST_REQUEST).build());
-        assertEquals("echo=" + TEST_REQUEST,getPayloadAsString(result));
+        assertEquals("echo=" + TEST_REQUEST, getPayloadAsString(result));
     }
 
     @Test
@@ -71,14 +71,16 @@ public class RestServiceWrapperFunctionalTestCase extends FunctionalTestCase
                                                                                              .nullPayload()
                                                                                              .outboundProperties(props)
                                                                                              .build());
-        assertEquals("foo=boo&faz=baz&far=bar",getPayloadAsString(result));
+        assertEquals("foo=boo&faz=baz&far=bar", getPayloadAsString(result));
     }
 
     @Test
     public void testOptionalParametersMissing() throws Exception
     {
-        MuleMessage result = muleContext.getClient().send("restServiceEndpoint3", MuleMessage.builder().nullPayload().addOutboundProperty("baz-header", "baz").build());
-        assertEquals("foo=boo&faz=baz",getPayloadAsString(result));
+        MuleMessage result = muleContext.getClient()
+                                        .send("restServiceEndpoint3",
+                                                MuleMessage.builder().nullPayload().addOutboundProperty("baz-header", "baz").build());
+        assertEquals("foo=boo&faz=baz", getPayloadAsString(result));
     }
 
     @Test

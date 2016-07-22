@@ -6,24 +6,23 @@
  */
 package org.mule.runtime.core.transformer.graph;
 
-import static junit.framework.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.registry.ResolverException;
 import org.mule.runtime.core.api.transformer.Converter;
-import org.mule.runtime.api.metadata.DataType;
 import org.mule.tck.size.SmallTest;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Test;
-import org.mockito.Mockito;
+import static junit.framework.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class CompositeConverterFilterTestCase

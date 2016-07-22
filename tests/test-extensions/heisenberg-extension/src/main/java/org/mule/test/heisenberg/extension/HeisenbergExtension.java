@@ -6,10 +6,6 @@
  */
 package org.mule.test.heisenberg.extension;
 
-import static org.mule.runtime.extension.api.Category.SELECT;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.LITERAL;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.REQUIRED;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -52,6 +48,11 @@ import java.util.function.Function;
 
 import javax.inject.Inject;
 
+import static org.mule.runtime.extension.api.Category.SELECT;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.LITERAL;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.REQUIRED;
+
 @Extension(name = HeisenbergExtension.HEISENBERG, description = HeisenbergExtension.EXTENSION_DESCRIPTION, category = SELECT, minMuleVersion = "4.1")
 @Operations({HeisenbergOperations.class, MoneyLaunderingOperation.class})
 @Extensible(alias = "heisenberg-empire")
@@ -71,14 +72,11 @@ public class HeisenbergExtension implements Lifecycle, MuleContextAware
     public static final String PERSONAL_INFORMATION_GROUP_NAME = "Personal Information";
     public static final String PARAMETER_OVERRIDED_DISPLAY_NAME = "Parameter Custom Display Name";
     public static final String PARAMETER_ORIGINAL_OVERRIDED_DISPLAY_NAME = "literalExpressionWithoutDefault";
-
+    public static int sourceTimesStarted = 0;
     private int initialise = 0;
     private int start = 0;
     private int stop = 0;
     private int dispose = 0;
-    public static int sourceTimesStarted = 0;
-
-
     private MuleContext muleContext;
 
     @Inject
@@ -240,6 +238,11 @@ public class HeisenbergExtension implements Lifecycle, MuleContextAware
         return money;
     }
 
+    void setMoney(BigDecimal money)
+    {
+        this.money = money;
+    }
+
     public Map<String, Long> getRecipe()
     {
         return recipe;
@@ -290,19 +293,14 @@ public class HeisenbergExtension implements Lifecycle, MuleContextAware
         return endingHealth;
     }
 
-    public ExtendedPersonalInfo getPersonalInfo()
-    {
-        return personalInfo;
-    }
-
     void setEndingHealth(HealthStatus endingHealth)
     {
         this.endingHealth = endingHealth;
     }
 
-    void setMoney(BigDecimal money)
+    public ExtendedPersonalInfo getPersonalInfo()
     {
-        this.money = money;
+        return personalInfo;
     }
 
     public String getLabAddress()
@@ -330,15 +328,15 @@ public class HeisenbergExtension implements Lifecycle, MuleContextAware
         return weaponTypeFunction;
     }
 
+    public MuleContext getMuleContext()
+    {
+        return muleContext;
+    }
+
     @Override
     public void setMuleContext(MuleContext context)
     {
         muleContext = context;
-    }
-
-    public MuleContext getMuleContext()
-    {
-        return muleContext;
     }
 
     public Weapon getWeapon()

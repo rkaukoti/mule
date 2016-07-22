@@ -20,9 +20,8 @@ public class WarnOnTimeout extends Statement
 {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    private Statement next;
     private final long timeout;
+    private Statement next;
     private boolean finished = false;
     private Throwable thrown = null;
 

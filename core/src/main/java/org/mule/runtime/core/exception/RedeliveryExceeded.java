@@ -31,7 +31,8 @@ public class RedeliveryExceeded implements FlowConstructAware, Initialisable
     @Override
     public void initialise() throws InitialisationException
     {
-        DefaultMessageProcessorChainBuilder defaultMessageProcessorChainBuilder = new DefaultMessageProcessorChainBuilder(this.flowConstruct);
+        DefaultMessageProcessorChainBuilder defaultMessageProcessorChainBuilder =
+                new DefaultMessageProcessorChainBuilder(this.flowConstruct);
         try
         {
             configuredMessageProcessors = defaultMessageProcessorChainBuilder.chain(messageProcessors).build();
@@ -63,7 +64,8 @@ public class RedeliveryExceeded implements FlowConstructAware, Initialisable
     public MuleEvent process(MuleEvent event) throws MuleException
     {
         MuleEvent result = event;
-        if (!messageProcessors.isEmpty()) {
+        if (!messageProcessors.isEmpty())
+        {
             result = configuredMessageProcessors.process(event);
         }
         if (result != null && !VoidMuleEvent.getInstance().equals(result))

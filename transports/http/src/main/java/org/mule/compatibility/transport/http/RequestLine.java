@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.transport.http;
 
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpVersion;
+import org.apache.commons.httpclient.ProtocolException;
 import org.mule.compatibility.transport.http.i18n.HttpMessages;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
-
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpVersion;
-import org.apache.commons.httpclient.ProtocolException;
 
 /**
  * Defines a HTTP request-line, consisting of method name, URI and protocol.
@@ -28,29 +27,6 @@ public class RequestLine
     private String method = null;
     private String uri = null;
     private String uriWithoutParams;
-
-    public static RequestLine parseLine(final String l) throws HttpException
-    {
-        String method;
-        String uri;
-        String protocol;
-        try
-        {
-            if (l == null)
-            {
-                throw new ProtocolException(HttpMessages.requestLineIsMalformed(l).getMessage());
-            }
-            StringTokenizer st = new StringTokenizer(l, " ");
-            method = st.nextToken();
-            uri = st.nextToken();
-            protocol = st.nextToken();
-        }
-        catch (NoSuchElementException e)
-        {
-            throw new ProtocolException(HttpMessages.requestLineIsMalformed(l).getMessage());
-        }
-        return new RequestLine(method, uri, protocol);
-    }
 
     public RequestLine(final String method, final String uri, final HttpVersion httpversion)
     {
@@ -76,6 +52,29 @@ public class RequestLine
             throws ProtocolException
     {
         this(method, uri, HttpVersion.parse(httpversion));
+    }
+
+    public static RequestLine parseLine(final String l) throws HttpException
+    {
+        String method;
+        String uri;
+        String protocol;
+        try
+        {
+            if (l == null)
+            {
+                throw new ProtocolException(HttpMessages.requestLineIsMalformed(l).getMessage());
+            }
+            StringTokenizer st = new StringTokenizer(l, " ");
+            method = st.nextToken();
+            uri = st.nextToken();
+            protocol = st.nextToken();
+        }
+        catch (NoSuchElementException e)
+        {
+            throw new ProtocolException(HttpMessages.requestLineIsMalformed(l).getMessage());
+        }
+        return new RequestLine(method, uri, protocol);
     }
 
     /*

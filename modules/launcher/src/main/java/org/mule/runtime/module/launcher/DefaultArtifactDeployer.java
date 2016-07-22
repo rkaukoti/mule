@@ -8,7 +8,6 @@ package org.mule.runtime.module.launcher;
 
 import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.runtime.module.launcher.artifact.DeployableArtifact;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +65,8 @@ public class DefaultArtifactDeployer<T extends DeployableArtifact> implements Ar
         }
         catch (Throwable t)
         {
-            logger.error(String.format("Unable to cleanly dispose artifact '%s'. Restart Mule if you get errors redeploying this artifact", artifact.getArtifactName()), t);
+            logger.error(String.format("Unable to cleanly dispose artifact '%s'. Restart Mule if you get errors redeploying this artifact",
+                    artifact.getArtifactName()), t);
         }
     }
 
@@ -79,7 +79,8 @@ public class DefaultArtifactDeployer<T extends DeployableArtifact> implements Ar
         }
         catch (Throwable t)
         {
-            logger.error(String.format("Unable to cleanly stop artifact '%s'. Restart Mule if you get errors redeploying this artifact", artifact.getArtifactName()), t);
+            logger.error(String.format("Unable to cleanly stop artifact '%s'. Restart Mule if you get errors redeploying this artifact",
+                    artifact.getArtifactName()), t);
         }
     }
 

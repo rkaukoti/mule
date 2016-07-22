@@ -6,42 +6,42 @@
  */
 package org.mule.runtime.module.extension.internal.connector;
 
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-
-import org.mule.runtime.core.api.MessagingException;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionExceptionCode;
 import org.mule.runtime.api.connection.ConnectionHandlingStrategy;
 import org.mule.runtime.api.connection.ConnectionHandlingStrategyFactory;
 import org.mule.runtime.api.connection.ConnectionValidationResult;
+import org.mule.runtime.core.api.MessagingException;
+import org.mule.runtime.core.retry.RetryPolicyExhaustedException;
 import org.mule.runtime.extension.api.annotation.Alias;
 import org.mule.runtime.extension.api.annotation.Extension;
 import org.mule.runtime.extension.api.annotation.Operations;
 import org.mule.runtime.extension.api.annotation.capability.Xml;
 import org.mule.runtime.extension.api.annotation.connector.Providers;
 import org.mule.runtime.extension.api.annotation.param.Connection;
-import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.test.petstore.extension.PetStoreClient;
 import org.mule.test.petstore.extension.PetStoreConnectionProvider;
 import org.mule.test.petstore.extension.PetStoreConnector;
 import org.mule.test.petstore.extension.PetStoreOperations;
-import org.mule.runtime.core.retry.RetryPolicyExhaustedException;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
 
 public class PetStoreRetryPolicyConnectionTestCase extends ExtensionFunctionalTestCase
 {
 
     public static final String CONNECTION_FAIL = "Connection fail";
     public static final String CONNECTION_FAIL_DOT = "Connection fail.";
-
-    public PetStoreRetryPolicyConnectionTestCase(){}
-
     @Rule
     public ExpectedException exception = ExpectedException.none();
+
+    public PetStoreRetryPolicyConnectionTestCase()
+    {
+    }
 
     @Override
     protected String getConfigFile()
@@ -93,7 +93,8 @@ public class PetStoreRetryPolicyConnectionTestCase extends ExtensionFunctionalTe
 
     @Extension(name = "petstore", description = "PetStore Test connector")
     @Operations(PetStoreOperationsWithFailures.class)
-    @Providers({PooledPetStoreConnectionProviderWithFailureInvalidConnection.class, PooledPetStoreConnectionProviderWithValidConnection.class})
+    @Providers({PooledPetStoreConnectionProviderWithFailureInvalidConnection.class,
+                PooledPetStoreConnectionProviderWithValidConnection.class})
     @Xml(namespaceLocation = "http://www.mulesoft.org/schema/mule/petstore", namespace = "petstore")
     public static class PetStoreConnectorWithConnectionFailure extends PetStoreConnector
     {
@@ -116,7 +117,8 @@ public class PetStoreRetryPolicyConnectionTestCase extends ExtensionFunctionalTe
         @Override
         public ConnectionValidationResult validate(PetStoreClient connection)
         {
-             return ConnectionValidationResult.failure(CONNECTION_FAIL, ConnectionExceptionCode.INCORRECT_CREDENTIALS, new Exception("Invalid credentials"));
+            return ConnectionValidationResult.failure(CONNECTION_FAIL, ConnectionExceptionCode.INCORRECT_CREDENTIALS,
+                    new Exception("Invalid credentials"));
         }
 
         @Override

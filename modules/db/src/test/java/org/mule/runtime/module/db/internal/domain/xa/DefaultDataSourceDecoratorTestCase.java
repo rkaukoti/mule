@@ -6,8 +6,11 @@
  */
 package org.mule.runtime.module.db.internal.domain.xa;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
@@ -15,11 +18,8 @@ import org.mule.tck.size.SmallTest;
 import javax.sql.DataSource;
 import javax.sql.XADataSource;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)

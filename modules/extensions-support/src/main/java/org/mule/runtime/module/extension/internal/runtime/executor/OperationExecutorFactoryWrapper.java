@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.executor;
 
-import org.mule.runtime.extension.api.runtime.operation.OperationExecutorFactory;
 import org.mule.runtime.extension.api.runtime.operation.Interceptor;
 import org.mule.runtime.extension.api.runtime.operation.OperationExecutor;
+import org.mule.runtime.extension.api.runtime.operation.OperationExecutorFactory;
 
 import java.util.List;
 
@@ -38,8 +38,8 @@ public final class OperationExecutorFactoryWrapper implements OperationExecutorF
     }
 
     /**
-     * @return a {@link InterceptableOperationExecutorWrapper} which decorates the result of propagating
-     * this invocation to the {@link #delegate}
+     * @return a {@link InterceptableOperationExecutorWrapper} which decorates the result of propagating this invocation to the {@link
+     * #delegate}
      */
     @Override
     public OperationExecutor createExecutor()

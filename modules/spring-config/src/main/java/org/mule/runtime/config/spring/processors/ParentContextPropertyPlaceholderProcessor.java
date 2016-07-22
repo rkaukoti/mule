@@ -6,17 +6,16 @@
  */
 package org.mule.runtime.config.spring.processors;
 
+import org.mule.runtime.config.spring.SpringRegistry;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.MuleContextAware;
-import org.mule.runtime.config.spring.SpringRegistry;
-
-import java.util.Map;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PlaceholderConfigurerSupport;
 import org.springframework.context.ApplicationContext;
+
+import java.util.Map;
 
 public class ParentContextPropertyPlaceholderProcessor implements MuleContextAware, BeanFactoryPostProcessor
 {
@@ -30,7 +29,8 @@ public class ParentContextPropertyPlaceholderProcessor implements MuleContextAwa
         ApplicationContext domainContext = applicationContext.getParent();
         if (domainContext != null)
         {
-            Map<String, PlaceholderConfigurerSupport> propertySourcesPlaceholderConfigurerMap = domainContext.getBeansOfType(PlaceholderConfigurerSupport.class);
+            Map<String, PlaceholderConfigurerSupport> propertySourcesPlaceholderConfigurerMap =
+                    domainContext.getBeansOfType(PlaceholderConfigurerSupport.class);
             for (PlaceholderConfigurerSupport propertySourcesPlaceholderConfigurer : propertySourcesPlaceholderConfigurerMap.values())
             {
                 propertySourcesPlaceholderConfigurer.postProcessBeanFactory(beanFactory);

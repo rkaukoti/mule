@@ -21,10 +21,10 @@ public class NullLifecycleAdapterWithBindings extends DefaultComponentLifecycleA
 {
 
     public NullLifecycleAdapterWithBindings(Object componentObject,
-            JavaWithBindingsComponent component,
-                                FlowConstruct flowConstruct,
-                                EntryPointResolverSet entryPointResolver,
-                                MuleContext muleContext) throws MuleException
+                                            JavaWithBindingsComponent component,
+                                            FlowConstruct flowConstruct,
+                                            EntryPointResolverSet entryPointResolver,
+                                            MuleContext muleContext) throws MuleException
     {
         super(componentObject, component, flowConstruct, entryPointResolver, muleContext);
     }

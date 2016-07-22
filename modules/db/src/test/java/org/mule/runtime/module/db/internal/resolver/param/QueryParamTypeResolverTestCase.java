@@ -7,10 +7,7 @@
 
 package org.mule.runtime.module.db.internal.resolver.param;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
 import org.mule.runtime.module.db.internal.domain.param.DefaultInputQueryParam;
 import org.mule.runtime.module.db.internal.domain.param.QueryParam;
@@ -32,7 +29,10 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class QueryParamTypeResolverTestCase extends AbstractMuleTestCase
@@ -87,6 +87,7 @@ public class QueryParamTypeResolverTestCase extends AbstractMuleTestCase
 
     private QueryTemplate createQueryTemplate()
     {
-        return new QueryTemplate(SQL_TEXT, QueryType.SELECT, Collections.<QueryParam>singletonList(new DefaultInputQueryParam(1, UnknownDbType.getInstance(), "7", "param1")));
+        return new QueryTemplate(SQL_TEXT, QueryType.SELECT,
+                Collections.<QueryParam>singletonList(new DefaultInputQueryParam(1, UnknownDbType.getInstance(), "7", "param1")));
     }
 }

@@ -6,6 +6,7 @@
  */
 package org.mule.compatibility.core.endpoint;
 
+import org.apache.commons.collections.map.LRUMap;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.EndpointException;
 import org.mule.compatibility.core.api.endpoint.EndpointMessageProcessorChainFactory;
@@ -28,6 +29,8 @@ import org.mule.runtime.core.api.retry.RetryPolicyTemplate;
 import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.core.api.transaction.TransactionConfig;
 import org.mule.runtime.core.processor.AbstractRedeliveryPolicy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.nio.charset.Charset;
@@ -35,10 +38,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
-import org.apache.commons.collections.map.LRUMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An Outbound endpoint who's URI is a template used to created new non dynamic
@@ -52,10 +51,8 @@ import org.slf4j.LoggerFactory;
 public class DynamicOutboundEndpoint implements OutboundEndpoint
 {
 
-    protected transient final Logger logger = LoggerFactory.getLogger(DynamicOutboundEndpoint.class);
-
     private static final long serialVersionUID = 8861985949279708638L;
-
+    protected transient final Logger logger = LoggerFactory.getLogger(DynamicOutboundEndpoint.class);
     private final EndpointBuilder endpointBuilder;
 
     private final OutboundEndpoint prototypeEndpoint;
@@ -64,7 +61,7 @@ public class DynamicOutboundEndpoint implements OutboundEndpoint
     private final Map<String, OutboundEndpoint> staticEndpoints = Collections.synchronizedMap(new LRUMap(64));
 
     private final DynamicURIBuilder dynamicURIBuilder;
-    
+
     private MessagingExceptionHandler exceptionHandler;
 
     public DynamicOutboundEndpoint(EndpointBuilder endpointBuilder, DynamicURIBuilder dynamicURIBuilder)
@@ -100,7 +97,7 @@ public class DynamicOutboundEndpoint implements OutboundEndpoint
         return properties;
     }
 
-    public OutboundEndpoint getStaticEndpoint(MuleEvent event)  throws MuleException
+    public OutboundEndpoint getStaticEndpoint(MuleEvent event) throws MuleException
     {
         final String uri = resolveUri(event);
 

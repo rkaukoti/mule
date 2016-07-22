@@ -6,9 +6,7 @@
  */
 package org.mule.test.config.spring.parsers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.testmodels.mule.TestTransactionManagerFactory;
 
@@ -17,7 +15,8 @@ import java.util.Map;
 
 import javax.transaction.TransactionManager;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class CustomTransactionManagerTestCase extends FunctionalTestCase
 {

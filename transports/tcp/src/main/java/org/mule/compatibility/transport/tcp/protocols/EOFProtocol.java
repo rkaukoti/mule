@@ -16,7 +16,7 @@ public class EOFProtocol extends DirectProtocol
     /**
      * Repeat until end of file
      *
-     * @param len Amount transferred last call (-1 on EOF or socket error)
+     * @param len       Amount transferred last call (-1 on EOF or socket error)
      * @param available Amount available
      * @return true if the transfer should continue
      */

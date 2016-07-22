@@ -18,7 +18,7 @@ import org.mule.runtime.core.source.polling.MessageProcessorPollingInterceptor;
  * Implementation of {@link MessageProcessorPollingInterceptor} that retrieves the
  * current watermark value before the polling flow is executed and updates it when it
  * is finished.
- * 
+ *
  * @since 3.5.0
  */
 public class WatermarkPollingInterceptor extends MessageProcessorPollingInterceptor

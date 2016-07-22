@@ -6,22 +6,19 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
-import org.mule.compatibility.transport.jms.DefaultJmsTopicResolver;
-import org.mule.compatibility.transport.jms.JmsConnector;
 import org.mule.functional.junit4.FunctionalTestCase;
 
 import javax.jms.Queue;
 import javax.jms.Topic;
 
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 public class DefaultJmsTopicResolverTestCase extends FunctionalTestCase
 {

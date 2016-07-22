@@ -24,14 +24,14 @@ public class ArtifactDeployerMonitorThreadFactory implements ThreadFactory
         SecurityManager s = System.getSecurityManager();
         group = (s != null) ? s.getThreadGroup() :
                 Thread.currentThread().getThreadGroup();
-        namePrefix = String.format("Mule.app.deployer.monitor.%d.thread.",  poolNumber.getAndIncrement());
+        namePrefix = String.format("Mule.app.deployer.monitor.%d.thread.", poolNumber.getAndIncrement());
     }
 
     public Thread newThread(Runnable r)
     {
         Thread t = new Thread(group, r,
-                              namePrefix + threadNumber.getAndIncrement(),
-                              0);
+                namePrefix + threadNumber.getAndIncrement(),
+                0);
         // make sure it's non-daemon, allows for an 'idle' state of Mule by preventing early termination
         t.setDaemon(false);
         t.setPriority(Thread.MIN_PRIORITY);

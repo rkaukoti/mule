@@ -6,12 +6,12 @@
  */
 package org.mule.compatibility.transport.jms.reliability;
 
-import static org.junit.Assert.assertTrue;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -44,7 +44,7 @@ public class InboundMessageLossTransactionsTestCase extends InboundMessageLossTe
         // Although a component exception occurs after the SEDA queue, the use of transactions
         // bypasses the SEDA queue, so message should get redelivered.
         assertTrue("Message should have been redelivered",
-                   messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
+                messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class InboundMessageLossTransactionsTestCase extends InboundMessageLossTe
         putMessageOnQueue("transformerException");
 
         assertTrue("Message should have been redelivered",
-                   messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
+                messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
     }
 
     @Test
@@ -64,6 +64,6 @@ public class InboundMessageLossTransactionsTestCase extends InboundMessageLossTe
         putMessageOnQueue("routerException");
 
         assertTrue("Message should have been redelivered",
-                   messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
+                messageRedelivered.await(latchTimeout, TimeUnit.MILLISECONDS));
     }
 }

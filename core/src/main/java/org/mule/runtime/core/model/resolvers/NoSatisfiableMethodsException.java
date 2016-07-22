@@ -18,7 +18,9 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
  */
 public class NoSatisfiableMethodsException extends MuleException
 {
-    /** Serial version */
+    /**
+     * Serial version
+     */
     private static final long serialVersionUID = -4703387041767867189L;
 
 

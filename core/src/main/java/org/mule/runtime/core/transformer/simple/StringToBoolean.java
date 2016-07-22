@@ -6,20 +6,21 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-import static java.lang.String.format;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableMap;
+
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.DiscoverableTransformer;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.transformer.AbstractTransformer;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableMap;
-
 import java.nio.charset.Charset;
 import java.util.Map;
+
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+import static java.lang.String.format;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * <code>ByteArrayToSerializable</code> converts a serialized object to its object
@@ -74,7 +75,7 @@ public class StringToBoolean extends AbstractTransformer implements Discoverable
             {
                 throw new TransformerException(createStaticMessage(
                         format("Cannot transform String '%s' to boolean. Valid types are: [%s]",
-                               value, Joiner.on(", ").join(MAPPING.keySet()))));
+                                value, Joiner.on(", ").join(MAPPING.keySet()))));
             }
         }
     }

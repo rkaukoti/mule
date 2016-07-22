@@ -10,7 +10,9 @@ public interface RequestHandlerManager
 {
 
     void stop();
+
     void start();
+
     void dispose();
 
 }

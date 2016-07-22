@@ -6,16 +6,12 @@
  */
 package org.mule.runtime.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_ENCODING_SYSTEM_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_SESSION_PROPERTY;
-import static org.mule.tck.SerializationTestUtils.addJavaSerializerToMockMuleContext;
+import com.google.common.base.Charsets;
 
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -35,18 +31,21 @@ import org.mule.runtime.core.session.SerializeAndEncodeSessionHandler;
 import org.mule.tck.MuleTestUtils;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
-import com.google.common.base.Charsets;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_ENCODING_SYSTEM_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_SESSION_PROPERTY;
+import static org.mule.tck.SerializationTestUtils.addJavaSerializerToMockMuleContext;
 
 public class MuleSessionHandlerTestCase extends AbstractMuleTestCase
 {
@@ -54,18 +53,6 @@ public class MuleSessionHandlerTestCase extends AbstractMuleTestCase
     private static String originalEncoding;
 
     private MuleContext muleContext;
-
-    @Before
-    public void setUp() throws Exception
-    {
-        muleContext = mock(MuleContext.class);
-        MuleConfiguration configuration = mock(MuleConfiguration.class);
-        when(configuration.getDefaultEncoding()).thenReturn(Charsets.UTF_8.name());
-        when(muleContext.getConfiguration()).thenReturn(configuration);
-        when(muleContext.getExecutionClassLoader()).thenReturn(Thread.currentThread().getContextClassLoader());
-        when(muleContext.getRegistry()).thenReturn(mock(MuleRegistry.class));
-        addJavaSerializerToMockMuleContext(muleContext);
-    }
 
     @BeforeClass
     public static void setUpEncoding()
@@ -85,6 +72,18 @@ public class MuleSessionHandlerTestCase extends AbstractMuleTestCase
         {
             System.setProperty(MULE_ENCODING_SYSTEM_PROPERTY, originalEncoding);
         }
+    }
+
+    @Before
+    public void setUp() throws Exception
+    {
+        muleContext = mock(MuleContext.class);
+        MuleConfiguration configuration = mock(MuleConfiguration.class);
+        when(configuration.getDefaultEncoding()).thenReturn(Charsets.UTF_8.name());
+        when(muleContext.getConfiguration()).thenReturn(configuration);
+        when(muleContext.getExecutionClassLoader()).thenReturn(Thread.currentThread().getContextClassLoader());
+        when(muleContext.getRegistry()).thenReturn(mock(MuleRegistry.class));
+        addJavaSerializerToMockMuleContext(muleContext);
     }
 
     /**
@@ -236,15 +235,15 @@ public class MuleSessionHandlerTestCase extends AbstractMuleTestCase
         }
 
         @Override
-        public void setAuthentication(Authentication authentication)
-        {
-            // nothing to do
-        }
-
-        @Override
         public Authentication getAuthentication()
         {
             return null;
+        }
+
+        @Override
+        public void setAuthentication(Authentication authentication)
+        {
+            // nothing to do
         }
     }
 

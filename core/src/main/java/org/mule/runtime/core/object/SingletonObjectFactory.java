@@ -64,8 +64,6 @@ public class SingletonObjectFactory extends AbstractObjectFactory
 
     /**
      * Always returns the same instance of the object.
-     * 
-     * @param muleContext
      */
     @Override
     public Object getInstance(MuleContext muleContext) throws Exception

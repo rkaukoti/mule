@@ -6,16 +6,15 @@
  */
 package org.mule.test.routing;
 
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
-import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
 
 public class RoundRobinTestCase extends FunctionalTestCase
 {

@@ -34,11 +34,14 @@ public class DependenciesGraph
     /**
      * Creates a {@link DependenciesGraph} for the given rootArtifact, dependencies and transitive dependencies
      *
-     * @param rootArtifact defines the rootArtifact {@link MavenArtifact} from where the graph was built of
-     * @param dependencies {@link java.util.List} of {@link MavenArtifact} that contains the direct dependencies for the rootArtifact
-     * @param transitiveDependencies {@link Map} for the transitive dependencies of the rootArtifact, key is a {@link MavenArtifact} dependency and value the {@link Set} of {@link MavenArtifact} dependencies of it
+     * @param rootArtifact           defines the rootArtifact {@link MavenArtifact} from where the graph was built of
+     * @param dependencies           {@link java.util.List} of {@link MavenArtifact} that contains the direct dependencies for the
+     *                               rootArtifact
+     * @param transitiveDependencies {@link Map} for the transitive dependencies of the rootArtifact, key is a {@link MavenArtifact}
+     *                               dependency and value the {@link Set} of {@link MavenArtifact} dependencies of it
      */
-    public DependenciesGraph(MavenArtifact rootArtifact, Set<MavenArtifact> dependencies, Map<MavenArtifact, Set<MavenArtifact>> transitiveDependencies)
+    public DependenciesGraph(MavenArtifact rootArtifact, Set<MavenArtifact> dependencies,
+                             Map<MavenArtifact, Set<MavenArtifact>> transitiveDependencies)
     {
         this.rootArtifact = rootArtifact;
         this.dependencies = dependencies;
@@ -59,8 +62,8 @@ public class DependenciesGraph
      * Gets the transitive dependencies for a {@link MavenArtifact}, rootArtifact cannot be used here.
      *
      * @param dependency the {@link MavenArtifact} to get is transitive dependencies
-     * @throws IllegalArgumentException if the rootArtifact was used to get its transitive dependencies
      * @return a {@link Set} of {@link MavenArtifact} with the transitive dependencies
+     * @throws IllegalArgumentException if the rootArtifact was used to get its transitive dependencies
      */
     public Set<MavenArtifact> getTransitiveDependencies(MavenArtifact dependency)
     {

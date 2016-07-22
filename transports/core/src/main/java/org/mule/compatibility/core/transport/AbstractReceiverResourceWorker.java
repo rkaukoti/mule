@@ -36,7 +36,7 @@ public abstract class AbstractReceiverResourceWorker extends AbstractReceiverWor
         try
         {
             Object message;
-            do 
+            do
             {
                 message = getNextMessage(resource);
                 messages.add(message);
@@ -54,13 +54,12 @@ public abstract class AbstractReceiverResourceWorker extends AbstractReceiverWor
     {
         return true;
     }
-    
+
     /**
      * The method used to read the next message from the underlying transport.
-     * @param resource the resource to read from, this may be a socket, a directory or some higher level
-     * representation.
+     *
+     * @param resource the resource to read from, this may be a socket, a directory or some higher level representation.
      * @return the message read from the resource.  This can be raw data such as a byte[].
-     * @throws Exception
      */
     protected abstract Object getNextMessage(Object resource) throws Exception;
 }

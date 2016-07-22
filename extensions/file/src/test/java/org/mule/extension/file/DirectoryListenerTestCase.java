@@ -6,6 +6,19 @@
  */
 package org.mule.extension.file;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.extension.file.internal.DirectoryListener;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.construct.FlowConstruct;
+import org.mule.runtime.core.api.context.notification.ServerNotification;
+import org.mule.runtime.core.lifecycle.PrimaryNodeLifecycleNotificationListener;
+import org.mule.runtime.extension.api.runtime.source.SourceContext;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -15,19 +28,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_MULE_CONTEXT;
-import org.mule.extension.file.internal.DirectoryListener;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.construct.FlowConstruct;
-import org.mule.runtime.core.api.context.notification.ServerNotification;
-import org.mule.runtime.core.lifecycle.PrimaryNodeLifecycleNotificationListener;
-import org.mule.runtime.extension.api.runtime.source.SourceContext;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DirectoryListenerTestCase extends AbstractMuleContextTestCase
@@ -74,7 +74,8 @@ public class DirectoryListenerTestCase extends AbstractMuleContextTestCase
     @Test
     public void startIfNodeBecomesSecondary() throws Exception
     {
-        ArgumentCaptor<PrimaryNodeLifecycleNotificationListener> listenerCaptor = ArgumentCaptor.forClass(PrimaryNodeLifecycleNotificationListener.class);
+        ArgumentCaptor<PrimaryNodeLifecycleNotificationListener> listenerCaptor =
+                ArgumentCaptor.forClass(PrimaryNodeLifecycleNotificationListener.class);
 
         directoryListener.start();
 

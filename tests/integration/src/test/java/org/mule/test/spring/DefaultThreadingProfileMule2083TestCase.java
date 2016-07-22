@@ -6,9 +6,8 @@
  */
 package org.mule.test.spring;
 
-import org.mule.functional.junit4.FunctionalTestCase;
-
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 
 public class DefaultThreadingProfileMule2083TestCase extends FunctionalTestCase
 {
@@ -16,8 +15,8 @@ public class DefaultThreadingProfileMule2083TestCase extends FunctionalTestCase
     protected String[] getConfigFiles()
     {
         return new String[] {
-            "default-threading-profile-1-mule-2083.xml",
-            "default-threading-profile-2-mule-2083.xml"
+                "default-threading-profile-1-mule-2083.xml",
+                "default-threading-profile-2-mule-2083.xml"
         };
     }
 

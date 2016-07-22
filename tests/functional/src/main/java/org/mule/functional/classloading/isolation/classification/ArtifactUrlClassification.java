@@ -26,11 +26,15 @@ public class ArtifactUrlClassification
     /**
      * Creates a instance with the list of {@link URL}s classified in container, plugins and application.
      *
-     * @param containerUrls list of {@link URL} that define the artifacts that would be loaded with the container {@link ClassLoader}
-     * @param pluginClassificationsUrls for each plugin discovered a list of {@link URL} that define the artifacts that would be loaded by the plugin {@link ClassLoader}
-     * @param applicationUrls list of {@link URL} that define the artifacts that would be loaded with the application {@link ClassLoader}
+     * @param containerUrls             list of {@link URL} that define the artifacts that would be loaded with the container {@link
+     *                                  ClassLoader}
+     * @param pluginClassificationsUrls for each plugin discovered a list of {@link URL} that define the artifacts that would be loaded by
+     *                                  the plugin {@link ClassLoader}
+     * @param applicationUrls           list of {@link URL} that define the artifacts that would be loaded with the application {@link
+     *                                  ClassLoader}
      */
-    public ArtifactUrlClassification(List<URL> containerUrls, List<PluginUrlClassification> pluginClassificationsUrls, List<URL> applicationUrls)
+    public ArtifactUrlClassification(List<URL> containerUrls, List<PluginUrlClassification> pluginClassificationsUrls,
+                                     List<URL> applicationUrls)
     {
         this.containerUrls = containerUrls;
         this.pluginClassificationsUrls = pluginClassificationsUrls;

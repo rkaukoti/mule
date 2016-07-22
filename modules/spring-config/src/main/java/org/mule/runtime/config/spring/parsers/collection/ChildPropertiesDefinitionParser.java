@@ -8,17 +8,16 @@ package org.mule.runtime.config.spring.parsers.collection;
 
 import org.mule.runtime.config.spring.MuleHierarchicalBeanDefinitionParserDelegate;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
-
-import java.util.Properties;
-
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
+import java.util.Properties;
+
 /**
  * Creates a single Properties object and processes standard Spring sub elements.  The properties are
- * injected into the parent object (the enclosing XML element).  
+ * injected into the parent object (the enclosing XML element).
  */
 public class ChildPropertiesDefinitionParser extends ChildDefinitionParser
 {
@@ -28,7 +27,7 @@ public class ChildPropertiesDefinitionParser extends ChildDefinitionParser
         super(setterMethod, /*clazz*/null);
         addBeanFlag(MuleHierarchicalBeanDefinitionParserDelegate.MULE_NO_RECURSE);
     }
-    
+
     protected Class getBeanClass(Element element)
     {
         return PropertiesFactoryBean.class;

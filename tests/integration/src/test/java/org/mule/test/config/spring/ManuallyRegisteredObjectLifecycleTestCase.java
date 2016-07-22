@@ -6,10 +6,7 @@
  */
 package org.mule.test.config.spring;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
@@ -22,7 +19,9 @@ import org.mule.runtime.core.config.builders.AbstractConfigurationBuilder;
 
 import java.util.List;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 public class ManuallyRegisteredObjectLifecycleTestCase extends FunctionalTestCase
 {

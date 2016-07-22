@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
         http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
         http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
@@ -13,22 +13,22 @@
     <flow name="getLaszloW10">
         <http:listener path="*" config-ref="listenerConfig"/>
 
-        <echo-component />
+        <echo-component/>
 
         <flow-ref name="W10Report"/>
     </flow>
 
     <flow name="W10Report">
-        <echo-component />
+        <echo-component/>
         <flow-ref name="W10FO"/>
     </flow>
 
     <flow name="W10FO">
-        <byte-array-to-string-transformer />
+        <byte-array-to-string-transformer/>
 
-        <component class="org.mule.functional.testmodels.services.TestReceiver" />
+        <component class="org.mule.functional.testmodels.services.TestReceiver"/>
 
-        <test:queue name="someOtherQueue" />
+        <test:queue name="someOtherQueue"/>
 
     </flow>
 

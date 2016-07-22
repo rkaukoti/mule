@@ -6,19 +6,13 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.hamcrest.core.Is;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.compatibility.core.api.transport.NoReceiverForEndpointException;
-import org.mule.compatibility.transport.http.HttpConnector;
-import org.mule.compatibility.transport.http.HttpMessageReceiver;
-import org.mule.compatibility.transport.http.HttpRequestDispatcherWork;
-import org.mule.compatibility.transport.http.HttpServerConnection;
-import org.mule.compatibility.transport.http.RequestLine;
 import org.mule.runtime.core.execution.MessageProcessContext;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
@@ -31,18 +25,20 @@ import java.net.Socket;
 
 import javax.resource.spi.work.Work;
 
-import org.hamcrest.core.Is;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
 public class HttpRequestDispatcherWorkTestCase extends AbstractMuleTestCase
 {
 
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    NoReceiverForEndpointException mockNoReceiverForEndpointException;
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     private HttpConnector mockHttpConnector;
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
@@ -53,8 +49,6 @@ public class HttpRequestDispatcherWorkTestCase extends AbstractMuleTestCase
     private Work mockWork;
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     private MessageProcessContext mockMessageContext;
-    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
-    NoReceiverForEndpointException mockNoReceiverForEndpointException;
 
     @Test(expected = IllegalArgumentException.class)
     public void createHttpRequestDispatcherWorkWithNullHttpConnector()

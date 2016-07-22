@@ -7,10 +7,10 @@
 
 package org.mule.runtime.module.db.integration;
 
-import static junit.framework.TestCase.fail;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import org.hamcrest.Matchers;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -18,10 +18,10 @@ import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 
 import java.util.List;
 
-import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static junit.framework.TestCase.fail;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 public abstract class AbstractQueryTimeoutTestCase extends AbstractDbIntegrationTestCase
 {
@@ -45,7 +45,6 @@ public abstract class AbstractQueryTimeoutTestCase extends AbstractDbIntegration
      * SQLTimeoutException, the test firsts executes the flow using no timeout, which
      * must pass, and then using a timeout which must fail. Because the first execution
      * was successful is assumed that the error is because of an aborted execution.
-     * @throws Exception
      */
     @Test
     public void timeoutsQuery() throws Exception

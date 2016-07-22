@@ -7,12 +7,12 @@
 package org.mule.runtime.module.ws.functional;
 
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.nullValue;
 
 public class SoapActionFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase
 {

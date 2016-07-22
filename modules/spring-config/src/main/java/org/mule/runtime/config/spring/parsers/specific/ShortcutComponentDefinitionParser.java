@@ -9,7 +9,6 @@ package org.mule.runtime.config.spring.parsers.specific;
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
 import org.mule.runtime.core.object.AbstractObjectFactory;
 import org.mule.runtime.core.object.PrototypeObjectFactory;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.beans.factory.xml.ParserContext;

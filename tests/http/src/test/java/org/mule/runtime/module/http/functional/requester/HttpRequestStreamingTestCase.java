@@ -7,15 +7,8 @@
 package org.mule.runtime.module.http.functional.requester;
 
 
-import static java.lang.String.valueOf;
-import static javax.servlet.http.HttpServletResponse.SC_OK;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.TRANSFER_ENCODING;
-import static org.mule.runtime.module.http.api.HttpHeaders.Values.CHUNKED;
+import org.eclipse.jetty.server.Request;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.util.IOUtils;
 
@@ -28,8 +21,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.Request;
-import org.junit.Test;
+import static java.lang.String.valueOf;
+import static javax.servlet.http.HttpServletResponse.SC_OK;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.TRANSFER_ENCODING;
+import static org.mule.runtime.module.http.api.HttpHeaders.Values.CHUNKED;
 
 public class HttpRequestStreamingTestCase extends AbstractHttpRequestTestCase
 {
@@ -77,7 +77,7 @@ public class HttpRequestStreamingTestCase extends AbstractHttpRequestTestCase
     public void doesNotStreamWithContentLengthTransferEncodingHeadersAndStreamingModeAuto() throws Exception
     {
         assertNoStreaming(flowRunner("streamingAutoBothHeaders").withPayload(new ByteArrayInputStream(TEST_MESSAGE.getBytes()))
-                                                           .run());
+                                                                .run());
     }
 
     @Test
@@ -118,7 +118,7 @@ public class HttpRequestStreamingTestCase extends AbstractHttpRequestTestCase
     public void streamsWithContentLengthHeaderAndStreamingModeAlways() throws Exception
     {
         addHeader(CONTENT_LENGTH, valueOf(TEST_MESSAGE.length()));
-        assertStreaming(runFlowWithPayload("streamingAlways",TEST_MESSAGE));
+        assertStreaming(runFlowWithPayload("streamingAlways", TEST_MESSAGE));
     }
 
     @Test

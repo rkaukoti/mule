@@ -7,12 +7,6 @@
 
 package org.mule.runtime.core.streaming;
 
-import org.mule.tck.size.SmallTest;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import junit.framework.Assert;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -22,6 +16,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.tck.size.SmallTest;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)

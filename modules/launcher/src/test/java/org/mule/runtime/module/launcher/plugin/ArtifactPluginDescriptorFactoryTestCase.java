@@ -7,44 +7,42 @@
 
 package org.mule.runtime.module.launcher.plugin;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItemInArray;
-import static org.hamcrest.core.Is.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter.EXPORTED_CLASS_PACKAGES_PROPERTY;
-import static org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter.EXPORTED_RESOURCE_PACKAGES_PROPERTY;
-import static org.mule.runtime.module.launcher.plugin.ArtifactPluginDescriptorFactory.PLUGIN_PROPERTIES;
-import static org.mule.runtime.module.launcher.plugin.ArtifactPluginDescriptorFactory.PROPERTY_LOADER_OVERRIDE;
-import static org.mule.runtime.core.util.FileUtils.stringToFile;
-import org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter;
-import org.mule.runtime.module.artifact.classloader.ClassLoaderFilter;
-import org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilterFactory;
-import org.mule.runtime.module.artifact.classloader.ClassLoaderLookupPolicy;
-import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mule.runtime.core.util.FileUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter;
+import org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilterFactory;
+import org.mule.runtime.module.artifact.classloader.ClassLoaderFilter;
+import org.mule.runtime.module.artifact.classloader.ClassLoaderLookupPolicy;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItemInArray;
+import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.util.FileUtils.stringToFile;
+import static org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter.EXPORTED_CLASS_PACKAGES_PROPERTY;
+import static org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter.EXPORTED_RESOURCE_PACKAGES_PROPERTY;
+import static org.mule.runtime.module.launcher.plugin.ArtifactPluginDescriptorFactory.PLUGIN_PROPERTIES;
+import static org.mule.runtime.module.launcher.plugin.ArtifactPluginDescriptorFactory.PROPERTY_LOADER_OVERRIDE;
 
 public class ArtifactPluginDescriptorFactoryTestCase extends AbstractMuleTestCase
 {
 
     public static final String PLUGIN_NAME = "testPlugin";
-
+    private final ArtifactClassLoaderFilterFactory classLoaderFilterFactory = mock(ArtifactClassLoaderFilterFactory.class);
     @Rule
     public TemporaryFolder pluginsFolder = new TemporaryFolder();
-
-    private final ArtifactClassLoaderFilterFactory classLoaderFilterFactory = mock(ArtifactClassLoaderFilterFactory.class);
     private ArtifactPluginDescriptorFactory descriptorFactory = new ArtifactPluginDescriptorFactory(classLoaderFilterFactory);
 
     @Before
@@ -130,7 +128,8 @@ public class ArtifactPluginDescriptorFactoryTestCase extends AbstractMuleTestCas
     {
 
         private final File pluginFolder;
-        private URL[] runtimeLibs = new URL[0];;
+        private URL[] runtimeLibs = new URL[0];
+        ;
         private ClassLoaderLookupPolicy classLoaderLookupPolicy = null;
         private ClassLoaderFilter classLoaderFilter = ArtifactClassLoaderFilter.NULL_CLASSLOADER_FILTER;
 

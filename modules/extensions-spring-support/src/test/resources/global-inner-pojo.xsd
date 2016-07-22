@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xs:schema xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.mulesoft.org/schema/mule/basic" attributeFormDefault="unqualified" elementFormDefault="qualified">
+<xs:schema xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.mulesoft.org/schema/mule/basic"
+           attributeFormDefault="unqualified" elementFormDefault="qualified">
     <xs:import namespace="http://www.w3.org/XML/1998/namespace"></xs:import>
     <xs:import namespace="http://www.springframework.org/schema/beans" schemaLocation="http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"></xs:import>
     <xs:import namespace="http://www.mulesoft.org/schema/mule/core" schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></xs:import>
@@ -17,7 +18,8 @@
                         <xs:element minOccurs="0" maxOccurs="1" name="required-pojo-default">
                             <xs:complexType>
                                 <xs:complexContent>
-                                    <xs:extension xmlns:basic="http://www.mulesoft.org/schema/mule/basic" base="basic:org.mule.runtime.module.extension.internal.runtime.connectivity.basic.Account"></xs:extension>
+                                    <xs:extension xmlns:basic="http://www.mulesoft.org/schema/mule/basic"
+                                                  base="basic:org.mule.runtime.module.extension.internal.runtime.connectivity.basic.Account"></xs:extension>
                                 </xs:complexContent>
                             </xs:complexType>
                         </xs:element>
@@ -70,7 +72,8 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
-    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/basic" type="FooType" substitutionGroup="mule:abstract-message-processor" name="foo"></xs:element>
+    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/basic" type="FooType" substitutionGroup="mule:abstract-message-processor"
+                name="foo"></xs:element>
     <xs:complexType name="FooType">
         <xs:complexContent>
             <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">

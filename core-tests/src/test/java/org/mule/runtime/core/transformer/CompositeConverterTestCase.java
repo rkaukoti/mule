@@ -6,6 +6,17 @@
  */
 package org.mule.runtime.core.transformer;
 
+import org.junit.Test;
+import org.mule.runtime.api.metadata.DataType;
+import org.mule.runtime.core.TransformationService;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.api.transformer.Converter;
+import org.mule.tck.size.SmallTest;
+
+import java.util.Arrays;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -17,18 +28,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import org.mule.runtime.api.metadata.DataType;
-import org.mule.runtime.core.TransformationService;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.transformer.Converter;
-import org.mule.tck.size.SmallTest;
-
-import java.util.Arrays;
-
-import org.junit.Test;
 
 @SmallTest
 public class CompositeConverterTestCase

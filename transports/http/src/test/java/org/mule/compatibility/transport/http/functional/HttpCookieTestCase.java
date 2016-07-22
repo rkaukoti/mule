@@ -6,11 +6,10 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
+import org.apache.commons.httpclient.Cookie;
+import org.apache.commons.httpclient.Header;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.compatibility.transport.http.HttpConstants;
 import org.mule.compatibility.transport.http.HttpRequest;
 import org.mule.runtime.core.api.MuleMessage;
@@ -25,23 +24,21 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.httpclient.Cookie;
-import org.apache.commons.httpclient.Header;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 public class HttpCookieTestCase extends AbstractMockHttpServerTestCase
 {
 
     private static final String EXPECTED_CUSTOM_COOKIE = "$Version=0; customCookie=yes";
     private static final String EXPECTED_EXPRESSION_COOKIE = "$Version=0; expressionCookie=MYCOOKIE";
-
+    @Rule
+    public DynamicPort dynamicPort = new DynamicPort("port1");
     private CountDownLatch latch = new CountDownLatch(1);
     private boolean cookieFound = false;
     private List<String> cookieHeaders = new ArrayList<>();
-
-    @Rule
-    public DynamicPort dynamicPort = new DynamicPort("port1");
 
     @Override
     protected String getConfigFile()
@@ -123,6 +120,7 @@ public class HttpCookieTestCase extends AbstractMockHttpServerTestCase
             assertThereIsCookieWithThisContent(cookie, cookieHeaders);
         }
     }
+
     private void assertThereIsCookieWithThisContent(String content, List<String> listOfRawCookies)
     {
         for (String rawCookie : listOfRawCookies)

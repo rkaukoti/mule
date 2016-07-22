@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.config.i18n.LocaleMessageHandler;
@@ -13,9 +15,6 @@ import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
-
-import org.junit.Ignore;
-import org.junit.Test;
 
 public class StringToObjectArrayTestCase extends AbstractTransformerTestCase
 {
@@ -25,7 +24,7 @@ public class StringToObjectArrayTestCase extends AbstractTransformerTestCase
     @Override
     public Object getResultData()
     {
-        return new String[]{ getMessage("char0"), getMessage("char1"), getMessage("char2") };
+        return new String[] {getMessage("char0"), getMessage("char1"), getMessage("char2")};
     }
 
     @Override
@@ -56,7 +55,7 @@ public class StringToObjectArrayTestCase extends AbstractTransformerTestCase
     {
         // Overriden just to ignore it
     }
-    
+
     @Override
     public Transformer getTransformer() throws Exception
     {
@@ -83,7 +82,7 @@ public class StringToObjectArrayTestCase extends AbstractTransformerTestCase
     {
         try
         {
-            return super.compareRoundtripResults(expected, ((String)result).getBytes(encoding));
+            return super.compareRoundtripResults(expected, ((String) result).getBytes(encoding));
         }
         catch (UnsupportedEncodingException e)
         {

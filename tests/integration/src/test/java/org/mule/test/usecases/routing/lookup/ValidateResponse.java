@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 
 /**
- * Throws an exception if the message does not contain "success".  In the real world, we might use XPath to 
+ * Throws an exception if the message does not contain "success".  In the real world, we might use XPath to
  * extract a particular tag or error code based on the expected response message format.
  */
 public class ValidateResponse extends AbstractTransformer
@@ -32,7 +32,7 @@ public class ValidateResponse extends AbstractTransformer
         {
             response = (String) src;
         }
-        
+
         if (response != null && response.contains("<ErrorStatus>Success</ErrorStatus>"))
         {
             return response;

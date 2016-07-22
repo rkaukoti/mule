@@ -6,10 +6,13 @@
  */
 package org.mule.runtime.core.exception;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.internal.verification.VerificationModeFactory;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -21,13 +24,9 @@ import org.mule.tck.size.SmallTest;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.internal.verification.VerificationModeFactory;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
@@ -58,14 +57,15 @@ public class ChoiceMessagingExceptionStrategyTestCase extends AbstractMuleTestCa
         ChoiceMessagingExceptionStrategy choiceMessagingExceptionStrategy = new ChoiceMessagingExceptionStrategy();
         when(mockMuleContext.getDefaultExceptionStrategy()).thenReturn(mockDefaultTestExceptionStrategy2);
         choiceMessagingExceptionStrategy.setMuleContext(mockMuleContext);
-        choiceMessagingExceptionStrategy.setExceptionListeners(new ArrayList<>(Arrays.<MessagingExceptionHandlerAcceptor>asList(mockTestExceptionStrategy1, mockTestExceptionStrategy2)));
+        choiceMessagingExceptionStrategy.setExceptionListeners(
+                new ArrayList<>(Arrays.<MessagingExceptionHandlerAcceptor>asList(mockTestExceptionStrategy1, mockTestExceptionStrategy2)));
         choiceMessagingExceptionStrategy.initialise();
         when(mockTestExceptionStrategy1.accept(mockMuleEvent)).thenReturn(false);
         when(mockTestExceptionStrategy2.accept(mockMuleEvent)).thenReturn(false);
         when(mockDefaultTestExceptionStrategy2.accept(mockMuleEvent)).thenReturn(true);
-        choiceMessagingExceptionStrategy.handleException(mockException,mockMuleEvent);
-        verify(mockTestExceptionStrategy1, VerificationModeFactory.times(0)).handleException(any(Exception.class),any(MuleEvent.class));
-        verify(mockTestExceptionStrategy2, VerificationModeFactory.times(0)).handleException(any(Exception.class),any(MuleEvent.class));
+        choiceMessagingExceptionStrategy.handleException(mockException, mockMuleEvent);
+        verify(mockTestExceptionStrategy1, VerificationModeFactory.times(0)).handleException(any(Exception.class), any(MuleEvent.class));
+        verify(mockTestExceptionStrategy2, VerificationModeFactory.times(0)).handleException(any(Exception.class), any(MuleEvent.class));
         verify(mockDefaultTestExceptionStrategy2, VerificationModeFactory.times(1)).handleException(mockException, mockMuleEvent);
     }
 
@@ -74,15 +74,17 @@ public class ChoiceMessagingExceptionStrategyTestCase extends AbstractMuleTestCa
     {
         ChoiceMessagingExceptionStrategy choiceMessagingExceptionStrategy = new ChoiceMessagingExceptionStrategy();
         choiceMessagingExceptionStrategy.setMuleContext(mockMuleContext);
-        choiceMessagingExceptionStrategy.setExceptionListeners(new ArrayList<>(Arrays.<MessagingExceptionHandlerAcceptor>asList(mockTestExceptionStrategy1, mockTestExceptionStrategy2)));
+        choiceMessagingExceptionStrategy.setExceptionListeners(
+                new ArrayList<>(Arrays.<MessagingExceptionHandlerAcceptor>asList(mockTestExceptionStrategy1, mockTestExceptionStrategy2)));
         when(mockMuleContext.getDefaultExceptionStrategy()).thenReturn(mockDefaultTestExceptionStrategy2);
         choiceMessagingExceptionStrategy.initialise();
         when(mockTestExceptionStrategy1.accept(mockMuleEvent)).thenReturn(false);
         when(mockTestExceptionStrategy2.accept(mockMuleEvent)).thenReturn(true);
         when(mockDefaultTestExceptionStrategy2.accept(mockMuleEvent)).thenReturn(true);
-        choiceMessagingExceptionStrategy.handleException(mockException,mockMuleEvent);
-        verify(mockTestExceptionStrategy1, VerificationModeFactory.times(0)).handleException(any(Exception.class),any(MuleEvent.class));
-        verify(mockDefaultTestExceptionStrategy2, VerificationModeFactory.times(0)).handleException(any(Exception.class),any(MuleEvent.class));
+        choiceMessagingExceptionStrategy.handleException(mockException, mockMuleEvent);
+        verify(mockTestExceptionStrategy1, VerificationModeFactory.times(0)).handleException(any(Exception.class), any(MuleEvent.class));
+        verify(mockDefaultTestExceptionStrategy2, VerificationModeFactory.times(0)).handleException(any(Exception.class),
+                any(MuleEvent.class));
         verify(mockTestExceptionStrategy2, VerificationModeFactory.times(1)).handleException(mockException, mockMuleEvent);
     }
 
@@ -91,7 +93,8 @@ public class ChoiceMessagingExceptionStrategyTestCase extends AbstractMuleTestCa
     {
         ChoiceMessagingExceptionStrategy choiceMessagingExceptionStrategy = new ChoiceMessagingExceptionStrategy();
         choiceMessagingExceptionStrategy.setMuleContext(mockMuleContext);
-        choiceMessagingExceptionStrategy.setExceptionListeners(new ArrayList<>(Arrays.<MessagingExceptionHandlerAcceptor>asList(mockTestExceptionStrategy1, mockTestExceptionStrategy2)));
+        choiceMessagingExceptionStrategy.setExceptionListeners(
+                new ArrayList<>(Arrays.<MessagingExceptionHandlerAcceptor>asList(mockTestExceptionStrategy1, mockTestExceptionStrategy2)));
         when(mockMuleContext.getDefaultExceptionStrategy()).thenReturn(mockDefaultTestExceptionStrategy2);
         when(mockTestExceptionStrategy1.acceptsAll()).thenReturn(true);
         when(mockTestExceptionStrategy2.acceptsAll()).thenReturn(false);

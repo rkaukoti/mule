@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getField;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.util.collection.ImmutableListCollector;
 import org.mule.runtime.extension.api.introspection.EnrichableModel;
 import org.mule.runtime.module.extension.internal.model.property.ParameterGroupModelProperty;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSet;
@@ -16,10 +16,11 @@ import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSetRe
 import org.mule.runtime.module.extension.internal.util.GroupValueSetter;
 import org.mule.runtime.module.extension.internal.util.SingleValueSetter;
 import org.mule.runtime.module.extension.internal.util.ValueSetter;
-import org.mule.runtime.core.util.collection.ImmutableListCollector;
 
 import java.lang.reflect.Field;
 import java.util.List;
+
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getField;
 
 /**
  * A specialization of {@link BaseObjectBuilder} which generates object based on
@@ -62,14 +63,15 @@ public abstract class ParameterGroupAwareObjectBuilder<T> extends BaseObjectBuil
     private List<ValueSetter> createSingleValueSetters(Class<?> prototypeClass, ResolverSet resolverSet)
     {
         return resolverSet.getResolvers().keySet().stream()
-                .map(parameterModel -> {
-                    Field field = getField(prototypeClass, parameterModel);
+                          .map(parameterModel ->
+                          {
+                              Field field = getField(prototypeClass, parameterModel);
 
-                    // if no field, then it means this is a group attribute
-                    return field != null ? new SingleValueSetter(parameterModel, field) : null;
-                })
-                .filter(field -> field != null)
-                .collect(new ImmutableListCollector<>());
+                              // if no field, then it means this is a group attribute
+                              return field != null ? new SingleValueSetter(parameterModel, field) : null;
+                          })
+                          .filter(field -> field != null)
+                          .collect(new ImmutableListCollector<>());
     }
 
     private void setValues(Object target, ResolverSetResult result, List<ValueSetter> setters) throws MuleException

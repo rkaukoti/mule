@@ -6,16 +6,16 @@
  */
 package org.mule.runtime.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.runtime.core.api.transaction.TransactionConfig;
 import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.transaction.MuleTransactionConfig;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import org.mule.tck.testmodels.mule.TestTransactionFactory;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 public class MuleTransactionConfigTestCase extends AbstractMuleContextTestCase
 {
@@ -45,7 +45,8 @@ public class MuleTransactionConfigTestCase extends AbstractMuleContextTestCase
     }
 
     @Test
-    public void testDefaults() throws Exception {
+    public void testDefaults() throws Exception
+    {
         MuleTransactionConfig c = new MuleTransactionConfig(TransactionConfig.ACTION_ALWAYS_BEGIN);
         c.setMuleContext(muleContext);
         assertEquals("Wrong default TX timeout", 30000, c.getTimeout());
@@ -53,7 +54,7 @@ public class MuleTransactionConfigTestCase extends AbstractMuleContextTestCase
 
     @Test
     public void testTransactionJoinIfPossible() throws TransactionException
-    {      
+    {
         MuleTransactionConfig txConfig = new MuleTransactionConfig(TransactionConfig.ACTION_JOIN_IF_POSSIBLE);
         txConfig.setMuleContext(muleContext);
         txConfig.setFactory(new TestTransactionFactory());
@@ -66,7 +67,7 @@ public class MuleTransactionConfigTestCase extends AbstractMuleContextTestCase
         MuleTransactionConfig txConfig = new MuleTransactionConfig(TransactionConfig.ACTION_ALWAYS_BEGIN);
         txConfig.setMuleContext(muleContext);
         // note how we don't set a factory here so the default in MTC is null
-        
+
         try
         {
             txConfig.isTransacted();

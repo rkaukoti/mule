@@ -6,19 +6,18 @@
  */
 package org.mule.runtime.module.ws.functional;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.MuleEventContext;
-import org.mule.runtime.core.api.MuleMessage;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.functional.EventCallback;
 import org.mule.functional.junit4.FlowRunner;
 import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
+import org.mule.runtime.core.api.MuleEventContext;
+import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.util.concurrent.Latch;
+import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class TimeoutFunctionalTestCase extends FunctionalTestCase
 {

@@ -6,8 +6,6 @@
  */
 package org.mule.tck;
 
-import static org.mule.tck.MuleTestUtils.getTestFlow;
-import static org.mule.tck.MuleTestUtils.getTestSession;
 import org.mule.compatibility.core.DefaultMuleEventEndpointUtils;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
@@ -44,18 +42,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.mule.tck.MuleTestUtils.getTestFlow;
+import static org.mule.tck.MuleTestUtils.getTestSession;
+
 public final class MuleEndpointTestUtils
 {
     public static InboundEndpoint getTestInboundEndpoint(String name, final MuleContext context)
             throws Exception
     {
-        return (InboundEndpoint) getTestEndpoint(name, null, null, null, null, context, builder -> getEndpointFactory(context.getRegistry()).getInboundEndpoint(builder), null);
+        return (InboundEndpoint) getTestEndpoint(name, null, null, null, null, context,
+                builder -> getEndpointFactory(context.getRegistry()).getInboundEndpoint(builder), null);
     }
 
     public static OutboundEndpoint getTestOutboundEndpoint(String name, final MuleContext context)
             throws Exception
     {
-        return (OutboundEndpoint) getTestEndpoint(name, null, null, null, null, context, builder -> getEndpointFactory(context.getRegistry()).getOutboundEndpoint(builder), null);
+        return (OutboundEndpoint) getTestEndpoint(name, null, null, null, null, context,
+                builder -> getEndpointFactory(context.getRegistry()).getOutboundEndpoint(builder), null);
     }
 
     public static InboundEndpoint getTestInboundEndpoint(String name,
@@ -229,18 +232,13 @@ public final class MuleEndpointTestUtils
         return source.getEndpoint(endpointBuilder);
     }
 
-    private interface EndpointSource
-    {
-
-        ImmutableEndpoint getEndpoint(EndpointBuilder builder) throws MuleException;
-    }
-
     public static ImmutableEndpoint getTestSchemeMetaInfoInboundEndpoint(String name,
                                                                          String protocol,
                                                                          final MuleContext context)
             throws Exception
     {
-        return getTestSchemeMetaInfoEndpoint(name, protocol, context, builder -> getEndpointFactory(context.getRegistry()).getInboundEndpoint(builder));
+        return getTestSchemeMetaInfoEndpoint(name, protocol, context,
+                builder -> getEndpointFactory(context.getRegistry()).getInboundEndpoint(builder));
     }
 
     public static ImmutableEndpoint getTestSchemeMetaInfoOutboundEndpoint(String name,
@@ -248,7 +246,8 @@ public final class MuleEndpointTestUtils
                                                                           final MuleContext context)
             throws Exception
     {
-        return getTestSchemeMetaInfoEndpoint(name, protocol, context, builder -> getEndpointFactory(context.getRegistry()).getOutboundEndpoint(builder));
+        return getTestSchemeMetaInfoEndpoint(name, protocol, context,
+                builder -> getEndpointFactory(context.getRegistry()).getOutboundEndpoint(builder));
     }
 
     private static ImmutableEndpoint getTestSchemeMetaInfoEndpoint(String name,
@@ -321,5 +320,11 @@ public final class MuleEndpointTestUtils
         {
             return null;
         }
+    }
+
+    private interface EndpointSource
+    {
+
+        ImmutableEndpoint getEndpoint(EndpointBuilder builder) throws MuleException;
     }
 }

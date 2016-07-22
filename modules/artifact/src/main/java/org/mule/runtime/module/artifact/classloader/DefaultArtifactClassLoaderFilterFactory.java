@@ -51,7 +51,7 @@ public class DefaultArtifactClassLoaderFilterFactory implements ArtifactClassLoa
                 }
                 if (export.endsWith(PACKAGE_SEPARATOR))
                 {
-                    export = export.substring(0, export.length() -1);
+                    export = export.substring(0, export.length() - 1);
                 }
                 exported.add(export);
             }

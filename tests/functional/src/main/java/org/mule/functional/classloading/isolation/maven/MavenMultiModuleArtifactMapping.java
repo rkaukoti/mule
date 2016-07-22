@@ -26,8 +26,8 @@ public interface MavenMultiModuleArtifactMapping
      * Gets a relative folder mapping defined for the artifact id
      *
      * @param artifactId to use for getting the folder in a multi-module mapping
-     * @throws IllegalArgumentException if there is no folder mapped for the artifactId
      * @return the relative folder path for the given artifactId.
+     * @throws IllegalArgumentException if there is no folder mapped for the artifactId
      */
     String getFolderName(String artifactId) throws IllegalArgumentException;
 
@@ -36,8 +36,8 @@ public interface MavenMultiModuleArtifactMapping
      * for each artifacId->relativeFolder
      *
      * @param path the folder path where the classes of the artifact were found. Without the target/classes/.
-     * @throws IllegalArgumentException if there is no folder mapped for the artifactId
      * @return the maven artifactId for a artifact path.
+     * @throws IllegalArgumentException if there is no folder mapped for the artifactId
      */
     String getArtifactId(String path) throws IllegalArgumentException;
 

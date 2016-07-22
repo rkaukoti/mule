@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.module.xml.transformers.xml;
 
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.message.OutputHandler;
@@ -16,8 +17,6 @@ import org.mule.runtime.module.xml.util.XMLUtils;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-
-import org.junit.Test;
 
 public class XmlToXMLStreamReaderTestCase extends AbstractXmlTransformerTestCase
 {

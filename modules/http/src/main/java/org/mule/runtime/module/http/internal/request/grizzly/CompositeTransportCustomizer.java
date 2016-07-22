@@ -8,11 +8,11 @@ package org.mule.runtime.module.http.internal.request.grizzly;
 
 import com.ning.http.client.providers.grizzly.TransportCustomizer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.glassfish.grizzly.filterchain.FilterChainBuilder;
 import org.glassfish.grizzly.nio.transport.TCPNIOTransport;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CompositeTransportCustomizer implements TransportCustomizer
 {

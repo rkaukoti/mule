@@ -11,12 +11,11 @@ import org.mule.runtime.config.spring.parsers.MuleDefinitionParserConfiguration;
 import org.mule.runtime.config.spring.parsers.PostProcessor;
 import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.ValueMap;
-
-import java.util.Map;
-
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
+
+import java.util.Map;
 
 /**
  * Support for extending a

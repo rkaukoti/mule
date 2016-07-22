@@ -14,12 +14,12 @@ import java.io.Serializable;
 public class FakeCredentialAccessor implements CredentialsAccessor
 {
     private String credentials = "Mule client <mule_client@mule.com>";
-    
+
     public FakeCredentialAccessor()
     {
 
     }
-    
+
     public FakeCredentialAccessor(String string)
     {
         this.credentials = string;

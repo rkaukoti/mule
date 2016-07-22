@@ -6,15 +6,15 @@
  */
 package org.mule.runtime.module.jboss.transactions;
 
-import static org.junit.Assert.assertTrue;
-
 import com.arjuna.ats.arjuna.common.arjPropertyManager;
-
-import java.io.File;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
+import java.io.File;
+
+import static org.junit.Assert.assertTrue;
 
 public class JBossArjunaConfigurationTestCase extends AbstractJbossArjunaConfigurationTestCase
 {

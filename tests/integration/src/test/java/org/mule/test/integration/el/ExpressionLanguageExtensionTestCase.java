@@ -6,8 +6,7 @@
  */
 package org.mule.test.integration.el;
 
-import static org.junit.Assert.assertSame;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -15,7 +14,7 @@ import org.mule.runtime.core.api.el.ExpressionLanguage;
 import org.mule.runtime.core.el.mvel.MVELExpressionLanguage;
 import org.mule.runtime.core.expression.DefaultExpressionManager;
 
-import org.junit.Test;
+import static org.junit.Assert.assertSame;
 
 public class ExpressionLanguageExtensionTestCase extends FunctionalTestCase
 {
@@ -28,7 +27,8 @@ public class ExpressionLanguageExtensionTestCase extends FunctionalTestCase
     @Test
     public void doesNotOverrideExpressionLanguageInExpressionManagerOnCreation() throws Exception
     {
-        ExpressionLanguage originalExpressionLanguage = ((DefaultExpressionManager) muleContext.getExpressionManager()).getExpressionLanguage();
+        ExpressionLanguage originalExpressionLanguage =
+                ((DefaultExpressionManager) muleContext.getExpressionManager()).getExpressionLanguage();
 
         MuleClient client = muleContext.getClient();
         flowRunner("createsExpressionLanguage").withPayload(TEST_MESSAGE).run();

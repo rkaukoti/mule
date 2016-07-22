@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.capability.xml.schema;
 
-import static java.util.Optional.empty;
-import static java.util.Optional.of;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
 import org.mule.runtime.extension.api.resources.GeneratedResource;
 import org.mule.runtime.extension.api.resources.spi.GeneratedResourceFactory;
@@ -15,6 +13,9 @@ import org.mule.runtime.extension.xml.dsl.api.property.XmlModelProperty;
 
 import java.util.Optional;
 import java.util.Properties;
+
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
 
 /**
  * Base class for {@link GeneratedResourceFactory} implementations which
@@ -41,8 +42,8 @@ abstract class AbstractXmlResourceFactory implements GeneratedResourceFactory
         XmlModelProperty xmlProperty = extensionModel.getModelProperty(XmlModelProperty.class).orElse(null);
 
         return xmlProperty == null
-               ? empty()
-               : of(generateXmlResource(extensionModel, xmlProperty));
+                ? empty()
+                : of(generateXmlResource(extensionModel, xmlProperty));
     }
 
     /**

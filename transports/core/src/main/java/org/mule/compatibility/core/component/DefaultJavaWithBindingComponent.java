@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Default implementation of {@link JavaComponent}. Component lifecycle is propagated to the component object instance
  * via the {@link LifecycleAdapter}.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -46,8 +46,8 @@ public class DefaultJavaWithBindingComponent extends AbstractJavaWithBindingsCom
     }
 
     public DefaultJavaWithBindingComponent(ObjectFactory objectFactory,
-                                EntryPointResolverSet entryPointResolverSet,
-                                List<InterfaceBinding> bindings)
+                                           EntryPointResolverSet entryPointResolverSet,
+                                           List<InterfaceBinding> bindings)
     {
         super(objectFactory, entryPointResolverSet, bindings);
     }
@@ -74,7 +74,7 @@ public class DefaultJavaWithBindingComponent extends AbstractJavaWithBindingsCom
             catch (Exception e)
             {
                 throw new InitialisationException(
-                    MessageFactory.createStaticMessage("Unable to create instance of POJO service"), e, this);
+                        MessageFactory.createStaticMessage("Unable to create instance of POJO service"), e, this);
 
             }
             // On all calls, start if not started.

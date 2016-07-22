@@ -6,8 +6,8 @@
  */
 package org.mule.extension.ftp.internal.ftp.command;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 import org.mule.extension.ftp.api.FtpFileAttributes;
 import org.mule.extension.ftp.api.ftp.ClassicFtpFileAttributes;
 import org.mule.extension.ftp.internal.ftp.connection.ClassicFtpFileSystem;
@@ -21,8 +21,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Stack;
 
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
+import static java.lang.String.format;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * Base class for implementations of {@link FileCommand} which operate

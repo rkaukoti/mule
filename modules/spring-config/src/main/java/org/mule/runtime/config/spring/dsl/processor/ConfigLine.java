@@ -6,20 +6,16 @@
  */
 package org.mule.runtime.config.spring.dsl.processor;
 
-import static com.google.common.collect.ImmutableMap.copyOf;
-import static org.mule.runtime.core.util.Preconditions.checkState;
-import org.mule.runtime.core.util.Preconditions;
+import org.w3c.dom.Node;
 
-import com.google.common.collect.ImmutableMap;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.w3c.dom.Node;
+import static com.google.common.collect.ImmutableMap.copyOf;
+import static org.mule.runtime.core.util.Preconditions.checkState;
 
 /**
  * A configuration line represents the data within a line in a configuration file
@@ -65,15 +61,18 @@ public class ConfigLine
     {
     }
 
-    public String getNamespace() {
+    public String getNamespace()
+    {
         return namespace;
     }
 
-    public String getIdentifier() {
+    public String getIdentifier()
+    {
         return identifier;
     }
 
-    public Map<String, SimpleConfigAttribute> getConfigAttributes() {
+    public Map<String, SimpleConfigAttribute> getConfigAttributes()
+    {
         return copyOf(configAttributes);
     }
 
@@ -82,11 +81,13 @@ public class ConfigLine
         return Collections.unmodifiableMap(customAttributes);
     }
 
-    public List<ConfigLine> getChildren() {
+    public List<ConfigLine> getChildren()
+    {
         return childrenConfigLines;
     }
 
-    public ConfigLine getParent() {
+    public ConfigLine getParent()
+    {
         return parent.getConfigLine();
     }
 
@@ -101,15 +102,21 @@ public class ConfigLine
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         ConfigLine that = (ConfigLine) o;
 
-        if (parent != null ? !parent.equals(that.parent) : that.parent != null) return false;
-        if (namespace != null ? !namespace.equals(that.namespace) : that.namespace != null) return false;
-        if (identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) return false;
+        if (parent != null ? !parent.equals(that.parent) : that.parent != null)
+            return false;
+        if (namespace != null ? !namespace.equals(that.namespace) : that.namespace != null)
+            return false;
+        if (identifier != null ? !identifier.equals(that.identifier) : that.identifier != null)
+            return false;
         if (configAttributes != null ? !configAttributes.equals(that.configAttributes) : that.configAttributes != null)
             return false;
         return childrenConfigLines != null ? childrenConfigLines.equals(that.childrenConfigLines) : that.childrenConfigLines == null;
@@ -117,7 +124,8 @@ public class ConfigLine
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int result = parent != null ? parent.hashCode() : 0;
         result = 31 * result + (namespace != null ? namespace.hashCode() : 0);
         result = 31 * result + (identifier != null ? identifier.hashCode() : 0);
@@ -131,13 +139,15 @@ public class ConfigLine
         private ConfigLine configLine = new ConfigLine();
         private boolean alreadyBuild;
 
-        public Builder setNamespace(String namespace) {
+        public Builder setNamespace(String namespace)
+        {
             checkState(!alreadyBuild, "builder already build an object, you cannot modify it");
             configLine.namespace = namespace;
             return this;
         }
 
-        public Builder setIdentifier(String operation) {
+        public Builder setIdentifier(String operation)
+        {
             checkState(!alreadyBuild, "builder already build an object, you cannot modify it");
             configLine.identifier = operation;
             return this;

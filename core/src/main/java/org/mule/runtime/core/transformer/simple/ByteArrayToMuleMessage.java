@@ -8,7 +8,9 @@ package org.mule.runtime.core.transformer.simple;
 
 import org.mule.runtime.api.metadata.DataType;
 
-/** TODO */
+/**
+ * TODO
+ */
 public class ByteArrayToMuleMessage extends ByteArrayToSerializable
 {
     public ByteArrayToMuleMessage()

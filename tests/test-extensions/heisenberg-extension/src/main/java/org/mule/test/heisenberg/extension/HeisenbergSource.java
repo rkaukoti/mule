@@ -6,9 +6,6 @@
  */
 package org.mule.test.heisenberg.extension;
 
-import static java.lang.String.format;
-import static java.util.concurrent.Executors.newScheduledThreadPool;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.api.execution.BlockingCompletionHandler;
 import org.mule.runtime.api.execution.CompletionHandler;
 import org.mule.runtime.api.message.Attributes;
@@ -27,6 +24,10 @@ import org.mule.runtime.extension.api.runtime.source.SourceContext;
 import java.math.BigDecimal;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import static java.lang.String.format;
+import static java.util.concurrent.Executors.newScheduledThreadPool;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 
 @Alias("ListenPayments")
@@ -70,7 +71,8 @@ public class HeisenbergSource extends Source<Void, Attributes> implements Initia
         }
 
         executor = newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(() -> sourceContext.getMessageHandler().handle(makeMessage(sourceContext), completionHandler()), 0, 100, TimeUnit.MILLISECONDS);
+        executor.scheduleAtFixedRate(() -> sourceContext.getMessageHandler().handle(makeMessage(sourceContext), completionHandler()), 0,
+                100, TimeUnit.MILLISECONDS);
     }
 
     private CompletionHandler<MuleEvent, Exception, MuleEvent> completionHandler()
@@ -116,7 +118,10 @@ public class HeisenbergSource extends Source<Void, Attributes> implements Initia
             sourceContext.getExceptionCallback().onException(new RuntimeException(INITIAL_BATCH_NUMBER_ERROR_MESSAGE));
         }
 
-        return MuleMessage.builder().payload(format("Meth Batch %d. If found by DEA contact %s", ++initialBatchNumber, connection.getSaulPhoneNumber())).build();
+        return MuleMessage.builder()
+                          .payload(format("Meth Batch %d. If found by DEA contact %s", ++initialBatchNumber,
+                                  connection.getSaulPhoneNumber()))
+                          .build();
     }
 
 

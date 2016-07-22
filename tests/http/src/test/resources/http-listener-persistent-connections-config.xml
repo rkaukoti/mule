@@ -9,7 +9,7 @@
         <httpn:listener-connection host="localhost" port="${nonPersistentPort}" usePersistentConnections="false"/>
     </httpn:listener-config>
     <flow name="nonPersistent">
-        <httpn:listener path="/" config-ref="nonPersistentConfig" />
+        <httpn:listener path="/" config-ref="nonPersistentConfig"/>
         <echo-component/>
     </flow>
 
@@ -17,7 +17,7 @@
         <httpn:listener-connection host="localhost" port="${persistentPort}" usePersistentConnections="true" connectionIdleTimeout="1000"/>
     </httpn:listener-config>
     <flow name="persistent">
-        <httpn:listener path="/" config-ref="persistentConfig" />
+        <httpn:listener path="/" config-ref="persistentConfig"/>
         <echo-component/>
     </flow>
 
@@ -25,13 +25,13 @@
         <httpn:listener-connection host="localhost" port="${persistentPortCloseHeader}" usePersistentConnections="true" connectionIdleTimeout="1000"/>
     </httpn:listener-config>
     <flow name="persistentCloseHeader">
-        <httpn:listener path="/" config-ref="persistentConfigCloseHeader" >
+        <httpn:listener path="/" config-ref="persistentConfigCloseHeader">
             <httpn:response-builder>
                 <httpn:headers>
                     <httpn:header key="Connection" value="close"/>
                 </httpn:headers>
             </httpn:response-builder>
-                </httpn:listener>
+        </httpn:listener>
         <echo-component/>
     </flow>
 
@@ -49,16 +49,16 @@
         <httpn:listener-connection host="localhost" port="${persistentStreamingPort}" usePersistentConnections="true" connectionIdleTimeout="1000"/>
     </httpn:listener-config>
     <flow name="persistentStreaming">
-        <httpn:listener path="/" config-ref="persistentConfigStreaming" responseStreamingMode="ALWAYS" />
-        <echo-component />
+        <httpn:listener path="/" config-ref="persistentConfigStreaming" responseStreamingMode="ALWAYS"/>
+        <echo-component/>
     </flow>
 
     <httpn:listener-config name="persistentConfigStreamingTransformer">
         <httpn:listener-connection host="localhost" port="${persistentStreamingTransformerPort}" usePersistentConnections="true" connectionIdleTimeout="1000"/>
     </httpn:listener-config>
     <flow name="persistentStreamingTransformer">
-        <httpn:listener path="/" config-ref="persistentConfigStreamingTransformer" responseStreamingMode="ALWAYS" />
-        <set-payload value="from_payload_transformer" />
+        <httpn:listener path="/" config-ref="persistentConfigStreamingTransformer" responseStreamingMode="ALWAYS"/>
+        <set-payload value="from_payload_transformer"/>
     </flow>
 
 </mule>

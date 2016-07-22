@@ -6,12 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.describer;
 
-import static org.mule.runtime.module.extension.internal.introspection.describer.MuleExtensionAnnotationParser.getAliasName;
-import static org.mule.runtime.module.extension.internal.introspection.describer.MuleExtensionAnnotationParser.parseLayoutAnnotations;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getExpressionSupport;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getFieldMetadataType;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getDefaultValue;
-
 import org.mule.metadata.api.ClassTypeLoader;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.extension.api.annotation.param.NoRef;
@@ -23,6 +17,12 @@ import org.mule.runtime.module.extension.internal.model.property.DeclaringMember
 import org.mule.runtime.module.extension.internal.model.property.NoReferencesModelProperty;
 
 import java.lang.reflect.Field;
+
+import static org.mule.runtime.module.extension.internal.introspection.describer.MuleExtensionAnnotationParser.getAliasName;
+import static org.mule.runtime.module.extension.internal.introspection.describer.MuleExtensionAnnotationParser.parseLayoutAnnotations;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getExpressionSupport;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getFieldMetadataType;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getDefaultValue;
 
 /**
  * Default implementation of {@link FieldDescriber}, capable
@@ -66,7 +66,7 @@ final class DefaultFieldDescriber implements FieldDescriber
 
         Optional optional = field.getAnnotation(Optional.class);
         parameterDeclarer = optional == null ? declarer.withRequiredParameter(parameterName)
-                                             : declarer.withOptionalParameter(parameterName).defaultingTo(getDefaultValue(optional));
+                : declarer.withOptionalParameter(parameterName).defaultingTo(getDefaultValue(optional));
 
         if (field.getAnnotation(NoRef.class) != null)
         {
@@ -74,8 +74,8 @@ final class DefaultFieldDescriber implements FieldDescriber
         }
 
         parameterDeclarer.ofType(fieldType)
-                .withExpressionSupport(getExpressionSupport(field))
-                .withModelProperty(new DeclaringMemberModelProperty(field));
+                         .withExpressionSupport(getExpressionSupport(field))
+                         .withModelProperty(new DeclaringMemberModelProperty(field));
 
         LayoutModelProperty layoutModelProperty = parseLayoutAnnotations(field, field.getName());
         if (layoutModelProperty != null)

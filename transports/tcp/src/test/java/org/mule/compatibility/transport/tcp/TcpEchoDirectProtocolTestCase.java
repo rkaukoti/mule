@@ -6,9 +6,8 @@
  */
 package org.mule.compatibility.transport.tcp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
@@ -16,8 +15,8 @@ import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class TcpEchoDirectProtocolTestCase extends FunctionalTestCase
 {
@@ -38,8 +37,9 @@ public class TcpEchoDirectProtocolTestCase extends FunctionalTestCase
     {
         MuleClient client = muleContext.getClient();
 
-        MuleMessage response = client.send(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("BounceTcpMMP")).getMessageSource()).getAddress(),
-            TEST_MESSAGE, null);
+        MuleMessage response = client.send(
+                ((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("BounceTcpMMP")).getMessageSource()).getAddress(),
+                TEST_MESSAGE, null);
 
         assertNotNull(response);
         assertEquals(TEST_MESSAGE, response.getPayload());

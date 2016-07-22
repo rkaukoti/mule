@@ -6,9 +6,7 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.compatibility.core.api.transport.MessageDispatcher;
 import org.mule.compatibility.core.api.transport.MessageReceiver;
@@ -21,11 +19,13 @@ import org.mule.runtime.core.api.lifecycle.CreateException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 /**
- * This test verifies and illustrates various usage patterns with {@link MuleMessageFactory}. It 
- * uses {@link MessageDispatcher} instances for the test but the same patterns apply to 
+ * This test verifies and illustrates various usage patterns with {@link MuleMessageFactory}. It
+ * uses {@link MessageDispatcher} instances for the test but the same patterns apply to
  * {@link MessageReceiver} and {@link MessageRequester} as well as all of the code resides in their
  * abstract superclasses.
  */
@@ -39,7 +39,7 @@ public class MuleMessageFactoryUsagePatternsTestCase extends AbstractMuleContext
     protected void doSetUp() throws Exception
     {
         super.doSetUp();
-        
+
         endpoint = getTestOutboundEndpoint("test");
         connector = (AbstractConnector) endpoint.getConnector();
         factoryFromConnector = connector.getMuleMessageFactory();
@@ -49,44 +49,44 @@ public class MuleMessageFactoryUsagePatternsTestCase extends AbstractMuleContext
     public void testSharedMuleMessageFactoryWithConnector() throws Exception
     {
         connector.setDispatcherFactory(new FakeDispatcherFactory());
-        
-        MockMessageDispatcher dispatcher = 
-            (MockMessageDispatcher) connector.getDispatcherFactory().create(endpoint);
+
+        MockMessageDispatcher dispatcher =
+                (MockMessageDispatcher) connector.getDispatcherFactory().create(endpoint);
         dispatcher.initialise();
-        
+
         MuleMessageFactory factoryFromDispatcher = dispatcher.getMuleMessageFactory();
         assertNotNull(factoryFromDispatcher);
         assertSame(factoryFromConnector, factoryFromDispatcher);
     }
-    
+
     @Test
     public void testMessageDispatcherCreatesOwnMuleMessageFactory() throws Exception
     {
         connector.setDispatcherFactory(new CustomDispatcherFactory());
-        
-        CustomMessageDispatcher dispatcher = 
-            (CustomMessageDispatcher) connector.getDispatcherFactory().create(endpoint);
+
+        CustomMessageDispatcher dispatcher =
+                (CustomMessageDispatcher) connector.getDispatcherFactory().create(endpoint);
         dispatcher.initialise();
-        
+
         MuleMessageFactory factoryFromDispatcher = dispatcher.getMuleMessageFactory();
         assertNotNull(factoryFromDispatcher);
         assertNotSame(factoryFromConnector, factoryFromDispatcher);
     }
-    
+
     private static class FakeDispatcherFactory extends AbstractMessageDispatcherFactory
     {
         public FakeDispatcherFactory()
         {
             super();
         }
-        
+
         @Override
         public MessageDispatcher create(OutboundEndpoint endpoint) throws MuleException
         {
             return new MockMessageDispatcher(endpoint);
         }
     }
-    
+
     private static class CustomDispatcherFactory extends AbstractMessageDispatcherFactory
     {
         public CustomDispatcherFactory()
@@ -100,7 +100,7 @@ public class MuleMessageFactoryUsagePatternsTestCase extends AbstractMuleContext
             return new CustomMessageDispatcher(endpoint);
         }
     }
-    
+
     private static class MockMessageDispatcher extends AbstractMessageDispatcher
     {
         public MockMessageDispatcher(OutboundEndpoint endpoint)
@@ -128,7 +128,7 @@ public class MuleMessageFactoryUsagePatternsTestCase extends AbstractMuleContext
             throw new UnsupportedOperationException("doSend");
         }
     }
-    
+
     private static class CustomMessageDispatcher extends AbstractMessageDispatcher
     {
         public CustomMessageDispatcher(OutboundEndpoint endpoint)

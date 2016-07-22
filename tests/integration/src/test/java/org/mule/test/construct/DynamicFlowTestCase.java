@@ -6,9 +6,8 @@
  */
 package org.mule.test.construct;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -30,13 +29,18 @@ import org.mule.runtime.core.transformer.simple.StringAppendTransformer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class DynamicFlowTestCase extends FunctionalTestCase
 {
 
     private MuleClient client;
+
+    private static Flow getFlow(String flowName) throws MuleException
+    {
+        return (Flow) muleContext.getRegistry().lookupFlowConstruct(flowName);
+    }
 
     @Override
     protected String getConfigFile()
@@ -63,7 +67,9 @@ public class DynamicFlowTestCase extends FunctionalTestCase
         result = muleEvent.getMessage();
         assertEquals("source->(pre)(static)", getPayloadAsString(result));
 
-        flow.dynamicPipeline(pipelineId).injectBefore(new StringAppendTransformer("(pre1)"), new StringAppendTransformer("(pre2)")).resetAndUpdate();
+        flow.dynamicPipeline(pipelineId)
+            .injectBefore(new StringAppendTransformer("(pre1)"), new StringAppendTransformer("(pre2)"))
+            .resetAndUpdate();
         muleEvent = flowRunner("dynamicFlow").withPayload("source->").run();
         result = muleEvent.getMessage();
         assertEquals("source->(pre1)(pre2)(static)", getPayloadAsString(result));
@@ -74,15 +80,15 @@ public class DynamicFlowTestCase extends FunctionalTestCase
     {
         Flow flow = getFlow("dynamicFlow");
         String pipelineId = flow.dynamicPipeline(null).injectBefore(new StringAppendTransformer("(pre)"))
-                .injectAfter(new StringAppendTransformer("(post)"))
-                .resetAndUpdate();
+                                .injectAfter(new StringAppendTransformer("(post)"))
+                                .resetAndUpdate();
         MuleEvent muleEvent = flowRunner("dynamicFlow").withPayload("source->").run();
         MuleMessage result = muleEvent.getMessage();
         assertEquals("source->(pre)(static)(post)", getPayloadAsString(result));
 
         flow.dynamicPipeline(pipelineId).injectBefore(new StringAppendTransformer("(pre)"))
-                .injectAfter(new StringAppendTransformer("(post1)"), new StringAppendTransformer("(post2)"))
-                .resetAndUpdate();
+            .injectAfter(new StringAppendTransformer("(post1)"), new StringAppendTransformer("(post2)"))
+            .resetAndUpdate();
         muleEvent = flowRunner("dynamicFlow").withPayload("source->").run();
         result = muleEvent.getMessage();
         assertEquals("source->(pre)(static)(post1)(post2)", getPayloadAsString(result));
@@ -162,29 +168,24 @@ public class DynamicFlowTestCase extends FunctionalTestCase
         assertNotNull(awareMessageProcessor.getMuleContext());
     }
 
-    @Test (expected = DynamicPipelineException.class)
+    @Test(expected = DynamicPipelineException.class)
     public void invalidInitialPipelineId() throws Exception
     {
         getFlow("dynamicFlow").dynamicPipeline("invalid-id").resetAndUpdate();
     }
 
-    @Test (expected = DynamicPipelineException.class)
+    @Test(expected = DynamicPipelineException.class)
     public void invalidNullPipelineId() throws Exception
     {
         getFlow("dynamicFlow").dynamicPipeline(null).resetAndUpdate();
         getFlow("dynamicFlow").dynamicPipeline(null).reset();
     }
 
-    @Test (expected = DynamicPipelineException.class)
+    @Test(expected = DynamicPipelineException.class)
     public void invalidPipelineId() throws Exception
     {
         String id = getFlow("dynamicFlow").dynamicPipeline(null).resetAndUpdate();
         getFlow("dynamicFlow").dynamicPipeline(id + "x").reset();
-    }
-
-    private static Flow getFlow(String flowName) throws MuleException
-    {
-        return (Flow) muleContext.getRegistry().lookupFlowConstruct(flowName);
     }
 
     public static class Component implements Callable
@@ -196,7 +197,8 @@ public class DynamicFlowTestCase extends FunctionalTestCase
         public Object onCall(MuleEventContext eventContext) throws Exception
         {
             Flow flow = (Flow) eventContext.getMuleContext().getRegistry().lookupFlowConstruct("dynamicComponentFlow");
-            pipelineId = flow.dynamicPipeline(pipelineId).injectBefore(new StringAppendTransformer("chain update #" + ++count)).resetAndUpdate();
+            pipelineId =
+                    flow.dynamicPipeline(pipelineId).injectBefore(new StringAppendTransformer("chain update #" + ++count)).resetAndUpdate();
             return eventContext.getMessage();
         }
 
@@ -259,6 +261,11 @@ public class DynamicFlowTestCase extends FunctionalTestCase
             return event;
         }
 
+        public FlowConstruct getFlowConstruct()
+        {
+            return flowConstruct;
+        }
+
         @Override
         public void setFlowConstruct(FlowConstruct flowConstruct)
         {
@@ -266,20 +273,15 @@ public class DynamicFlowTestCase extends FunctionalTestCase
             this.flowConstruct = flowConstruct;
         }
 
+        public MuleContext getMuleContext()
+        {
+            return muleContext;
+        }
+
         @Override
         public void setMuleContext(MuleContext muleContext)
         {
             this.muleContext = muleContext;
-        }
-
-        public FlowConstruct getFlowConstruct()
-        {
-            return flowConstruct;
-        }
-
-        public MuleContext getMuleContext()
-        {
-            return muleContext;
         }
     }
 

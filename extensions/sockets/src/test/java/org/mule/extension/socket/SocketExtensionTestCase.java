@@ -6,11 +6,8 @@
  */
 package org.mule.extension.socket;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.junit.rules.ExpectedException.none;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 import org.mule.extension.socket.api.SocketsExtension;
 import org.mule.functional.junit4.MuleArtifactFunctionalTestCase;
 import org.mule.runtime.api.message.MuleMessage;
@@ -31,8 +28,11 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.junit.rules.ExpectedException.none;
 
 /**
  * Base class with common behaviour for all the {@link SocketsExtension} test cases
@@ -40,30 +40,23 @@ import org.junit.rules.ExpectedException;
 public abstract class SocketExtensionTestCase extends MuleArtifactFunctionalTestCase
 {
 
-    protected static final int TIMEOUT_MILLIS = 5000;
-    protected static final int POLL_DELAY_MILLIS = 100;
     public static final String TEST_STRING = "This is a test string";
     public static final String RESPONSE_TEST_STRING = TEST_STRING + "_modified";
-
+    protected static final int TIMEOUT_MILLIS = 5000;
+    protected static final int POLL_DELAY_MILLIS = 100;
     /**
      * For tests with multiple sends
      */
     protected static final int REPETITIONS = 3;
-
-    protected static List<MuleMessage> receivedMessages;
-
-
     protected static final String NAME = "Messi";
     protected static final int AGE = 10;
-    protected TestPojo testPojo;
-    protected byte[] testByteArray;
-
-
+    protected static List<MuleMessage> receivedMessages;
     @Rule
     public DynamicPort dynamicPort = new DynamicPort("port");
-
     @Rule
     public ExpectedException expectedException = none();
+    protected TestPojo testPojo;
+    protected byte[] testByteArray;
 
     protected void assertPojo(MuleMessage message, TestPojo expectedContent) throws Exception
     {
@@ -99,22 +92,6 @@ public abstract class SocketExtensionTestCase extends MuleArtifactFunctionalTest
         receivedMessages = null;
     }
 
-    //TODO(gfernandes) MULE-10117 remove this when support for accessing resources is added to runner
-    public static class OnIncomingConnectionBean implements Callable
-    {
-
-        @Override
-        public Object onCall(MuleEventContext eventContext) throws Exception
-        {
-            MuleMessage originalMessage = eventContext.getEvent().getMessage();
-            MuleMessage message = MuleMessage.builder().payload(originalMessage.getPayload()).mediaType(originalMessage
-                                                                                                               .getDataType().getMediaType()).attributes(originalMessage.getAttributes()).build();
-            receivedMessages.add(message);
-
-            return eventContext.getEvent();
-        }
-    }
-
     protected void assertEvent(MuleMessage message, Object expectedContent) throws Exception
     {
         String payload = IOUtils.toString((InputStream) message.getPayload());
@@ -130,7 +107,8 @@ public abstract class SocketExtensionTestCase extends MuleArtifactFunctionalTest
     {
         PollingProber prober = new PollingProber(TIMEOUT_MILLIS, POLL_DELAY_MILLIS);
         ValueHolder<MuleMessage> messageHolder = new ValueHolder<>();
-        prober.check(new JUnitLambdaProbe(() -> {
+        prober.check(new JUnitLambdaProbe(() ->
+        {
             if (!receivedMessages.isEmpty())
             {
                 messageHolder.set(receivedMessages.remove(0));
@@ -172,6 +150,22 @@ public abstract class SocketExtensionTestCase extends MuleArtifactFunctionalTest
 
         assertEquals(expectedData.readFloat(), dataIn.readFloat(), 0.1f);
         assertEquals(expectedData.readFloat(), dataIn.readFloat(), 0.1f);
+    }
+
+    //TODO(gfernandes) MULE-10117 remove this when support for accessing resources is added to runner
+    public static class OnIncomingConnectionBean implements Callable
+    {
+
+        @Override
+        public Object onCall(MuleEventContext eventContext) throws Exception
+        {
+            MuleMessage originalMessage = eventContext.getEvent().getMessage();
+            MuleMessage message = MuleMessage.builder().payload(originalMessage.getPayload()).mediaType(originalMessage
+                    .getDataType().getMediaType()).attributes(originalMessage.getAttributes()).build();
+            receivedMessages.add(message);
+
+            return eventContext.getEvent();
+        }
     }
 
 

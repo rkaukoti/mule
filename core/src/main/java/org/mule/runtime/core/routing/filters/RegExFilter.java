@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.core.routing.filters;
 
-import static org.mule.runtime.core.util.ClassUtils.hash;
-import static org.mule.runtime.core.util.ClassUtils.isConsumable;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.MessageExchangePattern;
@@ -26,11 +23,13 @@ import org.mule.runtime.core.construct.Flow;
 import org.mule.runtime.core.transformer.simple.ByteArrayToObject;
 import org.mule.runtime.core.util.AttributeEvaluator;
 import org.mule.runtime.core.util.ClassUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.regex.Pattern;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.ClassUtils.hash;
+import static org.mule.runtime.core.util.ClassUtils.isConsumable;
 
 /**
  * <code>RegExFilter</code> is used to match a String argument against a regular expression.
@@ -45,15 +44,6 @@ public class RegExFilter implements Filter, ObjectFilter, MuleContextAware, Init
     private MuleContext muleContext;
     private int flags = NO_FLAGS;
     private AttributeEvaluator value;
-
-    @Override
-    public void initialise() throws InitialisationException
-    {
-        if (value != null)
-        {
-            value.initialize(muleContext.getExpressionManager());
-        }
-    }
 
     public RegExFilter()
     {
@@ -83,6 +73,15 @@ public class RegExFilter implements Filter, ObjectFilter, MuleContextAware, Init
     }
 
     @Override
+    public void initialise() throws InitialisationException
+    {
+        if (value != null)
+        {
+            value.initialize(muleContext.getExpressionManager());
+        }
+    }
+
+    @Override
     public boolean accept(MuleMessage message)
     {
         // TODO MULE-9341 Remove Filters that are not needed
@@ -100,7 +99,8 @@ public class RegExFilter implements Filter, ObjectFilter, MuleContextAware, Init
             }
             else
             {
-                final MuleMessage transformedMessage = muleContext.getTransformationService().transform(event.getMessage(), DataType.STRING);
+                final MuleMessage transformedMessage =
+                        muleContext.getTransformationService().transform(event.getMessage(), DataType.STRING);
                 // If the payload is a stream and we've consumed it, then we should set the payload on the
                 // message. This is the only time this method will alter the payload on the message
                 if (isConsumable(event.getMessage().getDataType().getType()))

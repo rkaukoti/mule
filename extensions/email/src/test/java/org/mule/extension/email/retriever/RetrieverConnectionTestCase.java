@@ -6,6 +6,26 @@
  */
 package org.mule.extension.email.retriever;
 
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.mule.extension.email.api.exception.EmailConnectionException;
+import org.mule.extension.email.api.exception.EmailException;
+import org.mule.extension.email.internal.retriever.RetrieverConnection;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import javax.mail.Flags;
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Store;
+
 import static javax.mail.Folder.READ_ONLY;
 import static javax.mail.Folder.READ_WRITE;
 import static org.hamcrest.Matchers.is;
@@ -22,26 +42,6 @@ import static org.mule.extension.email.util.EmailTestUtils.JUANI_EMAIL;
 import static org.powermock.api.mockito.PowerMockito.doNothing;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.when;
-import org.mule.extension.email.internal.retriever.RetrieverConnection;
-import org.mule.extension.email.api.exception.EmailConnectionException;
-import org.mule.extension.email.api.exception.EmailException;
-
-import javax.mail.Flags;
-import javax.mail.Folder;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Store;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Session.class)
@@ -49,11 +49,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public class RetrieverConnectionTestCase
 {
 
+    private static final String RECENT_FOLDER = "Recent";
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-
-    private static final String RECENT_FOLDER = "Recent";
-
     private Store store;
     private RetrieverConnection connection;
 

@@ -6,9 +6,7 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -16,7 +14,8 @@ import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.exception.DefaultMessagingExceptionStrategy;
 import org.mule.runtime.core.transaction.TransactionCoordination;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 /**
  * When exception strategies are used with transactions it should be possible to send

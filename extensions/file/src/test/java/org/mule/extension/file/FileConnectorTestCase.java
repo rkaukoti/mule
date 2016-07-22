@@ -6,9 +6,11 @@
  */
 package org.mule.extension.file;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.rules.ExpectedException.none;
+import org.apache.commons.io.FileUtils;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
+import org.junit.rules.TemporaryFolder;
 import org.mule.functional.junit4.MuleArtifactFunctionalTestCase;
 import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.core.api.MuleEvent;
@@ -20,11 +22,9 @@ import org.mule.tck.junit4.rule.SystemProperty;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
-import org.junit.rules.TemporaryFolder;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.rules.ExpectedException.none;
 
 public abstract class FileConnectorTestCase extends MuleArtifactFunctionalTestCase
 {
@@ -95,11 +95,13 @@ public abstract class FileConnectorTestCase extends MuleArtifactFunctionalTestCa
         doWrite("write", path, content, mode, createParent);
     }
 
-    protected void doWrite(String flow, String path, Object content, FileWriteMode mode, boolean createParent) throws Exception {
+    protected void doWrite(String flow, String path, Object content, FileWriteMode mode, boolean createParent) throws Exception
+    {
         doWrite(flow, path, content, mode, createParent, null);
     }
 
-    protected void doWrite(String flow, String path, Object content, FileWriteMode mode, boolean createParent, String encoding) throws Exception
+    protected void doWrite(String flow, String path, Object content, FileWriteMode mode, boolean createParent, String encoding)
+            throws Exception
     {
         flowRunner(flow)
                 .withFlowVariable("path", path)

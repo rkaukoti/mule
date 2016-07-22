@@ -15,6 +15,8 @@
 
 package org.mule.runtime.module.extension.internal.capability.xml.schema.model;
 
+import org.w3c.dom.Element;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,8 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
-
-import org.w3c.dom.Element;
 
 
 /**
@@ -107,8 +107,7 @@ public class Documentation
     /**
      * Gets the value of the source property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getSource()
     {
@@ -118,8 +117,7 @@ public class Documentation
     /**
      * Sets the value of the source property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setSource(String value)
     {
@@ -129,8 +127,7 @@ public class Documentation
     /**
      * Gets the value of the lang property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getLang()
     {
@@ -140,8 +137,7 @@ public class Documentation
     /**
      * Sets the value of the lang property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setLang(String value)
     {

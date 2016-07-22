@@ -6,18 +6,19 @@
  */
 package org.mule.runtime.module.http.api.requester;
 
-import static java.lang.String.valueOf;
+import org.mule.runtime.api.tls.TlsContextFactory;
+import org.mule.runtime.api.tls.TlsContextFactoryBuilder;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
-import org.mule.runtime.api.tls.TlsContextFactory;
-import org.mule.runtime.api.tls.TlsContextFactoryBuilder;
+import org.mule.runtime.core.util.ObjectNameHelper;
 import org.mule.runtime.module.http.api.HttpAuthentication;
 import org.mule.runtime.module.http.api.HttpConstants;
 import org.mule.runtime.module.http.api.requester.proxy.ProxyConfig;
 import org.mule.runtime.module.http.internal.request.DefaultHttpRequesterConfig;
-import org.mule.runtime.core.util.ObjectNameHelper;
+
+import static java.lang.String.valueOf;
 
 /**
  * Builder for creating http request configs pragmatically.
@@ -98,8 +99,8 @@ public class HttpRequesterConfigBuilder
     }
 
     /**
-     * @param usePersistentConnections true to reuse a connection for several request,
-     *                                 false to discard a connection after the first request.
+     * @param usePersistentConnections true to reuse a connection for several request, false to discard a connection after the first
+     *                                 request.
      * @return the builder
      */
     public HttpRequesterConfigBuilder setUsePersistentConnections(boolean usePersistentConnections)
@@ -169,8 +170,7 @@ public class HttpRequesterConfigBuilder
     }
 
     /**
-     * @param parseResponse true if the requester should parse the response or
-     *                      false if the response should be set plain as the payload
+     * @param parseResponse true if the requester should parse the response or false if the response should be set plain as the payload
      * @return the builder
      */
     public HttpRequesterConfigBuilder setParseResponse(boolean parseResponse)
@@ -180,8 +180,8 @@ public class HttpRequesterConfigBuilder
     }
 
     /**
-     * @param parseResponse an expression that resolves to true if the requester should parse the response or
-     *                      false if the response should be set plain as the payload
+     * @param parseResponse an expression that resolves to true if the requester should parse the response or false if the response should
+     *                      be set plain as the payload
      * @return the builder
      */
     public HttpRequesterConfigBuilder setParseResponseExpression(String parseResponse)
@@ -191,13 +191,11 @@ public class HttpRequesterConfigBuilder
     }
 
     /**
-     * @param sendBodyMode
-     *  {@link org.mule.runtime.module.http.api.requester.HttpSendBodyMode#ALWAYS} if not matter the HTTP method
-     *  the payload should be sent as the request body
-     *  {@link org.mule.runtime.module.http.api.requester.HttpSendBodyMode#NEVER} if not matter the HTTP method
-     *  the payload never should be sent as the request body
-     *  {@link org.mule.runtime.module.http.api.requester.HttpSendBodyMode#AUTO} if the payload will be sent
-     *   as the request body based on the HTTP request method.
+     * @param sendBodyMode {@link org.mule.runtime.module.http.api.requester.HttpSendBodyMode#ALWAYS} if not matter the HTTP method the
+     *                     payload should be sent as the request body {@link org.mule.runtime.module.http.api.requester.HttpSendBodyMode#NEVER}
+     *                     if not matter the HTTP method the payload never should be sent as the request body {@link
+     *                     org.mule.runtime.module.http.api.requester.HttpSendBodyMode#AUTO} if the payload will be sent as the request body
+     *                     based on the HTTP request method.
      * @return the builder
      */
     public HttpRequesterConfigBuilder setSendBodyMode(HttpSendBodyMode sendBodyMode)
@@ -206,13 +204,11 @@ public class HttpRequesterConfigBuilder
     }
 
     /**
-     * @param sendBodyMode an expression that resolves:
-     *  {@link org.mule.runtime.module.http.api.requester.HttpSendBodyMode#ALWAYS} if not matter the HTTP method
-     *  the payload should be sent as the request body
-     *  {@link org.mule.runtime.module.http.api.requester.HttpSendBodyMode#NEVER} if not matter the HTTP method
-     *  the payload never should be sent as the request body
-     *  {@link org.mule.runtime.module.http.api.requester.HttpSendBodyMode#AUTO} if the payload will be sent
-     *   as the request body based on the HTTP request method.
+     * @param sendBodyMode an expression that resolves: {@link org.mule.runtime.module.http.api.requester.HttpSendBodyMode#ALWAYS} if not
+     *                     matter the HTTP method the payload should be sent as the request body {@link
+     *                     org.mule.runtime.module.http.api.requester.HttpSendBodyMode#NEVER} if not matter the HTTP method the payload
+     *                     never should be sent as the request body {@link org.mule.runtime.module.http.api.requester.HttpSendBodyMode#AUTO}
+     *                     if the payload will be sent as the request body based on the HTTP request method.
      * @return the builder
      */
     public HttpRequesterConfigBuilder setSendBodyModeExpression(String sendBodyMode)
@@ -222,15 +218,12 @@ public class HttpRequesterConfigBuilder
     }
 
     /**
-     * @param requestStreamingMode
-     *  {@link org.mule.runtime.module.http.api.requester.HttpStreamingType#ALWAYS} if the request always
-     *  will be sent using Transfer-Encoding: chunked
-     *  {@link org.mule.runtime.module.http.api.requester.HttpStreamingType#NEVER} if the request never
-     *  will be sent using Transfer-Encoding: chunked
-     *  {@link org.mule.runtime.module.http.api.requester.HttpStreamingType#AUTO} if the request
-     *  will be sent using Transfer-Encoding: chunked based on the payload content. If the payload is an stream then
-     *  it will be sent using Transfer-Encoding: chunked
-     * @return
+     * @param requestStreamingMode {@link org.mule.runtime.module.http.api.requester.HttpStreamingType#ALWAYS} if the request always will be
+     *                             sent using Transfer-Encoding: chunked {@link org.mule.runtime.module.http.api.requester.HttpStreamingType#NEVER}
+     *                             if the request never will be sent using Transfer-Encoding: chunked {@link
+     *                             org.mule.runtime.module.http.api.requester.HttpStreamingType#AUTO} if the request will be sent using
+     *                             Transfer-Encoding: chunked based on the payload content. If the payload is an stream then it will be sent
+     *                             using Transfer-Encoding: chunked
      */
     public HttpRequesterConfigBuilder setRequestStreamingMode(HttpStreamingType requestStreamingMode)
     {
@@ -238,15 +231,12 @@ public class HttpRequesterConfigBuilder
     }
 
     /**
-     * @param requestStreamingMode an expression that resovles to:
-     *  {@link org.mule.runtime.module.http.api.requester.HttpStreamingType#ALWAYS} if the request always
-     *  will be sent using Transfer-Encoding: chunked
-     *  {@link org.mule.runtime.module.http.api.requester.HttpStreamingType#NEVER} if the request never
-     *  will be sent using Transfer-Encoding: chunked
-     *  {@link org.mule.runtime.module.http.api.requester.HttpStreamingType#AUTO} if the request
-     *  will be sent using Transfer-Encoding: chunked based on the payload content. If the payload is an stream then
-     *  it will be sent using Transfer-Encoding: chunked
-     * @return
+     * @param requestStreamingMode an expression that resovles to: {@link org.mule.runtime.module.http.api.requester.HttpStreamingType#ALWAYS}
+     *                             if the request always will be sent using Transfer-Encoding: chunked {@link
+     *                             org.mule.runtime.module.http.api.requester.HttpStreamingType#NEVER} if the request never will be sent
+     *                             using Transfer-Encoding: chunked {@link org.mule.runtime.module.http.api.requester.HttpStreamingType#AUTO}
+     *                             if the request will be sent using Transfer-Encoding: chunked based on the payload content. If the payload
+     *                             is an stream then it will be sent using Transfer-Encoding: chunked
      */
     public HttpRequesterConfigBuilder setRequestStreamingModeExpression(String requestStreamingMode)
     {
@@ -257,9 +247,7 @@ public class HttpRequesterConfigBuilder
     /**
      * Builder the request config and initializes it.
      *
-     * @return an {@link org.mule.runtime.module.http.api.requester.HttpRequesterConfig} created with the
-     *  provided configuration.
-     * @throws MuleException
+     * @return an {@link org.mule.runtime.module.http.api.requester.HttpRequesterConfig} created with the provided configuration.
      */
     public HttpRequesterConfig build() throws MuleException
     {

@@ -7,21 +7,21 @@
 
 package org.mule.runtime.module.db.integration.storedprocedure;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import org.mule.runtime.core.api.processor.MessageProcessor;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.common.Result;
 import org.mule.common.metadata.MetaData;
+import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
-import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import org.mule.runtime.module.db.integration.TestDbConfig;
+import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import org.mule.runtime.module.db.internal.processor.StoredProcedureMessageProcessor;
 
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class StoredProcedureInputMetadataTestCase extends AbstractDbIntegrationTestCase
 {

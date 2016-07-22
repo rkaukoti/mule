@@ -6,7 +6,7 @@
  */
 package org.mule.extension.ftp.internal.sftp.connection;
 
-import static org.mule.runtime.extension.api.annotation.param.display.Placement.CONNECTION;
+import com.google.common.base.Joiner;
 
 import org.mule.extension.ftp.api.sftp.SftpAuthenticationMethod;
 import org.mule.extension.ftp.internal.AbstractFtpConnectionProvider;
@@ -23,9 +23,9 @@ import org.mule.runtime.extension.api.annotation.param.display.Password;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.annotation.param.display.Summary;
 
-import com.google.common.base.Joiner;
-
 import java.util.Set;
+
+import static org.mule.runtime.extension.api.annotation.param.display.Placement.CONNECTION;
 
 /**
  * An {@link AbstractFtpConnectionProvider} which provides instances of
@@ -39,21 +39,19 @@ public class SftpConnectionProvider extends AbstractFtpConnectionProvider<SftpFi
 {
 
     /**
-     * The port number of the SFTP server to connect on
-     */
-    @Parameter
-    @Optional(defaultValue = "22")
-    @Placement(group = CONNECTION, order = 2)
-    private int port = 22;
-
-    /**
      * Username for the FTP Server. Required if the server is authenticated.
      */
     @Parameter
     @Optional
     @Placement(group = CONNECTION, order = 3)
     protected String username;
-
+    /**
+     * The port number of the SFTP server to connect on
+     */
+    @Parameter
+    @Optional(defaultValue = "22")
+    @Placement(group = CONNECTION, order = 2)
+    private int port = 22;
     /**
      * Password for the FTP Server. Required if the server is authenticated.
      */
@@ -130,7 +128,8 @@ public class SftpConnectionProvider extends AbstractFtpConnectionProvider<SftpFi
      * {@inheritDoc}
      */
     @Override
-    public ConnectionHandlingStrategy<SftpFileSystem> getHandlingStrategy(ConnectionHandlingStrategyFactory<SftpFileSystem> handlingStrategyFactory)
+    public ConnectionHandlingStrategy<SftpFileSystem> getHandlingStrategy(
+            ConnectionHandlingStrategyFactory<SftpFileSystem> handlingStrategyFactory)
     {
         return handlingStrategyFactory.supportsPooling();
     }

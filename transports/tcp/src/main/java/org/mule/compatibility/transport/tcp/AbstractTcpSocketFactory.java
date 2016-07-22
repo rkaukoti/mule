@@ -6,15 +6,14 @@
  */
 package org.mule.compatibility.transport.tcp;
 
+import org.apache.commons.pool.KeyedPoolableObjectFactory;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.runtime.core.util.MapUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.Socket;
-
-import org.apache.commons.pool.KeyedPoolableObjectFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Creates a client socket using the socket address extracted from the endpoint.  Addtional
@@ -50,7 +49,7 @@ public abstract class AbstractTcpSocketFactory implements KeyedPoolableObjectFac
     public void destroyObject(Object key, Object object) throws Exception
     {
         Socket socket = (Socket) object;
-        if(!socket.isClosed())
+        if (!socket.isClosed())
         {
             socket.close();
         }
@@ -75,7 +74,7 @@ public abstract class AbstractTcpSocketFactory implements KeyedPoolableObjectFac
         TcpSocketKey socketKey = (TcpSocketKey) key;
 
         boolean keepSocketOpen = MapUtils.getBooleanValue(socketKey.getEndpoint().getProperties(),
-            TcpConnector.KEEP_SEND_SOCKET_OPEN_PROPERTY, socketKey.getConnector().isKeepSendSocketOpen());
+                TcpConnector.KEEP_SEND_SOCKET_OPEN_PROPERTY, socketKey.getConnector().isKeepSendSocketOpen());
         Socket socket = (Socket) object;
 
         if (!keepSocketOpen)

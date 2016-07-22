@@ -6,13 +6,9 @@
  */
 package org.mule.extension.email.internal.commands;
 
-import static java.lang.String.format;
-import static java.nio.file.Paths.get;
-import static javax.mail.Folder.READ_ONLY;
-import static org.mule.runtime.core.util.FileUtils.write;
-import org.mule.extension.email.internal.retriever.RetrieverConnection;
 import org.mule.extension.email.api.exception.EmailException;
 import org.mule.extension.email.api.exception.EmailRetrieverException;
+import org.mule.extension.email.internal.retriever.RetrieverConnection;
 import org.mule.runtime.api.message.MuleMessage;
 
 import java.io.ByteArrayOutputStream;
@@ -26,6 +22,11 @@ import java.util.List;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+
+import static java.lang.String.format;
+import static java.nio.file.Paths.get;
+import static javax.mail.Folder.READ_ONLY;
+import static org.mule.runtime.core.util.FileUtils.write;
 
 /**
  * Represents the store emails operation.
@@ -55,8 +56,10 @@ public final class StoreCommand
      * @param muleMessage    the incoming {@link MuleMessage}.
      * @param folderName     the name of the folder where the email(s) is going to be fetched.
      * @param localDirectory the localDirectory where the emails are going to be stored.
-     * @param fileName       the name of the file that is going to be stored. The operation will append the email number and received date in the end.
-     * @param emailId        the optional number of the email to be marked. for default the email is taken from the incoming {@link MuleMessage}.
+     * @param fileName       the name of the file that is going to be stored. The operation will append the email number and received date
+     *                       in the end.
+     * @param emailId        the optional number of the email to be marked. for default the email is taken from the incoming {@link
+     *                       MuleMessage}.
      * @param overwrite      if should overwrite a file that already exist or not.
      */
     public void store(RetrieverConnection connection,

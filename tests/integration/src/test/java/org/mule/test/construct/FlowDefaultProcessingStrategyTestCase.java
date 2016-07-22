@@ -6,11 +6,7 @@
  */
 package org.mule.test.construct;
 
-import static java.lang.Thread.currentThread;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.functional.junit4.TransactionConfigEnum;
 import org.mule.runtime.core.MessageExchangePattern;
@@ -20,7 +16,10 @@ import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.tck.testmodels.mule.TestTransactionFactory;
 
-import org.junit.Test;
+import static java.lang.Thread.currentThread;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertThat;
 
 public class FlowDefaultProcessingStrategyTestCase extends FunctionalTestCase
 {

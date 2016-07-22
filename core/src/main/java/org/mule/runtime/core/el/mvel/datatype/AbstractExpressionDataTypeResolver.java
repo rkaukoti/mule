@@ -7,13 +7,12 @@
 
 package org.mule.runtime.core.el.mvel.datatype;
 
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.api.metadata.DataType;
 import org.mule.mvel2.ast.ASTNode;
 import org.mule.mvel2.compiler.CompiledExpression;
 import org.mule.mvel2.util.ASTIterator;
 import org.mule.mvel2.util.ASTLinkedList;
+import org.mule.runtime.api.metadata.DataType;
+import org.mule.runtime.core.api.MuleEvent;
 
 /**
  * Base class for extracting data type from {@link CompiledExpression}

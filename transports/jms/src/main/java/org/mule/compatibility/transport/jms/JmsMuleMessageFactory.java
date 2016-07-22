@@ -6,11 +6,11 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static org.mule.compatibility.transport.jms.JmsConstants.JMS_REPLY_TO;
-
 import org.mule.compatibility.core.transport.AbstractMuleMessageFactory;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.config.MuleProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.nio.charset.Charset;
@@ -22,8 +22,7 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.compatibility.transport.jms.JmsConstants.JMS_REPLY_TO;
 
 public class JmsMuleMessageFactory extends AbstractMuleMessageFactory
 {
@@ -33,7 +32,7 @@ public class JmsMuleMessageFactory extends AbstractMuleMessageFactory
     @Override
     protected Class<?>[] getSupportedTransportMessageTypes()
     {
-        return new Class[]{ Message.class };
+        return new Class[] {Message.class};
     }
 
     @Override
@@ -44,9 +43,9 @@ public class JmsMuleMessageFactory extends AbstractMuleMessageFactory
 
     @Override
     protected void addProperties(MuleMessage.Builder messageBuilder, Object transportMessage) throws Exception
-    {        
+    {
         Message jmsMessage = (Message) transportMessage;
-        
+
         Map<String, Serializable> messageProperties = new HashMap<>();
         addDeliveryModeProperty(jmsMessage, messageProperties);
         addExpirationProperty(jmsMessage, messageProperties);
@@ -135,7 +134,7 @@ public class JmsMuleMessageFactory extends AbstractMuleMessageFactory
             Destination replyTo = jmsMessage.getJMSReplyTo();
             if (replyTo != null)
             {
-                if(!(replyTo instanceof Serializable))
+                if (!(replyTo instanceof Serializable))
                 {
                     logger.warn("ReplyTo " + replyTo + " is not serializable and will not be propagated by Mule");
                 }
@@ -219,7 +218,8 @@ public class JmsMuleMessageFactory extends AbstractMuleMessageFactory
         }
     }
 
-    protected void addCorrelationProperties(Message jmsMessage, MuleMessage.Builder messageBuilder, Map<String, Serializable> messageProperties)
+    protected void addCorrelationProperties(Message jmsMessage, MuleMessage.Builder messageBuilder,
+                                            Map<String, Serializable> messageProperties)
     {
         try
         {

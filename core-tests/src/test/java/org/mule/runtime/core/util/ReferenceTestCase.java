@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.core.util;
 
+import org.junit.Test;
+import org.mule.runtime.core.api.util.Reference;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import org.mule.runtime.core.api.util.Reference;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import org.junit.Test;
 
 @SmallTest
 public class ReferenceTestCase extends AbstractMuleTestCase

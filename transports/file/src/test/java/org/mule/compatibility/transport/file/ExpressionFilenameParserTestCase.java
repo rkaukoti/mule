@@ -6,9 +6,7 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -19,7 +17,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test the syntax of the SimpleFilename parser
@@ -55,7 +55,7 @@ public class ExpressionFilenameParserTestCase extends AbstractMuleContextEndpoin
 
         result = parser.getFilename(event, "Test2_#[org.mule.runtime.core.util.DateUtils.getTimeStamp('yyMMdd')].txt");
         assertDatestampWithYearMonthAndDayMatches(result);
-        
+
         result = parser.getFilename(event, "Test3_#[org.mule.runtime.core.util.DateUtils.getTimeStamp('dd-MM-yy_HH-mm-ss.SSS')].txt");
         assertDefaultDatestampMatches(result);
 

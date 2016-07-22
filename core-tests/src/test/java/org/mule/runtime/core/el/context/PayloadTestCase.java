@@ -6,19 +6,18 @@
  */
 package org.mule.runtime.core.el.context;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.MuleMessage;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleMessage;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
 
 public class PayloadTestCase extends AbstractELTestCase
 {
@@ -35,7 +34,8 @@ public class PayloadTestCase extends AbstractELTestCase
     {
         event = mock(MuleEvent.class);
         message = mock(MuleMessage.class);
-        doAnswer(invocation -> {
+        doAnswer(invocation ->
+        {
             message = (MuleMessage) invocation.getArguments()[0];
             return null;
         }).when(event).setMessage(any(MuleMessage.class));

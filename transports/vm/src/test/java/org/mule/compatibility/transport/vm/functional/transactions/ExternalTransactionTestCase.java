@@ -6,14 +6,7 @@
  */
 package org.mule.compatibility.transport.vm.functional.transactions;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.api.execution.ExecutionCallback;
@@ -24,9 +17,16 @@ import org.mule.runtime.core.util.ExceptionUtils;
 
 import javax.transaction.Transaction;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-/** Test transaction behavior when "joinExternal" is set to allow joining external transactions
+/**
+ * Test transaction behavior when "joinExternal" is set to allow joining external transactions
  * There is one test per legal transactional behavior (e.g. ALWAYS_BEGIN).
  */
 public class ExternalTransactionTestCase extends AbstractExternalTransactionTestCase
@@ -314,7 +314,9 @@ public class ExternalTransactionTestCase extends AbstractExternalTransactionTest
         tm.rollback();
     }
 
-    /** Check that the configuration specifies considers external transactions */
+    /**
+     * Check that the configuration specifies considers external transactions
+     */
     @Test
     public void testConfiguration() throws Exception
     {

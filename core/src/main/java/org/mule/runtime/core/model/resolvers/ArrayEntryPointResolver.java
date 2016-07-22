@@ -36,7 +36,7 @@ public class ArrayEntryPointResolver extends AbstractArgumentEntryPointResolver
         Object temp = context.getMessage().getPayload();
         if (temp instanceof Object[])
         {
-            return new Object[]{temp};
+            return new Object[] {temp};
         }
         else
         {

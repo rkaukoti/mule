@@ -6,10 +6,8 @@
  */
 package org.mule.runtime.core.el.datetime;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.el.datetime.Time;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
@@ -25,8 +23,10 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class DateTimeTimeTestCase extends AbstractMuleTestCase
@@ -38,18 +38,18 @@ public class DateTimeTimeTestCase extends AbstractMuleTestCase
     protected volatile DateTime now;
     protected volatile DateTime before;
     protected volatile DateTime after;
-    
+
     @Before
     public void setup()
     {
         calendarNow = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
-        
+
         GregorianCalendar calendarBefore = ((GregorianCalendar) calendarNow.clone());
         calendarBefore.add(Calendar.MILLISECOND, -10);
 
         GregorianCalendar calendarAfter = ((GregorianCalendar) calendarNow.clone());
         calendarAfter.add(Calendar.MILLISECOND, +10);
-        
+
         before = new DateTime(calendarBefore).withTimeZone("UTC");
         now = new DateTime((GregorianCalendar) calendarNow.clone()).withTimeZone("UTC");
         after = new DateTime(calendarAfter).withTimeZone("UTC");
@@ -102,7 +102,7 @@ public class DateTimeTimeTestCase extends AbstractMuleTestCase
     {
         assertSameDay(now.getTime(), now.getTime().plusSeconds(TWO_DAYS_IN_SECONDS));
     }
-    
+
     @Test
     public void plusMinutes()
     {
@@ -122,7 +122,8 @@ public class DateTimeTimeTestCase extends AbstractMuleTestCase
     }
 
     @Test
-    public void plusHoursShouldKeepSameDayInRollover() {
+    public void plusHoursShouldKeepSameDayInRollover()
+    {
         assertSameDay(now.getTime(), now.getTime().plusHours(TWO_DAYS_IN_HOURS));
     }
 
@@ -132,7 +133,8 @@ public class DateTimeTimeTestCase extends AbstractMuleTestCase
     }
 
     @Test
-    public void withTimeZone() {
+    public void withTimeZone()
+    {
         int hour = now.getHours();
         assertThat(now.withTimeZone("GMT-03:00").getHours(), is(hour));
     }
@@ -221,7 +223,7 @@ public class DateTimeTimeTestCase extends AbstractMuleTestCase
     public void fromXMLCalendar() throws DatatypeConfigurationException
     {
         XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(
-            new GregorianCalendar());
+                new GregorianCalendar());
         xmlCal.setYear(1900);
         xmlCal.setMonth(1);
         xmlCal.setDay(1);

@@ -6,11 +6,6 @@
  */
 package org.mule.runtime.core.processor;
 
-import static org.mockito.Mockito.verify;
-
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,9 +20,15 @@ import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.lifecycle.Lifecycle;
 import org.mule.tck.size.SmallTest;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static org.mockito.Mockito.verify;
+
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class AbstractMuleObjectOwnerTest {
+public class AbstractMuleObjectOwnerTest
+{
 
     @Mock
     private TestClass mockObject1;
@@ -45,8 +46,9 @@ public class AbstractMuleObjectOwnerTest {
         abstractMuleObjectOwner = new AbstractMuleObjectOwner<TestClass>()
         {
             @Override
-            protected List<TestClass> getOwnedObjects() {
-                return Arrays.asList(mockObject1,mockObject2);
+            protected List<TestClass> getOwnedObjects()
+            {
+                return Arrays.asList(mockObject1, mockObject2);
             }
         };
         abstractMuleObjectOwner.setFlowConstruct(mockFlowConstruct);
@@ -54,7 +56,8 @@ public class AbstractMuleObjectOwnerTest {
     }
 
     @Test
-    public void testInitialise() throws Exception {
+    public void testInitialise() throws Exception
+    {
         abstractMuleObjectOwner.initialise();
         verify(mockObject1).initialise();
         verify(mockObject2).initialise();
@@ -65,21 +68,24 @@ public class AbstractMuleObjectOwnerTest {
     }
 
     @Test
-    public void testDispose() throws Exception {
+    public void testDispose() throws Exception
+    {
         abstractMuleObjectOwner.dispose();
         verify(mockObject1).dispose();
         verify(mockObject2).dispose();
     }
 
     @Test
-    public void testStart() throws Exception {
+    public void testStart() throws Exception
+    {
         abstractMuleObjectOwner.start();
         verify(mockObject1).start();
         verify(mockObject2).start();
     }
 
     @Test
-    public void testStop() throws Exception {
+    public void testStop() throws Exception
+    {
         abstractMuleObjectOwner.stop();
         verify(mockObject1).stop();
         verify(mockObject2).stop();
@@ -88,27 +94,33 @@ public class AbstractMuleObjectOwnerTest {
     public class TestClass implements Lifecycle, MuleContextAware, FlowConstructAware
     {
         @Override
-        public void dispose() {
+        public void dispose()
+        {
         }
 
         @Override
-        public void setFlowConstruct(FlowConstruct flowConstruct) {
+        public void setFlowConstruct(FlowConstruct flowConstruct)
+        {
         }
 
         @Override
-        public void initialise() throws InitialisationException {
+        public void initialise() throws InitialisationException
+        {
         }
 
         @Override
-        public void setMuleContext(MuleContext context) {
+        public void setMuleContext(MuleContext context)
+        {
         }
 
         @Override
-        public void start() throws MuleException {
+        public void start() throws MuleException
+        {
         }
 
         @Override
-        public void stop() throws MuleException {
+        public void stop() throws MuleException
+        {
         }
     }
 }

@@ -6,11 +6,7 @@
  */
 package org.mule.compatibility.core.registry;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.registry.RegistryBroker;
@@ -25,7 +21,10 @@ import org.mule.tck.testmodels.mule.TestConnector;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class RegistryBrokerTestCase extends AbstractMuleContextTestCase
 {
@@ -70,53 +69,6 @@ public class RegistryBrokerTestCase extends AbstractMuleContextTestCase
 
         // Both services are stopped before either connector
         assertEquals("conn2-stop conn-stop ", tracker);
-    }
-
-    class LifecycleTrackerConnector extends TestConnector
-    {
-
-        public LifecycleTrackerConnector(String name, MuleContext context)
-        {
-            super(context);
-            this.name = name;
-        }
-
-        @Override
-        protected void doStart()
-        {
-            super.doStart();
-            tracker += name + "-start ";
-        }
-
-        @Override
-        protected void doStop()
-        {
-            super.doStop();
-            tracker += name + "-stop ";
-        }
-    }
-
-    class LifecycleTrackerFlow extends Flow
-    {
-
-        public LifecycleTrackerFlow(String name, MuleContext muleContext)
-        {
-            super(name, muleContext);
-        }
-
-        @Override
-        protected void doStart() throws MuleException
-        {
-            super.doStart();
-            tracker += name + "-start ";
-        }
-
-        @Override
-        protected void doStop() throws MuleException
-        {
-            super.doStop();
-            tracker += name + "-stop ";
-        }
     }
 
     @Test
@@ -176,6 +128,53 @@ public class RegistryBrokerTestCase extends AbstractMuleContextTestCase
 
         assertThat(muleContext.getRegistry().lookupObject(Apple.class), is(VALUE1));
         assertThat(muleContext.getRegistry().lookupObject(Kiwi.class), is(VALUE2));
+    }
+
+    class LifecycleTrackerConnector extends TestConnector
+    {
+
+        public LifecycleTrackerConnector(String name, MuleContext context)
+        {
+            super(context);
+            this.name = name;
+        }
+
+        @Override
+        protected void doStart()
+        {
+            super.doStart();
+            tracker += name + "-start ";
+        }
+
+        @Override
+        protected void doStop()
+        {
+            super.doStop();
+            tracker += name + "-stop ";
+        }
+    }
+
+    class LifecycleTrackerFlow extends Flow
+    {
+
+        public LifecycleTrackerFlow(String name, MuleContext muleContext)
+        {
+            super(name, muleContext);
+        }
+
+        @Override
+        protected void doStart() throws MuleException
+        {
+            super.doStart();
+            tracker += name + "-start ";
+        }
+
+        @Override
+        protected void doStop() throws MuleException
+        {
+            super.doStop();
+            tracker += name + "-stop ";
+        }
     }
 
 }

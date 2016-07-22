@@ -6,9 +6,7 @@
  */
 package org.mule.test.transformers;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MuleEvent;
@@ -16,7 +14,8 @@ import org.mule.runtime.core.util.Base64;
 
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class TransformerEncodingTestCase extends FunctionalTestCase
 {

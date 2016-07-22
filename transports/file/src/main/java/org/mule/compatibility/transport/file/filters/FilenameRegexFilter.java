@@ -23,7 +23,7 @@ public class FilenameRegexFilter extends FilenameWildcardFilter
      * <p>
      * Returns <code>boolean</code> <code>TRUE</code> if the file conforms to the
      * regular expression pattern or <code>FALSE</code> otherwise.
-     * 
+     *
      * @return indication of acceptance as boolean.
      */
     @Override

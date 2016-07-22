@@ -7,6 +7,7 @@
 
 package org.mule.runtime.module.db.internal.result.row;
 
+import org.junit.Test;
 import org.mule.runtime.module.db.integration.TestRecordUtil;
 import org.mule.runtime.module.db.integration.model.Field;
 import org.mule.runtime.module.db.integration.model.Record;
@@ -20,8 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.Test;
 
 @SmallTest
 public class InsensitiveMapRowHandlerTestCase extends AbstractMuleTestCase

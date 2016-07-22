@@ -13,6 +13,8 @@ import org.mule.runtime.core.api.serialization.ObjectSerializer;
 import org.mule.runtime.core.util.NumberUtils;
 import org.mule.runtime.extension.api.annotation.Parameter;
 import org.mule.runtime.extension.api.annotation.param.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -22,9 +24,6 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This Abstract class has been introduced so as to have the byte protocols (i.e. the
@@ -37,15 +36,13 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractByteProtocol implements TcpProtocol
 {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DirectProtocol.class);
-
-    private static final long PAUSE_PERIOD = 100;
+    public static final boolean STREAM_OK = true;
+    public static final boolean NO_STREAM = false;
     protected static final int EOF = NumberUtils.INTEGER_MINUS_ONE;
     protected static final int NO_MAX_LENGTH = NumberUtils.INTEGER_MINUS_ONE;
-    public static final boolean STREAM_OK = true;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DirectProtocol.class);
+    private static final long PAUSE_PERIOD = 100;
     protected final boolean streamOk;
-    public static final boolean NO_STREAM = false;
-
     @DefaultObjectSerializer
     @Inject
     protected ObjectSerializer objectSerializer;

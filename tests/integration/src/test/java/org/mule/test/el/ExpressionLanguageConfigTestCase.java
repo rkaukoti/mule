@@ -6,18 +6,17 @@
  */
 package org.mule.test.el;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.el.ExpressionLanguage;
 import org.mule.runtime.core.api.expression.ExpressionManager;
-import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.text.DateFormat;
 import java.util.Locale;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class ExpressionLanguageConfigTestCase extends FunctionalTestCase
 {
@@ -80,7 +79,7 @@ public class ExpressionLanguageConfigTestCase extends FunctionalTestCase
     {
         assertEquals("Hello " + muleContext.getConfiguration().getId() + "!", el.evaluate("hello()"));
         assertEquals("Hello " + muleContext.getConfiguration().getId() + "!",
-            em.evaluate("hello()", null));
+                em.evaluate("hello()", null));
     }
 
     @Test

@@ -25,7 +25,6 @@ public interface ValueSetter
      *
      * @param target the object on which values are to be set
      * @param result a {@link ResolverSetResult}
-     * @throws MuleException
      */
     void set(Object target, ResolverSetResult result) throws MuleException;
 }

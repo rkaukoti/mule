@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.core.context.notification;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.construct.FlowConstruct;
@@ -21,12 +21,12 @@ import org.mule.runtime.core.api.source.MessageSource;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -109,7 +109,8 @@ public class NotificationHelperTestCase extends AbstractMuleTestCase
         verify(defaultNotificationHandler).fireNotification(notification);
     }
 
-    private void assertConnectorMessageNotification(ServerNotificationHandler notificationHandler, MessageSource messageSource, String uri, FlowConstruct flowConstruct, int action)
+    private void assertConnectorMessageNotification(ServerNotificationHandler notificationHandler, MessageSource messageSource, String uri,
+                                                    FlowConstruct flowConstruct, int action)
     {
         ArgumentCaptor<ConnectorMessageNotification> notificationCaptor = ArgumentCaptor.forClass(ConnectorMessageNotification.class);
         verify(notificationHandler).fireNotification(notificationCaptor.capture());

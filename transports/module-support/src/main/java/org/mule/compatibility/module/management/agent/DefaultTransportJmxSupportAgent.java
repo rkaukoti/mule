@@ -6,15 +6,15 @@
  */
 package org.mule.compatibility.module.management.agent;
 
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.DOMAIN;
-
 import org.mule.runtime.core.api.registry.MuleRegistry;
 import org.mule.runtime.core.api.registry.RegistrationException;
 import org.mule.runtime.core.config.bootstrap.ArtifactType;
 import org.mule.runtime.module.management.agent.AbstractJmxAgent;
 import org.mule.runtime.module.management.agent.AbstractJmxAgentExtension;
 import org.mule.runtime.module.management.agent.DefaultJmxSupportAgent;
+
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.DOMAIN;
 
 public class DefaultTransportJmxSupportAgent extends DefaultJmxSupportAgent
 {

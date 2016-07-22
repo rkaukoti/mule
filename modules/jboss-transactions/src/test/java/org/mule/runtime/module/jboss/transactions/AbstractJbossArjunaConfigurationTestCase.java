@@ -6,6 +6,17 @@
  */
 package org.mule.runtime.module.jboss.transactions;
 
+import com.arjuna.ats.arjuna.common.arjPropertyManager;
+import com.arjuna.common.util.propertyservice.PropertiesFactory;
+
+import org.mule.runtime.config.spring.SpringXmlConfigurationBuilder;
+import org.mule.runtime.core.api.config.ConfigurationBuilder;
+import org.mule.runtime.core.api.transaction.TransactionManagerFactory;
+import org.mule.runtime.module.jboss.transaction.JBossArjunaTransactionManagerFactory;
+import org.mule.tck.AbstractTxThreadAssociationTestCase;
+
+import java.util.Properties;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -15,17 +26,6 @@ import static org.mule.runtime.module.jboss.transaction.JBossArjunaTransactionMa
 import static org.mule.runtime.module.jboss.transaction.JBossArjunaTransactionManagerFactory.PROPERTY_ENVIRONMENT_OBJECTSTORE_DIR;
 import static org.mule.runtime.module.jboss.transaction.JBossArjunaTransactionManagerFactory.PROPERTY_OBJECTSTORE_DIR;
 import static org.mule.runtime.module.jboss.transaction.JBossArjunaTransactionManagerFactory.PROPERTY_USER_DIR;
-
-import org.mule.runtime.core.api.config.ConfigurationBuilder;
-import org.mule.runtime.core.api.transaction.TransactionManagerFactory;
-import org.mule.runtime.config.spring.SpringXmlConfigurationBuilder;
-import org.mule.runtime.module.jboss.transaction.JBossArjunaTransactionManagerFactory;
-import org.mule.tck.AbstractTxThreadAssociationTestCase;
-
-import java.util.Properties;
-
-import com.arjuna.ats.arjuna.common.arjPropertyManager;
-import com.arjuna.common.util.propertyservice.PropertiesFactory;
 
 public abstract class AbstractJbossArjunaConfigurationTestCase extends AbstractTxThreadAssociationTestCase
 {

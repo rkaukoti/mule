@@ -6,10 +6,7 @@
  */
 package org.mule.test.integration.transport.file;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.context.notification.EndpointMessageNotificationListener;
 import org.mule.compatibility.core.context.notification.EndpointMessageNotification;
 import org.mule.functional.junit4.FunctionalTestCase;
@@ -22,9 +19,12 @@ import java.io.FileInputStream;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-public class FileAppendConnectorTestCase extends FunctionalTestCase implements EndpointMessageNotificationListener<EndpointMessageNotification>
+public class FileAppendConnectorTestCase extends FunctionalTestCase
+        implements EndpointMessageNotificationListener<EndpointMessageNotification>
 {
     protected static final String OUTPUT_DIR = "myout";
     protected static final String OUTPUT_FILE = "out.txt";

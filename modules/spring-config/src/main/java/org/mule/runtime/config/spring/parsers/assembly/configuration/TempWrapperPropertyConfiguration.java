@@ -97,7 +97,7 @@ public class TempWrapperPropertyConfiguration implements PropertyConfiguration
         }
         else
         {
-            return extra.isIgnored(propertyName) && delegate.isIgnored(propertyName);            
+            return extra.isIgnored(propertyName) && delegate.isIgnored(propertyName);
         }
     }
 

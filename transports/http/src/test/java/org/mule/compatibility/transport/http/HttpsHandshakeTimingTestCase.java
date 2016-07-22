@@ -6,10 +6,8 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
+import org.mockito.Answers;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.transport.ssl.MockHandshakeCompletedEvent;
@@ -29,8 +27,10 @@ import java.util.Map;
 
 import javax.net.ssl.HandshakeCompletedEvent;
 
-import org.junit.Test;
-import org.mockito.Answers;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Test for SSL handshake timeouts. Unfortunately, there is no easy way to blackbox-test this
@@ -50,7 +50,9 @@ public class HttpsHandshakeTimingTestCase extends AbstractMuleContextEndpointTes
         MockHttpsMessageReceiver messageReceiver = setupMockHttpsMessageReceiver();
 
         MockSslSocket socket = new MockSslSocket();
-        HttpMessageProcessTemplate messageProcessTemplate = messageReceiver.createMessageProcessTemplate(new HttpServerConnection(socket, messageReceiver.getEndpoint().getEncoding(), (HttpConnector) messageReceiver.getConnector()));
+        HttpMessageProcessTemplate messageProcessTemplate = messageReceiver.createMessageProcessTemplate(
+                new HttpServerConnection(socket, messageReceiver.getEndpoint().getEncoding(),
+                        (HttpConnector) messageReceiver.getConnector()));
 
         MuleMessage message = MuleMessage.builder().payload(TEST_MESSAGE).build();
         messageProcessTemplate.beforeRouteEvent(getTestEvent(message));

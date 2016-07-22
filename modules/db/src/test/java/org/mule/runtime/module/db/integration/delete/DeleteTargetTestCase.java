@@ -7,8 +7,8 @@
 
 package org.mule.runtime.module.db.integration.delete;
 
-import static org.junit.Assert.assertEquals;
-import static org.mule.runtime.module.db.integration.model.Planet.VENUS;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
@@ -18,8 +18,8 @@ import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.junit.Assert.assertEquals;
+import static org.mule.runtime.module.db.integration.model.Planet.VENUS;
 
 public class DeleteTargetTestCase extends AbstractDbIntegrationTestCase
 {

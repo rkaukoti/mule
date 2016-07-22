@@ -18,6 +18,8 @@ import org.mule.runtime.module.management.mbean.YourKitProfilerService;
 import org.mule.runtime.module.management.support.AutoDiscoveryJmxSupportFactory;
 import org.mule.runtime.module.management.support.JmxSupport;
 import org.mule.runtime.module.management.support.JmxSupportFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,29 +31,22 @@ import javax.management.MBeanServerFactory;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class YourKitProfilerAgent implements Agent, MuleContextAware
 {
     /**
      * MBean name to register under.
      */
     public static final String PROFILER_OBJECT_NAME = "name=Profiler";
-
-    private String name = "yourkit-profiler";
-    private MBeanServer mBeanServer;
-    private ObjectName profilerName;
-
-    private JmxSupportFactory jmxSupportFactory = AutoDiscoveryJmxSupportFactory.getInstance();
-    private JmxSupport jmxSupport = jmxSupportFactory.getJmxSupport();
-
     /**
      * Logger used by this class
      */
     protected static final Logger logger = LoggerFactory.getLogger(YourKitProfilerAgent.class);
-
     protected MuleContext muleContext;
+    private String name = "yourkit-profiler";
+    private MBeanServer mBeanServer;
+    private ObjectName profilerName;
+    private JmxSupportFactory jmxSupportFactory = AutoDiscoveryJmxSupportFactory.getInstance();
+    private JmxSupport jmxSupport = jmxSupportFactory.getJmxSupport();
 
     public void setMuleContext(MuleContext context)
     {
@@ -80,7 +75,7 @@ public class YourKitProfilerAgent implements Agent, MuleContextAware
 
     public void initialise() throws InitialisationException
     {
-        if(!isApiAvailable())
+        if (!isApiAvailable())
         {
             logger.warn("Cannot find YourKit API. Profiler JMX Agent will be unregistered.");
             unregisterMeQuietly();
@@ -88,7 +83,7 @@ public class YourKitProfilerAgent implements Agent, MuleContextAware
         }
 
         final List servers = MBeanServerFactory.findMBeanServer(null);
-        if(servers.isEmpty())
+        if (servers.isEmpty())
         {
             throw new InitialisationException(ManagementMessages.noMBeanServerAvailable(), this);
         }
@@ -103,7 +98,7 @@ public class YourKitProfilerAgent implements Agent, MuleContextAware
             unregisterMBeansIfNecessary();
             mBeanServer.registerMBean(new YourKitProfilerService(), profilerName);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             throw new InitialisationException(CoreMessages.failedToStart(this.getName()), e, this);
         }
@@ -115,11 +110,11 @@ public class YourKitProfilerAgent implements Agent, MuleContextAware
     protected void unregisterMBeansIfNecessary()
             throws MalformedObjectNameException, InstanceNotFoundException, MBeanRegistrationException
     {
-        if(mBeanServer == null || profilerName == null)
+        if (mBeanServer == null || profilerName == null)
         {
             return;
         }
-        if(mBeanServer.isRegistered(profilerName))
+        if (mBeanServer.isRegistered(profilerName))
         {
             mBeanServer.unregisterMBean(profilerName);
         }
@@ -143,11 +138,12 @@ public class YourKitProfilerAgent implements Agent, MuleContextAware
 
     private boolean isApiAvailable()
     {
-        try{
+        try
+        {
             ClassUtils.getClass("com.yourkit.api.Controller");
             return true;
         }
-        catch(ClassNotFoundException e)
+        catch (ClassNotFoundException e)
         {
             return false;
         }

@@ -10,7 +10,7 @@ package org.mule.runtime.core.source.polling.watermark.selector;
 /**
  * A watermark selector receives values and selects which one should be the new
  * watermark value
- * 
+ *
  * @since 3.5.0
  */
 public abstract class WatermarkSelector
@@ -33,7 +33,7 @@ public abstract class WatermarkSelector
      * Continuous invocations to this method might return different values if
      * {@link #acceptValue(Object)} is invoked in between. Thread-safeness is also
      * not guaranteed by this contract
-     * 
+     *
      * @return the selected value
      */
     public Object getSelectedValue()

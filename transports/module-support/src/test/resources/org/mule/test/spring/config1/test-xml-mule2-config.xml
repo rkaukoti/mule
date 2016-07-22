@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:util="http://www.springframework.org/schema/util"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:spring="http://www.springframework.org/schema/beans"
       xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
-      xsi:schemaLocation="
-       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
-       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-current.xsd
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/transports http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd
        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd">
@@ -41,7 +39,7 @@
         <message-property-filter pattern="foo=bar"/>
     </transports:endpoint>
     <transports:endpoint name="waterMelonEndpoint" address="test://test.queue" exchange-pattern="one-way"
-              encoding="UTF-8"/>
+                         encoding="UTF-8"/>
     <transports:endpoint name="appleInEndpoint" address="test://AppleQueue" exchange-pattern="one-way"/>
     <transports:endpoint name="appleResponseEndpoint" address="test://AppleResponseQueue" exchange-pattern="one-way"/>
     <transports:endpoint name="orangeEndpoint" address="test://orangeQ" exchange-pattern="one-way">

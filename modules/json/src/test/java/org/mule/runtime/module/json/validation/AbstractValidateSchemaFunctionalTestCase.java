@@ -6,9 +6,10 @@
  */
 package org.mule.runtime.module.json.validation;
 
-import static junit.framework.TestCase.fail;
-import org.mule.runtime.core.api.MessagingException;
 import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MessagingException;
+
+import static junit.framework.TestCase.fail;
 
 abstract class AbstractValidateSchemaFunctionalTestCase extends FunctionalTestCase
 {

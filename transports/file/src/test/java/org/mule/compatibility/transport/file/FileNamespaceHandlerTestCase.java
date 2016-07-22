@@ -6,17 +6,10 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
-import org.mule.compatibility.transport.file.ExpressionFilenameParser;
-import org.mule.compatibility.transport.file.FileConnector;
-import org.mule.compatibility.transport.file.FilenameParser;
 import org.mule.compatibility.transport.file.filters.FilenameRegexFilter;
 import org.mule.compatibility.transport.file.transformers.FileToByteArray;
 import org.mule.compatibility.transport.file.transformers.FileToString;
@@ -24,7 +17,10 @@ import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.core.construct.Flow;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class FileNamespaceHandlerTestCase extends FunctionalTestCase
 {
@@ -85,16 +81,16 @@ public class FileNamespaceHandlerTestCase extends FunctionalTestCase
     public void testTransformersOnEndpoints() throws Exception
     {
         Object transformer1 = getEndpointFactory()
-            .getInboundEndpoint("ep1")
-            .getMessageProcessors()
-            .get(0);
+                .getInboundEndpoint("ep1")
+                .getMessageProcessors()
+                .get(0);
         assertNotNull(transformer1);
         assertEquals(FileToByteArray.class, transformer1.getClass());
 
         Object transformer2 = getEndpointFactory()
-            .getInboundEndpoint("ep2")
-            .getMessageProcessors()
-            .get(0);
+                .getInboundEndpoint("ep2")
+                .getMessageProcessors()
+                .get(0);
         assertNotNull(transformer2);
         assertEquals(FileToString.class, transformer2.getClass());
     }

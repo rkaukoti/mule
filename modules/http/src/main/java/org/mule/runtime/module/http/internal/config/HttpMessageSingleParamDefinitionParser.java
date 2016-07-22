@@ -9,7 +9,6 @@ package org.mule.runtime.module.http.internal.config;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
 import org.mule.runtime.module.http.internal.HttpParam;
 import org.mule.runtime.module.http.internal.HttpParamType;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;

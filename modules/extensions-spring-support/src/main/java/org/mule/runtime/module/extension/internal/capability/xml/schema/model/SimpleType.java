@@ -52,9 +52,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
         "union"
 })
 @XmlSeeAlso({
-                    TopLevelSimpleType.class,
-                    LocalSimpleType.class
-            })
+        TopLevelSimpleType.class,
+        LocalSimpleType.class
+})
 public abstract class SimpleType extends Annotated
 {
 
@@ -72,8 +72,7 @@ public abstract class SimpleType extends Annotated
     /**
      * Gets the value of the restriction property.
      *
-     * @return possible object is
-     * {@link Restriction }
+     * @return possible object is {@link Restriction }
      */
     public Restriction getRestriction()
     {
@@ -83,8 +82,7 @@ public abstract class SimpleType extends Annotated
     /**
      * Sets the value of the restriction property.
      *
-     * @param value allowed object is
-     *              {@link Restriction }
+     * @param value allowed object is {@link Restriction }
      */
     public void setRestriction(Restriction value)
     {
@@ -94,8 +92,7 @@ public abstract class SimpleType extends Annotated
     /**
      * Gets the value of the list property.
      *
-     * @return possible object is
-     * {@link List }
+     * @return possible object is {@link List }
      */
     public List getList()
     {
@@ -105,8 +102,7 @@ public abstract class SimpleType extends Annotated
     /**
      * Sets the value of the list property.
      *
-     * @param value allowed object is
-     *              {@link List }
+     * @param value allowed object is {@link List }
      */
     public void setList(List value)
     {
@@ -116,8 +112,7 @@ public abstract class SimpleType extends Annotated
     /**
      * Gets the value of the union property.
      *
-     * @return possible object is
-     * {@link Union }
+     * @return possible object is {@link Union }
      */
     public Union getUnion()
     {
@@ -127,8 +122,7 @@ public abstract class SimpleType extends Annotated
     /**
      * Sets the value of the union property.
      *
-     * @param value allowed object is
-     *              {@link Union }
+     * @param value allowed object is {@link Union }
      */
     public void setUnion(Union value)
     {
@@ -167,8 +161,7 @@ public abstract class SimpleType extends Annotated
     /**
      * Gets the value of the name property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getName()
     {
@@ -178,8 +171,7 @@ public abstract class SimpleType extends Annotated
     /**
      * Sets the value of the name property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setName(String value)
     {

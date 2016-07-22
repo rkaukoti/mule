@@ -18,12 +18,6 @@ public class SimpleOptionsBuilder extends AbstractBaseOptionsBuilder<SimpleOptio
     {
     }
 
-    @Override
-    public OperationOptions build()
-    {
-        return new SimpleOptions(getResponseTimeout(), isOutbound());
-    }
-
     /**
      * Factory method for the builder.
      *
@@ -32,6 +26,12 @@ public class SimpleOptionsBuilder extends AbstractBaseOptionsBuilder<SimpleOptio
     public static SimpleOptionsBuilder newOptions()
     {
         return new SimpleOptionsBuilder();
+    }
+
+    @Override
+    public OperationOptions build()
+    {
+        return new SimpleOptions(getResponseTimeout(), isOutbound());
     }
 
 }

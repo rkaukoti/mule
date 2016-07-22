@@ -6,22 +6,6 @@
  */
 package org.mule.runtime.module.http.functional.proxy;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import org.mule.runtime.core.api.config.MuleProperties;
-import org.mule.runtime.config.spring.util.ProcessingStrategyUtils;
-import org.mule.runtime.module.http.functional.requester.AbstractHttpRequestTestCase;
-import org.mule.tck.SensingNullMessageProcessor;
-import org.mule.tck.junit4.rule.DynamicPort;
-import org.mule.tck.junit4.rule.SystemProperty;
-import org.mule.runtime.core.util.IOUtils;
-
-import java.util.Arrays;
-import java.util.Collection;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.fluent.Request;
 import org.junit.After;
@@ -30,6 +14,22 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mule.runtime.config.spring.util.ProcessingStrategyUtils;
+import org.mule.runtime.core.api.config.MuleProperties;
+import org.mule.runtime.core.util.IOUtils;
+import org.mule.runtime.module.http.functional.requester.AbstractHttpRequestTestCase;
+import org.mule.tck.SensingNullMessageProcessor;
+import org.mule.tck.junit4.rule.DynamicPort;
+import org.mule.tck.junit4.rule.SystemProperty;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
 public class HttpProxyTemplateErrorHandlingTestCase extends AbstractHttpRequestTestCase
@@ -49,15 +49,6 @@ public class HttpProxyTemplateErrorHandlingTestCase extends AbstractHttpRequestT
     private boolean nonBlocking;
 
 
-    @Parameterized.Parameters
-    public static Collection<Object[]> parameters()
-    {
-        return Arrays.asList(new Object[][] {
-                {"http-proxy-template-error-handling-config.xml", false}//,
-                //{"http-proxy-template-error-handling-config.xml", true}
-        });
-    }
-
     public HttpProxyTemplateErrorHandlingTestCase(String configFile, boolean nonBlocking)
     {
         this.configFile = configFile;
@@ -65,8 +56,17 @@ public class HttpProxyTemplateErrorHandlingTestCase extends AbstractHttpRequestT
         if (nonBlocking)
         {
             systemProperty = new SystemProperty(MuleProperties.MULE_DEFAULT_PROCESSING_STRATEGY,
-                                                ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
+                    ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
         }
+    }
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> parameters()
+    {
+        return Arrays.asList(new Object[][] {
+                {"http-proxy-template-error-handling-config.xml", false}//,
+                //{"http-proxy-template-error-handling-config.xml", true}
+        });
     }
 
     @Override
@@ -91,7 +91,7 @@ public class HttpProxyTemplateErrorHandlingTestCase extends AbstractHttpRequestT
     public void noExceptionStrategy() throws Exception
     {
         HttpResponse response = Request.Get(getProxyUrl("noExceptionStrategy")).connectTimeout(RECEIVE_TIMEOUT)
-                .execute().returnResponse();
+                                       .execute().returnResponse();
 
         assertThat(response.getStatusLine().getStatusCode(), is(500));
     }
@@ -100,7 +100,7 @@ public class HttpProxyTemplateErrorHandlingTestCase extends AbstractHttpRequestT
     public void catchExceptionStrategy() throws Exception
     {
         HttpResponse response = Request.Get(getProxyUrl("catchExceptionStrategy")).connectTimeout(RECEIVE_TIMEOUT)
-                .execute().returnResponse();
+                                       .execute().returnResponse();
 
         assertThat(response.getStatusLine().getStatusCode(), is(200));
         assertThat(IOUtils.toString(response.getEntity().getContent()), equalTo(SERVICE_DOWN_MESSAGE));
@@ -113,7 +113,7 @@ public class HttpProxyTemplateErrorHandlingTestCase extends AbstractHttpRequestT
     public void rollbackExceptionStrategy() throws Exception
     {
         HttpResponse response = Request.Get(getProxyUrl("rollbackExceptionStrategy")).connectTimeout(RECEIVE_TIMEOUT)
-                .execute().returnResponse();
+                                       .execute().returnResponse();
 
         assertThat(response.getStatusLine().getStatusCode(), is(500));
         assertThat(IOUtils.toString(response.getEntity().getContent()), not(equalTo(SERVICE_DOWN_MESSAGE)));

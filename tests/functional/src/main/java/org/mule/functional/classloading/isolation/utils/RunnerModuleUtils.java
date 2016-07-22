@@ -26,7 +26,7 @@ public final class RunnerModuleUtils
      * Loads the {@link RunnerModuleUtils#EXCLUDED_PROPERTIES_FILE} file.
      *
      * @return a {@link Properties} loaded with the content of the file.
-     * @throws IOException if the properties couldn't load the file.
+     * @throws IOException           if the properties couldn't load the file.
      * @throws IllegalStateException if the file couldn't be found.
      */
     public static final Properties getExcludedProperties() throws IllegalStateException, IOException
@@ -35,7 +35,8 @@ public final class RunnerModuleUtils
         {
             if (excludedPropertiesUrl == null)
             {
-                throw new IllegalStateException("Couldn't find file: " + EXCLUDED_PROPERTIES_FILE + " in classpath, at least one should be defined");
+                throw new IllegalStateException(
+                        "Couldn't find file: " + EXCLUDED_PROPERTIES_FILE + " in classpath, at least one should be defined");
             }
             Properties excludedProperties = new Properties();
             excludedProperties.load(excludedPropertiesUrl);

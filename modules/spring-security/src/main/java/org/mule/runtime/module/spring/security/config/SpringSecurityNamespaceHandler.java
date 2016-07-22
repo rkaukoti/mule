@@ -11,7 +11,6 @@ import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
 import org.mule.runtime.config.spring.parsers.specific.SecurityFilterDefinitionParser;
 import org.mule.runtime.module.spring.security.AuthorizationFilter;
 import org.mule.runtime.module.spring.security.SpringProviderAdapter;
-
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
 /**

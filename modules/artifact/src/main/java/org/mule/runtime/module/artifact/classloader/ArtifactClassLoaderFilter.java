@@ -7,16 +7,16 @@
 
 package org.mule.runtime.module.artifact.classloader;
 
-import static java.util.Collections.unmodifiableSet;
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
 import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.module.artifact.descriptor.ArtifactDescriptor;
 
 import java.util.Collections;
 import java.util.Set;
+
+import static java.util.Collections.unmodifiableSet;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Filters classes and resources using a {@link ArtifactDescriptor} describing
@@ -30,7 +30,8 @@ import java.util.Set;
 public class ArtifactClassLoaderFilter implements ClassLoaderFilter
 {
 
-    public static final ArtifactClassLoaderFilter NULL_CLASSLOADER_FILTER = new ArtifactClassLoaderFilter(Collections.EMPTY_SET, Collections.EMPTY_SET);
+    public static final ArtifactClassLoaderFilter NULL_CLASSLOADER_FILTER =
+            new ArtifactClassLoaderFilter(Collections.EMPTY_SET, Collections.EMPTY_SET);
 
     public static final String EXPORTED_CLASS_PACKAGES_PROPERTY = "artifact.export.classPackages";
     public static final String EXPORTED_RESOURCE_PACKAGES_PROPERTY = "artifact.export.resourcePackages";
@@ -89,14 +90,18 @@ public class ArtifactClassLoaderFilter implements ClassLoaderFilter
         if (resourceName.length() > 0)
         {
             pkgName = (resourceName.charAt(0) == RESOURCE_SEPARATOR) ? resourceName.substring(1) : resourceName;
-            pkgName = (pkgName.lastIndexOf(RESOURCE_SEPARATOR) < 0) ? EMPTY_PACKAGE : pkgName.substring(0, pkgName.lastIndexOf(RESOURCE_SEPARATOR));
+            pkgName = (pkgName.lastIndexOf(RESOURCE_SEPARATOR) < 0) ?
+                    EMPTY_PACKAGE :
+                    pkgName.substring(0, pkgName.lastIndexOf(RESOURCE_SEPARATOR));
         }
         return pkgName;
     }
 
     private String getPackageName(String className)
     {
-        return (className.lastIndexOf(PACKAGE_SEPARATOR) < 0) ? EMPTY_PACKAGE : className.substring(0, className.lastIndexOf(PACKAGE_SEPARATOR));
+        return (className.lastIndexOf(PACKAGE_SEPARATOR) < 0) ?
+                EMPTY_PACKAGE :
+                className.substring(0, className.lastIndexOf(PACKAGE_SEPARATOR));
     }
 
     @Override

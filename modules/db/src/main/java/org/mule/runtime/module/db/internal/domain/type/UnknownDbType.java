@@ -27,6 +27,11 @@ public class UnknownDbType extends AbstractDbType
         super(Types.OTHER, UNKNOWN_TYPE_NAME);
     }
 
+    public static DbType getInstance()
+    {
+        return instance;
+    }
+
     @Override
     public void setParameterValue(PreparedStatement statement, int index, Object value) throws SQLException
     {
@@ -37,10 +42,5 @@ public class UnknownDbType extends AbstractDbType
     public Object getParameterValue(CallableStatement statement, int index) throws SQLException
     {
         return statement.getObject(index);
-    }
-
-    public static DbType getInstance()
-    {
-        return instance;
     }
 }

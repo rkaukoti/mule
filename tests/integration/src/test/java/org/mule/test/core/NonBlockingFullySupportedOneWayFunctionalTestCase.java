@@ -6,16 +6,16 @@
  */
 package org.mule.test.core;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.VoidMuleEvent;
+import org.mule.runtime.core.api.MessagingException;
+
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mule.functional.functional.FlowAssert.verify;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.runtime.core.VoidMuleEvent;
-import org.mule.runtime.core.api.MessagingException;
-
-import org.junit.Test;
 
 public class NonBlockingFullySupportedOneWayFunctionalTestCase extends FunctionalTestCase
 {
@@ -109,14 +109,14 @@ public class NonBlockingFullySupportedOneWayFunctionalTestCase extends Functiona
     public void filterBeforeNonBlockingRejects() throws Exception
     {
         assertThat(flowRunner("filterBeforeNonBlockingRejects").withPayload(TEST_MESSAGE).asynchronously()
-                           .nonBlocking().run(), is(nullValue()));
+                                                               .nonBlocking().run(), is(nullValue()));
     }
 
     @Test
     public void filterAfterEnricherBeforeNonBlocking() throws Exception
     {
         assertThat(flowRunner("filterAfterEnricherBeforeNonBlocking").withPayload(TEST_MESSAGE).asynchronously()
-                           .nonBlocking().run(), is(nullValue()));
+                                                                     .nonBlocking().run(), is(nullValue()));
     }
 
     @Test

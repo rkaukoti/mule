@@ -16,11 +16,11 @@ import org.mule.runtime.core.api.context.notification.ServerNotification;
  */
 public class ExceptionNotification extends ServerNotification
 {
+    public static final int EXCEPTION_ACTION = EXCEPTION_EVENT_ACTION_START_RANGE + 1;
     /**
      * Serial version.
      */
     private static final long serialVersionUID = -43091546451476239L;
-    public static final int EXCEPTION_ACTION = EXCEPTION_EVENT_ACTION_START_RANGE + 1;
 
     static
     {
@@ -40,9 +40,6 @@ public class ExceptionNotification extends ServerNotification
      * something like a ServiceException and when we register a listener under a
      * particular resource ID we want to listen for this root cause, not the
      * ServiceException.
-     * 
-     * @param exception
-     * @return
      */
     private static String getExceptionCause(Throwable exception)
     {

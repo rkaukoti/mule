@@ -6,13 +6,13 @@
  */
 package org.mule.compatibility.transport.jms.test;
 
+import org.mockito.Mockito;
+import org.mockito.internal.stubbing.defaultanswers.Answers;
+
 import javax.jms.Connection;
 import javax.jms.JMSException;
 import javax.jms.QueueConnection;
 import javax.jms.QueueConnectionFactory;
-
-import org.mockito.Mockito;
-import org.mockito.internal.stubbing.defaultanswers.Answers;
 
 public class TestConnectionFactory implements QueueConnectionFactory
 {
@@ -65,12 +65,12 @@ public class TestConnectionFactory implements QueueConnectionFactory
     {
         return createQueueConnection();
     }
-    
+
     public Object getCustomProperty()
     {
         return customProperty;
     }
-    
+
     public void setCustomProperty(Object custom)
     {
         customProperty = custom;

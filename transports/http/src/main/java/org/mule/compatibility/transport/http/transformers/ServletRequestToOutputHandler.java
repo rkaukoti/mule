@@ -34,25 +34,25 @@ public class ServletRequestToOutputHandler extends AbstractTransformer implement
     @Override
     public Object doTransform(final Object src, Charset encoding) throws TransformerException
     {
-            return (OutputHandler) (event, out) ->
+        return (OutputHandler) (event, out) ->
+        {
+            InputStream is = ((HttpServletRequest) src).getInputStream();
+            try
             {
-                InputStream is = ((HttpServletRequest) src).getInputStream();
-                try
-                {
-                    IOUtils.copyLarge(is, out);
-                }
-                finally
-                {
-                    is.close();
-                }
-            };
-        }
+                IOUtils.copyLarge(is, out);
+            }
+            finally
+            {
+                is.close();
+            }
+        };
+    }
 
     /**
      * If 2 or more discoverable transformers are equal, this value can be used to select the correct one
      *
-     * @return the priority weighting for this transformer. This is a value between
-     *         {@link #MIN_PRIORITY_WEIGHTING} and {@link #MAX_PRIORITY_WEIGHTING}.
+     * @return the priority weighting for this transformer. This is a value between {@link #MIN_PRIORITY_WEIGHTING} and {@link
+     * #MAX_PRIORITY_WEIGHTING}.
      */
     @Override
     public int getPriorityWeighting()
@@ -63,8 +63,8 @@ public class ServletRequestToOutputHandler extends AbstractTransformer implement
     /**
      * If 2 or more discoverable transformers are equal, this value can be used to select the correct one
      *
-     * @param weighting the priority weighting for this transformer. This is a value between
-     *                  {@link #MIN_PRIORITY_WEIGHTING} and {@link #MAX_PRIORITY_WEIGHTING}.
+     * @param weighting the priority weighting for this transformer. This is a value between {@link #MIN_PRIORITY_WEIGHTING} and {@link
+     *                  #MAX_PRIORITY_WEIGHTING}.
      */
     @Override
     public void setPriorityWeighting(int weighting)

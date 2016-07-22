@@ -21,7 +21,7 @@ import org.mule.runtime.module.tls.internal.config.TrustStoreTlsContextDefinitio
  */
 public class TlsNamespaceHandler extends AbstractMuleTransportsNamespaceHandler
 {
-    
+
     @Override
     public void init()
     {

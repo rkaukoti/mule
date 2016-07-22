@@ -6,9 +6,7 @@
  */
 package org.mule.test.tck;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.core.transport.ConfigurableKeyedObjectPool;
 import org.mule.compatibility.core.transport.ConfigurableKeyedObjectPoolFactory;
@@ -17,7 +15,8 @@ import org.mule.compatibility.core.transport.DefaultConfigurableKeyedObjectPoolF
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.testmodels.mule.TestConnector;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MuleTestNamespaceTestCase extends FunctionalTestCase
 {

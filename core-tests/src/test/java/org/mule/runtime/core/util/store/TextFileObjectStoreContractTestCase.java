@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.core.util.store;
 
+import org.junit.Test;
 import org.mule.runtime.core.api.store.ObjectStore;
 import org.mule.runtime.core.api.store.ObjectStoreException;
 
 import java.io.Serializable;
-
-import org.junit.Test;
 
 public class TextFileObjectStoreContractTestCase extends AbstractObjectStoreContractTestCase
 {
@@ -31,7 +30,9 @@ public class TextFileObjectStoreContractTestCase extends AbstractObjectStoreCont
     public void clear() throws ObjectStoreException
     {
         super.clear();
-    };
+    }
+
+    ;
 
     @Override
     protected void doTearDown() throws Exception

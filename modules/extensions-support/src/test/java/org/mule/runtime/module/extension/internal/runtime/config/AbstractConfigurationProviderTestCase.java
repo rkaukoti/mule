@@ -6,26 +6,26 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_TIME_SUPPLIER;
-import static org.mule.tck.MuleTestUtils.spyInjector;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.extension.api.introspection.config.RuntimeConfigurationModel;
-import org.mule.runtime.extension.api.introspection.RuntimeExtensionModel;
-import org.mule.runtime.module.extension.internal.runtime.DefaultOperationContext;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-import org.mule.tck.size.SmallTest;
-import org.mule.tck.util.TestTimeSupplier;
-
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.extension.api.introspection.RuntimeExtensionModel;
+import org.mule.runtime.extension.api.introspection.config.RuntimeConfigurationModel;
+import org.mule.runtime.module.extension.internal.runtime.DefaultOperationContext;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+import org.mule.tck.size.SmallTest;
+import org.mule.tck.util.TestTimeSupplier;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_TIME_SUPPLIER;
+import static org.mule.tck.MuleTestUtils.spyInjector;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)

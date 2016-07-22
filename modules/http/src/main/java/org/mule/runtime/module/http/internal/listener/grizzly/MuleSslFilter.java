@@ -6,14 +6,6 @@
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
-
-import java.io.IOException;
-
-import javax.net.ssl.SSLHandshakeException;
-import javax.net.ssl.SSLPeerUnverifiedException;
-import javax.net.ssl.SSLSession;
-
 import org.glassfish.grizzly.filterchain.FilterChainContext;
 import org.glassfish.grizzly.filterchain.NextAction;
 import org.glassfish.grizzly.ssl.SSLConnectionContext;
@@ -21,6 +13,14 @@ import org.glassfish.grizzly.ssl.SSLEngineConfigurator;
 import org.glassfish.grizzly.ssl.SSLFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+
+import javax.net.ssl.SSLHandshakeException;
+import javax.net.ssl.SSLPeerUnverifiedException;
+import javax.net.ssl.SSLSession;
+
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
 
 /**
  * Custom SSL filter that configures additional properties in the grizzly context.

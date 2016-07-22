@@ -6,13 +6,14 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.operation;
 
-import static java.util.Optional.empty;
-import static java.util.Optional.ofNullable;
 import org.mule.runtime.api.message.Attributes;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.extension.api.runtime.operation.OperationResult;
 
 import java.util.Optional;
+
+import static java.util.Optional.empty;
+import static java.util.Optional.ofNullable;
 
 /**
  * Default implementation of {@link OperationResult.Builder}

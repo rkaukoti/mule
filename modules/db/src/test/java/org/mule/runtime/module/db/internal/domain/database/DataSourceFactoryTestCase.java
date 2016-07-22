@@ -7,22 +7,22 @@
 
 package org.mule.runtime.module.db.internal.domain.database;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import com.mchange.v2.c3p0.PooledDataSource;
+
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.module.db.internal.domain.connection.DbPoolingProfile;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import com.mchange.v2.c3p0.PooledDataSource;
-
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.junit.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SmallTest
 public class DataSourceFactoryTestCase extends AbstractMuleTestCase
@@ -44,10 +44,6 @@ public class DataSourceFactoryTestCase extends AbstractMuleTestCase
             return disposableDataSource;
         }
     };
-
-    public interface DisposableDataSource extends DataSource, Disposable
-    {
-    }
 
     @Test
     public void destroysPooledDataSource() throws Exception
@@ -139,5 +135,9 @@ public class DataSourceFactoryTestCase extends AbstractMuleTestCase
     {
         dataSourceFactory.create(dataSourceConfig);
         dataSourceFactory.dispose();
+    }
+
+    public interface DisposableDataSource extends DataSource, Disposable
+    {
     }
 }

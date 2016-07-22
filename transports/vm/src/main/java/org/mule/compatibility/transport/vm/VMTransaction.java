@@ -45,7 +45,7 @@ public class VMTransaction extends AbstractSingleResourceTransaction
         super.bindResource(key, resource);
         try
         {
-            ((QueueSession)resource).begin();
+            ((QueueSession) resource).begin();
         }
         catch (ResourceManagerException e)
         {
@@ -65,7 +65,7 @@ public class VMTransaction extends AbstractSingleResourceTransaction
         {
             if (resource != null)
             {
-                ((QueueSession)resource).commit();
+                ((QueueSession) resource).commit();
             }
         }
         catch (ResourceManagerException e)
@@ -81,7 +81,7 @@ public class VMTransaction extends AbstractSingleResourceTransaction
         {
             if (resource != null)
             {
-                ((QueueSession)resource).rollback();
+                ((QueueSession) resource).rollback();
             }
         }
         catch (ResourceManagerException e)

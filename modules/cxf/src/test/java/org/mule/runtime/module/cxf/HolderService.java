@@ -14,8 +14,8 @@ import javax.xml.ws.Holder;
 public interface HolderService
 {
     String echo(String s1,
-                @WebParam(mode= WebParam.Mode.OUT) Holder<String> outS1,
-                @WebParam(mode= WebParam.Mode.OUT) Holder<String> outS2);
+                @WebParam(mode = WebParam.Mode.OUT) Holder<String> outS1,
+                @WebParam(mode = WebParam.Mode.OUT) Holder<String> outS2);
 
     String echo2(String s1,
                  @WebParam(mode = WebParam.Mode.OUT) Holder<String> outS1,

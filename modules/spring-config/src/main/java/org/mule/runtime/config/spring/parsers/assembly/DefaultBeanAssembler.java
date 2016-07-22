@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.config.spring.parsers.assembly;
 
+import org.mule.runtime.api.meta.AnnotatedObject;
 import org.mule.runtime.config.spring.MuleArtifactContext;
 import org.mule.runtime.config.spring.MuleHierarchicalBeanDefinitionParserDelegate;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
@@ -15,22 +16,9 @@ import org.mule.runtime.config.spring.parsers.assembly.configuration.SinglePrope
 import org.mule.runtime.config.spring.parsers.collection.ChildListEntryDefinitionParser;
 import org.mule.runtime.config.spring.parsers.collection.ChildMapEntryDefinitionParser;
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
-import org.mule.runtime.api.meta.AnnotatedObject;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.MapCombiner;
-
-import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
-
-import javax.xml.namespace.QName;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.MutablePropertyValues;
@@ -45,14 +33,25 @@ import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.beans.factory.support.ManagedMap;
 import org.w3c.dom.Attr;
 
+import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+import javax.xml.namespace.QName;
+
 public class DefaultBeanAssembler implements BeanAssembler
 {
 
     private static Logger logger = LoggerFactory.getLogger(DefaultBeanAssembler.class);
-    private PropertyConfiguration beanConfig;
     protected BeanDefinitionBuilder bean;
     protected PropertyConfiguration targetConfig;
     protected BeanDefinition target;
+    private PropertyConfiguration beanConfig;
 
     public DefaultBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
                                 PropertyConfiguration targetConfig, BeanDefinition target)
@@ -61,6 +60,101 @@ public class DefaultBeanAssembler implements BeanAssembler
         this.bean = bean;
         this.targetConfig = targetConfig;
         this.target = target;
+    }
+
+    protected static List retrieveList(Object value)
+    {
+        if (value instanceof List)
+        {
+            return (List) value;
+        }
+        else if (isDefinitionOf(value, MapCombiner.class))
+        {
+            return (List) unpackDefinition(value, MapCombiner.LIST);
+        }
+        else
+        {
+            throw new ClassCastException("Collection not of expected type: " + value);
+        }
+    }
+
+    private static Map retrieveMap(Object value)
+    {
+        if (value instanceof Map)
+        {
+            return (Map) value;
+        }
+        else if (isDefinitionOf(value, MapFactoryBean.class))
+        {
+            return (Map) unpackDefinition(value, "sourceMap");
+        }
+        else
+        {
+            throw new ClassCastException("Map not of expected type: " + value);
+        }
+    }
+
+    private static boolean isDefinitionOf(Object value, Class clazz)
+    {
+        return value instanceof BeanDefinition &&
+               ((BeanDefinition) value).getBeanClassName().equals(clazz.getName());
+    }
+
+    private static Object unpackDefinition(Object definition, String name)
+    {
+        return ((BeanDefinition) definition).getPropertyValues().getPropertyValue(name).getValue();
+    }
+
+    protected static String bestGuessName(PropertyConfiguration config, String oldName, String className)
+    {
+        String newName = config.translateName(oldName);
+        if (!methodExists(className, newName))
+        {
+            String plural = newName + "s";
+            if (methodExists(className, plural))
+            {
+                // this lets us avoid setting addCollection in the majority of cases
+                config.addCollection(oldName);
+                return plural;
+            }
+            if (newName.endsWith("y"))
+            {
+                String pluraly = newName.substring(0, newName.length() - 1) + "ies";
+                if (methodExists(className, pluraly))
+                {
+                    // this lets us avoid setting addCollection in the majority of cases
+                    config.addCollection(oldName);
+                    return pluraly;
+                }
+            }
+        }
+        return newName;
+    }
+
+    protected static boolean methodExists(String className, String newName)
+    {
+        try
+        {
+            // is there a better way than this?!
+            // BeanWrapperImpl instantiates an instance, which we don't want.
+            // if there really is no better way, i guess it should go in
+            // class or bean utils.
+            Class clazz = ClassUtils.getClass(className);
+            Method[] methods = clazz.getMethods();
+            String setter = "set" + newName;
+            for (int i = 0; i < methods.length; ++i)
+            {
+                if (methods[i].getName().equalsIgnoreCase(setter))
+                {
+                    return true;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            logger.debug("Could not access bean class " + className, e);
+        }
+        return false;
     }
 
     @Override
@@ -99,6 +193,7 @@ public class DefaultBeanAssembler implements BeanAssembler
      * check the Spring repo to see if a name already exists since that could lead to
      * unpredictable behaviour.
      * (see {@link org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration})
+     *
      * @param attribute The attribute to add
      */
     @Override
@@ -115,7 +210,7 @@ public class DefaultBeanAssembler implements BeanAssembler
                 String newName = bestGuessName(beanConfig, oldName, beanDefinition.getBeanClassName());
                 Object newValue = beanConfig.translateValue(oldName, oldValue);
                 addPropertyWithReference(beanDefinition.getPropertyValues(),
-                    beanConfig.getSingleProperty(oldName), newName, newValue);
+                        beanConfig.getSingleProperty(oldName), newName, newValue);
             }
         }
         else if (isAnnotationsPropertyAvailable(beanDefinition.getBeanClass()))
@@ -149,7 +244,7 @@ public class DefaultBeanAssembler implements BeanAssembler
         {
             if (logger.isDebugEnabled())
             {
-                logger.debug("Cannot assign "+beanDefinition.getBeanClass()+" to "+AnnotatedObject.class);
+                logger.debug("Cannot assign " + beanDefinition.getBeanClass() + " to " + AnnotatedObject.class);
             }
         }
     }
@@ -159,9 +254,12 @@ public class DefaultBeanAssembler implements BeanAssembler
      */
     public final boolean isAnnotationsPropertyAvailable(Class<?> beanClass)
     {
-        try {
+        try
+        {
             return AnnotatedObject.class.isAssignableFrom(beanClass);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             return false;
         }
     }
@@ -171,9 +269,12 @@ public class DefaultBeanAssembler implements BeanAssembler
      */
     public final boolean isAnnotationsPropertyAvailable(String beanClassName)
     {
-        try {
+        try
+        {
             return AnnotatedObject.class.isAssignableFrom(ClassUtils.getClass(beanClassName));
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             return false;
         }
     }
@@ -181,8 +282,8 @@ public class DefaultBeanAssembler implements BeanAssembler
     /**
      * Allow direct access to bean for major hacks
      *
-     * @param newName The property name to add
-     * @param newValue The property value to add
+     * @param newName     The property name to add
+     * @param newValue    The property value to add
      * @param isReference If true, a bean reference is added (and newValue must be a String)
      */
     @Override
@@ -196,6 +297,7 @@ public class DefaultBeanAssembler implements BeanAssembler
      * Add a property defined by an attribute to the parent of the bean we are constructing.
      *
      * <p>This is unusual.  Normally you want {@link #extendBean(org.w3c.dom.Attr)}.
+     *
      * @param attribute The attribute to add
      */
     @Override
@@ -212,8 +314,8 @@ public class DefaultBeanAssembler implements BeanAssembler
     /**
      * Allow direct access to target for major hacks
      *
-     * @param newName The property name to add
-     * @param newValue The property value to add
+     * @param newName     The property name to add
+     * @param newValue    The property value to add
      * @param isReference If true, a bean reference is added (and newValue must be a String)
      */
     @Override
@@ -223,10 +325,10 @@ public class DefaultBeanAssembler implements BeanAssembler
         if (target != null)
         {
             addPropertyWithReference(target.getPropertyValues(),
-                                     new SinglePropertyLiteral(isReference), newName, newValue);
+                    new SinglePropertyLiteral(isReference), newName, newValue);
         }
     }
-    
+
     @Override
     public void extendTarget(String oldName, String newName, Object newValue)
     {
@@ -239,7 +341,7 @@ public class DefaultBeanAssembler implements BeanAssembler
      * Insert the bean we have built into the target (typically the parent bean).
      *
      * <p>This is the most complex case because the bean can have an aribtrary type.
-     * 
+     *
      * @param oldName The identifying the bean (typically element name).
      */
     @Override
@@ -259,16 +361,16 @@ public class DefaultBeanAssembler implements BeanAssembler
         PropertyValue pv = targetProperties.getPropertyValue(newName);
         Object oldValue = null == pv ? null : pv.getValue();
 
-        if (! targetConfig.isIgnored(oldName))
+        if (!targetConfig.isIgnored(oldName))
         {
             if (targetConfig.isCollection(oldName) ||
-                    beanClass.equals(ChildListEntryDefinitionParser.ListEntry.class.getName()))
+                beanClass.equals(ChildListEntryDefinitionParser.ListEntry.class.getName()))
             {
                 if (null == oldValue)
                 {
                     if (beanClass.equals(ChildMapEntryDefinitionParser.KeyValuePair.class.getName()) ||
-                            beanClass.equals(MapEntryCombiner.class.getName()) ||
-                            beanClass.equals(MapFactoryBean.class.getName()))
+                        beanClass.equals(MapEntryCombiner.class.getName()) ||
+                        beanClass.equals(MapFactoryBean.class.getName()))
                     {
                         // a collection of maps requires an extra intermediate object that does the
                         // lazy combination/caching of maps when first used
@@ -326,7 +428,7 @@ public class DefaultBeanAssembler implements BeanAssembler
             }
         }
     }
-    
+
     @Override
     public void insertSingletonBeanInTarget(String propertyName, String singletonName)
     {
@@ -363,54 +465,11 @@ public class DefaultBeanAssembler implements BeanAssembler
         }
         // getTarget().getPropertyValues().addPropertyValue(newName, new RuntimeBeanReference(singletonName));
     }
-    
-    protected void insertInTarget(String oldName){
-        
-    }
 
-    protected static List retrieveList(Object value)
+    protected void insertInTarget(String oldName)
     {
-        if (value instanceof List)
-        {
-            return (List) value;
-        }
-        else if (isDefinitionOf(value, MapCombiner.class))
-        {
-            return (List) unpackDefinition(value, MapCombiner.LIST);
-        }
-        else
-        {
-            throw new ClassCastException("Collection not of expected type: " + value);
-        }
-    }
 
-    private static Map retrieveMap(Object value)
-    {
-        if (value instanceof Map)
-        {
-            return (Map) value;
-        }
-        else if (isDefinitionOf(value, MapFactoryBean.class))
-        {
-            return (Map) unpackDefinition(value, "sourceMap");
-        }
-        else
-        {
-            throw new ClassCastException("Map not of expected type: " + value);
-        }
     }
-
-    private static boolean isDefinitionOf(Object value, Class clazz)
-    {
-        return value instanceof BeanDefinition &&
-                ((BeanDefinition) value).getBeanClassName().equals(clazz.getName());
-    }
-
-    private static Object unpackDefinition(Object definition, String name)
-    {
-        return ((BeanDefinition) definition).getPropertyValues().getPropertyValue(name).getValue();
-    }
-
 
     /**
      * Copy the properties from the bean we have been building into the target (typically
@@ -432,7 +491,7 @@ public class DefaultBeanAssembler implements BeanAssembler
         assertTargetPresent();
         MutablePropertyValues targetProperties = target.getPropertyValues();
         MutablePropertyValues beanProperties = bean.getBeanDefinition().getPropertyValues();
-        for (int i=0;i < beanProperties.size(); i++)
+        for (int i = 0; i < beanProperties.size(); i++)
         {
             PropertyValue propertyValue = beanProperties.getPropertyValues()[i];
             addPropertyWithoutReference(targetProperties, new SinglePropertyLiteral(),
@@ -487,7 +546,7 @@ public class DefaultBeanAssembler implements BeanAssembler
                     {
                         config.setCollection();
                     }
-                    for (StringTokenizer refs = new StringTokenizer((String) value); refs.hasMoreTokens();)
+                    for (StringTokenizer refs = new StringTokenizer((String) value); refs.hasMoreTokens(); )
                     {
                         String ref = refs.nextToken();
                         if (logger.isDebugEnabled())
@@ -554,58 +613,6 @@ public class DefaultBeanAssembler implements BeanAssembler
                 properties.addPropertyValue(name, value);
             }
         }
-    }
-
-    protected static String bestGuessName(PropertyConfiguration config, String oldName, String className)
-    {
-        String newName = config.translateName(oldName);
-        if (! methodExists(className, newName))
-        {
-            String plural = newName + "s";
-            if (methodExists(className, plural))
-            {
-                // this lets us avoid setting addCollection in the majority of cases
-                config.addCollection(oldName);
-                return plural;
-            }
-            if (newName.endsWith("y"))
-            {
-                String pluraly = newName.substring(0, newName.length()-1) + "ies";
-                if (methodExists(className, pluraly))
-                {
-                    // this lets us avoid setting addCollection in the majority of cases
-                    config.addCollection(oldName);
-                    return pluraly;
-                }
-            }
-        }
-        return newName;
-    }
-
-    protected static boolean methodExists(String className, String newName)
-    {
-        try
-        {
-            // is there a better way than this?!
-            // BeanWrapperImpl instantiates an instance, which we don't want.
-            // if there really is no better way, i guess it should go in
-            // class or bean utils.
-            Class clazz = ClassUtils.getClass(className);
-            Method[] methods = clazz.getMethods();
-            String setter = "set" + newName;
-            for (int i = 0; i < methods.length; ++i)
-            {
-                if (methods[i].getName().equalsIgnoreCase(setter))
-                {
-                    return true;
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            logger.debug("Could not access bean class " + className, e);
-        }
-        return false;
     }
 
 

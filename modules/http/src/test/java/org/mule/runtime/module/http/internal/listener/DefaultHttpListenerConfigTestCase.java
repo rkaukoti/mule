@@ -6,6 +6,18 @@
  */
 package org.mule.runtime.module.http.internal.listener;
 
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.mule.runtime.api.tls.TlsContextFactory;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.lifecycle.InitialisationException;
+import org.mule.runtime.core.api.registry.RegistrationException;
+import org.mule.runtime.module.http.api.HttpListenerConnectionManager;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
@@ -13,19 +25,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
 import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
-
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.lifecycle.InitialisationException;
-import org.mule.runtime.core.api.registry.RegistrationException;
-import org.mule.runtime.module.http.api.HttpListenerConnectionManager;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-import org.mule.runtime.api.tls.TlsContextFactory;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 @SmallTest
 public class DefaultHttpListenerConfigTestCase extends AbstractMuleTestCase
@@ -44,7 +43,8 @@ public class DefaultHttpListenerConfigTestCase extends AbstractMuleTestCase
     @Before
     public void setUp() throws RegistrationException
     {
-        when((Object) (mockMuleContext.getRegistry().lookupObject(HttpListenerConnectionManager.class))).thenReturn(mockHttpListenerConnectionManager);
+        when((Object) (mockMuleContext.getRegistry().lookupObject(HttpListenerConnectionManager.class))).thenReturn(
+                mockHttpListenerConnectionManager);
         when(mockTlsContextFactory.isKeyStoreConfigured()).thenReturn(true);
         listenerConfig = createBaseListener();
     }

@@ -8,7 +8,6 @@ package org.mule.runtime.config.spring.parsers.specific;
 
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
-
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 

@@ -15,7 +15,7 @@ import org.mule.runtime.core.util.ObjectUtils;
 /**
  * <code>ReceiveException</code> is specifically thrown by the Provider receive method if something fails in the
  * underlying transport
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -41,7 +41,7 @@ public class ReceiveException extends MuleException
 
     /**
      * @param message the exception message
-     * @param cause the exception that cause this exception to be thrown
+     * @param cause   the exception that cause this exception to be thrown
      */
     public ReceiveException(Message message, ImmutableEndpoint endpoint, long timeout, Throwable cause)
     {
@@ -54,6 +54,6 @@ public class ReceiveException extends MuleException
     public ReceiveException(ImmutableEndpoint endpoint, long timeout, Throwable cause)
     {
         this(TransportCoreMessages.failedToRecevieWithTimeout(endpoint, timeout),
-            endpoint, timeout, cause);
+                endpoint, timeout, cause);
     }
 }

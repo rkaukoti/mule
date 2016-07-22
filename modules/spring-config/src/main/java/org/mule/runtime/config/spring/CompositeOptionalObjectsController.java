@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.config.spring;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import com.google.common.collect.ImmutableList;
 
 import org.mule.runtime.core.util.ArrayUtils;
 
-import com.google.common.collect.ImmutableList;
-
 import java.util.Collection;
 import java.util.List;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Implementation of {@link OptionalObjectsController} which groups

@@ -31,14 +31,13 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ArrayOfForecast", namespace = "http://ws.cdyne.com/WeatherWS/", propOrder = {
-    "forecast"
+        "forecast"
 })
-public class ArrayOfForecast {
+public class ArrayOfForecast
+{
 
     @XmlElement(name = "Forecast", namespace = "http://ws.cdyne.com/WeatherWS/", nillable = true)
     protected List<Forecast> forecast;
@@ -62,11 +61,11 @@ public class ArrayOfForecast {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Forecast }
-     *
-     *
      */
-    public List<Forecast> getForecast() {
-        if (forecast == null) {
+    public List<Forecast> getForecast()
+    {
+        if (forecast == null)
+        {
             forecast = new ArrayList<Forecast>();
         }
         return this.forecast;

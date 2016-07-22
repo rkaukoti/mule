@@ -6,7 +6,14 @@
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
+import org.glassfish.grizzly.Buffer;
+import org.glassfish.grizzly.WriteResult;
+import org.glassfish.grizzly.filterchain.FilterChainContext;
+import org.glassfish.grizzly.http.HttpContent;
+import org.glassfish.grizzly.http.HttpRequestPacket;
+import org.glassfish.grizzly.http.HttpResponsePacket;
+import org.glassfish.grizzly.http.HttpServerFilter;
+import org.glassfish.grizzly.memory.Buffers;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.Preconditions;
@@ -19,14 +26,7 @@ import org.mule.runtime.module.http.internal.listener.async.ResponseStatusCallba
 
 import java.io.IOException;
 
-import org.glassfish.grizzly.Buffer;
-import org.glassfish.grizzly.WriteResult;
-import org.glassfish.grizzly.filterchain.FilterChainContext;
-import org.glassfish.grizzly.http.HttpContent;
-import org.glassfish.grizzly.http.HttpRequestPacket;
-import org.glassfish.grizzly.http.HttpResponsePacket;
-import org.glassfish.grizzly.http.HttpServerFilter;
-import org.glassfish.grizzly.memory.Buffers;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
 
 /**
  * {@link org.glassfish.grizzly.CompletionHandler}, responsible for asynchronous response writing
@@ -42,9 +42,11 @@ public class ResponseCompletionHandler
     private boolean isDone;
     private boolean contentSend;
 
-    public ResponseCompletionHandler(final FilterChainContext ctx, final HttpRequestPacket httpRequestPacket, final HttpResponse httpResponse, ResponseStatusCallback responseStatusCallback)
+    public ResponseCompletionHandler(final FilterChainContext ctx, final HttpRequestPacket httpRequestPacket,
+                                     final HttpResponse httpResponse, ResponseStatusCallback responseStatusCallback)
     {
-        Preconditions.checkArgument((!(httpResponse.getEntity() instanceof InputStreamHttpEntity)), "response entity cannot be input stream");
+        Preconditions.checkArgument((!(httpResponse.getEntity() instanceof InputStreamHttpEntity)),
+                "response entity cannot be input stream");
         this.ctx = ctx;
         this.httpResponsePacket = buildHttpResponsePacket(httpRequestPacket, httpResponse);
         this.httpResponseContent = buildResponseContent(httpResponse);
@@ -77,8 +79,6 @@ public class ResponseCompletionHandler
 
     /**
      * Start the sending the response asynchronously
-     *
-     * @throws java.io.IOException
      */
     public void start() throws IOException
     {
@@ -87,8 +87,6 @@ public class ResponseCompletionHandler
 
     /**
      * Send the next part of the response
-     *
-     * @throws java.io.IOException
      */
     public void sendResponse() throws IOException
     {

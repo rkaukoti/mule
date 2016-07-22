@@ -8,6 +8,8 @@ package org.mule.runtime.module.ws.consumer;
 
 import org.mule.common.metadata.DefaultXmlMetaDataModel;
 import org.mule.common.metadata.MetaDataGenerationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 import java.util.List;
@@ -18,9 +20,6 @@ import javax.wsdl.Definition;
 import javax.wsdl.Part;
 import javax.xml.namespace.QName;
 import javax.xml.transform.TransformerException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Creates the request body for an operation of a web service when no parameters are required.

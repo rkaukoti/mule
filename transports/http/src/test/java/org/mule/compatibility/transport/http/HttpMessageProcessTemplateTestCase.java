@@ -6,6 +6,20 @@
  */
 package org.mule.compatibility.transport.http;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.api.config.MuleProperties;
+import org.mule.runtime.core.api.context.WorkManager;
+
+import java.nio.charset.Charset;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -17,20 +31,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mule.compatibility.transport.http.HttpConstants.HEADER_X_FORWARDED_FOR;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.config.MuleProperties;
-import org.mule.runtime.core.api.context.WorkManager;
-
-import java.nio.charset.Charset;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HttpMessageProcessTemplateTestCase
@@ -71,9 +71,9 @@ public class HttpMessageProcessTemplateTestCase
     public void prepare() throws MuleException
     {
         message = MuleMessage.builder().payload(PAYLOAD)
-                .addInboundProperty(MuleProperties.MULE_ROOT_MESSAGE_ID_PROPERTY, ROOT_MESSAGE_ID)
-                .addInboundProperty(HttpConnector.HTTP_REQUEST_PROPERTY, "/")
-                .build();
+                             .addInboundProperty(MuleProperties.MULE_ROOT_MESSAGE_ID_PROPERTY, ROOT_MESSAGE_ID)
+                             .addInboundProperty(HttpConnector.HTTP_REQUEST_PROPERTY, "/")
+                             .build();
 
         when(messageReceiver.getEndpoint().getEncoding()).thenReturn(ENCODING);
         when(messageReceiver.createMuleMessage(any(), any())).thenAnswer(invocation -> message);

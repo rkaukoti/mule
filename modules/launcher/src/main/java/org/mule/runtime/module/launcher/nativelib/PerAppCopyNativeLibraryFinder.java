@@ -8,12 +8,11 @@
 package org.mule.runtime.module.launcher.nativelib;
 
 import org.mule.runtime.core.util.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * * Finds native libraries in an application's lib folder and creates a copy of
@@ -22,9 +21,8 @@ import org.slf4j.LoggerFactory;
 public class PerAppCopyNativeLibraryFinder extends PerAppNativeLibraryFinder
 {
 
-    protected Logger logger = LoggerFactory.getLogger(getClass());
-
     private final File perAppNativeLibs;
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     public PerAppCopyNativeLibraryFinder(File libDir, File perAppNativeLibs)
     {
@@ -40,7 +38,8 @@ public class PerAppCopyNativeLibraryFinder extends PerAppNativeLibraryFinder
         {
             if (!this.perAppNativeLibs.mkdirs())
             {
-                throw new IllegalStateException(String.format("Unable to create application '%s' folder", this.perAppNativeLibs.getAbsolutePath()));
+                throw new IllegalStateException(
+                        String.format("Unable to create application '%s' folder", this.perAppNativeLibs.getAbsolutePath()));
             }
         }
     }
@@ -100,7 +99,9 @@ public class PerAppCopyNativeLibraryFinder extends PerAppNativeLibraryFinder
         }
         catch (IOException e)
         {
-            throw new IllegalStateException(String.format("Unable to generate copy for native library '%s' at '%s'", nativeLibName, tempLibrary.getAbsolutePath()), e);
+            throw new IllegalStateException(
+                    String.format("Unable to generate copy for native library '%s' at '%s'", nativeLibName, tempLibrary.getAbsolutePath()),
+                    e);
         }
     }
 }

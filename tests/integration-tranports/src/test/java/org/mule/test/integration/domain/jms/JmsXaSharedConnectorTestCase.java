@@ -6,17 +6,16 @@
  */
 package org.mule.test.integration.domain.jms;
 
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.compatibility.transport.jms.JmsConnector;
 import org.mule.compatibility.transport.jms.xa.DefaultXAConnectionFactoryWrapper;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertThat;
 
 public class JmsXaSharedConnectorTestCase extends JmsSharedConnectorTestCase
 {

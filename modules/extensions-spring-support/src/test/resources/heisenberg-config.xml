@@ -40,7 +40,7 @@
             </heisenberg:ricin>
         </heisenberg:ricin-packs>
         <heisenberg:next-door address="pollos hermanos" victim="Gustavo Fring">
-                <heisenberg:previous victim="Krazy-8" address="Jesse's"/>
+            <heisenberg:previous victim="Krazy-8" address="Jesse's"/>
         </heisenberg:next-door>
         <heisenberg:deaths-by-seasons>
             <heisenberg:deaths-by-season key="s01">
@@ -102,7 +102,7 @@
             </heisenberg:ricin>
         </heisenberg:ricin-packs>
         <heisenberg:next-door address="${pollosHermanos}" victim="${fring}">
-                <heisenberg:previous victim="${krazy8}" address="${jesseAddress}"/>
+            <heisenberg:previous victim="${krazy8}" address="${jesseAddress}"/>
         </heisenberg:next-door>
         <heisenberg:monthly-incomes>
             <heisenberg:monthly-income value="12000"/>

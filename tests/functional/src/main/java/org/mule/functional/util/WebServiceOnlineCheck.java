@@ -9,15 +9,14 @@ package org.mule.functional.util;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.core.util.StringUtils;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class WebServiceOnlineCheck
 {
@@ -27,9 +26,9 @@ public class WebServiceOnlineCheck
     public static boolean isWebServiceOnline()
     {
         logger.debug("Verifying that the web service is on-line...");
-        
+
         BufferedReader input = null;
-        try 
+        try
         {
             URLConnection conn = new URL(TEST_URL).openConnection();
             // setting these timeouts ensures the client does not deadlock indefinitely
@@ -38,11 +37,11 @@ public class WebServiceOnlineCheck
             conn.setReadTimeout(AbstractMuleContextTestCase.RECEIVE_TIMEOUT);
             InputStream in = conn.getInputStream();
 
-            input = new BufferedReader(new InputStreamReader(in));            
+            input = new BufferedReader(new InputStreamReader(in));
 
             String response = "";
             String line;
-            while ((line = input.readLine()) != null) 
+            while ((line = input.readLine()) != null)
             {
                 response += line;
             }
@@ -56,12 +55,12 @@ public class WebServiceOnlineCheck
                 logger.warn("Unexpected response, web service does not seem to be on-line: \n" + response);
                 return false;
             }
-        } 
-        catch (Exception e) 
+        }
+        catch (Exception e)
         {
             logger.warn("Exception occurred, web service does not seem to be on-line: " + e);
             return false;
-        } 
+        }
         finally
         {
             IOUtils.closeQuietly(input);

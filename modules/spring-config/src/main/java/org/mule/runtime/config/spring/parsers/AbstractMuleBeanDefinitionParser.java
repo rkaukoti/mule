@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.config.spring.parsers;
 
-import static org.mule.runtime.config.spring.parsers.XmlMetadataAnnotations.METADATA_ANNOTATIONS_KEY;
-import static org.mule.runtime.core.api.execution.LocationExecutionContextProvider.addMetadataAnnotationsFromXml;
+import org.mule.runtime.api.meta.AnnotatedObject;
 import org.mule.runtime.config.spring.MuleHierarchicalBeanDefinitionParserDelegate;
 import org.mule.runtime.config.spring.dsl.spring.BeanDefinitionFactory;
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
@@ -16,7 +15,6 @@ import org.mule.runtime.config.spring.parsers.assembly.DefaultBeanAssemblerFacto
 import org.mule.runtime.config.spring.parsers.assembly.configuration.ReusablePropertyConfiguration;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.ValueMap;
 import org.mule.runtime.config.spring.parsers.generic.AutoIdUtils;
-import org.mule.runtime.api.meta.AnnotatedObject;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.api.lifecycle.Disposable;
@@ -24,16 +22,6 @@ import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.core.util.XMLUtils;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.xml.namespace.QName;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
@@ -48,6 +36,18 @@ import org.springframework.core.io.Resource;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.xml.namespace.QName;
+
+import static org.mule.runtime.config.spring.parsers.XmlMetadataAnnotations.METADATA_ANNOTATIONS_KEY;
+import static org.mule.runtime.core.api.execution.LocationExecutionContextProvider.addMetadataAnnotationsFromXml;
 
 /**
  * This parser extends the Spring provided {@link AbstractBeanDefinitionParser} to provide additional features for
@@ -90,10 +90,10 @@ import org.w3c.dom.NamedNodeMap;
  * <p>Note that this class is not multi-thread safe.  The internal state is reset before each "use"
  * by {@link #preProcess(org.w3c.dom.Element)} which assumes sequential access.</p>
  *
- * @see  AbstractBeanDefinitionParser
+ * @see AbstractBeanDefinitionParser
  */
 public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefinitionParser
-    implements MuleDefinitionParser
+        implements MuleDefinitionParser
 {
     public static final String ROOT_ELEMENT = "mule";
     public static final String DOMAIN_ROOT_ELEMENT = "mule-domain";
@@ -109,18 +109,18 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
      * logger used by this class
      */
     protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
-    private BeanAssemblerFactory beanAssemblerFactory = new DefaultBeanAssemblerFactory();
     protected ReusablePropertyConfiguration beanPropertyConfiguration = new ReusablePropertyConfiguration();
+    // By default Mule objects are not singletons
+    protected boolean singleton = false;
+    private BeanAssemblerFactory beanAssemblerFactory = new DefaultBeanAssemblerFactory();
     private ParserContext parserContext;
     private BeanDefinitionRegistry registry;
     private LinkedList<PreProcessor> preProcessors = new LinkedList<PreProcessor>();
     private List<PostProcessor> postProcessors = new LinkedList<PostProcessor>();
     private Set<String> beanAttributes = new HashSet<String>();
-    // By default Mule objects are not singletons
-    protected boolean singleton = false;
-
-    /** Allow the bean class to be set explicitly via the "class" attribute. */
+    /**
+     * Allow the bean class to be set explicitly via the "class" attribute.
+     */
     private boolean allowClassAttribute = true;
     private Class<?> classConstraint = null;
 
@@ -128,6 +128,29 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
     {
         addIgnored(ATTRIBUTE_ID);
         addBeanFlag(MuleHierarchicalBeanDefinitionParserDelegate.MULE_FORCE_RECURSE);
+    }
+
+    public static String getConfigFileIdentifier(Resource resource)
+    {
+        return resource.getFilename() != null ? resource.getFilename() : resource.getDescription();
+    }
+
+    public static Map<QName, Object> processMetadataAnnotationsHelper(Element element, String configFileIdentifier,
+                                                                      BeanDefinitionBuilder builder)
+    {
+        Map<QName, Object> annotations = new HashMap<>();
+        // Ensure we have a placeholder for internally generated annotations, even if the XML config doesn't have any
+        // defined for this element.
+        if (AnnotatedObject.class.isAssignableFrom(builder.getBeanDefinition().getBeanClass()))
+        {
+
+            XmlMetadataAnnotations elementMetadata = (XmlMetadataAnnotations) element.getUserData(METADATA_ANNOTATIONS_KEY);
+            addMetadataAnnotationsFromXml(annotations, configFileIdentifier,
+                    elementMetadata.getLineNumber(), elementMetadata.getElementString());
+
+            builder.getBeanDefinition().getPropertyValues().addPropertyValue(AnnotatedObject.PROPERTY_NAME, annotations);
+        }
+        return annotations;
     }
 
     @Override
@@ -159,7 +182,7 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
     }
 
     /**
-     * @param alias The attribute name
+     * @param alias        The attribute name
      * @param propertyName The bean property name
      * @return This instance, allowing chaining during use, avoiding subclasses
      */
@@ -254,12 +277,10 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
      * bean Class} and passes it to the {@link #doParse} strategy method.
      *
      * @param element the element that is to be parsed into a single BeanDefinition
-     * @param context the object encapsulating the current state of the parsing
-     *            process
-     * @return the BeanDefinition resulting from the parsing of the supplied
-     *         {@link Element}
-     * @throws IllegalStateException if the bean {@link Class} returned from
-     *             {@link #getBeanClass(org.w3c.dom.Element)} is <code>null</code>
+     * @param context the object encapsulating the current state of the parsing process
+     * @return the BeanDefinition resulting from the parsing of the supplied {@link Element}
+     * @throws IllegalStateException if the bean {@link Class} returned from {@link #getBeanClass(org.w3c.dom.Element)} is
+     *                               <code>null</code>
      * @see #doParse
      */
     @Override
@@ -291,16 +312,11 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
         {
             // Inner bean definition must receive same singleton status as containing bean.
             builder.setScope(context.getContainingBeanDefinition().isSingleton()
-                             ? BeanDefinition.SCOPE_SINGLETON : BeanDefinition.SCOPE_PROTOTYPE);
+                    ? BeanDefinition.SCOPE_SINGLETON : BeanDefinition.SCOPE_PROTOTYPE);
         }
 
         doParse(element, context, builder);
         return builder.getBeanDefinition();
-    }
-
-    protected void setRegistry(BeanDefinitionRegistry registry)
-    {
-        this.registry = registry;
     }
 
     protected BeanDefinitionRegistry getRegistry()
@@ -312,6 +328,11 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
         return registry;
     }
 
+    protected void setRegistry(BeanDefinitionRegistry registry)
+    {
+        this.registry = registry;
+    }
+
     protected void checkElementNameUnique(Element element)
     {
         BeanDefinitionFactory.checkElementNameUnique(getRegistry(), element);
@@ -321,7 +342,7 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
     {
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(beanClass);
         // If a constructor with a single MuleContext argument is available then use it.
-        if (ClassUtils.getConstructor(beanClass, new Class[]{MuleContext.class}, true) != null)
+        if (ClassUtils.getConstructor(beanClass, new Class[] {MuleContext.class}, true) != null)
         {
             builder.addConstructorArgReference(MuleProperties.OBJECT_MULE_CONTEXT);
         }
@@ -342,7 +363,7 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
         if (null != beanClass && null != classConstraint && !classConstraint.isAssignableFrom(beanClass))
         {
             throw new IllegalStateException(beanClass + " not a subclass of " + classConstraint +
-                    " for " + XMLUtils.elementToString(element));
+                                            " for " + XMLUtils.elementToString(element));
         }
         if (null == beanClass)
         {
@@ -356,9 +377,9 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
      * explicit "class" attribute.
      *
      * @param element the <code>Element</code> that is being parsed
-     * @return the {@link Class} of the bean that is being defined via parsing the supplied <code>Element</code>
-     *         (must <b>not</b> be <code>null</code>)
-     * @see #parseInternal(org.w3c.dom.Element,ParserContext)
+     * @return the {@link Class} of the bean that is being defined via parsing the supplied <code>Element</code> (must <b>not</b> be
+     * <code>null</code>)
+     * @see #parseInternal(org.w3c.dom.Element, ParserContext)
      */
     protected Class<?> getBeanClassFromAttribute(Element element)
     {
@@ -384,9 +405,9 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
      * Determine the bean class corresponding to the supplied {@link Element}.
      *
      * @param element the <code>Element</code> that is being parsed
-     * @return the {@link Class} of the bean that is being defined via parsing the supplied <code>Element</code>
-     *         (must <b>not</b> be <code>null</code>)
-     * @see #parseInternal(org.w3c.dom.Element,ParserContext)
+     * @return the {@link Class} of the bean that is being defined via parsing the supplied <code>Element</code> (must <b>not</b> be
+     * <code>null</code>)
+     * @see #parseInternal(org.w3c.dom.Element, ParserContext)
      */
     protected abstract Class<?> getBeanClass(Element element);
 
@@ -398,8 +419,7 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
      * without ParserContext argument.
      *
      * @param element the XML element being parsed
-     * @param context the object encapsulating the current state of the parsing
-     *            process
+     * @param context the object encapsulating the current state of the parsing process
      * @param builder used to define the <code>BeanDefinition</code>
      */
     protected void doParse(Element element, ParserContext context, BeanDefinitionBuilder builder)
@@ -423,31 +443,9 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
         processMetadataAnnotationsHelper(element, configFileIdentifier, builder);
     }
 
-    public static String getConfigFileIdentifier(Resource resource)
-    {
-        return resource.getFilename() != null ? resource.getFilename() : resource.getDescription();
-    }
-
-    public static Map<QName, Object> processMetadataAnnotationsHelper(Element element, String configFileIdentifier, BeanDefinitionBuilder builder)
-    {
-        Map<QName, Object> annotations = new HashMap<>();
-        // Ensure we have a placeholder for internally generated annotations, even if the XML config doesn't have any
-        // defined for this element.
-        if (AnnotatedObject.class.isAssignableFrom(builder.getBeanDefinition().getBeanClass()))
-        {
-
-            XmlMetadataAnnotations elementMetadata = (XmlMetadataAnnotations) element.getUserData(METADATA_ANNOTATIONS_KEY);
-            addMetadataAnnotationsFromXml(annotations, configFileIdentifier,
-                    elementMetadata.getLineNumber(), elementMetadata.getElementString());
-
-            builder.getBeanDefinition().getPropertyValues().addPropertyValue(AnnotatedObject.PROPERTY_NAME, annotations);
-        }
-        return annotations;
-    }
-
     @Override
     protected String resolveId(Element element, AbstractBeanDefinition definition,
-        ParserContext context) throws BeanDefinitionStoreException
+                               ParserContext context) throws BeanDefinitionStoreException
     {
         return getBeanName(element);
     }
@@ -458,8 +456,8 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
     }
 
     /**
-     * Restricted use - does not include a target.
-     * If possible, use {@link org.mule.runtime.config.spring.parsers.AbstractHierarchicalDefinitionParser#getBeanAssembler(org.w3c.dom.Element, org.springframework.beans.factory.support.BeanDefinitionBuilder)}
+     * Restricted use - does not include a target. If possible, use {@link org.mule.runtime.config.spring.parsers.AbstractHierarchicalDefinitionParser#getBeanAssembler(org.w3c.dom.Element,
+     * org.springframework.beans.factory.support.BeanDefinitionBuilder)}
      *
      * @param bean The bean being constructed
      * @return An assembler that automates Mule-specific logic for bean construction
@@ -506,7 +504,8 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
      */
     protected boolean isTopLevel(Element element)
     {
-        return element.getParentNode().getLocalName().equals(ROOT_ELEMENT) || element.getParentNode().getLocalName().equals(DOMAIN_ROOT_ELEMENT);
+        return element.getParentNode().getLocalName().equals(ROOT_ELEMENT) ||
+               element.getParentNode().getLocalName().equals(DOMAIN_ROOT_ELEMENT);
     }
 
     @Override

@@ -8,7 +8,6 @@ package org.mule.runtime.config.spring.parsers.specific.properties;
 
 import org.mule.runtime.config.spring.parsers.assembly.MapEntryCombiner;
 import org.mule.runtime.config.spring.parsers.collection.ChildSingletonMapDefinitionParser;
-
 import org.w3c.dom.Element;
 
 public class SimplePropertyDefinitionParser extends ChildSingletonMapDefinitionParser
@@ -27,5 +26,5 @@ public class SimplePropertyDefinitionParser extends ChildSingletonMapDefinitionP
         // a collection, we have to do this here!
         getTargetPropertyConfiguration().addCollection(MapEntryCombiner.VALUE);
     }
-    
+
 }

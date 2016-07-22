@@ -6,15 +6,15 @@
  */
 package org.mule.extension.ftp;
 
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.extension.ftp.api.FtpFileAttributes;
 import org.mule.extension.ftp.api.FtpFilePredicateBuilder;
 import org.mule.runtime.module.extension.file.FilePredicateBuilderContractTestCase;
 
 import java.time.LocalDateTime;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.mockito.Mockito.when;
 
 public class FtpFilePredicateBuilderTestCase extends FilePredicateBuilderContractTestCase<FtpFilePredicateBuilder, FtpFileAttributes>
 {

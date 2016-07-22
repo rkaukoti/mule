@@ -23,7 +23,7 @@ public class TransformationLengthConverterFilter implements ConverterFilter
     @Override
     public List<Converter> filter(List<Converter> converters, DataType source, DataType result)
     {
-        if (converters.size() ==0)
+        if (converters.size() == 0)
         {
             return Collections.emptyList();
         }

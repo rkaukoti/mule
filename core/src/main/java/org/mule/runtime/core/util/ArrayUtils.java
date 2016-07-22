@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.core.util;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 // @ThreadSafe
 public class ArrayUtils extends org.apache.commons.lang.ArrayUtils
@@ -86,15 +86,11 @@ public class ArrayUtils extends org.apache.commons.lang.ArrayUtils
      *
      * @param objects the array of objects
      * @param clazz   the desired service type of the new array
-     * @return <code>null</code> when objects is <code>null</code>, or a new
-     * array containing the elements of the source array which is typed to
-     * the given <code>clazz</code> parameter. If <code>clazz</code> is
-     * already the service type of the source array, the source array is
-     * returned (i.e. no copy is created).
-     * @throws IllegalArgumentException if the <code>clazz</code> argument is
-     *                                  <code>null</code>.
-     * @throws ArrayStoreException      if the elements in <code>objects</code> cannot
-     *                                  be cast to <code>clazz</code>.
+     * @return <code>null</code> when objects is <code>null</code>, or a new array containing the elements of the source array which is
+     * typed to the given <code>clazz</code> parameter. If <code>clazz</code> is already the service type of the source array, the source
+     * array is returned (i.e. no copy is created).
+     * @throws IllegalArgumentException if the <code>clazz</code> argument is <code>null</code>.
+     * @throws ArrayStoreException      if the elements in <code>objects</code> cannot be cast to <code>clazz</code>.
      */
     public static Object[] toArrayOfComponentType(Object[] objects, Class clazz)
     {

@@ -6,11 +6,7 @@
  */
 package org.mule.test.config.spring.parsers;
 
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.test.config.spring.parsers.beans.ParameterAndChildElement;
 import org.mule.test.config.spring.parsers.beans.PojoWithSameTypeChildren;
@@ -23,7 +19,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
-import org.junit.Test;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertThat;
 
 public class XmlDslProcessingTestCase extends FunctionalTestCase
 {
@@ -92,7 +92,8 @@ public class XmlDslProcessingTestCase extends FunctionalTestCase
         SimpleCollectionObject simpleCollectionObject = muleContext.getRegistry().get("customCollectionTypeObject");
         Map<Object, Object> simpleParameters = simpleCollectionObject.getSimpleParameters();
         assertThat(simpleParameters.size(), is(1));
-        List<SimpleCollectionObject> collectionObject = (List<SimpleCollectionObject>) simpleParameters.get("other-children-custom-collection-type");
+        List<SimpleCollectionObject> collectionObject =
+                (List<SimpleCollectionObject>) simpleParameters.get("other-children-custom-collection-type");
         assertThat(collectionObject, instanceOf(LinkedList.class));
         assertCollectionChildrenContent(collectionObject);
     }

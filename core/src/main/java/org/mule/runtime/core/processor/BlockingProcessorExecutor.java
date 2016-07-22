@@ -22,10 +22,9 @@ import org.mule.runtime.core.routing.MessageFilter;
 import java.util.List;
 
 /**
- * This {@link org.mule.runtime.core.api.processor.ProcessorExecutor} implementation executes each {@link org.mule.runtime.core.api.processor.MessageProcessor}
- * in sucession in the same thread until or processors have been invoked or one of the following is returned by a processor:
- * <li>{@link org.mule.runtime.core.VoidMuleEvent}</li>
- * <li><code>null</code></li>
+ * This {@link org.mule.runtime.core.api.processor.ProcessorExecutor} implementation executes each {@link
+ * org.mule.runtime.core.api.processor.MessageProcessor} in sucession in the same thread until or processors have been invoked or one of the
+ * following is returned by a processor: <li>{@link org.mule.runtime.core.VoidMuleEvent}</li> <li><code>null</code></li>
  */
 public class BlockingProcessorExecutor implements ProcessorExecutor
 {
@@ -39,7 +38,7 @@ public class BlockingProcessorExecutor implements ProcessorExecutor
 
     public BlockingProcessorExecutor(MuleEvent event, List<MessageProcessor> processors,
                                      MessageProcessorExecutionTemplate messageProcessorExecutionTemplate, boolean
-            copyOnVoidEvent)
+                                             copyOnVoidEvent)
     {
         this.event = event;
         this.processors = processors;

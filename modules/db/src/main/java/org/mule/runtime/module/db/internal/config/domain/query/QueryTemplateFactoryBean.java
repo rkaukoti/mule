@@ -8,16 +8,15 @@
 package org.mule.runtime.module.db.internal.config.domain.query;
 
 import org.mule.runtime.module.db.internal.domain.param.DefaultInputQueryParam;
+import org.mule.runtime.module.db.internal.domain.param.InputQueryParam;
 import org.mule.runtime.module.db.internal.domain.param.QueryParam;
 import org.mule.runtime.module.db.internal.domain.query.QueryParamValue;
 import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
-import org.mule.runtime.module.db.internal.domain.param.InputQueryParam;
+import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 public class QueryTemplateFactoryBean extends AbstractFactoryBean<QueryTemplate>
 {

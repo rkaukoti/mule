@@ -21,10 +21,11 @@ public interface ObjectFactory extends Initialisable, Disposable
      * an existing instance depending on the implementation. If a new instance is
      * created it will also be initialized by this method
      * (Initilisable.initialise()).
-     * @param muleContext the current {@link org.mule.runtime.core.api.MuleContext} instance. This can be used for performing registry look-ups
-     * applying processors to newly created objects or even firing custom notifications
-     * @throws Exception if there is an exception thrown creating the new instance
+     *
+     * @param muleContext the current {@link org.mule.runtime.core.api.MuleContext} instance. This can be used for performing registry
+     *                    look-ups applying processors to newly created objects or even firing custom notifications
      * @return A new instance of an object.  The factory may decide to return the same instance each type or create a new instance each time
+     * @throws Exception if there is an exception thrown creating the new instance
      */
     Object getInstance(MuleContext muleContext) throws Exception;
 

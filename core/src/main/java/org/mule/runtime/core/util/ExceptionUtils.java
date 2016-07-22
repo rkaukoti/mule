@@ -6,16 +6,17 @@
  */
 package org.mule.runtime.core.util;
 
-import static java.util.Arrays.stream;
-import static java.util.Optional.empty;
-import static java.util.Optional.ofNullable;
-import static org.apache.commons.lang.SystemUtils.LINE_SEPARATOR;
 import org.mule.runtime.api.connection.ConnectionException;
 
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
 import java.util.concurrent.Callable;
+
+import static java.util.Arrays.stream;
+import static java.util.Optional.empty;
+import static java.util.Optional.ofNullable;
+import static org.apache.commons.lang.SystemUtils.LINE_SEPARATOR;
 
 /**
  * Mule exception utilities.
@@ -44,8 +45,7 @@ public class ExceptionUtils extends org.apache.commons.lang.exception.ExceptionU
      *
      * @param throwable the throwable to inspect, may be null
      * @param type      the type to search for, subclasses match, null returns null
-     * @return the throwable that is closest to the root in the throwable chain that
-     * matches the type or subclass of that type.
+     * @return the throwable that is closest to the root in the throwable chain that matches the type or subclass of that type.
      */
     @SuppressWarnings("unchecked")
     public static <ET> ET getDeepestOccurenceOfType(Throwable throwable, Class<ET> type)

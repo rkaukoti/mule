@@ -8,6 +8,7 @@ package org.mule.compatibility.transport.http.ntlm;
 
 import jcifs.ntlmssp.NtlmMessage;
 import jcifs.ntlmssp.Type2Message;
+
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.NTCredentials;
@@ -30,13 +31,11 @@ import static jcifs.util.Base64.encode;
 public class NTLMScheme implements AuthScheme
 {
 
-    private static enum AUTHENTICATION_STATE
-    {
-        UNINITIATED, INITIATED, TYPE1_MSG_GENERATED, TYPE2_MSG_RECEIVED, TYPE3_MSG_GENERATED, FAILED
-    }
-
     private static final String NOT_IMPLEMENTED_ERROR = "Not implemented as it is deprecated anyway in Httpclient 3.x";
-
+    /**
+     * Creates NTLM messages used during the authentication process.
+     */
+    private final NtlmMessageFactory ntlmMessageFactory = new NtlmMessageFactory();
     /**
      * Authentication process authenticationState
      */
@@ -46,11 +45,6 @@ public class NTLMScheme implements AuthScheme
      * NTLM challenge string received form the server.
      */
     private String receivedNtlmChallenge = null;
-
-    /**
-     * Creates NTLM messages used during the authentication process.
-     */
-    private final NtlmMessageFactory ntlmMessageFactory = new NtlmMessageFactory();
 
     public String authenticate(Credentials credentials, HttpMethod method) throws AuthenticationException
     {
@@ -147,8 +141,7 @@ public class NTLMScheme implements AuthScheme
     /**
      * Tests if the NTLM authentication process has been completed.
      *
-     * @return <tt>true</tt> if Basic authorization has been processed,
-     *         <tt>false</tt> otherwise.
+     * @return <tt>true</tt> if Basic authorization has been processed, <tt>false</tt> otherwise.
      */
     public boolean isComplete()
     {
@@ -191,12 +184,18 @@ public class NTLMScheme implements AuthScheme
         else
         {
             receivedNtlmChallenge = null;
-            authenticationState = authenticationState == AUTHENTICATION_STATE.UNINITIATED ? AUTHENTICATION_STATE.INITIATED : AUTHENTICATION_STATE.FAILED;
+            authenticationState =
+                    authenticationState == AUTHENTICATION_STATE.UNINITIATED ? AUTHENTICATION_STATE.INITIATED : AUTHENTICATION_STATE.FAILED;
         }
     }
 
     private String ntlmMessageToString(NtlmMessage ntlmMessage)
     {
         return "NTLM " + encode(ntlmMessage.toByteArray());
+    }
+
+    private static enum AUTHENTICATION_STATE
+    {
+        UNINITIATED, INITIATED, TYPE1_MSG_GENERATED, TYPE2_MSG_RECEIVED, TYPE3_MSG_GENERATED, FAILED
     }
 }

@@ -7,11 +7,10 @@
 package org.mule.runtime.module.ws.functional;
 
 
-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 
-import org.junit.Test;
+import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
 
 public class NoParamsFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase
 {

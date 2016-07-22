@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.core.routing.outbound;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.tck.size.SmallTest;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @SmallTest
 public class PartitionedMessageSequenceTestCase

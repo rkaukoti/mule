@@ -7,7 +7,7 @@
 
 package org.mule.runtime.module.db.internal.config.domain.query;
 
-import static org.apache.commons.collections.CollectionUtils.find;
+import org.apache.commons.collections.Predicate;
 import org.mule.runtime.module.db.internal.domain.param.DefaultInOutQueryParam;
 import org.mule.runtime.module.db.internal.domain.param.DefaultInputQueryParam;
 import org.mule.runtime.module.db.internal.domain.param.DefaultOutputQueryParam;
@@ -18,12 +18,12 @@ import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
 import org.mule.runtime.module.db.internal.domain.type.DbType;
 import org.mule.runtime.module.db.internal.domain.type.UnknownDbType;
 import org.mule.runtime.module.db.internal.parser.QueryTemplateParser;
+import org.springframework.beans.factory.FactoryBean;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.collections.Predicate;
-import org.springframework.beans.factory.FactoryBean;
+import static org.apache.commons.collections.CollectionUtils.find;
 
 /**
  * Creates {@link QueryTemplate} for parameterized queries
@@ -72,16 +72,18 @@ public class ParameterizedQueryTemplateFactoryBean implements FactoryBean<QueryT
         DbType paramType = templateParam.getType();
         if (!(queryParam.getType() instanceof UnknownDbType))
         {
-           paramType = queryParam.getType();
+            paramType = queryParam.getType();
         }
 
         if (queryParam instanceof InOutQueryParam)
         {
-            overriddenParam = new DefaultInOutQueryParam(templateParam.getIndex(), paramType, templateParam.getName(), ((InOutQueryParam) queryParam).getValue());
+            overriddenParam = new DefaultInOutQueryParam(templateParam.getIndex(), paramType, templateParam.getName(),
+                    ((InOutQueryParam) queryParam).getValue());
         }
         else if (queryParam instanceof InputQueryParam)
         {
-            overriddenParam = new DefaultInputQueryParam(templateParam.getIndex(), paramType, ((InputQueryParam) queryParam).getValue(), templateParam.getName());
+            overriddenParam = new DefaultInputQueryParam(templateParam.getIndex(), paramType, ((InputQueryParam) queryParam).getValue(),
+                    templateParam.getName());
         }
         else
         {

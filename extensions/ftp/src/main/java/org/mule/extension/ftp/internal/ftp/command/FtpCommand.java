@@ -6,7 +6,7 @@
  */
 package org.mule.extension.ftp.internal.ftp.command;
 
-import static java.lang.String.format;
+import org.apache.commons.net.ftp.FTPClient;
 import org.mule.extension.ftp.api.FtpFileAttributes;
 import org.mule.extension.ftp.internal.AbstractFtpCopyDelegate;
 import org.mule.extension.ftp.internal.FtpCopyDelegate;
@@ -15,13 +15,13 @@ import org.mule.runtime.api.message.MuleEvent;
 import org.mule.runtime.module.extension.file.api.FileAttributes;
 import org.mule.runtime.module.extension.file.api.FileConnectorConfig;
 import org.mule.runtime.module.extension.file.api.command.FileCommand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.apache.commons.net.ftp.FTPClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
 
 /**
  * Base class for {@link FileCommand} implementations that target a FTP/SFTP server
@@ -112,7 +112,8 @@ public abstract class FtpCommand<Connection extends FtpFileSystem> extends FileC
     {
         if (!tryChangeWorkingDirectory(path))
         {
-            throw new IllegalArgumentException(format("Could not change working directory to '%s'. Path doesn't exists or is not a directory", path.toString()));
+            throw new IllegalArgumentException(
+                    format("Could not change working directory to '%s'. Path doesn't exists or is not a directory", path.toString()));
         }
         LOGGER.debug("working directory changed to {}", path);
     }
@@ -197,8 +198,8 @@ public abstract class FtpCommand<Connection extends FtpFileSystem> extends FileC
     }
 
     /**
-     * Performs the base logic and delegates into {@link AbstractFtpCopyDelegate#doCopy(FileConnectorConfig, FileAttributes, Path, boolean, MuleEvent)}
-     * to perform the actual copying logic
+     * Performs the base logic and delegates into {@link AbstractFtpCopyDelegate#doCopy(FileConnectorConfig, FileAttributes, Path, boolean,
+     * MuleEvent)} to perform the actual copying logic
      *
      * @param config                the config that is parameterizing this operation
      * @param sourcePath            the path to be copied
@@ -248,7 +249,7 @@ public abstract class FtpCommand<Connection extends FtpFileSystem> extends FileC
             {
                 throw new IllegalArgumentException(String.format("Can't copy '%s' to '%s' because the destination path " +
                                                                  "doesn't exists",
-                                                                 sourceFile.getPath(), targetPath.toAbsolutePath()));
+                        sourceFile.getPath(), targetPath.toAbsolutePath()));
             }
         }
 

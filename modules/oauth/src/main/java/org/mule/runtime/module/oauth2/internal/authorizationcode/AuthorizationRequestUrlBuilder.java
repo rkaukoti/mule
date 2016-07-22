@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode;
 
-import static org.apache.commons.lang.StringUtils.isNotBlank;
-
-import org.mule.runtime.module.oauth2.internal.OAuthConstants;
 import org.mule.runtime.core.util.Preconditions;
+import org.mule.runtime.module.oauth2.internal.OAuthConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 /**
  * Builds the authorization url to redirect the user to.
@@ -90,30 +89,33 @@ public class AuthorizationRequestUrlBuilder
         urlBuilder.append(authorizationUrl);
 
         urlBuilder.append("?")
-                .append("response_type=code&")
-                .append(OAuthConstants.CLIENT_ID_PARAMETER + "=")
-                .append(clientId);
+                  .append("response_type=code&")
+                  .append(OAuthConstants.CLIENT_ID_PARAMETER + "=")
+                  .append(clientId);
 
         try
         {
             if (isNotBlank(scope))
             {
-                urlBuilder.append(String.format(ADDED_PARAMETER_TEMPLATE, OAuthConstants.SCOPE_PARAMETER)).append(URLEncoder.encode(scope, "UTF-8"));
+                urlBuilder.append(String.format(ADDED_PARAMETER_TEMPLATE, OAuthConstants.SCOPE_PARAMETER))
+                          .append(URLEncoder.encode(scope, "UTF-8"));
             }
             if (isNotBlank(state))
             {
-                urlBuilder.append(String.format(ADDED_PARAMETER_TEMPLATE, OAuthConstants.STATE_PARAMETER)).append(URLEncoder.encode(state, "UTF-8"));
+                urlBuilder.append(String.format(ADDED_PARAMETER_TEMPLATE, OAuthConstants.STATE_PARAMETER))
+                          .append(URLEncoder.encode(state, "UTF-8"));
             }
 
             for (Map.Entry<String, String> entry : customParameters.entrySet())
             {
                 urlBuilder.append("&")
-                        .append(entry.getKey())
-                        .append("=")
-                        .append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+                          .append(entry.getKey())
+                          .append("=")
+                          .append(URLEncoder.encode(entry.getValue(), "UTF-8"));
             }
 
-            urlBuilder.append(String.format(ADDED_PARAMETER_TEMPLATE, OAuthConstants.REDIRECT_URI_PARAMETER)).append(URLEncoder.encode(redirectUrl, "UTF-8"));
+            urlBuilder.append(String.format(ADDED_PARAMETER_TEMPLATE, OAuthConstants.REDIRECT_URI_PARAMETER))
+                      .append(URLEncoder.encode(redirectUrl, "UTF-8"));
         }
         catch (UnsupportedEncodingException e)
         {

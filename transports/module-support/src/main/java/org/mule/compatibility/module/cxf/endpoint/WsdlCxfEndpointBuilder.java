@@ -39,6 +39,16 @@ public class WsdlCxfEndpointBuilder extends AbstractMetaEndpointBuilder
         this.wsdlAddress = getEndpointAddressWithoutMetaScheme(address);
     }
 
+    private static String getAddressWithoutQuery(String string)
+    {
+        final int idx = string.indexOf('?');
+        if (idx != -1)
+        {
+            string = string.substring(0, idx);
+        }
+        return string;
+    }
+
     @Override
     public InboundEndpoint buildInboundEndpoint() throws EndpointException, InitialisationException
     {
@@ -57,7 +67,7 @@ public class WsdlCxfEndpointBuilder extends AbstractMetaEndpointBuilder
         {
             // List must be mutable as it gets cleared on Mule shutdown
             messageProcessors = new ArrayList<MessageProcessor>(
-                Arrays.asList(new FlowConfiguringMessageProcessor(builder)));
+                    Arrays.asList(new FlowConfiguringMessageProcessor(builder)));
         }
         catch (final Exception e)
         {
@@ -89,16 +99,6 @@ public class WsdlCxfEndpointBuilder extends AbstractMetaEndpointBuilder
             }
         }
         return null;
-    }
-
-    private static String getAddressWithoutQuery(String string)
-    {
-        final int idx = string.indexOf('?');
-        if (idx != -1)
-        {
-            string = string.substring(0, idx);
-        }
-        return string;
     }
 
 }

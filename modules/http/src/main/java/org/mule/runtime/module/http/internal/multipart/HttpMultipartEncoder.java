@@ -6,11 +6,9 @@
  */
 package org.mule.runtime.module.http.internal.multipart;
 
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_DISPOSITION;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
+import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.http.internal.HttpParser;
 import org.mule.runtime.module.http.internal.domain.MultipartHttpEntity;
-import org.mule.runtime.core.util.IOUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -21,14 +19,17 @@ import javax.mail.internet.InternetHeaders;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_DISPOSITION;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
+
 /**
  * Creates multipart
  */
 public class HttpMultipartEncoder
 {
 
-    private static final String FORM_DATA = "form-data";
     public static final String ATTACHMENT = "attachment";
+    private static final String FORM_DATA = "form-data";
 
     public static MimeMultipart createMultpartContent(MultipartHttpEntity body, String contentType)
     {
@@ -85,7 +86,8 @@ public class HttpMultipartEncoder
         return builder.toString();
     }
 
-    public static byte[] createMultipartContent(MultipartHttpEntity multipartEntity, String contentType) throws IOException, MessagingException
+    public static byte[] createMultipartContent(MultipartHttpEntity multipartEntity, String contentType)
+            throws IOException, MessagingException
     {
         MimeMultipart mimeMultipartContent = HttpMultipartEncoder.createMultpartContent(multipartEntity, contentType);
         final ByteArrayOutputStream byteArrayOutputStream;

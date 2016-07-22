@@ -23,7 +23,7 @@ public interface HttpAuthentication
      * request. Implementations will usually add some authentication header, but there is no restriction on this.
      *
      * @param muleEvent The event that is being processed.
-     * @param builder The builder that is being used to create the HTTP request.
+     * @param builder   The builder that is being used to create the HTTP request.
      */
     void authenticate(MuleEvent muleEvent, HttpRequestBuilder builder) throws MuleException;
 

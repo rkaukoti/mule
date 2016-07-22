@@ -6,12 +6,7 @@
  */
 package org.mule.compatibility.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupEndpointBuilder;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.runtime.config.spring.SpringXmlConfigurationBuilder;
 import org.mule.runtime.core.api.MuleContext;
@@ -19,7 +14,11 @@ import org.mule.runtime.core.api.context.MuleContextFactory;
 import org.mule.runtime.core.context.DefaultMuleContextFactory;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupEndpointBuilder;
 
 public class EmbeddedMuleTestCase extends AbstractMuleTestCase
 {

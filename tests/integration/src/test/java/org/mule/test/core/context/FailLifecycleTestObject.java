@@ -16,19 +16,6 @@ public class FailLifecycleTestObject implements Initialisable, Disposable
     private static boolean initInvoked = false;
     private static boolean disposeInvoked = false;
 
-    @Override
-    public void initialise() throws InitialisationException
-    {
-        initInvoked = true;
-        throw new InitialisationException(new RuntimeException(), this);
-    }
-
-    @Override
-    public void dispose()
-    {
-        disposeInvoked = true;
-    }
-
     public static boolean isInitInvoked()
     {
         return initInvoked;
@@ -43,5 +30,18 @@ public class FailLifecycleTestObject implements Initialisable, Disposable
     {
         initInvoked = false;
         disposeInvoked = false;
+    }
+
+    @Override
+    public void initialise() throws InitialisationException
+    {
+        initInvoked = true;
+        throw new InitialisationException(new RuntimeException(), this);
+    }
+
+    @Override
+    public void dispose()
+    {
+        disposeInvoked = true;
     }
 }

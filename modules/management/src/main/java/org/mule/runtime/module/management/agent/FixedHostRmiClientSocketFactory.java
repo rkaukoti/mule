@@ -28,15 +28,16 @@ public class FixedHostRmiClientSocketFactory implements RMIClientSocketFactory, 
     /**
      * Default constructor.
      */
-    public FixedHostRmiClientSocketFactory ()
+    public FixedHostRmiClientSocketFactory()
     {
     }
 
     /**
      * Create a new instance.
+     *
      * @param overrideHost host/ip to enforce
      */
-    public FixedHostRmiClientSocketFactory (final String overrideHost)
+    public FixedHostRmiClientSocketFactory(final String overrideHost)
     {
         this.overrideHost = overrideHost;
     }
@@ -49,7 +50,7 @@ public class FixedHostRmiClientSocketFactory implements RMIClientSocketFactory, 
      * @return a socket connected to the specified overrideHost and port.
      * @throws java.io.IOException if an I/O error occurs during socket creation
      */
-    public Socket createSocket (String host, int port) throws IOException
+    public Socket createSocket(String host, int port) throws IOException
     {
         /* NOTE this is StringUtils.defaultIfEmpty(overrideHost, host)
            This socket factory is required on the client, minimize the dependency graph
@@ -64,7 +65,7 @@ public class FixedHostRmiClientSocketFactory implements RMIClientSocketFactory, 
      *
      * @return Value for property 'overrideHost'.
      */
-    public String getOverrideHost ()
+    public String getOverrideHost()
     {
         return overrideHost;
     }
@@ -74,7 +75,7 @@ public class FixedHostRmiClientSocketFactory implements RMIClientSocketFactory, 
      *
      * @param overrideHost Value to set for property 'overrideHost'.
      */
-    public void setOverrideHost (final String overrideHost)
+    public void setOverrideHost(final String overrideHost)
     {
         this.overrideHost = overrideHost;
     }

@@ -12,7 +12,6 @@ import org.mule.runtime.core.config.i18n.Message;
 
 /**
  * TODO document
- *
  */
 public class AggregationException extends RoutingException
 {
@@ -42,7 +41,7 @@ public class AggregationException extends RoutingException
     }
 
     public AggregationException(Message message, EventGroup eventGroup, MessageProcessor endpoint,
-        Throwable cause)
+                                Throwable cause)
     {
         super(message, eventGroup.getMessageCollectionEvent(), endpoint, cause);
         this.eventGroup = eventGroup;

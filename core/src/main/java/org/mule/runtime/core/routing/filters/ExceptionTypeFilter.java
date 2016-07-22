@@ -36,7 +36,7 @@ public class ExceptionTypeFilter extends PayloadTypeFilter
 
     /**
      * Check a given message against this filter.
-     * 
+     *
      * @param message a non null message to filter.
      * @return <code>true</code> if the message matches the filter
      */

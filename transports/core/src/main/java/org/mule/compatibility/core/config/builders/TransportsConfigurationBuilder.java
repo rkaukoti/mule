@@ -9,7 +9,6 @@ package org.mule.compatibility.core.config.builders;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.endpoint.DefaultEndpointFactory;
 import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.registry.MuleRegistry;
 import org.mule.runtime.core.config.builders.DefaultsConfigurationBuilder;
 
 public class TransportsConfigurationBuilder extends DefaultsConfigurationBuilder

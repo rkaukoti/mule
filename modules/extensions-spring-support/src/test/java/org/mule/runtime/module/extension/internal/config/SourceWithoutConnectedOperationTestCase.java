@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.module.extension.internal.config;
 
+import org.junit.Test;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.tck.probe.JUnitLambdaProbe;
 import org.mule.tck.probe.PollingProber;
 import org.mule.test.vegan.extension.HarvestPeachesSource;
 import org.mule.test.vegan.extension.VeganExtension;
-
-import org.junit.Test;
 
 public class SourceWithoutConnectedOperationTestCase extends ExtensionFunctionalTestCase
 {

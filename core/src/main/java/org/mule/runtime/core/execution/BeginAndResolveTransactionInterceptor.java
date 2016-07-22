@@ -13,7 +13,6 @@ import org.mule.runtime.core.api.transaction.Transaction;
 import org.mule.runtime.core.api.transaction.TransactionConfig;
 import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.transaction.TransactionCoordination;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +25,8 @@ class BeginAndResolveTransactionInterceptor<T> implements ExecutionInterceptor<T
     private final boolean processOnException;
     private boolean mustResolveAnyTransaction;
 
-    BeginAndResolveTransactionInterceptor(ExecutionInterceptor next, TransactionConfig transactionConfig, MuleContext muleContext, boolean processOnException, boolean mustResolveAnyTransaction)
+    BeginAndResolveTransactionInterceptor(ExecutionInterceptor next, TransactionConfig transactionConfig, MuleContext muleContext,
+                                          boolean processOnException, boolean mustResolveAnyTransaction)
     {
         this.next = next;
         this.transactionConfig = transactionConfig;
@@ -44,7 +44,7 @@ class BeginAndResolveTransactionInterceptor<T> implements ExecutionInterceptor<T
         boolean resolveStartedTransaction = false;
         Transaction tx = TransactionCoordination.getInstance().getTransaction();
         if (action == TransactionConfig.ACTION_ALWAYS_BEGIN
-                || (action == TransactionConfig.ACTION_BEGIN_OR_JOIN && tx == null))
+            || (action == TransactionConfig.ACTION_BEGIN_OR_JOIN && tx == null))
         {
             if (logger.isDebugEnabled())
             {

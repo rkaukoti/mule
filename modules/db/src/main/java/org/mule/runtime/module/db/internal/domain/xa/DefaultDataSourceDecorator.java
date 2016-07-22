@@ -9,12 +9,11 @@ package org.mule.runtime.module.db.internal.domain.xa;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.util.Preconditions;
 import org.mule.runtime.module.db.internal.domain.connection.DbPoolingProfile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import javax.sql.XADataSource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Decorates a {@link DataSource} using a {@link DataSourceWrapper} if required
@@ -27,7 +26,8 @@ public class DefaultDataSourceDecorator implements DataSourceDecorator
     @Override
     public DataSource decorate(DataSource dataSource, String dataSourceName, DbPoolingProfile dbPoolingProfile, MuleContext muleContext)
     {
-        Preconditions.checkState(appliesTo(dataSource, muleContext), "DefaultDataSourceDecorator cannot be applied to data source " + dataSource);
+        Preconditions.checkState(appliesTo(dataSource, muleContext),
+                "DefaultDataSourceDecorator cannot be applied to data source " + dataSource);
         if (dbPoolingProfile != null)
         {
             logger.warn("Pooling profile configuration cannot be used with current transaction manager and XADataSource");

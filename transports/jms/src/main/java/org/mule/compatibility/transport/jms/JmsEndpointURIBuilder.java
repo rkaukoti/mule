@@ -23,7 +23,7 @@ public class JmsEndpointURIBuilder extends ResourceNameEndpointURIBuilder
     {
         super.setEndpoint(uri, props);
 
-		String oldUri = uri.toString();
+        String oldUri = uri.toString();
 
         String newUri = null;
         if (uri.getScheme().equals("topic"))
@@ -35,19 +35,19 @@ public class JmsEndpointURIBuilder extends ResourceNameEndpointURIBuilder
         {
             newUri = uri.toString().replace("queue://", "jms://");
         }//Added by Eugene - dynamic endpoints were resolved to jms://queue:// etc
-		else if (oldUri.startsWith("jms://queue://"))
-		{
-			newUri = uri.toString().replace("jms://queue://", "jms://queue:");
-		}
-		else if (oldUri.startsWith("jms://temp-queue://"))
-		{
-			newUri = uri.toString().replace("jms://temp-queue://", "jms://temp-queue:");
-		}
-		else if (oldUri.startsWith("jms://topic://"))
-		{
-			props.setProperty(RESOURCE_INFO_PROPERTY, "topic");
-			newUri = uri.toString().replace("jms://topic://", "jms://topic:");
-		}
+        else if (oldUri.startsWith("jms://queue://"))
+        {
+            newUri = uri.toString().replace("jms://queue://", "jms://queue:");
+        }
+        else if (oldUri.startsWith("jms://temp-queue://"))
+        {
+            newUri = uri.toString().replace("jms://temp-queue://", "jms://temp-queue:");
+        }
+        else if (oldUri.startsWith("jms://topic://"))
+        {
+            props.setProperty(RESOURCE_INFO_PROPERTY, "topic");
+            newUri = uri.toString().replace("jms://topic://", "jms://topic:");
+        }
 
         try
         {

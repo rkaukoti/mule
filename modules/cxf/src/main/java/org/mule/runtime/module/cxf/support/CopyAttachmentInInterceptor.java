@@ -6,18 +6,18 @@
  */
 package org.mule.runtime.module.cxf.support;
 
-import static com.google.common.net.HttpHeaders.CONTENT_TYPE;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.message.Attachment;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.AbstractPhaseInterceptor;
+import org.apache.cxf.phase.Phase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.cxf.CxfConstants;
 
 import java.util.Collection;
 
-import org.apache.cxf.interceptor.Fault;
-import org.apache.cxf.message.Attachment;
-import org.apache.cxf.message.Message;
-import org.apache.cxf.phase.AbstractPhaseInterceptor;
-import org.apache.cxf.phase.Phase;
+import static com.google.common.net.HttpHeaders.CONTENT_TYPE;
 
 public class CopyAttachmentInInterceptor extends AbstractPhaseInterceptor
 {

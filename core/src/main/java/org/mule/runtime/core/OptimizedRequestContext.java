@@ -8,7 +8,6 @@ package org.mule.runtime.core;
 
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,10 +21,8 @@ import org.slf4j.LoggerFactory;
  * unsafe (doesn't make a copy, use only where certain no threading); critical (safe,
  * documents that threading a known issue).</p>
  *
- * @deprecated
- *    If access to MuleEvent or MuleMessage is required,
- *    then implement a {@link org.mule.runtime.core.api.processor.MessageProcessor}
- *    or {@link org.mule.runtime.core.api.lifecycle.Callable} instead
+ * @deprecated If access to MuleEvent or MuleMessage is required, then implement a {@link org.mule.runtime.core.api.processor.MessageProcessor}
+ * or {@link org.mule.runtime.core.api.lifecycle.Callable} instead
  */
 @Deprecated
 public final class OptimizedRequestContext
@@ -86,5 +83,5 @@ public final class OptimizedRequestContext
             logger.debug(message, new Exception(message));
         }
     }
-    
+
 }

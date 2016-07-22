@@ -6,13 +6,14 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.executor;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.extension.api.runtime.operation.OperationExecutor;
 import org.mule.runtime.extension.api.runtime.operation.OperationExecutorFactory;
 
 import java.lang.reflect.Method;
+
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * An implementation of {@link OperationExecutorFactory} which produces instances
@@ -47,7 +48,8 @@ public final class ReflectiveOperationExecutorFactory<T> implements OperationExe
         }
         catch (Exception e)
         {
-            throw new MuleRuntimeException(createStaticMessage("Could not create instance of operation class " + implementationClass.getName()), e);
+            throw new MuleRuntimeException(
+                    createStaticMessage("Could not create instance of operation class " + implementationClass.getName()), e);
         }
 
         return new ReflectiveMethodOperationExecutor(operationMethod, delegate);

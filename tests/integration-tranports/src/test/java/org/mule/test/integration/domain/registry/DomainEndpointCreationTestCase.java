@@ -7,9 +7,7 @@
 
 package org.mule.test.integration.domain.registry;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-
+import org.junit.Test;
 import org.mule.compatibility.core.endpoint.AbstractEndpoint;
 import org.mule.functional.junit4.DomainFunctionalTestCase;
 import org.mule.runtime.core.api.MuleContext;
@@ -17,7 +15,8 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.source.MessageSource;
 import org.mule.runtime.core.construct.Flow;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class DomainEndpointCreationTestCase extends DomainFunctionalTestCase
 {
@@ -35,7 +34,7 @@ public class DomainEndpointCreationTestCase extends DomainFunctionalTestCase
     public ApplicationConfig[] getConfigResources()
     {
         return new ApplicationConfig[] {new ApplicationConfig(APP, APPLICATION_RESOURCES),
-        };
+                                        };
     }
 
     @Test

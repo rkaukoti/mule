@@ -6,9 +6,10 @@
  */
 package org.mule.runtime.module.launcher.domain;
 
-import static org.mule.runtime.module.launcher.MuleFoldersUtil.getDomainLibFolder;
 import org.mule.runtime.module.launcher.artifact.ArtifactStartedSplashScreen;
 import org.mule.runtime.module.launcher.descriptor.DomainDescriptor;
+
+import static org.mule.runtime.module.launcher.MuleFoldersUtil.getDomainLibFolder;
 
 /**
  * Splash screen specific for {@link Domain} startup.

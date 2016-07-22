@@ -6,19 +6,19 @@
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
-import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.PROCESSOR_IDENTIFIER;
-import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.QUEUE_STORE_IDENTIFIER;
-import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.TRANSFORMER_IDENTIFIER;
+import com.google.common.collect.ImmutableMap;
+
 import org.mule.runtime.config.spring.dsl.model.ComponentIdentifier;
 import org.mule.runtime.config.spring.dsl.model.ComponentModel;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.store.QueueStore;
-
-import com.google.common.collect.ImmutableMap;
+import org.springframework.beans.factory.config.RuntimeBeanReference;
 
 import java.util.function.Consumer;
 
-import org.springframework.beans.factory.config.RuntimeBeanReference;
+import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.PROCESSOR_IDENTIFIER;
+import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.QUEUE_STORE_IDENTIFIER;
+import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.TRANSFORMER_IDENTIFIER;
 
 /**
  * Bean definition creator for elements that are just containers for a reference
@@ -59,7 +59,8 @@ public class ReferenceBeanDefinitionCreator extends BeanDefinitionCreator
 
     private Consumer<ComponentModel> getConsumer(Class<?> componentModelType)
     {
-        return (componentModel) -> {
+        return (componentModel) ->
+        {
             componentModel.setBeanReference(new RuntimeBeanReference(componentModel.getParameters().get("ref")));
             componentModel.setType(componentModelType);
         };

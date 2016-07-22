@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode.functional;
 
-import org.mule.runtime.module.http.internal.request.ResponseValidatorException;
-import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ResourceOwnerOAuthContext;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mule.runtime.module.http.internal.request.ResponseValidatorException;
+import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ResourceOwnerOAuthContext;
 
 public class AuthorizationCodeRefreshTokenConfigTestCase extends AbstractAuthorizationCodeRefreshTokenConfigTestCase
 {
@@ -35,12 +34,12 @@ public class AuthorizationCodeRefreshTokenConfigTestCase extends AbstractAuthori
     /**
      * Refresh token is optional therefore this test will validate an scenario where the access_token is invalid and refresh_token
      * provided in previous token access has been revoked so a {@link ResponseValidatorException} should be thrown.
-     * @throws Exception
      */
     @Test
     public void afterFailureWithRefreshTokenNotIssuedThrowAuthenticationException() throws Exception
     {
         expectedException.expect(ResponseValidatorException.class);
-        executeRefreshTokenUsingOldRefreshTokenOnTokenCallAndRevokedByUsers("testFlow", SINGLE_TENANT_OAUTH_CONFIG, ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID, 403, 400);
+        executeRefreshTokenUsingOldRefreshTokenOnTokenCallAndRevokedByUsers("testFlow", SINGLE_TENANT_OAUTH_CONFIG,
+                ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID, 403, 400);
     }
 }

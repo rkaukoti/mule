@@ -6,13 +6,7 @@
  */
 package org.mule.compatibility.core.endpoint;
 
-import static java.nio.charset.StandardCharsets.US_ASCII;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.withSettings;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointMessageProcessorChainFactory;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
@@ -37,7 +31,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.US_ASCII;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.withSettings;
 
 public class EndpointTestCase extends AbstractMuleTestCase
 {
@@ -58,12 +57,12 @@ public class EndpointTestCase extends AbstractMuleTestCase
         final List<Transformer> inputTransformers = new ArrayList<>();
         final List<Transformer> outputTransformers = new ArrayList<>();
         final String name = "testEndpoint";
-        
+
         final Map<String, String> properties = new HashMap<>();
         final String property1 = "property1";
         final String value1 = "value1";
         properties.put(property1, value1);
-        
+
         final TransactionConfig mockTransactionConfig = mock(TransactionConfig.class);
         final boolean deleteUnacceptedMessages = true;
         final EndpointSecurityFilter mockEndpointSecurityFilter = mock(EndpointSecurityFilter.class);
@@ -114,11 +113,11 @@ public class EndpointTestCase extends AbstractMuleTestCase
         // Creates the endpoint using the transformers which will validate the
         // configuration
         new AbstractEndpoint(mockConnector, uri, name, properties,
-            mockTransactionConfig, deleteUnacceptedMessages, 
-            messageExchangePattern, responseTimeout, initialState, endpointEncoding, 
-            endpointBuilderName, muleContext, retryPolicyTemplate, redeliveryPolicy, messageProcessorsFactory,
-            messageProcessors, responseMessageProcessors, disableTransportTransformer,
-            mimeType)
+                mockTransactionConfig, deleteUnacceptedMessages,
+                messageExchangePattern, responseTimeout, initialState, endpointEncoding,
+                endpointBuilderName, muleContext, retryPolicyTemplate, redeliveryPolicy, messageProcessorsFactory,
+                messageProcessors, responseMessageProcessors, disableTransportTransformer,
+                mimeType)
         {
             @Override
             protected MessageProcessor createMessageProcessorChain(FlowConstruct flowConstruct) throws MuleException

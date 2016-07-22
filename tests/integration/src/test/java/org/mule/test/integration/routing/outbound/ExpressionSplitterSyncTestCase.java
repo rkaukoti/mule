@@ -6,13 +6,10 @@
  */
 package org.mule.test.integration.routing.outbound;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import org.mule.runtime.core.api.MuleMessage;
+import org.junit.Test;
 import org.mule.functional.functional.FlowAssert;
 import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleMessage;
 import org.mule.tck.testmodels.fruit.Apple;
 import org.mule.tck.testmodels.fruit.Banana;
 import org.mule.tck.testmodels.fruit.FruitBowl;
@@ -20,7 +17,9 @@ import org.mule.tck.testmodels.fruit.Orange;
 
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class ExpressionSplitterSyncTestCase extends FunctionalTestCase
 {
@@ -28,7 +27,7 @@ public class ExpressionSplitterSyncTestCase extends FunctionalTestCase
     @Override
     protected String getConfigFile()
     {
-        return  "org/mule/test/integration/routing/outbound/expression-splitter-sync-test-flow.xml";
+        return "org/mule/test/integration/routing/outbound/expression-splitter-sync-test-flow.xml";
     }
 
     @Test

@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.source;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleRuntimeException;
@@ -16,6 +15,8 @@ import org.mule.runtime.extension.api.runtime.source.Source;
 import org.mule.runtime.module.extension.internal.runtime.ParameterGroupAwareObjectBuilder;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSet;
 import org.mule.runtime.module.extension.internal.util.MuleExtensionUtils;
+
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * Resolves and injects the values of a {@link Source} that has fields annotated
@@ -49,18 +50,18 @@ public final class SourceConfigurer
      *
      * @param source a {@link Source}
      * @return the configured instance
-     * @throws MuleException
      */
     public Source configure(Source source) throws MuleException
     {
-        ParameterGroupAwareObjectBuilder<Source> builder = new ParameterGroupAwareObjectBuilder<Source>(source.getClass(), model, resolverSet)
-        {
-            @Override
-            protected Source instantiateObject()
-            {
-                return source;
-            }
-        };
+        ParameterGroupAwareObjectBuilder<Source> builder =
+                new ParameterGroupAwareObjectBuilder<Source>(source.getClass(), model, resolverSet)
+                {
+                    @Override
+                    protected Source instantiateObject()
+                    {
+                        return source;
+                    }
+                };
 
         try
         {

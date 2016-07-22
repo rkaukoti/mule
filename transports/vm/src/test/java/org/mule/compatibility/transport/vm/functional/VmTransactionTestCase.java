@@ -6,22 +6,22 @@
  */
 package org.mule.compatibility.transport.vm.functional;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.transaction.TransactionCoordination;
-
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class VmTransactionTestCase extends FunctionalTestCase
 {
 
-    protected static volatile boolean serviceComponentAck = false;
     protected static final Logger logger = LoggerFactory.getLogger(VmTransactionTestCase.class);
+    protected static volatile boolean serviceComponentAck = false;
 
     @Override
     protected String getConfigFile()

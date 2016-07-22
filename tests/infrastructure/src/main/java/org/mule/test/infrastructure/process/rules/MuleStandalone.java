@@ -6,9 +6,8 @@
  */
 package org.mule.test.infrastructure.process.rules;
 
-import org.mule.test.infrastructure.process.MuleProcessController;
-
 import org.junit.rules.ExternalResource;
+import org.mule.test.infrastructure.process.MuleProcessController;
 
 /**
  * This is a JUnit rule to start and stop Mule Runtime during tests. Usage:

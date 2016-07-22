@@ -6,9 +6,7 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.functional.functional.EventCallback;
 import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.functional.junit4.FunctionalTestCase;
@@ -20,11 +18,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class WorkDirectoryTestCase extends FunctionalTestCase
 {
-    
+
     private static final String TEST_FILENAME = "test.txt";
 
 
@@ -63,12 +62,12 @@ public class WorkDirectoryTestCase extends FunctionalTestCase
                         return;
                     }
                 }
-                
+
                 fail("no work dir file matching filename " + TEST_FILENAME);
             }
         });
-        
-        writeTestMessageToInputDirectory();        
+
+        writeTestMessageToInputDirectory();
         checkOutputDirectory();
     }
 
@@ -99,11 +98,11 @@ public class WorkDirectoryTestCase extends FunctionalTestCase
                     }
                 }
             }
-            
+
             Thread.sleep(1000);
         }
 
         fail("no file with name " + TEST_FILENAME + " in output directory");
     }
-    
+
 }

@@ -6,11 +6,9 @@
  */
 package org.mule.runtime.module.extension.internal.capability.xml;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.extension.api.util.NameUtils.hyphenize;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.extension.api.annotation.capability.Xml;
 import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclarer;
 import org.mule.runtime.extension.api.introspection.declaration.spi.ModelEnricher;
@@ -21,9 +19,11 @@ import org.mule.runtime.module.extension.internal.model.property.ImplementingTyp
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.extension.api.util.NameUtils.hyphenize;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -56,8 +56,8 @@ public class XmlModelEnricherTestCase extends AbstractMuleTestCase
         assertThat(xmlProperty.getNamespaceUri(), is(NAMESPACE_LOCATION));
         assertThat(xmlProperty.getXsdFileName(), is(String.format(XSD_FILENAME_MASK, NAMESPACE)));
         assertThat(xmlProperty.getSchemaLocation(), is(String.format(DEFAULT_SCHEMA_LOCATION_MASK,
-                                                                     NAMESPACE_LOCATION,
-                                                                     String.format(XSD_FILENAME_MASK, NAMESPACE))));
+                NAMESPACE_LOCATION,
+                String.format(XSD_FILENAME_MASK, NAMESPACE))));
     }
 
     @Test
@@ -72,8 +72,8 @@ public class XmlModelEnricherTestCase extends AbstractMuleTestCase
         assertThat(xmlProperty.getNamespaceUri(), equalTo(String.format(DEFAULT_NAMESPACE_LOCATION_MASK, EXTENSION_HYPHENAZED_NAME)));
         assertThat(xmlProperty.getXsdFileName(), is(String.format(XSD_FILENAME_MASK, EXTENSION_HYPHENAZED_NAME)));
         assertThat(xmlProperty.getSchemaLocation(), is(String.format(DEFAULT_SCHEMA_LOCATION_MASK,
-                                                                     String.format(DEFAULT_NAMESPACE_LOCATION_MASK, EXTENSION_HYPHENAZED_NAME),
-                                                                     String.format(XSD_FILENAME_MASK, EXTENSION_HYPHENAZED_NAME))));
+                String.format(DEFAULT_NAMESPACE_LOCATION_MASK, EXTENSION_HYPHENAZED_NAME),
+                String.format(XSD_FILENAME_MASK, EXTENSION_HYPHENAZED_NAME))));
     }
 
     @Test
@@ -88,8 +88,8 @@ public class XmlModelEnricherTestCase extends AbstractMuleTestCase
         assertThat(xmlProperty.getNamespaceUri(), equalTo(String.format(DEFAULT_NAMESPACE_LOCATION_MASK, NAMESPACE)));
         assertThat(xmlProperty.getXsdFileName(), is(String.format(XSD_FILENAME_MASK, NAMESPACE)));
         assertThat(xmlProperty.getSchemaLocation(), is(String.format(DEFAULT_SCHEMA_LOCATION_MASK,
-                                                                     String.format(DEFAULT_NAMESPACE_LOCATION_MASK, NAMESPACE),
-                                                                     String.format(XSD_FILENAME_MASK, NAMESPACE))));
+                String.format(DEFAULT_NAMESPACE_LOCATION_MASK, NAMESPACE),
+                String.format(XSD_FILENAME_MASK, NAMESPACE))));
     }
 
     @Test
@@ -104,8 +104,8 @@ public class XmlModelEnricherTestCase extends AbstractMuleTestCase
         assertThat(xmlProperty.getNamespaceUri(), equalTo(NAMESPACE_LOCATION));
         assertThat(xmlProperty.getXsdFileName(), is(String.format(XSD_FILENAME_MASK, hyphenize(EXTENSION))));
         assertThat(xmlProperty.getSchemaLocation(), is(String.format(DEFAULT_SCHEMA_LOCATION_MASK,
-                                                                     NAMESPACE_LOCATION,
-                                                                     String.format(XSD_FILENAME_MASK, hyphenize(EXTENSION)))));
+                NAMESPACE_LOCATION,
+                String.format(XSD_FILENAME_MASK, hyphenize(EXTENSION)))));
     }
 
     private XmlModelProperty enrich(Class<?> type)

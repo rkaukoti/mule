@@ -35,6 +35,7 @@ final class VoidReturnDelegate implements ReturnDelegate
 
     /**
      * {@inheritDoc}
+     *
      * @return {@link OperationContextAdapter#getEvent()}
      */
     @Override

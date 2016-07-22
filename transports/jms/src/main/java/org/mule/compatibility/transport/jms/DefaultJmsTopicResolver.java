@@ -9,13 +9,12 @@ package org.mule.compatibility.transport.jms;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
 import org.mule.runtime.core.util.MapUtils;
 import org.mule.runtime.core.util.StringMessageUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.jms.Destination;
 import javax.jms.Queue;
 import javax.jms.Topic;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A default implementation of the resolver uses endpoint's
@@ -36,9 +35,10 @@ public class DefaultJmsTopicResolver implements JmsTopicResolver
 
     /**
      * Create an instance of the resolver.
+     *
      * @param connector owning connector
      */
-    public DefaultJmsTopicResolver (final JmsConnector connector)
+    public DefaultJmsTopicResolver(final JmsConnector connector)
     {
         this.connector = connector;
     }
@@ -49,7 +49,7 @@ public class DefaultJmsTopicResolver implements JmsTopicResolver
      *
      * @return Value for property 'connector'.
      */
-    public JmsConnector getConnector ()
+    public JmsConnector getConnector()
     {
         return connector;
     }
@@ -62,25 +62,28 @@ public class DefaultJmsTopicResolver implements JmsTopicResolver
      * <p/>
      * <strong>NOTE:</strong> When using topics, use the '.' (dot) symbol for subcontext separation,
      * as opposed to '/'. Otherwise the resource info may not get properly translated for the
-     * topic endpoint due to the way URI's are parsed. 
+     * topic endpoint due to the way URI's are parsed.
+     *
      * @param endpoint endpoint to test
      * @return true if the endpoint has a topic configuration
-     * @see #isTopic(org.mule.api.endpoint.ImmutableEndpoint, boolean) 
+     * @see #isTopic(org.mule.api.endpoint.ImmutableEndpoint, boolean)
      */
     @Override
-    public boolean isTopic (ImmutableEndpoint endpoint)
+    public boolean isTopic(ImmutableEndpoint endpoint)
     {
         return isTopic(endpoint, true);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean isTopic (ImmutableEndpoint endpoint, boolean fallbackToEndpointProperties)
+    public boolean isTopic(ImmutableEndpoint endpoint, boolean fallbackToEndpointProperties)
     {
         String resourceInfo = endpoint.getEndpointURI().getResourceInfo();
 
         boolean topic = JmsConstants.TOPIC_PROPERTY.equalsIgnoreCase(resourceInfo) ||
-                endpoint.getEndpointURI().toString().contains(JmsConstants.TOPIC_PROPERTY + ":");
+                        endpoint.getEndpointURI().toString().contains(JmsConstants.TOPIC_PROPERTY + ":");
         if (!topic && fallbackToEndpointProperties)
         {
             topic = MapUtils.getBooleanValue(endpoint.getProperties(), JmsConstants.TOPIC_PROPERTY, false);
@@ -94,11 +97,12 @@ public class DefaultJmsTopicResolver implements JmsTopicResolver
      * that may fail for JMS systems implementing both a
      * {@code javax.jms.Topic} and {@code javax.jms.Queue} in
      * a single destination class implementation.
+     *
      * @param destination a jms destination to test
      * @return {@code true} if the destination is a topic
      */
     @Override
-    public boolean isTopic (Destination destination)
+    public boolean isTopic(Destination destination)
     {
         checkInvariants(destination);
 
@@ -107,9 +111,10 @@ public class DefaultJmsTopicResolver implements JmsTopicResolver
 
     /**
      * Perform some sanity checks, will complain in the log.
+     *
      * @param destination destination to test
      */
-    protected void checkInvariants (final Destination destination)
+    protected void checkInvariants(final Destination destination)
     {
         if (destination instanceof Topic && destination instanceof Queue
             && connector.getJmsSupport() instanceof Jms102bSupport)

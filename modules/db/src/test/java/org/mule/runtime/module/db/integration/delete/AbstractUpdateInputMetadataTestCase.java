@@ -7,20 +7,21 @@
 
 package org.mule.runtime.module.db.integration.delete;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.common.Result;
 import org.mule.common.metadata.DefinedMapMetaDataModel;
 import org.mule.common.metadata.MetaData;
 import org.mule.common.metadata.MetaDataModel;
 import org.mule.common.metadata.datatype.DataType;
+import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import org.mule.runtime.module.db.internal.processor.AbstractSingleQueryDbMessageProcessor;
 
 import java.util.List;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public abstract class AbstractUpdateInputMetadataTestCase extends AbstractDbIntegrationTestCase
 {

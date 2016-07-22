@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ConcurrentHashSet/* <E> */extends AbstractSet/* <E> */implements Set/* <E> */, Serializable
+public class ConcurrentHashSet/* <E> */ extends AbstractSet/* <E> */ implements Set/* <E> */, Serializable
 {
     private static final long serialVersionUID = 2454657854757543876L;
 

@@ -8,7 +8,7 @@ package org.mule.test.metadata.extension.model.shapes;
 
 public abstract class Shape
 {
-     private String color;
+    private String color;
 
     public String getColor()
     {

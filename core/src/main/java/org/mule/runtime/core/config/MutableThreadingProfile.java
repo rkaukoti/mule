@@ -22,21 +22,21 @@ import java.util.concurrent.ThreadFactory;
  * reconfigure a thread pool (if the latter supports it).<p/>
  * <p/>The following parameters are copied locally and can be modified directly:
  * <ul>
- *  <li>{@link #maxThreadsActive}
- *  <li>{@link #maxThreadsIdle}
- *  <li>{@link #maxBufferSize}
- *  <li>{@link #threadTTL}
- *  <li>{@link #threadWaitTimeout}
- *  <li>{@link #poolExhaustedAction}
- *  <li>{@link #doThreading}
+ * <li>{@link #maxThreadsActive}
+ * <li>{@link #maxThreadsIdle}
+ * <li>{@link #maxBufferSize}
+ * <li>{@link #threadTTL}
+ * <li>{@link #threadWaitTimeout}
+ * <li>{@link #poolExhaustedAction}
+ * <li>{@link #doThreading}
  * </ul>
  * <p/>The following parameters re-use the same object reference as the original threading
  * profile and <strong>are not deep clones</strong> of those:
  * <ul>
- *  <li>{@link #poolFactory}
- *  <li>{@link #workManagerFactory}
- *  <li>{@link #rejectedExecutionHandler}
- *  <li>{@link #threadFactory}
+ * <li>{@link #poolFactory}
+ * <li>{@link #workManagerFactory}
+ * <li>{@link #rejectedExecutionHandler}
+ * <li>{@link #threadFactory}
  * </ul>
  */
 public class MutableThreadingProfile implements ThreadingProfile
@@ -81,39 +81,14 @@ public class MutableThreadingProfile implements ThreadingProfile
         return maxThreadsActive;
     }
 
-    public int getMaxThreadsIdle()
-    {
-        return maxThreadsIdle;
-    }
-
-    public long getThreadTTL()
-    {
-        return threadTTL;
-    }
-
-    public long getThreadWaitTimeout()
-    {
-        return threadWaitTimeout;
-    }
-
-    public int getPoolExhaustedAction()
-    {
-        return poolExhaustedAction;
-    }
-
-    public RejectedExecutionHandler getRejectedExecutionHandler()
-    {
-        return rejectedExecutionHandler;
-    }
-
-    public ThreadFactory getThreadFactory()
-    {
-        return threadFactory;
-    }
-
     public void setMaxThreadsActive(int maxThreadsActive)
     {
         this.maxThreadsActive = maxThreadsActive;
+    }
+
+    public int getMaxThreadsIdle()
+    {
+        return maxThreadsIdle;
     }
 
     public void setMaxThreadsIdle(int maxThreadsIdle)
@@ -121,9 +96,19 @@ public class MutableThreadingProfile implements ThreadingProfile
         this.maxThreadsIdle = maxThreadsIdle;
     }
 
+    public long getThreadTTL()
+    {
+        return threadTTL;
+    }
+
     public void setThreadTTL(long threadTTL)
     {
         this.threadTTL = threadTTL;
+    }
+
+    public long getThreadWaitTimeout()
+    {
+        return threadWaitTimeout;
     }
 
     public void setThreadWaitTimeout(long threadWaitTimeout)
@@ -131,14 +116,29 @@ public class MutableThreadingProfile implements ThreadingProfile
         this.threadWaitTimeout = threadWaitTimeout;
     }
 
+    public int getPoolExhaustedAction()
+    {
+        return poolExhaustedAction;
+    }
+
     public void setPoolExhaustedAction(int poolExhaustedAction)
     {
         this.poolExhaustedAction = poolExhaustedAction;
     }
 
+    public RejectedExecutionHandler getRejectedExecutionHandler()
+    {
+        return rejectedExecutionHandler;
+    }
+
     public void setRejectedExecutionHandler(RejectedExecutionHandler rejectedExecutionHandler)
     {
         this.rejectedExecutionHandler = rejectedExecutionHandler;
+    }
+
+    public ThreadFactory getThreadFactory()
+    {
+        return threadFactory;
     }
 
     public void setThreadFactory(ThreadFactory threadFactory)
@@ -194,16 +194,16 @@ public class MutableThreadingProfile implements ThreadingProfile
     @Override
     public ScheduledExecutorService createScheduledPool(String name)
     {
-        return poolFactory.createScheduledPool(name,new ImmutableThreadingProfile(this));
-    }
-
-    public void setMuleContext(MuleContext muleContext)
-    {
-        this.muleContext = muleContext;
+        return poolFactory.createScheduledPool(name, new ImmutableThreadingProfile(this));
     }
 
     public MuleContext getMuleContext()
     {
         return muleContext;
+    }
+
+    public void setMuleContext(MuleContext muleContext)
+    {
+        this.muleContext = muleContext;
     }
 }

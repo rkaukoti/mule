@@ -6,10 +6,7 @@
  */
 package org.mule.compatibility.transport.vm.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -19,7 +16,10 @@ import java.io.File;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class VMAttachmentsTestCase extends FunctionalTestCase
 {
@@ -35,7 +35,8 @@ public class VMAttachmentsTestCase extends FunctionalTestCase
     {
         FileDataSource ds = new FileDataSource(new File("transports/vm/src/test/resources/"
                                                         + getConfigFile()).getAbsoluteFile());
-        MuleMessage msg = MuleMessage.builder().payload("Mmm... attachments!").addOutboundAttachment("test-attachment", new DataHandler(ds)).build();
+        MuleMessage msg =
+                MuleMessage.builder().payload("Mmm... attachments!").addOutboundAttachment("test-attachment", new DataHandler(ds)).build();
 
         MuleClient client = muleContext.getClient();
         MuleMessage reply = client.send("vm-in", msg);

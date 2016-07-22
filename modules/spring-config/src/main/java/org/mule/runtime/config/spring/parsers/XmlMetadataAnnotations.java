@@ -15,34 +15,33 @@ import java.util.Map;
 public interface XmlMetadataAnnotations
 {
     public static final String METADATA_ANNOTATIONS_KEY = "metadataAnnotations";
-    
+
     /**
      * Builds the opening tag of the xml element.
-     * 
+     *
      * @param qName the qualified name of the element
-     * @param atts the attributes of the element, with the qualified name as key
+     * @param atts  the attributes of the element, with the qualified name as key
      */
     void appendElementStart(String qName, Map<String, String> atts);
 
     /**
      * Adds the body of the xml tag.
-     * 
+     *
      * @param elementBody the body content to be added
      */
     void appendElementBody(String elementBody);
 
     /**
      * Builds the closing tag of the xml element.
-     * 
+     *
      * @param qName the qualified name of the element
      */
     void appendElementEnd(String qName);
 
     /**
      * @return the reconstruction of the declaration of the element in its source xml file.
-     *         <p/>
-     *         Note that the order of the elements may be different, and any implicit attributes with default values
-     *         will be included.
+     * <p/>
+     * Note that the order of the elements may be different, and any implicit attributes with default values will be included.
      */
     String getElementString();
 

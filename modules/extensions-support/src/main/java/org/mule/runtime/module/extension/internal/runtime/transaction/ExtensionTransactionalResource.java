@@ -82,7 +82,6 @@ public class ExtensionTransactionalResource<T extends TransactionalConnection> i
 
     /**
      * @return whether the transaction is commited or rolled back
-     * @throws TransactionException
      */
     public boolean isTransactionResolved() throws TransactionException
     {

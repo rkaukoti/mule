@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:jms="http://www.mulesoft.org/schema/mule/transport/jms"
-    xmlns:spring="http://www.springframework.org/schema/beans"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:test="http://www.mulesoft.org/schema/mule/test"
-    xsi:schemaLocation="
-    http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-    http://www.mulesoft.org/schema/mule/transport/jms http://www.mulesoft.org/schema/mule/transport/jms/current/mule-transport-jms.xsd
-    http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
-    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
-    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd">
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:jms="http://www.mulesoft.org/schema/mule/transport/jms"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+    http://www.mulesoft.org/schema/mule/transport/jms http://www.mulesoft.org/schema/mule/transport/jms/current/mule-transport-jms.xsd">
 
-    <jms:activemq-connector name="jmsConnector" maxRedelivery="0" />
+    <jms:activemq-connector name="jmsConnector" maxRedelivery="0"/>
 
     <jms:endpoint name="jmsInTx" queue="in">
-        <jms:transaction action="ALWAYS_BEGIN" />
+        <jms:transaction action="ALWAYS_BEGIN"/>
     </jms:endpoint>
 
     <jms:endpoint name="jmsOutTx" queue="out">

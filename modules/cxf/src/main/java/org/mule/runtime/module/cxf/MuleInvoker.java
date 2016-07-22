@@ -6,6 +6,17 @@
  */
 package org.mule.runtime.module.cxf;
 
+import org.apache.cxf.common.util.PropertyUtils;
+import org.apache.cxf.frontend.MethodDispatcher;
+import org.apache.cxf.helpers.CastUtils;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.message.Exchange;
+import org.apache.cxf.message.FaultMode;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.message.MessageContentsList;
+import org.apache.cxf.service.Service;
+import org.apache.cxf.service.invoker.Invoker;
+import org.apache.cxf.service.model.BindingOperationInfo;
 import org.mule.runtime.core.NonBlockingVoidMuleEvent;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
@@ -22,18 +33,6 @@ import java.util.List;
 
 import javax.script.ScriptException;
 
-import org.apache.cxf.common.util.PropertyUtils;
-import org.apache.cxf.frontend.MethodDispatcher;
-import org.apache.cxf.helpers.CastUtils;
-import org.apache.cxf.interceptor.Fault;
-import org.apache.cxf.message.Exchange;
-import org.apache.cxf.message.FaultMode;
-import org.apache.cxf.message.Message;
-import org.apache.cxf.message.MessageContentsList;
-import org.apache.cxf.service.Service;
-import org.apache.cxf.service.invoker.Invoker;
-import org.apache.cxf.service.model.BindingOperationInfo;
-
 /**
  * Invokes a Mule Service via a CXF binding.
  */
@@ -41,11 +40,74 @@ public class MuleInvoker implements Invoker
 {
     private final CxfInboundMessageProcessor cxfMmessageProcessor;
     private Class<?> targetClass;
-    
+
     public MuleInvoker(CxfInboundMessageProcessor cxfMmessageProcessor, Class<?> targetClass)
     {
         this.cxfMmessageProcessor = cxfMmessageProcessor;
         this.targetClass = targetClass;
+    }
+
+    /**
+     * Returns a Method that has the same declaring class as the class of
+     * targetObject to avoid the IllegalArgumentException when invoking the
+     * method on the target object. The methodToMatch will be returned if the
+     * targetObject doesn't have a similar method.
+     *
+     * @param methodToMatch The method to be used when finding a matching method in targetObject
+     * @param targetClass   The class to search in for the method.
+     * @return The methodToMatch if no such method exist in the class of targetObject; otherwise, a method from the class of targetObject
+     * matching the matchToMethod method.
+     */
+    private static Method matchMethod(Method methodToMatch, Class<?> targetClass)
+    {
+        for (Class<?> iface : targetClass.getInterfaces())
+        {
+            Method m = getMostSpecificMethod(methodToMatch, iface);
+            if (!methodToMatch.equals(m))
+            {
+                return m;
+            }
+        }
+        return methodToMatch;
+    }
+
+    /**
+     * Return whether the given object is a J2SE dynamic proxy.
+     *
+     * @param object the object to check
+     * @see java.lang.reflect.Proxy#isProxyClass
+     */
+    public static boolean isJdkDynamicProxy(Object object)
+    {
+        return object != null && Proxy.isProxyClass(object.getClass());
+    }
+
+    /**
+     * Given a method, which may come from an interface, and a targetClass used
+     * in the current AOP invocation, find the most specific method if there is
+     * one. E.g. the method may be IFoo.bar() and the target class may be
+     * DefaultFoo. In this case, the method may be DefaultFoo.bar(). This
+     * enables attributes on that method to be found.
+     *
+     * @param method      method to be invoked, which may come from an interface
+     * @param targetClass target class for the curren invocation. May be <code>null</code> or may not even implement the method.
+     * @return the more specific method, or the original method if the targetClass doesn't specialize it or implement it or is null
+     */
+    public static Method getMostSpecificMethod(Method method, Class<?> targetClass)
+    {
+        if (method != null && targetClass != null)
+        {
+            try
+            {
+                method = targetClass.getMethod(method.getName(), method.getParameterTypes());
+            }
+            catch (NoSuchMethodException ex)
+            {
+                // Perhaps the target class doesn't implement this method:
+                // that's fine, just use the original method
+            }
+        }
+        return method;
     }
 
     @Override
@@ -87,7 +149,9 @@ public class MuleInvoker implements Invoker
                     event.setFlowVariable(CxfConstants.INBOUND_SERVICE, svc.getName());
                 }
 
-                ErrorHandlingExecutionTemplate errorHandlingExecutionTemplate = ErrorHandlingExecutionTemplate.createErrorHandlingExecutionTemplate(event.getMuleContext(), event.getFlowConstruct().getExceptionListener());
+                ErrorHandlingExecutionTemplate errorHandlingExecutionTemplate =
+                        ErrorHandlingExecutionTemplate.createErrorHandlingExecutionTemplate(event.getMuleContext(),
+                                event.getFlowConstruct().getExceptionListener());
                 responseEvent = errorHandlingExecutionTemplate.execute(() -> cxfMmessageProcessor.processNext(event));
             }
             catch (MuleException e)
@@ -97,17 +161,18 @@ public class MuleInvoker implements Invoker
                 Throwable cause = e;
 
                 // See MULE-6329
-                if(Boolean.valueOf((String) event.getFlowVariable(CxfConstants.UNWRAP_MULE_EXCEPTIONS)))
+                if (Boolean.valueOf((String) event.getFlowVariable(CxfConstants.UNWRAP_MULE_EXCEPTIONS)))
                 {
                     cause = ExceptionHelper.getNonMuleException(e);
                     // Exceptions thrown from a ScriptComponent or a ScriptTransformer are going to be wrapped on a
                     // ScriptException
-                    if(cause instanceof ScriptException && cause.getCause() != null)
+                    if (cause instanceof ScriptException && cause.getCause() != null)
                     {
                         cause = cause.getCause();
                     }
                 }
-                else if(e instanceof ComponentException) {
+                else if (e instanceof ComponentException)
+                {
                     cause = e.getCause();
                 }
 
@@ -157,16 +222,16 @@ public class MuleInvoker implements Invoker
             }
             else if (resMessage.getPayload() == null)
             {
-                return new MessageContentsList((Object)null);
+                return new MessageContentsList((Object) null);
             }
             else if (cxfMmessageProcessor.isProxy())
             {
                 resMessage.getPayload();
-                return new Object[] { resMessage };
+                return new Object[] {resMessage};
             }
             else
             {
-                return new Object[]{resMessage.getPayload()};
+                return new Object[] {resMessage.getPayload()};
             }
         }
         else
@@ -182,7 +247,7 @@ public class MuleInvoker implements Invoker
     }
 
     protected Object extractPayload(Message cxfMessage)
-    {   
+    {
         List<Object> list = CastUtils.cast(cxfMessage.getContent(List.class));
         if (list == null)
         {
@@ -197,7 +262,7 @@ public class MuleInvoker implements Invoker
                 return new Object[0];
             }
         }
-        
+
         if ((list.size() == 1) && (list.get(0) != null))
         {
             return list.get(0);
@@ -206,67 +271,5 @@ public class MuleInvoker implements Invoker
         {
             return list.toArray();
         }
-    }
-
-    /**
-     * Returns a Method that has the same declaring class as the class of
-     * targetObject to avoid the IllegalArgumentException when invoking the
-     * method on the target object. The methodToMatch will be returned if the
-     * targetObject doesn't have a similar method.
-     * 
-     * @param methodToMatch The method to be used when finding a matching method
-     *            in targetObject
-     * @param targetClass The class to search in for the method.
-     * @return The methodToMatch if no such method exist in the class of
-     *         targetObject; otherwise, a method from the class of targetObject
-     *         matching the matchToMethod method.
-     */
-    private static Method matchMethod(Method methodToMatch, Class<?> targetClass) 
-    {
-        for (Class<?> iface : targetClass.getInterfaces())
-        {
-            Method m = getMostSpecificMethod(methodToMatch, iface);
-            if (!methodToMatch.equals(m)) 
-            {
-                return m;
-            }
-        }
-        return methodToMatch;
-    }
-
-    /**
-     * Return whether the given object is a J2SE dynamic proxy.
-     * 
-     * @param object the object to check
-     * @see java.lang.reflect.Proxy#isProxyClass
-     */
-    public static boolean isJdkDynamicProxy(Object object) 
-    {
-        return object != null && Proxy.isProxyClass(object.getClass());
-    }
-
-    /**
-     * Given a method, which may come from an interface, and a targetClass used
-     * in the current AOP invocation, find the most specific method if there is
-     * one. E.g. the method may be IFoo.bar() and the target class may be
-     * DefaultFoo. In this case, the method may be DefaultFoo.bar(). This
-     * enables attributes on that method to be found.
-     * 
-     * @param method method to be invoked, which may come from an interface
-     * @param targetClass target class for the curren invocation. May be
-     *            <code>null</code> or may not even implement the method.
-     * @return the more specific method, or the original method if the
-     *         targetClass doesn't specialize it or implement it or is null
-     */
-    public static Method getMostSpecificMethod(Method method, Class<?> targetClass) {
-        if (method != null && targetClass != null) {
-            try {
-                method = targetClass.getMethod(method.getName(), method.getParameterTypes());
-            } catch (NoSuchMethodException ex) {
-                // Perhaps the target class doesn't implement this method:
-                // that's fine, just use the original method
-            }
-        }
-        return method;
     }
 }

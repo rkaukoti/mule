@@ -41,18 +41,20 @@ import javax.jms.Topic;
 public class TransactedSingleResourceJmsMessageReceiver extends AbstractMessageReceiver
         implements MessageListener
 {
+    private final boolean topic;
     protected JmsConnector connector;
     protected RedeliveryHandler redeliveryHandler;
     protected MessageConsumer consumer;
     protected Session session;
     protected boolean startOnConnect = false;
-
-    /** determines whether messages will be received in a transaction template */
+    /**
+     * determines whether messages will be received in a transaction template
+     */
     protected boolean receiveMessagesInTransaction = true;
-
-    /** determines whether Multiple receivers are created to improve throughput */
+    /**
+     * determines whether Multiple receivers are created to improve throughput
+     */
     protected boolean useMultipleReceivers = true;
-    private final boolean topic;
 
 
     public TransactedSingleResourceJmsMessageReceiver(Connector connector,
@@ -124,7 +126,7 @@ public class TransactedSingleResourceJmsMessageReceiver extends AbstractMessageR
             {
                 durableName = "mule." + connector.getName() + "." + endpoint.getEndpointURI().getAddress();
                 logger.debug("Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: "
-                        + durableName);
+                             + durableName);
             }
 
             // Create consumer
@@ -248,11 +250,11 @@ public class TransactedSingleResourceJmsMessageReceiver extends AbstractMessageR
                     if (logger.isDebugEnabled())
                     {
                         logger.debug("Message received it is of type: " +
-                                ClassUtils.getSimpleName(message.getClass()));
+                                     ClassUtils.getSimpleName(message.getClass()));
                         if (message.getJMSDestination() != null)
                         {
                             logger.debug("Message received on " + message.getJMSDestination() + " ("
-                                    + message.getJMSDestination().getClass().getName() + ")");
+                                         + message.getJMSDestination().getClass().getName() + ")");
                         }
                         else
                         {
@@ -267,8 +269,8 @@ public class TransactedSingleResourceJmsMessageReceiver extends AbstractMessageR
                         if (logger.isDebugEnabled())
                         {
                             logger.debug("Message with correlationId: "
-                                    + message.getJMSCorrelationID()
-                                    + " is redelivered. handing off to Exception Handler");
+                                         + message.getJMSCorrelationID()
+                                         + " is redelivered. handing off to Exception Handler");
                         }
                         redeliveryHandler.handleRedelivery(message, receiver.getEndpoint(), receiver.getFlowConstruct());
                     }

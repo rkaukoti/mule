@@ -6,13 +6,8 @@
  */
 package org.mule.runtime.config.spring.factories;
 
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-
+import org.hamcrest.core.IsNull;
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleContext;
 import org.mule.runtime.core.context.DefaultMuleContextFactory;
 import org.mule.tck.junit4.AbstractMuleTestCase;
@@ -20,8 +15,12 @@ import org.mule.tck.testmodels.mule.TestTransactionManagerFactory;
 
 import javax.transaction.TransactionManager;
 
-import org.hamcrest.core.IsNull;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 public class TransactionManagerFactoryBeanTestCase extends AbstractMuleTestCase
 {

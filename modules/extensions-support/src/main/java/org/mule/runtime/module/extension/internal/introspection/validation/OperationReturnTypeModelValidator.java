@@ -6,7 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
-import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
+import com.google.common.collect.ImmutableList;
+
 import org.mule.runtime.api.message.MuleEvent;
 import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.extension.api.exception.IllegalModelDefinitionException;
@@ -15,9 +16,9 @@ import org.mule.runtime.extension.api.introspection.operation.OperationModel;
 import org.mule.runtime.module.extension.internal.exception.IllegalOperationModelDefinitionException;
 import org.mule.runtime.module.extension.internal.util.IdempotentExtensionWalker;
 
-import com.google.common.collect.ImmutableList;
-
 import java.util.List;
+
+import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
 
 /**
  * Validates that all {@link OperationModel operations} specify
@@ -49,13 +50,15 @@ public class OperationReturnTypeModelValidator implements ModelValidator
                 final Class<Object> returnType = getType(operationModel.getOutput().getType());
 
                 illegalReturnTypes.stream()
-                        .filter(forbiddenType -> forbiddenType.isAssignableFrom(returnType))
-                        .findFirst()
-                        .ifPresent(forbiddenType -> {
-                            throw new IllegalOperationModelDefinitionException(String.format("Operation '%s' in Extension '%s' specifies '%s' as a return type. Operations are " +
-                                                                                             "not allowed to return objects of that type",
-                                                                                             operationModel.getName(), extensionModel.getName(), MuleEvent.class.getName()));
-                        });
+                                  .filter(forbiddenType -> forbiddenType.isAssignableFrom(returnType))
+                                  .findFirst()
+                                  .ifPresent(forbiddenType ->
+                                  {
+                                      throw new IllegalOperationModelDefinitionException(String.format(
+                                              "Operation '%s' in Extension '%s' specifies '%s' as a return type. Operations are " +
+                                              "not allowed to return objects of that type",
+                                              operationModel.getName(), extensionModel.getName(), MuleEvent.class.getName()));
+                                  });
             }
         }.walk(extensionModel);
     }
@@ -63,6 +66,6 @@ public class OperationReturnTypeModelValidator implements ModelValidator
     private IllegalModelDefinitionException missingReturnTypeException(ExtensionModel model, OperationModel operationModel)
     {
         throw new IllegalOperationModelDefinitionException(String.format("Operation '%s' in Extension '%s' is missing a return type",
-                                                                         operationModel.getName(), model.getName()));
+                operationModel.getName(), model.getName()));
     }
 }

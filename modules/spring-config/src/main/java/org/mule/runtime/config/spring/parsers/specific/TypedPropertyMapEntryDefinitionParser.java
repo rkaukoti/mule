@@ -6,15 +6,12 @@
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
-import static org.mule.runtime.config.spring.parsers.specific.DataTypeFactoryBean.buildDataTypeDefinition;
-
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssemblerFactory;
 import org.mule.runtime.config.spring.parsers.assembly.DefaultBeanAssembler;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.config.spring.parsers.collection.ChildMapEntryDefinitionParser;
 import org.mule.runtime.core.metadata.TypedValue;
-
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.PropertyValues;
@@ -22,6 +19,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.ManagedMap;
+
+import static org.mule.runtime.config.spring.parsers.specific.DataTypeFactoryBean.buildDataTypeDefinition;
 
 public class TypedPropertyMapEntryDefinitionParser extends ChildMapEntryDefinitionParser
 {
@@ -66,7 +65,8 @@ public class TypedPropertyMapEntryDefinitionParser extends ChildMapEntryDefiniti
             MutablePropertyValues targetProperties = target.getPropertyValues();
             PropertyValue propertyValue = targetProperties.getPropertyValue(newName);
             @SuppressWarnings("unchecked")
-            ManagedMap<String, Object> propertiesMap = (ManagedMap<String, Object>) (null == propertyValue ? null : propertyValue.getValue());
+            ManagedMap<String, Object> propertiesMap =
+                    (ManagedMap<String, Object>) (null == propertyValue ? null : propertyValue.getValue());
 
             if (propertiesMap == null)
             {

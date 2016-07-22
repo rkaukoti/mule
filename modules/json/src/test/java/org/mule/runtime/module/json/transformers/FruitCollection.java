@@ -36,24 +36,24 @@ public class FruitCollection
         return apple;
     }
 
-    public Banana getBanana()
-    {
-        return banana;
-    }
-
-    public Orange getOrange()
-    {
-        return orange;
-    }
-
     public void setApple(Apple apple)
     {
         this.apple = apple;
     }
 
+    public Banana getBanana()
+    {
+        return banana;
+    }
+
     public void setBanana(Banana banana)
     {
         this.banana = banana;
+    }
+
+    public Orange getOrange()
+    {
+        return orange;
     }
 
     public void setOrange(Orange orange)

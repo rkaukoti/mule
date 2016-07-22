@@ -13,7 +13,8 @@ import org.mule.runtime.core.config.i18n.Message;
 import org.mule.runtime.core.util.ObjectUtils;
 
 /**
- * <code>LocatedMuleException</code> is a general exception that adds context location about the Exception (i.e.: where it occurred in the application).
+ * <code>LocatedMuleException</code> is a general exception that adds context location about the Exception (i.e.: where it occurred in the
+ * application).
  */
 
 public class LocatedMuleException extends MuleException
@@ -80,11 +81,13 @@ public class LocatedMuleException extends MuleException
         if (component instanceof NamedObject)
         {
             // Cannot currently get the application name without an event/context.
-            return LocationExecutionContextProvider.resolveProcessorRepresentation("app", "/" + ((NamedObject) component).getName(), component);
+            return LocationExecutionContextProvider.resolveProcessorRepresentation("app", "/" + ((NamedObject) component).getName(),
+                    component);
         }
         else
         {
-            return LocationExecutionContextProvider.resolveProcessorRepresentation("app", ObjectUtils.toString(component, "null"), component);
+            return LocationExecutionContextProvider.resolveProcessorRepresentation("app", ObjectUtils.toString(component, "null"),
+                    component);
         }
     }
 }

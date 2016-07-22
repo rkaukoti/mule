@@ -6,18 +6,17 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.mule.runtime.api.meta.NamedObject;
 
 import java.util.Map;
 
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
 
 /**
- * Parameterized Mule test classes (JUnit 4) should return a collection of objects 
+ * Parameterized Mule test classes (JUnit 4) should return a collection of objects
  * which implement this interface in the method annotated by @Parameters
- * 
+ *
  * @see Parameterized
  * @see Parameters
  */
@@ -25,9 +24,8 @@ public interface ParameterizedConfiguration extends NamedObject
 {
     /**
      * Perform any needed initialization in this method, such as loading properties from a properties file.
-     * 
+     *
      * @param callingClass is sometimes needed for correct classpath ordering
-     * @throws Exception
      */
     void initialise(Class callingClass) throws Exception;
 
@@ -37,7 +35,7 @@ public interface ParameterizedConfiguration extends NamedObject
     boolean isEnabled();
 
     /**
-     * Any properties returned by this method will be made available for substitution in the XML 
+     * Any properties returned by this method will be made available for substitution in the XML
      * configuration file(s) for this test case.
      */
     Map getProperties();

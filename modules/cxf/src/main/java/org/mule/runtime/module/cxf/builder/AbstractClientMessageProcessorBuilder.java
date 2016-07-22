@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.module.cxf.builder;
 
-import org.mule.runtime.module.cxf.support.StreamClosingInterceptor;
-
 import org.apache.cxf.endpoint.Client;
+import org.mule.runtime.module.cxf.support.StreamClosingInterceptor;
 
 /**
  * An abstract builder for non proxy clients.
@@ -16,7 +15,7 @@ import org.apache.cxf.endpoint.Client;
 public abstract class AbstractClientMessageProcessorBuilder extends AbstractOutboundMessageProcessorBuilder
 {
     protected Class<?> serviceClass;
-    
+
     @Override
     protected void configureClient(Client client)
     {
@@ -24,14 +23,14 @@ public abstract class AbstractClientMessageProcessorBuilder extends AbstractOutb
         client.getInInterceptors().add(new StreamClosingInterceptor());
         client.getInFaultInterceptors().add(new StreamClosingInterceptor());
     }
-    
-    public void setServiceClass(Class<?> serviceClass)
-    {
-        this.serviceClass = serviceClass;
-    }
 
     public Class<?> getServiceClass()
     {
         return serviceClass;
+    }
+
+    public void setServiceClass(Class<?> serviceClass)
+    {
+        this.serviceClass = serviceClass;
     }
 }

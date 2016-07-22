@@ -7,15 +7,15 @@
 
 package org.mule.runtime.module.artifact.classloader;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter.NULL_CLASSLOADER_FILTER;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter.NULL_CLASSLOADER_FILTER;
 
 public class DefaultArtifactClassLoaderFilterFactoryTestCase extends AbstractMuleTestCase
 {

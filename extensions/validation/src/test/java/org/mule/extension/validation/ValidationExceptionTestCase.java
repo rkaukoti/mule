@@ -6,16 +6,16 @@
  */
 package org.mule.extension.validation;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.mule.extension.validation.internal.ImmutableValidationResult.error;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.extension.validation.api.ExceptionFactory;
 import org.mule.extension.validation.api.ValidationException;
 import org.mule.extension.validation.api.ValidationResult;
 import org.mule.runtime.core.api.MuleEvent;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.mule.extension.validation.internal.ImmutableValidationResult.error;
 
 public class ValidationExceptionTestCase extends ValidationTestCase
 {

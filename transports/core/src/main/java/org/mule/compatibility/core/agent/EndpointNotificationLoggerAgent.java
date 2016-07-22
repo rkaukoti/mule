@@ -30,7 +30,7 @@ import java.util.List;
 
 /**
  * <code>EndpointAbstractEventLoggerAgent</code> will forward server notifications to a configurered endpoint uri.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -116,8 +116,9 @@ public class EndpointNotificationLoggerAgent extends AbstractNotificationLoggerA
                 logger.warn("Endpoint not started: " + endpoint.getEndpointURI() + ". Cannot dispatch notification: " + e);
                 return;
             }
-            if ((e.getAction() == ConnectionNotification.CONNECTION_FAILED || e.getAction() == ConnectionNotification.CONNECTION_DISCONNECTED)
-                    && (e.getSource()).equals(endpoint.getConnector()))
+            if ((e.getAction() == ConnectionNotification.CONNECTION_FAILED ||
+                 e.getAction() == ConnectionNotification.CONNECTION_DISCONNECTED)
+                && (e.getSource()).equals(endpoint.getConnector()))
             {
                 // If this is a CONNECTION_FAILED or
                 // CONNECTION_DISCONNECTED notification for the same connector that
@@ -138,7 +139,7 @@ public class EndpointNotificationLoggerAgent extends AbstractNotificationLoggerA
                 }
 
                 MuleEvent event = new DefaultMuleEvent(msg, endpoint.getExchangePattern(),
-                    (FlowConstruct) null);
+                        (FlowConstruct) null);
                 event.setEnableNotifications(false);
                 endpoint.process(event);
             }
@@ -146,7 +147,7 @@ public class EndpointNotificationLoggerAgent extends AbstractNotificationLoggerA
             {
                 // TODO MULE-863: If this is an error, do something better than this
                 logger.error("Failed to dispatch event: " + e.toString() + " over endpoint: " + endpoint
-                        + ". Error is: " + e1.getMessage(), e1);
+                             + ". Error is: " + e1.getMessage(), e1);
             }
         }
     }

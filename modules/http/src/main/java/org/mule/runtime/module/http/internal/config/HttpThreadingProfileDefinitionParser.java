@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.module.http.internal.config;
 
-import static org.mule.runtime.module.http.internal.listener.DefaultHttpListenerConfig.DEFAULT_MAX_THREADS;
-import org.mule.runtime.core.api.config.ThreadingProfile;
 import org.mule.runtime.config.spring.parsers.specific.ThreadingProfileDefinitionParser;
-
+import org.mule.runtime.core.api.config.ThreadingProfile;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
+
+import static org.mule.runtime.module.http.internal.listener.DefaultHttpListenerConfig.DEFAULT_MAX_THREADS;
 
 /**
  * Threading profile definition parser for HTTP, that sets a custom default value for the maxThreadsActive property.
@@ -25,7 +25,8 @@ public class HttpThreadingProfileDefinitionParser extends ThreadingProfileDefini
         super(propertyName, defaults);
     }
 
-    public HttpThreadingProfileDefinitionParser(String propertyName, String defaults, Class<? extends ThreadingProfile> threadingProfileClass)
+    public HttpThreadingProfileDefinitionParser(String propertyName, String defaults,
+                                                Class<? extends ThreadingProfile> threadingProfileClass)
     {
         super(propertyName, defaults, threadingProfileClass);
     }

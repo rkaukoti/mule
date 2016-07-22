@@ -39,7 +39,7 @@ public class CustomByteProtocol extends AbstractByteProtocol
 
     /**
      * Read bytes until we see '>>>', which ends the message
-     * */
+     */
     public Object read(InputStream is) throws IOException
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

@@ -6,6 +6,29 @@
  */
 package org.mule.extension.email.sender;
 
+import org.hamcrest.CoreMatchers;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
+import org.mockito.internal.matchers.StartsWith;
+import org.mule.extension.email.EmailConnectorTestCase;
+import org.mule.extension.email.api.EmailAttributes;
+import org.mule.extension.email.api.exception.EmailException;
+import org.mule.functional.junit4.runners.RunnerDelegateTo;
+import org.mule.runtime.core.util.IOUtils;
+
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Collection;
+
+import javax.activation.DataHandler;
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+
 import static java.lang.String.format;
 import static java.nio.charset.Charset.availableCharsets;
 import static java.util.Collections.singletonList;
@@ -27,29 +50,6 @@ import static org.mule.extension.email.util.EmailTestUtils.EMAIL_SUBJECT;
 import static org.mule.extension.email.util.EmailTestUtils.EMAIL_TEXT_PLAIN_ATTACHMENT_CONTENT;
 import static org.mule.extension.email.util.EmailTestUtils.JUANI_EMAIL;
 import static org.mule.extension.email.util.EmailTestUtils.MG_EMAIL;
-import org.mule.extension.email.EmailConnectorTestCase;
-import org.mule.extension.email.api.EmailAttributes;
-import org.mule.extension.email.api.exception.EmailException;
-import org.mule.functional.junit4.runners.RunnerDelegateTo;
-import org.mule.runtime.core.util.IOUtils;
-
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Collection;
-
-import javax.activation.DataHandler;
-import javax.mail.Address;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
-import org.mockito.internal.matchers.StartsWith;
 
 @RunnerDelegateTo(Parameterized.class)
 public class SMTPTestCase extends EmailConnectorTestCase
@@ -182,9 +182,9 @@ public class SMTPTestCase extends EmailConnectorTestCase
         Assert.assertThat(defaultEncoding, CoreMatchers.is(notNullValue()));
 
         final String customEncoding = availableCharsets().keySet().stream()
-                .filter(encoding -> !encoding.equals(defaultEncoding))
-                .findFirst()
-                .orElse(null);
+                                                         .filter(encoding -> !encoding.equals(defaultEncoding))
+                                                         .findFirst()
+                                                         .orElse(null);
 
         assertThat(customEncoding, is(notNullValue()));
 

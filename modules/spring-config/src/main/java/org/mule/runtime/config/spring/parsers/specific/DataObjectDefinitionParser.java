@@ -10,7 +10,6 @@ import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.core.util.StringUtils;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.xml.ParserContext;
@@ -62,7 +61,7 @@ public class DataObjectDefinitionParser extends ChildDefinitionParser
     @Override
     protected void postProcess(ParserContext context, BeanAssembler assembler, Element element)
     {
-        if(StringUtils.isNotEmpty(element.getTextContent()))
+        if (StringUtils.isNotEmpty(element.getTextContent()))
         {
             assembler.extendBean("data", element.getTextContent(), false);
         }
@@ -84,14 +83,14 @@ public class DataObjectDefinitionParser extends ChildDefinitionParser
 
         public Object getObject() throws Exception
         {
-            if(data!=null)
+            if (data != null)
             {
                 return data;
             }
 
-            if(file!=null)
+            if (file != null)
             {
-                if(binary)
+                if (binary)
                 {
                     data = IOUtils.toByteArray(IOUtils.getResourceAsStream(file, getClass()));
                 }
@@ -100,12 +99,12 @@ public class DataObjectDefinitionParser extends ChildDefinitionParser
                     data = IOUtils.getResourceAsString(file, getClass());
                 }
             }
-            else if(ref!=null)
+            else if (ref != null)
             {
                 data = context.getBean(ref);
             }
 
-            if(data==null)
+            if (data == null)
             {
                 throw new IllegalArgumentException("Data is null was not found");
             }

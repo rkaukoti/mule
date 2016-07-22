@@ -6,20 +6,19 @@
  */
 package org.mule.issues;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
+import org.mule.functional.functional.FunctionalTestComponent;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.Startable;
 import org.mule.runtime.core.api.lifecycle.Stoppable;
-import org.mule.functional.functional.FunctionalTestComponent;
-import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class AsyncComponentLifecycleIssue5649TestCase extends FunctionalTestCase implements FunctionalTestComponent.LifecycleCallback
 {

@@ -11,7 +11,7 @@ import org.mule.runtime.config.spring.parsers.generic.MuleOrphanDefinitionParser
 
 import javax.jms.Session;
 
-public class JmsConnectorDefinitionParser  extends MuleOrphanDefinitionParser
+public class JmsConnectorDefinitionParser extends MuleOrphanDefinitionParser
 {
 
     public JmsConnectorDefinitionParser()
@@ -23,9 +23,9 @@ public class JmsConnectorDefinitionParser  extends MuleOrphanDefinitionParser
     {
         super(clazz, true);
         addMapping("acknowledgementMode",
-            "AUTO_ACKNOWLEDGE=" + Session.AUTO_ACKNOWLEDGE + "," +
-            "CLIENT_ACKNOWLEDGE=" + Session.CLIENT_ACKNOWLEDGE + "," +
-            "DUPS_OK_ACKNOWLEDGE=" + Session.DUPS_OK_ACKNOWLEDGE);
+                "AUTO_ACKNOWLEDGE=" + Session.AUTO_ACKNOWLEDGE + "," +
+                "CLIENT_ACKNOWLEDGE=" + Session.CLIENT_ACKNOWLEDGE + "," +
+                "DUPS_OK_ACKNOWLEDGE=" + Session.DUPS_OK_ACKNOWLEDGE);
     }
-    
+
 }

@@ -6,14 +6,17 @@
  */
 package org.mule.runtime.module.xml.transformers.xml.xquery;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
+import net.sf.saxon.dom.DocumentBuilderImpl;
 
+import org.custommonkey.xmlunit.XMLUnit;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.util.IOUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,15 +25,11 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 
-import org.custommonkey.xmlunit.XMLUnit;
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import net.sf.saxon.dom.DocumentBuilderImpl;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
 
 public class XQuery3TestCase extends FunctionalTestCase
 {
@@ -101,7 +100,7 @@ public class XQuery3TestCase extends FunctionalTestCase
     public void multipleInputsByParam() throws Exception
     {
         try (InputStream books = IOUtils.getResourceAsStream("books.xml", getClass());
-             InputStream cities = IOUtils.getResourceAsStream("cities.xml", getClass()))
+                InputStream cities = IOUtils.getResourceAsStream("cities.xml", getClass()))
         {
 
             DocumentBuilder documentBuilder = new DocumentBuilderImpl();

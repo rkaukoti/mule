@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.core.transformer.graph;
 
+import org.jgrapht.graph.DirectedMultigraph;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Converter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import org.jgrapht.graph.DirectedMultigraph;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents the set of transformations between {@link DataType} based on the
@@ -24,9 +23,9 @@ public class TransformationGraph extends DirectedMultigraph<DataType, Transforma
 {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
-    
+
     private Set<Converter> registeredConverters = new HashSet<>();
-    
+
     public TransformationGraph()
     {
         super(TransformationEdge.class);
@@ -62,7 +61,7 @@ public class TransformationGraph extends DirectedMultigraph<DataType, Transforma
 
         registeredConverters.add(converter);
     }
-    
+
     public void removeConverter(Converter converter)
     {
         if (!registeredConverters.contains(converter))

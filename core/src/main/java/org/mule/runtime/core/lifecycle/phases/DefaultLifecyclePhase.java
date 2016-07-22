@@ -14,6 +14,8 @@ import org.mule.runtime.core.api.lifecycle.LifecycleStateEnabled;
 import org.mule.runtime.core.config.ExceptionHelper;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.lifecycle.LifecycleObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -22,9 +24,6 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents a configurable lifecycle phase. This is a default implementation of a
@@ -47,12 +46,12 @@ import org.slf4j.LoggerFactory;
 public class DefaultLifecyclePhase implements LifecyclePhase, MuleContextAware
 {
     protected transient final Logger logger = LoggerFactory.getLogger(DefaultLifecyclePhase.class);
-    private Class<?> lifecycleClass;
     private final Method lifecycleMethod;
-    private Set<LifecycleObject> orderedLifecycleObjects = new LinkedHashSet<LifecycleObject>(6);
-    private Class<?>[] ignorredObjectTypes;
     private final String name;
     private final String oppositeLifecyclePhase;
+    private Class<?> lifecycleClass;
+    private Set<LifecycleObject> orderedLifecycleObjects = new LinkedHashSet<LifecycleObject>(6);
+    private Class<?>[] ignorredObjectTypes;
     private Set<String> supportedPhases;
     private MuleContext muleContext;
 
@@ -76,8 +75,6 @@ public class DefaultLifecyclePhase implements LifecyclePhase, MuleContextAware
      * lifecycle method is applied to them. This method does not apply any special
      * ordering to <code>objects</code>.
      *
-     * @param objects
-     * @param lo
      * @return List with ordered objects
      */
     protected List<?> sortLifecycleInstances(Collection<?> objects, LifecycleObject lo)
@@ -247,7 +244,7 @@ public class DefaultLifecyclePhase implements LifecyclePhase, MuleContextAware
 
             // Need to get the cause of the MuleException so the LifecycleException wraps a non-mule exception
             throw new LifecycleException(CoreMessages.failedToInvokeLifecycle(lifecycleMethod.getName(), o),
-                ExceptionHelper.getNonMuleException(t), o);
+                    ExceptionHelper.getNonMuleException(t), o);
         }
     }
 

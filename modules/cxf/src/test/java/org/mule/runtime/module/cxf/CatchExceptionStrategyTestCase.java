@@ -7,15 +7,9 @@
 package org.mule.runtime.module.cxf;
 
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
-import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
+import org.apache.cxf.interceptor.Fault;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -32,15 +26,23 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.nio.charset.Charset;
 
-import org.apache.cxf.interceptor.Fault;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
+import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 
 public class CatchExceptionStrategyTestCase extends FunctionalTestCase
 {
+    public static final HttpRequestOptions HTTP_REQUEST_OPTIONS =
+            newOptions().method(org.mule.runtime.module.http.api.HttpConstants.Methods.POST.name()).disableStatusCodeValidation().build();
     private static final String requestPayload =
-        "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
+            "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
             "           xmlns:hi=\"http://example.cxf.module.runtime.mule.org/\">\n" +
             "<soap:Body>\n" +
             "<hi:sayHi>\n" +
@@ -48,9 +50,8 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase
             "</hi:sayHi>\n" +
             "</soap:Body>\n" +
             "</soap:Envelope>";
-
     private static final String requestFaultPayload =
-        "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
+            "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
             "           xmlns:hi=\"http://cxf.module.runtime.mule.org/\">\n" +
             "<soap:Body>\n" +
             "<hi:sayHi>\n" +
@@ -58,9 +59,6 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase
             "</hi:sayHi>\n" +
             "</soap:Body>\n" +
             "</soap:Envelope>";
-
-    public static final HttpRequestOptions HTTP_REQUEST_OPTIONS = newOptions().method(org.mule.runtime.module.http.api.HttpConstants.Methods.POST.name()).disableStatusCodeValidation().build();
-
     @Rule
     public DynamicPort dynamicPort = new DynamicPort("port1");
 
@@ -75,7 +73,8 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase
     {
         MuleMessage request = MuleMessage.builder().payload(requestFaultPayload).build();
         MuleClient client = muleContext.getClient();
-        MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/testServiceWithFaultCatchException", request, HTTP_REQUEST_OPTIONS);
+        MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/testServiceWithFaultCatchException", request,
+                HTTP_REQUEST_OPTIONS);
         assertNotNull(response);
         assertEquals(String.valueOf(OK.getStatusCode()), response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
         assertTrue(getPayloadAsString(response).contains("Anonymous"));
@@ -86,9 +85,12 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase
     {
         MuleMessage request = MuleMessage.builder().payload(requestFaultPayload).build();
         MuleClient client = muleContext.getClient();
-        MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/testServiceWithFaultCatchExceptionRethrown", request, HTTP_REQUEST_OPTIONS);
+        MuleMessage response =
+                client.send("http://localhost:" + dynamicPort.getNumber() + "/testServiceWithFaultCatchExceptionRethrown", request,
+                        HTTP_REQUEST_OPTIONS);
         assertNotNull(response);
-        assertEquals(String.valueOf(HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR.getStatusCode()), response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
+        assertEquals(String.valueOf(HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR.getStatusCode()),
+                response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
         assertTrue(getPayloadAsString(response).contains("<faultstring>"));
     }
 
@@ -97,7 +99,9 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase
     {
         MuleMessage request = MuleMessage.builder().payload(requestPayload).build();
         MuleClient client = muleContext.getClient();
-        MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/testTransformerExceptionCatchException", request, HTTP_REQUEST_OPTIONS);
+        MuleMessage response =
+                client.send("http://localhost:" + dynamicPort.getNumber() + "/testTransformerExceptionCatchException", request,
+                        HTTP_REQUEST_OPTIONS);
         assertNotNull(response);
         assertEquals(String.valueOf(OK.getStatusCode()), response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
         assertTrue(getPayloadAsString(response).contains("APPEND"));
@@ -132,7 +136,8 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase
     public void testServerClientProxyWithTransformerExceptionCatchStrategy() throws Exception
     {
         MuleClient client = muleContext.getClient();
-        MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/testProxyWithTransformerExceptionCatchStrategy", getTestMuleMessage(requestPayload), HTTP_REQUEST_OPTIONS);
+        MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/testProxyWithTransformerExceptionCatchStrategy",
+                getTestMuleMessage(requestPayload), HTTP_REQUEST_OPTIONS);
         String resString = getPayloadAsString(result);
         assertEquals(String.valueOf(OK.getStatusCode()), result.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
         assertTrue(resString.contains("Anonymous"));
@@ -143,7 +148,8 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase
         @Override
         public MuleEvent process(MuleEvent event) throws MuleException
         {
-            String payload = "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body><ns2:sayHiResponse xmlns:ns2=\"http://example.cxf.module.runtime.mule.org/\"><return>Hello Anonymous</return></ns2:sayHiResponse></soap:Body></soap:Envelope>";
+            String payload =
+                    "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body><ns2:sayHiResponse xmlns:ns2=\"http://example.cxf.module.runtime.mule.org/\"><return>Hello Anonymous</return></ns2:sayHiResponse></soap:Body></soap:Envelope>";
             event.setMessage(MuleMessage.builder(event.getMessage()).payload(payload).build());
             return event;
         }

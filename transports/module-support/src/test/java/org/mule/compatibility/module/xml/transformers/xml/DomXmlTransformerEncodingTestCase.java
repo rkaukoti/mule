@@ -6,8 +6,9 @@
  */
 package org.mule.compatibility.module.xml.transformers.xml;
 
-import static java.nio.charset.StandardCharsets.US_ASCII;
-
+import org.dom4j.DocumentHelper;
+import org.dom4j.io.DOMReader;
+import org.dom4j.io.DOMWriter;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
@@ -24,11 +25,9 @@ import org.mule.runtime.core.util.SystemUtils;
 import org.mule.runtime.module.xml.transformer.DomDocumentToXml;
 import org.mule.runtime.module.xml.transformer.XmlToDomDocument;
 import org.mule.runtime.module.xml.transformers.xml.AbstractXmlTransformerTestCase;
-
-import org.dom4j.DocumentHelper;
-import org.dom4j.io.DOMReader;
-import org.dom4j.io.DOMWriter;
 import org.w3c.dom.Document;
+
+import static java.nio.charset.StandardCharsets.US_ASCII;
 
 public class DomXmlTransformerEncodingTestCase extends AbstractXmlTransformerTestCase
 {
@@ -39,22 +38,23 @@ public class DomXmlTransformerEncodingTestCase extends AbstractXmlTransformerTes
     protected void doSetUp() throws Exception
     {
         org.dom4j.Document dom4jDoc = DocumentHelper.parseText(IOUtils.toString(IOUtils.getResourceAsStream(
-            "cdcatalog-utf-8.xml", getClass()), "UTF-8"));
+                "cdcatalog-utf-8.xml", getClass()), "UTF-8"));
         srcData = new DOMWriter().write(dom4jDoc);
         resultData = IOUtils.toString(IOUtils.getResourceAsStream("cdcatalog-us-ascii.xml", getClass()),
-            "US-ASCII");
+                "US-ASCII");
     }
 
     @Override
     public Transformer getTransformer() throws Exception
     {
-        EndpointAwareTransformer trans = new DefaultEndpointAwareTransformer(createObject(DomDocumentToXml.class), SystemUtils.getDefaultEncoding(muleContext));
+        EndpointAwareTransformer trans =
+                new DefaultEndpointAwareTransformer(createObject(DomDocumentToXml.class), SystemUtils.getDefaultEncoding(muleContext));
         trans.setReturnDataType(DataType.STRING);
 
         EndpointBuilder builder = new EndpointURIEndpointBuilder("test://test", muleContext);
         builder.setEncoding(US_ASCII);
         ImmutableEndpoint endpoint = getEndpointFactory().getInboundEndpoint(
-            builder);
+                builder);
 
         trans.setEndpoint(endpoint);
         return trans;
@@ -87,8 +87,8 @@ public class DomXmlTransformerEncodingTestCase extends AbstractXmlTransformerTes
         // instances
         if (expected instanceof Document)
         {
-            expected = new DOMReader().read((Document)expected).asXML();
-            result = new DOMReader().read((Document)result).asXML();
+            expected = new DOMReader().read((Document) expected).asXML();
+            result = new DOMReader().read((Document) result).asXML();
         }
 
         return super.compareResults(expected, result);

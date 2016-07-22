@@ -6,13 +6,14 @@
  */
 package org.mule.extension.email.internal.commands;
 
-import static org.mule.extension.email.internal.util.EmailConnectorUtils.getAttributesFromMessage;
 import org.mule.extension.email.api.EmailAttributes;
 import org.mule.extension.email.api.exception.EmailException;
 import org.mule.runtime.api.message.MuleMessage;
 
 import java.util.List;
 import java.util.function.Consumer;
+
+import static org.mule.extension.email.internal.util.EmailConnectorUtils.getAttributesFromMessage;
 
 /**
  * Executes an operation that receives an emailId.
@@ -26,7 +27,8 @@ import java.util.function.Consumer;
 public class EmailIdConsumerExecutor
 {
 
-    public static final String NO_ID_ERROR = "Expecting an explicit emailId value or email attributes in the incoming mule message in order to store an email.";
+    public static final String NO_ID_ERROR =
+            "Expecting an explicit emailId value or email attributes in the incoming mule message in order to store an email.";
 
     /**
      * Receives {@link Consumer} operation to perform for an specific emailId.
@@ -37,10 +39,6 @@ public class EmailIdConsumerExecutor
      * If no explicit {@code emailId} is provided and this method is not able
      * to find any emailIds in the incoming {@link MuleMessage} the execution of the
      * {@link Consumer} will fail.
-     *
-     * @param muleMessage
-     * @param emailId
-     * @param consumer
      */
     public void execute(MuleMessage muleMessage, Integer emailId, Consumer<Integer> consumer)
     {

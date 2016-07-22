@@ -10,7 +10,6 @@ import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.interceptor.Interceptor;
 import org.mule.runtime.core.processor.AbstractInterceptingMessageProcessor;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

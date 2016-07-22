@@ -6,13 +6,10 @@
  */
 package org.mule.runtime.config.spring.dsl.processor;
 
-import static java.util.Optional.empty;
-import static java.util.Optional.of;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import org.apache.commons.lang.ClassUtils;
 import org.mule.runtime.config.spring.dsl.api.TypeDefinition;
 import org.mule.runtime.config.spring.dsl.model.ComponentModel;
 import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.core.config.i18n.CoreMessages;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,7 +20,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import org.apache.commons.lang.ClassUtils;
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * Visitor that retrieves the {@code ComponentModel} object {@code Class} based
@@ -83,8 +82,8 @@ public class ObjectTypeVisitor implements TypeDefinitionVisitor
         catch (ClassNotFoundException e)
         {
             throw new MuleRuntimeException(createStaticMessage("Error while trying to locate Class definition for type %s on element %s",
-                                                               componentModel.getParameters().get(attributeName),
-                                                               componentModel.getIdentifier()), e);
+                    componentModel.getParameters().get(attributeName),
+                    componentModel.getIdentifier()), e);
         }
     }
 
@@ -92,7 +91,8 @@ public class ObjectTypeVisitor implements TypeDefinitionVisitor
     public void onMapType(TypeDefinition.MapEntryType mapEntryType)
     {
         this.type = mapEntryType.getClass();
-        this.mapEntryType = of(new TypeDefinition.MapEntryType(resolveType(mapEntryType.getKeyType()), resolveType(mapEntryType.getValueType())));
+        this.mapEntryType =
+                of(new TypeDefinition.MapEntryType(resolveType(mapEntryType.getKeyType()), resolveType(mapEntryType.getValueType())));
     }
 
     public Class<?> getType()

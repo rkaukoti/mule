@@ -6,21 +6,14 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
-import static org.hamcrest.CoreMatchers.any;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.withSettings;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_CONNECTION_MANAGER;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_TIME_SUPPLIER;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.verification.VerificationMode;
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.core.api.connector.ConnectionManager;
 import org.mule.runtime.core.api.context.MuleContextAware;
@@ -41,14 +34,21 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.verification.VerificationMode;
+import static org.hamcrest.CoreMatchers.any;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.same;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.withSettings;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_CONNECTION_MANAGER;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_TIME_SUPPLIER;
 
 @SmallTest
 @RunWith(Parameterized.class)
@@ -56,6 +56,21 @@ public class LifecycleAwareConfigurationInstanceTestCase extends AbstractInterce
 {
 
     private static final String NAME = "name";
+    @Mock
+    private RuntimeConfigurationModel configurationModel;
+    @Mock
+    private Lifecycle value;
+    @Mock
+    private ConnectionManager connectionManager;
+    private String name;
+    private Optional<ConnectionProvider> connectionProvider;
+    private TestTimeSupplier timeSupplier = new TestTimeSupplier(System.currentTimeMillis());
+
+    public LifecycleAwareConfigurationInstanceTestCase(String name, ConnectionProvider connectionProvider)
+    {
+        this.name = name;
+        this.connectionProvider = Optional.ofNullable(connectionProvider);
+    }
 
     @Parameters(name = "{0}")
     public static Collection<Object[]> data()
@@ -65,26 +80,6 @@ public class LifecycleAwareConfigurationInstanceTestCase extends AbstractInterce
                 {"Without provider", null}}
         );
     }
-
-    @Mock
-    private RuntimeConfigurationModel configurationModel;
-
-    @Mock
-    private Lifecycle value;
-
-    @Mock
-    private ConnectionManager connectionManager;
-
-    private String name;
-    private Optional<ConnectionProvider> connectionProvider;
-
-    public LifecycleAwareConfigurationInstanceTestCase(String name, ConnectionProvider connectionProvider)
-    {
-        this.name = name;
-        this.connectionProvider = Optional.ofNullable(connectionProvider);
-    }
-
-    private TestTimeSupplier timeSupplier = new TestTimeSupplier(System.currentTimeMillis());
 
     @Before
     @Override

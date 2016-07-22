@@ -6,11 +6,12 @@
  */
 package org.mule.runtime.core.registry;
 
-import static org.mule.runtime.core.api.registry.TransformerResolver.RegistryAction.ADDED;
+import com.google.common.collect.ImmutableList;
+
+import org.mule.runtime.api.meta.NameableObject;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.api.meta.NameableObject;
 import org.mule.runtime.core.api.agent.Agent;
 import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.api.lifecycle.Disposable;
@@ -32,8 +33,8 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.Predicate;
 import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.core.util.UUID;
-
-import com.google.common.collect.ImmutableList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,8 +48,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.registry.TransformerResolver.RegistryAction.ADDED;
 
 /**
  * Adds lookup/register/unregister methods for Mule-specific entities to the standard
@@ -57,30 +57,24 @@ import org.slf4j.LoggerFactory;
 public class MuleRegistryHelper implements MuleRegistry, RegistryProvider
 {
 
+    private final ReadWriteLock transformerResolversLock = new ReentrantReadWriteLock();
+    private final ReadWriteLock transformersLock = new ReentrantReadWriteLock();
     protected transient Logger logger = LoggerFactory.getLogger(MuleRegistryHelper.class);
-
-    /**
-     * A reference to Mule's internal registry
-     */
-    private DefaultRegistryBroker registry;
-
     /**
      * We cache transformer searches so that we only search once
      */
     protected ConcurrentHashMap/*<String, Transformer>*/ exactTransformerCache = new ConcurrentHashMap/*<String, Transformer>*/(8);
-    protected ConcurrentHashMap/*Map<String, List<Transformer>>*/ transformerListCache = new ConcurrentHashMap/*<String, List<Transformer>>*/(8);
-
+    protected ConcurrentHashMap/*Map<String, List<Transformer>>*/ transformerListCache =
+            new ConcurrentHashMap/*<String, List<Transformer>>*/(8);
+    /**
+     * A reference to Mule's internal registry
+     */
+    private DefaultRegistryBroker registry;
     private MuleContext muleContext;
-
-    private final ReadWriteLock transformerResolversLock = new ReentrantReadWriteLock();
-
     /**
      * Transformer transformerResolvers are registered on context start, then they are not unregistered.
      */
     private List<TransformerResolver> transformerResolvers = new ArrayList<>();
-
-    private final ReadWriteLock transformersLock = new ReentrantReadWriteLock();
-
     /**
      * Transformers are registered on context start, then they are usually not unregistered
      */
@@ -447,7 +441,8 @@ public class MuleRegistryHelper implements MuleRegistry, RegistryProvider
     @Override
     public void applyLifecycle(Object object, String startPhase, String toPhase) throws MuleException
     {
-        withLifecycleRegistry(object, registry -> {
+        withLifecycleRegistry(object, registry ->
+        {
             registry.applyLifecycle(object, startPhase, toPhase);
             return object;
         });
@@ -464,17 +459,6 @@ public class MuleRegistryHelper implements MuleRegistry, RegistryProvider
         return object;
     }
 
-    @FunctionalInterface
-    private interface LifecycleDelegate
-    {
-
-        Object apply(LifecycleRegistry registry) throws MuleException;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-    // Delegate to internal registry
-    ////////////////////////////////////////////////////////////////////////////
-
     /**
      * {@inheritDoc}
      */
@@ -483,6 +467,10 @@ public class MuleRegistryHelper implements MuleRegistry, RegistryProvider
     {
         return registry.lookupObject(type);
     }
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Delegate to internal registry
+    ////////////////////////////////////////////////////////////////////////////
 
     /**
      * {@inheritDoc}
@@ -654,10 +642,6 @@ public class MuleRegistryHelper implements MuleRegistry, RegistryProvider
         return name;
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-    // Registry Metadata
-    ////////////////////////////////////////////////////////////////////////////
-
     /**
      * {@inheritDoc}
      */
@@ -666,6 +650,10 @@ public class MuleRegistryHelper implements MuleRegistry, RegistryProvider
     {
         return this.toString();
     }
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Registry Metadata
+    ////////////////////////////////////////////////////////////////////////////
 
     /**
      * {@inheritDoc}
@@ -689,6 +677,13 @@ public class MuleRegistryHelper implements MuleRegistry, RegistryProvider
     {
         return source.getClass().getName() + source.hashCode() + ":" + result.getClass().getName()
                + result.hashCode();
+    }
+
+    @FunctionalInterface
+    private interface LifecycleDelegate
+    {
+
+        Object apply(LifecycleRegistry registry) throws MuleException;
     }
 
     private class TransformerResolverComparator implements Comparator<TransformerResolver>

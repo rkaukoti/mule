@@ -6,6 +6,13 @@
  */
 package org.mule.runtime.module.http.internal;
 
+import org.junit.Test;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.util.Collection;
+import java.util.HashMap;
+
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItems;
@@ -14,14 +21,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
-
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import java.util.Collection;
-import java.util.HashMap;
-
-import org.junit.Test;
 
 @SmallTest
 public class ParameterMapTestCase extends AbstractMuleTestCase

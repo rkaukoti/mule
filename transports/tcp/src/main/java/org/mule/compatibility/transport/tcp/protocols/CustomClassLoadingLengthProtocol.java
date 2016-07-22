@@ -6,15 +6,15 @@
  */
 package org.mule.compatibility.transport.tcp.protocols;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.apache.commons.io.input.ClassLoaderObjectInputStream;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * A length protocol that uses a specific class loader to load objects from streams
- * 
+ *
  * @since 2.2.6
  */
 public class CustomClassLoadingLengthProtocol extends LengthProtocol
@@ -35,7 +35,7 @@ public class CustomClassLoadingLengthProtocol extends LengthProtocol
         else
         {
             ClassLoaderObjectInputStream classLoaderIS = new ClassLoaderObjectInputStream(this.getClassLoader(),
-                is);
+                    is);
             try
             {
                 return classLoaderIS.readObject();

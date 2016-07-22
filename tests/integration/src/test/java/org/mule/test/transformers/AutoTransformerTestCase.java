@@ -6,17 +6,17 @@
  */
 package org.mule.test.transformers;
 
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.util.concurrent.Latch;
 import org.mule.tck.testmodels.fruit.Apple;
 import org.mule.tck.testmodels.fruit.Banana;
 import org.mule.tck.testmodels.fruit.FruitBasket;
 import org.mule.tck.testmodels.fruit.FruitBowl;
-import org.mule.runtime.core.util.concurrent.Latch;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 public class AutoTransformerTestCase extends FunctionalTestCase
 {

@@ -18,19 +18,18 @@ import org.mule.runtime.core.api.context.notification.ServerNotification;
 public class ComponentMessageNotification extends ServerNotification
 {
 
-    private static final long serialVersionUID = -6369685122731797646L;
-
     public static final int COMPONENT_PRE_INVOKE = COMPONENT_EVENT_ACTION_START_RANGE + 1;
     public static final int COMPONENT_POST_INVOKE = COMPONENT_EVENT_ACTION_START_RANGE + 2;
-
-    protected transient FlowConstruct flowConstruct;
-    protected transient Component component;
+    private static final long serialVersionUID = -6369685122731797646L;
 
     static
     {
         registerAction("component pre invoke", COMPONENT_PRE_INVOKE);
         registerAction("component post invoke", COMPONENT_POST_INVOKE);
     }
+
+    protected transient FlowConstruct flowConstruct;
+    protected transient Component component;
 
     /**
      * @param message

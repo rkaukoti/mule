@@ -6,13 +6,17 @@
  */
 package org.mule.runtime.module.cxf.issues;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.core.util.SystemUtils;
+import org.mule.tck.junit4.rule.DynamicPort;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -22,26 +26,21 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.custommonkey.xmlunit.XMLUnit;
-import org.junit.Rule;
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 public class ProxyServiceServingWsdlMule4092TestCase extends FunctionalTestCase
 {
 
-    private String expectedWsdlFileName;
-
     @Rule
     public DynamicPort dynamicPort = new DynamicPort("port1");
+    private String expectedWsdlFileName;
 
     @Override
     protected String getConfigFile()
     {
-        return  "issues/proxy-service-serving-wsdl-mule4092-flow-httpn.xml";
+        return "issues/proxy-service-serving-wsdl-mule4092-flow-httpn.xml";
     }
 
     @Override
@@ -102,7 +101,7 @@ public class ProxyServiceServingWsdlMule4092TestCase extends FunctionalTestCase
         assertEquals(topElement.getLocalName(), actualDom.getDocumentElement().getLocalName());
 
         Element expectedService = (Element) expectedDom.getElementsByTagNameNS(wsdlNamespace, "service")
-            .item(0);
+                                                       .item(0);
         Element actualService = (Element) actualDom.getElementsByTagNameNS(wsdlNamespace, "service").item(0);
         assertNotNull(actualService);
         assertEquals(expectedService.getAttribute("name"), actualService.getAttribute("name"));
@@ -113,7 +112,7 @@ public class ProxyServiceServingWsdlMule4092TestCase extends FunctionalTestCase
         assertEquals(expectedPort.getAttribute("name"), actualPort.getAttribute("name"));
 
         int expectedNumberOfMessages = expectedDom.getElementsByTagNameNS(wsdlNamespace, "message")
-            .getLength();
+                                                  .getLength();
         int actualNumberOfmMessages = actualDom.getElementsByTagNameNS(wsdlNamespace, "message").getLength();
         assertEquals(expectedNumberOfMessages, actualNumberOfmMessages);
     }
@@ -133,7 +132,7 @@ public class ProxyServiceServingWsdlMule4092TestCase extends FunctionalTestCase
     }
 
     private Document buildDOM(String xmlString)
-        throws ParserConfigurationException, IOException, SAXException
+            throws ParserConfigurationException, IOException, SAXException
     {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setNamespaceAware(true);

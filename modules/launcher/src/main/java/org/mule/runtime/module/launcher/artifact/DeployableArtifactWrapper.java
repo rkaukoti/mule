@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.module.launcher.artifact;
 
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
 import org.mule.runtime.module.launcher.DeploymentStartException;
@@ -16,13 +15,16 @@ import org.mule.runtime.module.launcher.descriptor.DeployableArtifactDescriptor;
 import java.io.File;
 import java.io.IOException;
 
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+
 /**
  * Decorates the target deployer to properly switch out context classloader for deployment
  * one where applicable. E.g. init() phase may load custom classes for an application, which
  * must be executed with deployment (app) classloader in the context, and not Mule system
  * classloader.
  */
-public class DeployableArtifactWrapper<T extends DeployableArtifact<D>, D extends DeployableArtifactDescriptor> implements DeployableArtifact<D>
+public class DeployableArtifactWrapper<T extends DeployableArtifact<D>, D extends DeployableArtifactDescriptor>
+        implements DeployableArtifact<D>
 {
 
     private T delegate;
@@ -89,8 +91,8 @@ public class DeployableArtifactWrapper<T extends DeployableArtifact<D>, D extend
     private void executeWithinArtifactClassLoader(ArtifactAction artifactAction)
     {
         ClassLoader classLoader = getArtifactClassLoader() != null
-                                  ? getArtifactClassLoader().getClassLoader()
-                                  : Thread.currentThread().getContextClassLoader();
+                ? getArtifactClassLoader().getClassLoader()
+                : Thread.currentThread().getContextClassLoader();
 
         withContextClassLoader(classLoader, artifactAction::execute);
     }

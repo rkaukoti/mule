@@ -17,10 +17,10 @@ public interface Filter
 {
     /**
      * Checks a given message against this filter.
-     * 
+     *
      * @param message a non null message to filter.
-     * @return <code>true</code> if the message matches the filter
-     * TODO MULE-9341 Remove Filters that are not needed.  This method will be removed when filters are cleaned up.
+     * @return <code>true</code> if the message matches the filter TODO MULE-9341 Remove Filters that are not needed.  This method will be
+     * removed when filters are cleaned up.
      */
     @Deprecated
     boolean accept(MuleMessage message);

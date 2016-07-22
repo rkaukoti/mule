@@ -6,20 +6,6 @@
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.when;
-import org.mule.runtime.module.http.internal.listener.ServerAddress;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
-import java.util.concurrent.Executor;
-
 import org.glassfish.grizzly.Connection;
 import org.glassfish.grizzly.IOEvent;
 import org.glassfish.grizzly.IOStrategy;
@@ -28,6 +14,20 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.module.http.internal.listener.ServerAddress;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
+import java.util.concurrent.Executor;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExecutorPerServerAddressIOStrategyTestCase extends AbstractMuleTestCase

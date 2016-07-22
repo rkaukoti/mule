@@ -6,19 +6,20 @@
  */
 package org.mule.runtime.module.http.internal.listener;
 
-import static org.mule.runtime.module.http.internal.HttpParser.normalizePathWithSpacesOrEncodedSpaces;
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.core.config.i18n.CoreMessages;
-import org.mule.runtime.module.http.internal.domain.request.HttpRequest;
-import org.mule.runtime.module.http.internal.listener.async.RequestHandler;
-import org.mule.runtime.module.http.internal.listener.matcher.ListenerRequestMatcher;
-import org.mule.runtime.core.util.Preconditions;
-import org.mule.runtime.core.util.StringUtils;
-
 import com.google.common.base.Joiner;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.mule.runtime.core.util.Preconditions;
+import org.mule.runtime.core.util.StringUtils;
+import org.mule.runtime.module.http.internal.domain.request.HttpRequest;
+import org.mule.runtime.module.http.internal.listener.async.RequestHandler;
+import org.mule.runtime.module.http.internal.listener.matcher.ListenerRequestMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,20 +29,19 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.module.http.internal.HttpParser.normalizePathWithSpacesOrEncodedSpaces;
 
 public class HttpListenerRegistry implements RequestHandlerProvider
 {
 
     private static final String WILDCARD_CHARACTER = "*";
     private static final String SLASH = "/";
-    private Logger logger = LoggerFactory.getLogger(getClass());
-
     private final ServerAddressMap<Server> serverAddressToServerMap = new ServerAddressMap<>();
     private final Map<Server, ServerAddressRequestHandlerRegistry> requestHandlerPerServerAddress = new HashMap<>();
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
-    public synchronized RequestHandlerManager addRequestHandler(final Server server, final RequestHandler requestHandler, final ListenerRequestMatcher requestMatcher)
+    public synchronized RequestHandlerManager addRequestHandler(final Server server, final RequestHandler requestHandler,
+                                                                final ListenerRequestMatcher requestMatcher)
     {
         ServerAddressRequestHandlerRegistry serverAddressRequestHandlerRegistry = this.requestHandlerPerServerAddress.get(server);
         if (serverAddressRequestHandlerRegistry == null)
@@ -63,7 +63,7 @@ public class HttpListenerRegistry implements RequestHandlerProvider
         final Server server = serverAddressToServerMap.get(new ServerAddress(ip, port));
         if (server != null && !server.isStopping() && !server.isStopped())
         {
-            final ServerAddressRequestHandlerRegistry serverAddressRequestHandlerRegistry = requestHandlerPerServerAddress.get( server);
+            final ServerAddressRequestHandlerRegistry serverAddressRequestHandlerRegistry = requestHandlerPerServerAddress.get(server);
             if (serverAddressRequestHandlerRegistry != null)
             {
                 return serverAddressRequestHandlerRegistry.findRequestHandler(request);
@@ -76,6 +76,48 @@ public class HttpListenerRegistry implements RequestHandlerProvider
         return NoListenerRequestHandler.getInstance();
     }
 
+    private boolean isUriParameter(String pathPart)
+    {
+        return (pathPart.startsWith("{") || pathPart.startsWith("/{")) && pathPart.endsWith("}");
+    }
+
+    private String getLastPathPortion(String possibleCollisionRequestMatcherPath)
+    {
+        final String[] parts = splitPath(possibleCollisionRequestMatcherPath);
+        if (parts.length == 0)
+        {
+            return StringUtils.EMPTY;
+        }
+        return parts[parts.length - 1];
+    }
+
+    private boolean isSameDepth(String possibleCollisionRequestMatcherPath, String newListenerRequestMatcherPath)
+    {
+        return getPathPartsSize(possibleCollisionRequestMatcherPath) == getPathPartsSize(newListenerRequestMatcherPath);
+    }
+
+    private int getPathPartsSize(String path)
+    {
+        int pathSize = splitPath(path).length - 1;
+        pathSize += (path.endsWith(SLASH) ? 1 : 0);
+        return pathSize;
+    }
+
+    private String[] splitPath(String path)
+    {
+        if (path.endsWith(SLASH))
+        {
+            // Remove the last slash
+            path = path.substring(0, path.length() - 1);
+        }
+        return path.split(SLASH, -1);
+    }
+
+    private boolean isCatchAllPath(String path)
+    {
+        return WILDCARD_CHARACTER.equals(path);
+    }
+
     public class ServerAddressRequestHandlerRegistry
     {
 
@@ -83,19 +125,24 @@ public class HttpListenerRegistry implements RequestHandlerProvider
         private PathMap rootPathMap = new PathMap();
         private PathMap catchAllPathMap = new PathMap();
         private Set<String> paths = new HashSet<>();
-        private LoadingCache<String, Stack<PathMap>> pathMapSearchCache = CacheBuilder.newBuilder().maximumSize(1000).build(new CacheLoader<String, Stack<PathMap>>() {
-            public Stack<PathMap> load(String path) {
-                return findPossibleRequestHandlers(path);
-            }
-        });
+        private LoadingCache<String, Stack<PathMap>> pathMapSearchCache =
+                CacheBuilder.newBuilder().maximumSize(1000).build(new CacheLoader<String, Stack<PathMap>>()
+                {
+                    public Stack<PathMap> load(String path)
+                    {
+                        return findPossibleRequestHandlers(path);
+                    }
+                });
 
-        public synchronized RequestHandlerManager addRequestHandler(final ListenerRequestMatcher requestMatcher, final RequestHandler requestHandler)
+        public synchronized RequestHandlerManager addRequestHandler(final ListenerRequestMatcher requestMatcher,
+                                                                    final RequestHandler requestHandler)
         {
             pathMapSearchCache.invalidateAll();
             String requestMatcherPath = normalizePathWithSpacesOrEncodedSpaces(requestMatcher.getPath());
-            Preconditions.checkArgument(requestMatcherPath.startsWith(SLASH) || requestMatcherPath.equals(WILDCARD_CHARACTER), "path parameter must start with /");
+            Preconditions.checkArgument(requestMatcherPath.startsWith(SLASH) || requestMatcherPath.equals(WILDCARD_CHARACTER),
+                    "path parameter must start with /");
             validateCollision(requestMatcher);
-            paths.add( getMethodAndPath(requestMatcher.getMethodRequestMatcher().getMethodsList(), requestMatcherPath) );
+            paths.add(getMethodAndPath(requestMatcher.getMethodRequestMatcher().getMethodsList(), requestMatcherPath));
             PathMap currentPathMap = rootPathMap;
             final RequestHandlerMatcherPair addedRequestHandlerMatcherPair;
             final PathMap requestHandlerOwner;
@@ -176,14 +223,16 @@ public class HttpListenerRegistry implements RequestHandlerProvider
                         if (newListenerRequestMatcher.getMethodRequestMatcher().intersectsWith(requestMatcher.getMethodRequestMatcher()))
                         {
                             String possibleCollisionLastPathPart = getLastPathPortion(possibleCollisionRequestMatcherPath);
-                            String newListenerRequestMatcherLastPathPart  = getLastPathPortion(newListenerRequestMatcherPath);
+                            String newListenerRequestMatcherLastPathPart = getLastPathPortion(newListenerRequestMatcherPath);
                             if (possibleCollisionLastPathPart.equals(newListenerRequestMatcherLastPathPart) ||
                                 (isCatchAllPath(possibleCollisionLastPathPart) && isCatchAllPath(newListenerRequestMatcherLastPathPart)) ||
                                 (isCatchAllPath(possibleCollisionLastPathPart) && isUriParameter(newListenerRequestMatcherLastPathPart)) ||
                                 (isUriParameter(possibleCollisionLastPathPart) && isCatchAllPath(newListenerRequestMatcherLastPathPart) ||
                                  (isUriParameter(possibleCollisionLastPathPart) && isUriParameter(newListenerRequestMatcherLastPathPart))))
                             {
-                                throw new MuleRuntimeException(CoreMessages.createStaticMessage(String.format("Already exists a listener matching that path and methods. Listener matching %s new listener %s", requestMatcher, newListenerRequestMatcher)));
+                                throw new MuleRuntimeException(CoreMessages.createStaticMessage(String.format(
+                                        "Already exists a listener matching that path and methods. Listener matching %s new listener %s",
+                                        requestMatcher, newListenerRequestMatcher)));
                             }
                         }
                     }
@@ -221,7 +270,7 @@ public class HttpListenerRegistry implements RequestHandlerProvider
                     logger.info("No listener found for request: " + getMethodAndPath(request.getMethod(), request.getPath()));
                     logger.info("Available listeners are: [{}]", Joiner.on(", ").join(this.paths));
                 }
-                if(methodNotAllowed)
+                if (methodNotAllowed)
                 {
                     return NoMethodRequestHandler.getInstance();
                 }
@@ -295,7 +344,8 @@ public class HttpListenerRegistry implements RequestHandlerProvider
             }
         }
 
-        private RequestHandlerMatcherPair findRequestHandlerMatcherPair(List<RequestHandlerMatcherPair> requestHandlerMatcherPairs, HttpRequest request)
+        private RequestHandlerMatcherPair findRequestHandlerMatcherPair(List<RequestHandlerMatcherPair> requestHandlerMatcherPairs,
+                                                                        HttpRequest request)
         {
             for (RequestHandlerMatcherPair requestHandlerMatcherPair : requestHandlerMatcherPairs)
             {
@@ -306,43 +356,6 @@ public class HttpListenerRegistry implements RequestHandlerProvider
             }
             return null;
         }
-    }
-
-    private boolean isUriParameter(String pathPart)
-    {
-        return (pathPart.startsWith("{") || pathPart.startsWith("/{")) && pathPart.endsWith("}");
-    }
-
-    private String getLastPathPortion(String possibleCollisionRequestMatcherPath)
-    {
-        final String[] parts = splitPath(possibleCollisionRequestMatcherPath);
-        if (parts.length == 0)
-        {
-            return StringUtils.EMPTY;
-        }
-        return parts[parts.length - 1];
-    }
-
-    private boolean isSameDepth(String possibleCollisionRequestMatcherPath, String newListenerRequestMatcherPath)
-    {
-        return getPathPartsSize(possibleCollisionRequestMatcherPath) == getPathPartsSize(newListenerRequestMatcherPath);
-    }
-
-    private int getPathPartsSize(String path)
-    {
-        int pathSize = splitPath(path).length - 1;
-        pathSize += (path.endsWith(SLASH) ? 1 : 0);
-        return pathSize;
-    }
-
-    private String[] splitPath(String path)
-    {
-        if (path.endsWith(SLASH) )
-        {
-            // Remove the last slash
-            path = path.substring(0, path.length()-1);
-        }
-        return path.split(SLASH, -1);
     }
 
     public class PathMap
@@ -433,17 +446,13 @@ public class HttpListenerRegistry implements RequestHandlerProvider
             {
                 return true;
             }
-            if (this.catchAllCurrentPathMap != null && this.catchAllCurrentPathMap.removeRequestHandlerMatcherPair(requestHandlerMatcherPair))
+            if (this.catchAllCurrentPathMap != null &&
+                this.catchAllCurrentPathMap.removeRequestHandlerMatcherPair(requestHandlerMatcherPair))
             {
                 return true;
             }
             return false;
         }
-    }
-
-    private boolean isCatchAllPath(String path)
-    {
-        return WILDCARD_CHARACTER.equals(path);
     }
 
     public class RequestHandlerMatcherPair

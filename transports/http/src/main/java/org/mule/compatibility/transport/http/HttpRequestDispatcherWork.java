@@ -6,18 +6,17 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
 import org.mule.compatibility.core.api.transport.NoReceiverForEndpointException;
 import org.mule.compatibility.transport.http.i18n.HttpMessages;
 import org.mule.runtime.core.util.monitor.Expirable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.Socket;
 import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 /**
  * Dispatches HttpRequest to the appropriate MessageReceiver
@@ -77,7 +76,8 @@ public class HttpRequestDispatcherWork implements Runnable, Expirable
                         }
                         catch (NoReceiverForEndpointException e)
                         {
-                            httpServerConnection.writeFailureResponse(HttpConstants.SC_NOT_FOUND, HttpMessages.cannotBindToAddress(httpServerConnection.getFullUri()).toString());
+                            httpServerConnection.writeFailureResponse(HttpConstants.SC_NOT_FOUND,
+                                    HttpMessages.cannotBindToAddress(httpServerConnection.getFullUri()).toString());
                         }
                     }
                 }

@@ -6,62 +6,61 @@
  */
 package org.mule.test.integration.routing.outbound;
 
+import org.custommonkey.xmlunit.XMLUnit;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleMessage;
+
+import java.util.List;
+
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import java.util.List;
-
-import org.custommonkey.xmlunit.XMLUnit;
-import org.junit.Test;
-
 public class ExpressionSplitterXPathTestCase extends FunctionalTestCase
 {
 
     private final String MESSAGE = "<Batch xmlns=\"http://acme.com\">\n" +
-            "    <Trade>\n" +
-            "        <Type>CASH</Type>\n" +
-            "        <Amount>40000</Amount>\n" +
-            "        <Currency>USD</Currency>\n" +
-            "        <Date>28102008</Date>\n" +
-            "    </Trade>    \n" +
-            "    <Trade>\n" +
-            "        <Type>CASH</Type>\n" +
-            "        <Amount>2000</Amount>\n" +
-            "        <Currency>GBP</Currency>\n" +
-            "        <Date>28102008</Date>\n" +
-            "    </Trade>    \n" +
-            "</Batch>";
+                                   "    <Trade>\n" +
+                                   "        <Type>CASH</Type>\n" +
+                                   "        <Amount>40000</Amount>\n" +
+                                   "        <Currency>USD</Currency>\n" +
+                                   "        <Date>28102008</Date>\n" +
+                                   "    </Trade>    \n" +
+                                   "    <Trade>\n" +
+                                   "        <Type>CASH</Type>\n" +
+                                   "        <Amount>2000</Amount>\n" +
+                                   "        <Currency>GBP</Currency>\n" +
+                                   "        <Date>28102008</Date>\n" +
+                                   "    </Trade>    \n" +
+                                   "</Batch>";
 
     private final String EXPECTED_MESSAGE_1 = "<Trade xmlns=\"http://acme.com\">\n" +
-            "        <Type>CASH</Type>\n" +
-            "        <Amount>40000</Amount>\n" +
-            "        <Currency>USD</Currency>\n" +
-            "        <Date>28102008</Date>\n" +
-            "        <Received/>\n" +
-            "    </Trade>";
+                                              "        <Type>CASH</Type>\n" +
+                                              "        <Amount>40000</Amount>\n" +
+                                              "        <Currency>USD</Currency>\n" +
+                                              "        <Date>28102008</Date>\n" +
+                                              "        <Received/>\n" +
+                                              "    </Trade>";
 
     private final String EXPECTED_MESSAGE_2 = "<Trade xmlns=\"http://acme.com\">\n" +
-            "        <Type>CASH</Type>\n" +
-            "        <Amount>2000</Amount>\n" +
-            "        <Currency>GBP</Currency>\n" +
-            "        <Date>28102008</Date>\n" +
-            "        <Received/>\n" +
-            "    </Trade>";
+                                              "        <Type>CASH</Type>\n" +
+                                              "        <Amount>2000</Amount>\n" +
+                                              "        <Currency>GBP</Currency>\n" +
+                                              "        <Date>28102008</Date>\n" +
+                                              "        <Received/>\n" +
+                                              "    </Trade>";
+
+    public ExpressionSplitterXPathTestCase()
+    {
+        XMLUnit.setIgnoreWhitespace(true);
+    }
 
     @Override
     protected String getConfigFile()
     {
         return "org/mule/test/integration/routing/outbound/expression-splitter-xpath-test-flow-el.xml";
-    }
-
-    public ExpressionSplitterXPathTestCase()
-    {
-        XMLUnit.setIgnoreWhitespace(true);
     }
 
     @Test

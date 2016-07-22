@@ -39,9 +39,9 @@ public class PollingHttpsMessageReceiver extends PollingHttpMessageReceiver
         }
 
         checkEtag = MapUtils.getBooleanValue(endpoint.getProperties(), "checkEtag",
-            pollingConnector.isCheckEtag());
+                pollingConnector.isCheckEtag());
         discardEmptyContent = MapUtils.getBooleanValue(endpoint.getProperties(),
-            "discardEmptyContent", pollingConnector.isDiscardEmptyContent());
+                "discardEmptyContent", pollingConnector.isDiscardEmptyContent());
     }
 }
 

@@ -6,10 +6,6 @@
  */
 package org.mule.test.metadata.extension;
 
-import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.AMERICA;
-import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.ARGENTINA;
-import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.BUENOS_AIRES;
-
 import org.mule.runtime.extension.api.annotation.Parameter;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataScope;
@@ -19,6 +15,10 @@ import org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver;
 import org.mule.test.metadata.extension.resolver.TestOutputNullTypeResolver;
 
 import java.util.Map;
+
+import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.AMERICA;
+import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.ARGENTINA;
+import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.BUENOS_AIRES;
 
 @MetadataScope(keysResolver = TestMultiLevelKeyResolver.class, contentResolver = TestMultiLevelKeyResolver.class, outputResolver = TestOutputNullTypeResolver.class)
 public class MetadataSourceWithMultilevel extends Source<Map<String, Object>, StringAttributes>
@@ -34,9 +34,9 @@ public class MetadataSourceWithMultilevel extends Source<Map<String, Object>, St
     public void start()
     {
         boolean injectedProperly = key != null
-                               && key.getCity().equals(BUENOS_AIRES)
-                               && key.getCountry().equals(ARGENTINA)
-                               && key.getContinent().equals(AMERICA);
+                                   && key.getCity().equals(BUENOS_AIRES)
+                                   && key.getCountry().equals(ARGENTINA)
+                                   && key.getContinent().equals(AMERICA);
 
         if (!injectedProperly)
         {

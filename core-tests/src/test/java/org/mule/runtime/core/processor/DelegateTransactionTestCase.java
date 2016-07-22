@@ -6,16 +6,15 @@
  */
 package org.mule.runtime.core.processor;
 
+import org.junit.Test;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Answers.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
-import org.junit.Test;
 
 
 public class DelegateTransactionTestCase extends AbstractMuleTestCase

@@ -7,11 +7,7 @@
 
 package org.mule.runtime.module.db.internal.domain.database;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.expression.ExpressionManager;
@@ -19,7 +15,11 @@ import org.mule.runtime.module.db.internal.domain.connection.DbPoolingProfile;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class DataSourceConfigTestCase extends AbstractMuleTestCase
@@ -141,7 +141,7 @@ public class DataSourceConfigTestCase extends AbstractMuleTestCase
     public void resolvesDynamicPassword() throws Exception
     {
         MuleEvent muleEvent = mock(MuleEvent.class);
-            mockDynamicDataSourceConfigEvaluation(muleEvent);
+        mockDynamicDataSourceConfigEvaluation(muleEvent);
         dataSourceConfig.setPassword(MULE_EXPRESSION);
 
         DataSourceConfig resolvedDataSourceConfig = dataSourceConfig.resolve(muleEvent);

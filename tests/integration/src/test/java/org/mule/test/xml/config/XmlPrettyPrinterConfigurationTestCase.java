@@ -6,15 +6,14 @@
  */
 package org.mule.test.xml.config;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.module.xml.transformer.XmlPrettyPrinter;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.runtime.module.xml.transformer.XmlPrettyPrinter;
-
-import org.junit.Test;
 
 public class XmlPrettyPrinterConfigurationTestCase extends FunctionalTestCase
 {

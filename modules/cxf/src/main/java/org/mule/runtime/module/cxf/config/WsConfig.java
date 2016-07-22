@@ -21,7 +21,7 @@ import java.util.Set;
 
 public class WsConfig implements MuleContextAware
 {
-    Map<String, Object> configProperties = new HashMap<> ();
+    Map<String, Object> configProperties = new HashMap<>();
 
     private MuleContext muleContext;
 
@@ -35,27 +35,33 @@ public class WsConfig implements MuleContextAware
         this.configProperties = configProperties;
     }
 
+    public Map<String, Object> getConfigProperties()
+    {
+        return new DynamicAttributeEvalutorMap(new HashMap<>(configProperties), muleContext);
+    }
+
     public void setConfigProperties(Map<String, Object> configProperties)
     {
         this.configProperties = configProperties;
     }
 
-    public Map<String, Object> getConfigProperties()
+    @Override
+    public void setMuleContext(MuleContext context)
     {
-        return new DynamicAttributeEvalutorMap(new HashMap<>(configProperties), muleContext);
+        this.muleContext = context;
     }
 
     private static class DynamicAttributeEvalutorMap implements Map<String, Object>
     {
         private Map<String, Object> map;
         private MuleContext muleContext;
-        
+
         public DynamicAttributeEvalutorMap(Map<String, Object> map, MuleContext muleContext)
         {
             this.map = map;
             this.muleContext = muleContext;
         }
-        
+
         private Map<String, Object> getEvaluatedMap()
         {
             MuleEvent event = RequestContext.getEvent();
@@ -67,7 +73,7 @@ public class WsConfig implements MuleContextAware
                 {
                     if (entry.getValue() instanceof String)
                     {
-                        AttributeEvaluator evaluator = new AttributeEvaluator((String)entry.getValue());
+                        AttributeEvaluator evaluator = new AttributeEvaluator((String) entry.getValue());
                         evaluator.initialize(muleContext.getExpressionManager());
                         evaluatedMap.put(entry.getKey(), evaluator.resolveValue(event));
                     }
@@ -152,11 +158,5 @@ public class WsConfig implements MuleContextAware
         {
             return getEvaluatedMap().values();
         }
-    }
-
-    @Override
-    public void setMuleContext(MuleContext context)
-    {
-        this.muleContext = context;
     }
 }

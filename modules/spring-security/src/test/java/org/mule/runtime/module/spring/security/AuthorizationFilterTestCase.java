@@ -6,14 +6,6 @@
  */
 package org.mule.runtime.module.spring.security;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.UNAUTHORIZED;
-
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
@@ -21,6 +13,13 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.hamcrest.core.Is;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.UNAUTHORIZED;
 
 public class AuthorizationFilterTestCase extends FunctionalTestCase
 {
@@ -37,7 +36,7 @@ public class AuthorizationFilterTestCase extends FunctionalTestCase
     @Test
     public void testNotAuthenticated() throws Exception
     {
-        doRequest("localhost",getUrl(), 401);
+        doRequest("localhost", getUrl(), 401);
     }
 
     @Test
@@ -45,7 +44,7 @@ public class AuthorizationFilterTestCase extends FunctionalTestCase
     {
         doRequest(null, "localhost", "anon", "anon", getUrl(), false, 405);
     }
-    
+
     @Test
     public void testAuthorized() throws Exception
     {
@@ -72,7 +71,7 @@ public class AuthorizationFilterTestCase extends FunctionalTestCase
         try
         {
             int status = client.executeMethod(get);
-            assertEquals(status,result);
+            assertEquals(status, result);
             assertNotNull(get.getResponseHeader("WWW-Authenticate"));
             assertThat(get.getResponseHeader("WWW-Authenticate").getValue().contains("mule-realm"), Is.is(true));
         }
@@ -93,7 +92,7 @@ public class AuthorizationFilterTestCase extends FunctionalTestCase
         HttpClient client = new HttpClient();
         client.getParams().setAuthenticationPreemptive(true);
         client.getState().setCredentials(new AuthScope(host, -1, realm),
-            new UsernamePasswordCredentials(user, pass));
+                new UsernamePasswordCredentials(user, pass));
         GetMethod get = new GetMethod(url);
         get.setDoAuthentication(handshake);
 

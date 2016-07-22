@@ -7,8 +7,6 @@
 
 package org.mule.runtime.module.cxf.support;
 
-import javax.xml.namespace.QName;
-
 import org.apache.cxf.binding.soap.wsdl.extensions.SoapBody;
 import org.apache.cxf.databinding.stax.StaxDataBindingInterceptor;
 import org.apache.cxf.endpoint.Endpoint;
@@ -23,10 +21,11 @@ import org.apache.cxf.service.model.ServiceModelUtil;
 import org.apache.cxf.staxutils.DepthXMLStreamReader;
 import org.apache.cxf.staxutils.StaxUtils;
 
+import javax.xml.namespace.QName;
+
 /**
  * Sets the correct operation when the binding style is RPC. The processing of the message content
  * is delegated to the StaxDataBindingInterceptor.
- *
  */
 public class ProxyRPCInInterceptor extends AbstractInDatabindingInterceptor
 {
@@ -37,7 +36,8 @@ public class ProxyRPCInInterceptor extends AbstractInDatabindingInterceptor
         addBefore(StaxDataBindingInterceptor.class.getName());
     }
 
-    private BindingOperationInfo getOperation(Message message, QName opName) {
+    private BindingOperationInfo getOperation(Message message, QName opName)
+    {
         BindingOperationInfo bop = ServiceModelUtil.getOperation(message.getExchange(), opName);
         if (bop == null)
         {
@@ -57,7 +57,8 @@ public class ProxyRPCInInterceptor extends AbstractInDatabindingInterceptor
                     if (output)
                     {
                         body = info.getOutput().getExtensor(SoapBody.class);
-                    } else
+                    }
+                    else
                     {
                         body = info.getInput().getExtensor(SoapBody.class);
                     }

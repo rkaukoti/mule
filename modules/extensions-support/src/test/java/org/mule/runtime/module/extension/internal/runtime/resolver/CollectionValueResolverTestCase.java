@@ -6,14 +6,10 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getResolver;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.context.MuleContextAware;
@@ -27,32 +23,34 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getResolver;
 
 @RunWith(Parameterized.class)
 public class CollectionValueResolverTestCase extends AbstractMuleTestCase
 {
 
     private Class<? extends Collection> collectionType;
-
-    @Parameterized.Parameters
-    public static Collection<Object[]> data()
-    {
-        return Arrays.asList(new Object[][] {{ArrayList.class}, {HashSet.class}});
-    }
-
     private CollectionValueResolver resolver;
     private List<ValueResolver> childResolvers;
     private List<Integer> expectedValues;
     private MuleContext muleContext;
     private MuleEvent event;
-
     public CollectionValueResolverTestCase(Class<? extends Collection> collectionType)
     {
         this.collectionType = collectionType;
+    }
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data()
+    {
+        return Arrays.asList(new Object[][] {{ArrayList.class}, {HashSet.class}});
     }
 
     @Before

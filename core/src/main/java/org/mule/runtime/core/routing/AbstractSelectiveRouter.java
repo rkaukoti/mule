@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.routing;
 
+import org.apache.commons.collections.ListUtils;
 import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -38,20 +39,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.commons.collections.ListUtils;
-
 public abstract class AbstractSelectiveRouter extends AbstractAnnotatedObject
         implements SelectiveRouter, RouterStatisticsRecorder, Lifecycle, FlowConstructAware, MuleContextAware, MessageProcessorContainer
 {
 
-    private final List<MessageProcessorFilterPair> conditionalMessageProcessors = new ArrayList<>();
-    private MessageProcessor defaultProcessor;
-    private final RouterResultsHandler resultsHandler = new DefaultRouterResultsHandler();
-    private RouterStatistics routerStatistics;
-
     final AtomicBoolean initialised = new AtomicBoolean(false);
     final AtomicBoolean starting = new AtomicBoolean(false);
     final AtomicBoolean started = new AtomicBoolean(false);
+    private final List<MessageProcessorFilterPair> conditionalMessageProcessors = new ArrayList<>();
+    private final RouterResultsHandler resultsHandler = new DefaultRouterResultsHandler();
+    private MessageProcessor defaultProcessor;
+    private RouterStatistics routerStatistics;
     private FlowConstruct flowConstruct;
     private MuleContext muleContext;
 
@@ -176,7 +174,7 @@ public abstract class AbstractSelectiveRouter extends AbstractAnnotatedObject
             MessageProcessorFilterPair addedPair = new MessageProcessorFilterPair(processor, filter);
 
             MessageProcessorFilterPair removedPair = conditionalMessageProcessors.set(index,
-                                                                                      transitionLifecycleManagedObjectForAddition(addedPair));
+                    transitionLifecycleManagedObjectForAddition(addedPair));
 
             transitionLifecycleManagedObjectForRemoval(removedPair);
         });
@@ -209,13 +207,13 @@ public abstract class AbstractSelectiveRouter extends AbstractAnnotatedObject
         }
 
         throw new RoutePathNotFoundException(
-                MessageFactory.createStaticMessage("Can't process message because no route has been found matching any filter and no default route is defined"),
+                MessageFactory.createStaticMessage(
+                        "Can't process message because no route has been found matching any filter and no default route is defined"),
                 event, this);
     }
 
     /**
-     * @return the processors selected according to the specific router strategy or
-     *         an empty collection (not null).
+     * @return the processors selected according to the specific router strategy or an empty collection (not null).
      */
     protected abstract Collection<MessageProcessor> selectProcessors(MuleEvent event);
 
@@ -318,12 +316,6 @@ public abstract class AbstractSelectiveRouter extends AbstractAnnotatedObject
         return Collections.unmodifiableList(conditionalMessageProcessors);
     }
 
-    private interface RoutesUpdater
-    {
-
-        void updateAt(int index);
-    }
-
     private void updateRoute(MessageProcessor processor, RoutesUpdater routesUpdater)
     {
         synchronized (conditionalMessageProcessors)
@@ -365,6 +357,12 @@ public abstract class AbstractSelectiveRouter extends AbstractAnnotatedObject
     public String toString()
     {
         return String.format("%s [flow-construct=%s, started=%s]", getClass().getSimpleName(),
-                             flowConstruct != null ? flowConstruct.getName() : null, started);
+                flowConstruct != null ? flowConstruct.getName() : null, started);
+    }
+
+    private interface RoutesUpdater
+    {
+
+        void updateAt(int index);
     }
 }

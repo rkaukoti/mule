@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.core.internal.connection;
 
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.startIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
 import org.mule.runtime.api.config.HasPoolingProfile;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionHandlingStrategy;
@@ -21,11 +17,15 @@ import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.lifecycle.Lifecycle;
 import org.mule.runtime.core.api.retry.RetryPolicyTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.startIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
 
 /**
  * Base class for wrappers for {@link ConnectionProvider} instances
@@ -37,11 +37,9 @@ public abstract class ConnectionProviderWrapper<Connection> implements Connectio
 {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionProviderWrapper.class);
-
+    private final ConnectionProvider<Connection> delegate;
     @Inject
     protected MuleContext muleContext;
-
-    private final ConnectionProvider<Connection> delegate;
 
     /**
      * Creates a new instance which wraps the {@code delegate}

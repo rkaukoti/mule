@@ -14,7 +14,8 @@ import java.io.Serializable;
 
 import javax.transaction.xa.Xid;
 
-public class XaQueueTypeTransactionContextAdapter extends AbstractXaTransactionContext implements XaQueueTransactionContext, QueueTransactionContextFactory<XaQueueTransactionContext>
+public class XaQueueTypeTransactionContextAdapter extends AbstractXaTransactionContext
+        implements XaQueueTransactionContext, QueueTransactionContextFactory<XaQueueTransactionContext>
 {
 
     private final XaTxQueueTransactionJournal xaTxQueueTransactionJournal;
@@ -22,7 +23,8 @@ public class XaQueueTypeTransactionContextAdapter extends AbstractXaTransactionC
     private final QueueTypeTransactionContextAdapter<XaQueueTransactionContext> delegate;
     private final Xid xid;
 
-    public XaQueueTypeTransactionContextAdapter(XaTxQueueTransactionJournal xaTxQueueTransactionJournal, QueueProvider queueProvider, Xid xid)
+    public XaQueueTypeTransactionContextAdapter(XaTxQueueTransactionJournal xaTxQueueTransactionJournal, QueueProvider queueProvider,
+                                                Xid xid)
     {
         this.xaTxQueueTransactionJournal = xaTxQueueTransactionJournal;
         this.queueProvider = queueProvider;

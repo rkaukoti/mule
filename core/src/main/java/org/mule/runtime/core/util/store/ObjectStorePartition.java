@@ -42,7 +42,7 @@ public class ObjectStorePartition<T extends Serializable> implements ListableObj
     {
         return partitionedObjectStore.retrieve(key, partitionName);
     }
-    
+
     @Override
     public void clear() throws ObjectStoreException
     {
@@ -83,10 +83,10 @@ public class ObjectStorePartition<T extends Serializable> implements ListableObj
     {
         return partitionedObjectStore;
     }
-    
+
     public String getPartitionName()
     {
         return partitionName;
     }
-    
+
 }

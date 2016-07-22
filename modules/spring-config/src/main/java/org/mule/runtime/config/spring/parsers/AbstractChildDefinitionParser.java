@@ -10,7 +10,6 @@ import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.generic.AutoIdUtils;
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
 import org.mule.runtime.core.util.StringUtils;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
@@ -72,7 +71,7 @@ public abstract class AbstractChildDefinitionParser
             else
             {
                 assembler.insertSingletonBeanInTarget(propertyName,
-                    element.getAttribute(AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME));
+                        element.getAttribute(AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME));
             }
         }
     }

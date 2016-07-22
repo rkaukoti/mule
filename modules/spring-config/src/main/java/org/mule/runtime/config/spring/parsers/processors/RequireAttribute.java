@@ -9,15 +9,14 @@ package org.mule.runtime.config.spring.parsers.processors;
 import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 
 /**
  * Throws an exception if any of the required attributes (after translation) are missing.
@@ -31,7 +30,7 @@ public class RequireAttribute implements PreProcessor
 
     public RequireAttribute(String required)
     {
-        this(new String[]{required});
+        this(new String[] {required});
     }
 
     public RequireAttribute(String[] required)
@@ -52,7 +51,7 @@ public class RequireAttribute implements PreProcessor
                 String alias = SpringXMLUtils.attributeName((Attr) attributes.item(i));
                 // don't translate to alias because the error message is in terms of the attributes
                 // the user enters - we don't want to expose the details of translations
-//                found = name.equals(config.translateName(alias));
+                //                found = name.equals(config.translateName(alias));
                 found = name.equals(alias);
             }
             if (!found)

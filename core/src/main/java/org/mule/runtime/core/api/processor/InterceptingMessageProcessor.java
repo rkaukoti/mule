@@ -7,7 +7,6 @@
 package org.mule.runtime.core.api.processor;
 
 import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.source.MessageSource;
 
 /**
  * <p>
@@ -17,7 +16,7 @@ import org.mule.runtime.core.api.source.MessageSource;
  * </p>
  * Although not normal, it is valid for the <i>listener</i> MessageProcessor to be
  * <i>null</i> and implementations should handle this case.
- * 
+ *
  * @since 3.0
  */
 public interface InterceptingMessageProcessor extends MessageProcessor

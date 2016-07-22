@@ -6,11 +6,6 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.junit.Assert.assertEquals;
-import static org.mule.runtime.core.api.security.tls.TlsConfiguration.DISABLE_SYSTEM_PROPERTIES_MAPPING_PROPERTY;
-import org.mule.tck.junit4.rule.DynamicPort;
-import org.mule.tck.junit4.rule.SystemProperty;
-
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
@@ -19,24 +14,27 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.tck.junit4.rule.DynamicPort;
+import org.mule.tck.junit4.rule.SystemProperty;
+
+import static org.junit.Assert.assertEquals;
+import static org.mule.runtime.core.api.security.tls.TlsConfiguration.DISABLE_SYSTEM_PROPERTIES_MAPPING_PROPERTY;
 
 
 public class HttpSecurityTestCase extends AbstractHttpSecurityTestCase
 {
 
+    private static String soapRequest =
+            "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:unk=\"http://unknown.namespace/\">" +
+            "<soapenv:Header/>" +
+            "<soapenv:Body>" +
+            "<unk:echo>" +
+            "<arg0>asdf</arg0>" +
+            "</unk:echo>" +
+            "</soapenv:Body>" +
+            "</soapenv:Envelope>";
     @Rule
     public SystemProperty disablePropertiesMapping = new SystemProperty(DISABLE_SYSTEM_PROPERTIES_MAPPING_PROPERTY, "false");
-
-    private static String soapRequest =
-        "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:unk=\"http://unknown.namespace/\">" +
-           "<soapenv:Header/>" +
-           "<soapenv:Body>" +
-              "<unk:echo>" +
-                 "<arg0>asdf</arg0>" +
-              "</unk:echo>" +
-           "</soapenv:Body>" +
-        "</soapenv:Envelope>";
-
     @Rule
     public DynamicPort dynamicPort1 = new DynamicPort("port1");
 
@@ -51,7 +49,6 @@ public class HttpSecurityTestCase extends AbstractHttpSecurityTestCase
 
     /**
      * This test doesn't work in Maven because Mule can't load the keystores from the jars
-     * @throws Exception
      */
     @Test
     public void testBasicAuth() throws Exception

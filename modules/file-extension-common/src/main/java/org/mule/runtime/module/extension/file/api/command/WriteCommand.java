@@ -20,7 +20,8 @@ public interface WriteCommand
 {
 
     /**
-     * Writes a file under the considerations of {@link FileSystem#write(FileConnectorConfig, String, Object, FileWriteMode, MuleEvent, boolean, boolean, String)}
+     * Writes a file under the considerations of {@link FileSystem#write(FileConnectorConfig, String, Object, FileWriteMode, MuleEvent,
+     * boolean, boolean, String)}
      *
      * @param config                the config on which is parameterizing this operation
      * @param filePath              the path of the file to be written
@@ -29,9 +30,8 @@ public interface WriteCommand
      * @param event                 the {@link MuleEvent} which processing triggers this operation
      * @param lock                  whether or not to lock the file
      * @param createParentDirectory whether or not to attempt creating the parent directory if it doesn't exists.
-     * @param encoding              when {@@code content} is a {@link String}, this attribute specifies the encoding
-     *                              to be used when writing. If not set, then it defaults to
-     *                              {@link FileConnectorConfig#getDefaultWriteEncoding()}
+     * @param encoding              when {@@code content} is a {@link String}, this attribute specifies the encoding to be used when
+     *                              writing. If not set, then it defaults to {@link FileConnectorConfig#getDefaultWriteEncoding()}
      * @throws IllegalArgumentException if an illegal combination of arguments is supplied
      */
     void write(FileConnectorConfig config,

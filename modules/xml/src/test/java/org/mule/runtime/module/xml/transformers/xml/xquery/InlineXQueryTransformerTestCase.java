@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.module.xml.transformers.xml.xquery;
 
+import org.custommonkey.xmlunit.XMLUnit;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.xml.transformer.XQueryTransformer;
-
-import org.custommonkey.xmlunit.XMLUnit;
 import org.w3c.dom.Document;
 
 public class InlineXQueryTransformerTestCase extends AbstractTransformerTestCase

@@ -6,12 +6,7 @@
  */
 package org.mule.runtime.module.extension.internal;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionHandlingStrategy;
@@ -34,7 +29,12 @@ import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.UseConfig;
 import org.mule.tck.testmodels.fruit.Apple;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
 
 public class ImplicitConfigTestCase extends ExtensionFunctionalTestCase
 {
@@ -56,10 +56,11 @@ public class ImplicitConfigTestCase extends ExtensionFunctionalTestCase
     {
         final Integer defaultValue = 42;
         ImplicitConfigExtension config = (ImplicitConfigExtension) flowRunner("implicitConfig").withPayload("")
-                .withFlowVariable("optionalWithDefault", defaultValue)
-                .run()
-                .getMessage()
-                .getPayload();
+                                                                                               .withFlowVariable("optionalWithDefault",
+                                                                                                       defaultValue)
+                                                                                               .run()
+                                                                                               .getMessage()
+                                                                                               .getPayload();
 
 
         assertThat(config, is(notNullValue()));
@@ -103,12 +104,6 @@ public class ImplicitConfigTestCase extends ExtensionFunctionalTestCase
         }
 
         @Override
-        public void setMuleContext(MuleContext context)
-        {
-            muleContext = context;
-        }
-
-        @Override
         public void start() throws MuleException
         {
             start++;
@@ -117,6 +112,12 @@ public class ImplicitConfigTestCase extends ExtensionFunctionalTestCase
         public MuleContext getMuleContext()
         {
             return muleContext;
+        }
+
+        @Override
+        public void setMuleContext(MuleContext context)
+        {
+            muleContext = context;
         }
 
         public int getInitialise()

@@ -6,8 +6,8 @@
  */
 package org.mule.runtime.module.xml.transformers.xml;
 
-import static org.junit.Assert.fail;
-
+import org.dom4j.DocumentHelper;
+import org.dom4j.io.DOMWriter;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.message.OutputHandler;
@@ -17,8 +17,7 @@ import org.mule.runtime.module.xml.transformer.XmlToOutputHandler;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-import org.dom4j.DocumentHelper;
-import org.dom4j.io.DOMWriter;
+import static org.junit.Assert.fail;
 
 public class XmlToOutputHandlerByteArrayTestCase extends AbstractXmlTransformerTestCase
 {
@@ -30,7 +29,7 @@ public class XmlToOutputHandlerByteArrayTestCase extends AbstractXmlTransformerT
     {
         InputStream resourceStream = IOUtils.getResourceAsStream("cdcatalog-utf-8.xml", getClass());
         resultData = IOUtils.toString(resourceStream, "UTF-8");
-        
+
         srcData = resultData.getBytes("UTF-8");
     }
 
@@ -66,13 +65,13 @@ public class XmlToOutputHandlerByteArrayTestCase extends AbstractXmlTransformerT
     {
         if (result instanceof OutputHandler)
         {
-            OutputHandler handler = (OutputHandler)result;
+            OutputHandler handler = (OutputHandler) result;
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             try
             {
                 handler.write(null, bos);
                 org.dom4j.Document dom4jDoc = null;
-                dom4jDoc = DocumentHelper.parseText((String)expected);
+                dom4jDoc = DocumentHelper.parseText((String) expected);
                 expected = new DOMWriter().write(dom4jDoc);
                 dom4jDoc = DocumentHelper.parseText(new String(bos.toByteArray(), "UTF-8"));
                 result = new DOMWriter().write(dom4jDoc);

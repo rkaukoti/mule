@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.management.mbeans;
 
+import org.junit.Test;
 import org.mule.runtime.management.AbstractMuleJmxTestCase;
 import org.mule.runtime.module.management.mbean.YourKitProfilerServiceMBean;
 
 import java.lang.reflect.Method;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
@@ -22,8 +21,6 @@ public class YourKitProfilerTestCase extends AbstractMuleJmxTestCase
     /**
      * Each method doen't have to be more than 32
      * There is a need for intergration with HQ
-     *
-     * @throws Exception
      */
     @Test
     public void testMethodLenght() throws Exception
@@ -31,7 +28,7 @@ public class YourKitProfilerTestCase extends AbstractMuleJmxTestCase
         Method[] methods = YourKitProfilerServiceMBean.class.getMethods();
         for (int i = 0; i < methods.length; i++)
         {
-            assertTrue(methods[i].getName(),methods[i].getName().length() < 32);
+            assertTrue(methods[i].getName(), methods[i].getName().length() < 32);
         }
 
     }

@@ -6,16 +6,17 @@
  */
 package org.mule.runtime.core.util;
 
-import static java.util.Arrays.asList;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.api.Closeable;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.util.StreamCloser;
 import org.mule.runtime.core.streaming.Consumer;
 import org.mule.tck.size.SmallTest;
+import org.xml.sax.InputSource;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -25,12 +26,11 @@ import java.util.Collection;
 
 import javax.xml.transform.sax.SAXSource;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.xml.sax.InputSource;
+import static java.util.Arrays.asList;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)

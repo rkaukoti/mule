@@ -72,7 +72,7 @@ public class QueueStoreAdapter<T extends Serializable> implements QueueStore<T>,
     {
         return store.remove(key);
     }
-    
+
     @Override
     public void clear() throws ObjectStoreException
     {

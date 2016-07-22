@@ -56,11 +56,6 @@ public enum TypeDerivationControl
         value = v;
     }
 
-    public DerivationControl value()
-    {
-        return value;
-    }
-
     public static TypeDerivationControl fromValue(DerivationControl v)
     {
         for (TypeDerivationControl c : TypeDerivationControl.values())
@@ -71,6 +66,11 @@ public enum TypeDerivationControl
             }
         }
         throw new IllegalArgumentException(v.toString());
+    }
+
+    public DerivationControl value()
+    {
+        return value;
     }
 
 }

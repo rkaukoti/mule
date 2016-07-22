@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.module.extension.internal.connector;
 
+import org.junit.Test;
+import org.mule.functional.junit4.ExtensionFunctionalTestCase;
+import org.mule.runtime.core.api.config.ThreadingProfile;
+import org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils;
+import org.mule.test.petstore.extension.PetStoreClient;
+import org.mule.test.petstore.extension.PetStoreConnector;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
-import org.mule.runtime.core.api.config.ThreadingProfile;
-import org.mule.functional.junit4.ExtensionFunctionalTestCase;
-import org.mule.test.petstore.extension.PetStoreClient;
-import org.mule.test.petstore.extension.PetStoreConnector;
-import org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils;
-
-import org.junit.Test;
 
 public class PetStoreThreadingProfileTestCase extends ExtensionFunctionalTestCase
 {
@@ -54,7 +54,8 @@ public class PetStoreThreadingProfileTestCase extends ExtensionFunctionalTestCas
         assertThreadingProfile(client.getThreadingProfile());
     }
 
-    private void assertThreadingProfile(ThreadingProfile threadingProfile){
+    private void assertThreadingProfile(ThreadingProfile threadingProfile)
+    {
         assertThat(threadingProfile, is(notNullValue()));
         assertThat(threadingProfile.getMaxThreadsActive(), is(20));
         assertThat(threadingProfile.isDoThreading(), is(false));

@@ -6,12 +6,7 @@
  */
 package org.mule.compatibility.core.endpoint;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
@@ -28,7 +23,11 @@ import org.mule.tck.testmodels.mule.TestConnector;
 
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 public class EndpointURIEndpointBuilderTestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -72,7 +71,8 @@ public class EndpointURIEndpointBuilderTestCase extends AbstractMuleContextEndpo
     {
         assertEquals(ep.getEndpointURI().getUri().toString(), "test://address");
         assertEquals(muleContext.getConfiguration().getDefaultResponseTimeout(), ep.getResponseTimeout());
-        assertTrue("ep.getRetryPolicyTemplate() = " + ep.getRetryPolicyTemplate().getClass(), ep.getRetryPolicyTemplate() instanceof NoRetryPolicyTemplate);
+        assertTrue("ep.getRetryPolicyTemplate() = " + ep.getRetryPolicyTemplate().getClass(),
+                ep.getRetryPolicyTemplate() instanceof NoRetryPolicyTemplate);
         assertTrue(ep.getTransactionConfig() instanceof MuleTransactionConfig);
         assertTrue(ep.getTransactionConfig() instanceof MuleTransactionConfig);
         assertEquals(null, ep.getSecurityFilter());
@@ -83,7 +83,7 @@ public class EndpointURIEndpointBuilderTestCase extends AbstractMuleContextEndpo
         assertEquals(null, ep.getFilter());
         assertEquals(ImmutableEndpoint.INITIAL_STATE_STARTED, ep.getInitialState());
     }
-    
+
     @Test
     public void testHasSetEncodingMethod() throws Exception
     {
@@ -91,7 +91,7 @@ public class EndpointURIEndpointBuilderTestCase extends AbstractMuleContextEndpo
         EndpointBuilder endpointBuilder = new EndpointURIEndpointBuilder(uri, muleContext);
         assertNotNull(endpointBuilder.getClass().getMethod("setEncoding", new Class[] {Charset.class}));
     }
-    
+
     @Test
     public void testEndpointBuilderFromEndpoint() throws Exception
     {
@@ -109,12 +109,10 @@ public class EndpointURIEndpointBuilderTestCase extends AbstractMuleContextEndpo
         assertEquals(endpoint.getRetryPolicyTemplate(), builder.getRetryPolicyTemplate(builder.getConnector()));
         assertEquals(MessageExchangePattern.ONE_WAY, builder.getExchangePattern());
     }
-    
+
     /**
      * Assert that the builder state (message prococessors/transformers) doesn't change when endpont is built
      * multiple times
-     * 
-     * @throws Exception
      */
     @Test
     public void testEndpointBuilderTransformersState() throws Exception
@@ -124,10 +122,10 @@ public class EndpointURIEndpointBuilderTestCase extends AbstractMuleContextEndpo
 
         String uri = "test://address?transformers=tran1&responseTransformers=tran2";
         EndpointBuilder endpointBuilder = new EndpointURIEndpointBuilder(uri, muleContext);
-        endpointBuilder.setTransformers(java.util.Collections.<Transformer> singletonList(new StringAppendTransformer(
-            "3")));
-        endpointBuilder.setResponseTransformers(java.util.Collections.<Transformer> singletonList(new StringAppendTransformer(
-            "4")));
+        endpointBuilder.setTransformers(java.util.Collections.<Transformer>singletonList(new StringAppendTransformer(
+                "3")));
+        endpointBuilder.setResponseTransformers(java.util.Collections.<Transformer>singletonList(new StringAppendTransformer(
+                "4")));
 
         InboundEndpoint endpoint = endpointBuilder.buildInboundEndpoint();
 
@@ -139,14 +137,14 @@ public class EndpointURIEndpointBuilderTestCase extends AbstractMuleContextEndpo
         assertEquals(2, endpoint.getMessageProcessors().size());
         assertEquals(2, endpoint.getResponseMessageProcessors().size());
     }
-    
+
     private static class SensingEndpointURIEndpointBuilder extends EndpointURIEndpointBuilder
     {
         public SensingEndpointURIEndpointBuilder(ImmutableEndpoint endpoint)
         {
             super(endpoint);
         }
-        
+
         public MessageExchangePattern getExchangePattern()
         {
             return messageExchangePattern;

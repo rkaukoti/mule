@@ -37,7 +37,7 @@
     </flow>
 
     <flow name="reqWithAttachment">
-        <httpn:listener config-ref="listenerConfig" path="reqWithAttachment" />
+        <httpn:listener config-ref="listenerConfig" path="reqWithAttachment"/>
         <test:assert expression="#[message.getAttributes().getParts().get('someJson').contentType == 'text/json']"/>
         <set-payload value="OK"/>
     </flow>

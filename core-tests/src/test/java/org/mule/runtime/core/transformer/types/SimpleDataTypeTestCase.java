@@ -7,18 +7,17 @@
 
 package org.mule.runtime.core.transformer.types;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mule.runtime.api.metadata.MediaType.JSON;
-
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.nio.charset.UnsupportedCharsetException;
 
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mule.runtime.api.metadata.MediaType.JSON;
 
 @SmallTest
 public class SimpleDataTypeTestCase extends AbstractMuleTestCase

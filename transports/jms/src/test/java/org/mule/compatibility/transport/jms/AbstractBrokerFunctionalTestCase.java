@@ -6,10 +6,9 @@
  */
 package org.mule.compatibility.transport.jms;
 
+import org.junit.Rule;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.test.infrastructure.process.rules.ActiveMQBroker;
-
-import org.junit.Rule;
 
 /**
  * Base test class for tests that require an Active MQ broker that is not embedded in the Mule application.

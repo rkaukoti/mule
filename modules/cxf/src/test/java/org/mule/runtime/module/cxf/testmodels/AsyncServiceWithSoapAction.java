@@ -19,7 +19,7 @@ public class AsyncServiceWithSoapAction
 
     private CountDownLatch latch = new CountDownLatch(1);
 
-    @WebMethod(action="send")
+    @WebMethod(action = "send")
     @Oneway
     public void send(@WebParam(name = "text") String s)
     {

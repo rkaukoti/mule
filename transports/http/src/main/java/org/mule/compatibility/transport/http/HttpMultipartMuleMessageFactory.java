@@ -6,8 +6,6 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.mule.compatibility.transport.http.HttpConstants.HEADER_CONTENT_TYPE;
-
 import org.mule.compatibility.transport.http.multipart.MultiPartInputStream;
 import org.mule.compatibility.transport.http.multipart.Part;
 import org.mule.compatibility.transport.http.multipart.PartDataSource;
@@ -19,6 +17,8 @@ import java.util.Collection;
 import java.util.Map;
 
 import javax.activation.DataHandler;
+
+import static org.mule.compatibility.transport.http.HttpConstants.HEADER_CONTENT_TYPE;
 
 public class HttpMultipartMuleMessageFactory extends HttpMuleMessageFactory
 {

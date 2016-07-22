@@ -20,8 +20,8 @@ public class SimpleFieldDebugInfo extends FieldDebugInfo<Object>
     /**
      * Creates a debug information for a simple field
      *
-     * @param name name of the created field. Must be a not blank {@link String}
-     * @param type class of the field. Cannot be null.
+     * @param name  name of the created field. Must be a not blank {@link String}
+     * @param type  class of the field. Cannot be null.
      * @param value value of the field. Can be null
      */
     SimpleFieldDebugInfo(String name, String type, Object value)

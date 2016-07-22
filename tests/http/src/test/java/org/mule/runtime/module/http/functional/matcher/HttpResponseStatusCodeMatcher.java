@@ -22,6 +22,12 @@ public class HttpResponseStatusCodeMatcher extends TypeSafeMatcher<HttpResponse>
         this.statusCode = statusCode;
     }
 
+    @Factory
+    public static Matcher<HttpResponse> hasStatusCode(int statusCode)
+    {
+        return new HttpResponseStatusCodeMatcher(statusCode);
+    }
+
     @Override
     public boolean matchesSafely(HttpResponse response)
     {
@@ -38,11 +44,5 @@ public class HttpResponseStatusCodeMatcher extends TypeSafeMatcher<HttpResponse>
     protected void describeMismatchSafely(HttpResponse response, Description mismatchDescription)
     {
         mismatchDescription.appendText("got a response with status code ").appendValue(response.getStatusLine().getStatusCode());
-    }
-
-    @Factory
-    public static Matcher<HttpResponse> hasStatusCode(int statusCode)
-    {
-        return new HttpResponseStatusCodeMatcher(statusCode);
     }
 }

@@ -23,8 +23,8 @@ import java.nio.charset.Charset;
  */
 public class StringToObjectArray extends AbstractTransformer
 {
-    private String delimiter = null;
     private static final String DEFAULT_DELIMITER = " ";
+    private String delimiter = null;
 
     public StringToObjectArray()
     {

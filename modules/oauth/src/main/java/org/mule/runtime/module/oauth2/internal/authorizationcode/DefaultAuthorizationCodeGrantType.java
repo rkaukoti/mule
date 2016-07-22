@@ -6,8 +6,8 @@
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-
+import org.apache.commons.lang.StringUtils;
+import org.mule.runtime.api.tls.TlsContextFactory;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -16,6 +16,7 @@ import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.lifecycle.Startable;
+import org.mule.runtime.core.util.AttributeEvaluator;
 import org.mule.runtime.module.http.api.HttpHeaders;
 import org.mule.runtime.module.http.internal.domain.request.HttpRequestBuilder;
 import org.mule.runtime.module.oauth2.api.RequestAuthenticationException;
@@ -23,19 +24,18 @@ import org.mule.runtime.module.oauth2.internal.AbstractGrantType;
 import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ConfigOAuthContext;
 import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ResourceOwnerOAuthContext;
 import org.mule.runtime.module.oauth2.internal.tokenmanager.TokenManagerConfig;
-import org.mule.runtime.api.tls.TlsContextFactory;
-import org.mule.runtime.core.util.AttributeEvaluator;
 
-import org.apache.commons.lang.StringUtils;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * Represents the config element for oauth:authentication-code-config.
  * <p/>
- * This config will:
- * - If the authorization-request is defined then it will create a flow listening for an user call to begin the oauth login.
- * - If the token-request is defined then it will create a flow for listening in the redirect uri so we can get the authentication code and retrieve the access token
+ * This config will: - If the authorization-request is defined then it will create a flow listening for an user call to begin the oauth
+ * login. - If the token-request is defined then it will create a flow for listening in the redirect uri so we can get the authentication
+ * code and retrieve the access token
  */
-public class DefaultAuthorizationCodeGrantType extends AbstractGrantType implements Initialisable, AuthorizationCodeGrantType, Startable, MuleContextAware
+public class DefaultAuthorizationCodeGrantType extends AbstractGrantType
+        implements Initialisable, AuthorizationCodeGrantType, Startable, MuleContextAware
 {
 
     private String clientId;
@@ -48,21 +48,6 @@ public class DefaultAuthorizationCodeGrantType extends AbstractGrantType impleme
     private TokenManagerConfig tokenManagerConfig;
     private AttributeEvaluator localAuthorizationUrlResourceOwnerIdEvaluator;
     private AttributeEvaluator resourceOwnerIdEvaluator;
-
-    public void setClientId(final String clientId)
-    {
-        this.clientId = clientId;
-    }
-
-    public void setClientSecret(final String clientSecret)
-    {
-        this.clientSecret = clientSecret;
-    }
-
-    public void setRedirectionUrl(final String redirectionUrl)
-    {
-        this.redirectionUrl = redirectionUrl;
-    }
 
     public void setAuthorizationRequestHandler(final AuthorizationRequestHandler authorizationRequestHandler)
     {
@@ -82,6 +67,11 @@ public class DefaultAuthorizationCodeGrantType extends AbstractGrantType impleme
     public String getRedirectionUrl()
     {
         return redirectionUrl;
+    }
+
+    public void setRedirectionUrl(final String redirectionUrl)
+    {
+        this.redirectionUrl = redirectionUrl;
     }
 
     @Override
@@ -117,9 +107,19 @@ public class DefaultAuthorizationCodeGrantType extends AbstractGrantType impleme
         return clientSecret;
     }
 
+    public void setClientSecret(final String clientSecret)
+    {
+        this.clientSecret = clientSecret;
+    }
+
     public String getClientId()
     {
         return clientId;
+    }
+
+    public void setClientId(final String clientId)
+    {
+        this.clientId = clientId;
     }
 
     @Override
@@ -171,12 +171,15 @@ public class DefaultAuthorizationCodeGrantType extends AbstractGrantType impleme
         final String resourceOwnerId = resourceOwnerIdEvaluator.resolveStringValue(muleEvent);
         if (resourceOwnerId == null)
         {
-            throw new RequestAuthenticationException(createStaticMessage(String.format("Evaluation of %s return an empty resourceOwnerId", localAuthorizationUrlResourceOwnerIdEvaluator.getRawValue())));
+            throw new RequestAuthenticationException(createStaticMessage(String.format("Evaluation of %s return an empty resourceOwnerId",
+                    localAuthorizationUrlResourceOwnerIdEvaluator.getRawValue())));
         }
         final String accessToken = getUserOAuthContext().getContextForResourceOwner(resourceOwnerId).getAccessToken();
         if (accessToken == null)
         {
-            throw new RequestAuthenticationException(createStaticMessage(String.format("No access token for the %s user. Verify that you have authenticated the user before trying to execute an operation to the API.", resourceOwnerId)));
+            throw new RequestAuthenticationException(createStaticMessage(String.format(
+                    "No access token for the %s user. Verify that you have authenticated the user before trying to execute an operation to the API.",
+                    resourceOwnerId)));
         }
         builder.addHeader(HttpHeaders.Names.AUTHORIZATION, buildAuthorizationHeaderContent(accessToken));
     }
@@ -189,7 +192,8 @@ public class DefaultAuthorizationCodeGrantType extends AbstractGrantType impleme
             final Object value = muleContext.getExpressionManager().evaluate(getRefreshTokenWhen(), firstAttemptResponseEvent);
             if (!(value instanceof Boolean))
             {
-                throw new MuleRuntimeException(createStaticMessage("Expression %s should return a boolean but return %s", getRefreshTokenWhen(), value));
+                throw new MuleRuntimeException(
+                        createStaticMessage("Expression %s should return a boolean but return %s", getRefreshTokenWhen(), value));
             }
             Boolean shouldRetryRequest = (Boolean) value;
             if (shouldRetryRequest)

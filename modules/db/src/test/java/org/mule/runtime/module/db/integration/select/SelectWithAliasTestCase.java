@@ -7,7 +7,8 @@
 
 package org.mule.runtime.module.db.integration.select;
 
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertMessageContains;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
@@ -19,8 +20,7 @@ import org.mule.runtime.module.db.integration.model.Record;
 
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertMessageContains;
 
 public class SelectWithAliasTestCase extends AbstractDbIntegrationTestCase
 {
@@ -59,6 +59,6 @@ public class SelectWithAliasTestCase extends AbstractDbIntegrationTestCase
                 new Record(new Field(NAME_FIELD_ALIAS, Planet.VENUS.getName())),
                 new Record(new Field(NAME_FIELD_ALIAS, Planet.EARTH.getName())),
                 new Record(new Field(NAME_FIELD_ALIAS, Planet.MARS.getName())),
-        };
+                };
     }
 }

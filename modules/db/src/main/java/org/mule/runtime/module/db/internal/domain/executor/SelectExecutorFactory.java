@@ -7,8 +7,8 @@
 
 package org.mule.runtime.module.db.internal.domain.executor;
 
-import org.mule.runtime.module.db.internal.result.resultset.ResultSetHandler;
 import org.mule.runtime.module.db.internal.domain.statement.StatementFactory;
+import org.mule.runtime.module.db.internal.result.resultset.ResultSetHandler;
 
 /**
  * Creates {@link QueryExecutor} instances

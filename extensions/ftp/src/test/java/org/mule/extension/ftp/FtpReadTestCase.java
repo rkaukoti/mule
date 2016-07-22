@@ -6,15 +6,7 @@
  */
 package org.mule.extension.ftp;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.extension.FtpTestHarness.BINARY_FILE_NAME;
-import static org.mule.extension.FtpTestHarness.HELLO_PATH;
-import static org.mule.extension.FtpTestHarness.HELLO_WORLD;
-import static org.mule.runtime.api.metadata.MediaType.JSON;
-
+import org.junit.Test;
 import org.mule.extension.FtpTestHarness;
 import org.mule.extension.ftp.api.FtpFileAttributes;
 import org.mule.runtime.api.message.MuleMessage;
@@ -25,7 +17,14 @@ import org.mule.runtime.module.extension.file.api.stream.AbstractFileInputStream
 
 import java.io.InputStream;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.extension.FtpTestHarness.BINARY_FILE_NAME;
+import static org.mule.extension.FtpTestHarness.HELLO_PATH;
+import static org.mule.extension.FtpTestHarness.HELLO_WORLD;
+import static org.mule.runtime.api.metadata.MediaType.JSON;
 
 public class FtpReadTestCase extends FtpConnectorTestCase
 {

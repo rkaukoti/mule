@@ -6,11 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.SUPPORTED;
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.ENCODING_PARAMETER_NAME;
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.MIME_TYPE_PARAMETER_NAME;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.isVoid;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getImplementingMethod;
 import org.mule.metadata.api.ClassTypeLoader;
 import org.mule.runtime.extension.api.annotation.DataTypeParameters;
 import org.mule.runtime.extension.api.exception.IllegalModelDefinitionException;
@@ -23,6 +18,12 @@ import org.mule.runtime.module.extension.internal.ExtensionProperties;
 import org.mule.runtime.module.extension.internal.util.IdempotentDeclarationWalker;
 
 import java.lang.reflect.Method;
+
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.SUPPORTED;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.ENCODING_PARAMETER_NAME;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.MIME_TYPE_PARAMETER_NAME;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.isVoid;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getImplementingMethod;
 
 /**
  * Enriches operations which were defined in methods annotated with {@link DataTypeParameters} so that
@@ -59,8 +60,10 @@ public final class DataTypeModelEnricher extends AbstractAnnotatedModelEnricher
                                     " Mutating the content metadata requires an operation with a return type.",
                                     declaration.getName(), declaration.getName()));
                         }
-                        declaration.addParameter(newParameter(MIME_TYPE_PARAMETER_NAME, "The mime type of the payload that this operation outputs."));
-                        declaration.addParameter(newParameter(ENCODING_PARAMETER_NAME, "The encoding of the payload that this operation outputs."));
+                        declaration.addParameter(
+                                newParameter(MIME_TYPE_PARAMETER_NAME, "The mime type of the payload that this operation outputs."));
+                        declaration.addParameter(
+                                newParameter(ENCODING_PARAMETER_NAME, "The encoding of the payload that this operation outputs."));
                     }
                 }
             }

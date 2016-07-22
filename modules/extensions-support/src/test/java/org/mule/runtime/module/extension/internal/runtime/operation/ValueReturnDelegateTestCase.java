@@ -6,16 +6,16 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.operation;
 
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.api.message.MuleMessage;
+import org.mule.tck.size.SmallTest;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
-import org.mule.runtime.api.message.MuleMessage;
-import org.mule.tck.size.SmallTest;
-
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.runners.MockitoJUnitRunner;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)

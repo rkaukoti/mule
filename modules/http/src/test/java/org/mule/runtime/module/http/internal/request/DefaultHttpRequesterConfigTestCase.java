@@ -6,6 +6,16 @@
  */
 package org.mule.runtime.module.http.internal.request;
 
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.mule.runtime.api.tls.TlsContextFactory;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.registry.MuleRegistry;
+import org.mule.runtime.core.api.registry.RegistrationException;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
@@ -14,17 +24,6 @@ import static org.mockito.Mockito.when;
 import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
 import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
 import static org.mule.runtime.module.http.internal.request.DefaultHttpRequesterConfig.OBJECT_HTTP_CLIENT_FACTORY;
-
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.registry.MuleRegistry;
-import org.mule.runtime.core.api.registry.RegistrationException;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.runtime.api.tls.TlsContextFactory;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 public class DefaultHttpRequesterConfigTestCase extends AbstractMuleTestCase
 {

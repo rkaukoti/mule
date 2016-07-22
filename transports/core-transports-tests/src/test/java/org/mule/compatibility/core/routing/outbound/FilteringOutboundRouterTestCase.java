@@ -6,13 +6,7 @@
  */
 package org.mule.compatibility.core.routing.outbound;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.compatibility.core.endpoint.outbound.EndpointMulticastingRouter;
 import org.mule.runtime.core.api.MuleEvent;
@@ -35,7 +29,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class FilteringOutboundRouterTestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -48,7 +48,7 @@ public class FilteringOutboundRouterTestCase extends AbstractMuleContextEndpoint
     public void testFilteringOutboundRouterAsync() throws Exception
     {
         OutboundEndpoint endpoint1 = getTestOutboundEndpoint("Test1Provider",
-            "test://Test1Provider?exchangePattern=request-response");
+                "test://Test1Provider?exchangePattern=request-response");
         assertNotNull(endpoint1);
         OutboundEndpoint mockEndpoint = RouterTestUtils.createMockEndpoint(endpoint1);
 
@@ -79,16 +79,16 @@ public class FilteringOutboundRouterTestCase extends AbstractMuleContextEndpoint
         assertTrue(!router.isMatch(getTestEvent(message)));
 
         router.setTransformers(
-              Arrays.<Transformer>asList(
-                new AbstractTransformer()
-                {
-                    @Override
-                    public Object doTransform(Object src, Charset outputEncoding) throws TransformerException
-                    {
-                        return ((Exception)src).getMessage();
-                    }
-                }
-            )
+                Arrays.<Transformer>asList(
+                        new AbstractTransformer()
+                        {
+                            @Override
+                            public Object doTransform(Object src, Charset outputEncoding) throws TransformerException
+                            {
+                                return ((Exception) src).getMessage();
+                            }
+                        }
+                )
         );
 
         assertTrue(router.isMatch(getTestEvent(message)));
@@ -98,7 +98,7 @@ public class FilteringOutboundRouterTestCase extends AbstractMuleContextEndpoint
     public void testFilteringOutboundRouterSync() throws Exception
     {
         OutboundEndpoint endpoint1 = getTestOutboundEndpoint("Test1Provider",
-            "test://Test1Provider?exchangePattern=request-response");
+                "test://Test1Provider?exchangePattern=request-response");
         assertNotNull(endpoint1);
         OutboundEndpoint mockEndpoint = RouterTestUtils.createMockEndpoint(endpoint1);
 

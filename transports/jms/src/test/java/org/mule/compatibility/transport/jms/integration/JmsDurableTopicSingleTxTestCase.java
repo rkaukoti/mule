@@ -13,6 +13,34 @@ import org.junit.Test;
  */
 public class JmsDurableTopicSingleTxTestCase extends JmsDurableTopicTestCase
 {
+    Scenario scenarioCommit = new ScenarioCommit()
+    {
+
+        @Override
+        public String getOutputDestinationName()
+        {
+            return getJmsConfig().getBroadcastDestinationName();
+        }
+    };
+    Scenario scenarioRollback = new ScenarioRollback()
+    {
+
+        @Override
+        public String getOutputDestinationName()
+        {
+            return getJmsConfig().getBroadcastDestinationName();
+        }
+    };
+    Scenario scenarioNotReceive = new ScenarioNotReceive()
+    {
+
+        @Override
+        public String getOutputDestinationName()
+        {
+            return getJmsConfig().getBroadcastDestinationName();
+        }
+    };
+
     @Override
     protected String getConfigFile()
     {
@@ -43,34 +71,4 @@ public class JmsDurableTopicSingleTxTestCase extends JmsDurableTopicTestCase
         receive(scenarioNotReceive);
 
     }
-
-    Scenario scenarioCommit = new ScenarioCommit()
-    {
-
-        @Override
-        public String getOutputDestinationName()
-        {
-            return getJmsConfig().getBroadcastDestinationName();
-        }
-    };
-
-    Scenario scenarioRollback = new ScenarioRollback()
-    {
-
-        @Override
-        public String getOutputDestinationName()
-        {
-            return getJmsConfig().getBroadcastDestinationName();
-        }
-    };
-
-    Scenario scenarioNotReceive = new ScenarioNotReceive()
-    {
-
-        @Override
-        public String getOutputDestinationName()
-        {
-            return getJmsConfig().getBroadcastDestinationName();
-        }
-    };
 }

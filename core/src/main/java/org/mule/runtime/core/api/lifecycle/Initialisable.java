@@ -21,9 +21,9 @@ public interface Initialisable
      * retrying to connect, a <code>RecoverableException</code> should be thrown.
      * There is no guarantee that by throwing a Recoverable exception that the Mule
      * instance will not shut down.
-     * 
+     *
      * @throws InitialisationException if a fatal error occurs causing the Mule instance to shutdown
-     * @throws RecoverableException if an error occurs that can be recovered from
+     * @throws RecoverableException    if an error occurs that can be recovered from
      */
     void initialise() throws InitialisationException;
 }

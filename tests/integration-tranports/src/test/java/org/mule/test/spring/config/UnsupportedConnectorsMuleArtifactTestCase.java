@@ -6,29 +6,28 @@
  */
 package org.mule.test.spring.config;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-
+import org.custommonkey.xmlunit.XMLUnit;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.common.MuleArtifact;
 import org.mule.common.MuleArtifactFactoryException;
 import org.mule.common.Testable;
 import org.mule.common.config.XmlConfigurationCallback;
 import org.mule.common.config.XmlConfigurationMuleArtifactFactory;
 import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.ServiceLoader;
 
-import org.custommonkey.xmlunit.XMLUnit;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 /**
  *
@@ -38,6 +37,11 @@ public class UnsupportedConnectorsMuleArtifactTestCase extends AbstractMuleTestC
 
     private XmlConfigurationMuleArtifactFactory lookupArtifact;
     private MuleArtifact artifact = null;
+
+    protected static XmlConfigurationMuleArtifactFactory lookupArtifact()
+    {
+        return ServiceLoader.load(XmlConfigurationMuleArtifactFactory.class).iterator().next();
+    }
 
     @Before
     public void before()
@@ -58,7 +62,8 @@ public class UnsupportedConnectorsMuleArtifactTestCase extends AbstractMuleTestC
     public void unsupportedConnectorsHttp() throws SAXException, IOException, MuleArtifactFactoryException
     {
         //HTTP
-        checkUnsupportedConnector("<http:connector name=\"HttpConnector\" xmlns:http=\"http://www.mulesoft.org/schema/mule/transport/http\"/>");
+        checkUnsupportedConnector(
+                "<http:connector name=\"HttpConnector\" xmlns:http=\"http://www.mulesoft.org/schema/mule/transport/http\"/>");
     }
 
     @Test
@@ -73,10 +78,11 @@ public class UnsupportedConnectorsMuleArtifactTestCase extends AbstractMuleTestC
     public void unsupportedConnectorsHttps() throws SAXException, IOException, MuleArtifactFactoryException
     {
         //HTTPS
-        checkUnsupportedConnector("<https:connector name=\"httpConnector\" xmlns:https=\"http://www.mulesoft.org/schema/mule/transport/https\">\n" +
-                                  "        <https:tls-key-store path=\"~/ce/tests/integration/src/test/resources/muletest.keystore\" keyPassword=\"mulepassword\" storePassword=\"mulepassword\"/>\n"
-                                  +
-                                  "</https:connector>");
+        checkUnsupportedConnector(
+                "<https:connector name=\"httpConnector\" xmlns:https=\"http://www.mulesoft.org/schema/mule/transport/https\">\n" +
+                "        <https:tls-key-store path=\"~/ce/tests/integration/src/test/resources/muletest.keystore\" keyPassword=\"mulepassword\" storePassword=\"mulepassword\"/>\n"
+                +
+                "</https:connector>");
     }
 
     @Test
@@ -118,12 +124,14 @@ public class UnsupportedConnectorsMuleArtifactTestCase extends AbstractMuleTestC
             @Override
             public String getSchemaLocation(String s)
             {
-                if (s != null){
+                if (s != null)
+                {
                     int connectorNameStart = s.lastIndexOf("/") + 1;
                     s = s + "/current/mule-transport-" + s.substring(connectorNameStart) + ".xsd";
                     return s;
                 }
-                else return null;
+                else
+                    return null;
             }
 
             @Override
@@ -139,10 +147,5 @@ public class UnsupportedConnectorsMuleArtifactTestCase extends AbstractMuleTestC
             }
         };
 
-    }
-
-    protected static XmlConfigurationMuleArtifactFactory lookupArtifact()
-    {
-        return ServiceLoader.load(XmlConfigurationMuleArtifactFactory.class).iterator().next();
     }
 }

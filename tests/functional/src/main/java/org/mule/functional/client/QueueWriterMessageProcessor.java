@@ -7,13 +7,14 @@
 
 package org.mule.functional.client;
 
-import static org.mule.functional.client.TestConnectorConfig.DEFAULT_CONFIG_ID;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.processor.MessageProcessor;
+
+import static org.mule.functional.client.TestConnectorConfig.DEFAULT_CONFIG_ID;
 
 /**
  * Writes {@link MuleEvent} to a test connector's queue.

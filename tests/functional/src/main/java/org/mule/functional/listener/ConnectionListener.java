@@ -6,10 +6,6 @@
  */
 package org.mule.functional.listener;
 
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.notification.ConnectionNotificationListener;
 import org.mule.runtime.core.context.notification.ConnectionNotification;
@@ -20,6 +16,10 @@ import org.mule.runtime.core.util.concurrent.Latch;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Listener for connection notifications.
@@ -48,7 +48,8 @@ public class ConnectionListener
                         if (previousNotificationTimestamp.isPresent())
                         {
                             long timeBetweenNotifications = currentNotificationTimestamp - previousNotificationTimestamp.get();
-                            if (!minimumTimeBetweenNotifications.isPresent() || minimumTimeBetweenNotifications.get() > timeBetweenNotifications)
+                            if (!minimumTimeBetweenNotifications.isPresent() ||
+                                minimumTimeBetweenNotifications.get() > timeBetweenNotifications)
                             {
                                 minimumTimeBetweenNotifications = Optional.of(timeBetweenNotifications);
                             }
@@ -116,7 +117,8 @@ public class ConnectionListener
      */
     public void assertMinimumTimeBetweenNotifications(long expectedTimeBetweenNotifications)
     {
-        Preconditions.checkState(minimumTimeBetweenNotifications.isPresent(), "At least two notifications must be received in order to get the minimum time between notifications");
+        Preconditions.checkState(minimumTimeBetweenNotifications.isPresent(),
+                "At least two notifications must be received in order to get the minimum time between notifications");
         assertThat(minimumTimeBetweenNotifications.get(), greaterThanOrEqualTo(expectedTimeBetweenNotifications));
     }
 }

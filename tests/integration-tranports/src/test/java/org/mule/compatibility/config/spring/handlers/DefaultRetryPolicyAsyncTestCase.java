@@ -6,19 +6,18 @@
  */
 package org.mule.compatibility.config.spring.handlers;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.retry.RetryPolicyTemplate;
 import org.mule.runtime.core.retry.async.AsynchronousRetryTemplate;
 import org.mule.runtime.core.retry.policies.SimpleRetryPolicyTemplate;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertThat;
 
 public class DefaultRetryPolicyAsyncTestCase extends FunctionalTestCase
 {
@@ -38,7 +37,7 @@ public class DefaultRetryPolicyAsyncTestCase extends FunctionalTestCase
         assertThat(rpf, not(nullValue()));
         assertThat(rpf, instanceOf(AsynchronousRetryTemplate.class));
         assertThat(((SimpleRetryPolicyTemplate) ((AsynchronousRetryTemplate) rpf).getDelegate()).getCount(), is(3));
-        
+
         assertThat(c.isConnected(), is(true));
         assertThat(c.isStarted(), is(true));
     }

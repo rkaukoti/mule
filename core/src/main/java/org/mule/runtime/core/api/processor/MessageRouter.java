@@ -18,15 +18,14 @@ public interface MessageRouter extends MessageProcessor
 {
     /**
      * Adds a new message processor to the list of routes
-     * 
+     *
      * @param processor new destination message processor
-     * @throws MuleException 
      */
     void addRoute(MessageProcessor processor) throws MuleException;
 
     /**
      * Removes a message processor from the list of routes
-     * 
+     *
      * @param processor destination message processor to remove
      */
     void removeRoute(MessageProcessor processor) throws MuleException;

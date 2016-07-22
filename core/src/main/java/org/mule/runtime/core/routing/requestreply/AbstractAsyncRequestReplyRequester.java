@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.core.routing.requestreply;
 
-import static org.mule.runtime.core.message.Correlation.NOT_SET;
-
+import org.apache.commons.collections.buffer.BoundedFifoBuffer;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.OptimizedRequestContext;
 import org.mule.runtime.core.api.DefaultMuleException;
@@ -45,34 +44,29 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.collections.buffer.BoundedFifoBuffer;
+import static org.mule.runtime.core.message.Correlation.NOT_SET;
 
 public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterceptingMessageProcessorBase
-    implements RequestReplyRequesterMessageProcessor, FlowConstructAware, Initialisable, Startable, Stoppable, Disposable
+        implements RequestReplyRequesterMessageProcessor, FlowConstructAware, Initialisable, Startable, Stoppable, Disposable
 {
     public static final int MAX_PROCESSED_GROUPS = 50000;
     public static final int UNCLAIMED_TIME_TO_LIVE = 60000;
-    public static int UNCLAIMED_INTERVAL = 60000;
-
-
     public static final String NAME_TEMPLATE = "%s.%s.%s.asyncReplies";
-    protected String name;
-    
-    protected volatile long timeout = -1;
-    protected volatile boolean failOnTimeout = true;
-    protected MessageSource replyMessageSource;
-    protected FlowConstruct flowConstruct;
-    private final MessageProcessor internalAsyncReplyMessageProcessor = new InternalAsyncReplyMessageProcessor();
-    private AsyncReplyMonitoringThread replyThread;
+    public static int UNCLAIMED_INTERVAL = 60000;
     protected final Map<String, Latch> locks = new ConcurrentHashMap<>();
-    private String storePrefix = "";
-
     protected final ConcurrentMap<String, MuleEvent> responseEvents = new ConcurrentHashMap<>();
     protected final Object processedLock = new Object();
     // @GuardedBy processedLock
     protected final BoundedFifoBuffer processed = new BoundedFifoBuffer(MAX_PROCESSED_GROUPS);
-
+    private final MessageProcessor internalAsyncReplyMessageProcessor = new InternalAsyncReplyMessageProcessor();
+    protected String name;
+    protected volatile long timeout = -1;
+    protected volatile boolean failOnTimeout = true;
+    protected MessageSource replyMessageSource;
+    protected FlowConstruct flowConstruct;
     protected ListableObjectStore store;
+    private AsyncReplyMonitoringThread replyThread;
+    private String storePrefix = "";
 
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException
@@ -98,7 +92,7 @@ public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterce
                     event.getSession().merge(resultEvent.getSession());
                 }
                 resultEvent = org.mule.runtime.core.RequestContext.setEvent(new DefaultMuleEvent(resultEvent.getMessage(),
-                    event));
+                        event));
             }
             return resultEvent;
         }
@@ -106,6 +100,7 @@ public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterce
 
     /**
      * Creates the lock used to synchronize a given event
+     *
      * @return a new Latch instance
      */
     protected Latch createEventLock()
@@ -135,10 +130,11 @@ public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterce
     public void initialise() throws InitialisationException
     {
         name = String.format(NAME_TEMPLATE, storePrefix, ThreadNameHelper.getPrefix(muleContext),
-            flowConstruct == null ? "" : flowConstruct.getName());
+                flowConstruct == null ? "" : flowConstruct.getName());
         store = ((ObjectStoreManager) muleContext.getRegistry().
-            get(MuleProperties.OBJECT_STORE_MANAGER)).
-            getObjectStore(name, false, MAX_PROCESSED_GROUPS, UNCLAIMED_TIME_TO_LIVE, UNCLAIMED_INTERVAL);
+                get(MuleProperties.OBJECT_STORE_MANAGER)).
+                                                                 getObjectStore(name, false, MAX_PROCESSED_GROUPS, UNCLAIMED_TIME_TO_LIVE,
+                                                                         UNCLAIMED_INTERVAL);
     }
 
     @Override
@@ -165,7 +161,7 @@ public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterce
             try
             {
                 ((ObjectStoreManager) muleContext.getRegistry().
-                    get(MuleProperties.OBJECT_STORE_MANAGER)).disposeStore(store);
+                        get(MuleProperties.OBJECT_STORE_MANAGER)).disposeStore(store);
             }
             catch (ObjectStoreException e)
             {
@@ -265,12 +261,12 @@ public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterce
             if (failOnTimeout)
             {
                 event.getMuleContext()
-                    .fireNotification(
-                        new RoutingNotification(event.getMessage(), null,
-                            RoutingNotification.ASYNC_REPLY_TIMEOUT));
+                     .fireNotification(
+                             new RoutingNotification(event.getMessage(), null,
+                                     RoutingNotification.ASYNC_REPLY_TIMEOUT));
 
                 throw new ResponseTimeoutException(CoreMessages.responseTimedOutWaitingForId((int) timeout,
-                    asyncReplyCorrelationId), event, null);
+                        asyncReplyCorrelationId), event, null);
             }
             else
             {
@@ -304,18 +300,6 @@ public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterce
         }
     }
 
-    class InternalAsyncReplyMessageProcessor implements MessageProcessor
-    {
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            String messageId = getAsyncReplyCorrelationId(event);
-            store.store(messageId, event);
-            replyThread.processNow();
-            return null;
-        }
-    }
-
     @Override
     public String toString()
     {
@@ -326,6 +310,18 @@ public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterce
     public void setFlowConstruct(FlowConstruct flowConstruct)
     {
         this.flowConstruct = flowConstruct;
+    }
+
+    class InternalAsyncReplyMessageProcessor implements MessageProcessor
+    {
+        @Override
+        public MuleEvent process(MuleEvent event) throws MuleException
+        {
+            String messageId = getAsyncReplyCorrelationId(event);
+            store.store(messageId, event);
+            replyThread.processNow();
+            return null;
+        }
     }
 
     private class AsyncReplyMonitoringThread extends EventProcessingThread
@@ -356,13 +352,13 @@ public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterce
                             if (logger.isDebugEnabled())
                             {
                                 logger.debug("An event was received for an event group that has already been processed, "
-                                    + "this is probably because the async-reply timed out. Correlation Id is: "
-                                    + correlationId + ". Dropping event");
+                                             + "this is probably because the async-reply timed out. Correlation Id is: "
+                                             + correlationId + ". Dropping event");
                             }
                             // Fire a notification to say we received this message
                             event.getMuleContext().fireNotification(
-                                new RoutingNotification(event.getMessage(), event.getMessageSourceURI().toString(),
-                                    RoutingNotification.MISSED_ASYNC_REPLY));
+                                    new RoutingNotification(event.getMessage(), event.getMessageSourceURI().toString(),
+                                            RoutingNotification.MISSED_ASYNC_REPLY));
                         }
                         else
                         {

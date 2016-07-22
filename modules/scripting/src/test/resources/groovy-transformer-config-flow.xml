@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:spring="http://www.springframework.org/schema/beans" xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
-    xmlns:test="http://www.mulesoft.org/schema/mule/test"
-    xsi:schemaLocation="
-       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
-       http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
+      xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd">
 
@@ -17,8 +15,8 @@
     <!--// START SNIPPET: transformer-config -->
     <script:transformer name="stringReplaceWithParams">
         <script:script engine="groovy">
-            <property key="oldStr" value="l" />
-            <property key="newStr" value="x" />
+            <property key="oldStr" value="l"/>
+            <property key="newStr" value="x"/>
             <script:text>
                 return payload.toString().replaceAll("$oldStr", "$newStr")
             </script:text>
@@ -38,18 +36,18 @@
 
     <flow name="fileBasedScript">
         <script:transformer>
-            <script:script file="simple-transformer.groovy" />
+            <script:script file="simple-transformer.groovy"/>
         </script:transformer>
         <test:queue name="fileBasedScriptTestOut"/>
     </flow>
 
     <flow name="referencedTransformer">
-        <transformer ref="stringReplace" />
+        <transformer ref="stringReplace"/>
         <test:queue name="referencedTransformerTestOut"/>
     </flow>
 
     <flow name="referencedTransformerWithParameters">
-        <transformer ref="stringReplaceWithParams" />
+        <transformer ref="stringReplaceWithParams"/>
         <test:queue name="referencedTransformerWithParametersTestOut"/>
     </flow>
 
@@ -61,7 +59,7 @@
         </script:transformer>
     </flow>
 
-     <flow name="transformByAssigningProperty">
+    <flow name="transformByAssigningProperty">
         <script:transformer>
             <script:script engine="groovy">
                 message = org.mule.runtime.core.api.MuleMessage.builder(message).addOutboundProperty('foo', 'bar').build()

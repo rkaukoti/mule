@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import java.io.IOException;
-
 import org.apache.http.HttpVersion;
 import org.junit.Test;
 
@@ -116,8 +114,7 @@ public class HttpListenerResponseStreaming10TestCase extends HttpListenerRespons
 
     /**
      * Last paragraph of <a href="http://tools.ietf.org/html/rfc2068#section-3.6">rfc2068#section-3.6</a> states:
-     *  A server MUST NOT send transfer-codings to an HTTP/1.0 client.
-     * @throws IOException
+     * A server MUST NOT send transfer-codings to an HTTP/1.0 client.
      */
     @Test
     public void alwaysString() throws Exception

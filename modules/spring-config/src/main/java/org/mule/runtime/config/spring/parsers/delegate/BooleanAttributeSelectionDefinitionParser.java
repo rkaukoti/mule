@@ -7,7 +7,6 @@
 package org.mule.runtime.config.spring.parsers.delegate;
 
 import org.mule.runtime.config.spring.parsers.MuleDefinitionParser;
-
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
@@ -19,9 +18,10 @@ public class BooleanAttributeSelectionDefinitionParser extends AbstractParallelD
     private MuleDefinitionParser whenTrue;
     private MuleDefinitionParser whenFalse;
 
-    public BooleanAttributeSelectionDefinitionParser(String attribute, boolean dflt, MuleDefinitionParser whenTrue, MuleDefinitionParser whenFalse)
+    public BooleanAttributeSelectionDefinitionParser(String attribute, boolean dflt, MuleDefinitionParser whenTrue,
+                                                     MuleDefinitionParser whenFalse)
     {
-        super(new MuleDefinitionParser[]{whenTrue, whenFalse});
+        super(new MuleDefinitionParser[] {whenTrue, whenFalse});
         this.attribute = attribute;
         this.dflt = dflt;
         this.whenTrue = whenTrue;

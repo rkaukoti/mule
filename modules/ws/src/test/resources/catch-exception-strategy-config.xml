@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
       xmlns:ws="http://www.mulesoft.org/schema/mule/ws"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
@@ -19,7 +19,7 @@
     </flow>
 
     <ws:consumer-config serviceAddress="http://localhost:${port}/services/Test" wsdlLocation="Test.wsdl"
-                        service="TestService" port="TestPort" name="globalConfig" />
+                        service="TestService" port="TestPort" name="globalConfig"/>
 
     <flow name="soapFaultWithoutCatchExceptionStrategy" processingStrategy="synchronous">
 
@@ -32,7 +32,7 @@
         <ws:consumer operation="fail"/>
 
         <catch-exception-strategy>
-            <set-property propertyName="soapFaultException" value="#[exception]" />
+            <set-property propertyName="soapFaultException" value="#[exception]"/>
         </catch-exception-strategy>
     </flow>
 

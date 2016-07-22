@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.module.spring.remoting;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
 import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class SpringRemotingTestCase extends FunctionalTestCase
 {
@@ -34,7 +34,7 @@ public class SpringRemotingTestCase extends FunctionalTestCase
         invoker.setServiceInterface(WorkInterface.class);
         invoker.setServiceUrl(String.format("http://localhost:%s/springService", port.getNumber()));
         invoker.afterPropertiesSet();
-        WorkInterface worker = (WorkInterface)invoker.getObject();
+        WorkInterface worker = (WorkInterface) invoker.getObject();
         ComplexData data = worker.executeComplexity(cd);
         assertNotNull(data);
         assertEquals(data.getSomeString(), "Foo Received");

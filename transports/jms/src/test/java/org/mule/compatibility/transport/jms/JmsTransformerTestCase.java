@@ -6,10 +6,7 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.compatibility.transport.jms.transformers.ObjectToJMSMessage;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.RequestContext;
@@ -20,7 +17,10 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class JmsTransformerTestCase extends AbstractMuleContextTestCase
 {
@@ -59,7 +59,7 @@ public class JmsTransformerTestCase extends AbstractMuleContextTestCase
         // return the same (but mockingly modified!) JMS message that is used as
         // input.
         ObjectToJMSMessage transformer = createObject(ObjectToJMSMessage.class);
-        Message transformed = (Message)  transformer.transform(msg.getPayload());
+        Message transformed = (Message) transformer.transform(msg.getPayload());
 
         // Finally we can assert that the setProperty done to the MuleMessage actually
         // made it through to the wrapped JMS Message. Yay!

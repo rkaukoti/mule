@@ -6,29 +6,13 @@
  */
 package org.mule.runtime.module.extension.internal.manager;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.extension.internal.introspection.describer.AnnotationsBasedDescriber.DESCRIBER_ID;
-import static org.mule.runtime.module.extension.internal.introspection.describer.AnnotationsBasedDescriber.TYPE_PROPERTY_NAME;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.mockClassLoaderModelProperty;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.stubRegistryKeys;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.toMetadataType;
-import static org.mule.test.heisenberg.extension.HeisenbergExtension.EXTENSION_DESCRIPTION;
-import static org.mule.test.heisenberg.extension.HeisenbergExtension.HEISENBERG;
+import com.google.common.collect.ImmutableList;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -52,8 +36,6 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 import org.mule.test.heisenberg.extension.HeisenbergExtension;
 
-import com.google.common.collect.ImmutableList;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -65,11 +47,29 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.extension.internal.introspection.describer.AnnotationsBasedDescriber.DESCRIBER_ID;
+import static org.mule.runtime.module.extension.internal.introspection.describer.AnnotationsBasedDescriber.TYPE_PROPERTY_NAME;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.mockClassLoaderModelProperty;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.stubRegistryKeys;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.toMetadataType;
+import static org.mule.test.heisenberg.extension.HeisenbergExtension.EXTENSION_DESCRIPTION;
+import static org.mule.test.heisenberg.extension.HeisenbergExtension.HEISENBERG;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -78,8 +78,6 @@ public class DefaultExtensionManagerTestCase extends AbstractMuleTestCase
 
     private static final String MULESOFT = "MuleSoft";
     private static final String OTHER_VENDOR = "OtherVendor";
-    private ExtensionManagerAdapter extensionsManager;
-
     private static final String EXTENSION1_NAME = "extension1";
     private static final String EXTENSION1_CONFIG_NAME = "extension1Config";
     private static final String EXTENSION1_CONFIG_INSTANCE_NAME = "extension1ConfigInstanceName";
@@ -87,46 +85,33 @@ public class DefaultExtensionManagerTestCase extends AbstractMuleTestCase
     private static final String EXTENSION2_NAME = "extension2";
     private static final String EXTENSION1_VERSION = "3.6.0";
     private static final String EXTENSION2_VERSION = "3.6.0";
-
+    private final Object configInstance = new Object();
+    private ExtensionManagerAdapter extensionsManager;
     @Mock
     private RuntimeExtensionModel extensionModel1;
-
     @Mock
     private RuntimeExtensionModel extensionModel2;
-
     @Mock
     private RuntimeExtensionModel extensionModel3WithRepeatedName;
-
     @Mock(answer = RETURNS_DEEP_STUBS)
     private MuleContext muleContext;
-
     @Mock(answer = RETURNS_DEEP_STUBS)
     private RuntimeConfigurationModel extension1ConfigurationModel;
-
     @Mock
     private RuntimeOperationModel extension1OperationModel;
-
     @Mock
     private OperationContextAdapter extension1OperationContext;
-
     @Mock
     private ConfigurationProvider<Object> extension1ConfigurationProvider;
-
     @Mock(answer = RETURNS_DEEP_STUBS)
     private ConfigurationInstance<Object> extension1ConfigurationInstance = mock(ConfigurationInstance.class);
-
     @Mock
     private OperationExecutorFactory executorFactory;
-
     @Mock
     private OperationExecutor executor;
-
     @Mock(answer = RETURNS_DEEP_STUBS)
     private MuleEvent event;
-
     private ClassLoader classLoader;
-
-    private final Object configInstance = new Object();
 
     @Before
     public void before() throws InitialisationException
@@ -273,8 +258,10 @@ public class DefaultExtensionManagerTestCase extends AbstractMuleTestCase
         when(extension1ConfigurationModel.getModelProperty(ParameterGroupModelProperty.class)).thenReturn(Optional.empty());
         when(registry.lookupObjects(ConfigurationProvider.class)).thenReturn(emptyList());
 
-        doAnswer(invocation -> {
-            when(muleContext.getRegistry().lookupObjects(ConfigurationProvider.class)).thenReturn(asList((ConfigurationProvider) invocation.getArguments()[1]));
+        doAnswer(invocation ->
+        {
+            when(muleContext.getRegistry().lookupObjects(ConfigurationProvider.class)).thenReturn(
+                    asList((ConfigurationProvider) invocation.getArguments()[1]));
             new Thread(() -> extensionsManager.getConfiguration(extensionModel1, event)).start();
             joinerLatch.countDown();
 
@@ -326,8 +313,8 @@ public class DefaultExtensionManagerTestCase extends AbstractMuleTestCase
                 .setDescription(EXTENSION_DESCRIPTION)
                 .setVersion(version);
         builder.withDescriber()
-                .setId(DESCRIBER_ID)
-                .addProperty(TYPE_PROPERTY_NAME, HeisenbergExtension.class.getName());
+               .setId(DESCRIBER_ID)
+               .addProperty(TYPE_PROPERTY_NAME, HeisenbergExtension.class.getName());
 
         extensionsManager.registerExtension(builder.build(), getClass().getClassLoader());
 

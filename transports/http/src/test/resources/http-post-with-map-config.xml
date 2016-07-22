@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:http="http://www.mulesoft.org/schema/mule/transport/http"
       xmlns:vm="http://www.mulesoft.org/schema/mule/transport/vm"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
             http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
             http://www.mulesoft.org/schema/mule/transport/http http://www.mulesoft.org/schema/mule/transport/http/current/mule-transport-http.xsd
@@ -10,7 +10,7 @@
     <flow name="httpClient">
         <vm:inbound-endpoint path="testInput"/>
         <http:outbound-endpoint exchange-pattern="request-response" address="http://localhost:${port1}/service"
-                                contentType="application/x-www-form-urlencoded" responseTimeout="300000" method="POST" />
+                                contentType="application/x-www-form-urlencoded" responseTimeout="300000" method="POST"/>
     </flow>
 
     <flow name="httpServer">

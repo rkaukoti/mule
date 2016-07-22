@@ -6,14 +6,13 @@
  */
 package org.mule.test.spring;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.construct.Flow;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class GlobalPropertiesMule2458TestCase extends FunctionalTestCase
 {

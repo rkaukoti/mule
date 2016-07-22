@@ -53,8 +53,8 @@ public class WaitPolicy implements RejectedExecutionHandler
             }
             else if (!e.getQueue().offer(r, time, timeUnit))
             {
-                String message = String.format("ThreadPoolExecutor did not accept within %1d %2s", 
-                    time, timeUnit);
+                String message = String.format("ThreadPoolExecutor did not accept within %1d %2s",
+                        time, timeUnit);
                 throw new RejectedExecutionException(message);
             }
         }

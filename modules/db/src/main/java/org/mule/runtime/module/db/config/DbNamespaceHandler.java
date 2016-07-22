@@ -7,18 +7,6 @@
 
 package org.mule.runtime.module.db.config;
 
-import static org.mule.runtime.config.spring.handlers.AbstractMuleNamespaceHandler.IgnoredDefinitionParser;
-import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.DATABASE_ATTRIBUTE;
-import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.DATA_SOURCE_REF_ATTRIBUTE;
-import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.DRIVER_ATTRIBUTE;
-import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.HOST_ATTRIBUTE;
-import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.LOGIN_TIMEOUT_ATTRIBUTE;
-import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.PASSWORD_ATTRIBUTE;
-import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.PORT_ATTRIBUTE;
-import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.TRANSACTION_ISOLATION_ATTRIBUTE;
-import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.URL_ATTRIBUTE;
-import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.USER_ATTRIBUTE;
-import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.USE_XA_TRANSACTIONS_ATTRIBUTE;
 import org.mule.runtime.config.spring.parsers.processors.CheckExclusiveAttributeAndText;
 import org.mule.runtime.config.spring.parsers.processors.CheckExclusiveAttributes;
 import org.mule.runtime.config.spring.parsers.processors.CheckRequiredAttributes;
@@ -39,8 +27,20 @@ import org.mule.runtime.module.db.internal.config.processor.InsertProcessorBeanD
 import org.mule.runtime.module.db.internal.config.processor.SelectProcessorDefinitionParser;
 import org.mule.runtime.module.db.internal.config.processor.StoredProcedureProcessorBeanDefinitionParser;
 import org.mule.runtime.module.db.internal.config.processor.UpdateProcessorBeanDefinitionParser;
-
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
+
+import static org.mule.runtime.config.spring.handlers.AbstractMuleNamespaceHandler.IgnoredDefinitionParser;
+import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.DATABASE_ATTRIBUTE;
+import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.DATA_SOURCE_REF_ATTRIBUTE;
+import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.DRIVER_ATTRIBUTE;
+import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.HOST_ATTRIBUTE;
+import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.LOGIN_TIMEOUT_ATTRIBUTE;
+import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.PASSWORD_ATTRIBUTE;
+import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.PORT_ATTRIBUTE;
+import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.TRANSACTION_ISOLATION_ATTRIBUTE;
+import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.URL_ATTRIBUTE;
+import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.USER_ATTRIBUTE;
+import static org.mule.runtime.module.db.internal.config.domain.database.DbConfigDefinitionParser.USE_XA_TRANSACTIONS_ATTRIBUTE;
 
 public class DbNamespaceHandler extends NamespaceHandlerSupport
 {
@@ -72,17 +72,23 @@ public class DbNamespaceHandler extends NamespaceHandlerSupport
 
     private void registerConfigDefinitionParsers()
     {
-        registerBeanDefinitionParser("generic-config", new DbConfigDefinitionParser(DbConfigResolverFactoryBean.class, new CheckExclusiveAttributes(new String[][] {
-                new String[] {DRIVER_ATTRIBUTE, URL_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE, TRANSACTION_ISOLATION_ATTRIBUTE, USE_XA_TRANSACTIONS_ATTRIBUTE},
-                new String[] {DATA_SOURCE_REF_ATTRIBUTE}})));
+        registerBeanDefinitionParser("generic-config",
+                new DbConfigDefinitionParser(DbConfigResolverFactoryBean.class, new CheckExclusiveAttributes(new String[][] {
+                        new String[] {DRIVER_ATTRIBUTE, URL_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE, TRANSACTION_ISOLATION_ATTRIBUTE,
+                                      USE_XA_TRANSACTIONS_ATTRIBUTE},
+                        new String[] {DATA_SOURCE_REF_ATTRIBUTE}})));
 
-        registerBeanDefinitionParser("derby-config", new DbConfigDefinitionParser(DerbyConfigResolverFactoryBean.class, new CheckExclusiveAttributes(new String[][] {
-                new String[] {URL_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE, TRANSACTION_ISOLATION_ATTRIBUTE, USE_XA_TRANSACTIONS_ATTRIBUTE},
-                new String[] {DATA_SOURCE_REF_ATTRIBUTE}})));
+        registerBeanDefinitionParser("derby-config",
+                new DbConfigDefinitionParser(DerbyConfigResolverFactoryBean.class, new CheckExclusiveAttributes(new String[][] {
+                        new String[] {URL_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE, TRANSACTION_ISOLATION_ATTRIBUTE,
+                                      USE_XA_TRANSACTIONS_ATTRIBUTE},
+                        new String[] {DATA_SOURCE_REF_ATTRIBUTE}})));
 
-        DbConfigDefinitionParser oracleDbConfigFactoryBean = new DbConfigDefinitionParser(OracleConfigResolverFactoryBean.class, new CheckExclusiveAttributes(new String[][] {
-                new String[] {URL_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE, TRANSACTION_ISOLATION_ATTRIBUTE, USE_XA_TRANSACTIONS_ATTRIBUTE},
-                new String[] {DATA_SOURCE_REF_ATTRIBUTE}}));
+        DbConfigDefinitionParser oracleDbConfigFactoryBean =
+                new DbConfigDefinitionParser(OracleConfigResolverFactoryBean.class, new CheckExclusiveAttributes(new String[][] {
+                        new String[] {URL_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE, TRANSACTION_ISOLATION_ATTRIBUTE,
+                                      USE_XA_TRANSACTIONS_ATTRIBUTE},
+                        new String[] {DATA_SOURCE_REF_ATTRIBUTE}}));
         oracleDbConfigFactoryBean.registerPreProcessor(
                 new CheckRequiredAttributes(new String[][] {
                         {DATA_SOURCE_REF_ATTRIBUTE},
@@ -95,10 +101,13 @@ public class DbNamespaceHandler extends NamespaceHandlerSupport
         oracleDbConfigFactoryBean.addAlias("instance", "database");
         registerBeanDefinitionParser("oracle-config", oracleDbConfigFactoryBean);
 
-        registerBeanDefinitionParser("mysql-config", new DbConfigDefinitionParser(MySqlConfigResolverFactoryBean.class, new CheckExclusiveAttributes(new String[][] {
-                new String[] {URL_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE, TRANSACTION_ISOLATION_ATTRIBUTE, USE_XA_TRANSACTIONS_ATTRIBUTE},
-                new String[] {HOST_ATTRIBUTE, PORT_ATTRIBUTE, DATABASE_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE, TRANSACTION_ISOLATION_ATTRIBUTE, USE_XA_TRANSACTIONS_ATTRIBUTE},
-                new String[] {DATA_SOURCE_REF_ATTRIBUTE}})));
+        registerBeanDefinitionParser("mysql-config",
+                new DbConfigDefinitionParser(MySqlConfigResolverFactoryBean.class, new CheckExclusiveAttributes(new String[][] {
+                        new String[] {URL_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE, TRANSACTION_ISOLATION_ATTRIBUTE,
+                                      USE_XA_TRANSACTIONS_ATTRIBUTE},
+                        new String[] {HOST_ATTRIBUTE, PORT_ATTRIBUTE, DATABASE_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE,
+                                      TRANSACTION_ISOLATION_ATTRIBUTE, USE_XA_TRANSACTIONS_ATTRIBUTE},
+                        new String[] {DATA_SOURCE_REF_ATTRIBUTE}})));
 
         registerIgnoredElement(DbConfigDefinitionParser.CONNECTION_PROPERTIES_ELEMENT_NAME);
         registerIgnoredElement(DbConfigDefinitionParser.PROPERTY_ELEMENT_NAME);

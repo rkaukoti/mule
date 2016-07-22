@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.core.util;
 
+import org.apache.commons.io.input.ClassLoaderObjectInputStream;
+import org.apache.commons.lang.SerializationException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.util.store.DeserializationPostInitialisable;
 
@@ -13,9 +15,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-
-import org.apache.commons.io.input.ClassLoaderObjectInputStream;
-import org.apache.commons.lang.SerializationException;
 
 public class SerializationUtils extends org.apache.commons.lang.SerializationUtils
 {
@@ -34,9 +33,9 @@ public class SerializationUtils extends org.apache.commons.lang.SerializationUti
         {
             throw new IllegalArgumentException("The MuleContext must not be null");
         }
-        return deserialize(objectData, muleContext.getExecutionClassLoader(), muleContext);        
+        return deserialize(objectData, muleContext.getExecutionClassLoader(), muleContext);
     }
-    
+
     /**
      * <p>Deserializes an <code>Object</code> from the specified stream.</p>
      * <p/>
@@ -50,9 +49,8 @@ public class SerializationUtils extends org.apache.commons.lang.SerializationUti
      * @param inputStream the serialized object input stream, must not be null
      * @param cl          classloader which can load custom classes from the stream
      * @return the deserialized object
-     * @throws IllegalArgumentException if <code>inputStream</code> is <code>null</code>
-     * @throws org.apache.commons.lang.SerializationException
-     *                                  (runtime) if the serialization fails
+     * @throws IllegalArgumentException                       if <code>inputStream</code> is <code>null</code>
+     * @throws org.apache.commons.lang.SerializationException (runtime) if the serialization fails
      */
     public static Object deserialize(InputStream inputStream, ClassLoader cl, MuleContext muleContext)
     {

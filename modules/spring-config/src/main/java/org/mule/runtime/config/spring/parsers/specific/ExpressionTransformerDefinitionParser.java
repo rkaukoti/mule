@@ -13,7 +13,6 @@ import org.mule.runtime.config.spring.parsers.processors.CheckExclusiveAttribute
 import org.mule.runtime.config.spring.parsers.processors.CheckRequiredAttributesWhenNoChildren;
 import org.mule.runtime.core.expression.ExpressionConfig;
 import org.mule.runtime.core.expression.transformers.ExpressionArgument;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.beans.factory.support.ManagedList;
@@ -30,14 +29,14 @@ public class ExpressionTransformerDefinitionParser extends ParentContextDefiniti
     public ExpressionTransformerDefinitionParser(Class messageProcessor)
     {
         super(MuleOrphanDefinitionParser.ROOT_ELEMENT, new ExpressionTransformerOrphanDefinitionParser(
-            messageProcessor, false));
+                messageProcessor, false));
         otherwise(new ExpressionTransformerChildDefinitionParser("messageProcessor", messageProcessor));
 
-        registerPreProcessor(new CheckRequiredAttributesWhenNoChildren(new String[][]{{"expression"}},
+        registerPreProcessor(new CheckRequiredAttributesWhenNoChildren(new String[][] {{"expression"}},
                 "return-argument", "http://www.mulesoft.org/schema/mule/core")).registerPreProcessor(
-            new CheckExclusiveAttributesAndChildren(new String[]{"expression"},
-                new String[]{"return-argument"}))
-            .addIgnored("expression");
+                new CheckExclusiveAttributesAndChildren(new String[] {"expression"},
+                        new String[] {"return-argument"}))
+                                                                               .addIgnored("expression");
     }
 
     protected static void addExpressionArgumentFromAttributes(Element element, BeanDefinitionBuilder builder)
@@ -51,13 +50,13 @@ public class ExpressionTransformerDefinitionParser extends ParentContextDefiniti
             GenericBeanDefinition objectFactoryBeanDefinition2 = new GenericBeanDefinition();
             objectFactoryBeanDefinition2.setBeanClass(ExpressionConfig.class);
             objectFactoryBeanDefinition2.getPropertyValues().addPropertyValue("expression",
-                element.getAttribute("expression"));
+                    element.getAttribute("expression"));
             objectFactoryBeanDefinition.getPropertyValues().addPropertyValue("expressionConfig",
-                objectFactoryBeanDefinition2);
+                    objectFactoryBeanDefinition2);
             ManagedList list = new ManagedList<ExpressionArgument>(1);
             list.add(objectFactoryBeanDefinition2);
             builder.getBeanDefinition().getPropertyValues().addPropertyValue("arguments",
-                objectFactoryBeanDefinition);
+                    objectFactoryBeanDefinition);
         }
     }
 

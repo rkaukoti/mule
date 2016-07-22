@@ -6,17 +6,16 @@
  */
 package org.mule.runtime.module.artifact.classloader.exception;
 
+import org.mule.runtime.module.artifact.classloader.ClassLoaderFilter;
+import org.mule.runtime.module.artifact.classloader.FilteringArtifactClassLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static java.lang.Boolean.valueOf;
 import static java.lang.String.format;
 import static java.lang.System.getProperty;
 import static java.lang.System.lineSeparator;
 import static org.mule.runtime.core.api.config.MuleProperties.MULE_LOG_VERBOSE_CLASSLOADING;
-
-import org.mule.runtime.module.artifact.classloader.ClassLoaderFilter;
-import org.mule.runtime.module.artifact.classloader.FilteringArtifactClassLoader;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Extends {@link ClassNotFoundException} providing additional trubleshooting information from the
@@ -35,10 +34,10 @@ public class NotExportedClassException extends ClassNotFoundException
 
     /**
      * Builds the exception.
-     * 
-     * @param className the name of the class that was trying to be loaded.
+     *
+     * @param className    the name of the class that was trying to be loaded.
      * @param artifactName the name of the artifact the class was being loaded from.
-     * @param filter the applied filter for the artifact.
+     * @param filter       the applied filter for the artifact.
      */
     public NotExportedClassException(String className, String artifactName, ClassLoaderFilter filter)
     {

@@ -6,16 +6,6 @@
  */
 package org.mule.runtime.module.http.internal.request;
 
-import static java.util.Collections.EMPTY_MAP;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_REASON_PROPERTY;
-import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.SET_COOKIE;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.SET_COOKIE2;
-import static org.mule.runtime.module.http.api.HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED;
-import static org.mule.runtime.module.http.internal.request.DefaultHttpRequester.DEFAULT_PAYLOAD_EXPRESSION;
-import static org.mule.runtime.module.http.internal.util.HttpToMuleMessage.getMediaType;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MessagingException;
@@ -30,6 +20,8 @@ import org.mule.runtime.module.http.internal.HttpParser;
 import org.mule.runtime.module.http.internal.domain.InputStreamHttpEntity;
 import org.mule.runtime.module.http.internal.domain.response.HttpResponse;
 import org.mule.runtime.module.http.internal.multipart.HttpPartDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,8 +36,16 @@ import java.util.Map;
 
 import javax.activation.DataHandler;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.util.Collections.EMPTY_MAP;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
+import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_REASON_PROPERTY;
+import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.SET_COOKIE;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.SET_COOKIE2;
+import static org.mule.runtime.module.http.api.HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED;
+import static org.mule.runtime.module.http.internal.request.DefaultHttpRequester.DEFAULT_PAYLOAD_EXPRESSION;
+import static org.mule.runtime.module.http.internal.util.HttpToMuleMessage.getMediaType;
 
 /**
  * Maps an HTTP response into a Mule event. A new message is set in the event with the contents of the response.
@@ -112,12 +112,12 @@ public class HttpResponseToMuleEvent
 
         // Setting uniqueId and rootId in order to correlate messages from request to response generated.
         final Builder builder = MuleMessage.builder()
-                                         .payload(muleEvent.getMessage().getPayload())
-                                         .id(requestMessageId)
-                                         .rootId(requestMessageRootId)
-                                         .inboundProperties(inboundProperties)
-                                         .inboundAttachments(inboundAttachments);
-        
+                                           .payload(muleEvent.getMessage().getPayload())
+                                           .id(requestMessageId)
+                                           .rootId(requestMessageRootId)
+                                           .inboundProperties(inboundProperties)
+                                           .inboundAttachments(inboundAttachments);
+
         if (StringUtils.isEmpty(responseContentType))
         {
             builder.mediaType(muleEvent.getMessage().getDataType().getMediaType());
@@ -126,7 +126,7 @@ public class HttpResponseToMuleEvent
         {
             builder.mediaType(MediaType.parse(responseContentType));
         }
-        
+
         MuleMessage message = builder.build();
 
         muleEvent.setMessage(message);
@@ -170,7 +170,8 @@ public class HttpResponseToMuleEvent
 
     private Map<String, DataHandler> getInboundAttachments(InputStream responseInputStream, String responseContentType) throws IOException
     {
-        Collection<HttpPartDataSource> httpParts = HttpPartDataSource.createFrom(HttpParser.parseMultipartContent(responseInputStream, responseContentType));
+        Collection<HttpPartDataSource> httpParts =
+                HttpPartDataSource.createFrom(HttpParser.parseMultipartContent(responseInputStream, responseContentType));
         Map<String, DataHandler> attachments = new HashMap<>();
 
         for (HttpPartDataSource httpPart : httpParts)
@@ -188,10 +189,10 @@ public class HttpResponseToMuleEvent
      */
     private void setResponsePayload(Object payload, MuleEvent muleEvent)
     {
-        if (StringUtils.isEmpty(requester.getTarget()) || DEFAULT_PAYLOAD_EXPRESSION.equals(requester.getTarget()) )
+        if (StringUtils.isEmpty(requester.getTarget()) || DEFAULT_PAYLOAD_EXPRESSION.equals(requester.getTarget()))
         {
             muleEvent.setMessage(MuleMessage.builder(muleEvent.getMessage())
-                                         .payload(payload).mediaType(muleEvent.getMessage().getDataType().getMediaType()).build());
+                                            .payload(payload).mediaType(muleEvent.getMessage().getDataType().getMediaType()).build());
         }
         else
         {

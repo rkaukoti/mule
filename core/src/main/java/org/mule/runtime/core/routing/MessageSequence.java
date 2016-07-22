@@ -10,9 +10,9 @@ import java.util.Iterator;
 
 /**
  * A sequence of messages
- * 
- * @author flbulgarelli
+ *
  * @param <T> the message payload type
+ * @author flbulgarelli
  */
 public interface MessageSequence<T> extends Iterator<T>
 {
@@ -20,22 +20,21 @@ public interface MessageSequence<T> extends Iterator<T>
 
     /**
      * If the sequence is empty
-     * 
+     *
      * @return !hasNext()
      */
     boolean isEmpty();
 
     /**
      * The number of members of the sequence.  If this is unknown, return UNKNOWN_ELEMENTS_COUNT.
-     * 
-     * @return The estimated size of the sequence, or {@link #UNKNOWN_SIZE},
-     *         if it is unknown
+     *
+     * @return The estimated size of the sequence, or {@link #UNKNOWN_SIZE}, if it is unknown
      */
     Integer size();
 
     /**
      * Whether this sequence has more elements.
-     * 
+     *
      * @see Iterator#hasNext()
      */
     @Override
@@ -49,9 +48,9 @@ public interface MessageSequence<T> extends Iterator<T>
      */
     @Override
     public T next();
-    
+
     /**
-     * Unsupported operation. 
+     * Unsupported operation.
      * {@link MessageSequence} do not allow removal of elements.
      */
     @Override

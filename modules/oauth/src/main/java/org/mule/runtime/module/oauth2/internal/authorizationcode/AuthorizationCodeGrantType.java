@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode;
 
+import org.mule.runtime.api.tls.TlsContextFactory;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.util.AttributeEvaluator;
 import org.mule.runtime.module.oauth2.internal.ApplicationCredentials;
 import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ConfigOAuthContext;
-import org.mule.runtime.api.tls.TlsContextFactory;
-import org.mule.runtime.core.util.AttributeEvaluator;
 
 /**
  * Provides access to the general configuration of an authorization code oauth config.
@@ -25,21 +25,22 @@ public interface AuthorizationCodeGrantType extends ApplicationCredentials
     String getRedirectionUrl();
 
     /**
-     * @return expression to determine if a call to the resource secured with oauth failed because the access token has expired or was revoked.
+     * @return expression to determine if a call to the resource secured with oauth failed because the access token has expired or was
+     * revoked.
      */
     String getRefreshTokenWhen();
 
     /**
      * @return the expression or static value of a certain user authenticated through this config. By being an expression we allow to
-     * authenticate several users and hold state (access token, refresh token, etc) for all those users. This expression is used
-     * during the local authorization url call to determine the resource owner id.
+     * authenticate several users and hold state (access token, refresh token, etc) for all those users. This expression is used during the
+     * local authorization url call to determine the resource owner id.
      */
     AttributeEvaluator getLocalAuthorizationUrlResourceOwnerIdEvaluator();
 
     /**
      * @return the expression or static value of a certain user authenticated through this config. By being an expression we allow to
-     * authenticate several users and hold state (access token, refresh token, etc) for all those users. This expressions is used
-     * during http:request execution to determine the resource owner id.
+     * authenticate several users and hold state (access token, refresh token, etc) for all those users. This expressions is used during
+     * http:request execution to determine the resource owner id.
      */
     AttributeEvaluator getResourceOwnerIdEvaluator();
 

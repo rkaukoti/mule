@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.core.serialization;
 
-import org.mule.runtime.core.api.serialization.SerializationException;
-
 import org.junit.Test;
+import org.mule.runtime.core.api.serialization.SerializationException;
 
 public class JavaObjectSerializerTestCase extends AbstractObjectSerializerContractTestCase
 {

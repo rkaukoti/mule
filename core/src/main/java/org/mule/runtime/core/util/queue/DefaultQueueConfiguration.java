@@ -39,7 +39,7 @@ public class DefaultQueueConfiguration implements QueueConfiguration
     public String toString()
     {
         return String.format("DefaultQueueConfiguration{" +
-               "persistent=%s, capacity=%s}", persistent, capacity);
+                             "persistent=%s, capacity=%s}", persistent, capacity);
     }
 
     @Override
@@ -53,6 +53,6 @@ public class DefaultQueueConfiguration implements QueueConfiguration
         {
             return false;
         }
-        return persistent == ((DefaultQueueConfiguration)obj).persistent && capacity == ((DefaultQueueConfiguration)obj).capacity;
+        return persistent == ((DefaultQueueConfiguration) obj).persistent && capacity == ((DefaultQueueConfiguration) obj).capacity;
     }
 }

@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.core.internal.metadata;
 
+import org.mule.runtime.api.metadata.ComponentId;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.api.metadata.ComponentId;
 import org.mule.runtime.core.config.i18n.Message;
 
 /**
@@ -30,7 +30,7 @@ public class InvalidComponentIdException extends MuleException
 
     /**
      * @param message the exception message
-     * @param cause the exception that cause this exception to be thrown
+     * @param cause   the exception that cause this exception to be thrown
      */
     InvalidComponentIdException(Message message, Throwable cause)
     {

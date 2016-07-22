@@ -6,12 +6,7 @@
  */
 package org.mule.runtime.core.routing.filters;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.runtime.core.routing.filters.logic.AndFilter;
 import org.mule.runtime.core.routing.filters.logic.NotFilter;
 import org.mule.runtime.core.routing.filters.logic.OrFilter;
@@ -19,7 +14,11 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.util.LinkedList;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class LogicFiltersTestCase extends AbstractMuleTestCase
 {
@@ -47,7 +46,7 @@ public class LogicFiltersTestCase extends AbstractMuleTestCase
         WildcardFilter left = new WildcardFilter("blah.blah.*");
         WildcardFilter right = new WildcardFilter("blah.*");
         filter = new AndFilter(left, right);
-        assertEquals(2,filter.getFilters().size());
+        assertEquals(2, filter.getFilters().size());
 
         assertTrue(filter.accept("blah.blah.blah"));
         assertTrue(right.accept("blah.blah"));

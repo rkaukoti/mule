@@ -6,6 +6,14 @@
  */
 package org.mule.runtime.module.cxf;
 
+import org.apache.cxf.Bus;
+import org.apache.cxf.BusException;
+import org.apache.cxf.BusFactory;
+import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.common.jaxb.JAXBContextCache;
+import org.apache.cxf.common.util.ASMHelper;
+import org.apache.cxf.transport.ConduitInitiatorManager;
+import org.apache.cxf.transport.DestinationFactoryManager;
 import org.mule.runtime.config.spring.SpringRegistry;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
@@ -17,21 +25,12 @@ import org.mule.runtime.module.cxf.support.MuleHeadersInInterceptor;
 import org.mule.runtime.module.cxf.support.MuleHeadersOutInterceptor;
 import org.mule.runtime.module.cxf.support.MuleProtocolHeadersOutInterceptor;
 import org.mule.runtime.module.cxf.transport.MuleUniversalTransport;
-
-import java.lang.reflect.Field;
-import java.util.Map;
-
-import org.apache.cxf.Bus;
-import org.apache.cxf.BusException;
-import org.apache.cxf.BusFactory;
-import org.apache.cxf.bus.spring.SpringBusFactory;
-import org.apache.cxf.common.jaxb.JAXBContextCache;
-import org.apache.cxf.common.util.ASMHelper;
-import org.apache.cxf.transport.ConduitInitiatorManager;
-import org.apache.cxf.transport.DestinationFactoryManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+
+import java.lang.reflect.Field;
+import java.util.Map;
 
 /**
  * Provides global CXF configuration defaults.
@@ -51,6 +50,19 @@ public class CxfConfiguration implements Initialisable, Disposable, MuleContextA
     private boolean initializeStaticBusInstance;
     private MuleContext muleContext;
     private boolean enableMuleSoapHeaders = true;
+
+    public static CxfConfiguration getConfiguration(MuleContext muleContext) throws MuleException
+    {
+        CxfConfiguration configuration = muleContext.getRegistry().get(CxfConstants.DEFAULT_CXF_CONFIGURATION);
+        if (configuration == null)
+        {
+            configuration = new CxfConfiguration();
+            configuration.setMuleContext(muleContext);
+            configuration.initialise();
+            muleContext.getRegistry().registerObject(CxfConstants.DEFAULT_CXF_CONFIGURATION, configuration);
+        }
+        return configuration;
+    }
 
     @Override
     public void initialise() throws InitialisationException
@@ -73,7 +85,8 @@ public class CxfConfiguration implements Initialisable, Disposable, MuleContextA
             BusFactory.setDefaultBus(null);
         }
 
-        MuleUniversalTransport transport = new MuleUniversalTransport(this, muleContext.getRegistry().lookupObject("_muleUniversalConduitFacotry"));
+        MuleUniversalTransport transport =
+                new MuleUniversalTransport(this, muleContext.getRegistry().lookupObject("_muleUniversalConduitFacotry"));
         DestinationFactoryManager dfm = bus.getExtension(DestinationFactoryManager.class);
         dfm.registerDestinationFactory("http://schemas.xmlsoap.org/soap/http", transport);
         dfm.registerDestinationFactory("http://schemas.xmlsoap.org/wsdl/soap/http", transport);
@@ -161,7 +174,7 @@ public class CxfConfiguration implements Initialisable, Disposable, MuleContextA
     {
         this.configurationLocation = configurationLocation;
     }
-    
+
     public boolean isInitializeStaticBusInstance()
     {
         return initializeStaticBusInstance;
@@ -172,28 +185,15 @@ public class CxfConfiguration implements Initialisable, Disposable, MuleContextA
         this.initializeStaticBusInstance = initializeStaticBusInstance;
     }
 
-    @Override
-    public void setMuleContext(MuleContext context)
-    {
-        this.muleContext = context;
-    }
-
     public MuleContext getMuleContext()
     {
         return muleContext;
     }
 
-    public static CxfConfiguration getConfiguration(MuleContext muleContext) throws MuleException
+    @Override
+    public void setMuleContext(MuleContext context)
     {
-        CxfConfiguration configuration = muleContext.getRegistry().get(CxfConstants.DEFAULT_CXF_CONFIGURATION);
-        if (configuration == null)
-        {
-            configuration = new CxfConfiguration();
-            configuration.setMuleContext(muleContext);
-            configuration.initialise();
-            muleContext.getRegistry().registerObject(CxfConstants.DEFAULT_CXF_CONFIGURATION, configuration);
-        }
-        return configuration;
+        this.muleContext = context;
     }
 
     public boolean isEnableMuleSoapHeaders()

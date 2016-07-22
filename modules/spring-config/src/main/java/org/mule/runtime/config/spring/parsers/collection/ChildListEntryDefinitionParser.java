@@ -9,7 +9,6 @@ package org.mule.runtime.config.spring.parsers.collection;
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
@@ -27,8 +26,6 @@ public class ChildListEntryDefinitionParser extends ChildDefinitionParser
 
     /**
      * Takes value from enclosed text
-     *
-     * @param propertyName
      */
     public ChildListEntryDefinitionParser(String propertyName)
     {
@@ -38,9 +35,6 @@ public class ChildListEntryDefinitionParser extends ChildDefinitionParser
 
     /**
      * Takes value from attribute
-     *
-     * @param propertyName
-     * @param attributeName
      */
     public ChildListEntryDefinitionParser(String propertyName, String attributeName)
     {
@@ -73,7 +67,7 @@ public class ChildListEntryDefinitionParser extends ChildDefinitionParser
         {
             super();
         }
-        
+
         public ListEntry(Object proxied)
         {
             this();
@@ -88,7 +82,7 @@ public class ChildListEntryDefinitionParser extends ChildDefinitionParser
         public void setValue(Object value)
         {
             this.value = value;
-        }   
+        }
     }
 
 }

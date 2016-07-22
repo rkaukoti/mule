@@ -6,9 +6,6 @@
  */
 package org.mule.extension.ftp.internal;
 
-import static org.mule.runtime.extension.api.annotation.param.display.Placement.ADVANCED;
-import static org.mule.runtime.extension.api.annotation.param.display.Placement.CONNECTION;
-
 import org.mule.extension.ftp.internal.ftp.connection.ClassicFtpFileSystem;
 import org.mule.extension.ftp.internal.ftp.connection.FtpFileSystem;
 import org.mule.runtime.api.connection.ConnectionProvider;
@@ -22,6 +19,9 @@ import org.mule.runtime.extension.api.annotation.param.display.Summary;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
+
+import static org.mule.runtime.extension.api.annotation.param.display.Placement.ADVANCED;
+import static org.mule.runtime.extension.api.annotation.param.display.Placement.CONNECTION;
 
 /**
  * Base class for {@link ConnectionProvider} implementations which take a
@@ -134,24 +134,14 @@ public abstract class AbstractFtpConnectionProvider<Connection extends FtpFileSy
         return connectionTimeout;
     }
 
-    protected TimeUnit getConnectionTimeoutUnit()
-    {
-        return connectionTimeoutUnit;
-    }
-
-    protected Integer getResponseTimeout()
-    {
-        return responseTimeout;
-    }
-
-    protected TimeUnit getResponseTimeoutUnit()
-    {
-        return responseTimeoutUnit;
-    }
-
     public void setConnectionTimeout(Integer connectionTimeout)
     {
         this.connectionTimeout = connectionTimeout;
+    }
+
+    protected TimeUnit getConnectionTimeoutUnit()
+    {
+        return connectionTimeoutUnit;
     }
 
     public void setConnectionTimeoutUnit(TimeUnit connectionTimeoutUnit)
@@ -159,9 +149,19 @@ public abstract class AbstractFtpConnectionProvider<Connection extends FtpFileSy
         this.connectionTimeoutUnit = connectionTimeoutUnit;
     }
 
+    protected Integer getResponseTimeout()
+    {
+        return responseTimeout;
+    }
+
     public void setResponseTimeout(Integer responseTimeout)
     {
         this.responseTimeout = responseTimeout;
+    }
+
+    protected TimeUnit getResponseTimeoutUnit()
+    {
+        return responseTimeoutUnit;
     }
 
     public void setResponseTimeoutUnit(TimeUnit responseTimeoutUnit)

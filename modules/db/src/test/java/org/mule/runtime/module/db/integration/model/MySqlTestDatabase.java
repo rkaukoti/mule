@@ -40,7 +40,8 @@ public class MySqlTestDatabase extends AbstractTestDatabase
     @Override
     public void createPlanetTable(Connection connection) throws SQLException
     {
-        executeDdl(connection, "CREATE TABLE PLANET(ID INTEGER NOT NULL AUTO_INCREMENT,POSITION INTEGER,NAME VARCHAR(255), PRIMARY KEY (ID))");
+        executeDdl(connection,
+                "CREATE TABLE PLANET(ID INTEGER NOT NULL AUTO_INCREMENT,POSITION INTEGER,NAME VARCHAR(255), PRIMARY KEY (ID))");
     }
 
     @Override

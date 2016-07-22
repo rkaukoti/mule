@@ -40,7 +40,7 @@ public class WindowsController extends Controller
     {
         super.stop(args);
         int errorRemove = runSync("remove");
-        if (errorRemove!= 0 && errorRemove != 0x424)
+        if (errorRemove != 0 && errorRemove != 0x424)
         {
             throw new MuleControllerException("The mule instance couldn't be removed as a service");
         }
@@ -94,14 +94,18 @@ public class WindowsController extends Controller
     {
         StringBuilder output = new StringBuilder();
         Process p;
-        try {
+        try
+        {
             p = Runtime.getRuntime().exec(cmd);
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line = "";
-            while ((line = reader.readLine())!= null) {
+            while ((line = reader.readLine()) != null)
+            {
                 output.append(line + "\n");
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
         return output.toString();

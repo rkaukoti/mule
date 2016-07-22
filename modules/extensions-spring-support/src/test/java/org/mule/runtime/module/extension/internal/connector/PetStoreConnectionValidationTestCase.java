@@ -6,14 +6,13 @@
  */
 package org.mule.runtime.module.extension.internal.connector;
 
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-
-import org.mule.runtime.core.api.MessagingException;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mule.runtime.core.api.MessagingException;
+
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
 
 public class PetStoreConnectionValidationTestCase extends PetStoreConnectionTestCase
 {

@@ -6,12 +6,7 @@
  */
 package org.mule.compatibility.core.endpoint;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-
-import org.mule.compatibility.core.endpoint.MuleEndpointURI;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
@@ -21,7 +16,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 public class MuleEndpointURITestCase extends AbstractMuleContextTestCase
 {
@@ -62,7 +60,7 @@ public class MuleEndpointURITestCase extends AbstractMuleContextTestCase
         assertEquals(9999, uri.getPort());
         assertEquals(0, uri.getParams().size());
     }
-    
+
     @Test
     public void testUriWithUsername() throws Exception
     {
@@ -72,7 +70,7 @@ public class MuleEndpointURITestCase extends AbstractMuleContextTestCase
         assertEquals("theUser", uri.getUser());
         assertEquals(0, uri.getParams().size());
     }
-        
+
     @Test
     public void testUriWithUsernameAndPassword() throws Exception
     {
@@ -84,7 +82,7 @@ public class MuleEndpointURITestCase extends AbstractMuleContextTestCase
         assertEquals("theUser:secret", uri.getUserInfo());
         assertEquals(0, uri.getParams().size());
     }
-    
+
     @Test
     public void testUriWithUsernameContainingAtSignAndPassword() throws Exception
     {
@@ -116,7 +114,7 @@ public class MuleEndpointURITestCase extends AbstractMuleContextTestCase
         assertEquals("/thePath", uri.getPath());
         assertEquals(0, uri.getParams().size());
     }
-    
+
     @Test
     public void testUriWithQuery() throws Exception
     {
@@ -124,12 +122,12 @@ public class MuleEndpointURITestCase extends AbstractMuleContextTestCase
         assertSchemeAndHostAndEnpointName(uri);
         assertEquals(-1, uri.getPort());
         assertEquals("query=xxx", uri.getQuery());
-        
+
         Properties params = uri.getParams();
         assertEquals(1, params.size());
         assertEquals("xxx", params.getProperty("query"));
     }
-    
+
     @Test
     public void testUriWithQueryContainingAtSign() throws Exception
     {
@@ -137,7 +135,7 @@ public class MuleEndpointURITestCase extends AbstractMuleContextTestCase
         assertSchemeAndHostAndEnpointName(uri);
         assertEquals(-1, uri.getPort());
         assertEquals("query=xxx@yyy", uri.getQuery());
-        
+
         Properties params = uri.getParams();
         assertEquals(1, params.size());
         assertEquals("xxx@yyy", params.getProperty("query"));
@@ -151,19 +149,19 @@ public class MuleEndpointURITestCase extends AbstractMuleContextTestCase
         assertEquals(-1, uri.getPort());
         assertEquals("/thePath", uri.getPath());
         assertEquals("query=xxx", uri.getQuery());
-        
+
         Properties params = uri.getParams();
         assertEquals(1, params.size());
         assertEquals("xxx", params.getProperty("query"));
     }
-    
+
     @Test
     public void testPasswordMasking() throws Exception
     {
         MuleEndpointURI uri = new MuleEndpointURI("test://theUser:password@theHost", muleContext);
         assertEquals("test://theUser:****@theHost", uri.toString());
     }
-    
+
     @Test
     public void testPasswordMaskingWithUsernameContainingAtSign() throws Exception
     {
@@ -187,7 +185,7 @@ public class MuleEndpointURITestCase extends AbstractMuleContextTestCase
         pool.shutdown();
         pool.awaitTermination(30, TimeUnit.SECONDS);
     }
-    
+
     @Test
     public void userPasswordEncoding() throws MuleException
     {

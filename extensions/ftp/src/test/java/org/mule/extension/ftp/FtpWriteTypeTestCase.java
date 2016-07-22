@@ -6,9 +6,9 @@
  */
 package org.mule.extension.ftp;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mule.extension.FtpTestHarness.HELLO_WORLD;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.extension.FtpTestHarness;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.message.OutputHandler;
@@ -21,13 +21,23 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mule.extension.FtpTestHarness.HELLO_WORLD;
 
 @RunWith(Parameterized.class)
 public class FtpWriteTypeTestCase extends FtpConnectorTestCase
 {
+
+    private final Object content;
+    private final String expected;
+    private String path;
+    public FtpWriteTypeTestCase(String name, FtpTestHarness testHarness, Object content, String expected)
+    {
+        super(name, testHarness);
+        this.content = content;
+        this.expected = expected;
+    }
 
     @Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> data()
@@ -45,18 +55,7 @@ public class FtpWriteTypeTestCase extends FtpConnectorTestCase
                 {"Sftp - byte[]", new SftpTestHarness(), HELLO_WORLD.getBytes(), HELLO_WORLD},
                 {"Sftp - OutputHandler", new SftpTestHarness(), new TestOutputHandler(), HELLO_WORLD},
                 {"Sftp - InputStream", new SftpTestHarness(), new ByteArrayInputStream(HELLO_WORLD.getBytes()), HELLO_WORLD},
-        });
-    }
-
-    private final Object content;
-    private final String expected;
-    private String path;
-
-    public FtpWriteTypeTestCase(String name, FtpTestHarness testHarness, Object content, String expected)
-    {
-        super(name, testHarness);
-        this.content = content;
-        this.expected = expected;
+                });
     }
 
     @Override

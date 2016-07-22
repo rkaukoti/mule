@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.core.registry;
 
+import com.google.common.collect.ImmutableList;
+
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.registry.LifecycleRegistry;
 import org.mule.runtime.core.api.registry.Registry;
-
-import com.google.common.collect.ImmutableList;
 
 import java.util.Collection;
 import java.util.List;
@@ -68,7 +68,9 @@ public class DefaultRegistryBroker extends AbstractRegistryBroker
                 if (registry instanceof LifecycleRegistry)
                 {
                     cachedLifecycleRegistry = (LifecycleRegistry) registry;
-                    return lifecycleRegistry.compareAndSet(null, cachedLifecycleRegistry) ? cachedLifecycleRegistry : lifecycleRegistry.get();
+                    return lifecycleRegistry.compareAndSet(null, cachedLifecycleRegistry) ?
+                            cachedLifecycleRegistry :
+                            lifecycleRegistry.get();
                 }
             }
         }

@@ -7,11 +7,12 @@
 package org.mule.runtime.module.json.transformers;
 
 
-import static java.nio.charset.StandardCharsets.UTF_8;
+import de.odysseus.staxon.json.JsonXMLOutputFactory;
 
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.util.IOUtils;
+import org.w3c.dom.Document;
 
 import java.io.File;
 import java.io.Reader;
@@ -24,14 +25,12 @@ import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stax.StAXSource;
 
-import org.w3c.dom.Document;
-
-import de.odysseus.staxon.json.JsonXMLOutputFactory;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Convert XML to a JSON string
  */
-public class XmlToJson  extends AbstractToFromXmlTransformer
+public class XmlToJson extends AbstractToFromXmlTransformer
 {
     public XmlToJson()
     {
@@ -73,7 +72,8 @@ public class XmlToJson  extends AbstractToFromXmlTransformer
                 inputs = new TransformerInputs(this, src);
                 if (inputs.getInputStream() != null)
                 {
-                    source = new StAXSource(inputFactory.createXMLStreamReader(inputs.getInputStream(), enc == null ? UTF_8.name() : enc.name()));
+                    source = new StAXSource(
+                            inputFactory.createXMLStreamReader(inputs.getInputStream(), enc == null ? UTF_8.name() : enc.name()));
                 }
                 else
                 {
@@ -83,7 +83,7 @@ public class XmlToJson  extends AbstractToFromXmlTransformer
             XMLOutputFactory outputFactory = new JsonXMLOutputFactory();
             outputFactory.setProperty(JsonXMLOutputFactory.PROP_AUTO_ARRAY, true);
             outputFactory.setProperty(JsonXMLOutputFactory.PROP_PRETTY_PRINT, true);
-           return convert(source, outputFactory);
+            return convert(source, outputFactory);
         }
         catch (Exception ex)
         {

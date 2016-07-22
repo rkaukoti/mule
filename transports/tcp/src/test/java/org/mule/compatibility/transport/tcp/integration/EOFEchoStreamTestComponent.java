@@ -22,7 +22,7 @@ public class EOFEchoStreamTestComponent
             total += n;
         }
         is.close();
-        
+
         return new String(buf);
     }
 }

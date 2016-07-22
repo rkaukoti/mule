@@ -6,12 +6,8 @@
  */
 package org.mule.compatibility.transport.tcp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
-import org.mule.compatibility.transport.tcp.TcpConnector;
-import org.mule.compatibility.transport.tcp.TcpProtocol;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.ResponseOutputStream;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -23,8 +19,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 public class TcpSocketsPoolTestCase extends FunctionalTestCase
 {
@@ -52,7 +49,7 @@ public class TcpSocketsPoolTestCase extends FunctionalTestCase
             client.send("clientWithExceptionEndpoint", TEST_MESSAGE, null);
             fail("Dispatch exception was expected");
         }
-        catch(DispatchException e)
+        catch (DispatchException e)
         {
             // Expected exception
         }

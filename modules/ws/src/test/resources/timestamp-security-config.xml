@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
       xmlns:ws="http://www.mulesoft.org/schema/mule/ws"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
@@ -14,8 +14,8 @@
 
     <ws:consumer-config serviceAddress="http://localhost:${port}/services/Test" wsdlLocation="Test.wsdl"
                         service="TestService" port="TestPort" name="configWithTimestamp">
-    <ws:security>
-            <ws:wss-timestamp expires="60" />
+        <ws:security>
+            <ws:wss-timestamp expires="60"/>
         </ws:security>
     </ws:consumer-config>
 
@@ -37,8 +37,8 @@
     </cxf:ws-security>
 
     <flow name="server">
-        <http:listener path="/services/Test" config-ref="listenerConfig" />
-        <cxf:jaxws-service serviceClass="org.mule.runtime.module.ws.consumer.TestService" >
+        <http:listener path="/services/Test" config-ref="listenerConfig"/>
+        <cxf:jaxws-service serviceClass="org.mule.runtime.module.ws.consumer.TestService">
             <cxf:ws-security ref="inboundConfig"/>
         </cxf:jaxws-service>
         <component class="org.mule.runtime.module.ws.consumer.TestService"/>

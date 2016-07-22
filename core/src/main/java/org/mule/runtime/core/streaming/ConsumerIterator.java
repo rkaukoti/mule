@@ -19,7 +19,7 @@ import java.util.Iterator;
  * consumer gets closed (either because this iterator closed it or some other
  * reason), then this iterator will consider that it has not next items.
  * {@link #Iterator.remove()} operation is not allowed on this instance
- * 
+ *
  * @since 3.5.0
  */
 public class ConsumerIterator<T> implements Iterator<T>, Closeable, ProvidesTotalHint
@@ -62,8 +62,6 @@ public class ConsumerIterator<T> implements Iterator<T>, Closeable, ProvidesTota
 
     /**
      * Not allowed on this implementations
-     * 
-     * @throws UnsupportedOperationException
      */
     public void remove()
     {

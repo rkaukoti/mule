@@ -6,14 +6,15 @@
  */
 package org.mule.runtime.core.util;
 
-import static java.lang.Boolean.TRUE;
-import static org.mule.runtime.core.api.config.MuleProperties.SYSTEM_PROPERTY_PREFIX;
 import org.mule.runtime.core.api.MuleContext;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
+import static java.lang.Boolean.TRUE;
+import static org.mule.runtime.core.api.config.MuleProperties.SYSTEM_PROPERTY_PREFIX;
 
 /**
  * Implements singleton pattern to allow different splash-screen implementations
@@ -28,37 +29,19 @@ import java.util.Map;
 public abstract class SplashScreen
 {
     public static final String RUNTIME_VERBOSE = SYSTEM_PROPERTY_PREFIX + "runtime.verbose";
+    protected static final String VALUE_FORMAT = " - %s";
+    private static final String KEY_VALUE_FORMAT = VALUE_FORMAT + " = %s";
     /**
      * Determines whether extra information should be display.
      */
     protected static PropertyChecker RUNTIME_VERBOSE_PROPERTY = new PropertyChecker(RUNTIME_VERBOSE, TRUE.toString());
-
-    protected static final String VALUE_FORMAT = " - %s";
-    private static final String KEY_VALUE_FORMAT = VALUE_FORMAT + " = %s";
     protected List<String> header = new ArrayList<String>();
     protected List<String> body = new ArrayList<String>();
     protected List<String> footer = new ArrayList<String>();
-    
-    /**
-     * Setting the header clears body and footer assuming a new
-     * splash-screen is built.
-     * 
-     */
-    final public void setHeader(MuleContext context)
+
+    protected SplashScreen()
     {
-        header.clear();
-        doHeader(context);
-    }
-    
-    final public void addBody(String line)
-    {
-        doBody(line);
-    }
-    
-    final public void setFooter(MuleContext context)
-    {
-        footer.clear();
-        doFooter(context);
+        // make sure no one else creates an instance
     }
 
     public static String miniSplash(final String message)
@@ -67,11 +50,32 @@ public abstract class SplashScreen
         return StringMessageUtils.getBoilerPlate(message, '+', 60);
     }
 
+    /**
+     * Setting the header clears body and footer assuming a new
+     * splash-screen is built.
+     */
+    final public void setHeader(MuleContext context)
+    {
+        header.clear();
+        doHeader(context);
+    }
+
+    final public void addBody(String line)
+    {
+        doBody(line);
+    }
+
+    final public void setFooter(MuleContext context)
+    {
+        footer.clear();
+        doFooter(context);
+    }
+
     protected void doHeader(MuleContext context)
     {
         // default reserved for mule core info
-    }   
-    
+    }
+
     protected void doBody(String line)
     {
         body.add(line);
@@ -105,17 +109,12 @@ public abstract class SplashScreen
             }
         }
     }
-    
+
     public String toString()
     {
         List<String> boilerPlate = new ArrayList<String>(header);
         boilerPlate.addAll(body);
         boilerPlate.addAll(footer);
         return StringMessageUtils.getBoilerPlate(boilerPlate, '*', 70);
-    }
-    
-    protected SplashScreen()
-    {
-        // make sure no one else creates an instance
     }
 }

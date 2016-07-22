@@ -7,14 +7,13 @@
 package org.mule.runtime.module.management.support;
 
 import org.mule.runtime.core.util.ClassUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ObjectStreamException;
 import java.lang.reflect.Method;
 
 import javax.management.ObjectName;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Will discover if newer JMX version is available, otherwise fallback to JMX 1.1
@@ -39,8 +38,10 @@ public class AutoDiscoveryJmxSupportFactory implements JmxSupportFactory
     private JmxSupport jmxSupport;
 
 
-    /** Constructs a new AutoDiscoveryJmxSupportFactory. */
-    protected AutoDiscoveryJmxSupportFactory ()
+    /**
+     * Constructs a new AutoDiscoveryJmxSupportFactory.
+     */
+    protected AutoDiscoveryJmxSupportFactory()
     {
         final boolean jmxModernAvailable = isModernSpecAvailable();
 
@@ -61,6 +62,7 @@ public class AutoDiscoveryJmxSupportFactory implements JmxSupportFactory
 
     /**
      * Obtain an instance of the factory class.
+     *
      * @return a cached singleton instance
      */
     public static JmxSupportFactory getInstance()
@@ -76,28 +78,30 @@ public class AutoDiscoveryJmxSupportFactory implements JmxSupportFactory
      * @return matching support class instance
      * @see JmxLegacySupport
      */
-    public JmxSupport getJmxSupport ()
+    public JmxSupport getJmxSupport()
     {
         return this.jmxSupport;
     }
 
     /**
      * Is JMX 1.2 and up available for use?
+     *
      * @return false if only JMX 1.1 can be used
      */
-    protected boolean isModernSpecAvailable ()
+    protected boolean isModernSpecAvailable()
     {
         Class<ObjectName> clazz = ObjectName.class;
         // method escape() is available since JMX 1.2
-        Method method = ClassUtils.getMethod(clazz, "quote", new Class[]{String.class});
+        Method method = ClassUtils.getMethod(clazz, "quote", new Class[] {String.class});
 
-        return  method != null;
+        return method != null;
     }
 
     /**
      * Safe deserialization.
-     * @throws ObjectStreamException will never throw it for this class
+     *
      * @return singleton instance for this classloader/JVM
+     * @throws ObjectStreamException will never throw it for this class
      */
     private Object readResolve() throws ObjectStreamException
     {

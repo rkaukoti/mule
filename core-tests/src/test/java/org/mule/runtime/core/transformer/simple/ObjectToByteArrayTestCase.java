@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.api.transformer.Converter.DEFAULT_PRIORITY_WEIGHTING;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.api.transformer.Converter.DEFAULT_PRIORITY_WEIGHTING;
 
 /**
  * This unit test only tests the default priority of the {@link org.mule.runtime.core.transformer.simple.ObjectToByteArray} transformer.

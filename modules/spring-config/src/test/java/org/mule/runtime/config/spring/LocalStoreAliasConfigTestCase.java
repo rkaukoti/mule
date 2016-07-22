@@ -7,15 +7,15 @@
 
 package org.mule.runtime.config.spring;
 
-import static java.util.Collections.emptyMap;
-import static org.junit.Assert.assertSame;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleContext;
 import org.mule.runtime.core.api.config.ConfigurationBuilder;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.junit.Test;
+import static java.util.Collections.emptyMap;
+import static org.junit.Assert.assertSame;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 
 public class LocalStoreAliasConfigTestCase extends AbstractMuleContextTestCase
 {
@@ -62,7 +62,8 @@ public class LocalStoreAliasConfigTestCase extends AbstractMuleContextTestCase
     public void objectStoreManager() throws Exception
     {
         this.testSame(MuleProperties.OBJECT_STORE_MANAGER, DefaultMuleContext.LOCAL_OBJECT_STORE_MANAGER_KEY);
-        assertSame(muleContext.getObjectStoreManager(), muleContext.getRegistry().lookupObject(DefaultMuleContext.LOCAL_OBJECT_STORE_MANAGER_KEY));
+        assertSame(muleContext.getObjectStoreManager(),
+                muleContext.getRegistry().lookupObject(DefaultMuleContext.LOCAL_OBJECT_STORE_MANAGER_KEY));
     }
 
     private void testSame(String key1, String key2)

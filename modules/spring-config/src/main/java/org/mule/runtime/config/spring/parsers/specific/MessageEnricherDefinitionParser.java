@@ -9,7 +9,6 @@ package org.mule.runtime.config.spring.parsers.specific;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
 import org.mule.runtime.core.enricher.MessageEnricher.EnrichExpressionPair;
 import org.mule.runtime.core.util.StringUtils;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.beans.factory.support.ManagedList;
@@ -32,9 +31,9 @@ public class MessageEnricherDefinitionParser extends ChildDefinitionParser
             GenericBeanDefinition objectFactoryBeanDefinition = new GenericBeanDefinition();
             objectFactoryBeanDefinition.setBeanClass(EnrichExpressionPair.class);
             objectFactoryBeanDefinition.getPropertyValues().addPropertyValue("source",
-                element.getAttribute("source"));
+                    element.getAttribute("source"));
             objectFactoryBeanDefinition.getPropertyValues().addPropertyValue("target",
-                element.getAttribute("target"));
+                    element.getAttribute("target"));
             ManagedList<GenericBeanDefinition> list = new ManagedList<GenericBeanDefinition>();
             list.add(objectFactoryBeanDefinition);
             builder.addPropertyValue("enrichExpressionPairs", list);

@@ -15,19 +15,19 @@ public final class FakeTransactionFactory implements UniversalTransactionFactory
 {
 
     @Override
-    public Transaction beginTransaction(MuleContext muleContext) throws TransactionException 
+    public Transaction beginTransaction(MuleContext muleContext) throws TransactionException
     {
         return null;
     }
 
     @Override
-    public boolean isTransacted() 
+    public boolean isTransacted()
     {
         return false;
     }
 
     @Override
-    public Transaction createUnboundTransaction(MuleContext muleContext) throws TransactionException 
+    public Transaction createUnboundTransaction(MuleContext muleContext) throws TransactionException
     {
         return null;
     }

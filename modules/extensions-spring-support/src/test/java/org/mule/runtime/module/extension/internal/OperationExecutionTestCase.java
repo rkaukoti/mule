@@ -6,23 +6,10 @@
  */
 package org.mule.runtime.module.extension.internal;
 
-import static org.apache.commons.lang.StringUtils.EMPTY;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mule.test.heisenberg.extension.HeisenbergConnectionProvider.SAUL_OFFICE_NUMBER;
-import static org.mule.test.heisenberg.extension.HeisenbergOperations.CALL_GUS_MESSAGE;
-import static org.mule.test.heisenberg.extension.HeisenbergOperations.CURE_CANCER_MESSAGE;
-import static org.mule.test.heisenberg.extension.exception.HeisenbergConnectionExceptionEnricher.ENRICHED_MESSAGE;
-import static org.mule.test.heisenberg.extension.model.HealthStatus.DEAD;
-import static org.mule.test.heisenberg.extension.model.KnockeableDoor.knock;
-import static org.mule.test.heisenberg.extension.model.Ricin.RICIN_KILL_MESSAGE;
-
+import org.hamcrest.Matchers;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.functional.junit4.FlowRunner;
 import org.mule.runtime.api.connection.ConnectionException;
@@ -43,23 +30,35 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.hamcrest.Matchers;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.apache.commons.lang.StringUtils.EMPTY;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mule.test.heisenberg.extension.HeisenbergConnectionProvider.SAUL_OFFICE_NUMBER;
+import static org.mule.test.heisenberg.extension.HeisenbergOperations.CALL_GUS_MESSAGE;
+import static org.mule.test.heisenberg.extension.HeisenbergOperations.CURE_CANCER_MESSAGE;
+import static org.mule.test.heisenberg.extension.exception.HeisenbergConnectionExceptionEnricher.ENRICHED_MESSAGE;
+import static org.mule.test.heisenberg.extension.model.HealthStatus.DEAD;
+import static org.mule.test.heisenberg.extension.model.KnockeableDoor.knock;
+import static org.mule.test.heisenberg.extension.model.Ricin.RICIN_KILL_MESSAGE;
 
 public class OperationExecutionTestCase extends ExtensionFunctionalTestCase
 {
 
+    public static final String HEISENBERG = "heisenberg";
+    public static final String KILL_RESULT =
+            String.format("Killed with: %s , Type %s and attribute %s", RICIN_KILL_MESSAGE, WeaponType.MELEE_WEAPON.name(),
+                    "Pizza on the rooftop");
+    public static final long PAYMENT = 100;
     private static final String GUSTAVO_FRING = "Gustavo Fring";
     private static final BigDecimal MONEY = BigDecimal.valueOf(1000000);
     private static final String GOODBYE_MESSAGE = "Say hello to my little friend";
     private static final String VICTIM = "Skyler";
-    public static final String HEISENBERG = "heisenberg";
-    public static final String KILL_RESULT = String.format("Killed with: %s , Type %s and attribute %s", RICIN_KILL_MESSAGE, WeaponType.MELEE_WEAPON.name(), "Pizza on the rooftop");
-
-    public static final long PAYMENT = 100;
-
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
@@ -350,7 +349,7 @@ public class OperationExecutionTestCase extends ExtensionFunctionalTestCase
     public void operationWithListPojoAsChildElementsOverridesDefault() throws Exception
     {
         List<Ricin> ricins = (List<Ricin>) flowRunner("killWithRicinAsChildElement").withPayload(EMPTY)
-                .run().getMessage().getPayload();
+                                                                                    .run().getMessage().getPayload();
 
         assertThat(ricins, hasSize(2));
         assertThat(ricins.get(0), instanceOf(Ricin.class));

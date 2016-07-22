@@ -19,10 +19,9 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 public class AsyncMessageNotification extends ServerNotification implements BlockingServerEvent
 {
 
-    private static final long serialVersionUID = 6065691696506216248L;
-
     public static final int PROCESS_ASYNC_SCHEDULED = ASYNC_MESSAGE_EVENT_ACTION_START_RANGE + 1;
     public static final int PROCESS_ASYNC_COMPLETE = ASYNC_MESSAGE_EVENT_ACTION_START_RANGE + 2;
+    private static final long serialVersionUID = 6065691696506216248L;
 
     static
     {

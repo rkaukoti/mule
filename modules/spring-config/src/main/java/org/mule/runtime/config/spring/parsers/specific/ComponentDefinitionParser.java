@@ -8,7 +8,6 @@ package org.mule.runtime.config.spring.parsers.specific;
 
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
-
 import org.w3c.dom.Element;
 
 public class ComponentDefinitionParser extends ChildDefinitionParser

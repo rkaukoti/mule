@@ -13,7 +13,9 @@ import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.api.model.EntryPointResolverSet;
 import org.mule.runtime.core.component.DefaultComponentLifecycleAdapter;
 
-/** <code>TestComponentLifecycleAdapter</code> TODO document */
+/**
+ * <code>TestComponentLifecycleAdapter</code> TODO document
+ */
 public class TestComponentLifecycleAdapter extends DefaultComponentLifecycleAdapter
 {
     public TestComponentLifecycleAdapter(Object pojoService,
@@ -25,10 +27,10 @@ public class TestComponentLifecycleAdapter extends DefaultComponentLifecycleAdap
     }
 
     public TestComponentLifecycleAdapter(Object pojoService,
-                                       JavaComponent service,
-                                       FlowConstruct flowConstruct,
-                                       EntryPointResolverSet epResolver,
-                                       MuleContext muleContext) throws MuleException
+                                         JavaComponent service,
+                                         FlowConstruct flowConstruct,
+                                         EntryPointResolverSet epResolver,
+                                         MuleContext muleContext) throws MuleException
     {
         super(pojoService, service, flowConstruct, epResolver, muleContext);
     }

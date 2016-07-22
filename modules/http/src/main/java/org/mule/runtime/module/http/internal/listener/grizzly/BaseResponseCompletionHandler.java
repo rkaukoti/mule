@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONNECTION;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.TRANSFER_ENCODING;
-import static org.mule.runtime.module.http.api.HttpHeaders.Values.CLOSE;
-import org.mule.runtime.module.http.internal.domain.response.HttpResponse;
-
-import java.util.Collection;
-
 import org.glassfish.grizzly.EmptyCompletionHandler;
 import org.glassfish.grizzly.WriteResult;
 import org.glassfish.grizzly.http.HttpRequestPacket;
 import org.glassfish.grizzly.http.HttpResponsePacket;
+import org.mule.runtime.module.http.internal.domain.response.HttpResponse;
+
+import java.util.Collection;
+
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONNECTION;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.TRANSFER_ENCODING;
+import static org.mule.runtime.module.http.api.HttpHeaders.Values.CLOSE;
 
 public abstract class BaseResponseCompletionHandler extends EmptyCompletionHandler<WriteResult>
 {
@@ -24,8 +24,8 @@ public abstract class BaseResponseCompletionHandler extends EmptyCompletionHandl
     protected HttpResponsePacket buildHttpResponsePacket(HttpRequestPacket sourceRequest, HttpResponse httpResponse)
     {
         final HttpResponsePacket.Builder responsePacketBuilder = HttpResponsePacket.builder(sourceRequest)
-                .status(httpResponse.getStatusCode())
-                .reasonPhrase(httpResponse.getReasonPhrase());
+                                                                                   .status(httpResponse.getStatusCode())
+                                                                                   .reasonPhrase(httpResponse.getReasonPhrase());
 
         final Collection<String> allHeaders = httpResponse.getHeaderNames();
         for (String headerName : allHeaders)

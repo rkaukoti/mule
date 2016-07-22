@@ -6,6 +6,21 @@
  */
 package org.mule.compatibility.config.spring.parsers.specific;
 
+import org.mule.compatibility.core.endpoint.URIBuilder;
+import org.mule.runtime.config.spring.dsl.model.ComponentIdentifier;
+import org.mule.runtime.config.spring.dsl.model.ComponentModel;
+import org.mule.runtime.config.spring.dsl.spring.CommonBeanDefinitionCreator;
+import org.mule.runtime.config.spring.factories.MessageProcessorChainFactoryBean;
+import org.mule.runtime.core.processor.AbstractRedeliveryPolicy;
+import org.mule.runtime.core.util.StringUtils;
+import org.springframework.beans.PropertyValue;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.RuntimeBeanReference;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.support.ManagedList;
+import org.springframework.beans.factory.support.ManagedMap;
+
 import static org.mule.compatibility.config.spring.TransportComponentBuildingDefinitionProvider.ENDPOINT_ELEMENT;
 import static org.mule.compatibility.config.spring.TransportComponentBuildingDefinitionProvider.INBOUND_ENDPOINT_ELEMENT;
 import static org.mule.compatibility.config.spring.TransportComponentBuildingDefinitionProvider.OUTBOUND_ENDPOINT_ELEMENT;
@@ -14,23 +29,6 @@ import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.SPRING_P
 import static org.mule.runtime.config.spring.dsl.spring.CommonBeanDefinitionCreator.areMatchingTypes;
 import static org.mule.runtime.config.spring.dsl.spring.PropertyComponentUtils.getPropertyValueFromPropertyComponent;
 import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_MULE_CONTEXT;
-
-import org.mule.compatibility.core.endpoint.URIBuilder;
-import org.mule.runtime.config.spring.dsl.model.ComponentIdentifier;
-import org.mule.runtime.config.spring.dsl.model.ComponentModel;
-import org.mule.runtime.config.spring.dsl.spring.CommonBeanDefinitionCreator;
-import org.mule.runtime.config.spring.dsl.spring.PropertyComponentUtils;
-import org.mule.runtime.config.spring.factories.MessageProcessorChainFactoryBean;
-import org.mule.runtime.core.processor.AbstractRedeliveryPolicy;
-import org.mule.runtime.core.util.StringUtils;
-
-import org.springframework.beans.PropertyValue;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.config.RuntimeBeanReference;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.ManagedList;
-import org.springframework.beans.factory.support.ManagedMap;
 
 /**
  * This is a post processor that will run for every {@link ComponentModel} parsing. In case that the {@code ComponentModel}
@@ -74,26 +72,33 @@ public class TransportElementBeanDefinitionPostProcessor implements CommonBeanDe
         //but to the properties map inside it. So we need to revert previous properties processing in this particular case.
         ManagedMap propertiesMap = new ManagedMap();
         componentModel.getInnerComponents()
-                .stream()
-                .filter(innerComponent -> {
-                    ComponentIdentifier identifier = innerComponent.getIdentifier();
-                    return identifier.equals(SPRING_PROPERTY_IDENTIFIER) || identifier.equals(MULE_PROPERTY_IDENTIFIER);
-                }).forEach(propertyComponentModel -> {
-                    PropertyValue propertyValue = getPropertyValueFromPropertyComponent(propertyComponentModel);
-                    modelBeanDefinition.getPropertyValues().removePropertyValue(propertyValue.getName());
-                    propertiesMap.put(propertyValue.getName(), propertyValue.getValue());
-                });
+                      .stream()
+                      .filter(innerComponent ->
+                      {
+                          ComponentIdentifier identifier = innerComponent.getIdentifier();
+                          return identifier.equals(SPRING_PROPERTY_IDENTIFIER) || identifier.equals(MULE_PROPERTY_IDENTIFIER);
+                      }).forEach(propertyComponentModel ->
+        {
+            PropertyValue propertyValue = getPropertyValueFromPropertyComponent(propertyComponentModel);
+            modelBeanDefinition.getPropertyValues().removePropertyValue(propertyValue.getName());
+            propertiesMap.put(propertyValue.getName(), propertyValue.getValue());
+        });
         componentModel.getInnerComponents()
-                .stream()
-                .filter(innerComponent -> {
-                    return innerComponent.getIdentifier().getName().equals(PROPERTIES_ELEMENT);
-                })
-                .findFirst()
-                .ifPresent(propertiesComponent -> {
-                    CommonBeanDefinitionCreator.getPropertyValueFromPropertiesComponent(propertiesComponent).stream().forEach( propertyValue -> {
-                        propertiesMap.put(propertyValue.getName(), propertyValue.getValue());
-                    });
-                });
+                      .stream()
+                      .filter(innerComponent ->
+                      {
+                          return innerComponent.getIdentifier().getName().equals(PROPERTIES_ELEMENT);
+                      })
+                      .findFirst()
+                      .ifPresent(propertiesComponent ->
+                      {
+                          CommonBeanDefinitionCreator.getPropertyValueFromPropertiesComponent(propertiesComponent)
+                                                     .stream()
+                                                     .forEach(propertyValue ->
+                                                     {
+                                                         propertiesMap.put(propertyValue.getName(), propertyValue.getValue());
+                                                     });
+                      });
         if (!propertiesMap.isEmpty())
         {
             modelBeanDefinition.getPropertyValues().addPropertyValue(PROPERTIES_ELEMENT, propertiesMap);
@@ -107,7 +112,8 @@ public class TransportElementBeanDefinitionPostProcessor implements CommonBeanDe
             for (int i = 0; i < messageProcessors.size(); i++)
             {
                 Object processorDefinition = messageProcessors.get(i);
-                if (processorDefinition instanceof AbstractBeanDefinition && areMatchingTypes(AbstractRedeliveryPolicy.class, ((AbstractBeanDefinition) processorDefinition).getBeanClass()))
+                if (processorDefinition instanceof AbstractBeanDefinition &&
+                    areMatchingTypes(AbstractRedeliveryPolicy.class, ((AbstractBeanDefinition) processorDefinition).getBeanClass()))
                 {
                     messageProcessors.remove(i);
                     modelBeanDefinition.getPropertyValues().addPropertyValue("redeliveryPolicy", processorDefinition);
@@ -126,24 +132,31 @@ public class TransportElementBeanDefinitionPostProcessor implements CommonBeanDe
             Object lastMessageProcessor = messageProcessors.get(messageProcessors.size() - 1);
             if (lastMessageProcessor instanceof AbstractBeanDefinition)
             {
-                if (areMatchingTypes(MessageProcessorChainFactoryBean.class, ((AbstractBeanDefinition) lastMessageProcessor).getBeanClass()))
+                if (areMatchingTypes(MessageProcessorChainFactoryBean.class,
+                        ((AbstractBeanDefinition) lastMessageProcessor).getBeanClass()))
                 {
                     messageProcessors.remove(messageProcessors.size() - 1);
                 }
             }
         }
         //Take the <response> mps and add them.
-        componentModel.getInnerComponents().stream().filter( innerComponent -> {
+        componentModel.getInnerComponents().stream().filter(innerComponent ->
+        {
             return innerComponent.getIdentifier().getName().equals("response");
-        }).findFirst().ifPresent( responseComponentModel -> {
+        }).findFirst().ifPresent(responseComponentModel ->
+        {
             ManagedList responseMessageProcessorsBeanList = new ManagedList();
-            responseComponentModel.getInnerComponents().forEach( responseProcessorComponentModel -> {
+            responseComponentModel.getInnerComponents().forEach(responseProcessorComponentModel ->
+            {
                 BeanDefinition beanDefinition = responseProcessorComponentModel.getBeanDefinition();
-                responseMessageProcessorsBeanList.add(beanDefinition != null ? beanDefinition : responseProcessorComponentModel.getBeanReference());
+                responseMessageProcessorsBeanList.add(
+                        beanDefinition != null ? beanDefinition : responseProcessorComponentModel.getBeanReference());
             });
-            BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(MessageProcessorChainFactoryBean.class);
+            BeanDefinitionBuilder beanDefinitionBuilder =
+                    BeanDefinitionBuilder.genericBeanDefinition(MessageProcessorChainFactoryBean.class);
             beanDefinitionBuilder.addPropertyValue("messageProcessors", responseMessageProcessorsBeanList);
-            modelBeanDefinition.getPropertyValues().addPropertyValue("responseMessageProcessors", beanDefinitionBuilder.getBeanDefinition());
+            modelBeanDefinition.getPropertyValues()
+                               .addPropertyValue("responseMessageProcessors", beanDefinitionBuilder.getBeanDefinition());
         });
         return messageProcessors;
     }
@@ -191,7 +204,8 @@ public class TransportElementBeanDefinitionPostProcessor implements CommonBeanDe
     {
         if (componentModel.getParameters().containsKey(REFERENCE_ATTRIBUTE))
         {
-            modelBeanDefinition.getConstructorArgumentValues().addGenericArgumentValue(new RuntimeBeanReference(componentModel.getParameters().get(REFERENCE_ATTRIBUTE)));
+            modelBeanDefinition.getConstructorArgumentValues()
+                               .addGenericArgumentValue(new RuntimeBeanReference(componentModel.getParameters().get(REFERENCE_ATTRIBUTE)));
         }
     }
 

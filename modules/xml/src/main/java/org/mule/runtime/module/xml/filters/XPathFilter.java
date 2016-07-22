@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.module.xml.filters;
 
-import static org.mule.runtime.core.util.ClassUtils.equal;
-import static org.mule.runtime.core.util.ClassUtils.hash;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -24,15 +22,17 @@ import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.module.xml.util.NamespaceManager;
 import org.mule.runtime.module.xml.xpath.SaxonXpathEvaluator;
 import org.mule.runtime.module.xml.xpath.XPathEvaluator;
-
-import java.text.MessageFormat;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
-public class XPathFilter extends AbstractJaxpFilter  implements Filter, Initialisable, MuleContextAware
+import java.text.MessageFormat;
+import java.util.Map;
+
+import static org.mule.runtime.core.util.ClassUtils.equal;
+import static org.mule.runtime.core.util.ClassUtils.hash;
+
+public class XPathFilter extends AbstractJaxpFilter implements Filter, Initialisable, MuleContextAware
 {
     protected transient Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -78,9 +78,9 @@ public class XPathFilter extends AbstractJaxpFilter  implements Filter, Initiali
         if (pattern == null)
         {
             throw new InitialisationException(
-                MessageFactory.createStaticMessage("A pattern must be supplied to the " +
-                                                   ClassUtils.getSimpleName(getClass())),
-                this);
+                    MessageFactory.createStaticMessage("A pattern must be supplied to the " +
+                                                       ClassUtils.getSimpleName(getClass())),
+                    this);
         }
 
         try
@@ -106,7 +106,8 @@ public class XPathFilter extends AbstractJaxpFilter  implements Filter, Initiali
     @Override
     public boolean accept(MuleMessage message)
     {
-        throw new UnsupportedOperationException("MULE-9341 Remove Filters that are not needed.  This method will be removed when filters are cleaned up.");
+        throw new UnsupportedOperationException(
+                "MULE-9341 Remove Filters that are not needed.  This method will be removed when filters are cleaned up.");
     }
 
     @Override
@@ -141,7 +142,8 @@ public class XPathFilter extends AbstractJaxpFilter  implements Filter, Initiali
             {
                 if (logger.isInfoEnabled())
                 {
-                    logger.info("''expectedValue'' attribute for {} is not set, using 'true' by default", ClassUtils.getSimpleName(getClass()));
+                    logger.info("''expectedValue'' attribute for {} is not set, using 'true' by default",
+                            ClassUtils.getSimpleName(getClass()));
                 }
                 expectedValue = Boolean.TRUE.toString();
             }
@@ -181,7 +183,8 @@ public class XPathFilter extends AbstractJaxpFilter  implements Filter, Initiali
             if (logger.isWarnEnabled())
             {
                 logger.warn(
-                        ClassUtils.getSimpleName(getClass()) + " filter rejected message because of an error while evaluating the expression: "
+                        ClassUtils.getSimpleName(getClass()) +
+                        " filter rejected message because of an error while evaluating the expression: "
                         + e.getMessage(), e);
             }
             return false;
@@ -190,7 +193,7 @@ public class XPathFilter extends AbstractJaxpFilter  implements Filter, Initiali
         if (logger.isDebugEnabled())
         {
             logger.debug(MessageFormat.format("{0} Expression result = ''{1}'' -  Expected value = ''{2}''",
-                                              ClassUtils.getSimpleName(getClass()), xpathResult, expectedValue));
+                    ClassUtils.getSimpleName(getClass()), xpathResult, expectedValue));
         }
 
         // Compare the XPath result with the expected result.
@@ -211,7 +214,7 @@ public class XPathFilter extends AbstractJaxpFilter  implements Filter, Initiali
                 if (logger.isDebugEnabled())
                 {
                     logger.debug(MessageFormat.format("{0} expression evaluates to null: {1}",
-                                                      ClassUtils.getSimpleName(getClass()), pattern));
+                            ClassUtils.getSimpleName(getClass()), pattern));
                 }
             }
         }
@@ -267,8 +270,7 @@ public class XPathFilter extends AbstractJaxpFilter  implements Filter, Initiali
      * The prefix-to-namespace map for the namespace context to be applied to the
      * XPath evaluation.
      *
-     * @return The prefix-to-namespace map for the namespace context to be applied to
-     *         the XPath evaluation.
+     * @return The prefix-to-namespace map for the namespace context to be applied to the XPath evaluation.
      */
     public Map<String, String> getNamespaces()
     {
@@ -279,8 +281,7 @@ public class XPathFilter extends AbstractJaxpFilter  implements Filter, Initiali
      * The prefix-to-namespace map for the namespace context to be applied to the
      * XPath evaluation.
      *
-     * @param prefixToNamespaceMap The prefix-to-namespace map for the namespace
-     *            context to be applied to the XPath evaluation.
+     * @param prefixToNamespaceMap The prefix-to-namespace map for the namespace context to be applied to the XPath evaluation.
      */
     public void setNamespaces(Map<String, String> prefixToNamespaceMap)
     {
@@ -290,18 +291,20 @@ public class XPathFilter extends AbstractJaxpFilter  implements Filter, Initiali
     @Override
     public boolean equals(Object obj)
     {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
 
         final XPathFilter other = (XPathFilter) obj;
         return equal(expectedValue, other.expectedValue)
-            && equal(prefixToNamespaceMap, other.prefixToNamespaceMap)
-            && equal(pattern, other.pattern);
+               && equal(prefixToNamespaceMap, other.prefixToNamespaceMap)
+               && equal(pattern, other.pattern);
     }
 
     @Override
     public int hashCode()
     {
-        return hash(new Object[]{this.getClass(), expectedValue, prefixToNamespaceMap, pattern});
+        return hash(new Object[] {this.getClass(), expectedValue, prefixToNamespaceMap, pattern});
     }
 }

@@ -7,14 +7,10 @@
 
 package org.mule.runtime.module.launcher.plugin;
 
-import static java.io.File.separator;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_HOME_DIRECTORY_PROPERTY;
-import static org.mule.runtime.module.launcher.MuleFoldersUtil.CONTAINER_APP_PLUGINS;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mule.runtime.core.util.FileUtils;
 import org.mule.tck.ZipUtils;
 import org.mule.tck.ZipUtils.ZipResource;
@@ -24,10 +20,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import static java.io.File.separator;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_HOME_DIRECTORY_PROPERTY;
+import static org.mule.runtime.module.launcher.MuleFoldersUtil.CONTAINER_APP_PLUGINS;
 
 public class ArtifactPluginRepositoryTestCase extends AbstractMuleTestCase
 {
@@ -36,20 +36,19 @@ public class ArtifactPluginRepositoryTestCase extends AbstractMuleTestCase
 
     private static final String PLUGIN_PROPERTIES = "plugin.properties";
     private static final String PLUGIN_LIB_FOLDER = "lib";
-
+    private final ArtifactPluginDescriptorFactory artifactPluginDescriptorFactory = mock(ArtifactPluginDescriptorFactory.class);
+    private final ArtifactPluginRepository applicationPluginRepository =
+            new DefaultArtifactPluginRepository(artifactPluginDescriptorFactory);
     @Rule
     public TemporaryFolder muleHomeFolder = new TemporaryFolder();
-
-    private final ArtifactPluginDescriptorFactory artifactPluginDescriptorFactory = mock(ArtifactPluginDescriptorFactory.class);
-    private final ArtifactPluginRepository applicationPluginRepository = new DefaultArtifactPluginRepository(artifactPluginDescriptorFactory);
-
     private File pluginsLibFolder;
 
     @Before
     public void setUp() throws IOException
     {
         System.setProperty(MULE_HOME_DIRECTORY_PROPERTY, muleHomeFolder.getRoot().getCanonicalPath());
-        when(artifactPluginDescriptorFactory.create(anyObject())).thenAnswer(invocation -> {
+        when(artifactPluginDescriptorFactory.create(anyObject())).thenAnswer(invocation ->
+        {
             ArtifactPluginDescriptor descriptor = new ArtifactPluginDescriptor();
             descriptor.setName(((File) invocation.getArguments()[0]).getName());
             return descriptor;
@@ -113,7 +112,9 @@ public class ArtifactPluginRepositoryTestCase extends AbstractMuleTestCase
 
 
         File zipFile = new File(pluginsLibFolder, pluginName + ".zip");
-        ZipUtils.compress(zipFile, new ZipResource[] {new ZipResource(dummyJar.getAbsolutePath(), PLUGIN_LIB_FOLDER + separator + libraryJarName), new ZipResource(pluginPropertiesFile.getAbsolutePath(), pluginPropertiesFile.getName())});
+        ZipUtils.compress(zipFile,
+                new ZipResource[] {new ZipResource(dummyJar.getAbsolutePath(), PLUGIN_LIB_FOLDER + separator + libraryJarName),
+                                   new ZipResource(pluginPropertiesFile.getAbsolutePath(), pluginPropertiesFile.getName())});
 
         FileUtils.forceDelete(pluginFolder);
 

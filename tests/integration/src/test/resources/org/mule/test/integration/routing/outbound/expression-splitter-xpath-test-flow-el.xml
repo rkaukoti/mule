@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 
@@ -11,11 +11,11 @@
 
     <flow name="Distributor">
         <mulexml:xml-to-dom-transformer returnClass="org.dom4j.Document"/>
-        <splitter expression="xpath3('//acme:Trade', payload, 'NODESET')" />
+        <splitter expression="xpath3('//acme:Trade', payload, 'NODESET')"/>
         <round-robin>
             <flow-ref name="ServiceOne"/>
             <flow-ref name="ServiceTwo"/>
-        </round-robin>        
+        </round-robin>
     </flow>
 
     <flow name="ServiceOne">

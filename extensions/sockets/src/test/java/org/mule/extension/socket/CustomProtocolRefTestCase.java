@@ -6,13 +6,13 @@
  */
 package org.mule.extension.socket;
 
+import org.junit.Test;
+import org.mule.extension.socket.api.socket.tcp.TcpProtocol;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import org.mule.extension.socket.api.socket.tcp.TcpProtocol;
-
-import org.junit.Test;
 
 public class CustomProtocolRefTestCase extends SocketExtensionTestCase
 {

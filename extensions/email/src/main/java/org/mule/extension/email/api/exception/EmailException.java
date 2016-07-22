@@ -6,9 +6,9 @@
  */
 package org.mule.extension.email.api.exception;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-
 import org.mule.runtime.core.api.MuleRuntimeException;
+
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * Is the base {@link RuntimeException} type for the Email Connector any other exceptions

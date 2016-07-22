@@ -19,7 +19,8 @@ import org.mule.runtime.core.util.ValueHolder;
 
 import java.util.Set;
 
-public class TestThreadContextClassLoaderResolver implements MetadataKeysResolver, MetadataContentResolver<String>, MetadataOutputResolver<String>
+public class TestThreadContextClassLoaderResolver
+        implements MetadataKeysResolver, MetadataContentResolver<String>, MetadataOutputResolver<String>
 {
     private static ValueHolder<ClassLoader> contextClassLoader = new ValueHolder<>();
 

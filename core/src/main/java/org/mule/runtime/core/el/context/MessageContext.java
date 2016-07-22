@@ -22,19 +22,16 @@ import javax.activation.DataHandler;
 /**
  * Exposes information about the current Mule message:
  *
- * <li> <b>id</b>                    <i>The unique message id</i>
- * <li> <b>rootId</b>                <i>The root message id.  The id of the message before being split into parts.
- *                                      If was is not split then this value is the same as the id.</i>
- * <li> <b>correlationId</b>         <i>The message correlationId.</i>
- * <li> <b>correlationSequence</b>   <i>The message correlation sequence number.</i>
- * <li> <b>correlationGroupSize</b>  <i>The message correlation group size.</i>
- * <li> <b>dataType</b>              <i>The message data type (org.mule.runtime.core.api.transformer.DataType).</i>
- * <li> <b>replyTo</b>               <i>The message reply to destination. (mutable)</i>
- * <li> <b>payload</b>               <i>The message payload (mutable).  You can also use message.payloadAs(Class clazz).  Note: If the message payload is NullPayload, this method will return null (from 3.4)</i>
- * <li> <b>inboundProperties</b>     <i>Map of inbound message properties (immutable).</i>
- * <li> <b>outboundProperties</b>    <i>Map of outbound message properties.</i>
- * <li> <b>inboundAttachements</b>   <i>Map of inbound message attachments (immutable).</i>
- * <li> <b>outboundAttachements</b>  <i>Map of outbound message attachments.</i>
+ * <li> <b>id</b>                    <i>The unique message id</i> <li> <b>rootId</b>                <i>The root message id.  The id of the
+ * message before being split into parts. If was is not split then this value is the same as the id.</i> <li> <b>correlationId</b>
+ * <i>The message correlationId.</i> <li> <b>correlationSequence</b>   <i>The message correlation sequence number.</i> <li>
+ * <b>correlationGroupSize</b>  <i>The message correlation group size.</i> <li> <b>dataType</b>              <i>The message data type
+ * (org.mule.runtime.core.api.transformer.DataType).</i> <li> <b>replyTo</b>               <i>The message reply to destination.
+ * (mutable)</i> <li> <b>payload</b>               <i>The message payload (mutable).  You can also use message.payloadAs(Class clazz).
+ * Note: If the message payload is NullPayload, this method will return null (from 3.4)</i> <li> <b>inboundProperties</b>     <i>Map of
+ * inbound message properties (immutable).</i> <li> <b>outboundProperties</b>    <i>Map of outbound message properties.</i> <li>
+ * <b>inboundAttachements</b>   <i>Map of inbound message attachments (immutable).</i> <li> <b>outboundAttachements</b>  <i>Map of outbound
+ * message attachments.</i>
  */
 public class MessageContext
 {
@@ -82,12 +79,16 @@ public class MessageContext
         return event.getMessage().getPayload();
     }
 
+    public void setPayload(Object payload)
+    {
+        event.setMessage(MuleMessage.builder(event.getMessage()).payload(payload).build());
+    }
+
     /**
      * Obtains the payload of the current message transformed to the given #type.
      *
      * @param type the java type the payload is to be transformed to
      * @return the transformed payload
-     * @throws TransformerException
      */
     public <T> T payloadAs(Class<T> type) throws TransformerException
     {
@@ -106,11 +107,6 @@ public class MessageContext
     {
         event.setMessage(muleContext.getTransformationService().transform(event.getMessage(), dataType));
         return event.getMessage().getPayload();
-    }
-
-    public void setPayload(Object payload)
-    {
-        event.setMessage(MuleMessage.builder(event.getMessage()).payload(payload).build());
     }
 
     public Map<String, Serializable> getInboundProperties()

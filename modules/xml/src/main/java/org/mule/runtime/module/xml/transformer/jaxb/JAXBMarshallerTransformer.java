@@ -12,6 +12,7 @@ import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.message.OutputHandler;
 import org.mule.runtime.core.transformer.AbstractTransformer;
+import org.w3c.dom.Document;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,8 +25,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
 
 /**
  * Allows marshaling of Java objects to XML using JAXB 2.  A specific sourceClass can be set on this transformer, this

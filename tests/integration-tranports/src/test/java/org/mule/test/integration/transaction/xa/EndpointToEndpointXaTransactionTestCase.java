@@ -6,18 +6,17 @@
  */
 package org.mule.test.integration.transaction.xa;
 
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.util.Arrays;
 import java.util.Collection;
-
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 @RunWith(Parameterized.class)
 public class EndpointToEndpointXaTransactionTestCase extends FunctionalTestCase
@@ -50,26 +49,27 @@ public class EndpointToEndpointXaTransactionTestCase extends FunctionalTestCase
     {
         JmsBrokerSetUp createFirstJmsBroker = new JmsBrokerSetUp(port1.getNumber());
         JmsBrokerSetUp createSecondJmsBroker = new JmsBrokerSetUp(port2.getNumber());
-        CompositeTransactionalTestSetUp createTowJmsBrokers = new CompositeTransactionalTestSetUp(createFirstJmsBroker, createSecondJmsBroker);
+        CompositeTransactionalTestSetUp createTowJmsBrokers =
+                new CompositeTransactionalTestSetUp(createFirstJmsBroker, createSecondJmsBroker);
 
         return Arrays.asList(new Object[][] {
                 {new String[] {"org/mule/test/integration/transaction/xa/xa-transaction-config.xml",
-                        "org/mule/test/integration/transaction/xa/vm-xa-transaction-config.xml",
-                        transactionManagerConfigFile}, null,
-                        new QueueInboundMessageGenerator(), new QueueOutboundMessagesCounter()},
+                               "org/mule/test/integration/transaction/xa/vm-xa-transaction-config.xml",
+                               transactionManagerConfigFile}, null,
+                 new QueueInboundMessageGenerator(), new QueueOutboundMessagesCounter()},
                 {new String[] {"org/mule/test/integration/transaction/xa/xa-transaction-config.xml",
-                        "org/mule/test/integration/transaction/xa/vm-different-connectors-xa-transaction-config.xml",
-                        transactionManagerConfigFile}, null,
-                        new QueueInboundMessageGenerator(), new QueueOutboundMessagesCounter()},
+                               "org/mule/test/integration/transaction/xa/vm-different-connectors-xa-transaction-config.xml",
+                               transactionManagerConfigFile}, null,
+                 new QueueInboundMessageGenerator(), new QueueOutboundMessagesCounter()},
                 {new String[] {"org/mule/test/integration/transaction/xa/xa-transaction-config.xml",
-                        "org/mule/test/integration/transaction/xa/jms-xa-transaction-config.xml",
-                        transactionManagerConfigFile}, createFirstJmsBroker,
-                        new QueueInboundMessageGenerator(), JmsOutboundMessagesCounter.createVerifierForBroker(port1.getNumber())},
+                               "org/mule/test/integration/transaction/xa/jms-xa-transaction-config.xml",
+                               transactionManagerConfigFile}, createFirstJmsBroker,
+                 new QueueInboundMessageGenerator(), JmsOutboundMessagesCounter.createVerifierForBroker(port1.getNumber())},
                 {new String[] {"org/mule/test/integration/transaction/xa/xa-transaction-config.xml",
-                        "org/mule/test/integration/transaction/xa/jms-different-connectors-xa-transaction-config.xml",
-                        transactionManagerConfigFile}, createTowJmsBrokers,
-                        new QueueInboundMessageGenerator(), JmsOutboundMessagesCounter.createVerifierForBroker(port2.getNumber())},
-        }
+                               "org/mule/test/integration/transaction/xa/jms-different-connectors-xa-transaction-config.xml",
+                               transactionManagerConfigFile}, createTowJmsBrokers,
+                 new QueueInboundMessageGenerator(), JmsOutboundMessagesCounter.createVerifierForBroker(port2.getNumber())},
+                }
         );
     }
 

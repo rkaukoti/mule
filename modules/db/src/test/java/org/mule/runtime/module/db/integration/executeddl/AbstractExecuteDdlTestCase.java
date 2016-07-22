@@ -7,9 +7,8 @@
 
 package org.mule.runtime.module.db.integration.executeddl;
 
-import static org.junit.Assert.assertEquals;
-import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
+import org.apache.commons.dbutils.QueryRunner;
+import org.junit.Before;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 
@@ -20,8 +19,9 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbutils.QueryRunner;
-import org.junit.Before;
+import static org.junit.Assert.assertEquals;
+import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
 
 public abstract class AbstractExecuteDdlTestCase extends AbstractDbIntegrationTestCase
 {

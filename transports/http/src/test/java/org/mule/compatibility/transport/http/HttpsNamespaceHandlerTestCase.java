@@ -7,15 +7,12 @@
 package org.mule.compatibility.transport.http;
 
 
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
-import org.mule.compatibility.transport.http.HttpsConnector;
-import org.mule.compatibility.transport.http.HttpsPollingConnector;
-
-import org.junit.Test;
 
 public class HttpsNamespaceHandlerTestCase extends AbstractNamespaceHandlerTestCase
 {
@@ -50,7 +47,7 @@ public class HttpsNamespaceHandlerTestCase extends AbstractNamespaceHandlerTestC
     @Test
     public void testPollingProperties()
     {
-         HttpsPollingConnector connector =
+        HttpsPollingConnector connector =
                 (HttpsPollingConnector) muleContext.getRegistry().lookupObject("polling");
         assertNotNull(connector);
         assertEquals(3456, connector.getPollingFrequency());

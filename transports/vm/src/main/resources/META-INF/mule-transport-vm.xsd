@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/transport/vm"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:mule="http://www.mulesoft.org/schema/mule/core"
             xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
             xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
+            xmlns="http://www.mulesoft.org/schema/mule/transport/vm"
             targetNamespace="http://www.mulesoft.org/schema/mule/transport/vm"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">
 
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/core"
-                schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd" />
+                schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd"/>
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/transports"
-                schemaLocation="http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd" />
-    <xsd:import namespace = "http://www.mulesoft.org/schema/mule/schemadoc"
-                schemaLocation = "http://www.mulesoft.org/schema/mule/schemadoc/current/mule-schemadoc.xsd"/>
+                schemaLocation="http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd"/>
+    <xsd:import namespace="http://www.mulesoft.org/schema/mule/schemadoc"
+                schemaLocation="http://www.mulesoft.org/schema/mule/schemadoc/current/mule-schemadoc.xsd"/>
 
     <xsd:annotation>
         <xsd:documentation>
@@ -58,8 +58,8 @@
                 </xsd:attribute>
             </xsd:extension>
         </xsd:complexContent>
-   </xsd:complexType>
- 
+    </xsd:complexType>
+
     <xsd:element name="inbound-endpoint" type="inboundEndpointType" substitutionGroup="transports:abstract-inbound-endpoint">
         <xsd:annotation>
             <xsd:documentation>
@@ -93,7 +93,7 @@
     <xsd:element name="endpoint" type="globalEndpointType" substitutionGroup="mule:abstract-global-endpoint">
         <xsd:annotation>
             <xsd:documentation>
-                An endpoint "template" that can be used to construct an inbound or outbound endpoint elsewhere in the configuration by referencing the endpoint name. 
+                An endpoint "template" that can be used to construct an inbound or outbound endpoint elsewhere in the configuration by referencing the endpoint name.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -118,7 +118,8 @@
     <xsd:element name="transaction" type="mule:baseTransactionType" substitutionGroup="mule:abstract-transaction">
         <xsd:annotation>
             <xsd:documentation>
-                The transaction element configures a transaction. Transactions allow a series of operations to be grouped together so that they can be rolled back if a failure occurs. For more information, see [Transaction Management].
+                The transaction element configures a transaction. Transactions allow a series of operations to be grouped together so that they can be rolled back if a failure occurs. For more
+                information, see [Transaction Management].
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>

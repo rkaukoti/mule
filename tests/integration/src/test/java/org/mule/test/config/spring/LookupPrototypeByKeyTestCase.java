@@ -6,11 +6,11 @@
  */
 package org.mule.test.config.spring;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class LookupPrototypeByKeyTestCase extends FunctionalTestCase
 {

@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.core.internal.connection;
 
+import org.mule.runtime.api.connection.ConnectionHandler;
 import org.mule.runtime.core.api.Closeable;
 import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.api.connection.ConnectionHandler;
 
 /**
  * Adapter interface which extends the {@link ConnectionHandler} contract

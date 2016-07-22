@@ -16,8 +16,10 @@ public class SocketsNamespaceHandler extends AbstractMuleNamespaceHandler
 
     public void init()
     {
-        registerBeanDefinitionParser("client-socket-properties", new RootOrNestedElementBeanDefinitionParser(DefaultTcpClientSocketProperties.class, "clientSocketProperties"));
-        registerBeanDefinitionParser("server-socket-properties",  new RootOrNestedElementBeanDefinitionParser(DefaultTcpServerSocketProperties.class, "serverSocketProperties"));
+        registerBeanDefinitionParser("client-socket-properties",
+                new RootOrNestedElementBeanDefinitionParser(DefaultTcpClientSocketProperties.class, "clientSocketProperties"));
+        registerBeanDefinitionParser("server-socket-properties",
+                new RootOrNestedElementBeanDefinitionParser(DefaultTcpServerSocketProperties.class, "serverSocketProperties"));
     }
 
 }

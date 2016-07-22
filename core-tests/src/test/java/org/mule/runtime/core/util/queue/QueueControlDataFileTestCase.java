@@ -6,17 +6,16 @@
  */
 package org.mule.runtime.core.util.queue;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.io.File;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class QueueControlDataFileTestCase extends AbstractMuleTestCase
@@ -47,8 +46,10 @@ public class QueueControlDataFileTestCase extends AbstractMuleTestCase
         previousQueueControlDataFile.close();
 
         final QueueControlDataFile newQueueControlDataFile = createTestQueueDataControl();
-        assertThat(newQueueControlDataFile.getCurrentReadFile().getAbsolutePath(), is(previousQueueControlDataFile.getCurrentReadFile().getAbsolutePath()));
-        assertThat(newQueueControlDataFile.getCurrentWriteFile().getAbsolutePath(), is(previousQueueControlDataFile.getCurrentWriteFile().getAbsolutePath()));
+        assertThat(newQueueControlDataFile.getCurrentReadFile().getAbsolutePath(),
+                is(previousQueueControlDataFile.getCurrentReadFile().getAbsolutePath()));
+        assertThat(newQueueControlDataFile.getCurrentWriteFile().getAbsolutePath(),
+                is(previousQueueControlDataFile.getCurrentWriteFile().getAbsolutePath()));
         newQueueControlDataFile.close();
     }
 
@@ -65,7 +66,9 @@ public class QueueControlDataFileTestCase extends AbstractMuleTestCase
 
     private QueueControlDataFile createTestQueueDataControl()
     {
-        return new QueueControlDataFile(new QueueFileProvider(getTestQueueDataControlFile().getParentFile(), getTestQueueDataControlFile().getName()), DEFAULT_QUEUE_FILE, DEFAULT_QUEUE_FILE);
+        return new QueueControlDataFile(
+                new QueueFileProvider(getTestQueueDataControlFile().getParentFile(), getTestQueueDataControlFile().getName()),
+                DEFAULT_QUEUE_FILE, DEFAULT_QUEUE_FILE);
     }
 
     private File getTestQueueDataControlFile()

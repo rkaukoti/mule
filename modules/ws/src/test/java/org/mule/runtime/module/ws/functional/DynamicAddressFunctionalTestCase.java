@@ -7,9 +7,9 @@
 package org.mule.runtime.module.ws.functional;
 
 
-import static java.util.Collections.singletonMap;
-
 import org.junit.Test;
+
+import static java.util.Collections.singletonMap;
 
 public class DynamicAddressFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase
 {

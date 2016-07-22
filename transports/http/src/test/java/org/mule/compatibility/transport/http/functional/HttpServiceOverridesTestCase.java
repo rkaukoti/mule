@@ -6,14 +6,13 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.transport.http.HttpConnector;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.message.SessionHandler;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 public class HttpServiceOverridesTestCase extends FunctionalTestCase
 {
@@ -28,7 +27,7 @@ public class HttpServiceOverridesTestCase extends FunctionalTestCase
     {
         Connector connector = muleContext.getRegistry().lookupObject("httpConnector");
         assertTrue(connector instanceof HttpConnector);
-        
+
         HttpConnector httpConnector = (HttpConnector) connector;
         SessionHandler sessionHandler = httpConnector.getSessionHandler();
         assertTrue(sessionHandler instanceof TestSessionHandler);

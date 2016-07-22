@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.core;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.functional.functional.FlowAssert.verify;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.MuleEvent;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.functional.functional.FlowAssert.verify;
 
 public class NonBlockingFullySupportedEndpointFunctionalTestCase extends FunctionalTestCase
 {
@@ -28,7 +27,10 @@ public class NonBlockingFullySupportedEndpointFunctionalTestCase extends Functio
     @Test
     public void testTransportOutboundEndpoint() throws Exception
     {
-        final MuleEvent result = flowRunner("testOutboundEndpoint").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern()).nonBlocking().run();
+        final MuleEvent result = flowRunner("testOutboundEndpoint").withPayload(TEST_MESSAGE)
+                                                                   .withExchangePattern(getMessageExchnagePattern())
+                                                                   .nonBlocking()
+                                                                   .run();
         verify("testOutboundEndpoint");
         assertThat(result.getMessageAsString(), is(equalTo(TEST_MESSAGE)));
     }
@@ -36,7 +38,10 @@ public class NonBlockingFullySupportedEndpointFunctionalTestCase extends Functio
     @Test
     public void testTransportOutboundEndpointError() throws Exception
     {
-        MuleEvent result = flowRunner("testOutboundEndpointError").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern()).nonBlocking().run();
+        MuleEvent result = flowRunner("testOutboundEndpointError").withPayload(TEST_MESSAGE)
+                                                                  .withExchangePattern(getMessageExchnagePattern())
+                                                                  .nonBlocking()
+                                                                  .run();
         verify("testOutboundEndpointError");
         assertThat(result.getMessageAsString(), is(equalTo(TEST_MESSAGE)));
     }

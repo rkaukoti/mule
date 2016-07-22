@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.core.el.function;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOCase;
 import org.mule.runtime.core.api.el.ExpressionLanguageContext;
 import org.mule.runtime.core.api.el.ExpressionLanguageFunction;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.el.context.MessageContext;
-
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOCase;
 import org.mule.runtime.core.util.StringUtils;
 
 public class WildcardExpressionLanguageFuntion implements ExpressionLanguageFunction
@@ -26,7 +25,7 @@ public class WildcardExpressionLanguageFuntion implements ExpressionLanguageFunc
         if (numParams < 1 || numParams > 3)
         {
             throw new IllegalArgumentException("invalid number of arguments for the signature wildcard(" +
-                    "wildcardExpression, [melExpression], [caseSensitive]) was expected");
+                                               "wildcardExpression, [melExpression], [caseSensitive]) was expected");
         }
 
         String wildcardPattern = verifyWildcardPattern(params[0]);
@@ -37,7 +36,7 @@ public class WildcardExpressionLanguageFuntion implements ExpressionLanguageFunc
             try
             {
                 result = isMatch(wildcardPattern,
-                   context.getVariable("message", MessageContext.class).payloadAs(String.class), DEFAULT_SENSITIVITY);
+                        context.getVariable("message", MessageContext.class).payloadAs(String.class), DEFAULT_SENSITIVITY);
             }
             catch (TransformerException e)
             {
@@ -71,7 +70,7 @@ public class WildcardExpressionLanguageFuntion implements ExpressionLanguageFunc
         {
             throw new IllegalArgumentException("wildcard pattern is not a string");
         }
-        else  if (StringUtils.isBlank((String) wildcardPattern))
+        else if (StringUtils.isBlank((String) wildcardPattern))
         {
             throw new IllegalArgumentException("wildcard pattern cannot be blank");
         }

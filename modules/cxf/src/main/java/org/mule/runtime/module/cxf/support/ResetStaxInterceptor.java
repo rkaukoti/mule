@@ -6,19 +6,18 @@
  */
 package org.mule.runtime.module.cxf.support;
 
-import org.mule.runtime.module.xml.stax.ReversibleXMLStreamReader;
-
-import java.util.List;
-
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.interceptor.StaxInInterceptor;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.message.MessageContentsList;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
 import org.apache.cxf.phase.Phase;
+import org.mule.runtime.module.xml.stax.ReversibleXMLStreamReader;
+
+import java.util.List;
 
 /**
- * Replaces the XMLStreamReader with a ReversibleXMLStreamReader which caches the xml events so 
+ * Replaces the XMLStreamReader with a ReversibleXMLStreamReader which caches the xml events so
  * we can replay them later.
  */
 public class ResetStaxInterceptor extends AbstractPhaseInterceptor<Message>
@@ -34,7 +33,7 @@ public class ResetStaxInterceptor extends AbstractPhaseInterceptor<Message>
     {
         ReversibleXMLStreamReader reader = message.getContent(ReversibleXMLStreamReader.class);
         reader.reset();
-        
+
         // Replace the message contents because if you're using WSS4J, it leaves the
         // stream pointing to the body, when we want it pointing to the envelope.
         MessageContentsList parameters = new MessageContentsList();

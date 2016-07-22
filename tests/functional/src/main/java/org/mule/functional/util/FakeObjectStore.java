@@ -28,7 +28,7 @@ public class FakeObjectStore<T extends Serializable> implements ObjectStore<T>
     {
         return store.containsKey(key);
     }
-    
+
     @Override
     public void clear() throws ObjectStoreException
     {

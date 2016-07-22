@@ -6,13 +6,12 @@
  */
 package org.mule.compatibility.transport.http.reliability;
 
-import static org.junit.Assert.assertEquals;
-
-import org.mule.compatibility.transport.http.HttpConstants;
-
 import org.apache.commons.httpclient.HttpMethodBase;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.junit.Test;
+import org.mule.compatibility.transport.http.HttpConstants;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Verify that no inbound messages are lost when exceptions occur.

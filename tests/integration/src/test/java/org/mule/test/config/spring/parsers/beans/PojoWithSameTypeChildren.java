@@ -12,9 +12,9 @@ public class PojoWithSameTypeChildren
     private SimpleCollectionObject elementTypeA;
     private SimpleCollectionObject anotherElementTypeA;
 
-    public void setElementTypeA(SimpleCollectionObject elementTypeA)
+    public SimpleCollectionObject getAnotherElementTypeA()
     {
-        this.elementTypeA = elementTypeA;
+        return anotherElementTypeA;
     }
 
     public void setAnotherElementTypeA(SimpleCollectionObject anotherElementTypeA)
@@ -22,13 +22,13 @@ public class PojoWithSameTypeChildren
         this.anotherElementTypeA = anotherElementTypeA;
     }
 
-    public SimpleCollectionObject getAnotherElementTypeA()
-    {
-        return anotherElementTypeA;
-    }
-
     public SimpleCollectionObject getElementTypeA()
     {
         return elementTypeA;
+    }
+
+    public void setElementTypeA(SimpleCollectionObject elementTypeA)
+    {
+        this.elementTypeA = elementTypeA;
     }
 }

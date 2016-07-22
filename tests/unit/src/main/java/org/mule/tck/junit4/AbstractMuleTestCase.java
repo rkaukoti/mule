@@ -6,19 +6,6 @@
  */
 package org.mule.tck.junit4;
 
-import static org.junit.Assume.assumeThat;
-import org.mule.runtime.core.RequestContext;
-import org.mule.runtime.core.util.MuleUrlStreamHandlerFactory;
-import org.mule.runtime.core.util.StringMessageUtils;
-import org.mule.runtime.core.util.StringUtils;
-import org.mule.runtime.core.util.SystemUtils;
-import org.mule.tck.junit4.rule.WarningTimeout;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.After;
@@ -29,8 +16,21 @@ import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.junit.rules.TestRule;
 import org.junit.rules.Timeout;
+import org.mule.runtime.core.RequestContext;
+import org.mule.runtime.core.util.MuleUrlStreamHandlerFactory;
+import org.mule.runtime.core.util.StringMessageUtils;
+import org.mule.runtime.core.util.StringUtils;
+import org.mule.runtime.core.util.SystemUtils;
+import org.mule.tck.junit4.rule.WarningTimeout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.Assume.assumeThat;
 
 /**
  * <code>AbstractMuleTestCase</code> is a base class for Mule test cases. This
@@ -51,6 +51,9 @@ public abstract class AbstractMuleTestCase
      * Indicates whether the text boxes will be logged when starting each test case.
      */
     private static final boolean verbose;
+    private static final transient String THREAD_RESULT_LINE = StringUtils.repeat('-', 80);
+    private static final transient Logger LOGGER = LoggerFactory.getLogger(AbstractMuleTestCase.class);
+    private static String testCaseName;
 
     static
     {
@@ -73,19 +76,81 @@ public abstract class AbstractMuleTestCase
     }
 
     protected final transient Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    @Rule
+    public TestName name = new TestName();
     /**
      * Should be set to a string message describing any prerequisites not met.
      */
     private boolean offline = "true".equalsIgnoreCase(System.getProperty("org.mule.offline"));
-
     private int testTimeoutSecs = getTimeoutSystemProperty();
-
-    @Rule
-    public TestName name = new TestName();
-
     @Rule
     public TestRule globalTimeout = createTestTimeoutRule();
+
+    private static List<String> collectThreadNames()
+    {
+        List<String> threadNames = new ArrayList<String>();
+        for (Thread t : Thread.getAllStackTraces().keySet())
+        {
+            if (t.isAlive())
+            {
+                threadNames.add(t.getName() + " - " + t.getId());
+            }
+        }
+        Collections.sort(threadNames);
+        return threadNames;
+    }
+
+    @BeforeClass
+    public static void clearTestCaseName()
+    {
+        testCaseName = null;
+    }
+
+    @AfterClass
+    public static void dumpFilteredThreadsInTest()
+    {
+        List<String> currentThreads = collectThreadNames();
+        int filteredThreads = 0;
+        StringBuilder builder = new StringBuilder();
+        for (String threadName : currentThreads)
+        {
+            if (!nameIn(threadName, "Finalizer", "Monitor Ctrl-Break", "Reference Handler", "Signal Dispatcher", "main"))
+            {
+                builder.append("\n-> ").append(threadName);
+                filteredThreads++;
+            }
+        }
+        if (filteredThreads > 0)
+        {
+            logThreadsResult(String.format("Hung threads count: %d. Test case: %s. Thread names:%s", filteredThreads, testCaseName,
+                    builder.toString()));
+        }
+        else
+        {
+            logThreadsResult(String.format("No hung threads. Test case: %s", testCaseName));
+        }
+    }
+
+    private static boolean nameIn(String threadName, String... values)
+    {
+        String threadNameLowercase = threadName.toLowerCase();
+        if (values != null)
+        {
+            for (String value : values)
+            {
+                if (threadNameLowercase.startsWith(value.toLowerCase()))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static void logThreadsResult(String result)
+    {
+        LOGGER.warn(String.format("\n%s\n%s\n%s\n", THREAD_RESULT_LINE, result, THREAD_RESULT_LINE));
+    }
 
     /**
      * Creates the timeout rule that will be used to run the test.
@@ -226,8 +291,7 @@ public abstract class AbstractMuleTestCase
      * resources such as a public web service. In such cases it may be desirable
      * to not fail the test upon timeout but rather to simply log a warning.
      *
-     * @return true if it must fail on timeout and false otherwise. Default value
-     *         is true.
+     * @return true if it must fail on timeout and false otherwise. Default value is true.
      */
     protected boolean isFailOnTimeout()
     {
@@ -240,29 +304,6 @@ public abstract class AbstractMuleTestCase
         RequestContext.clear();
     }
 
-    private static List<String> collectThreadNames()
-    {
-        List<String> threadNames = new ArrayList<String>();
-        for (Thread t : Thread.getAllStackTraces().keySet())
-        {
-            if (t.isAlive())
-            {
-                threadNames.add(t.getName() + " - " + t.getId());
-            }
-        }
-        Collections.sort(threadNames);
-        return threadNames;
-    }
-
-
-    private static String testCaseName;
-
-    @BeforeClass
-    public static void clearTestCaseName()
-    {
-        testCaseName = null;
-    }
-
     @Before
     public void takeTestCaseName()
     {
@@ -270,54 +311,6 @@ public abstract class AbstractMuleTestCase
         {
             testCaseName = this.getClass().getName();
         }
-    }
-
-    @AfterClass
-    public static void dumpFilteredThreadsInTest()
-    {
-        List<String> currentThreads = collectThreadNames();
-        int filteredThreads = 0;
-        StringBuilder builder = new StringBuilder();
-        for (String threadName : currentThreads)
-        {
-            if (!nameIn(threadName, "Finalizer", "Monitor Ctrl-Break", "Reference Handler", "Signal Dispatcher", "main"))
-            {
-                builder.append("\n-> ").append(threadName);
-                filteredThreads++;
-            }
-        }
-        if (filteredThreads > 0)
-        {
-            logThreadsResult(String.format("Hung threads count: %d. Test case: %s. Thread names:%s", filteredThreads, testCaseName, builder.toString()));
-        }
-        else
-        {
-            logThreadsResult(String.format("No hung threads. Test case: %s", testCaseName));
-        }
-    }
-
-    private static boolean nameIn(String threadName, String... values)
-    {
-        String threadNameLowercase = threadName.toLowerCase();
-        if (values != null)
-        {
-            for (String value : values)
-            {
-                if (threadNameLowercase.startsWith(value.toLowerCase()))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private static final transient String THREAD_RESULT_LINE = StringUtils.repeat('-', 80);
-    private static final transient Logger LOGGER = LoggerFactory.getLogger(AbstractMuleTestCase.class);
-
-    private static void logThreadsResult(String result)
-    {
-        LOGGER.warn(String.format("\n%s\n%s\n%s\n", THREAD_RESULT_LINE, result, THREAD_RESULT_LINE));
     }
 
 }

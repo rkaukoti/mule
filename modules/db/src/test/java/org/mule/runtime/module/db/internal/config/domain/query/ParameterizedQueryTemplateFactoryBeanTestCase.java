@@ -7,12 +7,8 @@
 
 package org.mule.runtime.module.db.internal.config.domain.query;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.hamcrest.core.IsEqual;
+import org.junit.Test;
 import org.mule.runtime.module.db.internal.domain.param.DefaultInOutQueryParam;
 import org.mule.runtime.module.db.internal.domain.param.DefaultInputQueryParam;
 import org.mule.runtime.module.db.internal.domain.param.DefaultOutputQueryParam;
@@ -32,8 +28,12 @@ import org.mule.tck.size.SmallTest;
 import java.util.Collections;
 import java.util.List;
 
-import org.hamcrest.core.IsEqual;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class ParameterizedQueryTemplateFactoryBeanTestCase extends AbstractMuleTestCase
@@ -54,7 +54,8 @@ public class ParameterizedQueryTemplateFactoryBeanTestCase extends AbstractMuleT
         QueryTemplateParser queryParser = mock(QueryTemplateParser.class);
         when(queryParser.parse(QUERY)).thenReturn(queryTemplate);
 
-        ParameterizedQueryTemplateFactoryBean factoryBean = new ParameterizedQueryTemplateFactoryBean(QUERY, Collections.EMPTY_LIST, queryParser);
+        ParameterizedQueryTemplateFactoryBean factoryBean =
+                new ParameterizedQueryTemplateFactoryBean(QUERY, Collections.EMPTY_LIST, queryParser);
 
         QueryTemplate createdQueryTemplate = factoryBean.getObject();
 
@@ -66,13 +67,15 @@ public class ParameterizedQueryTemplateFactoryBeanTestCase extends AbstractMuleT
     @Test
     public void createsQueryWithDefaultParams() throws Exception
     {
-        List<QueryParam> defaultParams = Collections.<QueryParam>singletonList(new DefaultInputQueryParam(1, JdbcTypes.INTEGER_DB_TYPE, TEMPLATE_PARAM_VALUE, POSITION_PARAM_NAME));
+        List<QueryParam> defaultParams = Collections.<QueryParam>singletonList(
+                new DefaultInputQueryParam(1, JdbcTypes.INTEGER_DB_TYPE, TEMPLATE_PARAM_VALUE, POSITION_PARAM_NAME));
         QueryTemplate queryTemplate = new QueryTemplate(PARSED_PARAMETERIZED_QUERY, QueryType.SELECT, defaultParams);
 
         QueryTemplateParser queryParser = mock(QueryTemplateParser.class);
         when(queryParser.parse(PARAMETERIZED_QUERY)).thenReturn(queryTemplate);
 
-        ParameterizedQueryTemplateFactoryBean factoryBean = new ParameterizedQueryTemplateFactoryBean(PARAMETERIZED_QUERY, Collections.EMPTY_LIST, queryParser);
+        ParameterizedQueryTemplateFactoryBean factoryBean =
+                new ParameterizedQueryTemplateFactoryBean(PARAMETERIZED_QUERY, Collections.EMPTY_LIST, queryParser);
 
         QueryTemplate createdQueryTemplate = factoryBean.getObject();
 
@@ -86,7 +89,8 @@ public class ParameterizedQueryTemplateFactoryBeanTestCase extends AbstractMuleT
     @Test
     public void createsQueryWithOverriddenParams() throws Exception
     {
-        QueryTemplate createdQueryTemplate = doOverriddenParamTest(JdbcTypes.INTEGER_DB_TYPE, new DefaultInputQueryParam(1, JdbcTypes.INTEGER_DB_TYPE, OVERRIDDEN_PARAM_VALUE, POSITION_PARAM_NAME));
+        QueryTemplate createdQueryTemplate = doOverriddenParamTest(JdbcTypes.INTEGER_DB_TYPE,
+                new DefaultInputQueryParam(1, JdbcTypes.INTEGER_DB_TYPE, OVERRIDDEN_PARAM_VALUE, POSITION_PARAM_NAME));
 
         assertThat(createdQueryTemplate.getSqlText(), equalTo(PARSED_PARAMETERIZED_QUERY));
         assertThat(createdQueryTemplate.getType(), equalTo(QueryType.SELECT));
@@ -161,7 +165,8 @@ public class ParameterizedQueryTemplateFactoryBeanTestCase extends AbstractMuleT
 
     private QueryTemplate doOverriddenParamTest(DbType templateParamType, QueryParam overriddenParam) throws Exception
     {
-        List<QueryParam> defaultParams = Collections.<QueryParam>singletonList(new DefaultInputQueryParam(1, templateParamType, TEMPLATE_PARAM_VALUE, POSITION_PARAM_NAME));
+        List<QueryParam> defaultParams = Collections.<QueryParam>singletonList(
+                new DefaultInputQueryParam(1, templateParamType, TEMPLATE_PARAM_VALUE, POSITION_PARAM_NAME));
         QueryTemplate queryTemplate = new QueryTemplate(PARSED_PARAMETERIZED_QUERY, QueryType.SELECT, defaultParams);
 
         QueryTemplateParser queryParser = mock(QueryTemplateParser.class);
@@ -169,7 +174,8 @@ public class ParameterizedQueryTemplateFactoryBeanTestCase extends AbstractMuleT
 
         List<QueryParam> overriddenParams = Collections.<QueryParam>singletonList(overriddenParam);
 
-        ParameterizedQueryTemplateFactoryBean factoryBean = new ParameterizedQueryTemplateFactoryBean(PARAMETERIZED_QUERY, overriddenParams, queryParser);
+        ParameterizedQueryTemplateFactoryBean factoryBean =
+                new ParameterizedQueryTemplateFactoryBean(PARAMETERIZED_QUERY, overriddenParams, queryParser);
 
         return factoryBean.getObject();
     }
@@ -178,7 +184,8 @@ public class ParameterizedQueryTemplateFactoryBeanTestCase extends AbstractMuleT
     {
         QueryParam overriddenParam = new DefaultOutputQueryParam(2, overriddenParamType, POSITION_PARAM_NAME);
 
-        List<QueryParam> defaultParams = Collections.<QueryParam>singletonList(new DefaultInputQueryParam(1, templateParamType, TEMPLATE_PARAM_VALUE, POSITION_PARAM_NAME));
+        List<QueryParam> defaultParams = Collections.<QueryParam>singletonList(
+                new DefaultInputQueryParam(1, templateParamType, TEMPLATE_PARAM_VALUE, POSITION_PARAM_NAME));
         QueryTemplate queryTemplate = new QueryTemplate(PARSED_PARAMETERIZED_QUERY, QueryType.SELECT, defaultParams);
 
         QueryTemplateParser queryParser = mock(QueryTemplateParser.class);
@@ -186,7 +193,8 @@ public class ParameterizedQueryTemplateFactoryBeanTestCase extends AbstractMuleT
 
         List<QueryParam> overriddenParams = Collections.singletonList(overriddenParam);
 
-        ParameterizedQueryTemplateFactoryBean factoryBean = new ParameterizedQueryTemplateFactoryBean(PARAMETERIZED_QUERY, overriddenParams, queryParser);
+        ParameterizedQueryTemplateFactoryBean factoryBean =
+                new ParameterizedQueryTemplateFactoryBean(PARAMETERIZED_QUERY, overriddenParams, queryParser);
 
         QueryTemplate createdQueryTemplate = factoryBean.getObject();
 

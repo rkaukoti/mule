@@ -6,15 +6,10 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.describer;
 
-import static java.util.Arrays.stream;
-import static org.apache.commons.collections.CollectionUtils.isEmpty;
-import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
-import static org.mule.runtime.core.util.Preconditions.checkState;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getFieldMetadataType;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getMethodArgumentTypes;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.isParameterContainer;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getDefaultValue;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 
+import org.apache.commons.lang.StringUtils;
 import org.mule.metadata.api.ClassTypeLoader;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.message.MuleMessage;
@@ -46,9 +41,6 @@ import org.mule.runtime.module.extension.internal.model.property.ConnectivityMod
 import org.mule.runtime.module.extension.internal.model.property.DeclaringMemberModelProperty;
 import org.mule.runtime.module.extension.internal.util.IntrospectionUtils;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Repeatable;
 import java.lang.reflect.AnnotatedElement;
@@ -62,7 +54,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
-import org.apache.commons.lang.StringUtils;
+import static java.util.Arrays.stream;
+import static org.apache.commons.collections.CollectionUtils.isEmpty;
+import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
+import static org.mule.runtime.core.util.Preconditions.checkState;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getFieldMetadataType;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getMethodArgumentTypes;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.isParameterContainer;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getDefaultValue;
 
 /**
  * Utilities for reading annotations as a mean to describe extensions
@@ -85,14 +84,16 @@ public final class MuleExtensionAnnotationParser
 
     public static String getMemberName(BaseDeclaration<?> declaration, String defaultName)
     {
-        return declaration.getModelProperty(DeclaringMemberModelProperty.class).map(p -> p.getDeclaringField().getName()).orElse(defaultName);
+        return declaration.getModelProperty(DeclaringMemberModelProperty.class)
+                          .map(p -> p.getDeclaringField().getName())
+                          .orElse(defaultName);
     }
 
     public static Extension getExtension(Class<?> extensionType)
     {
         Extension extension = extensionType.getAnnotation(Extension.class);
         checkState(extension != null, String.format("%s is not a Mule extension since it's not annotated with %s",
-                                                    extensionType.getName(), Extension.class.getName()));
+                extensionType.getName(), Extension.class.getName()));
         return extension;
     }
 
@@ -118,7 +119,8 @@ public final class MuleExtensionAnnotationParser
             }
             else
             {
-                ParsedParameter parsedParameter = doParseParameter(paramNames.get(i), parameterTypes[i], annotations, typeLoader.getClassLoader());
+                ParsedParameter parsedParameter =
+                        doParseParameter(paramNames.get(i), parameterTypes[i], annotations, typeLoader.getClassLoader());
                 parsedParameter.setImplementingParameter(method.getParameters()[i]);
                 parsedParameters.add(parsedParameter);
             }
@@ -156,19 +158,19 @@ public final class MuleExtensionAnnotationParser
         stream(getType(parameterType).getDeclaredFields())
                 .filter(MuleExtensionAnnotationParser::isParameterOrParameterContainer)
                 .forEach(field ->
-                         {
-                             final Map<Class<? extends Annotation>, Annotation> annotations = toMap(field.getAnnotations());
-                             final MetadataType fieldType = typeLoader.load(field.getType());
+                {
+                    final Map<Class<? extends Annotation>, Annotation> annotations = toMap(field.getAnnotations());
+                    final MetadataType fieldType = typeLoader.load(field.getType());
 
-                             if (isParameterContainer(annotations.keySet(), fieldType))
-                             {
-                                 parseGroupParameters(getFieldMetadataType(field, typeLoader), parsedParameters, typeLoader);
-                             }
-                             else
-                             {
-                                 parsedParameters.add(doParseParameter(field.getName(), fieldType, annotations, typeLoader.getClassLoader()));
-                             }
-                         });
+                    if (isParameterContainer(annotations.keySet(), fieldType))
+                    {
+                        parseGroupParameters(getFieldMetadataType(field, typeLoader), parsedParameters, typeLoader);
+                    }
+                    else
+                    {
+                        parsedParameters.add(doParseParameter(field.getName(), fieldType, annotations, typeLoader.getClassLoader()));
+                    }
+                });
     }
 
     private static boolean isParameterOrParameterContainer(Field paramField)
@@ -206,7 +208,8 @@ public final class MuleExtensionAnnotationParser
         return parameter;
     }
 
-    private static boolean shouldAdvertise(MetadataType parameterType, Map<Class<? extends Annotation>, Annotation> annotations, ClassLoader classLoader)
+    private static boolean shouldAdvertise(MetadataType parameterType, Map<Class<? extends Annotation>, Annotation> annotations,
+                                           ClassLoader classLoader)
     {
         return !(IMPLICIT_ARGUMENT_TYPES.contains(getType(parameterType, classLoader)) ||
                  annotations.containsKey(UseConfig.class) ||
@@ -258,7 +261,7 @@ public final class MuleExtensionAnnotationParser
         {
             builder.order(placementAnnotation.order()).
                     groupName(placementAnnotation.group()).
-                    tabName(placementAnnotation.tab());
+                           tabName(placementAnnotation.tab());
         }
     }
 
@@ -290,8 +293,8 @@ public final class MuleExtensionAnnotationParser
     }
 
     /**
-     * Enriches the {@link ParameterDeclarer} with a {@link MetadataKeyPartModelProperty} or a {@link MetadataContentModelProperty} if the parsedParameter is
-     * annotated either as {@link MetadataKeyId}, {@link MetadataKeyPart} or {@link Content} respectibly.
+     * Enriches the {@link ParameterDeclarer} with a {@link MetadataKeyPartModelProperty} or a {@link MetadataContentModelProperty} if the
+     * parsedParameter is annotated either as {@link MetadataKeyId}, {@link MetadataKeyPart} or {@link Content} respectibly.
      *
      * @param element                    the method annotated parameter parsed
      * @param elementWithModelProperties the {@link ParameterDeclarer} associated to the parsed parameter

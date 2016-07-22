@@ -8,19 +8,19 @@ package org.mule.test.integration.transaction.xa;
 
 import com.google.common.collect.Lists;
 
-import java.util.List;
-
 import org.apache.activemq.broker.BrokerPlugin;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.security.AuthenticationUser;
 import org.apache.activemq.security.SimpleAuthenticationPlugin;
 
+import java.util.List;
+
 public class JmsBrokerSetUp implements TransactionalTestSetUp
 {
 
     private final int port;
-    private BrokerService broker;
     private final List<AuthenticationUser> users = Lists.newArrayList();
+    private BrokerService broker;
 
     public JmsBrokerSetUp(int port)
     {

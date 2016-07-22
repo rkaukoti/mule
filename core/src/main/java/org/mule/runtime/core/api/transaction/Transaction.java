@@ -22,22 +22,16 @@ public interface Transaction
 
     /**
      * Begin the transaction.
-     * 
-     * @throws TransactionException
      */
     void begin() throws TransactionException;
 
     /**
      * Commit the transaction
-     * 
-     * @throws TransactionException
      */
     void commit() throws TransactionException;
 
     /**
      * Rollback the transaction
-     * 
-     * @throws TransactionException
      */
     void rollback() throws TransactionException;
 
@@ -64,7 +58,7 @@ public interface Transaction
     boolean hasResource(Object key);
 
     /**
-     * @param key transactional resource key (i.e jdbc DataSource or jms Connection)
+     * @param key      transactional resource key (i.e jdbc DataSource or jms Connection)
      * @param resource transactional resource (i.e. jdbc Connection or jms Session)
      * @return true if the current transaction supports to bind transactional resources key and resource
      */

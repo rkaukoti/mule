@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.module.spring.transaction;
 
+import org.junit.Test;
+import org.mule.runtime.core.api.transaction.Transaction;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import org.mule.runtime.core.api.transaction.Transaction;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-
-import org.junit.Test;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionStatus;
 
 public class SpringTransactionFactoryTestCase extends AbstractMuleContextTestCase
 {

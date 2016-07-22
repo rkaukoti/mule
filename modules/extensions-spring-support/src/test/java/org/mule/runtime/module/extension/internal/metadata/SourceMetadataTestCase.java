@@ -6,14 +6,10 @@
  */
 package org.mule.runtime.module.extension.internal.metadata;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
-import static org.mule.tck.junit4.matcher.MetadataKeyMatcher.metadataKeyWithId;
-import static org.mule.test.metadata.extension.MetadataConnection.CAR;
-import static org.mule.test.metadata.extension.MetadataConnection.HOUSE;
-import static org.mule.test.metadata.extension.MetadataConnection.PERSON;
+import com.google.common.reflect.TypeToken;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.MetadataKey;
 import org.mule.runtime.api.metadata.SourceId;
 import org.mule.runtime.api.metadata.descriptor.ComponentMetadataDescriptor;
@@ -22,15 +18,18 @@ import org.mule.runtime.api.metadata.resolving.MetadataResult;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.tck.message.StringAttributes;
 
-import com.google.common.reflect.TypeToken;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
+import static org.mule.tck.junit4.matcher.MetadataKeyMatcher.metadataKeyWithId;
+import static org.mule.test.metadata.extension.MetadataConnection.CAR;
+import static org.mule.test.metadata.extension.MetadataConnection.HOUSE;
+import static org.mule.test.metadata.extension.MetadataConnection.PERSON;
 
 public class SourceMetadataTestCase extends MetadataExtensionFunctionalTestCase
 {

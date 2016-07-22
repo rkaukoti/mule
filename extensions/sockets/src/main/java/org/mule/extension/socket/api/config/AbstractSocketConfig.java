@@ -6,9 +6,9 @@
  */
 package org.mule.extension.socket.api.config;
 
+import org.mule.extension.socket.api.SocketOperations;
 import org.mule.extension.socket.api.SocketsExtension;
 import org.mule.extension.socket.api.connection.RequesterConnection;
-import org.mule.extension.socket.api.SocketOperations;
 import org.mule.extension.socket.api.source.SocketListener;
 import org.mule.extension.socket.api.worker.SocketWorker;
 import org.mule.runtime.api.message.MuleMessage;
@@ -22,6 +22,7 @@ import javax.inject.Inject;
 
 /**
  * Abstract config for {@link SocketsExtension}
+ *
  * @since 4.0
  */
 public class AbstractSocketConfig implements Initialisable

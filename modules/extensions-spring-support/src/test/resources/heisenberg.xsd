@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xs:schema xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.mulesoft.org/schema/mule/heisenberg" attributeFormDefault="unqualified" elementFormDefault="qualified">
+<xs:schema xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.mulesoft.org/schema/mule/heisenberg"
+           attributeFormDefault="unqualified" elementFormDefault="qualified">
     <xs:import namespace="http://www.w3.org/XML/1998/namespace"></xs:import>
     <xs:import namespace="http://www.springframework.org/schema/beans" schemaLocation="http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"></xs:import>
     <xs:import namespace="http://www.mulesoft.org/schema/mule/core" schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></xs:import>
@@ -11,7 +12,8 @@
             <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType"></xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns:heisenberg="http://www.mulesoft.org/schema/mule/heisenberg" type="heisenberg:org.mule.test.heisenberg.extension.model.Weapon" substitutionGroup="mule:abstract-extension" abstract="true" name="abstract-weapon"></xs:element>
+    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns:heisenberg="http://www.mulesoft.org/schema/mule/heisenberg"
+                type="heisenberg:org.mule.test.heisenberg.extension.model.Weapon" substitutionGroup="mule:abstract-extension" abstract="true" name="abstract-weapon"></xs:element>
     <xs:complexType name="org.mule.test.heisenberg.extension.model.KnockeableDoor">
         <xs:complexContent>
             <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
@@ -19,7 +21,8 @@
                     <xs:element minOccurs="0" maxOccurs="1" name="previous">
                         <xs:complexType>
                             <xs:complexContent>
-                                <xs:extension xmlns:heisenberg="http://www.mulesoft.org/schema/mule/heisenberg" base="heisenberg:org.mule.test.heisenberg.extension.model.KnockeableDoor"></xs:extension>
+                                <xs:extension xmlns:heisenberg="http://www.mulesoft.org/schema/mule/heisenberg"
+                                              base="heisenberg:org.mule.test.heisenberg.extension.model.KnockeableDoor"></xs:extension>
                             </xs:complexContent>
                         </xs:complexType>
                     </xs:element>
@@ -148,7 +151,8 @@
                         <xs:element minOccurs="0" maxOccurs="1" name="next-door">
                             <xs:complexType>
                                 <xs:complexContent>
-                                    <xs:extension xmlns:heisenberg="http://www.mulesoft.org/schema/mule/heisenberg" base="heisenberg:org.mule.test.heisenberg.extension.model.KnockeableDoor"></xs:extension>
+                                    <xs:extension xmlns:heisenberg="http://www.mulesoft.org/schema/mule/heisenberg"
+                                                  base="heisenberg:org.mule.test.heisenberg.extension.model.KnockeableDoor"></xs:extension>
                                 </xs:complexContent>
                             </xs:complexType>
                         </xs:element>
@@ -233,8 +237,10 @@
                     <xs:attribute type="mule:expressionMap" use="optional" name="wildCardWeaponMap"></xs:attribute>
                     <xs:attribute type="mule:expressionMap" use="optional" name="weaponValueMap"></xs:attribute>
                     <xs:attribute type="mule:expressionMap" use="optional" name="candidateDoors"></xs:attribute>
-                    <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/heisenberg" type="org.mule.test.heisenberg.extension.model.HealthStatusEnumType" use="optional" default="CANCER" name="initialHealth"></xs:attribute>
-                    <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/heisenberg" type="org.mule.test.heisenberg.extension.model.HealthStatusEnumType" use="required" name="finalHealth"></xs:attribute>
+                    <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/heisenberg" type="org.mule.test.heisenberg.extension.model.HealthStatusEnumType" use="optional" default="CANCER"
+                                  name="initialHealth"></xs:attribute>
+                    <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/heisenberg" type="org.mule.test.heisenberg.extension.model.HealthStatusEnumType" use="required"
+                                  name="finalHealth"></xs:attribute>
                     <xs:attribute type="mule:expressionString" use="optional" name="labAddress"></xs:attribute>
                     <xs:attribute type="xs:string" use="optional" name="firstEndevour"></xs:attribute>
                     <xs:attribute type="xs:string" use="optional" default="#[payload]" name="literalExpressionWithDefault"></xs:attribute>
@@ -264,7 +270,8 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
-    <xs:element xmlns="http://www.mulesoft.org/schema/mule/heisenberg" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="ListenPaymentsType" substitutionGroup="mule:abstract-message-source" name="listen-payments"></xs:element>
+    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/heisenberg" type="ListenPaymentsType" substitutionGroup="mule:abstract-message-source"
+                name="listen-payments"></xs:element>
     <xs:complexType name="ListenPaymentsType">
         <xs:complexContent>
             <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageSourceType">
@@ -544,7 +551,8 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:element xmlns="http://www.mulesoft.org/schema/mule/heisenberg" type="KillWithMultipleWildCardWeaponsType" substitutionGroup="heisenberg-empire" name="kill-with-multiple-wild-card-weapons"></xs:element>
+    <xs:element xmlns="http://www.mulesoft.org/schema/mule/heisenberg" type="KillWithMultipleWildCardWeaponsType" substitutionGroup="heisenberg-empire"
+                name="kill-with-multiple-wild-card-weapons"></xs:element>
     <xs:complexType name="KillWithMultipleWildCardWeaponsType">
         <xs:complexContent>
             <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
@@ -657,7 +665,8 @@
                     <xs:element minOccurs="0" maxOccurs="1" name="attributes-of-weapon">
                         <xs:complexType>
                             <xs:complexContent>
-                                <xs:extension xmlns:heisenberg="http://www.mulesoft.org/schema/mule/heisenberg" base="heisenberg:org.mule.test.heisenberg.extension.model.WeaponWeaponAttributes"></xs:extension>
+                                <xs:extension xmlns:heisenberg="http://www.mulesoft.org/schema/mule/heisenberg"
+                                              base="heisenberg:org.mule.test.heisenberg.extension.model.WeaponWeaponAttributes"></xs:extension>
                             </xs:complexContent>
                         </xs:complexType>
                     </xs:element>
@@ -686,7 +695,8 @@
                     <xs:element minOccurs="0" maxOccurs="1" name="knocked-door">
                         <xs:complexType>
                             <xs:complexContent>
-                                <xs:extension xmlns:heisenberg="http://www.mulesoft.org/schema/mule/heisenberg" base="heisenberg:org.mule.test.heisenberg.extension.model.KnockeableDoor"></xs:extension>
+                                <xs:extension xmlns:heisenberg="http://www.mulesoft.org/schema/mule/heisenberg"
+                                              base="heisenberg:org.mule.test.heisenberg.extension.model.KnockeableDoor"></xs:extension>
                             </xs:complexContent>
                         </xs:complexType>
                     </xs:element>

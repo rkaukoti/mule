@@ -22,10 +22,9 @@ public class FileTestUtils
      * Creates a data file that will be deleted when the JVM finalizes using
      * the default encoding
      *
-     * @param folder folder where the file will be created
+     * @param folder      folder where the file will be created
      * @param testMessage content of the file
      * @return the new file
-     * @throws Exception
      */
     public static File createDataFile(File folder, final String testMessage) throws Exception
     {
@@ -35,11 +34,10 @@ public class FileTestUtils
     /**
      * Creates a data file that will be deleted when the JVM finalizes
      *
-     * @param folder folder where the file will be created
+     * @param folder      folder where the file will be created
      * @param testMessage content of the file
-     * @param encoding encoding used to store the data
+     * @param encoding    encoding used to store the data
      * @return the new file
-     * @throws Exception
      */
     public static File createDataFile(File folder, final String testMessage, Charset encoding) throws Exception
     {
@@ -69,7 +67,7 @@ public class FileTestUtils
      * Creates a folder that will be deleted when the JVM finalizes
      *
      * @param parent folder that contains the created folder
-     * @param name name of the file
+     * @param name   name of the file
      * @return the new folder
      */
     public static File createFolder(File parent, String name)

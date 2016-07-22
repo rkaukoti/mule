@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
  * will remains in the key set and entry set.
  *
  * @param <T> The class of the values referenced in the map.
- *
  * @since 3.6.0
  */
 public class CaseInsensitiveMapWrapper<T> implements Map<String, T>, Serializable
@@ -52,7 +51,8 @@ public class CaseInsensitiveMapWrapper<T> implements Map<String, T>, Serializabl
 
     /**
      * Created a new instance using an existing map.
-     * @param map  existing map
+     *
+     * @param map existing map
      */
     public CaseInsensitiveMapWrapper(Map map)
     {
@@ -142,6 +142,16 @@ public class CaseInsensitiveMapWrapper<T> implements Map<String, T>, Serializabl
         return new EntrySet<>(baseMap.entrySet());
     }
 
+    /**
+     * Returns this map as a case sensitive map.
+     *
+     * @return case-sensitive map
+     */
+    public Map<String, T> asCaseSensitiveMap()
+    {
+        return baseMap.entrySet().stream().collect(Collectors.toMap(entry -> entry.getKey().getKey(), entry -> entry
+                .getValue()));
+    }
 
     private static class CaseInsensitiveMapKey implements Serializable
     {
@@ -175,7 +185,6 @@ public class CaseInsensitiveMapWrapper<T> implements Map<String, T>, Serializabl
                    keyLowerCase.equals(((CaseInsensitiveMapKey) obj).keyLowerCase);
         }
     }
-
 
     private static class KeySet extends AbstractConverterSet<CaseInsensitiveMapKey, String>
     {
@@ -231,7 +240,6 @@ public class CaseInsensitiveMapWrapper<T> implements Map<String, T>, Serializabl
 
         protected abstract Iterator<B> createIterator(Set<A> aSet);
     }
-
 
     private static class KeyIterator extends AbstractConverterIterator<CaseInsensitiveMapKey, String>
     {
@@ -292,17 +300,6 @@ public class CaseInsensitiveMapWrapper<T> implements Map<String, T>, Serializabl
         }
 
         protected abstract B convert(A next);
-    }
-
-    /**
-     * Returns this map as a case sensitive map.
-     *
-     * @return case-sensitive map
-     */
-    public Map<String, T> asCaseSensitiveMap()
-    {
-        return baseMap.entrySet().stream().collect(Collectors.toMap(entry -> entry.getKey().getKey(), entry -> entry
-                .getValue()));
     }
 
 }

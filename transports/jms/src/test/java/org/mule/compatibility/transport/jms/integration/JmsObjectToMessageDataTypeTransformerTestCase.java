@@ -7,9 +7,7 @@
 
 package org.mule.compatibility.transport.jms.integration;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.object.IsCompatibleType.typeCompatibleWith;
-import static org.mule.functional.functional.FlowAssert.verify;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.processor.MessageProcessor;
@@ -19,7 +17,9 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.object.IsCompatibleType.typeCompatibleWith;
+import static org.mule.functional.functional.FlowAssert.verify;
 
 public class JmsObjectToMessageDataTypeTransformerTestCase extends AbstractJmsFunctionalTestCase
 {

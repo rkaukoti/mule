@@ -6,9 +6,7 @@
  */
 package org.mule.test.integration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.DefaultMuleContext;
 import org.mule.runtime.core.api.MuleMessage;
@@ -18,7 +16,8 @@ import org.mule.runtime.core.construct.Flow;
 import org.mule.runtime.core.context.notification.ClusterNodeNotification;
 import org.mule.runtime.core.source.ClusterizableMessageSourceWrapper;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ClusterizableMessageSourceFlowTestCase extends FunctionalTestCase
 {
@@ -69,7 +68,7 @@ public class ClusterizableMessageSourceFlowTestCase extends FunctionalTestCase
 
         messageSource.initialise();
 
-        pollingController.isPrimary=true;
+        pollingController.isPrimary = true;
         muleContext.fireNotification(new ClusterNodeNotification("primary", ClusterNodeNotification.PRIMARY_CLUSTER_NODE_SELECTED));
 
         MuleClient client = muleContext.getClient();

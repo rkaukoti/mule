@@ -6,31 +6,35 @@
  */
 package org.mule.tck.testmodels.mule;
 
+import org.mule.runtime.api.meta.NameableObject;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.api.meta.NameableObject;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.util.ObjectUtils;
 
 public class TestMessageProcessor implements MessageProcessor, NameableObject
 {
-    /** Simple label string to be appended to the payload. */
+    /**
+     * Simple label string to be appended to the payload.
+     */
     private String label;
-    
-    /** Bean name used by Spring */
+
+    /**
+     * Bean name used by Spring
+     */
     private String name;
-    
+
     public TestMessageProcessor()
     {
         // For IoC
     }
-    
+
     public TestMessageProcessor(String label)
     {
         this.label = label;
     }
-    
+
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException
     {
@@ -54,15 +58,15 @@ public class TestMessageProcessor implements MessageProcessor, NameableObject
     }
 
     @Override
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    @Override
     public String getName()
     {
         return name;
+    }
+
+    @Override
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
     @Override

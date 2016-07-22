@@ -6,7 +6,6 @@
  */
 package org.mule.compatibility.transport.ssl;
 
-import org.mule.compatibility.transport.ssl.SslConnector;
 import org.mule.functional.functional.EventCallback;
 import org.mule.runtime.core.api.MuleEventContext;
 

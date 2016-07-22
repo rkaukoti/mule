@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:jms="http://www.mulesoft.org/schema/mule/transport/jms"
       xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
       xmlns:vm="http://www.mulesoft.org/schema/mule/transport/vm"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
@@ -12,7 +12,7 @@
        http://www.mulesoft.org/schema/mule/transports http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd
        http://www.mulesoft.org/schema/mule/transport/vm http://www.mulesoft.org/schema/mule/transport/vm/current/mule-transport-vm.xsd">
 
-    <jms:activemq-connector name="jmsConnector" />
+    <jms:activemq-connector name="jmsConnector"/>
 
     <jms:endpoint name="in" queue="in" exchange-pattern="request-response"/>
     <jms:endpoint name="out" queue="out" exchange-pattern="request-response"/>
@@ -23,7 +23,7 @@
         <transports:outbound-endpoint ref="in" exchange-pattern="request-response">
             <transports:response>
                 <set-property propertyName="test" value="test"/>
-                <append-string-transformer message=" jms flow content" />
+                <append-string-transformer message=" jms flow content"/>
             </transports:response>
         </transports:outbound-endpoint>
     </flow>
@@ -44,7 +44,7 @@
     <flow name="response-flow-case-2">
         <jms:inbound-endpoint ref="out">
             <transports:response>
-                <append-string-transformer message=" jms flow content" />
+                <append-string-transformer message=" jms flow content"/>
             </transports:response>
         </jms:inbound-endpoint>
         <set-property propertyName="a" value="a"/>

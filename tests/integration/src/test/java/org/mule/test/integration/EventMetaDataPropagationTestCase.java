@@ -6,10 +6,7 @@
  */
 package org.mule.test.integration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleEventContext;
@@ -30,7 +27,9 @@ import java.util.Map;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class EventMetaDataPropagationTestCase extends FunctionalTestCase
 {
@@ -99,9 +98,9 @@ public class EventMetaDataPropagationTestCase extends FunctionalTestCase
                 assertEquals("param1", msg.getInboundProperty("stringParam"));
                 final Object o = msg.getInboundProperty("objectParam");
                 assertTrue(o instanceof Apple);
-                assertEquals(12345.6, 12345.6, msg.<Double> getInboundProperty("doubleParam", 0d));
-                assertEquals(12345, msg.<Integer> getInboundProperty("integerParam", 0).intValue());
-                assertEquals(123456789, msg.<Long> getInboundProperty("longParam", 0L).longValue());
+                assertEquals(12345.6, 12345.6, msg.<Double>getInboundProperty("doubleParam", 0d));
+                assertEquals(12345, msg.<Integer>getInboundProperty("integerParam", 0).intValue());
+                assertEquals(123456789, msg.<Long>getInboundProperty("longParam", 0L).longValue());
                 assertEquals(Boolean.TRUE, msg.getInboundProperty("booleanParam", Boolean.FALSE));
                 assertNotNull(msg.getInboundAttachment("test1"));
             }
@@ -123,9 +122,9 @@ public class EventMetaDataPropagationTestCase extends FunctionalTestCase
             assertEquals("param1", event.getMessage().getOutboundProperty("stringParam"));
             final Object o = msg.getOutboundProperty("objectParam");
             assertTrue(o instanceof Apple);
-            assertEquals(12345.6, 12345.6, msg.<Double> getOutboundProperty("doubleParam", 0d));
-            assertEquals(12345, msg.<Integer> getOutboundProperty("integerParam", 0).intValue());
-            assertEquals(123456789, msg.<Long> getOutboundProperty("longParam", 0L).longValue());
+            assertEquals(12345.6, 12345.6, msg.<Double>getOutboundProperty("doubleParam", 0d));
+            assertEquals(12345, msg.<Integer>getOutboundProperty("integerParam", 0).intValue());
+            assertEquals(123456789, msg.<Long>getOutboundProperty("longParam", 0L).longValue());
             assertEquals(Boolean.TRUE, msg.getOutboundProperty("booleanParam", Boolean.FALSE));
             return msg;
         }

@@ -6,15 +6,13 @@
  */
 package org.mule.test.infrastructure.process.rules;
 
-import static org.apache.commons.io.FileUtils.copyInputStreamToFile;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.apache.commons.io.FileUtils;
+import static org.apache.commons.io.FileUtils.copyInputStreamToFile;
 
 
 public class DistroUnzipper

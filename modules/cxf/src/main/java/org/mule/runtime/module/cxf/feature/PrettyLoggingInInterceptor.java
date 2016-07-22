@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.module.cxf.feature;
 
-import java.io.PrintWriter;
-
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 
+import java.io.PrintWriter;
+
 /**
- * Takes the log output from the standard CXF LoggingInterceptor, 
- * disassembles it, pretty-prints the XML payload, then puts it all back 
+ * Takes the log output from the standard CXF LoggingInterceptor,
+ * disassembles it, pretty-prints the XML payload, then puts it all back
  * together again.
  */
 public class PrettyLoggingInInterceptor extends LoggingInInterceptor

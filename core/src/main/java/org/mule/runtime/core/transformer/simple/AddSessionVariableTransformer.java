@@ -6,8 +6,8 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
-import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.api.metadata.DataType;
+import org.mule.runtime.core.api.MuleEvent;
 
 import java.io.Serializable;
 
@@ -17,7 +17,7 @@ public class AddSessionVariableTransformer extends AbstractAddVariablePropertyTr
     @Override
     protected void addProperty(MuleEvent event, String propertyName, Object value, DataType dataType)
     {
-        event.getSession().setProperty(propertyName, (Serializable) value, dataType );
+        event.getSession().setProperty(propertyName, (Serializable) value, dataType);
     }
 
     @Override

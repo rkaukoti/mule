@@ -6,16 +6,16 @@
  */
 package org.mule.runtime.module.xml.xpath;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.module.xml.i18n.XmlMessages;
-import org.mule.runtime.module.xml.util.NamespaceManager;
-
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableMap;
+
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.module.xml.i18n.XmlMessages;
+import org.mule.runtime.module.xml.util.NamespaceManager;
+import org.w3c.dom.Node;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +29,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import javax.xml.xpath.XPathVariableResolver;
 
-import org.w3c.dom.Node;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * This is the preferred base implementation of {@link XPathEvaluator}. Because it's
@@ -67,19 +67,18 @@ public abstract class JaxpXPathEvaluator implements XPathEvaluator, XPathVariabl
     private final XPathFactory xpathFactory;
     private final Map<String, String> prefixToNamespaceMap = new HashMap<>();
     private final ThreadLocal<MuleEvent> evaluationEvent = new ThreadLocal<>();
-
-    private final LoadingCache<String, XPathExpression> expressionCache = CacheBuilder.newBuilder()
-            .expireAfterAccess(1, TimeUnit.MINUTES)
-            .build(new CacheLoader<String, XPathExpression>()
-            {
-                @Override
-                public XPathExpression load(String key) throws Exception
-                {
-                    return compile(key);
-                }
-            });
-
     private NamespaceContext namespaceContext;
+    private final LoadingCache<String, XPathExpression> expressionCache = CacheBuilder.newBuilder()
+                                                                                      .expireAfterAccess(1, TimeUnit.MINUTES)
+                                                                                      .build(new CacheLoader<String, XPathExpression>()
+                                                                                      {
+                                                                                          @Override
+                                                                                          public XPathExpression load(String key)
+                                                                                                  throws Exception
+                                                                                          {
+                                                                                              return compile(key);
+                                                                                          }
+                                                                                      });
 
     public JaxpXPathEvaluator()
     {
@@ -129,6 +128,7 @@ public abstract class JaxpXPathEvaluator implements XPathEvaluator, XPathVariabl
     /**
      * Resolves the given variable against the flow variables
      * in the {@link MuleEvent} held by {@link #evaluationEvent}
+     *
      * @param variableName the variable name
      * @return the variable value. Might be {@code null}
      */

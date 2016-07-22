@@ -6,24 +6,23 @@
  */
 package org.mule.runtime.core.transformer.graph;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.mule.runtime.api.metadata.DataType;
+import org.mule.runtime.core.api.transformer.Converter;
+import org.mule.runtime.core.api.transformer.Transformer;
+import org.mule.runtime.core.transformer.builder.MockConverterBuilder;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.util.Set;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-
-import org.mule.runtime.core.api.transformer.Converter;
-import org.mule.runtime.api.metadata.DataType;
-import org.mule.runtime.core.api.transformer.Transformer;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-import org.mule.runtime.core.transformer.builder.MockConverterBuilder;
-
-import java.util.Set;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 @SmallTest
 public class TransformationGraphTestCase extends AbstractMuleTestCase
@@ -33,11 +32,6 @@ public class TransformationGraphTestCase extends AbstractMuleTestCase
     private static final DataType JSON_DATA_TYPE = mock(DataType.class, "JSON_DATA_TYPE");
     private static final DataType INPUT_STREAM_DATA_TYPE = mock(DataType.class, "INPUT_STREAM_DATA_TYPE");
     private static final DataType STRING_DATA_TYPE = mock(DataType.class, "STRING_DATA_TYPE");
-
-    private static class XML_CLASS {}
-    private static class JSON_CLASS {}
-    private static class INPUT_STREAM_CLASS{}
-    private static class STRING_CLASS{}
 
     @BeforeClass
     public static void setupDataTypes()
@@ -281,7 +275,6 @@ public class TransformationGraphTestCase extends AbstractMuleTestCase
         assertFalse(graph.containsEdge(JSON_DATA_TYPE, INPUT_STREAM_DATA_TYPE));
     }
 
-
     private void assertContainsTransformer(Set<TransformationEdge> transformationEdges, Transformer transformer)
     {
         for (TransformationEdge edge : transformationEdges)
@@ -293,6 +286,22 @@ public class TransformationGraphTestCase extends AbstractMuleTestCase
         }
 
         fail(String.format("Transformation edges %s do not contain expected transformer %s", transformationEdges, transformer));
+    }
+
+    private static class XML_CLASS
+    {
+    }
+
+    private static class JSON_CLASS
+    {
+    }
+
+    private static class INPUT_STREAM_CLASS
+    {
+    }
+
+    private static class STRING_CLASS
+    {
     }
 
 }

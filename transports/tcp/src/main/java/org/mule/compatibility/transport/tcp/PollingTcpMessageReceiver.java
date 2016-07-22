@@ -21,7 +21,7 @@ import java.net.SocketTimeoutException;
 /**
  * <code>PollingTcpMessageReceiver</code> acts like a TCP client polling for new
  * messages.
- * 
+ *
  * @author esteban.robles
  */
 public class PollingTcpMessageReceiver extends AbstractPollingMessageReceiver
@@ -31,7 +31,7 @@ public class PollingTcpMessageReceiver extends AbstractPollingMessageReceiver
     private PollingTcpConnector connector;
 
     public PollingTcpMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint)
-        throws CreateException
+            throws CreateException
     {
         super(connector, flowConstruct, endpoint);
 
@@ -45,7 +45,7 @@ public class PollingTcpMessageReceiver extends AbstractPollingMessageReceiver
         }
 
         timeout = MapUtils.getIntValue(endpoint.getProperties(), "clientSoTimeout",
-            this.connector.getClientSoTimeout());
+                this.connector.getClientSoTimeout());
 
         if (timeout > Integer.MAX_VALUE || timeout < 0)
         {
@@ -53,7 +53,7 @@ public class PollingTcpMessageReceiver extends AbstractPollingMessageReceiver
         }
 
         long pollingFrequency = MapUtils.getLongValue(endpoint.getProperties(), "pollingFrequency",
-            this.connector.getPollingFrequency());
+                this.connector.getPollingFrequency());
         if (pollingFrequency > 0)
         {
             this.setFrequency(pollingFrequency);

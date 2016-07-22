@@ -7,10 +7,7 @@
 package org.mule.compatibility.core.source.polling.schedule;
 
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-
+import org.junit.Test;
 import org.mule.compatibility.core.transport.AbstractPollingMessageReceiver;
 import org.mule.compatibility.core.transport.PollingReceiverWorker;
 import org.mule.runtime.core.api.schedule.Scheduler;
@@ -19,7 +16,9 @@ import org.mule.runtime.core.source.polling.schedule.FixedFrequencySchedulerFact
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 public class FixedFrequencySchedulerFactoryTest
 {

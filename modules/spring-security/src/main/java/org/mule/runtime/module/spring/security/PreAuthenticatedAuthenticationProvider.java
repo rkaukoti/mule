@@ -12,7 +12,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 
 /**
  * Provides a pre authenticated authentication
- * 
+ *
  * @author estebanroblesluna
  */
 public class PreAuthenticatedAuthenticationProvider implements SpringAuthenticationProvider
@@ -23,7 +23,7 @@ public class PreAuthenticatedAuthenticationProvider implements SpringAuthenticat
     public Authentication getAuthentication(org.mule.runtime.core.api.security.Authentication authentication)
     {
         return new PreAuthenticatedAuthenticationToken(authentication.getPrincipal(),
-            authentication.getCredentials());
+                authentication.getCredentials());
     }
 }
 

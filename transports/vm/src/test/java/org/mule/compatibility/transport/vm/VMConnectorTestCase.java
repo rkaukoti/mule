@@ -8,7 +8,6 @@ package org.mule.compatibility.transport.vm;
 
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.core.transport.AbstractConnectorTestCase;
-import org.mule.compatibility.transport.vm.VMConnector;
 
 public class VMConnectorTestCase extends AbstractConnectorTestCase
 {

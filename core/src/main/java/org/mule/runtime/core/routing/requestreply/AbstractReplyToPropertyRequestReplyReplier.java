@@ -6,17 +6,16 @@
  */
 package org.mule.runtime.core.routing.requestreply;
 
+import org.apache.commons.lang.BooleanUtils;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.config.MuleProperties;
+import org.mule.runtime.core.api.connector.ReplyToHandler;
 import org.mule.runtime.core.api.processor.InternalMessageProcessor;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.processor.RequestReplyReplierMessageProcessor;
-import org.mule.runtime.core.api.connector.ReplyToHandler;
 import org.mule.runtime.core.processor.AbstractInterceptingMessageProcessor;
-
-import org.apache.commons.lang.BooleanUtils;
 
 public abstract class AbstractReplyToPropertyRequestReplyReplier extends AbstractInterceptingMessageProcessor
         implements RequestReplyReplierMessageProcessor, InternalMessageProcessor

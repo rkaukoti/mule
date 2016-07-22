@@ -6,9 +6,7 @@
  */
 package org.mule.compatibility.management.mbeans;
 
-import static org.junit.Assert.assertEquals;
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.registerConnector;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.runtime.management.AbstractMuleJmxTestCase;
 import org.mule.runtime.module.management.agent.JmxApplicationAgent;
@@ -19,7 +17,8 @@ import java.util.Set;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.registerConnector;
 
 public class ConnectorServiceTestCase extends AbstractMuleJmxTestCase
 {

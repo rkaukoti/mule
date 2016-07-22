@@ -11,7 +11,6 @@ import org.mule.runtime.core.api.transaction.Transaction;
 import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.api.transaction.TransactionFactory;
 import org.mule.runtime.core.transaction.AbstractSingleResourceTransaction;
-
 import org.springframework.jdbc.datasource.ConnectionHolder;
 import org.springframework.jms.connection.JmsResourceHolder;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -79,12 +78,12 @@ public class SpringTransactionFactory implements TransactionFactory
 
         protected void doCommit() throws TransactionException
         {
-           manager.commit(status);
+            manager.commit(status);
         }
 
         protected void doRollback() throws TransactionException
         {
-           manager.rollback(status);
+            manager.rollback(status);
         }
 
         public Object getResource(Object key)
@@ -96,12 +95,12 @@ public class SpringTransactionFactory implements TransactionFactory
                 {
                     if (res instanceof JmsResourceHolder)
                     {
-                        return ((JmsResourceHolder)res).getConnection();
+                        return ((JmsResourceHolder) res).getConnection();
                     }
                 }
                 else
                 {
-                    return ((ConnectionHolder)res).getConnection();
+                    return ((ConnectionHolder) res).getConnection();
                 }
             }
             return res;

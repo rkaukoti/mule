@@ -7,8 +7,6 @@
 package org.mule.runtime.module.cxf;
 
 
-import org.mule.runtime.core.api.MuleMessage;
-
 /**
  * This enum defines the strategies to convert a Payload to an array of arguments
  * that will be used to call the webservice in
@@ -22,9 +20,9 @@ public enum CxfPayloadToArguments
      * sent as a parameter just like any other object.
      */
     NULL_PAYLOAD_AS_PARAMETER(CxfConstants.PAYLOAD_TO_ARGUMENTS_NULL_PAYLOAD_AS_PARAMETER)
-    {
+            {
 
-    },
+            },
     /**
      * In this strategy, if the payload is {@code null} it will not be
      * send as a parameter. The array of arguments in this case will be empty. For
@@ -33,20 +31,20 @@ public enum CxfPayloadToArguments
      * {@link CxfPayloadToArguments#payloadToArrayOfArguments(Object)}).
      */
     NULL_PAYLOAD_AS_VOID(CxfConstants.PAYLOAD_TO_ARGUMENTS_NULL_PAYLOAD_AS_VOID)
-    {
-        @Override
-        public Object[] payloadToArrayOfArguments(Object payload)
-        {
-            if (payload == null)
             {
-                return new Object[]{};
-            }
-            else
-            {
-                return super.payloadToArrayOfArguments(payload);
-            }
-        }
-    };
+                @Override
+                public Object[] payloadToArrayOfArguments(Object payload)
+                {
+                    if (payload == null)
+                    {
+                        return new Object[] {};
+                    }
+                    else
+                    {
+                        return super.payloadToArrayOfArguments(payload);
+                    }
+                }
+            };
 
     /**
      * This is the value that is needed to be configured in the endpoint under
@@ -66,7 +64,7 @@ public enum CxfPayloadToArguments
      * this default implementation if the payload is already an array of
      * {@link Object objects} that array will be returned. Otherwise, an array with
      * one element, the payload, will be returned.
-     * 
+     *
      * @param payload the payload to convert to array of arguments.
      * @return the array of arguments
      */
@@ -79,7 +77,7 @@ public enum CxfPayloadToArguments
         }
         else
         {
-            args = new Object[]{payload};
+            args = new Object[] {payload};
         }
         return args;
     }

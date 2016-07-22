@@ -6,8 +6,10 @@
  */
 package org.mule.runtime.module.extension.internal.connector;
 
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
+import org.junit.After;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.message.Attributes;
@@ -29,10 +31,8 @@ import org.mule.test.petstore.extension.PetStoreConnector;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import org.junit.After;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
 
 public class PetStoreSourceRetryPolicyTestCase extends ExtensionFunctionalTestCase
 {
@@ -72,7 +72,8 @@ public class PetStoreSourceRetryPolicyTestCase extends ExtensionFunctionalTestCa
         }
         catch (Exception e)
         {
-            new PollingProber(TIMEOUT_MILLIS, POLL_DELAY_MILLIS).check(new JUnitLambdaProbe(() -> PetStoreConnectorWithSource.timesStarted == 2));
+            new PollingProber(TIMEOUT_MILLIS, POLL_DELAY_MILLIS).check(
+                    new JUnitLambdaProbe(() -> PetStoreConnectorWithSource.timesStarted == 2));
             throw e;
         }
     }
@@ -81,7 +82,13 @@ public class PetStoreSourceRetryPolicyTestCase extends ExtensionFunctionalTestCa
     public void retryPolicySourceFailOnException() throws Exception
     {
         startFlow("source-fail-on-exception");
-        new PollingProber(TIMEOUT_MILLIS, POLL_DELAY_MILLIS).check(new JUnitLambdaProbe(() -> PetStoreConnectorWithSource.timesStarted == 3));
+        new PollingProber(TIMEOUT_MILLIS, POLL_DELAY_MILLIS).check(
+                new JUnitLambdaProbe(() -> PetStoreConnectorWithSource.timesStarted == 3));
+    }
+
+    private void startFlow(String flowName) throws Exception
+    {
+        ((Flow) getFlowConstruct(flowName)).start();
     }
 
     @Extension(name = "petstore", description = "PetStore Test connector")
@@ -97,18 +104,15 @@ public class PetStoreSourceRetryPolicyTestCase extends ExtensionFunctionalTestCa
     public static class PetStoreSource extends Source<String, Attributes>
     {
 
+        public static boolean failedDueOnException = false;
         @UseConfig
         PetStoreConnectorWithSource config;
-
         @Parameter
         @Optional(defaultValue = "false")
         boolean failOnStart;
-
         @Parameter
         @Optional(defaultValue = "false")
         boolean failOnException;
-
-        public static boolean failedDueOnException = false;
 
         @Override
         public void start()
@@ -133,10 +137,5 @@ public class PetStoreSourceRetryPolicyTestCase extends ExtensionFunctionalTestCa
         {
 
         }
-    }
-
-    private void startFlow(String flowName) throws Exception
-    {
-        ((Flow) getFlowConstruct(flowName)).start();
     }
 }

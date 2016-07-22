@@ -13,8 +13,8 @@ import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
 /**
-* An input stream that returns a chunk of data and then blocks on a latch to ensure streaming in http transfers.
-*/
+ * An input stream that returns a chunk of data and then blocks on a latch to ensure streaming in http transfers.
+ */
 public class TestInputStream extends InputStream
 {
 
@@ -38,7 +38,7 @@ public class TestInputStream extends InputStream
     public int read(byte[] b) throws IOException
     {
         chunkCount++;
-        if(chunkCount==1)
+        if (chunkCount == 1)
         {
             return b.length;
         }
@@ -48,7 +48,7 @@ public class TestInputStream extends InputStream
 
     private void waitOnLatch() throws IOException
     {
-        if(latch!=null)
+        if (latch != null)
         {
             try
             {

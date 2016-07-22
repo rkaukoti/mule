@@ -11,6 +11,8 @@ import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
 import org.mule.runtime.module.db.internal.result.resultset.ResultSetIterator;
 import org.mule.runtime.module.db.internal.result.resultset.SingleResultResultSetCloser;
 import org.mule.runtime.module.db.internal.result.row.InsensitiveMapRowHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -18,9 +20,6 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manages database types that are discovered using database metadata
@@ -93,7 +92,8 @@ public class MetadataDbTypeManager implements DbTypeManager
         {
             DatabaseMetaData metaData = connection.getMetaData();
             ResultSet typeInfo = metaData.getTypeInfo();
-            ResultSetIterator resultSetIterator = new ResultSetIterator(connection, typeInfo, new InsensitiveMapRowHandler(), new SingleResultResultSetCloser());
+            ResultSetIterator resultSetIterator =
+                    new ResultSetIterator(connection, typeInfo, new InsensitiveMapRowHandler(), new SingleResultResultSetCloser());
             while (resultSetIterator.hasNext())
             {
                 Map<String, Object> typeRecord = resultSetIterator.next();

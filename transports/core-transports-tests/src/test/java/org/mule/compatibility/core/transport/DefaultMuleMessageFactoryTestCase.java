@@ -7,7 +7,6 @@
 package org.mule.compatibility.core.transport;
 
 import org.mule.compatibility.core.api.transport.MuleMessageFactory;
-import org.mule.compatibility.core.transport.DefaultMuleMessageFactory;
 
 public class DefaultMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTestCase
 {
@@ -16,7 +15,7 @@ public class DefaultMuleMessageFactoryTestCase extends AbstractMuleMessageFactor
         super();
         runUnsuppoprtedTransportMessageTest = false;
     }
-    
+
     @Override
     protected MuleMessageFactory doCreateMuleMessageFactory()
     {

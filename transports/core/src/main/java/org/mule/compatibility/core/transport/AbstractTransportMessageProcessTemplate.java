@@ -6,8 +6,6 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_ROOT_MESSAGE_ID_PROPERTY;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleContext;
@@ -20,18 +18,20 @@ import org.mule.runtime.core.execution.FlowProcessingPhaseTemplate;
 import org.mule.runtime.core.execution.MessageProcessContext;
 import org.mule.runtime.core.execution.ValidationPhaseTemplate;
 import org.mule.runtime.core.util.ObjectUtils;
-
-import java.io.OutputStream;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractTransportMessageProcessTemplate<MessageReceiverType extends AbstractMessageReceiver, ConnectorType extends AbstractConnector> implements FlowProcessingPhaseTemplate, ValidationPhaseTemplate
+import java.io.OutputStream;
+
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_ROOT_MESSAGE_ID_PROPERTY;
+
+public abstract class AbstractTransportMessageProcessTemplate<MessageReceiverType extends AbstractMessageReceiver, ConnectorType extends AbstractConnector>
+        implements FlowProcessingPhaseTemplate, ValidationPhaseTemplate
 {
 
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
     private final MessageReceiverType messageReceiver;
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
     private Object rawMessage;
     private MuleEvent muleEvent;
 
@@ -92,7 +92,6 @@ public abstract class AbstractTransportMessageProcessTemplate<MessageReceiverTyp
      * This method will only be called once for the {@link MessageProcessContext}
      *
      * @return the raw message from the {@link MessageSource}
-     * @throws MuleException
      */
     public abstract Object acquireMessage() throws MuleException;
 
@@ -143,7 +142,7 @@ public abstract class AbstractTransportMessageProcessTemplate<MessageReceiverTyp
         }
         return muleEvent;
     }
-    
+
     protected OutputStream getOutputStream()
     {
         return null;

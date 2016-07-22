@@ -6,17 +6,13 @@
  */
 package org.mule.runtime.core.registry;
 
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.registry.RegistrationException;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +20,18 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import org.slf4j.Logger;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 public class TransientRegistryTestCase extends AbstractMuleContextTestCase
 {
 
-    private static final String LIFECYCLE_PHASES = "[setMuleContext, initialise, start, stop, dispose]";
     public static final String TEST_KEY = "test";
+    private static final String LIFECYCLE_PHASES = "[setMuleContext, initialise, start, stop, dispose]";
 
     @Test
     public void testObjectLifecycle() throws Exception

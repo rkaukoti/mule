@@ -6,14 +6,7 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
-import org.mule.compatibility.transport.jms.Jms11Support;
-import org.mule.compatibility.transport.jms.JmsConnector;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
 
 import javax.jms.JMSException;
@@ -21,7 +14,11 @@ import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.Topic;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class Jms11SupportTestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -79,7 +76,7 @@ public class Jms11SupportTestCase extends AbstractMuleContextEndpointTestCase
         {
             // expected
             assertEquals("Wrong exception text.",
-                "A durable subscriber name was set but the destination was not a Topic", jmsex.getMessage());
+                    "A durable subscriber name was set but the destination was not a Topic", jmsex.getMessage());
         }
     }
 }

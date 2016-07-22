@@ -7,9 +7,6 @@
 
 package org.mule.runtime.core.api;
 
-import static java.lang.String.format;
-import static org.apache.commons.lang.StringUtils.abbreviate;
-import static org.mule.runtime.core.util.ClassUtils.isConsumable;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.processor.MessageProcessor;
@@ -25,6 +22,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Objects;
 
+import static java.lang.String.format;
+import static org.apache.commons.lang.StringUtils.abbreviate;
+import static org.mule.runtime.core.util.ClassUtils.isConsumable;
+
 /**
  * <code>MessagingException</code> is a general message exception thrown when errors
  * specific to Message processing occur..
@@ -39,17 +40,14 @@ public class MessagingException extends MuleException
      * Serial version
      */
     private static final long serialVersionUID = 6941498759267936649L;
-
-    /**
-     * The MuleMessage being processed when the error occurred
-     */
-    protected transient MuleMessage muleMessage;
-
     /**
      * The MuleEvent being processed when the error occurred
      */
     protected final transient MuleEvent event;
-
+    /**
+     * The MuleMessage being processed when the error occurred
+     */
+    protected transient MuleMessage muleMessage;
     protected transient MuleEvent processedEvent;
 
     private boolean causeRollback;
@@ -160,7 +158,8 @@ public class MessagingException extends MuleException
                         addInfo(PAYLOAD_TYPE_INFO_KEY, muleMessage.getDataType().getType().getName());
                         try
                         {
-                            addInfo(PAYLOAD_INFO_KEY, muleContext.getTransformationService().transform(muleMessage, DataType.STRING).getPayload());
+                            addInfo(PAYLOAD_INFO_KEY,
+                                    muleContext.getTransformationService().transform(muleMessage, DataType.STRING).getPayload());
                         }
                         catch (Exception e)
                         {
@@ -203,13 +202,13 @@ public class MessagingException extends MuleException
     public MuleEvent getEvent()
     {
         return processedEvent != null && !VoidMuleEvent.getInstance().equals(processedEvent)
-                                                                                            ? processedEvent
-                                                                                            : event;
+                ? processedEvent
+                : event;
     }
 
     /**
      * Sets the event that should be processed once this exception is caught
-     * 
+     *
      * @param processedEvent event bounded to the exception
      */
     public void setProcessedEvent(MuleEvent processedEvent)
@@ -229,10 +228,9 @@ public class MessagingException extends MuleException
     /**
      * Evaluates if the exception was caused (instance of) by the provided exception
      * type
-     * 
+     *
      * @param e exception type to check against
-     * @return true if the cause exception is an instance of the provided exception
-     *         type
+     * @return true if the cause exception is an instance of the provided exception type
      */
     public boolean causedBy(final Class e)
     {
@@ -254,7 +252,7 @@ public class MessagingException extends MuleException
      * Evaluates if the exception was caused by the type and only the type provided
      * exception type i,e: if cause exception is NullPointerException will only
      * return true if provided exception type is NullPointerException
-     * 
+     *
      * @param e exception type to check against
      * @return true if the cause exception is exaclty the provided exception type
      */
@@ -290,7 +288,7 @@ public class MessagingException extends MuleException
     /**
      * Checks the cause exception type name matches the provided regex. Supports any
      * java regex plus *, * prefix, * sufix
-     * 
+     *
      * @param regex regular expression to match against the exception type name
      * @return true if the exception matches the regex, false otherwise
      */
@@ -327,7 +325,7 @@ public class MessagingException extends MuleException
     /**
      * Signals if the exception cause rollback of any current transaction if any or
      * if the message source should rollback incoming message
-     * 
+     *
      * @return true if exception cause rollback, false otherwise
      */
     public boolean causedRollback()
@@ -338,8 +336,6 @@ public class MessagingException extends MuleException
     /**
      * Marks exception as rollback cause. Useful for message sources that can provide
      * some rollback mechanism.
-     * 
-     * @param causeRollback
      */
     public void setCauseRollback(boolean causeRollback)
     {
@@ -348,7 +344,7 @@ public class MessagingException extends MuleException
 
     /**
      * Marks an exception as handled so it won't be re-throwed
-     * 
+     *
      * @param handled true if the exception must be mark as handled, false otherwise
      */
     public void setHandled(boolean handled)
@@ -358,7 +354,7 @@ public class MessagingException extends MuleException
 
     /**
      * Signals if exception has been handled or not
-     * 
+     *
      * @return true if exception has been handled, false otherwise
      */
     public boolean handled()

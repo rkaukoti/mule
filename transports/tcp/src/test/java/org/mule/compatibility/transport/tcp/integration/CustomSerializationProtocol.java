@@ -6,13 +6,12 @@
  */
 package org.mule.compatibility.transport.tcp.integration;
 
+import org.apache.commons.lang.SerializationUtils;
 import org.mule.compatibility.transport.tcp.protocols.DirectProtocol;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import org.apache.commons.lang.SerializationUtils;
 
 public class CustomSerializationProtocol extends DirectProtocol
 {
@@ -22,7 +21,7 @@ public class CustomSerializationProtocol extends DirectProtocol
     {
         if (data instanceof NonSerializableMessageObject)
         {
-            NonSerializableMessageObject in = (NonSerializableMessageObject)data;
+            NonSerializableMessageObject in = (NonSerializableMessageObject) data;
 
             // do serialization... will use normal Serialization to simplify code...
             MessageObject serializableObject = new MessageObject(in.i, in.s, in.b);
@@ -46,9 +45,9 @@ public class CustomSerializationProtocol extends DirectProtocol
         }
         else
         {
-            MessageObject serializableObject = (MessageObject)SerializationUtils.deserialize(tmp);
+            MessageObject serializableObject = (MessageObject) SerializationUtils.deserialize(tmp);
             return new NonSerializableMessageObject(serializableObject.i, serializableObject.s,
-                serializableObject.b);
+                    serializableObject.b);
         }
     }
 

@@ -298,13 +298,49 @@ public class ObservableList<E> implements List<E>
         return delegate.toArray(a);
     }
 
+    public void addPropertyChangeListener(PropertyChangeListener listener)
+    {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener)
+    {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    // observable interface
+
+    public PropertyChangeListener[] getPropertyChangeListeners()
+    {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName)
+    {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener)
+    {
+        pcs.removePropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener)
+    {
+        pcs.removePropertyChangeListener(propertyName, listener);
+    }
+
+    public boolean hasListeners(String propertyName)
+    {
+        return pcs.hasListeners(propertyName);
+    }
+
     private class ObservableIterator implements Iterator<E>
     {
         protected static final int LAST_RET_NONE = -1;
-
-        private Iterator<E> iterDelegate;
         protected int cursor = 0;
         protected int lastRet = LAST_RET_NONE;
+        private Iterator<E> iterDelegate;
 
         public ObservableIterator(Iterator<E> iterDelegate)
         {
@@ -355,7 +391,7 @@ public class ObservableList<E> implements List<E>
 
         public ListIterator<E> getListIterator()
         {
-            return (ListIterator<E>)getDelegate();
+            return (ListIterator<E>) getDelegate();
         }
 
         @Override
@@ -402,42 +438,5 @@ public class ObservableList<E> implements List<E>
             ObservableList.this.set(lastRet, e);
         }
 
-    }
-
-    // observable interface
-
-    public void addPropertyChangeListener(PropertyChangeListener listener)
-    {
-        pcs.addPropertyChangeListener(listener);
-    }
-
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener)
-    {
-        pcs.addPropertyChangeListener(propertyName, listener);
-    }
-
-    public PropertyChangeListener[] getPropertyChangeListeners()
-    {
-        return pcs.getPropertyChangeListeners();
-    }
-
-    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName)
-    {
-        return pcs.getPropertyChangeListeners(propertyName);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener)
-    {
-        pcs.removePropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener)
-    {
-        pcs.removePropertyChangeListener(propertyName, listener);
-    }
-
-    public boolean hasListeners(String propertyName)
-    {
-        return pcs.hasListeners(propertyName);
     }
 }

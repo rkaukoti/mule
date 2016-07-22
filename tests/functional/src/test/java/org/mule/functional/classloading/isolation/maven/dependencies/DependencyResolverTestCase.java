@@ -6,16 +6,15 @@
  */
 package org.mule.functional.classloading.isolation.maven.dependencies;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertTrue;
+import com.google.common.collect.Sets;
+
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.functional.classloading.isolation.maven.DependenciesGraph;
 import org.mule.functional.classloading.isolation.maven.MavenArtifact;
 import org.mule.runtime.core.util.ValueHolder;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
-
-import com.google.common.collect.Sets;
 
 import java.net.MalformedURLException;
 import java.util.HashSet;
@@ -24,8 +23,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertTrue;
 
 @SmallTest
 public class DependencyResolverTestCase extends AbstractMuleTestCase
@@ -51,17 +51,17 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase
     public void excludeRootSelectProvidedDependenciesOnlyTestTransitiveDependencies()
     {
         builder = new DependencyResolver(new Configuration()
-                                             .setMavenDependencyGraph(buildDefaultDependencies())
-                                             .selectDependencies(
-                                                     new DependenciesFilter()
-                                                             .match(dependency -> dependency.isProvidedScope())
-                                                             .onlyCollectTransitiveDependencies()
-                                             )
-                                             .collectTransitiveDependencies(
-                                                     new TransitiveDependenciesFilter()
-                                                             .match(dependency -> dependency.isTestScope())
-                                                             .evaluateTransitiveDependenciesWhenPredicateFails()
-                                             )
+                .setMavenDependencyGraph(buildDefaultDependencies())
+                .selectDependencies(
+                        new DependenciesFilter()
+                                .match(dependency -> dependency.isProvidedScope())
+                                .onlyCollectTransitiveDependencies()
+                )
+                .collectTransitiveDependencies(
+                        new TransitiveDependenciesFilter()
+                                .match(dependency -> dependency.isTestScope())
+                                .evaluateTransitiveDependenciesWhenPredicateFails()
+                )
         );
 
         assertTrue(builder.resolveDependencies().isEmpty());
@@ -73,16 +73,18 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase
         ValueHolder<MavenArtifact> selectedRootArtifactHolder = new ValueHolder<>(rootArtifact);
 
         builder = new DependencyResolver(new Configuration()
-                                                 .setMavenDependencyGraph(buildDefaultDependencies())
-                                                 .includeRootArtifact(artifact -> artifact.getArtifactId().equals(selectedRootArtifactHolder.get().getArtifactId()))
-                                                 .selectDependencies(
-                                                         new DependenciesFilter()
-                                                                 .match(dependency -> dependency.getArtifactId().equals(selectedRootArtifactHolder.get().getArtifactId())
-                                                                                      || (rootArtifact.getArtifactId().equals(selectedRootArtifactHolder.get().getArtifactId()) && dependency.isProvidedScope())))
-                                                 .collectTransitiveDependencies(
-                                                         new TransitiveDependenciesFilter()
-                                                                 .match(transitiveDependency -> transitiveDependency.isProvidedScope())
-                                                 )
+                .setMavenDependencyGraph(buildDefaultDependencies())
+                .includeRootArtifact(artifact -> artifact.getArtifactId().equals(selectedRootArtifactHolder.get().getArtifactId()))
+                .selectDependencies(
+                        new DependenciesFilter()
+                                .match(dependency -> dependency.getArtifactId().equals(selectedRootArtifactHolder.get().getArtifactId())
+                                                     || (rootArtifact.getArtifactId()
+                                                                     .equals(selectedRootArtifactHolder.get().getArtifactId()) &&
+                                                         dependency.isProvidedScope())))
+                .collectTransitiveDependencies(
+                        new TransitiveDependenciesFilter()
+                                .match(transitiveDependency -> transitiveDependency.isProvidedScope())
+                )
         );
 
         Set<MavenArtifact> dependencies = builder.resolveDependencies();
@@ -108,15 +110,15 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase
     public void onlyTestTransitiveDependencies()
     {
         builder = new DependencyResolver(new Configuration()
-                                                     .setMavenDependencyGraph(buildDefaultDependencies())
-                                                     .selectDependencies(
-                                                             new DependenciesFilter()
-                                                                     .onlyCollectTransitiveDependencies()
-                                                     )
-                                                     .collectTransitiveDependencies(
-                                                             new TransitiveDependenciesFilter()
-                                                                     .match(dependency -> dependency.isTestScope())
-                                                     )
+                .setMavenDependencyGraph(buildDefaultDependencies())
+                .selectDependencies(
+                        new DependenciesFilter()
+                                .onlyCollectTransitiveDependencies()
+                )
+                .collectTransitiveDependencies(
+                        new TransitiveDependenciesFilter()
+                                .match(dependency -> dependency.isTestScope())
+                )
         );
 
         Set<MavenArtifact> dependencies = builder.resolveDependencies();
@@ -130,16 +132,16 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase
     public void excludeRootOnlyProvidedDependencies()
     {
         builder = new DependencyResolver(new Configuration()
-                                                     .setMavenDependencyGraph(buildDefaultDependencies())
-                                                     .selectDependencies(
-                                                             new DependenciesFilter()
-                                                                     .match(dependency -> dependency.isProvidedScope())
-                                                     )
-                                                     .collectTransitiveDependencies(
-                                                             new TransitiveDependenciesFilter()
-                                                                     .match(dependency -> dependency.isProvidedScope())
-                                                                     .evaluateTransitiveDependenciesWhenPredicateFails()
-                                                     )
+                .setMavenDependencyGraph(buildDefaultDependencies())
+                .selectDependencies(
+                        new DependenciesFilter()
+                                .match(dependency -> dependency.isProvidedScope())
+                )
+                .collectTransitiveDependencies(
+                        new TransitiveDependenciesFilter()
+                                .match(dependency -> dependency.isProvidedScope())
+                                .evaluateTransitiveDependenciesWhenPredicateFails()
+                )
         );
 
         Set<MavenArtifact> dependencies = builder.resolveDependencies();
@@ -154,12 +156,12 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase
     public void onlyProvidedDependenciesIncludingRootArtifactWithoutTransitiveDependencies()
     {
         builder = new DependencyResolver(new Configuration()
-                                                     .setMavenDependencyGraph(buildDefaultDependencies())
-                                                     .includeRootArtifact()
-                                                     .selectDependencies(
-                                                             new DependenciesFilter()
-                                                                     .match(dependency -> dependency.isProvidedScope())
-                                                     )
+                .setMavenDependencyGraph(buildDefaultDependencies())
+                .includeRootArtifact()
+                .selectDependencies(
+                        new DependenciesFilter()
+                                .match(dependency -> dependency.isProvidedScope())
+                )
         );
 
         Set<MavenArtifact> dependencies = builder.resolveDependencies();
@@ -174,16 +176,16 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase
     public void excludeRootOnlyCompileDependencies()
     {
         builder = new DependencyResolver(new Configuration()
-                                                     .setMavenDependencyGraph(buildDefaultDependencies())
-                                                     .selectDependencies(
-                                                             new DependenciesFilter()
-                                                                     .match(dependency -> dependency.isCompileScope())
-                                                     )
-                                                     .collectTransitiveDependencies(
-                                                             new TransitiveDependenciesFilter()
-                                                                     .match(dependency -> dependency.isCompileScope())
-                                                                     .evaluateTransitiveDependenciesWhenPredicateFails()
-                                                     )
+                .setMavenDependencyGraph(buildDefaultDependencies())
+                .selectDependencies(
+                        new DependenciesFilter()
+                                .match(dependency -> dependency.isCompileScope())
+                )
+                .collectTransitiveDependencies(
+                        new TransitiveDependenciesFilter()
+                                .match(dependency -> dependency.isCompileScope())
+                                .evaluateTransitiveDependenciesWhenPredicateFails()
+                )
         );
 
         Set<MavenArtifact> dependencies = builder.resolveDependencies();
@@ -198,17 +200,17 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase
     public void onlyCompileDependenciesIncludingRootArtifact()
     {
         builder = new DependencyResolver(new Configuration()
-                                                     .setMavenDependencyGraph(buildDefaultDependencies())
-                                                     .includeRootArtifact()
-                                                     .selectDependencies(
-                                                             new DependenciesFilter()
-                                                                     .match(dependency -> dependency.isCompileScope())
-                                                     )
-                                                     .collectTransitiveDependencies(
-                                                             new TransitiveDependenciesFilter()
-                                                                     .match(dependency -> dependency.isCompileScope())
-                                                                     .evaluateTransitiveDependenciesWhenPredicateFails()
-                                                     )
+                .setMavenDependencyGraph(buildDefaultDependencies())
+                .includeRootArtifact()
+                .selectDependencies(
+                        new DependenciesFilter()
+                                .match(dependency -> dependency.isCompileScope())
+                )
+                .collectTransitiveDependencies(
+                        new TransitiveDependenciesFilter()
+                                .match(dependency -> dependency.isCompileScope())
+                                .evaluateTransitiveDependenciesWhenPredicateFails()
+                )
         );
 
         Set<MavenArtifact> dependencies = builder.resolveDependencies();
@@ -223,7 +225,8 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase
     @Test
     public void excludeRootOnlyProvidedAndTransitiveDependencies()
     {
-        dom4JArtifact = buildMavenArtifact(dom4JArtifact.getGroupId(), dom4JArtifact.getArtifactId(), dom4JArtifact.getType(), dom4JArtifact.getVersion(), "compile");
+        dom4JArtifact = buildMavenArtifact(dom4JArtifact.getGroupId(), dom4JArtifact.getArtifactId(), dom4JArtifact.getType(),
+                dom4JArtifact.getVersion(), "compile");
 
         Set<MavenArtifact> commonsCliDependencies = new HashSet<>();
         commonsCliDependencies.add(dom4JArtifact);
@@ -232,16 +235,16 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase
         transitiveDependencies.put(commonsCliArtifact, commonsCliDependencies);
 
         builder = new DependencyResolver(new Configuration()
-                                                     .setMavenDependencyGraph(new DependenciesGraph(rootArtifact, Sets.newHashSet(commonsCliArtifact), transitiveDependencies))
-                                                     .selectDependencies(
-                                                             new DependenciesFilter()
-                                                                     .onlyCollectTransitiveDependencies()
-                                                     )
-                                                     .collectTransitiveDependencies(
-                                                             new TransitiveDependenciesFilter()
-                                                                     .match(dependency -> dependency.isCompileScope())
-                                                                     .evaluateTransitiveDependenciesWhenPredicateFails()
-                                                     )
+                .setMavenDependencyGraph(new DependenciesGraph(rootArtifact, Sets.newHashSet(commonsCliArtifact), transitiveDependencies))
+                .selectDependencies(
+                        new DependenciesFilter()
+                                .onlyCollectTransitiveDependencies()
+                )
+                .collectTransitiveDependencies(
+                        new TransitiveDependenciesFilter()
+                                .match(dependency -> dependency.isCompileScope())
+                                .evaluateTransitiveDependenciesWhenPredicateFails()
+                )
         );
 
         Set<MavenArtifact> results = builder.resolveDependencies();
@@ -257,7 +260,13 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase
 
     private MavenArtifact buildMavenArtifact(String groupId, String artifactId, String type, String version, String scope)
     {
-        return MavenArtifact.builder().withGroupId(groupId).withArtifactId(artifactId).withType(type).withVersion(version).withScope(scope).build();
+        return MavenArtifact.builder()
+                            .withGroupId(groupId)
+                            .withArtifactId(artifactId)
+                            .withType(type)
+                            .withVersion(version)
+                            .withScope(scope)
+                            .build();
     }
 
     private void buildDefaultArtifacts()

@@ -6,13 +6,15 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
-import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_STATUS_PROPERTY;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
-
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.commons.lang.mutable.MutableInt;
+import org.hamcrest.core.IsNull;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -29,15 +31,12 @@ import org.mule.tck.junit4.rule.DynamicPort;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
-import org.apache.commons.lang.mutable.MutableInt;
-import org.hamcrest.core.IsNull;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
+import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_STATUS_PROPERTY;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class RollbackExceptionStrategyTestCase extends FunctionalTestCase
 {
@@ -72,33 +71,36 @@ public class RollbackExceptionStrategyTestCase extends FunctionalTestCase
     {
         final CountDownLatch latch = new CountDownLatch(EXPECTED_DELIVERED_TIMES);
         MuleClient client = muleContext.getClient();
-        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
+        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>()
+        {
             @Override
             public void onNotification(ExceptionNotification notification)
             {
                 latch.countDown();
             }
         });
-        client.dispatch("vm://in","some message",null);
+        client.dispatch("vm://in", "some message", null);
         if (!latch.await(TIMEOUT, TimeUnit.MILLISECONDS))
         {
             fail("message should have been delivered at least 5 times");
         }
     }
+
     @Test
     @Ignore("MULE-6926: flaky test")
     public void testAlwaysRollbackJmsNoTransaction() throws Exception
     {
         final CountDownLatch latch = new CountDownLatch(EXPECTED_DELIVERED_TIMES);
         MuleClient client = muleContext.getClient();
-        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
+        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>()
+        {
             @Override
             public void onNotification(ExceptionNotification notification)
             {
                 latch.countDown();
             }
         });
-        client.dispatch("jms://in?connector=activeMq","some message",null);
+        client.dispatch("jms://in?connector=activeMq", "some message", null);
         if (!latch.await(TIMEOUT, TimeUnit.MILLISECONDS))
         {
             fail("message should have been delivered at least 5 times");
@@ -121,7 +123,7 @@ public class RollbackExceptionStrategyTestCase extends FunctionalTestCase
                 latch.countDown();
             }
         });
-        client.dispatch("jms://in2?connector=activeMq", MESSAGE,null);
+        client.dispatch("jms://in2?connector=activeMq", MESSAGE, null);
         if (!latch.await(TIMEOUT, TimeUnit.MILLISECONDS))
         {
             fail("message should have been delivered at least 5 times");
@@ -132,27 +134,28 @@ public class RollbackExceptionStrategyTestCase extends FunctionalTestCase
         assertThat(getPayloadAsString(dlqMessage), is(MESSAGE_EXPECTED));
     }
 
-	@Test
-	public void testRollbackWithComponent() throws Exception
-	{
-	    final CountDownLatch latch = new CountDownLatch(EXPECTED_DELIVERED_TIMES);
+    @Test
+    public void testRollbackWithComponent() throws Exception
+    {
+        final CountDownLatch latch = new CountDownLatch(EXPECTED_DELIVERED_TIMES);
         MuleClient client = muleContext.getClient();
-	    muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
-	        @Override
-	        public void onNotification(ExceptionNotification notification)
-	        {
-	            latch.countDown();
-	        }
-	    });
-	    client.dispatch("vm://in5", "some message", null);
-	    if (!latch.await(TIMEOUT, TimeUnit.MILLISECONDS))
-	    {
-	        fail("message should have been delivered at least 5 times");
-	    }
+        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>()
+        {
+            @Override
+            public void onNotification(ExceptionNotification notification)
+            {
+                latch.countDown();
+            }
+        });
+        client.dispatch("vm://in5", "some message", null);
+        if (!latch.await(TIMEOUT, TimeUnit.MILLISECONDS))
+        {
+            fail("message should have been delivered at least 5 times");
+        }
         MuleMessage result = client.send("vm://in5", MESSAGE, null, TIMEOUT);
-        assertThat(result,IsNull.<Object>notNullValue());
-        assertThat(getPayloadAsString(result),is(MESSAGE + " Rolled Back"));
-	}
+        assertThat(result, IsNull.<Object>notNullValue());
+        assertThat(getPayloadAsString(result), is(MESSAGE + " Rolled Back"));
+    }
 
     @Test
     public void testFullyDefinedRollbackExceptionStrategyWithComponent() throws Exception
@@ -162,13 +165,13 @@ public class RollbackExceptionStrategyTestCase extends FunctionalTestCase
         for (int i = 1; i <= EXPECTED_SHORT_DELIVERED_TIMES; i++)
         {
             result = client.send("vm://in6", MESSAGE, null, TIMEOUT);
-            assertThat(result,IsNull.<Object>notNullValue());
-            assertThat(result.getExceptionPayload(),IsNull.<Object>notNullValue());
-            assertThat(getPayloadAsString(result),is(MESSAGE + " apt1 apt2 apt3"));
+            assertThat(result, IsNull.<Object>notNullValue());
+            assertThat(result.getExceptionPayload(), IsNull.<Object>notNullValue());
+            assertThat(getPayloadAsString(result), is(MESSAGE + " apt1 apt2 apt3"));
         }
         result = client.send("vm://in6", MESSAGE, null, TIMEOUT);
-        assertThat(result,IsNull.<Object>notNullValue());
-        assertThat(getPayloadAsString(result),is(MESSAGE + " apt4 groovified"));
+        assertThat(result, IsNull.<Object>notNullValue());
+        assertThat(getPayloadAsString(result), is(MESSAGE + " apt4 groovified"));
     }
 
     @Test
@@ -177,7 +180,8 @@ public class RollbackExceptionStrategyTestCase extends FunctionalTestCase
         final CountDownLatch latch = new CountDownLatch(EXPECTED_DELIVERED_TIMES);
         final MutableInt deliveredTimes = new MutableInt(0);
         MuleClient client = muleContext.getClient();
-        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
+        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>()
+        {
             @Override
             public void onNotification(ExceptionNotification notification)
             {
@@ -202,7 +206,7 @@ public class RollbackExceptionStrategyTestCase extends FunctionalTestCase
         MuleClient client = muleContext.getClient();
         MuleMessage response = client.send(String.format("http://localhost:%s", dynamicPort1.getNumber()),
                 getTestMuleMessage(JSON_REQUEST), newOptions().disableStatusCodeValidation().responseTimeout(TIMEOUT).build());
-        assertThat(response.<Integer> getInboundProperty(HTTP_STATUS_PROPERTY), is(500));
+        assertThat(response.<Integer>getInboundProperty(HTTP_STATUS_PROPERTY), is(500));
     }
 
     @Test
@@ -221,17 +225,18 @@ public class RollbackExceptionStrategyTestCase extends FunctionalTestCase
     {
         MuleClient client = muleContext.getClient();
         MuleMessage response = null;
-        final HttpRequestOptions httpRequestOptions = newOptions().method(POST.name()).disableStatusCodeValidation().responseTimeout(TIMEOUT).build();
+        final HttpRequestOptions httpRequestOptions =
+                newOptions().method(POST.name()).disableStatusCodeValidation().responseTimeout(TIMEOUT).build();
         for (int i = 1; i <= EXPECTED_SHORT_DELIVERED_TIMES; i++)
         {
             response = client.send(String.format("http://localhost:%s", dynamicPort2.getNumber()),
                     getTestMuleMessage(MESSAGE), httpRequestOptions);
-            assertThat(response.<Integer> getInboundProperty(HTTP_STATUS_PROPERTY), is(500));
+            assertThat(response.<Integer>getInboundProperty(HTTP_STATUS_PROPERTY), is(500));
         }
         response = client.send(String.format("http://localhost:%s", dynamicPort2.getNumber()),
                 getTestMuleMessage(MESSAGE), httpRequestOptions);
-        assertThat(response.<Integer> getInboundProperty(HTTP_STATUS_PROPERTY), is(200));
-        assertThat(response.getExceptionPayload(), IsNull.<Object> nullValue());
+        assertThat(response.<Integer>getInboundProperty(HTTP_STATUS_PROPERTY), is(200));
+        assertThat(response.getExceptionPayload(), IsNull.<Object>nullValue());
         assertThat(getPayloadAsString(response), is(MESSAGE_EXPECTED));
     }
 
@@ -263,12 +268,12 @@ public class RollbackExceptionStrategyTestCase extends FunctionalTestCase
         for (int i = 1; i <= EXPECTED_SHORT_DELIVERED_TIMES; i++)
         {
             result = client.send("vm://in2", MESSAGE, null, TIMEOUT);
-            assertThat(result,IsNull.<Object>notNullValue());
-            assertThat(result.getExceptionPayload(),IsNull.<Object>notNullValue());
-            assertThat(getPayloadAsString(result),is(MESSAGE + " apt1 apt2 apt3"));
+            assertThat(result, IsNull.<Object>notNullValue());
+            assertThat(result.getExceptionPayload(), IsNull.<Object>notNullValue());
+            assertThat(getPayloadAsString(result), is(MESSAGE + " apt1 apt2 apt3"));
         }
         result = client.send("vm://in2", MESSAGE, null, TIMEOUT);
-        assertThat(result,IsNull.<Object>notNullValue());
+        assertThat(result, IsNull.<Object>notNullValue());
         assertThat(getPayloadAsString(result), is(MESSAGE + " apt4 apt5"));
     }
 
@@ -279,7 +284,8 @@ public class RollbackExceptionStrategyTestCase extends FunctionalTestCase
         final CountDownLatch latch = new CountDownLatch(EXPECTED_DELIVERED_TIMES);
         final MutableInt deliveredTimes = new MutableInt(0);
         MuleClient client = muleContext.getClient();
-        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
+        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>()
+        {
             @Override
             public void onNotification(ExceptionNotification notification)
             {
@@ -292,7 +298,7 @@ public class RollbackExceptionStrategyTestCase extends FunctionalTestCase
         {
             fail("message should have been delivered at least 5 times");
         }
-        assertThat(deliveredTimes.intValue(),is(EXPECTED_DELIVERED_TIMES));
+        assertThat(deliveredTimes.intValue(), is(EXPECTED_DELIVERED_TIMES));
     }
 
     @Test
@@ -302,7 +308,8 @@ public class RollbackExceptionStrategyTestCase extends FunctionalTestCase
         final CountDownLatch latch = new CountDownLatch(EXPECTED_DELIVERED_TIMES);
         final MutableInt deliveredTimes = new MutableInt(0);
         MuleClient client = muleContext.getClient();
-        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
+        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>()
+        {
             @Override
             public void onNotification(ExceptionNotification notification)
             {
@@ -310,19 +317,19 @@ public class RollbackExceptionStrategyTestCase extends FunctionalTestCase
                 latch.countDown();
             }
         });
-        client.dispatch("vm://in4","some message",null);
+        client.dispatch("vm://in4", "some message", null);
         if (!latch.await(TIMEOUT, TimeUnit.MILLISECONDS))
         {
             fail("message should have been delivered at least 5 times");
         }
-        assertThat(deliveredTimes.intValue(),is(EXPECTED_DELIVERED_TIMES));
+        assertThat(deliveredTimes.intValue(), is(EXPECTED_DELIVERED_TIMES));
     }
 
     @Test
     public void testRollbackExceptionStrategyCatchMessageRedeliveryDespiteChoiceConfiguration() throws Exception
     {
         MuleClient client = muleContext.getClient();
-        client.dispatch("vm://in7","some message",null);
+        client.dispatch("vm://in7", "some message", null);
         if (!CallMessageProcessor.latch.await(TIMEOUT, TimeUnit.MILLISECONDS))
         {
             fail("custom message processor wasn't call");

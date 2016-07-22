@@ -7,9 +7,6 @@
 
 package org.mule.runtime.container.internal;
 
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
-
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter;
 import org.mule.runtime.module.artifact.classloader.ClassLoaderFilter;
 
@@ -17,6 +14,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 /**
  * Creates a {@link ClassLoaderFilter} for the container filter what is exposed to

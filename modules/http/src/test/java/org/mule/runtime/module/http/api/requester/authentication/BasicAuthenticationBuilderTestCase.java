@@ -6,10 +6,8 @@
  */
 package org.mule.runtime.module.http.api.requester.authentication;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-
+import org.junit.Test;
+import org.mockito.Answers;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -18,8 +16,9 @@ import org.mule.runtime.module.http.internal.request.DefaultHttpAuthentication;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
-import org.mockito.Answers;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 @SmallTest
 public class BasicAuthenticationBuilderTestCase extends AbstractMuleTestCase

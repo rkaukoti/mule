@@ -6,16 +6,16 @@
  */
 package org.mule.test.integration.message;
 
+import org.junit.Ignore;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleMessage;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.runtime.core.api.MuleMessage;
-
-import org.junit.Ignore;
-import org.junit.Test;
 
 public class MessagePropertyScopesTestCase extends FunctionalTestCase
 {
@@ -27,7 +27,8 @@ public class MessagePropertyScopesTestCase extends FunctionalTestCase
     }
 
     @Test
-    public void testSessionProperty() throws Exception {
+    public void testSessionProperty() throws Exception
+    {
 
         MuleMessage response = flowRunner("InService1").withPayload("Hello World").run().getMessage();
         assertNotNull(response);

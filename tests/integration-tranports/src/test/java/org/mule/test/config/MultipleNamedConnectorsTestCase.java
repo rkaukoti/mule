@@ -6,9 +6,8 @@
  */
 package org.mule.test.config;
 
-import org.mule.functional.junit4.FunctionalTestCase;
-
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 
 public class MultipleNamedConnectorsTestCase extends FunctionalTestCase
 {

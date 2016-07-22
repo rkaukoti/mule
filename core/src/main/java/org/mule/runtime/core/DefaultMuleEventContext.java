@@ -18,13 +18,12 @@ import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.api.transaction.Transaction;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.transaction.TransactionCoordination;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.OutputStream;
 import java.net.URI;
 import java.nio.charset.Charset;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>DefaultMuleEventContext</code> is the context object for the current
@@ -71,13 +70,11 @@ public class DefaultMuleEventContext implements MuleEventContext
      * transformer used is the one configured on the endpoint through which this
      * event was received.
      *
-     * @param dataType The dataType  required for the return object. This param
-     *            just provides a convienient way to manage type casting of
-     *            transformed objects
+     * @param dataType The dataType  required for the return object. This param just provides a convienient way to manage type casting of
+     *                 transformed objects
      * @return the message transformed into it's recognised or expected format.
-     * @throws org.mule.runtime.core.api.transformer.TransformerException if a failure occurs or
-     *             if the return type is not the same as the expected type in the
-     *             transformer
+     * @throws org.mule.runtime.core.api.transformer.TransformerException if a failure occurs or if the return type is not the same as the
+     *                                                                    expected type in the transformer
      * @see org.mule.runtime.core.api.transformer.Transformer
      */
     @Override
@@ -91,13 +88,11 @@ public class DefaultMuleEventContext implements MuleEventContext
      * transformer used is the one configured on the endpoint through which this
      * event was received.
      *
-     * @param expectedType The class type required for the return object. This param
-     *            just provides a convienient way to manage type casting of
-     *            transformed objects
+     * @param expectedType The class type required for the return object. This param just provides a convienient way to manage type casting
+     *                     of transformed objects
      * @return the message transformed into it's recognised or expected format.
-     * @throws org.mule.runtime.core.api.transformer.TransformerException if a failure occurs or
-     *             if the return type is not the same as the expected type in the
-     *             transformer
+     * @throws org.mule.runtime.core.api.transformer.TransformerException if a failure occurs or if the return type is not the same as the
+     *                                                                    expected type in the transformer
      * @see org.mule.runtime.core.api.transformer.Transformer
      */
     @Override
@@ -110,8 +105,7 @@ public class DefaultMuleEventContext implements MuleEventContext
      * Returns the message contents as a string
      *
      * @return the message contents as a string
-     * @throws org.mule.runtime.core.api.MuleException if the message cannot be converted into a
-     *             string
+     * @throws org.mule.runtime.core.api.MuleException if the message cannot be converted into a string
      */
     @Override
     public String getMessageAsString(Charset encoding) throws MuleException
@@ -125,10 +119,8 @@ public class DefaultMuleEventContext implements MuleEventContext
      * through which this event was received. This method will use the default
      * encoding on the event
      *
-     * @return the message transformed into it's recognised or expected format as a
-     *         Strings.
-     * @throws org.mule.runtime.core.api.transformer.TransformerException if a failure occurs in
-     *             the transformer
+     * @return the message transformed into it's recognised or expected format as a Strings.
+     * @throws org.mule.runtime.core.api.transformer.TransformerException if a failure occurs in the transformer
      * @see org.mule.runtime.core.api.transformer.Transformer
      */
     @Override
@@ -142,8 +134,7 @@ public class DefaultMuleEventContext implements MuleEventContext
      * encoding on the event
      *
      * @return the message contents as a string
-     * @throws org.mule.runtime.core.api.MuleException if the message cannot be converted into a
-     *             string
+     * @throws org.mule.runtime.core.api.MuleException if the message cannot be converted into a string
      */
     @Override
     public String getMessageAsString() throws MuleException
@@ -154,8 +145,7 @@ public class DefaultMuleEventContext implements MuleEventContext
     /**
      * Returns the current transaction (if any) for the session
      *
-     * @return the current transaction for the session or null if there is no
-     *         transaction in progress
+     * @return the current transaction for the session or null if there is no transaction in progress
      */
     @Override
     public Transaction getCurrentTransaction()
@@ -167,12 +157,11 @@ public class DefaultMuleEventContext implements MuleEventContext
      * Depending on the session state this methods either Passes an event synchronously to the next available Mule
      * component in the pool or via the endpoint configured for the event
      *
-     * @param message the event message payload to send
-     * @param endpointName The endpoint name to disptch the event through. This will be looked up first on the service
-     *            configuration and then on the mule manager configuration
+     * @param message      the event message payload to send
+     * @param endpointName The endpoint name to disptch the event through. This will be looked up first on the service configuration and
+     *                     then on the mule manager configuration
      * @return the return Message from the call or null if there was no result
-     * @throws org.mule.runtime.core.api.MuleException if the event fails to be processed by the service or the
-     *             transport for the endpoint
+     * @throws org.mule.runtime.core.api.MuleException if the event fails to be processed by the service or the transport for the endpoint
      */
     @Override
     public MuleMessage sendEvent(MuleMessage message, String endpointName) throws MuleException
@@ -183,9 +172,8 @@ public class DefaultMuleEventContext implements MuleEventContext
     /**
      * Requests a synchronous receive of an event on the service
      *
-     * @param endpointName the endpoint identifing the endpointUri on ewhich the
-     *            event will be received
-     * @param timeout time in milliseconds before the request timesout
+     * @param endpointName the endpoint identifing the endpointUri on ewhich the event will be received
+     * @param timeout      time in milliseconds before the request timesout
      * @return The requested event or null if the request times out
      * @throws org.mule.runtime.core.api.MuleException if the request operation fails
      */
@@ -226,8 +214,7 @@ public class DefaultMuleEventContext implements MuleEventContext
      * An output stream the can optionally be used write response data to an incoming
      * message.
      *
-     * @return an output stream if one has been made available by the message
-     *         receiver that received the message
+     * @return an output stream if one has been made available by the message receiver that received the message
      */
     @Override
     public OutputStream getOutputStream()
@@ -251,8 +238,7 @@ public class DefaultMuleEventContext implements MuleEventContext
      * Returns the transaction for the current event or null if there is no
      * transaction in progresss
      *
-     * @return the transaction for the current event or null if there is no
-     *         transaction in progresss
+     * @return the transaction for the current event or null if there is no transaction in progresss
      */
     @Override
     public Transaction getTransaction()

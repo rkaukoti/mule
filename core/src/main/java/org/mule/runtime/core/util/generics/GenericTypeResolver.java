@@ -118,7 +118,7 @@ public abstract class GenericTypeResolver
         if (typeArgs.length != 1)
         {
             throw new IllegalArgumentException("Expected 1 type argument on generic interface [" +
-                    genericIfc.getName() + "] but found " + typeArgs.length);
+                                               genericIfc.getName() + "] but found " + typeArgs.length);
         }
         return typeArgs[0];
     }
@@ -130,8 +130,8 @@ public abstract class GenericTypeResolver
      *
      * @param clazz      the target class to check against
      * @param genericIfc the generic interface to resolve the type argument from
-     * @return the resolved type of each argument, with the array size matching the
-     *         number of actual type arguments, or <code>null</code> if not resolvable
+     * @return the resolved type of each argument, with the array size matching the number of actual type arguments, or <code>null</code> if
+     * not resolvable
      */
     public static Class[] resolveTypeArguments(Class clazz, Class genericIfc)
     {
@@ -357,7 +357,8 @@ public abstract class GenericTypeResolver
                     // the nearest match on the bridge method will be the bounded type.
                     TypeVariable typeVariableArgument = (TypeVariable) actualTypeArgument;
                     Type resolvedType = typeVariableMap.get(typeVariableArgument);
-                    if (resolvedType == null) {
+                    if (resolvedType == null)
+                    {
                         resolvedType = extractBoundForTypeVariable(typeVariableArgument);
                     }
                     typeVariableMap.put(variable, resolvedType);

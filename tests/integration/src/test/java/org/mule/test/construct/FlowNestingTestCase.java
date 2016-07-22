@@ -6,10 +6,8 @@
  */
 package org.mule.test.construct;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -21,8 +19,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class FlowNestingTestCase extends FunctionalTestCase
 {
@@ -48,7 +47,7 @@ public class FlowNestingTestCase extends FunctionalTestCase
         MuleMessage result = client.request("test://outFilter", RECEIVE_TIMEOUT);
         assertNotNull(result);
     }
-    
+
     @Test
     public void testNestingFiltersRejected() throws Exception
     {
@@ -62,7 +61,7 @@ public class FlowNestingTestCase extends FunctionalTestCase
         MuleMessage result = client.request("test://outFilter", RECEIVE_TIMEOUT);
         assertNull(result);
     }
-    
+
     @Test
     public void testNestingChoiceAccepted() throws Exception
     {
@@ -76,7 +75,7 @@ public class FlowNestingTestCase extends FunctionalTestCase
         assertNotNull(result);
         assertEquals("ABC", getPayloadAsString(result));
     }
-    
+
     @Test
     public void testNestingChoiceRejected() throws Exception
     {

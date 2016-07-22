@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.extension.api.annotation.capability.CustomStudioEditor;
 import org.mule.runtime.extension.api.annotation.capability.StudioProvidedEditor;
 import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclarer;
@@ -19,9 +19,9 @@ import org.mule.runtime.module.extension.internal.model.property.ImplementingTyp
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)

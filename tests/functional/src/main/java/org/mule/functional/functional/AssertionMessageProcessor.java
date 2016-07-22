@@ -6,6 +6,7 @@
  */
 package org.mule.functional.functional;
 
+import org.junit.Assert;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.construct.FlowConstruct;
@@ -19,29 +20,24 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Assert;
-
 public class AssertionMessageProcessor implements MessageProcessor, FlowConstructAware, Startable
 {
-    protected String expression  = "#[true]";
+    protected String expression = "#[true]";
     protected String message = "?";
+    protected boolean needToMatchCount = false;
+    protected int timeout = AbstractMuleContextTestCase.RECEIVE_TIMEOUT;
+    protected FlowConstruct flowConstruct;
+    protected ExpressionManager expressionManager;
     private int count = 1;
     private int invocationCount = 0;
-    protected boolean needToMatchCount = false;
+    private MuleEvent event;
+    private CountDownLatch latch;
+    private boolean result = true;
 
     public void setExpression(String expression)
     {
         this.expression = expression;
     }
-
-    protected int timeout = AbstractMuleContextTestCase.RECEIVE_TIMEOUT;
-
-    private MuleEvent event;
-    private CountDownLatch latch;
-
-    protected FlowConstruct flowConstruct;
-    protected ExpressionManager expressionManager;
-    private boolean result = true;
 
     @Override
     public void start() throws InitialisationException
@@ -72,14 +68,13 @@ public class AssertionMessageProcessor implements MessageProcessor, FlowConstruc
      * <li>count was set & count processes were done => ok</li>
      * <li>count was set & count processes were not done => fail</li>
      * <li>count was not set & at least one processing were done => ok</li>
-     * @throws InterruptedException
      */
     public void verify() throws InterruptedException
     {
         if (countFailOrNullEvent())
         {
             Assert.fail("Flow assertion '" + message + "' failed. No message received or if count attribute was " +
-                    "set then it was no matched.");
+                        "set then it was no matched.");
         }
         else if (expressionFailed())
         {
@@ -87,7 +82,7 @@ public class AssertionMessageProcessor implements MessageProcessor, FlowConstruc
                         + " evaluated false.");
         }
     }
-    
+
     public Boolean countFailOrNullEvent() throws InterruptedException  //added for testing (cant assert on asserts)
     {
         return !isProcessesCountCorrect();
@@ -130,8 +125,6 @@ public class AssertionMessageProcessor implements MessageProcessor, FlowConstruc
      * - count was set & count processes were done => ok
      * - count was set & count processes were not done => fail
      * - count was not set & at least one processing were done => ok
-     * @return
-     * @throws InterruptedException
      */
     synchronized private boolean isProcessesCountCorrect() throws InterruptedException
     {

@@ -6,7 +6,7 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
-import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
+import org.junit.Test;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionHandlingStrategy;
 import org.mule.runtime.api.connection.ConnectionHandlingStrategyFactory;
@@ -33,7 +33,7 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 import org.mule.tck.testmodels.fruit.Apple;
 
-import org.junit.Test;
+import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
 
 @SmallTest
 public class ConnectionProviderModelValidatorTestCase extends AbstractMuleTestCase
@@ -58,6 +58,23 @@ public class ConnectionProviderModelValidatorTestCase extends AbstractMuleTestCa
     public void invalidConnectionTypeProviderTestConnector()
     {
         validate(InvalidConnectionTypeProviderTestConnector.class);
+    }
+
+    private ExtensionModel modelFor(Class<?> connectorClass)
+    {
+        DescribingContext context = new DefaultDescribingContext(connectorClass.getClassLoader());
+        return extensionFactory.createFrom(new AnnotationsBasedDescriber(connectorClass, new StaticVersionResolver(getProductVersion()))
+                .describe(context), context);
+    }
+
+    private void validate(Class<?> connectorClass)
+    {
+        validator.validate(modelFor(connectorClass));
+    }
+
+    interface Config
+    {
+
     }
 
     @Extension(name = "validatorTest")
@@ -152,7 +169,8 @@ public class ConnectionProviderModelValidatorTestCase extends AbstractMuleTestCa
         }
 
         @Override
-        public ConnectionHandlingStrategy<ValidatorTestConnection> getHandlingStrategy(ConnectionHandlingStrategyFactory<ValidatorTestConnection> handlingStrategyFactory)
+        public ConnectionHandlingStrategy<ValidatorTestConnection> getHandlingStrategy(
+                ConnectionHandlingStrategyFactory<ValidatorTestConnection> handlingStrategyFactory)
         {
             return handlingStrategyFactory.cached();
         }
@@ -187,7 +205,8 @@ public class ConnectionProviderModelValidatorTestCase extends AbstractMuleTestCa
         }
 
         @Override
-        public ConnectionHandlingStrategy<ValidatorTestConnection> getHandlingStrategy(ConnectionHandlingStrategyFactory<ValidatorTestConnection> handlingStrategyFactory)
+        public ConnectionHandlingStrategy<ValidatorTestConnection> getHandlingStrategy(
+                ConnectionHandlingStrategyFactory<ValidatorTestConnection> handlingStrategyFactory)
         {
             return handlingStrategyFactory.cached();
         }
@@ -222,25 +241,8 @@ public class ConnectionProviderModelValidatorTestCase extends AbstractMuleTestCa
         }
     }
 
-    interface Config
-    {
-
-    }
-
     public static class ValidatorTestConnection
     {
 
-    }
-
-    private ExtensionModel modelFor(Class<?> connectorClass)
-    {
-        DescribingContext context = new DefaultDescribingContext(connectorClass.getClassLoader());
-        return extensionFactory.createFrom(new AnnotationsBasedDescriber(connectorClass, new StaticVersionResolver(getProductVersion()))
-                                                   .describe(context), context);
-    }
-
-    private void validate(Class<?> connectorClass)
-    {
-        validator.validate(modelFor(connectorClass));
     }
 }

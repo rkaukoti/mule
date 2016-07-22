@@ -61,8 +61,7 @@ public class List extends Annotated
     /**
      * Gets the value of the simpleType property.
      *
-     * @return possible object is
-     * {@link LocalSimpleType }
+     * @return possible object is {@link LocalSimpleType }
      */
     public LocalSimpleType getSimpleType()
     {
@@ -72,8 +71,7 @@ public class List extends Annotated
     /**
      * Sets the value of the simpleType property.
      *
-     * @param value allowed object is
-     *              {@link LocalSimpleType }
+     * @param value allowed object is {@link LocalSimpleType }
      */
     public void setSimpleType(LocalSimpleType value)
     {
@@ -83,8 +81,7 @@ public class List extends Annotated
     /**
      * Gets the value of the itemType property.
      *
-     * @return possible object is
-     * {@link QName }
+     * @return possible object is {@link QName }
      */
     public QName getItemType()
     {
@@ -94,8 +91,7 @@ public class List extends Annotated
     /**
      * Sets the value of the itemType property.
      *
-     * @param value allowed object is
-     *              {@link QName }
+     * @param value allowed object is {@link QName }
      */
     public void setItemType(QName value)
     {

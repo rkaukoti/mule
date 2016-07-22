@@ -12,7 +12,7 @@ import org.mule.runtime.core.api.MuleMessage;
 import java.util.Map;
 
 /**
- * The RetryContext is used to store any data which carries over from 
+ * The RetryContext is used to store any data which carries over from
  * attempt to attempt such as response messages.
  */
 public interface RetryContext
@@ -28,9 +28,9 @@ public interface RetryContext
 
     MuleMessage[] getReturnMessages();
 
-    MuleMessage getFirstReturnMessage();
-
     void setReturnMessages(MuleMessage[] returnMessages);
+
+    MuleMessage getFirstReturnMessage();
 
     void addReturnMessage(MuleMessage result);
 

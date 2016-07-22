@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.module.json.transformers;
 
-import static org.junit.Assert.fail;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
 import org.mule.tck.testmodels.fruit.Apple;
 import org.mule.tck.testmodels.fruit.Orange;
+
+import static org.junit.Assert.fail;
 
 /**
  * For this test I picked difficult beans in that they are not real beans, so I could test how to use
@@ -73,7 +73,7 @@ public class JsonBeanRoundTripTestCase extends AbstractTransformerTestCase
     public boolean compareResults(Object expected, Object result)
     {
         //MULE-4879 field ordering is not guaranteed by the JVM so we cannot compare result strings
-        if(expected instanceof String || expected instanceof byte[])
+        if (expected instanceof String || expected instanceof byte[])
         {
             try
             {

@@ -6,9 +6,11 @@
  */
 package org.mule.runtime.core.api.security.tls;
 
-import org.mule.runtime.core.util.ArrayUtils;
-
 import com.google.common.base.Joiner;
+
+import org.mule.runtime.core.util.ArrayUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -17,9 +19,6 @@ import java.net.ServerSocket;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -55,7 +54,8 @@ public class RestrictedSSLServerSocketFactory extends SSLServerSocketFactory
 
         if (this.enabledProtocols.length != protocols.length)
         {
-            logger.warn("Current context supports less SSL protocols than configured. Only the following are enabled: [{}]", Joiner.on(", ").join(this.enabledProtocols));
+            logger.warn("Current context supports less SSL protocols than configured. Only the following are enabled: [{}]",
+                    Joiner.on(", ").join(this.enabledProtocols));
         }
     }
 

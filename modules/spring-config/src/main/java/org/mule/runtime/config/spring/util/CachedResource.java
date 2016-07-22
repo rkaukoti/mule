@@ -7,14 +7,13 @@
 package org.mule.runtime.config.spring.util;
 
 import org.mule.runtime.core.util.IOUtils;
+import org.springframework.core.io.AbstractResource;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-
-import org.springframework.core.io.AbstractResource;
 
 /**
  * Spring 2.x is picky about open/closed input streams, as it requires a closed

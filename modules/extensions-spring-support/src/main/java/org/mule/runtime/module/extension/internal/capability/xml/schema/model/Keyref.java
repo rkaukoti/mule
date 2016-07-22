@@ -51,8 +51,7 @@ public class Keyref extends Keybase
     /**
      * Gets the value of the refer property.
      *
-     * @return possible object is
-     * {@link QName }
+     * @return possible object is {@link QName }
      */
     public QName getRefer()
     {
@@ -62,8 +61,7 @@ public class Keyref extends Keybase
     /**
      * Sets the value of the refer property.
      *
-     * @param value allowed object is
-     *              {@link QName }
+     * @param value allowed object is {@link QName }
      */
     public void setRefer(QName value)
     {

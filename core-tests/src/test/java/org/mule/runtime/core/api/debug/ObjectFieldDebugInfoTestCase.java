@@ -7,13 +7,12 @@
 
 package org.mule.runtime.core.api.debug;
 
+import org.junit.Test;
 import org.mule.tck.size.SmallTest;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.Test;
 
 @SmallTest
 public class ObjectFieldDebugInfoTestCase extends AbstractFieldDebugInfoTestCase<List<FieldDebugInfo<?>>>

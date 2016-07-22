@@ -7,19 +7,18 @@
 package org.mule.compatibility.transport.tcp.integration;
 
 import org.mule.functional.functional.FunctionalStreamingTestComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class BigInputStream extends InputStream
 {
 
     private static final int SUMMARY_SIZE = 4;
-    private static final MessageFormat FORMAT  =
+    private static final MessageFormat FORMAT =
             new MessageFormat("Sent {0,number,#} bytes, {1,number,###.##}% (free {2,number,#}/{3,number,#})");
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private long size;
@@ -33,7 +32,7 @@ public class BigInputStream extends InputStream
 
 
     /**
-     * @param size Number of bytes to transfer
+     * @param size     Number of bytes to transfer
      * @param messages Number of mesagges logged as INFO
      */
     public BigInputStream(long size, int messages)
@@ -55,8 +54,8 @@ public class BigInputStream extends InputStream
             tail[i] = data[(int) ((sent - SUMMARY_SIZE + i) % data.length)];
         }
         return "Received stream; length: " + sent + "; '" +
-                new String(data, 0, 4) + "..." + new String(tail) +
-                "'";
+               new String(data, 0, 4) + "..." + new String(tail) +
+               "'";
     }
 
     public int read() throws IOException
@@ -71,11 +70,11 @@ public class BigInputStream extends InputStream
             {
                 double percent = 100l * sent / ((double) size);
                 Runtime runtime = Runtime.getRuntime();
-                logger.info(FORMAT.format(new Object[]{
+                logger.info(FORMAT.format(new Object[] {
                         new Long(sent), new Double(percent),
                         new Long(runtime.freeMemory()), new Long(runtime.maxMemory())}));
                 nextMessage = ++printedMessages *
-                        ((int) Math.floor(((double) size) / (messages - 1)) - 1);
+                              ((int) Math.floor(((double) size) / (messages - 1)) - 1);
             }
             if (dataIndex == data.length)
             {

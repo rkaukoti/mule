@@ -6,10 +6,7 @@
  */
 package org.mule.runtime.core.transformer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.api.transformer.TransformerException;
@@ -21,7 +18,9 @@ import org.mule.tck.testmodels.fruit.RedApple;
 
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 public class TransformDiscoveryTestCase extends AbstractMuleContextTestCase
 {

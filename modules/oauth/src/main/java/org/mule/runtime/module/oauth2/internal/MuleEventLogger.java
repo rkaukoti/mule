@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.module.oauth2.internal;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
-
 import org.mule.runtime.core.api.MuleEvent;
-
 import org.slf4j.Logger;
+
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
 /**
  * Helper class to reuse message content logging for troubleshooting using the logs.
@@ -27,6 +26,7 @@ public class MuleEventLogger
 
     /**
      * Logs the event message payload type, the payload as string and the message properties.
+     *
      * @param muleEvent event to log.
      */
     public void logContent(MuleEvent muleEvent)

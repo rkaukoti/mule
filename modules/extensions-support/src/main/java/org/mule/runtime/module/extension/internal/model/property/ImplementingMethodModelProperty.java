@@ -6,11 +6,12 @@
  */
 package org.mule.runtime.module.extension.internal.model.property;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.extension.api.introspection.ModelProperty;
 import org.mule.runtime.extension.api.introspection.operation.OperationModel;
 
 import java.lang.reflect.Method;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * An immutable model property which indicates that the owning {@link OperationModel}

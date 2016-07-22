@@ -7,10 +7,8 @@
 
 package org.mule.runtime.module.db.integration.select;
 
-import static org.mule.runtime.module.db.integration.TestDbConfig.getOracleResource;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
-import static org.mule.runtime.module.db.integration.model.RegionManager.NORTHWEST_MANAGER;
-import static org.mule.runtime.module.db.integration.model.RegionManager.SOUTHWEST_MANAGER;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
@@ -22,8 +20,10 @@ import org.mule.runtime.module.db.integration.model.Record;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.mule.runtime.module.db.integration.TestDbConfig.getOracleResource;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
+import static org.mule.runtime.module.db.integration.model.RegionManager.NORTHWEST_MANAGER;
+import static org.mule.runtime.module.db.integration.model.RegionManager.SOUTHWEST_MANAGER;
 
 public class SelectStructUdtTestCase extends AbstractDbIntegrationTestCase
 {
@@ -59,7 +59,11 @@ public class SelectStructUdtTestCase extends AbstractDbIntegrationTestCase
         final MuleMessage response = responseEvent.getMessage();
 
         assertRecords(response.getPayload(),
-                      new Record(new Field("REGION_NAME", SOUTHWEST_MANAGER.getRegionName()), new Field("MANAGER_NAME", SOUTHWEST_MANAGER.getName()), new Field("DETAILS", SOUTHWEST_MANAGER.getContactDetails().asObjectArray())),
-                      new Record(new Field("REGION_NAME", NORTHWEST_MANAGER.getRegionName()), new Field("MANAGER_NAME", NORTHWEST_MANAGER.getName()), new Field("DETAILS", NORTHWEST_MANAGER.getContactDetails().asObjectArray())));
+                new Record(new Field("REGION_NAME", SOUTHWEST_MANAGER.getRegionName()),
+                        new Field("MANAGER_NAME", SOUTHWEST_MANAGER.getName()),
+                        new Field("DETAILS", SOUTHWEST_MANAGER.getContactDetails().asObjectArray())),
+                new Record(new Field("REGION_NAME", NORTHWEST_MANAGER.getRegionName()),
+                        new Field("MANAGER_NAME", NORTHWEST_MANAGER.getName()),
+                        new Field("DETAILS", NORTHWEST_MANAGER.getContactDetails().asObjectArray())));
     }
 }

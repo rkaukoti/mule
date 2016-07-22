@@ -56,11 +56,12 @@ public class PartitionedObjectStoreWrapper<T extends Serializable> implements Li
     {
         return getStore().retrieve(new QueueKey(partitionName, key));
     }
-    
+
     @Override
     public void clear() throws ObjectStoreException
     {
-        for (Serializable key : this.allKeys()) {
+        for (Serializable key : this.allKeys())
+        {
             this.remove(key);
         }
     }

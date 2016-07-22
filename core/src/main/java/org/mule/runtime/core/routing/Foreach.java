@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.routing;
 
-import static org.mule.runtime.core.api.LocatedMuleException.INFO_LOCATION_KEY;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MessagingException;
@@ -26,6 +24,9 @@ import org.mule.runtime.core.processor.chain.DefaultMessageProcessorChainBuilder
 import org.mule.runtime.core.routing.outbound.AbstractMessageSequenceSplitter;
 import org.mule.runtime.core.routing.outbound.CollectionMessageSequence;
 import org.mule.runtime.core.util.NotificationUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -33,9 +34,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
+import static org.mule.runtime.core.api.LocatedMuleException.INFO_LOCATION_KEY;
 
 /**
  * ` * The <code>Foreach</code> MessageProcessor allows iterating over a collection payload, or any collection
@@ -74,8 +73,8 @@ public class Foreach extends AbstractMessageProcessorOwner implements Initialisa
     public MuleEvent process(MuleEvent event) throws MuleException
     {
         String parentMessageProp = rootMessageVariableName != null
-                                   ? rootMessageVariableName
-                                   : ROOT_MESSAGE_PROPERTY;
+                ? rootMessageVariableName
+                : ROOT_MESSAGE_PROPERTY;
         Object previousCounterVar = null;
         Object previousRootMessageVar = null;
         if (event.getFlowVariableNames().contains(counterVariableName))
@@ -217,7 +216,7 @@ public class Foreach extends AbstractMessageProcessorOwner implements Initialisa
         try
         {
             this.ownedMessageProcessor = new DefaultMessageProcessorChainBuilder().chain(messageProcessors)
-                    .build();
+                                                                                  .build();
         }
         catch (MuleException e)
         {

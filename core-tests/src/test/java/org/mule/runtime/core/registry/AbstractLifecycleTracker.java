@@ -24,15 +24,18 @@ public abstract class AbstractLifecycleTracker implements Lifecycle,
 
     private final List<String> tracker = new ArrayList<>();
 
-    public List<String> getTracker() {
+    public List<String> getTracker()
+    {
         return tracker;
     }
 
-    public void setProperty(final String value) {
+    public void setProperty(final String value)
+    {
         tracker.add("setProperty");
     }
 
-    public void setMuleContext(final MuleContext context) {
+    public void setMuleContext(final MuleContext context)
+    {
         tracker.add("setMuleContext");
     }
 
@@ -46,11 +49,13 @@ public abstract class AbstractLifecycleTracker implements Lifecycle,
         tracker.add("start");
     }
 
-    public void stop() throws MuleException {
+    public void stop() throws MuleException
+    {
         tracker.add("stop");
     }
 
-    public void dispose() {
+    public void dispose()
+    {
         tracker.add("dispose");
     }
 

@@ -6,11 +6,9 @@
  */
 package org.mule.compatibility.transport.file.filters;
 
-import org.mule.compatibility.transport.file.filters.FilenameRegexFilter;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;

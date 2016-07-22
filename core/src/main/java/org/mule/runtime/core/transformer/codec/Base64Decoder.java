@@ -72,7 +72,7 @@ public class Base64Decoder extends AbstractTransformer
         catch (Exception ex)
         {
             throw new TransformerException(
-                CoreMessages.transformFailed("base64", getReturnDataType()), this, ex);
+                    CoreMessages.transformFailed("base64", getReturnDataType()), this, ex);
         }
     }
 

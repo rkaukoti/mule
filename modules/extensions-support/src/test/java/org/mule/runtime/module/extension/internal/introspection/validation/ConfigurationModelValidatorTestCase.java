@@ -6,7 +6,7 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
-import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
+import org.junit.Test;
 import org.mule.runtime.core.registry.SpiServiceRegistry;
 import org.mule.runtime.extension.api.annotation.Configuration;
 import org.mule.runtime.extension.api.annotation.Configurations;
@@ -24,7 +24,7 @@ import org.mule.runtime.module.extension.internal.introspection.version.StaticVe
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
+import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
 
 @SmallTest
 public class ConfigurationModelValidatorTestCase extends AbstractMuleTestCase
@@ -43,6 +43,23 @@ public class ConfigurationModelValidatorTestCase extends AbstractMuleTestCase
     public void invalidConfigurationTypesForOperations() throws Exception
     {
         validate(InvalidExtension.class);
+    }
+
+    private ExtensionModel modelFor(Class<?> connectorClass)
+    {
+        DescribingContext context = new DefaultDescribingContext(connectorClass.getClassLoader());
+        return extensionFactory.createFrom(new AnnotationsBasedDescriber(connectorClass, new StaticVersionResolver(getProductVersion()))
+                .describe(context), context);
+    }
+
+    private void validate(Class<?> connectorClass)
+    {
+        validator.validate(modelFor(connectorClass));
+    }
+
+    interface Config
+    {
+
     }
 
     @Extension(name = "invalidExtension")
@@ -99,22 +116,5 @@ public class ConfigurationModelValidatorTestCase extends AbstractMuleTestCase
         {
 
         }
-    }
-
-    interface Config
-    {
-
-    }
-
-    private ExtensionModel modelFor(Class<?> connectorClass)
-    {
-        DescribingContext context = new DefaultDescribingContext(connectorClass.getClassLoader());
-        return extensionFactory.createFrom(new AnnotationsBasedDescriber(connectorClass, new StaticVersionResolver(getProductVersion()))
-                                                   .describe(context), context);
-    }
-
-    private void validate(Class<?> connectorClass)
-    {
-        validator.validate(modelFor(connectorClass));
     }
 }

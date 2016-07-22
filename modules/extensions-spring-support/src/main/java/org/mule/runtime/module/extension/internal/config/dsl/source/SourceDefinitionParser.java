@@ -6,11 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.config.dsl.source;
 
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromChildConfiguration;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromFixedValue;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromSimpleParameter;
-import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.CONFIG_ATTRIBUTE;
 import org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinition;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.ConfigurationException;
@@ -22,6 +17,12 @@ import org.mule.runtime.extension.xml.dsl.api.resolver.DslElementResolver;
 import org.mule.runtime.module.extension.internal.config.dsl.ExtensionDefinitionParser;
 import org.mule.runtime.module.extension.internal.config.dsl.ExtensionParsingContext;
 import org.mule.runtime.module.extension.internal.runtime.source.ExtensionMessageSource;
+
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromChildConfiguration;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromFixedValue;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromSimpleParameter;
+import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.CONFIG_ATTRIBUTE;
 
 /**
  * An {@link ExtensionMessageSource} used to parse instances of {@link ExtensionMessageSource}
@@ -52,13 +53,13 @@ public class SourceDefinitionParser extends ExtensionDefinitionParser
     protected void doParse(ComponentBuildingDefinition.Builder definitionBuilder) throws ConfigurationException
     {
         definitionBuilder.withIdentifier(sourceDsl.getElementName())
-                .withTypeDefinition(fromType(ExtensionMessageSource.class))
-                .withObjectFactoryType(ExtensionSourceObjectFactory.class)
-                .withConstructorParameterDefinition(fromFixedValue(extensionModel).build())
-                .withConstructorParameterDefinition(fromFixedValue(sourceModel).build())
-                .withConstructorParameterDefinition(fromFixedValue(muleContext).build())
-                .withSetterParameterDefinition("retryPolicyTemplate", fromChildConfiguration(RetryPolicyTemplate.class).build())
-                .withSetterParameterDefinition("configurationProviderName", fromSimpleParameter(CONFIG_ATTRIBUTE).build());
+                         .withTypeDefinition(fromType(ExtensionMessageSource.class))
+                         .withObjectFactoryType(ExtensionSourceObjectFactory.class)
+                         .withConstructorParameterDefinition(fromFixedValue(extensionModel).build())
+                         .withConstructorParameterDefinition(fromFixedValue(sourceModel).build())
+                         .withConstructorParameterDefinition(fromFixedValue(muleContext).build())
+                         .withSetterParameterDefinition("retryPolicyTemplate", fromChildConfiguration(RetryPolicyTemplate.class).build())
+                         .withSetterParameterDefinition("configurationProviderName", fromSimpleParameter(CONFIG_ATTRIBUTE).build());
 
         parseParameters(sourceModel.getParameterModels());
     }

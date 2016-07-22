@@ -6,18 +6,20 @@
  */
 package org.mule.runtime.core.exception;
 
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.exception.MessagingExceptionHandler;
+import org.mule.runtime.core.api.exception.MessagingExceptionHandlerAcceptor;
+import org.mule.runtime.core.processor.AbstractMuleObjectOwner;
+
 import java.util.Arrays;
 import java.util.List;
 
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.exception.MessagingExceptionHandlerAcceptor;
-import org.mule.runtime.core.api.exception.MessagingExceptionHandler;
-import org.mule.runtime.core.processor.AbstractMuleObjectOwner;
-
 /**
- * Allows to use {@link org.mule.runtime.core.api.exception.MessagingExceptionHandler} as {@link org.mule.runtime.core.api.exception.MessagingExceptionHandlerAcceptor}.
+ * Allows to use {@link org.mule.runtime.core.api.exception.MessagingExceptionHandler} as {@link
+ * org.mule.runtime.core.api.exception.MessagingExceptionHandlerAcceptor}.
  */
-public class MessagingExceptionStrategyAcceptorDelegate extends AbstractMuleObjectOwner<MessagingExceptionHandler> implements MessagingExceptionHandlerAcceptor
+public class MessagingExceptionStrategyAcceptorDelegate extends AbstractMuleObjectOwner<MessagingExceptionHandler>
+        implements MessagingExceptionHandlerAcceptor
 {
     private MessagingExceptionHandler delegate;
 
@@ -31,7 +33,7 @@ public class MessagingExceptionStrategyAcceptorDelegate extends AbstractMuleObje
     {
         if (delegate instanceof MessagingExceptionHandlerAcceptor)
         {
-            return ((MessagingExceptionHandlerAcceptor)delegate).accept(event);
+            return ((MessagingExceptionHandlerAcceptor) delegate).accept(event);
         }
         return true;
     }
@@ -41,7 +43,7 @@ public class MessagingExceptionStrategyAcceptorDelegate extends AbstractMuleObje
     {
         if (delegate instanceof MessagingExceptionHandlerAcceptor)
         {
-            return ((MessagingExceptionHandlerAcceptor)delegate).acceptsAll();
+            return ((MessagingExceptionHandlerAcceptor) delegate).acceptsAll();
         }
         return true;
     }
@@ -49,11 +51,12 @@ public class MessagingExceptionStrategyAcceptorDelegate extends AbstractMuleObje
     @Override
     public MuleEvent handleException(Exception exception, MuleEvent event)
     {
-        return delegate.handleException(exception,event);
+        return delegate.handleException(exception, event);
     }
 
     @Override
-    protected List<MessagingExceptionHandler> getOwnedObjects() {
+    protected List<MessagingExceptionHandler> getOwnedObjects()
+    {
         return Arrays.asList(delegate);
     }
 

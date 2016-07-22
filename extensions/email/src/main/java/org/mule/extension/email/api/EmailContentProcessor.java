@@ -6,14 +6,10 @@
  */
 package org.mule.extension.email.api;
 
-import static javax.mail.Part.ATTACHMENT;
-import static org.mule.extension.email.internal.util.EmailConnectorUtils.TEXT;
-import static org.mule.runtime.core.util.IOUtils.toByteArray;
+import com.google.common.collect.ImmutableMap;
 
 import org.mule.extension.email.api.exception.EmailException;
 import org.mule.runtime.core.util.IOUtils;
-
-import com.google.common.collect.ImmutableMap;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -27,6 +23,10 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
+
+import static javax.mail.Part.ATTACHMENT;
+import static org.mule.extension.email.internal.util.EmailConnectorUtils.TEXT;
+import static org.mule.runtime.core.util.IOUtils.toByteArray;
 
 public class EmailContentProcessor
 {
@@ -149,7 +149,6 @@ public class EmailContentProcessor
      *
      * @param part the part to be validated.
      * @return true is the part is dispositioned as inline, false otherwise
-     * @throws MessagingException
      */
     private boolean isInline(Part part) throws MessagingException
     {
@@ -162,7 +161,6 @@ public class EmailContentProcessor
      *
      * @param part the part to be validated.
      * @return true is the part is dispositioned as an attachment, false otherwise
-     * @throws MessagingException
      */
     private boolean isAttachment(Part part) throws MessagingException
     {

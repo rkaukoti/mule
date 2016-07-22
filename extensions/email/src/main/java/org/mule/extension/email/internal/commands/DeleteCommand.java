@@ -6,11 +6,12 @@
  */
 package org.mule.extension.email.internal.commands;
 
-import static javax.mail.Flags.Flag.DELETED;
 import org.mule.extension.email.internal.retriever.RetrieverConnection;
 import org.mule.runtime.api.message.MuleMessage;
 
 import java.util.List;
+
+import static javax.mail.Flags.Flag.DELETED;
 
 /**
  * Represents the delete command (erase completely) of a folder. This operation

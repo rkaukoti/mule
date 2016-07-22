@@ -61,7 +61,7 @@ public class MuleContextLifecycleManager extends AbstractLifecycleManager<MuleCo
         invokePhase(destinationPhase, object, callback);
     }
 
-     protected void invokePhase(String phase, Object object, LifecycleCallback callback) throws LifecycleException
+    protected void invokePhase(String phase, Object object, LifecycleCallback callback) throws LifecycleException
     {
         try
         {

@@ -7,6 +7,7 @@
 
 package org.mule.runtime.module.db.internal.config.processor;
 
+import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.module.db.internal.config.domain.query.BulkQueryResolverFactoryBean;
 import org.mule.runtime.module.db.internal.domain.executor.BulkUpdateExecutorFactory;
 import org.mule.runtime.module.db.internal.metadata.BulkExecuteMetadataProvider;
@@ -14,8 +15,6 @@ import org.mule.runtime.module.db.internal.parser.SimpleQueryTemplateParser;
 import org.mule.runtime.module.db.internal.processor.BulkExecuteMessageProcessor;
 import org.mule.runtime.module.db.internal.resolver.query.FileBulkQueryResolver;
 import org.mule.runtime.module.db.internal.util.DefaultFileReader;
-import org.mule.runtime.core.util.StringUtils;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;

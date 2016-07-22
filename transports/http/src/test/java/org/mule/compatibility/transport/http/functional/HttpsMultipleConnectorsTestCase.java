@@ -7,11 +7,8 @@
 package org.mule.compatibility.transport.http.functional;
 
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mule.runtime.core.api.security.tls.TlsConfiguration.DISABLE_SYSTEM_PROPERTIES_MAPPING_PROPERTY;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.connector.DispatchException;
 import org.mule.runtime.core.construct.Flow;
@@ -20,8 +17,10 @@ import org.mule.tck.junit4.rule.SystemProperty;
 
 import javax.net.ssl.SSLHandshakeException;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mule.runtime.core.api.security.tls.TlsConfiguration.DISABLE_SYSTEM_PROPERTIES_MAPPING_PROPERTY;
 
 /**
  * Test case that verifies that multiple HTTPS connectors do not interfere with each other. The server endpoint

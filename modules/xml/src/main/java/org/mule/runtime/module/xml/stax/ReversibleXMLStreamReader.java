@@ -6,6 +6,17 @@
  */
 package org.mule.runtime.module.xml.stax;
 
+import javanet.staxutils.events.AbstractCharactersEvent;
+import javanet.staxutils.events.AttributeEvent;
+import javanet.staxutils.events.CDataEvent;
+import javanet.staxutils.events.CharactersEvent;
+import javanet.staxutils.events.CommentEvent;
+import javanet.staxutils.events.EndDocumentEvent;
+import javanet.staxutils.events.EndElementEvent;
+import javanet.staxutils.events.NamespaceEvent;
+import javanet.staxutils.events.StartDocumentEvent;
+import javanet.staxutils.events.StartElementEvent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,17 +30,6 @@ import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.Namespace;
 import javax.xml.stream.events.XMLEvent;
-
-import javanet.staxutils.events.AbstractCharactersEvent;
-import javanet.staxutils.events.AttributeEvent;
-import javanet.staxutils.events.CDataEvent;
-import javanet.staxutils.events.CharactersEvent;
-import javanet.staxutils.events.CommentEvent;
-import javanet.staxutils.events.EndDocumentEvent;
-import javanet.staxutils.events.EndElementEvent;
-import javanet.staxutils.events.NamespaceEvent;
-import javanet.staxutils.events.StartDocumentEvent;
-import javanet.staxutils.events.StartElementEvent;
 
 public class ReversibleXMLStreamReader extends DelegateXMLStreamReader
 {
@@ -130,47 +130,45 @@ public class ReversibleXMLStreamReader extends DelegateXMLStreamReader
 
     /**
      * Capture the current event;
-     *
-     * @param event
      */
     private void capture(int event)
     {
         switch (event)
         {
-            case XMLStreamConstants.START_DOCUMENT :
-                events.add(new StartDocumentEvent(getEncoding(), new Boolean(isStandalone()), getVersion(),
+        case XMLStreamConstants.START_DOCUMENT:
+            events.add(new StartDocumentEvent(getEncoding(), new Boolean(isStandalone()), getVersion(),
                     getLocation()));
-                break;
-            case XMLStreamConstants.END_DOCUMENT :
-                events.add(new EndDocumentEvent(getLocation()));
-                break;
-            case XMLStreamConstants.START_ELEMENT :
-                events.add(createStartElementEvent());
-                break;
-            case XMLStreamConstants.END_ELEMENT :
-                events.add(new EndElementEventX(getName(), getNamespaces()));
-                break;
-            case XMLStreamConstants.CDATA :
-                events.add(new CDataEvent(getText(), getLocation()));
-                break;
-            case XMLStreamConstants.CHARACTERS :
-                events.add(new CharactersEvent(getText(), getLocation()));
-                break;
-            case XMLStreamConstants.COMMENT :
-                events.add(new CommentEvent(getText(), getLocation()));
-                break;
-            case XMLStreamConstants.DTD :
-                break;
-            case XMLStreamConstants.ENTITY_DECLARATION :
-                break;
-            case XMLStreamConstants.ENTITY_REFERENCE :
-                break;
-            case XMLStreamConstants.NOTATION_DECLARATION :
-                break;
-            case XMLStreamConstants.PROCESSING_INSTRUCTION :
-                break;
-            case XMLStreamConstants.SPACE :
-                break;
+            break;
+        case XMLStreamConstants.END_DOCUMENT:
+            events.add(new EndDocumentEvent(getLocation()));
+            break;
+        case XMLStreamConstants.START_ELEMENT:
+            events.add(createStartElementEvent());
+            break;
+        case XMLStreamConstants.END_ELEMENT:
+            events.add(new EndElementEventX(getName(), getNamespaces()));
+            break;
+        case XMLStreamConstants.CDATA:
+            events.add(new CDataEvent(getText(), getLocation()));
+            break;
+        case XMLStreamConstants.CHARACTERS:
+            events.add(new CharactersEvent(getText(), getLocation()));
+            break;
+        case XMLStreamConstants.COMMENT:
+            events.add(new CommentEvent(getText(), getLocation()));
+            break;
+        case XMLStreamConstants.DTD:
+            break;
+        case XMLStreamConstants.ENTITY_DECLARATION:
+            break;
+        case XMLStreamConstants.ENTITY_REFERENCE:
+            break;
+        case XMLStreamConstants.NOTATION_DECLARATION:
+            break;
+        case XMLStreamConstants.PROCESSING_INSTRUCTION:
+            break;
+        case XMLStreamConstants.SPACE:
+            break;
         }
     }
 
@@ -183,7 +181,7 @@ public class ReversibleXMLStreamReader extends DelegateXMLStreamReader
         }
 
         return new StartElementEventX(getName(), attributes, getNamespaces(),
-            createContext(), getLocation(), null);
+                createContext(), getLocation(), null);
     }
 
     private NamespaceContext createContext()
@@ -237,7 +235,7 @@ public class ReversibleXMLStreamReader extends DelegateXMLStreamReader
             else if (eventType == XMLStreamConstants.START_ELEMENT)
             {
                 throw new XMLStreamException("element text content may not contain START_ELEMENT",
-                    getLocation());
+                        getLocation());
             }
             else
             {
@@ -458,7 +456,7 @@ public class ReversibleXMLStreamReader extends DelegateXMLStreamReader
     {
         if (replay)
         {
-            if(isStartElement())
+            if (isStartElement())
             {
                 return ((StartElementEventX) current).getNamespaceList().size();
             }
@@ -478,7 +476,7 @@ public class ReversibleXMLStreamReader extends DelegateXMLStreamReader
     {
         if (replay)
         {
-            if(isStartElement())
+            if (isStartElement())
             {
                 Namespace ns = (Namespace) ((StartElementEventX) current).getNamespaceList().get(arg0);
 
@@ -631,11 +629,13 @@ public class ReversibleXMLStreamReader extends DelegateXMLStreamReader
         {
             char[] src = getText().toCharArray();
 
-            if (sourceStart + length >= src.length) {
+            if (sourceStart + length >= src.length)
+            {
                 length = src.length - sourceStart;
             }
 
-            for (int i = 0; i < length; i++) {
+            for (int i = 0; i < length; i++)
+            {
                 target[targetStart + i] = src[i + sourceStart];
             }
 
@@ -713,7 +713,7 @@ public class ReversibleXMLStreamReader extends DelegateXMLStreamReader
         {
             int event = getEventType();
             return event == CHARACTERS || event == DTD
-                || event == ENTITY_REFERENCE || event == COMMENT || event == SPACE;
+                   || event == ENTITY_REFERENCE || event == COMMENT || event == SPACE;
         }
         else
         {

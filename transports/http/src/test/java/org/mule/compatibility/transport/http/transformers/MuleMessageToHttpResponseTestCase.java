@@ -6,16 +6,9 @@
  */
 package org.mule.compatibility.transport.http.transformers;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-
+import org.apache.commons.httpclient.Cookie;
+import org.apache.commons.httpclient.Header;
+import org.junit.Test;
 import org.mule.compatibility.transport.http.HttpConstants;
 import org.mule.compatibility.transport.http.HttpResponse;
 import org.mule.runtime.api.metadata.DataType;
@@ -30,9 +23,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-import org.apache.commons.httpclient.Cookie;
-import org.apache.commons.httpclient.Header;
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class MuleMessageToHttpResponseTestCase extends AbstractMuleContextTestCase
@@ -52,7 +51,7 @@ public class MuleMessageToHttpResponseTestCase extends AbstractMuleContextTestCa
         HttpResponse response = transformer.createResponse(null, UTF_8, msg);
         Header[] headers = response.getHeaders();
         int cookiesSet = 0;
-        for(Header header : headers)
+        for (Header header : headers)
         {
             if ("Set-Cookie".equals(header.getName()))
             {

@@ -23,14 +23,17 @@ public final class StudioModelEnricher extends AbstractAnnotatedModelEnricher
     @Override
     public void enrich(DescribingContext describingContext)
     {
-        StudioProvidedEditor studioProvidedEditor = extractAnnotation(describingContext.getExtensionDeclarer().getDeclaration(), StudioProvidedEditor.class);
-        CustomStudioEditor customStudioEditor = extractAnnotation(describingContext.getExtensionDeclarer().getDeclaration(), CustomStudioEditor.class);
+        StudioProvidedEditor studioProvidedEditor =
+                extractAnnotation(describingContext.getExtensionDeclarer().getDeclaration(), StudioProvidedEditor.class);
+        CustomStudioEditor customStudioEditor =
+                extractAnnotation(describingContext.getExtensionDeclarer().getDeclaration(), CustomStudioEditor.class);
 
         ExtensionDeclarer descriptor = describingContext.getExtensionDeclarer();
         descriptor.withModelProperty(createStudioEditorModelProperty(studioProvidedEditor, customStudioEditor));
     }
 
-    private StudioModelProperty createStudioEditorModelProperty(StudioProvidedEditor studioProvidedEditor, CustomStudioEditor customStudioEditor)
+    private StudioModelProperty createStudioEditorModelProperty(StudioProvidedEditor studioProvidedEditor,
+                                                                CustomStudioEditor customStudioEditor)
     {
         String editorFileName = "";
         boolean isDerived = false;

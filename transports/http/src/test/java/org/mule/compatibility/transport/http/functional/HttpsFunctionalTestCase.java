@@ -6,10 +6,7 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Rule;
 import org.mule.compatibility.transport.http.HttpsConnector;
 import org.mule.functional.functional.EventCallback;
 import org.mule.functional.functional.FunctionalTestComponent;
@@ -21,7 +18,9 @@ import org.mule.tck.junit4.rule.SystemProperty;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.junit.Rule;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class HttpsFunctionalTestCase extends HttpFunctionalTestCase
 {
@@ -32,7 +31,7 @@ public class HttpsFunctionalTestCase extends HttpFunctionalTestCase
     @Rule
     public SystemProperty serverKeystoreProperty = new SystemProperty(SERVER_KEYSTORE_PATH, SERVER_KEYSTORE);
 
-    
+
     @Override
     protected String getConfigFile()
     {
@@ -58,7 +57,8 @@ public class HttpsFunctionalTestCase extends HttpFunctionalTestCase
 
         MuleClient client = muleContext.getClient();
 
-        MuleMessage result = client.send("clientEndpoint", MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse("text/plain;charset=UTF-8")).build());
+        MuleMessage result = client.send("clientEndpoint",
+                MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse("text/plain;charset=UTF-8")).build());
 
         assertNotNull(result);
         assertEquals(TEST_MESSAGE + " Received", getPayloadAsString(result));

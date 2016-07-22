@@ -6,8 +6,21 @@
  */
 package org.mule.runtime.module.cxf.transport;
 
-import static org.apache.cxf.message.Message.DECOUPLED_CHANNEL_MESSAGE;
-import static org.mule.runtime.api.metadata.MediaType.XML;
+import org.apache.cxf.common.logging.LogUtils;
+import org.apache.cxf.endpoint.ClientImpl;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.message.Exchange;
+import org.apache.cxf.message.ExchangeImpl;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.message.MessageImpl;
+import org.apache.cxf.phase.AbstractPhaseInterceptor;
+import org.apache.cxf.phase.Phase;
+import org.apache.cxf.service.model.EndpointInfo;
+import org.apache.cxf.transport.AbstractConduit;
+import org.apache.cxf.transport.MessageObserver;
+import org.apache.cxf.ws.addressing.AttributedURIType;
+import org.apache.cxf.ws.addressing.EndpointReferenceType;
+import org.apache.cxf.wsdl.EndpointReferenceUtils;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.DefaultMuleEvent;
@@ -42,21 +55,8 @@ import java.util.logging.Logger;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Holder;
 
-import org.apache.cxf.common.logging.LogUtils;
-import org.apache.cxf.endpoint.ClientImpl;
-import org.apache.cxf.interceptor.Fault;
-import org.apache.cxf.message.Exchange;
-import org.apache.cxf.message.ExchangeImpl;
-import org.apache.cxf.message.Message;
-import org.apache.cxf.message.MessageImpl;
-import org.apache.cxf.phase.AbstractPhaseInterceptor;
-import org.apache.cxf.phase.Phase;
-import org.apache.cxf.service.model.EndpointInfo;
-import org.apache.cxf.transport.AbstractConduit;
-import org.apache.cxf.transport.MessageObserver;
-import org.apache.cxf.ws.addressing.AttributedURIType;
-import org.apache.cxf.ws.addressing.EndpointReferenceType;
-import org.apache.cxf.wsdl.EndpointReferenceUtils;
+import static org.apache.cxf.message.Message.DECOUPLED_CHANNEL_MESSAGE;
+import static org.mule.runtime.api.metadata.MediaType.XML;
 
 /**
  * A Conduit is primarily responsible for sending messages from CXF to somewhere
@@ -67,18 +67,15 @@ public class MuleUniversalConduit extends AbstractConduit
 {
 
     private static final Logger LOGGER = LogUtils.getL7dLogger(MuleUniversalConduit.class);
-
-    private EndpointInfo endpoint;
-
     protected CxfConfiguration configuration;
-
+    private EndpointInfo endpoint;
     private MuleUniversalTransport transport;
 
     private boolean closeInput = true;
 
     /**
      * @param ei The Endpoint being invoked by this destination.
-     * @param t The EPR associated with this Conduit - i.e. the reply destination.
+     * @param t  The EPR associated with this Conduit - i.e. the reply destination.
      */
     public MuleUniversalConduit(MuleUniversalTransport transport,
                                 CxfConfiguration configuration,
@@ -91,6 +88,35 @@ public class MuleUniversalConduit extends AbstractConduit
         this.configuration = configuration;
     }
 
+    /**
+     * Get the target endpoint reference.
+     *
+     * @param ei the corresponding EndpointInfo
+     * @param t  the given target EPR if available
+     * @return the actual target
+     */
+    protected static EndpointReferenceType getTargetReference(EndpointInfo ei, EndpointReferenceType t)
+    {
+        EndpointReferenceType ref = null;
+        if (null == t)
+        {
+            ref = new EndpointReferenceType();
+            AttributedURIType address = new AttributedURIType();
+            address.setValue(ei.getAddress());
+            ref.setAddress(address);
+            if (ei.getService() != null)
+            {
+                EndpointReferenceUtils.setServiceAndPortName(ref, ei.getService().getName(), ei.getName()
+                                                                                               .getLocalPart());
+            }
+        }
+        else
+        {
+            ref = t;
+        }
+        return ref;
+    }
+
     @Override
     public void close(Message msg) throws IOException
     {
@@ -99,7 +125,7 @@ public class MuleUniversalConduit extends AbstractConduit
         {
             os.close();
         }
-        
+
         if (closeInput)
         {
             InputStream in = msg.getContent(InputStream.class);
@@ -127,13 +153,13 @@ public class MuleUniversalConduit extends AbstractConduit
         final DelegatingOutputStream delegating = new DelegatingOutputStream(cache);
         message.setContent(OutputStream.class, delegating);
         message.setContent(DelegatingOutputStream.class, delegating);
-        
+
         OutputHandler handler = (event, out) ->
         {
             out.write(cache.toByteArray());
-            
+
             delegating.setOutputStream(out);
-            
+
             // resume writing!
             message.getInterceptorChain().doIntercept(message);
         };
@@ -141,12 +167,12 @@ public class MuleUniversalConduit extends AbstractConduit
         MuleEvent event = (MuleEvent) message.getExchange().get(CxfConstants.MULE_EVENT);
         // are we sending an out of band response for a server side request?
         boolean decoupled = event != null && message.getExchange().getInMessage() != null;
-        
+
         if (event == null || VoidMuleEvent.getInstance().equals(event) || decoupled)
         {
             // we've got an out of band WS-RM message or a message from a standalone client
             MuleMessage muleMsg = MuleMessage.builder().payload(handler).build();
-            
+
             String url = setupURL(message);
 
             try
@@ -158,7 +184,7 @@ public class MuleUniversalConduit extends AbstractConduit
                 throw new Fault(e);
             }
         }
-        else 
+        else
         {
             event.setMessage(MuleMessage.builder(event.getMessage()).payload(handler).mediaType(XML).build());
         }
@@ -168,7 +194,7 @@ public class MuleUniversalConduit extends AbstractConduit
             message.getExchange().put(CxfConstants.MULE_EVENT, event);
         }
         message.put(CxfConstants.MULE_EVENT, event);
-        
+
         final MuleEvent finalEvent = event;
         AbstractPhaseInterceptor<Message> i = new AbstractPhaseInterceptor<Message>(Phase.PRE_STREAM)
         {
@@ -198,11 +224,13 @@ public class MuleUniversalConduit extends AbstractConduit
 
         String result = value != null ? value : getTargetOrEndpoint();
 
-        if (username != null) {
-             int slashIdx = result.indexOf("//");
-             if (slashIdx != -1) {
-                 result = result.substring(0, slashIdx + 2) + username + ":" + password + "@" + result.substring(slashIdx+2);
-             }
+        if (username != null)
+        {
+            int slashIdx = result.indexOf("//");
+            if (slashIdx != -1)
+            {
+                result = result.substring(0, slashIdx + 2) + username + ":" + password + "@" + result.substring(slashIdx + 2);
+            }
         }
 
         // REVISIT: is this really correct?
@@ -216,7 +244,7 @@ public class MuleUniversalConduit extends AbstractConduit
         }
         return result;
     }
-    
+
     protected void dispatchMuleMessage(final Message m, MuleEvent reqEvent) throws MuleException
     {
         try
@@ -259,7 +287,7 @@ public class MuleUniversalConduit extends AbstractConduit
                 sendResultBackToCxf(m, resEvent);
             }
         }
-        catch(MuleException me)
+        catch (MuleException me)
         {
             throw me;
         }
@@ -316,7 +344,10 @@ public class MuleUniversalConduit extends AbstractConduit
         {
             // Sometimes there may not actually be a body, in which case
             // we want to act appropriately. E.g. one way invocations over a proxy
-            InputStream is = (InputStream) result.getMuleContext().getTransformationService().transform(result.getMessage(), DataType.INPUT_STREAM).getPayload();
+            InputStream is = (InputStream) result.getMuleContext()
+                                                 .getTransformationService()
+                                                 .transform(result.getMessage(), DataType.INPUT_STREAM)
+                                                 .getPayload();
             PushbackInputStream pb = new PushbackInputStream(is);
             result.setMessage(MuleMessage.builder(result.getMessage()).payload(pb).mediaType(XML).build());
 
@@ -335,7 +366,7 @@ public class MuleUniversalConduit extends AbstractConduit
     {
         return exchange != null && exchange.isOneWay();
     }
-    
+
     protected String getTargetOrEndpoint()
     {
         if (target != null)
@@ -350,7 +381,7 @@ public class MuleUniversalConduit extends AbstractConduit
     {
         // template method
     }
-    
+
     protected MuleEvent processNext(MuleEvent event, Exchange exchange) throws MuleException
     {
         CxfOutboundMessageProcessor processor = (CxfOutboundMessageProcessor) exchange.get(CxfConstants.CXF_OUTBOUND_MESSAGE_PROCESSOR);
@@ -368,60 +399,6 @@ public class MuleUniversalConduit extends AbstractConduit
     {
     }
 
-    /**
-     * Get the target endpoint reference.
-     * 
-     * @param ei the corresponding EndpointInfo
-     * @param t the given target EPR if available
-     * @return the actual target
-     */
-    protected static EndpointReferenceType getTargetReference(EndpointInfo ei, EndpointReferenceType t)
-    {
-        EndpointReferenceType ref = null;
-        if (null == t)
-        {
-            ref = new EndpointReferenceType();
-            AttributedURIType address = new AttributedURIType();
-            address.setValue(ei.getAddress());
-            ref.setAddress(address);
-            if (ei.getService() != null)
-            {
-                EndpointReferenceUtils.setServiceAndPortName(ref, ei.getService().getName(), ei.getName()
-                    .getLocalPart());
-            }
-        }
-        else
-        {
-            ref = t;
-        }
-        return ref;
-    }
-
-    /**
-     * Used to set appropriate message properties, exchange etc. as required for an
-     * incoming decoupled response (as opposed what's normally set by the Destination
-     * for an incoming request).
-     */
-    protected class InterposedMessageObserver implements MessageObserver
-    {
-        /**
-         * Called for an incoming message.
-         * 
-         * @param inMessage
-         */
-        @Override
-        public void onMessage(Message inMessage)
-        {
-            // disposable exchange, swapped with real Exchange on correlation
-            inMessage.setExchange(new ExchangeImpl());
-            inMessage.put(DECOUPLED_CHANNEL_MESSAGE, Boolean.TRUE);
-            inMessage.put(Message.RESPONSE_CODE, HttpURLConnection.HTTP_OK);
-            inMessage.remove(Message.ASYNC_POST_RESPONSE_DISPATCH);
-
-            incomingObserver.onMessage(inMessage);
-        }
-    }
-    
     public void setCloseInput(boolean closeInput)
     {
         this.closeInput = closeInput;
@@ -440,5 +417,28 @@ public class MuleUniversalConduit extends AbstractConduit
     protected MuleUniversalTransport getTransport()
     {
         return transport;
+    }
+
+    /**
+     * Used to set appropriate message properties, exchange etc. as required for an
+     * incoming decoupled response (as opposed what's normally set by the Destination
+     * for an incoming request).
+     */
+    protected class InterposedMessageObserver implements MessageObserver
+    {
+        /**
+         * Called for an incoming message.
+         */
+        @Override
+        public void onMessage(Message inMessage)
+        {
+            // disposable exchange, swapped with real Exchange on correlation
+            inMessage.setExchange(new ExchangeImpl());
+            inMessage.put(DECOUPLED_CHANNEL_MESSAGE, Boolean.TRUE);
+            inMessage.put(Message.RESPONSE_CODE, HttpURLConnection.HTTP_OK);
+            inMessage.remove(Message.ASYNC_POST_RESPONSE_DISPATCH);
+
+            incomingObserver.onMessage(inMessage);
+        }
     }
 }

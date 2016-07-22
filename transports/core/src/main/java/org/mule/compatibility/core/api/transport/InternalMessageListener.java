@@ -15,14 +15,15 @@ import java.io.OutputStream;
 /**
  * A listener used to receive Muleevents from a transport receiver. The listener can be
  * swapped out to deliver message to other frameworks, bypassing the Mule container.
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
 public interface InternalMessageListener
 {
     MuleMessage onMessage(MuleMessage message,
-                         Transaction trans,
-                         boolean synchronous,
-                         OutputStream outputStream) throws MuleException;
+                          Transaction trans,
+                          boolean synchronous,
+                          OutputStream outputStream) throws MuleException;
 
 }

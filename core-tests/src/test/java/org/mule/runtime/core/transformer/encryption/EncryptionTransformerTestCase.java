@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.core.transformer.encryption;
 
-import static org.junit.Assert.fail;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.security.CryptoFailureException;
 import org.mule.runtime.core.api.transformer.Transformer;
@@ -16,10 +15,13 @@ import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
 import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 
+import static org.junit.Assert.fail;
+
 public class EncryptionTransformerTestCase extends AbstractTransformerTestCase
 {
-    private static final String TEST_DATA = "the quick brown fox jumped over the lazy dog the quick brown fox jumped over the lazy dog the quick brown fox jumped over the lazy dog";
-    
+    private static final String TEST_DATA =
+            "the quick brown fox jumped over the lazy dog the quick brown fox jumped over the lazy dog the quick brown fox jumped over the lazy dog";
+
     private PasswordBasedEncryptionStrategy strat;
 
     @Override

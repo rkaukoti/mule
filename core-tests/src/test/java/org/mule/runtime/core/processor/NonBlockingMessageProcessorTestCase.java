@@ -6,12 +6,7 @@
  */
 package org.mule.runtime.core.processor;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.runtime.api.execution.CompletionHandler;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.MessageExchangePattern;
@@ -27,7 +22,11 @@ import org.mule.tck.MuleTestUtils;
 import org.mule.tck.SensingNullReplyToHandler;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 public class NonBlockingMessageProcessorTestCase extends AbstractMuleContextTestCase
 {
@@ -68,8 +67,8 @@ public class NonBlockingMessageProcessorTestCase extends AbstractMuleContextTest
         Flow flow = MuleTestUtils.getTestFlow(muleContext);
         flow.setProcessingStrategy(new NonBlockingProcessingStrategy());
         return new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).build(),
-                                                 MessageExchangePattern.REQUEST_RESPONSE,
-                                                 new SensingNullReplyToHandler(), flow);
+                MessageExchangePattern.REQUEST_RESPONSE,
+                new SensingNullReplyToHandler(), flow);
     }
 
     private class TestNonBlockingProcessor extends AbstractNonBlockingMessageProcessor

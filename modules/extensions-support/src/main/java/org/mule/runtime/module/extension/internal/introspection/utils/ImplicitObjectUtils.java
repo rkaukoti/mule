@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.utils;
 
-import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
 import org.mule.runtime.core.api.expression.ExpressionManager;
 import org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport;
 import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
@@ -17,6 +16,8 @@ import org.mule.runtime.module.extension.internal.runtime.resolver.TypeSafeExpre
 import org.mule.runtime.module.extension.internal.runtime.resolver.ValueResolver;
 
 import java.util.List;
+
+import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
 
 /**
  * Utilities for creating object with implicit values based on a {@link ParameterizedModel}

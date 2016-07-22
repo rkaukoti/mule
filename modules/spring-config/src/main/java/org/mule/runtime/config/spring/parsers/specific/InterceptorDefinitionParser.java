@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
-import org.mule.runtime.core.api.interceptor.Interceptor;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
-
+import org.mule.runtime.core.api.interceptor.Interceptor;
 import org.w3c.dom.Element;
 
 /**

@@ -6,17 +6,16 @@
  */
 package org.mule.test.routing;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.MuleEvent;
+import org.junit.Test;
 import org.mule.functional.junit4.FlowRunner;
+import org.mule.runtime.core.api.MuleEvent;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class DynamicRoundRobinTestCase extends DynamicRouterTestCase
 {
@@ -55,25 +54,25 @@ public class DynamicRoundRobinTestCase extends DynamicRouterTestCase
     public void withRoutesAndCustomId() throws Exception
     {
         initIdentifiableCustomRouteResolver();
-        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object> singletonMap(ID, ID_1), LETTER_A);
-        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object> singletonMap(ID, ID_1), LETTER_B);
-        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object> singletonMap(ID, ID_2), LETTER_A);
-        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object> singletonMap(ID, ID_1), LETTER_C);
-        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object> singletonMap(ID, ID_2), LETTER_B);
-        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object> singletonMap(ID, ID_3), LETTER_A);
-        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object> singletonMap(ID, ID_1), LETTER_D);
-        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object> singletonMap(ID, ID_2), LETTER_C);
+        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object>singletonMap(ID, ID_1), LETTER_A);
+        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object>singletonMap(ID, ID_1), LETTER_B);
+        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object>singletonMap(ID, ID_2), LETTER_A);
+        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object>singletonMap(ID, ID_1), LETTER_C);
+        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object>singletonMap(ID, ID_2), LETTER_B);
+        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object>singletonMap(ID, ID_3), LETTER_A);
+        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object>singletonMap(ID, ID_1), LETTER_D);
+        runFlowAndAssertResponse(DYNAMIC_ROUND_ROBIN_CUSTOM_ID, Collections.<String, Object>singletonMap(ID, ID_2), LETTER_C);
     }
 
     @Test
     public void testMultipleDynamicRouters() throws Exception
     {
         initCustomResolver();
-        runFlowAndAssertResponse(MULTIPLE_ROUND_ROBIN, Collections.<String, Object> singletonMap(FIRST_ROUTER_VAR, FIRST_ROUTER), LETTER_A);
-        runFlowAndAssertResponse(MULTIPLE_ROUND_ROBIN, Collections.<String, Object> singletonMap(FIRST_ROUTER_VAR, FIRST_ROUTER), LETTER_B);
-        runFlowAndAssertResponse(MULTIPLE_ROUND_ROBIN, Collections.<String, Object> singletonMap(FIRST_ROUTER_VAR, !FIRST_ROUTER), LETTER_A);
-        runFlowAndAssertResponse(MULTIPLE_ROUND_ROBIN, Collections.<String, Object> singletonMap(FIRST_ROUTER_VAR, FIRST_ROUTER), LETTER_C);
-        runFlowAndAssertResponse(MULTIPLE_ROUND_ROBIN, Collections.<String, Object> singletonMap(FIRST_ROUTER_VAR, !FIRST_ROUTER), LETTER_B);
+        runFlowAndAssertResponse(MULTIPLE_ROUND_ROBIN, Collections.<String, Object>singletonMap(FIRST_ROUTER_VAR, FIRST_ROUTER), LETTER_A);
+        runFlowAndAssertResponse(MULTIPLE_ROUND_ROBIN, Collections.<String, Object>singletonMap(FIRST_ROUTER_VAR, FIRST_ROUTER), LETTER_B);
+        runFlowAndAssertResponse(MULTIPLE_ROUND_ROBIN, Collections.<String, Object>singletonMap(FIRST_ROUTER_VAR, !FIRST_ROUTER), LETTER_A);
+        runFlowAndAssertResponse(MULTIPLE_ROUND_ROBIN, Collections.<String, Object>singletonMap(FIRST_ROUTER_VAR, FIRST_ROUTER), LETTER_C);
+        runFlowAndAssertResponse(MULTIPLE_ROUND_ROBIN, Collections.<String, Object>singletonMap(FIRST_ROUTER_VAR, !FIRST_ROUTER), LETTER_B);
     }
 
     @Test
@@ -115,9 +114,9 @@ public class DynamicRoundRobinTestCase extends DynamicRouterTestCase
     private MuleEvent runFlowAndAssertResponse(String flowName, Map<String, Object> flowVars, Object expectedMessage) throws Exception
     {
         FlowRunner runner = flowRunner(flowName).withPayload(TEST_MESSAGE);
-        if(flowVars != null)
+        if (flowVars != null)
         {
-            for(String key : flowVars.keySet())
+            for (String key : flowVars.keySet())
             {
                 runner = runner.withFlowVariable(key, flowVars.get(key));
             }

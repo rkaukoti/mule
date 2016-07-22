@@ -6,15 +6,15 @@
  */
 package org.mule.runtime.module.cxf.payload;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.api.connector.DispatchException;
 import org.mule.runtime.module.cxf.CxfOutboundMessageProcessor;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * This is an abstract utility class that helps the testing of
@@ -54,9 +54,9 @@ abstract class AbstractCallAndExpectIllegalArgumentException implements CallAndE
                        + DispatchException.class.getSimpleName(), e instanceof DispatchException);
             assertTrue(here() + ", exception.getCause() {" + e + "} must be a "
                        + IllegalArgumentException.class.getName(),
-                       e.getCause() instanceof IllegalArgumentException);
+                    e.getCause() instanceof IllegalArgumentException);
             assertEquals(here(), expectedIllegalArgumentExceptionMessage(), e.getCause()
-                    .getMessage());
+                                                                             .getMessage());
         }
     }
 

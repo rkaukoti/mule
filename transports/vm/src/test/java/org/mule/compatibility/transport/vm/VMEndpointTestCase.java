@@ -6,14 +6,12 @@
  */
 package org.mule.compatibility.transport.vm;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
 import org.mule.compatibility.core.endpoint.MuleEndpointURI;
-import org.mule.compatibility.transport.vm.VMConnector;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class VMEndpointTestCase extends AbstractMuleContextTestCase
 {

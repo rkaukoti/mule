@@ -50,8 +50,8 @@ public class UnauthorisedException extends SecurityException
     }
 
     @Deprecated
-    public UnauthorisedException(MuleEvent event, SecurityContext context, 
-        URI endpointURI, SecurityFilter filter)
+    public UnauthorisedException(MuleEvent event, SecurityContext context,
+                                 URI endpointURI, SecurityFilter filter)
     {
         super(constructMessage(context, endpointURI, filter), event);
     }

@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.module.xml.config;
 
-import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.OrphanDefinitionParser;
+import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.module.xml.util.NamespaceManager;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * TODO

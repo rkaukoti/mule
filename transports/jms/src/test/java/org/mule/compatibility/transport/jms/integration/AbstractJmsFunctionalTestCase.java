@@ -6,11 +6,6 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.config.spring.SpringXmlConfigurationBuilder;
 import org.mule.runtime.core.api.MuleMessage;
@@ -22,6 +17,8 @@ import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.CollectionUtils;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.net.URL;
@@ -48,50 +45,50 @@ import javax.transaction.HeuristicRollbackException;
 import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
- * This is the base class for all integration tests that are part of the JMS integration test suite.  This is
- * a suite that can be run on multiple JMS providers since all configuration for the provider is abstracted into
- * a single class which implements {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration}.  The implementation
- * of this class is loaded by looking for the classname in a properties file called 'jms-vendor-configs.txt' in the root
- * classpath.
+ * This is the base class for all integration tests that are part of the JMS integration test suite.  This is a suite that can be run on
+ * multiple JMS providers since all configuration for the provider is abstracted into a single class which implements {@link
+ * org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration}.  The implementation of this class is loaded by looking for the
+ * classname in a properties file called 'jms-vendor-configs.txt' in the root classpath.
  * <p/>
- * This test case provides a number of support methods for testing Jms providers with Mule.  This implementation is based
- * around the concept of scenarios.  Scenarios define an action or set of actions and are represented as implementations
- * of {@link org.mule.compatibility.transport.jms.integration.AbstractJmsFunctionalTestCase.Scenario}.  Scenarios can be combined to create
- * a test.  The default scenarios are usually sufficient to create a test.  These are:
- * {@link org.mule.compatibility.transport.jms.integration.AbstractJmsFunctionalTestCase.ScenarioReceive}
- * {@link org.mule.compatibility.transport.jms.integration.AbstractJmsFunctionalTestCase.ScenarioNotReceive}
- * {@link org.mule.compatibility.transport.jms.integration.AbstractJmsFunctionalTestCase.ScenarioCommit}
- * {@link org.mule.compatibility.transport.jms.integration.AbstractJmsFunctionalTestCase.ScenarioRollback}
- * {@link org.mule.compatibility.transport.jms.integration.AbstractJmsFunctionalTestCase.NonTransactedScenario}
+ * This test case provides a number of support methods for testing Jms providers with Mule.  This implementation is based around the concept
+ * of scenarios.  Scenarios define an action or set of actions and are represented as implementations of {@link
+ * org.mule.compatibility.transport.jms.integration.AbstractJmsFunctionalTestCase.Scenario}.  Scenarios can be combined to create a test.
+ * The default scenarios are usually sufficient to create a test.  These are: {@link org.mule.compatibility.transport.jms.integration.AbstractJmsFunctionalTestCase.ScenarioReceive}
+ * {@link org.mule.compatibility.transport.jms.integration.AbstractJmsFunctionalTestCase.ScenarioNotReceive} {@link
+ * org.mule.compatibility.transport.jms.integration.AbstractJmsFunctionalTestCase.ScenarioCommit} {@link
+ * org.mule.compatibility.transport.jms.integration.AbstractJmsFunctionalTestCase.ScenarioRollback} {@link
+ * org.mule.compatibility.transport.jms.integration.AbstractJmsFunctionalTestCase.NonTransactedScenario}
  * <p/>
- * This object will also add properties to the registry that can be accessed within XML config files using placeholders.
- * The following properties are made available -
- * <ul>
- * <li>${inbound.destination} - the URI of the inbound destination (retrieved from an {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li>
- * <li>${outbound.destination} - the URI of the outbound destination (retrieved from an {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li>
- * <li>${middle.destination} - the URI of the middle destination (retrieved from an {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li>
- * <li>${middle2.destination} - the URI of a second middle destination 'middle2'.</li>
- * <li>${middle3.destination} - the URI of a third middle destination 'middle3'.</li>
- * <li>${broadcast.destination} - the URI of the broadcast topic (retrieved from an {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li>
- * <li>${protocol} - the protocol of the current messaging connector (retrieved from an {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li>
- * </ul>
+ * This object will also add properties to the registry that can be accessed within XML config files using placeholders. The following
+ * properties are made available - <ul> <li>${inbound.destination} - the URI of the inbound destination (retrieved from an {@link
+ * org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li> <li>${outbound.destination} - the URI of
+ * the outbound destination (retrieved from an {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration}
+ * implementation)</li> <li>${middle.destination} - the URI of the middle destination (retrieved from an {@link
+ * org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li> <li>${middle2.destination} - the URI of a
+ * second middle destination 'middle2'.</li> <li>${middle3.destination} - the URI of a third middle destination 'middle3'.</li>
+ * <li>${broadcast.destination} - the URI of the broadcast topic (retrieved from an {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration}
+ * implementation)</li> <li>${protocol} - the protocol of the current messaging connector (retrieved from an {@link
+ * org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li> </ul>
  * <p/>
- * For each integration test there are 2 configuration files. One is provided by the JMS integration suite and defines the
- * event flow for the test. The other is a vendor-specific config file that defines the connectors and possibly endpoints and
- * transformers for the Jms connector being tested. These configurations are known as 'connector' files, they share the same
- * file name as the generic configuration file prepended with 'connector-'.  The location of these files must be
+ * For each integration test there are 2 configuration files. One is provided by the JMS integration suite and defines the event flow for
+ * the test. The other is a vendor-specific config file that defines the connectors and possibly endpoints and transformers for the Jms
+ * connector being tested. These configurations are known as 'connector' files, they share the same file name as the generic configuration
+ * file prepended with 'connector-'.  The location of these files must be
  * <p/>
  * <code>integration/&lt;provider_name>/connector-&lt;event_flow_config_name></code>
  * <p/>
  * The 'provider_name' is obtained from the {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation.
  * <p/>
- * In order to know what objects to define in the 'connector-' files you must copy the connector files from the ActiveMQ (default)
- * test suite and configure the objects to match the configuration in the ActiveMQ tests.  Note that the object names must
- * be consistently the same for things to work.
+ * In order to know what objects to define in the 'connector-' files you must copy the connector files from the ActiveMQ (default) test
+ * suite and configure the objects to match the configuration in the ActiveMQ tests.  Note that the object names must be consistently the
+ * same for things to work.
  */
 public abstract class AbstractJmsFunctionalTestCase extends FunctionalTestCase
 {
@@ -126,19 +123,32 @@ public abstract class AbstractJmsFunctionalTestCase extends FunctionalTestCase
      */
     private boolean multipleProviders = true;
 
+    public AbstractJmsFunctionalTestCase()
+    {
+        // TODO jmsProviderConfigs() can return more than one provider, but our test class can only handle one at a time
+        this(((JmsVendorConfiguration[]) jmsProviderConfigs().iterator().next())[0]);
+    }
+
+    public AbstractJmsFunctionalTestCase(JmsVendorConfiguration config)
+    {
+        setJmsConfig(config);
+        scenarioNoTx = new NonTransactedScenario();
+        scenarioCommit = new ScenarioCommit();
+        scenarioRollback = new ScenarioRollback();
+        scenarioNotReceive = new ScenarioNotReceive();
+        scenarioReceive = new ScenarioReceive();
+    }
+
     /**
      * Finds the {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} instances to test with by looking
      * in a file called "jms-vendor-configs.txt" which contains one or more fuly qualified classnames of
      * {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} instances to load.
      *
-     * @return a collection of {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} instance to test
-     * against.
+     * @return a collection of {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} instance to test against.
+     * @throws Exception if the 'jms-vendor-configs.txt' cannot be loaded or the classes defined within that file are not on the classpath
      *
-     * @throws Exception if the 'jms-vendor-configs.txt' cannot be loaded or the classes defined within that file
-     * are not on the classpath
-     *
-     * TODO this method can return more than one provider, but our test class can only handle one at a time
-     * IMPORTANT: Only set one class in 'jms-vendor-configs.txt'
+     *                   TODO this method can return more than one provider, but our test class can only handle one at a time IMPORTANT:
+     *                   Only set one class in 'jms-vendor-configs.txt'
      */
     public static Collection<?> jmsProviderConfigs()
     {
@@ -177,34 +187,18 @@ public abstract class AbstractJmsFunctionalTestCase extends FunctionalTestCase
         }
     }
 
-    public AbstractJmsFunctionalTestCase()
-    {
-        // TODO jmsProviderConfigs() can return more than one provider, but our test class can only handle one at a time
-        this(((JmsVendorConfiguration[]) jmsProviderConfigs().iterator().next())[0]);
-    }
-
-    public AbstractJmsFunctionalTestCase(JmsVendorConfiguration config)
-    {
-        setJmsConfig(config);
-        scenarioNoTx = new NonTransactedScenario();
-        scenarioCommit = new ScenarioCommit();
-        scenarioRollback = new ScenarioRollback();
-        scenarioNotReceive = new ScenarioNotReceive();
-        scenarioReceive = new ScenarioReceive();
-    }
-
     /**
      * Adds the following properties to the registry so that the Xml configuration files can reference them.
      * <p/>
-     * <ul>
-     * <li>${inbound.destination} - the URI of the inbound destination (retrieved from an {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li>
-     * <li>${outbound.destination} - the URI of the outbound destination (retrieved from an {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li>
-     * <li>${middle.destination} - the URI of the middle destination (retrieved from an {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li>
-     * <li>${middle2.destination} - the URI of a second middle destination 'middle2'.</li>
-     * <li>${middle3.destination} - the URI of a third middle destination 'middle3'.</li>
-     * <li>${broadcast.destination} - the URI of the broadcast topic (retrieved from an {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li>
-     * <li>${protocol} - the protocol of the current messaging connector (retrieved from an {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li>
-     * </ul>
+     * <ul> <li>${inbound.destination} - the URI of the inbound destination (retrieved from an {@link
+     * org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li> <li>${outbound.destination} - the URI
+     * of the outbound destination (retrieved from an {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration}
+     * implementation)</li> <li>${middle.destination} - the URI of the middle destination (retrieved from an {@link
+     * org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li> <li>${middle2.destination} - the URI of
+     * a second middle destination 'middle2'.</li> <li>${middle3.destination} - the URI of a third middle destination 'middle3'.</li>
+     * <li>${broadcast.destination} - the URI of the broadcast topic (retrieved from an {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration}
+     * implementation)</li> <li>${protocol} - the protocol of the current messaging connector (retrieved from an {@link
+     * org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration} implementation)</li> </ul>
      */
     @Override
     protected Properties getStartUpProperties()
@@ -234,7 +228,6 @@ public abstract class AbstractJmsFunctionalTestCase extends FunctionalTestCase
      * class which implements {@link #getConfigFile()}).
      *
      * @return The config builder used to create the Mule instance for this test
-     * @throws Exception
      */
     @Override
     protected ConfigurationBuilder getBuilder() throws Exception
@@ -251,9 +244,9 @@ public abstract class AbstractJmsFunctionalTestCase extends FunctionalTestCase
 
             String resources = configFile.substring(configFile.lastIndexOf("/") + 1);
             resources = String.format("integration/%s/connector-%s",
-                                      getJmsConfig().getName(), resources);
+                    getJmsConfig().getName(), resources);
 
-            String[] configFiles = new String[] { resources, configFile };
+            String[] configFiles = new String[] {resources, configFile};
             SpringXmlConfigurationBuilder builder = new SpringXmlConfigurationBuilder(configFiles);
             return builder;
         }
@@ -305,8 +298,7 @@ public abstract class AbstractJmsFunctionalTestCase extends FunctionalTestCase
      * Create a connection factory for the Jms profider being tested.  This calls
      * through to {@link org.mule.compatibility.transport.jms.integration.JmsVendorConfiguration#getConnection(boolean, boolean)}
      *
-     * @param topic whether to use a topic or queue connection factory, for 1.1
-     *              implementations this proerty can be ignored
+     * @param topic whether to use a topic or queue connection factory, for 1.1 implementations this proerty can be ignored
      * @param xa    whether to create an XA connection factory
      * @return a new JMS connection
      */
@@ -465,7 +457,7 @@ public abstract class AbstractJmsFunctionalTestCase extends FunctionalTestCase
         assertNull(result.getExceptionPayload());
         byte[] bytes = getPayloadAsBytes(result);
         assertEquals("Wrong number of bytes", expected.length, bytes.length);
-        for (int i=0; i < expected.length; ++i)
+        for (int i = 0; i < expected.length; ++i)
         {
             assertEquals("Byte #" + i + " does not match", expected[i], bytes[i]);
         }
@@ -644,6 +636,7 @@ public abstract class AbstractJmsFunctionalTestCase extends FunctionalTestCase
      * other tests may still exist from other tests' runs.
      * <p/>
      * Well-behaving tests should drain both inbound and outbound destinations, as well as any intermediary ones.
+     *
      * @param destination destination name without any protocol specifics
      */
     protected void purge(final String destination) throws JMSException
@@ -694,7 +687,6 @@ public abstract class AbstractJmsFunctionalTestCase extends FunctionalTestCase
     /**
      * Purge all of the topics which are created during testing
      * TODO DZ: we should be getting this list dynamically, and only calling them for the topic tests
-     * @throws Exception
      */
     protected void purgeTopics() throws Exception
     {
@@ -803,11 +795,11 @@ public abstract class AbstractJmsFunctionalTestCase extends FunctionalTestCase
 
         void send(Session session, MessageProducer producer)
                 throws JMSException, SystemException, HeuristicMixedException, HeuristicRollbackException,
-                       RollbackException;
+                RollbackException;
 
         Message receive(Session session, MessageConsumer consumer)
                 throws JMSException, SystemException, HeuristicMixedException, HeuristicRollbackException,
-                       RollbackException;
+                RollbackException;
 
         boolean isTransacted();
     }
@@ -837,15 +829,15 @@ public abstract class AbstractJmsFunctionalTestCase extends FunctionalTestCase
         }
 
         @Override
-        public String getOutputDestinationName()
-        {
-            return outputQueue;
-        }
-
-        @Override
         public void setInputDestinationName(String inputQueue)
         {
             this.inputQueue = inputQueue;
+        }
+
+        @Override
+        public String getOutputDestinationName()
+        {
+            return outputQueue;
         }
 
         @Override

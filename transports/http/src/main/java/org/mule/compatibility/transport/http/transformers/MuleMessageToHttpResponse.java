@@ -6,12 +6,12 @@
  */
 package org.mule.compatibility.transport.http.transformers;
 
-import static java.lang.String.valueOf;
-import static org.mule.compatibility.transport.http.HttpConstants.CUSTOM_HEADER_PREFIX;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_GROUP_SIZE_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_ID_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_SEQUENCE_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROPERTY;
+import org.apache.commons.httpclient.Cookie;
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpVersion;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.mule.compatibility.transport.http.CookieHelper;
 import org.mule.compatibility.transport.http.HttpConnector;
 import org.mule.compatibility.transport.http.HttpConstants;
@@ -36,32 +36,31 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.commons.httpclient.Cookie;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpVersion;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import static java.lang.String.valueOf;
+import static org.mule.compatibility.transport.http.HttpConstants.CUSTOM_HEADER_PREFIX;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_GROUP_SIZE_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_ID_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_SEQUENCE_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROPERTY;
 
 /**
  * Converts a {@link MuleMessage} into an Http response.
  */
 public class MuleMessageToHttpResponse extends AbstractMessageTransformer
 {
-    
-    private static DateTimeFormatter dateFormatter = DateTimeFormat.forPattern(HttpConstants.DATE_FORMAT_RFC822).withLocale(Locale.US);
-    
-    public static String formatDate(long time)
-    {
-        return dateFormatter.print(time);
-    }
 
+    private static DateTimeFormatter dateFormatter = DateTimeFormat.forPattern(HttpConstants.DATE_FORMAT_RFC822).withLocale(Locale.US);
     private String server;
 
     public MuleMessageToHttpResponse()
     {
         registerSourceType(DataType.OBJECT);
         setReturnDataType(DataType.fromType(HttpResponse.class));
+    }
+
+    public static String formatDate(long time)
+    {
+        return dateFormatter.print(time);
     }
 
     @Override
@@ -115,7 +114,7 @@ public class MuleMessageToHttpResponse extends AbstractMessageTransformer
 
             // Ensure there's a content length or transfer encoding header
             if (!response.containsHeader(HttpConstants.HEADER_CONTENT_LENGTH)
-                    && !response.containsHeader(HttpConstants.HEADER_TRANSFER_ENCODING))
+                && !response.containsHeader(HttpConstants.HEADER_TRANSFER_ENCODING))
             {
                 if (response.hasBody())
                 {
@@ -260,7 +259,7 @@ public class MuleMessageToHttpResponse extends AbstractMessageTransformer
                     for (Cookie cookie : arrayOfCookies)
                     {
                         response.addHeader(new Header(headerName,
-                            CookieHelper.formatCookieForASetCookieHeader(cookie)));
+                                CookieHelper.formatCookieForASetCookieHeader(cookie)));
                     }
                 }
             }
@@ -273,7 +272,7 @@ public class MuleMessageToHttpResponse extends AbstractMessageTransformer
                 }
             }
         }
-        
+
         Map customHeaders = msg.getOutboundProperty(HttpConnector.HTTP_CUSTOM_HEADERS_MAP_PROPERTY);
         if (customHeaders != null)
         {
@@ -302,8 +301,12 @@ public class MuleMessageToHttpResponse extends AbstractMessageTransformer
         msg.getCorrelation().getId().ifPresent(v ->
         {
             response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_ID_PROPERTY, v));
-            msg.getCorrelation().getGroupSize().ifPresent(s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_GROUP_SIZE_PROPERTY, valueOf(s))));
-            msg.getCorrelation().getSequence().ifPresent(s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_SEQUENCE_PROPERTY, valueOf(s))));
+            msg.getCorrelation()
+               .getGroupSize()
+               .ifPresent(s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_GROUP_SIZE_PROPERTY, valueOf(s))));
+            msg.getCorrelation()
+               .getSequence()
+               .ifPresent(s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_SEQUENCE_PROPERTY, valueOf(s))));
         });
         if (msg.getReplyTo() != null)
         {

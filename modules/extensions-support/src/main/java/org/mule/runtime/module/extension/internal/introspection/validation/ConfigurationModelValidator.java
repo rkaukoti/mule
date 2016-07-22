@@ -6,7 +6,9 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
-import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
+
 import org.mule.runtime.extension.api.exception.IllegalModelDefinitionException;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
 import org.mule.runtime.extension.api.introspection.config.ConfigurationFactory;
@@ -16,8 +18,7 @@ import org.mule.runtime.extension.api.introspection.operation.OperationModel;
 import org.mule.runtime.module.extension.internal.exception.IllegalConfigurationModelDefinitionException;
 import org.mule.runtime.module.extension.internal.model.property.ConfigTypeModelProperty;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ListMultimap;
+import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
 
 /**
  * {@link ModelValidator} which applies to {@link ExtensionModel}s which contains
@@ -45,12 +46,14 @@ public final class ConfigurationModelValidator implements ModelValidator
 
             for (Class clazz : configParams.keySet())
             {
-                final ConfigurationFactory configurationFactory = ((RuntimeConfigurationModel) configurationModel).getConfigurationFactory();
+                final ConfigurationFactory configurationFactory =
+                        ((RuntimeConfigurationModel) configurationModel).getConfigurationFactory();
                 if (!clazz.isAssignableFrom(configurationFactory.getObjectType()))
                 {
-                    throw new IllegalConfigurationModelDefinitionException(String.format("Extension '%s' defines the '%s' configuration. However, the extension's operations %s expect configurations of type '%s'. " +
-                                                                                         "Please make sure that all configurations in the extension can be used with all its operations.",
-                                                                                         model.getName(), configurationFactory.getObjectType(), clazz, configParams.get(clazz)));
+                    throw new IllegalConfigurationModelDefinitionException(String.format(
+                            "Extension '%s' defines the '%s' configuration. However, the extension's operations %s expect configurations of type '%s'. " +
+                            "Please make sure that all configurations in the extension can be used with all its operations.",
+                            model.getName(), configurationFactory.getObjectType(), clazz, configParams.get(clazz)));
                 }
             }
         }
@@ -63,8 +66,8 @@ public final class ConfigurationModelValidator implements ModelValidator
         for (OperationModel operationModel : model.getOperationModels())
         {
             operationModel.getModelProperty(ConfigTypeModelProperty.class)
-                    .ifPresent(modelProperty -> operationsByConfig.put(getType(modelProperty.getConfigType()),
-                                                                       operationModel.getName()));
+                          .ifPresent(modelProperty -> operationsByConfig.put(getType(modelProperty.getConfigType()),
+                                  operationModel.getName()));
         }
 
         return operationsByConfig;

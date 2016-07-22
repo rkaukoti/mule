@@ -6,7 +6,7 @@
  */
 package org.mule.runtime.core.api.security.tls;
 
-import static org.mule.runtime.core.api.config.MuleProperties.SYSTEM_PROPERTY_PREFIX;
+import org.apache.commons.lang.BooleanUtils;
 import org.mule.runtime.core.api.lifecycle.CreateException;
 import org.mule.runtime.core.api.security.TlsDirectKeyStore;
 import org.mule.runtime.core.api.security.TlsDirectTrustStore;
@@ -17,6 +17,8 @@ import org.mule.runtime.core.util.FileUtils;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.core.util.SecurityUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,9 +38,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
-import org.apache.commons.lang.BooleanUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.config.MuleProperties.SYSTEM_PROPERTY_PREFIX;
 
 /**
  * Support for configuring TLS/SSL connections.
@@ -103,7 +103,7 @@ import org.slf4j.LoggerFactory;
  * in {@link TlsPropertiesMapper} correctly handles the asymmetry, so an initial call to
  * {@link TlsConfiguration} uses the keystore defined via {@link TlsDirectKeyStore}, but
  * when a {@link TlsConfiguration} is retrieved from System proerties using
- * {@link TlsPropertiesMapper#readFromProperties(TlsConfiguration,java.util.Properties)}
+ * {@link TlsPropertiesMapper#readFromProperties(TlsConfiguration, java.util.Properties)}
  * the "indirect" properties are supplied as "direct" values, meaning that the "indirect"
  * socket factory can be retrieved from {@link #getKeyManagerFactory()}.  It just works.</p>
  */
@@ -179,6 +179,26 @@ public final class TlsConfiguration
     // i think the names are clearer.  the API names for the accessors are historical
     // and not a close fit to actual use (imho).
 
+    private static void assertNotNull(Object value, String message)
+    {
+        if (null == value)
+        {
+            throw new IllegalArgumentException(message);
+        }
+    }
+
+    private static String defaultForNull(String value, String deflt)
+    {
+        if (null == value)
+        {
+            return deflt;
+        }
+        else
+        {
+            return value;
+        }
+    }
+
     /**
      * @param anon      If the connection is anonymous then we don't care about client keys
      * @param namespace Namespace to use for global properties (for JSSE use JSSE_NAMESPACE)
@@ -253,7 +273,7 @@ public final class TlsConfiguration
         }
     }
 
-    protected  KeyStore loadKeyStore() throws GeneralSecurityException, IOException
+    protected KeyStore loadKeyStore() throws GeneralSecurityException, IOException
     {
         KeyStore tempKeyStore = KeyStore.getInstance(keystoreType);
 
@@ -261,7 +281,7 @@ public final class TlsConfiguration
         if (null == is)
         {
             throw new FileNotFoundException(
-                CoreMessages.cannotLoadFromClasspath("Keystore: " + keyStoreName).getMessage());
+                    CoreMessages.cannotLoadFromClasspath("Keystore: " + keyStoreName).getMessage());
         }
 
         tempKeyStore.load(is, keyStorePassword.toCharArray());
@@ -335,27 +355,6 @@ public final class TlsConfiguration
                 throw new CreateException(
                         CoreMessages.failedToLoad("Trust Manager (" + trustManagerAlgorithm + ")"), e, this);
             }
-        }
-    }
-
-
-    private static void assertNotNull(Object value, String message)
-    {
-        if (null == value)
-        {
-            throw new IllegalArgumentException(message);
-        }
-    }
-
-    private static String defaultForNull(String value, String deflt)
-    {
-        if (null == value)
-        {
-            return deflt;
-        }
-        else
-        {
-            return value;
         }
     }
 
@@ -528,15 +527,15 @@ public final class TlsConfiguration
     }
 
     @Override
-    public void setClientKeyStoreType(String clientKeyStoreType)
-    {
-        this.clientKeyStoreType = clientKeyStoreType;
-    }
-
-    @Override
     public String getClientKeyStoreType()
     {
         return clientKeyStoreType;
+    }
+
+    @Override
+    public void setClientKeyStoreType(String clientKeyStoreType)
+    {
+        this.clientKeyStoreType = clientKeyStoreType;
     }
 
     // access to trust store variables
@@ -671,7 +670,9 @@ public final class TlsConfiguration
         {
             return false;
         }
-        if (clientKeyStorePassword != null ? !clientKeyStorePassword.equals(that.clientKeyStorePassword) : that.clientKeyStorePassword != null)
+        if (clientKeyStorePassword != null ?
+                !clientKeyStorePassword.equals(that.clientKeyStorePassword) :
+                that.clientKeyStorePassword != null)
         {
             return false;
         }

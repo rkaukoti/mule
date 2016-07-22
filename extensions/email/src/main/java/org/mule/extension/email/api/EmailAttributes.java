@@ -6,11 +6,11 @@
  */
 package org.mule.extension.email.api;
 
-import org.mule.runtime.api.message.MuleMessage;
-import org.mule.runtime.core.message.BaseAttributes;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+
+import org.mule.runtime.api.message.MuleMessage;
+import org.mule.runtime.core.message.BaseAttributes;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -267,8 +267,7 @@ public class EmailAttributes extends BaseAttributes
     }
 
     /**
-     * @return an {@link EmailFlags} object containing the flags setted
-     * in the email.
+     * @return an {@link EmailFlags} object containing the flags setted in the email.
      */
     public EmailFlags getFlags()
     {

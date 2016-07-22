@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.module.management.agent;
 
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.DOMAIN;
-
 import org.mule.runtime.core.AbstractAgent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.agent.Agent;
@@ -17,6 +14,8 @@ import org.mule.runtime.core.api.registry.MuleRegistry;
 import org.mule.runtime.core.api.registry.RegistrationException;
 import org.mule.runtime.core.config.bootstrap.ArtifactType;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.rmi.server.RMIClientSocketFactory;
 import java.text.MessageFormat;
@@ -25,17 +24,15 @@ import java.util.Map;
 
 import javax.management.remote.rmi.RMIConnectorServer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.DOMAIN;
 
 public class DefaultJmxSupportAgent extends AbstractAgent
 {
 
-    private static final Logger logger = LoggerFactory.getLogger(DefaultJmxSupportAgent.class);
-
     public static final String DEFAULT_HOST = "localhost";
     public static final String DEFAULT_PORT = "1099";
-
+    private static final Logger logger = LoggerFactory.getLogger(DefaultJmxSupportAgent.class);
     private final boolean loadLog4jAgent = false;
     private boolean loadJdmkAgent = false;
     private boolean loadMx4jAgent = false;
@@ -44,17 +41,16 @@ public class DefaultJmxSupportAgent extends AbstractAgent
     private String host;
 
     private ConfigurableJMXAuthenticator jmxAuthenticator;
-
-    public DefaultJmxSupportAgent()
-    {
-        super("jmx-default-config");
-    }
-
     /**
      * Username/password combinations for JMX Remoting
      * authentication.
      */
     private Map<String, String> credentials = new HashMap<String, String>();
+
+    public DefaultJmxSupportAgent()
+    {
+        super("jmx-default-config");
+    }
 
     /**
      * Should be a 1 line description of the agent
@@ -104,8 +100,7 @@ public class DefaultJmxSupportAgent extends AbstractAgent
      * There is no guarantee that by throwing a Recoverable exception that the Mule
      * instance will not shut down.
      *
-     * @throws org.mule.runtime.core.api.lifecycle.InitialisationException if a fatal error occurs
-     *                                                        causing the Mule instance to shutdown
+     * @throws org.mule.runtime.core.api.lifecycle.InitialisationException if a fatal error occurs causing the Mule instance to shutdown
      */
     @Override
     public void initialise() throws InitialisationException
@@ -223,7 +218,7 @@ public class DefaultJmxSupportAgent extends AbstractAgent
 
             RMIClientSocketFactory factory = new FixedHostRmiClientSocketFactory(host);
             mergedProps.put(RMIConnectorServer.RMI_CLIENT_SOCKET_FACTORY_ATTRIBUTE,
-                            factory);
+                    factory);
             agent.setConnectorServerProperties(mergedProps);
         }
 
@@ -231,8 +226,8 @@ public class DefaultJmxSupportAgent extends AbstractAgent
         if (StringUtils.isBlank(remotingUri))
         {
             remotingUri = MessageFormat.format("service:jmx:rmi:///jndi/rmi://{0}:{1}/server",
-                                               StringUtils.defaultString(host, DEFAULT_HOST),
-                                               StringUtils.defaultString(port, DEFAULT_PORT));
+                    StringUtils.defaultString(host, DEFAULT_HOST),
+                    StringUtils.defaultString(port, DEFAULT_PORT));
         }
 
         if (credentials != null && !credentials.isEmpty())

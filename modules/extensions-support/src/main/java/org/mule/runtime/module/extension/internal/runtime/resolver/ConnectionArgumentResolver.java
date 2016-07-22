@@ -6,15 +6,16 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.CONNECTION_PARAM;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionHandler;
+import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.runtime.extension.api.runtime.operation.OperationContext;
 import org.mule.runtime.module.extension.internal.ExtensionProperties;
 import org.mule.runtime.module.extension.internal.runtime.OperationContextAdapter;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.CONNECTION_PARAM;
 
 /**
  * Returns the value of the {@link ExtensionProperties#CONNECTION_PARAM} variable,
@@ -49,9 +50,10 @@ public class ConnectionArgumentResolver implements ArgumentResolver<Object>
         }
         catch (ConnectionException e)
         {
-            throw new MuleRuntimeException(MessageFactory.createStaticMessage(String.format("Error was found trying to obtain a connection to execute operation '%s' of extension '%s'",
-                                                                                            operationContext.getOperationModel().getName(),
-                                                                                            operationContext.getConfiguration().getModel().getExtensionModel().getName())), e);
+            throw new MuleRuntimeException(MessageFactory.createStaticMessage(
+                    String.format("Error was found trying to obtain a connection to execute operation '%s' of extension '%s'",
+                            operationContext.getOperationModel().getName(),
+                            operationContext.getConfiguration().getModel().getExtensionModel().getName())), e);
         }
     }
 }

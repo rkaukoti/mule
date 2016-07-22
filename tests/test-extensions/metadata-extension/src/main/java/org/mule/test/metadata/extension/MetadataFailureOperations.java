@@ -19,10 +19,11 @@ public class MetadataFailureOperations extends MetadataOperationsParent
 {
 
     // MetadataResolver throws MetadataResolvingException
-    @MetadataScope( keysResolver = TestMetadataResolverMetadataResolvingFailure.class,
-                    contentResolver = TestMetadataResolverMetadataResolvingFailure.class,
-                    outputResolver = TestMetadataResolverMetadataResolvingFailure.class)
-    public Object failWithResolvingException(@Connection MetadataConnection connection, @MetadataKeyId String type, @Optional @Content Object content)
+    @MetadataScope(keysResolver = TestMetadataResolverMetadataResolvingFailure.class,
+            contentResolver = TestMetadataResolverMetadataResolvingFailure.class,
+            outputResolver = TestMetadataResolverMetadataResolvingFailure.class)
+    public Object failWithResolvingException(@Connection MetadataConnection connection, @MetadataKeyId String type,
+                                             @Optional @Content Object content)
     {
         return null;
     }
@@ -35,10 +36,11 @@ public class MetadataFailureOperations extends MetadataOperationsParent
 
     // Resolver for content and output type
     // With keysResolver and KeyParam
-    @MetadataScope( keysResolver = TestMetadataResolverRuntimeExceptionFailure.class,
-                    contentResolver = TestMetadataResolverRuntimeExceptionFailure.class,
-                    outputResolver = TestMetadataResolverRuntimeExceptionFailure.class)
-    public Object failWithRuntimeException(@Connection MetadataConnection connection, @MetadataKeyId String type, @Optional @Content Object content)
+    @MetadataScope(keysResolver = TestMetadataResolverRuntimeExceptionFailure.class,
+            contentResolver = TestMetadataResolverRuntimeExceptionFailure.class,
+            outputResolver = TestMetadataResolverRuntimeExceptionFailure.class)
+    public Object failWithRuntimeException(@Connection MetadataConnection connection, @MetadataKeyId String type,
+                                           @Optional @Content Object content)
     {
         return null;
     }

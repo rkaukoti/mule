@@ -24,7 +24,7 @@ public class DefaultTcpServerSocketProperties implements TcpServerSocketProperti
 
     // These options are undefined by default so that java.net.Socket/java.net.ServerSocket defaults are used.  We do
     // however document the java.net.Socket/java.net.ServerSocket defaults in the schema for usability.
-    private Integer serverTimeout ;
+    private Integer serverTimeout;
     private Integer timeout;
     private Integer linger;
 

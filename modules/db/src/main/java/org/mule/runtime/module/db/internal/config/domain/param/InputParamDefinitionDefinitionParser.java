@@ -8,7 +8,6 @@
 package org.mule.runtime.module.db.internal.config.domain.param;
 
 import org.mule.runtime.module.db.internal.domain.param.DefaultInputQueryParam;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;

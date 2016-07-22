@@ -6,20 +6,10 @@
  */
 package org.mule.runtime.module.json.transformers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
-
-import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSResourceResolver;
@@ -27,47 +17,56 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 public class JsonSchemaXsdValidationTestCase extends AbstractMuleContextTestCase
 {
     private static final String EXPECTED_JSON =
-        "{" +
-        "    \"cust:customer\" : {" +
-        "        \"@xmlns:cust\" : \"http:customer.com\"," +
-        "        \"cust:id\" : \"112\"," +
-        "        \"cust:first-name\" : \"Jane\"," +
-        "        \"cust:last-name\" : \"Doe\"," +
-        "        \"cust:address\" : {" +
-        "           \"cust:street\" : \"123 A Street\"" +
-        "        }," +
-        "        \"cust:phone-number\" : [ {" +
-        "            \"@type\" : \"work\"," +
-        "            \"$\" : \"555-1111\"" +
-        "        }, {" +
-        "            \"@type\" : \"cell\"," +
-        "            \"$\" : \"555-2222\"" +
-        "        } ]" +
-        "    }" +
-        "}";
+            "{" +
+            "    \"cust:customer\" : {" +
+            "        \"@xmlns:cust\" : \"http:customer.com\"," +
+            "        \"cust:id\" : \"112\"," +
+            "        \"cust:first-name\" : \"Jane\"," +
+            "        \"cust:last-name\" : \"Doe\"," +
+            "        \"cust:address\" : {" +
+            "           \"cust:street\" : \"123 A Street\"" +
+            "        }," +
+            "        \"cust:phone-number\" : [ {" +
+            "            \"@type\" : \"work\"," +
+            "            \"$\" : \"555-1111\"" +
+            "        }, {" +
+            "            \"@type\" : \"cell\"," +
+            "            \"$\" : \"555-2222\"" +
+            "        } ]" +
+            "    }" +
+            "}";
 
     private static final String BAD_JSON =
-        "{\n" +
-        "  \"cust:customer\" : {\n" +
-        "    \"@xmlns:cust\" : \"http:customer.com\",\n" +
-        "    \"cust:ID\" : \"112\",\n" +
-        "    \"cust:first-name\" : \"Jane\",\n" +
-        "    \"cust:last-name\" : \"Doe\",\n" +
-        "    \"cust:address\" : {\n" +
-        "      \"cust:street\" : \"123 A Street\"\n" +
-        "    },\n" +
-        "    \"cust:phone-number\" : [ {\n" +
-        "      \"@type\" : \"work\",\n" +
-        "      \"$\" : \"555-1111\"\n" +
-        "    }, {\n" +
-        "      \"@type\" : \"cell\",\n" +
-        "      \"$\" : \"555-2222\"\n" +
-        "    } ]\n" +
-        "  }\n" +
-        "}";
+            "{\n" +
+            "  \"cust:customer\" : {\n" +
+            "    \"@xmlns:cust\" : \"http:customer.com\",\n" +
+            "    \"cust:ID\" : \"112\",\n" +
+            "    \"cust:first-name\" : \"Jane\",\n" +
+            "    \"cust:last-name\" : \"Doe\",\n" +
+            "    \"cust:address\" : {\n" +
+            "      \"cust:street\" : \"123 A Street\"\n" +
+            "    },\n" +
+            "    \"cust:phone-number\" : [ {\n" +
+            "      \"@type\" : \"work\",\n" +
+            "      \"$\" : \"555-1111\"\n" +
+            "    }, {\n" +
+            "      \"@type\" : \"cell\",\n" +
+            "      \"$\" : \"555-2222\"\n" +
+            "    } ]\n" +
+            "  }\n" +
+            "}";
 
     private JsonSchemaValidationFilter filter;
     private CountingErrorHandler errorHandler;
@@ -167,7 +166,8 @@ public class JsonSchemaXsdValidationTestCase extends AbstractMuleContextTestCase
 
     private static class Resolver implements LSResourceResolver
     {
-        private String schema = IOUtils.toString(JsonSchemaXsdValidationTestCase.class.getClassLoader().getResourceAsStream("customer.xsd"));
+        private String schema =
+                IOUtils.toString(JsonSchemaXsdValidationTestCase.class.getClassLoader().getResourceAsStream("customer.xsd"));
 
         @Override
         public LSInput resolveResource(String type, String namespaceURI, String publicId, String systemId, String baseURI)

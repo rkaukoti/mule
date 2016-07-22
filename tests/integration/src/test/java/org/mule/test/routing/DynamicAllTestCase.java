@@ -6,16 +6,15 @@
  */
 package org.mule.test.routing;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 
 import java.util.List;
 
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class DynamicAllTestCase extends DynamicRouterTestCase
 {

@@ -6,16 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.operation;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.api.metadata.MediaType.ANY;
-import static org.mule.runtime.core.message.NullAttributes.NULL_ATTRIBUTES;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.api.message.Attributes;
 import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.api.metadata.MediaType;
@@ -26,11 +21,16 @@ import org.mule.runtime.module.extension.internal.runtime.OperationContextAdapte
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.api.metadata.MediaType.ANY;
+import static org.mule.runtime.core.message.NullAttributes.NULL_ATTRIBUTES;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)

@@ -6,20 +6,19 @@
  */
 package org.mule.runtime.module.http.internal.listener.matcher;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.runtime.module.http.internal.domain.request.HttpRequestBuilder;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class MethodRequestMatcherTestCase extends AbstractMuleTestCase
 {
 
-    @Test(expected =  IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void doNotAcceptsNull()
     {
         new MethodRequestMatcher(null);

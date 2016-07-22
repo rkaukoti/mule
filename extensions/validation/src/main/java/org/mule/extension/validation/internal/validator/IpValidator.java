@@ -6,13 +6,14 @@
  */
 package org.mule.extension.validation.internal.validator;
 
-import static org.mule.extension.validation.internal.ImmutableValidationResult.ok;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.config.i18n.Message;
+import com.google.common.net.InetAddresses;
+
 import org.mule.extension.validation.api.ValidationResult;
 import org.mule.extension.validation.internal.ValidationContext;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.config.i18n.Message;
 
-import com.google.common.net.InetAddresses;
+import static org.mule.extension.validation.internal.ImmutableValidationResult.ok;
 
 /**
  * A {@link AbstractValidator} which checks that a given
@@ -38,8 +39,8 @@ public class IpValidator extends AbstractValidator
     public ValidationResult validate(MuleEvent event)
     {
         return InetAddresses.isInetAddress(ip)
-               ? ok()
-               : fail();
+                ? ok()
+                : fail();
     }
 
     @Override

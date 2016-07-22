@@ -6,17 +6,16 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 import org.mule.compatibility.core.transport.AbstractConnector;
 import org.mule.compatibility.core.transport.ConnectorLifecycleManager;
-import org.mule.compatibility.transport.http.HttpConnector;
-import org.mule.compatibility.transport.http.HttpRequestDispatcher;
-import org.mule.compatibility.transport.http.HttpRequestDispatcherWork;
 import org.mule.runtime.core.api.context.WorkManager;
 import org.mule.runtime.core.api.exception.SystemExceptionHandler;
 import org.mule.runtime.core.api.retry.RetryCallback;
@@ -35,14 +34,11 @@ import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
@@ -96,7 +92,8 @@ public class HttpRequestDispatcherTestCase extends AbstractMuleTestCase
     @Test
     public void closeServerSocketWhenDisconnect() throws IOException
     {
-        HttpRequestDispatcher httpRequestDispatcher = new HttpRequestDispatcher(mockHttpConnector, mockRetryTemplate, mockServerSocket, mockWorkManager);
+        HttpRequestDispatcher httpRequestDispatcher =
+                new HttpRequestDispatcher(mockHttpConnector, mockRetryTemplate, mockServerSocket, mockWorkManager);
         httpRequestDispatcher.disconnect();
         verify(mockServerSocket, times(1)).close();
     }
@@ -104,7 +101,8 @@ public class HttpRequestDispatcherTestCase extends AbstractMuleTestCase
     @Test
     public void whenFailureCallSystemExceptionHandler() throws Exception
     {
-        final HttpRequestDispatcher httpRequestDispatcher = new HttpRequestDispatcher(mockHttpConnector, mockRetryTemplate, mockServerSocket, mockWorkManager);
+        final HttpRequestDispatcher httpRequestDispatcher =
+                new HttpRequestDispatcher(mockHttpConnector, mockRetryTemplate, mockServerSocket, mockWorkManager);
         final Latch acceptCalledLath = new Latch();
         sustituteLifecycleManager();
         when(mockConnectorLifecycleManager.getState().isStarted()).thenReturn(true);
@@ -160,7 +158,8 @@ public class HttpRequestDispatcherTestCase extends AbstractMuleTestCase
     @Test
     public void whenConnectorIsNotStartedDoNotAcceptSockets() throws Exception
     {
-        HttpRequestDispatcher httpRequestDispatcher = new HttpRequestDispatcher(mockHttpConnector, mockRetryTemplate, mockServerSocket, mockWorkManager);
+        HttpRequestDispatcher httpRequestDispatcher =
+                new HttpRequestDispatcher(mockHttpConnector, mockRetryTemplate, mockServerSocket, mockWorkManager);
         sustituteLifecycleManager();
         when(mockConnectorLifecycleManager.getState().isStarted()).thenReturn(false);
         when(mockHttpConnector.isStarted()).thenReturn(false);
@@ -168,7 +167,7 @@ public class HttpRequestDispatcherTestCase extends AbstractMuleTestCase
         try
         {
             dispatcherThread.start();
-            verify(mockRetryTemplate, times(0)).execute(any(RetryCallback.class),any(WorkManager.class));
+            verify(mockRetryTemplate, times(0)).execute(any(RetryCallback.class), any(WorkManager.class));
         }
         finally
         {
@@ -180,7 +179,8 @@ public class HttpRequestDispatcherTestCase extends AbstractMuleTestCase
     @Test
     public void whenSocketAcceptedExecuteWork() throws Exception
     {
-        final HttpRequestDispatcher httpRequestDispatcher = new HttpRequestDispatcher(mockHttpConnector, mockRetryTemplate, mockServerSocket, mockWorkManager);
+        final HttpRequestDispatcher httpRequestDispatcher =
+                new HttpRequestDispatcher(mockHttpConnector, mockRetryTemplate, mockServerSocket, mockWorkManager);
         httpRequestDispatcher.requestHandOffExecutor = mockExecutor;
         final Latch acceptCalledLath = new Latch();
         sustituteLifecycleManager();
@@ -222,7 +222,8 @@ public class HttpRequestDispatcherTestCase extends AbstractMuleTestCase
     @Test
     public void shutsDownRequestHandOffExecutorWhenDisconnected()
     {
-        HttpRequestDispatcher httpRequestDispatcher = new HttpRequestDispatcher(mockHttpConnector, mockRetryTemplate, mockServerSocket, mockWorkManager);
+        HttpRequestDispatcher httpRequestDispatcher =
+                new HttpRequestDispatcher(mockHttpConnector, mockRetryTemplate, mockServerSocket, mockWorkManager);
         httpRequestDispatcher.requestHandOffExecutor = mockExecutor;
 
         httpRequestDispatcher.disconnect();

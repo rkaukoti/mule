@@ -6,18 +6,15 @@
  */
 package org.mule.runtime.module.launcher;
 
-import static java.util.Collections.emptyList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Test;
+import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.artifact.classloader.DefaultArtifactClassLoaderFilterFactory;
 import org.mule.runtime.module.launcher.descriptor.ApplicationDescriptor;
 import org.mule.runtime.module.launcher.plugin.ArtifactPluginDescriptorFactory;
 import org.mule.runtime.module.launcher.plugin.ArtifactPluginDescriptorLoader;
 import org.mule.runtime.module.launcher.plugin.ArtifactPluginRepository;
 import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.runtime.core.util.IOUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,8 +22,11 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
+import static java.util.Collections.emptyList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Test the overriding of app properties by system properties
@@ -34,6 +34,7 @@ import org.junit.Test;
 public class PropertyOverridesTestCase extends AbstractMuleTestCase
 {
     private Map<String, String> existingProperties = new HashMap<String, String>();
+    private ArtifactPluginRepository applicationPluginRepository;
 
     private void setSystemProperties()
     {
@@ -44,8 +45,6 @@ public class PropertyOverridesTestCase extends AbstractMuleTestCase
         setSystemProperty("-Omule", "wayCool");
         setSystemProperty("-Omule.mmc", "evenCooler");
     }
-
-    private ArtifactPluginRepository applicationPluginRepository;
 
     @Before
     public void setUp() throws Exception
@@ -64,9 +63,11 @@ public class PropertyOverridesTestCase extends AbstractMuleTestCase
         input.close();
         output.close();
         ApplicationDescriptor descriptor = new ApplicationDescriptor();
-        ApplicationDescriptorFactory applicationDescriptorFactory = new ApplicationDescriptorFactory(new ArtifactPluginDescriptorLoader(new ArtifactPluginDescriptorFactory(new DefaultArtifactClassLoaderFilterFactory())), applicationPluginRepository);
+        ApplicationDescriptorFactory applicationDescriptorFactory = new ApplicationDescriptorFactory(
+                new ArtifactPluginDescriptorLoader(new ArtifactPluginDescriptorFactory(new DefaultArtifactClassLoaderFilterFactory())),
+                applicationPluginRepository);
         applicationDescriptorFactory.setApplicationProperties(descriptor, tempProps);
-        Map<String, String>appProps = descriptor.getAppProperties();
+        Map<String, String> appProps = descriptor.getAppProperties();
         assertEquals("state", appProps.get("texas"));
         assertEquals("country", appProps.get("peru"));
         assertEquals("austin", appProps.get("texas.capital"));
@@ -107,7 +108,7 @@ public class PropertyOverridesTestCase extends AbstractMuleTestCase
 
     private void resetSystemProperties()
     {
-        for (Map.Entry<String, String> entry: existingProperties.entrySet())
+        for (Map.Entry<String, String> entry : existingProperties.entrySet())
         {
             String key = entry.getKey();
             String value = entry.getValue();

@@ -46,7 +46,7 @@ public class NonBlockingProcessingStrategy extends AbstractThreadingProfileProce
         MuleContext muleContext = flowConstruct.getMuleContext();
         MuleWorkManager workManager = (MuleWorkManager) createThreadingProfile(muleContext).createWorkManager
                 (getThreadPoolName(flowConstruct.getName(), muleContext), muleContext.getConfiguration()
-                        .getShutdownTimeout());
+                                                                                     .getShutdownTimeout());
         return workManager;
     }
 

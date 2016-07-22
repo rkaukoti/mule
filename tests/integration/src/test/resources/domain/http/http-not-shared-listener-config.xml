@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
         http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
         http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
@@ -12,8 +12,8 @@
     <http:listener-config name="listenerConfig" host="localhost" port="${port1}"/>
 
     <flow name="ble">
-        <http:listener path="/test" config-ref="listenerConfig" />
-        <test:queue name="in" />
+        <http:listener path="/test" config-ref="listenerConfig"/>
+        <test:queue name="in"/>
     </flow>
 
 </mule>

@@ -11,12 +11,11 @@ import org.mule.runtime.module.db.internal.domain.executor.UpdateExecutorFactory
 import org.mule.runtime.module.db.internal.domain.query.QueryType;
 import org.mule.runtime.module.db.internal.metadata.UpdateMetadataProvider;
 import org.mule.runtime.module.db.internal.processor.UpdateMessageProcessor;
-
-import java.util.List;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
+
+import java.util.List;
 
 public class SingleUpdateProcessorDefinitionParser extends AbstractSingleQueryProcessorDefinitionParser
 {

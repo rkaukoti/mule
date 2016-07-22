@@ -15,17 +15,17 @@ import org.mule.runtime.core.api.context.notification.ServerNotification;
  */
 public class RoutingNotification extends ServerNotification
 {
-    /**
-     * Serial version
-     */
-    private static final long serialVersionUID = -6455441938378523145L;
     public static final int MISSED_ASYNC_REPLY = ROUTING_EVENT_ACTION_START_RANGE + 1;
     public static final int ASYNC_REPLY_TIMEOUT = ROUTING_EVENT_ACTION_START_RANGE + 2;
     public static final int CORRELATION_TIMEOUT = ROUTING_EVENT_ACTION_START_RANGE + 3;
     public static final int MISSED_AGGREGATION_GROUP_EVENT = ROUTING_EVENT_ACTION_START_RANGE + 4;
+    /**
+     * Serial version
+     */
+    private static final long serialVersionUID = -6455441938378523145L;
 
-    
-    static {
+    static
+    {
         registerAction("missed async reply", MISSED_ASYNC_REPLY);
         registerAction("async reply timeout", ASYNC_REPLY_TIMEOUT);
         registerAction("correlation timeout", CORRELATION_TIMEOUT);

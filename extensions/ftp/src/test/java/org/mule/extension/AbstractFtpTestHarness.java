@@ -6,14 +6,14 @@
  */
 package org.mule.extension;
 
-import static org.junit.rules.ExpectedException.none;
-import org.mule.tck.junit4.rule.SystemProperty;
-
 import org.junit.rules.ExpectedException;
 import org.junit.rules.ExternalResource;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+import org.mule.tck.junit4.rule.SystemProperty;
+
+import static org.junit.rules.ExpectedException.none;
 
 /**
  * Base class for {@link FtpTestHarness} implementations

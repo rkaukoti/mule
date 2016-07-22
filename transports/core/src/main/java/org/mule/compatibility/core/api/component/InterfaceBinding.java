@@ -28,16 +28,13 @@ public interface InterfaceBinding extends MessageProcessor
      * FilteringOutboundRouter which implements all the common logic need for a
      * router.
      *
-     * @return a result message if any from the invocation. If the endpoint bound has
-     *         a one-way exchange pattern configured a null result will always be
-     *         returned.
+     * @return a result message if any from the invocation. If the endpoint bound has a one-way exchange pattern configured a null result
+     * will always be returned.
      * @throws MessagingException if any errors occur during the sending of messages
-     * @throws MuleException
      * @see org.mule.compatibility.core.routing.outbound.FilteringOutboundRouter
      * @see org.mule.compatibility.core.routing.outbound.ExceptionBasedRouter
      * @see org.mule.compatibility.core.routing.outbound.MulticastingRouter
-     * @since 2.1 the synchronous argument has been removed. Instead use the
-     *        synchronous attribute of the endpoint you are dispatching to.
+     * @since 2.1 the synchronous argument has been removed. Instead use the synchronous attribute of the endpoint you are dispatching to.
      */
     @Override
     MuleEvent process(MuleEvent event) throws MuleException;
@@ -46,13 +43,13 @@ public interface InterfaceBinding extends MessageProcessor
      * @deprecated Transport infrastructure is deprecated.
      */
     @Deprecated
-    void setEndpoint(ImmutableEndpoint endpoint) throws MuleException;
+    ImmutableEndpoint getEndpoint();
 
     /**
      * @deprecated Transport infrastructure is deprecated.
      */
     @Deprecated
-    ImmutableEndpoint getEndpoint();
+    void setEndpoint(ImmutableEndpoint endpoint) throws MuleException;
 
     Class<?> getInterface();
 

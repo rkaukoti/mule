@@ -44,8 +44,7 @@ final class OperationExecutionResult
     }
 
     /**
-     * @return the {@link Optional} {@link InterceptorsRetryRequest} which contains if the
-     * interceptors asked to retry the request
+     * @return the {@link Optional} {@link InterceptorsRetryRequest} which contains if the interceptors asked to retry the request
      */
     public Optional<InterceptorsRetryRequest> getRetryRequest()
     {

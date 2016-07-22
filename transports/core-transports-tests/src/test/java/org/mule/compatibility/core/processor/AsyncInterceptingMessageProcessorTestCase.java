@@ -6,13 +6,7 @@
  */
 package org.mule.compatibility.core.processor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
@@ -30,13 +24,19 @@ import org.mule.tck.testmodels.mule.TestTransaction;
 import java.beans.ExceptionListener;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 
 public class AsyncInterceptingMessageProcessorTestCase extends AbstractMuleContextEndpointTestCase
-    implements ExceptionListener
+        implements ExceptionListener
 {
 
-    public static final String EXPECTING_SYNCHRONOUS_EVENT_ERROR = "Exception expected: '" + AsyncInterceptingMessageProcessor.SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE + "'";
+    public static final String EXPECTING_SYNCHRONOUS_EVENT_ERROR =
+            "Exception expected: '" + AsyncInterceptingMessageProcessor.SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE + "'";
 
     protected AsyncInterceptingMessageProcessor messageProcessor;
     protected TestListener target = new TestListener();
@@ -147,6 +147,12 @@ public class AsyncInterceptingMessageProcessorTestCase extends AbstractMuleConte
         return mp;
     }
 
+    @Override
+    public void exceptionThrown(Exception e)
+    {
+        exceptionThrown = e;
+    }
+
     class TestListener implements MessageProcessor
     {
 
@@ -161,12 +167,6 @@ public class AsyncInterceptingMessageProcessorTestCase extends AbstractMuleConte
             latch.countDown();
             return event;
         }
-    }
-
-    @Override
-    public void exceptionThrown(Exception e)
-    {
-        exceptionThrown = e;
     }
 
     class TestWorkManagerSource implements WorkManagerSource

@@ -25,7 +25,7 @@ public interface MuleEventContext
 {
     /**
      * Returns the message payload for this event
-     * 
+     *
      * @return the message payload for this event
      */
     MuleMessage getMessage();
@@ -42,13 +42,11 @@ public interface MuleEventContext
      * transformer used is the one configured on the endpoint through which this
      * event was received.
      *
-     * @param dataType The dataType  required for the return object. This param
-     *            just provides a convienient way to manage type casting of
-     *            transformed objects
+     * @param dataType The dataType  required for the return object. This param just provides a convienient way to manage type casting of
+     *                 transformed objects
      * @return the message transformed into it's recognised or expected format.
-     * @throws org.mule.runtime.core.api.transformer.TransformerException if a failure occurs or
-     *             if the return type is not the same as the expected type in the
-     *             transformer
+     * @throws org.mule.runtime.core.api.transformer.TransformerException if a failure occurs or if the return type is not the same as the
+     *                                                                    expected type in the transformer
      * @see org.mule.runtime.core.api.transformer.Transformer
      */
     Object transformMessage(DataType dataType) throws TransformerException;
@@ -57,14 +55,12 @@ public interface MuleEventContext
      * Returns the message transformed into it's recognised or expected format. The
      * transformer used is the one configured on the endpoint through which this
      * event was received.
-     * 
-     * @param expectedType The class type required for the return object. This param
-     *            just provides a convienient way to manage type casting of
-     *            transformed objects
+     *
+     * @param expectedType The class type required for the return object. This param just provides a convienient way to manage type casting
+     *                     of transformed objects
      * @return the message transformed into it's recognised or expected format.
-     * @throws org.mule.runtime.core.api.transformer.TransformerException if a failure occurs or
-     *             if the return type is not the same as the expected type in the
-     *             transformer
+     * @throws org.mule.runtime.core.api.transformer.TransformerException if a failure occurs or if the return type is not the same as the
+     *                                                                    expected type in the transformer
      * @see org.mule.runtime.core.api.transformer.Transformer
      */
     Object transformMessage(Class expectedType) throws TransformerException;
@@ -74,9 +70,8 @@ public interface MuleEventContext
      * then into a String. The transformer used is the one configured on the endpoint
      * through which this event was received. This method will use the encoding set
      * on the event
-     * 
-     * @return the message transformed into it's recognised or expected format as a
-     *         Strings.
+     *
+     * @return the message transformed into it's recognised or expected format as a Strings.
      * @throws TransformerException if a failure occurs in the transformer
      * @see org.mule.runtime.core.api.transformer.Transformer
      */
@@ -85,7 +80,7 @@ public interface MuleEventContext
     /**
      * Returns the message contents as a string This method will use the encoding set
      * on the event
-     * 
+     *
      * @return the message contents as a string
      * @throws MuleException if the message cannot be converted into a string
      */
@@ -93,7 +88,7 @@ public interface MuleEventContext
 
     /**
      * Returns the message contents as a string
-     * 
+     *
      * @param encoding The encoding to use when transforming the message
      * @return the message contents as a string
      * @throws MuleException if the message cannot be converted into a string
@@ -102,9 +97,8 @@ public interface MuleEventContext
 
     /**
      * Returns the current transaction (if any) for the session
-     * 
-     * @return the current transaction for the session or null if there is no
-     *         transaction in progress
+     *
+     * @return the current transaction for the session or null if there is no transaction in progress
      */
     Transaction getCurrentTransaction();
 
@@ -113,21 +107,19 @@ public interface MuleEventContext
      * synchronously to the next available Mule component in the pool or via the endpoint
      * configured for the event
      *
-     * @param message the event message payload to send
-     * @param endpointName The endpoint name to disptch the event through. This will
-     *            be looked up first on the service configuration and then on the
-     *            mule manager configuration
+     * @param message      the event message payload to send
+     * @param endpointName The endpoint name to disptch the event through. This will be looked up first on the service configuration and
+     *                     then on the mule manager configuration
      * @return the return Message from the call or null if there was no result
-     * @throws MuleException if the event fails to be processed by the service or
-     *             the transport for the endpoint
+     * @throws MuleException if the event fails to be processed by the service or the transport for the endpoint
      */
     MuleMessage sendEvent(MuleMessage message, String endpointName) throws MuleException;
 
     /**
      * Requests a synchronous receive of an event on the service.
-     * 
+     *
      * @param endpointName the endpoint identifying the endpointUri on which the event will be received
-     * @param timeout time in milliseconds before the request timesout
+     * @param timeout      time in milliseconds before the request timesout
      * @return The requested event or null if the request times out
      * @throws MuleException if the request operation fails
      */
@@ -144,7 +136,7 @@ public interface MuleEventContext
      * <code>UMOManager.getEventContext</code> to obtain the MuleEventContext for
      * the current thread. The user can programmatically control how events are
      * dispatched.
-     * 
+     *
      * @param stopFurtherProcessing the value to set.
      */
     void setStopFurtherProcessing(boolean stopFurtherProcessing);
@@ -152,18 +144,17 @@ public interface MuleEventContext
     /**
      * An output stream the can optionally be used write response data to an incoming
      * message.
-     * 
-     * @return an output strem if one has been made available by the message receiver
-     *         that received the message
+     *
+     * @return an output strem if one has been made available by the message receiver that received the message
      */
     OutputStream getOutputStream();
 
     MessageExchangePattern getExchangePattern();
-    
+
     /**
      * Returns a reference to the Endpoint Uri for this context This is the endpoint
      * on which the event was received
-     * 
+     *
      * @return the receive endpoint for this event context
      */
     URI getEndpointURI();
@@ -171,15 +162,14 @@ public interface MuleEventContext
     /**
      * Returns the transaction for the current event or null if there is no
      * transaction in progress
-     * 
-     * @return the transaction for the current event or null if there is no
-     *         transaction in progress
+     *
+     * @return the transaction for the current event or null if there is no transaction in progress
      */
     Transaction getTransaction();
 
     /**
      * Get the timeout value associated with the event
-     * 
+     *
      * @return the timeout for the event
      */
     int getTimeout();

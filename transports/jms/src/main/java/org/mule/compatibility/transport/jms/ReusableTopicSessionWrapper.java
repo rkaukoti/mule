@@ -6,6 +6,9 @@
  */
 package org.mule.compatibility.transport.jms;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 
 import javax.jms.BytesMessage;
@@ -27,9 +30,6 @@ import javax.jms.Topic;
 import javax.jms.TopicPublisher;
 import javax.jms.TopicSession;
 import javax.jms.TopicSubscriber;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ReusableTopicSessionWrapper implements TopicSession
 {

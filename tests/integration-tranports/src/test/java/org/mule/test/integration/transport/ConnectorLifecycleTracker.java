@@ -22,17 +22,16 @@ import java.util.List;
 public class ConnectorLifecycleTracker extends AbstractConnector
 {
     private final List<String> tracker = new ArrayList<String>();
-
+    boolean connected = false;
     private String property1;
 
-    boolean connected = false;
-    
     public ConnectorLifecycleTracker(MuleContext context)
     {
         super(context);
     }
-    
-    public List<String> getTracker() {
+
+    public List<String> getTracker()
+    {
         return tracker;
     }
 
@@ -57,8 +56,8 @@ public class ConnectorLifecycleTracker extends AbstractConnector
     }
 
 
-
-    public void setProperty(final String value) {
+    public void setProperty(final String value)
+    {
         tracker.add("setProperty");
     }
 
@@ -75,12 +74,14 @@ public class ConnectorLifecycleTracker extends AbstractConnector
     }
 
     @Override
-    public void doStop() throws MuleException {
+    public void doStop() throws MuleException
+    {
         tracker.add("stop");
     }
 
     @Override
-    public void doDispose() {
+    public void doDispose()
+    {
         tracker.add("dispose");
     }
 
@@ -97,7 +98,7 @@ public class ConnectorLifecycleTracker extends AbstractConnector
     }
 
     public MessageProcessor getOutboundEndpointMessageProcessor(OutboundEndpoint endpoint)
-        throws MuleException
+            throws MuleException
     {
         return null;
     }

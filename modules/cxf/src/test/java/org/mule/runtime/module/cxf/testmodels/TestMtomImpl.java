@@ -6,6 +6,9 @@
  */
 package org.mule.runtime.module.cxf.testmodels;
 
+import org.apache.cxf.mime.TestMtom;
+import org.apache.cxf.mime.types.XopStringType;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -13,9 +16,6 @@ import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.jws.WebService;
 import javax.xml.ws.Holder;
-
-import org.apache.cxf.mime.TestMtom;
-import org.apache.cxf.mime.types.XopStringType;
 
 @WebService(serviceName = "TestMtomService", portName = "TestMtomPort", targetNamespace = "http://cxf.apache.org/mime", endpointInterface = "org.apache.cxf.mime.TestMtom", wsdlLocation = "testutils/mtom_xop.wsdl")
 public class TestMtomImpl implements TestMtom
@@ -33,7 +33,8 @@ public class TestMtomImpl implements TestMtom
         try
         {
             InputStream inputStream = attachinfo.value.getInputStream();
-            while (inputStream.read() != -1);
+            while (inputStream.read() != -1)
+                ;
         }
         catch (IOException e)
         {

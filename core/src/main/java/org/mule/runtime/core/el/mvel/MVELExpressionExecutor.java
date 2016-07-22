@@ -7,26 +7,25 @@
 
 package org.mule.runtime.core.el.mvel;
 
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.core.api.config.MuleProperties;
-import org.mule.runtime.core.api.el.ExpressionExecutor;
-import org.mule.runtime.core.api.expression.InvalidExpressionException;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.google.common.util.concurrent.UncheckedExecutionException;
+
 import org.mule.mvel2.MVEL;
 import org.mule.mvel2.ParserConfiguration;
 import org.mule.mvel2.ParserContext;
 import org.mule.mvel2.optimizers.OptimizerFactory;
 import org.mule.mvel2.optimizers.dynamic.DynamicOptimizer;
 import org.mule.mvel2.optimizers.impl.refl.ReflectiveAccessorOptimizer;
-
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.google.common.util.concurrent.UncheckedExecutionException;
-
-import java.io.Serializable;
-
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.core.api.config.MuleProperties;
+import org.mule.runtime.core.api.el.ExpressionExecutor;
+import org.mule.runtime.core.api.expression.InvalidExpressionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
 
 /**
  * This MVEL executor uses MVEL {@link ReflectiveAccessorOptimizer} implementation rather than the default
@@ -36,11 +35,9 @@ import org.slf4j.LoggerFactory;
 public class MVELExpressionExecutor implements ExpressionExecutor<MVELExpressionLanguageContext>
 {
 
-    private static Logger log = LoggerFactory.getLogger(MVELExpressionExecutor.class);
     protected static final String DISABLE_MEL_EXPRESSION_CACHE = MuleProperties.SYSTEM_PROPERTY_PREFIX + "disableMelExpressionCache";
-
     protected static final int COMPILED_EXPRESSION_MAX_CACHE_SIZE = 1000;
-
+    private static Logger log = LoggerFactory.getLogger(MVELExpressionExecutor.class);
     protected ParserConfiguration parserConfiguration;
 
     protected LoadingCache<String, Serializable> compiledExpressionsCache;
@@ -53,15 +50,15 @@ public class MVELExpressionExecutor implements ExpressionExecutor<MVELExpression
         OptimizerFactory.setDefaultOptimizer(OptimizerFactory.SAFE_REFLECTIVE);
 
         compiledExpressionsCache = CacheBuilder.newBuilder()
-            .maximumSize(getCompiledExpressionMaxCacheSize())
-            .build(new CacheLoader<String, Serializable>()
-            {
-                @Override
-                public Serializable load(String key) throws Exception
-                {
-                    return MVEL.compileExpression(key, new ParserContext(parserConfiguration));
-                }
-            });
+                                               .maximumSize(getCompiledExpressionMaxCacheSize())
+                                               .build(new CacheLoader<String, Serializable>()
+                                               {
+                                                   @Override
+                                                   public Serializable load(String key) throws Exception
+                                                   {
+                                                       return MVEL.compileExpression(key, new ParserContext(parserConfiguration));
+                                                   }
+                                               });
     }
 
     private int getCompiledExpressionMaxCacheSize()
@@ -96,7 +93,7 @@ public class MVELExpressionExecutor implements ExpressionExecutor<MVELExpression
     /**
      * Compile an expression. If such expression was compiled before then return the compilation output from a
      * cache.
-     * 
+     *
      * @param expression Expression to be compiled
      * @return A {@link Serializable} object representing the compiled expression
      */

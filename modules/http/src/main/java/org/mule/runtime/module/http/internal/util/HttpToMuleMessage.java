@@ -6,27 +6,23 @@
  */
 package org.mule.runtime.module.http.internal.util;
 
+import org.mule.runtime.api.metadata.MediaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.nio.charset.Charset;
+
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.String.format;
 import static java.nio.charset.Charset.defaultCharset;
 import static org.mule.runtime.core.api.config.MuleProperties.SYSTEM_PROPERTY_PREFIX;
-import org.mule.runtime.api.metadata.MediaType;
-
-import java.nio.charset.Charset;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class HttpToMuleMessage
 {
     private static Logger logger = LoggerFactory.getLogger(HttpToMuleMessage.class);
 
     /**
-     * 
-     * @param contentTypeValue
-     * @param defaultCharset the encoding to use if the given {@code contentTypeValue} doesn't have
-     *            a {@code charset} parameter.
-     * @return
+     * @param defaultCharset the encoding to use if the given {@code contentTypeValue} doesn't have a {@code charset} parameter.
      */
     public static MediaType getMediaType(final String contentTypeValue, Charset defaultCharset)
     {

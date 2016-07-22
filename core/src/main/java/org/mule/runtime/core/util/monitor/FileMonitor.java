@@ -34,7 +34,7 @@ public class FileMonitor
 
     /**
      * Create a file monitor instance with specified polling interval.
-     * 
+     *
      * @param pollingInterval Polling interval in milli seconds.
      */
     public FileMonitor(long pollingInterval)
@@ -63,7 +63,7 @@ public class FileMonitor
      * and may well be a non-existing file in the case where the creating of the file
      * is to be trepped. <p/> More than one file can be listened for. When the
      * specified file is created, modified or deleted, listeners are notified.
-     * 
+     *
      * @param file File to listen for.
      */
     public void addFile(File file)
@@ -77,7 +77,7 @@ public class FileMonitor
 
     /**
      * Remove specified file for listening.
-     * 
+     *
      * @param file File to remove.
      */
     public void removeFile(File file)
@@ -87,7 +87,7 @@ public class FileMonitor
 
     /**
      * Add listener to this file monitor.
-     * 
+     *
      * @param fileListener Listener to add.
      */
     public void addListener(FileListener fileListener)
@@ -109,12 +109,12 @@ public class FileMonitor
 
     /**
      * Remove listener from this file monitor.
-     * 
+     *
      * @param fileListener Listener to remove.
      */
     public void removeListener(FileListener fileListener)
     {
-        for (Iterator<WeakReference<FileListener>> i = listeners.iterator(); i.hasNext();)
+        for (Iterator<WeakReference<FileListener>> i = listeners.iterator(); i.hasNext(); )
         {
             WeakReference<FileListener> reference = i.next();
             FileListener listener = reference.get();
@@ -163,7 +163,7 @@ public class FileMonitor
                     files.put(file, new Long(newModifiedTime));
 
                     // Notify listeners
-                    for (Iterator<WeakReference<FileListener>> j = listeners.iterator(); j.hasNext();)
+                    for (Iterator<WeakReference<FileListener>> j = listeners.iterator(); j.hasNext(); )
                     {
                         WeakReference<FileListener> reference = j.next();
                         FileListener listener = reference.get();

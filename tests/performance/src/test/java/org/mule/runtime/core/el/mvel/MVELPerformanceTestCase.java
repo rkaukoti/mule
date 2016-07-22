@@ -6,8 +6,13 @@
  */
 package org.mule.runtime.core.el.mvel;
 
-import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
-
+import org.databene.contiperf.PerfTest;
+import org.databene.contiperf.Required;
+import org.databene.contiperf.junit.ContiPerfRule;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -16,25 +21,10 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import java.util.Random;
 
-import org.databene.contiperf.PerfTest;
-import org.databene.contiperf.Required;
-import org.databene.contiperf.junit.ContiPerfRule;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
 
 public class MVELPerformanceTestCase extends AbstractMuleContextTestCase
 {
-    @Rule
-    public ContiPerfRule rule = new ContiPerfRule();
-
-    @Override
-    public int getTestTimeoutSecs()
-    {
-        return 180;
-    }
-
     final protected String mel = "StringBuilder sb = new StringBuilder(); fields = payload.split(',\');"
                                  + "if (fields.length > 4) {"
                                  + "    sb.append('  <Contact>\n');"
@@ -44,10 +34,16 @@ public class MVELPerformanceTestCase extends AbstractMuleContextTestCase
                                  + "    sb.append('    <TelNum>').append(fields[3]).append('</TelNum>\n');"
                                  + "    sb.append('    <SIN>').append(fields[4]).append('</SIN>\n');"
                                  + "    sb.append('  </Contact>\n');" + "}" + "sb.toString();";
-
     final protected String payload = "Tom,Fennelly,Male,4,Ireland";
-
+    @Rule
+    public ContiPerfRule rule = new ContiPerfRule();
     protected MuleEvent event;
+
+    @Override
+    public int getTestTimeoutSecs()
+    {
+        return 180;
+    }
 
     @Before
     public void before()

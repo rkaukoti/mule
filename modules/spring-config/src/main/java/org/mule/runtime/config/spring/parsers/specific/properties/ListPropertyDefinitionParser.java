@@ -8,7 +8,6 @@ package org.mule.runtime.config.spring.parsers.specific.properties;
 
 import org.mule.runtime.config.spring.parsers.assembly.MapEntryCombiner;
 import org.mule.runtime.config.spring.parsers.generic.ParentDefinitionParser;
-
 import org.w3c.dom.Element;
 
 /**
@@ -28,9 +27,6 @@ public class ListPropertyDefinitionParser extends ParentDefinitionParser
     /**
      * This method is to explain how things work.  If you need to call it, then you also need to replace
      * override the class ({#link #getBeanClass}).
-     *
-     * @param setter
-     * @param attribute
      */
     protected ListPropertyDefinitionParser(String setter, String attribute)
     {

@@ -46,13 +46,13 @@ public interface TransportServiceDescriptor extends ServiceDescriptor, MuleConte
     SessionHandler createSessionHandler() throws TransportServiceException;
 
     MessageReceiver createMessageReceiver(Connector connector,
-                                                 FlowConstruct flowConstruct,
-                                                 InboundEndpoint endpoint) throws MuleException;
+                                          FlowConstruct flowConstruct,
+                                          InboundEndpoint endpoint) throws MuleException;
 
     MessageReceiver createMessageReceiver(Connector connector,
-                                                 FlowConstruct flowConstruct,
-                                                 InboundEndpoint endpoint,
-                                                 Object... args) throws MuleException;
+                                          FlowConstruct flowConstruct,
+                                          InboundEndpoint endpoint,
+                                          Object... args) throws MuleException;
 
     MessageDispatcherFactory createDispatcherFactory() throws TransportServiceException;
 
@@ -76,10 +76,9 @@ public interface TransportServiceDescriptor extends ServiceDescriptor, MuleConte
     /**
      * Creates a {@link EndpointBuilder}
      *
-     * @param uri  address for the created endpoints
+     * @param uri         address for the created endpoints
      * @param muleContext context of the application owning endpoint builder
      * @return a non null endpoint builder for the given address
-     * @throws TransportFactoryException
      */
     EndpointBuilder createEndpointBuilder(String uri, MuleContext muleContext) throws TransportFactoryException;
 
@@ -89,16 +88,15 @@ public interface TransportServiceDescriptor extends ServiceDescriptor, MuleConte
     /**
      * Creates a {@link EndpointBuilder} wrapping an existing builder
      *
-     * @param builder  instance to be wrapped
+     * @param builder     instance to be wrapped
      * @param muleContext context of the application owning endpoint builder
      * @return a non null endpoint builder for the given builder
-     * @throws TransportFactoryException
      */
     EndpointBuilder createEndpointBuilder(EndpointURIEndpointBuilder builder, MuleContext muleContext) throws TransportFactoryException;
 
-    void setExceptionMappings(Properties props);
-
     Properties getExceptionMappings();
+
+    void setExceptionMappings(Properties props);
 
     List<MessageExchangePattern> getInboundExchangePatterns() throws TransportServiceException;
 

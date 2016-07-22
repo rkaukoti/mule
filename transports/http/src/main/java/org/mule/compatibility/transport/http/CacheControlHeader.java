@@ -36,7 +36,6 @@ public class CacheControlHeader
      * Evaluates all the properties in case there are expressions
      *
      * @param event MuleEvent
-     * @param expressionManager
      */
     public void parse(MuleEvent event, ExpressionManager expressionManager)
     {
@@ -50,7 +49,7 @@ public class CacheControlHeader
 
     private void checkDirective(String directive)
     {
-        if(directive != null && !Arrays.asList(DIRECTIVE).contains(directive))
+        if (directive != null && !Arrays.asList(DIRECTIVE).contains(directive))
         {
             throw new IllegalArgumentException("Invalid Cache-Control directive: " + directive);
         }
@@ -60,29 +59,29 @@ public class CacheControlHeader
     public String toString()
     {
         StringBuilder cacheControl = new StringBuilder("");
-        if(directive != null)
+        if (directive != null)
         {
             cacheControl.append(directive).append(",");
         }
-        if(Boolean.valueOf(noCache))
+        if (Boolean.valueOf(noCache))
         {
             cacheControl.append("no-cache").append(",");
         }
-        if(Boolean.valueOf(noStore))
+        if (Boolean.valueOf(noStore))
         {
             cacheControl.append("no-store").append(",");
         }
-        if(Boolean.valueOf(mustRevalidate))
+        if (Boolean.valueOf(mustRevalidate))
         {
             cacheControl.append("must-revalidate").append(",");
         }
-        if(maxAge != null)
+        if (maxAge != null)
         {
             cacheControl.append("max-age=").append(maxAge).append(",");
         }
 
         String value = cacheControl.toString();
-        if(value.endsWith(","))
+        if (value.endsWith(","))
         {
             return value.substring(0, value.length() - 1);
         }
@@ -91,7 +90,7 @@ public class CacheControlHeader
 
     private String parse(String value, MuleEvent event, ExpressionManager expressionManager)
     {
-        if(value != null)
+        if (value != null)
         {
             return expressionManager.parse(value, event);
         }

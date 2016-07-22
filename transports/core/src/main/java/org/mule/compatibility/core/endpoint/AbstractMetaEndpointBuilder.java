@@ -53,6 +53,16 @@ public abstract class AbstractMetaEndpointBuilder extends EndpointURIEndpointBui
         super(source);
     }
 
+    public static String getEndpointAddressWithoutMetaScheme(String string)
+    {
+        int idx = string.indexOf(':');
+        if (idx != -1)
+        {
+            string = string.substring(idx + 1);
+        }
+        return string;
+    }
+
     @Override
     public void setProperties(Map<String, Serializable> properties)
     {
@@ -78,22 +88,12 @@ public abstract class AbstractMetaEndpointBuilder extends EndpointURIEndpointBui
         return uriBuilder.getEndpoint().getScheme();
     }
 
-    public static String getEndpointAddressWithoutMetaScheme(String string)
-    {
-        int idx = string.indexOf(':');
-        if (idx != -1)
-        {
-            string = string.substring(idx+1);
-        }
-        return string;
-    }
-
     @Override
     protected Connector getConnector() throws EndpointException
     {
         AbstractConnector c = (AbstractConnector) super.getConnector();
         EndpointURI endpointURI = uriBuilder.getEndpoint();
-        if(!c.supportsProtocol(endpointURI.getFullScheme()))
+        if (!c.supportsProtocol(endpointURI.getFullScheme()))
         {
             c.registerSupportedMetaProtocol(endpointURI.getSchemeMetaInfo());
         }

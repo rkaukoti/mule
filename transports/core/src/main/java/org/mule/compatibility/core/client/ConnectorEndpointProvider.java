@@ -6,8 +6,6 @@
  */
 package org.mule.compatibility.core.client;
 
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupServiceDescriptor;
-
 import org.mule.compatibility.core.api.client.LocalMuleClient;
 import org.mule.compatibility.core.api.endpoint.EndpointCache;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
@@ -29,6 +27,8 @@ import org.mule.runtime.core.client.DefaultLocalMuleClient.MuleClientFlowConstru
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupServiceDescriptor;
 
 /**
  * Provides transports support to {@link LocalMuleClient}.
@@ -97,7 +97,8 @@ public class ConnectorEndpointProvider extends AbstractPriorizableConnectorMessa
                 @Override
                 public MuleEvent process(MuleEvent event) throws MuleException
                 {
-                    final InboundEndpoint inboundEndpoint = endpointCache.getInboundEndpoint(cacheKey.getUrl(), cacheKey.getExchangePattern());
+                    final InboundEndpoint inboundEndpoint =
+                            endpointCache.getInboundEndpoint(cacheKey.getUrl(), cacheKey.getExchangePattern());
                     MuleMessage message;
                     try
                     {

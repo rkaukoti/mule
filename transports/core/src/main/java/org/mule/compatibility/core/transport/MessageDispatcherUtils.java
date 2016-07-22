@@ -21,20 +21,20 @@ public class MessageDispatcherUtils
      */
     public static void applyLifecycle(MessageDispatcher dispatcher) throws MuleException
     {
-        String phase = ((AbstractConnector)dispatcher.getConnector()).getLifecycleManager().getCurrentPhase();
-        if(phase.equals(Startable.PHASE_NAME) && !dispatcher.getLifecycleState().isStarted())
+        String phase = ((AbstractConnector) dispatcher.getConnector()).getLifecycleManager().getCurrentPhase();
+        if (phase.equals(Startable.PHASE_NAME) && !dispatcher.getLifecycleState().isStarted())
         {
-            if(!dispatcher.getLifecycleState().isInitialised())
+            if (!dispatcher.getLifecycleState().isInitialised())
             {
                 dispatcher.initialise();
             }
             dispatcher.start();
         }
-        else if(phase.equals(Stoppable.PHASE_NAME) && dispatcher.getLifecycleState().isStarted())
+        else if (phase.equals(Stoppable.PHASE_NAME) && dispatcher.getLifecycleState().isStarted())
         {
             dispatcher.stop();
         }
-        else if(Disposable.PHASE_NAME.equals(phase))
+        else if (Disposable.PHASE_NAME.equals(phase))
         {
             dispatcher.dispose();
         }

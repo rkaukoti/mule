@@ -56,13 +56,15 @@ public class SimpleDataType implements DataType
         SimpleDataType that = (SimpleDataType) dataType;
 
         //ANY_MIME_TYPE will match to a null or non-null value for MediaType        
-        if ((this.getMediaType() == null && that.getMediaType() != null || that.getMediaType() == null && this.getMediaType() != null) && !MediaType.ANY.matches(this.mimeType)
+        if ((this.getMediaType() == null && that.getMediaType() != null || that.getMediaType() == null && this.getMediaType() != null) &&
+            !MediaType.ANY.matches(this.mimeType)
             && !MediaType.ANY.matches(that.mimeType))
         {
             return false;
         }
 
-        if (this.getMediaType() != null && !this.getMediaType().matches(that.getMediaType()) && !MediaType.ANY.matches(that.getMediaType()) && !MediaType.ANY.matches(this.getMediaType()))
+        if (this.getMediaType() != null && !this.getMediaType().matches(that.getMediaType()) &&
+            !MediaType.ANY.matches(that.getMediaType()) && !MediaType.ANY.matches(this.getMediaType()))
         {
             return false;
         }
@@ -147,7 +149,8 @@ public class SimpleDataType implements DataType
 
         // TODO MULE-9987 Fix this
         //ANY_MIME_TYPE will match to a null or non-null value for MediaType
-        if ((this.mimeType == null && that.mimeType != null || that.mimeType == null && this.mimeType != null) && !MediaType.ANY.matches(that.mimeType))
+        if ((this.mimeType == null && that.mimeType != null || that.mimeType == null && this.mimeType != null) &&
+            !MediaType.ANY.matches(that.mimeType))
         {
             return false;
         }

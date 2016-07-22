@@ -6,15 +6,13 @@
  */
 package org.mule.compatibility.module.client;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertTrue;
-
-import org.mule.compatibility.module.client.MuleClient;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 
 public class MuleClientStandaloneTestCase extends AbstractMuleClientTestCase
 {

@@ -49,12 +49,11 @@ import java.util.Set;
  */
 public class ReflectionEntryPointResolver extends AbstractEntryPointResolver
 {
+    protected WildcardFilter filter;
     // we don't want to match these methods when looking for a service method
     private Set<String> ignoredMethods = new HashSet<String>(Arrays.asList("equals",
             "getInvocationHandler", "set*", "toString",
             "getClass", "notify", "notifyAll", "wait", "hashCode", "clone", "is*", "get*"));
-
-    protected WildcardFilter filter;
 
     public ReflectionEntryPointResolver()
     {
@@ -101,8 +100,6 @@ public class ReflectionEntryPointResolver extends AbstractEntryPointResolver
      * For multiple parameters the payload of context.getMessage().geTPayload() should be an Array of objects.
      * If the message payload is of type {@link org.mule.runtime.api.message.NullPayload} the resolver will look for a no-argument
      * method to call that doesn't match the set of ignoredMethods on the resover.
-     *
-     * @throws Exception
      */
     public InvocationResult invoke(Object component, MuleEventContext context) throws Exception
     {
@@ -140,8 +137,8 @@ public class ReflectionEntryPointResolver extends AbstractEntryPointResolver
         }
         else
         {
-            methods = ClassUtils.getSatisfiableMethods(component.getClass(), 
-                ClassUtils.getClassTypes(payload), true, true, ignoredMethods);
+            methods = ClassUtils.getSatisfiableMethods(component.getClass(),
+                    ClassUtils.getClassTypes(payload), true, true, ignoredMethods);
 
             numMethods = methods.size();
 

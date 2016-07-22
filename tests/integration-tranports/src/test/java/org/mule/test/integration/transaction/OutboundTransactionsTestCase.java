@@ -6,13 +6,12 @@
  */
 package org.mule.test.integration.transaction;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
+import org.junit.Test;
 import org.mule.compatibility.module.client.MuleClient;
 import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class OutboundTransactionsTestCase extends FunctionalTestCase
 {

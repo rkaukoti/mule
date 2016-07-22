@@ -11,29 +11,29 @@ import org.mule.runtime.core.message.Correlation;
 public enum CorrelationMode
 {
     IF_NOT_SET
-    {
-        @Override
-        public boolean doCorrelation(Correlation messageCorrelation)
-        {
-            return !messageCorrelation.getId().isPresent();
-        }
-    },
+            {
+                @Override
+                public boolean doCorrelation(Correlation messageCorrelation)
+                {
+                    return !messageCorrelation.getId().isPresent();
+                }
+            },
     ALWAYS
-    {
-        @Override
-        public boolean doCorrelation(Correlation messageCorrelation)
-        {
-            return true;
-        }
-    },
+            {
+                @Override
+                public boolean doCorrelation(Correlation messageCorrelation)
+                {
+                    return true;
+                }
+            },
     NEVER
-    {
-        @Override
-        public boolean doCorrelation(Correlation messageCorrelation)
-        {
-            return false;
-        }
-    };
+            {
+                @Override
+                public boolean doCorrelation(Correlation messageCorrelation)
+                {
+                    return false;
+                }
+            };
 
     /**
      * @param messageCorrelation the correlation data form the message to check for its correlation attributes.

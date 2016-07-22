@@ -13,6 +13,8 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.metadata.TypedValue;
 import org.mule.runtime.core.util.CaseInsensitiveHashMap;
 import org.mule.runtime.core.util.UUID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -24,9 +26,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>DefaultMuleSession</code> manages the interaction and distribution of events for Mule Services.
@@ -105,18 +104,6 @@ public final class DefaultMuleSession implements MuleSession
      * The security context for this session. If not null outbound, inbound and/or method invocations will be
      * authenticated using this context
      *
-     * @param context the context for this session or null if the request is not secure.
-     */
-    @Override
-    public void setSecurityContext(SecurityContext context)
-    {
-        securityContext = context;
-    }
-
-    /**
-     * The security context for this session. If not null outbound, inbound and/or method invocations will be
-     * authenticated using this context
-     *
      * @return the context for this session or null if the request is not secure.
      */
     @Override
@@ -126,10 +113,22 @@ public final class DefaultMuleSession implements MuleSession
     }
 
     /**
+     * The security context for this session. If not null outbound, inbound and/or method invocations will be
+     * authenticated using this context
+     *
+     * @param context the context for this session or null if the request is not secure.
+     */
+    @Override
+    public void setSecurityContext(SecurityContext context)
+    {
+        securityContext = context;
+    }
+
+    /**
      * Will set a session level property. These will either be stored and retrieved using the underlying
      * transport mechanism of stored using a default mechanism
      *
-     * @param key the key for the object data being stored on the session
+     * @param key   the key for the object data being stored on the session
      * @param value the value of the session data
      */
     @Override
@@ -275,6 +274,6 @@ public final class DefaultMuleSession implements MuleSession
     {
         TypedValue typedValue = properties.get(name);
 
-        return typedValue== null ? null : typedValue.getDataType();
+        return typedValue == null ? null : typedValue.getDataType();
     }
 }

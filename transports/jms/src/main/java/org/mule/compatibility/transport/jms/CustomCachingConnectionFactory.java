@@ -10,6 +10,8 @@ package org.mule.compatibility.transport.jms;
 import org.mule.runtime.core.api.Closeable;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.Disposable;
+import org.springframework.jms.connection.CachingConnectionFactory;
+import org.springframework.jms.connection.SingleConnectionFactory;
 
 import java.lang.reflect.Field;
 
@@ -18,9 +20,6 @@ import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.QueueConnectionFactory;
 import javax.jms.TopicConnectionFactory;
-
-import org.springframework.jms.connection.CachingConnectionFactory;
-import org.springframework.jms.connection.SingleConnectionFactory;
 
 public class CustomCachingConnectionFactory extends CachingConnectionFactory implements Closeable, Disposable
 {

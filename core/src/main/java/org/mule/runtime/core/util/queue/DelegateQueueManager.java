@@ -13,7 +13,6 @@ import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.lifecycle.Lifecycle;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +42,11 @@ public class DelegateQueueManager implements QueueManager, Lifecycle, MuleContex
         {
             delegate = new TransactionalQueueManager();
         }
+    }
+
+    public static boolean isOldModeEnabled()
+    {
+        return Boolean.getBoolean(MULE_QUEUE_OLD_MODE_KEY);
     }
 
     @Override
@@ -100,11 +104,6 @@ public class DelegateQueueManager implements QueueManager, Lifecycle, MuleContex
         {
             ((MuleContextAware) this.delegate).setMuleContext(context);
         }
-    }
-
-    public static boolean isOldModeEnabled()
-    {
-        return Boolean.getBoolean(MULE_QUEUE_OLD_MODE_KEY);
     }
 
     QueueManager getDelegate()

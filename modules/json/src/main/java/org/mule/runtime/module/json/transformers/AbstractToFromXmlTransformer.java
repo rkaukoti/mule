@@ -8,17 +8,17 @@ package org.mule.runtime.module.json.transformers;
 
 import org.mule.runtime.core.transformer.AbstractTransformer;
 
+import java.io.StringWriter;
+
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stax.StAXResult;
-import java.io.StringWriter;
 
 /**
  * Superclass for transformers that convert JSON to and from XML

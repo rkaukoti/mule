@@ -6,9 +6,11 @@
  */
 package org.mule.runtime.module.launcher.log4j2;
 
-import static org.reflections.ReflectionUtils.getAllFields;
-import static org.reflections.ReflectionUtils.withName;
-
+import org.apache.logging.log4j.core.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.selector.ContextSelector;
+import org.apache.logging.log4j.message.MessageFactory;
 import org.mule.runtime.core.logging.LogConfigChangeSubject;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
 import org.mule.runtime.module.launcher.application.ApplicationClassLoader;
@@ -19,11 +21,8 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentMap;
 
-import org.apache.logging.log4j.core.Logger;
-import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.Configuration;
-import org.apache.logging.log4j.core.selector.ContextSelector;
-import org.apache.logging.log4j.message.MessageFactory;
+import static org.reflections.ReflectionUtils.getAllFields;
+import static org.reflections.ReflectionUtils.withName;
 
 /**
  * Subclass of {@link org.apache.logging.log4j.core.LoggerContext}
@@ -67,7 +66,8 @@ class MuleLoggerContext extends LoggerContext implements LogConfigChangeSubject
         configFile = configLocn;
         this.contextSelector = contextSelector;
         this.standlone = standalone;
-        ownerClassLoaderHash = ownerClassLoader != null ? ownerClassLoader.hashCode() : getClass().getClassLoader().getSystemClassLoader().hashCode();
+        ownerClassLoaderHash =
+                ownerClassLoader != null ? ownerClassLoader.hashCode() : getClass().getClassLoader().getSystemClassLoader().hashCode();
 
         if (ownerClassLoader instanceof ArtifactClassLoader)
         {
@@ -133,7 +133,8 @@ class MuleLoggerContext extends LoggerContext implements LogConfigChangeSubject
     protected Logger newInstance(LoggerContext ctx, final String name, final MessageFactory messageFactory)
     {
 
-        return new DispatchingLogger(super.newInstance(ctx, name, messageFactory), ownerClassLoaderHash, this, contextSelector, messageFactory)
+        return new DispatchingLogger(super.newInstance(ctx, name, messageFactory), ownerClassLoaderHash, this, contextSelector,
+                messageFactory)
         {
             // force the name due to log4j2's cyclic constructor dependencies
             // aren't a friend of the wrapper pattern
@@ -163,10 +164,10 @@ class MuleLoggerContext extends LoggerContext implements LogConfigChangeSubject
      * (https://issues.apache.org/jira/browse/LOG4J2-1318)
      * <p>
      * Obtains a Logger from the Context.
-     * 
-     * @param name The name of the Logger to return.
-     * @param messageFactory The message factory is used only when creating a logger, subsequent use does not change the
-     *            logger but will log a warning if mismatched.
+     *
+     * @param name           The name of the Logger to return.
+     * @param messageFactory The message factory is used only when creating a logger, subsequent use does not change the logger but will log
+     *                       a warning if mismatched.
      * @return The Logger.
      */
     @Override

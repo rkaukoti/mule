@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.core.config.i18n;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The <code>LocaleMessageHandler</code> is essentially a merging of the Message
@@ -40,7 +40,7 @@ public class LocaleMessageHandler
      */
     public static String getString(String bundleName, String code)
     {
-        return getString(bundleName, code, new Object[]{});
+        return getString(bundleName, code, new Object[] {});
     }
 
     /**
@@ -54,7 +54,7 @@ public class LocaleMessageHandler
             arg1 = "null";
         }
 
-        return getString(bundleName, code, new Object[]{arg1});
+        return getString(bundleName, code, new Object[] {arg1});
     }
 
     /**
@@ -73,7 +73,7 @@ public class LocaleMessageHandler
             arg2 = "null";
         }
 
-        return getString(bundleName, code, new Object[]{arg1, arg2});
+        return getString(bundleName, code, new Object[] {arg1, arg2});
     }
 
     /**

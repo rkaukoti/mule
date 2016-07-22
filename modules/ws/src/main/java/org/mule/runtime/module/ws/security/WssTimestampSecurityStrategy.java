@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.module.ws.security;
 
+import java.util.Map;
+
 import static org.apache.ws.security.handler.WSHandlerConstants.TIMESTAMP;
 import static org.apache.ws.security.handler.WSHandlerConstants.TTL_TIMESTAMP;
-
-import java.util.Map;
 
 public class WssTimestampSecurityStrategy extends AbstractSecurityStrategy implements SecurityStrategy
 {

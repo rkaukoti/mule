@@ -11,14 +11,13 @@ import org.mule.runtime.core.api.security.Authentication;
 import org.mule.runtime.core.api.security.SecurityException;
 import org.mule.runtime.core.security.AbstractSecurityProvider;
 import org.mule.runtime.module.spring.security.config.SecurityProperty;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.core.AuthenticationException;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.core.AuthenticationException;
 
 
 /**
@@ -31,7 +30,9 @@ public class SpringProviderAdapter extends AbstractSecurityProvider implements A
     private Map securityProperties;
     private SpringAuthenticationProvider authenticationProvider;
 
-    /** For Spring IoC only */
+    /**
+     * For Spring IoC only
+     */
     public SpringProviderAdapter()
     {
         super("spring-security");
@@ -56,10 +57,10 @@ public class SpringProviderAdapter extends AbstractSecurityProvider implements A
 
     public Authentication authenticate(Authentication authentication) throws SecurityException
     {
-        org.springframework.security.core.Authentication auth = null;        
+        org.springframework.security.core.Authentication auth = null;
         if (authentication instanceof SpringAuthenticationAdapter)
         {
-            auth = ((SpringAuthenticationAdapter)authentication).getDelegate();
+            auth = ((SpringAuthenticationAdapter) authentication).getDelegate();
         }
         else
         {
@@ -70,7 +71,8 @@ public class SpringProviderAdapter extends AbstractSecurityProvider implements A
         return new SpringAuthenticationAdapter(auth, getSecurityProperties(), authentication.getEvent());
     }
 
-    public org.springframework.security.core.Authentication authenticate(org.springframework.security.core.Authentication authentication) throws AuthenticationException    
+    public org.springframework.security.core.Authentication authenticate(org.springframework.security.core.Authentication authentication)
+            throws AuthenticationException
     {
         return delegate.authenticate(authentication);
     }
@@ -101,7 +103,8 @@ public class SpringProviderAdapter extends AbstractSecurityProvider implements A
 
     public SpringAuthenticationProvider getAuthenticationProvider()
     {
-        if (this.authenticationProvider == null) {
+        if (this.authenticationProvider == null)
+        {
             this.authenticationProvider = new UserAndPasswordAuthenticationProvider();
         }
         return authenticationProvider;

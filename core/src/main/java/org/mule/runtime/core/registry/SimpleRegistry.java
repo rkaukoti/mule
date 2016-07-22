@@ -6,12 +6,9 @@
  */
 package org.mule.runtime.core.registry;
 
-import static org.reflections.ReflectionUtils.getAllFields;
-import static org.reflections.ReflectionUtils.withAnnotation;
 import org.mule.runtime.core.api.Injector;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.registry.LifecycleRegistry;
@@ -21,6 +18,9 @@ import org.mule.runtime.core.lifecycle.phases.NotInLifecyclePhase;
 import java.lang.reflect.Field;
 
 import javax.inject.Inject;
+
+import static org.reflections.ReflectionUtils.getAllFields;
+import static org.reflections.ReflectionUtils.withAnnotation;
 
 /**
  * A very simple implementation of {@link LifecycleRegistry}. Useful for starting really lightweight
@@ -167,7 +167,7 @@ public class SimpleRegistry extends TransientRegistry implements LifecycleRegist
             catch (Exception e)
             {
                 throw new RuntimeException(String.format("Could not inject dependency on field %s of type %s",
-                                                         field.getName(), object.getClass().getName()), e);
+                        field.getName(), object.getClass().getName()), e);
             }
         }
 

@@ -47,8 +47,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "localElement")
 @XmlSeeAlso({
-                    NarrowMaxMin.class
-            })
+        NarrowMaxMin.class
+})
 public class LocalElement extends Element
 {
 

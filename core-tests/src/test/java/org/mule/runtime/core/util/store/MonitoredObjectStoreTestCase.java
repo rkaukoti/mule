@@ -6,14 +6,13 @@
  */
 package org.mule.runtime.core.util.store;
 
+import org.junit.Test;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.store.ObjectStoreException;
 import org.mule.runtime.core.api.store.ObjectStoreNotAvaliableException;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.io.Serializable;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

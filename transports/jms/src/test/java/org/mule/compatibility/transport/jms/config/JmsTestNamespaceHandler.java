@@ -6,13 +6,12 @@
  */
 package org.mule.compatibility.transport.jms.config;
 
-import org.mule.compatibility.transport.jms.config.ConnectionFactoryDefinitionParser;
-import org.mule.compatibility.transport.jms.config.JmsConnectorDefinitionParser;
 import org.mule.compatibility.transport.jms.test.TestJmsConnector;
-
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
-/** Registers Bean Definition Parsers for the "jms" namespace. */
+/**
+ * Registers Bean Definition Parsers for the "jms" namespace.
+ */
 public class JmsTestNamespaceHandler extends NamespaceHandlerSupport
 {
 
@@ -21,5 +20,5 @@ public class JmsTestNamespaceHandler extends NamespaceHandlerSupport
         registerBeanDefinitionParser("connector", new JmsConnectorDefinitionParser(TestJmsConnector.class));
         registerBeanDefinitionParser("connection-factory", new ConnectionFactoryDefinitionParser());
     }
-    
+
 }

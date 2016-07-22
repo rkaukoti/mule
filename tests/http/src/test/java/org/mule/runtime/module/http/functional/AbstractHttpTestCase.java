@@ -7,8 +7,8 @@
 package org.mule.runtime.module.http.functional;
 
 import org.mule.extension.http.internal.HttpConnector;
-import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.extension.socket.api.SocketsExtension;
+import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 
 public abstract class AbstractHttpTestCase extends ExtensionFunctionalTestCase
 {

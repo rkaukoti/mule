@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.module.spring.security.config;
 
-import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.NamedDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.OrphanDefinitionParser;
+import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.security.MuleSecurityManager;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.xml.BeanDefinitionParser;
@@ -42,9 +42,9 @@ public class SecurityManagerDefinitionParser implements BeanDefinitionParser
     @Override
     public BeanDefinition parse(Element element, ParserContext parserContext)
     {
-        if(element.hasAttribute(AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME))
+        if (element.hasAttribute(AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME))
         {
-            if(MuleProperties.OBJECT_SECURITY_MANAGER.equals(element.getAttribute(AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME)))
+            if (MuleProperties.OBJECT_SECURITY_MANAGER.equals(element.getAttribute(AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME)))
             {
                 element.removeAttribute(AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME);
                 return namedDefinitionParser.parse(element, parserContext);

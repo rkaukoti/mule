@@ -6,14 +6,13 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
  * Requires the following connector config: <jms:connector name="jmsConnector1"
@@ -141,8 +140,8 @@ public class JmsConnectorJndiTestCase extends AbstractJmsFunctionalTestCase
     }
 
     /**
-    * Use a non-JNDI Destination when jndiDestinations="false", test should pass.
-    */
+     * Use a non-JNDI Destination when jndiDestinations="false", test should pass.
+     */
     @Test
     public void testNonJndiDestinationWithJndiNameResolver() throws Exception
     {
@@ -156,8 +155,8 @@ public class JmsConnectorJndiTestCase extends AbstractJmsFunctionalTestCase
     }
 
     /**
-    * Use a non-JNDI Destination when jndiDestinations="true" but forceJndiDestinations="false", test should pass.
-    */
+     * Use a non-JNDI Destination when jndiDestinations="true" but forceJndiDestinations="false", test should pass.
+     */
     @Test
     public void testNonJndiDestinationOptionalWithJndiNameResolver() throws Exception
     {
@@ -171,8 +170,8 @@ public class JmsConnectorJndiTestCase extends AbstractJmsFunctionalTestCase
     }
 
     /**
-    * Use a non-JNDI Destination when forceJndiDestinations="true", test should fail.
-    */
+     * Use a non-JNDI Destination when forceJndiDestinations="true", test should fail.
+     */
     @Test
     public void testNonJndiDestinationForceWithJndiNameResolver() throws Exception
     {

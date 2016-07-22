@@ -6,6 +6,7 @@
  */
 package org.mule.functional.functional;
 
+import org.apache.commons.lang.StringUtils;
 import org.mule.functional.exceptions.FunctionalTestException;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleContext;
@@ -23,14 +24,12 @@ import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.NumberUtils;
 import org.mule.runtime.core.util.StringMessageUtils;
 import org.mule.runtime.core.util.SystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>FunctionalTestComponent</code> is a service that can be used by
@@ -48,11 +47,10 @@ import org.slf4j.LoggerFactory;
 // TODO This should really extend StaticComponent from mule-core as it is quite similar.
 public class FunctionalTestComponent implements Callable, Initialisable, Disposable, MuleContextAware, Receiveable, Startable, Stoppable
 {
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
     public static final int STREAM_SAMPLE_SIZE = 4;
     public static final int STREAM_BUFFER_SIZE = 4096;
-    
+    private static List<LifecycleCallback> lifecycleCallbacks = new ArrayList<LifecycleCallback>();
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
     private EventCallback eventCallback;
     private Object returnData = null;
     private boolean throwException = false;
@@ -66,15 +64,22 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
     private boolean logMessageDetails = false;
     private String id = "<none>";
     private MuleContext muleContext;
-    private static List<LifecycleCallback> lifecycleCallbacks = new ArrayList<LifecycleCallback>();
-
-    
     /**
      * Keeps a list of any messages received on this service. Note that only references
      * to the messages (objects) are stored, so any subsequent changes to the objects
      * will change the history.
      */
     private List<Object> messageHistory;
+
+    public static void addLifecycleCallback(LifecycleCallback callback)
+    {
+        lifecycleCallbacks.add(callback);
+    }
+
+    public static void removeLifecycleCallback(LifecycleCallback callback)
+    {
+        lifecycleCallbacks.remove(callback);
+    }
 
     @Override
     public void initialise()
@@ -144,7 +149,7 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
             }
             return o;
         }
-        else if (getAppendString()!=null)
+        else if (getAppendString() != null)
         {
             return context.getMessageAsString();
         }
@@ -155,12 +160,11 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
     }
 
     /**
-     * This method is used by some WebServices tests where you don' want to be introducing the {@link org.mule.runtime.core.api.MuleEventContext} as
-     * a complex type.
+     * This method is used by some WebServices tests where you don' want to be introducing the {@link
+     * org.mule.runtime.core.api.MuleEventContext} as a complex type.
      *
      * @param data the event data received
      * @return the processed message
-     * @throws Exception
      */
     @Override
     public Object onReceive(Object data) throws Exception
@@ -174,7 +178,6 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
         return process(data, context);
     }
 
-
     /**
      * Always throws a {@link FunctionalTestException}.  This methodis only called if
      * {@link #isThrowException()} is true.
@@ -187,8 +190,8 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
         {
             if (StringUtils.isNotBlank(exceptionText))
             {
-                Throwable exception = ClassUtils.instanciateClass(getExceptionToThrow(), 
-                    new Object[] { exceptionText });
+                Throwable exception = ClassUtils.instanciateClass(getExceptionToThrow(),
+                        new Object[] {exceptionText});
                 throw (Exception) exception;
             }
             else
@@ -215,7 +218,7 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
      * Note that the value of {@link #getAppendString()} can contain expressions.
      *
      * @param contents the string vlaue of the current message payload
-     * @param event  the current event
+     * @param event    the current event
      * @return a concatenated string of the current payload and the appendString
      */
     protected String append(String contents, MuleEvent event)
@@ -243,8 +246,8 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
         if (logger.isInfoEnabled())
         {
             String msg = StringMessageUtils.getBoilerPlate("Message Received in service: "
-                    + context.getFlowConstruct().getName() + ". Content is: "
-                    + StringMessageUtils.truncate(data.toString(), 100, true), '*', 80);
+                                                           + context.getFlowConstruct().getName() + ". Content is: "
+                                                           + StringMessageUtils.truncate(data.toString(), 100, true), '*', 80);
 
             logger.info(msg);
         }
@@ -376,9 +379,8 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
      * Sometimes you will want the service to always throw an exception, if this is the case you can
      * set the 'throwException' property to true.
      *
-     * @return throwException true if an exception should always be thrown from this instance.
-     *         If the {@link #returnData} property is set and is of type
-     *         java.lang.Exception, that exception will be thrown.
+     * @return throwException true if an exception should always be thrown from this instance. If the {@link #returnData} property is set
+     * and is of type java.lang.Exception, that exception will be thrown.
      */
     public boolean isThrowException()
     {
@@ -389,9 +391,8 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
      * Sometimes you will want the service to always throw an exception, if this is the case you can
      * set the 'throwException' property to true.
      *
-     * @param throwException true if an exception should always be thrown from this instance.
-     *                       If the {@link #returnData} property is set and is of type
-     *                       java.lang.Exception, that exception will be thrown.
+     * @param throwException true if an exception should always be thrown from this instance. If the {@link #returnData} property is set and
+     *                       is of type java.lang.Exception, that exception will be thrown.
      */
     public void setThrowException(boolean throwException)
     {
@@ -410,6 +411,7 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
 
     /**
      * If enableMessageHistory = true, returns the number of messages received by this service.
+     *
      * @return -1 if no message history, otherwise the history size
      */
     public int getReceivedMessagesCount()
@@ -517,12 +519,11 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
         this.logMessageDetails = logMessageDetails;
     }
 
-    
     public String getExceptionText()
     {
         return exceptionText;
     }
-    
+
     public void setExceptionText(String text)
     {
         exceptionText = text;
@@ -531,16 +532,6 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
     public void setId(String id)
     {
         this.id = id;
-    }
-
-    public static void addLifecycleCallback(LifecycleCallback callback)
-    {
-        lifecycleCallbacks.add(callback);
-    }
-
-    public static void removeLifecycleCallback(LifecycleCallback callback)
-    {
-        lifecycleCallbacks.remove(callback);
     }
 
     public interface LifecycleCallback

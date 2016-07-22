@@ -10,9 +10,6 @@ import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.ReusablePropertyConfiguration;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.TempWrapperPropertyConfiguration;
-import org.mule.runtime.config.spring.util.SpringXMLUtils;
-import org.mule.runtime.core.util.StringUtils;
-
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -92,8 +89,6 @@ public abstract class AbstractHierarchicalDefinitionParser extends AbstractMuleB
      * Provide access to bean assembler from non-hierarchical case.  Legacy support for
      * "mixed" definition parsers.
      *
-     * @param element
-     * @param bean
      * @deprecated
      */
     protected BeanAssembler getOrphanBeanAssembler(Element element, BeanDefinitionBuilder bean)

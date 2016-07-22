@@ -7,13 +7,13 @@
 
 package org.mule.runtime.core.config.bootstrap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Discovers {@link BootstrapService} instances corresponding to
@@ -50,7 +50,10 @@ public class PropertiesBootstrapServiceDiscoverer implements BootstrapServiceDis
         {
             final List<Properties> discoveredProperties = registryBootstrapDiscoverer.discover();
 
-            propertiesServices.addAll(discoveredProperties.stream().map(discoveredProperty -> new PropertiesBootstrapService(classLoader, discoveredProperty)).collect(Collectors.toList()));
+            propertiesServices.addAll(discoveredProperties.stream()
+                                                          .map(discoveredProperty -> new PropertiesBootstrapService(classLoader,
+                                                                  discoveredProperty))
+                                                          .collect(Collectors.toList()));
         }
         catch (BootstrapException e)
         {

@@ -39,7 +39,7 @@ public class NamingExceptionReader implements ExceptionReader
 
     /**
      * Returns a map of the non-stanard information stored on the exception
-     * 
+     *
      * @param t the exception to extract the information from
      * @return a map of the non-stanard information stored on the exception
      */
@@ -48,14 +48,14 @@ public class NamingExceptionReader implements ExceptionReader
         if (t instanceof NamingException)
         {
             NamingException e = (NamingException) t;
-            
+
             Map<String, Object> info = new HashMap<String, Object>();
             final Name remainingName = e.getRemainingName();
             final Name resolvedName = e.getResolvedName();
             info.put("Remaining Name", remainingName == null ?
                     MISSING_NAME_DISPLAY_VALUE : remainingName.toString());
-            info.put("Resolved Name", resolvedName == null ? 
-                MISSING_NAME_DISPLAY_VALUE : resolvedName.toString());
+            info.put("Resolved Name", resolvedName == null ?
+                    MISSING_NAME_DISPLAY_VALUE : resolvedName.toString());
             return info;
         }
         else

@@ -6,13 +6,12 @@
  */
 package org.mule.compatibility.config.spring.parsers.endpoint;
 
+import org.junit.Test;
 import org.mule.compatibility.core.config.builders.TransportsConfigurationBuilder;
-import org.mule.test.config.spring.parsers.AbstractBadConfigTestCase;
 import org.mule.runtime.core.api.config.ConfigurationBuilder;
+import org.mule.test.config.spring.parsers.AbstractBadConfigTestCase;
 
 import java.util.List;
-
-import org.junit.Test;
 
 public class AttributeErrorTestCase extends AbstractBadConfigTestCase
 {

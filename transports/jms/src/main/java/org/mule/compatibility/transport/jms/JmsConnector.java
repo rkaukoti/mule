@@ -81,87 +81,66 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
 
     public static final int REDELIVERY_IGNORE = -1;
 
-    private AtomicInteger receiverReportedExceptionCount = new AtomicInteger();
+    static
+    {
+        ExceptionHelper.registerExceptionReader(new JmsExceptionReader());
+    }
 
     ////////////////////////////////////////////////////////////////////////
     // Properties
     ////////////////////////////////////////////////////////////////////////
 
+    private final CompositeConnectionFactoryDecorator connectionFactoryDecorator = new CompositeConnectionFactoryDecorator();
+    public String username = null;
+    public String password = null;
+    private AtomicInteger receiverReportedExceptionCount = new AtomicInteger();
     private int acknowledgementMode = Session.AUTO_ACKNOWLEDGE;
-
     private String clientId;
-
     private boolean durable;
-
     private boolean noLocal;
-
     private boolean persistentDelivery;
-
-    private boolean honorQosHeaders;
-
-    private int maxRedelivery = REDELIVERY_FAIL_ON_FIRST;
-
-    private boolean cacheJmsSessions = true;
-
-    /**
-     * Whether to create a consumer on connect.
-     */
-    private boolean eagerConsumer = true;
 
     ////////////////////////////////////////////////////////////////////////
     // JMS Connection
     ////////////////////////////////////////////////////////////////////////
-
+    private boolean honorQosHeaders;
+    private int maxRedelivery = REDELIVERY_FAIL_ON_FIRST;
+    private boolean cacheJmsSessions = true;
+    /**
+     * Whether to create a consumer on connect.
+     */
+    private boolean eagerConsumer = true;
     /**
      * JMS Connection, not settable by the user.
      */
     private Connection connection;
-
     private ConnectionFactory connectionFactory;
-
     private Map connectionFactoryProperties;
-
-    public String username = null;
-
-    public String password = null;
-
     ////////////////////////////////////////////////////////////////////////
     // JNDI Connection
     ////////////////////////////////////////////////////////////////////////
     private String jndiProviderUrl;
-
     private String jndiInitialFactory;
-
     private Map jndiProviderProperties;
-
     private String connectionFactoryJndiName;
-
     private boolean jndiDestinations = false;
-
-    private boolean forceJndiDestinations = false;
-
-    /**
-     * Resolves JNDI names if the connector uses {@link #jndiDestinations}
-     */
-    private JndiNameResolver jndiNameResolver;
 
     ////////////////////////////////////////////////////////////////////////
     // Strategy classes
     ////////////////////////////////////////////////////////////////////////
-
+    private boolean forceJndiDestinations = false;
+    /**
+     * Resolves JNDI names if the connector uses {@link #jndiDestinations}
+     */
+    private JndiNameResolver jndiNameResolver;
     private String specification = JmsConstants.JMS_SPECIFICATION_102B;
-
     private JmsSupport jmsSupport;
-
     private JmsTopicResolver topicResolver;
-
     private RedeliveryHandlerFactory redeliveryHandlerFactory;
-
     /**
      * determines whether a temporary JMSReplyTo destination will be used when using synchronous outbound JMS endpoints
      */
     private boolean disableTemporaryReplyToDestinations = false;
-
     /**
      * If disableTemporaryReplyToDestinations = "true", this flag causes the original JMS Message to be returned as a
      * synchronous response with any properties set on it by the JMS Provider (e.g., JMSMessageID).
@@ -169,20 +148,15 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
      * @see EE-1688/MULE-3059
      */
     private boolean returnOriginalMessageAsReply = false;
-
     /**
      * In-container embedded mode disables some features for strict Java EE compliance.
      */
     private boolean embeddedMode;
-
     /**
      * Overrides XaResource.isSameRM() result. Needed for IBM WMQ XA
      * implementation (set to 'false'). Default value is null (don't override).
      */
     private Boolean sameRMOverrideValue;
-
-    private final CompositeConnectionFactoryDecorator connectionFactoryDecorator = new CompositeConnectionFactoryDecorator();
-
     /**
      * Used to ignore handling of ExceptionListener#onException when in the process of disconnecting.  This is
      * required because the Connector {@link org.mule.api.lifecycle.LifecycleManager} does not include
@@ -190,18 +164,12 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
      */
     private volatile boolean disconnecting;
 
-    private Timer responseTimeoutTimer;
-
     ////////////////////////////////////////////////////////////////////////
     // Methods
     ////////////////////////////////////////////////////////////////////////
 
     /* Register the Jms Exception reader if this class gets loaded */
-
-    static
-    {
-        ExceptionHelper.registerExceptionReader(new JmsExceptionReader());
-    }
+    private Timer responseTimeoutTimer;
 
     public JmsConnector(MuleContext context)
     {
@@ -266,8 +234,8 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
     /**
      * A factory method to create various JmsSupport class versions.
      *
-     * @see JmsSupport
      * @return JmsSupport instance
+     * @see JmsSupport
      */
     protected JmsSupport createJmsSupport()
     {
@@ -356,7 +324,6 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
 
     /**
      * Override this method to provide a default ConnectionFactory for a vendor-specific JMS Connector.
-     * @throws Exception
      */
     protected ConnectionFactory getDefaultConnectionFactory() throws Exception
     {
@@ -469,7 +436,8 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() throws Exception
+    {
         if (muleContext.isPrimaryPollingInstance() || clientId == null)
         {
             super.connect();
@@ -488,14 +456,14 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
                     {
                         // The connection should use instead the ApplicationClassloader
                         Thread.currentThread().setContextClassLoader(muleContext.getExecutionClassLoader());
-                        
+
                         JmsConnector.this.connect();
                     }
                     catch (Exception e)
                     {
                         throw new MuleRuntimeException(e);
                     }
-                    finally 
+                    finally
                     {
                         // Restore the notification original class loader so we don't interfere in any later
                         // usage of this thread
@@ -524,7 +492,7 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
             }
 
             int expectedReceiverCount = isMultiConsumerReceiver ? 1 :
-                                        (getReceivers().size() * getNumberOfConcurrentTransactedReceivers());
+                    (getReceivers().size() * getNumberOfConcurrentTransactedReceivers());
 
             if (logger.isDebugEnabled())
             {
@@ -630,7 +598,7 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
 
     public Session createSession(ImmutableEndpoint endpoint) throws JMSException
     {
-        return createSession(endpoint.getTransactionConfig().isTransacted(),getTopicResolver().isTopic(endpoint));
+        return createSession(endpoint.getTransactionConfig().isTransacted(), getTopicResolver().isTopic(endpoint));
     }
 
     public Session getSession(boolean transacted, boolean topic) throws JMSException
@@ -775,9 +743,6 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
 
     /**
      * Closes the MessageProducer
-     *
-     * @param producer
-     * @throws JMSException
      */
     public void close(MessageProducer producer) throws JMSException
     {
@@ -798,8 +763,6 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
     /**
      * Closes the MessageProducer without throwing an exception (an error message is
      * logged instead).
-     *
-     * @param producer
      */
     public void closeQuietly(MessageProducer producer)
     {
@@ -815,9 +778,6 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
 
     /**
      * Closes the MessageConsumer
-     *
-     * @param consumer
-     * @throws JMSException
      */
     public void close(MessageConsumer consumer) throws JMSException
     {
@@ -838,8 +798,6 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
     /**
      * Closes the MessageConsumer without throwing an exception (an error message is
      * logged instead).
-     *
-     * @param consumer
      */
     public void closeQuietly(MessageConsumer consumer)
     {
@@ -855,9 +813,6 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
 
     /**
      * Closes the MuleSession
-     *
-     * @param session
-     * @throws JMSException
      */
     public void close(Session session) throws JMSException
     {
@@ -874,8 +829,6 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
     /**
      * Closes the MuleSession without throwing an exception (an error message is logged
      * instead).
-     *
-     * @param session
      */
     public void closeQuietly(Session session)
     {
@@ -898,9 +851,6 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
 
     /**
      * Closes the TemporaryQueue
-     *
-     * @param tempQueue
-     * @throws JMSException
      */
     public void close(TemporaryQueue tempQueue) throws JMSException
     {
@@ -913,8 +863,6 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
     /**
      * Closes the TemporaryQueue without throwing an exception (an error message is
      * logged instead).
-     *
-     * @param tempQueue
      */
     public void closeQuietly(TemporaryQueue tempQueue)
     {
@@ -944,9 +892,6 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
 
     /**
      * Closes the TemporaryTopic
-     *
-     * @param tempTopic
-     * @throws JMSException
      */
     public void close(TemporaryTopic tempTopic) throws JMSException
     {
@@ -959,8 +904,6 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
     /**
      * Closes the TemporaryTopic without throwing an exception (an error message is
      * logged instead).
-     *
-     * @param tempTopic
      */
     public void closeQuietly(TemporaryTopic tempTopic)
     {
@@ -1235,31 +1178,28 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
     }
 
     /**
-     * Sets the <code>honorQosHeaders</code> property, which determines whether
-     * {@link JmsMessageDispatcher} should honor incoming message's QoS headers
-     * (JMSPriority, JMSDeliveryMode).
-     *
-     * @param honorQosHeaders <code>true</code> if {@link JmsMessageDispatcher}
-     *                        should honor incoming message's QoS headers; otherwise
-     *                        <code>false</code> Default is <code>false</code>, meaning that
-     *                        connector settings will override message headers.
-     */
-    public void setHonorQosHeaders(boolean honorQosHeaders)
-    {
-        this.honorQosHeaders = honorQosHeaders;
-    }
-
-    /**
      * Gets the value of <code>honorQosHeaders</code> property.
      *
-     * @return <code>true</code> if <code>JmsMessageDispatcher</code> should
-     *         honor incoming message's QoS headers; otherwise <code>false</code>
-     *         Default is <code>false</code>, meaning that connector settings will
-     *         override message headers.
+     * @return <code>true</code> if <code>JmsMessageDispatcher</code> should honor incoming message's QoS headers; otherwise
+     * <code>false</code> Default is <code>false</code>, meaning that connector settings will override message headers.
      */
     public boolean isHonorQosHeaders()
     {
         return honorQosHeaders;
+    }
+
+    /**
+     * Sets the <code>honorQosHeaders</code> property, which determines whether
+     * {@link JmsMessageDispatcher} should honor incoming message's QoS headers
+     * (JMSPriority, JMSDeliveryMode).
+     *
+     * @param honorQosHeaders <code>true</code> if {@link JmsMessageDispatcher} should honor incoming message's QoS headers; otherwise
+     *                        <code>false</code> Default is <code>false</code>, meaning that connector settings will override message
+     *                        headers.
+     */
+    public void setHonorQosHeaders(boolean honorQosHeaders)
+    {
+        this.honorQosHeaders = honorQosHeaders;
     }
 
     /**
@@ -1385,12 +1325,21 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
     }
 
     /**
-     * @param connectionFactoryProperties properties to be set on the underlying
-     *                                    ConnectionFactory.
+     * @param connectionFactoryProperties properties to be set on the underlying ConnectionFactory.
      */
     public void setConnectionFactoryProperties(Map connectionFactoryProperties)
     {
         this.connectionFactoryProperties = connectionFactoryProperties;
+    }
+
+    /**
+     * A synonym for {@link #numberOfConcurrentTransactedReceivers}.
+     *
+     * @return number of consumers
+     */
+    public int getNumberOfConsumers()
+    {
+        return this.numberOfConcurrentTransactedReceivers;
     }
 
     /**
@@ -1402,16 +1351,6 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
     public void setNumberOfConsumers(int count)
     {
         this.numberOfConcurrentTransactedReceivers = count;
-    }
-
-    /**
-     * A synonym for {@link #numberOfConcurrentTransactedReceivers}.
-     *
-     * @return number of consumers
-     */
-    public int getNumberOfConsumers()
-    {
-        return this.numberOfConcurrentTransactedReceivers;
     }
 
     public boolean isEmbeddedMode()
@@ -1478,7 +1417,7 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
      * Schedules a timeout task used for performing timeout of async responses.
      *
      * @param timerTask task to be executed on timeout
-     * @param timeout the number of milliseconds after which the timeout task should be executed
+     * @param timeout   the number of milliseconds after which the timeout task should be executed
      */
     public void scheduleTimeoutTask(TimerTask timerTask, int timeout)
     {

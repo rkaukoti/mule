@@ -6,18 +6,18 @@
  */
 package org.mule.runtime.module.reboot;
 
+import org.apache.commons.cli.BasicParser;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.tanukisoftware.wrapper.WrapperManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Date;
 import java.util.Properties;
-
-import org.apache.commons.cli.BasicParser;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-import org.tanukisoftware.wrapper.WrapperManager;
 
 /**
  * Determine which is the main class to run and delegate control to the Java Service
@@ -29,13 +29,12 @@ import org.tanukisoftware.wrapper.WrapperManager;
  */
 public class MuleContainerBootstrap
 {
-    private static final String MULE_MODULE_REBOOT_POM_FILE_PATH = "META-INF/maven/org.mule.module/mule-module-reboot/pom.properties";
- 
     public static final String CLI_OPTIONS[][] = {
-        {"main", "true", "Main Class"},
-        {"production", "false", "Modify the system class loader for production use (as in Mule 2.x)"},
-        {"version", "false", "Show product and version information"}
+            {"main", "true", "Main Class"},
+            {"production", "false", "Modify the system class loader for production use (as in Mule 2.x)"},
+            {"version", "false", "Show product and version information"}
     };
+    private static final String MULE_MODULE_REBOOT_POM_FILE_PATH = "META-INF/maven/org.mule.module/mule-module-reboot/pom.properties";
 
     public static void main(String[] args) throws Exception
     {
@@ -45,7 +44,7 @@ public class MuleContainerBootstrap
         String[] remainingArgs = commandLine.getArgs();
 
         prepareBootstrapPhase(commandLine);
-        
+
         System.out.println("Starting the Mule Container...");
         WrapperManager.start(new MuleContainerWrapper(), remainingArgs);
     }
@@ -55,7 +54,7 @@ public class MuleContainerBootstrap
         boolean production = commandLine.hasOption("production");
         prepareBootstrapPhase(production);
     }
-    
+
     private static void prepareBootstrapPhase(boolean production) throws Exception
     {
         File muleHome = lookupMuleHome();
@@ -64,15 +63,15 @@ public class MuleContainerBootstrap
         {
             muleBase = muleHome;
         }
-        
+
         setSystemMuleVersion();
     }
-    
+
     public static File lookupMuleHome() throws Exception
     {
         File muleHome = null;
         String muleHomeVar = System.getProperty("mule.home");
-        
+
         if (muleHomeVar != null && !muleHomeVar.trim().equals("") && !muleHomeVar.equals("%MULE_HOME%"))
         {
             muleHome = new File(muleHomeVar).getCanonicalFile();
@@ -84,12 +83,12 @@ public class MuleContainerBootstrap
         }
         return muleHome;
     }
-    
+
     public static File lookupMuleBase() throws Exception
     {
         File muleBase = null;
         String muleBaseVar = System.getProperty("mule.base");
-        
+
         if (muleBaseVar != null && !muleBaseVar.trim().equals("") && !muleBaseVar.equals("%MULE_BASE%"))
         {
             muleBase = new File(muleBaseVar).getCanonicalFile();
@@ -104,10 +103,10 @@ public class MuleContainerBootstrap
         {
             URL mavenPropertiesUrl = MuleContainerBootstrapUtils.getResource(MULE_MODULE_REBOOT_POM_FILE_PATH, MuleContainerWrapper.class);
             propertiesStream = mavenPropertiesUrl.openStream();
-            
+
             Properties mavenProperties = new Properties();
             mavenProperties.load(propertiesStream);
-            
+
             System.setProperty("mule.version", mavenProperties.getProperty("version"));
             System.setProperty("mule.reference.version", mavenProperties.getProperty("version") + '-' + (new Date()).getTime());
         }

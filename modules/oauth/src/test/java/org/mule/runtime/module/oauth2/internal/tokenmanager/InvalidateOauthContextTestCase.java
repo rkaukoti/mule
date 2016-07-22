@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.module.oauth2.internal.tokenmanager;
 
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
-
+import org.hamcrest.core.Is;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ConfigOAuthContext;
 import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ResourceOwnerOAuthContext;
 
-import org.hamcrest.core.Is;
-import org.junit.Test;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertThat;
 
 public class InvalidateOauthContextTestCase extends FunctionalTestCase
 {

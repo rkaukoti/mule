@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.util.pool;
 
+import org.apache.commons.pool.PoolableObjectFactory;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.component.JavaComponent;
@@ -16,21 +17,19 @@ import org.mule.runtime.core.api.lifecycle.Stoppable;
 import org.mule.runtime.core.api.object.ObjectFactory;
 import org.mule.runtime.core.component.PooledJavaComponent;
 import org.mule.runtime.core.config.PoolingProfile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.commons.pool.PoolableObjectFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * A LifecyleEnabledObjectPool implementation for pooling {@link LifecycleAdapter}
  * instances for implementations of {@link JavaComponent} that require
  * {@link LifecycleAdapter} pooling such as {@link PooledJavaComponent}.
- * 
+ *
  * @see PooledJavaComponent
  */
 public class DefaultLifecycleEnabledObjectPool extends CommonsPoolObjectPool implements LifecyleEnabledObjectPool
@@ -45,10 +44,9 @@ public class DefaultLifecycleEnabledObjectPool extends CommonsPoolObjectPool imp
     private List items = new LinkedList();
 
     /**
-     * @param objectFactory The object factory that should be used to create new
-     *            {@link org.mule.runtime.core.api.component.LifecycleAdapter} instance for the pool
+     * @param objectFactory  The object factory that should be used to create new {@link org.mule.runtime.core.api.component.LifecycleAdapter}
+     *                       instance for the pool
      * @param poolingProfile The pooling progile ot be used to configure pool
-     * @param muleContext
      */
     public DefaultLifecycleEnabledObjectPool(ObjectFactory objectFactory, PoolingProfile poolingProfile, MuleContext muleContext)
     {
@@ -65,7 +63,7 @@ public class DefaultLifecycleEnabledObjectPool extends CommonsPoolObjectPool imp
         started.set(true);
         synchronized (items)
         {
-            for (Iterator i = items.iterator(); i.hasNext();)
+            for (Iterator i = items.iterator(); i.hasNext(); )
             {
                 ((Startable) i.next()).start();
             }
@@ -77,7 +75,7 @@ public class DefaultLifecycleEnabledObjectPool extends CommonsPoolObjectPool imp
         started.set(false);
         synchronized (items)
         {
-            for (Iterator i = items.iterator(); i.hasNext();)
+            for (Iterator i = items.iterator(); i.hasNext(); )
             {
                 ((Stoppable) i.next()).stop();
             }

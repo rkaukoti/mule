@@ -29,15 +29,14 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "getWeatherInformationResult"
+        "getWeatherInformationResult"
 })
 @XmlRootElement(name = "GetWeatherInformationResponse", namespace = "http://ws.cdyne.com/WeatherWS/")
-public class GetWeatherInformationResponse {
+public class GetWeatherInformationResponse
+{
 
     @XmlElement(name = "GetWeatherInformationResult", namespace = "http://ws.cdyne.com/WeatherWS/")
     protected ArrayOfWeatherDescription getWeatherInformationResult;
@@ -45,24 +44,20 @@ public class GetWeatherInformationResponse {
     /**
      * Gets the value of the getWeatherInformationResult property.
      *
-     * @return
-     *     possible object is
-     *     {@link ArrayOfWeatherDescription }
-     *
+     * @return possible object is {@link ArrayOfWeatherDescription }
      */
-    public ArrayOfWeatherDescription getGetWeatherInformationResult() {
+    public ArrayOfWeatherDescription getGetWeatherInformationResult()
+    {
         return getWeatherInformationResult;
     }
 
     /**
      * Sets the value of the getWeatherInformationResult property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link ArrayOfWeatherDescription }
-     *
+     * @param value allowed object is {@link ArrayOfWeatherDescription }
      */
-    public void setGetWeatherInformationResult(ArrayOfWeatherDescription value) {
+    public void setGetWeatherInformationResult(ArrayOfWeatherDescription value)
+    {
         this.getWeatherInformationResult = value;
     }
 

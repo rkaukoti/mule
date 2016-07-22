@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.module.xml.el;
 
-import static org.mule.runtime.core.util.ClassUtils.isConsumable;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.core.util.Preconditions.checkState;
+import com.google.common.base.Joiner;
+import com.google.common.base.Supplier;
 
+import org.apache.commons.lang.StringUtils;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleContext;
@@ -29,21 +29,20 @@ import org.mule.runtime.module.xml.util.XMLUtils;
 import org.mule.runtime.module.xml.xpath.SaxonXpathEvaluator;
 import org.mule.runtime.module.xml.xpath.XPathEvaluator;
 import org.mule.runtime.module.xml.xpath.XPathReturnType;
-
-import com.google.common.base.Joiner;
-import com.google.common.base.Supplier;
-
-import java.io.InputStream;
-
-import javax.xml.stream.XMLStreamReader;
-
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+
+import java.io.InputStream;
+
+import javax.xml.stream.XMLStreamReader;
+
+import static org.mule.runtime.core.util.ClassUtils.isConsumable;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.core.util.Preconditions.checkState;
 
 /**
  * A MEL function capable of evaluation XPath expressions by delegating into an instance of
@@ -136,8 +135,8 @@ public class XPath3Function implements ExpressionLanguageFunction
 
     private static final XPathReturnType DEFAULT_RETURN_TYPE = XPathReturnType.STRING;
     private static final DataType[] SUPPORTED_TYPES = new DataType[] {
-                                                                      DataType.fromType(Document.class),
-                                                                      DataType.fromType(Node.class)
+            DataType.fromType(Document.class),
+            DataType.fromType(Node.class)
     };
     private static final String SUPPORTED_TYPES_AS_STRING = Joiner.on(',').join(SUPPORTED_TYPES);
 
@@ -209,7 +208,8 @@ public class XPath3Function implements ExpressionLanguageFunction
         if (node == null)
         {
             throw new IllegalArgumentException(
-                    String.format("Could not transform input of type '%s' to a supported one. Supported types are '%s'", input.getClass().getName(), SUPPORTED_TYPES_AS_STRING));
+                    String.format("Could not transform input of type '%s' to a supported one. Supported types are '%s'",
+                            input.getClass().getName(), SUPPORTED_TYPES_AS_STRING));
         }
 
         return node;
@@ -227,7 +227,8 @@ public class XPath3Function implements ExpressionLanguageFunction
 
     private void validateParams(Object[] params)
     {
-        checkArgument(params.length > 0 && params.length <= 3, String.format("xpath3() function accepts up to 3 arguments, but %s were provided instead", params.length));
+        checkArgument(params.length > 0 && params.length <= 3,
+                String.format("xpath3() function accepts up to 3 arguments, but %s were provided instead", params.length));
     }
 
     private String getXpathExpression(Object[] params)

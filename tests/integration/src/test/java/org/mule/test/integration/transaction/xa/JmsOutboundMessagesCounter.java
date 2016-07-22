@@ -6,14 +6,14 @@
  */
 package org.mule.test.integration.transaction.xa;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.springframework.jms.support.JmsUtils;
+
 import javax.jms.Connection;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
-
-import org.apache.activemq.ActiveMQConnectionFactory;
-import org.springframework.jms.support.JmsUtils;
 
 public class JmsOutboundMessagesCounter implements TransactionScenarios.OutboundMessagesCounter
 {
@@ -25,14 +25,14 @@ public class JmsOutboundMessagesCounter implements TransactionScenarios.Outbound
     private Connection connection;
 
 
-    public static JmsOutboundMessagesCounter createVerifierForBroker(int port)
-    {
-        return new JmsOutboundMessagesCounter("tcp://localhost:" + port);
-    }
-
     private JmsOutboundMessagesCounter(String brokerUrl)
     {
         this.brokerUrl = brokerUrl;
+    }
+
+    public static JmsOutboundMessagesCounter createVerifierForBroker(int port)
+    {
+        return new JmsOutboundMessagesCounter("tcp://localhost:" + port);
     }
 
     public void initialize()

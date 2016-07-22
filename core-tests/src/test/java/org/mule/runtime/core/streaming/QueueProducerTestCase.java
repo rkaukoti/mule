@@ -7,14 +7,6 @@
 
 package org.mule.runtime.core.streaming;
 
-import org.mule.tck.size.SmallTest;
-import org.mule.runtime.core.util.queue.Queue;
-
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
 import junit.framework.Assert;
 
 import org.junit.Before;
@@ -25,13 +17,21 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
+import org.mule.runtime.core.util.queue.Queue;
+import org.mule.tck.size.SmallTest;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
 public class QueueProducerTestCase
 {
     @Mock
-    private Queue queue;;
+    private Queue queue;
+    ;
 
     private Set<String> values;
     private Iterator<String> valuesIterator;

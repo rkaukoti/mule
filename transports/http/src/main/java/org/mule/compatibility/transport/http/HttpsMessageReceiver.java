@@ -42,6 +42,6 @@ public class HttpsMessageReceiver extends HttpMessageReceiver
     @Override
     HttpMessageProcessTemplate createMessageProcessTemplate(HttpServerConnection httpServerConnection)
     {
-        return new HttpsMessageProcessTemplate(this, httpServerConnection,getWorkManager());
+        return new HttpsMessageProcessTemplate(this, httpServerConnection, getWorkManager());
     }
 }

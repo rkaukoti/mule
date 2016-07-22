@@ -41,7 +41,8 @@ import org.mule.runtime.extension.api.annotation.capability.Xml;
 @Extension(name = "HTTP", description = "Connector to handle and perform HTTP requests")
 @Configurations({HttpListenerConfig.class, HttpRequesterConfig.class})
 @Operations(HttpOperations.class)
-@SubTypeMapping(baseType = HttpAuthentication.class, subTypes = {BasicAuthentication.class, DigestAuthentication.class, NtlmAuthentication.class})
+@SubTypeMapping(baseType = HttpAuthentication.class, subTypes = {BasicAuthentication.class, DigestAuthentication.class,
+                                                                 NtlmAuthentication.class})
 @SubTypeMapping(baseType = ProxyConfig.class, subTypes = {DefaultProxyConfig.class, NtlmProxyConfig.class})
 @SubTypeMapping(baseType = ResponseValidator.class, subTypes = {SuccessStatusCodeValidator.class, FailureStatusCodeValidator.class})
 @Import(type = TcpClientSocketProperties.class, from = SocketsExtension.class)

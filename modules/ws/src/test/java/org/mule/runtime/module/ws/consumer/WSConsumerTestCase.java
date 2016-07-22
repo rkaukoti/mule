@@ -7,13 +7,12 @@
 package org.mule.runtime.module.ws.consumer;
 
 
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.module.ws.security.WSSecurity;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import org.mule.tck.size.SmallTest;
-
-import org.junit.Test;
 
 @SmallTest
 public class WSConsumerTestCase extends AbstractMuleContextTestCase

@@ -6,11 +6,8 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import org.apache.commons.httpclient.Header;
+import org.junit.Test;
 import org.mule.compatibility.core.api.transport.MuleMessageFactory;
 import org.mule.compatibility.core.transport.AbstractMuleMessageFactoryTestCase;
 import org.mule.runtime.core.MessageExchangePattern;
@@ -19,15 +16,19 @@ import org.mule.runtime.core.api.MuleMessage;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import org.apache.commons.httpclient.Header;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class HttpMultipartMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTestCase
 {
 
     private static final String REQUEST_LINE = "POST /services/Echo HTTP/1.1";
     private static final String MULTIPART_BOUNDARY = "----------------------------299df9f9431b";
-    private static final Header[] HEADERS = new Header[] {new Header("Content-Type", "multipart/form-data; boundary=" + MULTIPART_BOUNDARY)};
+    private static final Header[] HEADERS =
+            new Header[] {new Header("Content-Type", "multipart/form-data; boundary=" + MULTIPART_BOUNDARY)};
     private static final String MULTIPART_MESSAGE = "--" + MULTIPART_BOUNDARY + "\r\n"
                                                     + "Content-Disposition: form-data; name=\"payload\"; filename=\"payload\"\r\n"
                                                     + "Content-Type: application/octet-stream\r\n\r\n" +
@@ -37,7 +38,8 @@ public class HttpMultipartMuleMessageFactoryTestCase extends AbstractMuleMessage
                                                     + "Content-Type: application/octet-stream\r\n\r\n" + "part two\r\n\r\n" +
                                                     "--" + MULTIPART_BOUNDARY + "--\r\n\r\n";
     private static final String MULTIPART_MESSAGE_NO_PAYLOAD = "--" + MULTIPART_BOUNDARY + "\r\n"
-                                                               + "Content-Disposition: form-data; name=\"nopayload\"; filename=\"nopayload\"\r\n"
+                                                               +
+                                                               "Content-Disposition: form-data; name=\"nopayload\"; filename=\"nopayload\"\r\n"
                                                                + "Content-Type: application/octet-stream\r\n\r\n" +
                                                                "part nopayload\r\n\r\n" +
                                                                "--" + MULTIPART_BOUNDARY + "\r\n"

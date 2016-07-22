@@ -6,17 +6,16 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.connector.ConnectException;
 import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.tck.testmodels.mule.TestExceptionStrategy;
 import org.mule.tck.testmodels.mule.TestExceptionStrategy.ExceptionCallback;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class HttpsInvalidKeystoreTestCase extends FunctionalTestCase implements ExceptionCallback
 {

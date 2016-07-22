@@ -19,14 +19,14 @@ public enum ArtType
     AUTHOR,
     PAINTER;
 
-    public String value()
-    {
-        return name();
-    }
-
     public static ArtType fromValue(String value)
     {
         return valueOf(value);
+    }
+
+    public String value()
+    {
+        return name();
     }
 
 }

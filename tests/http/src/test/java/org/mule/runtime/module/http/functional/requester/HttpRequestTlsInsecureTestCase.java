@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.internal.matchers.ThrowableMessageMatcher.hasMessage;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
@@ -21,10 +20,11 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.internal.matchers.ThrowableMessageMatcher.hasMessage;
 
 /**
  * Sets up two HTTPS clients using a regular trust-store, but one of them insecure.
@@ -43,18 +43,18 @@ public class HttpRequestTlsInsecureTestCase extends AbstractHttpTestCase
     @Rule
     public SystemProperty insecure = new SystemProperty("insecure", "true");
 
-    @Override
-    protected String getConfigFile()
-    {
-        return config;
-    }
-
     @Parameterized.Parameters
     public static Collection<Object[]> parameters()
     {
         return Arrays.asList(new Object[][] {
                 {"http-request-insecure-hostname-config.xml"},
                 {"http-request-insecure-certificate-config.xml"}});
+    }
+
+    @Override
+    protected String getConfigFile()
+    {
+        return config;
     }
 
     @Test

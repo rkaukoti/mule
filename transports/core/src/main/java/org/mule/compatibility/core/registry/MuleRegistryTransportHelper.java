@@ -20,11 +20,10 @@ import org.mule.runtime.core.api.registry.ServiceException;
 import org.mule.runtime.core.api.registry.ServiceType;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.registry.MuleRegistryHelper;
-
-import java.util.Properties;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Properties;
 
 /**
  * @deprecated Transport infrastructure is deprecated.
@@ -87,7 +86,8 @@ public class MuleRegistryTransportHelper
     /**
      * Looks up the service descriptor from a singleton cache and creates a new one if not found.
      */
-    public static ServiceDescriptor lookupServiceDescriptor(MuleRegistry registry, ServiceType type, String name, Properties overrides) throws ServiceException
+    public static ServiceDescriptor lookupServiceDescriptor(MuleRegistry registry, ServiceType type, String name, Properties overrides)
+            throws ServiceException
     {
         String key = new AbstractServiceDescriptor.Key(name, overrides).getKey();
         // TODO If we want these descriptors loaded form Spring we need to change the key mechanism
@@ -112,7 +112,8 @@ public class MuleRegistryTransportHelper
         }
     }
 
-    protected static ServiceDescriptor createServiceDescriptor(MuleRegistry registry, ServiceType type, String name, Properties overrides) throws ServiceException
+    protected static ServiceDescriptor createServiceDescriptor(MuleRegistry registry, ServiceType type, String name, Properties overrides)
+            throws ServiceException
     {
         // Stripe off and use the meta-scheme if present
         String scheme = name;

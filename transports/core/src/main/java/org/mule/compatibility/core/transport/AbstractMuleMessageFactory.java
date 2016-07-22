@@ -53,7 +53,8 @@ public abstract class AbstractMuleMessageFactory implements MuleMessageFactory
         }
 
         Object payload = extractPayload(transportMessage, encoding);
-        DataTypeParamsBuilder dataTypeBuilder = DataType.builder().type((Class) (payload == null ? Object.class : payload.getClass())).charset(encoding);
+        DataTypeParamsBuilder dataTypeBuilder =
+                DataType.builder().type((Class) (payload == null ? Object.class : payload.getClass())).charset(encoding);
         String mimeType = getMimeType(transportMessage);
         if (StringUtils.isNotEmpty(mimeType))
         {
@@ -65,11 +66,11 @@ public abstract class AbstractMuleMessageFactory implements MuleMessageFactory
         {
             messageBuilder = MuleMessage.builder(previousMessage).payload(payload);
         }
-        else if(payload instanceof MuleMessage)
+        else if (payload instanceof MuleMessage)
         {
             messageBuilder = MuleMessage.builder((MuleMessage) payload);
         }
-        else if(payload == null)
+        else if (payload == null)
         {
             messageBuilder = MuleMessage.builder().nullPayload();
         }

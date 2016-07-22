@@ -6,21 +6,21 @@
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
-import static org.mule.runtime.config.spring.dsl.spring.DslSimpleType.SIMPLE_TYPE_VALUE_PARAMETER_NAME;
-import static org.mule.runtime.config.spring.dsl.spring.DslSimpleType.isSimpleType;
-import static org.springframework.beans.factory.support.BeanDefinitionBuilder.genericBeanDefinition;
 import org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinition;
 import org.mule.runtime.config.spring.dsl.api.MapEntry;
 import org.mule.runtime.config.spring.dsl.api.TypeDefinition.MapEntryType;
 import org.mule.runtime.config.spring.dsl.model.ComponentModel;
 import org.mule.runtime.config.spring.dsl.processor.ObjectTypeVisitor;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
+import org.springframework.beans.factory.support.ManagedList;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
-import org.springframework.beans.factory.support.ManagedList;
+import static org.mule.runtime.config.spring.dsl.spring.DslSimpleType.SIMPLE_TYPE_VALUE_PARAMETER_NAME;
+import static org.mule.runtime.config.spring.dsl.spring.DslSimpleType.isSimpleType;
+import static org.springframework.beans.factory.support.BeanDefinitionBuilder.genericBeanDefinition;
 
 /**
  * {@code BeanDefinitionCreator} that handles component that define a map entry.
@@ -56,14 +56,15 @@ public class MapEntryBeanDefinitionCreator extends BeanDefinitionCreator
         ComponentBuildingDefinition componentBuildingDefinition = createBeanDefinitionRequest.getComponentBuildingDefinition();
         componentModel.setType(type);
         final Object key = componentModel.getParameters().get(ENTRY_TYPE_KEY_PARAMETER_NAME);
-        Object keyBeanDefinition = getConvertibleBeanDefinition(objectTypeVisitor.getMapEntryType().get().getKeyType(), key, componentBuildingDefinition.getKeyTypeConverter());
+        Object keyBeanDefinition = getConvertibleBeanDefinition(objectTypeVisitor.getMapEntryType().get().getKeyType(), key,
+                componentBuildingDefinition.getKeyTypeConverter());
         Object value;
         Class valueType = objectTypeVisitor.getMapEntryType().get().getValueType();
         if (isSimpleType(valueType) || componentModel.getInnerComponents().isEmpty())
         {
             value = getConvertibleBeanDefinition(objectTypeVisitor.getMapEntryType().get().getValueType(),
-                                                 componentModel.getParameters().get(SIMPLE_TYPE_VALUE_PARAMETER_NAME),
-                                                 componentBuildingDefinition.getTypeConverter());
+                    componentModel.getParameters().get(SIMPLE_TYPE_VALUE_PARAMETER_NAME),
+                    componentBuildingDefinition.getTypeConverter());
         }
         else if (List.class.isAssignableFrom(objectTypeVisitor.getMapEntryType().get().getValueType()))
         {
@@ -75,8 +76,10 @@ public class MapEntryBeanDefinitionCreator extends BeanDefinitionCreator
             else
             {
                 ManagedList<Object> managedList = componentModel.getInnerComponents().stream()
-                        .map(childComponent -> childComponent.getBeanDefinition() != null ? childComponent.getBeanDefinition() : childComponent.getBeanReference())
-                        .collect(Collectors.toCollection(ManagedList::new));
+                                                                .map(childComponent -> childComponent.getBeanDefinition() != null ?
+                                                                        childComponent.getBeanDefinition() :
+                                                                        childComponent.getBeanReference())
+                                                                .collect(Collectors.toCollection(ManagedList::new));
 
                 value = genericBeanDefinition(ObjectTypeVisitor.DEFAULT_COLLECTION_TYPE)
                         .addConstructorArgValue(managedList)

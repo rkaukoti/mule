@@ -15,5 +15,5 @@ public class SSAuthenticationNamespaceHandlerFlowTestCase extends Authentication
     {
         return "spring-security/authentication-config-flow.xml";
     }
- 
+
 }

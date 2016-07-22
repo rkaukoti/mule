@@ -19,8 +19,10 @@ import java.util.Set;
 public final class DebugUtils
 {
 
-    /** Do not instanciate. */
-    private DebugUtils ()
+    /**
+     * Do not instanciate.
+     */
+    private DebugUtils()
     {
         // no-op
     }
@@ -38,7 +40,7 @@ public final class DebugUtils
         {
             // Get services provided by each provider
             Set keys = providers[i].keySet();
-            for (Iterator it = keys.iterator(); it.hasNext();)
+            for (Iterator it = keys.iterator(); it.hasNext(); )
             {
                 String key = (String) it.next();
                 key = key.split(" ")[0];
@@ -68,7 +70,7 @@ public final class DebugUtils
         {
             // Get services provided by each provider
             Set keys = providers[i].keySet();
-            for (Iterator it = keys.iterator(); it.hasNext();)
+            for (Iterator it = keys.iterator(); it.hasNext(); )
             {
                 String key = (String) it.next();
                 key = key.split(" ")[0];

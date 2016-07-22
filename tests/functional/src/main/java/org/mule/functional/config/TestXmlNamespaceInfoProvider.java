@@ -6,11 +6,12 @@
  */
 package org.mule.functional.config;
 
-import static java.util.Arrays.asList;
 import org.mule.runtime.config.spring.dsl.api.xml.XmlNamespaceInfo;
 import org.mule.runtime.config.spring.dsl.api.xml.XmlNamespaceInfoProvider;
 
 import java.util.Collection;
+
+import static java.util.Arrays.asList;
 
 /**
  * {@link XmlNamespaceInfoProvider} for TEST module.

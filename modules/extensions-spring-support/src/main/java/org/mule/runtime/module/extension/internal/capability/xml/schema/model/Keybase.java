@@ -55,8 +55,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
         "field"
 })
 @XmlSeeAlso({
-                    Keyref.class
-            })
+        Keyref.class
+})
 public class Keybase extends Annotated
 {
 
@@ -72,8 +72,7 @@ public class Keybase extends Annotated
     /**
      * Gets the value of the selector property.
      *
-     * @return possible object is
-     * {@link Selector }
+     * @return possible object is {@link Selector }
      */
     public Selector getSelector()
     {
@@ -83,8 +82,7 @@ public class Keybase extends Annotated
     /**
      * Sets the value of the selector property.
      *
-     * @param value allowed object is
-     *              {@link Selector }
+     * @param value allowed object is {@link Selector }
      */
     public void setSelector(Selector value)
     {
@@ -123,8 +121,7 @@ public class Keybase extends Annotated
     /**
      * Gets the value of the name property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getName()
     {
@@ -134,8 +131,7 @@ public class Keybase extends Annotated
     /**
      * Sets the value of the name property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setName(String value)
     {

@@ -7,11 +7,6 @@
 package org.mule.runtime.module.ws.consumer;
 
 
-import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_CONNECTOR_MESSAGE_PROCESSOR_LOCATOR;
-import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
-
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -27,6 +22,11 @@ import org.mule.runtime.module.http.api.client.HttpRequestOptions;
 import org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder;
 import org.mule.runtime.module.http.api.requester.HttpRequesterConfig;
 import org.mule.runtime.module.ws.security.WSSecurity;
+
+import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_CONNECTOR_MESSAGE_PROCESSOR_LOCATOR;
+import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class WSConsumerConfig implements MuleContextAware
 {
@@ -56,7 +56,8 @@ public class WSConsumerConfig implements MuleContextAware
 
         if (connectorConfig != null && connector != null)
         {
-            throw new ConfigurationException(CoreMessages.createStaticMessage("Cannot set both connector-config and connector-ref attributes. Set either one of them, or none for default behavior."));
+            throw new ConfigurationException(CoreMessages.createStaticMessage(
+                    "Cannot set both connector-config and connector-ref attributes. Set either one of them, or none for default behavior."));
         }
 
         // MULE-9694 Reintroduce endpoint lookup capabilites for http and ws modules
@@ -72,8 +73,10 @@ public class WSConsumerConfig implements MuleContextAware
             @Override
             public MuleEvent process(MuleEvent event) throws MuleException
             {
-                ConnectorOperationLocator connectorOperationLocator = muleContext.getRegistry().get(OBJECT_CONNECTOR_MESSAGE_PROCESSOR_LOCATOR);
-                MessageProcessor messageProcessor = connectorOperationLocator.locateConnectorOperation(serviceAddress, getRequestOptions(), REQUEST_RESPONSE);
+                ConnectorOperationLocator connectorOperationLocator =
+                        muleContext.getRegistry().get(OBJECT_CONNECTOR_MESSAGE_PROCESSOR_LOCATOR);
+                MessageProcessor messageProcessor =
+                        connectorOperationLocator.locateConnectorOperation(serviceAddress, getRequestOptions(), REQUEST_RESPONSE);
                 return messageProcessor.process(event);
             }
 
@@ -81,7 +84,8 @@ public class WSConsumerConfig implements MuleContextAware
             {
                 if (requestOptions == null)
                 {
-                    final HttpRequestOptionsBuilder builder = newOptions().method(POST.name()).disableStatusCodeValidation().disableParseResponse();
+                    final HttpRequestOptionsBuilder builder =
+                            newOptions().method(POST.name()).disableStatusCodeValidation().disableParseResponse();
                     if (connectorConfig != null)
                     {
                         builder.requestConfig(connectorConfig);

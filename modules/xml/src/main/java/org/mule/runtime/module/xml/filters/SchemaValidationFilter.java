@@ -17,6 +17,11 @@ import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.module.xml.transformer.DelayedResult;
 import org.mule.runtime.module.xml.util.MuleResourceResolver;
 import org.mule.runtime.module.xml.util.XMLUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.ls.LSResourceResolver;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,15 +36,8 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.ls.LSResourceResolver;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-
 /**
  * Filter for schema validation.
- * 
  **/
 public class SchemaValidationFilter extends AbstractJaxpFilter implements Filter, Initialisable
 {
@@ -60,12 +58,13 @@ public class SchemaValidationFilter extends AbstractJaxpFilter implements Filter
     @Override
     public boolean accept(MuleMessage message)
     {
-        throw new UnsupportedOperationException("MULE-9341 Remove Filters that are not needed.  This method will be removed when filters are cleaned up.");
+        throw new UnsupportedOperationException(
+                "MULE-9341 Remove Filters that are not needed.  This method will be removed when filters are cleaned up.");
     }
 
     /**
      * Accepts the message if schema validation passes.
-     * 
+     *
      * @param event The event.
      * @return Whether the message passes schema validation.
      */
@@ -83,7 +82,7 @@ public class SchemaValidationFilter extends AbstractJaxpFilter implements Filter
             {
                 throw (RuntimeException) e;
             }
-            
+
             if (logger.isInfoEnabled())
             {
                 logger.info("SchemaValidationFilter rejected a message because there was a problem interpreting the payload as XML.", e);
@@ -100,17 +99,17 @@ public class SchemaValidationFilter extends AbstractJaxpFilter implements Filter
             return false;
         }
 
-        
+
         DOMResult result = null;
-        
+
         try
         {
-            if (returnResult) 
+            if (returnResult)
             {
                 result = new DOMResult();
                 createValidator().validate(source, result);
             }
-            else 
+            else
             {
                 createValidator().validate(source);
             }
@@ -120,8 +119,8 @@ public class SchemaValidationFilter extends AbstractJaxpFilter implements Filter
             if (logger.isDebugEnabled())
             {
                 logger.debug(
-                    "SchemaValidationFilter rejected a message because it apparently failed to validate against the schema.",
-                    e);
+                        "SchemaValidationFilter rejected a message because it apparently failed to validate against the schema.",
+                        e);
             }
             return false;
         }
@@ -130,19 +129,19 @@ public class SchemaValidationFilter extends AbstractJaxpFilter implements Filter
             if (logger.isInfoEnabled())
             {
                 logger.info(
-                    "SchemaValidationFilter rejected a message because there was a problem reading the XML.",
-                    e);
+                        "SchemaValidationFilter rejected a message because there was a problem reading the XML.",
+                        e);
             }
             return false;
         }
-        finally 
+        finally
         {
             if (result != null && result.getNode() != null)
             {
                 event.setMessage(MuleMessage.builder(event.getMessage()).payload(result.getNode()).build());
             }
         }
-        
+
         if (logger.isDebugEnabled())
         {
             logger.debug("SchemaValidationFilter accepted the message.");
@@ -153,7 +152,7 @@ public class SchemaValidationFilter extends AbstractJaxpFilter implements Filter
 
     /**
      * Get a delayed result.
-     * 
+     *
      * @param source The source.
      * @return The result.
      */
@@ -185,7 +184,7 @@ public class SchemaValidationFilter extends AbstractJaxpFilter implements Filter
 
     /**
      * Load the source from the specified object.
-     * 
+     *
      * @param msg Encompassing message
      * @return The source
      */
@@ -204,7 +203,7 @@ public class SchemaValidationFilter extends AbstractJaxpFilter implements Filter
     public void initialise() throws InitialisationException
     {
         super.initialise();
-        
+
         if (getSchemaObject() == null)
         {
             if (schemaLocations == null)
@@ -226,15 +225,15 @@ public class SchemaValidationFilter extends AbstractJaxpFilter implements Filter
                 {
                     throw new InitialisationException(e, this);
                 }
-    
+
                 if (schemaStream == null)
                 {
                     throw new InitialisationException(CoreMessages.failedToLoad(loc), this);
                 }
-                
+
                 schemas[i] = new StreamSource(schemaStream);
             }
-            
+
             SchemaFactory schemaFactory = SchemaFactory.newInstance(getSchemaLanguage());
 
             if (logger.isInfoEnabled())
@@ -280,7 +279,7 @@ public class SchemaValidationFilter extends AbstractJaxpFilter implements Filter
 
     /**
      * Create a validator.
-     * 
+     *
      * @return The validator.
      */
     public Validator createValidator() throws SAXException

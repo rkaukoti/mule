@@ -6,8 +6,7 @@
  */
 package org.mule.test.integration.interceptor;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -15,7 +14,7 @@ import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.interceptor.Interceptor;
 import org.mule.runtime.core.processor.AbstractInterceptingMessageProcessor;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class SharedInterceptorStackTestCase extends FunctionalTestCase
 {

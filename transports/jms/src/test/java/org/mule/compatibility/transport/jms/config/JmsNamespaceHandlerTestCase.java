@@ -6,15 +6,7 @@
  */
 package org.mule.compatibility.transport.jms.config;
 
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupEndpointBuilder;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointException;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
@@ -38,7 +30,14 @@ import org.mule.tck.testmodels.mule.TestTransactionFactory;
 
 import javax.jms.Session;
 
-import org.junit.Test;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupEndpointBuilder;
 
 /**
  * Tests the "jms" namespace.
@@ -108,7 +107,7 @@ public class JmsNamespaceHandlerTestCase extends FunctionalTestCase
         assertFalse(c.isEagerConsumer());
 
         assertEquals("1.1", c.getSpecification()); // 1.0.2b is the default, should
-                                                   // be changed in the config
+        // be changed in the config
         // test properties, default is 4
         assertEquals(7, c.getNumberOfConcurrentTransactedReceivers());
         assertTrue(c.isEmbeddedMode());
@@ -121,7 +120,7 @@ public class JmsNamespaceHandlerTestCase extends FunctionalTestCase
         assertNotNull(c);
 
         assertEquals("1.1", c.getSpecification()); // 1.0.2b is the default, should
-                                                   // be changed in the config
+        // be changed in the config
     }
 
     @Test
@@ -147,14 +146,14 @@ public class JmsNamespaceHandlerTestCase extends FunctionalTestCase
         assertFalse(c.isEagerConsumer());
 
         assertEquals("1.1", c.getSpecification()); // 1.0.2b is the default, should
-                                                   // be changed in the config
+        // be changed in the config
     }
 
     @Test
     public void testEndpointConfig() throws MuleException
     {
         ImmutableEndpoint endpoint1 = MuleRegistryTransportHelper.lookupEndpointBuilder(muleContext.getRegistry(), "endpoint1")
-            .buildInboundEndpoint();
+                                                                 .buildInboundEndpoint();
         assertNotNull(endpoint1);
         Filter filter1 = endpoint1.getFilter();
         assertNotNull(filter1);
@@ -172,7 +171,7 @@ public class JmsNamespaceHandlerTestCase extends FunctionalTestCase
         assertTrue(filter3 instanceof JmsPropertyFilter);
 
         InboundEndpoint inboundEndpoint = (InboundEndpoint) ((Flow) muleContext.getRegistry()
-                .lookupObject("testService")).getMessageSource();
+                                                                               .lookupObject("testService")).getMessageSource();
 
         assertNotNull(inboundEndpoint);
         assertEquals(1, inboundEndpoint.getProperties().size());
@@ -185,7 +184,7 @@ public class JmsNamespaceHandlerTestCase extends FunctionalTestCase
         ImmutableEndpoint endpoint3 = lookupEndpointBuilder(muleContext.getRegistry(), "endpoint3").buildOutboundEndpoint();
         assertNotNull(endpoint3);
         TestTransactionFactory factory = (TestTransactionFactory) endpoint3.getTransactionConfig()
-            .getFactory();
+                                                                           .getFactory();
         assertNotNull(factory);
         assertEquals("foo", factory.getValue());
     }
@@ -203,7 +202,9 @@ public class JmsNamespaceHandlerTestCase extends FunctionalTestCase
     public void testJndiConnectorAtributes() throws Exception
     {
         JmsConnector connector = (JmsConnector) muleContext.getRegistry().lookupObject("jmsJndiConnector");
-        assertThat("connection factory must be created only after connect so reconnection works when JNDI context is not yet available during start", connector.getConnectionFactory(), nullValue());
+        assertThat(
+                "connection factory must be created only after connect so reconnection works when JNDI context is not yet available during start",
+                connector.getConnectionFactory(), nullValue());
         connector.connect();
         assertNotNull(connector);
 
@@ -211,14 +212,14 @@ public class JmsNamespaceHandlerTestCase extends FunctionalTestCase
         assertEquals("jndi://test", connector.getJndiProviderUrl());
         assertEquals("jms/connectionFactory", connector.getConnectionFactoryJndiName());
         assertEquals("org.mule.compatibility.transport.jms.test.TestConnectionFactory", connector.getConnectionFactory()
-            .getClass()
-            .getName());
+                                                                                                 .getClass()
+                                                                                                 .getName());
         assertTrue(connector.isJndiDestinations());
         assertTrue(connector.isForceJndiDestinations());
         assertEquals("value", connector.getJndiProviderProperties().get("key"));
         assertEquals("customValue", connector.getConnectionFactoryProperties().get("customProperty"));
         assertEquals("customValue",
-            ((TestConnectionFactory) connector.getConnectionFactory()).getCustomProperty());
+                ((TestConnectionFactory) connector.getConnectionFactory()).getCustomProperty());
     }
 
     @Test

@@ -7,16 +7,15 @@
 
 package org.mule.runtime.module.db.internal.config.processor;
 
-import static org.springframework.beans.factory.support.BeanDefinitionBuilder.genericBeanDefinition;
-
 import org.mule.runtime.module.db.internal.result.resultset.IteratorResultSetHandler;
 import org.mule.runtime.module.db.internal.result.resultset.ListResultSetHandler;
 import org.mule.runtime.module.db.internal.result.row.InsensitiveMapRowHandler;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
+
+import static org.springframework.beans.factory.support.BeanDefinitionBuilder.genericBeanDefinition;
 
 public abstract class AbstractResultSetHandlerProcessorDefinitionParser extends AbstractSingleQueryProcessorDefinitionParser
 {
@@ -42,9 +41,9 @@ public abstract class AbstractResultSetHandlerProcessorDefinitionParser extends 
         if (Boolean.parseBoolean(streamingValue))
         {
             beanDefinition = genericBeanDefinition(IteratorResultSetHandler.class)
-                                                  .addConstructorArgValue(recordHandler)
-                                                  .addConstructorArgReference("db.statementStreamingResultSetCloser")
-                                                  .getBeanDefinition();
+                    .addConstructorArgValue(recordHandler)
+                    .addConstructorArgReference("db.statementStreamingResultSetCloser")
+                    .getBeanDefinition();
         }
         else
         {

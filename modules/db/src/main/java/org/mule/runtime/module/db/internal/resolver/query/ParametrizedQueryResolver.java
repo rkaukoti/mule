@@ -97,11 +97,13 @@ public class ParametrizedQueryResolver implements QueryResolver
 
             if (originalParam instanceof InOutQueryParam)
             {
-                newParam = new DefaultInOutQueryParam(originalParam.getIndex(), type, originalParam.getName(), ((InOutQueryParam) originalParam).getValue());
+                newParam = new DefaultInOutQueryParam(originalParam.getIndex(), type, originalParam.getName(),
+                        ((InOutQueryParam) originalParam).getValue());
             }
             else if (originalParam instanceof InputQueryParam)
             {
-                newParam = new DefaultInputQueryParam(originalParam.getIndex(), type, ((InputQueryParam) originalParam).getValue(), originalParam.getName());
+                newParam = new DefaultInputQueryParam(originalParam.getIndex(), type, ((InputQueryParam) originalParam).getValue(),
+                        originalParam.getName());
             }
             else if (originalParam instanceof OutputQueryParam)
             {

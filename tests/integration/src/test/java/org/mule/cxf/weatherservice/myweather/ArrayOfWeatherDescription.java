@@ -25,20 +25,20 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="WeatherDescription" type="{http://ws.cdyne.com/WeatherWS/}WeatherDescription" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="WeatherDescription" type="{http://ws.cdyne.com/WeatherWS/}WeatherDescription" maxOccurs="unbounded"
+ * minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ArrayOfWeatherDescription", namespace = "http://ws.cdyne.com/WeatherWS/", propOrder = {
-    "weatherDescription"
+        "weatherDescription"
 })
-public class ArrayOfWeatherDescription {
+public class ArrayOfWeatherDescription
+{
 
     @XmlElement(name = "WeatherDescription", namespace = "http://ws.cdyne.com/WeatherWS/")
     protected List<WeatherDescription> weatherDescription;
@@ -62,11 +62,11 @@ public class ArrayOfWeatherDescription {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link WeatherDescription }
-     *
-     *
      */
-    public List<WeatherDescription> getWeatherDescription() {
-        if (weatherDescription == null) {
+    public List<WeatherDescription> getWeatherDescription()
+    {
+        if (weatherDescription == null)
+        {
             weatherDescription = new ArrayList<WeatherDescription>();
         }
         return this.weatherDescription;

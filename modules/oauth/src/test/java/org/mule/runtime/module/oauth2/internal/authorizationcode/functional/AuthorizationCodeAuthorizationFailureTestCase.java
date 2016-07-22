@@ -6,6 +6,19 @@
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode.functional;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.fluent.Response;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.functional.functional.FlowAssert;
+import org.mule.runtime.module.oauth2.internal.StateEncoder;
+import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ResourceOwnerOAuthContext;
+import org.mule.runtime.module.oauth2.internal.tokenmanager.TokenManagerConfig;
+import org.mule.tck.MuleTestUtils;
+import org.mule.tck.junit4.rule.DynamicPort;
+
+import java.io.IOException;
+
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static org.apache.commons.lang.StringUtils.EMPTY;
@@ -23,26 +36,11 @@ import static org.mule.runtime.module.oauth2.internal.authorizationcode.AutoAuth
 import static org.mule.runtime.module.oauth2.internal.authorizationcode.AutoAuthorizationCodeTokenRequestHandler.TOKEN_URL_CALL_FAILED_STATUS;
 import static org.mule.tck.MuleTestUtils.testWithSystemProperty;
 
-import org.mule.functional.functional.FlowAssert;
-import org.mule.runtime.module.oauth2.internal.StateEncoder;
-import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ResourceOwnerOAuthContext;
-import org.mule.runtime.module.oauth2.internal.tokenmanager.TokenManagerConfig;
-import org.mule.tck.MuleTestUtils;
-import org.mule.tck.junit4.rule.DynamicPort;
-
-import java.io.IOException;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.fluent.Response;
-import org.junit.Rule;
-import org.junit.Test;
-
 public class AuthorizationCodeAuthorizationFailureTestCase extends AbstractAuthorizationCodeBasicTestCase
 {
 
-    private static final String EXPECTED_STATUS_CODE_SYSTEM_PROPERTY = "expectedStatusCode";
     public static final String REFRESHED_ACCESS_TOKEN = "rbBQLgJXBEYo83K4Fqs4guasdfsdfa";
-
+    private static final String EXPECTED_STATUS_CODE_SYSTEM_PROPERTY = "expectedStatusCode";
     @Rule
     public DynamicPort onCompleteUrlPort = new DynamicPort("onCompleteUrlPort");
 
@@ -150,7 +148,8 @@ public class AuthorizationCodeAuthorizationFailureTestCase extends AbstractAutho
                 .socketTimeout(REQUEST_TIMEOUT)
                 .execute();
         final TokenManagerConfig tokenManagerConfig = muleContext.getRegistry().lookupObject(TokenManagerConfig.class);
-        final ResourceOwnerOAuthContext oauthContext = tokenManagerConfig.getConfigOAuthContext().getContextForResourceOwner(ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID);
+        final ResourceOwnerOAuthContext oauthContext =
+                tokenManagerConfig.getConfigOAuthContext().getContextForResourceOwner(ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID);
 
         assertThat(oauthContext.getAccessToken(), is(ACCESS_TOKEN));
         assertThat(oauthContext.getRefreshToken(), is(nullValue()));
@@ -167,7 +166,8 @@ public class AuthorizationCodeAuthorizationFailureTestCase extends AbstractAutho
                 .execute();
 
         final TokenManagerConfig tokenManagerConfig = muleContext.getRegistry().lookupObject(TokenManagerConfig.class);
-        ResourceOwnerOAuthContext oauthContext = tokenManagerConfig.getConfigOAuthContext().getContextForResourceOwner(ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID);
+        ResourceOwnerOAuthContext oauthContext =
+                tokenManagerConfig.getConfigOAuthContext().getContextForResourceOwner(ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID);
 
         // Validates that the oauth context has both tokens
         assertThat(oauthContext.getAccessToken(), is(ACCESS_TOKEN));
@@ -182,7 +182,8 @@ public class AuthorizationCodeAuthorizationFailureTestCase extends AbstractAutho
                 .execute();
 
         // We need to retrieve the oauth context again to get it updated...
-        oauthContext = tokenManagerConfig.getConfigOAuthContext().getContextForResourceOwner(ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID);
+        oauthContext =
+                tokenManagerConfig.getConfigOAuthContext().getContextForResourceOwner(ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID);
 
         assertThat(oauthContext.getAccessToken(), is(REFRESHED_ACCESS_TOKEN));
         assertThat(oauthContext.getRefreshToken(), is(REFRESH_TOKEN));

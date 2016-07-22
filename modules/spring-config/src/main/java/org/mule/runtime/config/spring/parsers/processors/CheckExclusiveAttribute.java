@@ -10,14 +10,13 @@ import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 
 /**
  * If this attribute is present, no other can be
@@ -43,7 +42,7 @@ public class CheckExclusiveAttribute implements PreProcessor
         {
             Attr attribute = (Attr) attributes.item(i);
             String alias = SpringXMLUtils.attributeName(attribute);
-            if (! config.isIgnored(alias))
+            if (!config.isIgnored(alias))
             {
                 if (attribute.equals(alias))
                 {

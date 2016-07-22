@@ -27,27 +27,27 @@ import java.nio.charset.Charset;
  * MessageReceiver) will then register the receiver with the JMS server. Where a listener interface is not availiable
  * the derived <code>MessageReceiver</code> will implement the code necessary to receive data from the external system.
  * For example, the file endpoint will poll a specified directory for its data.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
 public interface MessageReceiver extends Connectable, MessageSource
 {
     /**
-     * @return the endpoint from which we are receiving events 
+     * @return the endpoint from which we are receiving events
      */
     InboundEndpoint getEndpoint();
-
-    /**
-     * @return the service associated with the receiver
-     */
-    FlowConstruct getFlowConstruct();
 
     /**
      * @param endpoint the endpoint to listen on
      * @see ImmutableEndpoint
      */
     void setEndpoint(InboundEndpoint endpoint);
+
+    /**
+     * @return the service associated with the receiver
+     */
+    FlowConstruct getFlowConstruct();
 
     /**
      * The endpointUri that this receiver listens on
@@ -63,7 +63,7 @@ public interface MessageReceiver extends Connectable, MessageSource
     MuleEvent routeMessage(MuleMessage message, Transaction trans) throws MuleException;
 
     MuleEvent routeMessage(MuleMessage message, Transaction trans, OutputStream outputStream)
-        throws MuleException;
+            throws MuleException;
 
     MuleMessage createMuleMessage(Object transportMessage, Charset encoding) throws MuleException;
 

@@ -8,12 +8,11 @@ package org.mule.runtime.core.transformer.graph;
 
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Converter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class CompositeConverterFilter implements ConverterFilter
 {

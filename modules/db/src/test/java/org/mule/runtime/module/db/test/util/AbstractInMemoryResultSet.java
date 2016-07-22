@@ -41,10 +41,9 @@ public abstract class AbstractInMemoryResultSet implements ResultSet
 
     private final Map<String, ColumnMetadata> columnsByName = new HashMap<String, ColumnMetadata>();
     private final Map<Integer, ColumnMetadata> columnsByIndex = new HashMap<Integer, ColumnMetadata>();
-    private List<ColumnMetadata> columns;
     private final List<Map<String, Object>> records;
     private final Statement statement;
-
+    private List<ColumnMetadata> columns;
     private int currentColumnIndex = 0;
     private boolean closed;
     private boolean wasNull;

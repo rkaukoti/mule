@@ -13,14 +13,13 @@ import org.mule.runtime.core.config.MuleManifest;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.core.util.NetworkUtils;
 import org.mule.runtime.core.util.StringMessageUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>MuleService</code> exposes certain Mule server functions for management
@@ -74,12 +73,12 @@ public class MuleService implements MuleServiceMBean
 
     public boolean isInitialised()
     {
-        return muleContext!=null && muleContext.isInitialised();
+        return muleContext != null && muleContext.isInitialised();
     }
 
     public boolean isStopped()
     {
-        return muleContext!=null && !muleContext.isStarted();
+        return muleContext != null && !muleContext.isStarted();
     }
 
     public Date getStartTime()
@@ -189,7 +188,7 @@ public class MuleService implements MuleServiceMBean
             {
                 loadCommunityLicense();
             }
-            
+
             if (license == null)
             {
                 license = "Failed to load license";
@@ -197,9 +196,9 @@ public class MuleService implements MuleServiceMBean
         }
         return license;
     }
-    
+
     private void loadEnterpriseLicense()
-    {        
+    {
         try
         {
             loadLicense("MULE_EE_LICENSE.txt");
@@ -207,9 +206,9 @@ public class MuleService implements MuleServiceMBean
         catch (IOException e)
         {
             // this will happen if running in a CE distribution and is not an error per se
-        }        
+        }
     }
-    
+
     private void loadCommunityLicense()
     {
         try
@@ -219,7 +218,7 @@ public class MuleService implements MuleServiceMBean
         catch (IOException e)
         {
             logger.warn("Failed to load MULE_LICENSE.txt", e);
-        }        
+        }
     }
 
     private void loadLicense(String licenseFile) throws IOException
@@ -227,7 +226,7 @@ public class MuleService implements MuleServiceMBean
         license = IOUtils.getResourceAsString(licenseFile, getClass());
         license = StringMessageUtils.getBoilerPlate(license, ' ', 80);
     }
-    
+
     /**
      * @deprecated use getBuildNumber() instead
      */

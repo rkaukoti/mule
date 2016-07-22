@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 
@@ -20,12 +20,12 @@
     </flow>
 
     <flow name="pollbar" processingStrategy="synchronous">
-        <poll frequency="1000" >
+        <poll frequency="1000">
             <static-component>
                 <return-data>bar</return-data>
             </static-component>
         </poll>
-        <component class="org.mule.test.integration.schedule.PollScheduleTestCase$BarComponent" />
+        <component class="org.mule.test.integration.schedule.PollScheduleTestCase$BarComponent"/>
     </flow>
 
     <flow name="pollbarNever">
@@ -36,6 +36,6 @@
                 <return-data>barNever</return-data>
             </static-component>
         </poll>
-        <component class="org.mule.test.integration.schedule.PollScheduleTestCase$BarComponent" />
+        <component class="org.mule.test.integration.schedule.PollScheduleTestCase$BarComponent"/>
     </flow>
 </mule>

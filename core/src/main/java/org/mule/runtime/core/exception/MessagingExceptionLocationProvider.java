@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.core.exception;
 
-import static org.mule.runtime.core.api.LocatedMuleException.INFO_LOCATION_KEY;
-import static org.mule.runtime.core.api.LocatedMuleException.INFO_SOURCE_XML_KEY;
-
 import org.mule.runtime.api.meta.AnnotatedObject;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.construct.MessageProcessorPathResolver;
@@ -17,6 +14,9 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.mule.runtime.core.api.LocatedMuleException.INFO_LOCATION_KEY;
+import static org.mule.runtime.core.api.LocatedMuleException.INFO_SOURCE_XML_KEY;
 
 /**
  * Generates location info to augment MessagingExceptions with.
@@ -29,7 +29,9 @@ public class MessagingExceptionLocationProvider extends LocationExecutionContext
     {
         Map<String, Object> contextInfo = new HashMap<String, Object>();
 
-        contextInfo.put(INFO_LOCATION_KEY, resolveProcessorRepresentation(event.getMuleContext().getConfiguration().getId(), getProcessorPath(event, lastProcessed), lastProcessed));
+        contextInfo.put(INFO_LOCATION_KEY,
+                resolveProcessorRepresentation(event.getMuleContext().getConfiguration().getId(), getProcessorPath(event, lastProcessed),
+                        lastProcessed));
         if (lastProcessed instanceof AnnotatedObject)
         {
             String sourceXML = getSourceXML((AnnotatedObject) lastProcessed);

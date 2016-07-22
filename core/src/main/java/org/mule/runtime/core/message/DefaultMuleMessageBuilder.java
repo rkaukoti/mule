@@ -6,19 +6,6 @@
  */
 package org.mule.runtime.core.message;
 
-import static java.util.Collections.emptyMap;
-import static java.util.Collections.unmodifiableSet;
-import static java.util.Objects.requireNonNull;
-import static org.apache.commons.lang.SystemUtils.LINE_SEPARATOR;
-import static org.mule.runtime.core.message.NullAttributes.NULL_ATTRIBUTES;
-import static org.mule.runtime.core.util.ObjectUtils.getBoolean;
-import static org.mule.runtime.core.util.ObjectUtils.getByte;
-import static org.mule.runtime.core.util.ObjectUtils.getDouble;
-import static org.mule.runtime.core.util.ObjectUtils.getFloat;
-import static org.mule.runtime.core.util.ObjectUtils.getInt;
-import static org.mule.runtime.core.util.ObjectUtils.getLong;
-import static org.mule.runtime.core.util.ObjectUtils.getShort;
-import static org.mule.runtime.core.util.ObjectUtils.getString;
 import org.mule.runtime.api.message.Attributes;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.DataTypeBuilder;
@@ -39,6 +26,8 @@ import org.mule.runtime.core.util.ObjectUtils;
 import org.mule.runtime.core.util.StringMessageUtils;
 import org.mule.runtime.core.util.UUID;
 import org.mule.runtime.core.util.store.DeserializationPostInitialisable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -53,8 +42,19 @@ import java.util.Set;
 
 import javax.activation.DataHandler;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.util.Collections.emptyMap;
+import static java.util.Collections.unmodifiableSet;
+import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang.SystemUtils.LINE_SEPARATOR;
+import static org.mule.runtime.core.message.NullAttributes.NULL_ATTRIBUTES;
+import static org.mule.runtime.core.util.ObjectUtils.getBoolean;
+import static org.mule.runtime.core.util.ObjectUtils.getByte;
+import static org.mule.runtime.core.util.ObjectUtils.getDouble;
+import static org.mule.runtime.core.util.ObjectUtils.getFloat;
+import static org.mule.runtime.core.util.ObjectUtils.getInt;
+import static org.mule.runtime.core.util.ObjectUtils.getLong;
+import static org.mule.runtime.core.util.ObjectUtils.getShort;
+import static org.mule.runtime.core.util.ObjectUtils.getString;
 
 /**
  * // TODO MULE-9855 MOVE TO org.mule.runtime.core.message
@@ -90,39 +90,6 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
         this((org.mule.runtime.api.message.MuleMessage) message);
     }
 
-    private void copyMessageAttributes(MuleMessage message)
-    {
-        this.id = message.getUniqueId();
-        message.getCorrelation().getId().ifPresent(v -> this.correlationId = v);
-        message.getCorrelation().getSequence().ifPresent(v -> this.correlationSequence = v);
-        message.getCorrelation().getGroupSize().ifPresent(v -> this.correlationGroupSize = v);
-        this.replyTo = message.getReplyTo();
-        this.rootId = message.getMessageRootId();
-        this.exceptionPayload = message.getExceptionPayload();
-        message.getInboundPropertyNames().forEach(key -> {
-            if (message.getInboundPropertyDataType(key) != null)
-            {
-                addInboundProperty(key, message.getInboundProperty(key), message.getInboundPropertyDataType(key));
-            }
-            else
-            {
-                addInboundProperty(key, message.getInboundProperty(key));
-            }
-        });
-        message.getOutboundPropertyNames().forEach(key -> {
-            if (message.getOutboundPropertyDataType(key) != null)
-            {
-                addOutboundProperty(key, message.getOutboundProperty(key), message.getOutboundPropertyDataType(key));
-            }
-            else
-            {
-                addOutboundProperty(key, message.getOutboundProperty(key));
-            }
-        });
-        message.getInboundAttachmentNames().forEach(name -> addInboundAttachment(name, message.getInboundAttachment(name)));
-        message.getOutboundAttachmentNames().forEach(name -> addOutboundAttachment(name, message.getOutboundAttachment(name)));
-    }
-
     public DefaultMuleMessageBuilder(org.mule.runtime.api.message.MuleMessage message)
     {
         requireNonNull(message);
@@ -134,6 +101,41 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
         {
             copyMessageAttributes((MuleMessage) message);
         }
+    }
+
+    private void copyMessageAttributes(MuleMessage message)
+    {
+        this.id = message.getUniqueId();
+        message.getCorrelation().getId().ifPresent(v -> this.correlationId = v);
+        message.getCorrelation().getSequence().ifPresent(v -> this.correlationSequence = v);
+        message.getCorrelation().getGroupSize().ifPresent(v -> this.correlationGroupSize = v);
+        this.replyTo = message.getReplyTo();
+        this.rootId = message.getMessageRootId();
+        this.exceptionPayload = message.getExceptionPayload();
+        message.getInboundPropertyNames().forEach(key ->
+        {
+            if (message.getInboundPropertyDataType(key) != null)
+            {
+                addInboundProperty(key, message.getInboundProperty(key), message.getInboundPropertyDataType(key));
+            }
+            else
+            {
+                addInboundProperty(key, message.getInboundProperty(key));
+            }
+        });
+        message.getOutboundPropertyNames().forEach(key ->
+        {
+            if (message.getOutboundPropertyDataType(key) != null)
+            {
+                addOutboundProperty(key, message.getOutboundProperty(key), message.getOutboundPropertyDataType(key));
+            }
+            else
+            {
+                addOutboundProperty(key, message.getOutboundProperty(key));
+            }
+        });
+        message.getInboundAttachmentNames().forEach(name -> addInboundAttachment(name, message.getInboundAttachment(name)));
+        message.getOutboundAttachmentNames().forEach(name -> addOutboundAttachment(name, message.getOutboundAttachment(name)));
     }
 
     @Override
@@ -358,10 +360,10 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
     public MuleMessage build()
     {
         return new MuleMessageImplementation(id != null ? id : UUID.getUUID(), rootId,
-                                             new TypedValue(payload, resolveDataType()), attributes,
-                                             inboundProperties, outboundProperties, inboundAttachments,
-                                             outboundAttachments, correlationId, correlationGroupSize,
-                                             correlationSequence, replyTo, exceptionPayload);
+                new TypedValue(payload, resolveDataType()), attributes,
+                inboundProperties, outboundProperties, inboundAttachments,
+                outboundAttachments, correlationId, correlationGroupSize,
+                correlationSequence, replyTo, exceptionPayload);
     }
 
     private DataType resolveDataType()
@@ -419,11 +421,11 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
         private Map<String, TypedValue<Serializable>> outboundMap = new CaseInsensitiveMapWrapper<>(HashMap.class);
 
         private MuleMessageImplementation(String id, String rootId, TypedValue typedValue, Attributes attributes,
-                                  Map<String, TypedValue<Serializable>> inboundProperties,
-                                  Map<String, TypedValue<Serializable>> outboundProperties,
-                                  Map<String, DataHandler> inboundAttachments, Map<String, DataHandler> outboundAttachments,
-                                  String correlationId, Integer correlationGroupSize, Integer correlationSequence,
-                                  Object replyTo, ExceptionPayload exceptionPayload)
+                                          Map<String, TypedValue<Serializable>> inboundProperties,
+                                          Map<String, TypedValue<Serializable>> outboundProperties,
+                                          Map<String, DataHandler> inboundAttachments, Map<String, DataHandler> outboundAttachments,
+                                          String correlationId, Integer correlationGroupSize, Integer correlationSequence,
+                                          Object replyTo, ExceptionPayload exceptionPayload)
         {
             this.id = id;
             this.rootId = rootId != null ? rootId : id;
@@ -459,11 +461,20 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
             return correlation;
         }
 
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Object getReplyTo()
+        {
+            return replyTo;
+        }
+
         private void setReplyTo(Object replyTo)
         {
             if (replyTo != null)
             {
-                if(!(replyTo instanceof Serializable))
+                if (!(replyTo instanceof Serializable))
                 {
                     logger.warn("ReplyTo " + replyTo + " is not serializable and will not be propagated by Mule");
                 }
@@ -476,15 +487,6 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
             {
                 this.replyTo = null;
             }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Object getReplyTo()
-        {
-            return replyTo;
         }
 
         /**
@@ -554,58 +556,6 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
             return typedValue.getValue();
         }
 
-        public static class SerializedDataHandler implements Serializable
-        {
-            private static final long serialVersionUID = 1L;
-
-            private DataHandler handler;
-            private String contentType;
-            private Object contents;
-
-            public SerializedDataHandler(String name, DataHandler handler, MuleContext muleContext) throws IOException
-            {
-                if (handler != null && !(handler instanceof Serializable))
-                {
-                    contentType = handler.getContentType();
-                    Object theContent = handler.getContent();
-                    if (theContent instanceof Serializable)
-                    {
-                        contents = theContent;
-                    }
-                    else
-                    {
-                        try
-                        {
-                            DataType source = DataType.fromObject(theContent);
-                            Transformer transformer = muleContext.getRegistry().lookupTransformer(source, DataType.BYTE_ARRAY);
-                            if (transformer == null)
-                            {
-                                throw new TransformerException(CoreMessages.noTransformerFoundForMessage(source, DataType.BYTE_ARRAY));
-                            }
-                            contents = transformer.transform(theContent);
-                        }
-                        catch(TransformerException ex)
-                        {
-                            String message = String.format(
-                                    "Unable to serialize the attachment %s, which is of type %s with contents of type %s",
-                                    name, handler.getClass(), theContent.getClass());
-                            logger.error(message);
-                            throw new IOException(message);
-                        }
-                    }
-                }
-                else
-                {
-                    this.handler = handler;
-                }
-            }
-
-            public DataHandler getHandler()
-            {
-                return contents != null ? new DataHandler(contents, contentType) : handler;
-            }
-        }
-
         private void writeObject(ObjectOutputStream out) throws Exception
         {
             out.defaultWriteObject();
@@ -647,7 +597,11 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
             {
                 out.writeBoolean(false);
                 // TODO MULE-10013 remove this logic from here
-                byte[] valueAsByteArray = (byte[]) RequestContext.getEvent().getMuleContext().getTransformationService().transform(this, DataType.BYTE_ARRAY).getPayload();
+                byte[] valueAsByteArray = (byte[]) RequestContext.getEvent()
+                                                                 .getMuleContext()
+                                                                 .getTransformationService()
+                                                                 .transform(this, DataType.BYTE_ARRAY)
+                                                                 .getPayload();
                 out.writeInt(valueAsByteArray.length);
                 new DataOutputStream(out).write(valueAsByteArray);
                 out.writeObject(DataType.BYTE_ARRAY);
@@ -692,8 +646,8 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
         {
             in.defaultReadObject();
             typedValue = new TypedValue(deserializeValue(in), (DataType) in.readObject());
-            inboundAttachments = deserializeAttachments((Map<String, SerializedDataHandler>)in.readObject());
-            outboundAttachments = deserializeAttachments((Map<String, SerializedDataHandler>)in.readObject());
+            inboundAttachments = deserializeAttachments((Map<String, SerializedDataHandler>) in.readObject());
+            outboundAttachments = deserializeAttachments((Map<String, SerializedDataHandler>) in.readObject());
         }
 
         /**
@@ -739,7 +693,7 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
             {
                 return false;
             }
-            return this.id.equals(((MuleMessageImplementation)obj).id);
+            return this.id.equals(((MuleMessageImplementation) obj).id);
         }
 
         @Override
@@ -813,7 +767,7 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
             }
             else if (defaultValue instanceof Boolean)
             {
-                return  (T) (Boolean) getBoolean(value, (Boolean) defaultValue);
+                return (T) (Boolean) getBoolean(value, (Boolean) defaultValue);
             }
             else if (defaultValue instanceof Byte)
             {
@@ -856,8 +810,61 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
                 }
                 else
                 {
-                    throw new IllegalArgumentException(CoreMessages.objectNotOfCorrectType(value.getClass(), defaultValue.getClass()).getMessage());
+                    throw new IllegalArgumentException(
+                            CoreMessages.objectNotOfCorrectType(value.getClass(), defaultValue.getClass()).getMessage());
                 }
+            }
+        }
+
+        public static class SerializedDataHandler implements Serializable
+        {
+            private static final long serialVersionUID = 1L;
+
+            private DataHandler handler;
+            private String contentType;
+            private Object contents;
+
+            public SerializedDataHandler(String name, DataHandler handler, MuleContext muleContext) throws IOException
+            {
+                if (handler != null && !(handler instanceof Serializable))
+                {
+                    contentType = handler.getContentType();
+                    Object theContent = handler.getContent();
+                    if (theContent instanceof Serializable)
+                    {
+                        contents = theContent;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            DataType source = DataType.fromObject(theContent);
+                            Transformer transformer = muleContext.getRegistry().lookupTransformer(source, DataType.BYTE_ARRAY);
+                            if (transformer == null)
+                            {
+                                throw new TransformerException(CoreMessages.noTransformerFoundForMessage(source, DataType.BYTE_ARRAY));
+                            }
+                            contents = transformer.transform(theContent);
+                        }
+                        catch (TransformerException ex)
+                        {
+                            String message = String.format(
+                                    "Unable to serialize the attachment %s, which is of type %s with contents of type %s",
+                                    name, handler.getClass(), theContent.getClass());
+                            logger.error(message);
+                            throw new IOException(message);
+                        }
+                    }
+                }
+                else
+                {
+                    this.handler = handler;
+                }
+            }
+
+            public DataHandler getHandler()
+            {
+                return contents != null ? new DataHandler(contents, contentType) : handler;
             }
         }
     }

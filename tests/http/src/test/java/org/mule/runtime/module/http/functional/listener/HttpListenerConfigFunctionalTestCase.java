@@ -6,15 +6,11 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static org.apache.http.HttpStatus.SC_NOT_FOUND;
-import static org.apache.http.HttpStatus.SC_OK;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.METHOD_NOT_ALLOWED;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.NOT_FOUND;
-import static org.mule.runtime.module.http.functional.matcher.HttpResponseReasonPhraseMatcher.hasReasonPhrase;
-import static org.mule.runtime.module.http.functional.matcher.HttpResponseStatusCodeMatcher.hasStatusCode;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.client.fluent.Response;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.http.api.HttpConstants;
@@ -34,11 +30,15 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.regex.Pattern;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.client.fluent.Response;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.apache.http.HttpStatus.SC_NOT_FOUND;
+import static org.apache.http.HttpStatus.SC_OK;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.METHOD_NOT_ALLOWED;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.NOT_FOUND;
+import static org.mule.runtime.module.http.functional.matcher.HttpResponseReasonPhraseMatcher.hasReasonPhrase;
+import static org.mule.runtime.module.http.functional.matcher.HttpResponseStatusCodeMatcher.hasStatusCode;
 
 public class HttpListenerConfigFunctionalTestCase extends AbstractHttpTestCase
 {
@@ -49,7 +49,11 @@ public class HttpListenerConfigFunctionalTestCase extends AbstractHttpTestCase
             "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
             "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
     private static final int TIMEOUT = 1000;
-    private static final HttpRequestOptions GET_OPTIONS = HttpRequestOptionsBuilder.newOptions().method(HttpConstants.Methods.GET.name()).responseTimeout(TIMEOUT).disableStatusCodeValidation().build();
+    private static final HttpRequestOptions GET_OPTIONS = HttpRequestOptionsBuilder.newOptions()
+                                                                                   .method(HttpConstants.Methods.GET.name())
+                                                                                   .responseTimeout(TIMEOUT)
+                                                                                   .disableStatusCodeValidation()
+                                                                                   .build();
 
     @Rule
     public DynamicPort fullConfigPort = new DynamicPort("fullConfigPort");
@@ -60,9 +64,9 @@ public class HttpListenerConfigFunctionalTestCase extends AbstractHttpTestCase
     @Rule
     public DynamicPort slashConfigPort = new DynamicPort("slashConfigPort");
     @Rule
-    public SystemProperty path = new SystemProperty("path","path");
+    public SystemProperty path = new SystemProperty("path", "path");
     @Rule
-    public SystemProperty basePath = new SystemProperty("basePath","basePath");
+    public SystemProperty basePath = new SystemProperty("basePath", "basePath");
     @Rule
     public SystemProperty nonLocalhostIp = new SystemProperty("nonLocalhostIp", getNonLocalhostIp());
 
@@ -89,14 +93,16 @@ public class HttpListenerConfigFunctionalTestCase extends AbstractHttpTestCase
     @Test
     public void fullConfigWrongPath() throws Exception
     {
-        final String url = String.format("http://localhost:%s/%s/%s", fullConfigPort.getNumber(), basePath.getValue(), path.getValue()+"2");
+        final String url =
+                String.format("http://localhost:%s/%s/%s", fullConfigPort.getNumber(), basePath.getValue(), path.getValue() + "2");
         callAndAssertStatus(url, SC_NOT_FOUND);
     }
 
     @Test
     public void listenerConfigOverridesListenerConfig() throws Exception
     {
-        final String url = String.format("http://%s:%s/%s/%s", nonLocalhostIp.getValue(), fullConfigPort.getNumber(), basePath.getValue(), path.getValue());
+        final String url = String.format("http://%s:%s/%s/%s", nonLocalhostIp.getValue(), fullConfigPort.getNumber(), basePath.getValue(),
+                path.getValue());
         callAndAssertStatus(url, SC_OK);
     }
 
@@ -115,6 +121,7 @@ public class HttpListenerConfigFunctionalTestCase extends AbstractHttpTestCase
         final HttpResponse httpResponse = callAndAssertStatus(url, METHOD_NOT_ALLOWED);
         assertThat(IOUtils.toString(httpResponse.getEntity().getContent()), containsString("Method not allowed for endpoint"));
     }
+
     @Test
     public void useSlashInPathAndBasePath() throws Exception
     {

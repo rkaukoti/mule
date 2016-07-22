@@ -6,26 +6,26 @@
  */
 package org.mule.runtime.module.tls;
 
-import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import org.mule.runtime.core.api.lifecycle.InitialisationException;
-import org.mule.runtime.core.api.security.tls.TlsConfiguration;
-import org.mule.runtime.module.tls.internal.DefaultTlsContextFactory;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.runtime.core.util.ClassUtils;
-import org.mule.runtime.core.util.StringUtils;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mule.runtime.core.api.lifecycle.InitialisationException;
+import org.mule.runtime.core.api.security.tls.TlsConfiguration;
+import org.mule.runtime.core.util.ClassUtils;
+import org.mule.runtime.core.util.StringUtils;
+import org.mule.runtime.module.tls.internal.DefaultTlsContextFactory;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class DefaultTlsContextFactoryTestCase extends AbstractMuleTestCase
 {

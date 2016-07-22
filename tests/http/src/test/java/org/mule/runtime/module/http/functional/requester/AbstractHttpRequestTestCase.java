@@ -6,24 +6,9 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import org.mule.runtime.core.util.CaseInsensitiveMapWrapper;
-import org.mule.runtime.core.util.FileUtils;
-import org.mule.runtime.core.util.IOUtils;
-import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
-
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.EnumerationUtils;
 import org.eclipse.jetty.server.Request;
@@ -34,17 +19,29 @@ import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
+import org.mule.runtime.core.util.CaseInsensitiveMapWrapper;
+import org.mule.runtime.core.util.FileUtils;
+import org.mule.runtime.core.util.IOUtils;
+import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
+
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class AbstractHttpRequestTestCase extends AbstractHttpTestCase
 {
 
+    public static final String DEFAULT_RESPONSE = "<h1>Response</h1>";
     @Rule
     public DynamicPort httpPort = new DynamicPort("httpPort");
     @Rule
     public DynamicPort httpsPort = new DynamicPort("httpsPort");
-
-    public static final String DEFAULT_RESPONSE = "<h1>Response</h1>";
-
     protected Server server;
 
     protected String method;
@@ -108,20 +105,6 @@ public class AbstractHttpRequestTestCase extends AbstractHttpTestCase
         return new TestHandler();
     }
 
-    private class TestHandler extends AbstractHandler
-    {
-
-        @Override
-        public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
-        {
-
-            handleRequest(baseRequest, request, response);
-
-            baseRequest.setHandled(true);
-        }
-    }
-
-
     protected void handleRequest(Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException
     {
         extractBaseRequestParts(baseRequest);
@@ -161,5 +144,19 @@ public class AbstractHttpRequestTestCase extends AbstractHttpTestCase
     public String getFirstReceivedHeader(String headerName)
     {
         return headers.get(headerName).iterator().next();
+    }
+
+    private class TestHandler extends AbstractHandler
+    {
+
+        @Override
+        public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
+                throws IOException, ServletException
+        {
+
+            handleRequest(baseRequest, request, response);
+
+            baseRequest.setHandled(true);
+        }
     }
 }

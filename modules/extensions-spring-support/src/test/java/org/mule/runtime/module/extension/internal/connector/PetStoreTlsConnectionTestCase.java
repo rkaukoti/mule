@@ -6,44 +6,43 @@
  */
 package org.mule.runtime.module.extension.internal.connector;
 
-import static java.util.Arrays.asList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import org.mule.functional.junit4.ExtensionFunctionalTestCase;
-import org.mule.test.petstore.extension.PetStoreClient;
-import org.mule.test.petstore.extension.PetStoreConnector;
-import org.mule.tck.junit4.rule.SystemProperty;
-
-import java.util.Collection;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mule.functional.junit4.ExtensionFunctionalTestCase;
+import org.mule.tck.junit4.rule.SystemProperty;
+import org.mule.test.petstore.extension.PetStoreClient;
+import org.mule.test.petstore.extension.PetStoreConnector;
+
+import java.util.Collection;
+
+import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
 public class PetStoreTlsConnectionTestCase extends ExtensionFunctionalTestCase
 {
-    @Parameterized.Parameters(name = "{0}")
-    public static Collection<Object[]> data()
-    {
-        return asList(new Object[][] {
-                {"global tls", "globalTls"},
-                {"inline tls", "inlineTls"}});
-    }
-
-    private String name;
-    private String configName;
-
     @Rule
     public SystemProperty systemProperty;
+    private String name;
+    private String configName;
 
     public PetStoreTlsConnectionTestCase(String name, String configName)
     {
         this.name = name;
         this.configName = configName;
         systemProperty = new SystemProperty("config", configName);
+    }
+
+    @Parameterized.Parameters(name = "{0}")
+    public static Collection<Object[]> data()
+    {
+        return asList(new Object[][] {
+                {"global tls", "globalTls"},
+                {"inline tls", "inlineTls"}});
     }
 
     @Override

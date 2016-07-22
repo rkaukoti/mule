@@ -6,19 +6,17 @@
  */
 package org.mule.runtime.module.extension.internal.connector;
 
-import static java.util.Arrays.asList;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import org.mule.runtime.core.api.MessagingException;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.api.connection.ConnectionException;
-import org.mule.test.petstore.extension.PetStoreClient;
+import org.mule.runtime.core.api.MessagingException;
+import org.mule.runtime.core.util.concurrent.Latch;
 import org.mule.tck.junit4.rule.SystemProperty;
 import org.mule.tck.probe.JUnitProbe;
 import org.mule.tck.probe.PollingProber;
-import org.mule.runtime.core.util.concurrent.Latch;
+import org.mule.test.petstore.extension.PetStoreClient;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,10 +26,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static java.util.Arrays.asList;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 @RunWith(Parameterized.class)
 public class PetStoreConnectionPoolingTestCase extends PetStoreConnectionTestCase
@@ -41,6 +41,20 @@ public class PetStoreConnectionPoolingTestCase extends PetStoreConnectionTestCas
     private static final String CUSTOM_POOLING_POOLED_CONFIG = CUSTOM_POOLING_CONFIG + "Pooled";
     private static final String CUSTOM_POOLING_POOLABLE_CONFIG = CUSTOM_POOLING_CONFIG + "Poolable";
     private static final String NO_POOLING = "noPooling";
+    @Rule
+    public SystemProperty configNameProperty;
+    protected int poolSize;
+    protected String name;
+    private ExecutorService executorService = null;
+    private Latch connectionLatch = new Latch();
+    private CountDownLatch testLatch;
+    public PetStoreConnectionPoolingTestCase(String name, int poolSize)
+    {
+        this.name = name;
+        this.poolSize = poolSize;
+        configNameProperty = new SystemProperty("configName", name);
+        testLatch = new CountDownLatch(poolSize);
+    }
 
     @Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> data()
@@ -49,24 +63,6 @@ public class PetStoreConnectionPoolingTestCase extends PetStoreConnectionTestCas
                 {CUSTOM_POOLING_POOLABLE_CONFIG, 3},
                 {CUSTOM_POOLING_POOLED_CONFIG, 3},
                 {NO_POOLING, 0}});
-    }
-
-    @Rule
-    public SystemProperty configNameProperty;
-
-    private ExecutorService executorService = null;
-    private Latch connectionLatch = new Latch();
-    private CountDownLatch testLatch;
-
-    protected int poolSize;
-    protected String name;
-
-    public PetStoreConnectionPoolingTestCase(String name, int poolSize)
-    {
-        this.name = name;
-        this.poolSize = poolSize;
-        configNameProperty = new SystemProperty("configName", name);
-        testLatch = new CountDownLatch(poolSize);
     }
 
     @Override
@@ -147,11 +143,12 @@ public class PetStoreConnectionPoolingTestCase extends PetStoreConnectionTestCas
     protected Future<PetStoreClient> getClientOnLatch()
     {
         return executorService.submit(() -> (PetStoreClient) flowRunner("getClientOnLatch").withPayload("")
-                                                              .withFlowVariable("testLatch", testLatch)
-                                                              .withFlowVariable("connectionLatch", connectionLatch)
-                                                              .run()
-                                                              .getMessage()
-                                                              .getPayload());
+                                                                                           .withFlowVariable("testLatch", testLatch)
+                                                                                           .withFlowVariable("connectionLatch",
+                                                                                                   connectionLatch)
+                                                                                           .run()
+                                                                                           .getMessage()
+                                                                                           .getPayload());
     }
 
     @Override

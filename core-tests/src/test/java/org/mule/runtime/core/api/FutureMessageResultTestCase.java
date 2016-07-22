@@ -6,11 +6,9 @@
  */
 package org.mule.runtime.core.api;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.util.concurrent.DaemonThreadFactory;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
@@ -21,9 +19,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeoutException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class FutureMessageResultTestCase extends AbstractMuleContextTestCase
 {
@@ -113,7 +112,7 @@ public class FutureMessageResultTestCase extends AbstractMuleContextTestCase
 
     @Test
     public void testExecuteWithTimeout()
-        throws ExecutionException, InterruptedException, MuleException
+            throws ExecutionException, InterruptedException, MuleException
     {
         Callable c = () ->
         {

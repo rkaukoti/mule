@@ -6,23 +6,19 @@
  */
 package org.mule.runtime.management.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.agent.Agent;
-import org.mule.runtime.core.api.registry.Registry;
 import org.mule.runtime.module.management.agent.JmxApplicationAgent;
 import org.mule.runtime.module.management.agent.JmxServerNotificationAgent;
 import org.mule.runtime.module.management.agent.Log4jAgent;
 import org.mule.runtime.module.management.agent.Mx4jAgent;
 import org.mule.tck.testmodels.mule.TestAgent;
 
-import java.util.Collection;
-import java.util.Iterator;
-
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class ManagementNamespaceHandlerTestCase extends FunctionalTestCase
 {
@@ -73,9 +69,9 @@ public class ManagementNamespaceHandlerTestCase extends FunctionalTestCase
         assertEquals("woggle", ((TestAgent) agent).getFrobbit());
 
         // needs profiler installed
-//        agent = muleContext.getRegistry().lookupAgent("yourkit-profiler");
-//        assertNotNull(agent);
-//        assertEquals(YourKitProfilerAgent.class, agent.getClass());
+        //        agent = muleContext.getRegistry().lookupAgent("yourkit-profiler");
+        //        assertNotNull(agent);
+        //        assertEquals(YourKitProfilerAgent.class, agent.getClass());
     }
 
 }

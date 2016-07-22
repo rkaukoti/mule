@@ -23,20 +23,22 @@ import java.util.List;
 // @ThreadSafe
 public final class Multicaster
 {
-    /** Do not instanciate. */
-    private Multicaster ()
+    /**
+     * Do not instanciate.
+     */
+    private Multicaster()
     {
         // no-op
     }
 
     public static Object create(Class<?> theInterface, Collection<?> objects)
     {
-        return create(new Class[]{ theInterface }, objects);
+        return create(new Class[] {theInterface}, objects);
     }
 
     public static Object create(Class<?> theInterface, Collection<?> objects, InvokeListener listener)
     {
-        return create(new Class[]{ theInterface }, objects, listener);
+        return create(new Class[] {theInterface}, objects, listener);
     }
 
     public static Object create(Class<?>[] interfaces, Collection<?> objects)
@@ -47,7 +49,14 @@ public final class Multicaster
     public static Object create(Class<?>[] interfaces, Collection<?> objects, InvokeListener listener)
     {
         return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), interfaces,
-            new CastingHandler(objects, listener));
+                new CastingHandler(objects, listener));
+    }
+
+    public static interface InvokeListener
+    {
+        void afterExecute(Object object, Method method, Object[] args);
+
+        Throwable onException(Object object, Method method, Object[] args, Throwable t);
     }
 
     private static class CastingHandler implements InvocationHandler
@@ -73,7 +82,7 @@ public final class Multicaster
             Object item = null;
             Object result;
 
-            for (Iterator<?> iterator = objects.iterator(); iterator.hasNext();)
+            for (Iterator<?> iterator = objects.iterator(); iterator.hasNext(); )
             {
                 try
                 {
@@ -103,12 +112,5 @@ public final class Multicaster
             }
             return results;
         }
-    }
-
-    public static interface InvokeListener
-    {
-        void afterExecute(Object object, Method method, Object[] args);
-
-        Throwable onException(Object object, Method method, Object[] args, Throwable t);
     }
 }

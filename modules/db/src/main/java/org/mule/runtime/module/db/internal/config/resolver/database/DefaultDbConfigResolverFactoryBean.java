@@ -9,9 +9,7 @@ package org.mule.runtime.module.db.internal.config.resolver.database;
 
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.MuleContextAware;
-
 import org.mule.runtime.module.db.internal.resolver.database.DefaultDbConfigResolver;
-
 import org.springframework.beans.factory.FactoryBean;
 
 public class DefaultDbConfigResolverFactoryBean implements FactoryBean<DefaultDbConfigResolver>, MuleContextAware

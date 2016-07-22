@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.springframework.util.ReflectionUtils.setField;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ValueResolver;
@@ -16,6 +14,9 @@ import org.mule.runtime.module.extension.internal.util.MuleExtensionUtils;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.springframework.util.ReflectionUtils.setField;
 
 /**
  * Base class for implementations of {@link ObjectBuilder}. It implements

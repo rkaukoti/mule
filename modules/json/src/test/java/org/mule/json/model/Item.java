@@ -14,7 +14,7 @@ public class Item
 {
     @JsonProperty
     private String code;
-    
+
     @JsonProperty
     private String description;
 

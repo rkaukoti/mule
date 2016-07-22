@@ -30,6 +30,18 @@ public class FailureGeneratorMessageProcessor implements MessageProcessor
         maximumNumberOfFailures = 5;
     }
 
+    public static void noFailure()
+    {
+        failureRange = -1;
+        resetMaximumNumberOfFailures();
+    }
+
+    public static void allFailure()
+    {
+        failureRange = 1;
+        maximumNumberOfFailures = Integer.MAX_VALUE;
+    }
+
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException
     {
@@ -42,17 +54,5 @@ public class FailureGeneratorMessageProcessor implements MessageProcessor
             }
         }
         return event;
-    }
-
-    public static void noFailure()
-    {
-        failureRange = -1;
-        resetMaximumNumberOfFailures();
-    }
-
-    public static void allFailure()
-    {
-        failureRange = 1;
-        maximumNumberOfFailures = Integer.MAX_VALUE;
     }
 }

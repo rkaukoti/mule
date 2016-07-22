@@ -6,9 +6,6 @@
  */
 package org.mule.compatibility.core.endpoint;
 
-import static java.net.URLDecoder.decode;
-import static org.apache.commons.lang.StringUtils.isNotBlank;
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupServiceDescriptor;
 import org.mule.compatibility.core.api.endpoint.EndpointException;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
 import org.mule.compatibility.core.api.endpoint.EndpointURIBuilder;
@@ -22,14 +19,17 @@ import org.mule.runtime.core.api.registry.ServiceException;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.PropertiesUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Hashtable;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.net.URLDecoder.decode;
+import static org.apache.commons.lang.StringUtils.isNotBlank;
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupServiceDescriptor;
 
 /**
  * <code>MuleEndpointURI</code> is used to determine how a message is sent or received. The url
@@ -45,20 +45,13 @@ import org.slf4j.LoggerFactory;
 public class MuleEndpointURI implements EndpointURI
 {
     /**
-     * Serial version
-     */
-    private static final long serialVersionUID = 3906735768171252877L;
-
-    /**
      * logger used by this class
      */
     protected static final Logger logger = LoggerFactory.getLogger(MuleEndpointURI.class);
-
-    public static boolean isMuleUri(String url)
-    {
-        return url.indexOf(":/") != -1;
-    }
-
+    /**
+     * Serial version
+     */
+    private static final long serialVersionUID = 3906735768171252877L;
     private String address;
     private String filterAddress;
     private String endpointName;
@@ -73,10 +66,8 @@ public class MuleEndpointURI implements EndpointURI
     private boolean dynamic;
     private transient MuleContext muleContext;
     private Properties serviceOverrides;
-
     private String user;
     private String password;
-
     MuleEndpointURI(String address,
                     String endpointName,
                     String connectorName,
@@ -170,6 +161,11 @@ public class MuleEndpointURI implements EndpointURI
         }
     }
 
+    public static boolean isMuleUri(String url)
+    {
+        return url.indexOf(":/") != -1;
+    }
+
     private String convertExpressionDelimiters(String uriString, String startChar)
     {
         //Allow Expressions to be embedded
@@ -193,7 +189,8 @@ public class MuleEndpointURI implements EndpointURI
                 {
                     if (--braceCount == 0)
                     {
-                        uriString = uriString.substring(0, index) + startChar + "[" + uriString.substring(index + 2, seek) + "]" + uriString.substring(seek+1);
+                        uriString = uriString.substring(0, index) + startChar + "[" + uriString.substring(index + 2, seek) + "]" +
+                                    uriString.substring(seek + 1);
                         break;
                     }
                 }
@@ -225,7 +222,8 @@ public class MuleEndpointURI implements EndpointURI
         {
             String scheme = getFullScheme();
             TransportServiceDescriptor sd;
-            sd = (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT, scheme, serviceOverrides);
+            sd = (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT, scheme,
+                    serviceOverrides);
             if (sd == null)
             {
                 throw new ServiceException(TransportCoreMessages.noServiceTransportDescriptor(scheme));
@@ -463,7 +461,7 @@ public class MuleEndpointURI implements EndpointURI
 
     protected String createUriStringWithPasswordMasked()
     {
-        String rawUserInfo =  uri.getRawUserInfo();
+        String rawUserInfo = uri.getRawUserInfo();
         // uri.getRawUserInfo() returns null for JMS endpoints with passwords, so use the userInfo
         // from this instance instead
         if (StringUtils.isBlank(rawUserInfo))
@@ -521,7 +519,7 @@ public class MuleEndpointURI implements EndpointURI
     @Override
     public String getUser()
     {
-        if(user == null)
+        if (user == null)
         {
             user = getUserInfoDataUsing(new DataExtractor()
             {
@@ -536,7 +534,7 @@ public class MuleEndpointURI implements EndpointURI
                     else
                     {
                         return source.substring(0, i);
-                    }                
+                    }
                 }
             });
         }
@@ -613,15 +611,15 @@ public class MuleEndpointURI implements EndpointURI
         }
         MuleEndpointURI muleEndpointURI = (MuleEndpointURI) o;
         return ClassUtils.equal(address, muleEndpointURI.address) &&
-                ClassUtils.equal(connectorName, muleEndpointURI.connectorName) &&
-                ClassUtils.equal(endpointName, muleEndpointURI.endpointName) &&
-                ClassUtils.equal(filterAddress, muleEndpointURI.filterAddress) &&
+               ClassUtils.equal(connectorName, muleEndpointURI.connectorName) &&
+               ClassUtils.equal(endpointName, muleEndpointURI.endpointName) &&
+               ClassUtils.equal(filterAddress, muleEndpointURI.filterAddress) &&
                areParamsEquals(muleEndpointURI.params) &&
-                ClassUtils.equal(resourceInfo, muleEndpointURI.resourceInfo) &&
-                ClassUtils.equal(schemeMetaInfo, muleEndpointURI.schemeMetaInfo) &&
-                ClassUtils.equal(transformers, muleEndpointURI.transformers) &&
-                ClassUtils.equal(responseTransformers, muleEndpointURI.responseTransformers) &&
-                ClassUtils.equal(uri, muleEndpointURI.uri);
+               ClassUtils.equal(resourceInfo, muleEndpointURI.resourceInfo) &&
+               ClassUtils.equal(schemeMetaInfo, muleEndpointURI.schemeMetaInfo) &&
+               ClassUtils.equal(transformers, muleEndpointURI.transformers) &&
+               ClassUtils.equal(responseTransformers, muleEndpointURI.responseTransformers) &&
+               ClassUtils.equal(uri, muleEndpointURI.uri);
     }
 
     /**
@@ -638,8 +636,6 @@ public class MuleEndpointURI implements EndpointURI
      * hashcode of each {@code params} instance.
      *
      * @See http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6582568
-     * @return
-     * @param theirParams
      */
     private boolean areParamsEquals(Properties theirParams)
     {
@@ -673,7 +669,7 @@ public class MuleEndpointURI implements EndpointURI
     @Override
     public int hashCode()
     {
-        return ClassUtils.hash(new Object[]{
+        return ClassUtils.hash(new Object[] {
                 address,
                 filterAddress,
                 endpointName,

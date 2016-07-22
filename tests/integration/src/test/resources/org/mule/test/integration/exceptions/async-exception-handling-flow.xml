@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:test="http://www.mulesoft.org/schema/mule/test"
-    xsi:schemaLocation="
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="
     http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
     http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd">
-    
+
     <flow name="SearchWebServiceBridge">
         <flow-ref name="RequestFlow"/>
     </flow>
-    
+
     <flow name="RequestFlow">
         <test:component throwException="true"/>
         <default-exception-strategy>
@@ -18,9 +18,9 @@
             </async>
         </default-exception-strategy>
     </flow>
-    
+
     <flow name="ExceptionFlow">
-        <test:queue name="back-channel"/>            
+        <test:queue name="back-channel"/>
     </flow>
 
 </mule>

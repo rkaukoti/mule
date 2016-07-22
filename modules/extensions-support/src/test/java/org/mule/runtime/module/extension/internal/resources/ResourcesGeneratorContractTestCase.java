@@ -6,9 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.resources;
 
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
 import org.mule.runtime.extension.api.resources.GeneratedResource;
 import org.mule.runtime.extension.api.resources.ResourcesGenerator;
@@ -20,11 +22,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -47,7 +47,8 @@ public abstract class ResourcesGeneratorContractTestCase extends AbstractMuleTes
     @Before
     public void before()
     {
-        when(resourceFactory.generateResource(extensionModel)).thenReturn(Optional.of(new GeneratedResource(RESOURCE_PATH, RESOURCE_CONTENT)));
+        when(resourceFactory.generateResource(extensionModel)).thenReturn(
+                Optional.of(new GeneratedResource(RESOURCE_PATH, RESOURCE_CONTENT)));
         resourceFactories = Arrays.asList(resourceFactory);
         generator = buildGenerator();
 

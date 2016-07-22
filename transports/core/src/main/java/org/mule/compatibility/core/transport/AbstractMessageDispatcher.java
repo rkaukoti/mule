@@ -6,11 +6,6 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.mule.runtime.core.OptimizedRequestContext.unsafeSetEvent;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_DISABLE_TRANSPORT_TRANSFORMER_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_PROPERTY;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.compatibility.core.api.transport.MessageDispatcher;
 import org.mule.runtime.api.execution.CompletionHandler;
@@ -37,12 +32,17 @@ import javax.resource.spi.work.Work;
 import javax.resource.spi.work.WorkException;
 import javax.resource.spi.work.WorkListener;
 
+import static org.mule.runtime.core.OptimizedRequestContext.unsafeSetEvent;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_DISABLE_TRANSPORT_TRANSFORMER_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_PROPERTY;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
+
 /**
  * Abstract implementation of an outbound channel adaptors. Outbound channel adaptors send messages over over
  * a specific transport. Different implementations may support different Message Exchange Patterns.
  */
 public abstract class AbstractMessageDispatcher extends AbstractTransportMessageHandler
-    implements MessageDispatcher
+        implements MessageDispatcher
 {
 
     protected List<Transformer> defaultOutboundTransformers;
@@ -89,12 +89,14 @@ public abstract class AbstractMessageDispatcher extends AbstractTransportMessage
             {
                 if (!event.getMuleContext().waitUntilStarted(event.getTimeout()))
                 {
-                    throw new MessagingException(MessageFactory.createStaticMessage("Timeout waiting for mule context to be completely started"), event, this);
+                    throw new MessagingException(
+                            MessageFactory.createStaticMessage("Timeout waiting for mule context to be completely started"), event, this);
                 }
 
                 if (isNonBlocking(event))
                 {
-                    doSendNonBlocking(event, new NonBlockingSendCompletionHandler(event, ((Flow) event.getFlowConstruct()).getWorkManager(), connector));
+                    doSendNonBlocking(event,
+                            new NonBlockingSendCompletionHandler(event, ((Flow) event.getFlowConstruct()).getWorkManager(), connector));
                     // Update RequestContext ThreadLocal for backwards compatibility. Clear event as we are done with
                     // this
                     // thread.
@@ -186,7 +188,7 @@ public abstract class AbstractMessageDispatcher extends AbstractTransportMessage
      * automatically set the REMOTE_SYNC header when client.send(..) is called so that results are returned
      * from remote invocations too.
      * </ol>
-     * 
+     *
      * @param event the current event
      * @return true if a response channel should be used to get a response from the event dispatch.
      */
@@ -238,6 +240,19 @@ public abstract class AbstractMessageDispatcher extends AbstractTransportMessage
     protected void doSendNonBlocking(MuleEvent event, CompletionHandler<MuleMessage, Exception, Void> completionHandler)
     {
         throw new IllegalStateException("This MessageDispatcher does not support non-blocking");
+    }
+
+    protected Charset resolveEncoding(MuleEvent event)
+    {
+        return event.getMessage().getDataType().getMediaType().getCharset().orElseGet(() ->
+        {
+            Charset encoding = getEndpoint().getEncoding();
+            if (encoding == null)
+            {
+                encoding = getDefaultEncoding(getEndpoint().getMuleContext());
+            }
+            return encoding;
+        });
     }
 
     private class NonBlockingSendCompletionHandler implements CompletionHandler<MuleMessage, Exception, Void>
@@ -323,19 +338,6 @@ public abstract class AbstractMessageDispatcher extends AbstractTransportMessage
                 event.getReplyToHandler().processExceptionReplyTo(new MessagingException(event, exception), null);
             }
         }
-    }
-
-    protected Charset resolveEncoding(MuleEvent event)
-    {
-        return event.getMessage().getDataType().getMediaType().getCharset().orElseGet(() ->
-        {
-            Charset encoding = getEndpoint().getEncoding();
-            if (encoding == null)
-            {
-                encoding = getDefaultEncoding(getEndpoint().getMuleContext());
-            }
-            return encoding;
-        });
     }
 
 }

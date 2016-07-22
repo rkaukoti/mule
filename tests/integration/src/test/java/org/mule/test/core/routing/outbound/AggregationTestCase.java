@@ -6,11 +6,8 @@
  */
 package org.mule.test.core.routing.outbound;
 
-import static java.util.stream.Collectors.toList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.MessageExchangePattern;
@@ -31,8 +28,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static java.util.stream.Collectors.toList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test that aggregators preserve message order in synchronous scenarios (MULE-5998)
@@ -81,16 +80,17 @@ public class AggregationTestCase extends FunctionalTestCase
         assertTrue(msg.getPayload() instanceof List);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        for (Object obj : (List<?>)msg.getPayload())
+        for (Object obj : (List<?>) msg.getPayload())
         {
             assertTrue(obj instanceof MuleEvent);
             MuleEvent event = (MuleEvent) obj;
             assertTrue(event.getMessage().getPayload() instanceof byte[]);
-            baos.write((byte[])event.getMessage().getPayload());
+            baos.write((byte[]) event.getMessage().getPayload());
         }
         String aggregated = baos.toString();
         assertEquals(PAYLOAD, aggregated);
     }
+
     public static class Aggregator extends SimpleCollectionAggregator
     {
         @Override

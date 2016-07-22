@@ -64,6 +64,11 @@ public class DynamicURIOutboundEndpoint implements OutboundEndpoint
         }
     }
 
+    public void setEndpointURI(EndpointURI dynamicEndpointURI)
+    {
+        this.dynamicEndpointURI = dynamicEndpointURI;
+    }
+
     @Override
     public String getAddress()
     {
@@ -76,11 +81,6 @@ public class DynamicURIOutboundEndpoint implements OutboundEndpoint
         {
             return null;
         }
-    }
-
-    public void setEndpointURI(EndpointURI dynamicEndpointURI)
-    {
-        this.dynamicEndpointURI = dynamicEndpointURI;
     }
 
     @Override
@@ -168,7 +168,7 @@ public class DynamicURIOutboundEndpoint implements OutboundEndpoint
     }
 
     @Override
-    public List <MessageProcessor> getMessageProcessors()
+    public List<MessageProcessor> getMessageProcessors()
     {
         return endpoint.getMessageProcessors();
     }

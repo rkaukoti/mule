@@ -33,7 +33,6 @@ import javax.jms.TopicSession;
 /**
  * <code>Jms102bSupport</code> is a template class to provide an absstraction
  * to to the Jms 1.0.2b api specification.
- *
  */
 
 public class Jms102bSupport extends Jms11Support
@@ -62,7 +61,7 @@ public class Jms102bSupport extends Jms11Support
         else
         {
             throw new IllegalArgumentException("Unsupported ConnectionFactory type: "
-                    + connectionFactory.getClass().getName());
+                                               + connectionFactory.getClass().getName());
         }
     }
 
@@ -84,13 +83,13 @@ public class Jms102bSupport extends Jms11Support
         else
         {
             throw new IllegalArgumentException("Unsupported ConnectionFactory type: "
-                    + connectionFactory.getClass().getName());
+                                               + connectionFactory.getClass().getName());
         }
     }
 
     @Override
     public Session createSession(Connection connection, boolean topic, boolean transacted,
-        int ackMode, boolean noLocal) throws JMSException
+                                 int ackMode, boolean noLocal) throws JMSException
     {
         if (connection == null)
         {
@@ -110,7 +109,8 @@ public class Jms102bSupport extends Jms11Support
         }
         else
         {
-            throw new IllegalArgumentException("Connection and domain type do not match, connection is of type " + connection.getClass().getName());
+            throw new IllegalArgumentException(
+                    "Connection and domain type do not match, connection is of type " + connection.getClass().getName());
         }
     }
 
@@ -249,7 +249,8 @@ public class Jms102bSupport extends Jms11Support
     }
 
     @Override
-    public void send(MessageProducer producer, Message message, boolean persistent, int priority, long ttl, boolean topic, ImmutableEndpoint endpoint)
+    public void send(MessageProducer producer, Message message, boolean persistent, int priority, long ttl, boolean topic,
+                     ImmutableEndpoint endpoint)
             throws JMSException
     {
         if (topic && producer instanceof TopicPublisher)

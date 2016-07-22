@@ -17,16 +17,14 @@ import org.mule.runtime.core.api.expression.InvalidExpressionException;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
-import org.mule.runtime.core.el.mvel.MVELExpressionLanguage;
 import org.mule.runtime.core.metadata.TypedValue;
 import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.core.util.TemplateParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides universal access for evaluating expressions embedded in Mule configurations, such as Xml, Java,
@@ -35,13 +33,11 @@ import org.slf4j.LoggerFactory;
 public class DefaultExpressionManager implements ExpressionManager, MuleContextAware, Initialisable
 {
 
+    public static final String OBJECT_FOR_ENRICHMENT = "__object_for_enrichment";
     /**
      * logger used by this class
      */
     protected static transient final Logger logger = LoggerFactory.getLogger(DefaultExpressionManager.class);
-
-    public static final String OBJECT_FOR_ENRICHMENT = "__object_for_enrichment";
-
     // default style parser
     private TemplateParser parser = TemplateParser.createMuleStyleParser();
 
@@ -49,6 +45,19 @@ public class DefaultExpressionManager implements ExpressionManager, MuleContextA
     private MuleContext muleContext;
 
     private ExpressionLanguage expressionLanguage;
+
+    public static String removeExpressionMarker(String expression)
+    {
+        if (expression == null)
+        {
+            throw new IllegalArgumentException(CoreMessages.objectIsNull("expression").getMessage());
+        }
+        if (expression.startsWith(DEFAULT_EXPRESSION_PREFIX))
+        {
+            expression = expression.substring(2, expression.length() - 1);
+        }
+        return expression;
+    }
 
     @Override
     public void setMuleContext(MuleContext context)
@@ -64,7 +73,7 @@ public class DefaultExpressionManager implements ExpressionManager, MuleContextA
 
     @Override
     public Object evaluate(String expression, MuleEvent event, boolean failIfNull)
-        throws ExpressionRuntimeException
+            throws ExpressionRuntimeException
     {
         expression = removeExpressionMarker(expression);
         return expressionLanguage.evaluate(expression, event);
@@ -76,7 +85,7 @@ public class DefaultExpressionManager implements ExpressionManager, MuleContextA
         expression = removeExpressionMarker(expression);
         expression = createEnrichmentExpression(expression);
         expressionLanguage.evaluate(expression, event,
-                                    Collections.singletonMap(OBJECT_FOR_ENRICHMENT, object));
+                Collections.singletonMap(OBJECT_FOR_ENRICHMENT, object));
     }
 
     @Override
@@ -93,7 +102,7 @@ public class DefaultExpressionManager implements ExpressionManager, MuleContextA
                                    boolean nonBooleanReturnsTrue) throws ExpressionRuntimeException
     {
         return resolveBoolean(evaluate(expression, event, false), nullReturnsTrue, nonBooleanReturnsTrue,
-            expression);
+                expression);
     }
 
     protected boolean resolveBoolean(Object result,
@@ -140,7 +149,7 @@ public class DefaultExpressionManager implements ExpressionManager, MuleContextA
 
     @Override
     public String parse(String expression, final MuleEvent event, final boolean failIfNull)
-        throws ExpressionRuntimeException
+            throws ExpressionRuntimeException
     {
         return parser.parse(new TemplateParser.TemplateCallback()
         {
@@ -211,7 +220,8 @@ public class DefaultExpressionManager implements ExpressionManager, MuleContextA
         final AtomicBoolean valid = new AtomicBoolean(true);
         final AtomicBoolean match = new AtomicBoolean(false);
         final StringBuilder message = new StringBuilder();
-        parser.parse(token -> {
+        parser.parse(token ->
+        {
             match.set(true);
             if (valid.get())
             {
@@ -236,7 +246,7 @@ public class DefaultExpressionManager implements ExpressionManager, MuleContextA
         else if (!match.get())
         {
             throw new InvalidExpressionException(expression,
-                "Expression string is not an expression.  Use isExpression(String) to validate first");
+                    "Expression string is not an expression.  Use isExpression(String) to validate first");
         }
     }
 
@@ -252,19 +262,6 @@ public class DefaultExpressionManager implements ExpressionManager, MuleContextA
         return evaluateBoolean(expression, event, false, false);
     }
 
-    public static String removeExpressionMarker(String expression)
-    {
-        if (expression == null)
-        {
-            throw new IllegalArgumentException(CoreMessages.objectIsNull("expression").getMessage());
-        }
-        if (expression.startsWith(DEFAULT_EXPRESSION_PREFIX))
-        {
-            expression = expression.substring(2, expression.length() - 1);
-        }
-        return expression;
-    }
-
     protected String createEnrichmentExpression(String expression)
     {
         if (expression.contains("$"))
@@ -278,13 +275,13 @@ public class DefaultExpressionManager implements ExpressionManager, MuleContextA
         return expression;
     }
 
-    public void setExpressionLanguage(ExpressionLanguage expressionLanguage)
-    {
-        this.expressionLanguage = expressionLanguage;
-    }
-
     public ExpressionLanguage getExpressionLanguage()
     {
         return expressionLanguage;
+    }
+
+    public void setExpressionLanguage(ExpressionLanguage expressionLanguage)
+    {
+        this.expressionLanguage = expressionLanguage;
     }
 }

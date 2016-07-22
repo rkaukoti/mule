@@ -25,7 +25,6 @@ public class DefaultOptionalObjectsController implements OptionalObjectsControll
     private final Object discardedObjectPlaceholder = new Object();
 
 
-
     @Override
     public void registerOptionalKey(String key)
     {

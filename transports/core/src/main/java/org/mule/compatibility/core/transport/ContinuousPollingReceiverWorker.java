@@ -9,7 +9,7 @@ package org.mule.compatibility.core.transport;
 
 /**
  * Bypass the regular scheduling mechanism in order to minimize latency and maximize
- * throughput for transports which have low or no cost for performing a poll operation 
+ * throughput for transports which have low or no cost for performing a poll operation
  * (such as an in-memory queue).
  */
 public class ContinuousPollingReceiverWorker extends PollingReceiverWorker

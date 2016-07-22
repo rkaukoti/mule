@@ -74,7 +74,7 @@ public class Base64Encoder extends AbstractTransformer
         catch (Exception ex)
         {
             throw new TransformerException(
-                CoreMessages.transformFailed(src.getClass().getName(), "base64"), this, ex);
+                    CoreMessages.transformFailed(src.getClass().getName(), "base64"), this, ex);
         }
     }
 

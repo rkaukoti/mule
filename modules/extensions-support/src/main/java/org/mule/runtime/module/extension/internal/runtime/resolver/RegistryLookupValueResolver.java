@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import org.apache.commons.lang.StringUtils;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 
-import org.apache.commons.lang.StringUtils;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Implementation of {@link ValueResolver} which accesses the mule registry
@@ -47,7 +47,6 @@ public class RegistryLookupValueResolver<T> implements ValueResolver<T>
      *
      * @param event a {@link MuleEvent}
      * @return the registry value associated with {@link #key}
-     * @throws Exception
      */
     @Override
     public T resolve(MuleEvent event) throws MuleException

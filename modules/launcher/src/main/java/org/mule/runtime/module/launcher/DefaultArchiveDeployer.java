@@ -6,7 +6,8 @@
  */
 package org.mule.runtime.module.launcher;
 
-import static org.mule.runtime.core.util.SplashScreen.miniSplash;
+import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
+import org.apache.commons.beanutils.BeanToPropertyValueTransformer;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.runtime.core.util.CollectionUtils;
@@ -16,6 +17,8 @@ import org.mule.runtime.module.launcher.application.NullDeploymentListener;
 import org.mule.runtime.module.launcher.artifact.ArtifactFactory;
 import org.mule.runtime.module.launcher.artifact.DeployableArtifact;
 import org.mule.runtime.module.launcher.util.ObservableList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,10 +30,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
-import org.apache.commons.beanutils.BeanToPropertyValueTransformer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.SplashScreen.miniSplash;
 
 /**
  * Deployer of an artifact within mule container.
@@ -58,8 +58,9 @@ public class DefaultArchiveDeployer<T extends DeployableArtifact> implements Arc
     private DeploymentListener deploymentListener = new NullDeploymentListener();
 
 
-    public DefaultArchiveDeployer(final ArtifactDeployer deployer, final ArtifactFactory artifactFactory, final ObservableList<T> artifacts, final ReentrantLock lock,
-            ArtifactDeploymentTemplate deploymentTemplate)
+    public DefaultArchiveDeployer(final ArtifactDeployer deployer, final ArtifactFactory artifactFactory, final ObservableList<T> artifacts,
+                                  final ReentrantLock lock,
+                                  ArtifactDeploymentTemplate deploymentTemplate)
     {
         this.deployer = deployer;
         this.artifactFactory = artifactFactory;
@@ -97,7 +98,8 @@ public class DefaultArchiveDeployer<T extends DeployableArtifact> implements Arc
     {
         String artifactName = artifactDir;
         @SuppressWarnings("rawtypes")
-        Collection<String> deployedAppNames = CollectionUtils.collect(artifacts, new BeanToPropertyValueTransformer(ARTIFACT_NAME_PROPERTY));
+        Collection<String> deployedAppNames =
+                CollectionUtils.collect(artifacts, new BeanToPropertyValueTransformer(ARTIFACT_NAME_PROPERTY));
 
         if (deployedAppNames.contains(artifactName) && (!artifactZombieMap.containsKey(artifactName)))
         {

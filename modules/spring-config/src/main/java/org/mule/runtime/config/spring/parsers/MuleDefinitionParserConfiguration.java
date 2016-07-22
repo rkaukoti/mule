@@ -18,13 +18,11 @@ public interface MuleDefinitionParserConfiguration
 
     /**
      * These are prepended to existing processors
-     * @param preProcessor
      */
     MuleDefinitionParserConfiguration registerPreProcessor(PreProcessor preProcessor);
 
     /**
      * These are appended to existing processors
-     * @param postProcessor
      */
     MuleDefinitionParserConfiguration registerPostProcessor(PostProcessor postProcessor);
 

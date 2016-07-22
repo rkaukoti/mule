@@ -7,16 +7,8 @@
 
 package org.mule.runtime.core.util.store;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_STORE_DEFAULT_IN_MEMORY_NAME;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_STORE_DEFAULT_PERSISTENT_NAME;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_STORE_MANAGER;
-
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.api.registry.RegistrationException;
 import org.mule.runtime.core.api.store.ListableObjectStore;
@@ -29,8 +21,15 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import org.mule.tck.probe.JUnitLambdaProbe;
 import org.mule.tck.probe.PollingProber;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_STORE_DEFAULT_IN_MEMORY_NAME;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_STORE_DEFAULT_PERSISTENT_NAME;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_STORE_MANAGER;
 
 public class ManagedStoresTestCase extends AbstractMuleContextTestCase
 {
@@ -47,26 +46,26 @@ public class ManagedStoresTestCase extends AbstractMuleContextTestCase
     public void testInMemoryStore() throws ObjectStoreException, InterruptedException, RegistrationException
     {
         muleContext.getRegistry().registerObject(OBJECT_STORE_DEFAULT_IN_MEMORY_NAME,
-            new SimpleMemoryObjectStore<String>());
+                new SimpleMemoryObjectStore<String>());
         ObjectStoreManager manager = muleContext.getRegistry().lookupObject(
-            MuleProperties.OBJECT_STORE_MANAGER);
+                MuleProperties.OBJECT_STORE_MANAGER);
         ListableObjectStore<String> store = manager.getObjectStore("inMemoryPart1", false);
         assertTrue(store instanceof PartitionedObjectStoreWrapper);
         ObjectStore<String> baseStore = ((PartitionedObjectStoreWrapper<String>) store).getBaseStore();
         assertTrue(baseStore instanceof SimpleMemoryObjectStore);
         assertSame(baseStore, muleContext.getRegistry().lookupObject(OBJECT_STORE_DEFAULT_IN_MEMORY_NAME));
         testObjectStore(store);
-        testObjectStoreExpiry(manager.<ObjectStore<String>> getObjectStore("inMemoryExpPart1", false, -1,
-            500, 200));
-        testObjectStoreMaxEntries(manager.<ListableObjectStore<String>> getObjectStore("inMemoryMaxPart1",
-                                                                                       false, 10, 10000, 200));
+        testObjectStoreExpiry(manager.<ObjectStore<String>>getObjectStore("inMemoryExpPart1", false, -1,
+                500, 200));
+        testObjectStoreMaxEntries(manager.<ListableObjectStore<String>>getObjectStore("inMemoryMaxPart1",
+                false, 10, 10000, 200));
     }
 
     @Test
     public void testClearPartition() throws ObjectStoreException, InterruptedException, RegistrationException
     {
         muleContext.getRegistry().registerObject(OBJECT_STORE_DEFAULT_IN_MEMORY_NAME,
-            new SimpleMemoryObjectStore<String>());
+                new SimpleMemoryObjectStore<String>());
         ObjectStoreManager manager = muleContext.getRegistry().lookupObject(OBJECT_STORE_MANAGER);
 
         ObjectStore<String> partition1 = manager.getObjectStore("inMemoryPart1", false);
@@ -84,12 +83,12 @@ public class ManagedStoresTestCase extends AbstractMuleContextTestCase
 
     @Test
     public void testPersistentStore()
-        throws ObjectStoreException, InterruptedException, RegistrationException
+            throws ObjectStoreException, InterruptedException, RegistrationException
     {
         QueuePersistenceObjectStore<String> queueStore = new QueuePersistenceObjectStore<String>(muleContext);
         queueStore.open();
         muleContext.getRegistry().registerObject(OBJECT_STORE_DEFAULT_PERSISTENT_NAME,
-            queueStore);
+                queueStore);
         ObjectStoreManager manager = muleContext.getRegistry().lookupObject(OBJECT_STORE_MANAGER);
         ListableObjectStore<String> store = manager.getObjectStore("persistencePart1", true);
         assertTrue(store instanceof PartitionedObjectStoreWrapper);
@@ -98,18 +97,18 @@ public class ManagedStoresTestCase extends AbstractMuleContextTestCase
         assertSame(baseStore,
                 muleContext.getRegistry().lookupObject(OBJECT_STORE_DEFAULT_PERSISTENT_NAME));
         testObjectStore(store);
-        testObjectStoreExpiry(manager.<ObjectStore<String>> getObjectStore("persistenceExpPart1", true, -1,
-                                                                           500, 200));
-        testObjectStoreMaxEntries(manager.<ListableObjectStore<String>> getObjectStore("persistenceMaxPart1",
-                                                                                       true, 10, 10000, 200));
+        testObjectStoreExpiry(manager.<ObjectStore<String>>getObjectStore("persistenceExpPart1", true, -1,
+                500, 200));
+        testObjectStoreMaxEntries(manager.<ListableObjectStore<String>>getObjectStore("persistenceMaxPart1",
+                true, 10, 10000, 200));
     }
 
     @Test
     public void testPartitionableInMemoryStore()
-        throws ObjectStoreException, RegistrationException, InterruptedException
+            throws ObjectStoreException, RegistrationException, InterruptedException
     {
         muleContext.getRegistry().registerObject(OBJECT_STORE_DEFAULT_IN_MEMORY_NAME,
-            new PartitionedInMemoryObjectStore<String>());
+                new PartitionedInMemoryObjectStore<String>());
         ObjectStoreManager manager = muleContext.getRegistry().lookupObject(OBJECT_STORE_MANAGER);
         ListableObjectStore<String> store = manager.getObjectStore("inMemoryPart2", false);
         assertTrue(store instanceof ObjectStorePartition);
@@ -118,22 +117,22 @@ public class ManagedStoresTestCase extends AbstractMuleContextTestCase
         assertSame(baseStore,
                 muleContext.getRegistry().lookupObject(OBJECT_STORE_DEFAULT_IN_MEMORY_NAME));
         testObjectStore(store);
-        testObjectStoreExpiry(manager.<ObjectStore<String>> getObjectStore("inMemoryExpPart2", false, -1,
-                                                                           500, 200));
-        testObjectStoreMaxEntries(manager.<ListableObjectStore<String>> getObjectStore("inMemoryMaxPart2",
-                                                                                       false, 10, 10000, 200));
+        testObjectStoreExpiry(manager.<ObjectStore<String>>getObjectStore("inMemoryExpPart2", false, -1,
+                500, 200));
+        testObjectStoreMaxEntries(manager.<ListableObjectStore<String>>getObjectStore("inMemoryMaxPart2",
+                false, 10, 10000, 200));
     }
 
     @Ignore("MULE-6926")
     @Test
     public void testPartitionablePersistenceStore()
-        throws ObjectStoreException, RegistrationException, InterruptedException
+            throws ObjectStoreException, RegistrationException, InterruptedException
     {
         PartitionedPersistentObjectStore<String> partitionedStore = new PartitionedPersistentObjectStore<String>(
-            muleContext);
+                muleContext);
         partitionedStore.open();
         muleContext.getRegistry().registerObject(OBJECT_STORE_DEFAULT_PERSISTENT_NAME,
-            partitionedStore);
+                partitionedStore);
         ObjectStoreManager manager = muleContext.getRegistry().lookupObject(OBJECT_STORE_MANAGER);
         ListableObjectStore<String> store = manager.getObjectStore("persistencePart2", true);
         assertTrue(store instanceof ObjectStorePartition);
@@ -142,10 +141,10 @@ public class ManagedStoresTestCase extends AbstractMuleContextTestCase
         assertSame(baseStore,
                 muleContext.getRegistry().lookupObject(OBJECT_STORE_DEFAULT_PERSISTENT_NAME));
         testObjectStore(store);
-        testObjectStoreExpiry(manager.<ObjectStore<String>> getObjectStore("persistenceExpPart2", true, -1,
-            1000, 200));
-        testObjectStoreMaxEntries(manager.<ListableObjectStore<String>> getObjectStore("persistenceMaxPart2",
-            true, 10, 10000, 200));
+        testObjectStoreExpiry(manager.<ObjectStore<String>>getObjectStore("persistenceExpPart2", true, -1,
+                1000, 200));
+        testObjectStoreMaxEntries(manager.<ListableObjectStore<String>>getObjectStore("persistenceMaxPart2",
+                true, 10, 10000, 200));
     }
 
     private void testObjectStore(ListableObjectStore<String> store) throws ObjectStoreException
@@ -198,7 +197,7 @@ public class ManagedStoresTestCase extends AbstractMuleContextTestCase
     }
 
     private void testObjectStoreExpiry(ObjectStore<String> objectStore)
-        throws ObjectStoreException, InterruptedException
+            throws ObjectStoreException, InterruptedException
     {
         objectStore.store("key1", "value1");
         assertEquals("value1", objectStore.retrieve("key1"));
@@ -219,7 +218,7 @@ public class ManagedStoresTestCase extends AbstractMuleContextTestCase
     }
 
     private void testObjectStoreMaxEntries(final ListableObjectStore<String> objectStore)
-        throws ObjectStoreException, InterruptedException
+            throws ObjectStoreException, InterruptedException
     {
         storeObjects(objectStore, 0, 90);
 

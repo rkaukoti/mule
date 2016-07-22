@@ -6,10 +6,7 @@
  */
 package org.mule.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.runtime.api.config.PoolingProfile;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.exception.MessagingExceptionHandler;
@@ -21,7 +18,9 @@ import org.mule.runtime.core.interceptor.LoggingInterceptor;
 import org.mule.runtime.core.interceptor.TimerInterceptor;
 import org.mule.tck.testmodels.mule.TestCompressionTransformer;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractConfigBuilderTestCase extends AbstractScriptConfigBuilderTestCase
 {

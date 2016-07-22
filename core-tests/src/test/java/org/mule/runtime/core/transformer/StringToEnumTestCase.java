@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.core.transformer;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.transformer.simple.StringToEnum;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class StringToEnumTestCase extends AbstractMuleTestCase
@@ -24,12 +24,6 @@ public class StringToEnumTestCase extends AbstractMuleTestCase
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-
-    enum TestEnum
-    {
-        A, B
-    }
-
     private StringToEnum transformer = new StringToEnum(TestEnum.class);
 
     @Test
@@ -55,5 +49,10 @@ public class StringToEnumTestCase extends AbstractMuleTestCase
     {
         expectedException.expect(IllegalArgumentException.class);
         new StringToEnum(null);
+    }
+
+    enum TestEnum
+    {
+        A, B
     }
 }

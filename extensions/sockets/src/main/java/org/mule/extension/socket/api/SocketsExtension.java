@@ -36,9 +36,11 @@ import org.mule.runtime.extension.api.annotation.SubTypeMapping;
 @Extension(name = "sockets")
 @Configurations({ListenerConfig.class, RequesterConfig.class})
 @SubTypeMapping(baseType = TcpProtocol.class, subTypes = {SafeProtocol.class, DirectProtocol.class, LengthProtocol.class,
-        StreamingProtocol.class, XmlMessageProtocol.class, XmlMessageEOFProtocol.class, CustomProtocol.class, EOFProtocol.class})
-@Export(classes = {TcpClientSocketProperties.class, TcpServerSocketProperties.class, UdpSocketProperties.class, ReadingTimeoutException.class, LengthExceededException.class,
-        LengthProtocol.class, AbstractByteProtocol.class})
+                                                          StreamingProtocol.class, XmlMessageProtocol.class, XmlMessageEOFProtocol.class,
+                                                          CustomProtocol.class, EOFProtocol.class})
+@Export(classes = {TcpClientSocketProperties.class, TcpServerSocketProperties.class, UdpSocketProperties.class,
+                   ReadingTimeoutException.class, LengthExceededException.class,
+                   LengthProtocol.class, AbstractByteProtocol.class})
 public class SocketsExtension
 {
 

@@ -6,18 +6,18 @@
  */
 package org.mule.runtime.module.cxf.wssec;
 
+import org.apache.ws.security.WSPasswordCallback;
+
 import java.io.IOException;
 
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.UnsupportedCallbackException;
 
-import org.apache.ws.security.WSPasswordCallback;
-
 /**
  * This callback simply supplies the password so that it's not stored in our config file.
  * You will need to call
- *   ClientPasswordCallback.setPassword("password");
+ * ClientPasswordCallback.setPassword("password");
  * from your code before invoking the secure service.
  */
 public class ClientPasswordCallback implements CallbackHandler

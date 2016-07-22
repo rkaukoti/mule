@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.module.http.functional;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
 import org.mule.runtime.core.api.context.notification.ConnectorMessageNotificationListener;
 import org.mule.runtime.core.api.context.notification.ServerNotification;
 import org.mule.runtime.core.api.context.notification.ServerNotificationListener;
@@ -22,8 +21,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.Transformer;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class TestConnectorMessageNotificationListener implements ServerNotificationListener<ConnectorMessageNotification>
 {
@@ -44,6 +43,19 @@ public class TestConnectorMessageNotificationListener implements ServerNotificat
     {
         this.latch = latch;
         this.expectedExchangePoint = expectedExchangePoint;
+    }
+
+    public static ServerNotificationManager register(ServerNotificationManager serverNotificationManager)
+    {
+        final Map<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>> mapping =
+                serverNotificationManager.getInterfaceToTypes();
+        if (!mapping.containsKey(ConnectorMessageNotificationListener.class))
+        {
+            serverNotificationManager.addInterfaceToType(TestConnectorMessageNotificationListener.class,
+                    ConnectorMessageNotification.class);
+            serverNotificationManager.addListener(new TestConnectorMessageNotificationListener());
+        }
+        return serverNotificationManager;
     }
 
     @Override
@@ -71,7 +83,7 @@ public class TestConnectorMessageNotificationListener implements ServerNotificat
 
     /**
      * Gets the list of notifications for the action name.
-     * @param actionName
+     *
      * @return The notifications sent for the given action.
      */
     public List<ConnectorMessageNotification> getNotifications(final String actionName)
@@ -84,17 +96,6 @@ public class TestConnectorMessageNotificationListener implements ServerNotificat
                 return ((ConnectorMessageNotification) object).getActionName().equals(actionName);
             }
         });
-    }
-
-    public static ServerNotificationManager register(ServerNotificationManager serverNotificationManager)
-    {
-        final Map<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>> mapping = serverNotificationManager.getInterfaceToTypes();
-        if (!mapping.containsKey(ConnectorMessageNotificationListener.class))
-        {
-            serverNotificationManager.addInterfaceToType(TestConnectorMessageNotificationListener.class, ConnectorMessageNotification.class);
-            serverNotificationManager.addListener(new TestConnectorMessageNotificationListener());
-        }
-        return serverNotificationManager;
     }
 
 

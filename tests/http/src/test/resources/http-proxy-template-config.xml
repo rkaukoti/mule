@@ -8,7 +8,7 @@
                http://www.mulesoft.org/schema/mule/httpn http://www.mulesoft.org/schema/mule/httpn/current/mule-httpn.xsd
                http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd">
 
-    <spring:bean name="sensingRequestResponseProcessor" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton" />
+    <spring:bean name="sensingRequestResponseProcessor" class="org.mule.tck.SensingNullRequestResponseMessageProcessor" scope="singleton"/>
 
     <httpn:listener-config name="proxyConfig">
         <httpn:listener-connection host="localhost" port="${proxyPort}"/>
@@ -22,12 +22,12 @@
         <httpn:listener config-ref="proxyConfig" path="/*" responseStreamingMode="AUTO" parseRequest="false">
             <httpn:response-builder statusCode="#[message.getAttributes().getStatusCode()]"
                                     reasonPhrase="#[message.getAttributes().getReasonPhrase()]"
-                                    headersRef="#[message.getAttributes().getHeaders()]" />
+                                    headersRef="#[message.getAttributes().getHeaders()]"/>
         </httpn:listener>
 
-        <processor ref="sensingRequestResponseProcessor" />
+        <processor ref="sensingRequestResponseProcessor"/>
 
-        <httpn:request config-ref="requestConfig" method="#[message.getAttributes().getMethod()]" path="#[message.getAttributes().getRequestPath()]" parseResponse="false"  key="ANY">
+        <httpn:request config-ref="requestConfig" method="#[message.getAttributes().getMethod()]" path="#[message.getAttributes().getRequestPath()]" parseResponse="false" key="ANY">
             <httpn:request-builder queryParams="#[message.getAttributes().getQueryParams()]" headers="#[message.getAttributes().getHeaders()]"/>
         </httpn:request>
 

@@ -6,10 +6,7 @@
  */
 package org.mule.runtime.core.config.bootstrap;
 
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
-
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.DefaultMuleContext;
 import org.mule.runtime.core.api.MuleContext;
@@ -28,7 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 
 public class SimpleRegistryBootstrapTransformersTest extends AbstractMuleContextTestCase
 {
@@ -62,16 +61,6 @@ public class SimpleRegistryBootstrapTransformersTest extends AbstractMuleContext
         // Avoid to use DefaultsConfigurationBuilder because it registers a new instance of SimpleRegistryBootstrap
         // that conflicts with the one being tested in the test
         return new DummyConfigurationBuilder();
-    }
-
-    private class DummyConfigurationBuilder extends DefaultsConfigurationBuilder
-    {
-
-        @Override
-        protected void doConfigure(MuleContext muleContext) throws Exception
-        {
-            // Do nothing
-        }
     }
 
     public static class ExpectedKeyTransformer extends AbstractDiscoverableTransformer
@@ -126,6 +115,16 @@ public class SimpleRegistryBootstrapTransformersTest extends AbstractMuleContext
                 }
             }
             return false;
+        }
+    }
+
+    private class DummyConfigurationBuilder extends DefaultsConfigurationBuilder
+    {
+
+        @Override
+        protected void doConfigure(MuleContext muleContext) throws Exception
+        {
+            // Do nothing
         }
     }
 }

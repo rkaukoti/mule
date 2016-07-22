@@ -27,8 +27,10 @@ public class StoredProcedureColumnTypesBuilder
     public StoredProcedureColumnTypesBuilder()
     {
         List<ColumnMetadata> columns = new ArrayList<ColumnMetadata>();
-        columns.add(new ColumnMetadata(StoredProcedureParamTypeResolverTestCase.TYPE_COLUMN, StoredProcedureParamTypeResolver.TYPE_ID_COLUMN_INDEX));
-        columns.add(new ColumnMetadata(StoredProcedureParamTypeResolverTestCase.NAME_COLUMN, StoredProcedureParamTypeResolver.TYPE_NAME_COLUMN_INDEX));
+        columns.add(new ColumnMetadata(StoredProcedureParamTypeResolverTestCase.TYPE_COLUMN,
+                StoredProcedureParamTypeResolver.TYPE_ID_COLUMN_INDEX));
+        columns.add(new ColumnMetadata(StoredProcedureParamTypeResolverTestCase.NAME_COLUMN,
+                StoredProcedureParamTypeResolver.TYPE_NAME_COLUMN_INDEX));
 
         resultSetBuilder = new ResultSetBuilder(columns);
     }

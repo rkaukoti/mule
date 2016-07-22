@@ -19,7 +19,7 @@ import java.util.Properties;
  * the form of - protocol://[host]:[port]/[provider]/endpointUri or protocol://[host]:[port]/endpointUri i.e.
  * vm://my.object or The protocol can be any of any conector registered with Mule. The endpoint name if specified must
  * be the name of a register global endpoint The endpointUri can be any endpointUri recognised by the endpoint type.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -36,7 +36,7 @@ public interface EndpointURI extends Serializable, Initialisable
 
     String getFilterAddress();
 
-    /** 
+    /**
      * @deprecated This property is used by endpoint-identifiers, global-endpoints use ImmutableEndpoint.getName()
      */
     @Deprecated
@@ -68,8 +68,7 @@ public interface EndpointURI extends Serializable, Initialisable
     /**
      * Returns the decoded user-information component of this EndpointURI.
      *
-     * @return The decoded user-information component of this EndpointURI, or {@code null} if the user information is
-     *         undefined
+     * @return The decoded user-information component of this EndpointURI, or {@code null} if the user information is undefined
      */
     String getUserInfo();
 

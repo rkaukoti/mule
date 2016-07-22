@@ -6,20 +6,19 @@
  */
 package org.mule.runtime.modules.schedulers.cron;
 
-import static junit.framework.Assert.assertEquals;
-
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.schedule.Scheduler;
 import org.mule.runtime.core.api.schedule.Schedulers;
-import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
 
 
-public class StoppedCronSchedulerTestCase  extends FunctionalTestCase
+public class StoppedCronSchedulerTestCase extends FunctionalTestCase
 {
     private static List<String> foo = new ArrayList<String>();
 
@@ -38,6 +37,16 @@ public class StoppedCronSchedulerTestCase  extends FunctionalTestCase
         assertEquals(1, foo.size());
     }
 
+    private void runSchedulersOnce() throws Exception
+    {
+        Collection<Scheduler> schedulers = muleContext.getRegistry().lookupScheduler(
+                Schedulers.flowConstructPollingSchedulers("pollfoo"));
+
+        for (Scheduler scheduler : schedulers)
+        {
+            scheduler.schedule();
+        }
+    }
 
     public static class FooComponent
     {
@@ -52,17 +61,6 @@ public class StoppedCronSchedulerTestCase  extends FunctionalTestCase
             }
 
             return false;
-        }
-    }
-
-    private void runSchedulersOnce() throws Exception
-    {
-        Collection<Scheduler> schedulers = muleContext.getRegistry().lookupScheduler(
-                Schedulers.flowConstructPollingSchedulers("pollfoo"));
-
-        for (Scheduler scheduler : schedulers)
-        {
-            scheduler.schedule();
         }
     }
 }

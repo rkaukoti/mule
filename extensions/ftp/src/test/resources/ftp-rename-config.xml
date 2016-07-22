@@ -16,7 +16,7 @@
     </flow>
 
     <flow name="readAndRename">
-        <ftp:read path="#[path]" />
+        <ftp:read path="#[path]"/>
         <ftp:rename to="#[to]"/>
     </flow>
 

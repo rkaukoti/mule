@@ -6,9 +6,7 @@
  */
 package org.mule.runtime.module.extension.internal.connector;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.test.petstore.extension.PetCage;
 import org.mule.test.petstore.extension.PetStoreConnector;
@@ -16,7 +14,9 @@ import org.mule.test.petstore.extension.PetStoreConnector;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 public class PetStoreComplexParameterTestCase extends ExtensionFunctionalTestCase
 {

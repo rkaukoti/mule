@@ -6,15 +6,8 @@
  */
 package org.mule.runtime.module.launcher.application;
 
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.runtime.core.context.notification.MuleContextNotification;
-import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
 import org.mule.runtime.module.launcher.MuleApplicationClassLoader;
 import org.mule.runtime.module.launcher.descriptor.ApplicationDescriptor;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
@@ -23,7 +16,13 @@ import org.mule.tck.probe.PollingProber;
 
 import java.util.Collections;
 
-import org.junit.Test;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * This tests verifies that the {@link org.mule.runtime.module.launcher.application.DefaultMuleApplication}
@@ -88,7 +87,8 @@ public class DefaultMuleApplicationStatusTestCase extends AbstractMuleContextTes
         ApplicationDescriptor descriptor = mock(ApplicationDescriptor.class);
         when(descriptor.getAbsoluteResourcePaths()).thenReturn(new String[] {});
 
-        DefaultMuleApplication application = new DefaultMuleApplication(descriptor, mock(MuleApplicationClassLoader.class), Collections.emptyList(), null);
+        DefaultMuleApplication application =
+                new DefaultMuleApplication(descriptor, mock(MuleApplicationClassLoader.class), Collections.emptyList(), null);
         application.install();
         assertThat(application.deploymentClassLoader, is(notNullValue()));
         application.dispose();
@@ -140,7 +140,8 @@ public class DefaultMuleApplicationStatusTestCase extends AbstractMuleContextTes
             @Override
             public String describeFailure()
             {
-                return String.format("Application remained at status %s instead of moving to %s", application.getStatus().name(), status.name());
+                return String.format("Application remained at status %s instead of moving to %s", application.getStatus().name(),
+                        status.name());
             }
         });
 

@@ -6,18 +6,17 @@
  */
 package org.mule.test.tck;
 
-import static org.junit.Assert.assertFalse;
-import static org.mockito.Mockito.when;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.functional.functional.ResponseAssertionMessageProcessor;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.tck.SensingNullMessageProcessor;
 import org.mule.tck.processor.TestNonBlockingProcessor;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.when;
 
 public class ResponseAssertionMessageProcessorTestCase extends AssertionMessageProcessorTestCase
 {

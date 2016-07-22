@@ -6,6 +6,12 @@
  */
 package org.mule.runtime.module.ws.security;
 
+import org.apache.ws.security.components.crypto.Merlin;
+import org.mule.runtime.api.tls.TlsContextKeyStoreConfiguration;
+import org.mule.runtime.api.tls.TlsContextTrustStoreConfiguration;
+
+import java.util.Properties;
+
 import static org.apache.ws.security.components.crypto.Merlin.KEYSTORE_ALIAS;
 import static org.apache.ws.security.components.crypto.Merlin.KEYSTORE_FILE;
 import static org.apache.ws.security.components.crypto.Merlin.KEYSTORE_PASSWORD;
@@ -15,12 +21,6 @@ import static org.apache.ws.security.components.crypto.Merlin.LOAD_CA_CERTS;
 import static org.apache.ws.security.components.crypto.Merlin.TRUSTSTORE_FILE;
 import static org.apache.ws.security.components.crypto.Merlin.TRUSTSTORE_PASSWORD;
 import static org.apache.ws.security.components.crypto.Merlin.TRUSTSTORE_TYPE;
-import org.mule.runtime.api.tls.TlsContextKeyStoreConfiguration;
-import org.mule.runtime.api.tls.TlsContextTrustStoreConfiguration;
-
-import java.util.Properties;
-
-import org.apache.ws.security.components.crypto.Merlin;
 
 /**
  * Utility class to create objects with the required properties to configure key stores and trust stores for WS-Security.

@@ -6,9 +6,8 @@
  */
 package org.mule.compatibility.transport.tcp.integration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.functional.functional.EventCallback;
 import org.mule.functional.functional.FunctionalStreamingTestComponent;
@@ -24,8 +23,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This test is more about testing the streaming model than the TCP provider, really.
@@ -89,8 +89,9 @@ public class StreamingTestCase extends FunctionalTestCase
 
         ((FunctionalStreamingTestComponent) ftc).setEventCallback(callback, TEST_MESSAGE.length());
 
-        client.dispatch(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource()).getAddress(),
-            TEST_MESSAGE, new HashMap());
+        client.dispatch(
+                ((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource()).getAddress(),
+                TEST_MESSAGE, new HashMap());
 
         latch.await(10, TimeUnit.SECONDS);
         assertEquals(RESULT, message.get());

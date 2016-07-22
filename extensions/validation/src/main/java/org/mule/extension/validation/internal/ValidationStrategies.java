@@ -6,19 +6,20 @@
  */
 package org.mule.extension.validation.internal;
 
-import static org.mule.extension.validation.internal.ImmutableValidationResult.error;
-import org.mule.extension.validation.api.ValidationExtension;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.NestedProcessor;
-import org.mule.runtime.extension.api.annotation.RestrictedTo;
 import org.mule.extension.validation.api.MultipleValidationException;
 import org.mule.extension.validation.api.MultipleValidationResult;
 import org.mule.extension.validation.api.ValidationException;
+import org.mule.extension.validation.api.ValidationExtension;
 import org.mule.extension.validation.api.ValidationResult;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.NestedProcessor;
 import org.mule.runtime.core.util.ExceptionUtils;
+import org.mule.runtime.extension.api.annotation.RestrictedTo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mule.extension.validation.internal.ImmutableValidationResult.error;
 
 /**
  * A class containing operations which performs
@@ -42,13 +43,13 @@ public final class ValidationStrategies
      * the All the child processors must contain the {@code validator-message-processor}
      * substitution group.
      *
-     * @param validations     the nested validation operations
-     * @param muleEvent       the current {@link MuleEvent}
+     * @param validations the nested validation operations
+     * @param muleEvent   the current {@link MuleEvent}
      * @return the same {@code muleEvent} that was passed as argument
      * @throws MultipleValidationException if at least one validator fails and {@code throwsException} is {@code true}
      */
     public void all(@RestrictedTo(ValidationExtension.class) List<NestedProcessor> validations,
-                         MuleEvent muleEvent) throws MultipleValidationException
+                    MuleEvent muleEvent) throws MultipleValidationException
     {
         List<ValidationResult> results = new ArrayList<>(validations.size());
         for (NestedProcessor validation : validations)

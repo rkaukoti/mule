@@ -7,12 +7,12 @@
 
 package org.mule.runtime.module.db.integration.select;
 
-import static org.junit.Assert.assertTrue;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.functional.junit4.FunctionalTestCase;
-
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleContext;
+
+import static org.junit.Assert.assertTrue;
 
 @Ignore("Parameter override has to fail when a parameter name does not exist")
 public class InvalidParamOverrideTestCase extends FunctionalTestCase

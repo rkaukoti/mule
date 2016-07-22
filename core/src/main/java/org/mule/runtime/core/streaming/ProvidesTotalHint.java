@@ -9,7 +9,7 @@ package org.mule.runtime.core.streaming;
 
 /**
  * Object provides a hint on total amount of elements it has/can process
- * 
+ *
  * @since 3.5.0
  */
 public interface ProvidesTotalHint

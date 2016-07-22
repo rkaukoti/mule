@@ -6,18 +6,18 @@
  */
 package org.mule.runtime.config.spring;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.contains;
-import static org.junit.Assert.assertThat;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.util.Collection;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.contains;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class DefaultOptionalObjectsControllerTestCase extends AbstractMuleTestCase

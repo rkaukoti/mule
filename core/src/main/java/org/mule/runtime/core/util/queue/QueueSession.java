@@ -26,22 +26,16 @@ public interface QueueSession extends XAResource
 
     /**
      * Starts a transaction to execute operations over a set of queue with atomicity.
-     *
-     * @throws ResourceManagerException
      */
     void begin() throws ResourceManagerException;
 
     /**
      * Commits a transaction started with {@link #begin()}
-     *
-     * @throws ResourceManagerException
      */
     void commit() throws ResourceManagerException;
 
     /**
      * Rollbacks a transaction started with {@link #begin()}
-     *
-     * @throws ResourceManagerException
      */
     void rollback() throws ResourceManagerException;
 

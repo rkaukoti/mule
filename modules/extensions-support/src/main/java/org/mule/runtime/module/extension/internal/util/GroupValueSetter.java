@@ -6,7 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.util;
 
-import static org.springframework.util.ReflectionUtils.setField;
+import com.google.common.collect.ImmutableList;
+
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.util.collection.ImmutableListCollector;
@@ -18,10 +19,10 @@ import org.mule.runtime.module.extension.internal.runtime.ObjectBuilder;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSetResult;
 import org.mule.runtime.module.extension.internal.runtime.resolver.StaticValueResolver;
 
-import com.google.common.collect.ImmutableList;
-
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.util.ReflectionUtils.setField;
 
 /**
  * An implementation of {@link ValueSetter} for parameter groups.
@@ -38,32 +39,8 @@ import java.util.Optional;
 public final class GroupValueSetter implements ValueSetter
 {
 
-    /**
-     * Returns a {@link List} containing one {@link ValueSetter} instance per each
-     * {@link org.mule.runtime.module.extension.internal.introspection.ParameterGroup} defined in the {@link ParameterGroupModelProperty} extracted
-     * from the given {@code model}. If {@code model} does not contain such model property
-     * then an empty {@link List} is returned
-     *
-     * @param model a {@link EnrichableModel} instance presumed to have the {@link ParameterGroupModelProperty}
-     * @return a {@link List} with {@link ValueSetter} instances. May be empty but will never be {@code null}
-     */
-    public static List<ValueSetter> settersFor(EnrichableModel model)
-    {
-        Optional<ParameterGroupModelProperty> parameterGroupModelProperty = model.getModelProperty(ParameterGroupModelProperty.class);
-
-        if (parameterGroupModelProperty.isPresent())
-        {
-            return parameterGroupModelProperty.get().getGroups().stream()
-                    .map(group -> new GroupValueSetter(group))
-                    .collect(new ImmutableListCollector<>());
-        }
-
-        return ImmutableList.of();
-    }
-
     private final ParameterGroup group;
     private final List<ValueSetter> childSetters;
-
     /**
      * Creates a new instance that can set values defined in the given {@code group}
      *
@@ -75,12 +52,35 @@ public final class GroupValueSetter implements ValueSetter
         childSetters = settersFor(group);
     }
 
+    /**
+     * Returns a {@link List} containing one {@link ValueSetter} instance per each {@link org.mule.runtime.module.extension.internal.introspection.ParameterGroup}
+     * defined in the {@link ParameterGroupModelProperty} extracted from the given {@code model}. If {@code model} does not contain such
+     * model property then an empty {@link List} is returned
+     *
+     * @param model a {@link EnrichableModel} instance presumed to have the {@link ParameterGroupModelProperty}
+     * @return a {@link List} with {@link ValueSetter} instances. May be empty but will never be {@code null}
+     */
+    public static List<ValueSetter> settersFor(EnrichableModel model)
+    {
+        Optional<ParameterGroupModelProperty> parameterGroupModelProperty = model.getModelProperty(ParameterGroupModelProperty.class);
+
+        if (parameterGroupModelProperty.isPresent())
+        {
+            return parameterGroupModelProperty.get().getGroups().stream()
+                                              .map(group -> new GroupValueSetter(group))
+                                              .collect(new ImmutableListCollector<>());
+        }
+
+        return ImmutableList.of();
+    }
+
     @Override
     public void set(Object target, ResolverSetResult result) throws MuleException
     {
         ObjectBuilder<?> groupBuilder = new DefaultObjectBuilder<>(group.getType());
 
-        group.getParameters().forEach(field -> groupBuilder.addPropertyResolver(field, new StaticValueResolver<>(result.get(field.getName()))));
+        group.getParameters()
+             .forEach(field -> groupBuilder.addPropertyResolver(field, new StaticValueResolver<>(result.get(field.getName()))));
 
         Object groupValue = groupBuilder.build(VoidMuleEvent.getInstance());
         setField(group.getField(), target, groupValue);

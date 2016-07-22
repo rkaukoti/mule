@@ -7,16 +7,15 @@
 
 package org.mule.runtime.core.streaming;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.tck.size.SmallTest;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
 
 @SmallTest
 public class ListConsumerTestCase
@@ -141,6 +140,8 @@ public class ListConsumerTestCase
         public int size()
         {
             return totalCount;
-        };
+        }
+
+        ;
     }
 }

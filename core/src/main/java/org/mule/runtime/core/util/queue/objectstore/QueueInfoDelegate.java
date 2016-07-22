@@ -59,7 +59,7 @@ public interface QueueInfoDelegate
     /**
      * Appends all of the elements in the specified collection to the queue (optional
      * operation).
-     * 
+     *
      * @param items to be added to the queue
      * @return <tt>true</tt> if this queue changed as a result of the call
      */

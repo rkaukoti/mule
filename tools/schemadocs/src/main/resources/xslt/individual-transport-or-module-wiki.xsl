@@ -1,9 +1,9 @@
 <xsl:stylesheet
-        version="2.0"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
         xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
-        >
+        version="2.0"
+>
 
     <!-- $Id: -->
 
@@ -42,7 +42,8 @@
         <xsl:if test="$display = 'common' or $display = 'all'">
             <xsl:choose>
                 <xsl:when test="/xsd:schema/xsd:annotation/xsd:appinfo/schemadoc:page-title">
-                    h1. <xsl:value-of select="/xsd:schema/xsd:annotation/xsd:appinfo/schemadoc:page-title"/>
+                    h1.
+                    <xsl:value-of select="/xsd:schema/xsd:annotation/xsd:appinfo/schemadoc:page-title"/>
                 </xsl:when>
                 <xsl:otherwise>h1. Transport (schemadoc:page-title not set)</xsl:otherwise>
             </xsl:choose>

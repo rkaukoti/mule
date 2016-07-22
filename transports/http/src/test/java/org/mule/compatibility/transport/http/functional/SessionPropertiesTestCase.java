@@ -6,9 +6,9 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -18,9 +18,8 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 @Ignore("Session properties are not supported anymore")
 public class SessionPropertiesTestCase extends FunctionalTestCase

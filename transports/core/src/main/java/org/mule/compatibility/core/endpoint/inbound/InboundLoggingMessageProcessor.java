@@ -13,7 +13,6 @@ import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.util.ObjectUtils;
 import org.mule.runtime.core.util.StringMessageUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +40,7 @@ public class InboundLoggingMessageProcessor implements MessageProcessor
             {
                 logger.trace("Message Payload: \n"
                              + StringMessageUtils.truncate(StringMessageUtils.toString(message.getPayload()),
-                                 200, false));
+                        200, false));
                 logger.trace("Message detail: \n" + StringMessageUtils.headersToString(message));
             }
             catch (Exception e)

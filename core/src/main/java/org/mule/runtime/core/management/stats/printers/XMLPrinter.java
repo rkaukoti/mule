@@ -19,7 +19,6 @@ import java.util.StringTokenizer;
 
 /**
  * <code>XMLPrinter</code> prints event processing stats as a XML document
- * 
  */
 public class XMLPrinter extends AbstractTablePrinter
 {
@@ -85,7 +84,7 @@ public class XMLPrinter extends AbstractTablePrinter
         column[41] = "Sample Period";
         return column;
     }
-    
+
     protected int getRouterInfo(RouterStatistics stats, String[] col, int index)
     {
         index++;

@@ -63,7 +63,11 @@ public abstract class AbstractAddVariablePropertyTransformer<T> extends Abstract
             else
             {
                 addProperty(event, key, typedValue.getValue(),
-                        DataType.builder().type(typedValue.getValue().getClass()).mediaType(getReturnDataType().getMediaType()).charset(resolveEncoding(typedValue)).build());
+                        DataType.builder()
+                                .type(typedValue.getValue().getClass())
+                                .mediaType(getReturnDataType().getMediaType())
+                                .charset(resolveEncoding(typedValue))
+                                .build());
             }
         }
         return event.getMessage();
@@ -72,17 +76,17 @@ public abstract class AbstractAddVariablePropertyTransformer<T> extends Abstract
     /**
      * Adds the property with its value and dataType to a property or variables scope.
      *
-     * @param event event to which property is to be added
-     * @param propertyName  name of the property or variable to add
-     * @param value   value of the property or variable to add
-     * @param dataType  data type of the property or variable to add
+     * @param event        event to which property is to be added
+     * @param propertyName name of the property or variable to add
+     * @param value        value of the property or variable to add
+     * @param dataType     data type of the property or variable to add
      */
     protected abstract void addProperty(MuleEvent event, String propertyName, T value, DataType dataType);
 
     /**
      * Removes the property from a property or variables scope.
      *
-     * @param event event to which property is to be removed
+     * @param event        event to which property is to be removed
      * @param propertyName name of the property or variable to remove
      */
     protected abstract void removeProperty(MuleEvent event, String propertyName);

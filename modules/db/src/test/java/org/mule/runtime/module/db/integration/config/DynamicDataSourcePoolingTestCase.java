@@ -19,6 +19,7 @@ public class DynamicDataSourcePoolingTestCase extends DatasourcePoolingTestCase
 
     protected String[] getFlowConfigurationResources()
     {
-        return new String[] {"integration/config/dynamic-derby-pooling-db-config.xml", "integration/config/dynamic-connection-pooling-config.xml"};
+        return new String[] {"integration/config/dynamic-derby-pooling-db-config.xml",
+                             "integration/config/dynamic-connection-pooling-config.xml"};
     }
 }

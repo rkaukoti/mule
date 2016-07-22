@@ -6,11 +6,9 @@
  */
 package org.mule.runtime.module.extension.file;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.util.concurrent.Latch;
 import org.mule.runtime.module.extension.file.api.AbstractFileSystem;
 import org.mule.runtime.module.extension.file.api.FileConnectorConfig;
@@ -32,9 +30,11 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -55,7 +55,8 @@ public class ConcurrentLockTestCase
     @Test
     public void concurrentLock() throws Exception
     {
-        new Thread(() -> {
+        new Thread(() ->
+        {
             try
             {
                 mainThreadLatch.release();

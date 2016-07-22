@@ -6,9 +6,10 @@
  */
 package org.mule.extension.validation.internal;
 
-import static org.mule.runtime.core.util.StringUtils.EMPTY;
-import org.mule.runtime.core.config.i18n.Message;
 import org.mule.extension.validation.api.ValidationResult;
+import org.mule.runtime.core.config.i18n.Message;
+
+import static org.mule.runtime.core.util.StringUtils.EMPTY;
 
 /**
  * An immutable implementation of {@link ValidationResult}.
@@ -30,6 +31,12 @@ public class ImmutableValidationResult implements ValidationResult
 
     private final String message;
     private final boolean error;
+
+    private ImmutableValidationResult(String message, boolean error)
+    {
+        this.message = message;
+        this.error = error;
+    }
 
     /**
      * Creates a new instance with the given {@code message}
@@ -65,12 +72,6 @@ public class ImmutableValidationResult implements ValidationResult
     public static ValidationResult ok()
     {
         return OK;
-    }
-
-    private ImmutableValidationResult(String message, boolean error)
-    {
-        this.message = message;
-        this.error = error;
     }
 
     /**

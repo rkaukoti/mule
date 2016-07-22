@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:spring="http://www.springframework.org/schema/beans"
+<mule xmlns:spring="http://www.springframework.org/schema/beans"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
                http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 
     <spring:beans>
-        <spring:bean id="flowStackAsserter" name="flowStackAsserter" class="org.mule.tck.util.FlowTraceUtils$FlowStackAsserter" scope="prototype" />
-        <spring:bean id="flowStackAsyncAsserter" name="flowStackAsyncAsserter" class="org.mule.tck.util.FlowTraceUtils$FlowStackAsyncAsserter" scope="prototype" />
+        <spring:bean id="flowStackAsserter" name="flowStackAsserter" class="org.mule.tck.util.FlowTraceUtils$FlowStackAsserter" scope="prototype"/>
+        <spring:bean id="flowStackAsyncAsserter" name="flowStackAsyncAsserter" class="org.mule.tck.util.FlowTraceUtils$FlowStackAsyncAsserter" scope="prototype"/>
     </spring:beans>
 
 
     <sub-flow name="subFlow">
         <processor ref="flowStackAsserter"/>
     </sub-flow>
-    
+
     <flow name="flow">
         <processor ref="flowStackAsserter"/>
     </flow>
@@ -59,15 +59,15 @@
     </flow>
 
     <!-- Async -->
-    
+
     <sub-flow name="subFlowInAsync">
         <processor ref="flowStackAsyncAsserter"/>
     </sub-flow>
-    
+
     <flow name="flowInAsync">
         <processor ref="flowStackAsyncAsserter"/>
     </flow>
-    
+
     <flow name="flowStaticWithAsync">
         <async>
             <flow-ref name="flowInAsync"/>
@@ -91,9 +91,9 @@
             <flow-ref name="#['subFlowInAsync']"/>
         </async>
     </flow>
-    
+
     <!-- Enricher -->
-    
+
     <flow name="flowStaticWithEnricher">
         <enricher source="#[payload]" target="#[flowVars.enriched]">
             <flow-ref name="flow"/>
@@ -117,9 +117,9 @@
             <flow-ref name="#['subFlow']"/>
         </enricher>
     </flow>
-    
+
     <!-- Choice -->
-    
+
     <flow name="flowStaticWithChoice">
         <choice>
             <when expression="#[true]">
@@ -163,9 +163,9 @@
             </otherwise>
         </choice>
     </flow>
-    
+
     <!-- Scatter Gather single -->
-    
+
     <flow name="flowStaticWithScatterGather">
         <scatter-gather>
             <test:component/>
@@ -193,9 +193,9 @@
             <flow-ref name="#['subFlow']"/>
         </scatter-gather>
     </flow>
-    
+
     <!-- Scatter Gather chain -->
-    
+
     <flow name="flowStaticWithScatterGatherChain">
         <scatter-gather>
             <test:component/>
@@ -231,5 +231,5 @@
             </processor-chain>
         </scatter-gather>
     </flow>
-    
+
 </mule>

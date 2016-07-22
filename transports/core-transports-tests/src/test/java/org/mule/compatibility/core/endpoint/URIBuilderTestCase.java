@@ -6,14 +6,8 @@
  */
 package org.mule.compatibility.core.endpoint;
 
-import static java.net.URLEncoder.encode;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
-import org.mule.compatibility.core.endpoint.URIBuilder;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
@@ -22,7 +16,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static java.net.URLEncoder.encode;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class URIBuilderTestCase extends AbstractMuleTestCase
@@ -105,7 +103,7 @@ public class URIBuilderTestCase extends AbstractMuleTestCase
     }
 
     @Test
-    public void testMultiValueParam() 
+    public void testMultiValueParam()
     {
         // Test from uri string
         URIBuilder uri = new URIBuilder("test://bar?aname=avalue&aname=bvalue&aname=cvalue", unusedMuleContext);
@@ -167,7 +165,8 @@ public class URIBuilderTestCase extends AbstractMuleTestCase
     }
 
     @Test
-    public void testConstructAddressWithParamsInRootPath() {
+    public void testConstructAddressWithParamsInRootPath()
+    {
         String address = "http://localhost:8080/?key1=value1";
         URIBuilder uri = new URIBuilder();
         uri.setAddress(address);
@@ -177,12 +176,12 @@ public class URIBuilderTestCase extends AbstractMuleTestCase
 
     /**
      * MULE-6279
-     * @throws UnsupportedEncodingException 
      */
     @Test
     public void testSetAddressWithSpecialURIChars() throws UnsupportedEncodingException
     {
-        String address = String.format("smtp://user%%40my-domain.com:%s@smtp.my-domain.com:25", encode(PWD_WITH_SPECIAL_CHARS, UTF_8.name()));
+        String address =
+                String.format("smtp://user%%40my-domain.com:%s@smtp.my-domain.com:25", encode(PWD_WITH_SPECIAL_CHARS, UTF_8.name()));
         URIBuilder uri = new URIBuilder();
         uri.setAddress(address);
         String result = uri.getEncodedConstructor();
@@ -191,12 +190,12 @@ public class URIBuilderTestCase extends AbstractMuleTestCase
 
     /**
      * MULE-6139
-     * @throws UnsupportedEncodingException 
      */
     @Test
     public void testConstructAddressWithSpecialURIChars() throws UnsupportedEncodingException
     {
-        String address = String.format("smtp://user%%40my-domain.com:%s@smtp.my-domain.com:25", encode(PWD_WITH_SPECIAL_CHARS, UTF_8.name()));
+        String address =
+                String.format("smtp://user%%40my-domain.com:%s@smtp.my-domain.com:25", encode(PWD_WITH_SPECIAL_CHARS, UTF_8.name()));
         URIBuilder uri = new URIBuilder();
         uri.setProtocol("smtp");
         uri.setUser("user@my-domain.com");

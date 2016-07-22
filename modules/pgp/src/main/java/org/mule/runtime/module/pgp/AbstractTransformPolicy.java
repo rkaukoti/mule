@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.module.pgp;
 
-import java.io.IOException;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicLong;
-
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * An abstract implementation of {@link TransformPolicy}.
@@ -22,11 +22,10 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractTransformPolicy implements TransformPolicy
 {
     protected static final Logger logger = LoggerFactory.getLogger(AbstractTransformPolicy.class);
-
+    protected volatile boolean isClosed;
     private AtomicBoolean startedCopying;
     private Thread copyingThread;
     private LazyTransformedInputStream inputStream;
-    protected volatile boolean isClosed;
     private AtomicLong bytesRequested;
 
     public AbstractTransformPolicy()
@@ -40,7 +39,8 @@ public abstract class AbstractTransformPolicy implements TransformPolicy
      * {@inheritDoc}
      */
     @Override
-    public void initialize(LazyTransformedInputStream lazyTransformedInputStream) {
+    public void initialize(LazyTransformedInputStream lazyTransformedInputStream)
+    {
         this.inputStream = lazyTransformedInputStream;
     }
 

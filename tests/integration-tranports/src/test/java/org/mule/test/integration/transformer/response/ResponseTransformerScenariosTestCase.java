@@ -6,11 +6,8 @@
  */
 package org.mule.test.integration.transformer.response;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_DISABLE_TRANSPORT_TRANSFORMER_PROPERTY;
+import org.junit.ClassRule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -20,27 +17,25 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.ClassRule;
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_DISABLE_TRANSPORT_TRANSFORMER_PROPERTY;
 
 public class ResponseTransformerScenariosTestCase extends FunctionalTestCase
 {
+    @ClassRule
+    public static DynamicPort httpPort1 = new DynamicPort("port1");
+    @ClassRule
+    public static DynamicPort httpPort2 = new DynamicPort("port2");
+    @ClassRule
+    public static DynamicPort httpPort3 = new DynamicPort("port3");
     private static String VM_INBOUND = " inbound";
     private static String VM_OUTBOUND = " outbound";
     private static String VM_RESPONSE = " response";
-
     private static String VM_OUT_IN_RESP = VM_OUTBOUND + VM_INBOUND + VM_RESPONSE;
-
     private static String CUSTOM_RESPONSE = " customResponse";
-
-    @ClassRule
-    public static DynamicPort httpPort1 = new DynamicPort("port1");
-
-    @ClassRule
-    public static DynamicPort httpPort2 = new DynamicPort("port2");
-
-    @ClassRule
-    public static DynamicPort httpPort3 = new DynamicPort("port3");
 
     public ResponseTransformerScenariosTestCase()
     {
@@ -82,7 +77,8 @@ public class ResponseTransformerScenariosTestCase extends FunctionalTestCase
         MuleClient client = muleContext.getClient();
         MuleMessage message = client.send("vm://syncOutboundEndpointResponseTransformer", "request", null);
         assertThat(message, notNullValue());
-        assertThat(getPayloadAsString(message), is(equalTo("request" + VM_OUTBOUND + VM_INBOUND + VM_OUT_IN_RESP + CUSTOM_RESPONSE + VM_RESPONSE)));
+        assertThat(getPayloadAsString(message),
+                is(equalTo("request" + VM_OUTBOUND + VM_INBOUND + VM_OUT_IN_RESP + CUSTOM_RESPONSE + VM_RESPONSE)));
     }
 
     @Test
@@ -111,7 +107,8 @@ public class ResponseTransformerScenariosTestCase extends FunctionalTestCase
         MuleMessage message = client.send("vm://chainedRouterOutboundEndpointResponseTransformer", "request", null);
         assertThat(message, notNullValue());
         assertThat(getPayloadAsString(message), is(equalTo("request" + VM_OUTBOUND + VM_INBOUND
-                                                            + VM_OUT_IN_RESP + VM_OUT_IN_RESP + CUSTOM_RESPONSE + CUSTOM_RESPONSE + VM_RESPONSE)));
+                                                           + VM_OUT_IN_RESP + VM_OUT_IN_RESP + CUSTOM_RESPONSE + CUSTOM_RESPONSE +
+                                                           VM_RESPONSE)));
     }
 
     @Test
@@ -121,6 +118,6 @@ public class ResponseTransformerScenariosTestCase extends FunctionalTestCase
         MuleMessage message = client.send("vm://nestedRouterOutboundEndpointResponseTransformer", "request", null);
         assertThat(message, notNullValue());
         assertThat(getPayloadAsString(message), is(equalTo("request" + VM_OUTBOUND + VM_INBOUND
-                                                            + VM_OUT_IN_RESP + CUSTOM_RESPONSE + CUSTOM_RESPONSE + VM_RESPONSE)));
+                                                           + VM_OUT_IN_RESP + CUSTOM_RESPONSE + CUSTOM_RESPONSE + VM_RESPONSE)));
     }
 }

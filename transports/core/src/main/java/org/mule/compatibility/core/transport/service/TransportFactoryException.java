@@ -13,7 +13,6 @@ import org.mule.runtime.core.config.i18n.Message;
  * <code>TransportFactoryException</code> is thrown by the endpoint factory if the
  * endpoint service cannot be found in the META-INF/services directory or if any part
  * of the endpoint cannot be instanciated.
- * 
  */
 
 public class TransportFactoryException extends EndpointException
@@ -33,7 +32,7 @@ public class TransportFactoryException extends EndpointException
 
     /**
      * @param message the exception message
-     * @param cause the exception that cause this exception to be thrown
+     * @param cause   the exception that cause this exception to be thrown
      */
     public TransportFactoryException(Message message, Throwable cause)
     {

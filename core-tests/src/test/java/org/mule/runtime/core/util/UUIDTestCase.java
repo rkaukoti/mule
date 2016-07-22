@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.util;
 
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.util.ArrayList;
@@ -14,8 +15,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -33,7 +32,7 @@ public class UUIDTestCase extends AbstractMuleTestCase
         for (int index = 0; index < numberOfIdsToGenerate; index++)
         {
             String generatedId = UUID.getUUID();
-            idsWithIndexes.add(new Object[]{generatedId, Integer.valueOf(index)});
+            idsWithIndexes.add(new Object[] {generatedId, Integer.valueOf(index)});
             if (ids.contains(generatedId))
             {
                 fail("REPEATED ID :" + index + ": " + generatedId);

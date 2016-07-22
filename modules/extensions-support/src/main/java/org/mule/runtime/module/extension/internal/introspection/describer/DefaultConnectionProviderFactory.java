@@ -6,14 +6,15 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.describer;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.checkInstantiable;
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.extension.api.exception.IllegalModelDefinitionException;
 import org.mule.runtime.extension.api.introspection.connection.ConnectionProviderFactory;
 import org.mule.runtime.module.extension.internal.exception.IllegalConnectionProviderModelDefinitionException;
+
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.checkInstantiable;
 
 
 /**
@@ -63,7 +64,8 @@ final class DefaultConnectionProviderFactory<Connection> implements ConnectionPr
         }
         catch (Exception e)
         {
-            throw new MuleRuntimeException(createStaticMessage("Could not create connection provider of type " + providerClass.getName()), e);
+            throw new MuleRuntimeException(createStaticMessage("Could not create connection provider of type " + providerClass.getName()),
+                    e);
         }
     }
 

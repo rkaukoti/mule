@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:https="http://www.mulesoft.org/schema/mule/transport/https"
-    xsi:schemaLocation="
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:https="http://www.mulesoft.org/schema/mule/transport/https"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/transport/https http://www.mulesoft.org/schema/mule/transport/https/current/mule-transport-https.xsd">
 
@@ -22,7 +22,7 @@
         <https:tls-client path="clientKeystore" storePassword="mulepassword"/>
         <https:tls-key-store keyPassword="mulepassword" path="serverKeystore" storePassword="mulepassword"/>
         <https:tls-server path="trustStore" storePassword="mulepassword" explicitOnly="true"
-                          requireClientAuthentication="true"/>    
+                          requireClientAuthentication="true"/>
     </https:polling-connector>
 
 

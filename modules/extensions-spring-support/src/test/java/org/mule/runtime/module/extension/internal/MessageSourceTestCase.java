@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.module.extension.internal;
 
-import static org.mule.test.heisenberg.extension.HeisenbergExtension.sourceTimesStarted;
-import static org.mule.test.heisenberg.extension.HeisenbergSource.CORE_POOL_SIZE_ERROR_MESSAGE;
-import static org.mule.test.heisenberg.extension.exception.HeisenbergConnectionExceptionEnricher.ENRICHED_MESSAGE;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.tck.probe.JUnitLambdaProbe;
@@ -17,9 +17,9 @@ import org.mule.test.heisenberg.extension.HeisenbergExtension;
 
 import java.math.BigDecimal;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.mule.test.heisenberg.extension.HeisenbergExtension.sourceTimesStarted;
+import static org.mule.test.heisenberg.extension.HeisenbergSource.CORE_POOL_SIZE_ERROR_MESSAGE;
+import static org.mule.test.heisenberg.extension.exception.HeisenbergConnectionExceptionEnricher.ENRICHED_MESSAGE;
 
 public class MessageSourceTestCase extends ExtensionFunctionalTestCase
 {
@@ -48,7 +48,8 @@ public class MessageSourceTestCase extends ExtensionFunctionalTestCase
         startFlow("source");
         HeisenbergExtension heisenberg = locateConfig();
 
-        new PollingProber(TIMEOUT_MILLIS, POLL_DELAY_MILLIS).check(new JUnitLambdaProbe(() -> new BigDecimal(POLL_DELAY_MILLIS).compareTo(heisenberg.getMoney()) < 0));
+        new PollingProber(TIMEOUT_MILLIS, POLL_DELAY_MILLIS).check(
+                new JUnitLambdaProbe(() -> new BigDecimal(POLL_DELAY_MILLIS).compareTo(heisenberg.getMoney()) < 0));
     }
 
     @Test

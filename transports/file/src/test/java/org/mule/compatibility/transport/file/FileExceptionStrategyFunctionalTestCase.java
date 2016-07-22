@@ -6,11 +6,8 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.functional.functional.EventCallback;
 import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.functional.junit4.FunctionalTestCase;
@@ -29,17 +26,18 @@ import java.io.File;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.Test;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class FileExceptionStrategyFunctionalTestCase extends FunctionalTestCase
 {
     public static final String TEST_MESSAGE = "Test file contents";
 
     public static final String FILE_WORKING_DIRECTORY_FOLDER = "temp/work-directory/";
-
-    private Latch latch = new Latch();
     protected File inputDir;
+    private Latch latch = new Latch();
     private Flow flow;
     private File inputFile;
     private PollingProber pollingProber = new PollingProber(5000, 200);
@@ -187,16 +185,16 @@ public class FileExceptionStrategyFunctionalTestCase extends FunctionalTestCase
             }
         });
     }
-    
+
     @Test
     public void testConsumeFileWithAsynchronousProcessingStrategy() throws Exception
     {
         inputDir = getFileInsideWorkingDirectory("temp/input-streaming-and-async-processing-strategy");
         inputFile = createDataFile(inputDir, "test1.txt");
         BeforeCloseStream.releaseLatch.await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS);
-        assertThat(inputFile.exists(),is(true));
+        assertThat(inputFile.exists(), is(true));
         BeforeCloseStream.awaitLatch.release();
-        AfterCloseStream.releaseLatch.await(RECEIVE_TIMEOUT,TimeUnit.MILLISECONDS);
+        AfterCloseStream.releaseLatch.await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS);
         pollingProber.check(new Probe()
         {
             @Override
@@ -254,14 +252,14 @@ public class FileExceptionStrategyFunctionalTestCase extends FunctionalTestCase
         public static Latch releaseLatch = new Latch();
         public static Latch awaitLatch = new Latch();
         public File file;
-        
+
         @Override
         public MuleEvent process(MuleEvent event) throws MuleException
         {
             releaseLatch.release();
             try
             {
-                awaitLatch.await(RECEIVE_TIMEOUT,TimeUnit.MILLISECONDS);
+                awaitLatch.await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS);
             }
             catch (InterruptedException e)
             {
@@ -275,7 +273,7 @@ public class FileExceptionStrategyFunctionalTestCase extends FunctionalTestCase
     {
         public static Latch releaseLatch = new Latch();
         public File file;
-        
+
         @Override
         public MuleEvent process(MuleEvent event) throws MuleException
         {

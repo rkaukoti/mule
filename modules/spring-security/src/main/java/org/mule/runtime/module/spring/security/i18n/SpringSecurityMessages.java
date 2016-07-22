@@ -12,7 +12,7 @@ import org.mule.runtime.core.config.i18n.MessageFactory;
 public class SpringSecurityMessages extends MessageFactory
 {
     private static final SpringSecurityMessages factory = new SpringSecurityMessages();
-    
+
     private static final String BUNDLE_PATH = getBundlePath("spring-security");
 
     public static Message basicFilterCannotHandleHeader(String header)

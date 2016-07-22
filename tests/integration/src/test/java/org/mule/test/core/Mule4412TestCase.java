@@ -6,17 +6,16 @@
  */
 package org.mule.test.core;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.api.client.MuleClient;
+import org.mule.test.filters.FilterCounter;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.client.MuleClient;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.test.filters.FilterCounter;
-
-import org.junit.Test;
 
 /**
  * Test for MULE-4412 : selective-consumer filter is applied twice. We test that the
@@ -49,8 +48,6 @@ public class Mule4412TestCase extends FunctionalTestCase
 
     /**
      * Make sure that the message only gets filtered once
-     *
-     * @throws Exception
      */
     @Test
     public void testFilterOnce() throws Exception
@@ -74,8 +71,6 @@ public class Mule4412TestCase extends FunctionalTestCase
 
     /**
      * Make sure the message does not get filtered when the property key is incorrect
-     *
-     * @throws Exception
      */
     @Test
     public void testWrongPropertyKey() throws Exception
@@ -93,8 +88,6 @@ public class Mule4412TestCase extends FunctionalTestCase
     /**
      * Make sure the message does not get filtered when the property value is not as
      * expected
-     *
-     * @throws Exception
      */
     @Test
     public void testWrongPropertyValue() throws Exception
@@ -113,8 +106,6 @@ public class Mule4412TestCase extends FunctionalTestCase
     /**
      * Make sure the message does not get filtered at all when the expected property
      * is not defined
-     *
-     * @throws Exception
      */
     @Test
     public void testNoProperty() throws Exception

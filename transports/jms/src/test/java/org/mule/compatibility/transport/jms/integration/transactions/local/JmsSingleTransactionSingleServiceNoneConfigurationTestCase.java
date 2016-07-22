@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.transport.jms.integration.transactions.local;
 
-import org.mule.compatibility.transport.jms.integration.AbstractJmsSingleTransactionSingleServiceTestCase;
-
 import org.junit.Test;
+import org.mule.compatibility.transport.jms.integration.AbstractJmsSingleTransactionSingleServiceTestCase;
 
 /**
  * Test all combinations of (inbound) NONE. They should all pass, except for
  * ALWAYS_JOIN on the outbound endpoint.
  */
 public class JmsSingleTransactionSingleServiceNoneConfigurationTestCase extends
-    AbstractJmsSingleTransactionSingleServiceTestCase
+        AbstractJmsSingleTransactionSingleServiceTestCase
 {
     @Override
     protected String getConfigFile()

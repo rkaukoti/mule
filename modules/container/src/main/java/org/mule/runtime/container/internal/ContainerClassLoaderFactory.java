@@ -7,6 +7,8 @@
 
 package org.mule.runtime.container.internal;
 
+import com.google.common.collect.ImmutableSet;
+
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
 import org.mule.runtime.module.artifact.classloader.ClassLoaderLookupPolicy;
 import org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy;
@@ -14,8 +16,6 @@ import org.mule.runtime.module.artifact.classloader.EnumerationAdapter;
 import org.mule.runtime.module.artifact.classloader.FilteringArtifactClassLoader;
 import org.mule.runtime.module.artifact.classloader.MuleArtifactClassLoader;
 import org.mule.runtime.module.artifact.classloader.MuleClassLoaderLookupPolicy;
-
-import com.google.common.collect.ImmutableSet;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,34 +36,6 @@ import java.util.Set;
 public class ContainerClassLoaderFactory
 {
 
-    private static final class MuleContainerClassLoader extends MuleArtifactClassLoader
-    {
-        static
-        {
-            registerAsParallelCapable();
-        }
-
-        private MuleContainerClassLoader(String name, URL[] urls, ClassLoader parent, ClassLoaderLookupPolicy lookupPolicy)
-        {
-            super(name, urls, parent, lookupPolicy);
-        }
-
-        @Override
-        public URL findResource(String name)
-        {
-            // Container classLoader is just an adapter, it does not owns any resource
-            return null;
-        }
-
-        @Override
-        public Enumeration<URL> findResources(String name) throws IOException
-        {
-            // Container classLoader is just an adapter, it does not owns any resource
-            return new EnumerationAdapter<>(Collections.emptyList());
-        }
-    }
-
-    //TODO(pablo.kraan): MULE-9524: Add a way to configure system and boot packages used on class loading lookup
     /**
      * System package define all the prefixes that must be loaded only from the container
      * classLoader, but then are filtered depending on what is part of the exposed API.
@@ -72,6 +44,7 @@ public class ContainerClassLoaderFactory
             "org.mule.runtime", "com.mulesoft.mule.runtime"
     );
 
+    //TODO(pablo.kraan): MULE-9524: Add a way to configure system and boot packages used on class loading lookup
     /**
      * Boot packages define all the prefixes that must be loaded from the container
      * classLoader without being filtered
@@ -114,15 +87,14 @@ public class ContainerClassLoaderFactory
             "org.springframework",
             "org.mule.mvel2"
     );
-
     private ModuleDiscoverer moduleDiscoverer = new ClasspathModuleDiscoverer(this.getClass().getClassLoader());
 
     /**
      * Creates the classLoader to represent the Mule container.
      *
      * @param parentClassLoader parent classLoader. Can be null.
-     * @return a non null {@link ArtifactClassLoader} containing container code that can be used as
-     * parent classloader for other mule artifacts.
+     * @return a non null {@link ArtifactClassLoader} containing container code that can be used as parent classloader for other mule
+     * artifacts.
      */
     public ArtifactClassLoader createContainerClassLoader(final ClassLoader parentClassLoader)
     {
@@ -135,8 +107,8 @@ public class ContainerClassLoaderFactory
      * Creates the container lookup policy to be used by child class loaders.
      *
      * @param muleModules list of modules that would be used to register in the filter based of the class loader.
-     * @return a non null {@link ClassLoaderLookupPolicy} that contains the lookup policies for boot, system packages.
-     * plus exported packages by the given list of {@link MuleModule}.
+     * @return a non null {@link ClassLoaderLookupPolicy} that contains the lookup policies for boot, system packages. plus exported
+     * packages by the given list of {@link MuleModule}.
      */
     protected ClassLoaderLookupPolicy getContainerClassLoaderLookupPolicy(List<MuleModule> muleModules)
     {
@@ -150,14 +122,16 @@ public class ContainerClassLoaderFactory
     /**
      * Creates an {@link ArtifactClassLoader} that always resolves resources by delegating to the parentClassLoader.
      *
-     * @param parentClassLoader the parent {@link ClassLoader} for the container
-     * @param muleModules the list of {@link MuleModule}s to be used for defining the filter
+     * @param parentClassLoader     the parent {@link ClassLoader} for the container
+     * @param muleModules           the list of {@link MuleModule}s to be used for defining the filter
      * @param containerLookupPolicy the {@link ClassLoaderLookupPolicy} to be used by the container
      * @return a {@link ArtifactClassLoader} to be used in a {@link FilteringContainerClassLoader}
      */
-    protected ArtifactClassLoader createArtifactClassLoader(final ClassLoader parentClassLoader, List<MuleModule> muleModules, final ClassLoaderLookupPolicy containerLookupPolicy)
+    protected ArtifactClassLoader createArtifactClassLoader(final ClassLoader parentClassLoader, List<MuleModule> muleModules,
+                                                            final ClassLoaderLookupPolicy containerLookupPolicy)
     {
-        return createContainerFilteringClassLoader(muleModules, new MuleContainerClassLoader("mule", new URL[0], parentClassLoader, containerLookupPolicy));
+        return createContainerFilteringClassLoader(muleModules,
+                new MuleContainerClassLoader("mule", new URL[0], parentClassLoader, containerLookupPolicy));
     }
 
     public void setModuleDiscoverer(ModuleDiscoverer moduleDiscoverer)
@@ -187,24 +161,56 @@ public class ContainerClassLoaderFactory
     }
 
     /**
-     * Creates a {@link FilteringArtifactClassLoader} to filter the {@link ArtifactClassLoader} containerClassLoader given based on {@link List<MuleModule>} of muleModules.
+     * Creates a {@link FilteringArtifactClassLoader} to filter the {@link ArtifactClassLoader} containerClassLoader given based on {@link
+     * List<MuleModule>} of muleModules.
      *
-     * @param muleModules the list of {@link MuleModule}s to be used for defining the filter
-     * @param containerClassLoader the {@link ArtifactClassLoader} for the container that will be used to delegate by the {@link FilteringContainerClassLoader}
-     * @return a {@link FilteringContainerClassLoader} that would be the one used as the parent of plugins and applications {@link ArtifactClassLoader}
+     * @param muleModules          the list of {@link MuleModule}s to be used for defining the filter
+     * @param containerClassLoader the {@link ArtifactClassLoader} for the container that will be used to delegate by the {@link
+     *                             FilteringContainerClassLoader}
+     * @return a {@link FilteringContainerClassLoader} that would be the one used as the parent of plugins and applications {@link
+     * ArtifactClassLoader}
      */
-    protected FilteringArtifactClassLoader createContainerFilteringClassLoader(List<MuleModule> muleModules, ArtifactClassLoader containerClassLoader)
+    protected FilteringArtifactClassLoader createContainerFilteringClassLoader(List<MuleModule> muleModules,
+                                                                               ArtifactClassLoader containerClassLoader)
     {
-        return new FilteringContainerClassLoader(containerClassLoader, new ContainerClassLoaderFilterFactory().create(getBootPackages(), muleModules));
+        return new FilteringContainerClassLoader(containerClassLoader,
+                new ContainerClassLoaderFilterFactory().create(getBootPackages(), muleModules));
     }
 
     /**
-     * @return a {@link Set} of packages that define all the prefixes that must be loaded from the container
-     * classLoader without being filtered
+     * @return a {@link Set} of packages that define all the prefixes that must be loaded from the container classLoader without being
+     * filtered
      */
     protected Set<String> getBootPackages()
     {
         return BOOT_PACKAGES;
+    }
+
+    private static final class MuleContainerClassLoader extends MuleArtifactClassLoader
+    {
+        static
+        {
+            registerAsParallelCapable();
+        }
+
+        private MuleContainerClassLoader(String name, URL[] urls, ClassLoader parent, ClassLoaderLookupPolicy lookupPolicy)
+        {
+            super(name, urls, parent, lookupPolicy);
+        }
+
+        @Override
+        public URL findResource(String name)
+        {
+            // Container classLoader is just an adapter, it does not owns any resource
+            return null;
+        }
+
+        @Override
+        public Enumeration<URL> findResources(String name) throws IOException
+        {
+            // Container classLoader is just an adapter, it does not owns any resource
+            return new EnumerationAdapter<>(Collections.emptyList());
+        }
     }
 
 }

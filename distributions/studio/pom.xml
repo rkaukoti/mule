@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.mule.distributions</groupId>
@@ -75,27 +76,27 @@
                                 def ceDistro = "$project.build.directory/ce-distribution/${communityArtifact}-${project.version}"
 
                                 scanner = ant.fileScanner {
-                                    fileset(dir:"$ceDistro/lib") {
-                                        include(name:"**/*.jar")
+                                    fileset(dir: "$ceDistro/lib") {
+                                        include(name: "**/*.jar")
                                     }
                                 }
 
-                                scanner.each{ file->
-                                        jarfile = new JarFile(file)
-                                        jarfile.entries().each{ entry->
-                                                if (entry.name =~ "^log4j.properties") {
-                                                    log.info "$file.name contains $entry.name"
-                                                    def tempDir = "$project.build.directory/temp-$file.name"
-                                                    ant.mkdir(dir: tempDir)
-                                                    ant.unjar(dest: tempDir) { fileset(file: file) }
-                                                    file.delete()
-                                                    ant.jar(
-                                                        basedir: tempDir,
-                                                        destfile: file,
-                                                        excludes: "log4j.properties",
-                                                        manifest: tempDir + "/META-INF/MANIFEST.MF")
-                                                }
+                                scanner.each { file ->
+                                    jarfile = new JarFile(file)
+                                    jarfile.entries().each { entry ->
+                                        if (entry.name =~ "^log4j.properties") {
+                                            log.info "$file.name contains $entry.name"
+                                            def tempDir = "$project.build.directory/temp-$file.name"
+                                            ant.mkdir(dir: tempDir)
+                                            ant.unjar(dest: tempDir) { fileset(file: file) }
+                                            file.delete()
+                                            ant.jar(
+                                                    basedir: tempDir,
+                                                    destfile: file,
+                                                    excludes: "log4j.properties",
+                                                    manifest: tempDir + "/META-INF/MANIFEST.MF")
                                         }
+                                    }
                                 }
 
 
@@ -108,8 +109,8 @@
                                     def dstFile = new File("${ceDistro}/src/mule-sources-${project.version}.zip")
                                     def tempSrc = "$project.build.directory/temp-src"
                                     ant.unzip(src: srcFile,
-                                              dest: tempSrc,
-                                              overwrite: true) { patternset(includes:"org/mule/**") }
+                                            dest: tempSrc,
+                                            overwrite: true) { patternset(includes: "org/mule/**") }
                                     ant.zip(basedir: tempSrc, destfile: dstFile)
                                 }
 

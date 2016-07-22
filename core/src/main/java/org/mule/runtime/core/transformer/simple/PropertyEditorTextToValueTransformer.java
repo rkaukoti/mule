@@ -19,7 +19,7 @@ import java.nio.charset.Charset;
  * instance allowing it to be used to transform from a String to another type in Mule
  */
 public class PropertyEditorTextToValueTransformer extends AbstractTransformer
-    implements DiscoverableTransformer
+        implements DiscoverableTransformer
 {
 
     private PropertyEditor propertyEditor;

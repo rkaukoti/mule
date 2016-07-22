@@ -10,14 +10,13 @@ package org.mule.runtime.module.cxf;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
 import javax.xml.ws.BindingType;
 
 @WebService
 @BindingType(javax.xml.ws.soap.SOAPBinding.SOAP11HTTP_BINDING)
 public interface Greeter
 {
-    @WebResult(name="name")
+    @WebResult(name = "name")
     public String greet(@WebParam(name = "name") String name);
 }
 

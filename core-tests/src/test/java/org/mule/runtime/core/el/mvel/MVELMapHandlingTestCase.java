@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.core.el.mvel;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.el.ExpressionLanguage;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
@@ -15,7 +14,8 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class MVELMapHandlingTestCase extends AbstractMuleContextTestCase
 {

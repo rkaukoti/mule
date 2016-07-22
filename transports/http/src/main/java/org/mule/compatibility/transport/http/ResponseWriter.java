@@ -6,8 +6,6 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static java.nio.charset.StandardCharsets.ISO_8859_1;
-
 import java.io.BufferedWriter;
 import java.io.FilterWriter;
 import java.io.IOException;
@@ -15,6 +13,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
 
 /**
  * Provides a hybrid Writer/OutputStream for sending HTTP response data
@@ -31,13 +31,13 @@ public class ResponseWriter extends FilterWriter
     }
 
     public ResponseWriter(final OutputStream outStream, final Charset encoding)
-        throws UnsupportedEncodingException
+            throws UnsupportedEncodingException
     {
         this(outStream, CRLF, encoding);
     }
 
     public ResponseWriter(final OutputStream outStream, final String lineSeparator, final Charset encoding)
-        throws UnsupportedEncodingException
+            throws UnsupportedEncodingException
     {
         super(new BufferedWriter(new OutputStreamWriter(outStream, encoding)));
         this.outStream = outStream;

@@ -18,7 +18,9 @@ public class TransportsJmxDomainAgent extends AbstractTransportsJmxAgent impleme
 {
 
     @Override
-    protected void registerServices() throws MuleException, NotCompliantMBeanException, MBeanRegistrationException, InstanceAlreadyExistsException, MalformedObjectNameException
+    protected void registerServices()
+            throws MuleException, NotCompliantMBeanException, MBeanRegistrationException, InstanceAlreadyExistsException,
+            MalformedObjectNameException
     {
         registerConnectorServices();
     }

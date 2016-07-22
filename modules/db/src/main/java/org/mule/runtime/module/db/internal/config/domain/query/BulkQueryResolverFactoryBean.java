@@ -12,9 +12,8 @@ import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.module.db.internal.parser.SimpleQueryTemplateParser;
 import org.mule.runtime.module.db.internal.resolver.param.ParamValueResolver;
 import org.mule.runtime.module.db.internal.resolver.query.BulkQueryResolver;
-import org.mule.runtime.module.db.internal.resolver.query.StaticBulkQueryResolver;
 import org.mule.runtime.module.db.internal.resolver.query.DynamicBulkQueryResolver;
-
+import org.mule.runtime.module.db.internal.resolver.query.StaticBulkQueryResolver;
 import org.springframework.beans.factory.FactoryBean;
 
 public class BulkQueryResolverFactoryBean implements FactoryBean<BulkQueryResolver>, MuleContextAware

@@ -6,19 +6,6 @@
  */
 package org.mule.test.core;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.config.MuleProperties;
-import org.mule.runtime.module.launcher.application.Application;
-import org.mule.rule.UseMuleLog4jContextFactory;
-import org.mule.test.infrastructure.deployment.AbstractFakeMuleServerTestCase;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.Callable;
-
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +15,18 @@ import org.apache.logging.log4j.core.appender.ConsoleAppender;
 import org.apache.logging.log4j.core.appender.RollingFileAppender;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.rule.UseMuleLog4jContextFactory;
+import org.mule.runtime.core.api.config.MuleProperties;
+import org.mule.runtime.module.launcher.application.Application;
+import org.mule.test.infrastructure.deployment.AbstractFakeMuleServerTestCase;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.Callable;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 /**
  * Checks log4j configuration for application and domains

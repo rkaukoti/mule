@@ -9,15 +9,14 @@ package org.mule.compatibility.transport.tcp;
 import org.mule.compatibility.transport.tcp.i18n.TcpMessages;
 import org.mule.runtime.core.util.NetworkUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.URI;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class TcpServerSocketFactory implements SimpleServerSocketFactory
 {
@@ -29,7 +28,8 @@ public class TcpServerSocketFactory implements SimpleServerSocketFactory
         String host = StringUtils.defaultIfEmpty(uri.getHost(), "localhost");
         InetAddress inetAddress = InetAddress.getByName(host);
 
-        if ((inetAddress.equals(NetworkUtils.getLocalHost()) || host.trim().equals("localhost")) && TcpPropertyHelper.isBindingLocalhostToAllLocalInterfaces())
+        if ((inetAddress.equals(NetworkUtils.getLocalHost()) || host.trim().equals("localhost")) &&
+            TcpPropertyHelper.isBindingLocalhostToAllLocalInterfaces())
         {
             logger.warn(TcpMessages.localhostBoundToAllLocalInterfaces().toString());
             return createServerSocket(uri.getPort(), backlog, reuse);

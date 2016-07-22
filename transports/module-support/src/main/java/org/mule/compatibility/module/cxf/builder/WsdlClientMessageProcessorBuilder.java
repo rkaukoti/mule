@@ -7,39 +7,38 @@
 package org.mule.compatibility.module.cxf.builder;
 
 
+import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.endpoint.dynamic.DynamicClientFactory;
 import org.mule.runtime.module.cxf.builder.AbstractOutboundMessageProcessorBuilder;
 
 import javax.xml.namespace.QName;
 
-import org.apache.cxf.endpoint.Client;
-import org.apache.cxf.endpoint.dynamic.DynamicClientFactory;
-
 /**
  * Builds an outbound CXF MessageProcessor based on a WSDL using CXF's
  * {@link DynamicClientFactory}. The <code>wsdlLocation</code> attribute
- * is required. The port and service attributes can also be supplied to 
+ * is required. The port and service attributes can also be supplied to
  * select the correct service and port in the WSDL.
  */
 public class WsdlClientMessageProcessorBuilder extends AbstractOutboundMessageProcessorBuilder
 {
     private final static Object CLIENT_CREATION_LOCK = new Object();
-    
+
     private String service;
     private String port;
-    
+
     public WsdlClientMessageProcessorBuilder()
     {
         super();
     }
-    
+
     protected Client createClient() throws Exception
     {
         synchronized (CLIENT_CREATION_LOCK)
         {
             DynamicClientFactory cf = DynamicClientFactory.newInstance(getBus());
-            return cf.createClient(getWsdlLocation(), 
-               (service == null ? null : QName.valueOf(service)), 
-               (getPort() == null ? null : QName.valueOf(getPort())));
+            return cf.createClient(getWsdlLocation(),
+                    (service == null ? null : QName.valueOf(service)),
+                    (getPort() == null ? null : QName.valueOf(getPort())));
         }
     }
 

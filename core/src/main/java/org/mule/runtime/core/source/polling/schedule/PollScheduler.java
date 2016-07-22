@@ -11,7 +11,7 @@ import org.mule.runtime.core.api.schedule.Scheduler;
 
 /**
  * <p>
- *     Abstract definition of a Scheduler for poll.
+ * Abstract definition of a Scheduler for poll.
  * </p>
  *
  * @since 3.5.0
@@ -22,7 +22,8 @@ public abstract class PollScheduler<T extends Runnable> implements Scheduler
     protected T job;
 
     /**
-     * <p>The {@link org.mule.runtime.core.api.schedule.Scheduler} name used as an identifier in the {@link org.mule.runtime.core.api.registry.MuleRegistry}</p>
+     * <p>The {@link org.mule.runtime.core.api.schedule.Scheduler} name used as an identifier in the {@link
+     * org.mule.runtime.core.api.registry.MuleRegistry}</p>
      */
     protected String name;
 
@@ -33,14 +34,14 @@ public abstract class PollScheduler<T extends Runnable> implements Scheduler
     }
 
     @Override
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    @Override
     public String getName()
     {
         return name;
+    }
+
+    @Override
+    public void setName(String name)
+    {
+        this.name = name;
     }
 }

@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.core.routing.filters;
 
-import static org.mule.runtime.core.PropertyScope.INBOUND;
-import static org.mule.runtime.core.PropertyScope.OUTBOUND;
-import static org.mule.runtime.core.util.ClassUtils.equal;
-import static org.mule.runtime.core.util.ClassUtils.hash;
 import org.mule.runtime.core.PropertyScope;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.core.util.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.mule.runtime.core.PropertyScope.INBOUND;
+import static org.mule.runtime.core.PropertyScope.OUTBOUND;
+import static org.mule.runtime.core.util.ClassUtils.equal;
+import static org.mule.runtime.core.util.ClassUtils.hash;
 
 /**
  * <code>MessagePropertyFilter</code> can be used to filter against properties on
@@ -64,7 +64,7 @@ public class MessagePropertyFilter implements Filter
             return false;
         }
         Object value;
-        if(scope.equals(INBOUND))
+        if (scope.equals(INBOUND))
         {
             value = message.getInboundProperty(propertyName);
         }
@@ -196,13 +196,13 @@ public class MessagePropertyFilter implements Filter
 
         final MessagePropertyFilter other = (MessagePropertyFilter) obj;
         return equal(propertyName, other.propertyName)
-                && equal(propertyValue, other.propertyValue)
-                && equal(scope, other.scope)
-                && caseSensitive == other.caseSensitive;
+               && equal(propertyValue, other.propertyValue)
+               && equal(scope, other.scope)
+               && caseSensitive == other.caseSensitive;
     }
 
     public int hashCode()
     {
-        return hash(new Object[]{this.getClass(), propertyName, propertyValue, scope, caseSensitive});
+        return hash(new Object[] {this.getClass(), propertyName, propertyValue, scope, caseSensitive});
     }
 }

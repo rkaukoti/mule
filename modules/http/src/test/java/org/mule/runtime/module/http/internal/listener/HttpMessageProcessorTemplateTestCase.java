@@ -6,6 +6,22 @@
  */
 package org.mule.runtime.module.http.internal.listener;
 
+import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mule.runtime.core.api.MessagingException;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.api.processor.MessageProcessor;
+import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.mule.runtime.core.execution.ResponseCompletionCallback;
+import org.mule.runtime.module.http.internal.domain.response.HttpResponse;
+import org.mule.runtime.module.http.internal.listener.async.HttpResponseReadyCallback;
+import org.mule.runtime.module.http.internal.listener.async.ResponseStatusCallback;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsSame.sameInstance;
@@ -22,23 +38,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR;
-
-import org.mule.runtime.core.api.MessagingException;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.processor.MessageProcessor;
-import org.mule.runtime.core.config.i18n.CoreMessages;
-import org.mule.runtime.core.execution.ResponseCompletionCallback;
-import org.mule.runtime.module.http.internal.domain.response.HttpResponse;
-import org.mule.runtime.module.http.internal.listener.async.HttpResponseReadyCallback;
-import org.mule.runtime.module.http.internal.listener.async.ResponseStatusCallback;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 
 @SmallTest
 public class HttpMessageProcessorTemplateTestCase extends AbstractMuleTestCase

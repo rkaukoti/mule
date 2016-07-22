@@ -17,7 +17,7 @@ public class CustomEntryPointResolver implements EntryPointResolver
     {
         return new InvocationResult(this,
                 ((Target) component).custom(context.getMessage().getPayload()),
-                Target.class.getMethod("custom", new Class[]{Object.class}));
+                Target.class.getMethod("custom", new Class[] {Object.class}));
     }
 
 }

@@ -8,10 +8,9 @@ package org.mule.runtime.module.spring.security;
 
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.security.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Map;
-
-import org.springframework.security.core.GrantedAuthority;
 
 public class SpringAuthenticationAdapter implements Authentication
 {
@@ -20,7 +19,7 @@ public class SpringAuthenticationAdapter implements Authentication
     private org.springframework.security.core.Authentication delegate;
     private Map<String, Object> properties;
     transient private MuleEvent event;
-    
+
     public SpringAuthenticationAdapter(org.springframework.security.core.Authentication authentication)
     {
         this(authentication, null);
@@ -31,7 +30,8 @@ public class SpringAuthenticationAdapter implements Authentication
         this(authentication, properties, null);
     }
 
-    public SpringAuthenticationAdapter(org.springframework.security.core.Authentication authentication, Map<String, Object> properties, MuleEvent event)
+    public SpringAuthenticationAdapter(org.springframework.security.core.Authentication authentication, Map<String, Object> properties,
+                                       MuleEvent event)
     {
         this.delegate = authentication;
         this.properties = properties;
@@ -39,15 +39,15 @@ public class SpringAuthenticationAdapter implements Authentication
     }
 
     @Override
-    public void setAuthenticated(boolean b)
-    {
-        delegate.setAuthenticated(b);
-    }
-
-    @Override
     public boolean isAuthenticated()
     {
         return delegate.isAuthenticated();
+    }
+
+    @Override
+    public void setAuthenticated(boolean b)
+    {
+        delegate.setAuthenticated(b);
     }
 
     public org.springframework.security.core.GrantedAuthority[] getAuthorities()

@@ -6,9 +6,6 @@
  */
 package org.mule.compatibility.transport.tcp;
 
-import java.lang.Boolean;
-import java.lang.String;
-
 /**
  * Helper class to read properties for the TCP transport.
  */

@@ -7,10 +7,7 @@
 
 package org.mule.runtime.core.config.bootstrap;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
@@ -18,7 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class PropertiesBootstrapServiceDiscovererTestCase extends AbstractMuleTestCase
@@ -29,7 +29,8 @@ public class PropertiesBootstrapServiceDiscovererTestCase extends AbstractMuleTe
     {
         final ClassLoader classLoader = mock(ClassLoader.class);
 
-        final PropertiesBootstrapServiceDiscoverer propertiesBootstrapServiceDiscoverer = new PropertiesBootstrapServiceDiscoverer(classLoader);
+        final PropertiesBootstrapServiceDiscoverer propertiesBootstrapServiceDiscoverer =
+                new PropertiesBootstrapServiceDiscoverer(classLoader);
 
         final List<BootstrapService> services = propertiesBootstrapServiceDiscoverer.discover();
 
@@ -57,7 +58,8 @@ public class PropertiesBootstrapServiceDiscovererTestCase extends AbstractMuleTe
         final ClassLoader classLoader = mock(ClassLoader.class);
         final RegistryBootstrapDiscoverer registryBootstrapDiscoverer = mock(RegistryBootstrapDiscoverer.class);
         when(registryBootstrapDiscoverer.discover()).thenReturn(properties);
-        final PropertiesBootstrapServiceDiscoverer propertiesBootstrapServiceDiscoverer = new PropertiesBootstrapServiceDiscoverer(classLoader, registryBootstrapDiscoverer);
+        final PropertiesBootstrapServiceDiscoverer propertiesBootstrapServiceDiscoverer =
+                new PropertiesBootstrapServiceDiscoverer(classLoader, registryBootstrapDiscoverer);
 
         final List<BootstrapService> services = propertiesBootstrapServiceDiscoverer.discover();
 

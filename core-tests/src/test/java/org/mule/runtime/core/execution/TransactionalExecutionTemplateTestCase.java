@@ -6,13 +6,16 @@
  */
 package org.mule.runtime.core.execution;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.hamcrest.core.Is;
+import org.hamcrest.core.IsNull;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.internal.verification.VerificationModeFactory;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -32,16 +35,12 @@ import org.mule.tck.size.SmallTest;
 import org.mule.tck.testmodels.mule.TestTransaction;
 import org.mule.tck.testmodels.mule.TestTransactionFactory;
 
-import org.hamcrest.core.Is;
-import org.hamcrest.core.IsNull;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.internal.verification.VerificationModeFactory;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
@@ -299,9 +298,8 @@ public class TransactionalExecutionTemplateTestCase extends AbstractMuleTestCase
         verify(mockTransaction).resume();
         verify(mockTransaction, VerificationModeFactory.times(0)).commit();
         verify(mockTransaction, VerificationModeFactory.times(0)).rollback();
-        assertThat((TestTransaction)TransactionCoordination.getInstance().getTransaction(), is(mockTransaction));
+        assertThat((TestTransaction) TransactionCoordination.getInstance().getTransaction(), is(mockTransaction));
     }
-
 
 
     @Test(expected = IllegalTransactionStateException.class)
@@ -350,7 +348,7 @@ public class TransactionalExecutionTemplateTestCase extends AbstractMuleTestCase
         assertThat((MuleEvent) result, is(RETURN_VALUE));
         verify(mockTransaction, VerificationModeFactory.times(0)).commit();
         verify(mockTransaction, VerificationModeFactory.times(0)).rollback();
-        assertThat((TestTransaction)TransactionCoordination.getInstance().getTransaction(), is(mockTransaction));
+        assertThat((TestTransaction) TransactionCoordination.getInstance().getTransaction(), is(mockTransaction));
     }
 
     @Test

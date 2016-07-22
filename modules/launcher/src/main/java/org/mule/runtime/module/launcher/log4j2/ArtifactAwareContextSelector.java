@@ -6,16 +6,15 @@
  */
 package org.mule.runtime.module.launcher.log4j2;
 
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.selector.ContextSelector;
+import org.apache.logging.log4j.status.StatusLogger;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
 import org.mule.runtime.module.artifact.classloader.ShutdownListener;
 
 import java.net.URI;
 import java.util.List;
-
-import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.selector.ContextSelector;
-import org.apache.logging.log4j.status.StatusLogger;
 
 /**
  * Implementation of {@link org.apache.logging.log4j.core.selector.ContextSelector}
@@ -49,37 +48,11 @@ class ArtifactAwareContextSelector implements ContextSelector, Disposable
 {
 
     static final StatusLogger logger = StatusLogger.getLogger();
-
-    private LoggerContextCache cache = new LoggerContextCache(this, getClass().getClassLoader());
-
     private final MuleLoggerContextFactory loggerContextFactory = new MuleLoggerContextFactory();
+    private LoggerContextCache cache = new LoggerContextCache(this, getClass().getClassLoader());
 
     ArtifactAwareContextSelector()
     {
-    }
-
-    @Override
-    public LoggerContext getContext(String fqcn, ClassLoader loader, boolean currentContext)
-    {
-        return getContext(fqcn, loader, currentContext, null);
-    }
-
-    @Override
-    public LoggerContext getContext(String fqcn, ClassLoader classLoader, boolean currentContext, URI configLocation)
-    {
-        return cache.getLoggerContext(resolveLoggerContextClassLoader(classLoader));
-    }
-
-    @Override
-    public List<LoggerContext> getLoggerContexts()
-    {
-        return cache.getAllLoggerContexts();
-    }
-
-    @Override
-    public void removeContext(LoggerContext context)
-    {
-        cache.remove(context);
     }
 
     /**
@@ -104,6 +77,30 @@ class ArtifactAwareContextSelector implements ContextSelector, Disposable
             loggerClassLoader = loggerClassLoader.getSystemClassLoader();
         }
         return loggerClassLoader;
+    }
+
+    @Override
+    public LoggerContext getContext(String fqcn, ClassLoader loader, boolean currentContext)
+    {
+        return getContext(fqcn, loader, currentContext, null);
+    }
+
+    @Override
+    public LoggerContext getContext(String fqcn, ClassLoader classLoader, boolean currentContext, URI configLocation)
+    {
+        return cache.getLoggerContext(resolveLoggerContextClassLoader(classLoader));
+    }
+
+    @Override
+    public List<LoggerContext> getLoggerContexts()
+    {
+        return cache.getAllLoggerContexts();
+    }
+
+    @Override
+    public void removeContext(LoggerContext context)
+    {
+        cache.remove(context);
     }
 
     @Override

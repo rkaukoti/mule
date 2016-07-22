@@ -7,7 +7,6 @@
 
 package org.mule.runtime.module.db.internal.processor;
 
-import static org.mule.runtime.core.api.debug.FieldDebugInfoFactory.createFieldDebugInfo;
 import org.mule.runtime.core.api.debug.FieldDebugInfo;
 import org.mule.runtime.module.db.internal.domain.query.Query;
 import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
@@ -15,13 +14,10 @@ import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mule.runtime.core.api.debug.FieldDebugInfoFactory.createFieldDebugInfo;
+
 public class DbDebugInfoUtils
 {
-
-    private DbDebugInfoUtils()
-    {
-
-    }
 
     public static final String QUERIES_DEBUG_FIELD = "Queries";
     public static final String QUERY_DEBUG_FIELD = "Query";
@@ -32,13 +28,16 @@ public class DbDebugInfoUtils
     public static final String CONNECTION_DEBUG_FIELD = "Connection";
     public static final String PARAM_DEBUG_FIELD_PREFIX = "param ";
     public static final String PARAM_SET_DEBUG_FIELD_PREFIX = "Param set ";
+    private DbDebugInfoUtils()
+    {
+
+    }
 
     /**
      * Creates debug information for a query
      *
-     * @param name name given to the query
+     * @param name          name given to the query
      * @param queryTemplate query template that will be debugged
-     * @return
      */
     public static FieldDebugInfo createQueryFieldDebugInfo(String name, QueryTemplate queryTemplate)
     {

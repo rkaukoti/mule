@@ -8,10 +8,9 @@ package org.mule.runtime.config.spring.factories;
 
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.extension.api.ExtensionManager;
+import org.springframework.beans.factory.FactoryBean;
 
 import javax.inject.Inject;
-
-import org.springframework.beans.factory.FactoryBean;
 
 /**
  * A {@link FactoryBean} which returns the {@link ExtensionManager}

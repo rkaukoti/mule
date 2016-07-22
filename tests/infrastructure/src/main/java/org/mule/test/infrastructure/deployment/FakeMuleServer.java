@@ -6,15 +6,8 @@
  */
 package org.mule.test.infrastructure.deployment;
 
-import static org.apache.commons.io.FileUtils.copyURLToFile;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import org.mule.runtime.container.internal.ContainerClassLoaderFactory;
 import org.mule.runtime.container.api.MuleCoreExtension;
+import org.mule.runtime.container.internal.ContainerClassLoaderFactory;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleRuntimeException;
@@ -41,23 +34,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static org.apache.commons.io.FileUtils.copyURLToFile;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 public class FakeMuleServer
 {
 
-    protected static final int DEPLOYMENT_TIMEOUT = 20000;
-
-    private File muleHome;
-    private File appsDir;
-    private File domainsDir;
-    private File logsDir;
-    private File pluginsDir;
-
-    private final DeploymentService deploymentService;
-    private final DeploymentListener deploymentListener;
-
-    private final List<MuleCoreExtension> coreExtensions;
-
     public static final String FAKE_SERVER_DISABLE_LOG_REPOSITORY_SELECTOR = "fake.server.disablelogrepositoryselector";
+    protected static final int DEPLOYMENT_TIMEOUT = 20000;
 
     static
     {
@@ -68,8 +57,16 @@ public class FakeMuleServer
         }
     }
 
-    private DefaultMuleCoreExtensionManagerServer coreExtensionManager;
+    private final DeploymentService deploymentService;
+    private final DeploymentListener deploymentListener;
+    private final List<MuleCoreExtension> coreExtensions;
     private final ArtifactClassLoader containerClassLoader;
+    private File muleHome;
+    private File appsDir;
+    private File domainsDir;
+    private File logsDir;
+    private File pluginsDir;
+    private DefaultMuleCoreExtensionManagerServer coreExtensionManager;
 
     public FakeMuleServer(String muleHomePath)
     {
@@ -278,9 +275,8 @@ public class FakeMuleServer
     /**
      * Deploys an application from a classpath resource
      *
-     * @param resource points to the resource to deploy. Non null.
-     * @param targetAppName application name used to deploy the resource. Null to
-     *                      maintain the original resource name
+     * @param resource      points to the resource to deploy. Non null.
+     * @param targetAppName application name used to deploy the resource. Null to maintain the original resource name
      * @throws IOException if the resource cannot be accessed
      */
     public void deploy(String resource, String targetAppName) throws IOException
@@ -292,9 +288,8 @@ public class FakeMuleServer
     /**
      * Deploys an application from an URL
      *
-     * @param resource points to the resource to deploy. Non null.
-     * @param targetAppName application name used to deploy the resource. Null to
-     *                      maintain the original resource name
+     * @param resource      points to the resource to deploy. Non null.
+     * @param targetAppName application name used to deploy the resource. Null to maintain the original resource name
      * @throws IOException if the URL cannot be accessed
      */
     public void deploy(URL resource, String targetAppName) throws IOException
@@ -403,7 +398,7 @@ public class FakeMuleServer
      * Deploys a Domain from a classpath folder
      *
      * @param domainFolder folder in which the domain is defined
-     * @param domainName name of the domain to use as domain artifact name
+     * @param domainName   name of the domain to use as domain artifact name
      */
     public void deployDomainFromClasspathFolder(String domainFolder, String domainName)
     {
@@ -414,7 +409,7 @@ public class FakeMuleServer
      * Deploys an Application from a classpath folder
      *
      * @param appFolder folder in which the app is defined
-     * @param appName name of the domain to use as app artifact name
+     * @param appName   name of the domain to use as app artifact name
      */
     public void deployAppFromClasspathFolder(String appFolder, String appName)
     {

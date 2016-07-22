@@ -47,6 +47,7 @@ import java.util.Properties;
 
 public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor implements TransportServiceDescriptor
 {
+    MuleContext muleContext;
     private String connector;
     private String dispatcherFactory;
     private String requesterFactory;
@@ -61,9 +62,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
     private String defaultOutboundTransformer;
     private String defaultResponseTransformer;
     private String endpointBuilder;
-
     private Properties exceptionMappings = new Properties();
-    MuleContext muleContext;
     private List<MessageExchangePattern> inboundExchangePatterns;
     private List<MessageExchangePattern> outboundExchangePatterns;
     private String defaultExchangePattern;
@@ -158,7 +157,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
         if (messageFactory == null)
         {
             throw new TransportServiceException(TransportCoreMessages.objectNotSetInService("Message Factory",
-                getService()));
+                    getService()));
         }
 
         try
@@ -170,10 +169,10 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
             //For backward compatibility keep trying to use deprecated constructor for custom message factories.
             logger.warn(String.format("Couldn't find %s empty constructor. " +
                                       "%s must be updated to have an empty constructor in order to work properly within domains.",
-                                      messageFactory, messageFactory));
+                    messageFactory, messageFactory));
             try
             {
-                final Object[] args = new Object[] { muleContext };
+                final Object[] args = new Object[] {muleContext};
                 return (MuleMessageFactory) ClassUtils.instanciateClass(messageFactory, args, classLoader);
             }
             catch (Exception e)
@@ -196,7 +195,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
             if (logger.isDebugEnabled())
             {
                 logger.debug("No session.handler set in service description, defaulting to: "
-                        + sessionHandler);
+                             + sessionHandler);
             }
         }
         try
@@ -292,7 +291,8 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
             }
             catch (Exception e)
             {
-                throw new TransportServiceException(TransportCoreMessages.failedToCreateObjectWith("Message Dispatcher Factory", dispatcherFactory), e);
+                throw new TransportServiceException(
+                        TransportCoreMessages.failedToCreateObjectWith("Message Dispatcher Factory", dispatcherFactory), e);
             }
         }
         else
@@ -337,7 +337,8 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
             }
             catch (Exception e)
             {
-                throw new TransportServiceException(TransportCoreMessages.failedToCreateObjectWith("Transaction Factory", transactionFactory), e);
+                throw new TransportServiceException(
+                        TransportCoreMessages.failedToCreateObjectWith("Transaction Factory", transactionFactory), e);
             }
         }
         else
@@ -403,7 +404,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
             catch (Exception e)
             {
                 throw new TransportFactoryException(CoreMessages.failedToLoadTransformer("inbound",
-                    defaultInboundTransformer), e);
+                        defaultInboundTransformer), e);
             }
         }
         return Collections.emptyList();
@@ -424,7 +425,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
             catch (Exception e)
             {
                 throw new TransportFactoryException(CoreMessages.failedToLoadTransformer("outbound",
-                    defaultOutboundTransformer), e);
+                        defaultOutboundTransformer), e);
             }
         }
         return Collections.emptyList();
@@ -445,7 +446,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
             catch (Exception e)
             {
                 throw new TransportFactoryException(CoreMessages.failedToLoadTransformer("response",
-                    defaultResponseTransformer), e);
+                        defaultResponseTransformer), e);
             }
         }
         return Collections.emptyList();
@@ -479,7 +480,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
         if (endpointUriBuilder == null)
         {
             logger.debug("Endpoint resolver not set, Loading default resolver: "
-                    + UrlEndpointURIBuilder.class.getName());
+                         + UrlEndpointURIBuilder.class.getName());
             return new UrlEndpointURIBuilder();
         }
         else
@@ -499,7 +500,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
     @Override
     public EndpointBuilder createEndpointBuilder(String uri) throws TransportFactoryException
     {
-         return createEndpointBuilder(uri, muleContext);
+        return createEndpointBuilder(uri, muleContext);
     }
 
     @Override
@@ -513,7 +514,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
         }
         else
         {
-            return createEndpointBuilder(new Object[] { uri, muleContext });
+            return createEndpointBuilder(new Object[] {uri, muleContext});
         }
     }
 
@@ -524,13 +525,14 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
     }
 
     @Override
-    public EndpointBuilder createEndpointBuilder(EndpointURIEndpointBuilder builder, MuleContext muleContext) throws TransportFactoryException
+    public EndpointBuilder createEndpointBuilder(EndpointURIEndpointBuilder builder, MuleContext muleContext)
+            throws TransportFactoryException
     {
         EndpointBuilder wrappingBuilder;
         if (endpointBuilder == null)
         {
             logger.debug("Endpoint builder not set, Loading default builder: "
-                    + EndpointURIEndpointBuilder.class.getName());
+                         + EndpointURIEndpointBuilder.class.getName());
             try
             {
                 wrappingBuilder = new EndpointURIEndpointBuilder(builder);
@@ -542,7 +544,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
         }
         else
         {
-            wrappingBuilder = createEndpointBuilder(new Object[] { builder });
+            wrappingBuilder = createEndpointBuilder(new Object[] {builder});
         }
 
         wrappingBuilder.setMuleContext(muleContext);
@@ -563,15 +565,15 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
     }
 
     @Override
-    public void setExceptionMappings(Properties props)
-    {
-        this.exceptionMappings = props;
-    }
-
-    @Override
     public Properties getExceptionMappings()
     {
         return this.exceptionMappings;
+    }
+
+    @Override
+    public void setExceptionMappings(Properties props)
+    {
+        this.exceptionMappings = props;
     }
 
     protected void initInboundExchangePatterns(Properties properties)
@@ -585,7 +587,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
         else
         {
             String mepsString =
-                removeProperty(MuleProperties.CONNECTOR_INBOUND_EXCHANGE_PATTERNS, properties);
+                    removeProperty(MuleProperties.CONNECTOR_INBOUND_EXCHANGE_PATTERNS, properties);
             inboundExchangePatterns = parseExchangePatterns(mepsString);
         }
     }
@@ -601,7 +603,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
         else
         {
             String mepsString =
-                removeProperty(MuleProperties.CONNECTOR_OUTBOUND_EXCHANGE_PATTERNS, properties);
+                    removeProperty(MuleProperties.CONNECTOR_OUTBOUND_EXCHANGE_PATTERNS, properties);
             outboundExchangePatterns = parseExchangePatterns(mepsString);
         }
     }
@@ -630,7 +632,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
         if (inboundExchangePatterns == null)
         {
             throw new TransportServiceException(TransportCoreMessages.objectNotSetInService(
-                MuleProperties.CONNECTOR_INBOUND_EXCHANGE_PATTERNS, getService()));
+                    MuleProperties.CONNECTOR_INBOUND_EXCHANGE_PATTERNS, getService()));
         }
         return inboundExchangePatterns;
     }
@@ -641,7 +643,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
         if (outboundExchangePatterns == null)
         {
             throw new TransportServiceException(TransportCoreMessages.objectNotSetInService(
-                MuleProperties.CONNECTOR_OUTBOUND_EXCHANGE_PATTERNS, getService()));
+                    MuleProperties.CONNECTOR_OUTBOUND_EXCHANGE_PATTERNS, getService()));
         }
         return outboundExchangePatterns;
     }
@@ -652,7 +654,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
         if (defaultExchangePattern == null)
         {
             throw new TransportServiceException(TransportCoreMessages.objectNotSetInService(
-                MuleProperties.CONNECTOR_DEFAULT_EXCHANGE_PATTERN, getService()));
+                    MuleProperties.CONNECTOR_DEFAULT_EXCHANGE_PATTERN, getService()));
         }
 
         return MessageExchangePattern.fromString(defaultExchangePattern);

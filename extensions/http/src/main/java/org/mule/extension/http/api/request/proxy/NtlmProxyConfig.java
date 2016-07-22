@@ -25,8 +25,14 @@ public class NtlmProxyConfig extends DefaultProxyConfig
     @DisplayName("NTLM Domain")
     private String ntlmDomain;
 
-    public String getNtlmDomain() { return ntlmDomain; }
+    public String getNtlmDomain()
+    {
+        return ntlmDomain;
+    }
 
-    public void setNtlmDomain(String ntlmDomain) { this.ntlmDomain = ntlmDomain; }
+    public void setNtlmDomain(String ntlmDomain)
+    {
+        this.ntlmDomain = ntlmDomain;
+    }
 
 }

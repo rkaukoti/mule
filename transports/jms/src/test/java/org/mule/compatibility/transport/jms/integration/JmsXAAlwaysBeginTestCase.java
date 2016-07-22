@@ -6,7 +6,10 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -16,16 +19,13 @@ import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 import javax.transaction.xa.Xid;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.junit.Assert.assertEquals;
 
 public class JmsXAAlwaysBeginTestCase extends AbstractJmsFunctionalTestCase
 {
+    protected static final Logger logger = LoggerFactory.getLogger(JmsXAAlwaysBeginTestCase.class);
     private static final List<Xid> committedTx = new CopyOnWriteArrayList<Xid>();
     private static final List<Xid> rolledbackTx = new CopyOnWriteArrayList<Xid>();
-    protected static final Logger logger = LoggerFactory.getLogger(JmsXAAlwaysBeginTestCase.class);
 
     @Override
     protected String getConfigFile()
@@ -79,6 +79,8 @@ public class JmsXAAlwaysBeginTestCase extends AbstractJmsFunctionalTestCase
     @Ignore
     public static class TestResource implements XAResource
     {
+        protected int _timeout = 0;
+
         @Override
         public void commit(Xid id, boolean onePhase) throws XAException
         {
@@ -144,7 +146,5 @@ public class JmsXAAlwaysBeginTestCase extends AbstractJmsFunctionalTestCase
         {
             logger.debug("XA_START[" + xid + "] Flags=" + flags);
         }
-
-        protected int _timeout = 0;
     }
 }

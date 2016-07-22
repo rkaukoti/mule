@@ -6,7 +6,6 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.core.api.transport.MuleMessageFactory;
@@ -30,30 +29,28 @@ import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.runtime.core.context.notification.ConnectionNotification;
 import org.mule.runtime.core.routing.MuleMessageInfoMapping;
 import org.mule.runtime.core.util.ClassUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 /**
  * Provide a default dispatch (client) support for handling threads lifecycle and validation.
  */
 public abstract class AbstractTransportMessageHandler<O> implements Connectable, LifecycleStateEnabled
 {
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
-    protected ImmutableEndpoint endpoint;
     protected final AbstractConnector connector;
-    protected RetryPolicyTemplate retryTemplate;
-    protected MuleMessageFactory muleMessageFactory = null;
-
-    protected ConnectableLifecycleManager<O> lifecycleManager;
     // TODO This state info. needs to be incorporated into the ConnectableLifecycleManager
     protected final AtomicBoolean connected = new AtomicBoolean(false);
-    
     protected final MessageInfoMapping defaultMessageInfoMapping = new MuleMessageInfoMapping();
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
+    protected ImmutableEndpoint endpoint;
+    protected RetryPolicyTemplate retryTemplate;
+    protected MuleMessageFactory muleMessageFactory = null;
+    protected ConnectableLifecycleManager<O> lifecycleManager;
 
     public AbstractTransportMessageHandler(ImmutableEndpoint endpoint)
     {
@@ -192,6 +189,15 @@ public abstract class AbstractTransportMessageHandler<O> implements Connectable,
         return endpoint;
     }
 
+    public void setEndpoint(ImmutableEndpoint endpoint)
+    {
+        if (endpoint == null)
+        {
+            throw new IllegalArgumentException("Endpoint cannot be null");
+        }
+        this.endpoint = endpoint;
+    }
+
     @Override
     public final synchronized void connect() throws Exception
     {
@@ -242,7 +248,7 @@ public abstract class AbstractTransportMessageHandler<O> implements Connectable,
         {
             stop();
         }
-        
+
         if (logger.isDebugEnabled())
         {
             logger.debug("Disconnecting: " + this);
@@ -373,6 +379,8 @@ public abstract class AbstractTransportMessageHandler<O> implements Connectable,
         // nothing to do by default
     }
 
+    // TODO MULE-4871 Endpoint should not be mutable
+
     @Override
     public String toString()
     {
@@ -383,17 +391,6 @@ public abstract class AbstractTransportMessageHandler<O> implements Connectable,
         sb.append(", disposed=").append(getLifecycleState().isDisposed());
         sb.append('}');
         return sb.toString();
-    }
-
-    // TODO MULE-4871 Endpoint should not be mutable
-
-    public void setEndpoint(ImmutableEndpoint endpoint)
-    {
-        if (endpoint == null)
-        {
-            throw new IllegalArgumentException("Endpoint cannot be null");
-        }
-        this.endpoint = endpoint;
     }
 
     abstract protected WorkManager getWorkManager() throws MuleException;
@@ -434,7 +431,7 @@ public abstract class AbstractTransportMessageHandler<O> implements Connectable,
      * message properties will be copied from <code>previousMessage</code>.
      */
     public MuleMessage createMuleMessage(Object transportMessage, MuleMessage previousMessage,
-                                                Charset encoding)
+                                         Charset encoding)
             throws MuleException
     {
         try

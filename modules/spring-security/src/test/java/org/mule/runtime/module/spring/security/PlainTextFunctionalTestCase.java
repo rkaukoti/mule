@@ -6,21 +6,21 @@
  */
 package org.mule.runtime.module.spring.security;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_USER_PROPERTY;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.UNAUTHORIZED;
-import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_STATUS_PROPERTY;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.security.MuleCredentials;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_USER_PROPERTY;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.UNAUTHORIZED;
+import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_STATUS_PROPERTY;
 
 @Ignore("See MULE-9202")
 public class PlainTextFunctionalTestCase extends FunctionalTestCase
@@ -28,7 +28,7 @@ public class PlainTextFunctionalTestCase extends FunctionalTestCase
 
     @Rule
     public DynamicPort port1 = new DynamicPort("port1");
-    
+
     @Override
     protected String getConfigFile()
     {

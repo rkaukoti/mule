@@ -6,24 +6,24 @@
  */
 package org.mule.test.routing;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.processor.MessageProcessor;
-import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 public class ForEachSessionVarTestCase extends FunctionalTestCase
 {
 
-    protected static MuleEvent event;
     private static final String MY_SESSION_LIST = "mySessionList";
+    protected static MuleEvent event;
 
     @Override
     protected String getConfigFile()
@@ -37,9 +37,9 @@ public class ForEachSessionVarTestCase extends FunctionalTestCase
         Collection<String> expectedArray = new ArrayList<>();
         expectedArray.add("Hello World A");
         expectedArray.add("Hello World B");
-        
+
         flowRunner("test-foreachFlow1").withPayload(getTestMuleMessage()).run();
-        
+
         //propierty should exist in the session and the message
         assertThat(event.getSession().<Collection<String>>getProperty(MY_SESSION_LIST), is(expectedArray));
         //removing the property from the session should affect the message as well

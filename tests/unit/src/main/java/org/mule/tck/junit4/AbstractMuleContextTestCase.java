@@ -6,8 +6,10 @@
  */
 package org.mule.tck.junit4;
 
-import static org.mule.tck.junit4.TestsLogConfigurationHelper.configureLoggingForTest;
-
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.rules.TemporaryFolder;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.MessageExchangePattern;
@@ -53,10 +55,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.rules.TemporaryFolder;
+import static org.mule.tck.junit4.TestsLogConfigurationHelper.configureLoggingForTest;
 
 /**
  * Extends {@link AbstractMuleTestCase} providing access to a {@link MuleContext}
@@ -65,33 +64,16 @@ import org.junit.rules.TemporaryFolder;
 public abstract class AbstractMuleContextTestCase extends AbstractMuleTestCase
 {
     public static final String WORKING_DIRECTORY_SYSTEM_PROPERTY_KEY = "workingDirectory";
-
-    public TemporaryFolder workingDirectory = new TemporaryFolder();
-
     /**
      * Top-level directories under <code>.mule</code> which are not deleted on each
      * test case recycle. This is required, e.g. to play nice with transaction manager
      * recovery service object store.
      */
-    public static final String[] IGNORED_DOT_MULE_DIRS = new String[]{"transaction-log"};
-
-    /**
-     * The context used to run this test. Context will be created per class
-     * or per method depending on  {@link #disposeContextPerClass}.
-     * The context will be started only when {@link #startContext} is true.
-     */
-    protected static MuleContext muleContext;
-
-    /**
-     * Start the muleContext once it's configured (defaults to false for AbstractMuleTestCase, true for FunctionalTestCase).
-     */
-    private boolean startContext = false;
-
+    public static final String[] IGNORED_DOT_MULE_DIRS = new String[] {"transaction-log"};
     /**
      * Convenient test message for unit testing.
      */
     public static final String TEST_MESSAGE = "Test Message";
-
     /**
      * Default timeout for multithreaded tests (using CountDownLatch, WaitableBoolean, etc.),
      * in milliseconds.  The higher this value, the more reliable the test will be, so it
@@ -99,216 +81,31 @@ public abstract class AbstractMuleContextTestCase extends AbstractMuleTestCase
      * day-to-day development cycles, so you may want to temporarily lower it while debugging.
      */
     public static final long LOCK_TIMEOUT = 30000;
-
     /**
      * Default timeout for waiting for responses
      */
     public static final int RECEIVE_TIMEOUT = 5000;
-
+    /**
+     * The context used to run this test. Context will be created per class
+     * or per method depending on  {@link #disposeContextPerClass}.
+     * The context will be started only when {@link #startContext} is true.
+     */
+    protected static MuleContext muleContext;
+    private static boolean logConfigured;
+    public TemporaryFolder workingDirectory = new TemporaryFolder();
     /**
      * Use this as a semaphore to the unit test to indicate when a callback has successfully been called.
      */
     protected Latch callbackCalled;
-
+    /**
+     * Start the muleContext once it's configured (defaults to false for AbstractMuleTestCase, true for FunctionalTestCase).
+     */
+    private boolean startContext = false;
     /**
      * Indicates if the context should be instantiated per context. Default is
      * false, which means that a context will be instantiated per test method.
      */
     private boolean disposeContextPerClass;
-    private static boolean logConfigured;
-
-    protected boolean isDisposeContextPerClass()
-    {
-        return disposeContextPerClass;
-    }
-
-    protected void setDisposeContextPerClass(boolean val)
-    {
-        disposeContextPerClass = val;
-    }
-
-    @Before
-    public final void setUpMuleContext() throws Exception
-    {
-        if (!logConfigured)
-        {
-            configureLoggingForTest(getClass());
-            logConfigured = true;
-        }
-        workingDirectory.create();
-        String workingDirectoryOldValue = System.setProperty(WORKING_DIRECTORY_SYSTEM_PROPERTY_KEY, workingDirectory.getRoot().getAbsolutePath());
-        try
-        {
-            doSetUpBeforeMuleContextCreation();
-
-            muleContext = createMuleContext();
-
-            if (isStartContext() && muleContext != null && !muleContext.isStarted())
-            {
-                startMuleContext();
-            }
-
-            doSetUp();
-        }
-        finally
-        {
-            if (workingDirectoryOldValue != null)
-            {
-                System.setProperty(WORKING_DIRECTORY_SYSTEM_PROPERTY_KEY, workingDirectoryOldValue);
-            }
-            else
-            {
-                System.clearProperty(WORKING_DIRECTORY_SYSTEM_PROPERTY_KEY);
-            }
-        }
-    }
-
-    protected void doSetUpBeforeMuleContextCreation() throws Exception
-    {
-    }
-
-    private void startMuleContext() throws MuleException, InterruptedException
-    {
-        final AtomicReference<Latch> contextStartedLatch = new AtomicReference<>();
-
-        contextStartedLatch.set(new Latch());
-        // Do not inline it, otherwise the type of the listener is lost
-        final MuleContextNotificationListener<MuleContextNotification> listener = notification ->
-        {
-            if (notification.getAction() == MuleContextNotification.CONTEXT_STARTED)
-            {
-                contextStartedLatch.get().countDown();
-            }
-        };
-        muleContext.registerListener(listener);
-
-        muleContext.start();
-
-        contextStartedLatch.get().await(20, TimeUnit.SECONDS);
-    }
-
-    /**
-     * Enables the adding of extra behavior on the set up stage of a test right
-     * after the creation of the mule context in {@link #setUpMuleContext}.
-     * <p>
-     * Under normal circumstances this method could be replaced by a
-     * <code>@Before</code> annotated method.
-     *
-     * @throws Exception if something fails that should halt the test case
-     */
-    protected void doSetUp() throws Exception
-    {
-        // template method
-    }
-
-    private void addIfPresent(List<ConfigurationBuilder> builders, String builderClassName) throws Exception
-    {
-        if (ClassUtils.isClassOnPath(builderClassName, getClass()))
-        {
-            builders.add((ConfigurationBuilder) ClassUtils.instanciateClass(builderClassName,
-                                                                            ClassUtils.NO_ARGS,
-                                                                            getClass()));
-        }
-    }
-
-    protected MuleContext createMuleContext() throws Exception
-    {
-        // Should we set up the manager for every method?
-        MuleContext context;
-        if (isDisposeContextPerClass() && muleContext != null)
-        {
-            context = muleContext;
-        }
-        else
-        {
-            final ClassLoader executionClassLoader = getExecutionClassLoader();
-            final ClassLoader originalContextClassLoader = Thread.currentThread().getContextClassLoader();
-            try
-            {
-                Thread.currentThread().setContextClassLoader(executionClassLoader);
-
-                MuleContextFactory muleContextFactory = new DefaultMuleContextFactory();
-                List<ConfigurationBuilder> builders = new ArrayList<>();
-                builders.add(new SimpleConfigurationBuilder(getStartUpProperties()));
-                builders.add(getBuilder());
-                addBuilders(builders);
-                MuleContextBuilder contextBuilder = new DefaultMuleContextBuilder();
-                DefaultMuleConfiguration muleConfiguration = new DefaultMuleConfiguration();
-                String workingDirectory = this.workingDirectory.getRoot().getAbsolutePath();
-                logger.info("Using working directory for test: " + workingDirectory);
-                muleConfiguration.setWorkingDirectory(workingDirectory);
-                contextBuilder.setMuleConfiguration(muleConfiguration);
-                contextBuilder.setExecutionClassLoader(executionClassLoader);
-                configureMuleContext(contextBuilder);
-                context = muleContextFactory.createMuleContext(builders, contextBuilder);
-                if (!isGracefulShutdown())
-                {
-                    ((DefaultMuleConfiguration) context.getConfiguration()).setShutdownTimeout(0);
-                }
-            }
-            finally
-            {
-                Thread.currentThread().setContextClassLoader(originalContextClassLoader);
-            }
-        }
-        return context;
-    }
-
-    protected  ClassLoader getExecutionClassLoader()
-    {
-        return this.getClass().getClassLoader();
-    }
-
-    //This sohuldn't be needed by Test cases but can be used by base testcases that wish to add further builders when
-    //creating the MuleContext.
-    protected void addBuilders(List<ConfigurationBuilder> builders)
-    {
-        //No op
-    }
-
-    /**
-     * Override this method to set properties of the MuleContextBuilder before it is
-     * used to create the MuleContext.
-     */
-    protected void configureMuleContext(MuleContextBuilder contextBuilder)
-    {
-        contextBuilder.setWorkListener(new TestingWorkListener());
-    }
-
-    protected ConfigurationBuilder getBuilder() throws Exception
-    {
-        return new DefaultsConfigurationBuilder();
-    }
-
-    protected String getConfigurationResources()
-    {
-        return StringUtils.EMPTY;
-    }
-
-    protected Properties getStartUpProperties()
-    {
-        return null;
-    }
-
-    @After
-    public final void disposeContextPerTest() throws Exception
-    {
-        doTearDown();
-
-        if (!isDisposeContextPerClass())
-        {
-            disposeContext();
-            doTearDownAfterMuleContextDispose();
-        }
-
-        // When an Assumption fails then junit doesn't call @Before methods so we need to avoid
-        // executing delete if there's no root folder.
-        workingDirectory.delete();
-    }
-
-    protected void doTearDownAfterMuleContextDispose() throws Exception
-    {
-    }
 
     @AfterClass
     public static void disposeContext()
@@ -336,39 +133,6 @@ public abstract class AbstractMuleContextTestCase extends AbstractMuleTestCase
             muleContext = null;
             TestsLogConfigurationHelper.clearLoggingConfig();
         }
-    }
-
-    /**
-     * Enables the adding of extra behavior on the tear down stage of a test
-     * before the mule context is disposed in {@link #disposeContextPerTest}.
-     * <p>
-     * Under normal circumstances this method could be replace with a
-     * <code>@After</code> annotated method.
-     *
-     * @throws Exception if something fails that should halt the testcase
-     */
-    protected void doTearDown() throws Exception
-    {
-        // template method
-    }
-
-    /**
-     * @return creates a new {@link org.mule.runtime.core.api.MuleMessage} with a test payload
-     */
-    @Deprecated
-    protected MuleMessage getTestMuleMessage()
-    {
-        return getTestMuleMessage(TEST_PAYLOAD);
-    }
-
-    /**
-     * @param message
-     * @return creates a new {@link org.mule.runtime.core.api.MuleMessage} with message as payload
-     */
-    @Deprecated
-    protected MuleMessage getTestMuleMessage(Object message)
-    {
-        return MuleMessage.builder().payload(message).build();
     }
 
     public static MuleEvent getTestEvent(Object data, FlowConstruct service) throws Exception
@@ -441,6 +205,232 @@ public abstract class AbstractMuleContextTestCase extends AbstractMuleTestCase
         return MuleTestUtils.getTestFlow(MuleTestUtils.APPLE_FLOW, component, false, muleContext);
     }
 
+    protected boolean isDisposeContextPerClass()
+    {
+        return disposeContextPerClass;
+    }
+
+    protected void setDisposeContextPerClass(boolean val)
+    {
+        disposeContextPerClass = val;
+    }
+
+    @Before
+    public final void setUpMuleContext() throws Exception
+    {
+        if (!logConfigured)
+        {
+            configureLoggingForTest(getClass());
+            logConfigured = true;
+        }
+        workingDirectory.create();
+        String workingDirectoryOldValue =
+                System.setProperty(WORKING_DIRECTORY_SYSTEM_PROPERTY_KEY, workingDirectory.getRoot().getAbsolutePath());
+        try
+        {
+            doSetUpBeforeMuleContextCreation();
+
+            muleContext = createMuleContext();
+
+            if (isStartContext() && muleContext != null && !muleContext.isStarted())
+            {
+                startMuleContext();
+            }
+
+            doSetUp();
+        }
+        finally
+        {
+            if (workingDirectoryOldValue != null)
+            {
+                System.setProperty(WORKING_DIRECTORY_SYSTEM_PROPERTY_KEY, workingDirectoryOldValue);
+            }
+            else
+            {
+                System.clearProperty(WORKING_DIRECTORY_SYSTEM_PROPERTY_KEY);
+            }
+        }
+    }
+
+    protected void doSetUpBeforeMuleContextCreation() throws Exception
+    {
+    }
+
+    private void startMuleContext() throws MuleException, InterruptedException
+    {
+        final AtomicReference<Latch> contextStartedLatch = new AtomicReference<>();
+
+        contextStartedLatch.set(new Latch());
+        // Do not inline it, otherwise the type of the listener is lost
+        final MuleContextNotificationListener<MuleContextNotification> listener = notification ->
+        {
+            if (notification.getAction() == MuleContextNotification.CONTEXT_STARTED)
+            {
+                contextStartedLatch.get().countDown();
+            }
+        };
+        muleContext.registerListener(listener);
+
+        muleContext.start();
+
+        contextStartedLatch.get().await(20, TimeUnit.SECONDS);
+    }
+
+    /**
+     * Enables the adding of extra behavior on the set up stage of a test right
+     * after the creation of the mule context in {@link #setUpMuleContext}.
+     * <p>
+     * Under normal circumstances this method could be replaced by a
+     * <code>@Before</code> annotated method.
+     *
+     * @throws Exception if something fails that should halt the test case
+     */
+    protected void doSetUp() throws Exception
+    {
+        // template method
+    }
+
+    private void addIfPresent(List<ConfigurationBuilder> builders, String builderClassName) throws Exception
+    {
+        if (ClassUtils.isClassOnPath(builderClassName, getClass()))
+        {
+            builders.add((ConfigurationBuilder) ClassUtils.instanciateClass(builderClassName,
+                    ClassUtils.NO_ARGS,
+                    getClass()));
+        }
+    }
+
+    protected MuleContext createMuleContext() throws Exception
+    {
+        // Should we set up the manager for every method?
+        MuleContext context;
+        if (isDisposeContextPerClass() && muleContext != null)
+        {
+            context = muleContext;
+        }
+        else
+        {
+            final ClassLoader executionClassLoader = getExecutionClassLoader();
+            final ClassLoader originalContextClassLoader = Thread.currentThread().getContextClassLoader();
+            try
+            {
+                Thread.currentThread().setContextClassLoader(executionClassLoader);
+
+                MuleContextFactory muleContextFactory = new DefaultMuleContextFactory();
+                List<ConfigurationBuilder> builders = new ArrayList<>();
+                builders.add(new SimpleConfigurationBuilder(getStartUpProperties()));
+                builders.add(getBuilder());
+                addBuilders(builders);
+                MuleContextBuilder contextBuilder = new DefaultMuleContextBuilder();
+                DefaultMuleConfiguration muleConfiguration = new DefaultMuleConfiguration();
+                String workingDirectory = this.workingDirectory.getRoot().getAbsolutePath();
+                logger.info("Using working directory for test: " + workingDirectory);
+                muleConfiguration.setWorkingDirectory(workingDirectory);
+                contextBuilder.setMuleConfiguration(muleConfiguration);
+                contextBuilder.setExecutionClassLoader(executionClassLoader);
+                configureMuleContext(contextBuilder);
+                context = muleContextFactory.createMuleContext(builders, contextBuilder);
+                if (!isGracefulShutdown())
+                {
+                    ((DefaultMuleConfiguration) context.getConfiguration()).setShutdownTimeout(0);
+                }
+            }
+            finally
+            {
+                Thread.currentThread().setContextClassLoader(originalContextClassLoader);
+            }
+        }
+        return context;
+    }
+
+    protected ClassLoader getExecutionClassLoader()
+    {
+        return this.getClass().getClassLoader();
+    }
+
+    //This sohuldn't be needed by Test cases but can be used by base testcases that wish to add further builders when
+    //creating the MuleContext.
+    protected void addBuilders(List<ConfigurationBuilder> builders)
+    {
+        //No op
+    }
+
+    /**
+     * Override this method to set properties of the MuleContextBuilder before it is
+     * used to create the MuleContext.
+     */
+    protected void configureMuleContext(MuleContextBuilder contextBuilder)
+    {
+        contextBuilder.setWorkListener(new TestingWorkListener());
+    }
+
+    protected ConfigurationBuilder getBuilder() throws Exception
+    {
+        return new DefaultsConfigurationBuilder();
+    }
+
+    protected String getConfigurationResources()
+    {
+        return StringUtils.EMPTY;
+    }
+
+    protected Properties getStartUpProperties()
+    {
+        return null;
+    }
+
+    @After
+    public final void disposeContextPerTest() throws Exception
+    {
+        doTearDown();
+
+        if (!isDisposeContextPerClass())
+        {
+            disposeContext();
+            doTearDownAfterMuleContextDispose();
+        }
+
+        // When an Assumption fails then junit doesn't call @Before methods so we need to avoid
+        // executing delete if there's no root folder.
+        workingDirectory.delete();
+    }
+
+    protected void doTearDownAfterMuleContextDispose() throws Exception
+    {
+    }
+
+    /**
+     * Enables the adding of extra behavior on the tear down stage of a test
+     * before the mule context is disposed in {@link #disposeContextPerTest}.
+     * <p>
+     * Under normal circumstances this method could be replace with a
+     * <code>@After</code> annotated method.
+     *
+     * @throws Exception if something fails that should halt the testcase
+     */
+    protected void doTearDown() throws Exception
+    {
+        // template method
+    }
+
+    /**
+     * @return creates a new {@link org.mule.runtime.core.api.MuleMessage} with a test payload
+     */
+    @Deprecated
+    protected MuleMessage getTestMuleMessage()
+    {
+        return getTestMuleMessage(TEST_PAYLOAD);
+    }
+
+    /**
+     * @return creates a new {@link org.mule.runtime.core.api.MuleMessage} with message as payload
+     */
+    @Deprecated
+    protected MuleMessage getTestMuleMessage(Object message)
+    {
+        return MuleMessage.builder().payload(message).build();
+    }
+
     protected boolean isStartContext()
     {
         return startContext;
@@ -506,7 +496,6 @@ public abstract class AbstractMuleContextTestCase extends AbstractMuleTestCase
      * lifecycle as the MuleContext
      *
      * @param o the object to register and initialise it
-     * @throws org.mule.runtime.core.api.registry.RegistrationException
      */
     protected void initialiseObject(Object o) throws RegistrationException
     {
@@ -586,7 +575,7 @@ public abstract class AbstractMuleContextTestCase extends AbstractMuleTestCase
     /**
      * Uses {@link TransformationService} to get representation of a message for a given {@link DataType}
      *
-     * @param message message to get payload from
+     * @param message  message to get payload from
      * @param dataType dataType to be transformed to
      * @return representation of the message payload of the required dataType
      * @throws Exception if there is an unexpected error obtaining the payload representation
@@ -600,7 +589,7 @@ public abstract class AbstractMuleContextTestCase extends AbstractMuleTestCase
      * Uses {@link TransformationService} to get representation of a message for a given {@link Class}
      *
      * @param message message to get payload from
-     * @param clazz type of the payload to be transformed to
+     * @param clazz   type of the payload to be transformed to
      * @return representation of the message payload of the required class
      * @throws Exception if there is an unexpected error obtaining the payload representation
      */

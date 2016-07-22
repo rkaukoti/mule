@@ -16,7 +16,7 @@ import java.util.List;
  * A Split message contains one or more message parts with an endpoint associated with each part. This class is used by
  * the Message Splitter routers ({@link org.mule.compatibility.core.routing.outbound.AbstractRoundRobinMessageSplitter}) to
  * define a mapping between message parts and the endpoint to dispatch on.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated

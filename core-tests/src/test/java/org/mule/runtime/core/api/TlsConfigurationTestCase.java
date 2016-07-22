@@ -6,16 +6,13 @@
  */
 package org.mule.runtime.core.api;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.api.lifecycle.CreateException;
 import org.mule.runtime.core.api.security.tls.TlsConfiguration;
-import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.SecurityUtils;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +23,10 @@ import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
-import org.junit.Test;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class TlsConfigurationTestCase extends AbstractMuleTestCase
 {

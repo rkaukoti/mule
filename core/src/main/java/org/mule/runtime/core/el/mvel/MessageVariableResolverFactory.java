@@ -21,15 +21,13 @@ import java.util.Map;
 public class MessageVariableResolverFactory extends MuleBaseVariableResolverFactory
 {
 
-    private static final long serialVersionUID = -6819292692339684915L;
-
-    private static final String MESSAGE = "message";
-    private static final String EXCEPTION = "exception";
     public static final String PAYLOAD = "payload";
-    public static final String MESSAGE_PAYLOAD = MESSAGE + "." + PAYLOAD;
     public static final String FLOW_VARS = "flowVars";
     public static final String SESSION_VARS = "sessionVars";
-
+    private static final long serialVersionUID = -6819292692339684915L;
+    private static final String MESSAGE = "message";
+    public static final String MESSAGE_PAYLOAD = MESSAGE + "." + PAYLOAD;
+    private static final String EXCEPTION = "exception";
     private MuleEvent event;
     private MuleContext muleContext;
 
@@ -44,8 +42,6 @@ public class MessageVariableResolverFactory extends MuleBaseVariableResolverFact
     /**
      * Convenience constructor to allow for more concise creation of VariableResolverFactory chains without
      * and performance overhead incurred by using a builder.
-     * 
-     * @param next
      */
     public MessageVariableResolverFactory(final ParserConfiguration parserConfiguration,
                                           final MuleContext muleContext,
@@ -90,7 +86,7 @@ public class MessageVariableResolverFactory extends MuleBaseVariableResolverFact
                 if (event.getMessage().getExceptionPayload() != null)
                 {
                     return new MuleImmutableVariableResolver<>(EXCEPTION,
-                        event.getMessage().getExceptionPayload().getException(), null);
+                            event.getMessage().getExceptionPayload().getException(), null);
                 }
                 else
                 {
@@ -105,7 +101,7 @@ public class MessageVariableResolverFactory extends MuleBaseVariableResolverFact
             else if (MVELExpressionLanguageContext.MULE_MESSAGE_INTERNAL_VARIABLE.equals(name))
             {
                 return new MuleImmutableVariableResolver<>(
-                    MVELExpressionLanguageContext.MULE_MESSAGE_INTERNAL_VARIABLE, event.getMessage(), null);
+                        MVELExpressionLanguageContext.MULE_MESSAGE_INTERNAL_VARIABLE, event.getMessage(), null);
             }
         }
         return super.getNextFactoryVariableResolver(name);

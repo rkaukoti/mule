@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.core.processor;
 
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.transaction.Transaction;
 import org.mule.runtime.core.transaction.TransactionCoordination;
 import org.mule.tck.testmodels.mule.TestTransaction;
-
-import org.junit.Test;
 
 public class LaxAsyncInterceptingMessageProcessorTestCase extends AsyncInterceptingMessageProcessorTestCase
 {
@@ -64,10 +63,10 @@ public class LaxAsyncInterceptingMessageProcessorTestCase extends AsyncIntercept
 
     @Override
     protected AsyncInterceptingMessageProcessor createAsyncInterceptingMessageProcessor(MessageProcessor listener)
-        throws Exception
+            throws Exception
     {
         LaxAsyncInterceptingMessageProcessor mp = new LaxAsyncInterceptingMessageProcessor(
-            new TestWorkManagerSource());
+                new TestWorkManagerSource());
         mp.setMuleContext(muleContext);
         mp.setListener(listener);
         return mp;

@@ -19,6 +19,8 @@ import org.mule.runtime.core.api.security.SecurityProviderNotFoundException;
 import org.mule.runtime.core.api.security.UnauthorisedException;
 import org.mule.runtime.core.api.security.UnknownAuthenticationTypeException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,9 +30,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>MuleSecurityManager</code> is a default implementation security manager
@@ -63,7 +62,7 @@ public class MuleSecurityManager implements SecurityManager
 
     @Override
     public Authentication authenticate(Authentication authentication)
-        throws SecurityException, SecurityProviderNotFoundException
+            throws SecurityException, SecurityProviderNotFoundException
     {
         Iterator<SecurityProvider> iter = providers.values().iterator();
         Class<? extends Authentication> toTest = authentication.getClass();
@@ -146,7 +145,7 @@ public class MuleSecurityManager implements SecurityManager
 
     @Override
     public SecurityContext createSecurityContext(Authentication authentication)
-        throws UnknownAuthenticationTypeException
+            throws UnknownAuthenticationTypeException
     {
         Iterator<SecurityProvider> iter = providers.values().iterator();
         Class<? extends Authentication> toTest = authentication.getClass();

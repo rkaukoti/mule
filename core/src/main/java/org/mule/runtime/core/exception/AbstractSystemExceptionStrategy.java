@@ -15,7 +15,7 @@ import org.mule.runtime.core.message.DefaultExceptionPayload;
 import org.mule.runtime.core.transaction.TransactionCoordination;
 
 /**
- * Fire a notification, log exception, clean up transaction if any, and trigger reconnection strategy 
+ * Fire a notification, log exception, clean up transaction if any, and trigger reconnection strategy
  * if this is a <code>ConnectException</code>.
  */
 public abstract class AbstractSystemExceptionStrategy extends AbstractExceptionListener implements SystemExceptionHandler
@@ -26,7 +26,7 @@ public abstract class AbstractSystemExceptionStrategy extends AbstractExceptionL
         fireNotification(ex);
 
         doLogException(ex);
-        
+
         if (isRollback(ex))
         {
             logger.debug("Rolling back transaction");

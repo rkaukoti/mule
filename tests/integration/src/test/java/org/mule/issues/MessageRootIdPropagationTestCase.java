@@ -6,8 +6,9 @@
  */
 package org.mule.issues;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FlowRunner;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
@@ -21,9 +22,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 @Ignore("See MULE-9195")
 public class MessageRootIdPropagationTestCase extends FunctionalTestCase
@@ -54,7 +53,7 @@ public class MessageRootIdPropagationTestCase extends FunctionalTestCase
     static class RootIDGatherer extends AbstractMessageTransformer
     {
         static int messageCount;
-        static Map<String, String>idMap;
+        static Map<String, String> idMap;
         static int counter;
 
 
@@ -76,13 +75,6 @@ public class MessageRootIdPropagationTestCase extends FunctionalTestCase
             idMap.put(where, id);
         }
 
-        @Override
-        public Object transformMessage(MuleEvent event, Charset outputEncoding)
-        {
-            process(event.getMessage());
-            return event.getMessage().getPayload();
-        }
-
         public static Set<String> getIds()
         {
             return new HashSet<>(idMap.values());
@@ -96,6 +88,13 @@ public class MessageRootIdPropagationTestCase extends FunctionalTestCase
         public static Map<String, String> getIdMap()
         {
             return idMap;
+        }
+
+        @Override
+        public Object transformMessage(MuleEvent event, Charset outputEncoding)
+        {
+            process(event.getMessage());
+            return event.getMessage().getPayload();
         }
     }
 }

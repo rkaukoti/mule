@@ -6,12 +6,6 @@
  */
 package org.mule.extension.validation;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
 import org.mule.extension.validation.api.ValidationException;
 import org.mule.extension.validation.api.ValidationExtension;
 import org.mule.extension.validation.internal.ValidationMessages;
@@ -19,6 +13,13 @@ import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.functional.junit4.FlowRunner;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.config.i18n.Message;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 abstract class ValidationTestCase extends ExtensionFunctionalTestCase
 {

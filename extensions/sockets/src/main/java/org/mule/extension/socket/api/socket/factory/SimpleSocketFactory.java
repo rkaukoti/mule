@@ -11,6 +11,7 @@ import java.net.Socket;
 
 /**
  * Interface for {@link Socket} factories
+ *
  * @since 4.0
  */
 public interface SimpleSocketFactory
@@ -18,8 +19,8 @@ public interface SimpleSocketFactory
 
     /**
      * Creates a {@link Socket}
+     *
      * @return a new instance of a {@link Socket} implementation
-     * @throws IOException
      */
     Socket createSocket() throws IOException;
 }

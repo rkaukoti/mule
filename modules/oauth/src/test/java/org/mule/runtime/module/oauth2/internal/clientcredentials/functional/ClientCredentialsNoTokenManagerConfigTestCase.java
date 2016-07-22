@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.module.oauth2.internal.clientcredentials.functional;
 
-import static org.junit.Assert.assertThat;
-
+import org.hamcrest.core.Is;
+import org.junit.Test;
 import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ResourceOwnerOAuthContext;
 import org.mule.runtime.module.oauth2.internal.tokenmanager.TokenManagerConfig;
 
-import org.hamcrest.core.Is;
-import org.junit.Test;
+import static org.junit.Assert.assertThat;
 
 public class ClientCredentialsNoTokenManagerConfigTestCase extends AbstractClientCredentialsBasicTestCase
 {
@@ -23,7 +22,8 @@ public class ClientCredentialsNoTokenManagerConfigTestCase extends AbstractClien
         verifyRequestDoneToTokenUrlForClientCredentials();
 
         TokenManagerConfig tokenManagerConfig = muleContext.getRegistry().lookupObject(TokenManagerConfig.class);
-        final ResourceOwnerOAuthContext oauthContext = tokenManagerConfig.getConfigOAuthContext().getContextForResourceOwner(ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID);
+        final ResourceOwnerOAuthContext oauthContext =
+                tokenManagerConfig.getConfigOAuthContext().getContextForResourceOwner(ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID);
         assertThat(oauthContext.getAccessToken(), Is.is(ACCESS_TOKEN));
     }
 

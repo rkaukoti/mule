@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.module.reboot;
 
+import org.tanukisoftware.wrapper.WrapperListener;
+import org.tanukisoftware.wrapper.WrapperManager;
+
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-
-import org.tanukisoftware.wrapper.WrapperListener;
-import org.tanukisoftware.wrapper.WrapperManager;
 
 public class MuleContainerWrapper implements WrapperListener
 {
@@ -27,15 +27,15 @@ public class MuleContainerWrapper implements WrapperListener
     /*---------------------------------------------------------------
      * WrapperListener Methods
      *-------------------------------------------------------------*/
+
     /**
      * The start method is called when the WrapperManager is signaled by the native
      * wrapper code that it can start its application. This method call is expected
      * to return, so a new thread should be launched if necessary.
      *
      * @param args List of arguments used to initialize the application.
-     * @return Any error code if the application should exit on completion of the
-     *         start method. If there were no problems then this method should return
-     *         null.
+     * @return Any error code if the application should exit on completion of the start method. If there were no problems then this method
+     * should return null.
      */
     public Integer start(String[] args)
     {
@@ -76,11 +76,9 @@ public class MuleContainerWrapper implements WrapperListener
      * then it must call WrapperManager.stopped() to avoid warning messages from the
      * Wrapper.
      *
-     * @param exitCode The suggested exit code that will be returned to the OS when
-     *            the JVM exits.
-     * @return The exit code to actually return to the OS. In most cases, this should
-     *         just be the value of exitCode, however the user code has the option of
-     *         changing the exit code if there are any problems during shutdown.
+     * @param exitCode The suggested exit code that will be returned to the OS when the JVM exits.
+     * @return The exit code to actually return to the OS. In most cases, this should just be the value of exitCode, however the user code
+     * has the option of changing the exit code if there are any problems during shutdown.
      */
     public int stop(int exitCode)
     {

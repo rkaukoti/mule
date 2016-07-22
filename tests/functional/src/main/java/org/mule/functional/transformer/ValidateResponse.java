@@ -31,7 +31,7 @@ public class ValidateResponse extends AbstractTransformer
         {
             response = IOUtils.toString((InputStream) src);
         }
-        
+
         if (response != null && response.contains("success"))
         {
             return response;

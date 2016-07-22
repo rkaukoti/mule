@@ -32,14 +32,14 @@ public class InboundAttachmentMapContext extends AbstractMapContext<DataHandler>
     public void doPut(String key, DataHandler value)
     {
         throw new UnsupportedOperationException(CoreMessages.inboundMessageAttachmentsImmutable(key)
-            .getMessage());
+                                                            .getMessage());
     }
 
     @Override
     public void doRemove(String key)
     {
         throw new UnsupportedOperationException(CoreMessages.inboundMessageAttachmentsImmutable(key)
-            .getMessage());
+                                                            .getMessage());
     }
 
     @Override
@@ -52,6 +52,6 @@ public class InboundAttachmentMapContext extends AbstractMapContext<DataHandler>
     public void clear()
     {
         throw new UnsupportedOperationException(CoreMessages.inboundMessageAttachmentsImmutable()
-            .getMessage());
+                                                            .getMessage());
     }
 }

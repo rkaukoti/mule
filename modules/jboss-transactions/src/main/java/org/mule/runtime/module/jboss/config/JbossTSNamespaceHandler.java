@@ -9,7 +9,6 @@ package org.mule.runtime.module.jboss.config;
 import org.mule.runtime.config.spring.parsers.collection.ChildMapEntryDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.MuleOrphanDefinitionParser;
 import org.mule.runtime.module.jboss.transaction.JBossArjunaTransactionManagerFactory;
-
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
 /**
@@ -19,8 +18,9 @@ public class JbossTSNamespaceHandler extends NamespaceHandlerSupport
 {
     public void init()
     {
-        registerBeanDefinitionParser("transaction-manager", new MuleOrphanDefinitionParser(JBossArjunaTransactionManagerFactory.class, true));
-        registerBeanDefinitionParser("properties", new ChildMapEntryDefinitionParser("properties","key","value"));
+        registerBeanDefinitionParser("transaction-manager",
+                new MuleOrphanDefinitionParser(JBossArjunaTransactionManagerFactory.class, true));
+        registerBeanDefinitionParser("properties", new ChildMapEntryDefinitionParser("properties", "key", "value"));
     }
 
 }

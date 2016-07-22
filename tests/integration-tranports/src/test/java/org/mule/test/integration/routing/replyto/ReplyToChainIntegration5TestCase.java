@@ -6,18 +6,17 @@
  */
 package org.mule.test.integration.routing.replyto;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.util.concurrent.Latch;
 
-import org.junit.Test;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertThat;
 
 public class ReplyToChainIntegration5TestCase extends FunctionalTestCase
 {

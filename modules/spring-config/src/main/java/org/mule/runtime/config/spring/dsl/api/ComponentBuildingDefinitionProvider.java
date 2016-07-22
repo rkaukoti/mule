@@ -11,6 +11,7 @@ import org.mule.runtime.core.api.MuleContext;
 import java.util.List;
 
 //TODO MULE-9646: move to an SPI package and remove from spring and move to API
+
 /**
  * Service provider interface to define mule DSL extensions processors.
  *

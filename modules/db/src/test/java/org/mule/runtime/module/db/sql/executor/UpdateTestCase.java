@@ -7,9 +7,8 @@
 
 package org.mule.runtime.module.db.sql.executor;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
 import org.mule.runtime.module.db.internal.domain.executor.UpdateExecutor;
 import org.mule.runtime.module.db.internal.domain.param.QueryParam;
@@ -23,8 +22,9 @@ import org.mule.tck.size.SmallTest;
 import java.sql.Statement;
 import java.util.Collections;
 
-import org.junit.Test;
-import org.mockito.Mockito;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class UpdateTestCase extends AbstractMuleTestCase

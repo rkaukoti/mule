@@ -6,15 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.capability.xml.schema.builder;
 
-import static org.apache.commons.lang.StringUtils.capitalize;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
-import static org.mule.runtime.extension.api.util.NameUtils.hyphenize;
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.TARGET_ATTRIBUTE;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.isVoid;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_MESSAGE_PROCESSOR;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_MESSAGE_PROCESSOR_TYPE;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.TARGET_ATTRIBUTE_DESCRIPTION;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.TYPE_SUFFIX;
 import org.mule.runtime.core.util.ValueHolder;
 import org.mule.runtime.extension.api.introspection.operation.OperationModel;
 import org.mule.runtime.module.extension.internal.capability.xml.schema.model.Attribute;
@@ -24,6 +15,16 @@ import org.mule.runtime.module.extension.internal.capability.xml.schema.model.To
 import org.mule.runtime.module.extension.internal.model.property.ExtendingOperationModelProperty;
 
 import javax.xml.namespace.QName;
+
+import static org.apache.commons.lang.StringUtils.capitalize;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
+import static org.mule.runtime.extension.api.util.NameUtils.hyphenize;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.TARGET_ATTRIBUTE;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.isVoid;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_MESSAGE_PROCESSOR;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_MESSAGE_PROCESSOR_TYPE;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.TARGET_ATTRIBUTE_DESCRIPTION;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.TYPE_SUFFIX;
 
 /**
  * Builder delegation class to generate a XSD schema that describes a
@@ -68,7 +69,7 @@ class OperationSchemaDelegate
     {
         ValueHolder<QName> substitutionGroup = new ValueHolder<>(MULE_ABSTRACT_MESSAGE_PROCESSOR);
         operationModel.getModelProperty(ExtendingOperationModelProperty.class)
-                .ifPresent(property -> substitutionGroup.set(builder.getSubstitutionGroup(property.getType())));
+                      .ifPresent(property -> substitutionGroup.set(builder.getSubstitutionGroup(property.getType())));
 
         return substitutionGroup.get();
     }

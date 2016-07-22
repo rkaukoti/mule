@@ -6,11 +6,8 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static javax.servlet.http.HttpServletResponse.SC_OK;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
+import org.eclipse.jetty.server.Request;
+import org.junit.Test;
 import org.mule.extension.http.api.HttpResponseAttributes;
 import org.mule.runtime.core.api.MuleEvent;
 
@@ -20,13 +17,16 @@ import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.Request;
-import org.junit.Test;
+import static javax.servlet.http.HttpServletResponse.SC_OK;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
 
 public class HttpRequestMultipartTestCase extends AbstractHttpRequestTestCase
 {
 
-    private static final String BOUNDARY =  "bec89590-35fe-11e5-a966-de100cec9c0d";
+    private static final String BOUNDARY = "bec89590-35fe-11e5-a966-de100cec9c0d";
     private static final String CONTENT_DISPOSITION_HEADER = "Content-Disposition: form-data; name=\"partName\"\r\n";
     private static final String MULTIPART_FORMAT = "--%1$s\r\n %2$sContent-Type: text/plain\n\r\ntest\r\n--%1$s--\r\n";
     private static final String CONTENT_DISPOSITION_PATH = "/contentDisposition";

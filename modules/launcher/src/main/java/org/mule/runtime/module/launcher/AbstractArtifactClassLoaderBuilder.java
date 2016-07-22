@@ -6,17 +6,6 @@
  */
 package org.mule.runtime.module.launcher;
 
-import static java.lang.String.format;
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptyMap;
-import static org.apache.commons.collections.CollectionUtils.find;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.core.util.Preconditions.checkState;
-import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_FIRST;
-import static org.mule.runtime.module.reboot.MuleContainerBootstrapUtils.getMuleTmpDir;
-import org.mule.runtime.core.api.DefaultMuleException;
-import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.util.FileUtils;
 import org.mule.runtime.core.util.UUID;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
@@ -47,6 +36,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static java.lang.String.format;
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyMap;
+import static org.apache.commons.collections.CollectionUtils.find;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.core.util.Preconditions.checkState;
+import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_FIRST;
+import static org.mule.runtime.module.reboot.MuleContainerBootstrapUtils.getMuleTmpDir;
 
 /**
  * Base class for all artifacts class loader filters.
@@ -164,7 +163,8 @@ public abstract class AbstractArtifactClassLoaderBuilder<T extends AbstractArtif
 
         for (File applicationPluginDependency : applicationPluginDependencies)
         {
-            ArtifactPluginDescriptor artifactPluginDescriptor = artifactPluginDescriptorLoader.load(applicationPluginDependency, new File(getMuleTmpDir(), UUID.getUUID()));
+            ArtifactPluginDescriptor artifactPluginDescriptor =
+                    artifactPluginDescriptorLoader.load(applicationPluginDependency, new File(getMuleTmpDir(), UUID.getUUID()));
             artifactPluginDescriptors.add(artifactPluginDescriptor);
         }
 
@@ -226,7 +226,9 @@ public abstract class AbstractArtifactClassLoaderBuilder<T extends AbstractArtif
         {
             if (containsApplicationPluginDescriptor(appPluginDescriptor))
             {
-                final String msg = format("Failed to deploy artifact [%s], plugin [%s] is already bundled within the container and cannot be included in artifact", artifactId, appPluginDescriptor.getName());
+                final String msg =
+                        format("Failed to deploy artifact [%s], plugin [%s] is already bundled within the container and cannot be included in artifact",
+                                artifactId, appPluginDescriptor.getName());
                 throw new DeploymentException(createStaticMessage(msg));
             }
 
@@ -236,15 +238,16 @@ public abstract class AbstractArtifactClassLoaderBuilder<T extends AbstractArtif
     }
 
     /**
-     * @param appPluginDescriptor
      * @return true if this application has the given appPluginDescriptor already defined in its artifactPluginDescriptors list.
      */
     private boolean containsApplicationPluginDescriptor(ArtifactPluginDescriptor appPluginDescriptor)
     {
-        return find(this.artifactPluginDescriptors, object -> ((ArtifactPluginDescriptor) object).getName().equals(appPluginDescriptor.getName())) != null;
+        return find(this.artifactPluginDescriptors,
+                object -> ((ArtifactPluginDescriptor) object).getName().equals(appPluginDescriptor.getName())) != null;
     }
 
-    private ArtifactClassLoader createCompositePluginClassLoader(ArtifactClassLoader parent, List<ArtifactPluginDescriptor> artifactPluginDescriptors)
+    private ArtifactClassLoader createCompositePluginClassLoader(ArtifactClassLoader parent,
+                                                                 List<ArtifactPluginDescriptor> artifactPluginDescriptors)
     {
         List<ArtifactClassLoader> classLoaders = new LinkedList<>();
 
@@ -256,7 +259,9 @@ public abstract class AbstractArtifactClassLoaderBuilder<T extends AbstractArtif
             ArtifactPlugin artifactPlugin = artifactPluginFactory.create(artifactPluginDescriptor, parent);
             artifactPluginClassLoaders.add(artifactPlugin.getArtifactClassLoader());
 
-            final FilteringArtifactClassLoader filteringPluginClassLoader = new FilteringArtifactClassLoader(artifactPlugin.getArtifactClassLoader(), artifactPlugin.getDescriptor().getClassLoaderFilter());
+            final FilteringArtifactClassLoader filteringPluginClassLoader =
+                    new FilteringArtifactClassLoader(artifactPlugin.getArtifactClassLoader(),
+                            artifactPlugin.getDescriptor().getClassLoaderFilter());
             classLoaders.add(filteringPluginClassLoader);
         }
         return new CompositeArtifactClassLoader("appPlugins", parent.getClassLoader(), classLoaders, parent.getClassLoaderLookupPolicy());

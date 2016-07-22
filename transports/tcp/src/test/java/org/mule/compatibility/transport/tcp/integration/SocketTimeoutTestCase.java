@@ -6,9 +6,8 @@
  */
 package org.mule.compatibility.transport.tcp.integration;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.compatibility.module.client.MuleClient;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.FutureMessageResult;
@@ -17,8 +16,8 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.util.concurrent.TimeoutException;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 public class SocketTimeoutTestCase extends FunctionalTestCase
 {

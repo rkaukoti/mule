@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.core.processor;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import junit.framework.Assert;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Answers;
+import org.mockito.internal.verification.VerificationModeFactory;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -26,11 +25,11 @@ import org.mule.runtime.core.api.serialization.ObjectSerializer;
 import org.mule.runtime.core.api.store.ObjectStore;
 import org.mule.runtime.core.api.store.ObjectStoreException;
 import org.mule.runtime.core.api.store.ObjectStoreManager;
-import org.mule.tck.SerializationTestUtils;
-import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.runtime.core.util.concurrent.Latch;
 import org.mule.runtime.core.util.lock.MuleLockFactory;
 import org.mule.runtime.core.util.lock.SingleServerLockProvider;
+import org.mule.tck.SerializationTestUtils;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -39,14 +38,14 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Answers;
-import org.mockito.internal.verification.VerificationModeFactory;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
-import junit.framework.Assert;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class IdempotentRedeliveryPolicyTestCase extends AbstractMuleTestCase
 {
@@ -55,7 +54,7 @@ public class IdempotentRedeliveryPolicyTestCase extends AbstractMuleTestCase
     public static final int MAX_REDELIVERY_COUNT = 0;
     private static final String UTF_8 = "utf-8";
     private static ObjectSerializer serializer;
-
+    private final IdempotentRedeliveryPolicy irp = new IdempotentRedeliveryPolicy();
     private MuleContext mockMuleContext = mock(MuleContext.class, Answers.RETURNS_DEEP_STUBS.get());
     private ObjectStoreManager mockObjectStoreManager = mock(ObjectStoreManager.class, Answers.RETURNS_DEEP_STUBS.get());
     private MessageProcessor mockFailingMessageProcessor = mock(MessageProcessor.class, Answers.RETURNS_DEEP_STUBS.get());
@@ -65,7 +64,6 @@ public class IdempotentRedeliveryPolicyTestCase extends AbstractMuleTestCase
     private MuleEvent event = mock(MuleEvent.class, Answers.RETURNS_DEEP_STUBS.get());
     private Latch waitLatch = new Latch();
     private CountDownLatch waitingMessageProcessorExecutionLatch = new CountDownLatch(2);
-    private final IdempotentRedeliveryPolicy irp = new IdempotentRedeliveryPolicy();
 
     @Before
     @SuppressWarnings("rawtypes")
@@ -90,14 +88,15 @@ public class IdempotentRedeliveryPolicyTestCase extends AbstractMuleTestCase
         when(mockMuleContext.getObjectStoreManager()).thenReturn(mockObjectStoreManager);
         when(mockMuleContext.getConfiguration().getDefaultEncoding()).thenReturn(UTF_8);
         final InMemoryObjectStore inMemoryObjectStore = new InMemoryObjectStore();
-        when(mockObjectStoreManager.getObjectStore(anyString(), anyBoolean(), anyInt(), anyInt(), anyInt())).thenAnswer(new Answer<ObjectStore>()
-        {
-            @Override
-            public ObjectStore answer(InvocationOnMock invocation) throws Throwable
-            {
-                return inMemoryObjectStore;
-            }
-        });
+        when(mockObjectStoreManager.getObjectStore(anyString(), anyBoolean(), anyInt(), anyInt(), anyInt())).thenAnswer(
+                new Answer<ObjectStore>()
+                {
+                    @Override
+                    public ObjectStore answer(InvocationOnMock invocation) throws Throwable
+                    {
+                        return inMemoryObjectStore;
+                    }
+                });
         when(event.getMessage()).thenReturn(message);
 
         IdempotentRedeliveryPolicyTestCase.serializer = SerializationTestUtils.getJavaSerializerWithMockContext();
@@ -135,14 +134,15 @@ public class IdempotentRedeliveryPolicyTestCase extends AbstractMuleTestCase
         when(message.getPayload()).thenReturn(STRING_MESSAGE);
         reset(mockObjectStoreManager);
         final ObjectStore serializationObjectStore = new SerializationObjectStore();
-        when(mockObjectStoreManager.getObjectStore(anyString(), anyBoolean(), anyInt(), anyInt(), anyInt())).thenAnswer(new Answer<ObjectStore>()
-        {
-            @Override
-            public ObjectStore answer(InvocationOnMock invocation) throws Throwable
-            {
-                return serializationObjectStore;
-            }
-        });
+        when(mockObjectStoreManager.getObjectStore(anyString(), anyBoolean(), anyInt(), anyInt(), anyInt())).thenAnswer(
+                new Answer<ObjectStore>()
+                {
+                    @Override
+                    public ObjectStore answer(InvocationOnMock invocation) throws Throwable
+                    {
+                        return serializationObjectStore;
+                    }
+                });
         irp.initialise();
         processUntilFailure();
         verify(mockDlqMessageProcessor, VerificationModeFactory.times(1)).process(event);
@@ -180,27 +180,9 @@ public class IdempotentRedeliveryPolicyTestCase extends AbstractMuleTestCase
         }
     }
 
-    public class ExecuteIrpThread extends Thread
-    {
-        public Exception exception;
-
-        @Override
-        public void run()
-        {
-            try
-            {
-                irp.process(event);
-            }
-            catch (Exception e)
-            {
-                exception = e;
-            }
-        }
-    }
-
     public static class SerializationObjectStore implements ObjectStore<AtomicInteger>
     {
-        private Map<Serializable,Serializable> store = new HashMap<Serializable,Serializable>();
+        private Map<Serializable, Serializable> store = new HashMap<Serializable, Serializable>();
 
         @Override
         public boolean contains(Serializable key) throws ObjectStoreException
@@ -243,7 +225,7 @@ public class IdempotentRedeliveryPolicyTestCase extends AbstractMuleTestCase
 
     public static class InMemoryObjectStore implements ObjectStore<AtomicInteger>
     {
-        private Map<Serializable,AtomicInteger> store = new HashMap<Serializable,AtomicInteger>();
+        private Map<Serializable, AtomicInteger> store = new HashMap<Serializable, AtomicInteger>();
 
         @Override
         public boolean contains(Serializable key) throws ObjectStoreException
@@ -254,7 +236,7 @@ public class IdempotentRedeliveryPolicyTestCase extends AbstractMuleTestCase
         @Override
         public void store(Serializable key, AtomicInteger value) throws ObjectStoreException
         {
-            store.put(key,value);
+            store.put(key, value);
         }
 
         @Override
@@ -279,6 +261,24 @@ public class IdempotentRedeliveryPolicyTestCase extends AbstractMuleTestCase
         public boolean isPersistent()
         {
             return false;
+        }
+    }
+
+    public class ExecuteIrpThread extends Thread
+    {
+        public Exception exception;
+
+        @Override
+        public void run()
+        {
+            try
+            {
+                irp.process(event);
+            }
+            catch (Exception e)
+            {
+                exception = e;
+            }
         }
     }
 }

@@ -6,6 +6,14 @@
  */
 package org.mule.runtime.module.xml.transformer;
 
+import com.saxonica.xqj.SaxonXQDataSource;
+
+import net.sf.saxon.Configuration;
+
+import org.apache.commons.pool.BasePoolableObjectFactory;
+import org.apache.commons.pool.impl.GenericObjectPool;
+import org.dom4j.io.DOMWriter;
+import org.dom4j.io.DocumentSource;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleRuntimeException;
@@ -16,6 +24,9 @@ import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.xml.i18n.XmlMessages;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -37,18 +48,6 @@ import javax.xml.xquery.XQItemType;
 import javax.xml.xquery.XQPreparedExpression;
 import javax.xml.xquery.XQResultSequence;
 
-import org.apache.commons.pool.BasePoolableObjectFactory;
-import org.apache.commons.pool.impl.GenericObjectPool;
-import org.dom4j.io.DOMWriter;
-import org.dom4j.io.DocumentSource;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
-import com.saxonica.xqj.SaxonXQDataSource;
-
-import net.sf.saxon.Configuration;
-
 /**
  * The XQuery Module gives users the ability to perform XQuery transformations on XML messages in Mule
  */
@@ -64,12 +63,11 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
     private static final int MAX_ACTIVE_TRANSFORMERS = MAX_IDLE_TRANSFORMERS;
 
     protected final GenericObjectPool transformerPool;
-
+    protected Configuration configuration;
     private volatile String xqueryFile;
     private volatile String xquery;
     private volatile Map<String, Object> contextProperties;
     private volatile XQConnection connection;
-    protected Configuration configuration;
 
     public XQueryTransformer()
     {
@@ -264,7 +262,8 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
                 }
                 else if (o instanceof Boolean)
                 {
-                    transformer.bindBoolean(paramKey, ((Boolean) o).booleanValue(), connection.createAtomicType(XQItemType.XQBASETYPE_BOOLEAN));
+                    transformer.bindBoolean(paramKey, ((Boolean) o).booleanValue(),
+                            connection.createAtomicType(XQItemType.XQBASETYPE_BOOLEAN));
                 }
                 else if (o instanceof Byte)
                 {
@@ -300,7 +299,8 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
                 }
                 else
                 {
-                    logger.warn(String.format("Cannot bind value for key '%s' because type '%s' is not supported", key, o.getClass().getName()));
+                    logger.warn(String.format("Cannot bind value for key '%s' because type '%s' is not supported", key,
+                            o.getClass().getName()));
                 }
             }
         }
@@ -316,7 +316,7 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
         // Replace transformation parameters with null values
         if (contextProperties != null)
         {
-            for (Map.Entry<String, Object> parameter: contextProperties.entrySet())
+            for (Map.Entry<String, Object> parameter : contextProperties.entrySet())
             {
                 String key = parameter.getKey();
                 transformer.bindAtomicValue(new QName(key), "", connection.createAtomicType(XQItemType.XQBASETYPE_STRING));
@@ -326,27 +326,23 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
 
     /**
      * Returns the InputSource corresponding to xqueryFile or xquery
-     *
-     * @param src
-     * @param transformer
-     * @throws XQException
-     *
-     * @throws Exception
-     *
      */
     protected void bindDocument(Object src, XQPreparedExpression transformer) throws Exception
     {
         if (src instanceof byte[])
         {
-            transformer.bindDocument(new QName(SOURCE_DOCUMENT_NAMESPACE), new StreamSource(new ByteArrayInputStream((byte[]) src)), connection.createDocumentType());
+            transformer.bindDocument(new QName(SOURCE_DOCUMENT_NAMESPACE), new StreamSource(new ByteArrayInputStream((byte[]) src)),
+                    connection.createDocumentType());
         }
         else if (src instanceof InputStream)
         {
-            transformer.bindDocument(new QName(SOURCE_DOCUMENT_NAMESPACE), new StreamSource((InputStream) src), connection.createDocumentType());
+            transformer.bindDocument(new QName(SOURCE_DOCUMENT_NAMESPACE), new StreamSource((InputStream) src),
+                    connection.createDocumentType());
         }
         else if (src instanceof String)
         {
-            transformer.bindDocument(new QName(SOURCE_DOCUMENT_NAMESPACE), new StreamSource(new ByteArrayInputStream(((String) src).getBytes())),connection.createDocumentType());
+            transformer.bindDocument(new QName(SOURCE_DOCUMENT_NAMESPACE),
+                    new StreamSource(new ByteArrayInputStream(((String) src).getBytes())), connection.createDocumentType());
         }
         else if (src instanceof Document)
         {
@@ -408,26 +404,8 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
         this.xquery = xquery;
     }
 
-    protected class PooledXQueryTransformerFactory extends BasePoolableObjectFactory
-    {
-        @Override
-        public Object makeObject() throws Exception
-        {
-            return connection.prepareExpression(xquery);
-        }
-
-        @Override
-        public void destroyObject(Object o) throws Exception
-        {
-            ((XQPreparedExpression) o).close();
-            super.destroyObject(o);
-        }
-    }
-
-
     /**
-     * @return The current maximum number of allowable active transformer objects in
-     *         the pool
+     * @return The current maximum number of allowable active transformer objects in the pool
      */
     public int getMaxActiveTransformers()
     {
@@ -446,8 +424,7 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
     }
 
     /**
-     * @return The current maximum number of allowable idle transformer objects in the
-     *         pool
+     * @return The current maximum number of allowable idle transformer objects in the pool
      */
     public int getMaxIdleTransformers()
     {
@@ -468,8 +445,7 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
      * Gets the parameters to be used when applying the transformation
      *
      * @return a map of the parameter names and associated values
-     * @see javax.xml.transform.Transformer#setParameter(java.lang.String,
-     *      java.lang.Object)
+     * @see javax.xml.transform.Transformer#setParameter(java.lang.String, java.lang.Object)
      */
     public Map<String, Object> getContextProperties()
     {
@@ -480,8 +456,7 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
      * Sets the parameters to be used when applying the transformation
      *
      * @param contextProperties a map of the parameter names and associated values
-     * @see javax.xml.transform.Transformer#setParameter(java.lang.String,
-     *      java.lang.Object)
+     * @see javax.xml.transform.Transformer#setParameter(java.lang.String, java.lang.Object)
      */
     public void setContextProperties(Map<String, Object> contextProperties)
     {
@@ -508,7 +483,6 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
      * @param name  the name of the parameter
      * @param value the value of the paramter
      * @return the object to be set as the parameter value
-     * @throws TransformerException
      */
     protected Object evaluateTransformParameter(String name, Object value, MuleEvent event) throws TransformerException
     {
@@ -531,6 +505,22 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
         catch (InitialisationException e)
         {
             throw new MuleRuntimeException(CoreMessages.failedToClone(getClass().getName()), e);
+        }
+    }
+
+    protected class PooledXQueryTransformerFactory extends BasePoolableObjectFactory
+    {
+        @Override
+        public Object makeObject() throws Exception
+        {
+            return connection.prepareExpression(xquery);
+        }
+
+        @Override
+        public void destroyObject(Object o) throws Exception
+        {
+            ((XQPreparedExpression) o).close();
+            super.destroyObject(o);
         }
     }
 }

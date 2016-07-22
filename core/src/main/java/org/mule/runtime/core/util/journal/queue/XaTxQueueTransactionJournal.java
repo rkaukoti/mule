@@ -59,7 +59,8 @@ public class XaTxQueueTransactionJournal extends AbstractQueueTransactionJournal
 
     public void logPrepare(Xid xid)
     {
-        getJournal().logCheckpointOperation(createCheckpointJournalEntry(xid, AbstractQueueTxJournalEntry.Operation.PREPARE.getByteRepresentation()));
+        getJournal().logCheckpointOperation(
+                createCheckpointJournalEntry(xid, AbstractQueueTxJournalEntry.Operation.PREPARE.getByteRepresentation()));
     }
 
     @Override

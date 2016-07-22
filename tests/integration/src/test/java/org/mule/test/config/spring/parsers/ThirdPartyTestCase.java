@@ -6,12 +6,11 @@
  */
 package org.mule.test.config.spring.parsers;
 
-import static org.junit.Assert.assertNotNull;
-
-import org.mule.test.config.spring.parsers.beans.ThirdPartyContainer;
-import org.mule.functional.junit4.FunctionalTestCase;
-
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.test.config.spring.parsers.beans.ThirdPartyContainer;
+
+import static org.junit.Assert.assertNotNull;
 
 public class ThirdPartyTestCase extends FunctionalTestCase
 {

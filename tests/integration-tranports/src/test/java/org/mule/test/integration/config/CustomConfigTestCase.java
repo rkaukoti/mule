@@ -6,16 +6,15 @@
  */
 package org.mule.test.integration.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.testmodels.mule.TestConnector;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class CustomConfigTestCase extends FunctionalTestCase
 {
@@ -29,9 +28,9 @@ public class CustomConfigTestCase extends FunctionalTestCase
     public void testCustomEndpointConfig() throws Exception
     {
         ImmutableEndpoint ep = getEndpointFactory().getOutboundEndpoint(
-            "fooEndpoint");
+                "fooEndpoint");
         assertNotNull("fooEndpoint should not be null", ep);
-        TestFilter tf = (TestFilter)ep.getFilter();
+        TestFilter tf = (TestFilter) ep.getFilter();
         assertNotNull("the filter on the endpoint should not be null", tf);
         assertEquals(tf.getFoo(), "goo");
         assertEquals(tf.getBar(), 12);

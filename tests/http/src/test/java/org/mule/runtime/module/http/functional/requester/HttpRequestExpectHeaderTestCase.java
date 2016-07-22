@@ -6,10 +6,8 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.EXPECTATION_FAILED;
-import static org.mule.runtime.module.http.functional.matcher.HttpMessageAttributesMatchers.hasStatusCode;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.extension.http.api.HttpResponseAttributes;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.module.http.functional.AbstractHttpExpectHeaderServerTestCase;
@@ -17,8 +15,10 @@ import org.mule.runtime.module.http.functional.AbstractHttpExpectHeaderServerTes
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.EXPECTATION_FAILED;
+import static org.mule.runtime.module.http.functional.matcher.HttpMessageAttributesMatchers.hasStatusCode;
 
 public class HttpRequestExpectHeaderTestCase extends AbstractHttpExpectHeaderServerTestCase
 {
@@ -60,7 +60,7 @@ public class HttpRequestExpectHeaderTestCase extends AbstractHttpExpectHeaderSer
         }).run();
 
         assertThat((HttpResponseAttributes) response.getMessage().getAttributes(),
-                   hasStatusCode(EXPECTATION_FAILED.getStatusCode()));
+                hasStatusCode(EXPECTATION_FAILED.getStatusCode()));
 
         stopServer();
     }

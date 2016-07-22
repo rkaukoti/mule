@@ -13,18 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Keeps track of the deployment status of the artifact listening to the deployment notifications
  */
-public class ArtifactDeploymentStatusTracker  extends AbstractDeploymentListener
+public class ArtifactDeploymentStatusTracker extends AbstractDeploymentListener
 {
-
-    public static enum DeploymentState
-    {
-        // The deployment is in progress
-        DEPLOYING,
-        // The deployment was finished with a failure
-        FAILED,
-        // The deployment was successfully finished
-        DEPLOYED
-    }
 
     protected Map<String, DeploymentState> deploymentStates = new ConcurrentHashMap<String, DeploymentState>();
 
@@ -46,6 +36,16 @@ public class ArtifactDeploymentStatusTracker  extends AbstractDeploymentListener
     public void onDeploymentFailure(String artifactName, Throwable failureCause)
     {
         deploymentStates.put(artifactName, DeploymentState.FAILED);
+    }
+
+    public static enum DeploymentState
+    {
+        // The deployment is in progress
+        DEPLOYING,
+        // The deployment was finished with a failure
+        FAILED,
+        // The deployment was successfully finished
+        DEPLOYED
     }
 
 }

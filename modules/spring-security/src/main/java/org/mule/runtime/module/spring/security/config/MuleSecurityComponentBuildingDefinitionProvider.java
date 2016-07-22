@@ -6,14 +6,6 @@
  */
 package org.mule.runtime.module.spring.security.config;
 
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromChildCollectionConfiguration;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromReferenceObject;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromSimpleParameter;
-import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromSimpleReferenceParameter;
-import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
-import static org.mule.runtime.module.spring.security.config.MuleSecurityXmlNamespaceInfoProvider.MULE_SS_NAMESPACE;
 import org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinition;
 import org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinitionProvider;
 import org.mule.runtime.core.api.MuleContext;
@@ -24,6 +16,15 @@ import org.mule.runtime.module.spring.security.SpringProviderAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromChildCollectionConfiguration;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromReferenceObject;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromSimpleParameter;
+import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder.fromSimpleReferenceParameter;
+import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
+import static org.mule.runtime.module.spring.security.config.MuleSecurityXmlNamespaceInfoProvider.MULE_SS_NAMESPACE;
 
 /**
  * {@link org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinition} definitions for the components
@@ -46,37 +47,44 @@ public class MuleSecurityComponentBuildingDefinitionProvider implements Componen
         ComponentBuildingDefinition.Builder baseDefinition = new ComponentBuildingDefinition.Builder().withNamespace(MULE_SS_NAMESPACE);
 
         componentBuildingDefinitions.add(baseDefinition.copy()
-                                                 .withIdentifier("security-manager")
-                                                 .withTypeDefinition(fromType(SecurityManager.class))
-                                                 .withObjectFactoryType(MuleSecurityManagerConfigurator.class)
-                                                 .withSetterParameterDefinition("muleContext", fromReferenceObject(MuleContext.class).build())
-                                                 .withSetterParameterDefinition("name", fromSimpleParameter("name").build())
-                                                 .withSetterParameterDefinition("providers", fromChildCollectionConfiguration(SecurityProvider.class).build())
-                                                 .build());
+                                                       .withIdentifier("security-manager")
+                                                       .withTypeDefinition(fromType(SecurityManager.class))
+                                                       .withObjectFactoryType(MuleSecurityManagerConfigurator.class)
+                                                       .withSetterParameterDefinition("muleContext",
+                                                               fromReferenceObject(MuleContext.class).build())
+                                                       .withSetterParameterDefinition("name", fromSimpleParameter("name").build())
+                                                       .withSetterParameterDefinition("providers",
+                                                               fromChildCollectionConfiguration(SecurityProvider.class).build())
+                                                       .build());
 
         componentBuildingDefinitions.add(baseDefinition.copy()
-                                                 .withIdentifier("delegate-security-provider")
-                                                 .withTypeDefinition(fromType(SpringProviderAdapter.class))
-                                                 .withSetterParameterDefinition("name", fromSimpleParameter("name").build())
-                                                 .withSetterParameterDefinition("securityProperties", fromChildCollectionConfiguration(SecurityProperty.class).build())
-                                                 .withSetterParameterDefinition("delegate", fromSimpleReferenceParameter("delegate-ref").build())
-                                                 .withSetterParameterDefinition("authenticationProvider", fromSimpleReferenceParameter("authenticationProvider-ref").build())
-                                                 .build());
+                                                       .withIdentifier("delegate-security-provider")
+                                                       .withTypeDefinition(fromType(SpringProviderAdapter.class))
+                                                       .withSetterParameterDefinition("name", fromSimpleParameter("name").build())
+                                                       .withSetterParameterDefinition("securityProperties",
+                                                               fromChildCollectionConfiguration(SecurityProperty.class).build())
+                                                       .withSetterParameterDefinition("delegate",
+                                                               fromSimpleReferenceParameter("delegate-ref").build())
+                                                       .withSetterParameterDefinition("authenticationProvider",
+                                                               fromSimpleReferenceParameter("authenticationProvider-ref").build())
+                                                       .build());
 
         componentBuildingDefinitions.add(baseDefinition.copy()
-                                                 .withIdentifier("security-property")
-                                                 .withTypeDefinition(fromType(SecurityProperty.class))
-                                                 .withConstructorParameterDefinition(fromSimpleParameter("name").build())
-                                                 .withConstructorParameterDefinition(fromSimpleParameter("value").build())
-                                                 .build());
+                                                       .withIdentifier("security-property")
+                                                       .withTypeDefinition(fromType(SecurityProperty.class))
+                                                       .withConstructorParameterDefinition(fromSimpleParameter("name").build())
+                                                       .withConstructorParameterDefinition(fromSimpleParameter("value").build())
+                                                       .build());
 
         componentBuildingDefinitions.add(baseDefinition.copy()
-                                                 .withIdentifier("authorization-filter")
-                                                 .withTypeDefinition(fromType(AuthorizationFilter.class))
-                                                 .withSetterParameterDefinition("requiredAuthorities", fromSimpleParameter("requiredAuthorities", (value) -> asList(((String) value).split(","))
-                                                         .stream()
-                                                         .map(String::trim).collect(toList())).build())
-                                                 .build());
+                                                       .withIdentifier("authorization-filter")
+                                                       .withTypeDefinition(fromType(AuthorizationFilter.class))
+                                                       .withSetterParameterDefinition("requiredAuthorities",
+                                                               fromSimpleParameter("requiredAuthorities",
+                                                                       (value) -> asList(((String) value).split(","))
+                                                                               .stream()
+                                                                               .map(String::trim).collect(toList())).build())
+                                                       .build());
         return componentBuildingDefinitions;
     }
 }

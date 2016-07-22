@@ -33,7 +33,6 @@ public class DefaultValueResolverParsingDelegate implements ValueResolverParsing
     /**
      * @param key          the parsed entity key
      * @param metadataType a {@link MetadataType}
-     * @param dslElementResolver
      * @return A {@link ValueResolver} that performs a registry lookup using the given {@code key}
      */
     @Override

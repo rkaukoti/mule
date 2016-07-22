@@ -7,19 +7,18 @@
 package org.mule.compatibility.transport.http;
 
 
-import org.mule.runtime.core.util.IOUtils;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.util.Iterator;
-
 import org.apache.commons.httpclient.ChunkedInputStream;
 import org.apache.commons.httpclient.ContentLengthInputStream;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HeaderElement;
 import org.apache.commons.httpclient.HeaderGroup;
 import org.apache.commons.httpclient.NameValuePair;
+import org.mule.runtime.core.util.IOUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.Iterator;
 
 /**
  * A http request wrapper

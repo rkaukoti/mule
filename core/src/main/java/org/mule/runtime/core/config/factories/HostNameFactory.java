@@ -8,11 +8,10 @@ package org.mule.runtime.core.config.factories;
 
 import org.mule.runtime.core.api.config.PropertyFactory;
 import org.mule.runtime.core.util.NetworkUtils;
-
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Map;
 
 /**
  * Extracts the local hostname from the local system

@@ -6,11 +6,11 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.test.integration.exceptions.CatchExceptionStrategyTestCase.JSON_REQUEST;
-import static org.mule.test.integration.exceptions.CatchExceptionStrategyTestCase.JSON_RESPONSE;
-
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.hamcrest.core.Is;
+import org.hamcrest.core.IsNull;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -19,11 +19,10 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.transaction.Transaction;
 import org.mule.runtime.core.transaction.TransactionCoordination;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.hamcrest.core.Is;
-import org.hamcrest.core.IsNull;
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.test.integration.exceptions.CatchExceptionStrategyTestCase.JSON_REQUEST;
+import static org.mule.test.integration.exceptions.CatchExceptionStrategyTestCase.JSON_RESPONSE;
 
 public class CatchExceptionStrategyFlowRefTestCase extends FunctionalTestCase
 {

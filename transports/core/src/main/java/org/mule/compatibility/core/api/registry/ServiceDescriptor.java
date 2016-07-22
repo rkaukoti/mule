@@ -8,7 +8,7 @@ package org.mule.compatibility.core.api.registry;
 
 /**
  * Parent interface for any pluggable service in Mule (transport, model, etc.)
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated

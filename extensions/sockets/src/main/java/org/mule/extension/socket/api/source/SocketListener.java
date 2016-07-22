@@ -6,11 +6,6 @@
  */
 package org.mule.extension.socket.api.source;
 
-import static java.lang.String.format;
-import static java.util.concurrent.Executors.newSingleThreadExecutor;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static org.mule.runtime.core.util.concurrent.ThreadNameHelper.getPrefix;
-
 import org.mule.extension.socket.api.SocketAttributes;
 import org.mule.extension.socket.api.config.ListenerConfig;
 import org.mule.extension.socket.api.connection.ListenerConnection;
@@ -25,6 +20,8 @@ import org.mule.runtime.core.api.context.WorkManager;
 import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.UseConfig;
 import org.mule.runtime.extension.api.runtime.source.Source;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.util.concurrent.ExecutorService;
@@ -34,8 +31,10 @@ import javax.inject.Inject;
 import javax.resource.spi.work.WorkEvent;
 import javax.resource.spi.work.WorkListener;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static java.util.concurrent.Executors.newSingleThreadExecutor;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static org.mule.runtime.core.util.concurrent.ThreadNameHelper.getPrefix;
 
 /**
  * Listens for socket connections of the given protocol in the configured host and port.
@@ -73,13 +72,107 @@ public final class SocketListener extends Source<InputStream, SocketAttributes> 
     {
 
         // TODO MULE-9898
-        ThreadingProfile threadingProfile = config.getThreadingProfile() == null ? muleContext.getDefaultThreadingProfile() : config.getThreadingProfile();
+        ThreadingProfile threadingProfile =
+                config.getThreadingProfile() == null ? muleContext.getDefaultThreadingProfile() : config.getThreadingProfile();
         workManager = threadingProfile.createWorkManager("SocketListenerWorkManager", muleContext.getConfiguration().getShutdownTimeout());
         workManager.start();
 
-        executorService = newSingleThreadExecutor(r -> new Thread(r, format("%s%s.socket.listener", getPrefix(muleContext), flowConstruct.getName())));
+        executorService = newSingleThreadExecutor(
+                r -> new Thread(r, format("%s%s.socket.listener", getPrefix(muleContext), flowConstruct.getName())));
         stopRequested.set(false);
         executorService.execute(this::listen);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void stop()
+    {
+        stopRequested.set(true);
+        workManager.dispose();
+        shutdownExecutor();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setFlowConstruct(FlowConstruct flowConstruct)
+    {
+        this.flowConstruct = flowConstruct;
+    }
+
+    private boolean isRequestedToStop()
+    {
+        return stopRequested.get() || Thread.currentThread().isInterrupted();
+    }
+
+    private void shutdownExecutor()
+    {
+        if (executorService == null)
+        {
+            return;
+        }
+
+        executorService.shutdownNow();
+        try
+        {
+            if (!executorService.awaitTermination(muleContext.getConfiguration().getShutdownTimeout(), MILLISECONDS))
+            {
+                if (LOGGER.isWarnEnabled())
+                {
+                    LOGGER.warn("Could not properly terminate pending events for socket listener on flow " + flowConstruct.getName());
+                }
+            }
+        }
+        catch (InterruptedException e)
+        {
+            if (LOGGER.isWarnEnabled())
+            {
+                LOGGER.warn(
+                        "Got interrupted while trying to terminate pending events for socket listener on flow " + flowConstruct.getName());
+            }
+        }
+    }
+
+    private void listen()
+    {
+
+        SocketWorkListener socketWorkListener = new SocketWorkListener();
+        for (; ; )
+        {
+            if (isRequestedToStop())
+            {
+                return;
+            }
+
+            try
+            {
+                SocketWorker worker = connection.listen(sourceContext.getMessageHandler());
+                worker.setEncoding(config.getDefaultEncoding());
+                workManager.scheduleWork(worker, WorkManager.INDEFINITE, null, socketWorkListener);
+            }
+            catch (ConnectionException e)
+            {
+                if (!isRequestedToStop())
+                {
+                    sourceContext.getExceptionCallback().onException(e);
+                }
+            }
+            catch (Exception e)
+            {
+                if (isRequestedToStop())
+                {
+                    return;
+                }
+
+                if (LOGGER.isDebugEnabled())
+                {
+                    LOGGER.debug("An exception occurred while listening for new connections", e);
+                }
+            }
+        }
     }
 
     private class SocketWorkListener implements WorkListener
@@ -143,104 +236,12 @@ public final class SocketListener extends Source<InputStream, SocketAttributes> 
             if (LOGGER.isDebugEnabled())
             {
                 LOGGER.debug(format("Work caused exception on '%s'. Work being executed was: %s",
-                                    type, event.getWork().toString()));
+                        type, event.getWork().toString()));
             }
 
             if (e instanceof MessagingException || e instanceof ConnectionException)
             {
                 sourceContext.getExceptionCallback().onException(e);
-            }
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void stop()
-    {
-        stopRequested.set(true);
-        workManager.dispose();
-        shutdownExecutor();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setFlowConstruct(FlowConstruct flowConstruct)
-    {
-        this.flowConstruct = flowConstruct;
-    }
-
-    private boolean isRequestedToStop()
-    {
-        return stopRequested.get() || Thread.currentThread().isInterrupted();
-    }
-
-    private void shutdownExecutor()
-    {
-        if (executorService == null)
-        {
-            return;
-        }
-
-        executorService.shutdownNow();
-        try
-        {
-            if (!executorService.awaitTermination(muleContext.getConfiguration().getShutdownTimeout(), MILLISECONDS))
-            {
-                if (LOGGER.isWarnEnabled())
-                {
-                    LOGGER.warn("Could not properly terminate pending events for socket listener on flow " + flowConstruct.getName());
-                }
-            }
-        }
-        catch (InterruptedException e)
-        {
-            if (LOGGER.isWarnEnabled())
-            {
-                LOGGER.warn("Got interrupted while trying to terminate pending events for socket listener on flow " + flowConstruct.getName());
-            }
-        }
-    }
-
-
-    private void listen()
-    {
-
-        SocketWorkListener socketWorkListener = new SocketWorkListener();
-        for (; ; )
-        {
-            if (isRequestedToStop())
-            {
-                return;
-            }
-
-            try
-            {
-                SocketWorker worker = connection.listen(sourceContext.getMessageHandler());
-                worker.setEncoding(config.getDefaultEncoding());
-                workManager.scheduleWork(worker, WorkManager.INDEFINITE, null, socketWorkListener);
-            }
-            catch (ConnectionException e)
-            {
-                if (!isRequestedToStop())
-                {
-                    sourceContext.getExceptionCallback().onException(e);
-                }
-            }
-            catch (Exception e)
-            {
-                if (isRequestedToStop())
-                {
-                    return;
-                }
-
-                if (LOGGER.isDebugEnabled())
-                {
-                    LOGGER.debug("An exception occurred while listening for new connections", e);
-                }
             }
         }
     }

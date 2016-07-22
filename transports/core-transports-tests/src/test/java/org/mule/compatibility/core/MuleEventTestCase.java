@@ -6,13 +6,7 @@
  */
 package org.mule.compatibility.core;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
@@ -41,13 +35,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 
 public class MuleEventTestCase extends AbstractMuleContextEndpointTestCase
 {
 
     private static final String TEST_PAYLOAD = "anyValuePayload";
+
     /*
      * See http://mule.mulesoft.org/jira/browse/MULE-384 for details.
      */
@@ -196,7 +196,7 @@ public class MuleEventTestCase extends AbstractMuleContextEndpointTestCase
         byte[] serializedEvent = muleContext.getObjectSerializer().serialize(testEvent);
         testEvent = muleContext.getObjectSerializer().deserialize(serializedEvent);
 
-        assertArrayEquals((byte[])testEvent.getMessage().getPayload(), payload.toString().getBytes());
+        assertArrayEquals((byte[]) testEvent.getMessage().getPayload(), payload.toString().getBytes());
     }
 
     private void createAndRegisterTransformersEndpointBuilderService() throws Exception
@@ -224,6 +224,11 @@ public class MuleEventTestCase extends AbstractMuleContextEndpointTestCase
         getTestFlow();
     }
 
+    public void registerEndpointBuilder(MuleRegistry registry, String name, EndpointBuilder builder) throws MuleException
+    {
+        registry.registerObject(name, builder, EndpointBuilder.class);
+    }
+
     private static class TestEventTransformer extends AbstractTransformer
     {
         @Override
@@ -231,10 +236,5 @@ public class MuleEventTestCase extends AbstractMuleContextEndpointTestCase
         {
             return "Transformed Test Data";
         }
-    }
-
-    public void registerEndpointBuilder(MuleRegistry registry, String name, EndpointBuilder builder) throws MuleException
-    {
-        registry.registerObject(name, builder, EndpointBuilder.class);
     }
 }

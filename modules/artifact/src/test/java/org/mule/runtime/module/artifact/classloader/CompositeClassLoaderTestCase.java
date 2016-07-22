@@ -7,6 +7,17 @@
 
 package org.mule.runtime.module.artifact.classloader;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.mule.runtime.module.artifact.classloader.TestClassLoader.TestClassNotFoundException;
+import org.mule.runtime.module.artifact.classloader.exception.CompositeClassNotFoundException;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
@@ -17,18 +28,6 @@ import static org.mockito.Mockito.when;
 import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_FIRST;
 import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_ONLY;
 import static org.mule.tck.junit4.matcher.FunctionExpressionMatcher.expressionMatches;
-
-import org.mule.runtime.module.artifact.classloader.TestClassLoader.TestClassNotFoundException;
-import org.mule.runtime.module.artifact.classloader.exception.CompositeClassNotFoundException;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 public class CompositeClassLoaderTestCase extends AbstractMuleTestCase
 {
@@ -43,13 +42,11 @@ public class CompositeClassLoaderTestCase extends AbstractMuleTestCase
     public static final String LIBRARY_FROM_PARENT = "parent.dummy.so";
     public static final String LIBRARY_FROM_CLASSLAODER1 = "classloader1.dummy.so";
     public static final String LIBRARY_FROM_CLASSLAODER2 = "classloader2.dummy.so";
-
-    @Rule
-    public ExpectedException expected = ExpectedException.none();
-
     private final TestClassLoader parentClassLoader = new TestClassLoader();
     private final TestClassLoader classLoader1 = new TestClassLoader();
     private final TestClassLoader classLoader2 = new SubTestClassLoader();
+    @Rule
+    public ExpectedException expected = ExpectedException.none();
 
     @Test
     public void usesParentOnlyLookup() throws ClassNotFoundException
@@ -111,7 +108,7 @@ public class CompositeClassLoaderTestCase extends AbstractMuleTestCase
     }
 
     @Test
-    public void  usesParentFirstAndChildLookupAndFails() throws ClassNotFoundException
+    public void usesParentFirstAndChildLookupAndFails() throws ClassNotFoundException
     {
         expected.expect(CompositeClassNotFoundException.class);
         expected.expectMessage(startsWith("Cannot load class '" + CLASS_NAME + "': ["));

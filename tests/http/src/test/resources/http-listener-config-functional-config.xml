@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:httpn="http://www.mulesoft.org/schema/mule/httpn"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/httpn http://www.mulesoft.org/schema/mule/httpn/current/mule-httpn.xsd">
 
@@ -22,23 +22,23 @@
     </httpn:listener-config>
 
     <flow name="emptyListenerConfigFlow">
-        <httpn:listener path="${path}" config-ref="emptyConfig" />
+        <httpn:listener path="${path}" config-ref="emptyConfig"/>
         <echo-component/>
     </flow>
 
     <!-- If no listener is defined for a config, no server is created -->
     <flow name="noListenerConfigListenerFlow">
-        <httpn:listener path="listener" config-ref="noListenerConfig" />
+        <httpn:listener path="listener" config-ref="noListenerConfig"/>
         <echo-component/>
     </flow>
 
     <flow name="fullListenerConfigFlow">
-        <httpn:listener path="${path}" config-ref="fullConfig" />
+        <httpn:listener path="${path}" config-ref="fullConfig"/>
         <echo-component/>
     </flow>
 
     <flow name="useDifferentIpSamePathFlow">
-        <httpn:listener path="${path}" config-ref="nonLocalHostConfig" />
+        <httpn:listener path="${path}" config-ref="nonLocalHostConfig"/>
         <echo-component/>
     </flow>
 
@@ -52,16 +52,16 @@
     </httpn:listener-config>
 
     <flow name="useSlashInPathAndBasePath1">
-        <httpn:listener path="/" config-ref="slashListenerConfig" />
-        <set-payload value="1" />
+        <httpn:listener path="/" config-ref="slashListenerConfig"/>
+        <set-payload value="1"/>
     </flow>
     <flow name="useSlashInPathAndBasePath2">
-        <httpn:listener path="//" config-ref="slashListenerConfig" />
-        <set-payload value="2" />
+        <httpn:listener path="//" config-ref="slashListenerConfig"/>
+        <set-payload value="2"/>
     </flow>
     <flow name="useSlashInPathAndBasePath3">
-        <httpn:listener path="///" config-ref="slashListenerConfig" />
-        <set-payload value="3" />
+        <httpn:listener path="///" config-ref="slashListenerConfig"/>
+        <set-payload value="3"/>
     </flow>
 
 </mule>

@@ -6,16 +6,15 @@
  */
 package org.mule.runtime.modules.schedulers.cron;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.exception.SystemExceptionHandler;
 import org.mule.runtime.core.api.schedule.Scheduler;
 import org.mule.runtime.core.source.polling.PollingTask;
 import org.mule.runtime.core.source.polling.PollingWorker;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 public class CronSchedulerFactoryTest
 {

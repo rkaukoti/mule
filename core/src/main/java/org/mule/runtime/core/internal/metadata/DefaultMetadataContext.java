@@ -31,7 +31,8 @@ public class DefaultMetadataContext implements MetadataContext
      * Retrieves the configuration for the related component
      *
      * @param configInstance    instance of the configuration of a component
-     * @param connectionManager {@link ConnectionManager} which is able to find a connection for the component using the {@param configInstance}
+     * @param connectionManager {@link ConnectionManager} which is able to find a connection for the component using the {@param
+     *                          configInstance}
      * @param cache             instance of the {@link MetadataCache} for this context
      */
     public DefaultMetadataContext(ConfigurationInstance<Object> configInstance, ConnectionManager connectionManager, MetadataCache cache)
@@ -55,8 +56,8 @@ public class DefaultMetadataContext implements MetadataContext
      * Retrieves the connection for the related component and configuration
      *
      * @param <C> Connection type
-     * @return A connection instance of {@param <C>} type for the component. If the related configuration does not
-     * require a connection {@link Optional#empty()} will be returned
+     * @return A connection instance of {@param <C>} type for the component. If the related configuration does not require a connection
+     * {@link Optional#empty()} will be returned
      * @throws ConnectionException when no valid connection is found for the related component and configuration
      */
     @Override

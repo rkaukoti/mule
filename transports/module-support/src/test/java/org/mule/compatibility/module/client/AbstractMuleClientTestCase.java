@@ -6,17 +6,15 @@
  */
 package org.mule.compatibility.module.client;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
-import org.mule.compatibility.module.client.MuleClient;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 public abstract class AbstractMuleClientTestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -38,14 +36,14 @@ public abstract class AbstractMuleClientTestCase extends AbstractMuleContextEndp
     public void testOutboundEndpointCache() throws MuleException
     {
         MuleClient muleClient = new MuleClient(muleContext);
-        OutboundEndpoint endpointa = muleClient.getOutboundEndpoint("test://test1", 
-            MessageExchangePattern.REQUEST_RESPONSE, null);
-        OutboundEndpoint endpointb = muleClient.getOutboundEndpoint("test://test1", 
-            MessageExchangePattern.REQUEST_RESPONSE, null);
-        OutboundEndpoint endpointd = muleClient.getOutboundEndpoint("test://test2", 
-            MessageExchangePattern.REQUEST_RESPONSE, null);
-        OutboundEndpoint endpointc = muleClient.getOutboundEndpoint("test://test1", 
-            MessageExchangePattern.REQUEST_RESPONSE, null);
+        OutboundEndpoint endpointa = muleClient.getOutboundEndpoint("test://test1",
+                MessageExchangePattern.REQUEST_RESPONSE, null);
+        OutboundEndpoint endpointb = muleClient.getOutboundEndpoint("test://test1",
+                MessageExchangePattern.REQUEST_RESPONSE, null);
+        OutboundEndpoint endpointd = muleClient.getOutboundEndpoint("test://test2",
+                MessageExchangePattern.REQUEST_RESPONSE, null);
+        OutboundEndpoint endpointc = muleClient.getOutboundEndpoint("test://test1",
+                MessageExchangePattern.REQUEST_RESPONSE, null);
         assertEquals(endpointa, endpointc);
         assertEquals(endpointb, endpointb);
         assertNotSame(endpointa, endpointd);

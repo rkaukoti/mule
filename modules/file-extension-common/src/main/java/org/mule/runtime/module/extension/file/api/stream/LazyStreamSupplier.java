@@ -26,7 +26,8 @@ public final class LazyStreamSupplier implements Supplier<InputStream>
 
     public LazyStreamSupplier(Supplier<InputStream> streamFactory)
     {
-        delegate = () -> {
+        delegate = () ->
+        {
             synchronized (this)
             {
                 if (stream == null)

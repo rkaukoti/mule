@@ -39,13 +39,17 @@ public class MavenArtifactToClassPathUrlsResolver
      * Looks for a matching {@link URL} for the artifact.
      *
      * @param artifact to be used in order to find the {@link URL} in list of urls
-     * @param urls a list of {@link URL} provided by the classpath
-     * @throws IllegalArgumentException if the artifact couldn't be resolved to a URL
+     * @param urls     a list of {@link URL} provided by the classpath
      * @return a non-null {@link URL} that represents the {@link MavenArtifact} passed
+     * @throws IllegalArgumentException if the artifact couldn't be resolved to a URL
      */
     public URL resolveURL(final MavenArtifact artifact, final List<URL> urls)
     {
-        Optional<URL> artifactURL = urls.stream().filter(filePath -> filePath.getFile().contains(artifact.getGroupIdAsPath() + File.separator + artifact.getArtifactId() + File.separator)).findFirst();
+        Optional<URL> artifactURL = urls.stream()
+                                        .filter(filePath -> filePath.getFile()
+                                                                    .contains(artifact.getGroupIdAsPath() + File.separator +
+                                                                              artifact.getArtifactId() + File.separator))
+                                        .findFirst();
         if (artifactURL.isPresent())
         {
             return artifactURL.get();
@@ -61,13 +65,14 @@ public class MavenArtifactToClassPathUrlsResolver
      * It also supports to look for jars or classes depending if the artifacts were packaged or not.
      *
      * @param artifact to be used in order to find the {@link URL} in list of urls
-     * @param urls a list of {@link URL} obtained from the classpath
-     * @throws IllegalArgumentException if couldn't find a mapping URL either
+     * @param urls     a list of {@link URL} obtained from the classpath
      * @return a non-null {@link URL} that represents the {@link MavenArtifact} passed
+     * @throws IllegalArgumentException if couldn't find a mapping URL either
      */
     private URL getModuleURL(final MavenArtifact artifact, final List<URL> urls)
     {
-        final StringBuilder moduleFolder = new StringBuilder(mavenMultiModuleArtifactMapping.getFolderName(artifact.getArtifactId())).append("target/");
+        final StringBuilder moduleFolder =
+                new StringBuilder(mavenMultiModuleArtifactMapping.getFolderName(artifact.getArtifactId())).append("target/");
 
         // Fix to handle when running test during an install phase due to maven builds the classpath pointing out to packaged files instead of classes folders.
         final StringBuilder explodedUrlSuffix = new StringBuilder();
@@ -82,7 +87,8 @@ public class MavenArtifactToClassPathUrlsResolver
             explodedUrlSuffix.append("classes/");
             packagedUrlSuffix.append("^(?!.*?(?:-tests.jar)).*.jar");
         }
-        final Optional<URL> localFile = urls.stream().filter(url -> {
+        final Optional<URL> localFile = urls.stream().filter(url ->
+        {
             String path = url.getFile();
             if (path.contains(moduleFolder))
             {
@@ -93,7 +99,9 @@ public class MavenArtifactToClassPathUrlsResolver
         }).findFirst();
         if (!localFile.isPresent())
         {
-            throw new IllegalArgumentException("Cannot locate artifact as multi-module dependency: '" + artifact + "', on module folder: " + moduleFolder + " using exploded url suffix regex: " + explodedUrlSuffix + " or " + packagedUrlSuffix + " using classpath: " + urls);
+            throw new IllegalArgumentException(
+                    "Cannot locate artifact as multi-module dependency: '" + artifact + "', on module folder: " + moduleFolder +
+                    " using exploded url suffix regex: " + explodedUrlSuffix + " or " + packagedUrlSuffix + " using classpath: " + urls);
 
         }
         return localFile.get();

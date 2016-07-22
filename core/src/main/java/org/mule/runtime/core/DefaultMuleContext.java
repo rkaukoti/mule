@@ -6,11 +6,6 @@
  */
 package org.mule.runtime.core;
 
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_EXPRESSION_LANGUAGE;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_POLLING_CONTROLLER;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_TRANSACTION_MANAGER;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.startIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
 import org.mule.runtime.config.spring.DefaultCustomizationService;
 import org.mule.runtime.core.api.CustomizationService;
 import org.mule.runtime.core.api.Injector;
@@ -79,6 +74,8 @@ import org.mule.runtime.core.util.concurrent.Latch;
 import org.mule.runtime.core.util.lock.LockFactory;
 import org.mule.runtime.core.util.queue.QueueManager;
 import org.mule.runtime.extension.api.ExtensionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -91,8 +88,11 @@ import javax.resource.spi.work.WorkListener;
 import javax.transaction.TransactionManager;
 import javax.xml.namespace.QName;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_EXPRESSION_LANGUAGE;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_POLLING_CONTROLLER;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_TRANSACTION_MANAGER;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.startIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
 
 public class DefaultMuleContext implements MuleContext
 {
@@ -106,85 +106,59 @@ public class DefaultMuleContext implements MuleContext
     public static final String LOCAL_PERSISTENT_OBJECT_STORE_KEY = "_localPersistentObjectStore";
     public static final String LOCAL_OBJECT_STORE_MANAGER_KEY = "_localObjectStoreManager";
     public static final String LOCAL_QUEUE_MANAGER_KEY = "_localQueueManager";
-
+    private final Latch startLatch = new Latch();
+    /**
+     * LifecycleManager for the MuleContext.  Note: this is NOT the same lifecycle manager
+     * as the one in the Registry.
+     */
+    protected MuleContextLifecycleManager lifecycleManager;
+    protected ServerNotificationManager notificationManager;
+    protected MuleClient localMuleClient;
+    /**
+     * Global exception handler which handles "system" exceptions (i.e., when no message is involved).
+     */
+    protected SystemExceptionHandler exceptionListener;
     /**
      * logger used by this class
      */
     private transient Logger logger = LoggerFactory.getLogger(DefaultMuleContext.class);
-
     private CustomizationService customizationService = new DefaultCustomizationService();
-
     /**
      * Internal registry facade which delegates to other registries.
      */
     private DefaultRegistryBroker registryBroker;
-
     /**
      * Simplified Mule configuration interface
      */
     private MuleRegistry muleRegistryHelper;
-
     /**
      * Default component to perform dependency injection
      *
      * @since 3.7.0
      */
     private Injector injector;
-
     /**
      * stats used for management
      */
     private AllStatistics stats = new AllStatistics();
-
     private WorkManager workManager;
-
     private WorkListener workListener;
-
-    /**
-     * LifecycleManager for the MuleContext.  Note: this is NOT the same lifecycle manager
-     * as the one in the Registry.
-     */
-    protected MuleContextLifecycleManager lifecycleManager;
-
-    protected ServerNotificationManager notificationManager;
-
     private MuleConfiguration config;
-
     /**
      * the date in milliseconds from when the server was started
      */
     private long startDate;
-
     private ExpressionManager expressionManager;
-
     private volatile StreamCloserService streamCloserService;
     private Object streamCloserServiceLock = new Object();
-
     private ClassLoader executionClassLoader;
-
-    protected MuleClient localMuleClient;
-
-    /**
-     * Global exception handler which handles "system" exceptions (i.e., when no message is involved).
-     */
-    protected SystemExceptionHandler exceptionListener;
-
     private PollingController pollingController = new DefaultPollingController();
-
     private ClusterConfiguration clusterConfiguration = new NullClusterConfiguration();
-
     private Map<QName, Set<Object>> configurationAnnotations = new HashMap<QName, Set<Object>>();
-
     private SingleResourceTransactionFactoryManager singleResourceTransactionFactoryManager = new SingleResourceTransactionFactoryManager();
-
     private LockFactory lockFactory;
-
     private ExpressionLanguage expressionLanguage;
-
     private ProcessingTimeWatcher processingTimeWatcher;
-
-    private final Latch startLatch = new Latch();
-
     private QueueManager queueManager;
 
     private ExtensionManager extensionManager;
@@ -272,7 +246,7 @@ public class DefaultMuleContext implements MuleContext
         catch (RuntimeException e)
         {
             throw new InitialisationException(CoreMessages.invalidJdk(SystemUtils.JAVA_VERSION,
-                                                                      JdkVersionUtils.getSupportedJdks()), this);
+                    JdkVersionUtils.getSupportedJdks()), this);
         }
 
         try
@@ -478,6 +452,11 @@ public class DefaultMuleContext implements MuleContext
         return lifecycleManager;
     }
 
+    public void setLifecycleManager(MuleContextLifecycleManager lifecyleManager)
+    {
+        this.lifecycleManager = lifecyleManager;
+    }
+
     /**
      * Gets all statistics for this instance
      *
@@ -520,11 +499,9 @@ public class DefaultMuleContext implements MuleContext
      * Fires a server notification to all registered
      * {@link org.mule.runtime.core.api.context.notification.CustomNotificationListener} notificationManager.
      *
-     * @param notification the notification to fire. This must be of type
-     *                     {@link org.mule.runtime.core.context.notification.CustomNotification} otherwise an
-     *                     exception will be thrown.
-     * @throws UnsupportedOperationException if the notification fired is not a
-     *                                       {@link org.mule.runtime.core.context.notification.CustomNotification}
+     * @param notification the notification to fire. This must be of type {@link org.mule.runtime.core.context.notification.CustomNotification}
+     *                     otherwise an exception will be thrown.
+     * @throws UnsupportedOperationException if the notification fired is not a {@link org.mule.runtime.core.context.notification.CustomNotification}
      */
     @Override
     public void fireNotification(ServerNotification notification)
@@ -541,27 +518,11 @@ public class DefaultMuleContext implements MuleContext
     }
 
     /**
-     * Sets the security manager used by this Mule instance to authenticate and
-     * authorise incoming and outgoing event traffic and service invocations
-     *
-     * @param securityManager the security manager used by this Mule instance to
-     *                        authenticate and authorise incoming and outgoing event traffic
-     *                        and service invocations
-     */
-    @Override
-    public void setSecurityManager(SecurityManager securityManager) throws RegistrationException
-    {
-        checkLifecycleForPropertySet(MuleProperties.OBJECT_SECURITY_MANAGER, Initialisable.PHASE_NAME);
-        registryBroker.registerObject(MuleProperties.OBJECT_SECURITY_MANAGER, securityManager);
-    }
-
-    /**
      * Gets the security manager used by this Mule instance to authenticate and
      * authorise incoming and outgoing event traffic and service invocations
      *
-     * @return he security manager used by this Mule instance to authenticate
-     *         and authorise incoming and outgoing event traffic and service
-     *         invocations
+     * @return he security manager used by this Mule instance to authenticate and authorise incoming and outgoing event traffic and service
+     * invocations
      */
     @Override
     public SecurityManager getSecurityManager()
@@ -580,6 +541,20 @@ public class DefaultMuleContext implements MuleContext
             throw new MuleRuntimeException(CoreMessages.objectIsNull("securityManager"));
         }
         return securityManager;
+    }
+
+    /**
+     * Sets the security manager used by this Mule instance to authenticate and
+     * authorise incoming and outgoing event traffic and service invocations
+     *
+     * @param securityManager the security manager used by this Mule instance to authenticate and authorise incoming and outgoing event
+     *                        traffic and service invocations
+     */
+    @Override
+    public void setSecurityManager(SecurityManager securityManager) throws RegistrationException
+    {
+        checkLifecycleForPropertySet(MuleProperties.OBJECT_SECURITY_MANAGER, Initialisable.PHASE_NAME);
+        registryBroker.registerObject(MuleProperties.OBJECT_SECURITY_MANAGER, securityManager);
     }
 
     /**
@@ -603,6 +578,11 @@ public class DefaultMuleContext implements MuleContext
     public WorkManager getWorkManager()
     {
         return workManager;
+    }
+
+    public void setWorkManager(WorkManager workManager)
+    {
+        this.workManager = workManager;
     }
 
     @Override
@@ -630,9 +610,21 @@ public class DefaultMuleContext implements MuleContext
     }
 
     @Override
+    public void setQueueManager(QueueManager queueManager) throws RegistrationException
+    {
+        getRegistry().registerObject(MuleProperties.OBJECT_QUEUE_MANAGER, queueManager);
+        this.queueManager = queueManager;
+    }
+
+    @Override
     public ExtensionManager getExtensionManager()
     {
         return extensionManager;
+    }
+
+    public void setExtensionManager(ExtensionManager extensionManager)
+    {
+        this.extensionManager = extensionManager;
     }
 
     @Override
@@ -648,6 +640,11 @@ public class DefaultMuleContext implements MuleContext
     public ObjectSerializer getObjectSerializer()
     {
         return objectSerializer;
+    }
+
+    public void setObjectSerializer(ObjectSerializer objectSerializer)
+    {
+        this.objectSerializer = objectSerializer;
     }
 
     /**
@@ -678,16 +675,8 @@ public class DefaultMuleContext implements MuleContext
         return this.getRegistry().lookupObject(LOCAL_QUEUE_MANAGER_KEY);
     }
 
-    @Override
-    public void setQueueManager(QueueManager queueManager) throws RegistrationException
-    {
-        getRegistry().registerObject(MuleProperties.OBJECT_QUEUE_MANAGER, queueManager);
-        this.queueManager = queueManager;
-    }
-
     /**
-     * @return the MuleConfiguration for this MuleManager. This object is immutable
-     *         once the manager has initialised.
+     * @return the MuleConfiguration for this MuleManager. This object is immutable once the manager has initialised.
      */
     @Override
     public MuleConfiguration getConfiguration()
@@ -700,6 +689,23 @@ public class DefaultMuleContext implements MuleContext
     public ServerNotificationManager getNotificationManager()
     {
         return notificationManager;
+    }
+
+    public void setNotificationManager(ServerNotificationManager notificationManager)
+    {
+        this.notificationManager = notificationManager;
+    }
+
+    /**
+     * Returns the Jta transaction manager used by this Mule server instance. or
+     * null if a transaction manager has not been set
+     *
+     * @return the Jta transaction manager used by this Mule server instance. or null if a transaction manager has not been set
+     */
+    @Override
+    public TransactionManager getTransactionManager()
+    {
+        return getRegistry().lookupObject(OBJECT_TRANSACTION_MANAGER);
     }
 
     /**
@@ -715,24 +721,12 @@ public class DefaultMuleContext implements MuleContext
         registryBroker.registerObject(OBJECT_TRANSACTION_MANAGER, manager);
     }
 
-    /**
-     * Returns the Jta transaction manager used by this Mule server instance. or
-     * null if a transaction manager has not been set
-     *
-     * @return the Jta transaction manager used by this Mule server instance. or
-     *         null if a transaction manager has not been set
-     */
-    @Override
-    public TransactionManager getTransactionManager()
-    {
-        return getRegistry().lookupObject(OBJECT_TRANSACTION_MANAGER);
-    }
-
     protected void checkLifecycleForPropertySet(String propertyName, String phase) throws IllegalStateException
     {
         if (lifecycleManager.isPhaseComplete(phase))
         {
-            throw new IllegalStateException("Cannot set property: '" + propertyName + "' once the server has already been through the " + phase + " phase.");
+            throw new IllegalStateException(
+                    "Cannot set property: '" + propertyName + "' once the server has already been through the " + phase + " phase.");
         }
     }
 
@@ -752,6 +746,11 @@ public class DefaultMuleContext implements MuleContext
     public Injector getInjector()
     {
         return injector;
+    }
+
+    public void setInjector(Injector injector)
+    {
+        this.injector = injector;
     }
 
     @Override
@@ -828,16 +827,21 @@ public class DefaultMuleContext implements MuleContext
         return expressionManager;
     }
 
-    @Override
-    public void setExecutionClassLoader(ClassLoader cl)
+    public void setExpressionManager(DefaultExpressionManager expressionManager)
     {
-        this.executionClassLoader = cl;
+        this.expressionManager = expressionManager;
     }
 
     @Override
     public ClassLoader getExecutionClassLoader()
     {
         return executionClassLoader;
+    }
+
+    @Override
+    public void setExecutionClassLoader(ClassLoader cl)
+    {
+        this.executionClassLoader = cl;
     }
 
     /**
@@ -863,8 +867,8 @@ public class DefaultMuleContext implements MuleContext
     protected SplashScreen buildStartupSplash()
     {
         SplashScreen startupScreen = config.isContainerMode()
-                                         ? new ApplicationStartupSplashScreen()
-                                         : new ServerStartupSplashScreen();
+                ? new ApplicationStartupSplashScreen()
+                : new ServerStartupSplashScreen();
         startupScreen.setHeader(this);
         startupScreen.setFooter(this);
         return startupScreen;
@@ -873,8 +877,8 @@ public class DefaultMuleContext implements MuleContext
     protected SplashScreen buildShutdownSplash()
     {
         SplashScreen shutdownScreen = config.isContainerMode()
-                                         ? new ApplicationShutdownSplashScreen()
-                                         : new ServerShutdownSplashScreen();
+                ? new ApplicationShutdownSplashScreen()
+                : new ServerShutdownSplashScreen();
         shutdownScreen.setHeader(this);
         return shutdownScreen;
     }
@@ -960,7 +964,8 @@ public class DefaultMuleContext implements MuleContext
             defaultExceptionStrategy = getRegistry().lookupObject(config.getDefaultExceptionStrategyName());
             if (defaultExceptionStrategy == null)
             {
-                throw new MuleRuntimeException(CoreMessages.createStaticMessage(String.format("No global exception strategy named %s",config.getDefaultExceptionStrategyName())));
+                throw new MuleRuntimeException(CoreMessages.createStaticMessage(
+                        String.format("No global exception strategy named %s", config.getDefaultExceptionStrategyName())));
             }
         }
         else
@@ -1069,39 +1074,14 @@ public class DefaultMuleContext implements MuleContext
         this.config = muleConfiguration;
     }
 
-    public void setWorkManager(WorkManager workManager)
-    {
-        this.workManager = workManager;
-    }
-
     public void setworkListener(WorkListener workListener)
     {
         this.workListener = workListener;
     }
 
-    public void setNotificationManager(ServerNotificationManager notificationManager)
-    {
-        this.notificationManager = notificationManager;
-    }
-
-    public void setLifecycleManager(MuleContextLifecycleManager lifecyleManager)
-    {
-        this.lifecycleManager = lifecyleManager;
-    }
-
-    public void setExpressionManager(DefaultExpressionManager expressionManager)
-    {
-        this.expressionManager = expressionManager;
-    }
-
     public void setRegistryBroker(DefaultRegistryBroker registryBroker)
     {
         this.registryBroker = registryBroker;
-    }
-
-    public void setInjector(Injector injector)
-    {
-        this.injector = injector;
     }
 
     public void setMuleRegistry(MuleRegistryHelper muleRegistry)
@@ -1112,16 +1092,6 @@ public class DefaultMuleContext implements MuleContext
     public void setLocalMuleClient(DefaultLocalMuleClient localMuleContext)
     {
         this.localMuleClient = localMuleContext;
-    }
-
-    public void setExtensionManager(ExtensionManager extensionManager)
-    {
-        this.extensionManager = extensionManager;
-    }
-
-    public void setObjectSerializer(ObjectSerializer objectSerializer)
-    {
-        this.objectSerializer = objectSerializer;
     }
 
     @Override

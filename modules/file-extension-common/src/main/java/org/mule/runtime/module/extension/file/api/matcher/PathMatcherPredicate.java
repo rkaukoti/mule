@@ -6,7 +6,7 @@
  */
 package org.mule.runtime.module.extension.file.api.matcher;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import org.apache.commons.lang.StringUtils;
 
 import java.nio.file.FileSystems;
 import java.nio.file.PathMatcher;
@@ -14,7 +14,7 @@ import java.nio.file.Paths;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * A {@link Predicate} which tests random paths in {@link String}

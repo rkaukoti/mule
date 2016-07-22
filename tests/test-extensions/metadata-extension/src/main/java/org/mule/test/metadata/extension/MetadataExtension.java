@@ -27,7 +27,8 @@ import org.mule.test.metadata.extension.model.shapes.Square;
 import org.mule.test.metadata.extension.resolver.TestContentAndOutputResolverWithKeyResolver;
 
 @Extension(name = "Metadata")
-@Operations({MetadataOperations.class, MetadataFailureOperations.class, MetadataInheritedExtensionResolversOperations.class, MetadataInheritedOperationResolversOperations.class})
+@Operations({MetadataOperations.class, MetadataFailureOperations.class, MetadataInheritedExtensionResolversOperations.class,
+             MetadataInheritedOperationResolversOperations.class})
 @Providers(MetadataConnectionProvider.class)
 @Sources({MetadataSource.class, MetadataSourceWithMultilevel.class})
 @SubTypeMapping(baseType = Animal.class, subTypes = Bear.class)

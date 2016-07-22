@@ -6,7 +6,7 @@
  */
 package org.mule.extension.validation.internal.validator;
 
-import static org.mule.extension.validation.internal.ImmutableValidationResult.ok;
+import org.apache.commons.lang.StringUtils;
 import org.mule.extension.validation.api.ValidationResult;
 import org.mule.extension.validation.internal.ValidationContext;
 import org.mule.mvel2.compiler.BlankLiteral;
@@ -17,7 +17,7 @@ import org.mule.runtime.core.util.ArrayUtils;
 import java.util.Collection;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import static org.mule.extension.validation.internal.ImmutableValidationResult.ok;
 
 /**
  * Validates that {@link #value} is not empty. The definition of empty depends on

@@ -13,7 +13,6 @@ import org.mule.runtime.core.config.i18n.Message;
 /**
  * <code>ResponseTimeoutException</code> is thrown when a response is not received
  * in a given timeout in the Response Router.
- * 
  */
 public class ResponseTimeoutException extends RoutingException
 {
@@ -28,7 +27,7 @@ public class ResponseTimeoutException extends RoutingException
     }
 
     public ResponseTimeoutException(Message message, MuleEvent event, MessageProcessor target,
-        Throwable cause)
+                                    Throwable cause)
     {
         super(message, event, target, cause);
     }

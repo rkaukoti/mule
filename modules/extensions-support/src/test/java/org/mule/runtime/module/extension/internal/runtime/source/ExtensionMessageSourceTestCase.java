@@ -6,32 +6,17 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.source;
 
-import static org.apache.commons.lang3.exception.ExceptionUtils.getThrowables;
-import static org.assertj.core.api.ThrowableAssert.catchThrowable;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.Matchers.hasItemInArray;
-import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_EXTENSION_MANAGER;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.mockClassLoaderModelProperty;
-import static org.mule.tck.MuleTestUtils.spyInjector;
-import static org.mule.test.heisenberg.extension.exception.HeisenbergConnectionExceptionEnricher.ENRICHED_MESSAGE;
-
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.execution.CompletionHandler;
 import org.mule.runtime.api.execution.ExceptionCallback;
@@ -74,17 +59,31 @@ import java.util.Optional;
 
 import javax.resource.spi.work.Work;
 
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InOrder;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.apache.commons.lang3.exception.ExceptionUtils.getThrowables;
+import static org.assertj.core.api.ThrowableAssert.catchThrowable;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.Matchers.hasItemInArray;
+import static org.hamcrest.core.StringContains.containsString;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_EXTENSION_MANAGER;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.mockClassLoaderModelProperty;
+import static org.mule.tck.MuleTestUtils.spyInjector;
+import static org.mule.test.heisenberg.extension.exception.HeisenbergConnectionExceptionEnricher.ENRICHED_MESSAGE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExtensionMessageSourceTestCase extends AbstractMuleContextTestCase
@@ -93,66 +92,49 @@ public class ExtensionMessageSourceTestCase extends AbstractMuleContextTestCase
     private static final String CONFIG_NAME = "myConfig";
     private static final String ERROR_MESSAGE = "ERROR";
     private static final String SOURCE_NAME = "source";
-
+    private final RetryPolicyTemplate retryPolicyTemplate = new SimpleRetryPolicyTemplate(0, 2);
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-
     @Mock
     private RuntimeExtensionModel extensionModel;
-
     @Mock
     private RuntimeSourceModel sourceModel;
-
     @Mock
     private SourceFactory sourceFactory;
-
     @Mock
     private ThreadingProfile threadingProfile;
-
     @Mock
     private WorkManager workManager;
-
     @Mock(answer = RETURNS_DEEP_STUBS)
     private MessageProcessor messageProcessor;
-
     @Mock
     private FlowConstruct flowConstruct;
-
     @Mock(extraInterfaces = Lifecycle.class)
     private Source source;
-
     @Mock(answer = RETURNS_DEEP_STUBS)
     private ExtensionManagerAdapter extensionManager;
-
     @Mock
     private MessageProcessingManager messageProcessingManager;
-
     @Mock
     private ExceptionEnricherFactory enricherFactory;
-
     @Mock
     private MuleMessage muleMessage;
-
     @Mock
     private ConfigurationProvider<Object> configurationProvider;
-
     @Mock(answer = RETURNS_DEEP_STUBS)
     private RuntimeConfigurationModel configurationModel;
-
     @Mock
     private ConfigurationInstance<Object> configurationInstance;
-
     @Mock(answer = RETURNS_DEEP_STUBS)
     private MuleEvent event;
-
     private ExtensionMessageSource messageSource;
-    private final RetryPolicyTemplate retryPolicyTemplate = new SimpleRetryPolicyTemplate(0, 2);
 
     @Before
     public void before() throws Exception
     {
         spyInjector(muleContext);
-        when(threadingProfile.createWorkManager(anyString(), eq(muleContext.getConfiguration().getShutdownTimeout()))).thenReturn(workManager);
+        when(threadingProfile.createWorkManager(anyString(), eq(muleContext.getConfiguration().getShutdownTimeout()))).thenReturn(
+                workManager);
         when(sourceFactory.createSource()).thenReturn(source);
         when(sourceModel.getExceptionEnricherFactory()).thenReturn(Optional.empty());
         when(sourceModel.getName()).thenReturn(SOURCE_NAME);
@@ -177,7 +159,8 @@ public class ExtensionMessageSourceTestCase extends AbstractMuleContextTestCase
     @Test
     public void handleMessage() throws Exception
     {
-        doAnswer(invocation -> {
+        doAnswer(invocation ->
+        {
             ((Work) invocation.getArguments()[0]).run();
             return null;
         }).when(workManager).scheduleWork(any(Work.class));
@@ -412,7 +395,9 @@ public class ExtensionMessageSourceTestCase extends AbstractMuleContextTestCase
 
     private ExtensionMessageSource getNewExtensionMessageSourceInstance() throws MuleException
     {
-        ExtensionMessageSource messageSource = new ExtensionMessageSource(extensionModel, sourceModel, sourceFactory, CONFIG_NAME, threadingProfile, retryPolicyTemplate, extensionManager);
+        ExtensionMessageSource messageSource =
+                new ExtensionMessageSource(extensionModel, sourceModel, sourceFactory, CONFIG_NAME, threadingProfile, retryPolicyTemplate,
+                        extensionManager);
         messageSource.setListener(messageProcessor);
         messageSource.setFlowConstruct(flowConstruct);
         muleContext.getInjector().inject(messageSource);

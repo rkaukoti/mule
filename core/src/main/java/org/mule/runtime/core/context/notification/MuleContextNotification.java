@@ -17,11 +17,6 @@ import org.mule.runtime.core.api.context.notification.ServerNotification;
  */
 public class MuleContextNotification extends ServerNotification implements BlockingServerEvent
 {
-    /**
-     * Serial version
-     */
-    private static final long serialVersionUID = -3246036188011581121L;
-    
     public static final int CONTEXT_INITIALISING = CONTEXT_EVENT_ACTION_START_RANGE + 1;
     public static final int CONTEXT_INITIALISED = CONTEXT_EVENT_ACTION_START_RANGE + 2;
     public static final int CONTEXT_STARTING = CONTEXT_EVENT_ACTION_START_RANGE + 3;
@@ -30,8 +25,13 @@ public class MuleContextNotification extends ServerNotification implements Block
     public static final int CONTEXT_STOPPED = CONTEXT_EVENT_ACTION_START_RANGE + 6;
     public static final int CONTEXT_DISPOSING = CONTEXT_EVENT_ACTION_START_RANGE + 7;
     public static final int CONTEXT_DISPOSED = CONTEXT_EVENT_ACTION_START_RANGE + 8;
-    
-    static {
+    /**
+     * Serial version
+     */
+    private static final long serialVersionUID = -3246036188011581121L;
+
+    static
+    {
         registerAction("mule context initialising", CONTEXT_INITIALISING);
         registerAction("mule context initialised", CONTEXT_INITIALISED);
         registerAction("mule context starting", CONTEXT_STARTING);
@@ -79,7 +79,7 @@ public class MuleContextNotification extends ServerNotification implements Block
     public String toString()
     {
         return EVENT_NAME + "{" + "action=" + getActionName(action) + ", resourceId=" + resourceIdentifier
-                + ", timestamp=" + timestamp + "}";
+               + ", timestamp=" + timestamp + "}";
     }
-    
+
 }

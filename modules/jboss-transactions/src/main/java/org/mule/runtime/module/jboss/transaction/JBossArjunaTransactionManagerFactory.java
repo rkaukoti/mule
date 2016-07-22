@@ -6,12 +6,13 @@
  */
 package org.mule.runtime.module.jboss.transaction;
 
+import com.arjuna.ats.arjuna.common.arjPropertyManager;
+import com.arjuna.common.util.propertyservice.PropertiesFactory;
+
 import org.mule.runtime.core.api.config.MuleConfiguration;
 import org.mule.runtime.core.api.transaction.TransactionManagerFactory;
 import org.mule.runtime.core.util.NetworkUtils;
-
-import com.arjuna.ats.arjuna.common.arjPropertyManager;
-import com.arjuna.common.util.propertyservice.PropertiesFactory;
+import org.springframework.util.StringUtils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -21,8 +22,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.transaction.TransactionManager;
-
-import org.springframework.util.StringUtils;
 
 public class JBossArjunaTransactionManagerFactory implements TransactionManagerFactory
 {
@@ -66,7 +65,7 @@ public class JBossArjunaTransactionManagerFactory implements TransactionManagerF
                 {
                     InetAddress address = NetworkUtils.getLocalHost();
                     final String xaNodeId = MessageFormat.format("Mule[{0}/{1}]",
-                                                                 address.getHostName(), address.getHostAddress());
+                            address.getHostName(), address.getHostAddress());
                     arjPropertyManager.getCoreEnvironmentBean().setNodeIdentifier(xaNodeId);
                 }
                 catch (UnknownHostException e)
@@ -78,12 +77,16 @@ public class JBossArjunaTransactionManagerFactory implements TransactionManagerF
             // see http://docs.jboss.org/jbosstm/docs/4.2.3/javadoc/jts/com/arjuna/ats/arjuna/common/Environment.html
             // and com.arjuna.ats.arjuna.common.CoreEnvironmentBean, CoordinatorEnvironmentBean and ObjectStoreEnvironmentBean 
             //Setting the timeout if any
-            if(properties.containsKey(PROPERTY_DEFAULT_TIMEOUT)){
-                arjPropertyManager.getCoordinatorEnvironmentBean().setDefaultTimeout(Integer.valueOf(properties.get(PROPERTY_DEFAULT_TIMEOUT)));
+            if (properties.containsKey(PROPERTY_DEFAULT_TIMEOUT))
+            {
+                arjPropertyManager.getCoordinatorEnvironmentBean()
+                                  .setDefaultTimeout(Integer.valueOf(properties.get(PROPERTY_DEFAULT_TIMEOUT)));
             }
             //Setting the tx reaper timeout if any
-            if(properties.containsKey(PROPERTY_TX_REAPER_TIMEOUT)){
-                arjPropertyManager.getCoordinatorEnvironmentBean().setTxReaperTimeout(Long.valueOf(properties.get(PROPERTY_TX_REAPER_TIMEOUT)));
+            if (properties.containsKey(PROPERTY_TX_REAPER_TIMEOUT))
+            {
+                arjPropertyManager.getCoordinatorEnvironmentBean()
+                                  .setTxReaperTimeout(Long.valueOf(properties.get(PROPERTY_TX_REAPER_TIMEOUT)));
             }
             /*for (Map.Entry<String, String> entry : properties.entrySet())
             {

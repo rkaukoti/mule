@@ -6,10 +6,9 @@
  */
 package org.mule.test.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.junit.After;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.runtime.core.MuleServer;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.FilenameUtils;
@@ -18,9 +17,9 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.security.Permission;
 
-import org.junit.After;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class MuleServerTestCase extends AbstractMuleTestCase
 {
@@ -51,7 +50,7 @@ public class MuleServerTestCase extends AbstractMuleTestCase
             }
         };
         assertEquals(ClassUtils.getResource("mule-config.xml", MuleServer.class).toString(),
-            muleServer.getConfigurationResources());
+                muleServer.getConfigurationResources());
         assertEquals(MuleServer.CLASSNAME_DEFAULT_CONFIG_BUILDER, MuleServer.getConfigBuilderClassName());
         muleServer.initialize();
     }
@@ -100,7 +99,7 @@ public class MuleServerTestCase extends AbstractMuleTestCase
             }
         };
         assertEquals("mule-config.xml,org/mule/test/spring/config1/test-xml-mule2-config.xml",
-            muleServer.getConfigurationResources());
+                muleServer.getConfigurationResources());
         assertEquals(MuleServer.CLASSNAME_DEFAULT_CONFIG_BUILDER, MuleServer.getConfigBuilderClassName());
         muleServer.initialize();
     }
@@ -117,7 +116,7 @@ public class MuleServerTestCase extends AbstractMuleTestCase
             }
         };
         assertEquals(ClassUtils.getResource("mule-config.xml", MuleServer.class).toString(),
-            muleServer.getConfigurationResources());
+                muleServer.getConfigurationResources());
         assertEquals("org.mule.runtime.config.spring.SpringXmlConfigurationBuilder", MuleServer.getConfigBuilderClassName());
         muleServer.initialize();
     }
@@ -134,7 +133,7 @@ public class MuleServerTestCase extends AbstractMuleTestCase
             }
         };
         assertEquals(ClassUtils.getResource("mule-config.xml", MuleServer.class).toString(),
-            muleServer.getConfigurationResources());
+                muleServer.getConfigurationResources());
         assertEquals("org.mule.runtime.config.spring.SpringXmlConfigurationBuilder", MuleServer.getConfigBuilderClassName());
         muleServer.initialize();
     }
@@ -144,10 +143,10 @@ public class MuleServerTestCase extends AbstractMuleTestCase
     public void testMuleServerAppConfig() throws Exception
     {
         muleServer = new MuleServer(new String[] {
-            "-config",
-            "mule-config.xml",
-            "-appconfig",
-                                                  "org/mule/test/spring/config1/test-app-config.properties"})
+                "-config",
+                "mule-config.xml",
+                "-appconfig",
+                "org/mule/test/spring/config1/test-app-config.properties"})
         {
             @Override
             public void shutdown()
@@ -160,25 +159,25 @@ public class MuleServerTestCase extends AbstractMuleTestCase
         assertTrue(FilenameUtils.separatorsToUnix(workingDirectory).endsWith("/target/.appT"));
     }
 
-    @Test(expected=ExitException.class)
+    @Test(expected = ExitException.class)
     public void testMuleServerJdkVersion()
     {
-    	String javaVersion = System.setProperty("java.version", "1.5.0_12");
-    	try
-    	{
-	    	try
-	    	{
-	    		JdkVersionUtils.validateJdk();
-	    		fail("Test is invalid because the Jdk version or vendor is supposed to now be invalid");
-	    	}
-	    	catch (RuntimeException e)
-	    	{
-	    		// expected
-	    	}
-	    	SecurityManager manager = System.getSecurityManager();
-	    	try
-	    	{
-	    		System.setSecurityManager(new NoExitSecurityManager());
+        String javaVersion = System.setProperty("java.version", "1.5.0_12");
+        try
+        {
+            try
+            {
+                JdkVersionUtils.validateJdk();
+                fail("Test is invalid because the Jdk version or vendor is supposed to now be invalid");
+            }
+            catch (RuntimeException e)
+            {
+                // expected
+            }
+            SecurityManager manager = System.getSecurityManager();
+            try
+            {
+                System.setSecurityManager(new NoExitSecurityManager());
                 muleServer = new MuleServer()
                 {
                     @Override
@@ -187,46 +186,49 @@ public class MuleServerTestCase extends AbstractMuleTestCase
                         doShutdown();
                     }
                 };
-		        fail("Jdk Version is invalid");
-	    	}
-	    	finally
-	    	{
-		        System.setSecurityManager(manager);
-	    	}
-    	}
-    	finally
-    	{
-    		System.setProperty("java.version", javaVersion);
-    	}
+                fail("Jdk Version is invalid");
+            }
+            finally
+            {
+                System.setSecurityManager(manager);
+            }
+        }
+        finally
+        {
+            System.setProperty("java.version", javaVersion);
+        }
     }
-    
+
     private static final class NoExitSecurityManager extends SecurityManager
     {
-    	@Override
-    	public void checkPermission(Permission perm) {
-    		// allow everything
-    	}
-    	
-    	@Override
-    	public void checkPermission(Permission perm, Object context) {
-    		// allow everything
-    	}
-    	
-    	@Override
-    	public void checkExit(int status)
-    	{
-    		super.checkExit(status);
-    		throw new ExitException(status);
-    	}
+        @Override
+        public void checkPermission(Permission perm)
+        {
+            // allow everything
+        }
+
+        @Override
+        public void checkPermission(Permission perm, Object context)
+        {
+            // allow everything
+        }
+
+        @Override
+        public void checkExit(int status)
+        {
+            super.checkExit(status);
+            throw new ExitException(status);
+        }
     }
-    
-    private static class ExitException extends SecurityException 
+
+    private static class ExitException extends SecurityException
     {
         public final int status;
-        public ExitException(int status) 
+
+        public ExitException(int status)
         {
-                super();
-                this.status = status;
+            super();
+            this.status = status;
         }
     }
 

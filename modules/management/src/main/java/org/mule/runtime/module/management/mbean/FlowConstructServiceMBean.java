@@ -12,7 +12,7 @@ import javax.management.ObjectName;
  * <code>FlowConstructServiceMBean</code> defines the management interface for a mule
  * managed flow construct.
  */
-public interface FlowConstructServiceMBean  extends FlowConstructStatsMBean
+public interface FlowConstructServiceMBean extends FlowConstructStatsMBean
 {
     /**
      * The statistics for this flow construct

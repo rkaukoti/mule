@@ -151,12 +151,45 @@ public class CopyOnWriteCaseInsensitiveMap<K, V> implements Map<K, V>, Serializa
      * of reads vastly outnumbering writes is
      * no longer true
      *
-     * @return a case insensitive {@link Map} with a
-     * copy of {@code this} map's entries
+     * @return a case insensitive {@link Map} with a copy of {@code this} map's entries
      */
     public Map<K, V> asHashMap()
     {
         return new HashMap<>(view);
+    }
+
+    @Override
+    public Collection<V> values()
+    {
+        return view.values();
+    }
+
+    @Override
+    public Set<Entry<K, V>> entrySet()
+    {
+        return view.entrySet();
+    }
+
+    @Override
+    public String toString()
+    {
+        return core.toString();
+    }
+
+    private void updateCore(Map<K, V> core)
+    {
+        this.core = core;
+        this.view = Collections.unmodifiableMap(core);
+    }
+
+    /**
+     * After deserialization we can just use unserialized original map directly.
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
+    {
+        in.defaultReadObject();
+        this.view = Collections.unmodifiableMap(core);
+        this.keyset = new KeySet();
     }
 
     private final class KeySet extends AbstractSet<K>
@@ -201,7 +234,7 @@ public class CopyOnWriteCaseInsensitiveMap<K, V> implements Map<K, V>, Serializa
 
         public boolean hasNext()
         {
-            return current < keyArray.length -1;
+            return current < keyArray.length - 1;
         }
 
         public K next()
@@ -231,40 +264,6 @@ public class CopyOnWriteCaseInsensitiveMap<K, V> implements Map<K, V>, Serializa
             CopyOnWriteCaseInsensitiveMap.this.remove(keyArray[current]);
             lastRemovalIndex = current;
         }
-    }
-
-    @Override
-    public Collection<V> values()
-    {
-        return view.values();
-    }
-
-    @Override
-    public Set<Entry<K, V>> entrySet()
-    {
-        return view.entrySet();
-    }
-
-    @Override
-    public String toString()
-    {
-        return core.toString();
-    }
-
-    private void updateCore(Map<K, V> core)
-    {
-        this.core = core;
-        this.view = Collections.unmodifiableMap(core);
-    }
-
-    /**
-     * After deserialization we can just use unserialized original map directly.
-     */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
-    {
-        in.defaultReadObject();
-        this.view = Collections.unmodifiableMap(core);
-        this.keyset = new KeySet();
     }
 
 }

@@ -6,13 +6,13 @@
  */
 package org.mule.extension.ftp;
 
+import org.junit.Test;
+import org.mule.extension.FtpTestHarness;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mule.extension.FtpTestHarness.HELLO_PATH;
 import static org.mule.extension.FtpTestHarness.HELLO_WORLD;
-import org.mule.extension.FtpTestHarness;
-
-import org.junit.Test;
 
 public class FtpDeleteTestCase extends FtpConnectorTestCase
 {

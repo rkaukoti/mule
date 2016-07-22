@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isA;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
-
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -23,10 +22,10 @@ import org.mule.tck.junit4.rule.SystemProperty;
 
 import java.io.IOException;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.isA;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
 
 /**
  * Sets up some HTTPS servers and clients with different protocols and ciphers.
@@ -76,7 +75,9 @@ public class HttpRestrictedCiphersAndProtocolsTestCase extends AbstractHttpTestC
     {
         //Uses default ciphers and protocols
         HttpRequestOptions requestOptions = optionsBuilder.tlsContextFactory(tlsContextFactory).build();
-        MuleMessage response = muleContext.getClient().send(String.format("https://localhost:%s", port1.getValue()), getTestMuleMessage(TEST_PAYLOAD), requestOptions);
+        MuleMessage response = muleContext.getClient()
+                                          .send(String.format("https://localhost:%s", port1.getValue()), getTestMuleMessage(TEST_PAYLOAD),
+                                                  requestOptions);
         assertThat(muleContext.getTransformationService().transform(response, DataType.STRING).getPayload(), is(TEST_PAYLOAD));
     }
 
@@ -86,7 +87,9 @@ public class HttpRestrictedCiphersAndProtocolsTestCase extends AbstractHttpTestC
         //Forces TLS_DHE_DSS_WITH_AES_128_CBC_SHA
         tlsContextFactory.setEnabledCipherSuites(cipherSuites.getValue());
         HttpRequestOptions requestOptions = optionsBuilder.tlsContextFactory(tlsContextFactory).build();
-        MuleMessage response = muleContext.getClient().send(String.format("https://localhost:%s", port3.getValue()), getTestMuleMessage(TEST_PAYLOAD), requestOptions);
+        MuleMessage response = muleContext.getClient()
+                                          .send(String.format("https://localhost:%s", port3.getValue()), getTestMuleMessage(TEST_PAYLOAD),
+                                                  requestOptions);
         assertThat(muleContext.getTransformationService().transform(response, DataType.STRING).getPayload(), is(TEST_PAYLOAD));
     }
 

@@ -6,9 +6,6 @@
  */
 package org.mule.extension.ftp.internal.sftp.command;
 
-import static org.mule.runtime.module.extension.file.api.TreeNode.Builder.forDirectory;
-import static org.mule.runtime.module.extension.file.api.TreeNode.Builder.forFile;
-
 import org.mule.extension.ftp.api.sftp.SftpFileAttributes;
 import org.mule.extension.ftp.internal.sftp.connection.SftpClient;
 import org.mule.extension.ftp.internal.sftp.connection.SftpFileSystem;
@@ -17,13 +14,15 @@ import org.mule.runtime.module.extension.file.api.FileAttributes;
 import org.mule.runtime.module.extension.file.api.FileConnectorConfig;
 import org.mule.runtime.module.extension.file.api.TreeNode;
 import org.mule.runtime.module.extension.file.api.command.ListCommand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.function.Predicate;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.module.extension.file.api.TreeNode.Builder.forDirectory;
+import static org.mule.runtime.module.extension.file.api.TreeNode.Builder.forFile;
 
 /**
  * A {@link SftpCommand} which implements the {@link ListCommand} contract
@@ -47,7 +46,8 @@ public final class SftpListCommand extends SftpCommand implements ListCommand
      * {@inheritDoc}
      */
     @Override
-    public TreeNode list(FileConnectorConfig config, String directoryPath, boolean recursive, MuleMessage message, Predicate<FileAttributes> matcher)
+    public TreeNode list(FileConnectorConfig config, String directoryPath, boolean recursive, MuleMessage message,
+                         Predicate<FileAttributes> matcher)
     {
         FileAttributes directoryAttributes = getExistingFile(config, directoryPath);
         Path path = Paths.get(directoryAttributes.getPath());
@@ -63,7 +63,8 @@ public final class SftpListCommand extends SftpCommand implements ListCommand
         return treeNodeBuilder.build();
     }
 
-    private void doList(FileConnectorConfig config, String path, TreeNode.Builder treeNodeBuilder, boolean recursive, MuleMessage message, Predicate<FileAttributes> matcher)
+    private void doList(FileConnectorConfig config, String path, TreeNode.Builder treeNodeBuilder, boolean recursive, MuleMessage message,
+                        Predicate<FileAttributes> matcher)
     {
         LOGGER.debug("Listing directory {}", path);
         for (SftpFileAttributes file : client.list(path))

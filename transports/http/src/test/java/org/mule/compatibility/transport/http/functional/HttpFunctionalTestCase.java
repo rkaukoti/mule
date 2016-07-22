@@ -6,9 +6,8 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.ClassRule;
+import org.junit.Test;
 import org.mule.compatibility.transport.http.HttpConnector;
 import org.mule.functional.functional.EventCallback;
 import org.mule.functional.functional.FunctionalTestComponent;
@@ -18,16 +17,15 @@ import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.ClassRule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class HttpFunctionalTestCase extends FunctionalTestCase
 {
-    protected static String TEST_MESSAGE = "Test Http Request (R�dgr�d), 57 = \u06f7\u06f5 in Arabic";
-    protected boolean checkPathProperties = true;
-
     @ClassRule
     public static DynamicPort dynamicPort = new DynamicPort("port1");
+    protected static String TEST_MESSAGE = "Test Http Request (R�dgr�d), 57 = \u06f7\u06f5 in Arabic";
+    protected boolean checkPathProperties = true;
 
     @Override
     protected String getConfigFile()
@@ -55,7 +53,8 @@ public class HttpFunctionalTestCase extends FunctionalTestCase
         }
 
         MuleClient client = muleContext.getClient();
-        MuleMessage result = client.send("clientEndpoint", MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse("text/plain;charset=UTF-8")).build());
+        MuleMessage result = client.send("clientEndpoint",
+                MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse("text/plain;charset=UTF-8")).build());
         assertEquals(TEST_MESSAGE + " Received", getPayloadAsString(result));
     }
 }

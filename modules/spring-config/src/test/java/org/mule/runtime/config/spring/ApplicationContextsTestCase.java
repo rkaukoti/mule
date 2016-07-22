@@ -6,6 +6,21 @@
  */
 package org.mule.runtime.config.spring;
 
+import org.junit.After;
+import org.junit.Test;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.config.ConfigurationBuilder;
+import org.mule.runtime.core.context.DefaultMuleContextFactory;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.testmodels.fruit.Apple;
+import org.mule.tck.testmodels.fruit.Orange;
+import org.mule.tck.testmodels.fruit.Seed;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.concurrent.TimeUnit;
+
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -15,22 +30,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.config.ConfigurationBuilder;
-import org.mule.runtime.core.context.DefaultMuleContextFactory;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.testmodels.fruit.Apple;
-import org.mule.tck.testmodels.fruit.Orange;
-import org.mule.tck.testmodels.fruit.Seed;
-
-import java.util.concurrent.TimeUnit;
-
-import org.junit.After;
-import org.junit.Test;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ApplicationContextsTestCase extends AbstractMuleTestCase
 {
@@ -179,7 +178,8 @@ public class ApplicationContextsTestCase extends AbstractMuleTestCase
     @Test
     public void testAppContextTogetherWithMuleConfig() throws Exception
     {
-        context = new DefaultMuleContextFactory().createMuleContext(new SpringXmlConfigurationBuilder(new String[] {"application-context.xml", "mule-config.xml"}));
+        context = new DefaultMuleContextFactory().createMuleContext(
+                new SpringXmlConfigurationBuilder(new String[] {"application-context.xml", "mule-config.xml"}));
 
         context.start();
 

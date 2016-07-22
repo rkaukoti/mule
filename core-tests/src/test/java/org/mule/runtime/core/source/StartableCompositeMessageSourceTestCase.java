@@ -6,17 +6,16 @@
  */
 package org.mule.runtime.core.source;
 
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.Startable;
 import org.mule.runtime.core.api.lifecycle.Stoppable;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.source.MessageSource;
+import org.mule.runtime.core.util.ObjectUtils;
 import org.mule.tck.SensingNullMessageProcessor;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
-import org.mule.runtime.core.util.ObjectUtils;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -40,7 +39,7 @@ public class StartableCompositeMessageSourceTestCase extends AbstractMuleContext
         testEvent = getTestEvent(TEST_MESSAGE);
         source = new NullMessageSource(testEvent);
     }
-    
+
     protected StartableCompositeMessageSource getCompositeSource()
     {
         return new StartableCompositeMessageSource();

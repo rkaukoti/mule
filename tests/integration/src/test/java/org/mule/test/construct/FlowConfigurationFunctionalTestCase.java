@@ -6,20 +6,7 @@
  */
 package org.mule.test.construct;
 
-import static java.lang.Thread.currentThread;
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mule.functional.junit4.TransactionConfigEnum.ACTION_NONE;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
@@ -44,7 +31,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import static java.lang.Thread.currentThread;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mule.functional.junit4.TransactionConfigEnum.ACTION_NONE;
 
 public class FlowConfigurationFunctionalTestCase extends FunctionalTestCase
 {
@@ -258,7 +257,8 @@ public class FlowConfigurationFunctionalTestCase extends FunctionalTestCase
         final FruitBowl fruitBowl = new FruitBowl();
         fruitBowl.addFruit(apple);
 
-        final MuleMessage result = flowRunner("split-aggregate-response-singleton-list").withPayload(fruitBowl.getFruit()).run().getMessage();
+        final MuleMessage result =
+                flowRunner("split-aggregate-response-singleton-list").withPayload(fruitBowl.getFruit()).run().getMessage();
 
         assertNotNull(result);
         assertTrue(result.getPayload() instanceof List);
@@ -531,26 +531,12 @@ public class FlowConfigurationFunctionalTestCase extends FunctionalTestCase
         flowRunner("loggerheader").withPayload("0").withOutboundProperty("toLog", "valueToLog").run();
     }
 
-    public static class Pojo
-    {
-
-        public void method()
-        {
-            // does nothing
-        }
-
-        public void method(Object arg1, Object arg2)
-        {
-            // does nothing
-        }
-    }
-
     @Test
     public void testCustomMessageRouter() throws Exception
     {
         MuleMessage result = flowRunner("customRouter").withPayload("").run().getMessage();
         assertEquals("abc", ((List<MuleMessage>) result.getPayload()).stream().map(msg -> (String) msg.getPayload())
-                .collect(joining()));
+                                                                     .collect(joining()));
     }
 
     @Test
@@ -598,6 +584,19 @@ public class FlowConfigurationFunctionalTestCase extends FunctionalTestCase
         assertEquals("abcd", result.getMessageAsString());
     }
 
+    public static class Pojo
+    {
+
+        public void method()
+        {
+            // does nothing
+        }
+
+        public void method(Object arg1, Object arg2)
+        {
+            // does nothing
+        }
+    }
 
     public static class TestMessageSource implements MessageSource
     {

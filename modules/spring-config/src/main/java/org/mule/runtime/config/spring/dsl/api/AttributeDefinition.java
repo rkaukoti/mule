@@ -6,11 +6,12 @@
  */
 package org.mule.runtime.config.spring.dsl.api;
 
-import static java.util.Optional.ofNullable;
-import static org.mule.runtime.core.util.Preconditions.checkState;
 import org.mule.runtime.config.spring.dsl.processor.AttributeDefinitionVisitor;
 
 import java.util.Optional;
+
+import static java.util.Optional.ofNullable;
+import static org.mule.runtime.core.util.Preconditions.checkState;
 
 /**
  * Defines how to build an attribute from an object.
@@ -126,7 +127,7 @@ public class AttributeDefinition
 
         /**
          * @param configParameterName name of the configuration parameter from which this attribute value will be extracted.
-         * @param typeConverter converter from the configuration value to a custom type.
+         * @param typeConverter       converter from the configuration value to a custom type.
          * @return the builder
          */
         public static Builder fromSimpleParameter(String configParameterName, TypeConverter typeConverter)
@@ -135,47 +136,6 @@ public class AttributeDefinition
             builder.attributeDefinition.configParameterName = configParameterName;
             builder.attributeDefinition.typeConverter = typeConverter;
             return builder;
-        }
-
-        /**
-         * @param defaultValue defines the default value to be used for the attribute if no other value is provided.
-         * @return the builder
-         */
-        public Builder withDefaultValue(Object defaultValue)
-        {
-            attributeDefinition.hasDefaultValue = true;
-            attributeDefinition.defaultValue = defaultValue;
-            return this;
-        }
-
-        /**
-         * Defines the parent identifier used to wrap a child element. Useful when there are children with the same type and
-         * we need to make a distinction to know how to do injection over multiple attributes with the same type.
-         * The identifier provided does not require a component definition since it will be just for qualifying a child.
-         *
-         * i.e.:
-         * <pre>
-         *     <parent-component>
-         *         <first-wrapper>
-         *             <child-component>
-         *         </first-wrapper>
-         *         <second-wrapper>
-         *             <child-component>
-         *         </second-wrapper>
-         *     </parent-component>
-         * </pre>
-         *
-         * The first-wrapper and second-wrapper elements are just used to univocally identify the object attribute in which the
-         * child-component object must be injected.
-         *
-         * @param identifier component identifier in the configuration for the parent element wrapping the child component
-         * @return
-         */
-        public Builder withWrapperIdentifier(String identifier)
-        {
-            checkState(attributeDefinition.childObjectType != null, "Identifier can only be used with children component definitions");
-            attributeDefinition.wrapperIdentifier = identifier;
-            return this;
         }
 
         /**
@@ -254,8 +214,7 @@ public class AttributeDefinition
         }
 
         /**
-         * @param referenceSimpleParameter configuration attribute that holds a reference to another
-         *                                 configuration object.
+         * @param referenceSimpleParameter configuration attribute that holds a reference to another configuration object.
          * @return the builder
          */
         public static Builder fromSimpleReferenceParameter(String referenceSimpleParameter)
@@ -284,7 +243,7 @@ public class AttributeDefinition
          * Used when an attribute must be set with a map of objects created from the
          * user configuration.
          *
-         * @param keyType the map key type.
+         * @param keyType   the map key type.
          * @param valueType the map value type.
          * @return the builder
          */
@@ -322,6 +281,46 @@ public class AttributeDefinition
             Builder builder = new Builder();
             builder.attributeDefinition.definitions = definitions;
             return builder;
+        }
+
+        /**
+         * @param defaultValue defines the default value to be used for the attribute if no other value is provided.
+         * @return the builder
+         */
+        public Builder withDefaultValue(Object defaultValue)
+        {
+            attributeDefinition.hasDefaultValue = true;
+            attributeDefinition.defaultValue = defaultValue;
+            return this;
+        }
+
+        /**
+         * Defines the parent identifier used to wrap a child element. Useful when there are children with the same type and
+         * we need to make a distinction to know how to do injection over multiple attributes with the same type.
+         * The identifier provided does not require a component definition since it will be just for qualifying a child.
+         *
+         * i.e.:
+         * <pre>
+         *     <parent-component>
+         *         <first-wrapper>
+         *             <child-component>
+         *         </first-wrapper>
+         *         <second-wrapper>
+         *             <child-component>
+         *         </second-wrapper>
+         *     </parent-component>
+         * </pre>
+         *
+         * The first-wrapper and second-wrapper elements are just used to univocally identify the object attribute in which the
+         * child-component object must be injected.
+         *
+         * @param identifier component identifier in the configuration for the parent element wrapping the child component
+         */
+        public Builder withWrapperIdentifier(String identifier)
+        {
+            checkState(attributeDefinition.childObjectType != null, "Identifier can only be used with children component definitions");
+            attributeDefinition.wrapperIdentifier = identifier;
+            return this;
         }
 
         public Builder withIdentifier(String childIdentifier)

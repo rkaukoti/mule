@@ -6,6 +6,16 @@
  */
 package org.mule.runtime.module.cxf.builder;
 
+import org.apache.cxf.binding.Binding;
+import org.apache.cxf.binding.soap.interceptor.CheckFaultInterceptor;
+import org.apache.cxf.binding.soap.interceptor.Soap11FaultInInterceptor;
+import org.apache.cxf.binding.soap.interceptor.Soap12FaultInInterceptor;
+import org.apache.cxf.binding.soap.interceptor.SoapOutInterceptor;
+import org.apache.cxf.databinding.stax.StaxDataBinding;
+import org.apache.cxf.databinding.stax.StaxDataBindingFeature;
+import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.frontend.ClientFactoryBean;
+import org.apache.cxf.interceptor.WrappedOutInterceptor;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.lifecycle.CreateException;
 import org.mule.runtime.module.cxf.CxfConstants;
@@ -20,17 +30,6 @@ import org.mule.runtime.module.cxf.support.ReversibleStaxInInterceptor;
 import org.mule.runtime.module.cxf.support.StreamClosingInterceptor;
 import org.mule.runtime.module.cxf.transport.MuleUniversalConduit;
 
-import org.apache.cxf.binding.Binding;
-import org.apache.cxf.binding.soap.interceptor.CheckFaultInterceptor;
-import org.apache.cxf.binding.soap.interceptor.Soap11FaultInInterceptor;
-import org.apache.cxf.binding.soap.interceptor.Soap12FaultInInterceptor;
-import org.apache.cxf.binding.soap.interceptor.SoapOutInterceptor;
-import org.apache.cxf.databinding.stax.StaxDataBinding;
-import org.apache.cxf.databinding.stax.StaxDataBindingFeature;
-import org.apache.cxf.endpoint.Client;
-import org.apache.cxf.frontend.ClientFactoryBean;
-import org.apache.cxf.interceptor.WrappedOutInterceptor;
-
 /**
  * Creates an outbound proxy based on a specially configure CXF Client.
  * This allows you to send raw XML to your MessageProcessor and have it sent
@@ -38,23 +37,23 @@ import org.apache.cxf.interceptor.WrappedOutInterceptor;
  * <p>
  * The input to the resulting MessageProcessor can be either a SOAP Body
  * or a SOAP Envelope depending on how the payload attribute is configured.
- * Valid values are "body" or "envelope". 
+ * Valid values are "body" or "envelope".
  */
 public class ProxyClientMessageProcessorBuilder extends AbstractOutboundMessageProcessorBuilder
 {
     private String payload;
-    
+
     @Override
     protected void configureClient(Client client)
     {
-        MuleUniversalConduit conduit = (MuleUniversalConduit)client.getConduit();
+        MuleUniversalConduit conduit = (MuleUniversalConduit) client.getConduit();
 
         // add interceptors to handle Mule proxy specific stuff
         client.getInInterceptors().add(new CopyAttachmentInInterceptor());
         client.getInInterceptors().add(new StreamClosingInterceptor());
         client.getOutInterceptors().add(new OutputPayloadInterceptor(muleContext.getTransformationService()));
         client.getOutInterceptors().add(new CopyAttachmentOutInterceptor());
-        
+
         // Don't close the input because people need to be able to work with the live stream
         conduit.setCloseInput(false);
     }
@@ -63,7 +62,7 @@ public class ProxyClientMessageProcessorBuilder extends AbstractOutboundMessageP
     {
         return CxfConstants.PAYLOAD_ENVELOPE.equals(payload);
     }
-    
+
     @Override
     protected void configureMessageProcessor(CxfOutboundMessageProcessor processor)
     {
@@ -82,12 +81,12 @@ public class ProxyClientMessageProcessorBuilder extends AbstractOutboundMessageP
         cpf.setProperties(properties);
 
         // If there's a soapVersion defined then the corresponding bindingId will be set
-        if(soapVersion != null)
+        if (soapVersion != null)
         {
             cpf.setBindingId(CxfUtils.getBindingIdForSoapVersion(soapVersion));
         }
-        
-        if (wsdlLocation != null) 
+
+        if (wsdlLocation != null)
         {
             cpf.setWsdlURL(wsdlLocation);
         }
@@ -100,7 +99,7 @@ public class ProxyClientMessageProcessorBuilder extends AbstractOutboundMessageP
         CxfUtils.removeInterceptor(binding.getInInterceptors(), Soap12FaultInInterceptor.class.getName());
         CxfUtils.removeInterceptor(binding.getInInterceptors(), CheckFaultInterceptor.class.getName());
 
-        if (isProxyEnvelope()) 
+        if (isProxyEnvelope())
         {
             CxfUtils.removeInterceptor(binding.getOutInterceptors(), SoapOutInterceptor.class.getName());
             client.getInInterceptors().add(new ReversibleStaxInInterceptor());

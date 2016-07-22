@@ -6,6 +6,20 @@
  */
 package org.mule.runtime.core.el.mvel;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.mule.mvel2.CompileException;
+import org.mule.mvel2.ParserConfiguration;
+import org.mule.runtime.core.api.lifecycle.InitialisationException;
+import org.mule.runtime.core.el.context.AbstractELTestCase;
+import org.mule.tck.MuleTestUtils;
+import org.mule.tck.size.SmallTest;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Opcodes;
+
+import java.io.Serializable;
+
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
@@ -14,20 +28,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import org.mule.mvel2.CompileException;
-import org.mule.mvel2.ParserConfiguration;
-import org.mule.runtime.core.api.lifecycle.InitialisationException;
-import org.mule.runtime.core.el.context.AbstractELTestCase;
-import org.mule.tck.MuleTestUtils;
-import org.mule.tck.size.SmallTest;
-
-import java.io.Serializable;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.Opcodes;
 
 @SmallTest
 public class MVELExpressionExecutorTestCase extends AbstractELTestCase
@@ -84,7 +84,8 @@ public class MVELExpressionExecutorTestCase extends AbstractELTestCase
     @Test
     public void useContextClassLoader() throws ClassNotFoundException
     {
-        withContextClassLoader(new MyClassClassLoader(), () -> {
+        withContextClassLoader(new MyClassClassLoader(), () ->
+        {
             try
             {
                 assertFalse((Boolean) mvel.execute("1 is org.MyClass", null));

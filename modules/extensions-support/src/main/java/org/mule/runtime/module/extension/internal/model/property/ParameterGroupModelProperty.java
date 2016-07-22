@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.model.property;
 
+import com.google.common.collect.ImmutableList;
+
 import org.mule.runtime.extension.api.introspection.ModelProperty;
 import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
 import org.mule.runtime.module.extension.internal.introspection.ParameterGroup;
-
-import com.google.common.collect.ImmutableList;
 
 import java.util.List;
 

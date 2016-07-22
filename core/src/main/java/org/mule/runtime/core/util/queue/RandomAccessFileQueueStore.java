@@ -7,6 +7,8 @@
 package org.mule.runtime.core.util.queue;
 
 import org.mule.runtime.core.api.MuleRuntimeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.EOFException;
 import java.io.File;
@@ -16,19 +18,16 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Basic queueing functionality with file storage.
  */
 class RandomAccessFileQueueStore
 {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected static final int CONTROL_DATA_SIZE = 5;
     private static final byte NOT_REMOVED = 0;
     private static final byte REMOVED = 1;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final QueueFileProvider queueFileProvider;
 
     private LinkedList<Long> orderedKeys = new LinkedList<Long>();
@@ -63,7 +62,6 @@ class RandomAccessFileQueueStore
      * Remove and returns data from the queue.
      *
      * @return data from the beginning of the queue.
-     * @throws InterruptedException
      */
     public synchronized byte[] removeFirst() throws InterruptedException
     {
@@ -90,7 +88,6 @@ class RandomAccessFileQueueStore
      * Retrieves the first element from the queue without removing it.
      *
      * @return first element from the queue.
-     * @throws InterruptedException
      */
     public synchronized byte[] getFirst() throws InterruptedException
     {
@@ -101,7 +98,6 @@ class RandomAccessFileQueueStore
      * Adds an element in the beginning of the queue.
      *
      * @param item element to add.
-     * @throws InterruptedException
      */
     public synchronized void addFirst(byte[] item) throws InterruptedException
     {

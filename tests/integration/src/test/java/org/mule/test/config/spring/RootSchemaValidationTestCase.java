@@ -6,10 +6,10 @@
  */
 package org.mule.test.config.spring;
 
-import java.io.IOException;
-
 import org.junit.Test;
 import org.xml.sax.SAXException;
+
+import java.io.IOException;
 
 
 public class RootSchemaValidationTestCase extends AbstractSchemaValidationTestCase

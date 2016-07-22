@@ -6,16 +6,16 @@
  */
 package org.mule.runtime.module.xml.transformer.datatype;
 
-import org.mule.runtime.api.metadata.DataType;
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.core.metadata.SimpleDataType;
-import org.mule.runtime.core.util.ClassUtils;
-
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+
+import org.mule.runtime.api.metadata.DataType;
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.core.metadata.SimpleDataType;
+import org.mule.runtime.core.util.ClassUtils;
 
 /**
  * A serializer to handle instances of {@link SimpleDataType}.

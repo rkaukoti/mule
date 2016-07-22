@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
+import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
-import org.mule.metadata.api.model.MetadataType;
 
 import java.util.function.Function;
 

@@ -23,15 +23,11 @@ public interface PollingTask
 
     /**
      * Task execution logic
-     *
-     * @throws Exception
      */
     void run() throws Exception;
 
     /**
      * Stops the current task. <p/> This may be called by the task runner in case of a thread interruption.
-     *
-     * @throws MuleException
      */
     void stop() throws MuleException;
 }

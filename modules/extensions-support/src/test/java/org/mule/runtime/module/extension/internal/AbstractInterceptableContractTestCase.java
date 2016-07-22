@@ -6,8 +6,13 @@
  */
 package org.mule.runtime.module.extension.internal;
 
-import static org.mockito.Mockito.verify;
-import static org.mule.tck.MuleTestUtils.spyInjector;
+import com.google.common.collect.ImmutableList;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.api.Injector;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
@@ -18,28 +23,21 @@ import org.mule.runtime.extension.api.runtime.operation.Interceptor;
 import org.mule.runtime.module.extension.internal.introspection.AbstractInterceptable;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import com.google.common.collect.ImmutableList;
-
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.mockito.Mockito.verify;
+import static org.mule.tck.MuleTestUtils.spyInjector;
 
 @RunWith(MockitoJUnitRunner.class)
 public abstract class AbstractInterceptableContractTestCase<T extends AbstractInterceptable> extends AbstractMuleContextTestCase
 {
 
-    @Mock(extraInterfaces = Lifecycle.class)
-    private Interceptor interceptor1;
-
-    @Mock(extraInterfaces = Lifecycle.class)
-    private Interceptor interceptor2;
-
     protected Injector injector;
     protected T interceptable;
+    @Mock(extraInterfaces = Lifecycle.class)
+    private Interceptor interceptor1;
+    @Mock(extraInterfaces = Lifecycle.class)
+    private Interceptor interceptor2;
 
     @Before
     public void before() throws Exception

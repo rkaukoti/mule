@@ -6,15 +6,16 @@
  */
 package org.mule.runtime.components.script.refreshable;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import org.mule.runtime.core.api.MuleMessage;
 import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.util.IOUtils;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public abstract class AbstractRefreshableBeanTestCase extends FunctionalTestCase
 {

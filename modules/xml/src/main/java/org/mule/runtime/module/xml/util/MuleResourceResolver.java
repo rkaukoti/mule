@@ -43,7 +43,8 @@ public class MuleResourceResolver implements LSResourceResolver
         }
     }
 
-    private LSInput obtainInputStream(String type, String namespaceURI, String publicId, String systemId, String baseUri) throws URISyntaxException, IOException
+    private LSInput obtainInputStream(String type, String namespaceURI, String publicId, String systemId, String baseUri)
+            throws URISyntaxException, IOException
     {
         String resource = resolveUri(systemId, baseUri);
 

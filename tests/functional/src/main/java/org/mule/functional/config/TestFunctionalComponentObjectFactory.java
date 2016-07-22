@@ -14,7 +14,8 @@ import org.mule.functional.testmodels.services.TestServiceComponent;
  *
  * @since 4.0
  */
-public class TestFunctionalComponentObjectFactory extends FunctionalComponentObjectFactory {
+public class TestFunctionalComponentObjectFactory extends FunctionalComponentObjectFactory
+{
 
     @Override
     protected FunctionalTestComponent newComponentInstance()

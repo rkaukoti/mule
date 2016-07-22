@@ -6,6 +6,10 @@
  */
 package org.mule.runtime.management.agents;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.module.management.agent.FixedHostRmiClientSocketFactory;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
@@ -16,11 +20,6 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.channels.ServerSocketChannel;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

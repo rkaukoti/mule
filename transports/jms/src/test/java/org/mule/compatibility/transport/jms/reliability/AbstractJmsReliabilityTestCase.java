@@ -23,24 +23,24 @@ public abstract class AbstractJmsReliabilityTestCase extends AbstractJmsFunction
 {
     protected int acknowledgeMode = Session.AUTO_ACKNOWLEDGE;
     protected int deliveryMode = DeliveryMode.PERSISTENT;
-        
+
     // These are used by the receiver only, not the sender
     protected Connection connection;
     protected Session session;
     protected MessageConsumer consumer;
-        
+
     public AbstractJmsReliabilityTestCase()
     {
         setMultipleProviders(false);
     }
-    
+
     @Override
     protected void doTearDown() throws Exception
     {
         closeConsumer();
         super.doTearDown();
     }
-    
+
     protected void closeConsumer() throws Exception
     {
         if (consumer != null)
@@ -100,13 +100,13 @@ public abstract class AbstractJmsReliabilityTestCase extends AbstractJmsFunction
             }
         }
     }
-    
+
     protected Message readMessageFromQueue(String queueName) throws Exception
     {
         if (consumer == null)
         {
             createConsumer(queueName);
-        }        
+        }
         return consumer.receive(getTimeout());
     }
 
@@ -115,10 +115,10 @@ public abstract class AbstractJmsReliabilityTestCase extends AbstractJmsFunction
         if (consumer == null)
         {
             createConsumer(queueName);
-        }        
+        }
         consumer.setMessageListener(listener);
     }
-    
+
     protected void createConsumer(String queueName) throws Exception
     {
         connection = getConnection(false, false);

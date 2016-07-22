@@ -8,10 +8,9 @@
 package org.mule.runtime.module.db.integration.update;
 
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mule.runtime.module.db.integration.TestDbConfig.getDerbyResource;
-import static org.mule.runtime.module.db.integration.TestDbConfig.getOracleResource;
-import static org.mule.runtime.module.db.integration.model.RegionManager.SOUTHWEST_MANAGER;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
@@ -21,9 +20,10 @@ import org.mule.runtime.module.db.integration.model.OracleTestDatabase;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.hamcrest.Matchers;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mule.runtime.module.db.integration.TestDbConfig.getDerbyResource;
+import static org.mule.runtime.module.db.integration.TestDbConfig.getOracleResource;
+import static org.mule.runtime.module.db.integration.model.RegionManager.SOUTHWEST_MANAGER;
 
 public class UpdateJavaUdtTestCase extends AbstractDbIntegrationTestCase
 {

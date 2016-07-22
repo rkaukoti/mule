@@ -16,7 +16,7 @@ public interface FileListener
 {
     /**
      * Called when one of the monitored files are created, deleted or modified.
-     * 
+     *
      * @param file File which has been changed.
      */
     void fileChanged(File file) throws IOException;

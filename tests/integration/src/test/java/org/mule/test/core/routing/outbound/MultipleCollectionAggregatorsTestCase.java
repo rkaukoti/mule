@@ -6,10 +6,10 @@
  */
 package org.mule.test.core.routing.outbound;
 
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 public class MultipleCollectionAggregatorsTestCase extends FunctionalTestCase
 {

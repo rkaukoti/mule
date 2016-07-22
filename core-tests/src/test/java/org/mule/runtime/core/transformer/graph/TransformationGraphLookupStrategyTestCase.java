@@ -6,21 +6,20 @@
  */
 package org.mule.runtime.core.transformer.graph;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
-import static org.mockito.Mockito.mock;
-
-import org.mule.runtime.core.api.transformer.Converter;
+import org.junit.Assert;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
+import org.mule.runtime.core.api.transformer.Converter;
 import org.mule.runtime.core.transformer.CompositeConverter;
 import org.mule.runtime.core.transformer.builder.MockConverterBuilder;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
 
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 @SmallTest
 public class TransformationGraphLookupStrategyTestCase extends AbstractMuleTestCase
@@ -86,7 +85,8 @@ public class TransformationGraphLookupStrategyTestCase extends AbstractMuleTestC
     @Test
     public void findsCompositeConverter() throws Exception
     {
-        Converter inputStreamToString = new MockConverterBuilder().named("inputStreamToString").from(INPUT_STREAM_DATA_TYPE).to(STRING_DATA_TYPE).build();
+        Converter inputStreamToString =
+                new MockConverterBuilder().named("inputStreamToString").from(INPUT_STREAM_DATA_TYPE).to(STRING_DATA_TYPE).build();
         graph.addConverter(inputStreamToString);
         Converter stringToJson = new MockConverterBuilder().named("stringToJson").from(STRING_DATA_TYPE).to(JSON_DATA_TYPE).build();
         graph.addConverter(stringToJson);
@@ -100,9 +100,11 @@ public class TransformationGraphLookupStrategyTestCase extends AbstractMuleTestC
     @Test
     public void findsMultipleCompositeConvertersWithMultipleEdgesFromSource() throws Exception
     {
-        Converter inputStreamToString = new MockConverterBuilder().named("inputStreamToString").from(INPUT_STREAM_DATA_TYPE).to(STRING_DATA_TYPE).build();
+        Converter inputStreamToString =
+                new MockConverterBuilder().named("inputStreamToString").from(INPUT_STREAM_DATA_TYPE).to(STRING_DATA_TYPE).build();
         graph.addConverter(inputStreamToString);
-        Converter inputStreamToJson = new MockConverterBuilder().named("inputStreamToJson").from(INPUT_STREAM_DATA_TYPE).to(JSON_DATA_TYPE).build();
+        Converter inputStreamToJson =
+                new MockConverterBuilder().named("inputStreamToJson").from(INPUT_STREAM_DATA_TYPE).to(JSON_DATA_TYPE).build();
         graph.addConverter(inputStreamToJson);
         Converter jsonToXml = new MockConverterBuilder().named("jsonToXml").from(JSON_DATA_TYPE).to(XML_DATA_TYPE).build();
         graph.addConverter(jsonToXml);

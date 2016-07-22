@@ -6,17 +6,12 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static java.lang.Boolean.FALSE;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_FORCE_SYNC_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_ROOT_MESSAGE_ID_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_DEFAULT_MESSAGE_PROCESSING_MANAGER;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_STORE_MANAGER;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleContext;
@@ -36,12 +31,16 @@ import org.mule.tck.size.SmallTest;
 
 import java.io.File;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.lang.Boolean.FALSE;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_FORCE_SYNC_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_ROOT_MESSAGE_ID_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_DEFAULT_MESSAGE_PROCESSING_MANAGER;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_STORE_MANAGER;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
@@ -82,7 +81,7 @@ public class FileMessageReceiverMessageProcessingTestCase extends AbstractMuleTe
     }
 
     /**
-     *  Message processed successfully
+     * Message processed successfully
      */
     @Test
     public void testProcessFileAndDeleteIt() throws Exception
@@ -97,7 +96,7 @@ public class FileMessageReceiverMessageProcessingTestCase extends AbstractMuleTe
     }
 
     /**
-     *  Message processing fails but exception is handled
+     * Message processing fails but exception is handled
      */
     @Test
     public void testProcessFileThatFailsThrowHandleExceptionThenDeleteIt() throws Exception
@@ -113,7 +112,7 @@ public class FileMessageReceiverMessageProcessingTestCase extends AbstractMuleTe
     }
 
     /**
-     *  Message processing fails and exception is not handled
+     * Message processing fails and exception is not handled
      */
     @Test
     public void testProcessFileThatFailsThrowsUnhandledExceptionThenDoNotDeleteIt() throws Exception
@@ -129,8 +128,8 @@ public class FileMessageReceiverMessageProcessingTestCase extends AbstractMuleTe
     }
 
     /**
-     *  Streaming file
-     *  Message processed successfully
+     * Streaming file
+     * Message processed successfully
      */
     @Test
     public void testProcessStreamingFileTheDoNotDeleteIt() throws Exception
@@ -144,12 +143,12 @@ public class FileMessageReceiverMessageProcessingTestCase extends AbstractMuleTe
         fileMessageReceiver.processFile(file);
         //Using streaming, files can't be removed since the stream can still
         //in used, for instance, if we sent the payload to a vm queue
-        assertThat(file.exists(),is(true));
+        assertThat(file.exists(), is(true));
     }
 
     /**
-     *  Streaming file
-     *  Message processing fails but exception is handled
+     * Streaming file
+     * Message processing fails but exception is handled
      */
     @Test
     public void testProcessStreamingFileThatFailsThrowHandleExceptionThenDoNotDeleteIt() throws Exception
@@ -162,12 +161,12 @@ public class FileMessageReceiverMessageProcessingTestCase extends AbstractMuleTe
         FileMessageReceiver fileMessageReceiver = createFileMessageReceiver();
         File file = createMockFile("text.csv");
         fileMessageReceiver.processFile(file);
-        assertThat(file.exists(),is(false));
+        assertThat(file.exists(), is(false));
     }
 
     /**
-     *  Streaming file
-     *  Message processing fails and exception is not handled
+     * Streaming file
+     * Message processing fails and exception is not handled
      */
     @Test
     public void testProcessStreamingFileThatFailsThrowsUnhandledExceptionThenDoNotDeleteIt() throws Exception
@@ -180,7 +179,7 @@ public class FileMessageReceiverMessageProcessingTestCase extends AbstractMuleTe
         FileMessageReceiver fileMessageReceiver = createFileMessageReceiver();
         File file = createMockFile("text.csv");
         fileMessageReceiver.processFile(file);
-        assertThat(file.exists(),is(true));
+        assertThat(file.exists(), is(true));
     }
 
     private void configureListenerToThrow(MessagingException mockMessagingException) throws Exception
@@ -195,19 +194,21 @@ public class FileMessageReceiverMessageProcessingTestCase extends AbstractMuleTe
 
     private FileMessageReceiver createFileMessageReceiver() throws CreateException, InitialisationException
     {
-        FileMessageReceiver fileMessageReceiver = new FileMessageReceiver(mockFileConnector, mockFlowConstruct, mockInboundEndpoint, IMPUT_FILES_DIR, null, null, 100) {
-            @Override
-            protected boolean attemptFileLock(File sourceFile) throws MuleException
-            {
-                return true;
-            }
+        FileMessageReceiver fileMessageReceiver =
+                new FileMessageReceiver(mockFileConnector, mockFlowConstruct, mockInboundEndpoint, IMPUT_FILES_DIR, null, null, 100)
+                {
+                    @Override
+                    protected boolean attemptFileLock(File sourceFile) throws MuleException
+                    {
+                        return true;
+                    }
 
-            @Override
-            protected void initializeMessageFactory() throws InitialisationException
-            {
-                this.muleMessageFactory = mockMessageFactory;
-            }
-        };
+                    @Override
+                    protected void initializeMessageFactory() throws InitialisationException
+                    {
+                        this.muleMessageFactory = mockMessageFactory;
+                    }
+                };
         fileMessageReceiver.setListener(mockMessageProcessor);
         fileMessageReceiver.initialise();
         return fileMessageReceiver;
@@ -228,7 +229,7 @@ public class FileMessageReceiverMessageProcessingTestCase extends AbstractMuleTe
         when(mockMuleEvent.getFlowConstruct().getExceptionListener()).thenReturn(mockMessagingExceptionHandler);
         when(mockHandledMessagingException.causedRollback()).thenReturn(false);
         when(mockUnhandledMessagingException.causedRollback()).thenReturn(true);
-        when(mockMessagingExceptionHandler.handleException(any(Exception.class),any(MuleEvent.class))).thenAnswer(invocationOnMock ->
+        when(mockMessagingExceptionHandler.handleException(any(Exception.class), any(MuleEvent.class))).thenAnswer(invocationOnMock ->
         {
             if (invocationOnMock.getArguments()[0] == mockHandledMessagingException)
             {
@@ -239,7 +240,8 @@ public class FileMessageReceiverMessageProcessingTestCase extends AbstractMuleTe
                 throw (Throwable) invocationOnMock.getArguments()[0];
             }
         });
-        when(mockInboundEndpoint.getMuleContext().getRegistry().get(OBJECT_DEFAULT_MESSAGE_PROCESSING_MANAGER)).thenReturn(mockMessageManager);
+        when(mockInboundEndpoint.getMuleContext().getRegistry().get(OBJECT_DEFAULT_MESSAGE_PROCESSING_MANAGER)).thenReturn(
+                mockMessageManager);
         when(mockInboundEndpoint.getMuleContext().getRegistry().get(OBJECT_STORE_MANAGER)).thenReturn(mockObjectStoreManager);
     }
 

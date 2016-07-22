@@ -12,7 +12,7 @@ import org.mule.tck.testmodels.fruit.Orange;
 /**
  * A simple object factory for unit testing.
  */
-public class FloridaSunnyOrangeFactory 
+public class FloridaSunnyOrangeFactory
 {
     public static Orange giveMeAnOrange()
     {

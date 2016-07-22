@@ -29,7 +29,6 @@ public class TypeDefinition
      * {@code List}, {@code Set} interfaces. In those cases the runtime
      * will use a default implementation.
      *
-     *
      * @param type {@code Class} of the domain model to be created.
      * @return {@code TypeDefinition} created from that type.
      */
@@ -51,6 +50,13 @@ public class TypeDefinition
         return typeDefinition;
     }
 
+    public static TypeDefinition fromMapEntryType(Class<?> keyType, Class<?> valueType)
+    {
+        TypeDefinition typeDefinition = new TypeDefinition();
+        typeDefinition.mapType = new MapEntryType(keyType, valueType);
+        return typeDefinition;
+    }
+
     public void visit(TypeDefinitionVisitor typeDefinitionVisitor)
     {
         if (type != null)
@@ -67,20 +73,12 @@ public class TypeDefinition
         }
     }
 
-    public static TypeDefinition fromMapEntryType(Class<?> keyType, Class<?> valueType)
-    {
-        TypeDefinition typeDefinition = new TypeDefinition();
-        typeDefinition.mapType = new MapEntryType(keyType, valueType);
-        return typeDefinition;
-    }
-
     /**
      * Instances of this class represent the type of a map entry.
      *
-     * @since 4.0
-     *
-     * @param <KeyType> the key type
+     * @param <KeyType>   the key type
      * @param <ValueType> the value type.=
+     * @since 4.0
      */
     public static class MapEntryType<KeyType, ValueType>
     {

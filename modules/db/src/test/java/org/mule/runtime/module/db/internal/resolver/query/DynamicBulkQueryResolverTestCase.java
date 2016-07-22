@@ -7,16 +7,16 @@
 
 package org.mule.runtime.module.db.internal.resolver.query;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.runtime.core.api.expression.ExpressionManager;
 import org.mule.runtime.module.db.internal.domain.query.BulkQuery;
 import org.mule.runtime.module.db.internal.parser.QueryTemplateParser;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class DynamicBulkQueryResolverTestCase extends AbstractBulkQueryResolverTestCase
@@ -42,7 +42,8 @@ public class DynamicBulkQueryResolverTestCase extends AbstractBulkQueryResolverT
         ExpressionManager expressionManager = mock(ExpressionManager.class);
         when(expressionManager.parse(DYNAMIC_BULK_QUERY, muleEvent)).thenReturn("");
 
-        DynamicBulkQueryResolver bulkQueryResolver = new DynamicBulkQueryResolver(DYNAMIC_BULK_QUERY, queryTemplateParser, expressionManager);
+        DynamicBulkQueryResolver bulkQueryResolver =
+                new DynamicBulkQueryResolver(DYNAMIC_BULK_QUERY, queryTemplateParser, expressionManager);
 
         bulkQueryResolver.resolve(muleEvent);
     }
@@ -55,7 +56,8 @@ public class DynamicBulkQueryResolverTestCase extends AbstractBulkQueryResolverT
         ExpressionManager expressionManager = mock(ExpressionManager.class);
         when(expressionManager.parse(DYNAMIC_BULK_QUERY, muleEvent)).thenReturn(BULK_SQL_QUERY);
 
-        DynamicBulkQueryResolver bulkQueryResolver = new DynamicBulkQueryResolver(DYNAMIC_BULK_QUERY, queryTemplateParser, expressionManager);
+        DynamicBulkQueryResolver bulkQueryResolver =
+                new DynamicBulkQueryResolver(DYNAMIC_BULK_QUERY, queryTemplateParser, expressionManager);
 
         BulkQuery resolvedBulkQuery = bulkQueryResolver.resolve(muleEvent);
 

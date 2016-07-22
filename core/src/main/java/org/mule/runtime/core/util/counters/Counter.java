@@ -25,21 +25,21 @@ public interface Counter extends NamedObject
 
     /**
      * Accessor for the counter type.
-     * 
+     *
      * @return the type of the counter
      */
     CounterFactory.Type getType();
 
     /**
      * Increment the counter's value by 1.0.
-     * 
+     *
      * @return the new value of the counter
      */
     double increment();
 
     /**
      * Increment the counter's value by the specified amount.
-     * 
+     *
      * @param value the amount to increment the counter by
      * @return the new value of the counter
      */
@@ -47,21 +47,21 @@ public interface Counter extends NamedObject
 
     /**
      * Decrement the counter's value by 1.0.
-     * 
+     *
      * @return the new value of the counter
      */
     double decrement();
 
     /**
      * Set the counter's value to a new value.
-     * 
+     *
      * @param value the new value of the counter
      */
     void setRawValue(double value);
 
     /**
      * Compute and return the value of the counter.
-     * 
+     *
      * @return the value of the counter
      */
     double nextValue();

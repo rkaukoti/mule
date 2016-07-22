@@ -6,20 +6,20 @@
  */
 package org.mule.test.routing;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
+
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.processor.MessageProcessor;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multiset;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class UntilSuccessfulWithSplitterTestCase extends FunctionalTestCase
 {

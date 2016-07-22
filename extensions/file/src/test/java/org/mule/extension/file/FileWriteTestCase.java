@@ -6,6 +6,15 @@
  */
 package org.mule.extension.file;
 
+import org.junit.Test;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.core.util.FileUtils;
+import org.mule.runtime.module.extension.file.api.FileWriteMode;
+
+import java.io.File;
+import java.util.Arrays;
+
 import static java.nio.charset.Charset.availableCharsets;
 import static org.apache.commons.io.FileUtils.readFileToByteArray;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -16,15 +25,6 @@ import static org.junit.Assert.assertThat;
 import static org.mule.runtime.module.extension.file.api.FileWriteMode.APPEND;
 import static org.mule.runtime.module.extension.file.api.FileWriteMode.CREATE_NEW;
 import static org.mule.runtime.module.extension.file.api.FileWriteMode.OVERWRITE;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.core.util.FileUtils;
-import org.mule.runtime.module.extension.file.api.FileWriteMode;
-
-import java.io.File;
-import java.util.Arrays;
-
-import org.junit.Test;
 
 public class FileWriteTestCase extends FileConnectorTestCase
 {
@@ -145,9 +145,9 @@ public class FileWriteTestCase extends FileConnectorTestCase
         assertThat(defaultEncoding, is(notNullValue()));
 
         final String customEncoding = availableCharsets().keySet().stream()
-                .filter(encoding -> !encoding.equals(defaultEncoding))
-                .findFirst()
-                .orElse(null);
+                                                         .filter(encoding -> !encoding.equals(defaultEncoding))
+                                                         .findFirst()
+                                                         .orElse(null);
 
         assertThat(customEncoding, is(notNullValue()));
         final String filename = "encoding.txt";

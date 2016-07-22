@@ -6,15 +6,15 @@
  */
 package org.mule.extension.file;
 
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.extension.file.api.LocalFileAttributes;
 import org.mule.extension.file.api.LocalFilePredicateBuilder;
 import org.mule.runtime.module.extension.file.FilePredicateBuilderContractTestCase;
 
 import java.time.LocalDateTime;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.mockito.Mockito.when;
 
 public class LocalFilePredicateBuilderTestCase extends FilePredicateBuilderContractTestCase<LocalFilePredicateBuilder, LocalFileAttributes>
 {

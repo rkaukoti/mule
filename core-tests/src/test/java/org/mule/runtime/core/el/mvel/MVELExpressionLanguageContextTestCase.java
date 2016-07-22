@@ -6,10 +6,7 @@
  */
 package org.mule.runtime.core.el.mvel;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
+import org.junit.Test;
 import org.mule.mvel2.ParserConfiguration;
 import org.mule.mvel2.integration.impl.MapVariableResolverFactory;
 import org.mule.mvel2.integration.impl.SimpleValueResolver;
@@ -17,7 +14,9 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import java.util.Collections;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class MVELExpressionLanguageContextTestCase extends AbstractMuleContextTestCase
 {
@@ -28,7 +27,7 @@ public class MVELExpressionLanguageContextTestCase extends AbstractMuleContextTe
     public void testGetVariableResolver()
     {
         MuleBaseVariableResolverFactory resoverFactory = new MVELExpressionLanguageContext(parserConfig,
-            muleContext);
+                muleContext);
         resoverFactory.addResolver("foo", new SimpleValueResolver("val"));
 
         assertNotNull(resoverFactory.getVariableResolver("foo"));
@@ -42,7 +41,7 @@ public class MVELExpressionLanguageContextTestCase extends AbstractMuleContextTe
         parserConfig.addImport(String.class);
 
         MuleBaseVariableResolverFactory resoverFactory = new MVELExpressionLanguageContext(parserConfig,
-            muleContext);
+                muleContext);
         resoverFactory.setNextFactory(new MapVariableResolverFactory(Collections.singletonMap("foo", "val")));
 
         assertNotNull(resoverFactory.getVariableResolver("foo"));

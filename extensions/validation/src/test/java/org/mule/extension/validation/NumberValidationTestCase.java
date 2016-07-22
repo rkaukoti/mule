@@ -6,15 +6,14 @@
  */
 package org.mule.extension.validation;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.extension.validation.api.NumberType;
 import org.mule.functional.junit4.FlowRunner;
 
 import java.util.Arrays;
 import java.util.Collection;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 @RunWith(Parameterized.class)
 public class NumberValidationTestCase extends ValidationTestCase
@@ -29,19 +28,8 @@ public class NumberValidationTestCase extends ValidationTestCase
     private final Number upperBoundaryViolation;
     private final NumberType numberType;
 
-    @Parameterized.Parameters(name = "{0}")
-    public static Collection<Object[]> parameters()
-    {
-        return Arrays.asList(new Object[][] {
-                {"long", Long.MAX_VALUE / 2, Long.MIN_VALUE + 1, Long.MAX_VALUE - 1, Long.MIN_VALUE, Long.MAX_VALUE, NumberType.LONG},
-                {"integer", Integer.MAX_VALUE / 2, Integer.MIN_VALUE + 1, Integer.MAX_VALUE - 1, Integer.MIN_VALUE, Integer.MAX_VALUE, NumberType.INTEGER},
-                {"short", new Short("100"), new Integer(Short.MIN_VALUE + 1).shortValue(), new Integer(Short.MAX_VALUE - 1).shortValue(), Short.MIN_VALUE, Short.MAX_VALUE, NumberType.SHORT},
-                {"double", 10D, 1D, 10D, Double.MIN_VALUE, Double.MAX_VALUE, NumberType.DOUBLE},
-                {"float", 10F, 1F, 10F, 0F, 20F, NumberType.DOUBLE}
-        });
-    }
-
-    public NumberValidationTestCase(String name, Number value, Number minValue, Number maxValue, Number lowerBoundaryViolation, Number upperBoundaryViolation, NumberType numberType)
+    public NumberValidationTestCase(String name, Number value, Number minValue, Number maxValue, Number lowerBoundaryViolation,
+                                    Number upperBoundaryViolation, NumberType numberType)
     {
         this.value = value.toString();
         this.minValue = minValue;
@@ -49,6 +37,20 @@ public class NumberValidationTestCase extends ValidationTestCase
         this.lowerBoundaryViolation = lowerBoundaryViolation;
         this.upperBoundaryViolation = upperBoundaryViolation;
         this.numberType = numberType;
+    }
+
+    @Parameterized.Parameters(name = "{0}")
+    public static Collection<Object[]> parameters()
+    {
+        return Arrays.asList(new Object[][] {
+                {"long", Long.MAX_VALUE / 2, Long.MIN_VALUE + 1, Long.MAX_VALUE - 1, Long.MIN_VALUE, Long.MAX_VALUE, NumberType.LONG},
+                {"integer", Integer.MAX_VALUE / 2, Integer.MIN_VALUE + 1, Integer.MAX_VALUE - 1, Integer.MIN_VALUE, Integer.MAX_VALUE,
+                 NumberType.INTEGER},
+                {"short", new Short("100"), new Integer(Short.MIN_VALUE + 1).shortValue(), new Integer(Short.MAX_VALUE - 1).shortValue(),
+                 Short.MIN_VALUE, Short.MAX_VALUE, NumberType.SHORT},
+                {"double", 10D, 1D, 10D, Double.MIN_VALUE, Double.MAX_VALUE, NumberType.DOUBLE},
+                {"float", 10F, 1F, 10F, 0F, 20F, NumberType.DOUBLE}
+        });
     }
 
     @Override
@@ -62,10 +64,13 @@ public class NumberValidationTestCase extends ValidationTestCase
     {
         assertValid(configureNumberValidationRunner(flowRunner(FLOW_NAME), value, minValue, maxValue));
         final String invalid = "unparseable";
-        assertInvalid(configureNumberValidationRunner(flowRunner(FLOW_NAME), invalid, minValue, maxValue), messages.invalidNumberType(invalid, numberType.name()));
+        assertInvalid(configureNumberValidationRunner(flowRunner(FLOW_NAME), invalid, minValue, maxValue),
+                messages.invalidNumberType(invalid, numberType.name()));
 
-        assertInvalid(configureNumberValidationRunner(flowRunner(FLOW_NAME), upperBoundaryViolation, minValue, maxValue), messages.greaterThan(upperBoundaryViolation, maxValue));
-        assertInvalid(configureNumberValidationRunner(flowRunner(FLOW_NAME), lowerBoundaryViolation, minValue, maxValue), messages.lowerThan(lowerBoundaryViolation, minValue));
+        assertInvalid(configureNumberValidationRunner(flowRunner(FLOW_NAME), upperBoundaryViolation, minValue, maxValue),
+                messages.greaterThan(upperBoundaryViolation, maxValue));
+        assertInvalid(configureNumberValidationRunner(flowRunner(FLOW_NAME), lowerBoundaryViolation, minValue, maxValue),
+                messages.lowerThan(lowerBoundaryViolation, minValue));
     }
 
     private FlowRunner configureNumberValidationRunner(FlowRunner runner, Object value, Object minValue, Object maxValue)

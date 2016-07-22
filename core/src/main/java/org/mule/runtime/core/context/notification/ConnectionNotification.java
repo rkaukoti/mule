@@ -6,8 +6,8 @@
  */
 package org.mule.runtime.core.context.notification;
 
-import org.mule.runtime.core.api.context.notification.ServerNotification;
 import org.mule.runtime.core.api.connector.Connectable;
+import org.mule.runtime.core.api.context.notification.ServerNotification;
 
 /**
  * Is fired by a connector when a connection is made or disconnected.
@@ -15,15 +15,16 @@ import org.mule.runtime.core.api.connector.Connectable;
  */
 public class ConnectionNotification extends ServerNotification
 {
+    public static final int CONNECTION_CONNECTED = CONNECTION_EVENT_ACTION_START_RANGE + 1;
+    public static final int CONNECTION_FAILED = CONNECTION_EVENT_ACTION_START_RANGE + 2;
+    public static final int CONNECTION_DISCONNECTED = CONNECTION_EVENT_ACTION_START_RANGE + 3;
     /**
      * Serial version
      */
     private static final long serialVersionUID = -6455441938378523145L;
-    public static final int CONNECTION_CONNECTED = CONNECTION_EVENT_ACTION_START_RANGE + 1;
-    public static final int CONNECTION_FAILED = CONNECTION_EVENT_ACTION_START_RANGE + 2;
-    public static final int CONNECTION_DISCONNECTED = CONNECTION_EVENT_ACTION_START_RANGE + 3;
 
-    static {
+    static
+    {
         registerAction("connected", CONNECTION_CONNECTED);
         registerAction("connect failed", CONNECTION_FAILED);
         registerAction("disconnected", CONNECTION_DISCONNECTED);

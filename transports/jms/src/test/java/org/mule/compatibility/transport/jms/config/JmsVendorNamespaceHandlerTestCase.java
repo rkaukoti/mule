@@ -6,10 +6,8 @@
  */
 package org.mule.compatibility.transport.jms.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.junit.Test;
 import org.mule.compatibility.transport.jms.JmsConnector;
 import org.mule.compatibility.transport.jms.JmsConstants;
 import org.mule.compatibility.transport.jms.activemq.ActiveMQJmsConnector;
@@ -21,8 +19,9 @@ import org.mule.functional.junit4.FunctionalTestCase;
 
 import javax.jms.ConnectionFactory;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests the "jms" namespace for vendor-specific configs.

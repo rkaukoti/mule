@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.module.http.internal;
 
-import static java.util.Collections.unmodifiableMap;
-
 import org.mule.runtime.module.http.api.HttpParameters;
 
 import java.io.Serializable;
@@ -22,6 +20,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static java.util.Collections.unmodifiableMap;
 
 /**
  * Implementation of {@link HttpParameters} that allows the aggregation of keys and access to the aggregated list or a
@@ -166,7 +166,7 @@ public class ParameterMap implements HttpParameters, Serializable
     }
 
     @Override
-    public Set<Entry<String,String>> entrySet()
+    public Set<Entry<String, String>> entrySet()
     {
         HashSet<Entry<String, String>> entries = new HashSet<>();
         for (String key : paramsMap.keySet())

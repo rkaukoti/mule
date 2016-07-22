@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.module.xml.transformers.xml.xstream;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.module.xml.transformer.ObjectToXml;
 import org.mule.runtime.module.xml.transformer.XmlToObject;
@@ -18,7 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class XmlObjectTransformersTestCase extends AbstractXmlTransformerTestCase
 {
@@ -35,7 +34,7 @@ public class XmlObjectTransformersTestCase extends AbstractXmlTransformerTestCas
     @Override
     public Transformer getTransformer() throws Exception
     {
-        ObjectToXml trans =  createObject(ObjectToXml.class);
+        ObjectToXml trans = createObject(ObjectToXml.class);
         trans.setAliases(aliases);
         return trans;
     }

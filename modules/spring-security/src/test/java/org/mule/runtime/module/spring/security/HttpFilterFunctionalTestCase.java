@@ -6,13 +6,6 @@
  */
 package org.mule.runtime.module.spring.security;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.UNAUTHORIZED;
-
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
@@ -20,6 +13,12 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.UNAUTHORIZED;
 
 public class HttpFilterFunctionalTestCase extends FunctionalTestCase
 {
@@ -108,7 +107,7 @@ public class HttpFilterFunctionalTestCase extends FunctionalTestCase
         HttpClient client = new HttpClient();
         client.getParams().setAuthenticationPreemptive(true);
         client.getState().setCredentials(new AuthScope(host, -1, realm),
-            new UsernamePasswordCredentials(user, pass));
+                new UsernamePasswordCredentials(user, pass));
         GetMethod get = new GetMethod(url);
         get.setDoAuthentication(handshake);
 

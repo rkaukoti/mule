@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.el.function;
 
+import org.apache.commons.collections.map.LRUMap;
 import org.mule.runtime.core.api.el.ExpressionLanguageContext;
 import org.mule.runtime.core.api.el.ExpressionLanguageFunction;
 import org.mule.runtime.core.api.transformer.TransformerException;
@@ -15,8 +16,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.collections.map.LRUMap;
 
 public class RegexExpressionLanguageFuntion implements ExpressionLanguageFunction
 {
@@ -43,7 +42,7 @@ public class RegexExpressionLanguageFuntion implements ExpressionLanguageFunctio
             try
             {
                 result = getMatches(regex,
-                    context.getVariable("message", MessageContext.class).payloadAs(String.class), 0, context);
+                        context.getVariable("message", MessageContext.class).payloadAs(String.class), 0, context);
             }
             catch (TransformerException e)
             {

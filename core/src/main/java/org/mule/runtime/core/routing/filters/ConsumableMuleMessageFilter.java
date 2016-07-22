@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.core.routing.filters;
 
-import static org.mule.runtime.core.util.ClassUtils.isConsumable;
-
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.routing.filter.Filter;
+
+import static org.mule.runtime.core.util.ClassUtils.isConsumable;
 
 /**
  * Filters messages that have a consumable payload.

@@ -6,15 +6,14 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
 import org.mule.compatibility.core.endpoint.MuleEndpointURI;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class JmsEndpointTestCase extends AbstractMuleContextTestCase
 {
@@ -162,7 +161,7 @@ public class JmsEndpointTestCase extends AbstractMuleContextTestCase
         url.initialise();
         assertEquals("jms", url.getScheme());
         assertEquals("[[testgroup]]test.queue", url.getAddress());
-        assertNull( url.getResourceInfo());
+        assertNull(url.getResourceInfo());
         assertEquals("jms://?address=[[testgroup]]test.queue", url.toString());
     }
 
@@ -173,7 +172,7 @@ public class JmsEndpointTestCase extends AbstractMuleContextTestCase
         url.initialise();
         assertEquals("jms", url.getScheme());
         assertEquals("[[testgroup]]test.queue", url.getAddress());
-        assertNull( url.getResourceInfo());
+        assertNull(url.getResourceInfo());
         assertEquals("jms://%5B%5Btestgroup%5D%5Dtest.queue", url.toString());
     }
 

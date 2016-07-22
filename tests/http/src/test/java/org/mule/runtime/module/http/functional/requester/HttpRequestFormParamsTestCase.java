@@ -7,11 +7,7 @@
 package org.mule.runtime.module.http.functional.requester;
 
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.module.http.api.HttpHeaders;
 
@@ -21,7 +17,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class HttpRequestFormParamsTestCase extends AbstractHttpRequestTestCase
 {
@@ -43,7 +42,8 @@ public class HttpRequestFormParamsTestCase extends AbstractHttpRequestTestCase
 
         assertThat(uri, equalTo("/testPath"));
         assertThat(body, equalTo("testName1=testValue1&testName2=testValue2"));
-        assertThat(getFirstReceivedHeader(HttpHeaders.Names.CONTENT_TYPE), equalTo(HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED.toRfcString()));
+        assertThat(getFirstReceivedHeader(HttpHeaders.Names.CONTENT_TYPE),
+                equalTo(HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED.toRfcString()));
     }
 
 

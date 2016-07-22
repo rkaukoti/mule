@@ -56,8 +56,7 @@ public class SimpleContent
     /**
      * Gets the value of the restriction property.
      *
-     * @return possible object is
-     * {@link SimpleRestrictionType }
+     * @return possible object is {@link SimpleRestrictionType }
      */
     public SimpleRestrictionType getRestriction()
     {
@@ -67,8 +66,7 @@ public class SimpleContent
     /**
      * Sets the value of the restriction property.
      *
-     * @param value allowed object is
-     *              {@link SimpleRestrictionType }
+     * @param value allowed object is {@link SimpleRestrictionType }
      */
     public void setRestriction(SimpleRestrictionType value)
     {
@@ -78,8 +76,7 @@ public class SimpleContent
     /**
      * Gets the value of the extension property.
      *
-     * @return possible object is
-     * {@link SimpleExtensionType }
+     * @return possible object is {@link SimpleExtensionType }
      */
     public SimpleExtensionType getExtension()
     {
@@ -89,8 +86,7 @@ public class SimpleContent
     /**
      * Sets the value of the extension property.
      *
-     * @param value allowed object is
-     *              {@link SimpleExtensionType }
+     * @param value allowed object is {@link SimpleExtensionType }
      */
     public void setExtension(SimpleExtensionType value)
     {

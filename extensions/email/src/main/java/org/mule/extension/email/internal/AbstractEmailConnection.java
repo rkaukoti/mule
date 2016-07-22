@@ -6,7 +6,6 @@
  */
 package org.mule.extension.email.internal;
 
-import static org.apache.commons.lang.StringUtils.join;
 import org.mule.extension.email.api.exception.EmailConnectionException;
 import org.mule.extension.email.api.exception.EmailException;
 import org.mule.runtime.api.connection.ConnectionValidationResult;
@@ -19,6 +18,8 @@ import java.util.Properties;
 
 import javax.mail.Session;
 import javax.net.ssl.SSLContext;
+
+import static org.apache.commons.lang.StringUtils.join;
 
 /**
  * Generic implementation for an email connection of a connector which operates
@@ -123,7 +124,8 @@ public abstract class AbstractEmailConnection
     /**
      * Creates a new {@link Properties} instance and set all the basic properties required by the specified {@code protocol}.
      */
-    private Properties buildBasicSessionProperties(String host, String port, long connectionTimeout, long readTimeout, long writeTimeout) throws EmailConnectionException
+    private Properties buildBasicSessionProperties(String host, String port, long connectionTimeout, long readTimeout, long writeTimeout)
+            throws EmailConnectionException
     {
         Properties props = new Properties();
         props.setProperty(protocol.getPortProperty(), port);
@@ -191,8 +193,7 @@ public abstract class AbstractEmailConnection
     /**
      * Checks if the current {@link AbstractEmailConnection} instance is valid or not.
      *
-     * @return a {@link ConnectionValidationResult} indicating if the connection
-     * is valid or not.
+     * @return a {@link ConnectionValidationResult} indicating if the connection is valid or not.
      */
     public abstract ConnectionValidationResult validate();
 

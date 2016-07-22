@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.core.el.mvel;
 
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.MuleEvent;
 import org.mule.mvel2.ParserConfiguration;
 import org.mule.mvel2.integration.VariableResolver;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.MuleEvent;
 
 public class VariableVariableResolverFactory extends MuleBaseVariableResolverFactory
 {
@@ -56,8 +56,7 @@ public class VariableVariableResolverFactory extends MuleBaseVariableResolverFac
         }
     }
 
-    @SuppressWarnings("rawtypes")
-    class FlowVariableVariableResolver implements VariableResolver
+    @SuppressWarnings("rawtypes") class FlowVariableVariableResolver implements VariableResolver
     {
 
         private static final long serialVersionUID = -4847663330454657440L;
@@ -105,8 +104,7 @@ public class VariableVariableResolverFactory extends MuleBaseVariableResolverFac
         }
     }
 
-    @SuppressWarnings({"deprecation", "rawtypes"})
-    class SessionVariableVariableResolver implements VariableResolver
+    @SuppressWarnings({"deprecation", "rawtypes"}) class SessionVariableVariableResolver implements VariableResolver
     {
 
         private static final long serialVersionUID = 7658449705305592397L;

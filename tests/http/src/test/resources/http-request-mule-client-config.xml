@@ -15,7 +15,7 @@
     </httpn:listener-config>
 
     <httpn:listener-config name="httpsListenerConfig">
-        <httpn:listener-connection  host="localhost" protocol="HTTPS" port="${httpsPort}">
+        <httpn:listener-connection host="localhost" protocol="HTTPS" port="${httpsPort}">
             <tls:context>
                 <tls:key-store path="tls/serverKeystore" password="mulepassword" keyPassword="mulepassword"/>
             </tls:context>
@@ -25,11 +25,11 @@
     <httpn:request-config name="requestConfig" followRedirects="false"/>
 
     <tls:context name="tlsContext">
-        <tls:trust-store password="mulepassword" path="tls/trustStore" />
+        <tls:trust-store password="mulepassword" path="tls/trustStore"/>
     </tls:context>
 
     <flow name="echoFlow">
-        <httpn:listener path="path" config-ref="listenerConfig" />
+        <httpn:listener path="path" config-ref="listenerConfig"/>
         <object-to-string-transformer/>
         <copy-properties propertyName="*"/>
         <test:queue name="out"/>

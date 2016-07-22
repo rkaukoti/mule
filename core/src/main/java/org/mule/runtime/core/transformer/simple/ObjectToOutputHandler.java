@@ -21,11 +21,15 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 
-/** <code>ObjectToOutputHandler</code> converts a byte array into a String. */
+/**
+ * <code>ObjectToOutputHandler</code> converts a byte array into a String.
+ */
 public class ObjectToOutputHandler extends AbstractTransformer implements DiscoverableTransformer
 {
 
-    /** Give core transformers a slighty higher priority */
+    /**
+     * Give core transformers a slighty higher priority
+     */
     private int priorityWeighting = DiscoverableTransformer.DEFAULT_PRIORITY_WEIGHTING + 1;
 
     public ObjectToOutputHandler()

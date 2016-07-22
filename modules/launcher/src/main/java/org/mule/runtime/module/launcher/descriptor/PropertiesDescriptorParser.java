@@ -6,7 +6,7 @@
  */
 package org.mule.runtime.module.launcher.descriptor;
 
-import static org.mule.runtime.module.reboot.MuleContainerBootstrapUtils.getMuleAppDir;
+import org.apache.commons.lang.BooleanUtils;
 import org.mule.runtime.core.util.PropertiesUtils;
 import org.mule.runtime.core.util.StringUtils;
 
@@ -15,14 +15,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.apache.commons.lang.BooleanUtils;
+import static org.mule.runtime.module.reboot.MuleContainerBootstrapUtils.getMuleAppDir;
 
 public class PropertiesDescriptorParser implements DescriptorParser<ApplicationDescriptor>
 {
     public static final String PROPERTY_REDEPLOYMENT_ENABLED = "redeployment.enabled";
+    public static final String PROPERTY_DOMAIN = "domain";
     protected static final String PROPERTY_ENCODING = "encoding";
     protected static final String PROPERTY_CONFIG_BUILDER = "config.builder";
-    public static final String PROPERTY_DOMAIN = "domain";
     // support not yet implemented for CL reversal
     protected static final String PROPERTY_CONFIG_RESOURCES = "config.resources";
     protected static final String PROPERTY_LOG_CONFIG_FILE = "log.configFile";

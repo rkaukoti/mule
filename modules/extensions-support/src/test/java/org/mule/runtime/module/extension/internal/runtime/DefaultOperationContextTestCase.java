@@ -6,13 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
-import static java.util.Collections.emptyList;
-import static org.apache.commons.lang.StringUtils.EMPTY;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.extension.api.ExtensionManager;
@@ -30,11 +28,12 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.util.Collections.emptyList;
+import static org.apache.commons.lang.StringUtils.EMPTY;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -74,7 +73,8 @@ public class DefaultOperationContextTestCase extends AbstractMuleTestCase
     @Before
     public void before()
     {
-        configuration = new LifecycleAwareConfigurationInstance<>(CONFIG_NAME, configurationModel, configurationInstance, emptyList(), Optional.empty());
+        configuration = new LifecycleAwareConfigurationInstance<>(CONFIG_NAME, configurationModel, configurationInstance, emptyList(),
+                Optional.empty());
         Map<String, Object> parametersMap = new HashMap<>();
         parametersMap.put(PARAM_NAME, VALUE);
         when(resolverSetResult.asMap()).thenReturn(parametersMap);

@@ -9,10 +9,9 @@ package org.mule.compatibility.transport.jms.config;
 
 import org.mule.compatibility.transport.jms.CustomCachingConnectionFactory;
 import org.mule.runtime.config.spring.dsl.api.ObjectFactory;
+import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 import javax.jms.ConnectionFactory;
-
-import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 /**
  * DEPRECATED: This element is deprecated from Mule 3.6.
@@ -20,7 +19,8 @@ import org.springframework.beans.factory.config.AbstractFactoryBean;
  * by default when a CachingConnectionFactory has not been configured explicitly.
  */
 @Deprecated
-public class CachingConnectionFactoryFactoryBean extends AbstractFactoryBean<CustomCachingConnectionFactory> implements ObjectFactory<CustomCachingConnectionFactory>
+public class CachingConnectionFactoryFactoryBean extends AbstractFactoryBean<CustomCachingConnectionFactory>
+        implements ObjectFactory<CustomCachingConnectionFactory>
 {
 
     public static final int DEFAULT_SESSION_CACHE_SIZE = 1;
@@ -42,8 +42,8 @@ public class CachingConnectionFactoryFactoryBean extends AbstractFactoryBean<Cus
     protected CustomCachingConnectionFactory createInstance() throws Exception
     {
         CustomCachingConnectionFactory cachingConnectionFactory = new CustomCachingConnectionFactory(connectionFactory,
-                                                                                                     username,
-                                                                                                     password);
+                username,
+                password);
         cachingConnectionFactory.setCacheProducers(cacheProducers);
         cachingConnectionFactory.setSessionCacheSize(sessionCacheSize);
         cachingConnectionFactory.setCacheConsumers(false);

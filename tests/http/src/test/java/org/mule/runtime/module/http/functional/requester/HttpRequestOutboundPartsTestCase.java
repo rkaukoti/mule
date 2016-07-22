@@ -6,17 +6,10 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.startsWith;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.api.metadata.MediaType.HTML;
-import static org.mule.runtime.api.metadata.MediaType.TEXT;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_DISPOSITION;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
-import static org.mule.runtime.module.http.functional.matcher.HttpMessageAttributesMatchers.hasStatusCode;
-
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.util.MultiPartInputStreamParser;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.extension.http.api.HttpPart;
 import org.mule.extension.http.api.HttpResponseAttributes;
 import org.mule.runtime.api.metadata.MediaType;
@@ -35,30 +28,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.util.MultiPartInputStreamParser;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.api.metadata.MediaType.HTML;
+import static org.mule.runtime.api.metadata.MediaType.TEXT;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_DISPOSITION;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
+import static org.mule.runtime.module.http.functional.matcher.HttpMessageAttributesMatchers.hasStatusCode;
 
 public class HttpRequestOutboundPartsTestCase extends AbstractHttpRequestTestCase
 {
 
+    public static final String PARTS = "parts";
     private static final String TEST_FILE_NAME = "auth/realm.properties";
     private static final String TEST_PART_NAME = "partName";
-    public static final String PARTS = "parts";
-
     @Rule
     public SystemProperty sendBufferSize = new SystemProperty("sendBufferSize", "128");
+    private Collection<Part> parts;
+    private List<HttpPart> partsToSend = new LinkedList<>();
+    private String requestContentType;
 
     @Override
     protected String getConfigFile()
     {
         return "http-request-outbound-parts-config.xml";
     }
-
-    private Collection<Part> parts;
-    private List<HttpPart> partsToSend = new LinkedList<>();
-    private String requestContentType;
 
     @Override
     protected boolean enableHttps()
@@ -87,7 +84,7 @@ public class HttpRequestOutboundPartsTestCase extends AbstractHttpRequestTestCas
     public void partsAreSent() throws Exception
     {
         flowRunner("requestPartFlow").withPayload(TEST_MESSAGE)
-                .run();
+                                     .run();
 
         assertThat(requestContentType, startsWith("multipart/form-data; boundary="));
         assertThat(parts.size(), equalTo(2));
@@ -221,7 +218,8 @@ public class HttpRequestOutboundPartsTestCase extends AbstractHttpRequestTestCas
     {
         requestContentType = request.getHeader(CONTENT_TYPE);
 
-        MultiPartInputStreamParser inputStreamParser = new MultiPartInputStreamParser(request.getInputStream(), request.getContentType(), null, null);
+        MultiPartInputStreamParser inputStreamParser =
+                new MultiPartInputStreamParser(request.getInputStream(), request.getContentType(), null, null);
 
         try
         {

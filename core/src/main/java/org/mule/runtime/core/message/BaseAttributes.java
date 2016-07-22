@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.core.message;
 
-import static org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE;
-
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.mule.runtime.api.message.Attributes;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import static org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE;
 
 /**
  * Basic attributes implementation that defines a generic {@link #toString()} method.
- * 
+ *
  * @since 4.0
  */
 public abstract class BaseAttributes implements Attributes

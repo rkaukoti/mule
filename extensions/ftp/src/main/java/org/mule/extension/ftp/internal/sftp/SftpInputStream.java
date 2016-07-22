@@ -6,10 +6,10 @@
  */
 package org.mule.extension.ftp.internal.sftp;
 
-import org.mule.extension.ftp.internal.FtpConnector;
 import org.mule.extension.ftp.api.FtpFileAttributes;
-import org.mule.extension.ftp.internal.ftp.connection.FtpFileSystem;
+import org.mule.extension.ftp.internal.FtpConnector;
 import org.mule.extension.ftp.internal.FtpInputStream;
+import org.mule.extension.ftp.internal.ftp.connection.FtpFileSystem;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionHandler;
 import org.mule.runtime.module.extension.file.api.FileAttributes;
@@ -26,6 +26,12 @@ import java.util.function.Supplier;
 public class SftpInputStream extends FtpInputStream
 {
 
+    private SftpInputStream(Supplier<InputStream> streamSupplier, ConnectionHandler<FtpFileSystem> connectionHandler, PathLock lock)
+            throws ConnectionException
+    {
+        super(streamSupplier, connectionHandler, lock);
+    }
+
     /**
      * Establishes the underlying connection and returns a new instance of this class.
      * <p>
@@ -41,10 +47,5 @@ public class SftpInputStream extends FtpInputStream
     {
         ConnectionHandler<FtpFileSystem> connectionHandler = getConnectionHandler(config);
         return new SftpInputStream(getStreamSupplier(attributes, connectionHandler), connectionHandler, lock);
-    }
-
-    private SftpInputStream(Supplier<InputStream> streamSupplier, ConnectionHandler<FtpFileSystem> connectionHandler, PathLock lock) throws ConnectionException
-    {
-        super(streamSupplier, connectionHandler, lock);
     }
 }

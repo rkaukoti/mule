@@ -15,29 +15,29 @@ public class VMTransactionFactory implements UniversalTransactionFactory
 {
     public static UniversalTransactionFactory factoryDelegate = new VMTransactionFactoryDelegate();
 
+    /**
+     * @deprecated For customizing the behavior of VM transport the whole {@link org.mule.util.queue.QueueManager} should be override
+     */
+    @Deprecated
+    public static void setFactoryDelegate(UniversalTransactionFactory factoryDelegate)
+    {
+        VMTransactionFactory.factoryDelegate = factoryDelegate;
+    }
+
     @Override
     public Transaction beginTransaction(MuleContext muleContext) throws TransactionException
     {
         return factoryDelegate.beginTransaction(muleContext);
     }
 
+    /**
+     * sets the transaction factory to be used to create VM transactions.  This must also be an UnboundTransactionFactory
+     */
+
     @Override
     public boolean isTransacted()
     {
         return factoryDelegate.isTransacted();
-    }
-
-    /**
-     * sets the transaction factory to be used to create VM transactions.  This must also be an UnboundTransactionFactory
-     */
-    /**
-     * @deprecated For customizing the behavior of VM transport the whole {@link org.mule.util.queue.QueueManager} should be override
-     * @param factoryDelegate
-     */
-    @Deprecated
-    public static void setFactoryDelegate(UniversalTransactionFactory factoryDelegate)
-    {
-        VMTransactionFactory.factoryDelegate = factoryDelegate;
     }
 
     @Override

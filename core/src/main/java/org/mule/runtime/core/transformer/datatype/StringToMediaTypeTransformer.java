@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.transformer.datatype;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.DataTypeBuilder;
 import org.mule.runtime.api.metadata.MediaType;
@@ -16,6 +14,8 @@ import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.transformer.AbstractTransformer;
 
 import java.nio.charset.Charset;
+
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * Converts strings to {@link MediaType} instances. See {@link DataTypeBuilder#mediaType(String)}

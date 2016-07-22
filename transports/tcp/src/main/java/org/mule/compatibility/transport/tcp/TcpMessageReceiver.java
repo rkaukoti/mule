@@ -6,7 +6,6 @@
  */
 package org.mule.compatibility.transport.tcp;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_CLIENT_ADDRESS;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.core.connector.EndpointConnectException;
@@ -46,16 +45,17 @@ import javax.resource.spi.work.Work;
 import javax.resource.spi.work.WorkException;
 import javax.resource.spi.work.WorkManager;
 
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_CLIENT_ADDRESS;
+
 /**
  * <code>TcpMessageReceiver</code> acts like a TCP server to receive socket
  * requests.
  */
 public class TcpMessageReceiver extends AbstractMessageReceiver implements Work
 {
+    protected final AtomicBoolean disposing = new AtomicBoolean(false);
     private ServerSocket serverSocket = null;
 
-    protected final AtomicBoolean disposing = new AtomicBoolean(false);
-    
     public TcpMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint)
             throws CreateException
     {
@@ -125,6 +125,7 @@ public class TcpMessageReceiver extends AbstractMessageReceiver implements Work
 
     /**
      * Obtain the serverSocket
+     *
      * @return the server socket for this server
      */
     public ServerSocket getServerSocket()
@@ -230,7 +231,7 @@ public class TcpMessageReceiver extends AbstractMessageReceiver implements Work
         protected boolean dataInWorkFinished = false;
         protected Object notify = new Object();
         private boolean moreMessages = true;
-        
+
         public TcpWorker(Socket socket, AbstractMessageReceiver receiver) throws IOException
         {
             super(socket, receiver, ((TcpConnector) connector).getTcpProtocol().createResponse(socket));
@@ -252,7 +253,7 @@ public class TcpMessageReceiver extends AbstractMessageReceiver implements Work
                     // The Protocol is responsible for closing this.
                     dataInWorkFinished = true;
                     moreMessages = false;
-                    
+
                     synchronized (notify)
                     {
                         notify.notifyAll();
@@ -267,7 +268,7 @@ public class TcpMessageReceiver extends AbstractMessageReceiver implements Work
         {
             dispose();
         }
-        
+
         @Override
         public void dispose()
         {
@@ -325,7 +326,7 @@ public class TcpMessageReceiver extends AbstractMessageReceiver implements Work
                         logger.debug("Closing listener: " + socketAddress);
                     }
                 }
-                    
+
                 try
                 {
                     shutdownSocket();
@@ -359,28 +360,28 @@ public class TcpMessageReceiver extends AbstractMessageReceiver implements Work
         @Override
         protected Object getNextMessage(Object resource) throws Exception
         {
-            long keepAliveTimeout = ((TcpConnector)connector).getKeepAliveTimeout();
-            
+            long keepAliveTimeout = ((TcpConnector) connector).getKeepAliveTimeout();
+
             Object readMsg = null;
             try
             {
                 // Create a monitor if expiry was set
-                if(keepAliveTimeout > 0)
+                if (keepAliveTimeout > 0)
                 {
-                    ((TcpConnector) connector).getKeepAliveMonitor().addExpirable(keepAliveTimeout, 
-                        TimeUnit.MILLISECONDS, this);
+                    ((TcpConnector) connector).getKeepAliveMonitor().addExpirable(keepAliveTimeout,
+                            TimeUnit.MILLISECONDS, this);
                 }
-                
+
                 readMsg = protocol.read(dataIn);
-                
+
                 // There was some action so we can clear the monitor
                 ((TcpConnector) connector).getKeepAliveMonitor().removeExpirable(this);
-                
+
                 if (dataIn.isStreaming())
                 {
                     moreMessages = false;
-                } 
-                
+                }
+
                 return readMsg;
             }
             catch (SocketTimeoutException e)
@@ -397,24 +398,24 @@ public class TcpMessageReceiver extends AbstractMessageReceiver implements Work
                     dataIn.close();
                 }
             }
-            
+
             return null;
         }
-        
+
         @Override
         protected boolean hasMoreMessages(Object message)
         {
-            return !socket.isClosed() && !dataInWorkFinished 
-                && !disposing.get() && moreMessages;
+            return !socket.isClosed() && !dataInWorkFinished
+                   && !disposing.get() && moreMessages;
         }
 
         @Override
         protected void handleResults(List messages) throws Exception
-        {            
+        {
             //should send back only if remote synch is set or no outbound endpoints
             if (endpoint.getExchangePattern().hasResponse())
             {
-                for (Iterator iterator = messages.iterator(); iterator.hasNext();)
+                for (Iterator iterator = messages.iterator(); iterator.hasNext(); )
                 {
                     Object o = iterator.next();
                     protocol.write(dataOut, o);

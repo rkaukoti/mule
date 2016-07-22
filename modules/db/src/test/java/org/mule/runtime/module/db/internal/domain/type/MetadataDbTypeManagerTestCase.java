@@ -7,11 +7,7 @@
 
 package org.mule.runtime.module.db.internal.domain.type;
 
-import static junit.framework.TestCase.fail;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
 import org.mule.runtime.module.db.test.util.ColumnMetadata;
 import org.mule.runtime.module.db.test.util.ResultSetBuilder;
@@ -28,7 +24,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import static junit.framework.TestCase.fail;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class MetadataDbTypeManagerTestCase extends AbstractMuleTestCase
@@ -114,7 +114,8 @@ public class MetadataDbTypeManagerTestCase extends AbstractMuleTestCase
     {
         List<ColumnMetadata> columns = new ArrayList<ColumnMetadata>();
         columns.add(new ColumnMetadata(MetadataDbTypeManager.METADATA_TYPE_ID_COLUMN, MetadataDbTypeManager.METADATA_TYPE_ID_COLUMN, 1));
-        columns.add(new ColumnMetadata(MetadataDbTypeManager.METADATA_TYPE_NAME_COLUMN, MetadataDbTypeManager.METADATA_TYPE_NAME_COLUMN, 2));
+        columns.add(
+                new ColumnMetadata(MetadataDbTypeManager.METADATA_TYPE_NAME_COLUMN, MetadataDbTypeManager.METADATA_TYPE_NAME_COLUMN, 2));
         return columns;
     }
 

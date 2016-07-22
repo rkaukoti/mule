@@ -6,27 +6,25 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_GROUP_SIZE_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_ID_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_SEQUENCE_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROPERTY;
-
+import org.dom4j.Namespace;
+import org.dom4j.QName;
+import org.dom4j.dom.DOMElement;
 import org.mule.runtime.core.api.MuleEvent;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import java.util.Iterator;
 
 import javax.xml.soap.Name;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPEnvelope;
-import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPHeader;
 import javax.xml.soap.SOAPHeaderElement;
 
-import org.dom4j.Namespace;
-import org.dom4j.QName;
-import org.dom4j.dom.DOMElement;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_GROUP_SIZE_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_ID_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_SEQUENCE_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROPERTY;
 
 /**
  * <code>MuleSoapHeaders</code> is a helper class for extracting and writing Mule
@@ -34,20 +32,17 @@ import org.w3c.dom.Node;
  */
 public class MuleSoapHeaders
 {
+    public static final String MULE_10_ACTOR = "http://www.muleumo.org/providers/soap/1.0";
+    public static final String MULE_NAMESPACE = "mule";
+    public static final String MULE_HEADER = "header";
+    public static final String ENV_REQUEST_HEADERS = "MULE_REQUEST_HEADERS";
     private String replyTo;
     private String correlationId;
     private String correlationGroup;
     private String correlationSequence;
 
-    public static final String MULE_10_ACTOR = "http://www.muleumo.org/providers/soap/1.0";
-    public static final String MULE_NAMESPACE = "mule";
-    public static final String MULE_HEADER = "header";
-    public static final String ENV_REQUEST_HEADERS = "MULE_REQUEST_HEADERS";
-
     /**
      * Extracts header properties from a Mule event
-     * 
-     * @param event
      */
     public MuleSoapHeaders(MuleEvent event)
     {
@@ -65,8 +60,6 @@ public class MuleSoapHeaders
 
     /**
      * Extracts Mule header properties from a Soap message
-     * 
-     * @param soapHeader
      */
     public MuleSoapHeaders(SOAPHeader soapHeader)
     {
@@ -74,7 +67,7 @@ public class MuleSoapHeaders
         SOAPHeaderElement headerElement;
         while (iter.hasNext())
         {
-            headerElement = (SOAPHeaderElement)iter.next();
+            headerElement = (SOAPHeaderElement) iter.next();
 
             // checking that the elements are part of the mule namespace
             if (org.mule.runtime.core.util.StringUtils.equals(MULE_10_ACTOR, headerElement.getNamespaceURI()))
@@ -105,7 +98,7 @@ public class MuleSoapHeaders
             // if not, means that it is a value not an element, therefore we cannot
             // look for correlation_id ...
             {
-                element = (SOAPElement)elementObject;
+                element = (SOAPElement) elementObject;
                 String localName = element.getLocalName();
                 String elementValue = getStringValue(element);
 
@@ -147,9 +140,6 @@ public class MuleSoapHeaders
 
     /**
      * Writes the header properties to a Soap header
-     * 
-     * @param env
-     * @throws SOAPException
      */
     public void addHeaders(SOAPEnvelope env) throws Exception
     {
@@ -173,10 +163,10 @@ public class MuleSoapHeaders
         if (correlationId != null)
         {
             SOAPElement e = muleHeader.addChildElement(MULE_CORRELATION_ID_PROPERTY,
-                                                       MULE_NAMESPACE);
+                    MULE_NAMESPACE);
             e.addTextNode(correlationId);
             e = muleHeader.addChildElement(MULE_CORRELATION_GROUP_SIZE_PROPERTY,
-                                           MULE_NAMESPACE);
+                    MULE_NAMESPACE);
             e.addTextNode(correlationGroup);
             e = muleHeader.addChildElement(MULE_CORRELATION_SEQUENCE_PROPERTY, MULE_NAMESPACE);
             e.addTextNode(correlationSequence);
@@ -206,16 +196,16 @@ public class MuleSoapHeaders
         if (correlationId != null)
         {
             Node e = muleHeader.appendChild(new DOMElement(new QName(
-                MULE_CORRELATION_ID_PROPERTY, new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
+                    MULE_CORRELATION_ID_PROPERTY, new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
             e.setNodeValue(correlationId);
 
             e = muleHeader.appendChild(new DOMElement(new QName(
-                MULE_CORRELATION_GROUP_SIZE_PROPERTY, new Namespace(MULE_NAMESPACE,
+                    MULE_CORRELATION_GROUP_SIZE_PROPERTY, new Namespace(MULE_NAMESPACE,
                     MULE_10_ACTOR))));
             e.setNodeValue(correlationGroup);
 
             e = muleHeader.appendChild(new DOMElement(new QName(
-                MULE_CORRELATION_SEQUENCE_PROPERTY, new Namespace(MULE_NAMESPACE,
+                    MULE_CORRELATION_SEQUENCE_PROPERTY, new Namespace(MULE_NAMESPACE,
                     MULE_10_ACTOR))));
             e.setNodeValue(correlationSequence);
         }
@@ -223,7 +213,7 @@ public class MuleSoapHeaders
         {
 
             Node e = muleHeader.appendChild(new DOMElement(new QName(MULE_REPLY_TO_PROPERTY,
-                                                                     new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
+                    new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
             e.setNodeValue(replyTo);
         }
         return muleHeader;

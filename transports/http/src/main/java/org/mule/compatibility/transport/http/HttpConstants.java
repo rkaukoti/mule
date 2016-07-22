@@ -6,15 +6,14 @@
  */
 package org.mule.compatibility.transport.http;
 
+import com.google.common.net.HttpHeaders;
+
+import org.apache.commons.collections.map.CaseInsensitiveMap;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.util.MapUtils;
 
-import com.google.common.net.HttpHeaders;
-
 import java.util.Collections;
 import java.util.Map;
-
-import org.apache.commons.collections.map.CaseInsensitiveMap;
 
 /**
  * <code>HttpConstants</code> for request and response headers
@@ -174,7 +173,8 @@ public class HttpConstants
     public static final int SC_UNPROCESSABLE_ENTITY = 422;
     public static final int SC_LOCKED = 423;
     public static final int SC_FAILED_DEPENDENCY = 424;
-    public static final int SC_INTERNAL_SERVER_ERROR = org.mule.runtime.module.http.api.HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR.getStatusCode();
+    public static final int SC_INTERNAL_SERVER_ERROR =
+            org.mule.runtime.module.http.api.HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR.getStatusCode();
     public static final int SC_NOT_IMPLEMENTED = 501;
     public static final int SC_BAD_GATEWAY = 502;
     public static final int SC_SERVICE_UNAVAILABLE = 503;
@@ -184,33 +184,34 @@ public class HttpConstants
 
     static
     {
-        String[] strings = new String[]{HEADER_ACCEPT, HEADER_ACCEPT_CHARSET, HEADER_ACCEPT_ENCODING,
-            HEADER_ACCEPT_LANGUAGE, HEADER_AUTHORIZATION, HEADER_COOKIE, HEADER_EXPECT, HEADER_FROM,
-            HEADER_HOST, HEADER_IF_MATCH, HEADER_IF_MODIFIED_SINCE, HEADER_IF_NONE_MATCH,
-            HEADER_IF_RANGE, HEADER_IF_UNMODIFIED_SINCE, HEADER_MAX_FORWARDS, HEADER_PROXY_AUTHORIZATION,
-            HEADER_RANGE, HEADER_REFERER, HEADER_TE, HEADER_USER_AGENT, HEADER_SLUG, HEADER_X_FORWARDED_FOR};
+        String[] strings = new String[] {HEADER_ACCEPT, HEADER_ACCEPT_CHARSET, HEADER_ACCEPT_ENCODING,
+                                         HEADER_ACCEPT_LANGUAGE, HEADER_AUTHORIZATION, HEADER_COOKIE, HEADER_EXPECT, HEADER_FROM,
+                                         HEADER_HOST, HEADER_IF_MATCH, HEADER_IF_MODIFIED_SINCE, HEADER_IF_NONE_MATCH,
+                                         HEADER_IF_RANGE, HEADER_IF_UNMODIFIED_SINCE, HEADER_MAX_FORWARDS, HEADER_PROXY_AUTHORIZATION,
+                                         HEADER_RANGE, HEADER_REFERER, HEADER_TE, HEADER_USER_AGENT, HEADER_SLUG, HEADER_X_FORWARDED_FOR};
 
         REQUEST_HEADER_NAMES = Collections.unmodifiableMap(MapUtils.mapWithKeysAndValues(
-            CaseInsensitiveMap.class, strings, strings));
+                CaseInsensitiveMap.class, strings, strings));
 
-        strings = new String[]{HEADER_ACCEPT_RANGES, HEADER_AGE, HEADER_CONTENT_DISPOSITION,
-            HEADER_COOKIE_SET, HEADER_ETAG, HEADER_LOCATION, HEADER_PROXY_AUTHENTICATE,
-            HEADER_RETRY_AFTER, HEADER_SERVER, HEADER_VARY, HEADER_WWW_AUTHENTICATE, HEADER_TRANSFER_ENCODING}; // TODO: remove HEADER_TRANSFER_ENCODING
+        strings = new String[] {HEADER_ACCEPT_RANGES, HEADER_AGE, HEADER_CONTENT_DISPOSITION,
+                                HEADER_COOKIE_SET, HEADER_ETAG, HEADER_LOCATION, HEADER_PROXY_AUTHENTICATE,
+                                HEADER_RETRY_AFTER, HEADER_SERVER, HEADER_VARY, HEADER_WWW_AUTHENTICATE,
+                                HEADER_TRANSFER_ENCODING}; // TODO: remove HEADER_TRANSFER_ENCODING
 
         RESPONSE_HEADER_NAMES = Collections.unmodifiableMap(MapUtils.mapWithKeysAndValues(
-            CaseInsensitiveMap.class, strings, strings));
+                CaseInsensitiveMap.class, strings, strings));
 
-        strings = new String[]{HEADER_ALLOW, HEADER_CACHE_CONTROL, HEADER_CONNECTION, HEADER_CONTENT_ENCODING,
-            HEADER_CONTENT_LANGUAGE, HEADER_CONTENT_LENGTH, HEADER_CONTENT_LOCATION, HEADER_CONTENT_MD5,
-            HEADER_CONTENT_RANGE, HEADER_CONTENT_TYPE, HEADER_DATE, HEADER_EXPIRES, HEADER_KEEP_ALIVE,
-            HEADER_LAST_MODIFIED, HEADER_PRAGMA, HEADER_TRAILER, /*HEADER_TRANSFER_ENCODING, */ HEADER_UPGRADE,
-            HEADER_VIA, HEADER_WARNING};
+        strings = new String[] {HEADER_ALLOW, HEADER_CACHE_CONTROL, HEADER_CONNECTION, HEADER_CONTENT_ENCODING,
+                                HEADER_CONTENT_LANGUAGE, HEADER_CONTENT_LENGTH, HEADER_CONTENT_LOCATION, HEADER_CONTENT_MD5,
+                                HEADER_CONTENT_RANGE, HEADER_CONTENT_TYPE, HEADER_DATE, HEADER_EXPIRES, HEADER_KEEP_ALIVE,
+                                HEADER_LAST_MODIFIED, HEADER_PRAGMA, HEADER_TRAILER, /*HEADER_TRANSFER_ENCODING, */ HEADER_UPGRADE,
+                                HEADER_VIA, HEADER_WARNING};
 
         GENERAL_AND_ENTITY_HEADER_NAMES = Collections.unmodifiableMap(MapUtils.mapWithKeysAndValues(
-            CaseInsensitiveMap.class, strings, strings));
+                CaseInsensitiveMap.class, strings, strings));
 
         Map<String, String> allHeaders = MapUtils.mapWithKeysAndValues(CaseInsensitiveMap.class, strings,
-            strings);
+                strings);
         allHeaders.putAll(REQUEST_HEADER_NAMES);
         allHeaders.putAll(RESPONSE_HEADER_NAMES);
         ALL_HEADER_NAMES = Collections.unmodifiableMap(allHeaders);

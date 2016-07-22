@@ -6,10 +6,6 @@
  */
 package org.mule.extension.email.internal.retriever.imap;
 
-import static javax.mail.Flags.Flag.DELETED;
-import static javax.mail.Flags.Flag.SEEN;
-import static org.mule.extension.email.internal.util.EmailConnectorUtils.INBOX_FOLDER;
-
 import org.mule.extension.email.internal.commands.ExpungeCommand;
 import org.mule.extension.email.internal.commands.SetFlagCommand;
 import org.mule.extension.email.internal.retriever.RetrieverConnection;
@@ -22,6 +18,10 @@ import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Summary;
 
 import javax.inject.Inject;
+
+import static javax.mail.Flags.Flag.DELETED;
+import static javax.mail.Flags.Flag.SEEN;
+import static org.mule.extension.email.internal.util.EmailConnectorUtils.INBOX_FOLDER;
 
 /**
  * Basic set of operations which perform on top the IMAP email protocol.
@@ -37,10 +37,9 @@ public class IMAPOperations
     private MuleContext context;
 
     /**
-     * Marks an incoming email as READ.
-     * <p>
-     * This operation can target a single email, but if no emailID is specified and the incoming {@link MuleMessage} is carrying a list of emails
-     * this operation will mark all the emails that the {@link MuleMessage} is carrying if they belong to the specified folder.
+     * Marks an incoming email as READ. <p> This operation can target a single email, but if no emailID is specified and the incoming {@link
+     * MuleMessage} is carrying a list of emails this operation will mark all the emails that the {@link MuleMessage} is carrying if they
+     * belong to the specified folder.
      *
      * @param message       The incoming {@link MuleMessage}.
      * @param connection    The corresponding {@link RetrieverConnection} instance.
@@ -56,13 +55,11 @@ public class IMAPOperations
     }
 
     /**
-     * Marks an incoming email as DELETED, this way the marked email(s) are scheduled for deletion when the folder closes.
-     * <p>
-     * All DELETED marked emails are going to be eliminated from the mailbox when one of {@link IMAPOperations#expungeFolder(RetrieverConnection, String)}
-     * or {@link RetrieverOperations#delete(MuleMessage, RetrieverConnection, String, Integer)} is executed.
-     * <p>
-     * This operation can target a single email, but also if the incoming {@link MuleMessage} is carrying a list of emails
-     * this operation will mark all the emails that the {@link MuleMessage} is carrying.
+     * Marks an incoming email as DELETED, this way the marked email(s) are scheduled for deletion when the folder closes. <p> All DELETED
+     * marked emails are going to be eliminated from the mailbox when one of {@link IMAPOperations#expungeFolder(RetrieverConnection,
+     * String)} or {@link RetrieverOperations#delete(MuleMessage, RetrieverConnection, String, Integer)} is executed. <p> This operation can
+     * target a single email, but also if the incoming {@link MuleMessage} is carrying a list of emails this operation will mark all the
+     * emails that the {@link MuleMessage} is carrying.
      *
      * @param message       The incoming {@link MuleMessage}.
      * @param connection    The corresponding {@link RetrieverConnection} instance.
@@ -81,8 +78,7 @@ public class IMAPOperations
      * Eliminates from the mailbox all the messages scheduled for deletion with the DELETED flag set.
      *
      * @param connection    The associated {@link RetrieverConnection}.
-     * @param mailboxFolder Mailbox folder where the emails with the 'DELETED' flag are going to be scheduled to be
-     *                      definitely deleted
+     * @param mailboxFolder Mailbox folder where the emails with the 'DELETED' flag are going to be scheduled to be definitely deleted
      */
     public void expungeFolder(@Connection RetrieverConnection connection,
                               @Optional(defaultValue = INBOX_FOLDER) String mailboxFolder)

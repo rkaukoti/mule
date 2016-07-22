@@ -13,16 +13,15 @@ import java.util.List;
 
 /**
  * Keeps context information about the message processors that were executed as part of the processing of an event.
- * 
+ *
  * @since 3.8.0
  */
 public interface ProcessorsTrace extends Serializable
 {
 
     /**
-     * @return the paths of the processors that were executed as part of flows that have already been completed, ordered
-     *         by time of execution, if {@link DefaultMuleConfiguration#isFlowTrace()} is {@code true}. Empty list
-     *         otherwise.
+     * @return the paths of the processors that were executed as part of flows that have already been completed, ordered by time of
+     * execution, if {@link DefaultMuleConfiguration#isFlowTrace()} is {@code true}. Empty list otherwise.
      */
     List<String> getExecutedProcessors();
 

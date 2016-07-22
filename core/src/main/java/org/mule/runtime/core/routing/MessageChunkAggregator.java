@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.core.routing;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -19,9 +21,6 @@ import org.mule.runtime.core.routing.correlation.EventCorrelatorCallback;
 
 import java.util.Arrays;
 import java.util.Comparator;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.output.ByteArrayOutputStream;
 
 public class MessageChunkAggregator extends AbstractAggregator
 {
@@ -44,7 +43,7 @@ public class MessageChunkAggregator extends AbstractAggregator
              * This method is invoked if the shouldAggregate method is called and
              * returns true. Once this method returns an aggregated message the event
              * group is removed from the router
-             * 
+             *
              * @param events the event group for this request
              * @return an aggregated message
              * @throws org.mule.runtime.core.routing.AggregationException if the aggregation

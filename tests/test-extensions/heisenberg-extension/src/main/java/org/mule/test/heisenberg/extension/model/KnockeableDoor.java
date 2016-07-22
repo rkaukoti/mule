@@ -13,17 +13,10 @@ import org.mule.runtime.extension.api.annotation.Parameter;
 public class KnockeableDoor
 {
 
-    public static String knock(String value)
-    {
-        return "Knocked on " + value;
-    }
-
     @Parameter
     private String victim;
-
     @Parameter
     private String address;
-
     @Parameter
     private KnockeableDoor previous;
 
@@ -34,6 +27,11 @@ public class KnockeableDoor
     public KnockeableDoor(String victim)
     {
         this.victim = victim;
+    }
+
+    public static String knock(String value)
+    {
+        return "Knocked on " + value;
     }
 
     public String knock()

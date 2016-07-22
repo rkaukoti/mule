@@ -6,19 +6,19 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.api.exception.MessagingExceptionHandler;
 import org.mule.runtime.core.exception.CatchMessagingExceptionStrategy;
-import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertThat;
 
 public class DefaultExceptionStrategyTestCase extends FunctionalTestCase
 {
@@ -27,6 +27,23 @@ public class DefaultExceptionStrategyTestCase extends FunctionalTestCase
     protected String getConfigFile()
     {
         return "org/mule/test/integration/exceptions/default-exception-strategy.xml";
+    }
+
+    @Test
+    public void testFlowAndServiceUseProperExceptionStrategy()
+    {
+        Set<MessagingExceptionHandler> usedExceptionStrategies = new HashSet<MessagingExceptionHandler>();
+
+        FlowConstruct flowNoExceptionStrategy = muleContext.getRegistry().lookupFlowConstruct("flowNoExceptionStrategy");
+        MessagingExceptionHandler flowNoExceptionStrategyExceptionListener = flowNoExceptionStrategy.getExceptionListener();
+        assertThat(flowNoExceptionStrategyExceptionListener, instanceOf(CustomExceptionStrategy.class));
+        assertThat(usedExceptionStrategies.add(flowNoExceptionStrategyExceptionListener), is(true));
+
+        FlowConstruct flowExceptionStrategy = muleContext.getRegistry().lookupFlowConstruct("flowExceptionStrategy");
+        MessagingExceptionHandler flowExceptionStrategyExceptionListener = flowExceptionStrategy.getExceptionListener();
+        assertThat(flowExceptionStrategyExceptionListener, instanceOf(CatchMessagingExceptionStrategy.class));
+        assertThat(usedExceptionStrategies.add(flowExceptionStrategyExceptionListener), is(true));
+
     }
 
     public static class CustomExceptionStrategy implements MessagingExceptionHandler
@@ -59,23 +76,6 @@ public class DefaultExceptionStrategyTestCase extends FunctionalTestCase
         {
             this.logException = logException;
         }
-    }
-
-    @Test
-    public void testFlowAndServiceUseProperExceptionStrategy()
-    {
-        Set<MessagingExceptionHandler> usedExceptionStrategies = new HashSet<MessagingExceptionHandler>();
-
-        FlowConstruct flowNoExceptionStrategy = muleContext.getRegistry().lookupFlowConstruct("flowNoExceptionStrategy");
-        MessagingExceptionHandler flowNoExceptionStrategyExceptionListener = flowNoExceptionStrategy.getExceptionListener();
-        assertThat(flowNoExceptionStrategyExceptionListener, instanceOf(CustomExceptionStrategy.class));
-        assertThat(usedExceptionStrategies.add(flowNoExceptionStrategyExceptionListener), is(true));
-
-        FlowConstruct flowExceptionStrategy = muleContext.getRegistry().lookupFlowConstruct("flowExceptionStrategy");
-        MessagingExceptionHandler flowExceptionStrategyExceptionListener = flowExceptionStrategy.getExceptionListener();
-        assertThat(flowExceptionStrategyExceptionListener, instanceOf(CatchMessagingExceptionStrategy.class));
-        assertThat(usedExceptionStrategies.add(flowExceptionStrategyExceptionListener), is(true));
-
     }
 
 }

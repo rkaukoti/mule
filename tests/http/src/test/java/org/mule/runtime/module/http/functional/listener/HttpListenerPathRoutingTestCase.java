@@ -6,15 +6,6 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-import org.mule.tck.junit4.rule.SystemProperty;
-
-import java.util.Arrays;
-import java.util.Collection;
-
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Response;
 import org.apache.http.entity.StringEntity;
@@ -22,11 +13,21 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
+import org.mule.tck.junit4.rule.SystemProperty;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
 public class HttpListenerPathRoutingTestCase extends AbstractHttpTestCase
 {
 
+    private final String testPath;
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
     @Rule
@@ -38,19 +39,16 @@ public class HttpListenerPathRoutingTestCase extends AbstractHttpTestCase
     @Rule
     public SystemProperty pathSubPath = new SystemProperty("path/subpath", "path/subpath");
 
-    private final String testPath;
-
-    @Parameterized.Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {{"path"},{"path2"},{"anotherPath"},{"path/subpath"}});
-    }
-
-
     public HttpListenerPathRoutingTestCase(String path)
     {
         this.testPath = path;
     }
 
+    @Parameterized.Parameters
+    public static Collection<Object[]> data()
+    {
+        return Arrays.asList(new Object[][] {{"path"}, {"path2"}, {"anotherPath"}, {"path/subpath"}});
+    }
 
     @Override
     protected String getConfigFile()

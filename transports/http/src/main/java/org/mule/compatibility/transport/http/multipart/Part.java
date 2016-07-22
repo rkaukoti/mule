@@ -44,19 +44,19 @@ import java.util.Collection;
  * <p> This class represents a part or form item that was received within a
  * <code>multipart/form-data</code> POST request.
  *
- * This is an adaptation of the javax.servlet.Part interface introduced into the Servlet 3.0 specification. 
+ * This is an adaptation of the javax.servlet.Part interface introduced into the Servlet 3.0 specification.
  * The API has been kept that same but the package has changed not to conflict with the Servlet spec.
  *
  * @since 3.0
  */
-public interface Part {
+public interface Part
+{
 
     /**
      * Gets the content of this part as an <tt>InputStream</tt>
      *
      * @return The content of this part as an <tt>InputStream</tt>
-     * @throws IOException If an error occurs in retrieving the content
-     * as an <tt>InputStream</tt>
+     * @throws IOException If an error occurs in retrieving the content as an <tt>InputStream</tt>
      */
     public InputStream getInputStream() throws IOException;
 
@@ -89,10 +89,8 @@ public interface Part {
      * example, file renaming, where possible, rather than copying all of the
      * underlying data, thus gaining a significant performance benefit.
      *
-     * @param fileName the name of the file to which the stream will be
-     * written. The file is created relative to the location as
-     * specified in the MultipartConfig
-     *
+     * @param fileName the name of the file to which the stream will be written. The file is created relative to the location as specified
+     *                 in the MultipartConfig
      * @throws IOException if an error occurs.
      */
     public void write(String fileName) throws IOException;
@@ -106,7 +104,6 @@ public interface Part {
     public void delete() throws IOException;
 
     /**
-     *
      * Returns the value of the specified mime header
      * as a <code>String</code>. If the Part did not include a header
      * of the specified name, this method returns <code>null</code>.
@@ -115,14 +112,9 @@ public interface Part {
      * The header name is case insensitive. You can use
      * this method with any request header.
      *
-     * @param name        a <code>String</code> specifying the
-     *                header name
-     *
-     * @return            a <code>String</code> containing the
-     *                value of the requested
-     *                header, or <code>null</code>
-     *                if the part does not
-     *                have a header of that name
+     * @param name a <code>String</code> specifying the header name
+     * @return a <code>String</code> containing the value of the requested header, or <code>null</code> if the part does not have a header
+     * of that name
      */
     public String getHeader(String name);
 
@@ -135,9 +127,7 @@ public interface Part {
      * <p>Part header names are case insensitive.
      *
      * @param name the header name whose values to return
-     *
-     * @return a (possibly empty) <code>Collection</code> of the values of
-     * the header with the given name
+     * @return a (possibly empty) <code>Collection</code> of the values of the header with the given name
      */
     public Collection<String> getHeaders(String name);
 
@@ -151,8 +141,7 @@ public interface Part {
      * <p>Any changes to the returned <code>Collection</code> must not
      * affect this <code>Part</code>.
      *
-     * @return a (possibly empty) <code>Collection</code> of the header
-     * names of this Part
+     * @return a (possibly empty) <code>Collection</code> of the header names of this Part
      */
     public Collection<String> getHeaderNames();
 

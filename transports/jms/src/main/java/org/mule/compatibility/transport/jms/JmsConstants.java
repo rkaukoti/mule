@@ -45,8 +45,8 @@ public class JmsConstants
     public static final String RETURN_ORIGINAL_MESSAGE_PROPERTY = "returnOriginalMessageAsReply";
 
     public static final Set JMS_PROPERTY_NAMES = Collections.unmodifiableSet(new HashSet(
-        Arrays.asList(new String[]{JMS_SPECIFICATION_102B, JMS_SPECIFICATION_11, JMS_CORRELATION_ID,
-            JMS_DELIVERY_MODE, JMS_DELIVERY_MODE, JMS_DESTINATION, JMS_EXPIRATION, JMS_MESSAGE_ID,
-            JMS_PRIORITY, JMS_REDELIVERED, JMS_REPLY_TO, JMS_TIMESTAMP, JMS_TYPE, JMS_SELECTOR_PROPERTY})));
+            Arrays.asList(new String[] {JMS_SPECIFICATION_102B, JMS_SPECIFICATION_11, JMS_CORRELATION_ID,
+                                        JMS_DELIVERY_MODE, JMS_DELIVERY_MODE, JMS_DESTINATION, JMS_EXPIRATION, JMS_MESSAGE_ID,
+                                        JMS_PRIORITY, JMS_REDELIVERED, JMS_REPLY_TO, JMS_TIMESTAMP, JMS_TYPE, JMS_SELECTOR_PROPERTY})));
 
 }

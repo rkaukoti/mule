@@ -18,7 +18,7 @@ import java.nio.charset.Charset;
 
 /**
  * Combine {@link MessageDispatching} with various lifecycle methods for the actual instances doing message sending.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -30,7 +30,7 @@ public interface MessageDispatcher extends Connectable, MessageProcessor, Lifecy
     /**
      * This method can perform necessary state updates before any of the
      * {@link MessageDispatching} methods are invoked.
-     * 
+     *
      * @see MessageDispatcherFactory#activate(OutboundEndpoint, MessageDispatcher)
      */
     void activate();
@@ -39,24 +39,22 @@ public interface MessageDispatcher extends Connectable, MessageProcessor, Lifecy
      * After sending a message, the dispatcher can use this method e.g. to
      * clean up its internal state (if it has any) or return pooled resources to
      * whereever it got them during {@link #activate()}.
-     * 
+     *
      * @see MessageDispatcherFactory#passivate(OutboundEndpoint, MessageDispatcher)
      */
     void passivate();
 
     /**
      * Determines whether this dispatcher can be reused after message sending.
-     * 
-     * @return <code>true</code> if this dispatcher can be reused,
-     *         <code>false</code> otherwise (for example when
-     *         {@link Disposable#dispose()} has been called because an Exception was
-     *         raised)
+     *
+     * @return <code>true</code> if this dispatcher can be reused, <code>false</code> otherwise (for example when {@link
+     * Disposable#dispose()} has been called because an Exception was raised)
      */
     boolean validate();
 
     /**
      * Gets the connector for this dispatcher
-     * 
+     *
      * @return the connector for this dispatcher
      */
     Connector getConnector();
@@ -65,7 +63,7 @@ public interface MessageDispatcher extends Connectable, MessageProcessor, Lifecy
      * @return the endpoint which we are dispatching events to
      */
     OutboundEndpoint getEndpoint();
-    
+
     MuleMessage createMuleMessage(Object transportMessage, Charset encoding) throws MuleException;
 
     MuleMessage createMuleMessage(Object transportMessage) throws MuleException;

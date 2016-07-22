@@ -7,12 +7,12 @@
 
 package org.mule.runtime.core.el.mvel.datatype;
 
-import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.SESSION_VARS;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleEvent;
 
 import java.io.Serializable;
+
+import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.SESSION_VARS;
 
 public class SessionVarEnricherDataTypePropagatorTestCase extends AbstractScopedVarAssignmentDataTypePropagatorTestCase
 {

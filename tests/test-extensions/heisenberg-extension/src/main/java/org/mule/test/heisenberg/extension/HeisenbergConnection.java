@@ -13,9 +13,8 @@ import org.mule.runtime.core.api.lifecycle.Lifecycle;
 public class HeisenbergConnection implements Lifecycle
 {
 
-    private boolean connected = true;
     private final String saulPhoneNumber;
-
+    private boolean connected = true;
     private int initialise = 0;
     private int start = 0;
     private int stop = 0;
@@ -82,7 +81,9 @@ public class HeisenbergConnection implements Lifecycle
     {
         if (value != expected)
         {
-            throw new IllegalStateException(String.format("lifecycle phase '%s' wrongfully applied. Was expecting to be applied %d times but %d found instead", phaseName, expected, value));
+            throw new IllegalStateException(
+                    String.format("lifecycle phase '%s' wrongfully applied. Was expecting to be applied %d times but %d found instead",
+                            phaseName, expected, value));
         }
     }
 }

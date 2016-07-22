@@ -7,13 +7,13 @@
 
 package org.mule.runtime.module.launcher;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_HOME_DIRECTORY_PROPERTY;
-
 import java.io.File;
 
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_HOME_DIRECTORY_PROPERTY;
+
 /**
- *  Calculates folders for a mule server based on the
- *  {@value org.mule.runtime.core.api.config.MuleProperties#MULE_HOME_DIRECTORY_PROPERTY} property
+ * Calculates folders for a mule server based on the
+ * {@value org.mule.runtime.core.api.config.MuleProperties#MULE_HOME_DIRECTORY_PROPERTY} property
  */
 public class MuleFoldersUtil
 {

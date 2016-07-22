@@ -7,12 +7,7 @@
 
 package org.mule.runtime.core.el.mvel.datatype;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mule.mvel2.MVEL.compileExpression;
-
+import org.junit.Test;
 import org.mule.mvel2.ParserContext;
 import org.mule.mvel2.compiler.CompiledExpression;
 import org.mule.runtime.api.metadata.DataType;
@@ -24,7 +19,11 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mule.mvel2.MVEL.compileExpression;
 
 public class MvelEnricherDataTypePropagatorTestCase extends AbstractMuleContextTestCase
 {

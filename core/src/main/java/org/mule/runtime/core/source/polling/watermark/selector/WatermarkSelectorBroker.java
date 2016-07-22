@@ -9,53 +9,49 @@ package org.mule.runtime.core.source.polling.watermark.selector;
 
 /**
  * Broker for the default implementations of {@link WatermarkSelector}
- * 
+ *
  * @since 3.5.0
  */
 public enum WatermarkSelectorBroker
 {
 
     MIN
-    {
-
-        @Override
-        public WatermarkSelector newSelector()
-        {
-            return new MinValueWatermarkSelector();
-        }
-    },
+            {
+                @Override
+                public WatermarkSelector newSelector()
+                {
+                    return new MinValueWatermarkSelector();
+                }
+            },
     MAX
-    {
-
-        @Override
-        public WatermarkSelector newSelector()
-        {
-            return new MaxValueWatermarkSelector();
-        }
-    },
+            {
+                @Override
+                public WatermarkSelector newSelector()
+                {
+                    return new MaxValueWatermarkSelector();
+                }
+            },
     FIRST
-    {
-
-        @Override
-        public WatermarkSelector newSelector()
-        {
-            return new FirstItemWatermarkSelector();
-        }
-    },
+            {
+                @Override
+                public WatermarkSelector newSelector()
+                {
+                    return new FirstItemWatermarkSelector();
+                }
+            },
     LAST
-    {
-
-        @Override
-        public WatermarkSelector newSelector()
-        {
-            return new LastItemWatermarkSelector();
-        }
-    };
+            {
+                @Override
+                public WatermarkSelector newSelector()
+                {
+                    return new LastItemWatermarkSelector();
+                }
+            };
 
     /**
      * Returns a new instance of {@link WatermarkSelector}. Each invocation returns a
      * different instance
-     * 
+     *
      * @return a {@link WatermarkSelector}
      */
     public abstract WatermarkSelector newSelector();

@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.module.http.api.client;
 
+import org.mule.runtime.api.tls.TlsContextFactory;
 import org.mule.runtime.core.api.client.AbstractBaseOptionsBuilder;
 import org.mule.runtime.module.http.api.requester.HttpRequesterConfig;
 import org.mule.runtime.module.http.api.requester.HttpStreamingType;
 import org.mule.runtime.module.http.internal.request.client.DefaultHttpRequestOptions;
-import org.mule.runtime.api.tls.TlsContextFactory;
 
 /**
  * Builder object for {@link org.mule.runtime.module.http.api.client.HttpRequestOptions}
@@ -28,6 +28,14 @@ public class HttpRequestOptionsBuilder extends AbstractBaseOptionsBuilder<HttpRe
 
     private HttpRequestOptionsBuilder()
     {
+    }
+
+    /**
+     * @return factory method for creating a new builder.
+     */
+    public static HttpRequestOptionsBuilder newOptions()
+    {
+        return new HttpRequestOptionsBuilder();
     }
 
     /**
@@ -112,15 +120,8 @@ public class HttpRequestOptionsBuilder extends AbstractBaseOptionsBuilder<HttpRe
     @Override
     public HttpRequestOptions build()
     {
-        return new DefaultHttpRequestOptions(method, followsRedirect, requestStreamingMode, requestConfig, disableStatusCodeValidation, disableParseResponse, tlsContextFactory, getResponseTimeout());
-    }
-
-    /**
-     * @return factory method for creating a new builder.
-     */
-    public static HttpRequestOptionsBuilder newOptions()
-    {
-        return new HttpRequestOptionsBuilder();
+        return new DefaultHttpRequestOptions(method, followsRedirect, requestStreamingMode, requestConfig, disableStatusCodeValidation,
+                disableParseResponse, tlsContextFactory, getResponseTimeout());
     }
 
 }

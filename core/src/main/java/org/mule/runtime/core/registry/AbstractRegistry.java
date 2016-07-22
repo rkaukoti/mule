@@ -19,25 +19,22 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.runtime.core.lifecycle.RegistryLifecycleManager;
 import org.mule.runtime.core.util.UUID;
-
-import java.util.Collection;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
 
 
 public abstract class AbstractRegistry implements Registry
 {
 
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
+    protected MuleContext muleContext;
+    protected RegistryLifecycleManager lifecycleManager;
     /**
      * the unique id for this Registry
      */
     private String id;
-
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
-    protected MuleContext muleContext;
-    protected RegistryLifecycleManager lifecycleManager;
 
     protected AbstractRegistry(String id, MuleContext muleContext)
     {
@@ -192,7 +189,6 @@ public abstract class AbstractRegistry implements Registry
      *
      * @param key the key of the object to be unregistered object
      * @return the object which was registered under {@code key}
-     * @throws RegistrationException
      */
     protected abstract Object doUnregisterObject(String key) throws RegistrationException;
 
@@ -208,7 +204,8 @@ public abstract class AbstractRegistry implements Registry
         }
         else if (objects.size() > 1)
         {
-            throw new RegistrationException(MessageFactory.createStaticMessage("More than one object of type " + type + " registered but only one expected."));
+            throw new RegistrationException(
+                    MessageFactory.createStaticMessage("More than one object of type " + type + " registered but only one expected."));
         }
         else
         {

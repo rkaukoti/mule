@@ -7,13 +7,6 @@
 
 package org.mule.runtime.module.db.integration;
 
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.module.db.integration.matcher.FieldMatcher.containsField;
-import static org.mule.runtime.module.db.integration.model.Planet.EARTH;
-import static org.mule.runtime.module.db.integration.model.Planet.MARS;
-import static org.mule.runtime.module.db.integration.model.Planet.VENUS;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.model.Alien;
 import org.mule.runtime.module.db.integration.model.Field;
@@ -25,6 +18,14 @@ import java.sql.Struct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.module.db.integration.matcher.FieldMatcher.containsField;
+import static org.mule.runtime.module.db.integration.model.Planet.EARTH;
+import static org.mule.runtime.module.db.integration.model.Planet.MARS;
+import static org.mule.runtime.module.db.integration.model.Planet.VENUS;
 
 public class TestRecordUtil
 {

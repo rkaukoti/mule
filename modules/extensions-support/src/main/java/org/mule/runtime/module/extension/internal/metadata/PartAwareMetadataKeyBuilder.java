@@ -11,11 +11,11 @@ import org.mule.runtime.api.metadata.MetadataKey;
 import org.mule.runtime.api.metadata.MetadataKeyBuilder;
 
 /**
-  * Extension of {@link MetadataKeyBuilder} which adds de capability of create {@link DefaultMetadataKey} with
-  * a configured {@code partName}
-  *
-  * @since 4.0
-  */
+ * Extension of {@link MetadataKeyBuilder} which adds de capability of create {@link DefaultMetadataKey} with
+ * a configured {@code partName}
+ *
+ * @since 4.0
+ */
 public class PartAwareMetadataKeyBuilder extends MetadataKeyBuilder
 {
 

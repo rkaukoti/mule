@@ -21,7 +21,7 @@ public class EncryptionNotSupportedException extends SecurityException
      * Serial version
      */
     private static final long serialVersionUID = -1661059380853528624L;
-    
+
     public EncryptionNotSupportedException(Message message, MuleEvent event)
     {
         super(message, event);

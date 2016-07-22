@@ -13,14 +13,14 @@ import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
  */
 public interface EndpointAware
 {
-    void setEndpoint(ImmutableEndpoint ep);
-
     /**
      * The endpoint that this transformer is attached to
-     * 
+     *
      * @return the endpoint associated with the transformer
      * @deprecated
      */
     @Deprecated
     ImmutableEndpoint getEndpoint();
+
+    void setEndpoint(ImmutableEndpoint ep);
 }

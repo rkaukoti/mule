@@ -7,9 +7,10 @@
 
 package org.mule.runtime.module.cxf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
+import org.apache.cxf.helpers.DOMUtils;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.ApplicationContextBuilder;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleContext;
@@ -17,6 +18,9 @@ import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.http.api.HttpConstants;
 import org.mule.runtime.module.http.api.client.HttpRequestOptions;
 import org.mule.tck.junit4.rule.DynamicPort;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
 
 import java.io.StringReader;
 import java.util.Arrays;
@@ -24,24 +28,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.cxf.helpers.DOMUtils;
-import org.custommonkey.xmlunit.XMLUnit;
-import org.junit.Rule;
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.InputSource;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class ProxyWSDLRewriteSchemaLocationsTestCase extends FunctionalTestCase
 {
+    private static final HttpRequestOptions HTTP_REQUEST_OPTIONS = newOptions().method(HttpConstants.Methods.POST.name()).build();
     @Rule
     public final DynamicPort httpPortProxy = new DynamicPort("portProxy");
-
     @Rule
     public final DynamicPort httpPortMockServer = new DynamicPort("portMockServer");
-
-    private static final HttpRequestOptions HTTP_REQUEST_OPTIONS = newOptions().method(HttpConstants.Methods.POST.name()).build();
-
     private MuleContext mockServerContext;
 
     @Override
@@ -54,7 +51,8 @@ public class ProxyWSDLRewriteSchemaLocationsTestCase extends FunctionalTestCase
     protected void doSetUpBeforeMuleContextCreation() throws Exception
     {
         ApplicationContextBuilder applicationContextBuilder = new ApplicationContextBuilder();
-        applicationContextBuilder.setApplicationResources(new String[]{"wsdlAndXsdMockServer/proxy-wsdl-rewrite-schema-locations-conf-server-httpn.xml"});
+        applicationContextBuilder.setApplicationResources(
+                new String[] {"wsdlAndXsdMockServer/proxy-wsdl-rewrite-schema-locations-conf-server-httpn.xml"});
         mockServerContext = applicationContextBuilder.build();
         super.doSetUpBeforeMuleContextCreation();
     }
@@ -63,7 +61,7 @@ public class ProxyWSDLRewriteSchemaLocationsTestCase extends FunctionalTestCase
     protected void doTearDownAfterMuleContextDispose() throws Exception
     {
         super.doTearDownAfterMuleContextDispose();
-        if(mockServerContext !=null)
+        if (mockServerContext != null)
         {
             mockServerContext.dispose();
         }
@@ -73,13 +71,14 @@ public class ProxyWSDLRewriteSchemaLocationsTestCase extends FunctionalTestCase
     public void testProxyWSDLRewriteAllSchemaLocations() throws Exception
     {
         String proxyAddress = "http://localhost:" + httpPortProxy.getNumber() + "/localServicePath";
-        MuleMessage response = muleContext.getClient().send(proxyAddress + "?wsdl", MuleMessage.builder().nullPayload().build(), HTTP_REQUEST_OPTIONS);
+        MuleMessage response =
+                muleContext.getClient().send(proxyAddress + "?wsdl", MuleMessage.builder().nullPayload().build(), HTTP_REQUEST_OPTIONS);
 
         Set<String> expectedParametersValues = new HashSet<String>();
         expectedParametersValues.addAll(Arrays.asList("xsd=xsd0"));
 
         List<Element> schemaImports = getSchemaImports(getWsdl(response));
-        for(Element schemaImport : schemaImports)
+        for (Element schemaImport : schemaImports)
         {
             String schemaLocation = getLocation(schemaImport);
             int parametersStart = schemaLocation.indexOf("?");
@@ -87,7 +86,7 @@ public class ProxyWSDLRewriteSchemaLocationsTestCase extends FunctionalTestCase
 
             assertEquals(proxyAddress, locationPath);
 
-            String queryString = schemaLocation.substring(parametersStart+1);
+            String queryString = schemaLocation.substring(parametersStart + 1);
             expectedParametersValues.remove(queryString);
         }
         assertTrue(expectedParametersValues.isEmpty());

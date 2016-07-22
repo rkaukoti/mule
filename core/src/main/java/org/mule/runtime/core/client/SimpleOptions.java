@@ -22,6 +22,7 @@ public class SimpleOptions implements OperationOptions
         this.responseTimeout = responseTimeout;
         this.outbound = outbound;
     }
+
     @Override
     public Long getResponseTimeout()
     {

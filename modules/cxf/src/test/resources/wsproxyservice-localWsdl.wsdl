@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<wsdl:definitions name="EchoComponent" targetNamespace="http://simple.component.mule.org/"
-                  xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-                  xmlns:tns="http://simple.component.mule.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://simple.component.mule.org/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="EchoComponent"
+                  targetNamespace="http://simple.component.mule.org/">
     <wsdl:types>
-        <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
-                    targetNamespace="http://simple.component.mule.org/" xmlns:tns="http://simple.component.mule.org/"
-                    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <xsd:schema xmlns:tns="http://simple.component.mule.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                    attributeFormDefault="unqualified" elementFormDefault="qualified"
+                    targetNamespace="http://simple.component.mule.org/">
             <xsd:element name="echo" type="tns:echo"/>
             <xsd:complexType name="echo">
                 <xsd:sequence>

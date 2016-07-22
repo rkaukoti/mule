@@ -7,13 +7,6 @@
 
 package org.mule.test.infrastructure.process;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Pattern;
-
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteException;
@@ -24,13 +17,20 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
+
 public abstract class Controller
 {
 
     protected static final String ANCHOR_SUFFIX = "-anchor.txt";
-    private static final IOFileFilter ANCHOR_FILTER = FileFilterUtils.suffixFileFilter(ANCHOR_SUFFIX);
     protected static final String STATUS = "Mule Enterprise Edition is running \\(([0-9]+)\\)\\.";
     protected static final Pattern STATUS_PATTERN = Pattern.compile(STATUS);
+    private static final IOFileFilter ANCHOR_FILTER = FileFilterUtils.suffixFileFilter(ANCHOR_SUFFIX);
     private static final int DEFAULT_TIMEOUT = 30000;
     private static final String MULE_HOME_VARIABLE = "MULE_HOME";
     private static final String DOMAIN_DEPLOY_ERROR = "Error deploying domain %s.";

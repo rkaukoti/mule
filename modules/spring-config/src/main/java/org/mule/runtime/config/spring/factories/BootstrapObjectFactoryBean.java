@@ -7,7 +7,6 @@
 package org.mule.runtime.config.spring.factories;
 
 import org.mule.runtime.core.config.bootstrap.BootstrapObjectFactory;
-
 import org.springframework.beans.factory.FactoryBean;
 
 /**

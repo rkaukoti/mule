@@ -6,13 +6,10 @@
  */
 package org.mule.extension.socket.api.worker;
 
-import static java.lang.String.format;
-import static org.mule.extension.socket.internal.SocketUtils.createMuleMessage;
-
 import org.mule.extension.socket.api.ImmutableSocketAttributes;
+import org.mule.extension.socket.api.SocketAttributes;
 import org.mule.extension.socket.api.connection.tcp.TcpListenerConnection;
 import org.mule.extension.socket.api.socket.tcp.TcpProtocol;
-import org.mule.extension.socket.api.SocketAttributes;
 import org.mule.extension.socket.internal.TcpInputStream;
 import org.mule.runtime.api.execution.CompletionHandler;
 import org.mule.runtime.api.execution.ExceptionCallback;
@@ -20,6 +17,8 @@ import org.mule.runtime.api.message.MuleEvent;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.extension.api.runtime.MessageHandler;
 import org.mule.runtime.extension.api.runtime.source.Source;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -29,13 +28,12 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static org.mule.extension.socket.internal.SocketUtils.createMuleMessage;
 
 /**
- * Only one worker will be created per each new TCP connection accepted by the {@link TcpListenerConnection#listen(MuleContext, MessageHandler)},
- * This class is responsible for reading from that connection is closed by the sender,
- * or {@link Source} is stopped.
+ * Only one worker will be created per each new TCP connection accepted by the {@link TcpListenerConnection#listen(MuleContext,
+ * MessageHandler)}, This class is responsible for reading from that connection is closed by the sender, or {@link Source} is stopped.
  *
  * @since 4.0
  */
@@ -184,7 +182,7 @@ public final class TcpWorker extends SocketWorker
                     {
                         exceptionCallback.onException(new IOException(
                                 format("An error occurred while sending TCP response to address '%s'",
-                                       socket.getRemoteSocketAddress().toString(), e))
+                                        socket.getRemoteSocketAddress().toString(), e))
                         );
                     }
                 }

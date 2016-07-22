@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.module.launcher;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mule.runtime.module.launcher.MuleFoldersUtil.getExecutionFolder;
-
+import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.spi.LoggerContextFactory;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mockito.InOrder;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.module.launcher.coreextension.MuleCoreExtensionManagerServer;
 import org.mule.runtime.module.launcher.log4j2.MuleLog4jContextFactory;
@@ -21,13 +21,12 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.junit4.rule.SystemProperty;
 import org.mule.tck.size.SmallTest;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.spi.LoggerContextFactory;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.mockito.InOrder;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mule.runtime.module.launcher.MuleFoldersUtil.getExecutionFolder;
 
 @SmallTest
 public class MuleContainerTestCase extends AbstractMuleTestCase

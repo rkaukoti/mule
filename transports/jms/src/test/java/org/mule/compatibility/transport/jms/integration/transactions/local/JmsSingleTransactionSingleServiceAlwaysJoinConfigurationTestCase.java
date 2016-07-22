@@ -6,15 +6,14 @@
  */
 package org.mule.compatibility.transport.jms.integration.transactions.local;
 
-import org.mule.compatibility.transport.jms.integration.AbstractJmsSingleTransactionSingleServiceTestCase;
-
 import org.junit.Test;
+import org.mule.compatibility.transport.jms.integration.AbstractJmsSingleTransactionSingleServiceTestCase;
 
 /**
  * Test all combinations of (inbound) ALWAYS_JOIN.  They should all fail.
  */
 public class JmsSingleTransactionSingleServiceAlwaysJoinConfigurationTestCase extends
-    AbstractJmsSingleTransactionSingleServiceTestCase
+        AbstractJmsSingleTransactionSingleServiceTestCase
 {
     @Override
     protected String getConfigFile()

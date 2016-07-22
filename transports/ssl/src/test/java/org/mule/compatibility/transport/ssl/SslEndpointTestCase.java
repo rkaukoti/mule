@@ -6,15 +6,14 @@
  */
 package org.mule.compatibility.transport.ssl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
 import org.mule.compatibility.core.endpoint.MuleEndpointURI;
 import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class SslEndpointTestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -52,7 +51,7 @@ public class SslEndpointTestCase extends AbstractMuleContextEndpointTestCase
     public void testQueryParams2() throws Exception
     {
         EndpointURI url = new MuleEndpointURI(
-            "ssl://localhost:7856?param=1&endpointName=sslProvider&blankParam=", muleContext);
+                "ssl://localhost:7856?param=1&endpointName=sslProvider&blankParam=", muleContext);
         url.initialise();
         assertEquals("ssl", url.getScheme());
         assertEquals("ssl://localhost:7856", url.getAddress());

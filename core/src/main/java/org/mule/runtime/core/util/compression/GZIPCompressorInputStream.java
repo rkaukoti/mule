@@ -23,16 +23,16 @@ public class GZIPCompressorInputStream extends DeflaterInputStream
 
     // Writes GZIP member header.
     private final static byte[] HEADER = {
-        (byte) GZIP_MAGIC,                // Magic number (short)
-        (byte)(GZIP_MAGIC >> 8),          // Magic number (short)
-        Deflater.DEFLATED,                // Compression method (CM)
-        0,                                // Flags (FLG)
-        0,                                // Modification time MTIME (int)
-        0,                                // Modification time MTIME (int)
-        0,                                // Modification time MTIME (int)
-        0,                                // Modification time MTIME (int)
-        0,                                // Extra flags (XFLG)
-        0                                 // Operating system (OS)
+            (byte) GZIP_MAGIC,                // Magic number (short)
+            (byte) (GZIP_MAGIC >> 8),          // Magic number (short)
+            Deflater.DEFLATED,                // Compression method (CM)
+            0,                                // Flags (FLG)
+            0,                                // Modification time MTIME (int)
+            0,                                // Modification time MTIME (int)
+            0,                                // Modification time MTIME (int)
+            0,                                // Modification time MTIME (int)
+            0,                                // Extra flags (XFLG)
+            0                                 // Operating system (OS)
     };
 
     // Trailer length in bytes.
@@ -43,37 +43,6 @@ public class GZIPCompressorInputStream extends DeflaterInputStream
 
     // Internal buffer for GZIP header and trailer.
     private Buffer buffer;
-
-    /**
-     * Helper inner class containing the length and position of the internal buffer.
-     */
-    private class Buffer
-    {
-        public byte[] data;
-        public int position;
-        public int length;
-
-        /**
-         * Creates a new buffer initializing it with the GZIP header content.
-         */
-        public Buffer()
-        {
-            data = new byte[Math.max(HEADER.length, TRAILER_LENGTH)];
-            System.arraycopy(HEADER, 0, data, 0, HEADER.length);
-            position = 0;
-            length = HEADER.length;
-        }
-
-        /**
-         * Returns the amount of bytes that are left to be read from the buffer.
-         *
-         * @return The byte counts to be read.
-         */
-        int getByteCountRemainder()
-        {
-            return length - position;
-        }
-    }
 
     /**
      * Creates a new {@link GZIPCompressorInputStream} from an uncompressed {@link InputStream}.
@@ -127,7 +96,7 @@ public class GZIPCompressorInputStream extends DeflaterInputStream
     /**
      * Writes GZIP member trailer to a byte array, starting at a given offset.
      *
-     * @param buf The buffer to write the trailer to.
+     * @param buf    The buffer to write the trailer to.
      * @param offset The offset from which to start writing.
      * @return The amount of bytes that were written.
      * @throws IOException If an I/O error is produced.
@@ -142,8 +111,8 @@ public class GZIPCompressorInputStream extends DeflaterInputStream
     /**
      * Writes integer in Intel byte order to a byte array, starting at a given offset.
      *
-     * @param i The integer to write.
-     * @param buf The buffer to write the integer to.
+     * @param i      The integer to write.
+     * @param buf    The buffer to write the integer to.
      * @param offset The offset from which to start writing.
      * @return The amount of bytes written.
      * @throws IOException If an I/O error is produced.
@@ -158,16 +127,47 @@ public class GZIPCompressorInputStream extends DeflaterInputStream
     /**
      * Writes short integer in Intel byte order to a byte array, starting at a given offset.
      *
-     * @param s The short to write.
-     * @param buf The buffer to write the integer to.
+     * @param s      The short to write.
+     * @param buf    The buffer to write the integer to.
      * @param offset The offset from which to start writing.
      * @return The amount of bytes written.
      * @throws IOException If an I/O error is produced.
      */
     private int writeShort(int s, byte[] buf, int offset) throws IOException
     {
-        buf[offset] = (byte)(s & 0xff);
-        buf[offset + 1] = (byte)((s >> 8) & 0xff);
+        buf[offset] = (byte) (s & 0xff);
+        buf[offset + 1] = (byte) ((s >> 8) & 0xff);
         return 2;
+    }
+
+    /**
+     * Helper inner class containing the length and position of the internal buffer.
+     */
+    private class Buffer
+    {
+        public byte[] data;
+        public int position;
+        public int length;
+
+        /**
+         * Creates a new buffer initializing it with the GZIP header content.
+         */
+        public Buffer()
+        {
+            data = new byte[Math.max(HEADER.length, TRAILER_LENGTH)];
+            System.arraycopy(HEADER, 0, data, 0, HEADER.length);
+            position = 0;
+            length = HEADER.length;
+        }
+
+        /**
+         * Returns the amount of bytes that are left to be read from the buffer.
+         *
+         * @return The byte counts to be read.
+         */
+        int getByteCountRemainder()
+        {
+            return length - position;
+        }
     }
 }

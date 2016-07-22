@@ -7,10 +7,8 @@
 
 package org.mule.compatibility.transport.http.functional;
 
-import static java.nio.charset.StandardCharsets.UTF_16;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MuleEvent;
@@ -22,8 +20,9 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.nio.charset.Charset;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.UTF_16;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class HttpOutboundDataTypeTestCase extends FunctionalTestCase
 {
@@ -42,7 +41,10 @@ public class HttpOutboundDataTypeTestCase extends FunctionalTestCase
     {
         MuleClient client = muleContext.getClient();
 
-        MuleMessage muleMessage = MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse(MediaType.TEXT + "; charset=" + UTF_16.name())).build();
+        MuleMessage muleMessage = MuleMessage.builder()
+                                             .payload(TEST_MESSAGE)
+                                             .mediaType(MediaType.parse(MediaType.TEXT + "; charset=" + UTF_16.name()))
+                                             .build();
 
         client.dispatch("vm://testInput", muleMessage);
 

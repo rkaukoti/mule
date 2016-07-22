@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:n1="http://peoplesoft.com/MX_PURCHASE_ORDERSoapIn" xmlns:n12="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="n1 n12 xs">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:n1="http://peoplesoft.com/MX_PURCHASE_ORDERSoapIn" xmlns:n12="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                version="1.0" exclude-result-prefixes="n1 n12 xs">
     <xsl:output method="xml" indent="yes"/>
     <xsl:template match="/n12:Envelope">
         <MX_PS_MESSAGE>

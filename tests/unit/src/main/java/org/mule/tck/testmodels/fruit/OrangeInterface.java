@@ -17,13 +17,13 @@ public interface OrangeInterface extends Fruit
 {
     String getBrand();
 
-    Integer getSegments();
-
-    Double getRadius();
-
     void setBrand(String string);
 
+    Integer getSegments();
+
     void setSegments(Integer integer);
+
+    Double getRadius();
 
     void setRadius(Double double1);
 

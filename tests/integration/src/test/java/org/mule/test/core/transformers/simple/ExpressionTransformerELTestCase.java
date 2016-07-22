@@ -6,11 +6,7 @@
  */
 package org.mule.test.core.transformers.simple;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.expression.transformers.BeanBuilderTransformer;
@@ -26,7 +22,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class ExpressionTransformerELTestCase extends FunctionalTestCase
 {
@@ -39,7 +38,7 @@ public class ExpressionTransformerELTestCase extends FunctionalTestCase
     private void testTransformerConfig(String name) throws Exception
     {
         ExpressionTransformer transformer = (ExpressionTransformer) muleContext.getRegistry()
-            .lookupTransformer(name);
+                                                                               .lookupTransformer(name);
         assertNotNull(transformer);
         assertNotNull(transformer.getArguments());
         assertEquals(2, transformer.getArguments().size());
@@ -67,7 +66,7 @@ public class ExpressionTransformerELTestCase extends FunctionalTestCase
     private void testBeanBuilderTransformerConfig(String name) throws Exception
     {
         BeanBuilderTransformer transformer = (BeanBuilderTransformer) muleContext.getRegistry()
-            .lookupTransformer(name);
+                                                                                 .lookupTransformer(name);
         assertNotNull(transformer);
         assertNotNull(transformer.getArguments());
         assertEquals(3, transformer.getArguments().size());
@@ -91,7 +90,7 @@ public class ExpressionTransformerELTestCase extends FunctionalTestCase
     private void testExecutionWithCorrectMessage(String name) throws Exception
     {
         ExpressionTransformer transformer = (ExpressionTransformer) muleContext.getRegistry()
-            .lookupTransformer(name);
+                                                                               .lookupTransformer(name);
         Map<String, Serializable> props = new HashMap<>();
         props.put("foo", "moo");
         props.put("bar", "mar");
@@ -116,7 +115,7 @@ public class ExpressionTransformerELTestCase extends FunctionalTestCase
     public void testExecutionWithPartialMissingOptionalParams() throws Exception
     {
         ExpressionTransformer transformer = (ExpressionTransformer) muleContext.getRegistry()
-            .lookupTransformer("testTransformer");
+                                                                               .lookupTransformer("testTransformer");
         Map<String, Serializable> props = new HashMap<>();
         props.put("foo", "moo");
 
@@ -139,7 +138,7 @@ public class ExpressionTransformerELTestCase extends FunctionalTestCase
     public void testTransformerConfigWithSingleArgument() throws Exception
     {
         ExpressionTransformer transformer = (ExpressionTransformer) muleContext.getRegistry()
-            .lookupTransformer("testTransformer2");
+                                                                               .lookupTransformer("testTransformer2");
         Map<String, Serializable> props = new HashMap<>();
         props.put("foo", "moo");
         props.put("bar", "mar");
@@ -164,7 +163,7 @@ public class ExpressionTransformerELTestCase extends FunctionalTestCase
     private void testTransformerConfigWithSingleArgumentShortcutConfig(String name) throws Exception
     {
         ExpressionTransformer transformer = (ExpressionTransformer) muleContext.getRegistry()
-            .lookupTransformer(name);
+                                                                               .lookupTransformer(name);
         Map<String, Serializable> props = new HashMap<>();
         props.put("foo", "moo");
         props.put("bar", "mar");

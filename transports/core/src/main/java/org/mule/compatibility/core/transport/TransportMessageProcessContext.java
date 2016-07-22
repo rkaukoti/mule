@@ -12,7 +12,6 @@ import org.mule.runtime.core.api.context.WorkManager;
 import org.mule.runtime.core.api.source.MessageSource;
 import org.mule.runtime.core.api.transaction.TransactionConfig;
 import org.mule.runtime.core.execution.MessageProcessContext;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,9 +21,8 @@ import org.slf4j.LoggerFactory;
 public class TransportMessageProcessContext implements MessageProcessContext
 {
 
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
     private final MessageReceiver messageReceiver;
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
     private WorkManager flowExecutionWorkManager;
 
     /**
@@ -44,7 +42,7 @@ public class TransportMessageProcessContext implements MessageProcessContext
      * Calling #supportsAsynchronousProcessing method will always return true since
      * there's a WorkManager available to execute the flow.
      *
-     * @param messageReceiver receiver of the message
+     * @param messageReceiver          receiver of the message
      * @param flowExecutionWorkManager the work manager to use for the flow execution
      */
     public TransportMessageProcessContext(MessageReceiver messageReceiver, WorkManager flowExecutionWorkManager)

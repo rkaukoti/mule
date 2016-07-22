@@ -57,10 +57,13 @@ public class MultipartConfiguration
      *
      * @param location defualts to "" if values is null.
      */
-    public MultipartConfiguration(String location) {
-        if (location == null) {
+    public MultipartConfiguration(String location)
+    {
+        if (location == null)
+        {
             this.location = "";
-        } else
+        }
+        else
             this.location = location;
         this.maxFileSize = -1L;
         this.maxRequestSize = -1L;
@@ -70,18 +73,19 @@ public class MultipartConfiguration
     /**
      * Constructs an instance with all values specified.
      *
-     * @param location the directory location where files will be stored
-     * @param maxFileSize the maximum size allowed for uploaded files
-     * @param maxRequestSize the maximum size allowed for
-     * multipart/form-data requests
-     * @param fileSizeThreshold the size threshold after which files will
-     * be written to disk
+     * @param location          the directory location where files will be stored
+     * @param maxFileSize       the maximum size allowed for uploaded files
+     * @param maxRequestSize    the maximum size allowed for multipart/form-data requests
+     * @param fileSizeThreshold the size threshold after which files will be written to disk
      */
     public MultipartConfiguration(String location, long maxFileSize,
-            long maxRequestSize, int fileSizeThreshold) {
-        if (location == null) {
+                                  long maxRequestSize, int fileSizeThreshold)
+    {
+        if (location == null)
+        {
             this.location = "";
-        } else
+        }
+        else
             this.location = location;
         this.maxFileSize = maxFileSize;
         this.maxRequestSize = maxRequestSize;
@@ -93,7 +97,8 @@ public class MultipartConfiguration
      *
      * @return the directory location where files will be stored
      */
-    public String getLocation() {
+    public String getLocation()
+    {
         return this.location;
     }
 
@@ -102,7 +107,8 @@ public class MultipartConfiguration
      *
      * @return the maximum size allowed for uploaded files
      */
-    public long getMaxFileSize() {
+    public long getMaxFileSize()
+    {
         return this.maxFileSize;
     }
 
@@ -111,7 +117,8 @@ public class MultipartConfiguration
      *
      * @return the maximum size allowed for multipart/form-data requests
      */
-    public long getMaxRequestSize() {
+    public long getMaxRequestSize()
+    {
         return this.maxRequestSize;
     }
 
@@ -120,7 +127,8 @@ public class MultipartConfiguration
      *
      * @return the size threshold after which files will be written to disk
      */
-    public int getFileSizeThreshold() {
+    public int getFileSizeThreshold()
+    {
         return this.fileSizeThreshold;
     }
 }

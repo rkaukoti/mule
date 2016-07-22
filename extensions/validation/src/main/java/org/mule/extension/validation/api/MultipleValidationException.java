@@ -27,6 +27,7 @@ public final class MultipleValidationException extends ValidationException
 
     /**
      * The {@link MultipleValidationResult} which this exception informs
+     *
      * @return a {@link MultipleValidationResult}
      */
     public MultipleValidationResult getMultipleValidationResult()

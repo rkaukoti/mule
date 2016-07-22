@@ -6,10 +6,9 @@
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
-import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.config.spring.parsers.generic.NamedDefinitionParser;
+import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.el.mvel.MVELExpressionLanguageWrapper;
-
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.xml.ParserContext;
@@ -31,7 +30,7 @@ public class ExpressionLanguageDefinitionParser extends NamedDefinitionParser
 
     @Override
     protected String resolveId(Element element, AbstractBeanDefinition definition, ParserContext parserContext)
-        throws BeanDefinitionStoreException
+            throws BeanDefinitionStoreException
     {
         return MuleProperties.OBJECT_EXPRESSION_LANGUAGE;
     }

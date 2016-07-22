@@ -15,7 +15,6 @@ package org.mule.runtime.config.spring.dsl.api;
  * defined by the {@link org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinition} that use them.
  *
  * @param <T> the type of the object to be created.
- *
  * @since 4.0
  */
 public interface ObjectFactory<T>

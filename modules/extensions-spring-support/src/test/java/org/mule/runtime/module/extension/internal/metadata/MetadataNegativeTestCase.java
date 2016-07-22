@@ -6,10 +6,7 @@
  */
 package org.mule.runtime.module.extension.internal.metadata;
 
-import static org.mule.runtime.module.extension.internal.metadata.PartAwareMetadataKeyBuilder.newKey;
-import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.AMERICA;
-import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.SAN_FRANCISCO;
-import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.USA;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.MetadataKey;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
 import org.mule.runtime.api.metadata.ProcessorId;
@@ -22,7 +19,10 @@ import org.mule.runtime.core.internal.metadata.InvalidComponentIdException;
 import java.io.IOException;
 import java.util.Set;
 
-import org.junit.Test;
+import static org.mule.runtime.module.extension.internal.metadata.PartAwareMetadataKeyBuilder.newKey;
+import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.AMERICA;
+import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.SAN_FRANCISCO;
+import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.USA;
 
 public class MetadataNegativeTestCase extends MetadataExtensionFunctionalTestCase
 {
@@ -117,7 +117,8 @@ public class MetadataNegativeTestCase extends MetadataExtensionFunctionalTestCas
         componentId = new ProcessorId(RESOLVER_WITH_DYNAMIC_CONFIG, FIRST_PROCESSOR_INDEX);
         MetadataKey key = newKey(AMERICA, CONTINENT).withChild(newKey(USA, COUNTRY).withChild(newKey(SAN_FRANCISCO, CITY))).build();
         MetadataResult<ComponentMetadataDescriptor> result = metadataManager.getMetadata(componentId, key);
-        assertFailure(result, "Configuration used for Metadata fetch cannot be dynamic", FailureCode.INVALID_CONFIGURATION, MetadataResolvingException.class.getName());
+        assertFailure(result, "Configuration used for Metadata fetch cannot be dynamic", FailureCode.INVALID_CONFIGURATION,
+                MetadataResolvingException.class.getName());
     }
 
     @Test

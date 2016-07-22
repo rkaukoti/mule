@@ -6,14 +6,6 @@
  */
 package org.mule.runtime.module.launcher.log4j2;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -25,6 +17,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Answers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -82,7 +82,8 @@ public class DispatchingLoggerTestCase extends AbstractMuleTestCase
     @Test
     public void anotherClassLoader()
     {
-        withContextClassLoader(additionalClassLoader, () -> {
+        withContextClassLoader(additionalClassLoader, () ->
+        {
             logger.info(MESSAGE);
             verify(originalLogger).info(MESSAGE);
         });
@@ -91,7 +92,8 @@ public class DispatchingLoggerTestCase extends AbstractMuleTestCase
     @Test
     public void artifactClassLoader()
     {
-        withContextClassLoader(artifactClassLoader, () -> {
+        withContextClassLoader(artifactClassLoader, () ->
+        {
             logger.info(MESSAGE);
             verify(contextSelector).getContext(LOGGER_NAME, artifactClassLoader, true);
         });

@@ -6,14 +6,14 @@
  */
 package org.mule.extension.socket;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.functional.junit4.runners.RunnerDelegateTo;
 import org.mule.runtime.core.util.IOUtils;
 
 import java.io.InputStream;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.junit.Assert.assertEquals;
 
 @RunnerDelegateTo(Parameterized.class)
 public class TcpMultipleSendTestCase extends ParameterizedProtocolTestCase

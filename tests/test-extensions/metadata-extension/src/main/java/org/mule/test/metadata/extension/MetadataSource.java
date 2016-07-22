@@ -6,8 +6,6 @@
  */
 package org.mule.test.metadata.extension;
 
-import static org.mule.test.metadata.extension.MetadataConnection.PERSON;
-
 import org.mule.runtime.extension.api.annotation.Parameter;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataScope;
@@ -17,6 +15,8 @@ import org.mule.test.metadata.extension.resolver.TestContentAndOutputResolverWit
 import org.mule.test.metadata.extension.resolver.TestContentAndOutputWithAttributesResolverWithKeyResolver;
 
 import java.util.Map;
+
+import static org.mule.test.metadata.extension.MetadataConnection.PERSON;
 
 
 @MetadataScope(keysResolver = TestContentAndOutputResolverWithKeyResolver.class,

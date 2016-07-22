@@ -7,10 +7,10 @@
 
 package org.mule.runtime.module.launcher.domain;
 
-import static java.lang.String.format;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import static java.lang.String.format;
 
 /**
  * Manages {@link Domain} instances created on the container.

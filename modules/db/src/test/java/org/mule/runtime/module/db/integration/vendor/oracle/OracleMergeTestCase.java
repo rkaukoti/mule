@@ -7,26 +7,25 @@
 
 package org.mule.runtime.module.db.integration.vendor.oracle;
 
+import org.junit.runners.Parameterized;
 import org.mule.runtime.module.db.integration.TestDbConfig;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import org.mule.runtime.module.db.integration.update.MergeTestCase;
 
 import java.util.List;
 
-import org.junit.runners.Parameterized;
-
 public class OracleMergeTestCase extends MergeTestCase
 {
+
+    public OracleMergeTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
+    {
+        super(dataSourceConfigResource, testDatabase);
+    }
 
     @Parameterized.Parameters
     public static List<Object[]> parameters()
     {
         return TestDbConfig.getOracleResource();
-    }
-
-    public OracleMergeTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
     }
 
     @Override

@@ -16,13 +16,12 @@ import org.mule.runtime.core.processor.chain.DefaultMessageProcessorChainBuilder
 import org.mule.runtime.core.routing.MessageProcessorFilterPair;
 import org.mule.runtime.core.routing.filters.AcceptAllFilter;
 import org.mule.runtime.core.routing.filters.ExpressionFilter;
+import org.springframework.beans.factory.FactoryBean;
 
 import java.util.List;
 
-import org.springframework.beans.factory.FactoryBean;
-
 public class MessageProcessorFilterPairFactoryBean implements FactoryBean<MessageProcessorFilterPair>,
-    MuleContextAware
+        MuleContextAware
 {
     private List<MessageProcessor> messageProcessors;
     private Filter filter = new ExpressionFilter();
@@ -59,7 +58,7 @@ public class MessageProcessorFilterPairFactoryBean implements FactoryBean<Messag
             else
             {
                 throw new IllegalArgumentException(
-                    "MessageProcessorBuilder should only have MessageProcessors or MessageProcessorBuilders configured");
+                        "MessageProcessorBuilder should only have MessageProcessors or MessageProcessorBuilders configured");
             }
         }
 

@@ -6,25 +6,23 @@
  */
 package org.mule.runtime.config.spring;
 
-import static java.util.Collections.emptyMap;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.lifecycle.LifecycleUtils;
-import org.mule.runtime.core.config.bootstrap.ArtifactType;
-import org.mule.runtime.core.context.DefaultMuleContextFactory;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
-import java.util.Calendar;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.lifecycle.LifecycleUtils;
+import org.mule.runtime.core.context.DefaultMuleContextFactory;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Calendar;
+
+import static java.util.Collections.emptyMap;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 
 public class OptionalObjectsIgnoredTestCase extends AbstractMuleTestCase
 {
@@ -37,7 +35,8 @@ public class OptionalObjectsIgnoredTestCase extends AbstractMuleTestCase
     @Before
     public void before() throws Exception
     {
-        muleContext = new DefaultMuleContextFactory().createMuleContext(new SpringXmlConfigurationBuilder(new String[] {}, emptyMap(), APP));
+        muleContext =
+                new DefaultMuleContextFactory().createMuleContext(new SpringXmlConfigurationBuilder(new String[] {}, emptyMap(), APP));
         muleContext.start();
         muleContext.getRegistry().lookupByType(Calendar.class);
     }

@@ -6,9 +6,12 @@
  */
 package org.mule.runtime.module.launcher;
 
-import static org.mule.runtime.core.util.SplashScreen.miniSplash;
-import static org.mule.runtime.module.launcher.DefaultArchiveDeployer.ARTIFACT_NAME_PROPERTY;
-import static org.mule.runtime.module.launcher.DefaultArchiveDeployer.ZIP_FILE_SUFFIX;
+import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
+import org.apache.commons.io.filefilter.AndFileFilter;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.FileFileFilter;
+import org.apache.commons.io.filefilter.IOFileFilter;
+import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.mule.runtime.core.config.StartupContext;
 import org.mule.runtime.core.util.ArrayUtils;
 import org.mule.runtime.core.util.CollectionUtils;
@@ -22,6 +25,8 @@ import org.mule.runtime.module.launcher.util.DebuggableReentrantLock;
 import org.mule.runtime.module.launcher.util.ElementAddedEvent;
 import org.mule.runtime.module.launcher.util.ElementRemovedEvent;
 import org.mule.runtime.module.launcher.util.ObservableList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -38,14 +43,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
-import org.apache.commons.io.filefilter.AndFileFilter;
-import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import org.apache.commons.io.filefilter.FileFileFilter;
-import org.apache.commons.io.filefilter.IOFileFilter;
-import org.apache.commons.io.filefilter.SuffixFileFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.SplashScreen.miniSplash;
+import static org.mule.runtime.module.launcher.DefaultArchiveDeployer.ARTIFACT_NAME_PROPERTY;
+import static org.mule.runtime.module.launcher.DefaultArchiveDeployer.ZIP_FILE_SUFFIX;
 
 /**
  * It's in charge of the whole deployment process.
@@ -74,11 +74,12 @@ public class DeploymentDirectoryWatcher implements Runnable
     private final ObservableList<Domain> domains;
     private final File appsDir;
     private final File domainsDir;
+    protected volatile boolean dirty;
     private ScheduledExecutorService artifactDirMonitorTimer;
 
-    protected volatile boolean dirty;
-
-    public DeploymentDirectoryWatcher(final ArchiveDeployer<Domain> domainArchiveDeployer, final ArchiveDeployer<Application> applicationArchiveDeployer, ObservableList<Domain> domains, ObservableList<Application> applications, final ReentrantLock deploymentLock)
+    public DeploymentDirectoryWatcher(final ArchiveDeployer<Domain> domainArchiveDeployer,
+                                      final ArchiveDeployer<Application> applicationArchiveDeployer, ObservableList<Domain> domains,
+                                      ObservableList<Application> applications, final ReentrantLock deploymentLock)
     {
         this.appsDir = applicationArchiveDeployer.getDeploymentDirectory();
         this.domainsDir = domainArchiveDeployer.getDeploymentDirectory();
@@ -117,6 +118,19 @@ public class DeploymentDirectoryWatcher implements Runnable
         });
         this.applicationTimestampListener = new ArtifactTimestampListener(applications);
         this.domainTimestampListener = new ArtifactTimestampListener(domains);
+    }
+
+    private static int getChangesCheckIntervalMs()
+    {
+        try
+        {
+            String value = System.getProperty(CHANGE_CHECK_INTERVAL_PROPERTY);
+            return Integer.parseInt(value);
+        }
+        catch (NumberFormatException e)
+        {
+            return DEFAULT_CHANGES_CHECK_INTERVAL_MS;
+        }
     }
 
     /**
@@ -237,28 +251,15 @@ public class DeploymentDirectoryWatcher implements Runnable
         }
     }
 
-    private static int getChangesCheckIntervalMs()
-    {
-        try
-        {
-            String value = System.getProperty(CHANGE_CHECK_INTERVAL_PROPERTY);
-            return Integer.parseInt(value);
-        }
-        catch (NumberFormatException e)
-        {
-            return DEFAULT_CHANGES_CHECK_INTERVAL_MS;
-        }
-    }
-
     private void scheduleChangeMonitor()
     {
         final int reloadIntervalMs = getChangesCheckIntervalMs();
         artifactDirMonitorTimer = Executors.newSingleThreadScheduledExecutor(new ArtifactDeployerMonitorThreadFactory());
 
         artifactDirMonitorTimer.scheduleWithFixedDelay(this,
-                                                       0,
-                                                       reloadIntervalMs,
-                                                       TimeUnit.MILLISECONDS);
+                0,
+                reloadIntervalMs,
+                TimeUnit.MILLISECONDS);
 
         if (logger.isInfoEnabled())
         {
@@ -392,7 +393,8 @@ public class DeploymentDirectoryWatcher implements Runnable
         undeployRemovedArtifacts(appsDir, applications, applicationArchiveDeployer);
     }
 
-    private void undeployRemovedArtifacts(File artifactDir, ObservableList<? extends Artifact> artifacts, ArchiveDeployer<? extends Artifact> archiveDeployer)
+    private void undeployRemovedArtifacts(File artifactDir, ObservableList<? extends Artifact> artifacts,
+                                          ArchiveDeployer<? extends Artifact> archiveDeployer)
     {
         // we care only about removed anchors
         String[] currentAnchors = artifactDir.list(new SuffixFileFilter(ARTIFACT_ANCHOR_SUFFIX));
@@ -534,10 +536,13 @@ public class DeploymentDirectoryWatcher implements Runnable
 
     private <T extends DeployableArtifact> Collection getArtifactsToRedeploy(Collection<T> collection)
     {
-        return CollectionUtils.select(collection, object -> ((DeployableArtifactDescriptor) ((DeployableArtifact) object).getDescriptor()).isRedeploymentEnabled());
+        return CollectionUtils.select(collection,
+                object -> ((DeployableArtifactDescriptor) ((DeployableArtifact) object).getDescriptor()).isRedeploymentEnabled());
     }
 
-    private <T extends Artifact> void redeployModifiedArtifacts(Collection<T> artifacts, ArtifactTimestampListener<T> artifactTimestampListener, ArchiveDeployer<T> artifactArchiveDeployer)
+    private <T extends Artifact> void redeployModifiedArtifacts(Collection<T> artifacts,
+                                                                ArtifactTimestampListener<T> artifactTimestampListener,
+                                                                ArchiveDeployer<T> artifactArchiveDeployer)
     {
         for (T artifact : artifacts)
         {
@@ -577,7 +582,8 @@ public class DeploymentDirectoryWatcher implements Runnable
     private static class ArtifactTimestampListener<T extends Artifact> implements PropertyChangeListener
     {
 
-        private Map<String, ArtifactResourcesTimestamp<T>> artifactConfigResourcesTimestaps = new HashMap<String, ArtifactResourcesTimestamp<T>>();
+        private Map<String, ArtifactResourcesTimestamp<T>> artifactConfigResourcesTimestaps =
+                new HashMap<String, ArtifactResourcesTimestamp<T>>();
 
         public ArtifactTimestampListener(ObservableList<T> artifacts)
         {

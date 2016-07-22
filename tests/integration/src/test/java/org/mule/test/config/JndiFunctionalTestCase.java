@@ -6,14 +6,13 @@
  */
 package org.mule.test.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.testmodels.fruit.Apple;
 import org.mule.tck.testmodels.fruit.Orange;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class JndiFunctionalTestCase extends FunctionalTestCase
 {
@@ -27,7 +26,7 @@ public class JndiFunctionalTestCase extends FunctionalTestCase
     public void testJndi()
     {
         Object obj;
-        
+
         obj = muleContext.getRegistry().lookupObject(new String("apple"));
         assertNotNull(obj);
         assertEquals(Apple.class, obj.getClass());

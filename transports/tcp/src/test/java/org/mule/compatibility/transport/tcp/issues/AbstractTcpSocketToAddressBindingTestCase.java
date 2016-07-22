@@ -6,6 +6,7 @@
  */
 package org.mule.compatibility.transport.tcp.issues;
 
+import org.junit.Rule;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
 
@@ -17,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-
-import org.junit.Rule;
 
 /**
  * Tests how sockets are bound to addresses by the TCP transport. This test is related to MULE-6584.
@@ -50,6 +49,7 @@ public abstract class AbstractTcpSocketToAddressBindingTestCase extends Function
 
     /**
      * Returns the name of the transport associated with this test.
+     *
      * @return The transport name.
      */
     protected String getTransportName()
@@ -59,6 +59,7 @@ public abstract class AbstractTcpSocketToAddressBindingTestCase extends Function
 
     /**
      * Returns all local {@link java.net.InetAddress} except the loopback address.
+     *
      * @return A {@link java.util.List <InetAddress>} with the IPv4 local addresses.
      * @throws java.net.SocketException If there is a problem getting the addresses.
      */

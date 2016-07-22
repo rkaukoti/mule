@@ -9,7 +9,6 @@ package org.mule.runtime.config.spring.parsers.collection;
 import org.mule.runtime.config.spring.parsers.AbstractChildDefinitionParser;
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
 import org.mule.runtime.core.util.StringUtils;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Attr;

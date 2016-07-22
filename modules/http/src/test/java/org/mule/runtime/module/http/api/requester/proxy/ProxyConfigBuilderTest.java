@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.module.http.api.requester.proxy;
 
+import org.junit.Test;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
-
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
-import org.junit.Test;
 
 public class ProxyConfigBuilderTest extends AbstractMuleTestCase
 {
@@ -39,7 +38,7 @@ public class ProxyConfigBuilderTest extends AbstractMuleTestCase
     @Test
     public void minimalConfig()
     {
-        ProxyConfig config =  proxyConfigBuilder
+        ProxyConfig config = proxyConfigBuilder
                 .setHost(HOST).setPort(PORT).build();
         assertThat(config.getHost(), is(HOST));
         assertThat(config.getPort(), is(PORT));

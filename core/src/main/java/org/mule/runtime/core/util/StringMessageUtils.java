@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.core.util;
 
+import org.mule.runtime.core.PropertyScope;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.core.PropertyScope;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 
 import java.io.Serializable;
@@ -33,8 +33,10 @@ public final class StringMessageUtils
     public static final int MAX_ELEMENTS = 50;
     public static final int DEFAULT_MESSAGE_WIDTH = 80;
 
-    /** Do not instanciate. */
-    private StringMessageUtils ()
+    /**
+     * Do not instanciate.
+     */
+    private StringMessageUtils()
     {
         // no-op
     }
@@ -58,7 +60,7 @@ public final class StringMessageUtils
 
     public static String getBoilerPlate(String message, char c, int maxlength)
     {
-        List<String> messages = Arrays.asList(new String[]{message});
+        List<String> messages = Arrays.asList(new String[] {message});
         messages = new ArrayList<String>(messages);
         return getBoilerPlate(messages, c, maxlength);
     }
@@ -241,24 +243,31 @@ public final class StringMessageUtils
         StringBuilder buf = new StringBuilder();
         buf.append(SystemUtils.LINE_SEPARATOR).append("Message properties:").append(SystemUtils.LINE_SEPARATOR);
 
-            try
-            {
-                Set<String> inboundNames = new TreeSet(m.getInboundPropertyNames());
-                buf.append("  ").append(PropertyScope.INBOUND.toString().toUpperCase()).append(" scoped properties:").append(SystemUtils.LINE_SEPARATOR);
-                appendPropertyValues(m, buf, inboundNames, name -> m.getInboundProperty(name));
+        try
+        {
+            Set<String> inboundNames = new TreeSet(m.getInboundPropertyNames());
+            buf.append("  ")
+               .append(PropertyScope.INBOUND.toString().toUpperCase())
+               .append(" scoped properties:")
+               .append(SystemUtils.LINE_SEPARATOR);
+            appendPropertyValues(m, buf, inboundNames, name -> m.getInboundProperty(name));
 
-                Set<String> outboundNames = new TreeSet(m.getOutboundPropertyNames());
-                buf.append("  ").append(PropertyScope.OUTBOUND.toString().toUpperCase()).append(" scoped properties:").append(SystemUtils.LINE_SEPARATOR);
-                appendPropertyValues(m, buf, outboundNames, name -> m.getOutboundProperty(name));
-            }
-            catch (IllegalArgumentException e)
-            {
-                // ignored
-            }
+            Set<String> outboundNames = new TreeSet(m.getOutboundPropertyNames());
+            buf.append("  ")
+               .append(PropertyScope.OUTBOUND.toString().toUpperCase())
+               .append(" scoped properties:")
+               .append(SystemUtils.LINE_SEPARATOR);
+            appendPropertyValues(m, buf, outboundNames, name -> m.getOutboundProperty(name));
+        }
+        catch (IllegalArgumentException e)
+        {
+            // ignored
+        }
         return buf.toString();
     }
 
-    private static void appendPropertyValues(MuleMessage m, StringBuilder buf, Set<String> names, Function<String, Serializable> valueResolver)
+    private static void appendPropertyValues(MuleMessage m, StringBuilder buf, Set<String> names,
+                                             Function<String, Serializable> valueResolver)
     {
         for (String name : names)
         {

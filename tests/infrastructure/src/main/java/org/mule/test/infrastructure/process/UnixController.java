@@ -7,14 +7,14 @@
 
 package org.mule.test.infrastructure.process;
 
-import java.io.ByteArrayOutputStream;
-import java.util.Map;
-import java.util.regex.Matcher;
-
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
+
+import java.io.ByteArrayOutputStream;
+import java.util.Map;
+import java.util.regex.Matcher;
 
 /**
  *

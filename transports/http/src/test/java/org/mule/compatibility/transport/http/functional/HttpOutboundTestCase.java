@@ -6,11 +6,8 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
+import org.junit.ClassRule;
+import org.junit.Test;
 import org.mule.compatibility.transport.http.HttpConstants;
 import org.mule.compatibility.transport.http.HttpRequest;
 import org.mule.runtime.core.util.concurrent.Latch;
@@ -18,8 +15,10 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.ClassRule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 public class HttpOutboundTestCase extends AbstractMockHttpServerTestCase
 {

@@ -6,17 +6,15 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Ignore;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Ignore;
-
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 @Ignore("MULE-9072 - Remove MuleSession")

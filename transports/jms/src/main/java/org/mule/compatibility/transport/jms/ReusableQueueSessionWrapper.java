@@ -6,6 +6,9 @@
  */
 package org.mule.compatibility.transport.jms;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 
 import javax.jms.BytesMessage;
@@ -28,9 +31,6 @@ import javax.jms.TemporaryTopic;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
 import javax.jms.TopicSubscriber;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ReusableQueueSessionWrapper implements QueueSession
 {

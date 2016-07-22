@@ -6,12 +6,12 @@
  */
 package org.mule.functional.config;
 
-import static org.mule.runtime.core.util.IOUtils.getResourceAsString;
 import org.mule.runtime.config.spring.dsl.api.ObjectFactory;
+import org.springframework.beans.factory.BeanCreationException;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.BeanCreationException;
+import static org.mule.runtime.core.util.IOUtils.getResourceAsString;
 
 /**
  * {@link ObjectFactory} for test:component return-data element.

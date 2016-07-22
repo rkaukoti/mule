@@ -6,11 +6,7 @@
  */
 package org.mule.runtime.core.component;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.object.ObjectFactory;
 import org.mule.runtime.core.construct.Flow;
@@ -18,7 +14,11 @@ import org.mule.runtime.core.lifecycle.LifecycleTrackerComponent;
 import org.mule.runtime.core.object.PrototypeObjectFactory;
 import org.mule.tck.testmodels.fruit.Orange;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class DefaultJavaComponentTestCase extends AbstractComponentTestCase
 {
@@ -52,7 +52,7 @@ public class DefaultJavaComponentTestCase extends AbstractComponentTestCase
         component.start();
 
         assertNotSame(component.borrowComponentLifecycleAdaptor(),
-                      component.borrowComponentLifecycleAdaptor());
+                component.borrowComponentLifecycleAdaptor());
 
         Object obj = component.getObjectFactory().getInstance(muleContext);
         assertNotNull(obj);

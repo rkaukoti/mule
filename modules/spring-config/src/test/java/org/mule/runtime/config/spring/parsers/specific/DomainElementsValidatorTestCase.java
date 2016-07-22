@@ -6,16 +6,15 @@
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
+import org.junit.Test;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import org.junit.Test;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 @SmallTest
 public class DomainElementsValidatorTestCase extends AbstractMuleTestCase

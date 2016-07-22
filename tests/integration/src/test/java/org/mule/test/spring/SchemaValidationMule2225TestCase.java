@@ -6,8 +6,10 @@
  */
 package org.mule.test.spring;
 
-import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.junit.Test;
 import org.mule.runtime.core.util.IOUtils;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,9 +19,6 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-
-import org.junit.Test;
-import org.xml.sax.SAXException;
 
 import static org.junit.Assert.assertNotNull;
 

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:http="http://www.mulesoft.org/schema/mule/transport/http"
-      xmlns:https="http://www.mulesoft.org/schema/mule/transport/https"
-      xmlns:spring="http://www.springframework.org/schema/beans"
-      xsi:schemaLocation="
-          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
-          http://www.mulesoft.org/schema/mule/transport/http http://www.mulesoft.org/schema/mule/transport/http/current/mule-transport-http.xsd
-          http://www.mulesoft.org/schema/mule/transport/https http://www.mulesoft.org/schema/mule/transport/https/current/mule-transport-https.xsd
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/transport/http http://www.mulesoft.org/schema/mule/transport/http/current/mule-transport-http.xsd
+
           http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 
     <flow name="Streaming">
@@ -16,5 +12,5 @@
             <singleton-object class="org.mule.compatibility.transport.http.components.StreamingResponseComponent"/>
         </component>
     </flow>
-    
+
 </mule>

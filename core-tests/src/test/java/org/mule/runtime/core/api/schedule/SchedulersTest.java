@@ -7,12 +7,12 @@
 package org.mule.runtime.core.api.schedule;
 
 
+import org.junit.Test;
+import org.mule.runtime.core.util.Predicate;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.runtime.core.util.Predicate;
-
-import org.junit.Test;
 
 public class SchedulersTest extends AbstractMuleTestCase
 {

@@ -6,11 +6,10 @@
  */
 package org.mule.compatibility.transport.tcp.issues;
 
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
 
 public class MultiConnectorMULE3669TestCase extends FunctionalTestCase
 {

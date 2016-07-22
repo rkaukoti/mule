@@ -7,31 +7,31 @@
 
 package org.mule.runtime.config.spring.dsl.processor.xml;
 
-import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.SPRING_CONTEXT_NAMESPACE;
-import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.SPRING_NAMESPACE;
-import static org.mule.runtime.config.spring.dsl.processor.xml.CoreXmlNamespaceInfoProvider.CORE_NAMESPACE_NAME;
-import static org.mule.runtime.config.spring.dsl.processor.xml.XmlCustomAttributeHandler.to;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.ImmutableList;
+
 import org.mule.runtime.config.spring.dsl.api.xml.XmlNamespaceInfo;
 import org.mule.runtime.config.spring.dsl.api.xml.XmlNamespaceInfoProvider;
 import org.mule.runtime.config.spring.dsl.processor.ConfigLine;
 import org.mule.runtime.config.spring.dsl.processor.ConfigLineProvider;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.registry.ServiceRegistry;
-
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.collect.ImmutableList;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.SPRING_CONTEXT_NAMESPACE;
+import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.SPRING_NAMESPACE;
+import static org.mule.runtime.config.spring.dsl.processor.xml.CoreXmlNamespaceInfoProvider.CORE_NAMESPACE_NAME;
+import static org.mule.runtime.config.spring.dsl.processor.xml.XmlCustomAttributeHandler.to;
 
 /**
  * Simple parser that transforms an XML document to a set of {@link org.mule.runtime.config.spring.dsl.processor.ConfigLine}
@@ -48,14 +48,15 @@ public class XmlApplicationParser
     private static final String COLON = ":";
     private static final Map<String, String> predefinedNamespace = new HashMap<>();
     private static final String UNDEFINED_NAMESPACE = "undefined";
-    private final List<XmlNamespaceInfoProvider> namespaceInfoProviders;
-    private final Cache<String, String> namespaceCache;
 
     static
     {
         predefinedNamespace.put("http://www.springframework.org/schema/beans", SPRING_NAMESPACE);
         predefinedNamespace.put("http://www.springframework.org/schema/context", SPRING_CONTEXT_NAMESPACE);
     }
+
+    private final List<XmlNamespaceInfoProvider> namespaceInfoProviders;
+    private final Cache<String, String> namespaceCache;
 
     public XmlApplicationParser(ServiceRegistry serviceRegistry)
     {
@@ -89,7 +90,8 @@ public class XmlApplicationParser
     {
         try
         {
-            return namespaceCache.get(namespaceUri, () -> {
+            return namespaceCache.get(namespaceUri, () ->
+            {
                 String namespace = loadNamespaceFromProviders(namespaceUri);
                 if (namespace == null)
                 {
@@ -106,7 +108,8 @@ public class XmlApplicationParser
 
     public Optional<ConfigLine> parse(Element configElement)
     {
-        return configLineFromElement(configElement, () -> {
+        return configLineFromElement(configElement, () ->
+        {
             return null;
         });
     }
@@ -152,9 +155,11 @@ public class XmlApplicationParser
                 }
                 else
                 {
-                    configLineFromElement(child, () -> {
+                    configLineFromElement(child, () ->
+                    {
                         return builder.build();
-                    }).ifPresent(configLine -> {
+                    }).ifPresent(configLine ->
+                    {
                         builder.addChild(configLine);
                     });
                 }

@@ -23,7 +23,6 @@ import org.mule.runtime.core.api.security.UnknownAuthenticationTypeException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.transformer.TransformerTemplate;
 import org.mule.runtime.core.util.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +51,7 @@ public abstract class AbstractSecurityFilter implements MuleContextAware, Securi
         {
             securityManager = muleContext.getSecurityManager();
         }
-        
+
         if (securityManager == null)
         {
             throw new InitialisationException(CoreMessages.authSecurityManagerNotSet(), this);
@@ -80,7 +79,7 @@ public abstract class AbstractSecurityFilter implements MuleContextAware, Securi
             }
             securityManager = localManager;
         }
-        
+
         doInitialise();
     }
 
@@ -88,15 +87,15 @@ public abstract class AbstractSecurityFilter implements MuleContextAware, Securi
     {
     }
 
+    public SecurityManager getSecurityManager()
+    {
+        return securityManager;
+    }
+
     /** @param manager  */
     public void setSecurityManager(SecurityManager manager)
     {
         securityManager = manager;
-    }
-
-    public SecurityManager getSecurityManager()
-    {
-        return securityManager;
     }
 
     public String getSecurityProviders()
@@ -113,7 +112,7 @@ public abstract class AbstractSecurityFilter implements MuleContextAware, Securi
             throws SecurityException, UnknownAuthenticationTypeException, CryptoFailureException,
             SecurityProviderNotFoundException, EncryptionStrategyNotFoundException,
             InitialisationException;
-    
+
     protected void updatePayload(MuleMessage message, final Object payload, MuleEvent event) throws MuleException
     {
         TransformerTemplate trans = new TransformerTemplate(new TransformerTemplate.TransformerCallback()

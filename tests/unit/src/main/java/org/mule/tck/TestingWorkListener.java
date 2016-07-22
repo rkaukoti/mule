@@ -23,11 +23,11 @@ public class TestingWorkListener extends DefaultWorkListener
 
                 if (t instanceof Error)
                 {
-                    throw (Error)t;
+                    throw (Error) t;
                 }
                 else if (t instanceof RuntimeException)
                 {
-                    throw (RuntimeException)t;
+                    throw (RuntimeException) t;
                 }
             }
 

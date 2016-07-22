@@ -6,14 +6,13 @@
  */
 package org.mule.test.integration.transport.file;
 
-import static org.junit.Assert.assertFalse;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.util.FileUtils;
 
 import java.io.File;
 
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
 
 public class FileAppendEndpointTestCase extends FileAppendConnectorTestCase
 {

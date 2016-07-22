@@ -6,6 +6,16 @@
  */
 package org.mule.runtime.module.xml.transformers.xml;
 
+import org.junit.Test;
+import org.mule.runtime.api.metadata.MediaType;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.module.xml.transformer.ObjectToXml;
+import org.mule.runtime.module.xml.transformer.XmlToObject;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+import org.mule.tck.testmodels.fruit.Apple;
+
+import java.util.Set;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
@@ -17,17 +27,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import org.mule.runtime.api.metadata.MediaType;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.module.xml.transformer.ObjectToXml;
-import org.mule.runtime.module.xml.transformer.XmlToObject;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-import org.mule.tck.testmodels.fruit.Apple;
-
-import java.util.Set;
-
-import org.junit.Test;
-
 public class XmlMuleMessageTransformersTestCase extends AbstractMuleContextTestCase
 {
 
@@ -38,8 +37,8 @@ public class XmlMuleMessageTransformersTestCase extends AbstractMuleContextTestC
         t1.setAcceptMuleMessage(true);
 
         MuleMessage msg = MuleMessage.builder().payload("test").mediaType(MediaType.ANY.withCharset(UTF_8))
-                .correlationId("1234").addOutboundProperty("object", new Apple()).addOutboundProperty("string",
-                                                                                                      "hello").build();
+                                     .correlationId("1234").addOutboundProperty("object", new Apple()).addOutboundProperty("string",
+                        "hello").build();
 
         String xml = (String) t1.transform(msg);
         assertNotNull(xml);

@@ -11,8 +11,8 @@ import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataKey;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
-import org.mule.runtime.api.metadata.resolving.MetadataKeysResolver;
 import org.mule.runtime.api.metadata.resolving.MetadataAttributesResolver;
+import org.mule.runtime.api.metadata.resolving.MetadataKeysResolver;
 import org.mule.runtime.api.metadata.resolving.MetadataOutputResolver;
 
 import java.util.Set;

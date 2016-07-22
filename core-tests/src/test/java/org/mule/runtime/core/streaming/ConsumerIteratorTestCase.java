@@ -7,15 +7,14 @@
 
 package org.mule.runtime.core.streaming;
 
+import org.apache.commons.lang.RandomStringUtils;
+import org.junit.Assert;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.tck.size.SmallTest;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.lang.RandomStringUtils;
-import org.junit.Assert;
-import org.junit.Test;
 
 @SmallTest
 public class ConsumerIteratorTestCase
@@ -45,11 +44,15 @@ public class ConsumerIteratorTestCase
             }
 
             return null;
-        };
+        }
+
+        ;
 
         public void close() throws MuleException
         {
-        };
+        }
+
+        ;
 
         @Override
         public int getTotalResults()

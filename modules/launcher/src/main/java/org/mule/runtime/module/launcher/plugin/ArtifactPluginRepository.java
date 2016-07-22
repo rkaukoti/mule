@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Repository that defines {@link ArtifactPlugin} bundled with the container
+ *
  * @since 4.0
  */
 public interface ArtifactPluginRepository

@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.module.cxf.wssec;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Ignore;
 import org.mule.runtime.core.api.security.SecurityContext;
 
-import org.junit.Ignore;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @Ignore("MULE-6926: flaky test")
 public class SpringSecurityWithWsSecurityTestCase extends UsernameTokenTestCase
@@ -21,8 +20,8 @@ public class SpringSecurityWithWsSecurityTestCase extends UsernameTokenTestCase
     protected String[] getConfigFiles()
     {
         return new String[] {
-                             "org/mule/runtime/module/cxf/wssec/cxf-secure-service-security-manager-ws-security-flow-httpn.xml",
-                             "org/mule/runtime/module/cxf/wssec/spring-security-ws-security-conf.xml"
+                "org/mule/runtime/module/cxf/wssec/cxf-secure-service-security-manager-ws-security-flow-httpn.xml",
+                "org/mule/runtime/module/cxf/wssec/spring-security-ws-security-conf.xml"
         };
     }
 

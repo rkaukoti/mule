@@ -45,12 +45,12 @@ public class NotPermittedException extends SecurityException
         super(message, event, cause, failingMessageProcessor);
     }
 
-    public NotPermittedException(MuleEvent event, SecurityContext context,SecurityFilter filter)
+    public NotPermittedException(MuleEvent event, SecurityContext context, SecurityFilter filter)
     {
         super(constructMessage(context, event.getMessageSourceURI(), filter), event);
     }
 
-    private static Message constructMessage(SecurityContext context, 
+    private static Message constructMessage(SecurityContext context,
                                             URI endpointURI,
                                             SecurityFilter filter)
     {

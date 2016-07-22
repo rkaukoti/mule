@@ -6,15 +6,13 @@
  */
 package org.mule.test.routing;
 
+import org.junit.After;
+import org.junit.Test;
 import org.mule.runtime.config.spring.SpringXmlConfigurationBuilder;
 import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.config.ConfigurationException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.context.DefaultMuleContextFactory;
 import org.mule.tck.junit4.AbstractMuleTestCase;
-
-import org.junit.After;
-import org.junit.Test;
 
 public class UntilSuccessfulInvalidConfigTestCase extends AbstractMuleTestCase
 {
@@ -34,6 +32,7 @@ public class UntilSuccessfulInvalidConfigTestCase extends AbstractMuleTestCase
     @Test(expected = InitialisationException.class)
     public void exclusiveWaitConfig() throws Exception
     {
-        context = new DefaultMuleContextFactory().createMuleContext(new SpringXmlConfigurationBuilder("until-successful-invalid-wait-test.xml"));
+        context = new DefaultMuleContextFactory().createMuleContext(
+                new SpringXmlConfigurationBuilder("until-successful-invalid-wait-test.xml"));
     }
 }

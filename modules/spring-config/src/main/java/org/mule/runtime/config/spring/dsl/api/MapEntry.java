@@ -12,10 +12,9 @@ package org.mule.runtime.config.spring.dsl.api;
  * It's possible to create map instances from a set of entries or receive a list of entries
  * for any custom map processing.
  *
- * @since 4.0
- *
- * @param <KeyType> the key type
+ * @param <KeyType>   the key type
  * @param <ValueType> the value type
+ * @since 4.0
  */
 public class MapEntry<KeyType, ValueType>
 {

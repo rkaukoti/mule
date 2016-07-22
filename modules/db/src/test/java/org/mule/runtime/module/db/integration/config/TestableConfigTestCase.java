@@ -7,9 +7,8 @@
 
 package org.mule.runtime.module.db.integration.config;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mule.common.Result.Status.SUCCESS;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.common.TestResult;
 import org.mule.common.Testable;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
@@ -18,8 +17,9 @@ import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mule.common.Result.Status.SUCCESS;
 
 public class TestableConfigTestCase extends AbstractDbIntegrationTestCase
 {
@@ -29,22 +29,22 @@ public class TestableConfigTestCase extends AbstractDbIntegrationTestCase
         super(dataSourceConfigResource, testDatabase);
     }
 
-    @Override
-    protected String[] getFlowConfigurationResources()
-    {
-        return new String[0];
-    }
-
     @Parameterized.Parameters
     public static List<Object[]> parameters()
     {
         return TestDbConfig.getDerbyResource();
     }
 
+    @Override
+    protected String[] getFlowConfigurationResources()
+    {
+        return new String[0];
+    }
+
     @Test
     public void testsConnection() throws Exception
     {
-        Testable testable =  muleContext.getRegistry().lookupObject("dbConfig");
+        Testable testable = muleContext.getRegistry().lookupObject("dbConfig");
 
         TestResult result = testable.test();
 

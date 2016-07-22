@@ -6,12 +6,11 @@
  */
 package org.mule.test.config.spring.parsers.specific;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class CompositeMessageProcessorDefinitionParserTestCase extends FunctionalTestCase
 {

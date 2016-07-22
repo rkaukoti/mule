@@ -6,13 +6,7 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static java.util.Collections.emptyMap;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-
+import org.junit.Test;
 import org.mule.functional.functional.FlowAssert;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
@@ -34,7 +28,12 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static java.util.Collections.emptyMap;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 public class ExceptionHandlingTestCase extends FunctionalTestCase
 {
@@ -205,7 +204,7 @@ public class ExceptionHandlingTestCase extends FunctionalTestCase
         flowRunner("customProcessorInExceptionStrategy").withPayload(MESSAGE).asynchronously().run();
 
         MuleClient client = muleContext.getClient();
-        MuleMessage response = client.request("test://outStrategy1",3000);
+        MuleMessage response = client.request("test://outStrategy1", 3000);
 
         assertNotNull(response);
 
@@ -302,7 +301,7 @@ public class ExceptionHandlingTestCase extends FunctionalTestCase
             {
                 expectedHandler = messagingExceptionHandler.equals(event.getFlowConstruct().getExceptionListener());
             }
-            event.setFlowVariable("expectedHandler",expectedHandler);
+            event.setFlowVariable("expectedHandler", expectedHandler);
             injectedMessagingExceptionHandler = messagingExceptionHandler;
             return event;
         }

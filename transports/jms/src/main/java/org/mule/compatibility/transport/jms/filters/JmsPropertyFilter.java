@@ -6,19 +6,19 @@
  */
 package org.mule.compatibility.transport.jms.filters;
 
-import static org.mule.runtime.core.util.ClassUtils.equal;
-import static org.mule.runtime.core.util.ClassUtils.hash;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.regex.Pattern;
 
 import javax.jms.Message;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.ClassUtils.equal;
+import static org.mule.runtime.core.util.ClassUtils.hash;
 
 public class JmsPropertyFilter implements Filter
 {
@@ -120,8 +120,8 @@ public class JmsPropertyFilter implements Filter
             catch (NumberFormatException nfe)
             {
                 logger.warn("Unable to convert expression " +
-                        expression + " to " + propertyClass + ": " +
-                        nfe.toString());
+                            expression + " to " + propertyClass + ": " +
+                            nfe.toString());
             }
             catch (Exception e)
             {
@@ -135,15 +135,7 @@ public class JmsPropertyFilter implements Filter
                         ClassUtils.getSimpleName(message.getDataType().getType()));
         }
 
-            return false;
-        }
-
-    /**
-     * Sets the match expression
-     */
-    public void setExpression(String expression)
-    {
-        this.expression = expression;
+        return false;
     }
 
     /**
@@ -155,11 +147,11 @@ public class JmsPropertyFilter implements Filter
     }
 
     /**
-     * Sets the name of the property
+     * Sets the match expression
      */
-    public void setPropertyName(String propertyName)
+    public void setExpression(String expression)
     {
-        this.propertyName = propertyName;
+        this.expression = expression;
     }
 
     /**
@@ -171,11 +163,11 @@ public class JmsPropertyFilter implements Filter
     }
 
     /**
-     * Sets the class type of the property
+     * Sets the name of the property
      */
-    public void setPropertyClass(String propertyClass)
+    public void setPropertyName(String propertyName)
     {
-        this.propertyClass = propertyClass;
+        this.propertyName = propertyName;
     }
 
     /**
@@ -184,6 +176,14 @@ public class JmsPropertyFilter implements Filter
     public String getPropertyClass()
     {
         return propertyClass;
+    }
+
+    /**
+     * Sets the class type of the property
+     */
+    public void setPropertyClass(String propertyClass)
+    {
+        this.propertyClass = propertyClass;
     }
 
     /**
@@ -205,19 +205,21 @@ public class JmsPropertyFilter implements Filter
     @Override
     public boolean equals(Object obj)
     {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
 
         final JmsPropertyFilter other = (JmsPropertyFilter) obj;
         return equal(expression, other.expression)
-            && equal(propertyClass, other.propertyClass)
-            && equal(propertyName, other.propertyName)
-            && equal(pattern, other.pattern);
+               && equal(propertyClass, other.propertyClass)
+               && equal(propertyName, other.propertyName)
+               && equal(pattern, other.pattern);
     }
 
     @Override
     public int hashCode()
     {
-        return hash(new Object[]{this.getClass(), expression, propertyClass, propertyName, pattern});
+        return hash(new Object[] {this.getClass(), expression, propertyClass, propertyName, pattern});
     }
 }

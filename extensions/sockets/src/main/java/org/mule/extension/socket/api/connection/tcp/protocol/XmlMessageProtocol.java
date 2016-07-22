@@ -6,14 +6,14 @@
  */
 package org.mule.extension.socket.api.connection.tcp.protocol;
 
-import static org.mule.extension.socket.internal.SocketUtils.getByteArray;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PushbackInputStream;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import static org.mule.extension.socket.internal.SocketUtils.getByteArray;
 
 /**
  * <p>

@@ -6,19 +6,19 @@
  */
 package org.mule.runtime.module.cxf.payload;
 
-import static org.junit.Assert.assertEquals;
-
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 
+import static org.junit.Assert.assertEquals;
+
 class CallAndExpectPayloadResult implements CallAndExpect
 {
+    private final MuleContext muleContext;
     private Object expectedPayloadResult;
     private String outputEndpointName;
     private Object payload;
-    private final MuleContext muleContext;
 
     public CallAndExpectPayloadResult(String outputEndpointName,
                                       Object payload,

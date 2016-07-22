@@ -6,14 +6,9 @@
  */
 package org.mule.runtime.core.session;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleSession;
@@ -30,9 +25,14 @@ import org.mule.runtime.core.serialization.internal.JavaObjectSerializer;
 
 import java.util.Collections;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 
 public class DefaultMuleSessionTestCase
 {
@@ -189,11 +189,11 @@ public class DefaultMuleSessionTestCase
         assertEquals(before.isValid(), after.isValid());
         assertEquals((Object) before.getProperty("foo"), after.getProperty("foo"));
         assertEquals(before.getSecurityContext().getAuthentication().getPrincipal(),
-            after.getSecurityContext().getAuthentication().getPrincipal());
+                after.getSecurityContext().getAuthentication().getPrincipal());
         assertEquals(before.getSecurityContext().getAuthentication().getProperties().get("key1"),
-            after.getSecurityContext().getAuthentication().getProperties().get("key1"));
+                after.getSecurityContext().getAuthentication().getProperties().get("key1"));
         assertEquals(before.getSecurityContext().getAuthentication().getCredentials(),
-            after.getSecurityContext().getAuthentication().getCredentials());
+                after.getSecurityContext().getAuthentication().getCredentials());
         // assertEquals(before.getSecurityContext().getAuthentication().getEvent().getId(),
         // after.getSecurityContext().getAuthentication().getEvent().getId());
 
@@ -221,7 +221,7 @@ public class DefaultMuleSessionTestCase
 
     private SecurityContext createTestAuthentication()
     {
-        Authentication auth = new DefaultMuleAuthentication(new MuleCredentials("dan", new char[]{'d', 'f'}));
+        Authentication auth = new DefaultMuleAuthentication(new MuleCredentials("dan", new char[] {'d', 'f'}));
         auth.setProperties(Collections.<String, Object>singletonMap("key1", "value1"));
         SecurityContext securityContext = new DefaultSecurityContextFactory().create(auth);
         return securityContext;

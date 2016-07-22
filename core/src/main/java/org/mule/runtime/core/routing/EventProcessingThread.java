@@ -34,7 +34,7 @@ public abstract class EventProcessingThread extends Thread
             lock.notifyAll();
         }
     }
-    
+
     /**
      * Stops the monitoring of the expired groups.
      */
@@ -43,7 +43,7 @@ public abstract class EventProcessingThread extends Thread
         logger.debug("Stopping " + getName());
         stopRequested = true;
         processNow();
-        
+
         try
         {
             this.join();

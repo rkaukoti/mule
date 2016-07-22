@@ -34,10 +34,10 @@ public class ValidateJsonSchemaMessageProcessor implements MessageProcessor, Ini
     public void initialise() throws InitialisationException
     {
         validator = JsonSchemaValidator.builder()
-                .setSchemaLocation(schemaLocation)
-                .setDereferencing(dereferencing)
-                .addSchemaRedirects(schemaRedirects)
-                .build();
+                                       .setSchemaLocation(schemaLocation)
+                                       .setDereferencing(dereferencing)
+                                       .addSchemaRedirects(schemaRedirects)
+                                       .build();
     }
 
     @Override

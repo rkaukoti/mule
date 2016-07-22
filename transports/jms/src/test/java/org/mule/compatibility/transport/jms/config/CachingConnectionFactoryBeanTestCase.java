@@ -7,18 +7,16 @@
 
 package org.mule.compatibility.transport.jms.config;
 
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-
+import org.junit.Test;
 import org.mule.compatibility.transport.jms.CustomCachingConnectionFactory;
-import org.mule.compatibility.transport.jms.config.CachingConnectionFactoryFactoryBean;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import javax.jms.ConnectionFactory;
 
-import org.junit.Test;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 @SmallTest
 public class CachingConnectionFactoryBeanTestCase extends AbstractMuleTestCase

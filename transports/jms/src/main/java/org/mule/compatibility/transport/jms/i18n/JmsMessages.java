@@ -18,9 +18,9 @@ import org.mule.runtime.core.util.StringMessageUtils;
 public class JmsMessages extends MessageFactory
 {
     private static final JmsMessages factory = new JmsMessages();
-    
+
     private static final String BUNDLE_PATH = getBundlePath("jms");
-    
+
     public static Message connectorDoesNotSupportSyncReceiveWhenTransacted()
     {
         return factory.createMessage(BUNDLE_PATH, 2);
@@ -59,7 +59,8 @@ public class JmsMessages extends MessageFactory
 
     public static Message tooManyRedeliveries(String messageId, int times, int maxRedelivery, ImmutableEndpoint endpoint)
     {
-        return factory.createMessage(BUNDLE_PATH, 11, messageId, times, maxRedelivery, endpoint.getEndpointURI(), endpoint.getConnector().getName());
+        return factory.createMessage(BUNDLE_PATH, 11, messageId, times, maxRedelivery, endpoint.getEndpointURI(),
+                endpoint.getConnector().getName());
     }
 
     public static Message invalidResourceType(Class<?> expectedClass, Object object)
@@ -69,17 +70,17 @@ public class JmsMessages extends MessageFactory
         {
             actualClass = object.getClass();
         }
-        
+
         return factory.createMessage(BUNDLE_PATH, 12, StringMessageUtils.toString(expectedClass),
-            StringMessageUtils.toString(actualClass));
+                StringMessageUtils.toString(actualClass));
     }
 
     public static Message checkTransformer(String string, Class<?> class1, String name)
     {
         return factory.createMessage(BUNDLE_PATH, 13, string, ClassUtils.getSimpleName(class1.getClass()),
-            name);
+                name);
     }
-    
+
     public static Message noConnectionFactoryConfigured()
     {
         return factory.createMessage(BUNDLE_PATH, 14);

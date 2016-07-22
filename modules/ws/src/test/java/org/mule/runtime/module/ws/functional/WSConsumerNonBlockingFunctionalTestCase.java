@@ -7,12 +7,10 @@
 
 package org.mule.runtime.module.ws.functional;
 
-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
-
+import org.hamcrest.Matchers;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.tck.SensingNullRequestResponseMessageProcessor;
@@ -22,10 +20,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
-import org.hamcrest.Matchers;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 @RunWith(Parameterized.class)
 public class WSConsumerNonBlockingFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase
@@ -34,16 +33,16 @@ public class WSConsumerNonBlockingFunctionalTestCase extends AbstractWSConsumerF
     @Parameterized.Parameter(value = 0)
     public String configFile;
 
-    @Override
-    protected String getConfigFile()
-    {
-        return configFile;
-    }
-
     @Parameterized.Parameters
     public static Collection<Object[]> parameters()
     {
         return Arrays.asList(new Object[][] {{"ws-consumer-http-module-config-nb.xml"}});
+    }
+
+    @Override
+    protected String getConfigFile()
+    {
+        return configFile;
     }
 
     @Test
@@ -65,7 +64,8 @@ public class WSConsumerNonBlockingFunctionalTestCase extends AbstractWSConsumerF
     public void invalidNamespaceReturnsSOAPFault() throws Exception
     {
         String message = "<tns:echo xmlns:tns=\"http://invalid/\"><text>Hello</text></tns:echo>";
-        assertSoapFault("http://localhost:" + dynamicPort.getNumber() + "/in", message, "Unexpected wrapper element {http://invalid/}echo found");
+        assertSoapFault("http://localhost:" + dynamicPort.getNumber() + "/in", message,
+                "Unexpected wrapper element {http://invalid/}echo found");
         muleContext.getRegistry().lookupObject(SensingNullRequestResponseMessageProcessor.class).assertRequestResponseThreadsDifferent();
     }
 
@@ -75,8 +75,8 @@ public class WSConsumerNonBlockingFunctionalTestCase extends AbstractWSConsumerF
         MuleMessage request = MuleMessage.builder().payload(ECHO_REQUEST).build();
         MuleClient client = muleContext.getClient();
         MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/inMidFlow",
-                                           request, newOptions().method(POST.name()).disableStatusCodeValidation()
-                                                   .build());
+                request, newOptions().method(POST.name()).disableStatusCodeValidation()
+                                     .build());
         assertThat(getPayloadAsString(response), equalTo(TEST_MESSAGE));
     }
 

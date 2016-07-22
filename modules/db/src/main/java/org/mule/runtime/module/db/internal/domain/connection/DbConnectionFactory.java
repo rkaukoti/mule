@@ -20,9 +20,8 @@ public interface DbConnectionFactory
     /**
      * Creates a connection with a given {@link TransactionalAction}
      *
-     * @param transactionalAction indicates whether or not the factory should
-     *                            look at active transactions in order to lookup
-     *                            for already created connections
+     * @param transactionalAction indicates whether or not the factory should look at active transactions in order to lookup for already
+     *                            created connections
      * @return a connection for the given {@link TransactionalAction}
      * @throws SQLException when not able to obtain a new connection
      */

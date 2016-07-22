@@ -6,21 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
-import static java.util.Arrays.asList;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getParameter;
-import org.mule.runtime.extension.api.exception.IllegalModelDefinitionException;
-import org.mule.runtime.extension.api.introspection.connection.ConnectionProviderModel;
-import org.mule.runtime.extension.api.introspection.ExtensionModel;
-import org.mule.runtime.extension.api.introspection.operation.OperationModel;
-import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
-import org.mule.runtime.extension.api.introspection.config.RuntimeConfigurationModel;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-import org.mule.tck.testmodels.fruit.Apple;
-import org.mule.tck.testmodels.fruit.Banana;
-
 import com.google.common.collect.ImmutableList;
 
 import org.junit.Before;
@@ -28,6 +13,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.extension.api.exception.IllegalModelDefinitionException;
+import org.mule.runtime.extension.api.introspection.ExtensionModel;
+import org.mule.runtime.extension.api.introspection.config.RuntimeConfigurationModel;
+import org.mule.runtime.extension.api.introspection.connection.ConnectionProviderModel;
+import org.mule.runtime.extension.api.introspection.operation.OperationModel;
+import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+import org.mule.tck.testmodels.fruit.Apple;
+import org.mule.tck.testmodels.fruit.Banana;
+
+import static java.util.Arrays.asList;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getParameter;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -84,7 +84,8 @@ public class NameClashModelValidatorTestCase extends AbstractMuleTestCase
         when(operationModel.getName()).thenReturn(OPERATION_NAME);
         when(operationModel.getParameterModels()).thenReturn(asList(simpleOperationParam, topLevelOperationParam));
         when(connectionProviderModel.getName()).thenReturn(CONNECTION_PROVIDER_NAME);
-        when(connectionProviderModel.getParameterModels()).thenReturn(asList(simpleConnectionProviderParam, topLevelConnectionProviderParam));
+        when(connectionProviderModel.getParameterModels()).thenReturn(
+                asList(simpleConnectionProviderParam, topLevelConnectionProviderParam));
     }
 
     @Test
@@ -128,7 +129,8 @@ public class NameClashModelValidatorTestCase extends AbstractMuleTestCase
     public void connectionProviderTopLevelParameterCrashesWithOperationName()
     {
         ParameterModel offending = getParameter(TOP_LEVEL_OPERATION_PARAM_NAME, Banana.class);
-        when(connectionProviderModel.getParameterModels()).thenReturn(asList(simpleConnectionProviderParam, topLevelConnectionProviderParam, offending));
+        when(connectionProviderModel.getParameterModels()).thenReturn(
+                asList(simpleConnectionProviderParam, topLevelConnectionProviderParam, offending));
         validate();
     }
 
@@ -161,7 +163,8 @@ public class NameClashModelValidatorTestCase extends AbstractMuleTestCase
     public void connectionProviderTopLevelParameterCrashesWithConfigName()
     {
         ParameterModel offending = getParameter(CONFIG_NAME, Apple.class);
-        when(connectionProviderModel.getParameterModels()).thenReturn(asList(simpleConnectionProviderParam, topLevelConnectionProviderParam, offending));
+        when(connectionProviderModel.getParameterModels()).thenReturn(
+                asList(simpleConnectionProviderParam, topLevelConnectionProviderParam, offending));
         validate();
     }
 
@@ -177,7 +180,8 @@ public class NameClashModelValidatorTestCase extends AbstractMuleTestCase
     public void connectionProviderTopLevelParameterCrashesWithName()
     {
         ParameterModel offending = getParameter(CONNECTION_PROVIDER_NAME, Apple.class);
-        when(connectionProviderModel.getParameterModels()).thenReturn(asList(simpleConnectionProviderParam, topLevelConnectionProviderParam, offending));
+        when(connectionProviderModel.getParameterModels()).thenReturn(
+                asList(simpleConnectionProviderParam, topLevelConnectionProviderParam, offending));
         validate();
     }
 
@@ -210,7 +214,8 @@ public class NameClashModelValidatorTestCase extends AbstractMuleTestCase
     public void connectionProviderWithRepeatedParameterName()
     {
         ParameterModel offending = getParameter(SIMPLE_PARAM_NAME, String.class);
-        when(connectionProviderModel.getParameterModels()).thenReturn(asList(simpleConnectionProviderParam, topLevelConnectionProviderParam, offending));
+        when(connectionProviderModel.getParameterModels()).thenReturn(
+                asList(simpleConnectionProviderParam, topLevelConnectionProviderParam, offending));
         validate();
     }
 

@@ -7,9 +7,10 @@
 
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
+import org.apache.commons.httpclient.Header;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.compatibility.transport.http.HttpConstants;
 import org.mule.compatibility.transport.http.HttpRequest;
 import org.mule.runtime.core.api.MuleException;
@@ -22,10 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.commons.httpclient.Header;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 public class HttpOutboundKeepAliveTestCase extends AbstractMockHttpServerTestCase
 {

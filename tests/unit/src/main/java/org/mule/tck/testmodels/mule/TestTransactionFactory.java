@@ -13,7 +13,6 @@ import org.mule.runtime.core.api.transaction.TransactionFactory;
 
 /**
  * <code>TestTransactionFactory</code> creates a {@link org.mule.tck.testmodels.mule.TestTransaction}
- * 
  */
 
 public class TestTransactionFactory implements TransactionFactory
@@ -31,7 +30,6 @@ public class TestTransactionFactory implements TransactionFactory
     {
         this.mockTransaction = mockTransaction;
     }
-
 
 
     public Transaction beginTransaction(MuleContext muleContext) throws TransactionException

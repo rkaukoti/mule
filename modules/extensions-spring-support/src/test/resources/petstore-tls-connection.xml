@@ -15,9 +15,9 @@
     <petstore:config name="globalTls">
         <petstore:connection username="john" password="doe" tlsContext="globalTlsContext"/>
         <petstore:pets>
-            <petstore:pet value="Lassie" />
-            <petstore:pet value="Sapo Pepe" />
-            <petstore:pet value="My mother's parrot" />
+            <petstore:pet value="Lassie"/>
+            <petstore:pet value="Sapo Pepe"/>
+            <petstore:pet value="My mother's parrot"/>
         </petstore:pets>
     </petstore:config>
 
@@ -29,13 +29,13 @@
             </tls:context>
         </petstore:connection>
         <petstore:pets>
-            <petstore:pet value="Lassie" />
-            <petstore:pet value="Sapo Pepe" />
-            <petstore:pet value="My mother's parrot" />
+            <petstore:pet value="Lassie"/>
+            <petstore:pet value="Sapo Pepe"/>
+            <petstore:pet value="My mother's parrot"/>
         </petstore:pets>
     </petstore:config>
 
     <flow name="getClient">
-        <petstore:get-client config-ref="${config}" />
+        <petstore:get-client config-ref="${config}"/>
     </flow>
 </mule>

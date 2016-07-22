@@ -83,7 +83,8 @@ public class PartitionedPersistentObjectStore<T extends Serializable> extends
 
     private void createPartition(String partitionName) throws ObjectStoreException
     {
-        PersistentObjectStorePartition persistentObjectStorePartition = new PersistentObjectStorePartition(muleContext, partitionName, getNewPartitionDirectory());
+        PersistentObjectStorePartition persistentObjectStorePartition =
+                new PersistentObjectStorePartition(muleContext, partitionName, getNewPartitionDirectory());
         persistentObjectStorePartition.open();
         partitionsByName.put(partitionName, persistentObjectStorePartition);
     }
@@ -122,13 +123,13 @@ public class PartitionedPersistentObjectStore<T extends Serializable> extends
     {
         return getPartitionObjectStore(partitionName).remove(key.toString());
     }
-    
+
     @Override
     public List<Serializable> allKeys(String partitionName) throws ObjectStoreException
     {
         return getPartitionObjectStore(partitionName).allKeys();
     }
-    
+
     @Override
     public void clear(String partitionName) throws ObjectStoreException
     {
@@ -213,7 +214,8 @@ public class PartitionedPersistentObjectStore<T extends Serializable> extends
         {
             try
             {
-                PersistentObjectStorePartition persistentObjectStorePartition = new PersistentObjectStorePartition(muleContext, partitionDirectory);
+                PersistentObjectStorePartition persistentObjectStorePartition =
+                        new PersistentObjectStorePartition(muleContext, partitionDirectory);
                 persistentObjectStorePartition.open();
                 partitionsByName.put(persistentObjectStorePartition.getPartitionName(), persistentObjectStorePartition);
             }

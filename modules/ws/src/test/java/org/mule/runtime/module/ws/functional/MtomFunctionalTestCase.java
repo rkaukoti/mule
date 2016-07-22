@@ -6,11 +6,8 @@
  */
 package org.mule.runtime.module.ws.functional;
 
-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.util.IOUtils;
@@ -23,8 +20,10 @@ import java.util.regex.Pattern;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @Ignore("See MULE-9203")
 public class MtomFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase
@@ -47,7 +46,8 @@ public class MtomFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase
                                        "</attachment></ns:uploadAttachment>", TEST_FILE_ATTACHMENT);
 
         MuleEvent event = flowRunner("clientUploadAttachment").withPayload(request)
-                                                              .withOutboundAttachment("testAttachmentId", buildDataHandler(TEST_FILE_ATTACHMENT))
+                                                              .withOutboundAttachment("testAttachmentId",
+                                                                      buildDataHandler(TEST_FILE_ATTACHMENT))
                                                               .run();
 
         String expected = "<ns2:uploadAttachmentResponse xmlns:ns2=\"http://consumer.ws.module.runtime.mule.org/\">" +
@@ -74,7 +74,8 @@ public class MtomFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase
                          "</attachment></ns:echoAttachment>";
 
         MuleEvent event = flowRunner("clientEchoAttachment").withPayload(request)
-                                                            .withOutboundAttachment("testAttachmentId", buildDataHandler(TEST_FILE_ATTACHMENT))
+                                                            .withOutboundAttachment("testAttachmentId",
+                                                                    buildDataHandler(TEST_FILE_ATTACHMENT))
                                                             .run();
 
         assertAttachmentInResponse(event.getMessage(), TEST_FILE_ATTACHMENT);

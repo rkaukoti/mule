@@ -25,7 +25,7 @@ public class InstanceLockGroup implements LockGroup
     public InstanceLockGroup(LockProvider lockProvider)
     {
         this.lockProvider = lockProvider;
-        this.locks = new HashMap<String,LockEntry>();
+        this.locks = new HashMap<String, LockEntry>();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class InstanceLockGroup implements LockGroup
             else
             {
                 lockEntry = new LockEntry(lockProvider.createLock(lockId));
-                locks.put(lockId,lockEntry);
+                locks.put(lockId, lockEntry);
             }
             lockEntry.incrementLockCount();
             lockAccessMonitor.notifyAll();
@@ -81,7 +81,7 @@ public class InstanceLockGroup implements LockGroup
             else
             {
                 lockEntry = new LockEntry(lockProvider.createLock(lockId));
-                locks.put(lockId,lockEntry);
+                locks.put(lockId, lockEntry);
             }
             lockEntry.incrementLockCount();
             lockAccessMonitor.notifyAll();
@@ -114,7 +114,7 @@ public class InstanceLockGroup implements LockGroup
             else
             {
                 lockEntry = new LockEntry(lockProvider.createLock(lockId));
-                locks.put(lockId,lockEntry);
+                locks.put(lockId, lockEntry);
             }
             lockEntry.incrementLockCount();
             lockAccessMonitor.notifyAll();
@@ -147,7 +147,7 @@ public class InstanceLockGroup implements LockGroup
             else
             {
                 lockEntry = new LockEntry(lockProvider.createLock(lockId));
-                locks.put(lockId,lockEntry);
+                locks.put(lockId, lockEntry);
             }
             lockEntry.incrementLockCount();
             lockAccessMonitor.notifyAll();
@@ -155,11 +155,20 @@ public class InstanceLockGroup implements LockGroup
         lockEntry.getLock().lockInterruptibly();
     }
 
+    @Override
+    public void dispose()
+    {
+        synchronized (lockAccessMonitor)
+        {
+            locks.clear();
+        }
+    }
+
     public static class LockEntry
     {
-        private AtomicInteger lockCount  = new AtomicInteger(0);
+        private AtomicInteger lockCount = new AtomicInteger(0);
         private Lock lock;
-        
+
         public LockEntry(Lock lock)
         {
             this.lock = lock;
@@ -183,15 +192,6 @@ public class InstanceLockGroup implements LockGroup
         public boolean hasPendingLocks()
         {
             return lockCount.get() > 0;
-        }
-    }
-
-    @Override
-    public void dispose()
-    {
-        synchronized (lockAccessMonitor)
-        {
-            locks.clear();
         }
     }
 }

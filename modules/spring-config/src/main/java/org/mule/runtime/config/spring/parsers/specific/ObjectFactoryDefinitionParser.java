@@ -9,13 +9,12 @@ package org.mule.runtime.config.spring.parsers.specific;
 import org.mule.runtime.config.spring.parsers.AbstractChildDefinitionParser;
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
 import org.mule.runtime.core.object.AbstractObjectFactory;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.w3c.dom.Element;
 
 public class ObjectFactoryDefinitionParser extends AbstractChildDefinitionParser
 {
-    
+
     protected Class beanClass = null;
     protected String setterMethod = null;
 
@@ -23,8 +22,8 @@ public class ObjectFactoryDefinitionParser extends AbstractChildDefinitionParser
     {
         this(beanClass);
         this.setterMethod = setterMethod;
-    }                                                             
-    
+    }
+
     public ObjectFactoryDefinitionParser(Class beanClass)
     {
         super();
@@ -51,5 +50,5 @@ public class ObjectFactoryDefinitionParser extends AbstractChildDefinitionParser
     protected Class getBeanClass(Element element)
     {
         return beanClass;
-    }                                                                 
+    }
 }

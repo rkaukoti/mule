@@ -6,10 +6,13 @@
  */
 package org.mule.runtime.core.security;
 
+import org.apache.commons.io.IOUtils;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.security.CryptoFailureException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -20,10 +23,6 @@ import java.security.spec.KeySpec;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
-
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A JCE based encryption strategy. It also provides base64 encoding of
@@ -66,7 +65,7 @@ public abstract class AbstractJCEEncryptionStrategy extends AbstractNamedEncrypt
         catch (Exception e)
         {
             throw new InitialisationException(CoreMessages.failedToCreate("encryption ciphers"),
-                e, this);
+                    e, this);
         }
     }
 
@@ -90,7 +89,8 @@ public abstract class AbstractJCEEncryptionStrategy extends AbstractNamedEncrypt
 
     protected abstract SecretKey getSecretKey() throws GeneralSecurityException;
 
-    public InputStream encrypt(InputStream data, Object info) throws CryptoFailureException {
+    public InputStream encrypt(InputStream data, Object info) throws CryptoFailureException
+    {
         try
         {
             return new ByteArrayInputStream(this.encrypt(IOUtils.toByteArray(data), info));
@@ -101,7 +101,8 @@ public abstract class AbstractJCEEncryptionStrategy extends AbstractNamedEncrypt
         }
     }
 
-    public InputStream decrypt(InputStream data, Object info) throws CryptoFailureException {
+    public InputStream decrypt(InputStream data, Object info) throws CryptoFailureException
+    {
         try
         {
             return new ByteArrayInputStream(this.decrypt(IOUtils.toByteArray(data), info));
@@ -111,7 +112,7 @@ public abstract class AbstractJCEEncryptionStrategy extends AbstractNamedEncrypt
             throw new CryptoFailureException(this, e);
         }
     }
-    
+
     public byte[] encrypt(byte[] data, Object info) throws CryptoFailureException
     {
         try

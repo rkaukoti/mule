@@ -6,7 +6,6 @@
  */
 package org.mule.extension.file.internal.command;
 
-import static java.lang.String.format;
 import org.mule.extension.file.api.LocalFileAttributes;
 import org.mule.extension.file.internal.LocalFileSystem;
 import org.mule.runtime.api.message.MuleMessage;
@@ -19,6 +18,8 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.function.Predicate;
+
+import static java.lang.String.format;
 
 /**
  * A {@link LocalFileCommand} which implements the {@link ListCommand}
@@ -40,7 +41,8 @@ public final class LocalListCommand extends LocalFileCommand implements ListComm
      * {@inheritDoc}
      */
     @Override
-    public TreeNode list(FileConnectorConfig config, String directoryPath, boolean recursive, MuleMessage message, Predicate<FileAttributes> matcher)
+    public TreeNode list(FileConnectorConfig config, String directoryPath, boolean recursive, MuleMessage message,
+                         Predicate<FileAttributes> matcher)
     {
         Path path = resolveExistingPath(config, directoryPath);
         if (!Files.isDirectory(path))
@@ -54,11 +56,13 @@ public final class LocalListCommand extends LocalFileCommand implements ListComm
         return treeNodeBuilder.build();
     }
 
-    private void doList(FileConnectorConfig config, File parent, TreeNode.Builder treeNodeBuilder, boolean recursive, MuleMessage message, Predicate<FileAttributes> matcher)
+    private void doList(FileConnectorConfig config, File parent, TreeNode.Builder treeNodeBuilder, boolean recursive, MuleMessage message,
+                        Predicate<FileAttributes> matcher)
     {
         if (!parent.canRead())
         {
-            throw exception(format("Could not list files from directory '%s' because access was denied by the operating system", parent.getAbsolutePath()));
+            throw exception(format("Could not list files from directory '%s' because access was denied by the operating system",
+                    parent.getAbsolutePath()));
         }
 
         for (File child : parent.listFiles())

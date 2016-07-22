@@ -65,8 +65,8 @@ public interface LifecycleRegistry extends Registry
      * have been previously applied regardless.
      *
      * @param key            the key of the object you're looking for
-     * @param applyLifecycle if lifecycle should be applied to the returned object.
-     *                       Passing {@code true} doesn't guarantee that the lifecycle is applied
+     * @param applyLifecycle if lifecycle should be applied to the returned object. Passing {@code true} doesn't guarantee that the
+     *                       lifecycle is applied
      * @return object or {@code null} if not found
      */
     <T> T lookupObject(String key, boolean applyLifecycle);

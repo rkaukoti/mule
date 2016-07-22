@@ -6,9 +6,9 @@
  */
 package org.mule.tck.junit4.rule;
 
-import java.util.TimeZone;
-
 import org.junit.rules.ExternalResource;
+
+import java.util.TimeZone;
 
 /**
  * Sets up a time zone to use on tests, guarantying that the original default one is reset afterwards.

@@ -6,32 +6,32 @@
  */
 package org.mule.runtime.core.el.function;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Test;
+import org.mule.mvel2.CompileException;
+import org.mule.mvel2.ParserConfiguration;
+import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.TransformationService;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.el.ExpressionExecutor;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
-import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.el.context.MessageContext;
 import org.mule.runtime.core.el.mvel.MVELExpressionExecutor;
 import org.mule.runtime.core.el.mvel.MVELExpressionLanguageContext;
-import org.mule.mvel2.CompileException;
-import org.mule.mvel2.ParserConfiguration;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.util.Date;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class WildcardExpressionLanguageFunctionTestCase extends AbstractMuleTestCase
@@ -59,7 +59,7 @@ public class WildcardExpressionLanguageFunctionTestCase extends AbstractMuleTest
     public void testReturnFalseWhenDoesNotMatches() throws Exception
     {
         addMessageToContextWithPayload("TEST");
-        boolean result = (Boolean) wildcardFunction.call(new Object[]{"'*ASDF*QWER*'"}, context);
+        boolean result = (Boolean) wildcardFunction.call(new Object[] {"'*ASDF*QWER*'"}, context);
         assertFalse(result);
     }
 
@@ -75,7 +75,7 @@ public class WildcardExpressionLanguageFunctionTestCase extends AbstractMuleTest
     public void testReturnsTrueWhenMatches() throws Exception
     {
         addMessageToContextWithPayload("TESTfooTEST");
-        boolean result = (Boolean) wildcardFunction.call(new Object[]{"TEST*TEST"}, context);
+        boolean result = (Boolean) wildcardFunction.call(new Object[] {"TEST*TEST"}, context);
         assertTrue(result);
     }
 
@@ -90,7 +90,7 @@ public class WildcardExpressionLanguageFunctionTestCase extends AbstractMuleTest
     @Test
     public void testReturnFalseWhenDoesNotMatchesDefinedTextArgument() throws Exception
     {
-        boolean result = (Boolean) wildcardFunction.call(new Object[]{"'*ASDF*QWER*'", "TEST"}, context);
+        boolean result = (Boolean) wildcardFunction.call(new Object[] {"'*ASDF*QWER*'", "TEST"}, context);
         assertFalse(result);
     }
 
@@ -104,7 +104,7 @@ public class WildcardExpressionLanguageFunctionTestCase extends AbstractMuleTest
     @Test
     public void testReturnsTrueWhenMatchesDefinedTextArgument() throws Exception
     {
-        boolean result = (Boolean) wildcardFunction.call(new Object[]{"TEST*TEST", "TESTfooTEST"}, context);
+        boolean result = (Boolean) wildcardFunction.call(new Object[] {"TEST*TEST", "TESTfooTEST"}, context);
         assertTrue(result);
     }
 
@@ -119,7 +119,7 @@ public class WildcardExpressionLanguageFunctionTestCase extends AbstractMuleTest
     @Test
     public void testReturnFalseWhenDoesNotMatchesDefinedTextArgumentAndSensitivityIsTrue() throws Exception
     {
-        boolean result = (Boolean) wildcardFunction.call(new Object[]{"'tes*'", "TEST", true}, context);
+        boolean result = (Boolean) wildcardFunction.call(new Object[] {"'tes*'", "TEST", true}, context);
         assertFalse(result);
     }
 
@@ -133,7 +133,7 @@ public class WildcardExpressionLanguageFunctionTestCase extends AbstractMuleTest
     @Test
     public void testReturnFalseWhenDoesNotMatchesDefinedTextArgumentAndSensitivityIsFalse() throws Exception
     {
-        boolean result = (Boolean) wildcardFunction.call(new Object[]{"'*ASDF*QWER*'", "TEST", false}, context);
+        boolean result = (Boolean) wildcardFunction.call(new Object[] {"'*ASDF*QWER*'", "TEST", false}, context);
         assertFalse(result);
     }
 
@@ -147,7 +147,7 @@ public class WildcardExpressionLanguageFunctionTestCase extends AbstractMuleTest
     @Test
     public void testReturnsTrueWhenMatchesDefinedTextArgumentAndSensitivityIsTrue() throws Exception
     {
-        boolean result = (Boolean) wildcardFunction.call(new Object[]{"test*TEST", "testfooTEST", true}, context);
+        boolean result = (Boolean) wildcardFunction.call(new Object[] {"test*TEST", "testfooTEST", true}, context);
         assertTrue(result);
     }
 
@@ -162,7 +162,7 @@ public class WildcardExpressionLanguageFunctionTestCase extends AbstractMuleTest
     @Test
     public void testReturnsTrueWhenMatchesDefinedTextArgumentAndSensitivityIsFalse() throws Exception
     {
-        boolean result = (Boolean) wildcardFunction.call(new Object[]{"TEST*test", "testfooTEST", false}, context);
+        boolean result = (Boolean) wildcardFunction.call(new Object[] {"TEST*test", "testfooTEST", false}, context);
         assertTrue(result);
     }
 
@@ -177,7 +177,7 @@ public class WildcardExpressionLanguageFunctionTestCase extends AbstractMuleTest
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidNullPattern() throws Exception
     {
-        wildcardFunction.call(new Object[]{null}, context);
+        wildcardFunction.call(new Object[] {null}, context);
     }
 
     @Test(expected = CompileException.class)
@@ -189,7 +189,7 @@ public class WildcardExpressionLanguageFunctionTestCase extends AbstractMuleTest
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidNonStringPattern() throws Exception
     {
-        wildcardFunction.call(new Object[]{new Date()}, context);
+        wildcardFunction.call(new Object[] {new Date()}, context);
     }
 
     @Test(expected = CompileException.class)
@@ -201,7 +201,7 @@ public class WildcardExpressionLanguageFunctionTestCase extends AbstractMuleTest
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidNullText() throws Exception
     {
-        wildcardFunction.call(new Object[]{"TEST*TEST", null}, context);
+        wildcardFunction.call(new Object[] {"TEST*TEST", null}, context);
     }
 
     @Test(expected = CompileException.class)
@@ -213,7 +213,7 @@ public class WildcardExpressionLanguageFunctionTestCase extends AbstractMuleTest
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidNonStringText() throws Exception
     {
-        wildcardFunction.call(new Object[]{"TEST*TEST", new Date()}, context);
+        wildcardFunction.call(new Object[] {"TEST*TEST", new Date()}, context);
     }
 
     @Test(expected = CompileException.class)
@@ -225,7 +225,7 @@ public class WildcardExpressionLanguageFunctionTestCase extends AbstractMuleTest
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidBlankStringText() throws Exception
     {
-        wildcardFunction.call(new Object[]{"", "testfooTEST"}, context);
+        wildcardFunction.call(new Object[] {"", "testfooTEST"}, context);
     }
 
     @Test(expected = CompileException.class)
@@ -239,7 +239,8 @@ public class WildcardExpressionLanguageFunctionTestCase extends AbstractMuleTest
     {
         event = mock(MuleEvent.class);
         message = mock(MuleMessage.class);
-        doAnswer(invocation -> {
+        doAnswer(invocation ->
+        {
             message = (MuleMessage) invocation.getArguments()[0];
             return null;
         }).when(event).setMessage(any(MuleMessage.class));

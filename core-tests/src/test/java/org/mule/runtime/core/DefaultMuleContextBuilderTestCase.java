@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.ThreadingProfile;
 import org.mule.runtime.core.api.context.notification.AsyncMessageNotificationListener;
@@ -40,13 +39,14 @@ import org.mule.runtime.core.context.notification.SecurityNotification;
 import org.mule.runtime.core.context.notification.ServerNotificationManager;
 import org.mule.runtime.core.context.notification.TransactionNotification;
 import org.mule.runtime.core.lifecycle.MuleContextLifecycleManager;
-import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.runtime.core.work.MuleWorkManager;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class DefaultMuleContextBuilderTestCase extends AbstractMuleTestCase
 {
@@ -92,7 +92,7 @@ public class DefaultMuleContextBuilderTestCase extends AbstractMuleTestCase
         builder.setWorkManager(new MyWorkManager(ThreadingProfile.DEFAULT_THREADING_PROFILE, "test"));
         MuleContext muleContext = builder.buildMuleContext();
 
-        Map<Class<? extends ServerNotificationListener>,Set<Class<? extends ServerNotification>>> interfaces =
+        Map<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>> interfaces =
                 muleContext.getNotificationManager().getInterfaceToTypes();
 
         assertEquals(MuleContextNotification.class, interfaces.get(MuleContextNotificationListener.class).toArray()[0]);
@@ -111,7 +111,8 @@ public class DefaultMuleContextBuilderTestCase extends AbstractMuleTestCase
 
     }
 
-    private MuleContext build() {
+    private MuleContext build()
+    {
         DefaultMuleContextBuilder builder = new DefaultMuleContextBuilder();
         builder.setMuleConfiguration(new MyMuleConfiguration());
         builder.setLifecycleManager(new MyLifeCycleManager());

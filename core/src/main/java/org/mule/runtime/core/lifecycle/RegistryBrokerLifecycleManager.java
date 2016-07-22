@@ -46,7 +46,7 @@ public class RegistryBrokerLifecycleManager extends RegistryLifecycleManager
     }
 
     public void fireInitialisePhase(LifecycleCallback<AbstractRegistryBroker> callback)
-        throws InitialisationException
+            throws InitialisationException
     {
         checkPhase(Initialisable.PHASE_NAME);
 

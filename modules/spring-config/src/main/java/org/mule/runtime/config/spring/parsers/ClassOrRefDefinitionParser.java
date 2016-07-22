@@ -8,7 +8,6 @@ package org.mule.runtime.config.spring.parsers;
 
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.StringUtils;
-
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -23,14 +22,14 @@ public class ClassOrRefDefinitionParser extends AbstractBeanDefinitionParser
     public ClassOrRefDefinitionParser(String propertyName)
     {
         super();
-        
+
         if (StringUtils.isEmpty(propertyName))
         {
             throw new IllegalArgumentException("propertyName cannot be null");
         }
         this.propertyName = propertyName;
     }
-    
+
     @Override
     protected AbstractBeanDefinition parseInternal(Element element, ParserContext parserContext)
     {
@@ -43,9 +42,9 @@ public class ClassOrRefDefinitionParser extends AbstractBeanDefinitionParser
         {
             String elementName = element.getLocalName();
             throw new IllegalArgumentException("Neither ref nor class attribute specified for the "
-                + elementName + " element");
+                                               + elementName + " element");
         }
-        
+
         if (StringUtils.isNotBlank(ref))
         {
             // add a ref to other bean

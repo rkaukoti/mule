@@ -9,9 +9,8 @@ package org.mule.runtime.module.scripting.config;
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.generic.OptionalChildDefinitionParser;
 import org.mule.runtime.config.spring.parsers.processors.CheckRequiredAttributes;
-import org.mule.runtime.module.scripting.component.Scriptable;
 import org.mule.runtime.core.util.StringUtils;
-
+import org.mule.runtime.module.scripting.component.Scriptable;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -23,13 +22,13 @@ public class ScriptDefinitionParser extends OptionalChildDefinitionParser
         super("script", Scriptable.class);
         addIgnored("name");
         addAlias("engine", "scriptEngineName");
-        addAlias("file", "scriptFile");        
+        addAlias("file", "scriptFile");
 
         // The "engine" attribute is required unless "file" is specified, in which case the 
         // file extension will be used to determine the appropriate script engine.
         String[][] requiredAttributeSets = new String[2][];
-        requiredAttributeSets[0] = new String[]{"engine"};
-        requiredAttributeSets[1] = new String[]{"file"};
+        requiredAttributeSets[0] = new String[] {"engine"};
+        requiredAttributeSets[1] = new String[] {"file"};
         registerPreProcessor(new CheckRequiredAttributes(requiredAttributeSets));
     }
 
@@ -40,7 +39,7 @@ public class ScriptDefinitionParser extends OptionalChildDefinitionParser
         {
             String value = node.getNodeValue();
             //Support CDATA for script text
-            if(node.getNextSibling()!=null && node.getNextSibling().getNodeType()== Node.CDATA_SECTION_NODE)
+            if (node.getNextSibling() != null && node.getNextSibling().getNodeType() == Node.CDATA_SECTION_NODE)
             {
                 value = node.getNextSibling().getNodeValue();
             }

@@ -6,10 +6,11 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
+import org.apache.commons.httpclient.HttpVersion;
+import org.apache.commons.httpclient.params.HttpClientParams;
+import org.apache.commons.lang.time.StopWatch;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.compatibility.transport.http.HttpConnector;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
@@ -20,11 +21,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.httpclient.HttpVersion;
-import org.apache.commons.httpclient.params.HttpClientParams;
-import org.apache.commons.lang.time.StopWatch;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 public class HttpContinueFunctionalTestCase extends FunctionalTestCase
 {
@@ -32,11 +31,9 @@ public class HttpContinueFunctionalTestCase extends FunctionalTestCase
      * HttpClient has default 3 seconds wait for Expect-Continue calls.
      */
     private static final int DEFAULT_HTTP_CLIENT_CONTINUE_WAIT = 3000;
-
-    protected StopWatch stopWatch;
-
     @Rule
     public DynamicPort dynamicPort = new DynamicPort("port1");
+    protected StopWatch stopWatch;
 
     @Override
     protected String getConfigFile()

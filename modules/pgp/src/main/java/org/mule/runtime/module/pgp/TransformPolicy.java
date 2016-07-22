@@ -9,16 +9,14 @@ package org.mule.runtime.module.pgp;
 /**
  * A {@link TransformPolicy} represents a policy that controls how {@link StreamTransformer}
  * transform {@link LazyTransformedInputStream}.
- * 
+ *
  * For instance, a policy would be transform all the bytes of the stream without waiting for some
- * object to be requested. 
+ * object to be requested.
  */
 public interface TransformPolicy
 {
     /**
      * Initialize this policy with the corresponding lazyTransformedInputStream
-     * 
-     * @param lazyTransformedInputStream
      */
     void initialize(LazyTransformedInputStream lazyTransformedInputStream);
 
@@ -29,7 +27,7 @@ public interface TransformPolicy
 
     /**
      * Notifies this policy that the object has requested nroOfBytes
-     * 
+     *
      * @param nroOfBytes the nro of bytes requested by the object
      */
     void readRequest(long nroOfBytes);

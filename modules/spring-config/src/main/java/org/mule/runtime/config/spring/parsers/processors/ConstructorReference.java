@@ -8,9 +8,8 @@ package org.mule.runtime.config.spring.parsers.processors;
 
 import org.mule.runtime.config.spring.parsers.PostProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
-
-import org.w3c.dom.Element;
 import org.springframework.beans.factory.xml.ParserContext;
+import org.w3c.dom.Element;
 
 public class ConstructorReference implements PostProcessor
 {

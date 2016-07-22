@@ -6,6 +6,9 @@
  */
 package org.mule.runtime.module.management.agent;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.management.MBeanException;
 import javax.management.MBeanRegistration;
 import javax.management.MBeanServer;
@@ -13,9 +16,6 @@ import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
 import javax.management.StandardMBean;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Ensures any external jmx invocation (like e.g. remote) is executed with a correct application

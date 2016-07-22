@@ -6,14 +6,9 @@
  */
 package org.mule.runtime.module.cxf.config;
 
+import org.apache.cxf.ws.security.SecurityConstants;
 import org.mule.runtime.config.spring.MuleHierarchicalBeanDefinitionParserDelegate;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
-import org.mule.runtime.module.cxf.support.MuleSecurityManagerValidator;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.cxf.ws.security.SecurityConstants;
 import org.springframework.beans.factory.config.MapFactoryBean;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -43,39 +38,39 @@ public class WsCustomValidatorDefinitionParser extends ChildDefinitionParser
         ManagedMap values = new ManagedMap();
 
         NodeList properties = element.getChildNodes();
-        for(int index = 0; index < properties.getLength(); index ++)
+        for (int index = 0; index < properties.getLength(); index++)
         {
             Node property = properties.item(index);
-            if(property instanceof Element)
+            if (property instanceof Element)
             {
                 String localName = property.getLocalName();
-                String ref = ((Element)property).getAttribute("ref");
+                String ref = ((Element) property).getAttribute("ref");
                 String key = "";
 
-                if("username-token-validator".equals(localName))
+                if ("username-token-validator".equals(localName))
                 {
                     key = SecurityConstants.USERNAME_TOKEN_VALIDATOR;
                 }
-                else if("saml1-token-validator".equals(localName))
+                else if ("saml1-token-validator".equals(localName))
                 {
                     key = SecurityConstants.SAML1_TOKEN_VALIDATOR;
                 }
-                else if("saml2-token-validator".equals(localName))
+                else if ("saml2-token-validator".equals(localName))
                 {
                     key = SecurityConstants.SAML2_TOKEN_VALIDATOR;
                 }
-                else if("timestamp-token-validator".equals(localName))
+                else if ("timestamp-token-validator".equals(localName))
                 {
                     key = SecurityConstants.TIMESTAMP_TOKEN_VALIDATOR;
                 }
-                else if("signature-token-validator".equals(localName))
+                else if ("signature-token-validator".equals(localName))
                 {
                     key = SecurityConstants.SIGNATURE_TOKEN_VALIDATOR;
                 }
-                else if("bst-token-validator".equals(localName))
+                else if ("bst-token-validator".equals(localName))
                 {
                     key = SecurityConstants.BST_TOKEN_VALIDATOR;
-                } 
+                }
                 else
                 {
                     throw new IllegalArgumentException("Illegal custom validator: " + localName);

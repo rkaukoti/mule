@@ -24,40 +24,10 @@ import java.io.Serializable;
 public abstract class AbstractQueueTxJournalEntry<T> implements JournalEntry<T>
 {
 
-    enum Operation
-    {
-        COMMIT((byte) 1), ROLLBACK((byte) 2), PREPARE((byte) 3), REMOVE((byte) 4), ADD((byte) 5), ADD_FIRST((byte) 6);
-
-        private final byte byteRepresentation;
-
-        Operation(byte operation)
-        {
-            this.byteRepresentation = operation;
-        }
-
-        public byte getByteRepresentation()
-        {
-            return byteRepresentation;
-        }
-
-        public static Operation createFromByteRepresentation(byte byteRepresentation)
-        {
-            for (Operation operation : values())
-            {
-                if (operation.byteRepresentation == byteRepresentation)
-                {
-                    return operation;
-                }
-            }
-            throw new MuleRuntimeException(CoreMessages.createStaticMessage("Unexpected byte representation value: " + byteRepresentation));
-        }
-    }
-
     private T txId;
     private String queueName;
     private byte operation;
     private Serializable value;
-
     public AbstractQueueTxJournalEntry(T txId, byte operation, String queueName, Serializable value)
     {
         this.txId = txId;
@@ -91,6 +61,12 @@ public abstract class AbstractQueueTxJournalEntry<T> implements JournalEntry<T>
         value = muleContext.getObjectSerializer().deserialize(valueAsBytes);
     }
 
+    public static boolean isCheckpointOperation(byte operationAsByte)
+    {
+        Operation operation = Operation.createFromByteRepresentation(operationAsByte);
+        return operation.equals(Operation.COMMIT) || operation.equals(Operation.ROLLBACK) || operation.equals(Operation.PREPARE);
+    }
+
     public void write(DataOutputStream outputStream, MuleContext muleContext)
     {
         try
@@ -113,12 +89,6 @@ public abstract class AbstractQueueTxJournalEntry<T> implements JournalEntry<T>
         {
             throw new MuleRuntimeException(e);
         }
-    }
-
-    public static boolean isCheckpointOperation(byte operationAsByte)
-    {
-        Operation operation = Operation.createFromByteRepresentation(operationAsByte);
-        return operation.equals(Operation.COMMIT) || operation.equals(Operation.ROLLBACK) || operation.equals(Operation.PREPARE);
     }
 
     public Serializable getValue()
@@ -188,5 +158,34 @@ public abstract class AbstractQueueTxJournalEntry<T> implements JournalEntry<T>
      * @throws IOException in case the serialization fails
      */
     protected abstract void serializeTxId(DataOutputStream outputStream) throws IOException;
+
+    enum Operation
+    {
+        COMMIT((byte) 1), ROLLBACK((byte) 2), PREPARE((byte) 3), REMOVE((byte) 4), ADD((byte) 5), ADD_FIRST((byte) 6);
+
+        private final byte byteRepresentation;
+
+        Operation(byte operation)
+        {
+            this.byteRepresentation = operation;
+        }
+
+        public static Operation createFromByteRepresentation(byte byteRepresentation)
+        {
+            for (Operation operation : values())
+            {
+                if (operation.byteRepresentation == byteRepresentation)
+                {
+                    return operation;
+                }
+            }
+            throw new MuleRuntimeException(CoreMessages.createStaticMessage("Unexpected byte representation value: " + byteRepresentation));
+        }
+
+        public byte getByteRepresentation()
+        {
+            return byteRepresentation;
+        }
+    }
 }
 

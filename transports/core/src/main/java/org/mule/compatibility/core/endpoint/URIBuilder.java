@@ -6,10 +6,7 @@
  */
 package org.mule.compatibility.core.endpoint;
 
-import static java.net.URLEncoder.encode;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.apache.commons.collections.TransformerUtils.nopTransformer;
-
+import org.apache.commons.collections.Transformer;
 import org.mule.compatibility.core.api.endpoint.EndpointException;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
 import org.mule.runtime.core.AbstractAnnotatedObject;
@@ -27,7 +24,9 @@ import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.apache.commons.collections.Transformer;
+import static java.net.URLEncoder.encode;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.commons.collections.TransformerUtils.nopTransformer;
 
 /**
  * This has the following logic:
@@ -44,18 +43,9 @@ import org.apache.commons.collections.Transformer;
  * TODO - check that we have sufficient control via XML (what about empty strings?)
  *
  * Not called EndpointURIBuilder because of {@link org.mule.compatibility.core.api.endpoint.EndpointURIBuilder}
- *
  */
 public class URIBuilder extends AbstractAnnotatedObject
 {
-    private static final String DOTS = ":";
-    private static final String DOTS_SLASHES = DOTS + "//";
-    private static final String SLASH = "/";
-    private static final String QUERY = "?";
-    private static final String AND = "&";
-    private static final String EQUALS = "=";
-    private static final String BACKSLASH = "\\";
-
     public static final String META = "meta";
     public static final String PROTOCOL = "protocol";
     public static final String USER = "user";
@@ -64,17 +54,15 @@ public class URIBuilder extends AbstractAnnotatedObject
     public static final String ADDRESS = "address";
     public static final String PORT = "port";
     public static final String PATH = "path";
-
     public static final String[] ALL_ATTRIBUTES =
-            new String[]{META, PROTOCOL, USER, PASSWORD, HOST, ADDRESS, PORT, PATH};
+            new String[] {META, PROTOCOL, USER, PASSWORD, HOST, ADDRESS, PORT, PATH};
     // combinations used in various endpoint parsers to validate required attributes
-    public static final String[] PATH_ATTRIBUTES = new String[]{PATH};
-    public static final String[] HOST_ATTRIBUTES = new String[]{HOST};
-    public static final String[] SOCKET_ATTRIBUTES = new String[]{HOST, PORT};
-    public static final String[] USERHOST_ATTRIBUTES = new String[]{USER, HOST};
+    public static final String[] PATH_ATTRIBUTES = new String[] {PATH};
+    public static final String[] HOST_ATTRIBUTES = new String[] {HOST};
+    public static final String[] SOCKET_ATTRIBUTES = new String[] {HOST, PORT};
+    public static final String[] USERHOST_ATTRIBUTES = new String[] {USER, HOST};
     // this doesn't include address, since that is handled separately (and is exclusive with these)
-    public static final String[] ALL_TRANSPORT_ATTRIBUTES = new String[]{USER, PASSWORD, HOST, PORT, PATH};
-
+    public static final String[] ALL_TRANSPORT_ATTRIBUTES = new String[] {USER, PASSWORD, HOST, PORT, PATH};
     protected static final Transformer URL_ENCODER = new Transformer()
     {
         @Override
@@ -90,7 +78,13 @@ public class URIBuilder extends AbstractAnnotatedObject
             }
         }
     };
-
+    private static final String DOTS = ":";
+    private static final String DOTS_SLASHES = DOTS + "//";
+    private static final String SLASH = "/";
+    private static final String QUERY = "?";
+    private static final String AND = "&";
+    private static final String EQUALS = "=";
+    private static final String BACKSLASH = "\\";
     private String address;
     private String meta;
     private String protocol;
@@ -129,9 +123,14 @@ public class URIBuilder extends AbstractAnnotatedObject
         if (dots > -1 && dots < dotsSlashes)
         {
             this.meta = address.substring(0, dots);
-            address = address.substring(dots+1);
+            address = address.substring(dots + 1);
         }
         this.address = address;
+    }
+
+    protected static boolean equal(Object a, Object b)
+    {
+        return ClassUtils.equal(a, b);
     }
 
     public MuleContext getMuleContext()
@@ -144,31 +143,6 @@ public class URIBuilder extends AbstractAnnotatedObject
         this.muleContext = muleContext;
     }
 
-    public void setUser(String user)
-    {
-        assertNotUsed();
-        this.user = user;
-    }
-
-    public void setPassword(String password)
-    {
-        assertNotUsed();
-        this.password = password;
-    }
-
-    public void setHost(String host)
-    {
-        assertNotUsed();
-        this.host = host;
-    }
-
-    public void setAddress(String address)
-    {
-        assertNotUsed();
-        this.address = address;
-        assertAddressConsistent();
-    }
-
     /**
      * For backwards compatibility
      */
@@ -176,60 +150,6 @@ public class URIBuilder extends AbstractAnnotatedObject
     {
         assertNotUsed();
         this.port = Integer.toString(port);
-    }
-
-    /**
-     * Allows ports to be Mule expressions
-     */
-    public void setPort(String port)
-    {
-        assertNotUsed();
-        this.port = port;
-    }
-
-    public void setProtocol(String protocol)
-    {
-        assertNotUsed();
-        this.protocol = protocol;
-        assertAddressConsistent();
-    }
-
-    public void setMeta(String meta)
-    {
-        assertNotUsed();
-        this.meta = meta;
-    }
-
-    public void setPath(String path)
-    {
-        assertNotUsed();
-        if (null != path)
-        {
-            if (path.indexOf(DOTS_SLASHES) > -1)
-            {
-                throw new IllegalArgumentException("Unusual syntax in path: '" + path + "' contains " + DOTS_SLASHES);
-            }
-            else if (path.contains(BACKSLASH))
-            {
-                // Windows syntax.  convert it to URI syntax
-                try
-                {
-                    URI pathUri = new File(path).toURI();
-                    path = pathUri.getPath();
-                }
-                catch (Exception ex)
-                {
-                    throw new IllegalArgumentException("Illegal syntax in path: " + path, ex);
-                }
-            }
-        }
-        this.path = path;
-    }
-
-    public void setQueryMap(Map queryMap)
-    {
-        assertNotUsed();
-        this.queryMap = queryMap;
     }
 
     public EndpointURI getEndpoint()
@@ -243,7 +163,7 @@ public class URIBuilder extends AbstractAnnotatedObject
             }
             catch (EndpointException e)
             {
-                throw (IllegalStateException)new IllegalStateException("Bad endpoint configuration").initCause(e);
+                throw (IllegalStateException) new IllegalStateException("Bad endpoint configuration").initCause(e);
             }
         }
         return cache.get();
@@ -397,8 +317,8 @@ public class URIBuilder extends AbstractAnnotatedObject
                 if (address.startsWith(meta + DOTS))
                 {
                     throw new IllegalArgumentException("Meta-protocol '" + meta +
-                            "' should not be specified in the address '" + address +
-                            "' - it is implicit in the element namespace.");
+                                                       "' should not be specified in the address '" + address +
+                                                       "' - it is implicit in the element namespace.");
                 }
                 if (null != protocol)
                 {
@@ -409,9 +329,9 @@ public class URIBuilder extends AbstractAnnotatedObject
                     if (address.indexOf(DOTS_SLASHES) == -1)
                     {
                         throw new IllegalArgumentException("Address '" + address +
-                                "' does not have a transport protocol prefix " +
-                                "(omit the meta protocol prefix, '" + meta + DOTS +
-                                "' - it is implicit in the element namespace).");
+                                                           "' does not have a transport protocol prefix " +
+                                                           "(omit the meta protocol prefix, '" + meta + DOTS +
+                                                           "' - it is implicit in the element namespace).");
                     }
                 }
             }
@@ -440,30 +360,151 @@ public class URIBuilder extends AbstractAnnotatedObject
     @Override
     public boolean equals(Object other)
     {
-        if (null == other || !getClass().equals(other.getClass())) return false;
-        if (this == other) return true;
+        if (null == other || !getClass().equals(other.getClass()))
+            return false;
+        if (this == other)
+            return true;
 
         URIBuilder builder = (URIBuilder) other;
         return equal(address, builder.address)
-                && equal(meta, builder.meta)
-                && equal(protocol, builder.protocol)
-                && equal(user, builder.user)
-                && equal(password, builder.password)
-                && equal(host, builder.host)
-                && equal(port, builder.port)
-                && equal(path, builder.path)
-                && equal(queryMap, builder.queryMap);
-    }
-
-    protected static boolean equal(Object a, Object b)
-    {
-        return ClassUtils.equal(a, b);
+               && equal(meta, builder.meta)
+               && equal(protocol, builder.protocol)
+               && equal(user, builder.user)
+               && equal(password, builder.password)
+               && equal(host, builder.host)
+               && equal(port, builder.port)
+               && equal(path, builder.path)
+               && equal(queryMap, builder.queryMap);
     }
 
     @Override
     public int hashCode()
     {
-        return ClassUtils.hash(new Object[]{address, meta, protocol, user, password, host, port, path, queryMap});
+        return ClassUtils.hash(new Object[] {address, meta, protocol, user, password, host, port, path, queryMap});
+    }
+
+    public String getProtocol()
+    {
+        return protocol;
+    }
+
+    public void setProtocol(String protocol)
+    {
+        assertNotUsed();
+        this.protocol = protocol;
+        assertAddressConsistent();
+    }
+
+    public String getMeta()
+    {
+        return meta;
+    }
+
+    public void setMeta(String meta)
+    {
+        assertNotUsed();
+        this.meta = meta;
+    }
+
+    public String getUser()
+    {
+        return user;
+    }
+
+    public void setUser(String user)
+    {
+        assertNotUsed();
+        this.user = user;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        assertNotUsed();
+        this.password = password;
+    }
+
+    public String getHost()
+    {
+        return host;
+    }
+
+    public void setHost(String host)
+    {
+        assertNotUsed();
+        this.host = host;
+    }
+
+    public String getPort()
+    {
+        return port;
+    }
+
+    /**
+     * Allows ports to be Mule expressions
+     */
+    public void setPort(String port)
+    {
+        assertNotUsed();
+        this.port = port;
+    }
+
+    public String getPath()
+    {
+        return path;
+    }
+
+    public void setPath(String path)
+    {
+        assertNotUsed();
+        if (null != path)
+        {
+            if (path.indexOf(DOTS_SLASHES) > -1)
+            {
+                throw new IllegalArgumentException("Unusual syntax in path: '" + path + "' contains " + DOTS_SLASHES);
+            }
+            else if (path.contains(BACKSLASH))
+            {
+                // Windows syntax.  convert it to URI syntax
+                try
+                {
+                    URI pathUri = new File(path).toURI();
+                    path = pathUri.getPath();
+                }
+                catch (Exception ex)
+                {
+                    throw new IllegalArgumentException("Illegal syntax in path: " + path, ex);
+                }
+            }
+        }
+        this.path = path;
+    }
+
+    public String getAddress()
+    {
+        return address;
+    }
+
+    public void setAddress(String address)
+    {
+        assertNotUsed();
+        this.address = address;
+        assertAddressConsistent();
+    }
+
+    public Map getQueryMap()
+    {
+        return queryMap;
+    }
+
+    public void setQueryMap(Map queryMap)
+    {
+        assertNotUsed();
+        this.queryMap = queryMap;
     }
 
     private static class OrderedQueryParameters
@@ -480,6 +521,7 @@ public class URIBuilder extends AbstractAnnotatedObject
         /**
          * Replace the first instance of the given parameter. This method does not make sense under the assumption that
          * a given parameter name can have multiple values, so here we simply preserve the existing semantics.
+         *
          * @param map A map off the name/value pairs to add/replace in the query string
          */
         public void override(Map map)
@@ -539,51 +581,6 @@ public class URIBuilder extends AbstractAnnotatedObject
             }
             return buffer.toString();
         }
-    }
-
-    public String getProtocol()
-    {
-        return protocol;
-    }
-
-    public String getMeta()
-    {
-        return meta;
-    }
-
-    public String getUser()
-    {
-        return user;
-    }
-
-    public String getPassword()
-    {
-        return password;
-    }
-
-    public String getHost()
-    {
-        return host;
-    }
-
-    public String getPort()
-    {
-        return port;
-    }
-
-    public String getPath()
-    {
-        return path;
-    }
-
-    public String getAddress()
-    {
-        return address;
-    }
-
-    public Map getQueryMap()
-    {
-        return queryMap;
     }
 
 }

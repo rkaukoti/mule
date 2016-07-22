@@ -8,7 +8,6 @@ package org.mule.runtime.config.spring.parsers.collection;
 
 import org.mule.runtime.config.spring.parsers.generic.AutoIdUtils;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
-
 import org.w3c.dom.Element;
 
 /**
@@ -34,7 +33,7 @@ public class ChildMapEntryDefinitionParser extends ChildDefinitionParser
         addAlias(keyName, KEY);
         addAlias(valueName, VALUE);
     }
-    
+
     @Override
     public String getBeanName(Element e)
     {
@@ -68,14 +67,14 @@ public class ChildMapEntryDefinitionParser extends ChildDefinitionParser
             return key;
         }
 
-        public Object getValue()
-        {
-            return value;
-        }
-
         public void setKey(String key)
         {
             this.key = key;
+        }
+
+        public Object getValue()
+        {
+            return value;
         }
 
         public void setValue(Object value)

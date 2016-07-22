@@ -17,7 +17,7 @@ public class ResourceManagerSystemException extends ResourceManagerException
     private static final long serialVersionUID = 1202058044460490597L;
 
     /**
-     * 
+     *
      */
     public ResourceManagerSystemException()
     {

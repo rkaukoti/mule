@@ -6,9 +6,7 @@
  */
 package org.mule.compatibility.core.routing;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.mock;
+import org.junit.Test;
 import org.mule.compatibility.core.DefaultMuleEventEndpointUtils;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.runtime.core.DefaultMuleEvent;
@@ -20,7 +18,9 @@ import org.mule.runtime.core.routing.IdempotentSecureHashMessageFilter;
 import org.mule.runtime.core.util.store.InMemoryObjectStore;
 import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.mock;
 
 public class IdempotentSecureHashMessageFilterTestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -53,7 +53,7 @@ public class IdempotentSecureHashMessageFilterTestCase extends AbstractMuleConte
         MuleEvent processedEvent = ir.process(event);
         assertNotNull(processedEvent);
 
-         // This will not process, because the message is a duplicate
+        // This will not process, because the message is a duplicate
         okMessage = MuleMessage.builder().payload("OK").build();
         event = new DefaultMuleEvent(okMessage, getTestFlow(), session);
         DefaultMuleEventEndpointUtils.populateFieldsFromInboundEndpoint(event, endpoint1);

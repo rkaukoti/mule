@@ -6,6 +6,12 @@
  */
 package org.mule.runtime.module.ws.consumer;
 
+import org.apache.cxf.binding.soap.SoapHeader;
+import org.apache.cxf.binding.soap.SoapMessage;
+import org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor;
+import org.apache.cxf.headers.Header;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.phase.Phase;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.NonBlockingVoidMuleEvent;
 import org.mule.runtime.core.api.MuleContext;
@@ -16,13 +22,6 @@ import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.api.transformer.TransformerMessagingException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.module.cxf.CxfConstants;
-
-import org.apache.cxf.binding.soap.SoapHeader;
-import org.apache.cxf.binding.soap.SoapMessage;
-import org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor;
-import org.apache.cxf.headers.Header;
-import org.apache.cxf.interceptor.Fault;
-import org.apache.cxf.phase.Phase;
 
 /**
  * CXF interceptor that adds inbound properties to the Mule message based on the SOAP headers
@@ -69,7 +68,7 @@ public class OutputSoapHeadersInterceptor extends AbstractSoapInterceptor
                 {
                     throw new Fault(new TransformerMessagingException(
                             CoreMessages.createStaticMessage("Cannot parse content of SOAP header %s in the response",
-                                                             header.getName().getLocalPart()), event, transformer, e.getCause()));
+                                    header.getName().getLocalPart()), event, transformer, e.getCause()));
                 }
             }
         }

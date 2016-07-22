@@ -6,23 +6,23 @@
  */
 package org.mule.runtime.core.processor.chain;
 
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.hamcrest.CoreMatchers;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.processor.ProcessorExecutor;
 import org.mule.runtime.core.api.connector.ReplyToHandler;
+import org.mule.runtime.core.api.processor.ProcessorExecutor;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.runtime.core.processor.BlockingProcessorExecutor;
 import org.mule.runtime.core.processor.NonBlockingProcessorExecutor;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.hamcrest.CoreMatchers;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest

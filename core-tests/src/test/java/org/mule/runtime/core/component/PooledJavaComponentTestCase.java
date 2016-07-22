@@ -6,13 +6,7 @@
  */
 package org.mule.runtime.core.component;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.runtime.core.api.component.LifecycleAdapter;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.object.ObjectFactory;
@@ -26,10 +20,16 @@ import org.mule.tck.testmodels.fruit.WaterMelon;
 
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class PooledJavaComponentTestCase extends AbstractPoolingTestCase
-{    
+{
     @Test
     public void testComponentCreation() throws Exception
     {
@@ -53,15 +53,15 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase
     {
         PooledJavaComponent component = new PooledJavaComponent(getDefaultObjectFactory(), createDefaultPoolingProfile());
         assertNull(component.lifecycleAdapterPool);
-        
+
         component.setFlowConstruct(getTestFlow());
         component.setMuleContext(muleContext);
         component.initialise();
         assertNull(component.lifecycleAdapterPool);
-        
+
         component.start();
         assertNotNull(component.lifecycleAdapterPool);
-        
+
         component.stop();
         assertNull(component.lifecycleAdapterPool);
     }
@@ -71,7 +71,7 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase
     {
         PooledJavaComponent component = createPooledComponent();
         assertNotSame(component.borrowComponentLifecycleAdaptor(), component.borrowComponentLifecycleAdaptor());
-        
+
         component.stop();
         component.start();
 
@@ -89,14 +89,14 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase
         LifecycleAdapter borrowed = component.borrowComponentLifecycleAdaptor();
         assertNotNull(borrowed);
         assertEquals(1, component.lifecycleAdapterPool.getNumActive());
-        
+
         component.returnComponentLifecycleAdaptor(borrowed);
         assertEquals(0, component.lifecycleAdapterPool.getNumActive());
 
         borrowed = component.borrowComponentLifecycleAdaptor();
         assertNotNull(borrowed);
         assertEquals(1, component.lifecycleAdapterPool.getNumActive());
-        
+
         Object borrowed2 = component.borrowComponentLifecycleAdaptor();
         assertNotNull(borrowed2);
         assertEquals(2, component.lifecycleAdapterPool.getNumActive());
@@ -107,7 +107,7 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase
     {
         PoolingProfile pp = createDefaultPoolingProfile();
         pp.setExhaustedAction(PoolingProfile.WHEN_EXHAUSTED_FAIL);
-        
+
         PooledJavaComponent component = createPooledComponent(pp);
         borrowLifecycleAdaptersUntilPoolIsFull(component);
 
@@ -127,10 +127,10 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase
     {
         PoolingProfile pp = createDefaultPoolingProfile();
         pp.setExhaustedAction(PoolingProfile.WHEN_EXHAUSTED_WAIT);
-        
+
         PooledJavaComponent component = createPooledComponent(pp);
         assertEquals(0, component.lifecycleAdapterPool.getNumActive());
-        
+
         borrowLifecycleAdaptersUntilPoolIsFull(component);
 
         long startTime = System.currentTimeMillis();
@@ -151,7 +151,7 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase
     {
         PoolingProfile pp = createDefaultPoolingProfile();
         pp.setExhaustedAction(PoolingProfile.WHEN_EXHAUSTED_WAIT);
-        
+
         PooledJavaComponent component = createPooledComponent(pp);
         assertEquals(0, component.lifecycleAdapterPool.getNumActive());
 
@@ -164,7 +164,7 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase
             assertEquals(component.lifecycleAdapterPool.getNumActive(), i + 1);
         }
         assertEquals(oneRemainingInPool, component.lifecycleAdapterPool.getNumActive());
-        
+
         long startTime = System.currentTimeMillis();
         int borrowerWait = 500;
         Borrower borrower = new Borrower(component, borrowerWait);
@@ -186,13 +186,13 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase
         long totalTime = System.currentTimeMillis() - startTime;
         assertTrue(totalTime >= borrowerWait);
     }
-    
+
     @Test
     public void testGrowOnExhaust() throws Exception
     {
         PoolingProfile pp = createDefaultPoolingProfile();
         pp.setExhaustedAction(PoolingProfile.WHEN_EXHAUSTED_GROW);
-        
+
         PooledJavaComponent component = createPooledComponent(pp);
 
         borrowLifecycleAdaptersUntilPoolIsFull(component);
@@ -208,7 +208,7 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase
     {
         PoolingProfile pp = createDefaultPoolingProfile();
         pp.setExhaustedAction(PoolingProfile.WHEN_EXHAUSTED_FAIL);
-        
+
         PooledJavaComponent component = createPooledComponent(pp);
 
         LifecycleAdapter borrowed = component.borrowComponentLifecycleAdaptor();
@@ -236,7 +236,7 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase
         assertFalse("Service IDs " + id2 + " and " + id3 + " should be different", id2.equals(id3));
         assertFalse("Service IDs " + id1 + " and " + id3 + " should be different", id1.equals(id3));
     }
-    
+
     @Test
     public void testDisposingFactoryDisposesObject() throws Exception
     {
@@ -250,14 +250,14 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase
 
         assertNull(lifecycleAdapter.componentObject);
     }
-    
+
     private PrototypeObjectFactory getDefaultObjectFactory() throws InitialisationException
     {
         PrototypeObjectFactory objectFactory = new PrototypeObjectFactory(Orange.class);
         objectFactory.initialise();
         return objectFactory;
     }
-    
+
     private PooledJavaComponent createPooledComponent() throws Exception
     {
         return createPooledComponent(createDefaultPoolingProfile(), getDefaultObjectFactory());
@@ -267,12 +267,12 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase
     {
         return createPooledComponent(createDefaultPoolingProfile(), objectFactory);
     }
-    
+
     private PooledJavaComponent createPooledComponent(PoolingProfile poolingProfile) throws Exception
     {
         return createPooledComponent(poolingProfile, getDefaultObjectFactory());
     }
-    
+
     private PooledJavaComponent createPooledComponent(PoolingProfile poolingProfile, ObjectFactory objectFactory) throws Exception
     {
         PooledJavaComponent component = new PooledJavaComponent(objectFactory, poolingProfile);
@@ -282,7 +282,7 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase
         component.start();
         return component;
     }
-    
+
     private void borrowLifecycleAdaptersUntilPoolIsFull(PooledJavaComponent component) throws Exception
     {
         for (int i = 0; i < MAX_ACTIVE; i++)
@@ -296,21 +296,21 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase
 
     private String getIdFromObjectCreatedByPool(PooledJavaComponent component) throws Exception
     {
-        DefaultComponentLifecycleAdapter lifecycleAdapter = 
-            (DefaultComponentLifecycleAdapter) component.borrowComponentLifecycleAdaptor();
+        DefaultComponentLifecycleAdapter lifecycleAdapter =
+                (DefaultComponentLifecycleAdapter) component.borrowComponentLifecycleAdaptor();
         Object obj = lifecycleAdapter.componentObject;
-        
+
         // there is a slight chance that GC kicks in before we can get a hard reference to the 
         // object. If this occurs, talk do Dirk and Andrew P about how to fix this
         assertNotNull(obj);
-        
+
         assertTrue("Object should be of type UniqueComponent", obj instanceof UniqueComponent);
-     
+
         String id = ((UniqueComponent) obj).getId();
         assertNotNull(id);
         return id;
     }
-    
+
     private static class Borrower implements Runnable
     {
         private PooledJavaComponent component;

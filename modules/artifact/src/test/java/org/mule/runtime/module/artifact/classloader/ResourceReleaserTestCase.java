@@ -6,6 +6,14 @@
  */
 package org.mule.runtime.module.artifact.classloader;
 
+import org.junit.Test;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.sql.Driver;
+
 import static java.sql.DriverManager.deregisterDriver;
 import static java.sql.DriverManager.getDrivers;
 import static java.sql.DriverManager.registerDriver;
@@ -15,25 +23,19 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.sql.Driver;
-
-import org.junit.Test;
 
 @SmallTest
 public class ResourceReleaserTestCase extends AbstractMuleTestCase
 {
 
-    public static final String TEST_RESOURCE_RELEASER_CLASS_LOCATION = "/org/mule/runtime/module/artifact/classloader/TestResourceReleaser.class";
+    public static final String TEST_RESOURCE_RELEASER_CLASS_LOCATION =
+            "/org/mule/runtime/module/artifact/classloader/TestResourceReleaser.class";
 
     @Test
     public void createdByCorrectArtifactClassLoader() throws Exception
     {
-        ensureResourceReleaserIsCreatedByCorrectClassLoader(new TestArtifactClassLoader(new TestArtifactClassLoader(Thread.currentThread().getContextClassLoader())));
+        ensureResourceReleaserIsCreatedByCorrectClassLoader(
+                new TestArtifactClassLoader(new TestArtifactClassLoader(Thread.currentThread().getContextClassLoader())));
     }
 
     @Test
@@ -46,7 +48,8 @@ public class ResourceReleaserTestCase extends AbstractMuleTestCase
     public void notDeregisterJdbcDriversDifferentClassLoaders() throws Exception
     {
         Driver jdbcDriver = mock(Driver.class);
-        TestArtifactClassLoader classLoader = new TestArtifactClassLoader(new TestArtifactClassLoader(Thread.currentThread().getContextClassLoader()));
+        TestArtifactClassLoader classLoader =
+                new TestArtifactClassLoader(new TestArtifactClassLoader(Thread.currentThread().getContextClassLoader()));
         try
         {
             registerDriver(jdbcDriver);

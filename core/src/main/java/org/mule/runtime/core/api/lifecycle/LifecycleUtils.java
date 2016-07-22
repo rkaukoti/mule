@@ -6,9 +6,7 @@
  */
 package org.mule.runtime.core.api.lifecycle;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import org.apache.commons.collections.CollectionUtils;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleRuntimeException;
@@ -16,12 +14,14 @@ import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.api.construct.FlowConstructAware;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.config.i18n.Message;
+import org.slf4j.Logger;
 
 import java.util.Collection;
 import java.util.Optional;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
+import static java.lang.String.format;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Utility class for performing lifecycle operations on objects, as long
@@ -47,7 +47,6 @@ public class LifecycleUtils
      * if it implements the {@link Initialisable} interface.
      *
      * @param object the object you're trying to initialise
-     * @throws InitialisationException
      */
     public static void initialiseIfNeeded(Object object) throws InitialisationException
     {
@@ -63,12 +62,12 @@ public class LifecycleUtils
      * {@link FlowConstructAware}, in which case it will invoke {@link FlowConstructAware#setFlowConstruct(FlowConstruct)}
      * with the given {@code flowConstruct}
      *
-     * @param object      the object you're trying to initialise
-     * @param muleContext a {@link MuleContext}
+     * @param object        the object you're trying to initialise
+     * @param muleContext   a {@link MuleContext}
      * @param flowConstruct the {@link org.mule.runtime.core.api.construct.FlowConstruct} in which the object is defined.
-     * @throws InitialisationException
      */
-    public static void initialiseIfNeeded(Object object, MuleContext muleContext, FlowConstruct flowConstruct) throws InitialisationException
+    public static void initialiseIfNeeded(Object object, MuleContext muleContext, FlowConstruct flowConstruct)
+            throws InitialisationException
     {
         object = unwrap(object);
         if (flowConstruct != null && object instanceof FlowConstructAware)
@@ -88,7 +87,6 @@ public class LifecycleUtils
      *
      * @param object      the object you're trying to initialise
      * @param muleContext a {@link MuleContext}
-     * @throws InitialisationException
      * @throws IllegalArgumentException if {@code MuleContext} is {@code null}
      */
     public static void initialiseIfNeeded(Object object, MuleContext muleContext) throws InitialisationException
@@ -110,7 +108,6 @@ public class LifecycleUtils
      * @param object      the object you're trying to initialise
      * @param inject      whether it should perform dependency injection on the {@code object} before actually initialising it
      * @param muleContext a {@link MuleContext}
-     * @throws InitialisationException
      * @throws IllegalArgumentException if {@code MuleContext} is {@code null}
      */
     public static void initialiseIfNeeded(Object object, boolean inject, MuleContext muleContext) throws InitialisationException
@@ -136,7 +133,8 @@ public class LifecycleUtils
             }
             catch (MuleException e)
             {
-                Message message = createStaticMessage(format("Found exception trying to inject object of type '%s' on initialising phase", object.getClass().getName()));
+                Message message = createStaticMessage(
+                        format("Found exception trying to inject object of type '%s' on initialising phase", object.getClass().getName()));
                 if (object instanceof Initialisable)
                 {
                     throw new InitialisationException(message, e, (Initialisable) object);
@@ -152,7 +150,6 @@ public class LifecycleUtils
      * For each item in the {@code objects} collection, it invokes {@link #initialiseIfNeeded(Object)}
      *
      * @param objects the list of objects to be initialised
-     * @throws InitialisationException
      */
     public static void initialiseIfNeeded(Collection<? extends Object> objects) throws InitialisationException
     {
@@ -164,7 +161,6 @@ public class LifecycleUtils
      *
      * @param objects     the list of objects to be initialised
      * @param muleContext a {@link MuleContext}
-     * @throws InitialisationException
      */
     public static void initialiseIfNeeded(Collection<? extends Object> objects, MuleContext muleContext) throws InitialisationException
     {
@@ -183,7 +179,6 @@ public class LifecycleUtils
      * {@link Startable} interface
      *
      * @param object the object you're trying to start
-     * @throws MuleException
      */
     public static void startIfNeeded(Object object) throws MuleException
     {
@@ -199,7 +194,6 @@ public class LifecycleUtils
      * if it implements the {@link Startable} interface.
      *
      * @param objects the list of objects to be started
-     * @throws MuleException
      */
     public static void startIfNeeded(Collection<? extends Object> objects) throws MuleException
     {
@@ -211,7 +205,6 @@ public class LifecycleUtils
      * if it implements the {@link Stoppable} interface.
      *
      * @param objects the list of objects to be stopped
-     * @throws MuleException
      */
     public static void stopIfNeeded(Collection<? extends Object> objects) throws MuleException
     {
@@ -246,7 +239,6 @@ public class LifecycleUtils
      * Invokes the {@link Stoppable#stop()} on {@code object} if it implements the {@link Stoppable} interface.
      *
      * @param object the object you're trying to stop
-     * @throws MuleException
      */
     public static void stopIfNeeded(Object object) throws MuleException
     {
@@ -288,7 +280,6 @@ public class LifecycleUtils
      * provided {@code logger}
      *
      * @param objects the list of objects to be stopped
-     * @throws MuleException
      */
     public static void disposeAllIfNeeded(Collection<? extends Object> objects, Logger logger)
     {
@@ -318,7 +309,8 @@ public class LifecycleUtils
         }
     }
 
-    private static void doApplyPhase(String phase, Collection<? extends Object> objects, MuleContext muleContext, Logger logger) throws MuleException
+    private static void doApplyPhase(String phase, Collection<? extends Object> objects, MuleContext muleContext, Logger logger)
+            throws MuleException
     {
         if (CollectionUtils.isEmpty(objects))
         {

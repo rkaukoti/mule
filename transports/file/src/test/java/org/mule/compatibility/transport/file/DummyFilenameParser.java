@@ -6,7 +6,6 @@
  */
 package org.mule.compatibility.transport.file;
 
-import org.mule.compatibility.transport.file.FilenameParser;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 

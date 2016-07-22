@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/ws"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:mule="http://www.mulesoft.org/schema/mule/core"
             xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
+            xmlns="http://www.mulesoft.org/schema/mule/ws"
             targetNamespace="http://www.mulesoft.org/schema/mule/ws"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">
 
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/core"
-                schemaLocation="http://www.mulesoft.org/schema/mule/core/3.8/mule.xsd" />
-    <xsd:import namespace = "http://www.mulesoft.org/schema/mule/schemadoc"
-                schemaLocation = "http://www.mulesoft.org/schema/mule/schemadoc/3.8/mule-schemadoc.xsd"/>
+                schemaLocation="http://www.mulesoft.org/schema/mule/core/3.8/mule.xsd"/>
+    <xsd:import namespace="http://www.mulesoft.org/schema/mule/schemadoc"
+                schemaLocation="http://www.mulesoft.org/schema/mule/schemadoc/3.8/mule-schemadoc.xsd"/>
 
     <xsd:annotation>
         <xsd:documentation>
@@ -102,7 +102,7 @@
                                                 </xsd:documentation>
                                             </xsd:annotation>
                                         </xsd:attribute>
-                                        <xsd:attribute name="passwordType" use="required" >
+                                        <xsd:attribute name="passwordType" use="required">
                                             <xsd:annotation>
                                                 <xsd:documentation>
                                                     The type of the password (can be either TEXT or DIGEST).
@@ -110,7 +110,7 @@
                                             </xsd:annotation>
                                             <xsd:simpleType>
                                                 <xsd:restriction base="xsd:string">
-                                                    <xsd:enumeration value="TEXT" />
+                                                    <xsd:enumeration value="TEXT"/>
                                                     <xsd:enumeration value="DIGEST"/>
                                                 </xsd:restriction>
                                             </xsd:simpleType>
@@ -138,7 +138,7 @@
                                         </xsd:documentation>
                                     </xsd:annotation>
                                     <xsd:complexType>
-                                        <xsd:attribute name="expires" type="mule:substitutableLong" use="required" >
+                                        <xsd:attribute name="expires" type="mule:substitutableLong" use="required">
                                             <xsd:annotation>
                                                 <xsd:documentation>
                                                     The time difference between creation and expiry time in seconds.
@@ -154,7 +154,7 @@
                                         </xsd:documentation>
                                     </xsd:annotation>
                                     <xsd:complexType>
-                                        <xsd:attribute name="tlsContext-ref" type="xsd:string" use="required" >
+                                        <xsd:attribute name="tlsContext-ref" type="xsd:string" use="required">
                                             <xsd:annotation>
                                                 <xsd:documentation>
                                                     Reference to a TLS context that will be used to sign the request. This context must have a
@@ -171,7 +171,7 @@
                                         </xsd:documentation>
                                     </xsd:annotation>
                                     <xsd:complexType>
-                                        <xsd:attribute name="tlsContext-ref" type="xsd:string" use="optional" >
+                                        <xsd:attribute name="tlsContext-ref" type="xsd:string" use="optional">
                                             <xsd:annotation>
                                                 <xsd:documentation>
                                                     Reference to a TLS context that will be used to verify the signature of the response. The certificates in the
@@ -189,7 +189,7 @@
                                         </xsd:documentation>
                                     </xsd:annotation>
                                     <xsd:complexType>
-                                        <xsd:attribute name="tlsContext-ref" type="xsd:string" use="optional" >
+                                        <xsd:attribute name="tlsContext-ref" type="xsd:string" use="optional">
                                             <xsd:annotation>
                                                 <xsd:documentation>
                                                     Reference to a TLS context that will be used to encrypt the request. The public key for the specified
@@ -198,7 +198,7 @@
                                                 </xsd:documentation>
                                             </xsd:annotation>
                                         </xsd:attribute>
-                                        <xsd:attribute name="alias" type="xsd:string" use="required" >
+                                        <xsd:attribute name="alias" type="xsd:string" use="required">
                                             <xsd:annotation>
                                                 <xsd:documentation>
                                                     Alias of the certificate to use for encryption. An entry in the trust store must exist for this alias.
@@ -214,7 +214,7 @@
                                         </xsd:documentation>
                                     </xsd:annotation>
                                     <xsd:complexType>
-                                        <xsd:attribute name="tlsContext-ref" type="xsd:string" use="required" >
+                                        <xsd:attribute name="tlsContext-ref" type="xsd:string" use="required">
                                             <xsd:annotation>
                                                 <xsd:documentation>
                                                     Reference to a TLS context that will be used. The private key of this key store

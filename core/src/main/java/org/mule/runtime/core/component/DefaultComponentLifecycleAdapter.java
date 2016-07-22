@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.core.component;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 import org.mule.runtime.core.DefaultMuleEventContext;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleContext;
@@ -27,6 +26,8 @@ import org.mule.runtime.core.model.resolvers.LegacyEntryPointResolverSet;
 import org.mule.runtime.core.registry.JSR250ValidatorProcessor;
 import org.mule.runtime.core.util.annotation.AnnotationMetaData;
 import org.mule.runtime.core.util.annotation.AnnotationUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -35,8 +36,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * <code>DefaultComponentLifecycleAdapter</code> is a default implementation of
@@ -48,8 +48,8 @@ import org.slf4j.LoggerFactory;
  * <li>{@link org.mule.runtime.core.api.lifecycle.Stoppable}</li>
  * <li>{@link org.mule.runtime.core.api.lifecycle.Disposable}</li>
  * </ul>
- *  This implementation also supports JSR-250 lifecycle annotations
- *  {@link javax.annotation.PostConstruct} (for initialisation) and/or {@link javax.annotation.PreDestroy}
+ * This implementation also supports JSR-250 lifecycle annotations
+ * {@link javax.annotation.PostConstruct} (for initialisation) and/or {@link javax.annotation.PreDestroy}
  * (for disposal of the object). Only one of each annotation can be used per component object.
  *
  * @see org.mule.runtime.core.registry.JSR250ValidatorProcessor for details about the rules for using JSR-250 lifecycle annotations
@@ -74,11 +74,9 @@ public class DefaultComponentLifecycleAdapter implements LifecycleAdapter
 
     protected Method initMethod;
     protected Method disposeMethod;
-
+    protected MuleContext muleContext;
     private boolean started = false;
     private boolean disposed = false;
-
-    protected MuleContext muleContext;
 
     public DefaultComponentLifecycleAdapter(Object componentObject,
                                             JavaComponent component,
@@ -122,15 +120,15 @@ public class DefaultComponentLifecycleAdapter implements LifecycleAdapter
         Object object = componentObject;
         initMethod = findInitMethod(object);
         disposeMethod = findDisposeMethod(object);
-        isInitialisable = initMethod!=null;
-        isDisposable = disposeMethod!=null;
+        isInitialisable = initMethod != null;
+        isDisposable = disposeMethod != null;
         isStartable = Startable.class.isInstance(object);
         isStoppable = Stoppable.class.isInstance(object);
     }
 
     protected Method findInitMethod(Object object)
     {
-        if(object instanceof Initialisable)
+        if (object instanceof Initialisable)
         {
             try
             {
@@ -147,7 +145,7 @@ public class DefaultComponentLifecycleAdapter implements LifecycleAdapter
         {
             return null;
         }
-        else if(metaData.size() > 1)
+        else if (metaData.size() > 1)
         {
             throw new IllegalArgumentException(CoreMessages.objectHasMoreThanOnePostConstructAnnotation(object.getClass()).getMessage());
         }

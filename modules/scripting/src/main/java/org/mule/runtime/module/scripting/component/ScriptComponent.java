@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.module.scripting.component;
 
-import static org.mule.runtime.module.scripting.component.Scriptable.BINDING_MESSAGE;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.lifecycle.LifecycleUtils;
 import org.mule.runtime.core.component.AbstractComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.script.Bindings;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.module.scripting.component.Scriptable.BINDING_MESSAGE;
 
 /**
  * A Script service backed by a JSR-223 compliant script engine such as

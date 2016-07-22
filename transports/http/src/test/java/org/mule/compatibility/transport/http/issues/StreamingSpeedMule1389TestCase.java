@@ -6,11 +6,10 @@
  */
 package org.mule.compatibility.transport.http.issues;
 
+import org.junit.Rule;
 import org.mule.compatibility.transport.tcp.integration.AbstractStreamingCapacityTestCase;
 import org.mule.runtime.core.util.SystemUtils;
 import org.mule.tck.junit4.rule.DynamicPort;
-
-import org.junit.Rule;
 
 public class StreamingSpeedMule1389TestCase extends AbstractStreamingCapacityTestCase
 {

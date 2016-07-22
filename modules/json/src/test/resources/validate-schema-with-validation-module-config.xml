@@ -10,7 +10,7 @@
     <flow name="validate">
         <validation:all>
             <validation:validations>
-                <json:validate-schema schemaLocation="schema/fstab-bad.json" />
+                <json:validate-schema schemaLocation="schema/fstab-bad.json"/>
             </validation:validations>
         </validation:all>
     </flow>

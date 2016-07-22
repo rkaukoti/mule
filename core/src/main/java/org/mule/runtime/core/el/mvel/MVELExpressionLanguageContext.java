@@ -6,29 +6,28 @@
  */
 package org.mule.runtime.core.el.mvel;
 
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.el.ExpressionLanguageContext;
-import org.mule.runtime.core.api.el.ExpressionLanguageFunction;
-import org.mule.runtime.core.api.el.VariableAssignmentCallback;
-import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.mvel2.ImmutableElementException;
 import org.mule.mvel2.ParserConfiguration;
 import org.mule.mvel2.ParserContext;
 import org.mule.mvel2.ast.FunctionInstance;
 import org.mule.mvel2.compiler.AbstractParser;
 import org.mule.mvel2.integration.VariableResolver;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.el.ExpressionLanguageContext;
+import org.mule.runtime.core.api.el.ExpressionLanguageFunction;
+import org.mule.runtime.core.api.el.VariableAssignmentCallback;
+import org.mule.runtime.core.config.i18n.CoreMessages;
 
 import java.lang.reflect.Method;
 
 public class MVELExpressionLanguageContext extends MuleBaseVariableResolverFactory
-    implements ExpressionLanguageContext
+        implements ExpressionLanguageContext
 {
 
-    private static final long serialVersionUID = 909413730991198290L;
     public static final String MULE_MESSAGE_INTERNAL_VARIABLE = "_muleMessage";
     public static final String MULE_EVENT_INTERNAL_VARIABLE = "_muleEvent";
     public static final String MULE_CONTEXT_INTERNAL_VARIABLE = "_muleContext";
-
+    private static final long serialVersionUID = 909413730991198290L;
     protected ParserConfiguration parserConfiguration;
     protected MuleContext muleContext;
 
@@ -56,7 +55,7 @@ public class MVELExpressionLanguageContext extends MuleBaseVariableResolverFacto
         if (variableResolver instanceof MuleAliasVariableResolver)
         {
             variableResolver = new MuleAliasVariableResolver((MuleAliasVariableResolver) variableResolver,
-                this);
+                    this);
         }
         return variableResolver;
     }
@@ -69,14 +68,14 @@ public class MVELExpressionLanguageContext extends MuleBaseVariableResolverFacto
     public <T> void addVariable(String name, T value)
     {
         addResolver(name, new MuleVariableResolver<T>(name, value, value != null ? value.getClass() : null,
-            null));
+                null));
     }
 
     @Override
     public <T> void addVariable(String name, T value, VariableAssignmentCallback<T> assignmentCallback)
     {
         addResolver(name, new MuleVariableResolver<T>(name, value, value != null ? value.getClass() : null,
-            assignmentCallback));
+                assignmentCallback));
     }
 
     @Override
@@ -88,7 +87,7 @@ public class MVELExpressionLanguageContext extends MuleBaseVariableResolverFacto
             public void assignValue(String name, T value, T newValue)
             {
                 throw new ImmutableElementException(
-                    CoreMessages.expressionFinalVariableCannotBeAssignedValue(name).getMessage());
+                        CoreMessages.expressionFinalVariableCannotBeAssignedValue(name).getMessage());
             }
         });
     }

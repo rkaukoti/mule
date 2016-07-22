@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.core.mule.model;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.model.InvocationResult;
 import org.mule.runtime.core.model.resolvers.CallableEntryPointResolver;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import org.mule.tck.testmodels.fruit.Apple;
 import org.mule.tck.testmodels.fruit.WaterMelon;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class CallableEntryPointDiscoveryTestCase extends AbstractMuleContextTestCase
 {

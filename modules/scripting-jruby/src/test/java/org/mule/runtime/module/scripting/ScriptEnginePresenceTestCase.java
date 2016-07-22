@@ -6,10 +6,14 @@
  */
 package org.mule.runtime.module.scripting;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-
+import org.hamcrest.Description;
+import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
@@ -20,41 +24,32 @@ import java.util.List;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 
-import org.hamcrest.Description;
-import org.hamcrest.TypeSafeMatcher;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 @RunWith(Parameterized.class)
 public class ScriptEnginePresenceTestCase extends AbstractMuleTestCase
 {
 
+    @Parameter(0)
+    public String engineName;
+    @Parameter(1)
+    public String extension;
+    @Parameter(2)
+    public String fullName;
+    @Parameter(3)
+    public String version;
+    private ScriptEngineManager scriptEngineManager;
+
     @Parameters
     public static Collection<Object[]> data()
     {
         return Arrays.asList(new Object[][] {
-                                             {"jruby", "rb", "JSR 223 JRuby Engine", "1.7.24"}
+                {"jruby", "rb", "JSR 223 JRuby Engine", "1.7.24"}
         });
     }
-
-    @Parameter(0)
-    public String engineName;
-
-    @Parameter(1)
-    public String extension;
-
-    @Parameter(2)
-    public String fullName;
-
-    @Parameter(3)
-    public String version;
-
-    private ScriptEngineManager scriptEngineManager;
 
     @Before
     public void before()

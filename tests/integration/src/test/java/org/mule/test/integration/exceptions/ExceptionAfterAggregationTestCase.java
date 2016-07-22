@@ -6,39 +6,37 @@
  */
 package org.mule.test.integration.exceptions;
 
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import java.util.Arrays;
-import java.util.Collection;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.mule.functional.junit4.FunctionalTestCase;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 @RunWith(Parameterized.class)
 public class ExceptionAfterAggregationTestCase extends FunctionalTestCase
 {
 
+    private final String configResources;
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    private final String configResources;
+    public ExceptionAfterAggregationTestCase(String configResources)
+    {
+        super();
+        this.configResources = configResources;
+    }
 
     @Parameters
     public static Collection<Object[]> parameters()
     {
         return Arrays.asList(new Object[][] {
                 {"exception-after-aggregation-test-config-simple.xml"},
-        });
-    }
-
-    public ExceptionAfterAggregationTestCase(String configResources)
-    {
-        super();
-        this.configResources = configResources;
+                });
     }
 
     @Override

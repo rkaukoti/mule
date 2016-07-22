@@ -6,11 +6,12 @@
  */
 package org.mule.runtime.core.message.processing;
 
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.execution.MessageProcessContext;
 import org.mule.runtime.core.execution.PhaseResultNotifier;
@@ -19,12 +20,10 @@ import org.mule.runtime.core.execution.ValidationPhaseTemplate;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
@@ -59,7 +58,7 @@ public class ValidationPhaseTestCase extends AbstractMuleContextTestCase
     {
         when(mockTemplate.validateMessage()).thenReturn(false);
         new ValidationPhase().runPhase(mockTemplate, mockContext, mockPhaseResultNotifier);
-        verify(mockTemplate,times(1)).discardInvalidMessage();
+        verify(mockTemplate, times(1)).discardInvalidMessage();
         verify(mockPhaseResultNotifier, Mockito.times(1)).phaseConsumedMessage();
     }
 

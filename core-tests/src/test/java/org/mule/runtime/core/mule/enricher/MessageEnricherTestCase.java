@@ -6,22 +6,7 @@
  */
 package org.mule.runtime.core.mule.enricher;
 
-import static java.nio.charset.StandardCharsets.UTF_16;
-import static junit.framework.Assert.assertSame;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.api.metadata.MediaType.JSON;
-
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.MessageExchangePattern;
@@ -45,7 +30,21 @@ import org.mule.tck.junit4.matcher.DataTypeMatcher;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.UTF_16;
+import static junit.framework.Assert.assertSame;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.api.metadata.MediaType.JSON;
 
 public class MessageEnricherTestCase extends AbstractMuleContextTestCase
 {
@@ -75,7 +74,8 @@ public class MessageEnricherTestCase extends AbstractMuleContextTestCase
     {
         MessageEnricher enricher = new MessageEnricher();
         enricher.setMuleContext(muleContext);
-        enricher.addEnrichExpressionPair(new EnrichExpressionPair("#[message.outboundProperties.header1]", "#[message.outboundProperties.myHeader]"));
+        enricher.addEnrichExpressionPair(
+                new EnrichExpressionPair("#[message.outboundProperties.header1]", "#[message.outboundProperties.myHeader]"));
         enricher.setEnrichmentMessageProcessor(event ->
         {
             event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty("header1", "test").build());
@@ -92,9 +92,12 @@ public class MessageEnricherTestCase extends AbstractMuleContextTestCase
     {
         MessageEnricher enricher = new MessageEnricher();
         enricher.setMuleContext(muleContext);
-        enricher.addEnrichExpressionPair(new EnrichExpressionPair("#[message.outboundProperties.header1]", "#[message.outboundProperties.myHeader1]"));
-        enricher.addEnrichExpressionPair(new EnrichExpressionPair("#[message.outboundProperties.header2]", "#[message.outboundProperties.myHeader2]"));
-        enricher.addEnrichExpressionPair(new EnrichExpressionPair("#[message.outboundProperties.header3]", "#[message.outboundProperties.myHeader3]"));
+        enricher.addEnrichExpressionPair(
+                new EnrichExpressionPair("#[message.outboundProperties.header1]", "#[message.outboundProperties.myHeader1]"));
+        enricher.addEnrichExpressionPair(
+                new EnrichExpressionPair("#[message.outboundProperties.header2]", "#[message.outboundProperties.myHeader2]"));
+        enricher.addEnrichExpressionPair(
+                new EnrichExpressionPair("#[message.outboundProperties.header3]", "#[message.outboundProperties.myHeader3]"));
         enricher.setEnrichmentMessageProcessor(event ->
         {
             event.setMessage(MuleMessage.builder(event.getMessage())
@@ -353,7 +356,8 @@ public class MessageEnricherTestCase extends AbstractMuleContextTestCase
     @Test
     public void enricherConservesSameEventInstanceNonBlockingTargetBlocking() throws Exception
     {
-        SensingNullMessageProcessor sensingNullMessageProcessor = new SensingNullMessageProcessor(){
+        SensingNullMessageProcessor sensingNullMessageProcessor = new SensingNullMessageProcessor()
+        {
             @Override
             public boolean isNonBlocking(MuleEvent event)
             {
@@ -402,8 +406,8 @@ public class MessageEnricherTestCase extends AbstractMuleContextTestCase
         when(flow.getMuleContext()).thenReturn(muleContext);
 
         return new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).build(),
-                                                  MessageExchangePattern.REQUEST_RESPONSE, nullReplyToHandler,
-                                                  flow);
+                MessageExchangePattern.REQUEST_RESPONSE, nullReplyToHandler,
+                flow);
     }
 
     private MessageEnricher createNonBlockingEnricher(SensingNullMessageProcessor sensingNullMessageProcessor)

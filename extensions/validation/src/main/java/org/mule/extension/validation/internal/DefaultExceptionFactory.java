@@ -6,23 +6,24 @@
  */
 package org.mule.extension.validation.internal;
 
-import static org.reflections.ReflectionUtils.getConstructors;
-import static org.reflections.ReflectionUtils.withParameters;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.core.config.i18n.MessageFactory;
-import org.mule.extension.validation.api.ExceptionFactory;
-import org.mule.extension.validation.api.ValidationResult;
-import org.mule.runtime.core.util.ClassUtils;
-import org.mule.runtime.core.util.CollectionUtils;
-
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
+import org.mule.extension.validation.api.ExceptionFactory;
+import org.mule.extension.validation.api.ValidationResult;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.core.config.i18n.MessageFactory;
+import org.mule.runtime.core.util.ClassUtils;
+import org.mule.runtime.core.util.CollectionUtils;
+
 import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.concurrent.ExecutionException;
+
+import static org.reflections.ReflectionUtils.getConstructors;
+import static org.reflections.ReflectionUtils.withParameters;
 
 /**
  * Default implementation of {@link ExceptionFactory}.
@@ -45,39 +46,41 @@ import java.util.concurrent.ExecutionException;
 public class DefaultExceptionFactory implements ExceptionFactory
 {
 
-    private final LoadingCache<Class<? extends Exception>, ConstructorDelegate<? extends Exception>> constructorCache = CacheBuilder.newBuilder().build(new CacheLoader<Class<? extends Exception>, ConstructorDelegate<? extends Exception>>()
-    {
-        @Override
-        public ConstructorDelegate<? extends Exception> load(Class<? extends Exception> exceptionType) throws Exception
-        {
-            return selectMostCompleteConstructor(exceptionType);
-        }
-    });
-
-    private final LoadingCache<String, Class<? extends Exception>> classCache = CacheBuilder.newBuilder().build(new CacheLoader<String, Class<? extends Exception>>()
-    {
-        @Override
-        public Class<? extends Exception> load(String exceptionClassName) throws Exception
-        {
-            Class<? extends Exception> exceptionClass;
-            try
+    private final LoadingCache<Class<? extends Exception>, ConstructorDelegate<? extends Exception>> constructorCache =
+            CacheBuilder.newBuilder().build(new CacheLoader<Class<? extends Exception>, ConstructorDelegate<? extends Exception>>()
             {
-                exceptionClass = ClassUtils.getClass(exceptionClassName);
-            }
-            catch (ClassNotFoundException e)
-            {
-                throw new IllegalArgumentException("Could not find exception class " + exceptionClassName);
-            }
+                @Override
+                public ConstructorDelegate<? extends Exception> load(Class<? extends Exception> exceptionType) throws Exception
+                {
+                    return selectMostCompleteConstructor(exceptionType);
+                }
+            });
 
-            if (!Exception.class.isAssignableFrom(exceptionClass))
+    private final LoadingCache<String, Class<? extends Exception>> classCache =
+            CacheBuilder.newBuilder().build(new CacheLoader<String, Class<? extends Exception>>()
             {
-                throw new IllegalArgumentException(String.format(
-                        "Was expecting an exception type, %s found instead", exceptionClass.getCanonicalName()));
-            }
+                @Override
+                public Class<? extends Exception> load(String exceptionClassName) throws Exception
+                {
+                    Class<? extends Exception> exceptionClass;
+                    try
+                    {
+                        exceptionClass = ClassUtils.getClass(exceptionClassName);
+                    }
+                    catch (ClassNotFoundException e)
+                    {
+                        throw new IllegalArgumentException("Could not find exception class " + exceptionClassName);
+                    }
 
-            return exceptionClass;
-        }
-    });
+                    if (!Exception.class.isAssignableFrom(exceptionClass))
+                    {
+                        throw new IllegalArgumentException(String.format(
+                                "Was expecting an exception type, %s found instead", exceptionClass.getCanonicalName()));
+                    }
+
+                    return exceptionClass;
+                }
+            });
 
     @Override
     public <T extends Exception> T createException(ValidationResult result, Class<T> exceptionClass, MuleEvent event)
@@ -91,8 +94,8 @@ public class DefaultExceptionFactory implements ExceptionFactory
         {
             throw new MuleRuntimeException(MessageFactory.createStaticMessage(
                     String.format("Could not create exception of type %s. Exception message was:\n%s",
-                                  exceptionClass.getName(),
-                                  result.getMessage())));
+                            exceptionClass.getName(),
+                            result.getMessage())));
         }
     }
 
@@ -153,7 +156,8 @@ public class DefaultExceptionFactory implements ExceptionFactory
         T createException(ValidationResult validationResult, String message, MuleEvent event) throws Exception;
     }
 
-    private class ValidationResultAndEventConstructorDelegate<T extends Exception> implements ConstructorDelegate<T> {
+    private class ValidationResultAndEventConstructorDelegate<T extends Exception> implements ConstructorDelegate<T>
+    {
 
         private final Constructor<T> constructor;
 

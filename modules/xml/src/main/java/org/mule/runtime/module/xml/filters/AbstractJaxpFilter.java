@@ -12,11 +12,10 @@ import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.module.xml.transformer.XmlToDomDocument;
 import org.mule.runtime.module.xml.util.XMLUtils;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * Common filter functionality for filters which need to convert payloads to {@link Document}s.
@@ -27,12 +26,13 @@ public abstract class AbstractJaxpFilter
     private XmlToDomDocument xmlToDom = new XmlToDomDocument();
 
     private DocumentBuilderFactory documentBuilderFactory;
-    
+
     public AbstractJaxpFilter()
     {
         super();
         xmlToDom.setReturnDataType(DataType.fromType(Document.class));
     }
+
     public void initialise() throws InitialisationException
     {
         if (getDocumentBuilderFactory() == null)
@@ -60,7 +60,7 @@ public abstract class AbstractJaxpFilter
 
     /**
      * The document builder factory to use in case XML needs to be parsed.
-     * 
+     *
      * @return The document builder factory to use in case XML needs to be parsed.
      */
     public DocumentBuilderFactory getDocumentBuilderFactory()
@@ -70,9 +70,8 @@ public abstract class AbstractJaxpFilter
 
     /**
      * The document builder factory to use in case XML needs to be parsed.
-     * 
-     * @param documentBuilderFactory The document builder factory to use in case XML
-     *            needs to be parsed.
+     *
+     * @param documentBuilderFactory The document builder factory to use in case XML needs to be parsed.
      */
     public void setDocumentBuilderFactory(DocumentBuilderFactory documentBuilderFactory)
     {

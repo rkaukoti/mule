@@ -16,7 +16,6 @@ public interface RequestMatcher
 
     /**
      * @param httpRequest request to evaluate against
-     *
      * @return true if the request matches the expected condition, false otherwise.
      */
     boolean matches(HttpRequest httpRequest);

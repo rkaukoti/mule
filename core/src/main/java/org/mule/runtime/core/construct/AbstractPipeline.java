@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.core.construct;
 
-import static org.mule.runtime.core.util.NotificationUtils.buildPathResolver;
-
+import org.apache.commons.collections.Predicate;
 import org.mule.runtime.core.api.GlobalNameableObject;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleContext;
@@ -55,7 +54,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.collections.Predicate;
+import static org.mule.runtime.core.util.NotificationUtils.buildPathResolver;
 
 /**
  * Abstract implementation of {@link AbstractFlowConstruct} that allows a list of {@link MessageProcessor}s
@@ -66,15 +65,6 @@ import org.apache.commons.collections.Predicate;
  */
 public abstract class AbstractPipeline extends AbstractFlowConstruct implements Pipeline
 {
-    protected MessageSource messageSource;
-    protected MessageProcessor pipeline;
-
-    protected List<MessageProcessor> messageProcessors = Collections.emptyList();
-    private PathResolver flowMap;
-
-    protected ProcessingStrategy processingStrategy;
-    private boolean canProcessMessage = false;
-
     private static final Predicate sourceCompatibleWithAsync = new Predicate()
     {
         @Override
@@ -86,7 +76,8 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
             }
             else if (messageSource instanceof CompositeMessageSource)
             {
-                return CollectionUtils.selectRejected(((CompositeMessageSource) messageSource).getSources(), sourceCompatibleWithAsync).isEmpty();
+                return CollectionUtils.selectRejected(((CompositeMessageSource) messageSource).getSources(), sourceCompatibleWithAsync)
+                                      .isEmpty();
             }
             else
             {
@@ -94,6 +85,12 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
             }
         }
     };
+    protected MessageSource messageSource;
+    protected MessageProcessor pipeline;
+    protected List<MessageProcessor> messageProcessors = Collections.emptyList();
+    protected ProcessingStrategy processingStrategy;
+    private PathResolver flowMap;
+    private boolean canProcessMessage = false;
 
     public AbstractPipeline(String name, MuleContext muleContext)
     {
@@ -157,7 +154,7 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
             {
                 muleContext.getNotificationManager().fireNotification(
                         new PipelineMessageNotification(AbstractPipeline.this, event,
-                                                        PipelineMessageNotification.PROCESS_START));
+                                PipelineMessageNotification.PROCESS_START));
                 return super.processRequest(event);
             }
 
@@ -166,7 +163,7 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
             {
                 muleContext.getNotificationManager().fireNotification(
                         new PipelineMessageNotification(AbstractPipeline.this, event,
-                                                        PipelineMessageNotification.PROCESS_COMPLETE, exception));
+                                PipelineMessageNotification.PROCESS_COMPLETE, exception));
             }
         });
     }
@@ -187,15 +184,15 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
     }
 
     @Override
-    public void setMessageProcessors(List<MessageProcessor> messageProcessors)
-    {
-        this.messageProcessors = messageProcessors;
-    }
-
-    @Override
     public List<MessageProcessor> getMessageProcessors()
     {
         return messageProcessors;
+    }
+
+    @Override
+    public void setMessageProcessors(List<MessageProcessor> messageProcessors)
+    {
+        this.messageProcessors = messageProcessors;
     }
 
     @Override
@@ -271,14 +268,14 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
     protected void configureMessageProcessors(MessageProcessorChainBuilder builder) throws MuleException
     {
         getProcessingStrategy().configureProcessors(getMessageProcessors(),
-                                                    new StageNameSource()
-                                                    {
-                                                        @Override
-                                                        public String getName()
-                                                        {
-                                                            return AbstractPipeline.this.getName();
-                                                        }
-                                                    }, builder, muleContext);
+                new StageNameSource()
+                {
+                    @Override
+                    public String getName()
+                    {
+                        return AbstractPipeline.this.getName();
+                    }
+                }, builder, muleContext);
     }
 
     @Override
@@ -289,7 +286,7 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
         // Ensure that inbound endpoints are compatible with processing strategy.
         boolean userConfiguredProcessingStrategy = !(processingStrategy instanceof DefaultFlowProcessingStrategy);
         boolean userConfiguredAsyncProcessingStrategy = processingStrategy instanceof AsynchronousProcessingStrategy
-                && userConfiguredProcessingStrategy;
+                                                        && userConfiguredProcessingStrategy;
 
         boolean redeliveryHandlerConfigured = isRedeliveryPolicyConfigured();
 
@@ -319,7 +316,8 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
             setProcessingStrategy(new SynchronousProcessingStrategy());
             if (LOGGER.isWarnEnabled())
             {
-                LOGGER.warn("Using message redelivery and rollback-exception-strategy requires synchronous processing strategy. Processing strategy re-configured to synchronous");
+                LOGGER.warn(
+                        "Using message redelivery and rollback-exception-strategy requires synchronous processing strategy. Processing strategy re-configured to synchronous");
             }
         }
     }
@@ -328,7 +326,7 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
     {
         boolean isRedeliveredPolicyConfigured = false;
         if (this.exceptionListener instanceof RollbackMessagingExceptionStrategy
-                && ((RollbackMessagingExceptionStrategy) exceptionListener).hasMaxRedeliveryAttempts())
+            && ((RollbackMessagingExceptionStrategy) exceptionListener).hasMaxRedeliveryAttempts())
         {
             isRedeliveredPolicyConfigured = true;
         }
@@ -362,7 +360,7 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
         {
             throw ce;
         }
-        catch(MuleException e)
+        catch (MuleException e)
         {
             // If the messageSource couldn't be started we would need to stop the pipeline (if possible) in order to leave
             // its LifeciclyManager also as initialise phase so the flow can be disposed later
@@ -381,8 +379,8 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
     @Override
     public void addMessageProcessorPathElements(MessageProcessorPathElement pathElement)
     {
-        String processorsPrefix =  "processors";
-        String esPrefix =  "es";
+        String processorsPrefix = "processors";
+        String esPrefix = "es";
 
         MessageProcessorPathElement processorPathElement = pathElement.addChild(processorsPrefix);
 
@@ -391,12 +389,15 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
         List<MessageProcessor> filteredMessageProcessorList = new ArrayList<MessageProcessor>();
         for (MessageProcessor messageProcessor : getMessageProcessors())
         {
-            if(messageProcessor instanceof InterceptingMessageProcessor){
+            if (messageProcessor instanceof InterceptingMessageProcessor)
             {
-                filteredMessageProcessorList.add(messageProcessor);
-                break;
+                {
+                    filteredMessageProcessorList.add(messageProcessor);
+                    break;
+                }
             }
-            }else{
+            else
+            {
                 filteredMessageProcessorList.add(messageProcessor);
             }
         }
@@ -409,7 +410,7 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
             MessageProcessorPathElement exceptionStrategyPathElement = pathElement;
             if (esGlobalName != null)
             {
-                exceptionStrategyPathElement =  exceptionStrategyPathElement.addChild(esGlobalName);
+                exceptionStrategyPathElement = exceptionStrategyPathElement.addChild(esGlobalName);
             }
             exceptionStrategyPathElement = exceptionStrategyPathElement.addChild(esPrefix);
             ((MessageProcessorContainer) exceptionListener).addMessageProcessorPathElements(exceptionStrategyPathElement);
@@ -434,23 +435,6 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
         return flowMap.resolvePath(processor);
     }
 
-
-    public class ProcessIfPipelineStartedMessageProcessor extends AbstractFilteringMessageProcessor
-    {
-
-        @Override
-        protected boolean accept(MuleEvent event)
-        {
-            return canProcessMessage;
-        }
-
-        @Override
-        protected MuleEvent handleUnaccepted(MuleEvent event) throws LifecycleException
-        {
-            throw new LifecycleException(CoreMessages.isStopped(getName()), event.getMessage());
-        }
-    }
-
     @Override
     protected void doStop() throws MuleException
     {
@@ -473,6 +457,22 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
         disposeIfDisposable(pipeline);
         disposeIfDisposable(messageSource);
         super.doDispose();
+    }
+
+    public class ProcessIfPipelineStartedMessageProcessor extends AbstractFilteringMessageProcessor
+    {
+
+        @Override
+        protected boolean accept(MuleEvent event)
+        {
+            return canProcessMessage;
+        }
+
+        @Override
+        protected MuleEvent handleUnaccepted(MuleEvent event) throws LifecycleException
+        {
+            throw new LifecycleException(CoreMessages.isStopped(getName()), event.getMessage());
+        }
     }
 
 }

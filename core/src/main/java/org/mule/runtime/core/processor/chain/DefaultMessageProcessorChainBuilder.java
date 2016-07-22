@@ -105,13 +105,13 @@ public class DefaultMessageProcessorChainBuilder extends AbstractMessageProcesso
     protected DefaultMessageProcessorChain createInnerChain(LinkedList<MessageProcessor> tempList)
     {
         return new DefaultMessageProcessorChain("(inner iterating chain) of " + name,
-            new ArrayList<MessageProcessor>(tempList));
+                new ArrayList<MessageProcessor>(tempList));
     }
 
     protected DefaultMessageProcessorChain createOuterChain(LinkedList<MessageProcessor> tempList)
     {
         return new DefaultMessageProcessorChain("(inner iterating chain) of " + name,
-            new ArrayList<MessageProcessor>(tempList));
+                new ArrayList<MessageProcessor>(tempList));
     }
 
     public DefaultMessageProcessorChainBuilder chain(MessageProcessor... processors)

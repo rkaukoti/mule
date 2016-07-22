@@ -6,14 +6,13 @@
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.config.spring.parsers.specific.RegExFilterDefinitionParser.FlagsMapping;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.util.regex.Pattern;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

@@ -12,7 +12,9 @@ import org.mule.runtime.core.transformer.AbstractMessageTransformer;
 
 import java.nio.charset.Charset;
 
-/** TODO */
+/**
+ * TODO
+ */
 public class MuleMessageToByteArray extends AbstractMessageTransformer
 {
     public MuleMessageToByteArray()

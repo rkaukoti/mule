@@ -37,14 +37,14 @@ public class ImmutableThreadingProfile implements ThreadingProfile
     private MuleContext muleContext;
 
     public ImmutableThreadingProfile(int maxThreadsActive,
-                            int maxThreadsIdle,
-                            int maxBufferSize,
-                            long threadTTL,
-                            long threadWaitTimeout,
-                            int poolExhaustedAction,
-                            boolean doThreading,
-                            RejectedExecutionHandler rejectedExecutionHandler,
-                            ThreadFactory threadFactory)
+                                     int maxThreadsIdle,
+                                     int maxBufferSize,
+                                     long threadTTL,
+                                     long threadWaitTimeout,
+                                     int poolExhaustedAction,
+                                     boolean doThreading,
+                                     RejectedExecutionHandler rejectedExecutionHandler,
+                                     ThreadFactory threadFactory)
     {
         this.maxThreadsActive = maxThreadsActive;
         this.maxThreadsIdle = maxThreadsIdle;
@@ -75,39 +75,14 @@ public class ImmutableThreadingProfile implements ThreadingProfile
         return maxThreadsActive;
     }
 
-    public int getMaxThreadsIdle()
-    {
-        return maxThreadsIdle;
-    }
-
-    public long getThreadTTL()
-    {
-        return threadTTL;
-    }
-
-    public long getThreadWaitTimeout()
-    {
-        return threadWaitTimeout;
-    }
-
-    public int getPoolExhaustedAction()
-    {
-        return poolExhaustedAction;
-    }
-
-    public RejectedExecutionHandler getRejectedExecutionHandler()
-    {
-        return rejectedExecutionHandler;
-    }
-
-    public ThreadFactory getThreadFactory()
-    {
-        return threadFactory;
-    }
-
     public void setMaxThreadsActive(int maxThreadsActive)
     {
         throw new UnsupportedOperationException(getClass().getName());
+    }
+
+    public int getMaxThreadsIdle()
+    {
+        return maxThreadsIdle;
     }
 
     public void setMaxThreadsIdle(int maxThreadsIdle)
@@ -115,9 +90,19 @@ public class ImmutableThreadingProfile implements ThreadingProfile
         throw new UnsupportedOperationException(getClass().getName());
     }
 
+    public long getThreadTTL()
+    {
+        return threadTTL;
+    }
+
     public void setThreadTTL(long threadTTL)
     {
         throw new UnsupportedOperationException(getClass().getName());
+    }
+
+    public long getThreadWaitTimeout()
+    {
+        return threadWaitTimeout;
     }
 
     public void setThreadWaitTimeout(long threadWaitTimeout)
@@ -125,14 +110,29 @@ public class ImmutableThreadingProfile implements ThreadingProfile
         throw new UnsupportedOperationException(getClass().getName());
     }
 
+    public int getPoolExhaustedAction()
+    {
+        return poolExhaustedAction;
+    }
+
     public void setPoolExhaustedAction(int poolExhaustPolicy)
     {
         throw new UnsupportedOperationException(getClass().getName());
     }
 
+    public RejectedExecutionHandler getRejectedExecutionHandler()
+    {
+        return rejectedExecutionHandler;
+    }
+
     public void setRejectedExecutionHandler(RejectedExecutionHandler rejectedExecutionHandler)
     {
         throw new UnsupportedOperationException(getClass().getName());
+    }
+
+    public ThreadFactory getThreadFactory()
+    {
+        return threadFactory;
     }
 
     public void setThreadFactory(ThreadFactory threadFactory)
@@ -196,6 +196,11 @@ public class ImmutableThreadingProfile implements ThreadingProfile
         return poolFactory.createScheduledPool(name, new ImmutableThreadingProfile(this));
     }
 
+    public MuleContext getMuleContext()
+    {
+        return muleContext;
+    }
+
     public void setMuleContext(MuleContext context)
     {
         this.muleContext = context;
@@ -209,19 +214,14 @@ public class ImmutableThreadingProfile implements ThreadingProfile
         poolFactory.setMuleContext(muleContext);
     }
 
-    public MuleContext getMuleContext()
-    {
-        return muleContext;
-    }
-
     public String toString()
     {
         return "ThreadingProfile{" + "maxThreadsActive=" + maxThreadsActive + ", maxThreadsIdle="
-                        + maxThreadsIdle + ", maxBufferSize=" + maxBufferSize + ", threadTTL=" + threadTTL
-                        + ", poolExhaustedAction=" + poolExhaustedAction + ", threadWaitTimeout="
-                        + threadWaitTimeout + ", doThreading=" + doThreading + ", workManagerFactory="
-                        + workManagerFactory + ", rejectedExecutionHandler=" + rejectedExecutionHandler
-                        + ", threadFactory=" + threadFactory + "}";
+               + maxThreadsIdle + ", maxBufferSize=" + maxBufferSize + ", threadTTL=" + threadTTL
+               + ", poolExhaustedAction=" + poolExhaustedAction + ", threadWaitTimeout="
+               + threadWaitTimeout + ", doThreading=" + doThreading + ", workManagerFactory="
+               + workManagerFactory + ", rejectedExecutionHandler=" + rejectedExecutionHandler
+               + ", threadFactory=" + threadFactory + "}";
     }
 
     public static class DefaultWorkManagerFactory implements WorkManagerFactory, MuleContextAware

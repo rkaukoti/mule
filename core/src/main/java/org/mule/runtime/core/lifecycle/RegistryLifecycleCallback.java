@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.lifecycle;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.HasLifecycleInterceptor;
 import org.mule.runtime.core.api.lifecycle.LifecycleCallback;
@@ -14,14 +15,12 @@ import org.mule.runtime.core.api.lifecycle.LifecycleInterceptor;
 import org.mule.runtime.core.api.lifecycle.LifecyclePhase;
 import org.mule.runtime.core.api.registry.Registry;
 import org.mule.runtime.core.lifecycle.phases.ContainerManagedLifecyclePhase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of {@link LifecycleCallback} for applying {@link Registry} lifecycles
@@ -75,7 +74,8 @@ public class RegistryLifecycleCallback<T> implements LifecycleCallback<T>, HasLi
         interceptor.onPhaseCompleted(phase);
     }
 
-    private void doApplyLifecycle(LifecyclePhase phase, Set<Object> duplicates, LifecycleObject lifecycleObject, Collection<?> targetObjects) throws LifecycleException
+    private void doApplyLifecycle(LifecyclePhase phase, Set<Object> duplicates, LifecycleObject lifecycleObject,
+                                  Collection<?> targetObjects) throws LifecycleException
     {
         if (CollectionUtils.isEmpty(targetObjects))
         {
@@ -106,8 +106,8 @@ public class RegistryLifecycleCallback<T> implements LifecycleCallback<T>, HasLi
                 {
                     LOGGER.debug(String.format("Skipping the application of the '%s' lifecycle phase over a certain object " +
                                                "because a %s interceptor of type [%s] indicated so. Object is: %s",
-                                               phase.getName(), LifecycleInterceptor.class.getSimpleName(),
-                                               interceptor.getClass().getName(), target));
+                            phase.getName(), LifecycleInterceptor.class.getSimpleName(),
+                            interceptor.getClass().getName(), target));
                 }
             }
         }

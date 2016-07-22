@@ -6,11 +6,11 @@
  */
 package org.mule.extension.socket;
 
-import static org.hamcrest.Matchers.instanceOf;
-import org.mule.runtime.core.api.MessagingException;
-
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mule.runtime.core.api.MessagingException;
+
+import static org.hamcrest.Matchers.instanceOf;
 
 @Ignore("MULE-9738: It is not supported yet to application access classes from extensions")
 public class CustomProtocolTestCase extends SocketExtensionTestCase

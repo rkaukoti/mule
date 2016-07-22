@@ -6,13 +6,7 @@
  */
 package org.mule.test.integration.client;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-import static org.mule.compatibility.core.api.config.MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY;
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.registerEndpoint;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_PROPERTY;
-import static org.mule.runtime.core.api.transaction.TransactionConfig.ACTION_ALWAYS_BEGIN;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
@@ -33,7 +27,13 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+import static org.mule.compatibility.core.api.config.MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY;
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.registerEndpoint;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_PROPERTY;
+import static org.mule.runtime.core.api.transaction.TransactionConfig.ACTION_ALWAYS_BEGIN;
 
 public class MuleClientTransactionTestCase extends FunctionalTestCase
 {
@@ -64,7 +64,7 @@ public class MuleClientTransactionTestCase extends FunctionalTestCase
         // the transaction config so that the endpoint will "know" it is transacted
         // and not close the session itself but leave it up to the transaction.
         EndpointBuilder endpointBuilder = new EndpointURIEndpointBuilder(
-            new URIBuilder("jms://test.queue", muleContext));
+                new URIBuilder("jms://test.queue", muleContext));
         endpointBuilder.setTransactionConfig(tc);
         endpointBuilder.setName("TransactedTest.Queue");
         ImmutableEndpoint inboundEndpoint = getEndpointFactory().getOutboundEndpoint(endpointBuilder);
@@ -112,7 +112,7 @@ public class MuleClientTransactionTestCase extends FunctionalTestCase
         // the transaction config so that the endpoint will "know" it is transacted
         // and not close the session itself but leave it up to the transaction.
         EndpointBuilder endpointBuilder = new EndpointURIEndpointBuilder(
-            new URIBuilder("jms://test.queue", muleContext));
+                new URIBuilder("jms://test.queue", muleContext));
         endpointBuilder.setTransactionConfig(tc);
         endpointBuilder.setName("TransactedTest.Queue");
         ImmutableEndpoint inboundEndpoint = getEndpointFactory().getOutboundEndpoint(endpointBuilder);
@@ -166,7 +166,7 @@ public class MuleClientTransactionTestCase extends FunctionalTestCase
         // the transaction config so that the endpoint will "know" it is transacted
         // and not close the session itself but leave it up to the transaction.
         EndpointBuilder endpointBuilder = new EndpointURIEndpointBuilder(
-            new URIBuilder("jms://test.queue", muleContext));
+                new URIBuilder("jms://test.queue", muleContext));
         endpointBuilder.setTransactionConfig(tc);
         endpointBuilder.setName("TransactedTest.Queue");
         ImmutableEndpoint inboundEndpoint = getEndpointFactory().getOutboundEndpoint(endpointBuilder);

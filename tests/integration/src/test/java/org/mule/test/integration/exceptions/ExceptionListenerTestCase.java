@@ -6,6 +6,18 @@
  */
 package org.mule.test.integration.exceptions;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.api.client.MuleClient;
+import org.mule.runtime.core.api.context.notification.ExceptionStrategyNotificationListener;
+import org.mule.runtime.core.api.context.notification.ServerNotification;
+import org.mule.runtime.core.context.notification.ExceptionStrategyNotification;
+import org.mule.runtime.core.message.ExceptionMessage;
+import org.mule.tck.probe.JUnitProbe;
+import org.mule.tck.probe.PollingProber;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -13,19 +25,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
-import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.client.MuleClient;
-import org.mule.runtime.core.api.context.notification.ExceptionStrategyNotificationListener;
-import org.mule.runtime.core.api.context.notification.ServerNotification;
-import org.mule.runtime.core.context.notification.ExceptionStrategyNotification;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.runtime.core.message.ExceptionMessage;
-import org.mule.tck.probe.JUnitProbe;
-import org.mule.tck.probe.PollingProber;
-
-import org.junit.Test;
 
 public class ExceptionListenerTestCase extends FunctionalTestCase
 {
@@ -90,7 +89,8 @@ public class ExceptionListenerTestCase extends FunctionalTestCase
     {
         assertThat(exceptionStrategyStartNotification.getResourceIdentifier(), is(not(nullValue())));
         assertThat(exceptionStrategyStartNotification.getResourceIdentifier(), is("mycomponent"));
-        assertThat(exceptionStrategyStartNotification.getResourceIdentifier(), is(exceptionStrategyEndNotification.getResourceIdentifier()));
+        assertThat(exceptionStrategyStartNotification.getResourceIdentifier(),
+                is(exceptionStrategyEndNotification.getResourceIdentifier()));
     }
 
     private void assertNotificationsArrived()

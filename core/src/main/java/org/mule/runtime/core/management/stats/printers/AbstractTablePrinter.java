@@ -99,7 +99,7 @@ public class AbstractTablePrinter extends PrintWriter
         if (stats instanceof SedaServiceStatistics)
         {
             col[1] = ((SedaServiceStatistics) stats).getComponentPoolMaxSize() + "/"
-                    + ((SedaServiceStatistics) stats).getComponentPoolAbsoluteMaxSize();
+                     + ((SedaServiceStatistics) stats).getComponentPoolAbsoluteMaxSize();
             col[2] = String.valueOf(((SedaServiceStatistics) stats).getComponentPoolSize());
         }
         else
@@ -225,7 +225,7 @@ public class AbstractTablePrinter extends PrintWriter
         else if (obj instanceof ServiceStatistics)
         {
             List<ServiceStatistics> l = new ArrayList<ServiceStatistics>();
-            l.add((ServiceStatistics)obj);
+            l.add((ServiceStatistics) obj);
             print(l);
         }
         else

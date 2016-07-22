@@ -15,7 +15,7 @@ public interface EndpointAwareTransformer extends EndpointAware, Transformer
 
     /**
      * The endpoint that this transformer is attached to
-     * 
+     *
      * @return the endpoint associated with the transformer
      * @deprecated
      */

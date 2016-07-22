@@ -6,21 +6,21 @@
  */
 package org.mule.runtime.module.launcher.plugin;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mule.runtime.core.util.FileUtils.createFile;
-import static org.mule.tck.ZipUtils.compress;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.rules.TemporaryFolder;
 import org.mule.tck.ZipUtils;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.rules.TemporaryFolder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mule.runtime.core.util.FileUtils.createFile;
+import static org.mule.tck.ZipUtils.compress;
 
 
 public class ArtifactPluginDescriptorLoaderTestCase extends AbstractMuleTestCase
@@ -69,7 +69,7 @@ public class ArtifactPluginDescriptorLoaderTestCase extends AbstractMuleTestCase
     {
         String pluginName = "plugin";
         File plugin = pluginsFolder.newFile(pluginName + ".zip");
-        compress(plugin, new ZipUtils.ZipResource[]{});
+        compress(plugin, new ZipUtils.ZipResource[] {});
         File unpackDestination = pluginsFolder.newFolder("destination");
         pluginDescriptorLoader.load(plugin, unpackDestination);
         verify(artifactPluginDescriptorFactory).create(new File(unpackDestination, pluginName));

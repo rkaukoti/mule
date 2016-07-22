@@ -45,10 +45,10 @@ public class NamespaceRestorerXMLStreamReader extends ScopeSaverXMLStreamReader
             namespaces = new ArrayList<Namespace>();
 
             Set<String> prefixes = new HashSet<String>();
-            for (StartElement elem: scopes())
+            for (StartElement elem : scopes())
             {
-                Iterator<Namespace> iter =  elem.getNamespaces();
-                while(iter.hasNext())
+                Iterator<Namespace> iter = elem.getNamespaces();
+                while (iter.hasNext())
                 {
                     Namespace ns = iter.next();
                     if (prefixes.add(ns.getPrefix()) && !nsBlacklist.contains(ns.getNamespaceURI()))

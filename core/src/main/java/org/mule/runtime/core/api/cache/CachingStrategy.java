@@ -26,11 +26,8 @@ public interface CachingStrategy
      * choose to create new instances every time.
      *
      * @param request          the event to process
-     * @param messageProcessor the message processor that will be executed when
-     *                         the response for the event is not in the cache.
-     * @return a response for the request that could be obtained using the
-     *         cache.
-     * @throws MuleException
+     * @param messageProcessor the message processor that will be executed when the response for the event is not in the cache.
+     * @return a response for the request that could be obtained using the cache.
      */
     MuleEvent process(MuleEvent request, MessageProcessor messageProcessor) throws MuleException;
 }

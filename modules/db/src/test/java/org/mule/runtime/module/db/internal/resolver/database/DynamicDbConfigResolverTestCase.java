@@ -7,16 +7,12 @@
 
 package org.mule.runtime.module.db.internal.resolver.database;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.sameInstance;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import org.mule.runtime.core.api.MuleEvent;
+import org.junit.Test;
 import org.mule.common.Result;
 import org.mule.common.TestResult;
 import org.mule.common.metadata.MetaData;
 import org.mule.common.metadata.MetaDataKey;
+import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.module.db.internal.domain.database.DataSourceConfig;
 import org.mule.runtime.module.db.internal.domain.database.DataSourceFactory;
 import org.mule.runtime.module.db.internal.domain.database.DbConfig;
@@ -30,7 +26,11 @@ import java.util.List;
 import javax.sql.DataSource;
 import javax.xml.namespace.QName;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.sameInstance;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class DynamicDbConfigResolverTestCase extends AbstractMuleTestCase
 {

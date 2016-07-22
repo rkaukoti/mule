@@ -26,11 +26,6 @@ public enum ArtifactType
         this.artifactTypeAsString = artifactTypeAsString;
     }
 
-    public String getAsString()
-    {
-        return this.artifactTypeAsString;
-    }
-
     public static ArtifactType createFromString(String artifactTypeAsString)
     {
         for (ArtifactType artifactType : values())
@@ -41,5 +36,10 @@ public enum ArtifactType
             }
         }
         throw new MuleRuntimeException(CoreMessages.createStaticMessage("No artifact type found for value: " + artifactTypeAsString));
+    }
+
+    public String getAsString()
+    {
+        return this.artifactTypeAsString;
     }
 }

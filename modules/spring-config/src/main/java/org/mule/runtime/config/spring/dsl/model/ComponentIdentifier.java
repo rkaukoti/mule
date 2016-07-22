@@ -8,7 +8,6 @@ package org.mule.runtime.config.spring.dsl.model;
 
 import static org.mule.runtime.config.spring.dsl.processor.xml.CoreXmlNamespaceInfoProvider.CORE_NAMESPACE_NAME;
 import static org.mule.runtime.core.util.Preconditions.checkState;
-import org.mule.runtime.core.util.Preconditions;
 
 /**
  * Unique identifier for a configuration option.
@@ -39,39 +38,6 @@ public class ComponentIdentifier
     public String getName()
     {
         return identifier;
-    }
-
-    public static class Builder
-    {
-
-        private ComponentIdentifier componentIdentifier = new ComponentIdentifier();
-
-        /**
-         * @param namespace namespace identifier of the mule language extensions module
-         * @return the builder
-         */
-        public Builder withNamespace(String namespace)
-        {
-            componentIdentifier.namespace = namespace;
-            return this;
-        }
-
-        /**
-         * @param identifier identifier unique identifier within the namespace of the language configuration extension
-         * @return the builder
-         */
-        public Builder withName(String identifier)
-        {
-            componentIdentifier.identifier = identifier;
-            return this;
-        }
-
-        public ComponentIdentifier build()
-        {
-            checkState(componentIdentifier.namespace != null, "Namespace must be not null");
-            checkState(componentIdentifier.identifier != null, "Name must be not null");
-            return componentIdentifier;
-        }
     }
 
     @Override
@@ -108,5 +74,38 @@ public class ComponentIdentifier
     public String toString()
     {
         return getNamespace().equals(CORE_NAMESPACE_NAME) ? getName() : getNamespace() + ":" + getName();
+    }
+
+    public static class Builder
+    {
+
+        private ComponentIdentifier componentIdentifier = new ComponentIdentifier();
+
+        /**
+         * @param namespace namespace identifier of the mule language extensions module
+         * @return the builder
+         */
+        public Builder withNamespace(String namespace)
+        {
+            componentIdentifier.namespace = namespace;
+            return this;
+        }
+
+        /**
+         * @param identifier identifier unique identifier within the namespace of the language configuration extension
+         * @return the builder
+         */
+        public Builder withName(String identifier)
+        {
+            componentIdentifier.identifier = identifier;
+            return this;
+        }
+
+        public ComponentIdentifier build()
+        {
+            checkState(componentIdentifier.namespace != null, "Namespace must be not null");
+            checkState(componentIdentifier.identifier != null, "Name must be not null");
+            return componentIdentifier;
+        }
     }
 }

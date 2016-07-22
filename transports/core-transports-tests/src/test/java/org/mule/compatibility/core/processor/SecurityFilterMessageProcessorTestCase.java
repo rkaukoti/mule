@@ -6,12 +6,7 @@
  */
 package org.mule.compatibility.core.processor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.RequestContext;
@@ -20,7 +15,11 @@ import org.mule.runtime.core.api.processor.InterceptingMessageProcessor;
 import org.mule.runtime.core.processor.SecurityFilterMessageProcessor;
 import org.mule.tck.security.TestSecurityFilter;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 
 public class SecurityFilterMessageProcessorTestCase extends AbstractMessageProcessorTestCase
 {
@@ -29,7 +28,7 @@ public class SecurityFilterMessageProcessorTestCase extends AbstractMessageProce
     {
         TestSecurityFilter securityFilter = new TestSecurityFilter(true);
         InboundEndpoint endpoint = createTestInboundEndpoint(null, securityFilter,
-            MessageExchangePattern.REQUEST_RESPONSE, null);
+                MessageExchangePattern.REQUEST_RESPONSE, null);
         InterceptingMessageProcessor mp = new SecurityFilterMessageProcessor(securityFilter);
         TestListener listner = new TestListener();
         mp.setListener(listner);
@@ -47,7 +46,7 @@ public class SecurityFilterMessageProcessorTestCase extends AbstractMessageProce
     {
         TestSecurityFilter securityFilter = new TestSecurityFilter(false);
         InboundEndpoint endpoint = createTestInboundEndpoint(null, securityFilter,
-            MessageExchangePattern.REQUEST_RESPONSE, null);
+                MessageExchangePattern.REQUEST_RESPONSE, null);
         InterceptingMessageProcessor mp = new SecurityFilterMessageProcessor(securityFilter);
         TestListener listner = new TestListener();
         mp.setListener(listner);

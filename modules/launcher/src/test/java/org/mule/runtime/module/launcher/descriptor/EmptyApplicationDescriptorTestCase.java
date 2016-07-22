@@ -6,10 +6,8 @@
  */
 package org.mule.runtime.module.launcher.descriptor;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.core.MuleServer;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.module.reboot.MuleContainerBootstrapUtils;
@@ -19,8 +17,9 @@ import org.mule.tck.size.SmallTest;
 
 import java.io.IOException;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class EmptyApplicationDescriptorTestCase extends AbstractMuleTestCase

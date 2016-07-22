@@ -6,14 +6,13 @@
  */
 package org.mule.test.config.spring.parsers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
+import org.mule.test.config.spring.parsers.beans.AbstractBean;
 import org.mule.test.config.spring.parsers.beans.ChildBean;
 import org.mule.test.config.spring.parsers.beans.OrphanBean;
-import org.mule.test.config.spring.parsers.beans.AbstractBean;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class AliasTestCase extends AbstractNamespaceTestCase
 {

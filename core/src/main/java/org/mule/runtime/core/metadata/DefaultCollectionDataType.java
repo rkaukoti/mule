@@ -76,7 +76,8 @@ public class DefaultCollectionDataType extends SimpleDataType implements Collect
         }
 
         // TODO MULE-9987 Fix this
-        if ((mimeType != null ? !mimeType.matches(that.mimeType) : that.mimeType != null) && !MediaType.ANY.matches(that.mimeType) && !MediaType.ANY.matches(this.mimeType))
+        if ((mimeType != null ? !mimeType.matches(that.mimeType) : that.mimeType != null) && !MediaType.ANY.matches(that.mimeType) &&
+            !MediaType.ANY.matches(this.mimeType))
         {
             return false;
         }
@@ -98,9 +99,9 @@ public class DefaultCollectionDataType extends SimpleDataType implements Collect
     public String toString()
     {
         return "CollectionDataType{" +
-                "type=" + getType().getName() +
+               "type=" + getType().getName() +
                ", itemType=" + getItemDataType().toString() +
-                ", mimeType='" + getMediaType() + '\'' +
-                '}';
+               ", mimeType='" + getMediaType() + '\'' +
+               '}';
     }
 }

@@ -7,17 +7,16 @@
 
 package org.mule.test.core.transformers.simple;
 
-import static java.nio.charset.StandardCharsets.UTF_16;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.UTF_16;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
 
 public class SetSessionVariableDataTypeTestCase extends FunctionalTestCase
 {

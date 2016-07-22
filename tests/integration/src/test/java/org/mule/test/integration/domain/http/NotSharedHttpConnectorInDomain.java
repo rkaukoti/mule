@@ -6,18 +6,17 @@
  */
 package org.mule.test.integration.domain.http;
 
-import static java.lang.String.format;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.DomainFunctionalTestCase;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static java.lang.String.format;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 public class NotSharedHttpConnectorInDomain extends DomainFunctionalTestCase
 {
@@ -42,7 +41,8 @@ public class NotSharedHttpConnectorInDomain extends DomainFunctionalTestCase
     }
 
     @Test
-    public void sendMessageToNotSharedConnectorInDomain() throws Exception {
+    public void sendMessageToNotSharedConnectorInDomain() throws Exception
+    {
         String url = format("http://localhost:%d/test", dynamicPort.getNumber());
         MuleContext muleContext = getMuleContextForApp(APP);
         muleContext.getClient().send(url, MuleMessage.builder().payload("").build());

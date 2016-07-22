@@ -13,7 +13,7 @@ import org.mule.runtime.core.config.i18n.MessageFactory;
 public class VMMessages extends MessageFactory
 {
     private static final VMMessages factory = new VMMessages();
-    
+
     private static final String BUNDLE_PATH = getBundlePath(VMConnector.VM);
 
     public static Message noReceiverForEndpoint(String name, Object uri)

@@ -6,14 +6,12 @@
  */
 package org.mule.extension.socket;
 
-import static java.lang.String.format;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import org.junit.Test;
 import org.mule.functional.functional.EventCallback;
 import org.mule.functional.functional.FunctionalStreamingTestComponent;
 import org.mule.runtime.core.api.MuleEventContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.util.concurrent.CountDownLatch;
@@ -21,16 +19,18 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class TcpStreamingTestCase extends SocketExtensionTestCase
 {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TcpStreamingTestCase.class);
     public static final String TEST_MESSAGE = "Test TCP Request";
     public static final String RESULT = "Received stream; length: %d; 'Test...uest'";
+    private static final Logger LOGGER = LoggerFactory.getLogger(TcpStreamingTestCase.class);
     private static int SINGLE_ITERATION = 1;
 
     @Override
@@ -54,7 +54,6 @@ public class TcpStreamingTestCase extends SocketExtensionTestCase
     /**
      * @param payload    to be sent in each request
      * @param iterations amount of times that the send flow should be called
-     * @throws Exception
      */
     private void streamingTestCase(Object payload, int iterations) throws Exception
     {

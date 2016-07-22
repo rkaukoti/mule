@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.module.json;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.module.json.filters.IsJsonFilter;
 import org.mule.runtime.module.json.transformers.FruitCollection;
 import org.mule.runtime.module.json.transformers.JsonBeanRoundTripTestCase;
@@ -19,11 +19,10 @@ import org.mule.runtime.module.json.transformers.JsonToXml;
 import org.mule.runtime.module.json.transformers.JsonXsltTransformer;
 import org.mule.runtime.module.json.transformers.ObjectToJson;
 import org.mule.runtime.module.json.transformers.XmlToJson;
-import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class JsonNamespaceHandlerTestCase extends FunctionalTestCase
 {
@@ -74,10 +73,10 @@ public class JsonNamespaceHandlerTestCase extends FunctionalTestCase
         assertEquals(FruitCollection.class, deserializer.getReturnDataType().getType());
         assertEquals(1, deserializer.getDeserializationMixins().size());
 
-       //Test roundTrip
+        //Test roundTrip
         FruitCollection fc = JsonBeanRoundTripTestCase.JSON_OBJECT;
 
-        String result = (String)serializer.transform(fc);
+        String result = (String) serializer.transform(fc);
         assertNotNull(result);
         // compare the structure and values but not the attributes' order
         ObjectMapper mapper = new ObjectMapper();
@@ -85,7 +84,7 @@ public class JsonNamespaceHandlerTestCase extends FunctionalTestCase
         JsonNode expectedJsonNode = mapper.readTree(JsonBeanRoundTripTestCase.JSON_STRING);
         assertEquals(actualJsonNode, expectedJsonNode);
 
-        FruitCollection result2 = (FruitCollection)deserializer.transform(result);
+        FruitCollection result2 = (FruitCollection) deserializer.transform(result);
         assertNotNull(result2);
         assertEquals(fc, result2);
     }

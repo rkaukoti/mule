@@ -6,6 +6,16 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.fluent.Request;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
+import org.mule.tck.junit4.rule.SystemProperty;
+
 import static java.lang.String.format;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -13,16 +23,6 @@ import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.BAD_REQU
 import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
 import static org.mule.runtime.module.http.internal.HttpParser.appendQueryParam;
 import static org.mule.runtime.module.http.internal.listener.grizzly.GrizzlyServerManager.MAXIMUM_HEADER_SECTION_SIZE_PROPERTY_KEY;
-import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-import org.mule.tck.junit4.rule.SystemProperty;
-
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.fluent.Request;
-import org.junit.Rule;
-import org.junit.Test;
 
 public class HttpListenerHeaderSizeTestCase extends AbstractHttpTestCase
 {
@@ -61,7 +61,8 @@ public class HttpListenerHeaderSizeTestCase extends AbstractHttpTestCase
     private HttpResponse sendRequestWithQueryParam(int queryParamSize) throws Exception
     {
         String longQueryParamValue = RandomStringUtils.randomAlphanumeric(queryParamSize);
-        String urlWithQueryParameter = appendQueryParam(format("http://localhost:%d/", dynamicPort.getNumber()), "longQueryParam", longQueryParamValue);
+        String urlWithQueryParameter =
+                appendQueryParam(format("http://localhost:%d/", dynamicPort.getNumber()), "longQueryParam", longQueryParamValue);
         return Request.Post(urlWithQueryParameter).execute().returnResponse();
     }
 }

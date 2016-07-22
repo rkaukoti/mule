@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.module.json.transformers;
 
-import static org.junit.Assert.fail;
-
+import org.junit.Ignore;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.config.i18n.LocaleMessageHandler;
@@ -17,7 +16,7 @@ import org.mule.tck.testmodels.fruit.Orange;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
-import org.junit.Ignore;
+import static org.junit.Assert.fail;
 
 @Ignore("See MULE-9307")
 public class JsonBeanRoundTripNonAsciiTestCase extends JsonBeanRoundTripTestCase
@@ -30,8 +29,8 @@ public class JsonBeanRoundTripNonAsciiTestCase extends JsonBeanRoundTripTestCase
     public JsonBeanRoundTripNonAsciiTestCase()
     {
         jsonString = "{\"apple\":{\"bitten\":true,\"washed\":false},\"orange\":{\"brand\":\""
-            +  getBrandOfOrange(Locale.JAPAN)
-            + "\",\"segments\":8,\"radius\":3.45,\"listProperties\":null,\"mapProperties\":null,\"arrayProperties\":null}}";
+                     + getBrandOfOrange(Locale.JAPAN)
+                     + "\",\"segments\":8,\"radius\":3.45,\"listProperties\":null,\"mapProperties\":null,\"arrayProperties\":null}}";
 
         jsonObject = new FruitCollection(new Apple(true), null, new Orange(8, 3.45, getBrandOfOrange(Locale.JAPAN)));
     }
@@ -63,7 +62,7 @@ public class JsonBeanRoundTripNonAsciiTestCase extends JsonBeanRoundTripTestCase
         trans.setReturnDataType(DataType.BYTE_ARRAY);
         return trans;
     }
-    
+
     @Override
     public Object getTestData()
     {

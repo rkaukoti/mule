@@ -6,6 +6,8 @@
  */
 package org.mule.compatibility.transport.http.transformers;
 
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpMethod;
 import org.mule.compatibility.transport.http.HttpConstants;
 import org.mule.compatibility.transport.http.ReleasingInputStream;
 import org.mule.runtime.api.metadata.DataType;
@@ -18,9 +20,6 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpMethod;
 
 /**
  * <code>HttpClientMethodResponseToObject</code> transforms a http client response
@@ -40,8 +39,8 @@ public class HttpClientMethodResponseToObject extends AbstractTransformer
     public Object doTransform(Object src, Charset encoding) throws TransformerException
     {
         Object msg;
-        HttpMethod httpMethod = (HttpMethod)src;
-        
+        HttpMethod httpMethod = (HttpMethod) src;
+
         InputStream is;
         try
         {
@@ -51,7 +50,7 @@ public class HttpClientMethodResponseToObject extends AbstractTransformer
         {
             throw new TransformerException(this, e);
         }
-        
+
         if (is == null)
         {
             msg = null;
@@ -60,7 +59,7 @@ public class HttpClientMethodResponseToObject extends AbstractTransformer
         {
             msg = new ReleasingInputStream(is, httpMethod);
         }
-        
+
         // Standard headers
         Map headerProps = new HashMap();
         Header[] headers = httpMethod.getResponseHeaders();

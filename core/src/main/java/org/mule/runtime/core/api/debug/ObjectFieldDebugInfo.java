@@ -7,9 +7,9 @@
 
 package org.mule.runtime.core.api.debug;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
 import java.util.List;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Provides debug information for an object's field that contains a value
@@ -22,10 +22,9 @@ public class ObjectFieldDebugInfo extends FieldDebugInfo<List<FieldDebugInfo<?>>
     /**
      * Creates debug information for an object
      *
-     * @param name name of the created field. Must be a not blank {@link String}
+     * @param name   name of the created field. Must be a not blank {@link String}
      * @param type   class of the field. Cannot be null.
-     * @param fields a {@link List} containing debug information for the
-     *               object's fields. Non null.
+     * @param fields a {@link List} containing debug information for the object's fields. Non null.
      */
     ObjectFieldDebugInfo(String name, String type, List<FieldDebugInfo<?>> fields)
     {

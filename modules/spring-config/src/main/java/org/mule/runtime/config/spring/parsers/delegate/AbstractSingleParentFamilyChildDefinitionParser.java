@@ -10,12 +10,11 @@ import org.mule.runtime.config.spring.parsers.MuleChildDefinitionParser;
 import org.mule.runtime.config.spring.parsers.MuleDefinitionParser;
 import org.mule.runtime.config.spring.parsers.MuleDefinitionParserConfiguration;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 
 
 public class AbstractSingleParentFamilyChildDefinitionParser
-    extends AbstractSingleParentFamilyDefinitionParser implements MuleChildDefinitionParser
+        extends AbstractSingleParentFamilyDefinitionParser implements MuleChildDefinitionParser
 {
 
     protected MuleDefinitionParserConfiguration addDelegate(MuleDefinitionParser delegate)

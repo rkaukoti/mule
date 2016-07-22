@@ -7,11 +7,10 @@
 
 package org.mule.runtime.module.db.performance;
 
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.runtime.core.api.client.MuleClient;
-
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.client.MuleClient;
 
 /**
  * Not a real test, used to generate load and verify that there are no memory

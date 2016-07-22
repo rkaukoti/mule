@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.api.transformer.TransformerException;
@@ -15,7 +14,7 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import java.math.BigDecimal;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class BasicTypeAutoTransformationTestCase extends AbstractMuleContextTestCase
 {
@@ -33,7 +32,7 @@ public class BasicTypeAutoTransformationTestCase extends AbstractMuleContextTest
     }
 
     protected void testType(String string, Class type, Class primitive, Object value)
-        throws TransformerException
+            throws TransformerException
     {
         assertEquals(value, lookupFromStringTransformer(type).transform(string));
         assertEquals(string, lookupToStringTransformer(type).transform(value));

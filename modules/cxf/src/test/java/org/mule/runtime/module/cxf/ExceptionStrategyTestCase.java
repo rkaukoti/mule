@@ -6,14 +6,10 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_STATUS_PROPERTY;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
-
+import org.apache.cxf.interceptor.Fault;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
@@ -33,16 +29,19 @@ import java.nio.charset.Charset;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.cxf.interceptor.Fault;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_STATUS_PROPERTY;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class ExceptionStrategyTestCase extends FunctionalTestCase
 {
 
     private static final String requestPayload =
-        "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
+            "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
             "           xmlns:hi=\"http://example.cxf.module.runtime.mule.org/\">\n" +
             "<soap:Body>\n" +
             "<hi:sayHi>\n" +
@@ -52,7 +51,7 @@ public class ExceptionStrategyTestCase extends FunctionalTestCase
             "</soap:Envelope>";
 
     private static final String requestFaultPayload =
-        "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
+            "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
             "           xmlns:hi=\"http://cxf.module.runtime.mule.org/\">\n" +
             "<soap:Body>\n" +
             "<hi:sayHi>\n" +
@@ -61,14 +60,13 @@ public class ExceptionStrategyTestCase extends FunctionalTestCase
             "</soap:Body>\n" +
             "</soap:Envelope>";
 
-    private static final HttpRequestOptions HTTP_REQUEST_OPTIONS = newOptions().method(org.mule.runtime.module.http.api.HttpConstants.Methods.POST.name()).disableStatusCodeValidation().build();
-
-    private CountDownLatch latch;
-
+    private static final HttpRequestOptions HTTP_REQUEST_OPTIONS =
+            newOptions().method(org.mule.runtime.module.http.api.HttpConstants.Methods.POST.name()).disableStatusCodeValidation().build();
     @Rule
     public DynamicPort dynamicPort = new DynamicPort("port1");
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
+    private CountDownLatch latch;
 
     @Override
     protected String getConfigFile()
@@ -83,7 +81,8 @@ public class ExceptionStrategyTestCase extends FunctionalTestCase
         MuleClient client = muleContext.getClient();
         latch = new CountDownLatch(1);
         registerExceptionNotificationListener();
-        MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/testServiceWithFault", request, HTTP_REQUEST_OPTIONS);
+        MuleMessage response =
+                client.send("http://localhost:" + dynamicPort.getNumber() + "/testServiceWithFault", request, HTTP_REQUEST_OPTIONS);
         assertNotNull(response);
         assertTrue(getPayloadAsString(response).contains("<faultstring>"));
         assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()), response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
@@ -97,7 +96,8 @@ public class ExceptionStrategyTestCase extends FunctionalTestCase
         MuleClient client = muleContext.getClient();
         latch = new CountDownLatch(1);
         registerExceptionNotificationListener();
-        MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/testServiceWithException", request, HTTP_REQUEST_OPTIONS);
+        MuleMessage response =
+                client.send("http://localhost:" + dynamicPort.getNumber() + "/testServiceWithException", request, HTTP_REQUEST_OPTIONS);
         assertNotNull(response);
         assertTrue(getPayloadAsString(response).contains("<faultstring>"));
         assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()), response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
@@ -126,7 +126,9 @@ public class ExceptionStrategyTestCase extends FunctionalTestCase
         MuleClient client = muleContext.getClient();
         latch = new CountDownLatch(1);
         registerExceptionNotificationListener();
-        MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/proxyExceptionStrategy", getTestMuleMessage(requestPayload), HTTP_REQUEST_OPTIONS);
+        MuleMessage response =
+                client.send("http://localhost:" + dynamicPort.getNumber() + "/proxyExceptionStrategy", getTestMuleMessage(requestPayload),
+                        HTTP_REQUEST_OPTIONS);
         assertNotNull(response);
         assertTrue(getPayloadAsString(response).contains("<faultstring>"));
 

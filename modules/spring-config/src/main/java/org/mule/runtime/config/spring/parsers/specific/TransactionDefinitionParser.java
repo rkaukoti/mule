@@ -55,7 +55,7 @@ public class TransactionDefinitionParser extends AbstractSingleParentFamilyDefin
         final MuleDefinitionParserConfiguration childDefinitionParser = addDelegateAsChild(new ChildDefinitionParser(FACTORY, factoryClass))
                 .setIgnoredDefault(false)
                 .addAlias(FACTORY_CLASS, AbstractMuleBeanDefinitionParser.ATTRIBUTE_CLASS)
-                        // the ref is set on the parent
+                // the ref is set on the parent
                 .registerPreProcessor(new BlockAttribute(FACTORY));
         for (String attribute : getIgnoredAttributes())
         {

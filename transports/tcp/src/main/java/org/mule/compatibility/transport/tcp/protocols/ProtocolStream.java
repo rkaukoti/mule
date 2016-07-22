@@ -30,8 +30,8 @@ public class ProtocolStream extends OutputStream
     {
         if (!streamOk)
         {
-             throw new IllegalArgumentException("TCP protocol " + ClassUtils.getSimpleName(protocol.getClass()) +
-                     " does not support streaming output");
+            throw new IllegalArgumentException("TCP protocol " + ClassUtils.getSimpleName(protocol.getClass()) +
+                                               " does not support streaming output");
         }
     }
 
@@ -61,7 +61,7 @@ public class ProtocolStream extends OutputStream
     @Override
     public void write(int b) throws IOException
     {
-        write(new byte[]{(byte) b});
+        write(new byte[] {(byte) b});
     }
 
     @Override

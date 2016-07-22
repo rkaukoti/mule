@@ -18,7 +18,7 @@ public class TestConnector2 extends TestConnector
     {
         super(context);
     }
-    
+
     @Override
     public String getProtocol()
     {

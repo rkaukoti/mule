@@ -6,7 +6,7 @@
  */
 package org.mule.runtime.module.json.transformers;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
+import de.odysseus.staxon.json.JsonXMLInputFactory;
 
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.TransformerException;
@@ -22,7 +22,7 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.transform.Source;
 import javax.xml.transform.stax.StAXSource;
 
-import de.odysseus.staxon.json.JsonXMLInputFactory;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Convert JSON to an XML document string
@@ -49,13 +49,14 @@ public class JsonToXml extends AbstractToFromXmlTransformer
     {
         XMLInputFactory inputFactory = new JsonXMLInputFactory();
         inputFactory.setProperty(JsonXMLInputFactory.PROP_MULTIPLE_PI, false);
-        TransformerInputs inputs = new TransformerInputs(this,src);
+        TransformerInputs inputs = new TransformerInputs(this, src);
         Source source;
         try
         {
             if (inputs.getInputStream() != null)
             {
-                source = new StAXSource(inputFactory.createXMLStreamReader(inputs.getInputStream(), enc == null ? UTF_8.name() : enc.name()));
+                source = new StAXSource(
+                        inputFactory.createXMLStreamReader(inputs.getInputStream(), enc == null ? UTF_8.name() : enc.name()));
             }
             else
             {

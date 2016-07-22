@@ -6,18 +6,6 @@
  */
 package org.mule.runtime.module.http.internal.listener;
 
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.getReasonPhraseForStatusCode;
-import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_PREFIX;
-import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_STATUS_PROPERTY;
-import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_VERSION_PROPERTY;
-import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_REASON_PROPERTY;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONNECTION;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.TRANSFER_ENCODING;
-import static org.mule.runtime.module.http.api.HttpHeaders.Values.CHUNKED;
-import static org.mule.runtime.module.http.api.requester.HttpStreamingType.ALWAYS;
-import static org.mule.runtime.module.http.api.requester.HttpStreamingType.AUTO;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MessagingException;
@@ -45,6 +33,8 @@ import org.mule.runtime.module.http.internal.domain.MultipartHttpEntity;
 import org.mule.runtime.module.http.internal.domain.response.HttpResponse;
 import org.mule.runtime.module.http.internal.multipart.HttpMultipartEncoder;
 import org.mule.runtime.module.http.internal.multipart.HttpPartDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -55,8 +45,18 @@ import java.util.Set;
 
 import javax.activation.DataHandler;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.getReasonPhraseForStatusCode;
+import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_PREFIX;
+import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_STATUS_PROPERTY;
+import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_VERSION_PROPERTY;
+import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_REASON_PROPERTY;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONNECTION;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.TRANSFER_ENCODING;
+import static org.mule.runtime.module.http.api.HttpHeaders.Values.CHUNKED;
+import static org.mule.runtime.module.http.api.requester.HttpStreamingType.ALWAYS;
+import static org.mule.runtime.module.http.api.requester.HttpStreamingType.AUTO;
 
 public class HttpResponseBuilder extends HttpMessageBuilder implements Initialisable, MuleContextAware
 {
@@ -72,6 +72,14 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
     private AttributeEvaluator reasonPhraseEvaluator;
     private MuleContext muleContext;
 
+    public static HttpResponseBuilder emptyInstance(MuleContext muleContext) throws InitialisationException
+    {
+        final HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder();
+        httpResponseBuilder.setMuleContext(muleContext);
+        httpResponseBuilder.init();
+        return httpResponseBuilder;
+    }
+
     @Override
     public void initialise() throws InitialisationException
     {
@@ -85,7 +93,8 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
         reasonPhraseEvaluator = new AttributeEvaluator(reasonPhrase).initialize(muleContext.getExpressionManager());
     }
 
-    public HttpResponse build(org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder httpResponseBuilder, MuleEvent event) throws MessagingException
+    public HttpResponse build(org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder httpResponseBuilder,
+                              MuleEvent event) throws MessagingException
     {
         final HttpResponseHeaderBuilder httpResponseHeaderBuilder = new HttpResponseHeaderBuilder();
         final Set<String> outboundProperties = event.getMessage().getOutboundPropertyNames();
@@ -116,7 +125,8 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
             {
                 if (TRANSFER_ENCODING.equals(name) && !supportsTransferEncoding(event))
                 {
-                    logger.debug("Client HTTP version is lower than 1.1 so the unsupported 'Transfer-Encoding' header has been removed and 'Content-Length' will be sent instead.");
+                    logger.debug(
+                            "Client HTTP version is lower than 1.1 so the unsupported 'Transfer-Encoding' header has been removed and 'Content-Length' will be sent instead.");
                 }
                 else
                 {
@@ -142,7 +152,8 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
                 warnNoMultipartContentTypeButMultipartEntity(httpResponseHeaderBuilder.getContentType());
             }
             httpEntity = createMultipartEntity(event, httpResponseHeaderBuilder.getContentType());
-            resolveEncoding(httpResponseHeaderBuilder, existingTransferEncoding, existingContentLength, supportsTransferEncoding(event), (ByteArrayHttpEntity) httpEntity);
+            resolveEncoding(httpResponseHeaderBuilder, existingTransferEncoding, existingContentLength, supportsTransferEncoding(event),
+                    (ByteArrayHttpEntity) httpEntity);
         }
         else
         {
@@ -186,7 +197,8 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
                 try
                 {
                     ByteArrayHttpEntity byteArrayHttpEntity = new ByteArrayHttpEntity(event.getMessageAsBytes());
-                    resolveEncoding(httpResponseHeaderBuilder, existingTransferEncoding, existingContentLength, supportsTransferEncoding(event), byteArrayHttpEntity);
+                    resolveEncoding(httpResponseHeaderBuilder, existingTransferEncoding, existingContentLength,
+                            supportsTransferEncoding(event), byteArrayHttpEntity);
                     httpEntity = byteArrayHttpEntity;
                 }
                 catch (Exception e)
@@ -222,7 +234,7 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
 
     private boolean supportsTransferEncoding(MuleEvent event)
     {
-        String httpVersion = event.getMessage().<String> getInboundProperty(HTTP_VERSION_PROPERTY);
+        String httpVersion = event.getMessage().<String>getInboundProperty(HTTP_VERSION_PROPERTY);
         return !(HttpProtocol.HTTP_0_9.asString().equals(httpVersion) || HttpProtocol.HTTP_1_0.asString().equals(httpVersion));
     }
 
@@ -232,7 +244,8 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
                                  boolean supportsTranferEncoding,
                                  ByteArrayHttpEntity byteArrayHttpEntity)
     {
-        if (responseStreaming == ALWAYS || (responseStreaming == AUTO && existingContentLength == null && CHUNKED.equals(existingTransferEncoding)))
+        if (responseStreaming == ALWAYS ||
+            (responseStreaming == AUTO && existingContentLength == null && CHUNKED.equals(existingTransferEncoding)))
         {
             if (supportsTranferEncoding)
             {
@@ -247,7 +260,8 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
 
     private boolean isNotIgnoredProperty(String outboundPropertyName)
     {
-        return !outboundPropertyName.startsWith(HTTP_PREFIX) && !outboundPropertyName.equalsIgnoreCase(CONNECTION) && !outboundPropertyName.equalsIgnoreCase(TRANSFER_ENCODING);
+        return !outboundPropertyName.startsWith(HTTP_PREFIX) && !outboundPropertyName.equalsIgnoreCase(CONNECTION) &&
+               !outboundPropertyName.equalsIgnoreCase(TRANSFER_ENCODING);
     }
 
     private void setupContentLengthEncoding(HttpResponseHeaderBuilder httpResponseHeaderBuilder, int contentLength)
@@ -298,7 +312,7 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
         {
             return reasonPhraseOutboundProperty.toString();
         }
-        else if(resolvedStatusCode != null)
+        else if (resolvedStatusCode != null)
         {
             return getReasonPhraseForStatusCode(resolvedStatusCode);
         }
@@ -336,7 +350,9 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
     {
         if (!mapPayloadButNoUrlEncodedContentyTypeWarned)
         {
-            logger.warn(String.format("Payload is a Map which will be used to generate an url encoded http body but Contenty-Type specified is %s and not %s", contentType, HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED));
+            logger.warn(String.format(
+                    "Payload is a Map which will be used to generate an url encoded http body but Contenty-Type specified is %s and not %s",
+                    contentType, HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED));
             mapPayloadButNoUrlEncodedContentyTypeWarned = true;
         }
     }
@@ -345,7 +361,9 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
     {
         if (!multipartEntityWithNoMultipartContentyTypeWarned)
         {
-            logger.warn(String.format("Sending http response with Content-Type %s but the message has attachment and a multipart entity is generated", contentType));
+            logger.warn(String.format(
+                    "Sending http response with Content-Type %s but the message has attachment and a multipart entity is generated",
+                    contentType));
             multipartEntityWithNoMultipartContentyTypeWarned = true;
         }
     }
@@ -373,14 +391,6 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
         }
     }
 
-    public static HttpResponseBuilder emptyInstance(MuleContext muleContext) throws InitialisationException
-    {
-        final HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder();
-        httpResponseBuilder.setMuleContext(muleContext);
-        httpResponseBuilder.init();
-        return httpResponseBuilder;
-    }
-
     public void setReasonPhrase(String reasonPhrase)
     {
         this.reasonPhrase = reasonPhrase;
@@ -396,15 +406,14 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
         this.disablePropertiesAsHeaders = disablePropertiesAsHeaders;
     }
 
+    public HttpStreamingType getResponseStreaming()
+    {
+        return responseStreaming;
+    }
 
     public void setResponseStreaming(HttpStreamingType responseStreaming)
     {
         this.responseStreaming = responseStreaming;
-    }
-
-    public HttpStreamingType getResponseStreaming()
-    {
-        return responseStreaming;
     }
 
     @Override

@@ -7,11 +7,8 @@
 
 package org.mule.runtime.module.db.integration.select;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.getAllPlanetRecords;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
@@ -21,8 +18,11 @@ import org.mule.runtime.module.db.internal.result.resultset.ResultSetIterator;
 
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.getAllPlanetRecords;
 
 public class SelectStreamingTestCase extends AbstractDbIntegrationTestCase
 {

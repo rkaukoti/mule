@@ -6,14 +6,15 @@
  */
 package org.mule.runtime.core.message.processing;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doCallRealMethod;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.InOrder;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -36,15 +37,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.InOrder;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
@@ -84,7 +83,8 @@ public class MuleMessageProcessingManagerTestCase extends org.mule.tck.junit4.Ab
         when(completeMessageProcessTemplateAndContext.validateMessage()).thenReturn(true);
         when(messageProcessPhase.compareTo(any(MessageProcessPhase.class))).thenCallRealMethod();
         when(messageProcessPhase.supportsTemplate(any(MessageProcessTemplate.class))).thenCallRealMethod();
-        doCallRealMethod().when(messageProcessPhase).runPhase(any(MessageProcessTemplate.class), any(MessageProcessContext.class), any(PhaseResultNotifier.class));
+        doCallRealMethod().when(messageProcessPhase)
+                          .runPhase(any(MessageProcessTemplate.class), any(MessageProcessContext.class), any(PhaseResultNotifier.class));
         MuleMessageProcessingManager manager = createManagerUsingPhasesInRegistry(Arrays.<MessageProcessPhase>asList(messageProcessPhase));
         manager.processMessage(completeMessageProcessTemplateAndContext, completeMessageProcessTemplateAndContext);
         verify(completeMessageProcessTemplateAndContext, times(0)).routeEvent(any(MuleEvent.class));
@@ -94,7 +94,7 @@ public class MuleMessageProcessingManagerTestCase extends org.mule.tck.junit4.Ab
 
     private PhaseAfterValidationBeforeFlow createPhaseAfterValidation()
     {
-        return mock(PhaseAfterValidationBeforeFlow.class,Answers.RETURNS_DEEP_STUBS.get());
+        return mock(PhaseAfterValidationBeforeFlow.class, Answers.RETURNS_DEEP_STUBS.get());
     }
 
     @Test
@@ -120,7 +120,8 @@ public class MuleMessageProcessingManagerTestCase extends org.mule.tck.junit4.Ab
                 phaseResultNotifier.phaseFailure(new DefaultMuleException("error"));
                 return null;
             }
-        }).when(failureMessageProcessPhase).runPhase(any(MessageProcessTemplate.class), any(MessageProcessContext.class), any(PhaseResultNotifier.class));
+        }).when(failureMessageProcessPhase)
+          .runPhase(any(MessageProcessTemplate.class), any(MessageProcessContext.class), any(PhaseResultNotifier.class));
         return failureMessageProcessPhase;
     }
 
@@ -137,7 +138,8 @@ public class MuleMessageProcessingManagerTestCase extends org.mule.tck.junit4.Ab
         processAndVerifyDefaultPhasesAreExecuted(manager);
     }
 
-    private MuleMessageProcessingManager createManagerUsingPhasesInRegistry(Collection<MessageProcessPhase> phasesInRegistry) throws InitialisationException
+    private MuleMessageProcessingManager createManagerUsingPhasesInRegistry(Collection<MessageProcessPhase> phasesInRegistry)
+            throws InitialisationException
     {
         MuleMessageProcessingManager manager = new MuleMessageProcessingManager();
         manager.setMuleContext(mockMuleContext);
@@ -150,14 +152,15 @@ public class MuleMessageProcessingManagerTestCase extends org.mule.tck.junit4.Ab
     {
         when(completeMessageProcessTemplateAndContext.validateMessage()).thenReturn(true);
 
-        manager.processMessage(completeMessageProcessTemplateAndContext,completeMessageProcessTemplateAndContext);
+        manager.processMessage(completeMessageProcessTemplateAndContext, completeMessageProcessTemplateAndContext);
         InOrder verifyInOrder = Mockito.inOrder(completeMessageProcessTemplateAndContext);
         verifyInOrder.verify(completeMessageProcessTemplateAndContext, times(1)).validateMessage();
         verifyInOrder.verify(completeMessageProcessTemplateAndContext, times(1)).routeEvent(Mockito.any(MuleEvent.class));
         verifyInOrder.verify(completeMessageProcessTemplateAndContext, times(1)).messageProcessingEnded();
     }
 
-    public interface TestMessageProcessTemplateAndContext extends ValidationPhaseTemplate, FlowProcessingPhaseTemplate, EndPhaseTemplate, MessageProcessContext
+    public interface TestMessageProcessTemplateAndContext
+            extends ValidationPhaseTemplate, FlowProcessingPhaseTemplate, EndPhaseTemplate, MessageProcessContext
     {
     }
 
@@ -185,7 +188,8 @@ public class MuleMessageProcessingManagerTestCase extends org.mule.tck.junit4.Ab
         }
 
         @Override
-        public void runPhase(MessageProcessTemplate messageProcessTemplate, MessageProcessContext messageProcessContext, PhaseResultNotifier phaseResultNotifier)
+        public void runPhase(MessageProcessTemplate messageProcessTemplate, MessageProcessContext messageProcessContext,
+                             PhaseResultNotifier phaseResultNotifier)
         {
             phaseResultNotifier.phaseConsumedMessage();
         }

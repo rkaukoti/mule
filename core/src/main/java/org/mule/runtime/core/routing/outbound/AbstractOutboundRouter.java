@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.routing.outbound;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_REQUESTOR_PROPERTY;
-
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.DefaultMuleException;
@@ -44,14 +42,15 @@ import org.mule.runtime.core.routing.CorrelationMode;
 import org.mule.runtime.core.routing.DefaultRouterResultsHandler;
 import org.mule.runtime.core.util.StringMessageUtils;
 import org.mule.runtime.core.util.SystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_REQUESTOR_PROPERTY;
 
 /**
  * <code>AbstractOutboundRouter</code> is a base router class that tracks statistics about message processing
@@ -76,18 +75,17 @@ public abstract class AbstractOutboundRouter extends AbstractMessageProcessorOwn
     protected TransactionConfig transactionConfig;
 
     protected RouterResultsHandler resultsHandler = new DefaultRouterResultsHandler();
-
-    private RouterStatistics routerStatistics;
-
     protected AtomicBoolean initialised = new AtomicBoolean(false);
     protected AtomicBoolean started = new AtomicBoolean(false);
-
-    private MessageProcessorExecutionTemplate notificationTemplate = MessageProcessorExecutionTemplate.createNotificationExecutionTemplate();
+    private RouterStatistics routerStatistics;
+    private MessageProcessorExecutionTemplate notificationTemplate =
+            MessageProcessorExecutionTemplate.createNotificationExecutionTemplate();
 
     @Override
     public MuleEvent process(final MuleEvent event) throws MuleException
     {
-        ExecutionTemplate<MuleEvent> executionTemplate = TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, getTransactionConfig());
+        ExecutionTemplate<MuleEvent> executionTemplate =
+                TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, getTransactionConfig());
         ExecutionCallback<MuleEvent> processingCallback = () ->
         {
             try
@@ -164,8 +162,9 @@ public abstract class AbstractOutboundRouter extends AbstractMessageProcessorOwn
                     try
                     {
                         logger.trace("Response payload: \n"
-                                     + StringMessageUtils.truncate(muleContext.getTransformationService().getPayloadForLogging(resultMessage),
-                                                                   100, false));
+                                     +
+                                     StringMessageUtils.truncate(muleContext.getTransformationService().getPayloadForLogging(resultMessage),
+                                             100, false));
                     }
                     catch (Exception e)
                     {
@@ -213,6 +212,15 @@ public abstract class AbstractOutboundRouter extends AbstractMessageProcessorOwn
         return routes;
     }
 
+    public void setRoutes(List<MessageProcessor> routes) throws MuleException
+    {
+        this.routes.clear();
+        for (MessageProcessor route : routes)
+        {
+            addRoute(route);
+        }
+    }
+
     /*
      * For spring access
      */
@@ -221,15 +229,6 @@ public abstract class AbstractOutboundRouter extends AbstractMessageProcessorOwn
     public void setMessageProcessors(List<MessageProcessor> routes) throws MuleException
     {
         setRoutes(routes);
-    }
-
-    public void setRoutes(List<MessageProcessor> routes) throws MuleException
-    {
-        this.routes.clear();
-        for (MessageProcessor route : routes)
-        {
-            addRoute(route);
-        }
     }
 
     @Override
@@ -455,15 +454,15 @@ public abstract class AbstractOutboundRouter extends AbstractMessageProcessorOwn
         return muleContext;
     }
 
+    public RouterStatistics getRouterStatistics()
+    {
+        return routerStatistics;
+    }
+
     @Override
     public void setRouterStatistics(RouterStatistics stats)
     {
         this.routerStatistics = stats;
-    }
-
-    public RouterStatistics getRouterStatistics()
-    {
-        return routerStatistics;
     }
 
     @Override

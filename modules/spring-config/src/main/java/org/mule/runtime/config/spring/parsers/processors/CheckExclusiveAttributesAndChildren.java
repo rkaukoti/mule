@@ -6,12 +6,6 @@
  */
 package org.mule.runtime.config.spring.parsers.processors;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
@@ -21,6 +15,12 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.TypeInfo;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Attributes and children elements cannot appear together. Child names are either
@@ -33,25 +33,6 @@ public class CheckExclusiveAttributesAndChildren implements PreProcessor
     private final Set<String> attributeNames;
     private final Set<String> childrenNames;
     private final Set<ChildType> childrenTypes;
-
-    private static class ChildType
-    {
-        String ns;
-        String name;
-
-        public ChildType(String ns, String name)
-        {
-            this.ns = ns;
-            this.name = name;
-        }
-
-        @Override
-        public String toString()
-        {
-            return "{" + ns + "}" + name;
-        }
-
-    }
 
     public CheckExclusiveAttributesAndChildren(String[] attributeNames, String[] childrenNamesOrTypes)
     {
@@ -124,8 +105,8 @@ public class CheckExclusiveAttributesAndChildren implements PreProcessor
             {
 
                 throw new CheckExclusiveAttributesAndChildrenException(
-                    "Element " + SpringXMLUtils.elementToString(element) + " can't contain child of type "
-                                    + childrenType + " because it defines attribute " + attributeName);
+                        "Element " + SpringXMLUtils.elementToString(element) + " can't contain child of type "
+                        + childrenType + " because it defines attribute " + attributeName);
             }
         }
 
@@ -144,6 +125,25 @@ public class CheckExclusiveAttributesAndChildren implements PreProcessor
                                                                    + " because it defines attribute "
                                                                    + attributeName);
         }
+    }
+
+    private static class ChildType
+    {
+        String ns;
+        String name;
+
+        public ChildType(String ns, String name)
+        {
+            this.ns = ns;
+            this.name = name;
+        }
+
+        @Override
+        public String toString()
+        {
+            return "{" + ns + "}" + name;
+        }
+
     }
 
     public static class CheckExclusiveAttributesAndChildrenException extends IllegalStateException

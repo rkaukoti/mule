@@ -11,7 +11,6 @@ import org.mule.runtime.config.spring.parsers.assembly.BeanAssemblerFactory;
 import org.mule.runtime.config.spring.parsers.assembly.DefaultBeanAssembler;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.config.spring.parsers.collection.ChildMapEntryDefinitionParser;
-
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.PropertyValues;
@@ -62,8 +61,8 @@ public class ImportMapEntryDefinitionParser extends ChildMapEntryDefinitionParse
             PropertyValue pv = targetProperties.getPropertyValue(newName);
             @SuppressWarnings("unchecked")
             ManagedMap<String, String> oldValue = (ManagedMap<String, String>) (null == pv
-                                                                                          ? null
-                                                                                          : pv.getValue());
+                    ? null
+                    : pv.getValue());
 
             if (null == oldValue)
             {
@@ -74,7 +73,7 @@ public class ImportMapEntryDefinitionParser extends ChildMapEntryDefinitionParse
 
             String importName = null;
             String importClassName = (String) sourceProperties.getPropertyValue(
-                ChildMapEntryDefinitionParser.VALUE).getValue();
+                    ChildMapEntryDefinitionParser.VALUE).getValue();
 
             PropertyValue namePropertyValue = sourceProperties.getPropertyValue(ChildMapEntryDefinitionParser.KEY);
             if (namePropertyValue != null)
@@ -84,7 +83,7 @@ public class ImportMapEntryDefinitionParser extends ChildMapEntryDefinitionParse
             else
             {
                 importName = importClassName.substring(importClassName.lastIndexOf(".") + 1,
-                    importClassName.length());
+                        importClassName.length());
             }
 
             oldValue.put(importName, importClassName);

@@ -6,10 +6,6 @@
  */
 package org.mule.extension.file.internal.command;
 
-import static java.lang.String.format;
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
 import org.mule.extension.file.internal.LocalFileSystem;
 import org.mule.runtime.api.message.MuleEvent;
 import org.mule.runtime.core.api.MuleContext;
@@ -29,6 +25,11 @@ import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+
+import static java.lang.String.format;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 
 /**
  * A {@link LocalFileCommand} which implements the {@link WriteCommand} contract
@@ -94,8 +95,9 @@ public final class LocalWriteCommand extends LocalFileCommand implements WriteCo
         }
         catch (FileAlreadyExistsException e)
         {
-            throw new IllegalArgumentException(String.format("Cannot write to path '%s' because it already exists and write mode '%s' was selected. " +
-                                                             "Use a different write mode or point to a path which doesn't exists", path, mode));
+            throw new IllegalArgumentException(
+                    String.format("Cannot write to path '%s' because it already exists and write mode '%s' was selected. " +
+                                  "Use a different write mode or point to a path which doesn't exists", path, mode));
         }
     }
 
@@ -104,12 +106,12 @@ public final class LocalWriteCommand extends LocalFileCommand implements WriteCo
 
         switch (mode)
         {
-            case APPEND:
-                return new OpenOption[] {CREATE, WRITE, StandardOpenOption.APPEND};
-            case CREATE_NEW:
-                return new OpenOption[] {WRITE, StandardOpenOption.CREATE_NEW};
-            case OVERWRITE:
-                return new OpenOption[] {CREATE, WRITE, TRUNCATE_EXISTING};
+        case APPEND:
+            return new OpenOption[] {CREATE, WRITE, StandardOpenOption.APPEND};
+        case CREATE_NEW:
+            return new OpenOption[] {WRITE, StandardOpenOption.CREATE_NEW};
+        case OVERWRITE:
+            return new OpenOption[] {CREATE, WRITE, TRUNCATE_EXISTING};
         }
 
         throw new IllegalArgumentException("Unsupported write mode " + mode);

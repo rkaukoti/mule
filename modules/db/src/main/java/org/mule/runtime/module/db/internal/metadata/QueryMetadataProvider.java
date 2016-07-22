@@ -24,6 +24,7 @@ public interface QueryMetadataProvider
 
     /**
      * Provides output metadata
+     *
      * @param metaData metadata propagated from the input
      * @return input metadata for a given type of query. Can be null
      */

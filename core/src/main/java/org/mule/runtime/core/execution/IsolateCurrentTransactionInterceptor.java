@@ -40,7 +40,7 @@ public class IsolateCurrentTransactionInterceptor<T> implements ExecutionInterce
             }
             return next.execute(muleEventProcessingCallback, executionContext);
         }
-        finally 
+        finally
         {
             if (transactionIsolated)
             {

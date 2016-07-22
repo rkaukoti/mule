@@ -11,7 +11,9 @@ import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.api.model.EntryPointResolverSet;
 
-/** <code>LifecycleAdapterFactory</code> TODO (document class) */
+/**
+ * <code>LifecycleAdapterFactory</code> TODO (document class)
+ */
 public interface LifecycleAdapterFactory<JC extends JavaComponent>
 {
     LifecycleAdapter create(Object pojoService,

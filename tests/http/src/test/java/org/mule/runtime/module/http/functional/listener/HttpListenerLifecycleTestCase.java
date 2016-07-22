@@ -6,11 +6,12 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.startsWith;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.SERVICE_UNAVAILABLE;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.client.fluent.Response;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.extension.internal.runtime.config.LifecycleAwareConfigurationProvider;
@@ -21,12 +22,11 @@ import org.mule.tck.junit4.rule.DynamicPort;
 import java.io.IOException;
 import java.net.ConnectException;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.client.fluent.Response;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.SERVICE_UNAVAILABLE;
 
 public class HttpListenerLifecycleTestCase extends AbstractHttpTestCase
 {
@@ -86,7 +86,8 @@ public class HttpListenerLifecycleTestCase extends AbstractHttpTestCase
     @Test
     public void disposeListenerReturns404() throws Exception
     {
-        ExtensionMessageSource httpListener = (ExtensionMessageSource) ((Flow) getFlowConstruct("catchAllWithinTestPathFlow")).getMessageSource();
+        ExtensionMessageSource httpListener =
+                (ExtensionMessageSource) ((Flow) getFlowConstruct("catchAllWithinTestPathFlow")).getMessageSource();
         httpListener.dispose();
         final Response response = Request.Get(getLifecycleConfigUrl("/path/somepath")).execute();
         final HttpResponse httpResponse = response.returnResponse();

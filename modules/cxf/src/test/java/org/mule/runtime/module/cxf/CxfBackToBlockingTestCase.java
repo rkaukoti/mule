@@ -6,11 +6,9 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.module.cxf.CxfBasicTestCase.APP_SOAP_XML;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -25,19 +23,19 @@ import java.io.InputStream;
 
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
-import org.custommonkey.xmlunit.XMLUnit;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.module.cxf.CxfBasicTestCase.APP_SOAP_XML;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class CxfBackToBlockingTestCase extends FunctionalTestCase
 {
 
     private static final HttpRequestOptions HTTP_REQUEST_OPTIONS = newOptions().method(Methods.POST.name()).build();
-
-    private String echoWsdl;
-
     @Rule
     public DynamicPort dynamicPort = new DynamicPort("port1");
+    private String echoWsdl;
 
     @Override
     protected String getConfigFile()
@@ -78,7 +76,8 @@ public class CxfBackToBlockingTestCase extends FunctionalTestCase
     public void backToBlockingWsdl() throws Exception
     {
         MuleClient client = muleContext.getClient();
-        MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/services/Echo" + "?wsdl", MuleMessage.builder().nullPayload().build(), HTTP_REQUEST_OPTIONS);
+        MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/services/Echo" + "?wsdl",
+                MuleMessage.builder().nullPayload().build(), HTTP_REQUEST_OPTIONS);
         assertNotNull(result.getPayload());
         XMLUnit.compareXML(echoWsdl, getPayloadAsString(result));
         muleContext.getRegistry().lookupObject(SensingNullRequestResponseMessageProcessor.class).assertRequestResponseThreadsSame();

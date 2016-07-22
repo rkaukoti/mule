@@ -31,7 +31,8 @@ import java.util.Map;
 public class SelectMetadataProvider extends AbstractQueryMetadataProvider
 {
 
-    public static final String DUPLICATE_COLUMN_LABEL_ERROR = "Query metadata contains multiple columns with the same label. Define column aliases to resolve this problem";
+    public static final String DUPLICATE_COLUMN_LABEL_ERROR =
+            "Query metadata contains multiple columns with the same label. Define column aliases to resolve this problem";
 
     private final boolean streaming;
 

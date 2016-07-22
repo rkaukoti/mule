@@ -46,6 +46,7 @@ public class TreeNode implements Serializable, Iterable
 
     private transient final OperationResult<?, FileAttributes> info;
     private final List<TreeNode> childs;
+
     private TreeNode(OperationResult<?, FileAttributes> info, List<TreeNode> childs)
     {
         this.info = info;
@@ -141,8 +142,8 @@ public class TreeNode implements Serializable, Iterable
          * Obtains a new {@link Builder} instance to be used to create
          * a {@link TreeNode} which references a file
          *
-         * @param message a {@link MuleMessage} which payload is an {@link InputStream} with the file content
-         *                and a {@link FileAttributes} instance as attributes
+         * @param message a {@link MuleMessage} which payload is an {@link InputStream} with the file content and a {@link FileAttributes}
+         *                instance as attributes
          * @return a new {@link Builder}
          */
         public static Builder forFile(OperationResult<InputStream, FileAttributes> message)

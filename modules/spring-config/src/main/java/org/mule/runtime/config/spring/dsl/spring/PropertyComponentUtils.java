@@ -6,15 +6,15 @@
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
-import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.MULE_PROPERTY_IDENTIFIER;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 import org.mule.runtime.config.spring.dsl.model.ComponentIdentifier;
 import org.mule.runtime.config.spring.dsl.model.ComponentModel;
 import org.mule.runtime.core.api.MuleRuntimeException;
-
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.ManagedMap;
+
+import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.MULE_PROPERTY_IDENTIFIER;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * Utility class to parse spring:property, spring:properties or property components in the configuration.
@@ -58,7 +58,8 @@ public class PropertyComponentUtils
         {
             ComponentModel springMap = propertyComponentModel.getInnerComponents().get(0);
             ManagedMap<String, Object> propertiesMap = new ManagedMap<>();
-            springMap.getInnerComponents().stream().forEach( mapEntry -> {
+            springMap.getInnerComponents().stream().forEach(mapEntry ->
+            {
                 Object value;
                 if (mapEntry.getParameters().containsKey(VALUE_PARAMETER_NAME))
                 {
@@ -74,7 +75,8 @@ public class PropertyComponentUtils
         }
         else
         {
-            throw new MuleRuntimeException(createStaticMessage("Unrecognized property model identifier: " + propertyComponentModel.getInnerComponents().get(0)));
+            throw new MuleRuntimeException(
+                    createStaticMessage("Unrecognized property model identifier: " + propertyComponentModel.getInnerComponents().get(0)));
         }
         return propertyValue;
     }

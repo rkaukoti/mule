@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.core.registry;
 
-import org.mule.runtime.core.api.registry.ServiceRegistry;
-
 import com.google.common.collect.ImmutableList;
+
+import org.mule.runtime.core.api.registry.ServiceRegistry;
 
 import java.util.Collection;
 import java.util.ServiceLoader;

@@ -27,12 +27,15 @@ public class ArtifactClassLoaderBuilderFactory
     /**
      * Creates an {@code ArtifactClassLoaderBuilderFactory} to create instances of {@code ArtifactClassLoaderBuilder}.
      *
-     * @param artifactClassLoaderFactory factory for creating the artifact resources and classes specific class loader
-     * @param applicationPluginRepository repository for artifacts plugins that are provided by default by the runtime
-     * @param artifactPluginFactory factory for creating an artifact plugin from it's descriptor
+     * @param artifactClassLoaderFactory     factory for creating the artifact resources and classes specific class loader
+     * @param applicationPluginRepository    repository for artifacts plugins that are provided by default by the runtime
+     * @param artifactPluginFactory          factory for creating an artifact plugin from it's descriptor
      * @param artifactPluginDescriptorLoader factory for loading the artifact plugin descriptor from a file
      */
-    public ArtifactClassLoaderBuilderFactory(DeployableArtifactClassLoaderFactory artifactClassLoaderFactory, ArtifactPluginRepository applicationPluginRepository, ArtifactPluginFactory artifactPluginFactory, ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader)
+    public ArtifactClassLoaderBuilderFactory(DeployableArtifactClassLoaderFactory artifactClassLoaderFactory,
+                                             ArtifactPluginRepository applicationPluginRepository,
+                                             ArtifactPluginFactory artifactPluginFactory,
+                                             ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader)
     {
         this.artifactClassLoaderFactory = artifactClassLoaderFactory;
         this.applicationPluginRepository = applicationPluginRepository;
@@ -47,7 +50,8 @@ public class ArtifactClassLoaderBuilderFactory
      */
     public ArtifactClassLoaderBuilder createArtifactClassLoaderBuilder()
     {
-        return new ArtifactClassLoaderBuilder(artifactClassLoaderFactory, applicationPluginRepository, artifactPluginFactory, artifactPluginDescriptorLoader);
+        return new ArtifactClassLoaderBuilder(artifactClassLoaderFactory, applicationPluginRepository, artifactPluginFactory,
+                artifactPluginDescriptorLoader);
     }
 
 }

@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.module.extension.internal.operation;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.runtime.api.message.MuleEvent;
 import org.mule.tck.testmodels.fruit.Apple;
 import org.mule.test.vegan.extension.VeganExtension;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class NoRefFunctionalTestCase extends ExtensionFunctionalTestCase
 {

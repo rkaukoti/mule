@@ -54,14 +54,14 @@ public class MapToBean extends AbstractTransformer implements DiscoverableTransf
     {
         try
         {
-            Map props = (Map)src;
-            String c = (String)props.remove(CLASS_PROPERTY);
+            Map props = (Map) src;
+            String c = (String) props.remove(CLASS_PROPERTY);
             Class clazz = getReturnDataType().getType();
             if (c == null && Object.class.equals(clazz))
             {
                 throw new TransformerException(CoreMessages.transformerMapBeanClassNotSet());
             }
-            else if (c!=null)
+            else if (c != null)
             {
                 clazz = ClassUtils.loadClass(c, getClass());
             }

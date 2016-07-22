@@ -6,11 +6,7 @@
  */
 package org.mule.test.integration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
@@ -30,7 +26,10 @@ import org.mule.tck.MuleEndpointTestUtils;
 
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test the creation of various targets from the service descriptor
@@ -82,7 +81,7 @@ public class MuleEndpointConfigurationFlowTestCase extends FunctionalTestCase
         assertNotNull(((Flow) flow).getMessageSource());
 
         assertEquals(1, ((DefaultInboundEndpoint) ((Flow) flow).getMessageSource()).getMessageProcessors()
-            .size());
+                                                                                   .size());
 
         ImmutableEndpoint endpoint = ((DefaultInboundEndpoint) ((Flow) flow).getMessageSource());
         assertNotNull(endpoint);
@@ -127,7 +126,7 @@ public class MuleEndpointConfigurationFlowTestCase extends FunctionalTestCase
     public void testEndpointFromURI() throws Exception
     {
         ImmutableEndpoint ep = getEndpointFactory().getInboundEndpoint(
-            "test://hello?exchangePattern=request-response&responseTimeout=2002&connector=testConnector1");
+                "test://hello?exchangePattern=request-response&responseTimeout=2002&connector=testConnector1");
         assertEquals(MessageExchangePattern.REQUEST_RESPONSE, ep.getExchangePattern());
         assertEquals(2002, ep.getResponseTimeout());
         assertTrue(ep instanceof InboundEndpoint);
@@ -138,7 +137,7 @@ public class MuleEndpointConfigurationFlowTestCase extends FunctionalTestCase
         assertEquals(2002, event.getTimeout());
 
         ImmutableEndpoint ep2 = getEndpointFactory().getInboundEndpoint(
-            "test://hello?connector=testConnector1");
+                "test://hello?connector=testConnector1");
 
         event = MuleEndpointTestUtils.getTestEvent("hello", getTestFlow(), (InboundEndpoint) ep2,
                 muleContext);

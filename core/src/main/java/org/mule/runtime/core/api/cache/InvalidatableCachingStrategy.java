@@ -25,7 +25,6 @@ public interface InvalidatableCachingStrategy
      * Invalidates a given entry from the cache if it exists, otherwise ignores it.
      *
      * @param key indicates the cache entry to invalidate. Cannot be null.
-     *
      * @throws InvalidateCacheException if there is any error invalidating the cache strategy
      * @throws IllegalArgumentException if key has an invalid value
      */

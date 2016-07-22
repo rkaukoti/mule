@@ -24,8 +24,6 @@ public final class TransitiveDependenciesFilter
     /**
      * Creates a new instance, only visible to package scope so the {@link Configuration} is the only one
      * that should call this constructor.
-     *
-     * @param predicate
      */
     TransitiveDependenciesFilter(Predicate<MavenArtifact> predicate)
     {
@@ -42,7 +40,6 @@ public final class TransitiveDependenciesFilter
     /**
      * {@link Predicate} to be used to filter which transitive dependencies should be included.
      *
-     * @param predicate
      * @return this
      */
     public TransitiveDependenciesFilter match(Predicate<MavenArtifact> predicate)

@@ -122,7 +122,8 @@ public class ReflectionMuleCoreExtensionDependencyResolver implements MuleCoreEx
                 }
                 else
                 {
-                    throw new IllegalDependencyInjectionException("A class cannot implement CoreExtensionAware when is also using MuleCoreExtensionDependency");
+                    throw new IllegalDependencyInjectionException(
+                            "A class cannot implement CoreExtensionAware when is also using MuleCoreExtensionDependency");
                 }
             }
         }
@@ -141,11 +142,13 @@ public class ReflectionMuleCoreExtensionDependencyResolver implements MuleCoreEx
         });
     }
 
-    private void injectDependencies(MuleCoreExtension muleCoreExtension, List<MuleCoreExtension> resolvedExtensions, List<LinkedMuleCoreExtensionDependency> dependencies)
+    private void injectDependencies(MuleCoreExtension muleCoreExtension, List<MuleCoreExtension> resolvedExtensions,
+                                    List<LinkedMuleCoreExtensionDependency> dependencies)
     {
         for (LinkedMuleCoreExtensionDependency linkedMuleCoreExtensionDependency : dependencies)
         {
-            final MuleCoreExtension dependencyInstance = findDependencyInstance(resolvedExtensions, linkedMuleCoreExtensionDependency.getDependencyClass());
+            final MuleCoreExtension dependencyInstance =
+                    findDependencyInstance(resolvedExtensions, linkedMuleCoreExtensionDependency.getDependencyClass());
 
             try
             {
@@ -158,7 +161,8 @@ public class ReflectionMuleCoreExtensionDependencyResolver implements MuleCoreEx
         }
     }
 
-    private MuleCoreExtension findDependencyInstance(List<MuleCoreExtension> resolvedExtensions, Class<? extends MuleCoreExtension> dependencyClass)
+    private MuleCoreExtension findDependencyInstance(List<MuleCoreExtension> resolvedExtensions,
+                                                     Class<? extends MuleCoreExtension> dependencyClass)
     {
         for (MuleCoreExtension coreExtension : resolvedExtensions)
         {

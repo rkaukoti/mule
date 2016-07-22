@@ -6,8 +6,6 @@
  */
 package org.mule.compatibility.core.endpoint;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_SESSION_PROPERTY;
-
 import org.mule.compatibility.core.api.endpoint.EndpointMessageProcessorChainFactory;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
@@ -37,6 +35,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_SESSION_PROPERTY;
+
 public class DefaultOutboundEndpoint extends AbstractEndpoint implements OutboundEndpoint
 {
     private static final long serialVersionUID = 8860985949279708638L;
@@ -59,12 +59,12 @@ public class DefaultOutboundEndpoint extends AbstractEndpoint implements Outboun
                                    AbstractRedeliveryPolicy redeliveryPolicy,
                                    String responsePropertiesList,
                                    EndpointMessageProcessorChainFactory messageProcessorsFactory,
-                                   List <MessageProcessor> messageProcessors,
-                                   List <MessageProcessor> responseMessageProcessors,
+                                   List<MessageProcessor> messageProcessors,
+                                   List<MessageProcessor> responseMessageProcessors,
                                    boolean disableTransportTransformer,
                                    MediaType endpointMimeType)
     {
-        super(connector, endpointUri, name, properties, transactionConfig, 
+        super(connector, endpointUri, name, properties, transactionConfig,
                 deleteUnacceptedMessage, messageExchangePattern, responseTimeout, initialState,
                 endpointEncoding, endpointBuilderName, muleContext, retryPolicyTemplate, null,
                 messageProcessorsFactory, messageProcessors, responseMessageProcessors, disableTransportTransformer, endpointMimeType);
@@ -116,7 +116,7 @@ public class DefaultOutboundEndpoint extends AbstractEndpoint implements Outboun
     {
         EndpointMessageProcessorChainFactory factory = getMessageProcessorsFactory();
         MessageProcessor chain = factory.createOutboundMessageProcessorChain(this,
-            ((AbstractConnector) getConnector()).createDispatcherMessageProcessor(this));
+                ((AbstractConnector) getConnector()).createDispatcherMessageProcessor(this));
 
         if (chain instanceof MuleContextAware)
         {
@@ -146,6 +146,6 @@ public class DefaultOutboundEndpoint extends AbstractEndpoint implements Outboun
     @Override
     public void setMessagingExceptionHandler(MessagingExceptionHandler messagingExceptionHandler)
     {
-       this.exceptionHandler = messagingExceptionHandler;
+        this.exceptionHandler = messagingExceptionHandler;
     }
 }

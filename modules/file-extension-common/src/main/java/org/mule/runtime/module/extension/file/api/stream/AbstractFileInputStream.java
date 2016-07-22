@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.module.extension.file.api.stream;
 
+import org.apache.commons.io.input.AutoCloseInputStream;
 import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.module.extension.file.api.FileSystem;
 import org.mule.runtime.module.extension.file.api.lock.PathLock;
+import org.springframework.cglib.proxy.Enhancer;
+import org.springframework.cglib.proxy.MethodInterceptor;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
-
-import org.apache.commons.io.input.AutoCloseInputStream;
-import org.springframework.cglib.proxy.Enhancer;
-import org.springframework.cglib.proxy.MethodInterceptor;
 
 /**
  * Base class for {@link InputStream} instances returned by connectors
@@ -41,21 +40,20 @@ import org.springframework.cglib.proxy.MethodInterceptor;
 public abstract class AbstractFileInputStream extends AutoCloseInputStream
 {
 
-    private static InputStream createLazyStream(LazyStreamSupplier streamFactory)
-    {
-        return (InputStream) Enhancer.create(InputStream.class, (MethodInterceptor) (proxy, method, arguments, methodProxy)
-                -> methodProxy.invoke(streamFactory.get(), arguments));
-    }
-
     private final LazyStreamSupplier streamSupplier;
     private final PathLock lock;
     private final AtomicBoolean closed = new AtomicBoolean(false);
-
     public AbstractFileInputStream(LazyStreamSupplier streamSupplier, PathLock lock)
     {
         super(createLazyStream(streamSupplier));
         this.lock = lock;
         this.streamSupplier = streamSupplier;
+    }
+
+    private static InputStream createLazyStream(LazyStreamSupplier streamFactory)
+    {
+        return (InputStream) Enhancer.create(InputStream.class, (MethodInterceptor) (proxy, method, arguments, methodProxy)
+                -> methodProxy.invoke(streamFactory.get(), arguments));
     }
 
     /**

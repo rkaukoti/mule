@@ -24,9 +24,9 @@ public class TokenResponseConfiguration
 
     private List<ParameterExtractor> parameterExtractors = Collections.emptyList();
 
-    public void setParameterExtractors(final List<ParameterExtractor> parameterExtractors)
+    public String getAccessToken()
     {
-        this.parameterExtractors = parameterExtractors;
+        return accessToken;
     }
 
     public void setAccessToken(final String accessToken)
@@ -34,24 +34,14 @@ public class TokenResponseConfiguration
         this.accessToken = accessToken;
     }
 
-    public void setRefreshToken(final String refreshToken)
-    {
-        this.refreshToken = refreshToken;
-    }
-
-    public void setExpiresIn(final String expiresIn)
-    {
-        this.expiresIn = expiresIn;
-    }
-
-    public String getAccessToken()
-    {
-        return accessToken;
-    }
-
     public String getRefreshToken()
     {
         return refreshToken;
+    }
+
+    public void setRefreshToken(final String refreshToken)
+    {
+        this.refreshToken = refreshToken;
     }
 
     public String getExpiresIn()
@@ -59,8 +49,18 @@ public class TokenResponseConfiguration
         return expiresIn;
     }
 
+    public void setExpiresIn(final String expiresIn)
+    {
+        this.expiresIn = expiresIn;
+    }
+
     public List<ParameterExtractor> getParameterExtractors()
     {
         return parameterExtractors;
+    }
+
+    public void setParameterExtractors(final List<ParameterExtractor> parameterExtractors)
+    {
+        this.parameterExtractors = parameterExtractors;
     }
 }

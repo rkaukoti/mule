@@ -6,18 +6,8 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
-import static java.nio.charset.StandardCharsets.US_ASCII;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.api.metadata.MediaType.APPLICATION_XML;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.DefaultMuleEvent;
@@ -37,8 +27,17 @@ import java.nio.charset.Charset;
 
 import javax.activation.MimeTypeParseException;
 
-import org.junit.Before;
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.US_ASCII;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.api.metadata.MediaType.APPLICATION_XML;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
+import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
 
 @SmallTest
 public abstract class AbstractAddVariablePropertyTransformerTestCase extends AbstractMuleContextTestCase

@@ -11,11 +11,10 @@ import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.lifecycle.Startable;
 import org.mule.runtime.core.api.lifecycle.Stoppable;
-
-import java.util.HashMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
 
 public class WaterMelon implements Fruit, Startable, Stoppable, Disposable
 {
@@ -71,24 +70,24 @@ public class WaterMelon implements Fruit, Startable, Stoppable, Disposable
         return brand;
     }
 
-    public Integer getSeeds()
-    {
-        return seeds;
-    }
-
-    public Double getRadius()
-    {
-        return radius;
-    }
-
     public void setBrand(String string)
     {
         brand = string;
     }
 
+    public Integer getSeeds()
+    {
+        return seeds;
+    }
+
     public void setSeeds(Integer integer)
     {
         seeds = integer;
+    }
+
+    public Double getRadius()
+    {
+        return radius;
     }
 
     public void setRadius(Double double1)

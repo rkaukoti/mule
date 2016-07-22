@@ -6,14 +6,6 @@
  */
 package org.mule.compatibility.transport.http;
 
-import org.mule.compatibility.transport.http.MuleHostConfiguration;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
-
 import org.apache.commons.httpclient.ConnectTimeoutException;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpHost;
@@ -24,23 +16,29 @@ import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 import org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory;
 import org.junit.Test;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class MuleHostConfigurationTestCase extends AbstractMuleTestCase
 {
-    
+
     private static final String HTTPX = "httpx";
-    
+
     @Test
     public void testSetHostViaUri() throws Exception
     {
         HostConfiguration hostConfig = createHostConfiguration();
-        
+
         URI uri = new URI("http://www.mulesoft.org:8080", false);
         hostConfig.setHost(uri);
-        
+
         assertMockSocketFactory(hostConfig);
         assertEquals("www.mulesoft.org", hostConfig.getHost());
         assertEquals(8080, hostConfig.getPort());
@@ -54,10 +52,10 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase
             protected void doTest() throws Exception
             {
                 HostConfiguration hostConfig = createHostConfiguration();
-                
+
                 URI uri = new URI("httpx://www.mulesoft.org:8080", false);
                 hostConfig.setHost(uri);
-                
+
                 assertTrue(hostConfig.getProtocol().getSocketFactory() instanceof DefaultProtocolSocketFactory);
                 assertEquals("www.mulesoft.org", hostConfig.getHost());
                 assertEquals(8080, hostConfig.getPort());
@@ -69,10 +67,10 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase
     public void testSetHostViaHttpHost()
     {
         HostConfiguration hostConfig = createHostConfiguration();
-        
+
         HttpHost host = new HttpHost("www.mulesoft.org", 8080);
         hostConfig.setHost(host);
-        
+
         assertMockSocketFactory(hostConfig);
         assertEquals("www.mulesoft.org", hostConfig.getHost());
         assertEquals(8080, hostConfig.getPort());
@@ -82,9 +80,9 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase
     public void testSetHostViaHostAndPortAndProtocolName()
     {
         HostConfiguration hostConfig = createHostConfiguration();
-        
+
         hostConfig.setHost("www.mulesoft.org", 8080, "http");
-        
+
         assertMockSocketFactory(hostConfig);
         assertEquals("www.mulesoft.org", hostConfig.getHost());
         assertEquals(8080, hostConfig.getPort());
@@ -98,9 +96,9 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase
             protected void doTest() throws Exception
             {
                 HostConfiguration hostConfig = createHostConfiguration();
-                
+
                 hostConfig.setHost("www.mulesoft.org", 8080, "httpx");
-                
+
                 assertDefaultSocketFactory(hostConfig);
                 assertEquals("www.mulesoft.org", hostConfig.getHost());
                 assertEquals(8080, hostConfig.getPort());
@@ -116,7 +114,7 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase
 
         Protocol protocol = Protocol.getProtocol("http");
         hostConfig.setHost("www.mulesoft.org", "www.mulesoft.com", 8080, protocol);
-        
+
         assertMockSocketFactory(hostConfig);
         assertEquals("www.mulesoft.org", hostConfig.getHost());
         assertEquals(8080, hostConfig.getPort());
@@ -135,7 +133,7 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase
 
                 Protocol protocol = Protocol.getProtocol("httpx");
                 hostConfig.setHost("www.mulesoft.org", "www.mulesoft.com", 8080, protocol);
-                
+
                 assertDefaultSocketFactory(hostConfig);
                 assertEquals("www.mulesoft.org", hostConfig.getHost());
                 assertEquals(8080, hostConfig.getPort());
@@ -160,9 +158,9 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase
     public void testSetHostViaHost()
     {
         HostConfiguration hostConfig = createHostConfiguration();
-        
+
         hostConfig.setHost("www.mulesoft.org");
-        
+
         assertEquals("www.mulesoft.org", hostConfig.getHost());
         assertMockSocketFactory(hostConfig);
     }
@@ -174,45 +172,45 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase
         HostConfiguration clone = (HostConfiguration) hostConfig.clone();
         assertMockSocketFactory(clone);
     }
-    
+
     private MuleHostConfiguration createHostConfiguration()
     {
         MuleHostConfiguration hostConfig = new MuleHostConfiguration();
         ProtocolSocketFactory socketFactory = new MockSecureProtocolFactory();
         Protocol protocol = new Protocol("http", socketFactory, 80);
         hostConfig.setHost("localhost", 80, protocol);
-        
+
         // since we're using a setHost variant here, too let's assert that it actually worked
         assertMockSocketFactory(hostConfig);
-        
+
         return hostConfig;
     }
-    
+
     private void assertMockSocketFactory(HostConfiguration hostConfig)
     {
         assertTrue(hostConfig.getProtocol().getSocketFactory() instanceof MockSecureProtocolFactory);
     }
-    
+
     private void assertDefaultSocketFactory(HostConfiguration hostConfig)
     {
         assertTrue(hostConfig.getProtocol().getSocketFactory() instanceof DefaultProtocolSocketFactory);
     }
-    
+
     private static abstract class DifferentProtocolTemplate
     {
         public DifferentProtocolTemplate()
         {
             super();
         }
-        
+
         @Test
-    public void test() throws Exception
+        public void test() throws Exception
         {
             try
             {
                 Protocol httpxProtocol = new Protocol(HTTPX, new DefaultProtocolSocketFactory(), 81);
                 Protocol.registerProtocol(HTTPX, httpxProtocol);
-                
+
                 doTest();
             }
             finally
@@ -220,7 +218,7 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase
                 Protocol.unregisterProtocol(HTTPX);
             }
         }
-        
+
         protected abstract void doTest() throws Exception;
     }
 
@@ -230,9 +228,9 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase
         {
             super();
         }
-        
+
         public Socket createSocket(Socket socket, String host, int port, boolean autoClose)
-            throws IOException, UnknownHostException
+                throws IOException, UnknownHostException
         {
             throw new UnsupportedOperationException();
         }
@@ -243,18 +241,18 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase
         }
 
         public Socket createSocket(String host, int port, InetAddress localAddress, int localPort)
-            throws IOException, UnknownHostException
+                throws IOException, UnknownHostException
         {
             throw new UnsupportedOperationException();
         }
 
         public Socket createSocket(String host, int port, InetAddress localAddress, int localPort,
-            HttpConnectionParams params) throws IOException, UnknownHostException, ConnectTimeoutException
+                                   HttpConnectionParams params) throws IOException, UnknownHostException, ConnectTimeoutException
         {
             throw new UnsupportedOperationException();
         }
     }
-    
+
 }
 
 

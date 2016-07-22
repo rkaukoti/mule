@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.core.util;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 // @ThreadSafe
 public class MapUtils extends org.apache.commons.collections.MapUtils
@@ -48,8 +48,8 @@ public class MapUtils extends org.apache.commons.collections.MapUtils
      * keys or values iterator is null or exhausted.
      *
      * @param mapClass the Class of the Map to instantiate
-     * @param keys iterator for Objects ued as keys
-     * @param values iterator for Objects used as values
+     * @param keys     iterator for Objects ued as keys
+     * @param values   iterator for Objects used as values
      * @return the instantiated Map
      */
     public static <K, V> Map<K, V> mapWithKeysAndValues(Class<? extends Map> mapClass,
@@ -87,7 +87,7 @@ public class MapUtils extends org.apache.commons.collections.MapUtils
      * Creates a String representation of the given Map, with optional newlines
      * between elements.
      *
-     * @param props the map to format
+     * @param props   the map to format
      * @param newline indicates whether elements are to be split across lines
      * @return the formatted String
      */

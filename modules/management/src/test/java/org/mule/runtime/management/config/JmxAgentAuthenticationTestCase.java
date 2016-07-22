@@ -6,8 +6,8 @@
  */
 package org.mule.runtime.management.config;
 
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
 
@@ -23,8 +23,7 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
 
 public class JmxAgentAuthenticationTestCase extends FunctionalTestCase
 {
@@ -75,7 +74,7 @@ public class JmxAgentAuthenticationTestCase extends FunctionalTestCase
     private JMXServiceURL createServiceUrl() throws MalformedURLException
     {
         String url = String.format("service:jmx:rmi:///jndi/rmi://localhost:%d/server",
-                                   dynamicPort.getNumber());
+                dynamicPort.getNumber());
         return new JMXServiceURL(url);
     }
 }

@@ -7,12 +7,11 @@
 package org.mule.runtime.module.launcher;
 
 import org.mule.runtime.core.api.MuleContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class CompositeDeploymentListener implements DeploymentListener, DeploymentListenerManager
 {
@@ -179,6 +178,8 @@ public class CompositeDeploymentListener implements DeploymentListener, Deployme
 
     private void logNotificationProcessingError(String appName, DeploymentListener listener, String notification, Throwable error)
     {
-        logger.error(String.format("Listener '%s' failed to process notification '%s' for application '%s'", listener, notification, appName), error);
+        logger.error(
+                String.format("Listener '%s' failed to process notification '%s' for application '%s'", listener, notification, appName),
+                error);
     }
 }

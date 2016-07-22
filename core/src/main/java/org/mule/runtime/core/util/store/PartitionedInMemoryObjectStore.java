@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.core.util.store;
 
-import static org.mule.runtime.core.api.store.ObjectStoreManager.UNBOUNDED;
 import org.mule.runtime.core.api.store.ObjectAlreadyExistsException;
 import org.mule.runtime.core.api.store.ObjectDoesNotExistException;
 import org.mule.runtime.core.api.store.ObjectStoreException;
@@ -22,11 +21,15 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
+import static org.mule.runtime.core.api.store.ObjectStoreManager.UNBOUNDED;
+
 public class PartitionedInMemoryObjectStore<T extends Serializable> extends AbstractPartitionedObjectStore<T>
-    implements PartitionableExpirableObjectStore<T>
+        implements PartitionableExpirableObjectStore<T>
 {
-    private ConcurrentMap<String, ConcurrentMap<Serializable, T>> partitions = new ConcurrentHashMap<String, ConcurrentMap<Serializable, T>>();
-    private ConcurrentMap<String, ConcurrentLinkedQueue<ExpiryEntry>> expiryInfoPartition = new ConcurrentHashMap<String, ConcurrentLinkedQueue<ExpiryEntry>>();
+    private ConcurrentMap<String, ConcurrentMap<Serializable, T>> partitions =
+            new ConcurrentHashMap<String, ConcurrentMap<Serializable, T>>();
+    private ConcurrentMap<String, ConcurrentLinkedQueue<ExpiryEntry>> expiryInfoPartition =
+            new ConcurrentHashMap<String, ConcurrentLinkedQueue<ExpiryEntry>>();
 
     @Override
     public boolean isPersistent()
@@ -97,7 +100,7 @@ public class PartitionedInMemoryObjectStore<T extends Serializable> extends Abst
     {
         return new ArrayList<Serializable>(getPartition(partitionName).keySet());
     }
-    
+
     @Override
     public void clear(String partitionName) throws ObjectStoreException
     {
@@ -132,7 +135,7 @@ public class PartitionedInMemoryObjectStore<T extends Serializable> extends Abst
         {
             partition = new ConcurrentLinkedQueue<ExpiryEntry>();
             ConcurrentLinkedQueue<ExpiryEntry> previous = expiryInfoPartition.putIfAbsent(
-                partitionName, partition);
+                    partitionName, partition);
             if (previous != null)
             {
                 partition = previous;

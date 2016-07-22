@@ -6,6 +6,19 @@
  */
 package org.mule.compatibility.transport.http;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.httpclient.Credentials;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpConnectionManager;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.HttpState;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.NTCredentials;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthPolicy;
+import org.apache.commons.httpclient.auth.AuthScope;
+import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
+import org.apache.commons.httpclient.util.IdleConnectionTimeoutThread;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
@@ -31,6 +44,7 @@ import org.mule.runtime.core.util.BooleanUtils;
 import org.mule.runtime.core.util.MapUtils;
 import org.mule.runtime.core.util.OneTimeWarning;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -44,21 +58,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.httpclient.Credentials;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpConnectionManager;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.HttpState;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.NTCredentials;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.httpclient.auth.AuthPolicy;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
-import org.apache.commons.httpclient.util.IdleConnectionTimeoutThread;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>HttpConnector</code> provides a way of receiving and sending http requests
@@ -95,7 +94,8 @@ public class HttpConnector extends TcpConnector
      * MuleEvent property to pass back the status for the response
      */
     public static final String HTTP_STATUS_PROPERTY = org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_STATUS_PROPERTY;
-    public static final String HTTP_VERSION_PROPERTY = org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_VERSION_PROPERTY;
+    public static final String HTTP_VERSION_PROPERTY =
+            org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_VERSION_PROPERTY;
 
     /**
      * @deprecated Instead users can now add properties to the outgoing request using the OUTBOUND property scope on the message.
@@ -121,18 +121,21 @@ public class HttpConnector extends TcpConnector
     /**
      * The path and query portions of the URL being accessed.
      */
-    public static final String HTTP_REQUEST_PROPERTY = org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_REQUEST_PROPERTY;
+    public static final String HTTP_REQUEST_PROPERTY =
+            org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_REQUEST_PROPERTY;
 
     /**
      * The path portion of the URL being accessed. No query string is included.
      */
-    public static final String HTTP_REQUEST_PATH_PROPERTY = org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_REQUEST_PATH_PROPERTY;
+    public static final String HTTP_REQUEST_PATH_PROPERTY =
+            org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_REQUEST_PATH_PROPERTY;
 
     /**
      * The context path of the endpoint being accessed. This is the path that the
      * HTTP endpoint is listening on.
      */
-    public static final String HTTP_CONTEXT_PATH_PROPERTY = org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_CONTEXT_PATH_PROPERTY;
+    public static final String HTTP_CONTEXT_PATH_PROPERTY =
+            org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_CONTEXT_PATH_PROPERTY;
 
     /**
      * The context URI of the endpoint being accessed. This is the address that the
@@ -158,14 +161,22 @@ public class HttpConnector extends TcpConnector
     public static final String DEFAULT_HTTP_GET_BODY_PARAM_PROPERTY = "body";
     public static final String HTTP_POST_BODY_PARAM_PROPERTY = HTTP_PREFIX + "post.body.param";
 
-    public static final String HTTP_DISABLE_STATUS_CODE_EXCEPTION_CHECK = org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_DISABLE_STATUS_CODE_EXCEPTION_CHECK;
+    public static final String HTTP_DISABLE_STATUS_CODE_EXCEPTION_CHECK =
+            org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_DISABLE_STATUS_CODE_EXCEPTION_CHECK;
     public static final String HTTP_ENCODE_PARAMVALUE = HTTP_PREFIX + "encode.paramvalue";
 
     public static final Set<String> HTTP_INBOUND_PROPERTIES;
-
-    protected Map<OutboundEndpoint, MessageDispatcher> endpointDispatchers = new ConcurrentHashMap<OutboundEndpoint, MessageDispatcher>();
-
-    private static OneTimeWarning deprecationWarning = new OneTimeWarning(LoggerFactory.getLogger(HttpConnector.class), HttpNamespaceHandler.HTTP_TRANSPORT_DEPRECATION_MESSAGE);
+    public static final String HTTP_COOKIE_SPEC_PROPERTY = "cookieSpec";
+    public static final String HTTP_COOKIES_PROPERTY = "cookies";
+    public static final String HTTP_ENABLE_COOKIES_PROPERTY = "enableCookies";
+    public static final String COOKIE_SPEC_NETSCAPE = "netscape";
+    public static final String COOKIE_SPEC_RFC2109 = "rfc2109";
+    public static final String ROOT_PATH = "/";
+    public static final int DEFAULT_CONNECTION_TIMEOUT = 2000;
+    public static final String BIND_TO_ALL_INTERFACES_IP = "0.0.0.0";
+    private static final String LOOKUP_DEBUG_MESSAGE_FORMAT = "%s lookup of receiver on connector: %s with URI key: %s.";
+    private static OneTimeWarning deprecationWarning =
+            new OneTimeWarning(LoggerFactory.getLogger(HttpConnector.class), HttpNamespaceHandler.HTTP_TRANSPORT_DEPRECATION_MESSAGE);
 
     static
     {
@@ -185,40 +196,21 @@ public class HttpConnector extends TcpConnector
         AuthPolicy.registerAuthScheme(AuthPolicy.NTLM, NTLMScheme.class);
     }
 
-    public static final String HTTP_COOKIE_SPEC_PROPERTY = "cookieSpec";
-    public static final String HTTP_COOKIES_PROPERTY = "cookies";
-    public static final String HTTP_ENABLE_COOKIES_PROPERTY = "enableCookies";
-
-    public static final String COOKIE_SPEC_NETSCAPE = "netscape";
-    public static final String COOKIE_SPEC_RFC2109 = "rfc2109";
-    public static final String ROOT_PATH = "/";
-    public static final int DEFAULT_CONNECTION_TIMEOUT = 2000;
-
-    public static final String BIND_TO_ALL_INTERFACES_IP = "0.0.0.0";
-    private static final String LOOKUP_DEBUG_MESSAGE_FORMAT = "%s lookup of receiver on connector: %s with URI key: %s.";
-
-    private String proxyHostname = null;
-
-    private int proxyPort = org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP.getDefaultPort();
-
-    private String proxyUsername = null;
-
-    private String proxyPassword = null;
-
-    private boolean proxyNtlmAuthentication;
-
-    private String cookieSpec;
-
-    private boolean enableCookies = false;
-
+    protected Map<OutboundEndpoint, MessageDispatcher> endpointDispatchers = new ConcurrentHashMap<OutboundEndpoint, MessageDispatcher>();
     protected HttpConnectionManager clientConnectionManager;
-
+    private String proxyHostname = null;
+    private int proxyPort = org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP.getDefaultPort();
+    private String proxyUsername = null;
+    private String proxyPassword = null;
+    private boolean proxyNtlmAuthentication;
+    private String cookieSpec;
+    private boolean enableCookies = false;
     private IdleConnectionTimeoutThread connectionCleaner;
 
     private boolean disableCleanupThread;
 
     private org.mule.compatibility.transport.http.HttpConnectionManager connectionManager;
-    
+
     private boolean singleDispatcherPerEndpoint = false;
 
     public HttpConnector(MuleContext context)
@@ -226,7 +218,108 @@ public class HttpConnector extends TcpConnector
         super(context);
         deprecationWarning.warn();
         singleDispatcherPerEndpoint = BooleanUtils.toBoolean(System.getProperty(SINGLE_DISPATCHER_PER_ENDPOINT_SYSTEM_PROPERTY));
-        
+
+    }
+
+    /**
+     * Ensures that the supplied URL starts with a '/'.
+     */
+    public static String normalizeUrl(String url)
+    {
+        if (url == null)
+        {
+            url = "/";
+        }
+        else if (!url.startsWith("/"))
+        {
+            url = "/" + url;
+        }
+        return url;
+    }
+
+    public static MessageReceiver findReceiverByStemConsideringMatchingHost(Map<Object, MessageReceiver> receivers, String uri)
+    {
+        int match = -1;
+        MessageReceiver receiver = null;
+        final URI requestUri = URI.create(uri);
+
+        for (final Map.Entry<Object, MessageReceiver> e : receivers.entrySet())
+        {
+            try
+            {
+                final URI receiverUri = URI.create((String) e.getKey());
+                final MessageReceiver candidate = e.getValue();
+                int pathLength = replaceNull(receiverUri.getPath()).length();
+
+                if (uriStartsWith(requestUri, receiverUri) && match < pathLength)
+                {
+                    match = pathLength;
+                    receiver = candidate;
+                }
+            }
+            catch (IllegalArgumentException iae)
+            {
+                // Receiver key is not a valid URI, it won't match
+                continue;
+            }
+        }
+        return receiver;
+    }
+
+    public static MessageReceiver findReceiverByStem(Map<Object, MessageReceiver> receivers, String uriStr)
+    {
+        int match = 0;
+        MessageReceiver receiver = null;
+        for (Map.Entry<Object, MessageReceiver> e : receivers.entrySet())
+        {
+            String key = (String) e.getKey();
+            MessageReceiver candidate = e.getValue();
+            if (uriStr.startsWith(key) && match < key.length())
+            {
+                match = key.length();
+                receiver = candidate;
+            }
+        }
+        return receiver;
+    }
+
+    private static String replaceNull(String text)
+    {
+        return text == null ? "" : text;
+    }
+
+    private static boolean uriStartsWith(URI requestUri, URI receiverUri)
+    {
+        return uriMatchesReceiverHostAndPort(requestUri, receiverUri)
+               && StringUtils.startsWith(requestUri.getPath(), receiverUri.getPath());
+    }
+
+    public static boolean uriMatchesReceiver(URI uri, URI receiverUri)
+    {
+        return uriMatchesReceiverHostAndPort(uri, receiverUri) &&
+               receiverUri.getPath().equalsIgnoreCase(uri.getPath());
+    }
+
+    private static boolean uriMatchesReceiverHostAndPort(URI uri, URI receiverUri)
+    {
+        return receiverUri.getPort() == uri.getPort() &&
+               StringUtils.equalsIgnoreCase(receiverUri.getScheme(), uri.getScheme()) &&
+               matchesUserInfo(uri, receiverUri) &&
+               (HttpConnector.BIND_TO_ALL_INTERFACES_IP.equals(receiverUri.getHost()) ||
+                HttpConnector.BIND_TO_ALL_INTERFACES_IP.equals(uri.getHost()) ||
+                StringUtils.equalsIgnoreCase(receiverUri.getHost(), uri.getHost()));
+    }
+
+    private static boolean matchesUserInfo(URI uri, URI receiverUri)
+    {
+        if (uri.getUserInfo() == null)
+        {
+            return receiverUri.getUserInfo() == null;
+        }
+        else
+        {
+            return uri.getUserInfo().equals(receiverUri.getUserInfo());
+        }
     }
 
     @Override
@@ -290,7 +383,7 @@ public class HttpConnector extends TcpConnector
             }
             catch (MuleException e)
             {
-                throw new InitialisationException(CoreMessages.createStaticMessage("failed creating http connection manager"),this);
+                throw new InitialisationException(CoreMessages.createStaticMessage("failed creating http connection manager"), this);
             }
         }
     }
@@ -328,7 +421,7 @@ public class HttpConnector extends TcpConnector
         super.doStart();
         if (this.connectionManager == null)
         {
-            this.connectionManager = new org.mule.compatibility.transport.http.HttpConnectionManager(this,getReceiverWorkManager());
+            this.connectionManager = new org.mule.compatibility.transport.http.HttpConnectionManager(this, getReceiverWorkManager());
         }
     }
 
@@ -395,24 +488,14 @@ public class HttpConnector extends TcpConnector
         return proxyHostname;
     }
 
-    public String getProxyPassword()
-    {
-        return proxyPassword;
-    }
-
-    public int getProxyPort()
-    {
-        return proxyPort;
-    }
-
-    public String getProxyUsername()
-    {
-        return proxyUsername;
-    }
-
     public void setProxyHostname(String host)
     {
         proxyHostname = host;
+    }
+
+    public String getProxyPassword()
+    {
+        return proxyPassword;
     }
 
     public void setProxyPassword(String string)
@@ -420,9 +503,19 @@ public class HttpConnector extends TcpConnector
         proxyPassword = string;
     }
 
+    public int getProxyPort()
+    {
+        return proxyPort;
+    }
+
     public void setProxyPort(int port)
     {
         proxyPort = port;
+    }
+
+    public String getProxyUsername()
+    {
+        return proxyUsername;
     }
 
     public void setProxyUsername(String string)
@@ -460,7 +553,6 @@ public class HttpConnector extends TcpConnector
     {
         this.enableCookies = enableCookies;
     }
-
 
     public HttpConnectionManager getClientConnectionManager()
     {
@@ -543,22 +635,6 @@ public class HttpConnector extends TcpConnector
         }
     }
 
-    /**
-     * Ensures that the supplied URL starts with a '/'.
-     */
-    public static String normalizeUrl(String url)
-    {
-        if (url == null)
-        {
-            url = "/";
-        }
-        else if (!url.startsWith("/"))
-        {
-            url = "/" + url;
-        }
-        return url;
-    }
-
     public boolean isProxyNtlmAuthentication()
     {
         return proxyNtlmAuthentication;
@@ -579,7 +655,6 @@ public class HttpConnector extends TcpConnector
         connectionManager.removeConnection(endpointURI);
     }
 
-
     public HttpMessageReceiver lookupReceiver(Socket socket, RequestLine requestLine) throws NoReceiverForEndpointException
     {
         int port = ((InetSocketAddress) socket.getLocalSocketAddress()).getPort();
@@ -591,7 +666,7 @@ public class HttpConnector extends TcpConnector
                 host = messageReceiver.getEndpointURI().getHost();
                 if (!BIND_TO_ALL_INTERFACES_IP.equals(host))
                 {
-                     break;
+                    break;
                 }
             }
         }
@@ -682,52 +757,6 @@ public class HttpConnector extends TcpConnector
         }
     }
 
-    public static MessageReceiver findReceiverByStemConsideringMatchingHost(Map<Object, MessageReceiver> receivers, String uri)
-    {
-        int match = -1;
-        MessageReceiver receiver = null;
-        final URI requestUri = URI.create(uri);
-
-        for (final Map.Entry<Object, MessageReceiver> e : receivers.entrySet())
-        {
-            try
-            {
-                final URI receiverUri = URI.create((String) e.getKey());
-                final MessageReceiver candidate = e.getValue();
-                int pathLength = replaceNull(receiverUri.getPath()).length();
-
-                if (uriStartsWith(requestUri, receiverUri) && match < pathLength)
-                {
-                    match = pathLength;
-                    receiver = candidate;
-                }
-            }
-            catch(IllegalArgumentException iae)
-            {
-                // Receiver key is not a valid URI, it won't match
-                continue;
-            }
-        }
-        return receiver;
-    }
-
-    public static MessageReceiver findReceiverByStem(Map<Object, MessageReceiver> receivers, String uriStr)
-    {
-        int match = 0;
-        MessageReceiver receiver = null;
-        for (Map.Entry<Object, MessageReceiver> e : receivers.entrySet())
-        {
-            String key = (String) e.getKey();
-            MessageReceiver candidate = e.getValue();
-            if (uriStr.startsWith(key) && match < key.length())
-            {
-                match = key.length();
-                receiver = candidate;
-            }
-        }
-        return receiver;
-    }
-
     @Override
     protected ServerSocket getServerSocket(URI uri) throws IOException
     {
@@ -754,7 +783,7 @@ public class HttpConnector extends TcpConnector
         logger.warn("keepSendSocketOpen attribute is deprecated, use keepAlive in the outbound endpoint instead");
         super.setKeepSendSocketOpen(keepSendSocketOpen);
     }
-    
+
     @Override
     public MessageProcessor createDispatcherMessageProcessor(OutboundEndpoint endpoint) throws MuleException
     {
@@ -800,51 +829,12 @@ public class HttpConnector extends TcpConnector
     {
         MessageReceiver receiver = super.getReceiver(flowConstruct, endpoint);
         //if no receiver was found looking for an exact match, use lookupReceiver to see if there's one with a matching host and same port and path
-        if(receiver == null)
+        if (receiver == null)
         {
             String key = (String) getReceiverKey(flowConstruct, endpoint);
             receiver = lookupReceiver(key);
         }
         return receiver;
-    }
-
-    private static String replaceNull(String text)
-    {
-        return text == null? "" : text;
-    }
-
-    private static boolean uriStartsWith(URI requestUri, URI receiverUri)
-    {
-        return uriMatchesReceiverHostAndPort(requestUri, receiverUri)
-               && StringUtils.startsWith(requestUri.getPath(), receiverUri.getPath());
-    }
-
-    public static boolean uriMatchesReceiver(URI uri, URI receiverUri)
-    {
-        return uriMatchesReceiverHostAndPort(uri, receiverUri) &&
-               receiverUri.getPath().equalsIgnoreCase(uri.getPath());
-    }
-
-    private static boolean uriMatchesReceiverHostAndPort(URI uri, URI receiverUri)
-    {
-        return receiverUri.getPort() == uri.getPort() &&
-               StringUtils.equalsIgnoreCase(receiverUri.getScheme(), uri.getScheme()) &&
-               matchesUserInfo(uri, receiverUri) &&
-               (HttpConnector.BIND_TO_ALL_INTERFACES_IP. equals(receiverUri.getHost()) ||
-                HttpConnector.BIND_TO_ALL_INTERFACES_IP.equals(uri.getHost()) ||
-                StringUtils.equalsIgnoreCase(receiverUri.getHost(), uri.getHost()));
-    }
-
-    private static boolean matchesUserInfo(URI uri, URI receiverUri)
-    {
-        if (uri.getUserInfo() == null)
-        {
-            return receiverUri.getUserInfo() == null;
-        }
-        else
-        {
-            return uri.getUserInfo().equals(receiverUri.getUserInfo());
-        }
     }
 
     protected void applyDispatcherLifecycle(MessageDispatcher dispatcher) throws MuleException

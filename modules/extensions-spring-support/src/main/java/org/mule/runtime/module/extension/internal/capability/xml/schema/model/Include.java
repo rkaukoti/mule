@@ -53,8 +53,7 @@ public class Include
     /**
      * Gets the value of the schemaLocation property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getSchemaLocation()
     {
@@ -64,8 +63,7 @@ public class Include
     /**
      * Sets the value of the schemaLocation property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setSchemaLocation(String value)
     {

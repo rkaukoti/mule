@@ -6,20 +6,20 @@
  */
 package org.mule.extension.socket.api.connection.udp;
 
-import static org.mule.extension.socket.internal.SocketUtils.configureConnection;
 import org.mule.extension.socket.api.ConnectionSettings;
 import org.mule.extension.socket.api.client.SocketClient;
+import org.mule.extension.socket.api.client.UdpClient;
 import org.mule.extension.socket.api.connection.RequesterConnection;
 import org.mule.extension.socket.api.socket.udp.UdpSocketProperties;
-import org.mule.extension.socket.api.client.UdpClient;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.extension.api.annotation.Alias;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.DatagramSocket;
 import java.net.SocketAddress;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.extension.socket.internal.SocketUtils.configureConnection;
 
 /**
  * Implementation of {@link RequesterConnection} for UDP connections.

@@ -7,7 +7,6 @@
 package org.mule.runtime.config.spring.parsers.generic;
 
 import org.mule.runtime.config.spring.parsers.AbstractChildDefinitionParser;
-
 import org.w3c.dom.Element;
 
 /**
@@ -26,6 +25,7 @@ public class ChildDefinitionParser extends AbstractChildDefinitionParser
 
     /**
      * The class will be inferred from the class attribute
+     *
      * @param setterMethod The target method (where the child will be injected)
      */
     public ChildDefinitionParser(String setterMethod)
@@ -35,7 +35,7 @@ public class ChildDefinitionParser extends AbstractChildDefinitionParser
 
     /**
      * @param setterMethod The target method (where the child will be injected)
-     * @param clazz The class created by this element/parser
+     * @param clazz        The class created by this element/parser
      */
     public ChildDefinitionParser(String setterMethod, Class<?> clazz)
     {
@@ -43,10 +43,7 @@ public class ChildDefinitionParser extends AbstractChildDefinitionParser
     }
 
     /**
-     *
-     * @param setterMethod
-     * @param clazz
-     * @param singleton  determines is bean should be singleton or not
+     * @param singleton determines is bean should be singleton or not
      */
     public ChildDefinitionParser(String setterMethod, Class<?> clazz, boolean singleton)
     {
@@ -57,9 +54,10 @@ public class ChildDefinitionParser extends AbstractChildDefinitionParser
     /**
      * The class (which is inferred from the class attribute if null here) is checked to be
      * a subclass of the constraint
+     *
      * @param setterMethod The target method (where the child will be injected)
-     * @param clazz The class created by this element/parser (may be null)
-     * @param constraint Superclass of clazz (may be null)
+     * @param clazz        The class created by this element/parser (may be null)
+     * @param constraint   Superclass of clazz (may be null)
      */
     public ChildDefinitionParser(String setterMethod, Class<?> clazz, Class<?> constraint)
     {
@@ -70,9 +68,9 @@ public class ChildDefinitionParser extends AbstractChildDefinitionParser
      * The class (which is inferred from the class attribute if null here) is checked to be
      * a subclass of the constraint.
      *
-     * @param setterMethod The target method (where the child will be injected)
-     * @param clazz The class created by this element/parser (may be null)
-     * @param constraint Superclass of clazz (may be null)
+     * @param setterMethod        The target method (where the child will be injected)
+     * @param clazz               The class created by this element/parser (may be null)
+     * @param constraint          Superclass of clazz (may be null)
      * @param allowClassAttribute Is class read from class attribute (if present, takes precedence over clazz)
      */
     public ChildDefinitionParser(String setterMethod, Class<?> clazz, Class<?> constraint, boolean allowClassAttribute)
@@ -89,7 +87,7 @@ public class ChildDefinitionParser extends AbstractChildDefinitionParser
         super.preProcess(element);
         if (isAllowClassAttribute())
         {
-           clazz = null; // reset for this element
+            clazz = null; // reset for this element
         }
     }
 

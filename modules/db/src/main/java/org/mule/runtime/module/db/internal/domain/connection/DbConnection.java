@@ -45,7 +45,7 @@ public interface DbConnection extends Connection
 
     /**
      * Indicates which {@link TransactionalAction} used to create this connection
-
+     *
      * @return connection's transactional action
      */
     TransactionalAction getTransactionalAction();

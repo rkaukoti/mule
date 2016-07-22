@@ -10,7 +10,7 @@ import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.config.i18n.Message;
 
 /**
- * This exception class is thrown in cases when an exception occurs while operating on an 
+ * This exception class is thrown in cases when an exception occurs while operating on an
  * {@link ObjectStore}.
  */
 public class ObjectStoreException extends MuleException

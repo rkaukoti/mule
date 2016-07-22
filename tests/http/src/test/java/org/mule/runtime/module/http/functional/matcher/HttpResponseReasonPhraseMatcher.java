@@ -21,6 +21,12 @@ public class HttpResponseReasonPhraseMatcher extends TypeSafeMatcher<HttpRespons
         this.reasonPhrase = reasonPhrase;
     }
 
+    @Factory
+    public static Matcher<HttpResponse> hasReasonPhrase(String reasonPhrease)
+    {
+        return new HttpResponseReasonPhraseMatcher(reasonPhrease);
+    }
+
     @Override
     public boolean matchesSafely(HttpResponse response)
     {
@@ -37,11 +43,5 @@ public class HttpResponseReasonPhraseMatcher extends TypeSafeMatcher<HttpRespons
     protected void describeMismatchSafely(HttpResponse response, Description mismatchDescription)
     {
         mismatchDescription.appendText("got a response with reason phrase ").appendValue(response.getStatusLine().getReasonPhrase());
-    }
-
-    @Factory
-    public static Matcher<HttpResponse> hasReasonPhrase(String reasonPhrease)
-    {
-        return new HttpResponseReasonPhraseMatcher(reasonPhrease);
     }
 }

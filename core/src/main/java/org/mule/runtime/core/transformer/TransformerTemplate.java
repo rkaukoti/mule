@@ -12,7 +12,9 @@ import org.mule.runtime.core.api.transformer.TransformerException;
 
 import java.nio.charset.Charset;
 
-/** TODO */
+/**
+ * TODO
+ */
 public class TransformerTemplate extends AbstractMessageTransformer
 {
     private TransformerCallback callback;
@@ -31,7 +33,7 @@ public class TransformerTemplate extends AbstractMessageTransformer
         }
         catch (TransformerException e)
         {
-            throw new TransformerException(e.getI18nMessage(),this, e);
+            throw new TransformerException(e.getI18nMessage(), this, e);
         }
         catch (Exception e)
         {

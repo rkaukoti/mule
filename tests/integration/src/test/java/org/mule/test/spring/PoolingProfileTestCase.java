@@ -6,19 +6,19 @@
  */
 package org.mule.test.spring;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.mule.functional.functional.FunctionalTestComponent;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.component.PooledJavaComponent;
 import org.mule.runtime.core.config.PoolingProfile;
 import org.mule.runtime.core.construct.Flow;
-import org.mule.functional.functional.FunctionalTestComponent;
-import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
 import org.mule.tck.probe.Prober;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class PoolingProfileTestCase extends FunctionalTestCase
 {
@@ -66,7 +66,7 @@ public class PoolingProfileTestCase extends FunctionalTestCase
     public void testEvictOne()
     {
         doTest("evict_one", PoolingProfile.WHEN_EXHAUSTED_WAIT,
-               PoolingProfile.INITIALISE_ALL, 1, 1, 0);
+                PoolingProfile.INITIALISE_ALL, 1, 1, 0);
 
 
         Prober prober = new PollingProber(5000, 50);

@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.config.spring.dsl.model;
 
-import static com.google.common.collect.ImmutableMap.copyOf;
-import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.NAME_ATTRIBUTE;
 import org.mule.runtime.core.api.processor.MessageRouter;
 import org.mule.runtime.core.util.Preconditions;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.BeanReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,22 +19,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.config.BeanReference;
+import static com.google.common.collect.ImmutableMap.copyOf;
+import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.NAME_ATTRIBUTE;
 
 /**
- * An {@code ComponentModel} represents the user configuration of a component (flow, config, message processor, etc) defined
- * in an artifact configuration file.
+ * An {@code ComponentModel} represents the user configuration of a component (flow, config, message processor, etc) defined in an artifact
+ * configuration file.
  * <p/>
  * Every {@code ComponentModel} represents the configuration of a core configuration or an extension configuration. Which configuration
- * element this object represents is identified by a {@link org.mule.runtime.config.spring.dsl.model.ComponentIdentifier} that can be retrieved
- * using {@code #getIdentifier}.
+ * element this object represents is identified by a {@link org.mule.runtime.config.spring.dsl.model.ComponentIdentifier} that can be
+ * retrieved using {@code #getIdentifier}.
  * <p/>
- * It may have simple configuration parameters which are retrieve by using {@code #getParameters} or complex parameters which are
- * retrieved using {@code #getInnerComponents}.
+ * It may have simple configuration parameters which are retrieve by using {@code #getParameters} or complex parameters which are retrieved
+ * using {@code #getInnerComponents}.
  * <p/>
- * There's a set of configuration attributes or custom attributes that may not be mapped directly to the object that runs on runtime
- * but may be hold by a {@code ComponentModel}. Those attributes are retrieved by using {@code #getCustomAttributes}.
+ * There's a set of configuration attributes or custom attributes that may not be mapped directly to the object that runs on runtime but may
+ * be hold by a {@code ComponentModel}. Those attributes are retrieved by using {@code #getCustomAttributes}.
  *
  * @since 4.0
  */
@@ -97,19 +97,19 @@ public class ComponentModel
     }
 
     /**
-     * @param beanDefinition the {@code BeanDefinition} created based on the {@code ComponentModel} values.
-     */
-    public void setBeanDefinition(BeanDefinition beanDefinition)
-    {
-        this.beanDefinition = beanDefinition;
-    }
-
-    /**
      * @return the {@code BeanDefinition} created based on the {@code ComponentModel} values.
      */
     public BeanDefinition getBeanDefinition()
     {
         return beanDefinition;
+    }
+
+    /**
+     * @param beanDefinition the {@code BeanDefinition} created based on the {@code ComponentModel} values.
+     */
+    public void setBeanDefinition(BeanDefinition beanDefinition)
+    {
+        this.beanDefinition = beanDefinition;
     }
 
     /**
@@ -145,17 +145,17 @@ public class ComponentModel
         return MessageRouter.class.isAssignableFrom(type);
     }
 
-    public void setParent(ComponentModel parent)
-    {
-        this.parent = parent;
-    }
-
     /**
      * @return the parent component model in the configuration.
      */
     public ComponentModel getParent()
     {
         return parent;
+    }
+
+    public void setParent(ComponentModel parent)
+    {
+        this.parent = parent;
     }
 
     /**
@@ -167,14 +167,6 @@ public class ComponentModel
     }
 
     /**
-     * @param beanReference the {@code BeanReference} that represents this object.
-     */
-    public void setBeanReference(BeanReference beanReference)
-    {
-        this.beanReference = beanReference;
-    }
-
-    /**
      * @return the {@code BeanReference} that represents this object.
      */
     public BeanReference getBeanReference()
@@ -183,12 +175,61 @@ public class ComponentModel
     }
 
     /**
+     * @param beanReference the {@code BeanReference} that represents this object.
+     */
+    public void setBeanReference(BeanReference beanReference)
+    {
+        this.beanReference = beanReference;
+    }
+
+    /**
      * @param parameterName configuration parameter name
-     * @return true if the value provided for the configuration parameter was get from the DSL schema, false if it was explicitly defined in the config
+     * @return true if the value provided for the configuration parameter was get from the DSL schema, false if it was explicitly defined in
+     * the config
      */
     public boolean isParameterValueProvidedBySchema(String parameterName)
     {
         return this.schemaValueParameter.contains(parameterName);
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+
+        ComponentModel that = (ComponentModel) o;
+
+        if (root != that.root)
+        {
+            return false;
+        }
+        if (!identifier.equals(that.identifier))
+        {
+            return false;
+        }
+        if (!parameters.equals(that.parameters))
+        {
+            return false;
+        }
+        return innerComponents.equals(that.innerComponents);
+
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = (root ? 1 : 0);
+        result = 31 * result + identifier.hashCode();
+        result = 31 * result + parameters.hashCode();
+        result = 31 * result + innerComponents.hashCode();
+        return result;
     }
 
     /**
@@ -212,7 +253,6 @@ public class ComponentModel
         /**
          * @param parameterName name of the configuration parameter.
          * @param value         value contained by the configuration parameter.
-         * @param valueFromSchema
          * @return the builder.
          */
         public Builder addParameter(String parameterName, String value, boolean valueFromSchema)
@@ -285,46 +325,6 @@ public class ComponentModel
             return model;
         }
 
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o)
-        {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass())
-        {
-            return false;
-        }
-
-        ComponentModel that = (ComponentModel) o;
-
-        if (root != that.root)
-        {
-            return false;
-        }
-        if (!identifier.equals(that.identifier))
-        {
-            return false;
-        }
-        if (!parameters.equals(that.parameters))
-        {
-            return false;
-        }
-        return innerComponents.equals(that.innerComponents);
-
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int result = (root ? 1 : 0);
-        result = 31 * result + identifier.hashCode();
-        result = 31 * result + parameters.hashCode();
-        result = 31 * result + innerComponents.hashCode();
-        return result;
     }
 
 }

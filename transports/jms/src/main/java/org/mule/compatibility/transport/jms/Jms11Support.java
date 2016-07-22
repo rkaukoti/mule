@@ -7,6 +7,8 @@
 package org.mule.compatibility.transport.jms;
 
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
 
@@ -21,9 +23,6 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.Topic;
 import javax.naming.NamingException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>Jms11Support</code> is a template class to provide an abstraction to to
@@ -47,7 +46,7 @@ public class Jms11Support implements JmsSupport
 
     @Override
     public Connection createConnection(ConnectionFactory connectionFactory, String username, String password)
-        throws JMSException
+            throws JMSException
     {
         if (connectionFactory == null)
         {
@@ -78,14 +77,14 @@ public class Jms11Support implements JmsSupport
 
     @Override
     public MessageProducer createProducer(Session session, Destination destination, boolean topic)
-        throws JMSException
+            throws JMSException
     {
         return session.createProducer(destination);
     }
 
     @Override
     public MessageConsumer createConsumer(Session session, Destination destination, boolean topic, ImmutableEndpoint endpoint)
-        throws JMSException
+            throws JMSException
     {
         return createConsumer(session, destination, null, false, null, topic, endpoint);
     }
@@ -114,12 +113,12 @@ public class Jms11Support implements JmsSupport
             if (topic)
             {
                 return session.createDurableSubscriber((Topic) destination, durableName, messageSelector,
-                    noLocal);
+                        noLocal);
             }
             else
             {
                 throw new JMSException(
-                    "A durable subscriber name was set but the destination was not a Topic");
+                        "A durable subscriber name was set but the destination was not a Topic");
             }
         }
     }
@@ -172,7 +171,7 @@ public class Jms11Support implements JmsSupport
                 {
                     throw e;
                 }
-                else 
+                else
                 {
                     logger.warn("Unable to look up JNDI destination " + name + ": " + e.getMessage());
                 }
@@ -202,7 +201,7 @@ public class Jms11Support implements JmsSupport
             return session.createQueue(name);
         }
     }
-    
+
     protected Destination getJndiDestination(String name) throws JMSException
     {
         Object temp;
@@ -221,10 +220,10 @@ public class Jms11Support implements JmsSupport
                 logger.debug("Cannot retrieve JNDI resource '{}'", name, e);
             }
             String message = MessageFormat.format("Failed to look up destination {0}. Reason: {1}",
-                                                  name, e.getMessage());
+                    name, e.getMessage());
             throw new JMSException(message);
         }
-        
+
         if (temp != null)
         {
             if (temp instanceof Destination)
@@ -257,15 +256,15 @@ public class Jms11Support implements JmsSupport
     public void send(MessageProducer producer, Message message, boolean topic, ImmutableEndpoint endpoint) throws JMSException
     {
         send(producer, message, connector.isPersistentDelivery(), Message.DEFAULT_PRIORITY,
-            Message.DEFAULT_TIME_TO_LIVE, topic, endpoint);
+                Message.DEFAULT_TIME_TO_LIVE, topic, endpoint);
     }
 
     @Override
     public void send(MessageProducer producer, Message message, Destination dest, boolean topic, ImmutableEndpoint endpoint)
-        throws JMSException
+            throws JMSException
     {
         send(producer, message, dest, connector.isPersistentDelivery(), Message.DEFAULT_PRIORITY,
-            Message.DEFAULT_TIME_TO_LIVE, topic, endpoint);
+                Message.DEFAULT_TIME_TO_LIVE, topic, endpoint);
     }
 
     @Override
@@ -277,7 +276,7 @@ public class Jms11Support implements JmsSupport
                      boolean topic, ImmutableEndpoint endpoint) throws JMSException
     {
         producer.send(message, (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT),
-            priority, ttl);
+                priority, ttl);
     }
 
     @Override
@@ -290,7 +289,7 @@ public class Jms11Support implements JmsSupport
                      boolean topic, ImmutableEndpoint endpoint) throws JMSException
     {
         producer.send(dest, message, (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT),
-            priority, ttl);
+                priority, ttl);
     }
 
 }

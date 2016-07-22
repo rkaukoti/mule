@@ -7,7 +7,6 @@
 package org.mule.runtime.core.retry.policies;
 
 import org.mule.runtime.core.api.retry.RetryPolicy;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,15 +17,13 @@ import org.slf4j.LoggerFactory;
 public class SimpleRetryPolicyTemplate extends AbstractPolicyTemplate
 {
 
+    public static final int DEFAULT_FREQUENCY = 2000;
+    public static final int DEFAULT_RETRY_COUNT = 2;
+    public static final int RETRY_COUNT_FOREVER = -1;
     /**
      * logger used by this class
      */
     protected transient final Logger logger = LoggerFactory.getLogger(SimpleRetryPolicyTemplate.class);
-
-    public static final int DEFAULT_FREQUENCY = 2000;
-    public static final int DEFAULT_RETRY_COUNT = 2;
-    public static final int RETRY_COUNT_FOREVER = -1;
-
     protected volatile int count = DEFAULT_RETRY_COUNT;
     protected volatile long frequency = DEFAULT_FREQUENCY;
 
@@ -46,14 +43,14 @@ public class SimpleRetryPolicyTemplate extends AbstractPolicyTemplate
         return frequency;
     }
 
-    public int getCount()
-    {
-        return count;
-    }
-
     public void setFrequency(long frequency)
     {
         this.frequency = frequency;
+    }
+
+    public int getCount()
+    {
+        return count;
     }
 
     public void setCount(int count)

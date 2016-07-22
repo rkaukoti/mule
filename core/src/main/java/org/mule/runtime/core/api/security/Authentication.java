@@ -17,9 +17,9 @@ import java.util.Map;
  */
 public interface Authentication extends Serializable
 {
-    void setAuthenticated(boolean b);
-
     boolean isAuthenticated();
+
+    void setAuthenticated(boolean b);
 
     Object getCredentials();
 

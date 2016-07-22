@@ -27,7 +27,7 @@ public class SingleParentFamilyDefinitionParser extends AbstractSingleParentFami
 
     public SingleParentFamilyDefinitionParser addChildDelegate(String attribute, MuleChildDefinitionParser delegate)
     {
-        return addChildDelegate(new String[]{attribute}, delegate);
+        return addChildDelegate(new String[] {attribute}, delegate);
     }
 
     public SingleParentFamilyDefinitionParser addChildDelegate(String[] attributes, MuleChildDefinitionParser delegate)

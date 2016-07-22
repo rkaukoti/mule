@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.config.spring.parsers.processors;
 
+import org.junit.Test;
+import org.mule.runtime.config.spring.parsers.PreProcessor;
+import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
+import org.w3c.dom.Element;
+
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import org.mule.runtime.config.spring.parsers.PreProcessor;
-import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
-
-import org.junit.Test;
-import org.w3c.dom.Element;
 
 public class CheckExclusiveAttributesTestCase extends AbstractPreProcessorTestCase
 {
@@ -21,24 +21,24 @@ public class CheckExclusiveAttributesTestCase extends AbstractPreProcessorTestCa
     public void testDisjointSingleAttributeGroups() throws Exception
     {
         String[][] groups = new String[][] {
-            new String[] { "a" }, 
-            new String[] { "b" }
+                new String[] {"a"},
+                new String[] {"b"}
         };
-     
+
         assertOk(groups, "a");
         assertOk(groups, "b");
         assertOk(groups, "x");
     }
-    
+
     @Test
     public void testDisjointMultipleAttributes() throws Exception
     {
         String[][] groups = new String[][] {
-            new String[] { "a1" }, 
-            new String[] { "b1", "b2" }
+                new String[] {"a1"},
+                new String[] {"b1", "b2"}
         };
         String text = "do not match the exclusive groups";
-        
+
         assertOk(groups, "");
         // optional attribute
         assertOk(groups, "x");
@@ -54,7 +54,7 @@ public class CheckExclusiveAttributesTestCase extends AbstractPreProcessorTestCa
         assertOk(groups, "x b2");
         // all attributes from second group
         assertOk(groups, "b1 b2");
-        
+
         assertBad(groups, "a1 b1", text);
         assertBad(groups, "b1 a1", text);
         assertBad(groups, "a1 b2", text);
@@ -66,11 +66,11 @@ public class CheckExclusiveAttributesTestCase extends AbstractPreProcessorTestCa
     @Test
     public void testSecondGroupEmpty() throws Exception
     {
-        String[][] groups = new String[][]{
-            new String[] { "a1" },
-            new String[] {}
+        String[][] groups = new String[][] {
+                new String[] {"a1"},
+                new String[] {}
         };
-        
+
         assertOk(groups, "");
         // optional attribute
         assertOk(groups, "x");
@@ -79,15 +79,15 @@ public class CheckExclusiveAttributesTestCase extends AbstractPreProcessorTestCa
         // attribute from first group plus optional attribute
         assertOk(groups, "a1 x");
     }
-    
+
     @Test
     public void testGroupsWithOverlappingAttributes() throws Exception
     {
         String[][] groups = new String[][] {
-            new String[] { "a1", "b1" },
-            new String[] { "a1", "b2" }
+                new String[] {"a1", "b1"},
+                new String[] {"a1", "b2"}
         };
-        
+
         // attribute from first group (can be in either group)
         assertBad(groups, "a1", "do not satisfy");
         // attribute from first group
@@ -102,15 +102,15 @@ public class CheckExclusiveAttributesTestCase extends AbstractPreProcessorTestCa
         // complete second group
         assertOk(groups, "a1 b2");
     }
-    
+
     @Test
     public void testRealWorld() throws Exception
     {
         String[][] groups = new String[][] {
-            new String[] { "type", "recipient" },
-            new String[] { "type", "from" }
+                new String[] {"type", "recipient"},
+                new String[] {"type", "from"}
         };
-        
+
         assertOk(groups, "id name recipient subject type");
     }
 
@@ -126,7 +126,7 @@ public class CheckExclusiveAttributesTestCase extends AbstractPreProcessorTestCa
         CheckExclusiveAttribute check = new CheckExclusiveAttribute("value");
         check.preProcess(config, element);
     }
-    
+
     @Override
     protected PreProcessor createCheck(String[][] constraint, String elementName, String elementNamespaceUrl)
     {

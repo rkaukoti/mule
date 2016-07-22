@@ -25,5 +25,5 @@ class SimpleSerializableObject implements Serializable
         this.b = b;
         this.i = i;
     }
-    
+
 }

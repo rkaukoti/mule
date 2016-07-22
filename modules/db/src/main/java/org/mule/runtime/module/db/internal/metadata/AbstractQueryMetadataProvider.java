@@ -62,7 +62,6 @@ public abstract class AbstractQueryMetadataProvider implements QueryMetadataProv
     }
 
     /**
-     *
      * @return output metadata for a type of query. Can be null
      */
     protected abstract Result<MetaData> getStaticOutputMetadata();
@@ -71,7 +70,6 @@ public abstract class AbstractQueryMetadataProvider implements QueryMetadataProv
      * Calculates the dynamic output metadata from a statement
      *
      * @param statement statement used to calculate the metadata
-     *
      * @return output metadata for the statement. Can be null
      */
     protected abstract Result<MetaData> getDynamicOutputMetadata(PreparedStatement statement);
@@ -80,8 +78,7 @@ public abstract class AbstractQueryMetadataProvider implements QueryMetadataProv
      * Calculates the input metadata for a statement
      *
      * @param statement statement used to calculate the metadata
-     * @param query query that will be executed in the statement
-     * @return
+     * @param query     query that will be executed in the statement
      */
     protected Result<MetaData> getDynamicInputMetadata(PreparedStatement statement, Query query)
     {
@@ -129,7 +126,8 @@ public abstract class AbstractQueryMetadataProvider implements QueryMetadataProv
         return new DefaultResult<MetaData>(defaultMetaData);
     }
 
-    private Result<MetaData> getInputMetadataUsingStatementMetadata(PreparedStatement statement, List<String> fieldNames) throws SQLException
+    private Result<MetaData> getInputMetadataUsingStatementMetadata(PreparedStatement statement, List<String> fieldNames)
+            throws SQLException
     {
         ParameterMetaData parameterMetaData = statement.getParameterMetaData();
 

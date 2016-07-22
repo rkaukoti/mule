@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.module.xml.transformer;
 
+import org.apache.commons.pool.BasePoolableObjectFactory;
+import org.apache.commons.pool.impl.GenericObjectPool;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -34,9 +36,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.URIResolver;
 import javax.xml.transform.stream.StreamSource;
-
-import org.apache.commons.pool.BasePoolableObjectFactory;
-import org.apache.commons.pool.impl.GenericObjectPool;
 
 /**
  * <code>XsltTransformer</code> performs an XSLT transform on a DOM (or other XML-ish)
@@ -90,16 +89,14 @@ import org.apache.commons.pool.impl.GenericObjectPool;
 
 public class XsltTransformer extends AbstractXmlTransformer
 {
+    //Saxon shipped with Mule
+    public static final String PREFERRED_TRANSFORMER_FACTORY = "net.sf.saxon.TransformerFactoryImpl";
     // keep at least 1 XSLT Transformer ready by default
     private static final int MIN_IDLE_TRANSFORMERS = 1;
     // keep max. 32 XSLT Transformers around by default
     private static final int MAX_IDLE_TRANSFORMERS = 32;
     // MAX_IDLE is also the total limit
     private static final int MAX_ACTIVE_TRANSFORMERS = MAX_IDLE_TRANSFORMERS;
-
-    //Saxon shipped with Mule
-    public static final String PREFERRED_TRANSFORMER_FACTORY = "net.sf.saxon.TransformerFactoryImpl";
-
     protected final GenericObjectPool transformerPool;
 
     /**
@@ -268,8 +265,7 @@ public class XsltTransformer extends AbstractXmlTransformer
      * Returns the name of the currently configured javax.xml.transform.Transformer
      * factory class used to create XSLT Transformers.
      *
-     * @return a TransformerFactory class name or <code>null</code> if none has been
-     *         configured
+     * @return a TransformerFactory class name or <code>null</code> if none has been configured
      */
     public String getXslTransformerFactory()
     {
@@ -334,6 +330,91 @@ public class XsltTransformer extends AbstractXmlTransformer
         }
     }
 
+    /**
+     * @return The current maximum number of allowable active transformer objects in the pool
+     */
+    public int getMaxActiveTransformers()
+    {
+        return transformerPool.getMaxActive();
+    }
+
+    /**
+     * Sets the the current maximum number of active transformer objects allowed in the
+     * pool
+     *
+     * @param maxActiveTransformers New maximum size to set
+     */
+    public void setMaxActiveTransformers(int maxActiveTransformers)
+    {
+        transformerPool.setMaxActive(maxActiveTransformers);
+    }
+
+    /**
+     * @return The current maximum number of allowable idle transformer objects in the pool
+     */
+    public int getMaxIdleTransformers()
+    {
+        return transformerPool.getMaxIdle();
+    }
+
+    /**
+     * Sets the the current maximum number of idle transformer objects allowed in the pool
+     *
+     * @param maxIdleTransformers New maximum size to set
+     */
+    public void setMaxIdleTransformers(int maxIdleTransformers)
+    {
+        transformerPool.setMaxIdle(maxIdleTransformers);
+    }
+
+    /**
+     * Gets the parameters to be used when applying the transformation
+     *
+     * @return a map of the parameter names and associated values
+     * @see javax.xml.transform.Transformer#setParameter(java.lang.String, java.lang.Object)
+     */
+    public Map<String, Object> getContextProperties()
+    {
+        return contextProperties;
+    }
+
+    /**
+     * Sets the parameters to be used when applying the transformation
+     *
+     * @param contextProperties a map of the parameter names and associated values
+     * @see javax.xml.transform.Transformer#setParameter(java.lang.String, java.lang.Object)
+     */
+    public void setContextProperties(Map<String, Object> contextProperties)
+    {
+        this.contextProperties = contextProperties;
+    }
+
+    /**
+     * Returns the value to be set for the parameter. This method is called for each
+     * parameter before it is set on the transformer. The purpose of this method is
+     * to allow dynamic parameters related to the event (usually message properties)
+     * to be used. Any attribute of the current MuleEvent can be accessed using
+     * Property Extractors such as JXpath, bean path or header retrieval.
+     *
+     * @param key   the name of the parameter. The name isn't used for this implementation but is exposed as a param for classes that may
+     *              need it.
+     * @param value the value of the paramter
+     * @return the object to be set as the parameter value
+     */
+    protected Object evaluateTransformParameter(String key, Object value, MuleEvent event) throws TransformerException
+    {
+        if (value instanceof String)
+        {
+            String stringValue = (String) value;
+            if (muleContext.getExpressionManager().isExpression(stringValue))
+            {
+                return muleContext.getExpressionManager().evaluate(stringValue, event);
+            }
+        }
+
+        return value;
+    }
+
     protected class PooledXsltTransformerFactory extends BasePoolableObjectFactory
     {
         @Override
@@ -345,7 +426,8 @@ public class XsltTransformer extends AbstractXmlTransformer
 
             if (PREFERRED_TRANSFORMER_FACTORY.equals(factoryClassName) && !ClassUtils.isClassOnPath(factoryClassName, getClass()))
             {
-                logger.warn("Preferred Transfomer Factory " + PREFERRED_TRANSFORMER_FACTORY + " not on classpath and no default is set, defaulting to JDK");
+                logger.warn("Preferred Transfomer Factory " + PREFERRED_TRANSFORMER_FACTORY +
+                            " not on classpath and no default is set, defaulting to JDK");
                 factoryClassName = null;
             }
 
@@ -391,8 +473,8 @@ public class XsltTransformer extends AbstractXmlTransformer
 
     protected class DefaultErrorListener implements ErrorListener
     {
-        private TransformerException e = null;
         private final Transformer trans;
+        private TransformerException e = null;
 
         public DefaultErrorListener(Transformer trans)
         {
@@ -429,96 +511,5 @@ public class XsltTransformer extends AbstractXmlTransformer
         {
             logger.warn(exception.getMessage());
         }
-    }
-
-    /**
-     * @return The current maximum number of allowable active transformer objects in
-     *         the pool
-     */
-    public int getMaxActiveTransformers()
-    {
-        return transformerPool.getMaxActive();
-    }
-
-    /**
-     * Sets the the current maximum number of active transformer objects allowed in the
-     * pool
-     *
-     * @param maxActiveTransformers New maximum size to set
-     */
-    public void setMaxActiveTransformers(int maxActiveTransformers)
-    {
-        transformerPool.setMaxActive(maxActiveTransformers);
-    }
-
-    /**
-     * @return The current maximum number of allowable idle transformer objects in the
-     *         pool
-     */
-    public int getMaxIdleTransformers()
-    {
-        return transformerPool.getMaxIdle();
-    }
-
-    /**
-     * Sets the the current maximum number of idle transformer objects allowed in the pool
-     *
-     * @param maxIdleTransformers New maximum size to set
-     */
-    public void setMaxIdleTransformers(int maxIdleTransformers)
-    {
-        transformerPool.setMaxIdle(maxIdleTransformers);
-    }
-
-    /**
-     * Gets the parameters to be used when applying the transformation
-     *
-     * @return a map of the parameter names and associated values
-     * @see javax.xml.transform.Transformer#setParameter(java.lang.String,
-     *      java.lang.Object)
-     */
-    public Map<String, Object> getContextProperties()
-    {
-        return contextProperties;
-    }
-
-    /**
-     * Sets the parameters to be used when applying the transformation
-     *
-     * @param contextProperties a map of the parameter names and associated values
-     * @see javax.xml.transform.Transformer#setParameter(java.lang.String,
-     *      java.lang.Object)
-     */
-    public void setContextProperties(Map<String, Object> contextProperties)
-    {
-        this.contextProperties = contextProperties;
-    }
-
-    /**
-     * Returns the value to be set for the parameter. This method is called for each
-     * parameter before it is set on the transformer. The purpose of this method is
-     * to allow dynamic parameters related to the event (usually message properties)
-     * to be used. Any attribute of the current MuleEvent can be accessed using
-     * Property Extractors such as JXpath, bean path or header retrieval.
-     *
-     * @param key the name of the parameter. The name isn't used for this
-     *            implementation but is exposed as a param for classes that may need
-     *            it.
-     * @param value the value of the paramter
-     * @return the object to be set as the parameter value
-     * @throws TransformerException
-     */
-    protected Object evaluateTransformParameter(String key, Object value, MuleEvent event) throws TransformerException
-    {
-        if (value instanceof String)
-        {
-            String stringValue = (String) value;
-            if (muleContext.getExpressionManager().isExpression(stringValue))
-            {
-                return muleContext.getExpressionManager().evaluate(stringValue, event);
-            }
-        }
-
-        return value;
     }
 }

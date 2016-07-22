@@ -6,27 +6,19 @@
  */
 package org.mule.runtime.config.spring;
 
-import static org.junit.Assert.*;
-
+import org.junit.Test;
 import org.mule.common.Capability;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 @SmallTest
 public class DefaultMuleArtifactTestCase extends AbstractMuleTestCase
 {
-    
-    private interface MyCapability extends Capability{}
-    
-    private class BaseClassWithCapability implements MyCapability {}
-    
-    private class SubClassInheritingCapability extends BaseClassWithCapability {}
-    
-    private class BaseClassWithoutCapability {}
-    
-    private class SubClassImplementingCapability extends BaseClassWithoutCapability implements MyCapability {}
 
     @Test
     public void testCapabilityHierarchies()
@@ -34,11 +26,11 @@ public class DefaultMuleArtifactTestCase extends AbstractMuleTestCase
         DefaultMuleArtifact artifact = new DefaultMuleArtifact(new BaseClassWithCapability());
         assertTrue(artifact.hasCapability(MyCapability.class));
         assertNotNull(artifact.getCapability(MyCapability.class));
-        
+
         artifact = new DefaultMuleArtifact(new SubClassInheritingCapability());
         assertTrue(artifact.hasCapability(MyCapability.class));
         assertNotNull(artifact.getCapability(MyCapability.class));
-        
+
         artifact = new DefaultMuleArtifact(new BaseClassWithoutCapability());
         assertFalse(artifact.hasCapability(MyCapability.class));
         assertNull(artifact.getCapability(MyCapability.class));
@@ -46,6 +38,26 @@ public class DefaultMuleArtifactTestCase extends AbstractMuleTestCase
         artifact = new DefaultMuleArtifact(new SubClassImplementingCapability());
         assertTrue(artifact.hasCapability(MyCapability.class));
         assertNotNull(artifact.getCapability(MyCapability.class));
+    }
+
+    private interface MyCapability extends Capability
+    {
+    }
+
+    private class BaseClassWithCapability implements MyCapability
+    {
+    }
+
+    private class SubClassInheritingCapability extends BaseClassWithCapability
+    {
+    }
+
+    private class BaseClassWithoutCapability
+    {
+    }
+
+    private class SubClassImplementingCapability extends BaseClassWithoutCapability implements MyCapability
+    {
     }
 
 }

@@ -27,7 +27,6 @@ public interface FileContentVisitor
      * Invoked when the file has {@link String} content
      *
      * @param content the file's content
-     * @throws Exception
      */
     default void visit(String content) throws Exception
     {
@@ -37,7 +36,6 @@ public interface FileContentVisitor
      * Invoked when the file has one single {@code byte} as content
      *
      * @param content the file's content
-     * @throws Exception
      */
     default void visit(byte content) throws Exception
     {
@@ -47,7 +45,6 @@ public interface FileContentVisitor
      * Invoked when the file has one single {@code byte[]} as content
      *
      * @param content the file's content
-     * @throws Exception
      */
     default void visit(byte[] content) throws Exception
     {
@@ -57,7 +54,6 @@ public interface FileContentVisitor
      * Invoked when the file has an {@link OutputHandler} as content
      *
      * @param handler the file's content
-     * @throws Exception
      */
     default void visit(OutputHandler handler) throws Exception
     {
@@ -67,7 +63,6 @@ public interface FileContentVisitor
      * Invoked when the file has an {@link InputStream} as content
      *
      * @param content the file's content
-     * @throws Exception
      */
     default void visit(InputStream content) throws Exception
     {

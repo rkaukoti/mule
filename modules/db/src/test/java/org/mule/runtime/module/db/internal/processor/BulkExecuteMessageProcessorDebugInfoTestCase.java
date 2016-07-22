@@ -7,19 +7,8 @@
 
 package org.mule.runtime.module.db.internal.processor;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.db.internal.debug.DbDebugInfoTestUtils.createQueryFieldDebugInfoMatcher;
-import static org.mule.runtime.module.db.internal.domain.query.QueryType.DELETE;
-import static org.mule.runtime.module.db.internal.domain.query.QueryType.INSERT;
-import static org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction.NOT_SUPPORTED;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERIES_DEBUG_FIELD;
-import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
-import static org.mule.tck.junit4.matcher.ObjectDebugInfoMatcher.objectLike;
+import org.hamcrest.Matcher;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.debug.FieldDebugInfo;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
@@ -40,9 +29,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.db.internal.debug.DbDebugInfoTestUtils.createQueryFieldDebugInfoMatcher;
+import static org.mule.runtime.module.db.internal.domain.query.QueryType.DELETE;
+import static org.mule.runtime.module.db.internal.domain.query.QueryType.INSERT;
+import static org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction.NOT_SUPPORTED;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERIES_DEBUG_FIELD;
+import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
+import static org.mule.tck.junit4.matcher.ObjectDebugInfoMatcher.objectLike;
 
 @SmallTest
 public class BulkExecuteMessageProcessorDebugInfoTestCase extends AbstractMuleTestCase
@@ -75,7 +74,8 @@ public class BulkExecuteMessageProcessorDebugInfoTestCase extends AbstractMuleTe
         bulkQuery.add(new QueryTemplate(INSERT_QUERY, QueryType.INSERT, Collections.<QueryParam>emptyList()));
         when(bulkQueryResolver.resolve(event)).thenReturn(bulkQuery);
 
-        final BulkExecuteMessageProcessor bulkExecuteMessageProcessor = new BulkExecuteMessageProcessor(dbConfigResolver, bulkQueryResolver, null, NOT_SUPPORTED);
+        final BulkExecuteMessageProcessor bulkExecuteMessageProcessor =
+                new BulkExecuteMessageProcessor(dbConfigResolver, bulkQueryResolver, null, NOT_SUPPORTED);
 
         final List<FieldDebugInfo<?>> debugInfo = bulkExecuteMessageProcessor.getDebugInfo(event);
 
@@ -94,7 +94,8 @@ public class BulkExecuteMessageProcessorDebugInfoTestCase extends AbstractMuleTe
         final QueryResolutionException queryResolutionException = new QueryResolutionException("Error");
         when(bulkQueryResolver.resolve(event)).thenThrow(queryResolutionException);
 
-        final BulkExecuteMessageProcessor bulkExecuteMessageProcessor = new BulkExecuteMessageProcessor(dbConfigResolver, bulkQueryResolver, null, NOT_SUPPORTED);
+        final BulkExecuteMessageProcessor bulkExecuteMessageProcessor =
+                new BulkExecuteMessageProcessor(dbConfigResolver, bulkQueryResolver, null, NOT_SUPPORTED);
 
         final List<FieldDebugInfo<?>> debugInfo = bulkExecuteMessageProcessor.getDebugInfo(event);
 
@@ -115,7 +116,8 @@ public class BulkExecuteMessageProcessorDebugInfoTestCase extends AbstractMuleTe
         bulkQuery.add(new QueryTemplate(INSERT_QUERY, QueryType.INSERT, Collections.<QueryParam>emptyList()));
         when(bulkQueryResolver.resolve(event)).thenReturn(bulkQuery);
 
-        final BulkExecuteMessageProcessor bulkExecuteMessageProcessor = new BulkExecuteMessageProcessor(dbConfigResolver, bulkQueryResolver, null, NOT_SUPPORTED);
+        final BulkExecuteMessageProcessor bulkExecuteMessageProcessor =
+                new BulkExecuteMessageProcessor(dbConfigResolver, bulkQueryResolver, null, NOT_SUPPORTED);
 
         final List<FieldDebugInfo<?>> debugInfo = bulkExecuteMessageProcessor.getDebugInfo(event);
 

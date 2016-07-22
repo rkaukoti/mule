@@ -24,10 +24,10 @@ public class StringObjectArrayTransformersStreamingTestCase extends StringObject
     {
         InputStream input = (InputStream) src;
         String expected = IOUtils.toString(input);
-        
+
         return expected.equals(result);
     }
-    
+
 }
 
 

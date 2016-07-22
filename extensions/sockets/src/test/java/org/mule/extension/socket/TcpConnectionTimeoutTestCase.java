@@ -6,15 +6,15 @@
  */
 package org.mule.extension.socket;
 
-import static org.assertj.core.api.ThrowableAssert.catchThrowable;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.core.Is.is;
+import org.junit.Test;
 import org.mule.runtime.core.api.MessagingException;
 
 import java.net.SocketTimeoutException;
 
-import org.junit.Test;
+import static org.assertj.core.api.ThrowableAssert.catchThrowable;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.core.Is.is;
 
 public class TcpConnectionTimeoutTestCase extends SocketExtensionTestCase
 {

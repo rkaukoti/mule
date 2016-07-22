@@ -24,7 +24,7 @@ public class SingletonObjectFactoryTestCase extends AbstractObjectFactoryTestCas
         SingletonObjectFactory factory = (SingletonObjectFactory) getUninitialisedObjectFactory();
         factory.setObjectClass(Object.class);
         factory.initialise();
-        
+
         assertEquals(Object.class, factory.getObjectClass());
     }
 
@@ -34,7 +34,7 @@ public class SingletonObjectFactoryTestCase extends AbstractObjectFactoryTestCas
         SingletonObjectFactory factory = (SingletonObjectFactory) getUninitialisedObjectFactory();
         factory.setObjectClass(Object.class);
         factory.initialise();
-        
+
         assertSame(factory.getInstance(muleContext), factory.getInstance(muleContext));
     }
 

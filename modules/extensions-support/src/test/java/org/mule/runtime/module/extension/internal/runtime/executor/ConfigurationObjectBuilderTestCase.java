@@ -6,16 +6,15 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.executor;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getParameter;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getResolver;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
-import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
 import org.mule.runtime.extension.api.introspection.config.RuntimeConfigurationModel;
+import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
 import org.mule.runtime.module.extension.internal.model.property.ParameterGroupModelProperty;
 import org.mule.runtime.module.extension.internal.runtime.config.ConfigurationObjectBuilder;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSet;
@@ -25,22 +24,31 @@ import org.mule.tck.size.SmallTest;
 import java.util.Arrays;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getParameter;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getResolver;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
 public class ConfigurationObjectBuilderTestCase extends AbstractMuleTestCase
 {
 
-    private static final String NAME_VALUE = "name";
-    private static final String DESCRIPTION_VALUE = "description";
-
     public static final ParameterModel nameParameterModel = getParameter("name", String.class);
     public static final ParameterModel descriptionParameterModel = getParameter("description", String.class);
+    private static final String NAME_VALUE = "name";
+    private static final String DESCRIPTION_VALUE = "description";
+    @Mock
+    private ExtensionModel extensionModel;
+    @Mock(answer = RETURNS_DEEP_STUBS)
+    private RuntimeConfigurationModel configurationModel;
+    @Mock
+    private MuleEvent event;
+    private TestConfig configuration;
+    private ConfigurationObjectBuilder<TestConfig> configurationObjectBuilder;
+    private ResolverSet resolverSet;
 
     public static ResolverSet createResolverSet() throws Exception
     {
@@ -50,21 +58,6 @@ public class ConfigurationObjectBuilderTestCase extends AbstractMuleTestCase
 
         return resolverSet;
     }
-
-    @Mock
-    private ExtensionModel extensionModel;
-
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private RuntimeConfigurationModel configurationModel;
-
-    @Mock
-    private MuleEvent event;
-
-    private TestConfig configuration;
-
-    private ConfigurationObjectBuilder<TestConfig> configurationObjectBuilder;
-    private ResolverSet resolverSet;
-
 
     @Before
     public void before() throws Exception

@@ -6,14 +6,13 @@
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode.functional;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.findAll;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.post;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
+import com.google.common.collect.ImmutableMap;
 
+import com.github.tomakehurst.wiremock.client.WireMock;
+
+import org.apache.http.client.fluent.Request;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.module.http.internal.HttpParser;
 import org.mule.runtime.module.oauth2.AbstractOAuthAuthorizationTestCase;
 import org.mule.runtime.module.oauth2.asserter.AuthorizationRequestAsserter;
@@ -21,14 +20,15 @@ import org.mule.runtime.module.oauth2.asserter.OAuthContextFunctionAsserter;
 import org.mule.runtime.module.oauth2.internal.OAuthConstants;
 import org.mule.tck.junit4.rule.SystemProperty;
 
-import com.github.tomakehurst.wiremock.client.WireMock;
-import com.google.common.collect.ImmutableMap;
-
 import java.io.IOException;
 
-import org.apache.http.client.fluent.Request;
-import org.junit.Rule;
-import org.junit.Test;
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.findAll;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
 
 public class AuthorizationCodeMultitenantTestCase extends AbstractOAuthAuthorizationTestCase
 {
@@ -43,13 +43,17 @@ public class AuthorizationCodeMultitenantTestCase extends AbstractOAuthAuthoriza
     public static final String NO_STATE = null;
 
     @Rule
-    public SystemProperty localAuthorizationUrl = new SystemProperty("local.authorization.url", String.format("http://localhost:%d/authorization", localHostPort.getNumber()));
+    public SystemProperty localAuthorizationUrl =
+            new SystemProperty("local.authorization.url", String.format("http://localhost:%d/authorization", localHostPort.getNumber()));
     @Rule
-    public SystemProperty authorizationUrl = new SystemProperty("authorization.url", String.format("http://localhost:%d" + AUTHORIZE_PATH, oauthServerPort.getNumber()));
+    public SystemProperty authorizationUrl =
+            new SystemProperty("authorization.url", String.format("http://localhost:%d" + AUTHORIZE_PATH, oauthServerPort.getNumber()));
     @Rule
-    public SystemProperty redirectUrl = new SystemProperty("redirect.url", String.format("http://localhost:%d/redirect", localHostPort.getNumber()));
+    public SystemProperty redirectUrl =
+            new SystemProperty("redirect.url", String.format("http://localhost:%d/redirect", localHostPort.getNumber()));
     @Rule
-    public SystemProperty tokenUrl = new SystemProperty("token.url", String.format("http://localhost:%d" + TOKEN_PATH, oauthServerPort.getNumber()));
+    public SystemProperty tokenUrl =
+            new SystemProperty("token.url", String.format("http://localhost:%d" + TOKEN_PATH, oauthServerPort.getNumber()));
 
 
     @Override
@@ -66,11 +70,11 @@ public class AuthorizationCodeMultitenantTestCase extends AbstractOAuthAuthoriza
         executeForUserWithAccessToken(USER_ID_TONY, TONY_ACCESS_TOKEN, NO_STATE);
 
         OAuthContextFunctionAsserter.createFrom(muleContext.getExpressionLanguage(), MULTITENANT_CONFIG, USER_ID_JOHN)
-                .assertAccessTokenIs(JOHN_ACCESS_TOKEN)
-                .assertState(null);
+                                    .assertAccessTokenIs(JOHN_ACCESS_TOKEN)
+                                    .assertState(null);
         OAuthContextFunctionAsserter.createFrom(muleContext.getExpressionLanguage(), MULTITENANT_CONFIG, USER_ID_TONY)
-                .assertAccessTokenIs(TONY_ACCESS_TOKEN)
-                .assertState(null);
+                                    .assertAccessTokenIs(TONY_ACCESS_TOKEN)
+                                    .assertState(null);
     }
 
     @Test
@@ -81,11 +85,11 @@ public class AuthorizationCodeMultitenantTestCase extends AbstractOAuthAuthoriza
         executeForUserWithAccessToken(USER_ID_TONY, TONY_ACCESS_TOKEN, TONY_STATE);
 
         OAuthContextFunctionAsserter.createFrom(muleContext.getExpressionLanguage(), MULTITENANT_CONFIG, USER_ID_JOHN)
-                .assertAccessTokenIs(JOHN_ACCESS_TOKEN)
-                .assertState(JOHN_STATE);
+                                    .assertAccessTokenIs(JOHN_ACCESS_TOKEN)
+                                    .assertState(JOHN_STATE);
         OAuthContextFunctionAsserter.createFrom(muleContext.getExpressionLanguage(), MULTITENANT_CONFIG, USER_ID_TONY)
-                .assertAccessTokenIs(TONY_ACCESS_TOKEN)
-                .assertState(TONY_STATE);
+                                    .assertAccessTokenIs(TONY_ACCESS_TOKEN)
+                                    .assertState(TONY_STATE);
     }
 
     @Test
@@ -96,11 +100,11 @@ public class AuthorizationCodeMultitenantTestCase extends AbstractOAuthAuthoriza
         executeForUserWithAccessToken(USER_ID_TONY, TONY_ACCESS_TOKEN, NO_STATE);
 
         OAuthContextFunctionAsserter.createFrom(muleContext.getExpressionLanguage(), MULTITENANT_CONFIG, USER_ID_JOHN)
-                .assertAccessTokenIs(JOHN_ACCESS_TOKEN)
-                .assertState(null);
+                                    .assertAccessTokenIs(JOHN_ACCESS_TOKEN)
+                                    .assertState(null);
         OAuthContextFunctionAsserter.createFrom(muleContext.getExpressionLanguage(), MULTITENANT_CONFIG, USER_ID_TONY)
-                .assertAccessTokenIs(TONY_ACCESS_TOKEN)
-                .assertState(null);
+                                    .assertAccessTokenIs(TONY_ACCESS_TOKEN)
+                                    .assertState(null);
     }
 
     private void executeForUserWithAccessToken(String userId, String accessToken, String state) throws IOException
@@ -116,27 +120,27 @@ public class AuthorizationCodeMultitenantTestCase extends AbstractOAuthAuthoriza
         }
 
         Request.Get(localAuthorizationUrl.getValue() + "?" + HttpParser.encodeQueryString(localAuthorizationUrlParametersBuilder.build()))
-                .connectTimeout(REQUEST_TIMEOUT)
-                .socketTimeout(REQUEST_TIMEOUT)
-                .execute();
+               .connectTimeout(REQUEST_TIMEOUT)
+               .socketTimeout(REQUEST_TIMEOUT)
+               .execute();
 
         AuthorizationRequestAsserter.create((findAll(getRequestedFor(urlMatching(AUTHORIZE_PATH + ".*"))).get(0)))
-                .assertStateIs(expectedState);
+                                    .assertStateIs(expectedState);
 
         wireMockRule.stubFor(post(urlEqualTo(TOKEN_PATH))
-                                     .willReturn(aResponse()
-                                                         .withBody("{" +
-                                                                   "\"" + OAuthConstants.ACCESS_TOKEN_PARAMETER + "\":\"" + accessToken + "\"," +
-                                                                   "\"" + OAuthConstants.EXPIRES_IN_PARAMETER + "\":" + EXPIRES_IN + "," +
-                                                                   "\"" + OAuthConstants.REFRESH_TOKEN_PARAMETER + "\":\"" + REFRESH_TOKEN + "\"}")));
+                .willReturn(aResponse()
+                        .withBody("{" +
+                                  "\"" + OAuthConstants.ACCESS_TOKEN_PARAMETER + "\":\"" + accessToken + "\"," +
+                                  "\"" + OAuthConstants.EXPIRES_IN_PARAMETER + "\":" + EXPIRES_IN + "," +
+                                  "\"" + OAuthConstants.REFRESH_TOKEN_PARAMETER + "\":\"" + REFRESH_TOKEN + "\"}")));
 
         final String redirectUrlQueryParams = HttpParser.encodeQueryString(new ImmutableMap.Builder()
-                                                                                   .put(OAuthConstants.CODE_PARAMETER, AUTHENTICATION_CODE)
-                                                                                   .put(OAuthConstants.STATE_PARAMETER, expectedState).build());
+                .put(OAuthConstants.CODE_PARAMETER, AUTHENTICATION_CODE)
+                .put(OAuthConstants.STATE_PARAMETER, expectedState).build());
         Request.Get(redirectUrl.getValue() + "?" + redirectUrlQueryParams)
-                .connectTimeout(REQUEST_TIMEOUT)
-                .socketTimeout(REQUEST_TIMEOUT)
-                .execute();
+               .connectTimeout(REQUEST_TIMEOUT)
+               .socketTimeout(REQUEST_TIMEOUT)
+               .execute();
     }
 
 }

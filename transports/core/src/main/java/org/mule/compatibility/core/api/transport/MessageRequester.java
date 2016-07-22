@@ -19,7 +19,7 @@ import java.nio.charset.Charset;
 /**
  * Combine {@link org.mule.compatibility.core.api.transport.MessageRequesting} with various lifecycle methods for the actual
  * instances doing message sending.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -45,10 +45,8 @@ public interface MessageRequester extends Connectable, MessageRequesting, Lifecy
     /**
      * Determines whether this dispatcher can be reused after message receiving.
      *
-     * @return <code>true</code> if this dispatcher can be reused,
-     *         <code>false</code> otherwise (for example when
-     *         {@link org.mule.api.lifecycle.Disposable#dispose()} has been called because an Exception was
-     *         raised)
+     * @return <code>true</code> if this dispatcher can be reused, <code>false</code> otherwise (for example when {@link
+     * org.mule.api.lifecycle.Disposable#dispose()} has been called because an Exception was raised)
      */
     boolean validate();
 
@@ -60,10 +58,10 @@ public interface MessageRequester extends Connectable, MessageRequesting, Lifecy
     Connector getConnector();
 
     /**
-     * @return the endpoint used for requesting events 
+     * @return the endpoint used for requesting events
      */
     InboundEndpoint getEndpoint();
-    
+
     MuleMessage createMuleMessage(Object transportMessage, Charset encoding) throws MuleException;
 
     MuleMessage createMuleMessage(Object transportMessage) throws MuleException;

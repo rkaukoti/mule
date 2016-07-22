@@ -7,11 +7,8 @@
 
 package org.mule.runtime.core.streaming;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.tck.size.SmallTest;
 
@@ -20,16 +17,18 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 
 @SmallTest
 public class SimpleConsumerTestCase
 {
 
+    private final Set<String> values = new HashSet<String>(Arrays.asList("apple", "banana", "kiwi"));
     private Producer<String> producer;
     private Consumer<String> consumer;
-    private final Set<String> values = new HashSet<String>(Arrays.asList("apple", "banana", "kiwi"));
 
     @Before
     public void setUp() throws Exception
@@ -76,8 +75,8 @@ public class SimpleConsumerTestCase
     private class TestProducer implements Producer<String>
     {
 
-        private boolean closed = false;
         private final Iterator<String> iterator;
+        private boolean closed = false;
 
         private TestProducer()
         {

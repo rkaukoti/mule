@@ -17,7 +17,8 @@ public class TransactionTemplateTestUtils
 {
     public static ExecutionCallback getEmptyTransactionCallback(final MuleEvent returnObject)
     {
-        return new ExecutionCallback<MuleEvent>() {
+        return new ExecutionCallback<MuleEvent>()
+        {
             @Override
             public MuleEvent process() throws Exception
             {
@@ -28,7 +29,8 @@ public class TransactionTemplateTestUtils
 
     public static ExecutionCallback<MuleEvent> getRollbackTransactionCallback(final MuleEvent returnObject)
     {
-        return new ExecutionCallback() {
+        return new ExecutionCallback()
+        {
             @Override
             public MuleEvent process() throws Exception
             {
@@ -40,7 +42,8 @@ public class TransactionTemplateTestUtils
 
     public static ExecutionCallback<MuleEvent> getFailureTransactionCallback() throws Exception
     {
-        return new ExecutionCallback<MuleEvent>() {
+        return new ExecutionCallback<MuleEvent>()
+        {
             @Override
             public MuleEvent process() throws Exception
             {
@@ -49,9 +52,11 @@ public class TransactionTemplateTestUtils
         };
     }
 
-    public static ExecutionCallback<MuleEvent> getFailureTransactionCallback(final MessagingException mockMessagingException) throws Exception
+    public static ExecutionCallback<MuleEvent> getFailureTransactionCallback(final MessagingException mockMessagingException)
+            throws Exception
     {
-        return new ExecutionCallback<MuleEvent>() {
+        return new ExecutionCallback<MuleEvent>()
+        {
             @Override
             public MuleEvent process() throws Exception
             {
@@ -60,9 +65,11 @@ public class TransactionTemplateTestUtils
         };
     }
 
-    public static ExecutionCallback<MuleEvent> getFailureTransactionCallbackStartsTransaction(final MessagingException mockMessagingException, final Transaction mockTransaction)
+    public static ExecutionCallback<MuleEvent> getFailureTransactionCallbackStartsTransaction(
+            final MessagingException mockMessagingException, final Transaction mockTransaction)
     {
-        return new ExecutionCallback<MuleEvent>() {
+        return new ExecutionCallback<MuleEvent>()
+        {
 
             @Override
             public MuleEvent process() throws Exception

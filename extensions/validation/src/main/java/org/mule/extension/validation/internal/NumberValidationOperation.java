@@ -6,10 +6,10 @@
  */
 package org.mule.extension.validation.internal;
 
+import org.mule.extension.validation.api.NumberType;
 import org.mule.extension.validation.api.ValidationExtension;
 import org.mule.extension.validation.api.ValidationOptions;
 import org.mule.extension.validation.api.Validator;
-import org.mule.extension.validation.api.NumberType;
 import org.mule.extension.validation.internal.validator.NumberValidator;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.util.StringUtils;
@@ -53,12 +53,12 @@ public class NumberValidationOperation extends ValidationSupport
 
         ValidationContext context = createContext(options, event, config);
         Validator validator = new NumberValidator(value,
-                                                  parseLocale(locale),
-                                                  pattern,
-                                                  parseNumber(minValue, numberType),
-                                                  parseNumber(maxValue, numberType),
-                                                  numberType,
-                                                  context);
+                parseLocale(locale),
+                pattern,
+                parseNumber(minValue, numberType),
+                parseNumber(maxValue, numberType),
+                numberType,
+                context);
 
         validateWith(validator, context, event);
     }

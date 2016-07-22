@@ -23,6 +23,7 @@ public interface BeanAssembler
 {
 
     public BeanDefinitionBuilder getBean();
+
     public BeanDefinition getTarget();
 
     /**
@@ -34,6 +35,7 @@ public interface BeanAssembler
      * check the Spring repo to see if a name already exists since that could lead to
      * unpredictable behaviour.
      * (see {@link org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration})
+     *
      * @param attribute The attribute to add
      */
     void extendBean(Attr attribute);
@@ -41,8 +43,8 @@ public interface BeanAssembler
     /**
      * Allow direct access to bean for more complex cases
      *
-     * @param newName The property name to add
-     * @param newValue The property value to add
+     * @param newName     The property name to add
+     * @param newValue    The property value to add
      * @param isReference If true, a bean reference is added (and newValue must be a String)
      */
     void extendBean(String newName, Object newValue, boolean isReference);
@@ -51,6 +53,7 @@ public interface BeanAssembler
      * Add a property defined by an attribute to the parent of the bean we are constructing.
      *
      * <p>This is unusual.  Normally you want {@link #extendBean(org.w3c.dom.Attr)}.
+     *
      * @param attribute The attribute to add
      */
     void extendTarget(Attr attribute);
@@ -58,8 +61,8 @@ public interface BeanAssembler
     /**
      * Allow direct access to target for more complex cases
      *
-     * @param newName The property name to add
-     * @param newValue The property value to add
+     * @param newName     The property name to add
+     * @param newValue    The property value to add
      * @param isReference If true, a bean reference is added (and newValue must be a String)
      */
     void extendTarget(String newName, Object newValue, boolean isReference);
@@ -70,12 +73,13 @@ public interface BeanAssembler
      * Insert the bean we have built into the target (typically the parent bean).
      *
      * <p>This is the most complex case because the bean can have an arbitrary type.
+     *
      * @param oldName The identifying the bean (typically element name).
      */
     void insertBeanInTarget(String oldName);
 
     void insertSingletonBeanInTarget(String propertyName, String singletonName);
-    
+
     /**
      * Copy the properties from the bean we have been building into the target (typically
      * the parent bean).  In other words, the bean is a facade for the target.

@@ -8,13 +8,12 @@
 package org.mule.runtime.module.db.internal.config.processor;
 
 import org.mule.runtime.module.db.internal.domain.query.QueryType;
-
-import java.util.List;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.xml.BeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
+
+import java.util.List;
 
 public abstract class AbstractUpdateProcessorBeanDefinitionParser implements BeanDefinitionParser
 {

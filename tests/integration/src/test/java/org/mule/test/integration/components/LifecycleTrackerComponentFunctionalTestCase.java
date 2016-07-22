@@ -6,17 +6,16 @@
  */
 package org.mule.test.integration.components;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.lifecycle.AbstractLifecycleTracker;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
- * @author David Dossot (david@dossot.net) See
- *         http://mule.mulesoft.org/jira/browse/MULE-3846
+ * @author David Dossot (david@dossot.net) See http://mule.mulesoft.org/jira/browse/MULE-3846
  */
 public class LifecycleTrackerComponentFunctionalTestCase extends FunctionalTestCase
 {
@@ -33,14 +32,13 @@ public class LifecycleTrackerComponentFunctionalTestCase extends FunctionalTestC
      * muleContext injected (Component implements ServiceAware/MuleContextAware)
      * NOTE: muleContext is injected twice, once by registry and once by
      * lifecycleAdaptor
-     *
-     * @throws Exception
      */
     @Test
     public void testSpringBeanServiceLifecycle() throws Exception
     {
         //TODO(pablo.kraan): MERGE - is this correct to have initialise and setFlowConstruct as expected phases?
-        String expectedLifeCycle = "[setProperty, setMuleContext, springInitialize, initialise, setFlowConstruct, start, stop, dispose, springDestroy]";
+        String expectedLifeCycle =
+                "[setProperty, setMuleContext, springInitialize, initialise, setFlowConstruct, start, stop, dispose, springDestroy]";
 
         testComponentLifecycle("SpringBeanService", expectedLifeCycle);
     }
@@ -51,8 +49,6 @@ public class LifecycleTrackerComponentFunctionalTestCase extends FunctionalTestC
      * and muleContext injected (Component implements ServiceAware/MuleContextAware)
      * NOTE: muleContext is injected twice, once by registry and once by
      * lifecycleAdaptor
-     *
-     * @throws Exception
      */
     @Test
     public void testSpringBeanService2Lifecycle() throws Exception
@@ -66,8 +62,6 @@ public class LifecycleTrackerComponentFunctionalTestCase extends FunctionalTestC
     /**
      * ASSERT: - Mule lifecycle methods invoked - Service and muleContext injected
      * (Component implements ServiceAware/MuleContextAware)
-     *
-     * @throws Exception
      */
     @Test
     public void testSingletonServiceLifecycle() throws Exception
@@ -80,8 +74,6 @@ public class LifecycleTrackerComponentFunctionalTestCase extends FunctionalTestC
     /**
      * ASSERT: - Mule lifecycle methods invoked - Service and muleContext injected
      * (Component implements ServiceAware/MuleContextAware)
-     *
-     * @throws Exception
      */
     @Test
     public void testMulePrototypeServiceLifecycle() throws Exception
@@ -94,8 +86,6 @@ public class LifecycleTrackerComponentFunctionalTestCase extends FunctionalTestC
     /**
      * ASSERT: - Mule lifecycle methods invoked - Service and muleContext injected
      * (Component implements ServiceAware/MuleContextAware)
-     *
-     * @throws Exception
      */
     @Test
     public void testMulePooledPrototypeServiceLifecycle() throws Exception
@@ -110,19 +100,18 @@ public class LifecycleTrackerComponentFunctionalTestCase extends FunctionalTestC
      * new object in pool - Service and muleContext injected each time singleton is
      * used to create new object in pool (Component implements
      * ServiceAware/MuleContextAware)
-     *
-     * @throws Exception
      */
     @Test
     public void testMulePooledSingletonServiceLifecycle() throws Exception
     {
-        String expectedLifeCycle = "[setProperty, setFlowConstruct, setMuleContext, initialise, initialise, initialise, start, start, start, stop, stop, stop, dispose, dispose, dispose]";
+        String expectedLifeCycle =
+                "[setProperty, setFlowConstruct, setMuleContext, initialise, initialise, initialise, start, start, start, stop, stop, stop, dispose, dispose, dispose]";
 
         testComponentLifecycle("MulePooledSingletonService", expectedLifeCycle);
     }
 
     private void testComponentLifecycle(final String serviceName, final String expectedLifeCycle)
-        throws Exception
+            throws Exception
     {
 
         final AbstractLifecycleTracker tracker = exerciseComponent(serviceName);

@@ -6,8 +6,8 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.functional.FlowAssert;
 import org.mule.runtime.api.message.MuleEvent;
 import org.mule.runtime.core.util.IOUtils;
@@ -16,8 +16,8 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.io.InputStream;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class HttpRequestAttachmentsTestCase extends AbstractHttpTestCase
 {

@@ -12,7 +12,6 @@ import org.mule.runtime.core.api.transaction.Transaction;
 import org.mule.runtime.core.api.transaction.TransactionConfig;
 import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.transaction.TransactionCoordination;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +36,7 @@ public class SuspendXaTransactionInterceptor<T> implements ExecutionInterceptor<
         Transaction tx = TransactionCoordination.getInstance().getTransaction();
         byte action = transactionConfig.getAction();
         if ((action == TransactionConfig.ACTION_NONE || action == TransactionConfig.ACTION_ALWAYS_BEGIN)
-                && tx != null && tx.isXA())
+            && tx != null && tx.isXA())
         {
             if (logger.isDebugEnabled())
             {

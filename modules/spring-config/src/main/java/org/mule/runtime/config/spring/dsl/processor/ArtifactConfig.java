@@ -12,9 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents the application configuration files that describe the integrations. It does not include resource files or application descriptors.
+ * Represents the application configuration files that describe the integrations. It does not include resource files or application
+ * descriptors.
  *
- * An application configuration is defined by an application name and a set of configuration files containing the integration required components.
+ * An application configuration is defined by an application name and a set of configuration files containing the integration required
+ * components.
  *
  * @since 4.0
  */
@@ -26,13 +28,16 @@ public class ArtifactConfig
     private Map<String, String> applicationProperties;
 
     private ArtifactConfig()
-    {}
+    {
+    }
 
-    public String getArtifactName() {
+    public String getArtifactName()
+    {
         return artifactName;
     }
 
-    public List<ConfigFile> getConfigFiles() {
+    public List<ConfigFile> getConfigFiles()
+    {
         return Collections.unmodifiableList(configFiles);
     }
 
@@ -47,14 +52,16 @@ public class ArtifactConfig
     /**
      * Builder for {@link ArtifactConfig} instances.
      */
-    public static class Builder {
+    public static class Builder
+    {
         private ArtifactConfig applicationConfig = new ArtifactConfig();
 
         /**
          * @param applicationName the artifact name
          * @return the builder
          */
-        public Builder setApplicationName(String applicationName) {
+        public Builder setApplicationName(String applicationName)
+        {
             this.applicationConfig.artifactName = applicationName;
             return this;
         }
@@ -63,7 +70,8 @@ public class ArtifactConfig
          * @param configFile a {@code ConfigFile} to be added to the application.
          * @return the builder
          */
-        public Builder addConfigFile(ConfigFile configFile) {
+        public Builder addConfigFile(ConfigFile configFile)
+        {
             this.applicationConfig.configFiles.add(configFile);
             return this;
         }
@@ -78,7 +86,8 @@ public class ArtifactConfig
             return this;
         }
 
-        public ArtifactConfig build() {
+        public ArtifactConfig build()
+        {
             return this.applicationConfig;
         }
     }

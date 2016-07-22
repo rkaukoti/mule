@@ -7,15 +7,10 @@
 
 package org.mule.runtime.module.launcher.builder;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.core.Is.is;
-import static org.mule.tck.ZipUtils.compress;
-import org.mule.tck.ZipUtils.ZipResource;
 import org.mule.runtime.core.util.FileUtils;
 import org.mule.runtime.core.util.FilenameUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.mule.tck.ZipUtils.ZipResource;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,6 +20,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.core.Is.is;
+import static org.mule.tck.ZipUtils.compress;
+
 /**
  * Defines a builder to create files for mule artifacts.
  * <p/>
@@ -33,14 +34,14 @@ import java.util.Properties;
  *
  * @param <T> class of the implementation builder
  */
-public abstract class AbstractArtifactFileBuilder<T extends AbstractArtifactFileBuilder<T>>  implements TestArtifactDescriptor
+public abstract class AbstractArtifactFileBuilder<T extends AbstractArtifactFileBuilder<T>> implements TestArtifactDescriptor
 {
 
     private final String fileName;
     private final String id;
-    private File artifactFile;
     protected List<ZipResource> resources = new LinkedList<>();
     protected boolean corrupted;
+    private File artifactFile;
 
     /**
      * Creates a new builder
@@ -67,7 +68,7 @@ public abstract class AbstractArtifactFileBuilder<T extends AbstractArtifactFile
     /**
      * Create a new builder from another instance and different ID.
      *
-     * @param id artifact identifier. Non empty.
+     * @param id     artifact identifier. Non empty.
      * @param source instance used as template to build the new one. Non null.
      */
     public AbstractArtifactFileBuilder(String id, T source)
@@ -119,7 +120,7 @@ public abstract class AbstractArtifactFileBuilder<T extends AbstractArtifactFile
     @Override
     public String getZipPath()
     {
-        return "/"+ fileName;
+        return "/" + fileName;
     }
 
     @Override

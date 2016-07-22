@@ -7,25 +7,21 @@
 package org.mule.runtime.module.cxf.functional;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.module.http.api.HttpConstants;
 import org.mule.runtime.module.http.api.client.HttpRequestOptions;
-import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class CxfJaxWsServiceAndClientTestCase extends FunctionalTestCase
 {
-    @Rule
-    public DynamicPort port = new DynamicPort("port");
-
     private static final HttpRequestOptions HTTP_REQUEST_OPTIONS = newOptions().method(HttpConstants.Methods.POST.name()).build();
-
     private static final String REQUEST_PAYLOAD =
             "<soap:Envelope \n" +
             "           xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
@@ -36,18 +32,19 @@ public class CxfJaxWsServiceAndClientTestCase extends FunctionalTestCase
             "</svc:sayHi>\n" +
             "</soap:Body>\n" +
             "</soap:Envelope>";
-
     private static final String RESPONSE_PAYLOAD =
             "<soap:Envelope " +
-                "xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
-                "<soap:Body>" +
-                    "<ns2:sayHiResponse xmlns:ns2=\"http://example.cxf.module.runtime.mule.org/\">" +
-                        "<return>" +
-                            "Hello\u2297 Test Message" +
-                        "</return>" +
-                    "</ns2:sayHiResponse>" +
-                "</soap:Body>" +
+            "xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
+            "<soap:Body>" +
+            "<ns2:sayHiResponse xmlns:ns2=\"http://example.cxf.module.runtime.mule.org/\">" +
+            "<return>" +
+            "Hello\u2297 Test Message" +
+            "</return>" +
+            "</ns2:sayHiResponse>" +
+            "</soap:Body>" +
             "</soap:Envelope>";
+    @Rule
+    public DynamicPort port = new DynamicPort("port");
 
     @Override
     protected String getConfigFile()

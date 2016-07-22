@@ -7,6 +7,23 @@
 
 package org.mule.runtime.module.artifact.classloader;
 
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+import org.mule.runtime.module.artifact.classloader.exception.NotExportedClassException;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.junit4.rule.SystemProperty;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Enumeration;
+
 import static java.lang.System.lineSeparator;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -18,55 +35,34 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mule.runtime.core.api.config.MuleProperties.MULE_LOG_VERBOSE_CLASSLOADING;
 
-import org.mule.runtime.module.artifact.classloader.exception.NotExportedClassException;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.junit4.rule.SystemProperty;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-
 @RunWith(Parameterized.class)
 public class FilteringArtifactClassLoaderTestCase extends AbstractMuleTestCase
 {
 
     public static final String CLASS_NAME = "java.lang.Object";
     public static final String RESOURCE_NAME = "dummy.txt";
-
+    protected final ClassLoaderFilter filter = mock(ClassLoaderFilter.class);
+    protected final ArtifactClassLoader artifactClassLoader = mock(ArtifactClassLoader.class);
     @Rule
     public ExpectedException expected = ExpectedException.none();
-
     public boolean verboseClassloadingLog;
     @Rule
     public SystemProperty verboseClassloading;
-
     protected FilteringArtifactClassLoader filteringArtifactClassLoader;
-    protected final ClassLoaderFilter filter = mock(ClassLoaderFilter.class);
-    protected final ArtifactClassLoader artifactClassLoader = mock(ArtifactClassLoader.class);
-
-    @Parameters(name = "verbose: {0}")
-    public static Collection<Object[]> params()
-    {
-        return asList(new Object[][] {
-                                      {true},
-                                      {false}
-        });
-    }
 
     public FilteringArtifactClassLoaderTestCase(boolean verboseClassloadingLog)
     {
         this.verboseClassloadingLog = verboseClassloadingLog;
         verboseClassloading = new SystemProperty(MULE_LOG_VERBOSE_CLASSLOADING, Boolean.toString(verboseClassloadingLog));
+    }
+
+    @Parameters(name = "verbose: {0}")
+    public static Collection<Object[]> params()
+    {
+        return asList(new Object[][] {
+                {true},
+                {false}
+        });
     }
 
     @Before
@@ -81,7 +77,8 @@ public class FilteringArtifactClassLoaderTestCase extends AbstractMuleTestCase
         expected.expect(NotExportedClassException.class);
         if (verboseClassloadingLog)
         {
-            expected.expectMessage(is("Class '" + CLASS_NAME + "' not found in classloader for artifact 'mockArtifact'." + lineSeparator() + filter.toString()));
+            expected.expectMessage(is("Class '" + CLASS_NAME + "' not found in classloader for artifact 'mockArtifact'." + lineSeparator() +
+                                      filter.toString()));
         }
         else
         {

@@ -6,12 +6,10 @@
  */
 package org.mule.runtime.module.extension.internal.connector;
 
-import static java.util.Arrays.asList;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getConfigurationFromRegistry;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.runtime.api.tls.TlsContextFactory;
 import org.mule.runtime.api.tls.TlsContextKeyStoreConfiguration;
@@ -21,16 +19,29 @@ import org.mule.test.petstore.extension.PetStoreConnector;
 
 import java.util.Collection;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getConfigurationFromRegistry;
 
 @RunWith(Parameterized.class)
 public class PetStoreTlsConfigTestCase extends ExtensionFunctionalTestCase
 {
 
     private static final String PASSWORD = "changeit";
+    @Rule
+    public SystemProperty systemProperty;
+    private String name;
+    private String configName;
+
+    public PetStoreTlsConfigTestCase(String name, String configName)
+    {
+        this.name = name;
+        this.configName = configName;
+        systemProperty = new SystemProperty("config", configName);
+    }
 
     @Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> data()
@@ -38,19 +49,6 @@ public class PetStoreTlsConfigTestCase extends ExtensionFunctionalTestCase
         return asList(new Object[][] {
                 {"global tls", "globalTls"},
                 {"inline tls", "inlineTls"}});
-    }
-
-    private String name;
-    private String configName;
-
-    @Rule
-    public SystemProperty systemProperty;
-
-    public PetStoreTlsConfigTestCase(String name, String configName)
-    {
-        this.name = name;
-        this.configName = configName;
-        systemProperty = new SystemProperty("config", configName);
     }
 
     @Override

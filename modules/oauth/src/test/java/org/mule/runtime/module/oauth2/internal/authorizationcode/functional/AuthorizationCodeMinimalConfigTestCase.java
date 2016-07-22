@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode.functional;
 
-import org.mule.runtime.module.oauth2.asserter.OAuthContextFunctionAsserter;
-import org.mule.runtime.module.oauth2.internal.OAuthConstants;
-
 import org.apache.http.client.fluent.Request;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mule.runtime.module.oauth2.asserter.OAuthContextFunctionAsserter;
+import org.mule.runtime.module.oauth2.internal.OAuthConstants;
 
 public class AuthorizationCodeMinimalConfigTestCase extends AbstractAuthorizationCodeBasicTestCase
 {
@@ -29,15 +28,15 @@ public class AuthorizationCodeMinimalConfigTestCase extends AbstractAuthorizatio
         configureWireMockToExpectTokenPathRequestForAuthorizationCodeGrantType();
 
         Request.Get(redirectUrl.getValue() + "?" + OAuthConstants.CODE_PARAMETER + "=" + AUTHENTICATION_CODE)
-                .connectTimeout(REQUEST_TIMEOUT)
-                .socketTimeout(REQUEST_TIMEOUT)
-                .execute();
+               .connectTimeout(REQUEST_TIMEOUT)
+               .socketTimeout(REQUEST_TIMEOUT)
+               .execute();
 
         verifyRequestDoneToTokenUrlForAuthorizationCode();
 
         OAuthContextFunctionAsserter.createFrom(muleContext.getExpressionLanguage(), "tokenManagerConfig")
-                .assertAccessTokenIs(ACCESS_TOKEN)
-                .assertRefreshTokenIs(REFRESH_TOKEN);
+                                    .assertAccessTokenIs(ACCESS_TOKEN)
+                                    .assertRefreshTokenIs(REFRESH_TOKEN);
     }
 
 }

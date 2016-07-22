@@ -6,19 +6,17 @@
  */
 package org.mule.runtime.core.routing.outbound;
 
+import org.apache.commons.lang.Validate;
 import org.mule.runtime.core.routing.AbstractMessageSequence;
 import org.mule.runtime.core.routing.MessageSequence;
 
 import java.util.Iterator;
 
-import org.apache.commons.lang.Validate;
-
 /**
  * A {@link MessageSequence} that delegates its {@link #hasNext()} and
  * {@link #next()} methods to an {@link Iterator}, and has no estimated size
- * 
+ *
  * @author flbulgarelli
- * @param <T>
  */
 public final class IteratorMessageSequence<T> extends AbstractMessageSequence<T>
 {

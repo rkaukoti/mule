@@ -16,17 +16,17 @@ import org.mule.runtime.core.api.lifecycle.InitialisationException;
  */
 public interface SecurityFilter extends Initialisable
 {
+    SecurityManager getSecurityManager();
+
     /**
      * @param manager
      */
     void setSecurityManager(SecurityManager manager);
 
-    SecurityManager getSecurityManager();
-
     String getSecurityProviders();
 
     void setSecurityProviders(String providers);
-    
+
     void doFilter(MuleEvent event)
             throws SecurityException, UnknownAuthenticationTypeException, CryptoFailureException,
             SecurityProviderNotFoundException, EncryptionStrategyNotFoundException, InitialisationException;

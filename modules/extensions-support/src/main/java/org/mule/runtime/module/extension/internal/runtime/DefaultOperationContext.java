@@ -6,12 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
-import static java.lang.String.format;
-import static java.util.Optional.empty;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.TRANSACTIONAL_ACTION_PARAMETER_NAME;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.isTransactional;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.toActionCode;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.transaction.TransactionConfig;
@@ -27,6 +21,13 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Supplier;
+
+import static java.lang.String.format;
+import static java.util.Optional.empty;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.TRANSACTIONAL_ACTION_PARAMETER_NAME;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.isTransactional;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.toActionCode;
 
 /**
  * Default implementation of {@link OperationContextAdapter} which
@@ -75,8 +76,8 @@ public class DefaultOperationContext implements OperationContextAdapter
                 if (transactionConfig == null)
                 {
                     transactionConfig = isTransactional(operationModel)
-                                        ? Optional.of(buildTransactionConfig())
-                                        : empty();
+                            ? Optional.of(buildTransactionConfig())
+                            : empty();
 
                     transactionConfigSupplier = () -> transactionConfig;
                 }
@@ -134,7 +135,7 @@ public class DefaultOperationContext implements OperationContextAdapter
         if (!expectedType.isInstance(value))
         {
             throw new IllegalArgumentException(String.format("'%s' was expected to be of type '%s' but type '%s' was found instead",
-                                                             parameterName, expectedType.getName(), value.getClass().getName()));
+                    parameterName, expectedType.getName(), value.getClass().getName()));
         }
 
         return (T) value;
@@ -221,8 +222,9 @@ public class DefaultOperationContext implements OperationContextAdapter
         OperationTransactionalAction action = getTypeSafeParameter(TRANSACTIONAL_ACTION_PARAMETER_NAME, OperationTransactionalAction.class);
         if (action == null)
         {
-            throw new IllegalArgumentException(format("Operation '%s' from extension '%s' is transactional but no transactional action defined",
-                                                      operationModel.getName(), configuration.getModel().getExtensionModel().getName()));
+            throw new IllegalArgumentException(
+                    format("Operation '%s' from extension '%s' is transactional but no transactional action defined",
+                            operationModel.getName(), configuration.getModel().getExtensionModel().getName()));
         }
 
         return action;

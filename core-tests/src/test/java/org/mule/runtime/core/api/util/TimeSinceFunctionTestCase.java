@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.core.api.util;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.time.LocalDateTime;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class TimeSinceFunctionTestCase extends AbstractMuleTestCase
@@ -31,7 +31,8 @@ public class TimeSinceFunctionTestCase extends AbstractMuleTestCase
     }
 
     @Test
-    public void isAfter() {
+    public void isAfter()
+    {
         assertThat(function.apply(UPPER_BOUND, LOWER_BOUND), is(false));
     }
 }

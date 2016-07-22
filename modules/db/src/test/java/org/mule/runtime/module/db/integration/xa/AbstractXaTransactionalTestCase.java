@@ -7,13 +7,8 @@
 
 package org.mule.runtime.module.db.integration.xa;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.mule.functional.junit4.TransactionConfigEnum.ACTION_ALWAYS_BEGIN;
-import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
-import static org.mule.runtime.module.db.integration.model.Planet.MARS;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.transaction.XaTransactionFactory;
@@ -27,8 +22,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertThat;
+import static org.mule.functional.junit4.TransactionConfigEnum.ACTION_ALWAYS_BEGIN;
+import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
+import static org.mule.runtime.module.db.integration.model.Planet.MARS;
 
 public abstract class AbstractXaTransactionalTestCase extends AbstractDbIntegrationTestCase
 {

@@ -6,9 +6,8 @@
  */
 package org.mule.test.config.spring.parsers;
 
-import org.mule.test.config.spring.parsers.beans.OrphanBean;
-
 import org.junit.Test;
+import org.mule.test.config.spring.parsers.beans.OrphanBean;
 
 public class MapCombinerTestCase extends AbstractNamespaceTestCase
 {
@@ -33,7 +32,7 @@ public class MapCombinerTestCase extends AbstractNamespaceTestCase
         logger.info("Map size: " + bean.getMap().size());
         for (int i = 0; i < 6; ++i)
         {
-            assertMapEntryExists(bean.getMap(), Integer.toString(i+1), i+1);
+            assertMapEntryExists(bean.getMap(), Integer.toString(i + 1), i + 1);
         }
     }
 
@@ -44,7 +43,7 @@ public class MapCombinerTestCase extends AbstractNamespaceTestCase
         logger.info("Map size: " + bean.getMap().size());
         for (int i = 0; i < 2; ++i)
         {
-            assertMapEntryExists(bean.getMap(), Integer.toString(i+1), i+1);
+            assertMapEntryExists(bean.getMap(), Integer.toString(i + 1), i + 1);
         }
     }
 }

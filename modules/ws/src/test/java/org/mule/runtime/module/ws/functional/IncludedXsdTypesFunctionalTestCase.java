@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.module.ws.functional;
 
-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.tck.junit4.rule.SystemProperty;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
 
 public class IncludedXsdTypesFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase
 {
@@ -29,7 +28,6 @@ public class IncludedXsdTypesFunctionalTestCase extends AbstractWSConsumerFuncti
      * Verifies that a no parameter operation is successful having a WSDL definition file that imports
      * the types from another WSDL file, which includes the schema from yet another XSD file. If the metadata cannot
      * be generated then the payload would be used as SOAP body and the test would fail.
-     * @throws Exception
      */
     @Test
     public void metadataIsGeneratedAndPayloadIsIgnored() throws Exception

@@ -7,14 +7,10 @@
 
 package org.mule.runtime.module.db.integration.storedprocedure;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assume.assumeThat;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.getAllPlanetRecords;
-
+import org.hamcrest.core.IsEqual;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -27,10 +23,13 @@ import org.mule.runtime.module.db.internal.result.resultset.ResultSetIterator;
 import java.util.List;
 import java.util.Map;
 
-import org.hamcrest.core.IsEqual;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assume.assumeThat;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.getAllPlanetRecords;
 
 public class StoredProcedureStreamingResourceManagementTestCase extends AbstractDbIntegrationTestCase
 {
@@ -49,7 +48,8 @@ public class StoredProcedureStreamingResourceManagementTestCase extends Abstract
     @Override
     protected String[] getFlowConfigurationResources()
     {
-        return new String[] {"integration/config/derby-pooling-db-config.xml", "integration/storedprocedure/stored-procedure-streaming-resource-management-config.xml"};
+        return new String[] {"integration/config/derby-pooling-db-config.xml",
+                             "integration/storedprocedure/stored-procedure-streaming-resource-management-config.xml"};
     }
 
     @Test

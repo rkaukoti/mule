@@ -7,9 +7,9 @@
 
 package org.mule.test.infrastructure.process;
 
-import java.io.File;
-
 import org.apache.commons.lang.SystemUtils;
+
+import java.io.File;
 
 public class MuleProcessController
 {
@@ -56,7 +56,6 @@ public class MuleProcessController
     {
         controller.restart(args);
     }
-
 
 
     public void deploy(String path)

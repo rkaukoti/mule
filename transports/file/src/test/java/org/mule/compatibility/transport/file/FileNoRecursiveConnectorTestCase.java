@@ -7,16 +7,15 @@
 
 package org.mule.compatibility.transport.file;
 
-import static org.junit.Assert.assertNull;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 
 import java.io.File;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertNull;
 
 public class FileNoRecursiveConnectorTestCase extends FunctionalTestCase
 {

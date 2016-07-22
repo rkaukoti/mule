@@ -6,6 +6,25 @@
  */
 package org.mule.runtime.module.extension.internal.config;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.test.heisenberg.extension.HeisenbergExtension;
+import org.mule.test.heisenberg.extension.model.HealthStatus;
+import org.mule.test.heisenberg.extension.model.KnockeableDoor;
+import org.mule.test.heisenberg.extension.model.Ricin;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import static java.util.Calendar.YEAR;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -23,25 +42,6 @@ import static org.junit.runners.Parameterized.Parameters;
 import static org.mule.test.heisenberg.extension.HeisenbergExtension.AGE;
 import static org.mule.test.heisenberg.extension.HeisenbergExtension.HEISENBERG;
 import static org.mule.test.heisenberg.extension.model.types.WeaponType.FIRE_WEAPON;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.test.heisenberg.extension.HeisenbergExtension;
-import org.mule.test.heisenberg.extension.model.HealthStatus;
-import org.mule.test.heisenberg.extension.model.KnockeableDoor;
-import org.mule.test.heisenberg.extension.model.Ricin;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 @RunWith(Parameterized.class)
 public class ParameterizedConfigParserTestCase extends AbstractConfigParserTestCase
@@ -75,6 +75,8 @@ public class ParameterizedConfigParserTestCase extends AbstractConfigParserTestC
     private static final int DEATH_YEAR = 2011;
     private static final HealthStatus INITIAL_HEALTH = HealthStatus.CANCER;
     private static final HealthStatus FINAL_HEALTH = HealthStatus.DEAD;
+    @Parameter(0)
+    public String testConfig;
 
     @Parameters(name = "{0}")
     public static Collection<Object[]> data()
@@ -84,8 +86,37 @@ public class ParameterizedConfigParserTestCase extends AbstractConfigParserTestC
         });
     }
 
-    @Parameter(0)
-    public String testConfig;
+    public static Calendar getDateOfBirth()
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(YEAR, 1959);
+        calendar.set(Calendar.MONTH, Calendar.SEPTEMBER);
+        calendar.set(Calendar.DAY_OF_MONTH, 7);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar;
+    }
+
+    public static LocalDateTime getDateOfConception()
+    {
+        return LocalDateTime.of(1959, Month.JANUARY, 7, 0, 0);
+    }
+
+    public static Calendar getDateOfDeath()
+    {
+        Calendar calendar = getDateOfBirth();
+        calendar.set(YEAR, DEATH_YEAR);
+
+        return calendar;
+    }
+
+    public static KnockeableDoor getDoor() throws Exception
+    {
+        return muleContext.getRegistry().lookupObject("door");
+    }
 
     @Test
     public void config() throws Exception
@@ -181,7 +212,6 @@ public class ParameterizedConfigParserTestCase extends AbstractConfigParserTestC
         assertLiteralExpressions(heisenberg);
     }
 
-
     private void assertRicinPacks(HeisenbergExtension heisenberg)
     {
         Set<Ricin> ricinPacks = heisenberg.getRicinPacks();
@@ -244,7 +274,6 @@ public class ParameterizedConfigParserTestCase extends AbstractConfigParserTestC
         assertThat(heisenberg.getMoney(), equalTo(new BigDecimal(MONEY)));
     }
 
-
     private void assertCandidateDoors(HeisenbergExtension heisenberg)
     {
         Map<String, KnockeableDoor> candidates = heisenberg.getCandidateDoors();
@@ -266,38 +295,6 @@ public class ParameterizedConfigParserTestCase extends AbstractConfigParserTestC
     {
         assertThat(heisenberg.getLiteralExpressionWitouthDefault(), equalTo(LITERAL_EXPRESSION));
         assertThat(heisenberg.getLiteralExpressionWithDefault(), equalTo(DEFAULT_LITERAL_EXPRESSION));
-    }
-
-    public static Calendar getDateOfBirth()
-    {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(YEAR, 1959);
-        calendar.set(Calendar.MONTH, Calendar.SEPTEMBER);
-        calendar.set(Calendar.DAY_OF_MONTH, 7);
-        calendar.set(Calendar.HOUR, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        return calendar;
-    }
-
-    public static LocalDateTime getDateOfConception()
-    {
-        return LocalDateTime.of(1959, Month.JANUARY, 7,0,0);
-    }
-
-    public static Calendar getDateOfDeath()
-    {
-        Calendar calendar = getDateOfBirth();
-        calendar.set(YEAR, DEATH_YEAR);
-
-        return calendar;
-    }
-
-    public static KnockeableDoor getDoor() throws Exception
-    {
-        return muleContext.getRegistry().lookupObject("door");
     }
 
     private void assertLabeledRicin(HeisenbergExtension heisenberg)

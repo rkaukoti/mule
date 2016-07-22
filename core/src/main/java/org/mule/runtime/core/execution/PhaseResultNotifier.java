@@ -7,8 +7,8 @@
 package org.mule.runtime.core.execution;
 
 /**
- *  Notifier used by {@link MessageProcessPhase} in order to
- *  define the result of the phase execution
+ * Notifier used by {@link MessageProcessPhase} in order to
+ * define the result of the phase execution
  */
 public interface PhaseResultNotifier
 {

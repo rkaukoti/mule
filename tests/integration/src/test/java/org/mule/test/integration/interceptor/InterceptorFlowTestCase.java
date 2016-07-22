@@ -6,14 +6,13 @@
  */
 package org.mule.test.integration.interceptor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
-import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class InterceptorFlowTestCase extends FunctionalTestCase
 {
@@ -24,7 +23,7 @@ public class InterceptorFlowTestCase extends FunctionalTestCase
         MuleClient client = muleContext.getClient();
         MuleMessage message = client.request("test://out", 3000);
         assertNotNull(message);
-        String payload = (String)message.getPayload();
+        String payload = (String) message.getPayload();
         assertNotNull(payload);
         //note that there is an exclamation mark on the end that was added by the interceptor
         assertEquals(TEST_PAYLOAD + "!", payload);

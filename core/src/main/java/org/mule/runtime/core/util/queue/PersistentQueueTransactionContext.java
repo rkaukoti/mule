@@ -41,7 +41,7 @@ public class PersistentQueueTransactionContext implements LocalQueueTransactionC
     }
 
     public boolean offer(QueueStore queue, Serializable item, long offerTimeout)
-        throws InterruptedException
+            throws InterruptedException
     {
         this.transactionJournal.logAdd(txId, queue, item);
         return true;
@@ -56,12 +56,13 @@ public class PersistentQueueTransactionContext implements LocalQueueTransactionC
     {
         synchronized (queue)
         {
-            while (poll(queue, 10) != null);
+            while (poll(queue, 10) != null)
+                ;
         }
     }
 
     public Serializable poll(QueueStore queue, long pollTimeout)
-        throws InterruptedException
+            throws InterruptedException
     {
         synchronized (queue)
         {
@@ -86,7 +87,7 @@ public class PersistentQueueTransactionContext implements LocalQueueTransactionC
         Collection<LocalQueueTxJournalEntry> logEntries = this.transactionJournal.getLogEntriesForTx(txId);
         for (LocalQueueTxJournalEntry logEntry : logEntries)
         {
-            if (logEntry.getQueueName().equals(queue.getName()) && (logEntry.isAdd() ||  logEntry.isAddFirst()))
+            if (logEntry.getQueueName().equals(queue.getName()) && (logEntry.isAdd() || logEntry.isAddFirst()))
             {
                 numberOfElementsAdded++;
             }

@@ -6,7 +6,6 @@
  */
 package org.mule.compatibility.core.endpoint;
 
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupServiceDescriptor;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.EndpointException;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
@@ -21,19 +20,18 @@ import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.registry.RegistrationException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupServiceDescriptor;
+
 public class DefaultEndpointFactory implements EndpointFactory
 {
+    public static final String ENDPOINT_REGISTRY_PREFIX = "endpoint:";
     /**
      * logger used by this class
      */
     protected static final Logger logger = LoggerFactory.getLogger(DefaultEndpointFactory.class);
-
-    public static final String ENDPOINT_REGISTRY_PREFIX = "endpoint:";
-
     protected MuleContext muleContext;
 
     @Override
@@ -129,8 +127,9 @@ public class DefaultEndpointFactory implements EndpointFactory
         {
             logger.debug("Named EndpointBuilder not found, creating endpoint builder for uri");
             EndpointURI epURI = new MuleEndpointURI(uri, muleContext);
-            TransportServiceDescriptor tsd = (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT,
-                    epURI.getFullScheme(), null);
+            TransportServiceDescriptor tsd =
+                    (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT,
+                            epURI.getFullScheme(), null);
             endpointBuilder = tsd.createEndpointBuilder(uri, muleContext);
         }
         return endpointBuilder;
@@ -164,7 +163,7 @@ public class DefaultEndpointFactory implements EndpointFactory
             if (endpointBuilder == null)
             {
                 throw new IllegalArgumentException("The endpoint with name: " + uri.getEndpointName()
-                        + "was not found.");
+                                                   + "was not found.");
             }
         }
         else

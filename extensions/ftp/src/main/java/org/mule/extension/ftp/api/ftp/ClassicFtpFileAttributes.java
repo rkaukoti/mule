@@ -6,13 +6,12 @@
  */
 package org.mule.extension.ftp.api.ftp;
 
+import org.apache.commons.net.ftp.FTPFile;
 import org.mule.extension.ftp.api.FtpFileAttributes;
 import org.mule.runtime.module.extension.file.api.AbstractFileAttributes;
 
 import java.nio.file.Path;
 import java.time.LocalDateTime;
-
-import org.apache.commons.net.ftp.FTPFile;
 
 /**
  * Implementation of {@link FtpFileAttributes} for files read from a FTP server.

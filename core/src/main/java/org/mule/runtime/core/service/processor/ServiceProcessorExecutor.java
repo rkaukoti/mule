@@ -16,7 +16,8 @@ import org.mule.runtime.core.processor.BlockingProcessorExecutor;
 import java.util.List;
 
 /**
- * {@link org.mule.runtime.core.processor.BlockingProcessorExecutor} specifically for use with instances of {@link org.mule.runtime.core.api.service.Service}
+ * {@link org.mule.runtime.core.processor.BlockingProcessorExecutor} specifically for use with instances of {@link
+ * org.mule.runtime.core.api.service.Service}
  */
 public class ServiceProcessorExecutor extends BlockingProcessorExecutor
 {

@@ -6,14 +6,13 @@
  */
 package org.mule.test.xml.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 
 import java.util.Random;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class XmlFilterFunctionalTestCase extends AbstractXmlFunctionalTestCase
 {
@@ -67,17 +66,17 @@ public class XmlFilterFunctionalTestCase extends AbstractXmlFunctionalTestCase
         {
             switch (random.nextInt(3))
             {
-                case 0 :
-                    testNotXml();
-                    break;
-                case 1 :
-                    testOther();
-                    break;
-                case 2 :
-                    testSelf();
-                    break;
-                default :
-                    throw new IllegalStateException("Bad case");
+            case 0:
+                testNotXml();
+                break;
+            case 1:
+                testOther();
+                break;
+            case 2:
+                testSelf();
+                break;
+            default:
+                throw new IllegalStateException("Bad case");
             }
         }
     }

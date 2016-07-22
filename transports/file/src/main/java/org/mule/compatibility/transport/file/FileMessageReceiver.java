@@ -6,14 +6,7 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_FILENAME;
-import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_ORIGINAL_DIRECTORY;
-import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_ORIGINAL_FILENAME;
-import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_SOURCE_DIRECTORY;
-import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_SOURCE_FILENAME;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_FORCE_SYNC_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_STORE_MANAGER;
-
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.core.transport.AbstractPollingMessageReceiver;
@@ -54,7 +47,13 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 
-import org.apache.commons.collections.comparators.ReverseComparator;
+import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_FILENAME;
+import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_ORIGINAL_DIRECTORY;
+import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_ORIGINAL_FILENAME;
+import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_SOURCE_DIRECTORY;
+import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_SOURCE_FILENAME;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_FORCE_SYNC_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_STORE_MANAGER;
 
 /**
  * <code>FileMessageReceiver</code> is a polling listener that reads files from a
@@ -144,11 +143,12 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver
         boolean synchronousProcessing = false;
         if (getFlowConstruct() instanceof Flow)
         {
-            synchronousProcessing = ((Flow)getFlowConstruct()).getProcessingStrategy() instanceof SynchronousProcessingStrategy;
+            synchronousProcessing = ((Flow) getFlowConstruct()).getProcessingStrategy() instanceof SynchronousProcessingStrategy;
         }
-        this.poolOnPrimaryInstanceOnly = Boolean.valueOf(System.getProperty(MULE_TRANSPORT_FILE_SINGLEPOLLINSTANCE,"false")) || !synchronousProcessing;
+        this.poolOnPrimaryInstanceOnly =
+                Boolean.valueOf(System.getProperty(MULE_TRANSPORT_FILE_SINGLEPOLLINSTANCE, "false")) || !synchronousProcessing;
         ObjectStoreManager objectStoreManager = getEndpoint().getMuleContext().getRegistry().get(OBJECT_STORE_MANAGER);
-        filesBeingProcessingObjectStore = objectStoreManager.getObjectStore(getEndpoint().getName(),false,1000,60000,20000);
+        filesBeingProcessingObjectStore = objectStoreManager.getObjectStore(getEndpoint().getName(), false, 1000, 60000, 20000);
     }
 
     @Override
@@ -284,7 +284,7 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver
         {
             return;
         }
-        else if(logger.isInfoEnabled())
+        else if (logger.isInfoEnabled())
         {
             logger.info("Lock obtained on file: " + file.getAbsolutePath());
         }
@@ -297,10 +297,10 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver
         // This isn't nice but is needed as MuleMessage is required to resolve
         // destination file name
         MuleMessage fileParserMessasge = MuleMessage.builder()
-                .nullPayload()
-                .addInboundProperty(PROPERTY_ORIGINAL_FILENAME, originalSourceFileName)
-                .addInboundProperty(PROPERTY_ORIGINAL_DIRECTORY, originalSourceDirectory)
-                .build();
+                                                    .nullPayload()
+                                                    .addInboundProperty(PROPERTY_ORIGINAL_FILENAME, originalSourceFileName)
+                                                    .addInboundProperty(PROPERTY_ORIGINAL_DIRECTORY, originalSourceDirectory)
+                                                    .build();
 
         final DefaultMuleEvent event = new DefaultMuleEvent(fileParserMessasge, flowConstruct);
 
@@ -339,7 +339,8 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver
         {
             if (fileConnector.isStreaming())
             {
-                ReceiverFileInputStream payload = createReceiverFileInputStream(sourceFile, destinationFile, file1 -> removeProcessingMark(file1.getAbsolutePath()));
+                ReceiverFileInputStream payload =
+                        createReceiverFileInputStream(sourceFile, destinationFile, file1 -> removeProcessingMark(file1.getAbsolutePath()));
                 messageBuilder = MuleMessage.builder(createMuleMessage(payload, encoding));
             }
             else
@@ -383,7 +384,8 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver
         }
         else
         {
-            processWithoutStreaming(originalSourceFilePath, originalSourceFileName, originalSourceDirectory, sourceFile, destinationFile, executionTemplate, finalMessage);
+            processWithoutStreaming(originalSourceFilePath, originalSourceFileName, originalSourceDirectory, sourceFile, destinationFile,
+                    executionTemplate, finalMessage);
         }
     }
 
@@ -430,7 +432,10 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver
         }
     }
 
-    private void processWithoutStreaming(String originalSourceFile, final String originalSourceFileName, final String originalSourceDirectory, final File sourceFile,final File destinationFile, ExecutionTemplate<MuleEvent> executionTemplate, final MuleMessage finalMessage) throws DefaultMuleException
+    private void processWithoutStreaming(String originalSourceFile, final String originalSourceFileName,
+                                         final String originalSourceDirectory, final File sourceFile, final File destinationFile,
+                                         ExecutionTemplate<MuleEvent> executionTemplate, final MuleMessage finalMessage)
+            throws DefaultMuleException
     {
         try
         {
@@ -463,7 +468,8 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver
         }
     }
 
-    private void processWithStreaming(final File sourceFile, final ReceiverFileInputStream originalPayload, ExecutionTemplate<MuleEvent> executionTemplate, final MuleMessage finalMessage)
+    private void processWithStreaming(final File sourceFile, final ReceiverFileInputStream originalPayload,
+                                      ExecutionTemplate<MuleEvent> executionTemplate, final MuleMessage finalMessage)
     {
         try
         {
@@ -518,13 +524,14 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver
     protected ReceiverFileInputStream createReceiverFileInputStream(File sourceFile, File destinationFile) throws FileNotFoundException
     {
         return new ReceiverFileInputStream(sourceFile,
-                                           fileConnector.isAutoDelete(), destinationFile);
+                fileConnector.isAutoDelete(), destinationFile);
     }
 
-    protected ReceiverFileInputStream createReceiverFileInputStream(File sourceFile, File destinationFile, InputStreamCloseListener closeListener) throws FileNotFoundException
+    protected ReceiverFileInputStream createReceiverFileInputStream(File sourceFile, File destinationFile,
+                                                                    InputStreamCloseListener closeListener) throws FileNotFoundException
     {
         return new ReceiverFileInputStream(sourceFile,
-                                           fileConnector.isAutoDelete(), destinationFile,closeListener);
+                fileConnector.isAutoDelete(), destinationFile, closeListener);
     }
 
     private void rollbackFileMoveIfRequired(String originalSourceFile, File sourceFile)
@@ -564,10 +571,10 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver
 
             // create new Message for destinationFile
             message = MuleMessage.builder(createMuleMessage(destinationFile, endpoint.getEncoding()))
-                    .addInboundProperty(PROPERTY_FILENAME, destinationFile.getName())
-                    .addInboundProperty(PROPERTY_ORIGINAL_FILENAME, originalSourceFileName)
-                    .addInboundProperty(PROPERTY_ORIGINAL_DIRECTORY, originalSourceDirectory)
-                    .build();
+                                 .addInboundProperty(PROPERTY_FILENAME, destinationFile.getName())
+                                 .addInboundProperty(PROPERTY_ORIGINAL_FILENAME, originalSourceFileName)
+                                 .addInboundProperty(PROPERTY_ORIGINAL_DIRECTORY, originalSourceDirectory)
+                                 .build();
         }
 
         // finally deliver the file message
@@ -665,8 +672,7 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver
      * Get a list of files to be processed.
      *
      * @return an array of files to be processed.
-     * @throws org.mule.api.MuleException which will wrap any other exceptions or
-     *             errors.
+     * @throws org.mule.api.MuleException which will wrap any other exceptions or errors.
      */
     List<File> listFiles() throws MuleException
     {
@@ -724,8 +730,6 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver
 
     /**
      * Exception tolerant roll back method
-     *
-     * @throws Throwable
      */
     protected void rollbackFileMove(File sourceFile, String destinationFilePath) throws IOException
     {

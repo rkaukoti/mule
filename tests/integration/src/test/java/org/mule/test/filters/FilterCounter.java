@@ -14,9 +14,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class FilterCounter implements Filter
 {
     public static AtomicInteger counter = new AtomicInteger();
-    
+
     /**
-     * Increments the counter if it passes the filter 
+     * Increments the counter if it passes the filter
      */
     public boolean accept(MuleMessage message)
     {

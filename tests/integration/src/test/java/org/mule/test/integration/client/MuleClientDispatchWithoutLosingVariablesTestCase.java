@@ -6,9 +6,8 @@
  */
 package org.mule.test.integration.client;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.notNullValue;
-
+import org.junit.ClassRule;
+import org.junit.Test;
 import org.mule.functional.functional.FlowAssert;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
@@ -19,8 +18,8 @@ import org.mule.runtime.core.api.lifecycle.Callable;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.ClassRule;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
 
 /**
  * Tests to validate that MuleClient can be used from MessageProcessor and JavaComponent in order to dispatch an event to
@@ -30,6 +29,11 @@ public class MuleClientDispatchWithoutLosingVariablesTestCase extends Functional
 {
     @ClassRule
     public static DynamicPort port = new DynamicPort("port");
+
+    private static String getUrl(String path)
+    {
+        return String.format("http://localhost:%s/%s", port.getValue(), path);
+    }
 
     @Override
     protected String getConfigFile()
@@ -49,8 +53,6 @@ public class MuleClientDispatchWithoutLosingVariablesTestCase extends Functional
      * OptimizedRequestContext while processing it and before dispatching it to a different thread so
      * the original event that is the one that has to continue the execution of the main flow
      * was losing the Flow variables.
-     *
-     * @throws Exception
      */
     @Test
     public void testFlowVarsAfterDispatchFromMessageProcessor() throws Exception
@@ -69,8 +71,6 @@ public class MuleClientDispatchWithoutLosingVariablesTestCase extends Functional
      * OptimizedRequestContext while processing it and before dispatching it to a different thread so
      * the original event that is the one that has to continue the execution of the main flow
      * was losing the Flow variables.
-     *
-     * @throws Exception
      */
     @Test
     public void testFlowVarsAfterDispatchFromJavaComponent() throws Exception
@@ -119,11 +119,6 @@ public class MuleClientDispatchWithoutLosingVariablesTestCase extends Functional
             eventContext.sendEvent(MuleMessage.builder().payload("payload").build(), getUrl("innerrequestresponsetest"));
             return eventContext.getMessage();
         }
-    }
-
-    private static String getUrl(String path)
-    {
-        return String.format("http://localhost:%s/%s", port.getValue(), path);
     }
 
 }

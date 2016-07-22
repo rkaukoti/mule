@@ -7,7 +7,6 @@
 package org.mule.runtime.config.spring;
 
 import org.mule.runtime.core.api.GlobalNameableObject;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
@@ -28,7 +27,7 @@ public class GlobalNamePostProcessor implements BeanPostProcessor
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException
     {
-        if (bean instanceof GlobalNameableObject && beanName!=null && !beanName.startsWith(INNER_BEAN_PLACEHOLDER_PREFIX))
+        if (bean instanceof GlobalNameableObject && beanName != null && !beanName.startsWith(INNER_BEAN_PLACEHOLDER_PREFIX))
         {
             ((GlobalNameableObject) bean).setGlobalName(beanName);
         }

@@ -9,9 +9,7 @@ package org.mule.runtime.module.db.internal.config.domain.param;
 
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.AutoIdUtils;
-
 import org.mule.runtime.module.db.internal.domain.query.QueryParamValue;
-
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -66,7 +64,8 @@ public class InputParamValueBeanDefinitionParser extends AbstractMuleBeanDefinit
     }
 
     @Override
-    protected String resolveId(Element element, AbstractBeanDefinition definition, ParserContext context) throws BeanDefinitionStoreException
+    protected String resolveId(Element element, AbstractBeanDefinition definition, ParserContext context)
+            throws BeanDefinitionStoreException
     {
         return getBeanName(element);
     }

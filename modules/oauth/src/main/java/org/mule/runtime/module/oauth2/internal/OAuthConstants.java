@@ -31,6 +31,7 @@ public interface OAuthConstants
     String REFRESH_TOKEN_EXPRESSION = "#[regex('" + ".*\"refresh_token\"[ ]*:[ ]*\"([^\\\"]*)\".*" + "')]";
     String EXPIRATION_TIME_EXPRESSION = "#[regex('" + ".*\"expires_in\"[ ]*:[ ]*([\\\\d]*).*" + "')]";
 
-    String DEFAULT_REFRESH_TOKEN_WHEN_EXPRESSION = "#[message.inboundProperties['http.status'] == 401 || message.inboundProperties['http.status'] == 403]";
+    String DEFAULT_REFRESH_TOKEN_WHEN_EXPRESSION =
+            "#[message.inboundProperties['http.status'] == 401 || message.inboundProperties['http.status'] == 403]";
 
 }

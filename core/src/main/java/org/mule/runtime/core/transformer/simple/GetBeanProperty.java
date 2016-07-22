@@ -6,28 +6,27 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.transformer.AbstractTransformer;
 
 import java.nio.charset.Charset;
 
-import org.apache.commons.beanutils.PropertyUtils;
-
 /**
  * Looks up a property from a JavaBean using PropertyUtils.getProperty().
  * Nested properties are valid, assuming they follow JavaBean conventions.
- * 
- *   <transformer name="ExtractCustomer" className="org.mule.runtime.core.transformer.simple.GetBeanProperty">
- *       <properties>
- *           <property name="propertyName" value="customerRequest.customer" />
- *       </properties>
- *   </transformer>
+ *
+ * <transformer name="ExtractCustomer" className="org.mule.runtime.core.transformer.simple.GetBeanProperty">
+ * <properties>
+ * <property name="propertyName" value="customerRequest.customer" />
+ * </properties>
+ * </transformer>
  */
 public class GetBeanProperty extends AbstractTransformer
 {
     private String propertyName;
-    
+
     public GetBeanProperty()
     {
         super();

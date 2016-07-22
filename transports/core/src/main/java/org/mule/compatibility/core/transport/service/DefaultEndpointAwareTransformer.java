@@ -37,6 +37,26 @@ public class DefaultEndpointAwareTransformer implements EndpointAwareTransformer
     }
 
     @Override
+    public ImmutableEndpoint getEndpoint()
+    {
+        if (transformer instanceof CompositeConverter)
+        {
+            if (!((CompositeConverter) transformer).getConverters().isEmpty())
+            {
+                return ((EndpointAware) ((CompositeConverter) transformer).getConverters().iterator().next()).getEndpoint();
+            }
+            else
+            {
+                return null;
+            }
+        }
+        else
+        {
+            return this.endpoint;
+        }
+    }
+
+    @Override
     public void setEndpoint(ImmutableEndpoint ep)
     {
         this.endpoint = ep;
@@ -63,26 +83,6 @@ public class DefaultEndpointAwareTransformer implements EndpointAwareTransformer
         else if (transformer instanceof EndpointAware)
         {
             ((EndpointAware) transformer).setEndpoint(ep);
-        }
-    }
-
-    @Override
-    public ImmutableEndpoint getEndpoint()
-    {
-        if (transformer instanceof CompositeConverter)
-        {
-            if (!((CompositeConverter) transformer).getConverters().isEmpty())
-            {
-                return ((EndpointAware) ((CompositeConverter) transformer).getConverters().iterator().next()).getEndpoint();
-            }
-            else
-            {
-                return null;
-            }
-        }
-        else
-        {
-            return this.endpoint;
         }
     }
 
@@ -149,15 +149,15 @@ public class DefaultEndpointAwareTransformer implements EndpointAwareTransformer
     }
 
     @Override
-    public void setReturnDataType(DataType type)
-    {
-        transformer.setReturnDataType(type);
-    }
-
-    @Override
     public DataType getReturnDataType()
     {
         return transformer.getReturnDataType();
+    }
+
+    @Override
+    public void setReturnDataType(DataType type)
+    {
+        transformer.setReturnDataType(type);
     }
 
     @Override
@@ -179,15 +179,15 @@ public class DefaultEndpointAwareTransformer implements EndpointAwareTransformer
     }
 
     @Override
-    public void setName(String name)
-    {
-        transformer.setName(name);
-    }
-
-    @Override
     public String getName()
     {
         return transformer.getName();
+    }
+
+    @Override
+    public void setName(String name)
+    {
+        transformer.setName(name);
     }
 
     @Override

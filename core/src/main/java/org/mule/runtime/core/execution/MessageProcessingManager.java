@@ -16,13 +16,14 @@ public interface MessageProcessingManager
      * Process a message through a set of execution phases.
      * At bear minimum three phases will be executed:
      * - {@link ValidationPhase} which will validates the message content.
-     *      If message context is invalid then it will discard the message
+     * If message context is invalid then it will discard the message
      * - {@link FlowProcessingPhase} which will route the message through it's flow configuration
      * - {@link EndProcessPhase} which will be executed after all the phases have been executed
      *
-     * @param messageProcessTemplate contains template methods that will be executed by each phase in specific parts of the phase so
-     *                               the {@link org.mule.runtime.core.api.source.MessageSource} can apply custom logic during message processing.
-     *                               The message will participate only on those phases were the template defines the required template methods
+     * @param messageProcessTemplate contains template methods that will be executed by each phase in specific parts of the phase so the
+     *                               {@link org.mule.runtime.core.api.source.MessageSource} can apply custom logic during message
+     *                               processing. The message will participate only on those phases were the template defines the required
+     *                               template methods
      * @param messageProcessContext  defines the context of execution of the message
      */
     void processMessage(MessageProcessTemplate messageProcessTemplate, MessageProcessContext messageProcessContext);

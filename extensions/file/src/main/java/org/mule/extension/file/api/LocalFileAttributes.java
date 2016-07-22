@@ -6,7 +6,6 @@
  */
 package org.mule.extension.file.api;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.module.extension.file.api.AbstractFileAttributes;
 import org.mule.runtime.module.extension.file.api.FileAttributes;
@@ -18,6 +17,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * Implementation of {@link FileAttributes} for files obtained

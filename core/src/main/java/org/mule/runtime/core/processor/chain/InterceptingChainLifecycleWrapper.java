@@ -22,7 +22,8 @@ import java.util.List;
 public class InterceptingChainLifecycleWrapper extends AbstractMessageProcessorChain
 {
     private MessageProcessorChain chain;
-    private MessageProcessorExecutionTemplate messageProcessorExecutionTemplate = MessageProcessorExecutionTemplate.createExecutionTemplate();
+    private MessageProcessorExecutionTemplate messageProcessorExecutionTemplate =
+            MessageProcessorExecutionTemplate.createExecutionTemplate();
 
     public InterceptingChainLifecycleWrapper(MessageProcessorChain chain,
                                              List<MessageProcessor> processors,

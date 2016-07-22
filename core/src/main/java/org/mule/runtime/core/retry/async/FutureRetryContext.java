@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.core.retry.async;
 
-import java.util.Map;
-
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.retry.RetryContext;
+
+import java.util.Map;
 
 /**
  * An implementation of {@link RetryContext} to be used when a {@link org.mule.runtime.core.api.retry.RetryPolicyTemplate} is
@@ -36,7 +36,7 @@ public class FutureRetryContext implements RetryContext
         if (!isReady())
         {
             throw new IllegalStateException(
-                "Cannot perform operations on a FutureRetryContext until isReady() returns true");
+                    "Cannot perform operations on a FutureRetryContext until isReady() returns true");
         }
     }
 

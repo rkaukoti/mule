@@ -6,15 +6,6 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static junit.framework.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
-
-import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
-import org.mule.compatibility.transport.http.HttpConstants;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.runtime.core.construct.Flow;
-import org.mule.tck.junit4.rule.DynamicPort;
-
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
@@ -25,6 +16,14 @@ import org.apache.commons.httpclient.params.HttpClientParams;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
+import org.mule.compatibility.transport.http.HttpConstants;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.construct.Flow;
+import org.mule.tck.junit4.rule.DynamicPort;
+
+import static junit.framework.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 
 public class HttpKeepAliveFunctionalTestCase extends FunctionalTestCase
 {
@@ -180,7 +179,8 @@ public class HttpKeepAliveFunctionalTestCase extends FunctionalTestCase
         return new HttpClient(params);
     }
 
-    private void doTestHttp(String url, String inConnectionHeaderValue, String expectedConnectionHeaderValue, HttpClient httpClient) throws Exception
+    private void doTestHttp(String url, String inConnectionHeaderValue, String expectedConnectionHeaderValue, HttpClient httpClient)
+            throws Exception
     {
         GetMethod request = new GetMethod(url);
         if (StringUtils.isEmpty(inConnectionHeaderValue))
@@ -201,7 +201,8 @@ public class HttpKeepAliveFunctionalTestCase extends FunctionalTestCase
         assertEquals(HttpStatus.SC_OK, status);
     }
 
-    private void runHttpMethodAndAssertConnectionHeader(HttpMethod request, String expectedConnectionHeaderValue, HttpClient httpClient) throws Exception
+    private void runHttpMethodAndAssertConnectionHeader(HttpMethod request, String expectedConnectionHeaderValue, HttpClient httpClient)
+            throws Exception
     {
         int status = httpClient.executeMethod(request);
         assertEquals(HttpStatus.SC_OK, status);

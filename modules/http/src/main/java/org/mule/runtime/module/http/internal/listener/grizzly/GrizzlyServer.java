@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
+import org.glassfish.grizzly.nio.transport.TCPNIOServerConnection;
+import org.glassfish.grizzly.nio.transport.TCPNIOTransport;
 import org.mule.runtime.module.http.internal.listener.HttpListenerRegistry;
 import org.mule.runtime.module.http.internal.listener.RequestHandlerManager;
 import org.mule.runtime.module.http.internal.listener.Server;
@@ -14,9 +16,6 @@ import org.mule.runtime.module.http.internal.listener.async.RequestHandler;
 import org.mule.runtime.module.http.internal.listener.matcher.ListenerRequestMatcher;
 
 import java.io.IOException;
-
-import org.glassfish.grizzly.nio.transport.TCPNIOServerConnection;
-import org.glassfish.grizzly.nio.transport.TCPNIOTransport;
 
 public class GrizzlyServer implements Server
 {

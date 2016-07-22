@@ -6,16 +6,15 @@
  */
 package org.mule.test.infrastructure.deployment;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 import org.mule.runtime.container.api.MuleCoreExtension;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
 
 public class AbstractFakeMuleServerTestCase extends AbstractMuleTestCase
 {

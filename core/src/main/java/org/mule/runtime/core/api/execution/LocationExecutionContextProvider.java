@@ -14,24 +14,27 @@ import javax.xml.namespace.QName;
 
 /**
  * Provides a standard way to generate a log entry or message that references an element in a flow.
- * 
+ *
  * @since 3.8.0
  */
 public abstract class LocationExecutionContextProvider implements ExceptionContextProvider
 {
 
     private static final QName NAME_ANNOTATION_KEY = new QName("http://www.mulesoft.org/schema/mule/documentation", "name");
-    private static final QName SOURCE_FILE_ANNOTATION_KEY = new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceFileName");
-    private static final QName SOURCE_FILE_LINE_ANNOTATION_KEY = new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceFileLine");
-    private static final QName SOURCE_ELEMENT_ANNOTATION_KEY = new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceElement");
+    private static final QName SOURCE_FILE_ANNOTATION_KEY =
+            new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceFileName");
+    private static final QName SOURCE_FILE_LINE_ANNOTATION_KEY =
+            new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceFileLine");
+    private static final QName SOURCE_ELEMENT_ANNOTATION_KEY =
+            new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceElement");
 
     /**
      * Populates the passed beanAnnotations with the other passed parameters.
-     * 
+     *
      * @param beanAnnotations the map with annotations to populate
-     * @param fileName the name of the file where the element definition was read from.
-     * @param lineNumber the line number where the definition of the element starts in the file.
-     * @param xmlContent the xml representation of the element definition.
+     * @param fileName        the name of the file where the element definition was read from.
+     * @param lineNumber      the line number where the definition of the element starts in the file.
+     * @param xmlContent      the xml representation of the element definition.
      */
     public static void addMetadataAnnotationsFromXml(Map<QName, Object> beanAnnotations, String fileName, int lineNumber, String xmlContent)
     {
@@ -42,24 +45,21 @@ public abstract class LocationExecutionContextProvider implements ExceptionConte
 
     /**
      * Generates a representation of a flow element to be logged in a standard way.
-     * 
-     * @param appId
-     * @param processorPath
-     * @param element
-     * @return
      */
     public static String resolveProcessorRepresentation(String appId, String processorPath, Object element)
     {
         String docName = getDocName(element);
         if (docName != null)
         {
-            return String.format("%s @ %s:%s:%d (%s)", processorPath, appId, getSourceFile((AnnotatedObject) element), getSourceFileLine((AnnotatedObject) element), docName);
+            return String.format("%s @ %s:%s:%d (%s)", processorPath, appId, getSourceFile((AnnotatedObject) element),
+                    getSourceFileLine((AnnotatedObject) element), docName);
         }
         else
         {
             if (element instanceof AnnotatedObject)
             {
-                return String.format("%s @ %s:%s:%d", processorPath, appId, getSourceFile((AnnotatedObject) element), getSourceFileLine((AnnotatedObject) element));
+                return String.format("%s @ %s:%s:%d", processorPath, appId, getSourceFile((AnnotatedObject) element),
+                        getSourceFileLine((AnnotatedObject) element));
             }
             else
             {

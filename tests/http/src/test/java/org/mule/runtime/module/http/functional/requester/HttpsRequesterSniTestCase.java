@@ -6,23 +6,6 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assume.assumeThat;
-import org.mule.runtime.core.api.MessagingException;
-import org.mule.runtime.core.api.security.tls.TlsConfiguration;
-import org.mule.runtime.core.util.ClassUtils;
-import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.URL;
-import java.util.concurrent.atomic.AtomicReference;
-
 import org.apache.commons.lang.StringUtils;
 import org.glassfish.grizzly.Connection;
 import org.glassfish.grizzly.Grizzly;
@@ -43,6 +26,23 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.runtime.core.api.MessagingException;
+import org.mule.runtime.core.api.security.tls.TlsConfiguration;
+import org.mule.runtime.core.util.ClassUtils;
+import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.URL;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assume.assumeThat;
 
 public class HttpsRequesterSniTestCase extends AbstractHttpTestCase
 {
@@ -54,12 +54,6 @@ public class HttpsRequesterSniTestCase extends AbstractHttpTestCase
     public DynamicPort httpsPort = new DynamicPort("httpsPort");
 
     private Server server;
-
-    @Override
-    protected String getConfigFile()
-    {
-        return "http-request-sni-config.xml";
-    }
 
     @BeforeClass
     public static void createTlsPropertiesFile() throws Exception
@@ -85,6 +79,12 @@ public class HttpsRequesterSniTestCase extends AbstractHttpTestCase
         return new File(path, String.format(TlsConfiguration.PROPERTIES_FILE_PATTERN, TlsConfiguration.DEFAULT_SECURITY_MODEL));
     }
 
+    @Override
+    protected String getConfigFile()
+    {
+        return "http-request-sni-config.xml";
+    }
+
     @Before
     public void prepareServer() throws IOException
     {
@@ -93,7 +93,8 @@ public class HttpsRequesterSniTestCase extends AbstractHttpTestCase
     }
 
     @After
-    public void teardownServer() {
+    public void teardownServer()
+    {
         if (server != null)
         {
             server.stopServer();
@@ -119,7 +120,9 @@ public class HttpsRequesterSniTestCase extends AbstractHttpTestCase
         {
             address = InetAddress.getByName(FQDN);
         }
-        catch (Exception e) {}
+        catch (Exception e)
+        {
+        }
 
         assumeThat(address, is(notNullValue()));
 
@@ -132,8 +135,8 @@ public class HttpsRequesterSniTestCase extends AbstractHttpTestCase
      */
     public class Server
     {
-        HttpServer webServer;
         final AtomicReference<String> sniHostname;
+        HttpServer webServer;
         int port;
 
         SSLEngineConfigurator sslServerEngineConfig;
@@ -209,6 +212,11 @@ public class HttpsRequesterSniTestCase extends AbstractHttpTestCase
             return sslContextConfigurator;
         }
 
+        public String getHostname()
+        {
+            return sniHostname.get();
+        }
+
         private class SniAddOn implements AddOn
         {
             @Override
@@ -221,11 +229,6 @@ public class HttpsRequesterSniTestCase extends AbstractHttpTestCase
                     builder.set(idx, getSniFilter());
                 }
             }
-        }
-
-        public String getHostname()
-        {
-            return sniHostname.get();
         }
     }
 

@@ -20,6 +20,7 @@ public class DuplicateExportedPackageException extends ArtifactDescriptorCreateE
 
     /**
      * {@inheritDoc}
+     *
      * @param pluginsPerPackage a map containing a list of artifact names exporting a given Java package
      */
     public DuplicateExportedPackageException(Map<String, List<String>> pluginsPerPackage)

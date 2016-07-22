@@ -10,6 +10,8 @@ import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.util.UUID;
 import org.mule.tck.junit4.rule.FreePortFinder;
 import org.mule.test.infrastructure.deployment.FakeMuleServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,13 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class MuleContextProcessBuilder implements Cloneable, ConfigurableProcessBuilder
 {
-
-    protected transient final static Logger logger = LoggerFactory.getLogger(MuleContextProcessBuilder.class);
 
     public static final String MULE_CONTEXT_CONFIGURATION_ID_KEY = MuleProperties.SYSTEM_PROPERTY_PREFIX + "serverId";
     public static final String CONFIG_FILE_KEY = "configFile";
@@ -33,12 +30,12 @@ public class MuleContextProcessBuilder implements Cloneable, ConfigurableProcess
     public static final String COMMAND_PORT_PROPERTY = "test.command.port";
     public static final String MULE_CORE_EXTENSIONS_PROPERTY = "test.mule.coreextension";
     public static final int DEFAULT_DEBUG_PORT = 5005;
-
+    protected transient final static Logger logger = LoggerFactory.getLogger(MuleContextProcessBuilder.class);
     private final File testDirectory;
     private String muleAppClass;
     private String instanceId = "unknown";
-    private Map<String,String> systemProperties = new HashMap<String, String>();
-    private FreePortFinder freePortFinder= new FreePortFinder(8000,60000);
+    private Map<String, String> systemProperties = new HashMap<String, String>();
+    private FreePortFinder freePortFinder = new FreePortFinder(8000, 60000);
     private List<ProcessBuilderConfigurer> processBuilderConfigurers = new ArrayList<ProcessBuilderConfigurer>();
 
     public MuleContextProcessBuilder(File testDirectory)
@@ -73,7 +70,8 @@ public class MuleContextProcessBuilder implements Cloneable, ConfigurableProcess
         MuleContextProcessBuilder clusteredMuleContextProcessBuilder = new MuleContextProcessBuilder(this);
         clusteredMuleContextProcessBuilder.instanceId = String.valueOf(instanceId);
         clusteredMuleContextProcessBuilder.addConfigurationAttribute(MULE_CONTEXT_CONFIGURATION_ID_KEY, getMuleContextConfigurationId());
-        clusteredMuleContextProcessBuilder.addConfigurationAttribute(MuleProperties.MULE_HOME_DIRECTORY_PROPERTY, getMuleHomeDirectoryFor(instanceId));
+        clusteredMuleContextProcessBuilder.addConfigurationAttribute(MuleProperties.MULE_HOME_DIRECTORY_PROPERTY,
+                getMuleHomeDirectoryFor(instanceId));
         clusteredMuleContextProcessBuilder.addConfigurationAttribute(LOG_PORT_PROPERTY, freePortFinder.find().toString());
         clusteredMuleContextProcessBuilder.addConfigurationAttribute(COMMAND_PORT_PROPERTY, freePortFinder.find().toString());
         for (ProcessBuilderConfigurer processBuilderConfigurer : processBuilderConfigurers)
@@ -116,7 +114,8 @@ public class MuleContextProcessBuilder implements Cloneable, ConfigurableProcess
         ProcessBuilder processBuilder = new ProcessBuilder(command);
         try
         {
-            TestProcess testProcess = new TestProcess(instanceId, Integer.valueOf(systemProperties.get(LOG_PORT_PROPERTY)), Integer.valueOf(systemProperties.get(COMMAND_PORT_PROPERTY)));
+            TestProcess testProcess = new TestProcess(instanceId, Integer.valueOf(systemProperties.get(LOG_PORT_PROPERTY)),
+                    Integer.valueOf(systemProperties.get(COMMAND_PORT_PROPERTY)));
             Process process = processBuilder.start();
             testProcess.setProcess(process);
             return testProcess;

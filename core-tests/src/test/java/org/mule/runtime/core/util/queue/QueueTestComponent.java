@@ -29,7 +29,7 @@ public class QueueTestComponent
     }
 
     private void assertQueueDisposal(QueueManager mgr, Queue queue, QueueSession session, String queueName)
-        throws Exception
+            throws Exception
     {
         queue.put("some value");
         assertEquals(1, queue.size());

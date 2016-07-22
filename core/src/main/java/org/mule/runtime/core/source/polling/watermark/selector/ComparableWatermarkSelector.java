@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Base class for {@link WatermarkSelector}s that evaluate {@link Comparable}
  * objects. When a non {@link Comparable} value is received, is is discarded.
- * 
+ *
  * @since 3.5.0
  */
 public abstract class ComparableWatermarkSelector extends WatermarkSelector
@@ -53,8 +53,8 @@ public abstract class ComparableWatermarkSelector extends WatermarkSelector
             if (logger.isDebugEnabled())
             {
                 logger.debug(String.format(
-                    "This selector only accepts Comparable values but %s found instead. Ignoring.",
-                    value.getClass().getCanonicalName()));
+                        "This selector only accepts Comparable values but %s found instead. Ignoring.",
+                        value.getClass().getCanonicalName()));
             }
         }
     }
@@ -64,7 +64,7 @@ public abstract class ComparableWatermarkSelector extends WatermarkSelector
      * Min and Max selectors expect Java's compareTo method to return -1 or 1
      * respectively. However, this is not always the case, so we use this method
      * change and negative result to -1, and any positive result to 1.
-     * 
+     *
      * @param value The result of a compareTo method.
      * @return -1 if value is less than 0, 1 if value is larger than 0
      */

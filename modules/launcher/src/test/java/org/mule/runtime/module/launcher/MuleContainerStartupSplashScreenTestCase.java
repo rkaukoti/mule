@@ -6,15 +6,15 @@
  */
 package org.mule.runtime.module.launcher;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.not;
-import static org.mule.runtime.core.util.FileUtils.newFile;
-
-import java.io.File;
-
 import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.BeforeClass;
+
+import java.io.File;
+
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
+import static org.mule.runtime.core.util.FileUtils.newFile;
 
 public class MuleContainerStartupSplashScreenTestCase extends AbstractSplashScreenTestCase<MuleContainerStartupSplashScreen>
 {

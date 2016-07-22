@@ -6,15 +6,15 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.describer;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.extension.api.introspection.config.ConfigurationFactory;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 import org.mule.tck.testmodels.fruit.Apple;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class TypeAwareConfigurationFactoryTestCase extends AbstractMuleTestCase
@@ -33,7 +33,8 @@ public class TypeAwareConfigurationFactoryTestCase extends AbstractMuleTestCase
     @Test(expected = IllegalArgumentException.class)
     public void noDefaultConstructor()
     {
-        instantiator = new TypeAwareConfigurationFactory(TypeAwareConfigurationFactory.class, TypeAwareConfigurationFactory.class.getClassLoader());
+        instantiator = new TypeAwareConfigurationFactory(TypeAwareConfigurationFactory.class,
+                TypeAwareConfigurationFactory.class.getClassLoader());
     }
 
     @Test(expected = IllegalArgumentException.class)

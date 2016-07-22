@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
-import org.mule.runtime.module.http.internal.listener.ServerAddressMap;
-import org.mule.runtime.module.http.internal.listener.ServerAddress;
-
-import java.io.IOException;
-import java.net.InetSocketAddress;
-
 import org.glassfish.grizzly.Connection;
 import org.glassfish.grizzly.filterchain.BaseFilter;
 import org.glassfish.grizzly.filterchain.FilterChain;
 import org.glassfish.grizzly.filterchain.FilterChainContext;
 import org.glassfish.grizzly.filterchain.FilterChainEvent;
 import org.glassfish.grizzly.filterchain.NextAction;
+import org.mule.runtime.module.http.internal.listener.ServerAddress;
+import org.mule.runtime.module.http.internal.listener.ServerAddressMap;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
 
 /**
  * Grizzly filter to delegate to the right {link @BaseFilter} based on the Connection.
@@ -151,7 +150,7 @@ public class GrizzlyAddressDelegateFilter<F extends BaseFilter> extends BaseFilt
      * Adds a new Filter for a particular Server address
      *
      * @param serverAddress the server address to which this filter must be applied
-     * @param filter the filter to apply
+     * @param filter        the filter to apply
      */
     public synchronized void addFilterForAddress(ServerAddress serverAddress, F filter)
     {

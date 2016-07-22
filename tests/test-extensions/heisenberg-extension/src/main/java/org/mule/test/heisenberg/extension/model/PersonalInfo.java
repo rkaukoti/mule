@@ -6,11 +6,12 @@
  */
 package org.mule.test.heisenberg.extension.model;
 
-import static org.mule.test.heisenberg.extension.HeisenbergExtension.AGE;
-import static org.mule.test.heisenberg.extension.HeisenbergExtension.HEISENBERG;
 import org.mule.runtime.extension.api.annotation.Alias;
 import org.mule.runtime.extension.api.annotation.Parameter;
 import org.mule.runtime.extension.api.annotation.param.Optional;
+
+import static org.mule.test.heisenberg.extension.HeisenbergExtension.AGE;
+import static org.mule.test.heisenberg.extension.HeisenbergExtension.HEISENBERG;
 
 public class PersonalInfo
 {

@@ -6,10 +6,12 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static org.apache.commons.lang.StringUtils.EMPTY;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.message.BasicHeader;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
@@ -17,12 +19,10 @@ import org.mule.tck.junit4.rule.SystemProperty;
 
 import java.io.IOException;
 
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.message.BasicHeader;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.apache.commons.lang.StringUtils.EMPTY;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
 
 public class HttpListenerHeadersTestCase extends AbstractHttpTestCase
 {
@@ -52,13 +52,15 @@ public class HttpListenerHeadersTestCase extends AbstractHttpTestCase
     @Test
     public void handlesMultipleHeadersString() throws Exception
     {
-        testHeaders("multipleHeadersString", "custom2", new BasicHeader(header.getValue(), "custom1"), new BasicHeader(header.getValue(), "custom2"));
+        testHeaders("multipleHeadersString", "custom2", new BasicHeader(header.getValue(), "custom1"),
+                new BasicHeader(header.getValue(), "custom2"));
     }
 
     @Test
     public void handlesMultipleHeadersCollection() throws Exception
     {
-        testHeaders("multipleHeadersCollection", "custom1", new BasicHeader(header.getValue(), "custom1"), new BasicHeader(header.getValue(), "custom2"));
+        testHeaders("multipleHeadersCollection", "custom1", new BasicHeader(header.getValue(), "custom1"),
+                new BasicHeader(header.getValue(), "custom2"));
     }
 
     public void testHeaders(String path, String expectedResponse, Header... headers) throws IOException

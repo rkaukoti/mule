@@ -6,25 +6,25 @@
  */
 package org.mule.runtime.core.util.queue;
 
+import org.apache.commons.lang.NotImplementedException;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.context.MuleContextBuilder;
+import org.mule.runtime.core.config.DefaultMuleConfiguration;
+import org.mule.runtime.core.util.journal.queue.LocalTxQueueTransactionJournal;
+import org.mule.runtime.core.util.journal.queue.LocalTxQueueTransactionRecoverer;
+import org.mule.runtime.core.util.xa.ResourceManagerException;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+
+import java.io.Serializable;
+
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.context.MuleContextBuilder;
-import org.mule.runtime.core.config.DefaultMuleConfiguration;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-import org.mule.runtime.core.util.journal.queue.LocalTxQueueTransactionJournal;
-import org.mule.runtime.core.util.journal.queue.LocalTxQueueTransactionRecoverer;
-import org.mule.runtime.core.util.xa.ResourceManagerException;
-
-import java.io.Serializable;
-
-import org.apache.commons.lang.NotImplementedException;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 public class LocalTxQueueTransactionRecovererTestCase extends AbstractMuleContextTestCase
 {

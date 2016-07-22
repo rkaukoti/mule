@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.config.dsl;
 
-import static com.google.common.collect.ImmutableList.copyOf;
-import static org.mule.runtime.module.extension.internal.config.dsl.ExtensionDefinitionParser.CHILD_ELEMENT_KEY_PREFIX;
-import static org.mule.runtime.module.extension.internal.config.dsl.ExtensionDefinitionParser.CHILD_ELEMENT_KEY_SUFFIX;
 import org.mule.runtime.config.spring.dsl.api.ObjectFactory;
 import org.mule.runtime.core.util.collection.ImmutableListCollector;
 import org.mule.runtime.module.extension.internal.runtime.resolver.CollectionValueResolver;
@@ -22,6 +19,10 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.google.common.collect.ImmutableList.copyOf;
+import static org.mule.runtime.module.extension.internal.config.dsl.ExtensionDefinitionParser.CHILD_ELEMENT_KEY_PREFIX;
+import static org.mule.runtime.module.extension.internal.config.dsl.ExtensionDefinitionParser.CHILD_ELEMENT_KEY_SUFFIX;
 
 /**
  * Base class for {@link ObjectFactory} implementation which create
@@ -38,8 +39,7 @@ public abstract class AbstractExtensionObjectFactory<T> implements ObjectFactory
     private Map<String, Object> parameters = new HashMap<>();
 
     /**
-     * @return the components parameters as {@link Map} which key is the
-     * parameter name and the value is the actual thingy
+     * @return the components parameters as {@link Map} which key is the parameter name and the value is the actual thingy
      */
     protected Map<String, Object> getParameters()
     {
@@ -86,13 +86,15 @@ public abstract class AbstractExtensionObjectFactory<T> implements ObjectFactory
         }
         else if (value instanceof Collection)
         {
-            resolver = CollectionValueResolver.of((Class<? extends Collection>) value.getClass(), (List) ((Collection) value).stream().map(this::toValueResolver).collect(new ImmutableListCollector()));
+            resolver = CollectionValueResolver.of((Class<? extends Collection>) value.getClass(),
+                    (List) ((Collection) value).stream().map(this::toValueResolver).collect(new ImmutableListCollector()));
         }
         else if (value instanceof Map)
         {
             Map<Object, Object> map = (Map<Object, Object>) value;
             Map<ValueResolver<Object>, ValueResolver<Object>> normalizedMap = new LinkedHashMap<>(map.size());
-            map.forEach((key, entryValue) -> normalizedMap.put((ValueResolver<Object>) toValueResolver(key), (ValueResolver<Object>) toValueResolver(entryValue)));
+            map.forEach((key, entryValue) -> normalizedMap.put((ValueResolver<Object>) toValueResolver(key),
+                    (ValueResolver<Object>) toValueResolver(entryValue)));
             resolver = MapValueResolver.of(map.getClass(), copyOf(normalizedMap.keySet()), copyOf(normalizedMap.values()));
         }
         else
@@ -106,7 +108,8 @@ public abstract class AbstractExtensionObjectFactory<T> implements ObjectFactory
     {
         Map<String, Object> normalized = new HashMap<>();
 
-        parameters.forEach((key, value) -> {
+        parameters.forEach((key, value) ->
+        {
             String normalizedKey = key;
 
             if (isChildKey(key))

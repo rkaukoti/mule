@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.core.transformer;
 
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.api.transformer.TransformerException;
 
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import static org.junit.Assert.fail;
 
 public class NullResultTestCase extends AbstractTransformerTestCase
 {

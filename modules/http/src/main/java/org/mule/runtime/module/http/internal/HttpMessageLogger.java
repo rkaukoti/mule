@@ -22,11 +22,6 @@ public class HttpMessageLogger extends HttpProbe.Adapter
 
     private final LoggerType loggerType;
 
-    public enum LoggerType
-    {
-        LISTENER, REQUESTER
-    }
-
     public HttpMessageLogger(final LoggerType loggerType)
     {
         this.loggerType = loggerType;
@@ -50,6 +45,11 @@ public class HttpMessageLogger extends HttpProbe.Adapter
         {
             logger.debug(loggerType.name() + "\n" + buffer.toStringContent());
         }
+    }
+
+    public enum LoggerType
+    {
+        LISTENER, REQUESTER
     }
 
 }

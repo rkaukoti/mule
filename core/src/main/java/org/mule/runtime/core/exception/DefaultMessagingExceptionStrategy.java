@@ -9,11 +9,11 @@ package org.mule.runtime.core.exception;
 import org.mule.runtime.core.api.MuleContext;
 
 /**
- * This is the default exception handler for flows and services. The handler logs errors 
- * and will forward the message and exception to an exception endpoint if one is set 
- * on this Exception strategy.  If an endpoint is configured via the <default-exception-strategy> 
+ * This is the default exception handler for flows and services. The handler logs errors
+ * and will forward the message and exception to an exception endpoint if one is set
+ * on this Exception strategy.  If an endpoint is configured via the <default-exception-strategy>
  * element, a Dead Letter Queue pattern is assumed and so the transaction will commit.
- * Otherwise, the transaction will rollback, possibly causing the source message to be 
+ * Otherwise, the transaction will rollback, possibly causing the source message to be
  * redelivered (depends on the transport).
  */
 public class DefaultMessagingExceptionStrategy extends AbstractMessagingExceptionStrategy

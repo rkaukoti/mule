@@ -6,10 +6,9 @@
  */
 package org.mule.runtime.module.db.integration.config;
 
+import org.junit.Rule;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import org.mule.tck.junit4.rule.SystemProperty;
-
-import org.junit.Rule;
 
 public abstract class AbstractHostPortConfigTestCase extends AbstractDatabaseConfigTestCase
 {
@@ -17,10 +16,10 @@ public abstract class AbstractHostPortConfigTestCase extends AbstractDatabaseCon
     @Rule
     public SystemProperty databasePort = new SystemProperty("database.port", getDatabasePortPropertyValue());
 
-    protected abstract String getDatabasePortPropertyValue();
-
     public AbstractHostPortConfigTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
     {
         super(dataSourceConfigResource, testDatabase);
     }
+
+    protected abstract String getDatabasePortPropertyValue();
 }

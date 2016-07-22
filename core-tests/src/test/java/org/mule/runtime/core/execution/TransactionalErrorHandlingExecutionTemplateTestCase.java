@@ -6,19 +6,15 @@
  */
 package org.mule.runtime.core.execution;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.api.transaction.TransactionConfig.ACTION_ALWAYS_BEGIN;
-import static org.mule.runtime.core.execution.TransactionalErrorHandlingExecutionTemplate.createMainExecutionTemplate;
-import static org.mule.runtime.core.transaction.TransactionTemplateTestUtils.getFailureTransactionCallbackStartsTransaction;
-
+import org.hamcrest.core.Is;
+import org.hamcrest.core.IsNull;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.internal.verification.VerificationModeFactory;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.execution.ExecutionCallback;
@@ -38,15 +34,18 @@ import org.mule.tck.size.SmallTest;
 import org.mule.tck.testmodels.mule.TestTransaction;
 import org.mule.tck.testmodels.mule.TestTransactionFactory;
 
-import org.hamcrest.core.Is;
-import org.hamcrest.core.IsNull;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.internal.verification.VerificationModeFactory;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.api.transaction.TransactionConfig.ACTION_ALWAYS_BEGIN;
+import static org.mule.runtime.core.execution.TransactionalErrorHandlingExecutionTemplate.createMainExecutionTemplate;
+import static org.mule.runtime.core.transaction.TransactionTemplateTestUtils.getFailureTransactionCallbackStartsTransaction;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
@@ -90,7 +89,7 @@ public class TransactionalErrorHandlingExecutionTemplateTestCase extends Transac
 
         verify(mockTransaction).suspend();
         verify(mockTransaction, VerificationModeFactory.times(0)).commit();
-        verify(mockTransaction,VerificationModeFactory.times(0)).rollback();
+        verify(mockTransaction, VerificationModeFactory.times(0)).rollback();
         verify(mockTransaction).resume();
     }
 
@@ -112,8 +111,8 @@ public class TransactionalErrorHandlingExecutionTemplateTestCase extends Transac
             assertThat(e.getEvent(), is(exceptionListenerResult));
         }
         verify(mockTransaction).suspend();
-        verify(mockTransaction,VerificationModeFactory.times(0)).commit();
-        verify(mockTransaction,VerificationModeFactory.times(0)).rollback();
+        verify(mockTransaction, VerificationModeFactory.times(0)).commit();
+        verify(mockTransaction, VerificationModeFactory.times(0)).rollback();
         verify(mockNewTransaction).rollback();
         verify(mockTransaction).resume();
         assertThat((TestTransaction) TransactionCoordination.getInstance().getTransaction(), is(mockTransaction));
@@ -144,9 +143,9 @@ public class TransactionalErrorHandlingExecutionTemplateTestCase extends Transac
         }
         verify(mockTransaction, VerificationModeFactory.times(0)).commit();
         verify(mockTransaction, VerificationModeFactory.times(1)).rollback();
-        assertThat( TransactionCoordination.getInstance().getTransaction(), IsNull.<Object>nullValue());
+        assertThat(TransactionCoordination.getInstance().getTransaction(), IsNull.<Object>nullValue());
     }
-    
+
     @Test
     public void testInnerTransactionCreatedAndResolved() throws Exception
     {
@@ -163,13 +162,15 @@ public class TransactionalErrorHandlingExecutionTemplateTestCase extends Transac
         }
         verify(mockTransaction, VerificationModeFactory.times(0)).commit();
         verify(mockTransaction, VerificationModeFactory.times(1)).rollback();
-        assertThat( TransactionCoordination.getInstance().getTransaction(), IsNull.<Object>nullValue());
+        assertThat(TransactionCoordination.getInstance().getTransaction(), IsNull.<Object>nullValue());
     }
 
     @Test
     public void testInnerTransactionCreatedAndNotResolved() throws Exception
     {
-        ExecutionTemplate transactionTemplate = TransactionalErrorHandlingExecutionTemplate.createScopeExecutionTemplate(mockMuleContext, new MuleTransactionConfig(), mockMessagingExceptionHandler);
+        ExecutionTemplate transactionTemplate =
+                TransactionalErrorHandlingExecutionTemplate.createScopeExecutionTemplate(mockMuleContext, new MuleTransactionConfig(),
+                        mockMessagingExceptionHandler);
         configureCatchExceptionListenerCall();
         when(mockMessagingException.causedRollback()).thenReturn(false);
         try
@@ -182,7 +183,7 @@ public class TransactionalErrorHandlingExecutionTemplateTestCase extends Transac
         }
         verify(mockTransaction, VerificationModeFactory.times(0)).commit();
         verify(mockTransaction, VerificationModeFactory.times(0)).rollback();
-        assertThat( TransactionCoordination.getInstance().getTransaction(), IsNull.<Object>notNullValue());
+        assertThat(TransactionCoordination.getInstance().getTransaction(), IsNull.<Object>notNullValue());
     }
 
     @Test
@@ -225,7 +226,8 @@ public class TransactionalErrorHandlingExecutionTemplateTestCase extends Transac
             when(mockMuleContext.getNotificationManager()).thenReturn(mock(ServerNotificationManager.class));
             when(mockMuleContext.getRegistry()).thenReturn(mock(MuleRegistry.class));
             defaultMessagingExceptionStrategy.setMuleContext(mockMuleContext);
-            defaultMessagingExceptionStrategy.handleException((Exception) invocationOnMock.getArguments()[0], (MuleEvent) invocationOnMock.getArguments()[1]);
+            defaultMessagingExceptionStrategy.handleException((Exception) invocationOnMock.getArguments()[0],
+                    (MuleEvent) invocationOnMock.getArguments()[1]);
             return mockResultEvent;
         });
         return mockResultEvent;
@@ -241,7 +243,8 @@ public class TransactionalErrorHandlingExecutionTemplateTestCase extends Transac
             exceptionStrategy.setMuleContext(mockMuleContext);
             when(mockMuleContext.getNotificationManager()).thenReturn(mock(ServerNotificationManager.class));
             when(mockMuleContext.getRegistry()).thenReturn(mock(MuleRegistry.class));
-            exceptionStrategy.handleException((Exception) invocationOnMock.getArguments()[0], (MuleEvent) invocationOnMock.getArguments()[1]);
+            exceptionStrategy.handleException((Exception) invocationOnMock.getArguments()[0],
+                    (MuleEvent) invocationOnMock.getArguments()[1]);
             return mockResultEvent;
         });
         return mockResultEvent;

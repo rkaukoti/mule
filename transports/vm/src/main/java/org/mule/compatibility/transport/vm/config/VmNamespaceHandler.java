@@ -16,7 +16,6 @@ import org.mule.runtime.config.spring.parsers.specific.TransactionDefinitionPars
 
 /**
  * Reigsters a Bean Definition Parser for handling <code><vm:connector></code> elements.
- *
  */
 public class VmNamespaceHandler extends AbstractMuleTransportsNamespaceHandler
 {

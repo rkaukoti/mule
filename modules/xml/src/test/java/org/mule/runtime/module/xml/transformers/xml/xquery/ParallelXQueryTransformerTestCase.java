@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.module.xml.transformers.xml.xquery;
 
-import static java.lang.Runtime.getRuntime;
-import static org.junit.Assert.assertTrue;
-
+import org.custommonkey.xmlunit.XMLAssert;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.RequestContext;
@@ -24,9 +24,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.custommonkey.xmlunit.XMLAssert;
-import org.custommonkey.xmlunit.XMLUnit;
-import org.junit.Test;
+import static java.lang.Runtime.getRuntime;
+import static org.junit.Assert.assertTrue;
 
 public class ParallelXQueryTransformerTestCase extends AbstractMuleContextTestCase
 {
@@ -34,6 +33,7 @@ public class ParallelXQueryTransformerTestCase extends AbstractMuleContextTestCa
     private String srcData;
     private String resultData;
     private ConcurrentLinkedQueue<Object> actualResults = new ConcurrentLinkedQueue<>();
+    private CountDownLatch latch = new CountDownLatch(getParallelThreadCount());
 
     @Override
     protected void doSetUp() throws Exception
@@ -54,8 +54,6 @@ public class ParallelXQueryTransformerTestCase extends AbstractMuleContextTestCa
         return transformer;
     }
 
-    private CountDownLatch latch = new CountDownLatch(getParallelThreadCount());
-
     public synchronized void signalDone()
     {
         latch.countDown();
@@ -75,7 +73,8 @@ public class ParallelXQueryTransformerTestCase extends AbstractMuleContextTestCa
             {
                 try
                 {
-                    RequestContext.setEvent(MuleTestUtils.getTestEvent("test", testFlow, MessageExchangePattern.REQUEST_RESPONSE, muleContext));
+                    RequestContext.setEvent(
+                            MuleTestUtils.getTestEvent("test", testFlow, MessageExchangePattern.REQUEST_RESPONSE, muleContext));
                 }
                 catch (Exception e1)
                 {

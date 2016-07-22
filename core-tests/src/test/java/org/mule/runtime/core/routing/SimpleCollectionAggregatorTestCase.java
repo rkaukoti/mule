@@ -6,13 +6,8 @@
  */
 package org.mule.runtime.core.routing;
 
-import static java.util.stream.Collectors.toList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
@@ -27,8 +22,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static java.util.stream.Collectors.toList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class SimpleCollectionAggregatorTestCase extends AbstractMuleContextTestCase
 {
@@ -173,10 +172,10 @@ public class SimpleCollectionAggregatorTestCase extends AbstractMuleContextTestC
         List<MuleMessage> payload = (List<MuleMessage>) resultMessage.getPayload();
         assertEquals(2, payload.size());
 
-        assertEquals("test event A", ((List<MuleMessage>)payload.get(0).getPayload()).get(0).getPayload());
-        assertEquals("test event B", ((List<MuleMessage>)payload.get(0).getPayload()).get(1).getPayload());
-        assertEquals("test event C", ((List<MuleMessage>)payload.get(1).getPayload()).get(0).getPayload());
-        assertEquals("test event D", ((List<MuleMessage>)payload.get(1).getPayload()).get(1).getPayload());
+        assertEquals("test event A", ((List<MuleMessage>) payload.get(0).getPayload()).get(0).getPayload());
+        assertEquals("test event B", ((List<MuleMessage>) payload.get(0).getPayload()).get(1).getPayload());
+        assertEquals("test event C", ((List<MuleMessage>) payload.get(1).getPayload()).get(0).getPayload());
+        assertEquals("test event D", ((List<MuleMessage>) payload.get(1).getPayload()).get(1).getPayload());
 
     }
 

@@ -6,10 +6,15 @@
  */
 package org.mule.runtime.core.util;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_ENCODING_SYSTEM_PROPERTY;
-
+import org.apache.commons.cli.BasicParser;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -19,25 +24,19 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.cli.BasicParser;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_ENCODING_SYSTEM_PROPERTY;
 
 // @ThreadSafe
 
 public class SystemUtils extends org.apache.commons.lang.SystemUtils
 {
+    public static final boolean IS_JAVA_1_7 = (JAVA_VERSION_TRIMMED != null)
+                                              && JAVA_VERSION_TRIMMED.startsWith("1.7");
     // class logger
     protected static final Logger logger = LoggerFactory.getLogger(SystemUtils.class);
-
     // bash prepends: declare -x
     // zsh prepends: typeset -x
-    private static final String[] UNIX_ENV_PREFIXES = new String[]{"declare -", "typeset -"};
-
+    private static final String[] UNIX_ENV_PREFIXES = new String[] {"declare -", "typeset -"};
     // the environment of the VM process
     private static Map environment = null;
 
@@ -164,9 +163,6 @@ public class SystemUtils extends org.apache.commons.lang.SystemUtils
     {
         return SystemUtils.JAVA_VM_VENDOR.toUpperCase().indexOf("IBM") != -1;
     }
-    
-    public static final boolean IS_JAVA_1_7 = (JAVA_VERSION_TRIMMED != null) 
-    		&& JAVA_VERSION_TRIMMED.startsWith("1.7");
 
     // TODO MULE-1947 Command-line arguments should be handled exclusively by the bootloader
 
@@ -249,9 +245,8 @@ public class SystemUtils extends org.apache.commons.lang.SystemUtils
      * to be quoted properly: <code>-Dkey="some value"</code>.
      *
      * @param input String with property definitionn
-     * @return a {@link Map} of property String keys with their defined values
-     *         (Strings). If no valid key-value pairs can be parsed, the map is
-     *         empty.
+     * @return a {@link Map} of property String keys with their defined values (Strings). If no valid key-value pairs can be parsed, the map
+     * is empty.
      */
     public static Map<String, String> parsePropertyDefinitions(String input)
     {
@@ -406,14 +401,9 @@ public class SystemUtils extends org.apache.commons.lang.SystemUtils
     }
 
     /**
-     * @return the configured default encoding, checking in the follwing order until a value is
-     *         found:
-     *         <ul>
-     *         <li>{@code muleContext} ->
-     *         {@link org.mule.runtime.core.api.config.MuleConfiguration#getDefaultEncoding()}</li>
-     *         <li>The value of the system property 'mule.encoding'</li>
-     *         <li>{@code Charset.defaultCharset()}</li>
-     *         </ul>
+     * @return the configured default encoding, checking in the follwing order until a value is found: <ul> <li>{@code muleContext} ->
+     * {@link org.mule.runtime.core.api.config.MuleConfiguration#getDefaultEncoding()}</li> <li>The value of the system property
+     * 'mule.encoding'</li> <li>{@code Charset.defaultCharset()}</li> </ul>
      */
     public static Charset getDefaultEncoding(MuleContext muleContext)
     {

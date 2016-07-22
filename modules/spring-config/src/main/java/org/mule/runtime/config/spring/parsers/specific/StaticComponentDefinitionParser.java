@@ -10,15 +10,14 @@ import org.mule.runtime.core.component.DefaultJavaComponent;
 import org.mule.runtime.core.component.simple.StaticComponent;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.core.util.StringUtils;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * BDP which parses the <return-data> element of the <static-component>.
@@ -34,7 +33,7 @@ public class StaticComponentDefinitionParser extends SimpleComponentDefinitionPa
     protected AbstractBeanDefinition getObjectFactoryDefinition(Element element)
     {
         AbstractBeanDefinition objectFactoryBeanDefinition = super.getObjectFactoryDefinition(element);
-        
+
         String returnData = null;
 
         NodeList list = element.getChildNodes();
@@ -68,7 +67,7 @@ public class StaticComponentDefinitionParser extends SimpleComponentDefinitionPa
             props.put("data", returnData);
             objectFactoryBeanDefinition.getPropertyValues().addPropertyValue("properties", props);
         }
-        
+
         return objectFactoryBeanDefinition;
     }
 }

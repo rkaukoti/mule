@@ -6,13 +6,6 @@
  */
 package org.mule.extension.http.internal.request.validator;
 
-import static org.mule.extension.http.internal.HttpConnector.API_CONFIGURATION;
-import static org.mule.extension.http.internal.HttpConnector.AUTHENTICATION;
-import static org.mule.extension.http.internal.HttpConnector.OTHER_SETTINGS;
-import static org.mule.extension.http.internal.HttpConnector.URL_CONFIGURATION;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
-
 import org.mule.extension.http.api.HttpSendBodyMode;
 import org.mule.extension.http.api.HttpStreamingType;
 import org.mule.extension.http.api.request.RamlApiConfiguration;
@@ -37,6 +30,13 @@ import java.net.CookieManager;
 import java.util.function.Function;
 
 import javax.inject.Inject;
+
+import static org.mule.extension.http.internal.HttpConnector.API_CONFIGURATION;
+import static org.mule.extension.http.internal.HttpConnector.AUTHENTICATION;
+import static org.mule.extension.http.internal.HttpConnector.OTHER_SETTINGS;
+import static org.mule.extension.http.internal.HttpConnector.URL_CONFIGURATION;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
 
 /**
  * Configuration element for a HTTP requests.

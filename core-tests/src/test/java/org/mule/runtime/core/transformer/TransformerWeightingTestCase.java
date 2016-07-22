@@ -6,10 +6,7 @@
  */
 package org.mule.runtime.core.transformer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.transformer.builder.MockConverterBuilder;
@@ -21,7 +18,9 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @SmallTest
 public class TransformerWeightingTestCase extends AbstractMuleTestCase

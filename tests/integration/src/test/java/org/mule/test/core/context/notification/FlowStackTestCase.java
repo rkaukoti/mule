@@ -6,14 +6,11 @@
  */
 package org.mule.test.core.context.notification;
 
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_FLOW_TRACE;
-import static org.mule.tck.util.FlowTraceUtils.assertStackElements;
-import static org.mule.tck.util.FlowTraceUtils.isFlowStackElement;
-import org.mule.runtime.core.api.context.notification.MessageProcessorNotificationListener;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.context.notification.MessageProcessorNotificationListener;
 import org.mule.runtime.core.context.notification.MessageProcessorNotification;
 import org.mule.tck.junit4.rule.SystemProperty;
 import org.mule.tck.util.FlowTraceUtils.FlowStackAsserter;
@@ -22,9 +19,12 @@ import org.mule.tck.util.FlowTraceUtils.FlowStackAsyncAsserter;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_FLOW_TRACE;
+import static org.mule.tck.util.FlowTraceUtils.assertStackElements;
+import static org.mule.tck.util.FlowTraceUtils.isFlowStackElement;
 
 public class FlowStackTestCase extends FunctionalTestCase
 {
@@ -386,7 +386,7 @@ public class FlowStackTestCase extends FunctionalTestCase
         flowRunner("subFlowDynamicWithScatterGatherChain").withPayload("payload").run();
 
         assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
-        
+
         assertStackElements(FlowStackAsserter.stackToAssert,
                 isFlowStackElement("subFlow", "/subFlowDynamicWithScatterGatherChain/processors/0/1/0/subFlow/subprocessors/0"),
                 isFlowStackElement("subFlowDynamicWithScatterGatherChain", "/subFlowDynamicWithScatterGatherChain/processors/0/1/0"));

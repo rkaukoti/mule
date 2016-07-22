@@ -6,33 +6,6 @@
  */
 package org.mule.runtime.module.launcher.log4j2;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.launcher.log4j2.LoggerContextConfigurer.FORCED_CONSOLE_APPENDER_NAME;
-import static org.mule.runtime.module.launcher.log4j2.LoggerContextConfigurer.PER_APP_FILE_APPENDER_NAME;
-
-import org.mule.runtime.core.api.config.MuleProperties;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-import org.mule.runtime.core.util.ClassUtils;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.concurrent.TimeUnit;
-
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.Filter;
@@ -54,6 +27,32 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
+import org.mule.runtime.core.api.config.MuleProperties;
+import org.mule.runtime.core.util.ClassUtils;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.concurrent.TimeUnit;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.same;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.launcher.log4j2.LoggerContextConfigurer.FORCED_CONSOLE_APPENDER_NAME;
+import static org.mule.runtime.module.launcher.log4j2.LoggerContextConfigurer.PER_APP_FILE_APPENDER_NAME;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)

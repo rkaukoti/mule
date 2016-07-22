@@ -32,15 +32,11 @@ import java.util.List;
 public class FilteringOutboundRouter extends AbstractOutboundRouter implements TransformingMatchable
 {
     protected ExpressionManager expressionManager;
-
-    private List<Transformer> transformers = new LinkedList<Transformer>();
-
-    private Filter filter;
-
-    private boolean useTemplates = true;
-    
     // We used Square templates as they can exist as part of an URI.
     protected TemplateParser parser = TemplateParser.createSquareBracesStyleParser();
+    private List<Transformer> transformers = new LinkedList<Transformer>();
+    private Filter filter;
+    private boolean useTemplates = true;
 
     @Override
     public void initialise() throws InitialisationException
@@ -114,13 +110,11 @@ public class FilteringOutboundRouter extends AbstractOutboundRouter implements T
     /**
      * Will Return the target at the given index and will resolve any template tags
      * on the Endpoint URI if necessary
-     * 
+     *
      * @param index the index of the endpoint to get
-     * @param event the current event. This is required if template matching is
-     *            being used
+     * @param event the current event. This is required if template matching is being used
      * @return the endpoint at the index, with any template tags resolved
-     * @throws CouldNotRouteOutboundMessageException if the template causs the
-     *             endpoint to become illegal or malformed
+     * @throws CouldNotRouteOutboundMessageException if the template causs the endpoint to become illegal or malformed
      */
     public MessageProcessor getRoute(int index, MuleEvent event) throws CouldNotRouteOutboundMessageException
     {
@@ -148,7 +142,7 @@ public class FilteringOutboundRouter extends AbstractOutboundRouter implements T
     {
         this.useTemplates = useTemplates;
     }
-    
+
     @Override
     public boolean isTransformBeforeMatch()
     {

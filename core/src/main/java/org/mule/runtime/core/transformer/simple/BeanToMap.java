@@ -50,5 +50,5 @@ public class BeanToMap extends AbstractTransformer implements DiscoverableTransf
         priorityWeighting = weighting;
     }
 
-    
+
 }

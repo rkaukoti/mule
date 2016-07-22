@@ -32,7 +32,8 @@ class ValidateTransactionalStateInterceptor<T> implements ExecutionInterceptor<T
         {
             throw new IllegalTransactionStateException(
                     CoreMessages.transactionAvailableButActionIs("Never"));
-        } else if (transactionConfig.getAction() == TransactionConfig.ACTION_ALWAYS_JOIN && tx == null)
+        }
+        else if (transactionConfig.getAction() == TransactionConfig.ACTION_ALWAYS_JOIN && tx == null)
         {
             throw new IllegalTransactionStateException(
                     CoreMessages.transactionNotAvailableButActionIs("Always Join"));

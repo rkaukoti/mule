@@ -88,9 +88,6 @@ public abstract class AbstractJavaComponent extends AbstractComponent implements
     /**
      * Creates and initialises a new LifecycleAdaptor instance wrapped the component
      * object instance obtained from the configured object factory.
-     *
-     * @throws MuleException
-     * @throws Exception
      */
     protected LifecycleAdapter createLifecycleAdaptor() throws Exception
     {
@@ -102,7 +99,7 @@ public abstract class AbstractJavaComponent extends AbstractComponent implements
         {
             // Custom lifecycleAdapterFactory set on component
             lifecycleAdapter =
-                lifecycleAdapterFactory.create(object, this, flowConstruct, entryPointResolverSet, muleContext);
+                    lifecycleAdapterFactory.create(object, this, flowConstruct, entryPointResolverSet, muleContext);
         }
         else if (objectFactory.isExternallyManagedLifecycle())
         {
@@ -110,12 +107,12 @@ public abstract class AbstractJavaComponent extends AbstractComponent implements
             // externally managed instance then use NullLifecycleAdapter so that lifecycle
             // is not propagated
             lifecycleAdapter =
-                new NullLifecycleAdapter(object, this, flowConstruct, entryPointResolverSet, muleContext);
+                    new NullLifecycleAdapter(object, this, flowConstruct, entryPointResolverSet, muleContext);
         }
         else
         {
             lifecycleAdapter = new DefaultComponentLifecycleAdapterFactory().create(object, this,
-                flowConstruct, entryPointResolverSet, muleContext);
+                    flowConstruct, entryPointResolverSet, muleContext);
         }
         lifecycleAdapter.initialise();
         return lifecycleAdapter;
@@ -151,7 +148,7 @@ public abstract class AbstractJavaComponent extends AbstractComponent implements
     @Override
     protected void doDispose()
     {
-        if (objectFactory!=null)
+        if (objectFactory != null)
         {
             objectFactory.dispose();
         }

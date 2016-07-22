@@ -6,16 +6,13 @@
  */
 package org.mule.extension.socket.api.connection.udp;
 
-import static org.mule.extension.socket.internal.SocketUtils.configureConnection;
-import static org.mule.extension.socket.internal.SocketUtils.createPacket;
-
 import org.mule.extension.socket.api.ConnectionSettings;
-import org.mule.extension.socket.api.connection.ListenerConnection;
-import org.mule.extension.socket.api.socket.udp.UdpSocketProperties;
-import org.mule.extension.socket.api.worker.UdpWorker;
-import org.mule.extension.socket.api.exceptions.ReadingTimeoutException;
 import org.mule.extension.socket.api.SocketAttributes;
+import org.mule.extension.socket.api.connection.ListenerConnection;
+import org.mule.extension.socket.api.exceptions.ReadingTimeoutException;
+import org.mule.extension.socket.api.socket.udp.UdpSocketProperties;
 import org.mule.extension.socket.api.worker.SocketWorker;
+import org.mule.extension.socket.api.worker.UdpWorker;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.extension.api.runtime.MessageHandler;
 import org.mule.runtime.extension.api.runtime.source.Source;
@@ -25,6 +22,9 @@ import java.io.InputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketTimeoutException;
+
+import static org.mule.extension.socket.internal.SocketUtils.configureConnection;
+import static org.mule.extension.socket.internal.SocketUtils.createPacket;
 
 public class UdpListenerConnection extends AbstractUdpConnection implements ListenerConnection
 {
@@ -50,8 +50,8 @@ public class UdpListenerConnection extends AbstractUdpConnection implements List
      * listener socket used in the {@link Source}.
      *
      * @throws ReadingTimeoutException if the socket reached timeout while awaiting the arrival of a new package.
-     * @throws ConnectionException     if the socket was close while blocked on {@link DatagramSocket#receive(DatagramPacket)} method
-     *                                 and the close was not intentionally done by the {@link UdpListenerConnection#disconnect()} method.
+     * @throws ConnectionException     if the socket was close while blocked on {@link DatagramSocket#receive(DatagramPacket)} method and
+     *                                 the close was not intentionally done by the {@link UdpListenerConnection#disconnect()} method.
      * @throws IOException             if the socket was close while blocked on {@link DatagramSocket#receive(DatagramPacket)} method.
      */
     @Override

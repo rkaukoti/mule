@@ -49,7 +49,6 @@ public class DefaultLoginModule implements LoginModule
      * Abort if authentication fails
      *
      * @return boolean
-     * @throws LoginException
      */
     public final boolean abort() throws LoginException
     {
@@ -80,7 +79,6 @@ public class DefaultLoginModule implements LoginModule
      * Commit if authentication succeeds, otherwise return false
      *
      * @return boolean
-     * @throws LoginException
      */
     public final boolean commit() throws LoginException
     {
@@ -99,7 +97,7 @@ public class DefaultLoginModule implements LoginModule
             Set entities = subject.getPrincipals();
             if (!entities.contains(principal))
             {
-              entities.add(principal);
+                entities.add(principal);
             }
 
             // in any case, clean out state
@@ -112,11 +110,6 @@ public class DefaultLoginModule implements LoginModule
 
     /**
      * Initialises the callbackHandler, the credentials and the credentials list
-     *
-     * @param subject
-     * @param callbackHandler
-     * @param sharedState
-     * @param options
      */
     public final void initialize(Subject subject,
                                  CallbackHandler callbackHandler,
@@ -134,8 +127,7 @@ public class DefaultLoginModule implements LoginModule
      * This method attempts to login the user by checking his credentials against
      * those of the authorised users.
      *
-     * @throws LoginException This is thrown either when there is no callback Handler
-     *             or else when the user fails to be authenticated
+     * @throws LoginException This is thrown either when there is no callback Handler or else when the user fails to be authenticated
      */
     public final boolean login() throws LoginException
     {
@@ -154,7 +146,7 @@ public class DefaultLoginModule implements LoginModule
         PasswordCallback passCb = new PasswordCallback("password: ", true);
 
         // Create the callbacks to send to the Callback Handler
-        Callback[] callbacks = new Callback[]{nameCb, passCb};
+        Callback[] callbacks = new Callback[] {nameCb, passCb};
 
         // Call the handler to get the username and password of the user.
         try
@@ -243,7 +235,6 @@ public class DefaultLoginModule implements LoginModule
      * against which the username and password submitted with the request will be
      * checked
      *
-     * @param creds
      * @return outputList
      */
     public final List<String> getCredentialList(String creds)

@@ -30,8 +30,8 @@ class Sender
     public void dispatch(ServerNotification notification)
     {
         if (pair.isNullSubscription() ||
-                (null != notification.getResourceIdentifier() &&
-                        subscriptionFilter.accept(notification.getResourceIdentifier())))
+            (null != notification.getResourceIdentifier() &&
+             subscriptionFilter.accept(notification.getResourceIdentifier())))
         {
             try
             {

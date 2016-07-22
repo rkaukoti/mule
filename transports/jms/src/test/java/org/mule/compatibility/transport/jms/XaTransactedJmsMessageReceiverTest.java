@@ -6,24 +6,14 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static java.util.Collections.emptyMap;
-import static java.util.concurrent.Executors.newFixedThreadPool;
-import static java.util.concurrent.Executors.newSingleThreadExecutor;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.withSettings;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.runtime.core.api.construct.FlowConstruct;
@@ -44,17 +34,27 @@ import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
+import static java.util.Collections.emptyMap;
+import static java.util.concurrent.Executors.newFixedThreadPool;
+import static java.util.concurrent.Executors.newSingleThreadExecutor;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
 
 @RunWith(MockitoJUnitRunner.class)
-public class XaTransactedJmsMessageReceiverTest extends AbstractMuleTestCase {
+public class XaTransactedJmsMessageReceiverTest extends AbstractMuleTestCase
+{
 
 
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
@@ -79,7 +79,8 @@ public class XaTransactedJmsMessageReceiverTest extends AbstractMuleTestCase {
         when(mockJmsConnector.isConnected()).thenReturn(true);
         when(mockJmsConnector.getTopicResolver()).thenReturn(mock(JmsTopicResolver.class));
         when(mockJmsConnector.getSelector(mockInboundEndpoint)).thenReturn(null);
-        when(mockJmsConnector.getSession(mockInboundEndpoint)).thenReturn(mock(Session.class, withSettings().extraInterfaces(XaTransaction.MuleXaObject.class)));
+        when(mockJmsConnector.getSession(mockInboundEndpoint)).thenReturn(
+                mock(Session.class, withSettings().extraInterfaces(XaTransaction.MuleXaObject.class)));
 
         when(mockInboundEndpoint.getEndpointURI()).thenReturn(mock(EndpointURI.class));
         when(mockInboundEndpoint.getProperties()).thenReturn(emptyMap());
@@ -106,7 +107,8 @@ public class XaTransactedJmsMessageReceiverTest extends AbstractMuleTestCase {
     {
         when(mockJmsConnector.getTopicResolver().isTopic(mockInboundEndpoint)).thenReturn(true);
         when(mockInboundEndpoint.getConnector()).thenReturn(mockJmsConnector);
-        XaTransactedJmsMessageReceiver messageReceiver = new XaTransactedJmsMessageReceiver(mockJmsConnector, mockFlowConstruct, mockInboundEndpoint);
+        XaTransactedJmsMessageReceiver messageReceiver =
+                new XaTransactedJmsMessageReceiver(mockJmsConnector, mockFlowConstruct, mockInboundEndpoint);
         assertThat("receiver must be started only in primary node", messageReceiver.shouldConsumeInEveryNode(), is(false));
     }
 
@@ -115,7 +117,8 @@ public class XaTransactedJmsMessageReceiverTest extends AbstractMuleTestCase {
     {
         when(mockJmsConnector.getTopicResolver().isTopic(mockInboundEndpoint)).thenReturn(false);
         when(mockInboundEndpoint.getConnector()).thenReturn(mockJmsConnector);
-        XaTransactedJmsMessageReceiver messageReceiver = new XaTransactedJmsMessageReceiver(mockJmsConnector, mockFlowConstruct, mockInboundEndpoint);
+        XaTransactedJmsMessageReceiver messageReceiver =
+                new XaTransactedJmsMessageReceiver(mockJmsConnector, mockFlowConstruct, mockInboundEndpoint);
         assertThat("receiver must be started only in primary node", messageReceiver.shouldConsumeInEveryNode(), is(true));
     }
 
@@ -124,7 +127,8 @@ public class XaTransactedJmsMessageReceiverTest extends AbstractMuleTestCase {
         when(mockJmsConnector.getTopicResolver().isTopic(mockInboundEndpoint)).thenReturn(false);
         when(mockInboundEndpoint.getConnector()).thenReturn(mockJmsConnector);
 
-        XaTransactedJmsMessageReceiver messageReceiver = spy(new XaTransactedJmsMessageReceiver(mockJmsConnector, mockFlowConstruct, mockInboundEndpoint));
+        XaTransactedJmsMessageReceiver messageReceiver =
+                spy(new XaTransactedJmsMessageReceiver(mockJmsConnector, mockFlowConstruct, mockInboundEndpoint));
         doReturn(messageConsumer).when(messageReceiver).createConsumer();
 
         when(messageConsumer.receive(messageReceiver.timeout)).thenAnswer(invocation ->
@@ -172,9 +176,11 @@ public class XaTransactedJmsMessageReceiverTest extends AbstractMuleTestCase {
         final MessageConsumer consumer = mock(MessageConsumer.class);
         when(consumer.receive(anyLong())).then(buildLatchedReceiveAnswer(receivingLatch, disconnectedLatch));
 
-        when(jmsSupport.createConsumer(any(Session.class), any(Destination.class), anyString(), anyBoolean(), anyString(), anyBoolean(), eq(mockInboundEndpoint))).thenReturn(consumer);
+        when(jmsSupport.createConsumer(any(Session.class), any(Destination.class), anyString(), anyBoolean(), anyString(), anyBoolean(),
+                eq(mockInboundEndpoint))).thenReturn(consumer);
 
-        final XaTransactedJmsMessageReceiver messageReceiver = new XaTransactedJmsMessageReceiver(mockJmsConnector, mockFlowConstruct, mockInboundEndpoint);
+        final XaTransactedJmsMessageReceiver messageReceiver =
+                new XaTransactedJmsMessageReceiver(mockJmsConnector, mockFlowConstruct, mockInboundEndpoint);
 
         executor = newSingleThreadExecutor();
         executor.execute(buildReceiverPoller(messageReceiver));
@@ -200,10 +206,12 @@ public class XaTransactedJmsMessageReceiverTest extends AbstractMuleTestCase {
         when(consumer2.receive(anyLong())).then(buildLatchedReceiveAnswer(receivingLatch, disconnectedLatch));
         when(consumer3.receive(anyLong())).then(buildLatchedReceiveAnswer(receivingLatch, disconnectedLatch));
 
-        when(jmsSupport.createConsumer(any(Session.class), any(Destination.class), anyString(), anyBoolean(), anyString(), anyBoolean(), eq(mockInboundEndpoint))).thenReturn(consumer1, consumer2,
+        when(jmsSupport.createConsumer(any(Session.class), any(Destination.class), anyString(), anyBoolean(), anyString(), anyBoolean(),
+                eq(mockInboundEndpoint))).thenReturn(consumer1, consumer2,
                 consumer3);
 
-        final XaTransactedJmsMessageReceiver messageReceiver = new XaTransactedJmsMessageReceiver(mockJmsConnector, mockFlowConstruct, mockInboundEndpoint);
+        final XaTransactedJmsMessageReceiver messageReceiver =
+                new XaTransactedJmsMessageReceiver(mockJmsConnector, mockFlowConstruct, mockInboundEndpoint);
 
         executor = newFixedThreadPool(3);
         executor.execute(buildReceiverPoller(messageReceiver));

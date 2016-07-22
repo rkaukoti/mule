@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.core.transaction;
 
+import org.apache.commons.collections.ArrayStack;
 import org.mule.runtime.core.api.transaction.Transaction;
 import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.processor.DelegateTransaction;
-
-import org.apache.commons.collections.ArrayStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,18 +29,24 @@ public final class TransactionCoordination
      */
     private final ThreadLocal<Transaction> transactions = new ThreadLocal<Transaction>();
     private final ThreadLocal<Transaction> suspendedTransaction = new ThreadLocal<Transaction>();
-    private final ThreadLocal<ArrayStack>  isolatedTransactions = new ThreadLocal<ArrayStack>();
+    private final ThreadLocal<ArrayStack> isolatedTransactions = new ThreadLocal<ArrayStack>();
 
-    /** Lock variable that is used to access {@link #txCounter}. */
+    /**
+     * Lock variable that is used to access {@link #txCounter}.
+     */
     private final Object txCounterLock = new Object();
 
-    /** The access to this field is guarded by {@link #txCounterLock}. */
+    /**
+     * The access to this field is guarded by {@link #txCounterLock}.
+     */
     private int txCounter = 0;
 
-    /** Do not instanciate. */
+    /**
+     * Do not instanciate.
+     */
     private TransactionCoordination()
     {
-        super();        
+        super();
     }
 
     public static TransactionCoordination getInstance()
@@ -121,7 +126,8 @@ public final class TransactionCoordination
         if (oldTx instanceof TransactionCollection)
         {
             TransactionCollection txCollection = (TransactionCollection) oldTx;
-            if (txCollection.getTxCollection().contains(transaction)) {
+            if (txCollection.getTxCollection().contains(transaction))
+            {
                 // TODO improve the error message with more TX details
                 throw new IllegalTransactionStateException(CoreMessages.transactionAlreadyBound());
             }
@@ -163,7 +169,7 @@ public final class TransactionCoordination
         }
         catch (TransactionException e)
         {
-            logger.error("Failure resuming suspended transaction",e);
+            logger.error("Failure resuming suspended transaction", e);
         }
     }
 

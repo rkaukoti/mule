@@ -6,11 +6,10 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
+import org.apache.commons.io.FileUtils;
 import org.mule.runtime.core.util.IOUtils;
 
 import java.io.File;
-
-import org.apache.commons.io.FileUtils;
 
 public class HttpsSpecialCharKeystoreTestCase extends HttpsFunctionalTestCase
 {

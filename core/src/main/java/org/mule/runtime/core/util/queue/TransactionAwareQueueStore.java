@@ -10,26 +10,24 @@ import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.store.ObjectStoreException;
 import org.mule.runtime.core.util.store.DeserializationPostInitialisable;
-
-import java.io.Serializable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
+
 /**
  * Queue implementation that executes operations:
- *  - If there is no transaction context then executes the operation directly to the queue.
- *  - If there is a transaction context then executes the operation through the transaction context.
- *  - During queue dispose a {@link QueueStoreCacheListener} will be notified
+ * - If there is no transaction context then executes the operation directly to the queue.
+ * - If there is a transaction context then executes the operation through the transaction context.
+ * - During queue dispose a {@link QueueStoreCacheListener} will be notified
  */
 public class TransactionAwareQueueStore implements Queue
 {
 
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
     private final MuleContext muleContext;
     private final TransactionContextProvider transactionContextProvider;
     private final QueueStore queue;
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
 
     public TransactionAwareQueueStore(QueueStore queue, TransactionContextProvider transactionContextProvider, MuleContext muleContext)
     {

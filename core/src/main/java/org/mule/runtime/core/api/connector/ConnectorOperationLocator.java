@@ -20,12 +20,12 @@ public interface ConnectorOperationLocator
     /**
      * Lookup for an operation from a connector
      *
-     * @param url the URL that identifies the operation
+     * @param url              the URL that identifies the operation
      * @param operationOptions the options to use to execute the operation
-     * @param exchangePattern the exchange pattern to use for the operation
+     * @param exchangePattern  the exchange pattern to use for the operation
      * @return the operation configured for the url and options
-     * @throws MuleException
      */
-    MessageProcessor locateConnectorOperation(String url, OperationOptions operationOptions, MessageExchangePattern exchangePattern) throws MuleException;
+    MessageProcessor locateConnectorOperation(String url, OperationOptions operationOptions, MessageExchangePattern exchangePattern)
+            throws MuleException;
 
 }

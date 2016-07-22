@@ -7,6 +7,18 @@
 
 package org.mule.runtime.module.db.internal.processor;
 
+import org.hamcrest.Matcher;
+import org.junit.Test;
+import org.mule.runtime.core.api.debug.FieldDebugInfo;
+import org.mule.runtime.module.db.internal.domain.param.DefaultInputQueryParam;
+import org.mule.runtime.module.db.internal.domain.param.QueryParam;
+import org.mule.runtime.module.db.internal.domain.query.Query;
+import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
+import org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
@@ -18,20 +30,9 @@ import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.SQL
 import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.TYPE_DEBUG_FIELD;
 import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
 import static org.mule.tck.junit4.matcher.ObjectDebugInfoMatcher.objectLike;
-import org.mule.runtime.core.api.debug.FieldDebugInfo;
-import org.mule.runtime.module.db.internal.domain.param.DefaultInputQueryParam;
-import org.mule.runtime.module.db.internal.domain.param.QueryParam;
-import org.mule.runtime.module.db.internal.domain.query.Query;
-import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
-import org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hamcrest.Matcher;
-import org.junit.Test;
-
-public abstract class AbstractParameterizedSingleQueryMessageProcessorDebugInfoTestCase extends AbstractSingleQueryMessageProcessorDebugInfoTestCase
+public abstract class AbstractParameterizedSingleQueryMessageProcessorDebugInfoTestCase
+        extends AbstractSingleQueryMessageProcessorDebugInfoTestCase
 {
 
     public static final String NAME_PARAM = "name";
@@ -100,7 +101,7 @@ public abstract class AbstractParameterizedSingleQueryMessageProcessorDebugInfoT
         params.add(new DefaultInputQueryParam(1, null, EARTH.getName(), null));
         params.add(new DefaultInputQueryParam(2, null, EARTH.getPosition(), null));
         final QueryTemplate queryTemplate = new QueryTemplate(getSqlText(),
-                                                              getQueryType(), params);
+                getQueryType(), params);
         return new Query(queryTemplate);
     }
 

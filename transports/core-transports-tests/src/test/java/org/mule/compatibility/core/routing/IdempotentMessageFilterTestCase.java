@@ -6,10 +6,7 @@
  */
 package org.mule.compatibility.core.routing;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.mock;
-
+import org.junit.Test;
 import org.mule.compatibility.core.DefaultMuleEventEndpointUtils;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.runtime.core.DefaultMuleEvent;
@@ -21,7 +18,9 @@ import org.mule.runtime.core.routing.IdempotentMessageFilter;
 import org.mule.runtime.core.util.store.InMemoryObjectStore;
 import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.mock;
 
 public class IdempotentMessageFilterTestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -49,7 +48,7 @@ public class IdempotentMessageFilterTestCase extends AbstractMuleContextEndpoint
         MuleEvent processedEvent = ir.process(event);
         assertNotNull(processedEvent);
 
-         // This will not process, because the ID is a duplicate
+        // This will not process, because the ID is a duplicate
         okMessage = MuleMessage.builder().payload("OK").addOutboundProperty("id", "1").build();
         event = new DefaultMuleEvent(okMessage, getTestFlow(), session);
         DefaultMuleEventEndpointUtils.populateFieldsFromInboundEndpoint(event, endpoint1);

@@ -28,17 +28,16 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * The Start phase for the MuleContext. Calling
- * {@link MuleContext#start()} will initiate this phase via the
- * {@link org.mule.runtime.core.api.lifecycle.LifecycleManager}.
+ * The Start phase for the MuleContext. Calling {@link MuleContext#start()} will initiate this phase via the {@link
+ * org.mule.runtime.core.api.lifecycle.LifecycleManager}.
  * <p/>
- * The MuleContextStartPhase defines the lifecycle behaviour when the Mule context is started.  The MuleContext is associated
- * with one or more registries that inherit the lifecycle of the MuleContext.
+ * The MuleContextStartPhase defines the lifecycle behaviour when the Mule context is started.  The MuleContext is associated with one or
+ * more registries that inherit the lifecycle of the MuleContext.
  * <p/>
  * This phase is responsible for starting objects. Any object that implements {@link org.mule.runtime.core.api.lifecycle.Startable} will
- * have its {@link org.mule.runtime.core.api.lifecycle.Startable#start()} method called.  Objects are initialised in the order based on type:
- * {@link org.mule.runtime.core.api.agent.Agent}, {@link org.mule.runtime.core.api.construct.FlowConstruct}, followed
- * by any other object that implements {@link org.mule.runtime.core.api.lifecycle.Startable}.
+ * have its {@link org.mule.runtime.core.api.lifecycle.Startable#start()} method called.  Objects are initialised in the order based on
+ * type: {@link org.mule.runtime.core.api.agent.Agent}, {@link org.mule.runtime.core.api.construct.FlowConstruct}, followed by any other
+ * object that implements {@link org.mule.runtime.core.api.lifecycle.Startable}.
  *
  * @see org.mule.runtime.core.api.MuleContext
  * @see org.mule.runtime.core.api.lifecycle.LifecycleManager
@@ -50,7 +49,8 @@ public class MuleContextStartPhase extends DefaultLifecyclePhase
 
     public MuleContextStartPhase()
     {
-        this(new Class[] {Registry.class, MuleContext.class, MessageSource.class, InterceptingMessageProcessor.class, Component.class, OutboundRouter.class, MuleContext.class});
+        this(new Class[] {Registry.class, MuleContext.class, MessageSource.class, InterceptingMessageProcessor.class, Component.class,
+                          OutboundRouter.class, MuleContext.class});
     }
 
     public MuleContextStartPhase(Class<?>[] ignoredObjects)

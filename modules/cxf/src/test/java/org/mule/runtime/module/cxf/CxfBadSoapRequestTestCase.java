@@ -6,10 +6,11 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
-
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -18,18 +19,16 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.util.List;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class CxfBadSoapRequestTestCase extends FunctionalTestCase
 {
+    private static final HttpRequestOptions HTTP_REQUEST_OPTIONS =
+            newOptions().method(org.mule.runtime.module.http.api.HttpConstants.Methods.POST.name()).disableStatusCodeValidation().build();
     @Rule
     public DynamicPort dynamicPort = new DynamicPort("port1");
-
-    private static final HttpRequestOptions HTTP_REQUEST_OPTIONS = newOptions().method(org.mule.runtime.module.http.api.HttpConstants.Methods.POST.name()).disableStatusCodeValidation().build();
 
     @Override
     protected String getConfigFile()
@@ -42,15 +41,16 @@ public class CxfBadSoapRequestTestCase extends FunctionalTestCase
     {
         MuleClient client = muleContext.getClient();
 
-        String soapRequest = "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
-                             + "<soap:Body>"
-                             + "<ssss xmlns=\"http://www.muleumo.org\">"
-                             + "<request xmlns=\"http://www.muleumo.org\">Bad Request</request>"
-                             + "</ssss>"
-                             + "</soap:Body>" + "</soap:Envelope>";
+        String soapRequest =
+                "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
+                + "<soap:Body>"
+                + "<ssss xmlns=\"http://www.muleumo.org\">"
+                + "<request xmlns=\"http://www.muleumo.org\">Bad Request</request>"
+                + "</ssss>"
+                + "</soap:Body>" + "</soap:Envelope>";
 
         MuleMessage reply = client.send("http://localhost:" + dynamicPort.getNumber() + "/services/TestComponent", getTestMuleMessage(
-            soapRequest), HTTP_REQUEST_OPTIONS);
+                soapRequest), HTTP_REQUEST_OPTIONS);
 
         assertNotNull(reply);
         assertNotNull(reply.getPayload());
@@ -70,6 +70,6 @@ public class CxfBadSoapRequestTestCase extends FunctionalTestCase
         assertEquals(1, fault.size());
         Element faultStringElement = (Element) fault.get(0);
         assertEquals("Message part {http://www.muleumo.org}ssss was not recognized.  (Does it exist in service WSDL?)",
-            faultStringElement.getStringValue());
+                faultStringElement.getStringValue());
     }
 }

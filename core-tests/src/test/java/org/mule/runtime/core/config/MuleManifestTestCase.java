@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.core.config;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.mule.tck.size.SmallTest;
 
 import java.net.MalformedURLException;
@@ -14,9 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 @SmallTest
 public class MuleManifestTestCase

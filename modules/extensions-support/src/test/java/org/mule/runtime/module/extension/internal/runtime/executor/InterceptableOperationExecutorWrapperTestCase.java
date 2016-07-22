@@ -6,7 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.executor;
 
-import static org.mockito.Mockito.verify;
+import org.junit.Test;
+import org.mockito.Mock;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.Lifecycle;
@@ -16,10 +17,10 @@ import org.mule.runtime.extension.api.runtime.operation.OperationContext;
 import org.mule.runtime.extension.api.runtime.operation.OperationExecutor;
 import org.mule.runtime.module.extension.internal.AbstractInterceptableContractTestCase;
 
-import org.junit.Test;
-import org.mockito.Mock;
+import static org.mockito.Mockito.verify;
 
-public class InterceptableOperationExecutorWrapperTestCase extends AbstractInterceptableContractTestCase<InterceptableOperationExecutorWrapper>
+public class InterceptableOperationExecutorWrapperTestCase
+        extends AbstractInterceptableContractTestCase<InterceptableOperationExecutorWrapper>
 {
 
     @Mock(extraInterfaces = Lifecycle.class)

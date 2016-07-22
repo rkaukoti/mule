@@ -6,9 +6,8 @@
  */
 package org.mule.extension.ftp.internal;
 
-import static java.lang.String.format;
-import org.mule.extension.ftp.internal.ftp.connection.FtpFileSystem;
 import org.mule.extension.ftp.internal.ftp.command.FtpCommand;
+import org.mule.extension.ftp.internal.ftp.connection.FtpFileSystem;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionHandler;
 import org.mule.runtime.api.message.MuleEvent;
@@ -20,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import static java.lang.String.format;
 
 /**
  * Abstract implementation of {@link FtpCopyDelegate} for copying operations
@@ -67,8 +68,9 @@ public abstract class AbstractFtpCopyDelegate implements FtpCopyDelegate
         }
         catch (ConnectionException e)
         {
-            throw command.exception(format("FTP Copy operations require the use of two FTP connections. An exception was found trying to obtain second connection to" +
-                                           "copy the path '%s' to '%s'", source.getPath(), targetPath), e);
+            throw command.exception(
+                    format("FTP Copy operations require the use of two FTP connections. An exception was found trying to obtain second connection to" +
+                           "copy the path '%s' to '%s'", source.getPath(), targetPath), e);
         }
         try
         {
@@ -94,26 +96,28 @@ public abstract class AbstractFtpCopyDelegate implements FtpCopyDelegate
     /**
      * Performs a recursive copy of a directory
      *
-     * @param config     the config which is parameterizing this operation
+     * @param config           the config which is parameterizing this operation
      * @param sourcePath       the path to the directory to be copied
      * @param target           the target path
      * @param overwrite        whether to overwrite the target files if they already exists
      * @param writerConnection the {@link FtpFileSystem} which connects to the target endpoint
      * @param event            the {@link MuleEvent} which triggered this operation
      */
-    protected abstract void copyDirectory(FileConnectorConfig config, Path sourcePath, Path target, boolean overwrite, FtpFileSystem writerConnection, MuleEvent event);
+    protected abstract void copyDirectory(FileConnectorConfig config, Path sourcePath, Path target, boolean overwrite,
+                                          FtpFileSystem writerConnection, MuleEvent event);
 
     /**
      * Copies one individual file
      *
-     * @param config     the config which is parameterizing this operation
+     * @param config           the config which is parameterizing this operation
      * @param source           the {@link FileAttributes} for the file to be copied
      * @param target           the target path
      * @param overwrite        whether to overwrite the target files if they already exists
      * @param writerConnection the {@link FtpFileSystem} which connects to the target endpoint
      * @param event            the {@link MuleEvent} which triggered this operation
      */
-    protected void copyFile(FileConnectorConfig config, FileAttributes source, Path target, boolean overwrite, FtpFileSystem writerConnection, MuleEvent event)
+    protected void copyFile(FileConnectorConfig config, FileAttributes source, Path target, boolean overwrite,
+                            FtpFileSystem writerConnection, MuleEvent event)
     {
         FileAttributes targetFile = command.getFile(config, target.toString());
         if (targetFile != null)
@@ -132,18 +136,21 @@ public abstract class AbstractFtpCopyDelegate implements FtpCopyDelegate
         {
             if (inputStream == null)
             {
-                throw command.exception(format("Could not read file '%s' while trying to copy it to remote path '%s'", source.getPath(), target));
+                throw command.exception(
+                        format("Could not read file '%s' while trying to copy it to remote path '%s'", source.getPath(), target));
             }
 
             writeCopy(config, target.toString(), inputStream, overwrite, writerConnection, event);
         }
         catch (Exception e)
         {
-            throw command.exception(format("Found exception while trying to copy file '%s' to remote path '%s'", source.getPath(), target), e);
+            throw command.exception(format("Found exception while trying to copy file '%s' to remote path '%s'", source.getPath(), target),
+                    e);
         }
     }
 
-    private void writeCopy(FileConnectorConfig config, String targetPath, InputStream inputStream, boolean overwrite, FtpFileSystem writerConnection, MuleEvent event) throws IOException
+    private void writeCopy(FileConnectorConfig config, String targetPath, InputStream inputStream, boolean overwrite,
+                           FtpFileSystem writerConnection, MuleEvent event) throws IOException
     {
         final FileWriteMode mode = overwrite ? FileWriteMode.OVERWRITE : FileWriteMode.CREATE_NEW;
         writerConnection.write(config, targetPath, inputStream, mode, event, false, true, config.getDefaultWriteEncoding());

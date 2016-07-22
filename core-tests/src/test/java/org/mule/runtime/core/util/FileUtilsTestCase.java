@@ -6,14 +6,10 @@
  */
 package org.mule.runtime.core.util;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mule.tck.ZipUtils.compress;
-import static org.mule.runtime.core.util.FileUtils.unzip;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mule.tck.ZipUtils.ZipResource;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
@@ -21,17 +17,21 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mule.runtime.core.util.FileUtils.unzip;
+import static org.mule.tck.ZipUtils.compress;
 
 public class FileUtilsTestCase extends AbstractMuleTestCase
 {
 
     private static final String TEST_FILE = "testFile.txt";
     private static final String TEST_DIRECTORY = "target" + File.separator + "testDirectory";
-    private static final String UNZIPPED_FILE_PATH = TEST_DIRECTORY + File.separator +  "testFolder" + File.separator + "testFile.txt";
+    private static final String UNZIPPED_FILE_PATH = TEST_DIRECTORY + File.separator + "testFolder" + File.separator + "testFile.txt";
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
@@ -393,7 +393,7 @@ public class FileUtilsTestCase extends AbstractMuleTestCase
     {
         return File.createTempFile(filePath, ".junit");
     }
-    
+
     private File createTestDir(String dirPath) throws IOException
     {
         File file = createTestFile(dirPath);

@@ -7,10 +7,9 @@
 
 package org.mule.runtime.module.db.integration.reconnect;
 
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertMessageContains;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.getAllPlanetRecords;
+import org.enhydra.jdbc.standard.StandardDataSource;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.retry.RetryContext;
@@ -23,9 +22,10 @@ import org.mule.runtime.module.db.internal.resolver.database.DbConfigResolver;
 
 import java.util.List;
 
-import org.enhydra.jdbc.standard.StandardDataSource;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertMessageContains;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.getAllPlanetRecords;
 
 public class ReconnectStandardTestCase extends AbstractDbIntegrationTestCase
 {

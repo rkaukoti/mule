@@ -6,13 +6,13 @@
  */
 package org.mule.test.config.spring.parsers;
 
-import static org.junit.rules.ExpectedException.none;
-import org.mule.functional.junit4.ApplicationContextBuilder;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mule.functional.junit4.ApplicationContextBuilder;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+
+import static org.junit.rules.ExpectedException.none;
 
 public class XmlDslProcessingValidationTestCase extends AbstractMuleTestCase
 {
@@ -23,8 +23,10 @@ public class XmlDslProcessingValidationTestCase extends AbstractMuleTestCase
     @Test
     public void parameterAndChildAtOnce() throws Exception
     {
-        expectedException.expectMessage("Component parsers-test:element-with-attribute-and-child has a child element parsers-test:my-pojo which is used for the same purpose of the configuration parameter myPojo. Only one must be used.");
-        new ApplicationContextBuilder().setApplicationResources(new String[]{"org/mule/config/spring/parsers/dsl-validation-duplicate-pojo-or-list-parameter-config.xml"}).build();
+        expectedException.expectMessage(
+                "Component parsers-test:element-with-attribute-and-child has a child element parsers-test:my-pojo which is used for the same purpose of the configuration parameter myPojo. Only one must be used.");
+        new ApplicationContextBuilder().setApplicationResources(
+                new String[] {"org/mule/config/spring/parsers/dsl-validation-duplicate-pojo-or-list-parameter-config.xml"}).build();
     }
 
 }

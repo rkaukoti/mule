@@ -6,19 +6,19 @@
  */
 package org.mule.compatibility.core.processor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.processor.InterceptingMessageProcessor;
 import org.mule.runtime.core.processor.ExceptionHandlingMessageProcessor;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 @Ignore
 //Test is ignored since ExceptionHandlingMessageProcessor is not longer used - should be removed in next major release
@@ -71,8 +71,8 @@ public class ExceptionHandlingMessageProcessorTestCase extends AbstractMessagePr
     @Test
     public void testCatchRuntimeExceptionAsync() throws Exception
     {
-        OutboundEndpoint endpoint = createTestOutboundEndpoint(null, null, 
-            MessageExchangePattern.ONE_WAY, null);
+        OutboundEndpoint endpoint = createTestOutboundEndpoint(null, null,
+                MessageExchangePattern.ONE_WAY, null);
         InterceptingMessageProcessor mp = new ExceptionHandlingMessageProcessor();
         mp.setListener(new ExceptionThrowingMessageProcessor());
 
@@ -108,8 +108,8 @@ public class ExceptionHandlingMessageProcessorTestCase extends AbstractMessagePr
     @Test
     public void testCatchDispatchExceptionAsync() throws Exception
     {
-        OutboundEndpoint endpoint = createTestOutboundEndpoint(null, null, 
-            MessageExchangePattern.ONE_WAY, null);
+        OutboundEndpoint endpoint = createTestOutboundEndpoint(null, null,
+                MessageExchangePattern.ONE_WAY, null);
         InterceptingMessageProcessor mp = new ExceptionHandlingMessageProcessor();
         mp.setListener(new ExceptionThrowingMessageProcessor());
 

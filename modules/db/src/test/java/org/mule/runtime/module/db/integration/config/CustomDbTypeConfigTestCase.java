@@ -7,24 +7,24 @@
 
 package org.mule.runtime.module.db.integration.config;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
+import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
+import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
+import org.mule.runtime.module.db.integration.model.DerbyTestDatabase;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnectionFactory;
 import org.mule.runtime.module.db.internal.domain.database.GenericDbConfig;
 import org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction;
 import org.mule.runtime.module.db.internal.domain.type.DbType;
 import org.mule.runtime.module.db.internal.domain.type.DbTypeManager;
-import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
-import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
-import org.mule.runtime.module.db.integration.model.DerbyTestDatabase;
 import org.mule.runtime.module.db.internal.resolver.database.DbConfigResolver;
 
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class CustomDbTypeConfigTestCase extends AbstractDbIntegrationTestCase
 {
@@ -54,7 +54,7 @@ public class CustomDbTypeConfigTestCase extends AbstractDbIntegrationTestCase
     @Test
     public void resolvesCustomDbTypes() throws Exception
     {
-        DbConfigResolver dbConfigResolver  = muleContext.getRegistry().lookupObject("dbConfig");
+        DbConfigResolver dbConfigResolver = muleContext.getRegistry().lookupObject("dbConfig");
         GenericDbConfig dbConfig = (GenericDbConfig) dbConfigResolver.resolve(null);
         DbTypeManager dbTypeManager = dbConfig.getDbTypeManager();
         DbConnectionFactory connectionFactory = dbConfig.getConnectionFactory();

@@ -14,7 +14,7 @@ import org.mule.runtime.core.api.processor.RequestReplyReplierMessageProcessor;
 import org.mule.runtime.core.processor.AbstractInterceptingMessageProcessor;
 
 public class SimpleRequestReplyReplier extends AbstractInterceptingMessageProcessor
-    implements RequestReplyReplierMessageProcessor
+        implements RequestReplyReplierMessageProcessor
 {
 
     protected MessageProcessor replyMessageProcessor;

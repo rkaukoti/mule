@@ -6,20 +6,11 @@
  */
 package org.mule.runtime.core.el.mvel;
 
-import static java.nio.charset.StandardCharsets.UTF_16;
-import static java.util.Collections.singletonList;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.api.metadata.MediaType.JSON;
-import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.mule.mvel2.CompileException;
 import org.mule.mvel2.ParserContext;
 import org.mule.mvel2.PropertyAccessException;
@@ -69,32 +60,106 @@ import java.util.regex.Pattern;
 import javax.activation.DataHandler;
 import javax.activation.MimeType;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import static java.nio.charset.StandardCharsets.UTF_16;
+import static java.util.Collections.singletonList;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.api.metadata.MediaType.JSON;
+import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
 
 @RunWith(Parameterized.class)
 public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase
 {
 
+    final String largeExpression =
+            "payload = 'Tom,Fennelly,Male,4,Ireland';StringBuilder sb = new StringBuilder(); fields = payload.split(',\');"
+            + "if (fields.length > 4) {"
+            + "    sb.append('  <Contact>\n');"
+            + "    sb.append('    <FirstName>').append(fields[0]).append('</FirstName>\n');"
+            + "    sb.append('    <LastName>').append(fields[1]).append('</LastName>\n');"
+            + "    sb.append('    <Address>').append(fields[2]).append('</Address>\n');"
+            + "    sb.append('    <TelNum>').append(fields[3]).append('</TelNum>\n');"
+            + "    sb.append('    <SIN>').append(fields[4]).append('</SIN>\n');"
+            + "    sb.append('  </Contact>\n');" + "}" + "sb.toString();";
     protected Variant variant;
     protected MVELExpressionLanguage mvel;
-    final String largeExpression = "payload = 'Tom,Fennelly,Male,4,Ireland';StringBuilder sb = new StringBuilder(); fields = payload.split(',\');"
-                                   + "if (fields.length > 4) {"
-                                   + "    sb.append('  <Contact>\n');"
-                                   + "    sb.append('    <FirstName>').append(fields[0]).append('</FirstName>\n');"
-                                   + "    sb.append('    <LastName>').append(fields[1]).append('</LastName>\n');"
-                                   + "    sb.append('    <Address>').append(fields[2]).append('</Address>\n');"
-                                   + "    sb.append('    <TelNum>').append(fields[3]).append('</TelNum>\n');"
-                                   + "    sb.append('    <SIN>').append(fields[4]).append('</SIN>\n');"
-                                   + "    sb.append('  </Contact>\n');" + "}" + "sb.toString();";
 
     public MVELExpressionLanguageTestCase(Variant variant, String mvelOptimizer)
     {
         this.variant = variant;
         OptimizerFactory.setDefaultOptimizer(mvelOptimizer);
+    }
+
+    @Parameters
+    public static List<Object[]> parameters()
+    {
+        return Arrays.asList(new Object[][]
+                {
+                        {Variant.EXPRESSION_WITH_DELIMITER, OptimizerFactory.SAFE_REFLECTIVE},
+                        {Variant.EXPRESSION_WITH_DELIMITER, OptimizerFactory.DYNAMIC},
+                        {Variant.EXPRESSION_STRAIGHT_UP, OptimizerFactory.SAFE_REFLECTIVE},
+                        {Variant.EXPRESSION_STRAIGHT_UP, OptimizerFactory.DYNAMIC}
+                });
+    }
+
+    /**
+     * Scans all classes accessible from the context class loader which belong to the given package and
+     * subpackages.
+     *
+     * @param packageName The base package
+     * @return The classes
+     */
+    private static Class[] getClasses(String packageName) throws ClassNotFoundException, IOException
+    {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        assert classLoader != null;
+        String path = packageName.replace('.', '/');
+        Enumeration<URL> resources = classLoader.getResources(path);
+        List<File> dirs = new ArrayList<>();
+        while (resources.hasMoreElements())
+        {
+            URL resource = resources.nextElement();
+            dirs.add(new File(resource.getFile()));
+        }
+        ArrayList<Class> classes = new ArrayList<>();
+        for (File directory : dirs)
+        {
+            classes.addAll(findClasses(directory, packageName));
+        }
+        return classes.toArray(new Class[classes.size()]);
+    }
+
+    /**
+     * Recursive method used to find all classes in a given directory and subdirs.
+     *
+     * @param directory   The base directory
+     * @param packageName The package name for classes found inside the base directory
+     * @return The classes
+     */
+    private static List<Class> findClasses(File directory, String packageName) throws ClassNotFoundException
+    {
+        List<Class> classes = new ArrayList<>();
+        if (!directory.exists())
+        {
+            return classes;
+        }
+        File[] files = directory.listFiles();
+        for (File file : files)
+        {
+            if (file.getName().endsWith(".class"))
+            {
+                classes.add(ClassUtils.getClass(packageName + '.'
+                                                + file.getName().substring(0, file.getName().length() - 6)));
+            }
+        }
+        return classes;
     }
 
     @Before
@@ -122,20 +187,20 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase
     public void testEvaluateStringMapOfStringObject()
     {
         // Literals
-        assertEquals("hi", evaluate("'hi'", Collections.<String, Object> emptyMap()));
-        assertEquals(4, evaluate("2*2", Collections.<String, Object> emptyMap()));
+        assertEquals("hi", evaluate("'hi'", Collections.<String, Object>emptyMap()));
+        assertEquals(4, evaluate("2*2", Collections.<String, Object>emptyMap()));
 
         // Static context
         assertEquals(Calendar.getInstance().getTimeZone(),
-            evaluate("server.timeZone", Collections.<String, Object> emptyMap()));
+                evaluate("server.timeZone", Collections.<String, Object>emptyMap()));
         assertEquals(MuleManifest.getProductVersion(),
-            evaluate("mule.version", Collections.<String, Object> emptyMap()));
+                evaluate("mule.version", Collections.<String, Object>emptyMap()));
         assertEquals(muleContext.getConfiguration().getId(),
-            evaluate("app.name", Collections.<String, Object> emptyMap()));
+                evaluate("app.name", Collections.<String, Object>emptyMap()));
 
         // Custom variables (via method param)
-        assertEquals(1, evaluate("foo", Collections.<String, Object> singletonMap("foo", 1)));
-        assertEquals("bar", evaluate("foo", Collections.<String, Object> singletonMap("foo", "bar")));
+        assertEquals(1, evaluate("foo", Collections.<String, Object>singletonMap("foo", 1)));
+        assertEquals("bar", evaluate("foo", Collections.<String, Object>singletonMap("foo", "bar")));
     }
 
     @Test
@@ -177,8 +242,8 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase
         assertEquals("foo", evaluate("message.payload", event));
 
         // Custom variables (via method param)
-        assertEquals(1, evaluate("foo", Collections.<String, Object> singletonMap("foo", 1)));
-        assertEquals("bar", evaluate("foo", Collections.<String, Object> singletonMap("foo", "bar")));
+        assertEquals(1, evaluate("foo", Collections.<String, Object>singletonMap("foo", 1)));
+        assertEquals("bar", evaluate("foo", Collections.<String, Object>singletonMap("foo", "bar")));
     }
 
     @Test
@@ -217,8 +282,8 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase
         assertEquals("foo", evaluate("message.payload", event));
 
         // Custom variables (via method param)
-        assertEquals(1, evaluate("foo", Collections.<String, Object> singletonMap("foo", 1)));
-        assertEquals("bar", evaluate("foo", Collections.<String, Object> singletonMap("foo", "bar")));
+        assertEquals(1, evaluate("foo", Collections.<String, Object>singletonMap("foo", 1)));
+        assertEquals("bar", evaluate("foo", Collections.<String, Object>singletonMap("foo", "bar")));
     }
 
     @Test
@@ -249,7 +314,7 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase
     public void regexFunction() throws Exception
     {
         assertEquals("foo",
-            evaluate("regex('TEST(\\\\w+)TEST')", getTestEvent("TESTfooTEST")));
+                evaluate("regex('TEST(\\\\w+)TEST')", getTestEvent("TESTfooTEST")));
     }
 
     @Test
@@ -307,7 +372,7 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase
     @Test
     public void addImport() throws InitialisationException
     {
-        mvel.setImports(Collections.<String, Class<?>> singletonMap("loc", Locale.class));
+        mvel.setImports(Collections.<String, Class<?>>singletonMap("loc", Locale.class));
         mvel.initialise();
         assertEquals(Locale.class, evaluate("loc"));
     }
@@ -315,7 +380,7 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase
     @Test
     public void addAlias() throws InitialisationException
     {
-        mvel.setAliases(Collections.<String, String> singletonMap("appName", "app.name"));
+        mvel.setAliases(Collections.<String, String>singletonMap("appName", "app.name"));
         mvel.initialise();
         assertEquals(muleContext.getConfiguration().getId(), evaluate("appName"));
     }
@@ -351,18 +416,6 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase
         assertEquals(Pattern.class, evaluate(Pattern.class.getSimpleName()));
         assertEquals(DataType.class, evaluate(DataType.class.getSimpleName()));
         assertEquals(AbstractDataTypeBuilderFactory.class, evaluate(AbstractDataTypeBuilderFactory.class.getSimpleName()));
-    }
-
-    static class DummyExpressionLanguageExtension implements ExpressionLanguageExtension
-    {
-        @Override
-        public void configureContext(ExpressionLanguageContext context)
-        {
-            for (int i = 0; i < 20; i++)
-            {
-                context.declareFunction("dummy-function-" + i, new RegexExpressionLanguageFuntion());
-            }
-        }
     }
 
     @Test
@@ -559,28 +612,37 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase
         return createMockEvent(DataType.STRING);
     }
 
+    @Test
+    public void collectionAccessPayloadChangedMULE7506() throws Exception
+    {
+        MuleEvent event = getTestEvent(new String[] {"1", "2"});
+        assertEquals("1", mvel.evaluate("payload[0]", event));
+        event.setMessage(MuleMessage.builder(event.getMessage()).payload(singletonList("1")).build());
+        assertEquals("1", mvel.evaluate("payload[0]", event));
+    }
+
     public static enum Variant
     {
         EXPRESSION_WITH_DELIMITER, EXPRESSION_STRAIGHT_UP
     }
 
-    @Parameters
-    public static List<Object[]> parameters()
+    static class DummyExpressionLanguageExtension implements ExpressionLanguageExtension
     {
-        return Arrays.asList(new Object[][]
+        @Override
+        public void configureContext(ExpressionLanguageContext context)
         {
-            {Variant.EXPRESSION_WITH_DELIMITER, OptimizerFactory.SAFE_REFLECTIVE},
-            {Variant.EXPRESSION_WITH_DELIMITER, OptimizerFactory.DYNAMIC},
-            {Variant.EXPRESSION_STRAIGHT_UP, OptimizerFactory.SAFE_REFLECTIVE},
-            {Variant.EXPRESSION_STRAIGHT_UP, OptimizerFactory.DYNAMIC}
-        });
+            for (int i = 0; i < 20; i++)
+            {
+                context.declareFunction("dummy-function-" + i, new RegexExpressionLanguageFuntion());
+            }
+        }
     }
 
     private static class HelloWorldFunction extends Function
     {
         public HelloWorldFunction(ParserContext parserContext)
         {
-            super("hello", new char[]{}, 0, 0, 0, 0, 0, parserContext);
+            super("hello", new char[] {}, 0, 0, 0, 0, 0, parserContext);
         }
 
         @Override
@@ -591,71 +653,6 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase
         {
             return "Hello World!";
         }
-    }
-
-    /**
-     * Scans all classes accessible from the context class loader which belong to the given package and
-     * subpackages.
-     * 
-     * @param packageName The base package
-     * @return The classes
-     * @throws ClassNotFoundException
-     * @throws IOException
-     */
-    private static Class[] getClasses(String packageName) throws ClassNotFoundException, IOException
-    {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        assert classLoader != null;
-        String path = packageName.replace('.', '/');
-        Enumeration<URL> resources = classLoader.getResources(path);
-        List<File> dirs = new ArrayList<>();
-        while (resources.hasMoreElements())
-        {
-            URL resource = resources.nextElement();
-            dirs.add(new File(resource.getFile()));
-        }
-        ArrayList<Class> classes = new ArrayList<>();
-        for (File directory : dirs)
-        {
-            classes.addAll(findClasses(directory, packageName));
-        }
-        return classes.toArray(new Class[classes.size()]);
-    }
-
-    /**
-     * Recursive method used to find all classes in a given directory and subdirs.
-     * 
-     * @param directory The base directory
-     * @param packageName The package name for classes found inside the base directory
-     * @return The classes
-     * @throws ClassNotFoundException
-     */
-    private static List<Class> findClasses(File directory, String packageName) throws ClassNotFoundException
-    {
-        List<Class> classes = new ArrayList<>();
-        if (!directory.exists())
-        {
-            return classes;
-        }
-        File[] files = directory.listFiles();
-        for (File file : files)
-        {
-            if (file.getName().endsWith(".class"))
-            {
-                classes.add(ClassUtils.getClass(packageName + '.'
-                                          + file.getName().substring(0, file.getName().length() - 6)));
-            }
-        }
-        return classes;
-    }
-
-    @Test
-    public void collectionAccessPayloadChangedMULE7506() throws Exception
-    {
-        MuleEvent event = getTestEvent(new String[]{"1", "2"});
-        assertEquals("1", mvel.evaluate("payload[0]", event));
-        event.setMessage(MuleMessage.builder(event.getMessage()).payload(singletonList("1")).build());
-        assertEquals("1", mvel.evaluate("payload[0]", event));
     }
 
 }

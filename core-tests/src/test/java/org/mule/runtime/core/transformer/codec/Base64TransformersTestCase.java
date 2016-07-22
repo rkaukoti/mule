@@ -6,23 +6,22 @@
  */
 package org.mule.runtime.core.transformer.codec;
 
+import org.junit.Test;
+import org.mule.runtime.api.metadata.DataType;
+import org.mule.runtime.core.api.transformer.Transformer;
+import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
+import org.mule.runtime.core.util.Base64;
+
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
-import org.mule.runtime.api.metadata.DataType;
-import org.mule.runtime.core.api.transformer.Transformer;
-import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
-import org.mule.runtime.core.util.Base64;
-
-import org.junit.Test;
-
 public class Base64TransformersTestCase extends AbstractTransformerTestCase
 {
     private static final String TEST_DATA = "the quick brown fox jumped over the lazy dog";
-    
+
     @Override
     public Object getResultData()
     {

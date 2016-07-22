@@ -22,8 +22,8 @@ public class ErrorFieldDebugInfo extends FieldDebugInfo<Throwable>
      * Creates a debug info for a field when an error has occurred
      * obtaining field's information
      *
-     * @param name name of the created field. Must be a not blank {@link String}
-     * @param type type of the field. Cannot be null.
+     * @param name  name of the created field. Must be a not blank {@link String}
+     * @param type  type of the field. Cannot be null.
      * @param error error that prevents to obtain field debug info. Cannot be null
      */
     ErrorFieldDebugInfo(String name, String type, Throwable error)

@@ -6,19 +6,19 @@
  */
 package org.mule.runtime.module.extension.file.api.command;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.module.extension.file.api.FileConnectorConfig;
 import org.mule.runtime.module.extension.file.api.FileSystem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
 import java.util.concurrent.locks.Lock;
 import java.util.function.Predicate;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * Base class for implementations of the Command design pattern which
@@ -48,7 +48,7 @@ public abstract class FileCommand<F extends FileSystem>
      * Returns true if the given {@code path} exists
      *
      * @param config the config which is parameterizing this operation
-     * @param path the {@link Path} to test
+     * @param path   the {@link Path} to test
      * @return whether the {@code path} exists
      */
     protected abstract boolean exists(FileConnectorConfig config, Path path);
@@ -69,7 +69,9 @@ public abstract class FileCommand<F extends FileSystem>
             }
             else
             {
-                throw new IllegalArgumentException(format("Cannot write to file '%s' because path to it doesn't exist. Consider setting the 'createParentFolder' attribute to 'true'", path));
+                throw new IllegalArgumentException(
+                        format("Cannot write to file '%s' because path to it doesn't exist. Consider setting the 'createParentFolder' attribute to 'true'",
+                                path));
             }
         }
     }
@@ -136,7 +138,7 @@ public abstract class FileCommand<F extends FileSystem>
      * The existence of the obtained path is verified by delegating into
      * {@link #exists(FileConnectorConfig, Path)}
      *
-     * @param config the config on which is parameterizing this operation
+     * @param config   the config on which is parameterizing this operation
      * @param filePath the path to a file or directory
      * @return an absolute {@link Path}
      */
@@ -235,6 +237,7 @@ public abstract class FileCommand<F extends FileSystem>
      */
     public IllegalArgumentException alreadyExistsException(Path path)
     {
-        return new IllegalArgumentException(format("'%s' already exists. Set the 'overwrite' parameter to 'true' to perform the operation anyway", path));
+        return new IllegalArgumentException(
+                format("'%s' already exists. Set the 'overwrite' parameter to 'true' to perform the operation anyway", path));
     }
 }

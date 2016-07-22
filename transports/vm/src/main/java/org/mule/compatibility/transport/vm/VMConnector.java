@@ -28,7 +28,6 @@ import java.util.Iterator;
 /**
  * <code>VMConnector</code> A simple endpoint wrapper to allow a Mule service to
  * <p/> be accessed from an endpoint
- * 
  */
 public class VMConnector extends AbstractConnector
 {
@@ -138,7 +137,7 @@ public class VMConnector extends AbstractConnector
 
     VMMessageReceiver getReceiver(EndpointURI endpointUri) throws EndpointException
     {
-        return (VMMessageReceiver)getReceiverByEndpoint(endpointUri);
+        return (VMMessageReceiver) getReceiverByEndpoint(endpointUri);
     }
 
     QueueSession getQueueSession() throws InitialisationException
@@ -166,9 +165,9 @@ public class VMConnector extends AbstractConnector
         }
 
         // otherwise check each one against a wildcard match
-        for (Iterator iterator = receivers.values().iterator(); iterator.hasNext();)
+        for (Iterator iterator = receivers.values().iterator(); iterator.hasNext(); )
         {
-            receiver = (MessageReceiver)iterator.next();
+            receiver = (MessageReceiver) iterator.next();
             String filterAddress = receiver.getEndpointURI().getAddress();
             WildcardFilter filter = new WildcardFilter(filterAddress);
             if (filter.accept(endpointUri.getAddress()))
@@ -196,7 +195,7 @@ public class VMConnector extends AbstractConnector
     public boolean isResponseEnabled()
     {
         return true;
-    }                                                      
+    }
 
     public int getQueueTimeout()
     {

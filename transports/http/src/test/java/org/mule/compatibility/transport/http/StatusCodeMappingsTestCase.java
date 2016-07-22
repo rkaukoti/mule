@@ -6,8 +6,10 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Answers;
+import org.mockito.Mockito;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.routing.RoutingException;
@@ -16,15 +18,12 @@ import org.mule.runtime.core.config.ExceptionHelper;
 import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Answers;
-import org.mockito.Mockito;
+import static org.junit.Assert.assertEquals;
 
 public class StatusCodeMappingsTestCase extends AbstractMuleTestCase
 {
     MuleContext mockMuleContext = Mockito.mock(MuleContext.class, Answers.RETURNS_DEEP_STUBS.get());
-    
+
     @Before
     public void setUp()
     {
@@ -35,18 +34,18 @@ public class StatusCodeMappingsTestCase extends AbstractMuleTestCase
     @Test
     public void testErrorMappings()
     {
-        String code = ExceptionHelper.getErrorMapping("http", RoutingException.class,mockMuleContext);
+        String code = ExceptionHelper.getErrorMapping("http", RoutingException.class, mockMuleContext);
         assertEquals("500", code);
 
         code = ExceptionHelper.getErrorMapping("HTTP", org.mule.runtime.core.api.security.SecurityException.class, mockMuleContext);
         assertEquals("403", code);
 
-        code = ExceptionHelper.getErrorMapping("http", UnauthorisedException.class,mockMuleContext);
+        code = ExceptionHelper.getErrorMapping("http", UnauthorisedException.class, mockMuleContext);
         assertEquals("401", code);
 
-        code = ExceptionHelper.getErrorMapping("blah", DefaultMuleException.class,mockMuleContext);
+        code = ExceptionHelper.getErrorMapping("blah", DefaultMuleException.class, mockMuleContext);
         assertEquals(
-            String.valueOf(new DefaultMuleException(MessageFactory.createStaticMessage("test")).getExceptionCode()), code);
+                String.valueOf(new DefaultMuleException(MessageFactory.createStaticMessage("test")).getExceptionCode()), code);
 
     }
 

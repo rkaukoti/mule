@@ -6,14 +6,13 @@
  */
 package org.mule.test.core.transformers.simple;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import org.mule.runtime.core.api.transformer.Transformer;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.tck.testmodels.fruit.Orange;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class TransformerArraysTestCase extends FunctionalTestCase
 {

@@ -6,16 +6,15 @@
  */
 package org.mule.test.integration.routing.inbound;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.api.client.MuleClient;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.client.MuleClient;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import org.junit.Test;
 
 public class IdempotentRouterWithFilterTestCase extends FunctionalTestCase
 {
@@ -28,8 +27,6 @@ public class IdempotentRouterWithFilterTestCase extends FunctionalTestCase
 
     /**
      * This test will pass a message containing a String to the Mule server and verifies that it gets received.
-     * 
-     * @throws Exception
      */
     @Test
     @SuppressWarnings("null")
@@ -46,8 +43,6 @@ public class IdempotentRouterWithFilterTestCase extends FunctionalTestCase
 
     /**
      * This test will pass a message containing an Object to the Mule server and verifies that it does not get received.
-     * 
-     * @throws Exception
      */
     @Test
     public void testWithInvalidData() throws Exception

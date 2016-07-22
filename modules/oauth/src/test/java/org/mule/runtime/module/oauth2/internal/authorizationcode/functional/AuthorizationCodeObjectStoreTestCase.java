@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode.functional;
 
+import org.mule.runtime.core.util.store.SimpleMemoryObjectStore;
+
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.util.store.SimpleMemoryObjectStore;
 
 public class AuthorizationCodeObjectStoreTestCase extends AuthorizationCodeMinimalConfigTestCase
 {

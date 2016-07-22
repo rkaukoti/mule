@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.module.launcher.coreextension;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.runtime.container.api.MuleCoreExtension;
 import org.mule.runtime.container.api.MuleCoreExtensionDependency;
 import org.mule.runtime.core.api.MuleException;
@@ -18,7 +17,8 @@ import org.mule.tck.size.SmallTest;
 
 import java.util.List;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class ReflectionMuleCoreExtensionDependencyDiscovererTestCase extends AbstractMuleTestCase
@@ -36,7 +36,8 @@ public class ReflectionMuleCoreExtensionDependencyDiscovererTestCase extends Abs
     @Test
     public void resolvesSingleDependency() throws Exception
     {
-        final List<LinkedMuleCoreExtensionDependency> dependencies = dependencyDiscoverer.findDependencies(new DependantTestCoreExtension());
+        final List<LinkedMuleCoreExtensionDependency> dependencies =
+                dependencyDiscoverer.findDependencies(new DependantTestCoreExtension());
         assertThat(dependencies.size(), equalTo(1));
         assertThat((Class<TestCoreExtension>) dependencies.get(0).getDependencyClass(), equalTo(TestCoreExtension.class));
         assertThat(dependencies.get(0).getDependantMethod().getName(), equalTo("setTestCoreExtension"));

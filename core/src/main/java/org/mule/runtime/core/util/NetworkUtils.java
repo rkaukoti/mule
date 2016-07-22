@@ -6,15 +6,15 @@
  */
 package org.mule.runtime.core.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class NetworkUtils
 {
@@ -27,18 +27,18 @@ public final class NetworkUtils
     {
         // utility class only
     }
-    
+
     public static boolean isServerReachable(URL url, int timeout)
     {
         int port = url.getPort() != -1 ? url.getPort() : url.getDefaultPort();
         return isServerReachable(url.getHost(), port, timeout);
     }
-    
+
     public static boolean isServerReachable(String host, int port, int timeout)
     {
         boolean isServerReachable = false;
         Socket socket = null;
-        
+
         try
         {
             socket = TimedSocket.createSocket(host, port, timeout);
@@ -84,7 +84,6 @@ public final class NetworkUtils
      *
      * @param host the host name
      * @return the host ip
-     * @throws UnknownHostException
      */
     public static String getLocalHostIp(String host) throws UnknownHostException
     {

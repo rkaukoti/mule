@@ -7,9 +7,10 @@
 
 package org.mule.runtime.module.db.integration.model;
 
-import static org.mule.runtime.module.db.integration.model.RegionManager.NORTHWEST_MANAGER;
-import static org.mule.runtime.module.db.integration.model.RegionManager.SOUTHWEST_MANAGER;
+import org.apache.commons.dbutils.QueryRunner;
 import org.mule.common.metadata.datatype.DataType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,9 +18,8 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbutils.QueryRunner;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.module.db.integration.model.RegionManager.NORTHWEST_MANAGER;
+import static org.mule.runtime.module.db.integration.model.RegionManager.SOUTHWEST_MANAGER;
 
 public abstract class AbstractTestDatabase
 {
@@ -29,19 +29,10 @@ public abstract class AbstractTestDatabase
     public static final Contact[] CONTACT_TEST_VALUES = {Contact.CONTACT1, Contact.CONTACT2};
     public static final Region[] REGION_TEST_VALUES = {Region.NORTHWEST, Region.SOUTHWEST};
     public static final RegionManager[] REGION_MANAGER_TEST_VALUES = {SOUTHWEST_MANAGER, NORTHWEST_MANAGER};
-
-    private static final Logger logger = LoggerFactory.getLogger(AbstractTestDatabase.class);
     public static final String NO_SQLXML_SUPPORT_ERROR = "Database does not support SQLXML type";
     public static final String NO_RESULSET_FROM_FUNCTION_SUPPORT_ERROR = "Database does not support returning a resultset from a function";
     public static final String NO_UDT_SUPPORT_ERROR = "Database does not support User Defined Data Types";
-
-    public void deletePlanetTable(Connection connection) throws SQLException
-    {
-        executeUpdate(connection, "DELETE FROM PLANET");
-    }
-
-    public abstract void createPlanetTable(Connection connection) throws SQLException;
-
+    private static final Logger logger = LoggerFactory.getLogger(AbstractTestDatabase.class);
 
     public static void executeDdl(DataSource dataSource, String ddl) throws SQLException
     {
@@ -65,6 +56,13 @@ public abstract class AbstractTestDatabase
             statement.executeUpdate(ddl);
         }
     }
+
+    public void deletePlanetTable(Connection connection) throws SQLException
+    {
+        executeUpdate(connection, "DELETE FROM PLANET");
+    }
+
+    public abstract void createPlanetTable(Connection connection) throws SQLException;
 
     public void executeUpdate(Connection connection, String updateSql) throws SQLException
     {
@@ -149,7 +147,7 @@ public abstract class AbstractTestDatabase
         return false;
     }
 
-    protected void  createZipArrayType(Connection connection) throws SQLException
+    protected void createZipArrayType(Connection connection) throws SQLException
     {
         throw new UnsupportedOperationException(NO_UDT_SUPPORT_ERROR);
     }

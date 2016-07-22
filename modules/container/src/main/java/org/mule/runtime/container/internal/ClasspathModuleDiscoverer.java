@@ -7,17 +7,17 @@
 
 package org.mule.runtime.container.internal;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
-import static org.mule.runtime.core.util.PropertiesUtils.discoverProperties;
-import static org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter.EXPORTED_CLASS_PACKAGES_PROPERTY;
-import static org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter.EXPORTED_RESOURCE_PACKAGES_PROPERTY;
-
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+
+import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.mule.runtime.core.util.PropertiesUtils.discoverProperties;
+import static org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter.EXPORTED_CLASS_PACKAGES_PROPERTY;
+import static org.mule.runtime.module.artifact.classloader.ArtifactClassLoaderFilter.EXPORTED_RESOURCE_PACKAGES_PROPERTY;
 
 /**
  * Discovers {@link MuleModule} searching for {@link #MODULE_PROPERTIES} files

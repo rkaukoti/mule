@@ -12,7 +12,6 @@ import org.mule.runtime.core.config.i18n.Message;
  * <code>TransportServiceException</code> is thrown if a ProviderServicedescriptor
  * has a service error set. This is usually because the endpoint/connector cannot be
  * created from a service descriptor
- * 
  */
 
 public class TransportServiceException extends TransportFactoryException
@@ -32,7 +31,7 @@ public class TransportServiceException extends TransportFactoryException
 
     /**
      * @param message the exception message
-     * @param cause the exception that cause this exception to be thrown
+     * @param cause   the exception that cause this exception to be thrown
      */
     public TransportServiceException(Message message, Throwable cause)
     {

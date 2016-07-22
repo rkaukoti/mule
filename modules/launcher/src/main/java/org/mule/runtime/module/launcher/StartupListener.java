@@ -7,8 +7,8 @@
 package org.mule.runtime.module.launcher;
 
 /**
-*  Notifies when all mule apps has been started
-*/
+ * Notifies when all mule apps has been started
+ */
 public interface StartupListener
 {
 

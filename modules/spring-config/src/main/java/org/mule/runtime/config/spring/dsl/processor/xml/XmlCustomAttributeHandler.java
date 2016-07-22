@@ -8,7 +8,6 @@ package org.mule.runtime.config.spring.dsl.processor.xml;
 
 import org.mule.runtime.config.spring.dsl.model.ComponentModel;
 import org.mule.runtime.config.spring.dsl.processor.ConfigLine;
-
 import org.w3c.dom.Node;
 
 /**

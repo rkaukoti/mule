@@ -7,11 +7,10 @@
 
 package org.mule.runtime.module.launcher.nativelib;
 
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.runtime.core.util.SystemUtils;
-
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+import org.mule.runtime.core.util.SystemUtils;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 
 public class MacOsMatcher extends BaseMatcher<AbstractMuleTestCase>
 {

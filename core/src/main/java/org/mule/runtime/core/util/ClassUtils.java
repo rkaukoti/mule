@@ -6,16 +6,12 @@
  */
 package org.mule.runtime.core.util;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
-import static org.mule.runtime.core.util.ExceptionUtils.tryExpecting;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import com.google.common.primitives.Primitives;
 
 import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.message.OutputHandler;
 import org.mule.runtime.core.routing.filters.WildcardFilter;
-
-import com.google.common.primitives.Primitives;
 
 import java.io.BufferedReader;
 import java.io.CharArrayReader;
@@ -46,6 +42,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+
+import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.mule.runtime.core.util.ExceptionUtils.tryExpecting;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Extend the Apache Commons ClassUtils to provide additional functionality.
@@ -129,7 +129,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
      */
     public static URL getResource(final String resourceName, final Class<?> callingClass)
     {
-        URL url = AccessController.doPrivileged((PrivilegedAction<URL>) () -> {
+        URL url = AccessController.doPrivileged((PrivilegedAction<URL>) () ->
+        {
             final ClassLoader cl = Thread.currentThread().getContextClassLoader();
             return cl != null ? cl.getResource(resourceName) : null;
         });
@@ -177,7 +178,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
         checkArgument(!isEmpty(resourceName), "ResourceName cannot be empty");
         checkArgument(fallbackClassLoader != null, "FallbackClassLoader cannot be null");
 
-        Enumeration<URL> enumeration = AccessController.doPrivileged((PrivilegedAction<Enumeration<URL>>) () -> {
+        Enumeration<URL> enumeration = AccessController.doPrivileged((PrivilegedAction<Enumeration<URL>>) () ->
+        {
             try
             {
                 final ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -191,7 +193,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
 
         if (enumeration == null)
         {
-            enumeration = AccessController.doPrivileged((PrivilegedAction<Enumeration<URL>>) () -> {
+            enumeration = AccessController.doPrivileged((PrivilegedAction<Enumeration<URL>>) () ->
+            {
                 try
                 {
                     return ClassUtils.class.getClassLoader().getResources(resourceName);
@@ -205,7 +208,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
 
         if (enumeration == null)
         {
-            enumeration = AccessController.doPrivileged((PrivilegedAction<Enumeration<URL>>) () -> {
+            enumeration = AccessController.doPrivileged((PrivilegedAction<Enumeration<URL>>) () ->
+            {
                 try
                 {
                     return fallbackClassLoader.getResources(resourceName);
@@ -271,7 +275,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
             }
         }
 
-        Class<?> clazz = AccessController.doPrivileged((PrivilegedAction<Class<?>>) () -> {
+        Class<?> clazz = AccessController.doPrivileged((PrivilegedAction<Class<?>>) () ->
+        {
             try
             {
                 final ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -286,7 +291,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
 
         if (clazz == null)
         {
-            clazz = AccessController.doPrivileged((PrivilegedAction<Class<?>>) () -> {
+            clazz = AccessController.doPrivileged((PrivilegedAction<Class<?>>) () ->
+            {
                 try
                 {
                     return Class.forName(className);
@@ -300,7 +306,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
 
         if (clazz == null)
         {
-            clazz = AccessController.doPrivileged((PrivilegedAction<Class<?>>) () -> {
+            clazz = AccessController.doPrivileged((PrivilegedAction<Class<?>>) () ->
+            {
                 try
                 {
                     return ClassUtils.class.getClassLoader().loadClass(className);
@@ -314,7 +321,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
 
         if (clazz == null)
         {
-            clazz = AccessController.doPrivileged((PrivilegedAction<Class<?>>) () -> {
+            clazz = AccessController.doPrivileged((PrivilegedAction<Class<?>>) () ->
+            {
                 try
                 {
                     return callingClass.getClassLoader().loadClass(className);
@@ -337,7 +345,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
         }
         else
         {
-            throw new IllegalArgumentException(String.format("Loaded class '%s' is not assignable from type '%s'", clazz.getName(), type.getName()));
+            throw new IllegalArgumentException(
+                    String.format("Loaded class '%s' is not assignable from type '%s'", clazz.getName(), type.getName()));
         }
     }
 
@@ -442,7 +451,7 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
 
     public static <T> T instanciateClass(Class<? extends T> clazz, Object... constructorArgs)
             throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException,
-                   IllegalAccessException, InvocationTargetException
+            IllegalAccessException, InvocationTargetException
     {
         Class<?>[] args;
         if (constructorArgs != null)
@@ -491,14 +500,14 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
 
     public static Object instanciateClass(String name, Object... constructorArgs)
             throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException,
-                   InstantiationException, IllegalAccessException, InvocationTargetException
+            InstantiationException, IllegalAccessException, InvocationTargetException
     {
         return instanciateClass(name, constructorArgs, (ClassLoader) null);
     }
 
     public static Object instanciateClass(String name, Object[] constructorArgs, Class<?> callingClass)
             throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException,
-                   InstantiationException, IllegalAccessException, InvocationTargetException
+            InstantiationException, IllegalAccessException, InvocationTargetException
     {
         Class<?> clazz = loadClass(name, callingClass);
         return instanciateClass(clazz, constructorArgs);
@@ -506,7 +515,7 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
 
     public static Object instanciateClass(String name, Object[] constructorArgs, ClassLoader classLoader)
             throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException,
-                   InstantiationException, IllegalAccessException, InvocationTargetException
+            InstantiationException, IllegalAccessException, InvocationTargetException
     {
         Class<?> clazz;
         if (classLoader != null)
@@ -638,12 +647,9 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
      * @param implementation     the class to build methods on
      * @param parameterTypes     the argument param types to look for
      * @param voidOk             whether void methods shouldbe included in the found list
-     * @param matchOnObject      determines whether parameters of Object type are matched
-     *                           when they are of Object.class type
-     * @param ignoredMethodNames a Set of method names to ignore. Often 'equals' is
-     *                           not a desired match. This argument can be null.
-     * @return a List of methods on the class that match the criteria. If there are
-     * none, an empty list is returned
+     * @param matchOnObject      determines whether parameters of Object type are matched when they are of Object.class type
+     * @param ignoredMethodNames a Set of method names to ignore. Often 'equals' is not a desired match. This argument can be null.
+     * @return a List of methods on the class that match the criteria. If there are none, an empty list is returned
      */
     public static List<Method> getSatisfiableMethods(Class<?> implementation,
                                                      Class<?>[] parameterTypes,
@@ -661,13 +667,10 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
      * @param implementation     the class to build methods on
      * @param parameterTypes     the argument param types to look for
      * @param voidOk             whether void methods shouldbe included in the found list
-     * @param matchOnObject      determines whether parameters of Object type are matched
-     *                           when they are of Object.class type
-     * @param ignoredMethodNames a Set of method names to ignore. Often 'equals' is
-     *                           not a desired match. This argument can be null.
+     * @param matchOnObject      determines whether parameters of Object type are matched when they are of Object.class type
+     * @param ignoredMethodNames a Set of method names to ignore. Often 'equals' is not a desired match. This argument can be null.
      * @param filter             Wildcard expression filter that allows methods to be matched using wildcards i.e. 'get*'
-     * @return a List of methods on the class that match the criteria. If there are
-     * none, an empty list is returned
+     * @return a List of methods on the class that match the criteria. If there are none, an empty list is returned
      */
     public static List<Method> getSatisfiableMethods(Class<?> implementation,
                                                      Class<?>[] parameterTypes,
@@ -768,8 +771,7 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
     /**
      * Used for creating an array of class types for an array or single object
      *
-     * @param object single object or array. If this parameter is null or a zero length
-     *               array then {@link #NO_ARGS_TYPE} is returned
+     * @param object single object or array. If this parameter is null or a zero length array then {@link #NO_ARGS_TYPE} is returned
      * @return an array of class types for the object
      */
     public static Class<?>[] getClassTypes(Object object)
@@ -831,8 +833,7 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
      * @param c2            parameter types array
      * @param matchOnObject return false if there is a parameter of type Object in c1
      * @param acceptNulls   allows null parameter types in c2
-     * @return true if arrays are the same size and the types assignable from c2 to
-     * c1
+     * @return true if arrays are the same size and the types assignable from c2 to c1
      */
     public static boolean compare(Class[] c1, Class[] c2, boolean matchOnObject, boolean acceptNulls)
     {
@@ -932,31 +933,31 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
             encodedName.mark(1);
             switch (encodedName.read())
             {
-                case -1:
-                    return "null";
-                case 'Z':
-                    return "boolean";
-                case 'B':
-                    return "byte";
-                case 'C':
-                    return "char";
-                case 'D':
-                    return "double";
-                case 'F':
-                    return "float";
-                case 'I':
-                    return "int";
-                case 'J':
-                    return "long";
-                case 'S':
-                    return "short";
-                case '[':
-                    return classNameHelper(encodedName) + "[]";
-                case 'L':
-                    return shorten(new BufferedReader(encodedName).readLine());
-                default:
-                    encodedName.reset();
-                    return shorten(new BufferedReader(encodedName).readLine());
+            case -1:
+                return "null";
+            case 'Z':
+                return "boolean";
+            case 'B':
+                return "byte";
+            case 'C':
+                return "char";
+            case 'D':
+                return "double";
+            case 'F':
+                return "float";
+            case 'I':
+                return "int";
+            case 'J':
+                return "long";
+            case 'S':
+                return "short";
+            case '[':
+                return classNameHelper(encodedName) + "[]";
+            case 'L':
+                return shorten(new BufferedReader(encodedName).readLine());
+            default:
+                encodedName.reset();
+                return shorten(new BufferedReader(encodedName).readLine());
             }
         }
         catch (IOException e)
@@ -1086,8 +1087,7 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
      * @param type  the {@link Class} you want to check the {@code value against}
      * @param value an instance you want to verify is instance of {@code type}
      * @param <T>   the generic type of {@code type}
-     * @return {@code true} if {@code value} is an instance of {@code type} or if they are a wrapper-primitive pair.
-     * {@code false} otherwise
+     * @return {@code true} if {@code value} is an instance of {@code type} or if they are a wrapper-primitive pair. {@code false} otherwise
      */
     public static <T> boolean isInstance(Class<T> type, Object value)
     {
@@ -1207,7 +1207,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
     {
         try
         {
-            withContextClassLoader(classLoader, () -> {
+            withContextClassLoader(classLoader, () ->
+            {
                 runnable.run();
                 return null;
             });
@@ -1231,7 +1232,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils
      */
     public static <T> T withContextClassLoader(ClassLoader classLoader, Callable<T> callable)
     {
-        return withContextClassLoader(classLoader, callable, RuntimeException.class, e -> {
+        return withContextClassLoader(classLoader, callable, RuntimeException.class, e ->
+        {
             throw new MuleRuntimeException(e);
         });
     }

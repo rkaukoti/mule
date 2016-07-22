@@ -23,16 +23,6 @@ public class PolicyStatus
     private boolean ok = false;
     private Throwable throwable;
 
-    public static PolicyStatus policyExhausted(Throwable t)
-    {
-        return new PolicyStatus(true, t);
-    }
-
-    public static PolicyStatus policyOk()
-    {
-        return new PolicyStatus();
-    }
-
     protected PolicyStatus()
     {
         this.ok = true;
@@ -42,6 +32,16 @@ public class PolicyStatus
     {
         this.exhausted = exhausted;
         this.throwable = throwable;
+    }
+
+    public static PolicyStatus policyExhausted(Throwable t)
+    {
+        return new PolicyStatus(true, t);
+    }
+
+    public static PolicyStatus policyOk()
+    {
+        return new PolicyStatus();
     }
 
     public boolean isExhausted()

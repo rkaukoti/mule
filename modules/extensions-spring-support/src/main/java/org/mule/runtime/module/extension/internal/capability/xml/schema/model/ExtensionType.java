@@ -58,8 +58,8 @@ import javax.xml.namespace.QName;
         "anyAttribute"
 })
 @XmlSeeAlso({
-                    SimpleExtensionType.class
-            })
+        SimpleExtensionType.class
+})
 public class ExtensionType
         extends Annotated
 {
@@ -69,9 +69,9 @@ public class ExtensionType
     protected ExplicitGroup choice;
     protected ExplicitGroup sequence;
     @XmlElements({
-                         @XmlElement(name = "attributeGroup", type = AttributeGroupRef.class),
-                         @XmlElement(name = "attribute", type = Attribute.class)
-                 })
+            @XmlElement(name = "attributeGroup", type = AttributeGroupRef.class),
+            @XmlElement(name = "attribute", type = Attribute.class)
+    })
     protected List<Attribute> attributeOrAttributeGroup;
     protected Wildcard anyAttribute;
     @XmlAttribute(name = "base", required = true)
@@ -80,8 +80,7 @@ public class ExtensionType
     /**
      * Gets the value of the group property.
      *
-     * @return possible object is
-     * {@link GroupRef }
+     * @return possible object is {@link GroupRef }
      */
     public GroupRef getGroup()
     {
@@ -91,8 +90,7 @@ public class ExtensionType
     /**
      * Sets the value of the group property.
      *
-     * @param value allowed object is
-     *              {@link GroupRef }
+     * @param value allowed object is {@link GroupRef }
      */
     public void setGroup(GroupRef value)
     {
@@ -102,8 +100,7 @@ public class ExtensionType
     /**
      * Gets the value of the all property.
      *
-     * @return possible object is
-     * {@link All }
+     * @return possible object is {@link All }
      */
     public All getAll()
     {
@@ -113,8 +110,7 @@ public class ExtensionType
     /**
      * Sets the value of the all property.
      *
-     * @param value allowed object is
-     *              {@link All }
+     * @param value allowed object is {@link All }
      */
     public void setAll(All value)
     {
@@ -124,8 +120,7 @@ public class ExtensionType
     /**
      * Gets the value of the choice property.
      *
-     * @return possible object is
-     * {@link ExplicitGroup }
+     * @return possible object is {@link ExplicitGroup }
      */
     public ExplicitGroup getChoice()
     {
@@ -135,8 +130,7 @@ public class ExtensionType
     /**
      * Sets the value of the choice property.
      *
-     * @param value allowed object is
-     *              {@link ExplicitGroup }
+     * @param value allowed object is {@link ExplicitGroup }
      */
     public void setChoice(ExplicitGroup value)
     {
@@ -146,8 +140,7 @@ public class ExtensionType
     /**
      * Gets the value of the sequence property.
      *
-     * @return possible object is
-     * {@link ExplicitGroup }
+     * @return possible object is {@link ExplicitGroup }
      */
     public ExplicitGroup getSequence()
     {
@@ -157,8 +150,7 @@ public class ExtensionType
     /**
      * Sets the value of the sequence property.
      *
-     * @param value allowed object is
-     *              {@link ExplicitGroup }
+     * @param value allowed object is {@link ExplicitGroup }
      */
     public void setSequence(ExplicitGroup value)
     {
@@ -198,8 +190,7 @@ public class ExtensionType
     /**
      * Gets the value of the anyAttribute property.
      *
-     * @return possible object is
-     * {@link Wildcard }
+     * @return possible object is {@link Wildcard }
      */
     public Wildcard getAnyAttribute()
     {
@@ -209,8 +200,7 @@ public class ExtensionType
     /**
      * Sets the value of the anyAttribute property.
      *
-     * @param value allowed object is
-     *              {@link Wildcard }
+     * @param value allowed object is {@link Wildcard }
      */
     public void setAnyAttribute(Wildcard value)
     {
@@ -220,8 +210,7 @@ public class ExtensionType
     /**
      * Gets the value of the base property.
      *
-     * @return possible object is
-     * {@link QName }
+     * @return possible object is {@link QName }
      */
     public QName getBase()
     {
@@ -231,8 +220,7 @@ public class ExtensionType
     /**
      * Sets the value of the base property.
      *
-     * @param value allowed object is
-     *              {@link QName }
+     * @param value allowed object is {@link QName }
      */
     public void setBase(QName value)
     {

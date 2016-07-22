@@ -6,24 +6,17 @@
  */
 package org.mule.runtime.core.model.streaming;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class CallbackOutputStream extends OutputStream
 {
     private static final Logger logger = LoggerFactory.getLogger(CallbackOutputStream.class);
-
-    public static interface Callback
-    {
-        public void onClose() throws Exception;
-    }
-
     private OutputStream delegate;
     private Callback callback;
-
     public CallbackOutputStream(OutputStream delegate, Callback callback)
     {
         this.delegate = delegate;
@@ -69,11 +62,16 @@ public class CallbackOutputStream extends OutputStream
             {
                 callback.onClose();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 logger.debug("Suppressing exception while releasing resources: " + e.getMessage());
             }
         }
 
+    }
+
+    public static interface Callback
+    {
+        public void onClose() throws Exception;
     }
 }

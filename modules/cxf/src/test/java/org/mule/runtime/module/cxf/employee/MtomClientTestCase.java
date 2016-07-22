@@ -6,19 +6,18 @@
  */
 package org.mule.runtime.module.cxf.employee;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.tck.probe.JUnitProbe;
 import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Prober;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class MtomClientTestCase extends FunctionalTestCase
 {
@@ -45,7 +44,7 @@ public class MtomClientTestCase extends FunctionalTestCase
                 assertThat(svc.getInvocationCount(), is(greaterThanOrEqualTo(1)));
                 return true;
             }
-            
+
             @Override
             public String describeFailure()
             {

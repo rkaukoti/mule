@@ -6,9 +6,7 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
+import org.junit.Test;
 import org.mule.compatibility.transport.http.HttpConnector;
 import org.mule.compatibility.transport.http.HttpConstants;
 import org.mule.runtime.core.api.MuleMessage;
@@ -16,7 +14,8 @@ import org.mule.runtime.core.api.client.MuleClient;
 
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class HttpOutboundHeadersPropagationTestCase extends HttpFunctionalTestCase
 {
@@ -38,12 +37,13 @@ public class HttpOutboundHeadersPropagationTestCase extends HttpFunctionalTestCa
     {
         // no operation
     }
-    
+
     @Test
     public void outboundHttpContentTypeTest() throws Exception
     {
         MuleClient client = muleContext.getClient();
-        client.dispatch("vm://in", MuleMessage.builder().payload("HelloWorld!").addOutboundProperty("custom-header", "value-custom-header").build());
+        client.dispatch("vm://in",
+                MuleMessage.builder().payload("HelloWorld!").addOutboundProperty("custom-header", "value-custom-header").build());
 
         MuleMessage reply = client.request("vm://out", RECEIVE_TIMEOUT);
         Map<String, Object> headers = (Map<String, Object>) reply.getPayload();
@@ -54,13 +54,15 @@ public class HttpOutboundHeadersPropagationTestCase extends HttpFunctionalTestCa
             // a bug the flag HttpMethodParams.USE_EXPECT_CONTINUE is always false when invoking
             // org.apache.commons.httpclient.methods.ExpectContinueMethod.addRequestHeaders()
 
-            if(!HttpConstants.HEADER_EXPECT.equals(header))         // TODO: This should be sent on the request,
+            if (!HttpConstants.HEADER_EXPECT.equals(header))         // TODO: This should be sent on the request,
             {
-                if(HttpConstants.HEADER_COOKIE.equals(header))
+                if (HttpConstants.HEADER_COOKIE.equals(header))
                 {
                     assertNotNull("Request header <" + header + "> mshould be defined.", headers.get(HttpConnector.HTTP_COOKIES_PROPERTY));
-                } else {
-                    assertNotNull("Request header <" + header + "> should be defined.", headers.get(header));                
+                }
+                else
+                {
+                    assertNotNull("Request header <" + header + "> should be defined.", headers.get(header));
                 }
             }
 
@@ -71,7 +73,7 @@ public class HttpOutboundHeadersPropagationTestCase extends HttpFunctionalTestCa
         }
         for (String header : HttpConstants.RESPONSE_HEADER_NAMES.values())
         {
-            assertNull("Response header <" + header +"> should not be defined.", headers.get(header));
+            assertNull("Response header <" + header + "> should not be defined.", headers.get(header));
         }
         assertNotNull(reply);
     }

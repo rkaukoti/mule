@@ -6,8 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
-import org.mule.runtime.extension.api.runtime.ExpirationPolicy;
 import org.mule.runtime.core.time.TimeSupplier;
+import org.mule.runtime.extension.api.runtime.ExpirationPolicy;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +19,16 @@ import java.util.concurrent.TimeUnit;
 public final class ImmutableExpirationPolicy implements ExpirationPolicy
 {
 
+    private final long maxIdleTime;
+    private final TimeUnit timeUnit;
+    private final TimeSupplier timeSupplier;
+    public ImmutableExpirationPolicy(long maxIdleTime, TimeUnit timeUnit, TimeSupplier timeSupplier)
+    {
+        this.maxIdleTime = maxIdleTime;
+        this.timeUnit = timeUnit;
+        this.timeSupplier = timeSupplier;
+    }
+
     /**
      * Returns an instance with the default settings
      *
@@ -28,17 +38,6 @@ public final class ImmutableExpirationPolicy implements ExpirationPolicy
     public static ExpirationPolicy getDefault(TimeSupplier timeSupplier)
     {
         return new ImmutableExpirationPolicy(5, TimeUnit.MINUTES, timeSupplier);
-    }
-
-    private final long maxIdleTime;
-    private final TimeUnit timeUnit;
-    private final TimeSupplier timeSupplier;
-
-    public ImmutableExpirationPolicy(long maxIdleTime, TimeUnit timeUnit, TimeSupplier timeSupplier)
-    {
-        this.maxIdleTime = maxIdleTime;
-        this.timeUnit = timeUnit;
-        this.timeSupplier = timeSupplier;
     }
 
     /**

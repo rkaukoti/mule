@@ -25,7 +25,8 @@ public class MetaTransportServiceDescriptor extends DefaultTransportServiceDescr
 {
     private String metaScheme;
 
-    public MetaTransportServiceDescriptor(String metaScheme, String scheme, Properties props, ClassLoader classLoader) throws ServiceException
+    public MetaTransportServiceDescriptor(String metaScheme, String scheme, Properties props, ClassLoader classLoader)
+            throws ServiceException
     {
         super(metaScheme, props, classLoader);
         this.metaScheme = metaScheme;
@@ -48,8 +49,7 @@ public class MetaTransportServiceDescriptor extends DefaultTransportServiceDescr
      * Override the connector cration and register our Meta scheme with the connecotr so that the connector can
      * be used when creating endpoints using this meta transport
      *
-     * @return a transport connector matching the scheme of the descriptor with the meta scheme registered with the
-     *         connector
+     * @return a transport connector matching the scheme of the descriptor with the meta scheme registered with the connector
      * @throws TransportServiceException if the connector cannot be created
      */
     @Override

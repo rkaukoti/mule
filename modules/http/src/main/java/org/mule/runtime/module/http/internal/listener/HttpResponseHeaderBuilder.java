@@ -6,29 +6,29 @@
  */
 package org.mule.runtime.module.http.internal.listener;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.TRANSFER_ENCODING;
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.core.util.CaseInsensitiveMapWrapper;
-
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
+
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.core.util.CaseInsensitiveMapWrapper;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.TRANSFER_ENCODING;
+
 public class HttpResponseHeaderBuilder
 {
 
-    private List<String> calculatedHeadersNames = Arrays.asList(TRANSFER_ENCODING, CONTENT_LENGTH);
-
     Multimap<String, String> headers =
             Multimaps.newMultimap(new CaseInsensitiveMapWrapper<>(HashMap.class), () -> Sets.newHashSet());
+    private List<String> calculatedHeadersNames = Arrays.asList(TRANSFER_ENCODING, CONTENT_LENGTH);
 
     public void addHeader(String headerName, Object headerValue)
     {
@@ -99,7 +99,7 @@ public class HttpResponseHeaderBuilder
         {
             return null;
         }
-        return (String)((Collection)headers.get(header)).iterator().next();
+        return (String) ((Collection) headers.get(header)).iterator().next();
     }
 
     public void addContentType(String multipartFormData)

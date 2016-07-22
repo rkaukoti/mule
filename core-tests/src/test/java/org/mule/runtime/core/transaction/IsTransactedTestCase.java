@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.transaction;
 
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.transaction.Transaction;
@@ -13,8 +14,6 @@ import org.mule.runtime.core.api.transaction.TransactionConfig;
 import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.api.transaction.TransactionFactory;
 import org.mule.tck.junit4.AbstractMuleTestCase;
-
-import org.junit.Test;
 import org.mule.tck.testmodels.mule.TestTransaction;
 
 import static org.junit.Assert.assertFalse;

@@ -23,16 +23,9 @@ public class AttributeEvaluator
 {
 
     private static final Pattern SINGLE_EXPRESSION_REGEX_PATTERN = Pattern.compile("^#\\[(?:(?!#\\[).)*\\]$");
-
-    private enum AttributeType
-    {
-        EXPRESSION, PARSE_EXPRESSION, STATIC_VALUE
-    }
-
     private final String attributeValue;
     private ExpressionManager expressionManager;
     private AttributeType attributeType;
-
     public AttributeEvaluator(String attributeValue)
     {
         this.attributeValue = attributeValue;
@@ -133,7 +126,8 @@ public class AttributeEvaluator
         }
         else
         {
-            throw new MuleRuntimeException(CoreMessages.createStaticMessage(String.format("Value was required as integer but is of type: %s", value.getClass().getName())));
+            throw new MuleRuntimeException(CoreMessages.createStaticMessage(
+                    String.format("Value was required as integer but is of type: %s", value.getClass().getName())));
         }
     }
 
@@ -160,5 +154,10 @@ public class AttributeEvaluator
     public String getRawValue()
     {
         return attributeValue;
+    }
+
+    private enum AttributeType
+    {
+        EXPRESSION, PARSE_EXPRESSION, STATIC_VALUE
     }
 }

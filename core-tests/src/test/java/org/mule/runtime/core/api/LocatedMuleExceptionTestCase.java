@@ -6,13 +6,9 @@
  */
 package org.mule.runtime.core.api;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.withSettings;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.api.meta.AnnotatedObject;
 import org.mule.runtime.api.meta.NamedObject;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
@@ -20,9 +16,12 @@ import org.mule.tck.size.SmallTest;
 
 import javax.xml.namespace.QName;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
@@ -52,7 +51,8 @@ public class LocatedMuleExceptionTestCase extends AbstractMuleContextTestCase
         when(annotated.toString()).thenReturn("Mock@1");
 
         LocatedMuleException lme = new LocatedMuleException(annotated);
-        assertThat(lme.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(), is("Mock@1 @ app:muleApp.xml:10 (Mock Component)"));
+        assertThat(lme.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(),
+                is("Mock@1 @ app:muleApp.xml:10 (Mock Component)"));
     }
 
     @Test
@@ -66,7 +66,8 @@ public class LocatedMuleExceptionTestCase extends AbstractMuleContextTestCase
         when(namedAnnotated.toString()).thenReturn("Mock@1");
 
         LocatedMuleException lme = new LocatedMuleException(namedAnnotated);
-        assertThat(lme.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(), is("/mockComponent @ app:muleConfig.xml:6 (Mock Component)"));
+        assertThat(lme.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(),
+                is("/mockComponent @ app:muleConfig.xml:6 (Mock Component)"));
     }
 
     @Test

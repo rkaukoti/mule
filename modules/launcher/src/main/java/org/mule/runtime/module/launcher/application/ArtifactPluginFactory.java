@@ -24,7 +24,7 @@ public interface ArtifactPluginFactory
      * would be a child classloader of the given parent and it will use the same {@link ClassLoaderLookupPolicy} as the parent.
      *
      * @param descriptor that defines the application plugin
-     * @param parent {@link ArtifactClassLoader} to be used as parent classloader
+     * @param parent     {@link ArtifactClassLoader} to be used as parent classloader
      * @return an {@link ArtifactPlugin}
      */
     ArtifactPlugin create(ArtifactPluginDescriptor descriptor, ArtifactClassLoader parent);

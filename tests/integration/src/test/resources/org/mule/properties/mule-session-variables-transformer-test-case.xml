@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 
        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd">
 
-    <set-session-variable name="addSessionVariable" variableName="sesVarKey" value="sesVarValue" />
+    <set-session-variable name="addSessionVariable" variableName="sesVarKey" value="sesVarValue"/>
 
-    <set-session-variable name="addSessionVariableName" variableName="sesVarKeyName" value="sesVarKey" />
+    <set-session-variable name="addSessionVariableName" variableName="sesVarKeyName" value="sesVarKey"/>
 
-    <set-session-variable name="addSessionVariable2" variableName="invVarKey2" value="invVarValue2" />
+    <set-session-variable name="addSessionVariable2" variableName="invVarKey2" value="invVarValue2"/>
 
-    <set-session-variable name="addAnotherSessionVariable" variableName="anotherSessionVarKey" value="anotherSessionVarValue" />
+    <set-session-variable name="addAnotherSessionVariable" variableName="anotherSessionVarKey" value="anotherSessionVarValue"/>
 
-    <set-variable name="addInvocationVariable" variableName="invVarKey" value="invVarValue" />
+    <set-variable name="addInvocationVariable" variableName="invVarKey" value="invVarValue"/>
 
-    <set-variable name="addInvocationVariable2" variableName="invVarKey2" value="invVarValue2" />
+    <set-variable name="addInvocationVariable2" variableName="invVarKey2" value="invVarValue2"/>
 
     <set-session-variable name="setSessVarGlobal" variableName="#[sessionVars.sesVarKey]" value="#[flowVars.invVarKey]"/>
 
-    <remove-session-variable name="remSessVarGlobal" variableName="sesVarKey" />
+    <remove-session-variable name="remSessVarGlobal" variableName="sesVarKey"/>
 
     <flow name="addSessionVariableFlow" processingStrategy="synchronous">
         <set-session-variable variableName="prop" value="#['some value']"/>
@@ -53,7 +53,7 @@
         <remove-session-variable variableName="#[sessionVars.sesVarKeyName]"/>
         <test:assert expression="#[sessionVars.sesVarKey == null]"/>
     </flow>
-    
+
     <flow name="removeSessionVariableUsingParsedStringFlow" processingStrategy="synchronous">
         <transformer ref="addSessionVariable"/>
         <transformer ref="addSessionVariableName"/>
@@ -70,12 +70,12 @@
         <test:assert expression="#[sessionVars.sesPropKey2 == null]"/>
         <test:assert expression="#[sessionVars.anotherSessionVarKey != null]"/>
     </flow>
-    
+
     <flow name="removeAllSessionVariablesFlow" processingStrategy="synchronous">
         <transformer ref="addSessionVariable"/>
         <transformer ref="addSessionVariable2"/>
         <transformer ref="addAnotherSessionVariable"/>
-        <remove-session-variable variableName="*" />
+        <remove-session-variable variableName="*"/>
         <test:assert expression="#[sessionVars.invPropKey == null]"/>
         <test:assert expression="#[sessionVars.invPropKey2 == null]"/>
         <test:assert expression="#[sessionVars.anotherSessionVarKey == null]"/>

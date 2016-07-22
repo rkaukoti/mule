@@ -41,12 +41,22 @@ public class ResourceOwnerOAuthContext implements Serializable
         return accessToken;
     }
 
+    public void setAccessToken(final String accessToken)
+    {
+        this.accessToken = accessToken;
+    }
+
     /**
      * @return refresh token of the oauth context retrieved by the token request
      */
     public String getRefreshToken()
     {
         return refreshToken;
+    }
+
+    public void setRefreshToken(final String refreshToken)
+    {
+        this.refreshToken = refreshToken;
     }
 
     /**
@@ -57,19 +67,9 @@ public class ResourceOwnerOAuthContext implements Serializable
         return state;
     }
 
-    public void setAccessToken(final String accessToken)
+    public void setState(final String state)
     {
-        this.accessToken = accessToken;
-    }
-
-    public void setRefreshToken(final String refreshToken)
-    {
-        this.refreshToken = refreshToken;
-    }
-
-    public void setExpiresIn(final String expiresIn)
-    {
-        this.expiresIn = expiresIn;
+        this.state = state;
     }
 
     /**
@@ -80,9 +80,9 @@ public class ResourceOwnerOAuthContext implements Serializable
         return expiresIn;
     }
 
-    public void setState(final String state)
+    public void setExpiresIn(final String expiresIn)
     {
-        this.state = state;
+        this.expiresIn = expiresIn;
     }
 
     /**
@@ -106,16 +106,16 @@ public class ResourceOwnerOAuthContext implements Serializable
         return refreshUserOAuthContextLock;
     }
 
+    public void setRefreshUserOAuthContextLock(Lock refreshUserOAuthContextLock)
+    {
+        this.refreshUserOAuthContextLock = refreshUserOAuthContextLock;
+    }
+
     /**
      * @return id for the oauth state.
      */
     public String getResourceOwnerId()
     {
         return resourceOwnerId;
-    }
-
-    public void setRefreshUserOAuthContextLock(Lock refreshUserOAuthContextLock)
-    {
-        this.refreshUserOAuthContextLock = refreshUserOAuthContextLock;
     }
 }

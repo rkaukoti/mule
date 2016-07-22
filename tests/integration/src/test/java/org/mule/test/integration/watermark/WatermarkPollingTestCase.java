@@ -7,8 +7,10 @@
 
 package org.mule.test.integration.watermark;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.config.spring.factories.WatermarkFactoryBean;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -18,20 +20,17 @@ import org.mule.runtime.core.api.schedule.Schedulers;
 import org.mule.runtime.core.api.store.ObjectStore;
 import org.mule.runtime.core.api.store.ObjectStoreException;
 import org.mule.runtime.core.api.store.ObjectStoreManager;
-import org.mule.runtime.config.spring.factories.WatermarkFactoryBean;
-import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.util.store.ObjectStorePartition;
 import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
 import org.mule.tck.probe.Prober;
-import org.mule.runtime.core.util.store.ObjectStorePartition;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class WatermarkPollingTestCase extends FunctionalTestCase
 {
@@ -48,10 +47,8 @@ public class WatermarkPollingTestCase extends FunctionalTestCase
     private static final String DEFAULT_VALUE_WHEN_KEY_NOT_PRESENT = "noKey";
     private static final String MODIFIED_KEY_VALUE = "keyPresent";
     private static final String RESULT_OF_UPDATE_EXPRESSION = "valueUpdated";
-
-    private final Prober prober = new PollingProber(3000, 500);
-
     private static final List<String> foo = new ArrayList<String>();
+    private final Prober prober = new PollingProber(3000, 500);
 
     @Override
     protected String getConfigFile()
@@ -69,9 +66,9 @@ public class WatermarkPollingTestCase extends FunctionalTestCase
     public void testThatOsIsUserObjectStore()
     {
         ObjectStore<Serializable> defaultUserObjectStore = muleContext.getRegistry().lookupObject(
-            "_defaultUserObjectStore");
+                "_defaultUserObjectStore");
         assertEquals(defaultUserObjectStore,
-            ((ObjectStorePartition<Serializable>) getDefaultObjectStore()).getBaseStore());
+                ((ObjectStorePartition<Serializable>) getDefaultObjectStore()).getBaseStore());
     }
 
     /**
@@ -268,7 +265,7 @@ public class WatermarkPollingTestCase extends FunctionalTestCase
     public void watermarkWithObjectStore() throws Exception
     {
         final ObjectStore<Serializable> os = muleContext.getRegistry().lookupObject(
-            "_defaultInMemoryObjectStore");
+                "_defaultInMemoryObjectStore");
         os.store(OS_KEY8, PRE_EXISTENT_OS_VALUE);
         executePollOf("watermarkWithObjectStore");
 
@@ -500,14 +497,14 @@ public class WatermarkPollingTestCase extends FunctionalTestCase
     private ObjectStore<Serializable> getDefaultObjectStore()
     {
         ObjectStoreManager mgr = (ObjectStoreManager) muleContext.getRegistry().get(
-            MuleProperties.OBJECT_STORE_MANAGER);
+                MuleProperties.OBJECT_STORE_MANAGER);
         return mgr.getObjectStore(WatermarkFactoryBean.MULE_WATERMARK_PARTITION);
     }
 
     private void executePollOf(String flowName) throws Exception
     {
         Collection<Scheduler> schedulers = muleContext.getRegistry().lookupScheduler(
-            Schedulers.flowConstructPollingSchedulers(flowName));
+                Schedulers.flowConstructPollingSchedulers(flowName));
         for (Scheduler scheduler : schedulers)
         {
             scheduler.schedule();
@@ -554,15 +551,15 @@ public class WatermarkPollingTestCase extends FunctionalTestCase
                 }
 
                 @Override
-                public void setName(String name)
-                {
-                    scheduler.setName(name);
-                }
-
-                @Override
                 public String getName()
                 {
                     return scheduler.getName();
+                }
+
+                @Override
+                public void setName(String name)
+                {
+                    scheduler.setName(name);
                 }
 
                 @Override

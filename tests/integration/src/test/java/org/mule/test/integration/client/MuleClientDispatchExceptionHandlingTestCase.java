@@ -6,10 +6,8 @@
  */
 package org.mule.test.integration.client;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.core.Is.is;
-
+import org.junit.ClassRule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.DefaultMuleException;
@@ -25,8 +23,9 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.ClassRule;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.core.Is.is;
 
 /**
  * Tests to validate that MuleClient can be used from JavaComponent/MessageProcessor in order to dispatch an event to
@@ -47,6 +46,11 @@ public class MuleClientDispatchExceptionHandlingTestCase extends FunctionalTestC
     private static boolean eventPropagated;
     private static boolean isSameMessage;
 
+    private static String getUrl(String endpoint)
+    {
+        return String.format("http://localhost:%s/%s", port.getValue(), endpoint);
+    }
+
     @Override
     protected String getConfigFile()
     {
@@ -58,8 +62,6 @@ public class MuleClientDispatchExceptionHandlingTestCase extends FunctionalTestC
      * throws an exception and the catch-exception-strategy defined in main-flow is called.
      * It also validates that original event passed to JavaComponent is later propagated
      * to the JavaComponent defined in catch-exception-strategy block.
-     *
-     * @throws Exception
      */
     @Test
     public void testCatchExceptionThrowFromJavaComponentToJavaComponent() throws Exception
@@ -110,11 +112,6 @@ public class MuleClientDispatchExceptionHandlingTestCase extends FunctionalTestC
         assertThat(eventPropagated, is(true));
 
         assertThat(result, notNullValue(MuleMessage.class));
-    }
-
-    private static String getUrl(String endpoint)
-    {
-        return String.format("http://localhost:%s/%s", port.getValue(), endpoint);
     }
 
     // Just a simple JavaComponent used in catch-exception-strategy block
@@ -172,7 +169,7 @@ public class MuleClientDispatchExceptionHandlingTestCase extends FunctionalTestC
             messageFromMainFlow = eventFromMainFlow.getMessage();
 
             eventContext.sendEvent(MuleMessage.builder().payload("payload").build(),
-                                   getUrl("innerrequestresponsetest"));
+                    getUrl("innerrequestresponsetest"));
 
             throw new Exception("expected exception!");
         }

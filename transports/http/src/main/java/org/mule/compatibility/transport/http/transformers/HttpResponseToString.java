@@ -6,6 +6,9 @@
  */
 package org.mule.compatibility.transport.http.transformers;
 
+import org.apache.commons.httpclient.ChunkedOutputStream;
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.mule.compatibility.transport.http.HttpConstants;
 import org.mule.compatibility.transport.http.HttpResponse;
 import org.mule.compatibility.transport.http.ResponseWriter;
@@ -19,10 +22,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.Iterator;
-
-import org.apache.commons.httpclient.ChunkedOutputStream;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.io.output.ByteArrayOutputStream;
 
 /**
  * Converts an Http Response object to String. Note that the response headers are
@@ -45,7 +44,7 @@ public class HttpResponseToString extends AbstractTransformer
     {
         try
         {
-            HttpResponse response = (HttpResponse)src;
+            HttpResponse response = (HttpResponse) src;
             ByteArrayOutputStream bos = new ByteArrayOutputStream(8192);
             OutputStream outstream = bos;
             ResponseWriter writer = new ResponseWriter(outstream, encoding);
@@ -53,7 +52,7 @@ public class HttpResponseToString extends AbstractTransformer
             Iterator item = response.getHeaderIterator();
             while (item.hasNext())
             {
-                Header header = (Header)item.next();
+                Header header = (Header) item.next();
                 writer.print(header.toExternalForm());
             }
             writer.println();
@@ -76,7 +75,7 @@ public class HttpResponseToString extends AbstractTransformer
 
                 if (outstream instanceof ChunkedOutputStream)
                 {
-                    ((ChunkedOutputStream)outstream).finish();
+                    ((ChunkedOutputStream) outstream).finish();
                 }
             }
 

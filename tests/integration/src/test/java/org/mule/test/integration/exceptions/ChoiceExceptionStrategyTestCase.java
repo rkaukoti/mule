@@ -6,10 +6,9 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
@@ -19,9 +18,9 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 
 import java.sql.SQLDataException;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertThat;
 
 public class ChoiceExceptionStrategyTestCase extends FunctionalTestCase
 {
@@ -49,7 +48,9 @@ public class ChoiceExceptionStrategyTestCase extends FunctionalTestCase
     @Test
     public void testMatchesCorrectExceptionStrategyUsingWrapperAndCause() throws Exception
     {
-        callAndThrowException(new ResolverException(CoreMessages.createStaticMessage(""), new RuntimeException(new IllegalStateException())), "0 catch-2");
+        callAndThrowException(
+                new ResolverException(CoreMessages.createStaticMessage(""), new RuntimeException(new IllegalStateException())),
+                "0 catch-2");
     }
 
     @Test
@@ -75,7 +76,7 @@ public class ChoiceExceptionStrategyTestCase extends FunctionalTestCase
     {
         callAndThrowException(new AnotherTypeMyException(), "0 catch-5");
     }
-    
+
     @Test
     public void testMatchesCorrectExceptionStrategyUsingGroovyExpressionEvaluator() throws Exception
     {
@@ -99,7 +100,7 @@ public class ChoiceExceptionStrategyTestCase extends FunctionalTestCase
     {
         callAndThrowException(new AnotherTotallyDifferentKindOfException(), "0 catch-9");
     }
-    
+
     @Test
     public void testMatchesCorrectExceptionStrategyUsingFinishesWithSomethingElse() throws Exception
     {
@@ -124,7 +125,7 @@ public class ChoiceExceptionStrategyTestCase extends FunctionalTestCase
     {
         callAndThrowException("0", exceptionToThrow, expectedMessage);
     }
-    
+
     private void callAndThrowException(Object payload, final Exception exceptionToThrow, final String expectedMessage) throws Exception
     {
         FunctionalTestComponent ftc = getFunctionalTestComponent("matchesCorrectExceptionStrategyUsingExceptionType");

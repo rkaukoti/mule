@@ -20,6 +20,7 @@ public class DynamicDataSourcePoolingLimitTestCase extends DatasourcePoolingLimi
     @Override
     protected String[] getFlowConfigurationResources()
     {
-        return new String[] {"integration/config/dynamic-derby-minimum-pooling-db-config.xml", "integration/config/dynamic-connection-pooling-config.xml"};
+        return new String[] {"integration/config/dynamic-derby-minimum-pooling-db-config.xml",
+                             "integration/config/dynamic-connection-pooling-config.xml"};
     }
 }

@@ -60,8 +60,7 @@ public class Field
     /**
      * Gets the value of the xpath property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getXpath()
     {
@@ -71,8 +70,7 @@ public class Field
     /**
      * Sets the value of the xpath property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setXpath(String value)
     {

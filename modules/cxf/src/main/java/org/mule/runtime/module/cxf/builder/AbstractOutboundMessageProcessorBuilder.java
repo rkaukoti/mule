@@ -6,6 +6,14 @@
  */
 package org.mule.runtime.module.cxf.builder;
 
+import org.apache.cxf.Bus;
+import org.apache.cxf.BusFactory;
+import org.apache.cxf.databinding.DataBinding;
+import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.feature.AbstractFeature;
+import org.apache.cxf.interceptor.Interceptor;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleContext;
@@ -25,17 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.cxf.Bus;
-import org.apache.cxf.BusFactory;
-import org.apache.cxf.databinding.DataBinding;
-import org.apache.cxf.endpoint.Client;
-import org.apache.cxf.feature.AbstractFeature;
-import org.apache.cxf.interceptor.Interceptor;
-import org.apache.cxf.message.Message;
-import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
-
-public abstract class AbstractOutboundMessageProcessorBuilder 
-    implements MessageProcessorBuilder, MuleContextAware
+public abstract class AbstractOutboundMessageProcessorBuilder
+        implements MessageProcessorBuilder, MuleContextAware
 {
     protected Client client;
     protected String defaultMethodName;
@@ -53,7 +52,7 @@ public abstract class AbstractOutboundMessageProcessorBuilder
     protected String soapVersion;
     protected boolean enableMuleSoapHeaders = true;
     protected CxfPayloadToArguments payloadToArguments = CxfPayloadToArguments.NULL_PAYLOAD_AS_PARAMETER;
-    protected Map<String,Object> properties = new HashMap<String, Object>();
+    protected Map<String, Object> properties = new HashMap<String, Object>();
     protected MuleContext muleContext;
     protected String address;
     protected String operation;
@@ -64,20 +63,20 @@ public abstract class AbstractOutboundMessageProcessorBuilder
     @Override
     public CxfOutboundMessageProcessor build() throws MuleException
     {
-        if (muleContext == null) 
+        if (muleContext == null)
         {
             throw new IllegalStateException("MuleContext must be supplied.");
         }
-        
+
         if (configuration == null)
         {
             configuration = CxfConfiguration.getConfiguration(muleContext);
         }
-        
+
         // set the thread default bus so the JAX-WS Service implementation (or other bits of CXF code
         // which I don't know about, but may depend on it) can use it when creating a Client -- DD
         BusFactory.setThreadDefaultBus(getBus());
-       
+
         try
         {
             client = createClient();
@@ -94,13 +93,13 @@ public abstract class AbstractOutboundMessageProcessorBuilder
 
         client.setThreadLocalRequestContext(true);
 
-        if(wsSecurity != null && wsSecurity.getConfigProperties() != null && !wsSecurity.getConfigProperties().isEmpty())
+        if (wsSecurity != null && wsSecurity.getConfigProperties() != null && !wsSecurity.getConfigProperties().isEmpty())
         {
             client.getOutInterceptors().add(new WSS4JOutInterceptor(wsSecurity.getConfigProperties()));
         }
 
         configureClient(client);
-        
+
         if (features != null)
         {
             for (AbstractFeature f : features)
@@ -115,14 +114,14 @@ public abstract class AbstractOutboundMessageProcessorBuilder
         }
 
         addMuleInterceptors();
-        
+
         CxfOutboundMessageProcessor processor = createMessageProcessor();
         processor.setOperation(operation);
         configureMessageProcessor(processor);
         processor.setPayloadToArguments(payloadToArguments);
 
         processor.setMimeType(getMimeType());
-        
+
         return processor;
     }
 
@@ -155,15 +154,15 @@ public abstract class AbstractOutboundMessageProcessorBuilder
 
     private void addInterceptors(List<Interceptor<? extends Message>> col, List<Interceptor<? extends Message>> supplied)
     {
-        if (supplied != null) 
+        if (supplied != null)
         {
             col.addAll(supplied);
         }
     }
-    
+
     protected String getAddress()
     {
-        if (address == null) 
+        if (address == null)
         {
             // dummy URL for client builder
             return "http://host";
@@ -223,16 +222,16 @@ public abstract class AbstractOutboundMessageProcessorBuilder
         this.mtomEnabled = mtomEnabled;
     }
 
+    public String getSoapVersion()
+    {
+        return soapVersion;
+    }
+
     public void setSoapVersion(String soapVersion)
     {
         this.soapVersion = soapVersion;
     }
 
-    public String getSoapVersion()
-    {
-        return soapVersion;
-    }
-    
     public List<Interceptor<? extends Message>> getInInterceptors()
     {
         return inInterceptors;
@@ -282,7 +281,7 @@ public abstract class AbstractOutboundMessageProcessorBuilder
     {
         this.features = features;
     }
-    
+
     public String getWsdlLocation()
     {
         return wsdlLocation;
@@ -292,7 +291,7 @@ public abstract class AbstractOutboundMessageProcessorBuilder
     {
         this.wsdlLocation = wsdlLocation;
     }
-    
+
     public CxfConfiguration getConfiguration()
     {
         return configuration;
@@ -322,7 +321,7 @@ public abstract class AbstractOutboundMessageProcessorBuilder
     {
         this.payloadToArguments = payloadToArguments;
     }
-    
+
     public Map<String, Object> getProperties()
     {
         return properties;

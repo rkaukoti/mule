@@ -7,10 +7,6 @@
 
 package org.mule.runtime.module.db.internal.resolver.query;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.module.db.internal.domain.param.QueryParam;
 import org.mule.runtime.module.db.internal.domain.query.BulkQuery;
@@ -20,6 +16,11 @@ import org.mule.runtime.module.db.internal.parser.QueryTemplateParser;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.util.Collections;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class AbstractBulkQueryResolverTestCase extends AbstractMuleTestCase
 {
@@ -33,8 +34,10 @@ public class AbstractBulkQueryResolverTestCase extends AbstractMuleTestCase
     protected QueryTemplateParser createQueryTemplateParser()
     {
         QueryTemplateParser queryTemplateParser = mock(QueryTemplateParser.class);
-        when(queryTemplateParser.parse(STATIC_SQL_1)).thenReturn(new QueryTemplate(STATIC_SQL_1, QueryType.DELETE, Collections.<QueryParam>emptyList()));
-        when(queryTemplateParser.parse(STATIC_SQL_2)).thenReturn(new QueryTemplate(STATIC_SQL_2, QueryType.DELETE, Collections.<QueryParam>emptyList()));
+        when(queryTemplateParser.parse(STATIC_SQL_1)).thenReturn(
+                new QueryTemplate(STATIC_SQL_1, QueryType.DELETE, Collections.<QueryParam>emptyList()));
+        when(queryTemplateParser.parse(STATIC_SQL_2)).thenReturn(
+                new QueryTemplate(STATIC_SQL_2, QueryType.DELETE, Collections.<QueryParam>emptyList()));
 
         return queryTemplateParser;
     }

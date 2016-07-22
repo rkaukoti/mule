@@ -16,11 +16,14 @@ import javax.management.ObjectName;
  */
 public interface JmxSupport
 {
-    /** Default Mule domain prefix for all instances. */
+    /**
+     * Default Mule domain prefix for all instances.
+     */
     String DEFAULT_JMX_DOMAIN_PREFIX = "Mule";
 
     /**
      * Uses JMX 1.2 and higher standard escape method and semantics.
+     *
      * @param name value to escape for JMX compliance
      * @return value valid for JMX
      */
@@ -35,6 +38,7 @@ public interface JmxSupport
      * </ul>
      *
      * Domain clash is resolved by appending a counter at the end.
+     *
      * @return JMX domain name
      */
     String getDomainName(MuleContext context);
@@ -43,6 +47,7 @@ public interface JmxSupport
 
     /**
      * Create an object name. May cache the result.
+     *
      * @param name jmx object name
      * @return object name for MBeanServer consumption
      * @throws MalformedObjectNameException for invalid names

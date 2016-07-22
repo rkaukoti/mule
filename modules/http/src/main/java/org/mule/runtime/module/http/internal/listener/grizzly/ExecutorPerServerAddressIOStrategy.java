@@ -6,6 +6,11 @@
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
+import org.glassfish.grizzly.Connection;
+import org.glassfish.grizzly.Grizzly;
+import org.glassfish.grizzly.IOEvent;
+import org.glassfish.grizzly.IOEventLifeCycleListener;
+import org.glassfish.grizzly.strategies.AbstractIOStrategy;
 import org.mule.runtime.module.http.internal.listener.ServerAddress;
 
 import java.io.IOException;
@@ -13,12 +18,6 @@ import java.net.InetSocketAddress;
 import java.util.EnumSet;
 import java.util.concurrent.Executor;
 import java.util.logging.Logger;
-
-import org.glassfish.grizzly.Connection;
-import org.glassfish.grizzly.Grizzly;
-import org.glassfish.grizzly.IOEvent;
-import org.glassfish.grizzly.IOEventLifeCycleListener;
-import org.glassfish.grizzly.strategies.AbstractIOStrategy;
 
 /**
  * Grizzly IO Strategy that will handle each work to an specific {@link java.util.concurrent.Executor}
@@ -39,6 +38,15 @@ public class ExecutorPerServerAddressIOStrategy extends AbstractIOStrategy
     public ExecutorPerServerAddressIOStrategy(final ExecutorProvider executorProvider)
     {
         this.executorProvider = executorProvider;
+    }
+
+    private static void run0(final Connection connection,
+                             final IOEvent ioEvent,
+                             final IOEventLifeCycleListener lifeCycleListener)
+    {
+
+        fireIOEvent(connection, ioEvent, lifeCycleListener, logger);
+
     }
 
     @Override
@@ -92,15 +100,6 @@ public class ExecutorPerServerAddressIOStrategy extends AbstractIOStrategy
             // Run other types of IOEvent in selector thread.
             return null;
         }
-    }
-
-    private static void run0(final Connection connection,
-                             final IOEvent ioEvent,
-                             final IOEventLifeCycleListener lifeCycleListener)
-    {
-
-        fireIOEvent(connection, ioEvent, lifeCycleListener, logger);
-
     }
 
     private static final class WorkerThreadRunnable implements Runnable

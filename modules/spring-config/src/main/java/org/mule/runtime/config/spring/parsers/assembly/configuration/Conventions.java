@@ -22,13 +22,14 @@ public final class Conventions
     /**
      * Overloads the Spring version of this method to tak into account the first character in the attribute name
      * An upper case char as the first letter of a bean name is not allowed. In Mule this also signifies a non bean property
+     *
      * @param attributeName the attribute name to parse
      * @return the correctly formatted bean name
      */
     public static String attributeNameToPropertyName(String attributeName)
     {
         char[] chars = attributeName.toCharArray();
-        if(Character.isUpperCase(chars[0]))
+        if (Character.isUpperCase(chars[0]))
         {
             return attributeName;
         }

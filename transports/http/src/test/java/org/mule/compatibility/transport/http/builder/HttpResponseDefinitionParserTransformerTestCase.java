@@ -6,17 +6,15 @@
  */
 package org.mule.compatibility.transport.http.builder;
 
-import static org.junit.Assert.assertEquals;
-
-import org.mule.compatibility.transport.http.builder.HttpResponseDefinitionParser;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 @SmallTest
 public class HttpResponseDefinitionParserTransformerTestCase extends AbstractMuleTestCase
@@ -34,7 +32,7 @@ public class HttpResponseDefinitionParserTransformerTestCase extends AbstractMul
     {
         Map<String, String> headerNameMapping = populateHeaderNamesMapping();
 
-        for(String headerName : headerNameMapping.keySet())
+        for (String headerName : headerNameMapping.keySet())
         {
             String processedHeaderName = httpResponseDefinitionParser.processHeaderName(headerName);
             assertEquals(headerNameMapping.get(headerName), processedHeaderName);

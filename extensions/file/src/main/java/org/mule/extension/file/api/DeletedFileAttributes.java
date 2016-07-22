@@ -6,11 +6,11 @@
  */
 package org.mule.extension.file.api;
 
-import static org.mule.extension.file.api.FileEventType.DELETE;
-
 import java.nio.file.Path;
 import java.time.Instant;
 import java.time.LocalDateTime;
+
+import static org.mule.extension.file.api.FileEventType.DELETE;
 
 /**
  * A specialized version of {@link ListenerFileAttributes} which
@@ -34,6 +34,7 @@ public class DeletedFileAttributes extends ListenerFileAttributes
 
     /**
      * Creates a new instance
+     *
      * @param path the path of the deleted file
      */
     public DeletedFileAttributes(Path path)
@@ -46,7 +47,8 @@ public class DeletedFileAttributes extends ListenerFileAttributes
      */
     private IllegalStateException unsupported(String property)
     {
-        throw new IllegalStateException(String.format("Cannot obtain %s property for path '%s' because it has been deleted", property, getPath()));
+        throw new IllegalStateException(
+                String.format("Cannot obtain %s property for path '%s' because it has been deleted", property, getPath()));
     }
 
     /**

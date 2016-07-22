@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:jms="http://www.mulesoft.org/schema/mule/transport/jms"
       xmlns:spring="http://www.springframework.org/schema/beans"
       xmlns:util="http://www.springframework.org/schema/util"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-current.xsd
@@ -46,16 +46,16 @@
                             forceJndiDestinations="true"
                             connectionFactoryJndiName="ConnectionFactory"/>
 
-    <jms:endpoint name="ep_non-jndi-queue" queue="in1" connector-ref="jmsConnector1" 
-        exchange-pattern="one-way"/>
+    <jms:endpoint name="ep_non-jndi-queue" queue="in1" connector-ref="jmsConnector1"
+                  exchange-pattern="one-way"/>
     <jms:endpoint name="ep_non-jndi-queue-optional-jndi" queue="in1" connector-ref="jmsConnector2"
-        exchange-pattern="one-way"/>
+                  exchange-pattern="one-way"/>
     <jms:endpoint name="ep_non-jndi-queue-force-jndi" queue="in1" connector-ref="jmsConnector3"
-        exchange-pattern="one-way"/>
+                  exchange-pattern="one-way"/>
     <jms:endpoint name="ep_jndi-queue" queue="jndi-queue-in" connector-ref="jmsConnector2"
-        exchange-pattern="one-way"/>
+                  exchange-pattern="one-way"/>
     <jms:endpoint name="ep_jndi-topic" topic="jndi-topic-in" connector-ref="jmsConnector2"
-        exchange-pattern="one-way"/>
+                  exchange-pattern="one-way"/>
 
     <!-- Use JNDI ConnectionFactory but not JNDI Destinations -->
     <jms:connector name="jmsConnector4"

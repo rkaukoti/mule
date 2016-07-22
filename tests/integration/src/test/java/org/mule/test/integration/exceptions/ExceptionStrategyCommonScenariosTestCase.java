@@ -6,10 +6,8 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -17,8 +15,9 @@ import org.mule.runtime.core.component.ComponentException;
 import org.mule.runtime.core.exception.AbstractMessagingExceptionStrategy;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class ExceptionStrategyCommonScenariosTestCase extends FunctionalTestCase
 {
@@ -61,7 +60,7 @@ public class ExceptionStrategyCommonScenariosTestCase extends FunctionalTestCase
         {
             flowRunner("PreservePayloadExceptionStrategy").withPayload(MESSAGE_TO_SEND).run();
         }
-        catch(ComponentException e)
+        catch (ComponentException e)
         {
             assertThat(e.getEvent().getMessage(), notNullValue());
             assertThat(getPayloadAsString(e.getEvent().getMessage()), is(MESSAGE_MODIFIED));

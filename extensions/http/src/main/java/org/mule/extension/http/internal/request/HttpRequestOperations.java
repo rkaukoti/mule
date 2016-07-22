@@ -6,11 +6,6 @@
  */
 package org.mule.extension.http.internal.request;
 
-import static java.lang.Integer.MAX_VALUE;
-import static org.mule.extension.http.internal.HttpConnector.OTHER_SETTINGS;
-import static org.mule.extension.http.internal.HttpConnector.URL_OVERRIDE_CONFIGURATION;
-import static org.mule.runtime.extension.api.annotation.param.display.Placement.ADVANCED;
-
 import org.mule.extension.http.api.HttpResponseAttributes;
 import org.mule.extension.http.api.HttpSendBodyMode;
 import org.mule.extension.http.api.HttpStreamingType;
@@ -40,6 +35,11 @@ import java.util.function.Function;
 
 import javax.inject.Inject;
 
+import static java.lang.Integer.MAX_VALUE;
+import static org.mule.extension.http.internal.HttpConnector.OTHER_SETTINGS;
+import static org.mule.extension.http.internal.HttpConnector.URL_OVERRIDE_CONFIGURATION;
+import static org.mule.runtime.extension.api.annotation.param.display.Placement.ADVANCED;
+
 
 public class HttpRequestOperations
 {
@@ -56,14 +56,17 @@ public class HttpRequestOperations
      * @param method               The HTTP method for the request.
      * @param host                 Host where the requests will be sent.
      * @param port                 Port where the requests will be sent.
-     * @param source               The expression used to obtain the body that will be sent in the request. Default is empty, so the payload will be used as the body.
+     * @param source               The expression used to obtain the body that will be sent in the request. Default is empty, so the payload
+     *                             will be used as the body.
      * @param followRedirects      Specifies whether to follow redirects or not.
      * @param parseResponse        Defines if the HTTP response should be parsed or it's raw contents should be propagated instead.
      * @param requestStreamingMode Defines if the request should be sent using streaming or not.
      * @param sendBodyMode         Defines if the request should contain a body or not.
-     * @param responseTimeout      Maximum time that the request element will block the execution of the flow waiting for the HTTP response.
+     * @param responseTimeout      Maximum time that the request element will block the execution of the flow waiting for the HTTP
+     *                             response.
      * @param responseValidator    Configures error handling of the response.
-     * @param config               the {@link HttpConnector} configuration for this operation. All parameters not configured will be taken from it.
+     * @param config               the {@link HttpConnector} configuration for this operation. All parameters not configured will be taken
+     *                             from it.
      * @param muleEvent            the current {@link MuleEvent}
      * @return an {@link OperationResult} with {@link HttpResponseAttributes}
      */
@@ -87,7 +90,7 @@ public class HttpRequestOperations
                                                                    MuleEvent muleEvent) throws MuleException
     {
         HttpRequesterRequestBuilder resolvedBuilder = requestBuilder != null ? requestBuilder
-                                                                             : new HttpRequesterRequestBuilder();
+                : new HttpRequesterRequestBuilder();
         UriParameters uriParameters = client.getDefaultUriParameters();
 
         String resolvedHost = resolveIfNecessary(host, uriParameters.getHost(), muleEvent);
@@ -102,7 +105,7 @@ public class HttpRequestOperations
         Boolean resolvedParseResponse = resolveIfNecessary(parseResponse, config.getParseResponse(), muleEvent);
         Integer resolvedTimeout = resolveResponseTimeout(muleEvent, config, responseTimeout);
         ResponseValidator resolvedValidator = responseValidator != null ? responseValidator
-                                                                        : new SuccessStatusCodeValidator("0..399");
+                : new SuccessStatusCodeValidator("0..399");
 
         HttpRequester requester = new HttpRequester.Builder()
                 .setUri(resolvedUri)
@@ -118,7 +121,8 @@ public class HttpRequestOperations
                 .setConfig(config)
                 .build();
 
-        return OperationResult.<Object, HttpResponseAttributes>builder(requester.doRequest(muleEvent, client, resolvedBuilder, true)).build();
+        return OperationResult.<Object, HttpResponseAttributes>builder(
+                requester.doRequest(muleEvent, client, resolvedBuilder, true)).build();
     }
 
     private <T> T resolveIfNecessary(T value, Function<MuleEvent, T> function, MuleEvent event)

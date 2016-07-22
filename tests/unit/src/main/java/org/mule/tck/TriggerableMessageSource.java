@@ -35,7 +35,7 @@ public class TriggerableMessageSource implements NonBlockingMessageSource
     {
         this.listener = listener;
     }
-    
+
     @Override
     public String toString()
     {

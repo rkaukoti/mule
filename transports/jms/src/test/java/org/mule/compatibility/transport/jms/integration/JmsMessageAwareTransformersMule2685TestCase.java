@@ -6,9 +6,7 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.compatibility.core.routing.outbound.ExpressionRecipientList;
 import org.mule.compatibility.transport.jms.transformers.AbstractJmsTransformer;
 import org.mule.runtime.api.metadata.DataType;
@@ -16,6 +14,8 @@ import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.transformer.AbstractMessageTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 
@@ -23,11 +23,13 @@ import javax.jms.Message;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
-/** <code>JmsTransformersTestCase</code> Tests the JMS transformer implementations. */
+/**
+ * <code>JmsTransformersTestCase</code> Tests the JMS transformer implementations.
+ */
 public class JmsMessageAwareTransformersMule2685TestCase extends AbstractJmsFunctionalTestCase
 {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -72,7 +74,7 @@ public class JmsMessageAwareTransformersMule2685TestCase extends AbstractJmsFunc
 
         // Check that transformer 1 set message property ok.
         assertEquals("vm://recipient1, vm://recipient1, vm://recipient3",
-                     result1.getOutboundProperty(ExpressionRecipientList.DEFAULT_SELECTOR_PROPERTY));
+                result1.getOutboundProperty(ExpressionRecipientList.DEFAULT_SELECTOR_PROPERTY));
 
         AbstractJmsTransformer trans2 = new SessionEnabledObjectToJMSMessage(session);
         trans2.setMuleContext(muleContext);
@@ -86,11 +88,13 @@ public class JmsMessageAwareTransformersMule2685TestCase extends AbstractJmsFunc
         // Check to see if after the ObjectToJMSMessage transformer these properties
         // are on JMS message
         assertEquals("vm://recipient1, vm://recipient1, vm://recipient3",
-            result2.getStringProperty("recipients"));
+                result2.getStringProperty("recipients"));
 
     }
 
-    /** Test <i>AbstractMessageTransformer</i> which sets Message properties */
+    /**
+     * Test <i>AbstractMessageTransformer</i> which sets Message properties
+     */
     private class SetTestRecipientsTransformer extends AbstractMessageTransformer
     {
 
@@ -106,8 +110,8 @@ public class JmsMessageAwareTransformersMule2685TestCase extends AbstractJmsFunc
             logger.debug("Setting recipients to '" + recipients + "'");
 
             event.setMessage(MuleMessage.builder(event.getMessage())
-                                     .addOutboundProperty(ExpressionRecipientList.DEFAULT_SELECTOR_PROPERTY, recipients)
-                                     .build());
+                                        .addOutboundProperty(ExpressionRecipientList.DEFAULT_SELECTOR_PROPERTY, recipients)
+                                        .build());
             return event.getMessage();
         }
 

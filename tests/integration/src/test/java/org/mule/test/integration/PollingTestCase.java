@@ -6,23 +6,22 @@
  */
 package org.mule.test.integration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.schedule.Scheduler;
 import org.mule.runtime.core.api.schedule.Schedulers;
-import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class PollingTestCase extends FunctionalTestCase
 {
@@ -57,7 +56,7 @@ public class PollingTestCase extends FunctionalTestCase
         synchronized (foo)
         {
             assertTrue(foo.size() > 0);
-            for (String s: foo)
+            for (String s : foo)
             {
                 assertEquals("foo", s);
             }
@@ -65,7 +64,7 @@ public class PollingTestCase extends FunctionalTestCase
         synchronized (bar)
         {
             assertTrue(bar.size() > 0);
-            for (String s: bar)
+            for (String s : bar)
             {
                 assertEquals("bar", s);
             }

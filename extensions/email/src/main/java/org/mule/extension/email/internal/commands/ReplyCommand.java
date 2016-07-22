@@ -83,6 +83,7 @@ public final class ReplyCommand
         headers.putAll(attributes.getHeaders());
         List<String> ccAddresses = replyToAll ? attributes.getCcAddresses() : new ArrayList<>();
         List<EmailAttachment> emailAttachments = mapToEmailAttachments(attributes.getAttachments());
-        sendCommand.send(connection, content, subject, replyTo, from, defaultCharset, ccAddresses, new ArrayList<>(), headers, emailAttachments);
+        sendCommand.send(connection, content, subject, replyTo, from, defaultCharset, ccAddresses, new ArrayList<>(), headers,
+                emailAttachments);
     }
 }

@@ -1,7 +1,7 @@
 <html>
-    <head>
-        <title>Mule</title>
-    </head>
+<head>
+    <title>Mule</title>
+</head>
 <body>
 Internationalisation support for Mule messages and exception messages.
 <p/>
@@ -14,7 +14,7 @@ The class <code>MessageFactory</code> encapsulates the lookup of
 module should provide its own messages, subclasses of <code>MessageFactory</code>
 should be created. It is convention to put the module specific class in
 a subpackage called <code>i18n</code>.
-<p />
+<p/>
 <h3>Subclassing MessageFactory</h3>
 For a mule module <em>foo</em> with base package <code>org.mule.runtime.core.module.foo</code>
 a MessageFactory subclass would typcially look like this:
@@ -45,17 +45,21 @@ Note that the only publicly available methods are those from
 <code>FooMessages</code>. This approach has various advantages:
 <ul>
     <li><code>Message</code> instances are created using meaningful
-    java methods, i.e. client code is less cluttered with message
-    cration details.</li>
+        java methods, i.e. client code is less cluttered with message
+        cration details.
+    </li>
     <li>The method signature ensures that the right number of
-    arguments is passed in to format the message.</li>
+        arguments is passed in to format the message.
+    </li>
     <li>No more constants for message codes needed as there is
-    exactly one occurrence of the constant in the code.</li>
+        exactly one occurrence of the constant in the code.
+    </li>
     <li>By using the right <code>MessageFactory</code> subclass it
-    is ensured that the correct <code>ResourceBundle</code> will be
-    chosen for lookup.
+        is ensured that the correct <code>ResourceBundle</code> will be
+        chosen for lookup.
     <li>Formatting the input to messages can be taken out of the
-    client code by putting it in this class</li>
+        client code by putting it in this class
+    </li>
 </ul>
 </body>
 </html>

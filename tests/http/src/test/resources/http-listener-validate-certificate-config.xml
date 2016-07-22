@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:httpn="http://www.mulesoft.org/schema/mule/httpn"
       xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
@@ -26,7 +26,7 @@
         <test:assert expression="#[message.getAttributes().getClientCertificate() instanceof java.security.cert.Certificate]"/>
         <!-- Only the client certificate contains CN=OLEKSIYS-W3T this way we validate that we are actually publishing the client cert -->
         <test:assert expression="#[message.getAttributes().getClientCertificate().getSubjectDN().getName().contains('CN=OLEKSIYS-W3T')]"/>
-        <echo-component />
+        <echo-component/>
     </flow>
 
 
@@ -41,9 +41,8 @@
 
     <flow name="listenerWithoutTrustStoreFlow">
         <httpn:listener config-ref="listenerConfigWithoutTrustStore" path="/" allowedMethods="POST"/>
-        <echo-component />
+        <echo-component/>
     </flow>
-
 
 
 </mule>

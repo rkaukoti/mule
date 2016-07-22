@@ -6,6 +6,13 @@
  */
 package org.mule.runtime.module.ws.consumer;
 
+import org.apache.cxf.binding.soap.SoapHeader;
+import org.apache.cxf.binding.soap.SoapMessage;
+import org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor;
+import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.Phase;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -14,19 +21,11 @@ import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.api.transformer.TransformerMessagingException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.module.cxf.CxfConstants;
+import org.w3c.dom.Document;
 
 import java.util.Map;
 
 import javax.xml.namespace.QName;
-
-import org.apache.cxf.binding.soap.SoapHeader;
-import org.apache.cxf.binding.soap.SoapMessage;
-import org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor;
-import org.apache.cxf.endpoint.Client;
-import org.apache.cxf.interceptor.Fault;
-import org.apache.cxf.message.Message;
-import org.apache.cxf.phase.Phase;
-import org.w3c.dom.Document;
 
 /**
  * CXF interceptor that adds Soap headers to the SoapMessage based on outbound properties
@@ -63,14 +62,14 @@ public class InputSoapHeadersInterceptor extends AbstractSoapInterceptor
                 try
                 {
                     transformer = muleContext.getRegistry().lookupTransformer(DataType.fromObject(value),
-                                                                              DataType.fromType(Document.class));
+                            DataType.fromType(Document.class));
                 }
                 catch (TransformerException e)
                 {
                     MuleEvent event = (MuleEvent) message.getExchange().get(CxfConstants.MULE_EVENT);
                     throw new Fault(new TransformerMessagingException(
                             CoreMessages.createStaticMessage("Cannot find transformer to convert outbound property %s to XML",
-                                                             outboundProperty), event, transformer, e.getCause()));
+                                    outboundProperty), event, transformer, e.getCause()));
                 }
 
                 try
@@ -88,7 +87,7 @@ public class InputSoapHeadersInterceptor extends AbstractSoapInterceptor
 
                     throw new Fault(new TransformerMessagingException(
                             CoreMessages.createStaticMessage("Outbound property %s contains an invalid XML string",
-                                                             outboundProperty), event, transformer, e.getCause()));
+                                    outboundProperty), event, transformer, e.getCause()));
                 }
             }
         }

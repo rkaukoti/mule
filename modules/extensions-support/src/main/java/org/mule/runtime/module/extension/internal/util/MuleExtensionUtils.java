@@ -6,17 +6,9 @@
  */
 package org.mule.runtime.module.extension.internal.util;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
-import static org.apache.commons.collections.CollectionUtils.isEmpty;
-import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
-import static org.mule.runtime.core.api.transaction.TransactionConfig.ACTION_ALWAYS_JOIN;
-import static org.mule.runtime.core.api.transaction.TransactionConfig.ACTION_JOIN_IF_POSSIBLE;
-import static org.mule.runtime.core.api.transaction.TransactionConfig.ACTION_NOT_SUPPORTED;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.REQUIRED;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.SUPPORTED;
-import static org.springframework.util.ReflectionUtils.setField;
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
+
 import org.mule.metadata.java.api.utils.JavaTypeUtils;
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.core.DefaultMuleEvent;
@@ -57,9 +49,6 @@ import org.mule.runtime.module.extension.internal.model.property.ImplementingMet
 import org.mule.runtime.module.extension.internal.model.property.RequireNameField;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ValueResolver;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableList;
-
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -69,6 +58,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
+
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
+import static org.apache.commons.collections.CollectionUtils.isEmpty;
+import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
+import static org.mule.runtime.core.api.transaction.TransactionConfig.ACTION_ALWAYS_JOIN;
+import static org.mule.runtime.core.api.transaction.TransactionConfig.ACTION_JOIN_IF_POSSIBLE;
+import static org.mule.runtime.core.api.transaction.TransactionConfig.ACTION_NOT_SUPPORTED;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.REQUIRED;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.SUPPORTED;
+import static org.springframework.util.ReflectionUtils.setField;
 
 /**
  * Utilities for handling {@link ExtensionModel extensions}
@@ -112,8 +113,8 @@ public class MuleExtensionUtils
     public static List<ParameterModel> getDynamicParameters(ParameterizedModel model)
     {
         return model.getParameterModels().stream()
-                .filter(parameter -> acceptsExpressions(parameter.getExpressionSupport()))
-                .collect(toList());
+                    .filter(parameter -> acceptsExpressions(parameter.getExpressionSupport()))
+                    .collect(toList());
     }
 
     /**
@@ -181,10 +182,12 @@ public class MuleExtensionUtils
     public static Class<?> getOperationsConnectionType(ExtensionModel extensionModel)
     {
         Set<Class<?>> connectionTypes = extensionModel.getOperationModels().stream()
-                .map(operation -> operation.getModelProperty(ConnectivityModelProperty.class).map(ConnectivityModelProperty::getConnectionType).orElse(null))
-                .filter(type -> type != null)
-                .map(JavaTypeUtils::getType)
-                .collect(toSet());
+                                                      .map(operation -> operation.getModelProperty(ConnectivityModelProperty.class)
+                                                                                 .map(ConnectivityModelProperty::getConnectionType)
+                                                                                 .orElse(null))
+                                                      .filter(type -> type != null)
+                                                      .map(JavaTypeUtils::getType)
+                                                      .collect(toSet());
 
         if (isEmpty(connectionTypes))
         {
@@ -192,9 +195,10 @@ public class MuleExtensionUtils
         }
         else if (connectionTypes.size() > 1)
         {
-            throw new IllegalModelDefinitionException(String.format("Extension '%s' has operation which require connections of different types ([%s]). " +
-                                                                    "Please standarize on one single connection type to ensure that all operations work with any compatible %s",
-                                                                    extensionModel.getName(), Joiner.on(", ").join(connectionTypes), ConnectionProvider.class.getSimpleName()));
+            throw new IllegalModelDefinitionException(
+                    String.format("Extension '%s' has operation which require connections of different types ([%s]). " +
+                                  "Please standarize on one single connection type to ensure that all operations work with any compatible %s",
+                            extensionModel.getName(), Joiner.on(", ").join(connectionTypes), ConnectionProvider.class.getSimpleName()));
         }
         else
         {
@@ -248,8 +252,8 @@ public class MuleExtensionUtils
         }
 
         return interceptorFactories.stream()
-                .map(InterceptorFactory::createInterceptor)
-                .collect(new ImmutableListCollector<>());
+                                   .map(InterceptorFactory::createInterceptor)
+                                   .collect(new ImmutableListCollector<>());
     }
 
     /**
@@ -351,7 +355,9 @@ public class MuleExtensionUtils
      */
     public static Method getImplementingMethod(OperationDeclaration operationDeclaration)
     {
-        return operationDeclaration.getModelProperty(ImplementingMethodModelProperty.class).map(ImplementingMethodModelProperty::getMethod).orElse(null);
+        return operationDeclaration.getModelProperty(ImplementingMethodModelProperty.class)
+                                   .map(ImplementingMethodModelProperty::getMethod)
+                                   .orElse(null);
     }
 
     /**
@@ -365,8 +371,8 @@ public class MuleExtensionUtils
     public static ClassLoader getClassLoader(ExtensionModel extensionModel)
     {
         return extensionModel.getModelProperty(ClassLoaderModelProperty.class)
-                .map(ClassLoaderModelProperty::getClassLoader)
-                .orElseThrow(() -> noClassLoaderException(extensionModel.getName()));
+                             .map(ClassLoaderModelProperty::getClassLoader)
+                             .orElseThrow(() -> noClassLoaderException(extensionModel.getName()));
     }
 
     /**
@@ -387,20 +393,21 @@ public class MuleExtensionUtils
     public static void injectConfigName(EnrichableModel model, Object target, String configName)
     {
         model.getModelProperty(RequireNameField.class).ifPresent(property ->
-                                                                 {
-                                                                     final Field configNameField = property.getConfigNameField();
+        {
+            final Field configNameField = property.getConfigNameField();
 
-                                                                     if (!configNameField.getDeclaringClass().isInstance(target))
-                                                                     {
-                                                                         throw new IllegalConfigurationModelDefinitionException(String.format("field '%s' is annotated with @%s but not defined on an instance of type '%s'",
-                                                                                                                                              configNameField.toString(),
-                                                                                                                                              ConfigName.class.getSimpleName(),
-                                                                                                                                              target.getClass().getName()));
-                                                                     }
+            if (!configNameField.getDeclaringClass().isInstance(target))
+            {
+                throw new IllegalConfigurationModelDefinitionException(
+                        String.format("field '%s' is annotated with @%s but not defined on an instance of type '%s'",
+                                configNameField.toString(),
+                                ConfigName.class.getSimpleName(),
+                                target.getClass().getName()));
+            }
 
-                                                                     configNameField.setAccessible(true);
-                                                                     setField(configNameField, target, configName);
-                                                                 });
+            configNameField.setAccessible(true);
+            setField(configNameField, target, configName);
+        });
     }
 
     /**
@@ -414,12 +421,12 @@ public class MuleExtensionUtils
     {
         switch (action)
         {
-            case ALWAYS_JOIN:
-                return ACTION_ALWAYS_JOIN;
-            case JOIN_IF_POSSIBLE:
-                return ACTION_JOIN_IF_POSSIBLE;
-            case NOT_SUPPORTED:
-                return ACTION_NOT_SUPPORTED;
+        case ALWAYS_JOIN:
+            return ACTION_ALWAYS_JOIN;
+        case JOIN_IF_POSSIBLE:
+            return ACTION_JOIN_IF_POSSIBLE;
+        case NOT_SUPPORTED:
+            return ACTION_NOT_SUPPORTED;
         }
 
         throw new IllegalArgumentException("Unsupported action: " + action.name());
@@ -428,8 +435,8 @@ public class MuleExtensionUtils
     public static boolean isTransactional(OperationModel operationModel)
     {
         return operationModel.getModelProperty(ConnectivityModelProperty.class)
-                .map(ConnectivityModelProperty::supportsTransactions)
-                .orElse(false);
+                             .map(ConnectivityModelProperty::supportsTransactions)
+                             .orElse(false);
     }
 
     /**

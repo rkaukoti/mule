@@ -29,11 +29,11 @@ public interface MuleContextBuilder
     void setWorkManager(WorkManager workManager);
 
     void setWorkListener(WorkListener workListener);
-    
+
     void setNotificationManager(ServerNotificationManager notificationManager);
 
     void setLifecycleManager(LifecycleManager lifecycleManager);
-    
+
     void setMuleConfiguration(MuleConfiguration muleConfiguration);
 
     /**

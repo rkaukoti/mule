@@ -18,7 +18,9 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
  */
 public class TooManySatisfiableMethodsException extends MuleException
 {
-    /** Serial version */
+    /**
+     * Serial version
+     */
     private static final long serialVersionUID = 7856775581858822364L;
 
     public TooManySatisfiableMethodsException(Object component, Object[] types)

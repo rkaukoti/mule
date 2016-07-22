@@ -33,7 +33,6 @@ public final class NestedProcessorValueResolver extends AbstractNestedProcessorV
      *
      * @param event a {@link MuleEvent}
      * @return a {@link NestedProcessor}
-     * @throws MuleException
      */
     @Override
     public NestedProcessor resolve(MuleEvent event) throws MuleException

@@ -73,7 +73,7 @@ public class DefaultLifecycleState implements LifecycleState
     public boolean isPhaseExecuting(String phase)
     {
         String executingPhase = lifecycleManager.getExecutingPhase();
-        if(executingPhase!=null)
+        if (executingPhase != null)
         {
             return executingPhase.equals(phase);
         }

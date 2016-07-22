@@ -31,7 +31,7 @@ public class ServerStartupSplashScreen extends SplashScreen
         {
             header.add(StringUtils.defaultString(MuleManifest.getProductDescription(), notset));
             header.add(CoreMessages.version().getMessage() + " Build: "
-                    + StringUtils.defaultString(MuleManifest.getBuildNumber(), notset));
+                       + StringUtils.defaultString(MuleManifest.getBuildNumber(), notset));
 
             header.add(StringUtils.defaultString(MuleManifest.getVendorName(), notset));
             header.add(StringUtils.defaultString(MuleManifest.getProductMoreInfo(), notset));
@@ -49,13 +49,13 @@ public class ServerStartupSplashScreen extends SplashScreen
 
         // JDK, Encoding, OS, and Host
         header.add("JDK: " + System.getProperty("java.version") + " ("
-            + System.getProperty("java.vm.info") + ")");
+                   + System.getProperty("java.vm.info") + ")");
         header.add("OS encoding: " + System.getProperty("file.encoding")
-                + ", Mule encoding: " + context.getConfiguration().getDefaultEncoding());
+                   + ", Mule encoding: " + context.getConfiguration().getDefaultEncoding());
         String patch = System.getProperty("sun.os.patch.level", null);
         header.add("OS: " + System.getProperty("os.name")
-                + (patch != null && !"unknown".equalsIgnoreCase(patch) ? " - " + patch : "") + " ("
-                + System.getProperty("os.version") + ", " + System.getProperty("os.arch") + ")");
+                   + (patch != null && !"unknown".equalsIgnoreCase(patch) ? " - " + patch : "") + " ("
+                   + System.getProperty("os.version") + ", " + System.getProperty("os.arch") + ")");
         try
         {
             InetAddress host = NetworkUtils.getLocalHost();
@@ -87,7 +87,7 @@ public class ServerStartupSplashScreen extends SplashScreen
         if (agents.size() == 0)
         {
             footer.add(CoreMessages.agentsRunning().getMessage() + " "
-                    + CoreMessages.none().getMessage());
+                       + CoreMessages.none().getMessage());
         }
         else
         {

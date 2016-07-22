@@ -12,7 +12,7 @@ import org.mule.runtime.core.config.i18n.MessageFactory;
 public class BuildersMessages extends MessageFactory
 {
     private static final BuildersMessages factory = new BuildersMessages();
-    
+
     private static final String BUNDLE_PATH = getBundlePath("builders");
 
     public static Message failedToParseConfigResource(String description)
@@ -30,8 +30,8 @@ public class BuildersMessages extends MessageFactory
         return factory.createMessage(BUNDLE_PATH, 3, property);
     }
 
-    public static Message mustSpecifyContainerRefOrClassAttribute(String containerAttrib, 
-        String refAttrib, String config)
+    public static Message mustSpecifyContainerRefOrClassAttribute(String containerAttrib,
+                                                                  String refAttrib, String config)
     {
         return factory.createMessage(BUNDLE_PATH, 4, containerAttrib, refAttrib, config);
     }

@@ -16,7 +16,7 @@ import org.mule.runtime.core.util.StringUtils;
 public class ETagComponent implements Callable
 {
     private static String ETAG_VALUE = "0123456789";
-    
+
     @Override
     public Object onCall(MuleEventContext eventContext) throws Exception
     {

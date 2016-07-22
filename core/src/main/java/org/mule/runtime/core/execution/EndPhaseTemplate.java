@@ -7,8 +7,8 @@
 package org.mule.runtime.core.execution;
 
 /**
- *  Phase were the {@link MessageProcessTemplate} is notified that
- *  the message processing has ended
+ * Phase were the {@link MessageProcessTemplate} is notified that
+ * the message processing has ended
  */
 public interface EndPhaseTemplate extends MessageProcessTemplate
 {

@@ -6,7 +6,6 @@
  */
 package org.mule.compatibility.transport.vm;
 
-import static java.util.Collections.emptyMap;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.compatibility.core.api.transport.NoReceiverForEndpointException;
@@ -29,6 +28,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.activation.DataHandler;
+
+import static java.util.Collections.emptyMap;
 
 /**
  * <code>VMMessageDispatcher</code> is used for providing in memory interaction between components.
@@ -61,7 +62,7 @@ public class VMMessageDispatcher extends AbstractMessageDispatcher
         {
             // queue is full
             throw new DispatchException(VMMessages.queueIsFull(queue.getName(), queue.size()),
-                eventToDispatch, getEndpoint());
+                    eventToDispatch, getEndpoint());
         }
         if (logger.isDebugEnabled())
         {
@@ -84,7 +85,7 @@ public class VMMessageDispatcher extends AbstractMessageDispatcher
         if (receiver == null)
         {
             throw new NoReceiverForEndpointException(VMMessages.noReceiverForEndpoint(connector.getName(),
-                endpoint.getEndpointURI()));
+                    endpoint.getEndpointURI()));
         }
 
         MuleEvent eventToSend = DefaultMuleEvent.copy(event);
@@ -119,7 +120,7 @@ public class VMMessageDispatcher extends AbstractMessageDispatcher
         {
             // use the default queue profile to configure this queue.
             connector.getQueueProfile().configureQueue(endpoint.getMuleContext(),
-                endpoint.getEndpointURI().getAddress(), connector.getQueueManager());
+                    endpoint.getEndpointURI().getAddress(), connector.getQueueManager());
         }
     }
 
@@ -138,11 +139,11 @@ public class VMMessageDispatcher extends AbstractMessageDispatcher
         message.getOutboundAttachmentNames().stream().forEach(key -> outboundAttachments.put(key, message.getOutboundAttachment(key)));
 
         return MuleMessage.builder(message)
-                .inboundProperties(outboundProperties)
-                .inboundAttachments(outboundAttachments)
-                .outboundProperties(emptyMap())
-                .outboundAttachments(emptyMap())
-                .build();
+                          .inboundProperties(outboundProperties)
+                          .inboundAttachments(outboundAttachments)
+                          .outboundProperties(emptyMap())
+                          .outboundAttachments(emptyMap())
+                          .build();
     }
 
 }

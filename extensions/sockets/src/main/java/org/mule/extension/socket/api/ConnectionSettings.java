@@ -6,12 +6,13 @@
  */
 package org.mule.extension.socket.api;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.util.StringUtils.EMPTY;
-import static org.mule.runtime.core.util.StringUtils.isBlank;
 import org.mule.runtime.extension.api.annotation.Parameter;
 
 import java.net.InetSocketAddress;
+
+import static java.lang.String.format;
+import static org.mule.runtime.core.util.StringUtils.EMPTY;
+import static org.mule.runtime.core.util.StringUtils.isBlank;
 
 /**
  * Groups host and port fields.
@@ -25,6 +26,16 @@ public class ConnectionSettings
 {
 
     private static final int PORT_CHOSEN_BY_SYSTEM_MASK = 0;
+    /**
+     * Connection's port number
+     */
+    @Parameter
+    private Integer port;
+    /**
+     * Connection's host name
+     */
+    @Parameter
+    private String host;
 
     public ConnectionSettings()
     {
@@ -35,18 +46,6 @@ public class ConnectionSettings
         this.port = port;
         this.host = host;
     }
-
-    /**
-     * Connection's port number
-     */
-    @Parameter
-    private Integer port;
-
-    /**
-     * Connection's host name
-     */
-    @Parameter
-    private String host;
 
     public Integer getPort()
     {

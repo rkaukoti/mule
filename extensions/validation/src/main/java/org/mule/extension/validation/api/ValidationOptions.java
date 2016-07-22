@@ -6,10 +6,11 @@
  */
 package org.mule.extension.validation.api;
 
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.LITERAL;
 import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.Parameter;
 import org.mule.runtime.extension.api.annotation.param.Optional;
+
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.LITERAL;
 
 /**
  * A class which groups parameters which configure a

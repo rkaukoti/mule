@@ -6,16 +6,14 @@
  */
 package org.mule.compatibility.transport.tcp;
 
+import org.junit.Test;
+import org.mule.compatibility.core.api.endpoint.EndpointURI;
+import org.mule.compatibility.core.endpoint.MuleEndpointURI;
+import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-
-import org.mule.compatibility.core.api.endpoint.EndpointURI;
-import org.mule.compatibility.core.endpoint.MuleEndpointURI;
-import org.mule.compatibility.transport.tcp.TcpConnector;
-import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
-
-import org.junit.Test;
 
 public class TcpEndpointTestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -54,9 +52,9 @@ public class TcpEndpointTestCase extends AbstractMuleContextEndpointTestCase
     public void testQueryParams2() throws Exception
     {
         EndpointURI url = new MuleEndpointURI(
-            "tcp://localhost:7856?param=1&endpointName=tcpProvider&blankParam=", muleContext);
+                "tcp://localhost:7856?param=1&endpointName=tcpProvider&blankParam=", muleContext);
         url.initialise();
-        
+
         assertEquals(TcpConnector.TCP, url.getScheme());
         assertEquals("tcp://localhost:7856", url.getAddress());
         assertNotNull(url.getEndpointName());

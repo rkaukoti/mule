@@ -7,14 +7,8 @@
 
 package org.mule.runtime.module.db.integration.select;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.getEarthRecord;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.getMarsRecord;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.getVenusRecord;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
@@ -23,8 +17,14 @@ import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.getEarthRecord;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.getMarsRecord;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.getVenusRecord;
 
 public class SelectStreamingChunkTestCase extends AbstractDbIntegrationTestCase
 {

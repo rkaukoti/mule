@@ -6,13 +6,12 @@
  */
 package org.mule.compatibility.transport.http;
 
+import org.apache.commons.httpclient.methods.RequestEntity;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.message.OutputHandler;
 
 import java.io.IOException;
 import java.io.OutputStream;
-
-import org.apache.commons.httpclient.methods.RequestEntity;
 
 public class StreamPayloadRequestEntity implements RequestEntity
 {

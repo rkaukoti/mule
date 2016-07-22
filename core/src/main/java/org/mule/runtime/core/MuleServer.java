@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core;
 
-import static java.util.Collections.emptyMap;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
@@ -19,7 +17,6 @@ import org.mule.runtime.core.api.context.MuleContextFactory;
 import org.mule.runtime.core.config.ExceptionHelper;
 import org.mule.runtime.core.config.PropertiesMuleConfigurationFactory;
 import org.mule.runtime.core.config.StartupContext;
-import org.mule.runtime.core.config.bootstrap.ArtifactType;
 import org.mule.runtime.core.config.builders.SimpleConfigurationBuilder;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.config.i18n.Message;
@@ -32,6 +29,8 @@ import org.mule.runtime.core.util.MuleUrlStreamHandlerFactory;
 import org.mule.runtime.core.util.PropertiesUtils;
 import org.mule.runtime.core.util.StringMessageUtils;
 import org.mule.runtime.core.util.SystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,8 +39,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.util.Collections.emptyMap;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 
 /**
  * <code>MuleServer</code> is a simple application that represents a local Mule
@@ -50,68 +49,53 @@ import org.slf4j.LoggerFactory;
 public class MuleServer implements Runnable
 {
     public static final String CLI_OPTIONS[][] = {
-        {"builder", "true", "Configuration Builder Type"},
-        {"config", "true", "Configuration File"},
-        {"appconfig", "true", "Application configuration File"},
-        {"idle", "false", "Whether to run in idle (unconfigured) mode"},
-        {"main", "true", "Main Class"},
-        {"mode", "true", "Run Mode"},
-        {"props", "true", "Startup Properties"},
-        {"production", "false", "Production Mode"},
-        {"debug", "false", "Configure Mule for JPDA remote debugging."}
+            {"builder", "true", "Configuration Builder Type"},
+            {"config", "true", "Configuration File"},
+            {"appconfig", "true", "Application configuration File"},
+            {"idle", "false", "Whether to run in idle (unconfigured) mode"},
+            {"main", "true", "Main Class"},
+            {"mode", "true", "Run Mode"},
+            {"props", "true", "Startup Properties"},
+            {"production", "false", "Production Mode"},
+            {"debug", "false", "Configure Mule for JPDA remote debugging."}
     };
 
     /**
      * Don't use a class object so the core doesn't depend on mule-module-spring-config.
      */
     public static final String CLASSNAME_DEFAULT_CONFIG_BUILDER = "org.mule.runtime.core.config.builders.AutoConfigurationBuilder";
-
+    public static final String DEFAULT_CONFIGURATION = "mule-config.xml";
+    public static final String DEFAULT_APP_CONFIGURATION = "mule-app.properties";
     /**
      * This builder sets up the configuration for an idle Mule node - a node that
      * doesn't do anything initially but is fed configuration during runtime
      */
-    protected static final String CLASSNAME_DEFAULT_IDLE_CONFIG_BUILDER = "org.mule.runtime.core.config.builders.MuleIdleConfigurationBuilder";
-
+    protected static final String CLASSNAME_DEFAULT_IDLE_CONFIG_BUILDER =
+            "org.mule.runtime.core.config.builders.MuleIdleConfigurationBuilder";
     /**
      * Required to support the '-config spring' shortcut. Don't use a class object so
      * the core doesn't depend on mule-module-spring.
      * for Mule 2.x
      */
     protected static final String CLASSNAME_SPRING_CONFIG_BUILDER = "org.mule.runtime.config.spring.SpringXmlConfigurationBuilder";
-
     /**
      * logger used by this class
      */
     private static final Logger logger = LoggerFactory.getLogger(MuleServer.class);
-
-    public static final String DEFAULT_CONFIGURATION = "mule-config.xml";
-
-    public static final String DEFAULT_APP_CONFIGURATION = "mule-app.properties";
-
-    /**
-     * one or more configuration urls or filenames separated by commas
-     */
-    private String configurationResources = null;
-
-    private String appConfigurationResource = null;
-
     /**
      * A FQN of the #configBuilder class, required in case MuleServer is
      * reinitialised.
      */
     private static String configBuilderClassName = null;
-
     /**
      * A properties file to be read at startup. This can be useful for setting
      * properties which depend on the run-time environment (dev, test, production).
      */
     private static String startupPropertiesFile = null;
-
     /**
      * The Runtime shutdown thread used to dispose this server
      */
     private static MuleShutdownHook muleShutdownHook;
-
     /**
      * The MuleContext should contain anything which does not belong in the Registry.
      * There is one MuleContext per Mule instance. Assuming it has been created, a
@@ -119,6 +103,33 @@ public class MuleServer implements Runnable
      * MuleServer.getMuleContext()
      */
     protected MuleContext muleContext = null;
+    /**
+     * one or more configuration urls or filenames separated by commas
+     */
+    private String configurationResources = null;
+    private String appConfigurationResource = null;
+
+    public MuleServer()
+    {
+        init(new String[] {});
+    }
+
+    public MuleServer(String configResources)
+    {
+        // setConfigurationResources(configResources);
+        init(new String[] {"-config", configResources});
+    }
+
+    /**
+     * Configure the server with command-line arguments.
+     *
+     * @param args Command line args passed in from the {@link #main(String[])} method
+     * @throws IllegalArgumentException if an argument is passed in that is not recognised by the Mule Server
+     */
+    public MuleServer(String[] args) throws IllegalArgumentException
+    {
+        init(args);
+    }
 
     /**
      * Application entry point.
@@ -132,41 +143,77 @@ public class MuleServer implements Runnable
         server.start(false, true);
     }
 
-    public MuleServer()
+    /**
+     * Returns the class name of the configuration builder used to create this
+     * MuleServer.
+     *
+     * @return FQN of the current config builder
+     */
+    public static String getConfigBuilderClassName()
     {
-        init(new String[]{});
-    }
-
-    public MuleServer(String configResources)
-    {
-        // setConfigurationResources(configResources);
-        init(new String[]{"-config", configResources});
+        if (configBuilderClassName != null)
+        {
+            return configBuilderClassName;
+        }
+        else
+        {
+            return CLASSNAME_DEFAULT_CONFIG_BUILDER;
+        }
     }
 
     /**
-     * Configure the server with command-line arguments.
-     * @param args Command line args passed in from the {@link #main(String[])} method
-     * @throws IllegalArgumentException if an argument is passed in that is not recognised by the Mule Server
+     * Sets the configuration builder to use for this server. Note that if a builder
+     * is not set and the server's start method is called the default is an instance
+     * of <code>SpringXmlConfigurationBuilder</code>.
+     *
+     * @param builderClassName the configuration builder FQN to use
+     * @throws ClassNotFoundException if the class with the given name can not be loaded
      */
-    public MuleServer(String[] args) throws IllegalArgumentException
+    public static void setConfigBuilderClassName(String builderClassName) throws ClassNotFoundException
     {
-        init(args);
+        if (builderClassName != null)
+        {
+            Class<?> cls = ClassUtils.loadClass(builderClassName, MuleServer.class);
+            if (ConfigurationBuilder.class.isAssignableFrom(cls))
+            {
+                MuleServer.configBuilderClassName = builderClassName;
+            }
+            else
+            {
+                throw new IllegalArgumentException("Not a usable ConfigurationBuilder class: "
+                                                   + builderClassName);
+            }
+        }
+        else
+        {
+            MuleServer.configBuilderClassName = null;
+        }
+    }
+
+    public static String getStartupPropertiesFile()
+    {
+        return startupPropertiesFile;
+    }
+
+    public static void setStartupPropertiesFile(String startupPropertiesFile)
+    {
+        MuleServer.startupPropertiesFile = startupPropertiesFile;
     }
 
     protected void init(String[] args) throws IllegalArgumentException
     {
-    	// validate the JDK version/vendor
-    	try
-    	{
-    		JdkVersionUtils.validateJdk();
-    	}
-    	catch (RuntimeException e)
-    	{
-    		System.out.println(CoreMessages.invalidJdk(SystemUtils.JAVA_VERSION, 
-    				JdkVersionUtils.getSupportedJdks()));
+        // validate the JDK version/vendor
+        try
+        {
+            JdkVersionUtils.validateJdk();
+        }
+        catch (RuntimeException e)
+        {
+            System.out.println(CoreMessages.invalidJdk(SystemUtils.JAVA_VERSION,
+                    JdkVersionUtils.getSupportedJdks()));
             System.exit(-1);
-    	}
-    	
+        }
+
         Map<String, Object> commandlineOptions;
 
         try
@@ -251,10 +298,9 @@ public class MuleServer implements Runnable
     /**
      * Start the mule server
      *
-     * @param ownThread determines if the server will run in its own daemon thread or
-     *                  the current calling thread
-     * @param registerShutdownHook whether to register the default Mule Server shutdown hock.  this will shut down mule cleanly if
-     * the JVM is shutdown.  The only reason not to register this hook is to override it with a custom version
+     * @param ownThread            determines if the server will run in its own daemon thread or the current calling thread
+     * @param registerShutdownHook whether to register the default Mule Server shutdown hock.  this will shut down mule cleanly if the JVM
+     *                             is shutdown.  The only reason not to register this hook is to override it with a custom version
      */
     public void start(boolean ownThread, boolean registerShutdownHook)
     {
@@ -290,54 +336,6 @@ public class MuleServer implements Runnable
         catch (Throwable e)
         {
             shutdown(e);
-        }
-    }
-
-    /**
-     * Sets the configuration builder to use for this server. Note that if a builder
-     * is not set and the server's start method is called the default is an instance
-     * of <code>SpringXmlConfigurationBuilder</code>.
-     *
-     * @param builderClassName the configuration builder FQN to use
-     * @throws ClassNotFoundException if the class with the given name can not be
-     *                                loaded
-     */
-    public static void setConfigBuilderClassName(String builderClassName) throws ClassNotFoundException
-    {
-        if (builderClassName != null)
-        {
-            Class<?> cls = ClassUtils.loadClass(builderClassName, MuleServer.class);
-            if (ConfigurationBuilder.class.isAssignableFrom(cls))
-            {
-                MuleServer.configBuilderClassName = builderClassName;
-            }
-            else
-            {
-                throw new IllegalArgumentException("Not a usable ConfigurationBuilder class: "
-                        + builderClassName);
-            }
-        }
-        else
-        {
-            MuleServer.configBuilderClassName = null;
-        }
-    }
-
-    /**
-     * Returns the class name of the configuration builder used to create this
-     * MuleServer.
-     *
-     * @return FQN of the current config builder
-     */
-    public static String getConfigBuilderClassName()
-    {
-        if (configBuilderClassName != null)
-        {
-            return configBuilderClassName;
-        }
-        else
-        {
-            return CLASSNAME_DEFAULT_CONFIG_BUILDER;
         }
     }
 
@@ -379,7 +377,7 @@ public class MuleServer implements Runnable
         try
         {
             return (ConfigurationBuilder) ClassUtils.instanciateClass(getConfigBuilderClassName(),
-                                                                      new Object[]{ configurationResources , emptyMap(), APP}, MuleServer.class);
+                    new Object[] {configurationResources, emptyMap(), APP}, MuleServer.class);
         }
         catch (Exception e)
         {
@@ -473,6 +471,10 @@ public class MuleServer implements Runnable
         return logger;
     }
 
+    // /////////////////////////////////////////////////////////////////
+    // Getters and setters
+    // /////////////////////////////////////////////////////////////////
+
     public void registerShutdownHook()
     {
         if (muleShutdownHook == null)
@@ -494,10 +496,6 @@ public class MuleServer implements Runnable
         }
     }
 
-    // /////////////////////////////////////////////////////////////////
-    // Getters and setters
-    // /////////////////////////////////////////////////////////////////
-
     /**
      * Getter for property messengerURL.
      *
@@ -516,16 +514,6 @@ public class MuleServer implements Runnable
     public void setConfigurationResources(String configurationResources)
     {
         this.configurationResources = configurationResources;
-    }
-
-    public static String getStartupPropertiesFile()
-    {
-        return startupPropertiesFile;
-    }
-
-    public static void setStartupPropertiesFile(String startupPropertiesFile)
-    {
-        MuleServer.startupPropertiesFile = startupPropertiesFile;
     }
 
     public MuleContext getMuleContext()

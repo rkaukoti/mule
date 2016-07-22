@@ -6,25 +6,25 @@
  */
 package org.mule.test.xml.functional;
 
-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 
-import org.junit.Test;
+import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 public class SimpleXmlTransformerFunctionalTestCase extends FunctionalTestCase
 {
     public static final String SERIALIZED = "<org.mule.test.xml.functional.SimpleXmlTransformerFunctionalTestCase_-Parent>\n" +
-            "  <child>\n" +
-            "    <name>theChild</name>\n" +
-            "  </child>\n" +
-            "</org.mule.test.xml.functional.SimpleXmlTransformerFunctionalTestCase_-Parent>";
+                                            "  <child>\n" +
+                                            "    <name>theChild</name>\n" +
+                                            "  </child>\n" +
+                                            "</org.mule.test.xml.functional.SimpleXmlTransformerFunctionalTestCase_-Parent>";
 
 
     @Override

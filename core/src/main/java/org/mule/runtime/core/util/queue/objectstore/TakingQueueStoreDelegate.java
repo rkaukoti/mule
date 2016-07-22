@@ -25,5 +25,5 @@ public interface TakingQueueStoreDelegate extends QueueStoreDelegate
      */
     Serializable takeFromObjectStore(long timeout) throws InterruptedException;
 
-    void writeToObjectStore(Serializable data) throws InterruptedException,ObjectStoreException;
+    void writeToObjectStore(Serializable data) throws InterruptedException, ObjectStoreException;
 }

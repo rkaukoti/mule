@@ -6,8 +6,6 @@
  */
 package org.mule.test.heisenberg.extension;
 
-import static java.util.stream.Collectors.toList;
-
 import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleEvent;
@@ -45,6 +43,8 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import static java.util.stream.Collectors.toList;
+
 public class HeisenbergOperations
 {
 
@@ -74,7 +74,8 @@ public class HeisenbergOperations
     }
 
     @DataTypeParameters
-    public OperationResult<String, IntegerAttributes> getEnemy(@UseConfig HeisenbergExtension config, @Optional(defaultValue = "0") int index)
+    public OperationResult<String, IntegerAttributes> getEnemy(@UseConfig HeisenbergExtension config,
+                                                               @Optional(defaultValue = "0") int index)
     {
         Charset lastSupportedEncoding = Charset.availableCharsets().values().stream().reduce((first, last) -> last).get();
         org.mule.runtime.api.metadata.DataType dt = DataType.builder()
@@ -83,11 +84,11 @@ public class HeisenbergOperations
                                                             .charset(lastSupportedEncoding.toString())
                                                             .build();
 
-        return OperationResult.<String, IntegerAttributes> builder()
-                              .output(config.getEnemies().get(index))
-                              .mediaType(dt.getMediaType())
-                              .attributes(new IntegerAttributes(index))
-                              .build();
+        return OperationResult.<String, IntegerAttributes>builder()
+                .output(config.getEnemies().get(index))
+                .mediaType(dt.getMediaType())
+                .attributes(new IntegerAttributes(index))
+                .build();
     }
 
     public String kill(@Optional(defaultValue = "#[payload]") String victim, String goodbyeMessage) throws Exception
@@ -193,7 +194,8 @@ public class HeisenbergOperations
         return connection.getSaulPhoneNumber();
     }
 
-    public String literalEcho(@DisplayName(OPERATION_PARAMETER_OVERRIDED_DISPLAY_NAME) @Expression(ExpressionSupport.LITERAL) String literalExpression)
+    public String literalEcho(
+            @DisplayName(OPERATION_PARAMETER_OVERRIDED_DISPLAY_NAME) @Expression(ExpressionSupport.LITERAL) String literalExpression)
     {
         return literalExpression;
     }

@@ -10,6 +10,8 @@ import org.mule.runtime.core.api.config.ThreadingProfile;
 import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.core.util.concurrent.NamedThreadFactory;
 import org.mule.runtime.core.util.concurrent.WaitPolicy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -17,9 +19,6 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class DefaultThreadPoolFactory extends ThreadPoolFactory
 {
@@ -59,22 +58,22 @@ public class DefaultThreadPoolFactory extends ThreadPoolFactory
         {
             switch (tp.getPoolExhaustedAction())
             {
-                case ThreadingProfile.WHEN_EXHAUSTED_DISCARD_OLDEST :
-                    pool.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardOldestPolicy());
-                    break;
-                case ThreadingProfile.WHEN_EXHAUSTED_RUN :
-                    pool.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-                    break;
-                case ThreadingProfile.WHEN_EXHAUSTED_ABORT :
-                    pool.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
-                    break;
-                case ThreadingProfile.WHEN_EXHAUSTED_DISCARD :
-                    pool.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardPolicy());
-                    break;
-                default :
-                    // WHEN_EXHAUSTED_WAIT
-                    pool.setRejectedExecutionHandler(new WaitPolicy(tp.getThreadWaitTimeout(), TimeUnit.MILLISECONDS));
-                    break;
+            case ThreadingProfile.WHEN_EXHAUSTED_DISCARD_OLDEST:
+                pool.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardOldestPolicy());
+                break;
+            case ThreadingProfile.WHEN_EXHAUSTED_RUN:
+                pool.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+                break;
+            case ThreadingProfile.WHEN_EXHAUSTED_ABORT:
+                pool.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
+                break;
+            case ThreadingProfile.WHEN_EXHAUSTED_DISCARD:
+                pool.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardPolicy());
+                break;
+            default:
+                // WHEN_EXHAUSTED_WAIT
+                pool.setRejectedExecutionHandler(new WaitPolicy(tp.getThreadWaitTimeout(), TimeUnit.MILLISECONDS));
+                break;
             }
         }
     }
@@ -114,8 +113,8 @@ public class DefaultThreadPoolFactory extends ThreadPoolFactory
     protected ThreadPoolExecutor internalCreatePool(String name, ThreadingProfile tp, BlockingQueue buffer)
     {
         return new ThreadPoolExecutor(Math.min(tp.getMaxThreadsIdle(), tp.getMaxThreadsActive()),
-                                      tp.getMaxThreadsActive(), tp.getThreadTTL(),
-                                      TimeUnit.MILLISECONDS, buffer);
+                tp.getMaxThreadsActive(), tp.getThreadTTL(),
+                TimeUnit.MILLISECONDS, buffer);
     }
 
     protected ScheduledThreadPoolExecutor internalCreateScheduledPool(ThreadingProfile tp)

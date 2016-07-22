@@ -30,7 +30,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * <code>AbstractRecipientList</code> is used to dispatch a single event to multiple recipients over the same transport.
  * The recipient targets can be configured statically or can be obtained from the message payload.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -69,7 +69,7 @@ public abstract class AbstractRecipientList extends FilteringOutboundRouter
                 endpoint = getRecipientEndpoint(request, recipient);
 
                 boolean sync =
-                    (this.synchronous == null ? endpoint.getExchangePattern().hasResponse() : this.synchronous.booleanValue());
+                        (this.synchronous == null ? endpoint.getExchangePattern().hasResponse() : this.synchronous.booleanValue());
 
                 if (sync)
                 {

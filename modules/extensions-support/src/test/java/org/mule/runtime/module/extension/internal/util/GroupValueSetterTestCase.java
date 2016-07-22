@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.util;
 
-import static java.util.Arrays.asList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getField;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.module.extension.internal.introspection.ParameterGroup;
 import org.mule.runtime.module.extension.internal.model.property.ParameterGroupModelProperty;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSetResult;
@@ -23,11 +22,12 @@ import org.mule.test.heisenberg.extension.model.LifetimeInfo;
 
 import java.util.Date;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getField;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)

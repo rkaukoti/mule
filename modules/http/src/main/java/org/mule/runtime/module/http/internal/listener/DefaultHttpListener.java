@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.module.http.internal.listener;
 
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.BAD_REQUEST;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR;
-
 import org.mule.runtime.core.OptimizedRequestContext;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleContext;
@@ -36,20 +33,20 @@ import org.mule.runtime.module.http.internal.listener.async.ResponseStatusCallba
 import org.mule.runtime.module.http.internal.listener.matcher.AcceptsAllMethodsRequestMatcher;
 import org.mule.runtime.module.http.internal.listener.matcher.ListenerRequestMatcher;
 import org.mule.runtime.module.http.internal.listener.matcher.MethodRequestMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.BAD_REQUEST;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR;
 
 public class DefaultHttpListener implements HttpListener, Initialisable, MuleContextAware, FlowConstructAware
 {
 
-    private static final Logger logger = LoggerFactory.getLogger(DefaultHttpListener.class);
-
     public static final String SERVER_PROBLEM = "Server encountered a problem";
-
+    private static final Logger logger = LoggerFactory.getLogger(DefaultHttpListener.class);
     private String path;
     private String allowedMethods;
     private Boolean parseRequest;
@@ -70,21 +67,6 @@ public class DefaultHttpListener implements HttpListener, Initialisable, MuleCon
     public void setListener(final MessageProcessor messageProcessor)
     {
         this.messageProcessor = messageProcessor;
-    }
-
-    public void setPath(final String path)
-    {
-        this.path = path;
-    }
-
-    public void setAllowedMethods(final String allowedMethods)
-    {
-        this.allowedMethods = allowedMethods;
-    }
-
-    public void setConfig(DefaultHttpListenerConfig config)
-    {
-        this.config = config;
     }
 
     public void setResponseBuilder(HttpResponseBuilder responseBuilder)
@@ -113,6 +95,11 @@ public class DefaultHttpListener implements HttpListener, Initialisable, MuleCon
         return config;
     }
 
+    public void setConfig(DefaultHttpListenerConfig config)
+    {
+        this.config = config;
+    }
+
     @Override
     public synchronized void start() throws MuleException
     {
@@ -128,8 +115,12 @@ public class DefaultHttpListener implements HttpListener, Initialisable, MuleCon
             {
                 try
                 {
-                    final HttpMessageProcessorTemplate httpMessageProcessorTemplate = new HttpMessageProcessorTemplate(createEvent(requestContext), messageProcessor, responseCallback, responseBuilder, errorResponseBuilder);
-                    final HttpMessageProcessContext messageProcessContext = new HttpMessageProcessContext(DefaultHttpListener.this, flowConstruct, config.getWorkManager(), muleContext.getExecutionClassLoader());
+                    final HttpMessageProcessorTemplate httpMessageProcessorTemplate =
+                            new HttpMessageProcessorTemplate(createEvent(requestContext), messageProcessor, responseCallback,
+                                    responseBuilder, errorResponseBuilder);
+                    final HttpMessageProcessContext messageProcessContext =
+                            new HttpMessageProcessContext(DefaultHttpListener.this, flowConstruct, config.getWorkManager(),
+                                    muleContext.getExecutionClassLoader());
                     messageProcessingManager.processMessage(httpMessageProcessorTemplate, messageProcessContext);
                 }
                 catch (HttpRequestParsingException | IllegalArgumentException e)
@@ -151,10 +142,10 @@ public class DefaultHttpListener implements HttpListener, Initialisable, MuleCon
             private void sendErrorResponse(final HttpStatus status, String message, HttpResponseReadyCallback responseCallback)
             {
                 responseCallback.responseReady(new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder()
-                                                       .setStatusCode(status.getStatusCode())
-                                                       .setReasonPhrase(status.getReasonPhrase())
-                                                       .setEntity(new ByteArrayHttpEntity(message.getBytes()))
-                                                       .build(), new ResponseStatusCallback()
+                        .setStatusCode(status.getStatusCode())
+                        .setReasonPhrase(status.getReasonPhrase())
+                        .setEntity(new ByteArrayHttpEntity(message.getBytes()))
+                        .build(), new ResponseStatusCallback()
                 {
                     @Override
                     public void responseSendFailure(Throwable exception)
@@ -214,7 +205,8 @@ public class DefaultHttpListener implements HttpListener, Initialisable, MuleCon
         try
         {
             messageProcessingManager = DefaultHttpListener.this.muleContext.getRegistry().lookupObject(MessageProcessingManager.class);
-            requestHandlerManager = this.config.addRequestHandler(new ListenerRequestMatcher(methodRequestMatcher, path), getRequestHandler());
+            requestHandlerManager =
+                    this.config.addRequestHandler(new ListenerRequestMatcher(methodRequestMatcher, path), getRequestHandler());
         }
         catch (Exception e)
         {
@@ -233,7 +225,8 @@ public class DefaultHttpListener implements HttpListener, Initialisable, MuleCon
                 String uriParamName = pathPart.substring(1, pathPart.length() - 1);
                 if (uriParamNames.contains(uriParamName))
                 {
-                    throw new InitialisationException(CoreMessages.createStaticMessage(String.format("Http Listener with path %s contains duplicated uri param names", this.path)), this);
+                    throw new InitialisationException(CoreMessages.createStaticMessage(
+                            String.format("Http Listener with path %s contains duplicated uri param names", this.path)), this);
                 }
                 uriParamNames.add(uriParamName);
             }
@@ -241,7 +234,9 @@ public class DefaultHttpListener implements HttpListener, Initialisable, MuleCon
             {
                 if (pathPart.contains("*") && pathPart.length() > 1)
                 {
-                    throw new InitialisationException(CoreMessages.createStaticMessage(String.format("Http Listener with path %s contains an invalid use of a wildcard. Wildcards can only be used at the end of the path (i.e.: /path/*) or between / characters (.i.e.: /path/*/anotherPath))", this.path)), this);
+                    throw new InitialisationException(CoreMessages.createStaticMessage(String.format(
+                            "Http Listener with path %s contains an invalid use of a wildcard. Wildcards can only be used at the end of the path (i.e.: /path/*) or between / characters (.i.e.: /path/*/anotherPath))",
+                            this.path)), this);
                 }
             }
         }
@@ -290,9 +285,19 @@ public class DefaultHttpListener implements HttpListener, Initialisable, MuleCon
         return path;
     }
 
+    public void setPath(final String path)
+    {
+        this.path = path;
+    }
+
     @Override
     public String[] getAllowedMethods()
     {
         return parsedAllowedMethods;
+    }
+
+    public void setAllowedMethods(final String allowedMethods)
+    {
+        this.allowedMethods = allowedMethods;
     }
 }

@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.core.el.context;
 
-import org.mule.runtime.core.config.MuleManifest;
-
-import java.net.UnknownHostException;
-
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.mule.runtime.core.config.MuleManifest;
+
+import java.net.UnknownHostException;
 
 public class MuleInstanceContextTestCase extends AbstractELTestCase
 {

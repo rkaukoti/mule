@@ -56,8 +56,8 @@ import org.mule.runtime.core.work.SerialWorkManager;
  */
 public class Flow extends AbstractPipeline implements MessageProcessor, StageNameSourceProvider, DynamicPipeline
 {
-    private int stageCount = 0;
     private final StageNameSource sequentialStageNameSource;
+    private int stageCount = 0;
     private DynamicPipelineMessageProcessor dynamicPipelineMessageProcessor;
     private WorkManager workManager;
 
@@ -108,7 +108,8 @@ public class Flow extends AbstractPipeline implements MessageProcessor, StageNam
         final MuleEvent newEvent = createMuleEventForCurrentFlow(event, event.getReplyToDestination(), event.getReplyToHandler());
         try
         {
-            ExecutionTemplate<MuleEvent> executionTemplate = ErrorHandlingExecutionTemplate.createErrorHandlingExecutionTemplate(muleContext, getExceptionListener());
+            ExecutionTemplate<MuleEvent> executionTemplate =
+                    ErrorHandlingExecutionTemplate.createErrorHandlingExecutionTemplate(muleContext, getExceptionListener());
             MuleEvent result = executionTemplate.execute(new ExecutionCallback<MuleEvent>()
             {
 
@@ -128,7 +129,7 @@ public class Flow extends AbstractPipeline implements MessageProcessor, StageNam
         catch (Exception e)
         {
             resetRequestContextEvent(event);
-            throw new DefaultMuleException(CoreMessages.createStaticMessage("Flow execution exception"),e);
+            throw new DefaultMuleException(CoreMessages.createStaticMessage("Flow execution exception"), e);
         }
     }
 
@@ -178,7 +179,7 @@ public class Flow extends AbstractPipeline implements MessageProcessor, StageNam
         {
             // Create new event with original FlowConstruct, ReplyToHandler and synchronous
             result = new DefaultMuleEvent(result, original.getFlowConstruct(), original.getReplyToHandler(),
-                                        original.getReplyToDestination(), original.isSynchronous());
+                    original.getReplyToDestination(), original.isSynchronous());
         }
         resetRequestContextEvent(result);
         return result;
@@ -211,6 +212,7 @@ public class Flow extends AbstractPipeline implements MessageProcessor, StageNam
 
     /**
      * {@inheritDoc}
+     *
      * @return a {@link DefaultFlowProcessingStrategy}
      */
     @Override
@@ -232,7 +234,7 @@ public class Flow extends AbstractPipeline implements MessageProcessor, StageNam
             && ((AsynchronousProcessingStrategy) processingStrategy).getMaxThreads() != null)
         {
             statistics = new FlowConstructStatistics(getConstructType(), name,
-                ((AsynchronousProcessingStrategy) processingStrategy).getMaxThreads());
+                    ((AsynchronousProcessingStrategy) processingStrategy).getMaxThreads());
         }
         else
         {
@@ -246,14 +248,14 @@ public class Flow extends AbstractPipeline implements MessageProcessor, StageNam
     protected void configureMessageProcessors(MessageProcessorChainBuilder builder) throws MuleException
     {
         getProcessingStrategy().configureProcessors(getMessageProcessors(),
-            new StageNameSource()
-            {
-                @Override
-                public String getName()
+                new StageNameSource()
                 {
-                    return String.format("%s.stage%s", Flow.this.getName(), ++stageCount);
-                }
-            }, builder, muleContext);
+                    @Override
+                    public String getName()
+                    {
+                        return String.format("%s.stage%s", Flow.this.getName(), ++stageCount);
+                    }
+                }, builder, muleContext);
     }
 
     /**

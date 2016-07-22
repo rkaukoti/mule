@@ -6,10 +6,8 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
+import org.junit.ClassRule;
+import org.junit.Test;
 import org.mule.compatibility.transport.http.HttpRequest;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MuleMessage;
@@ -17,8 +15,9 @@ import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.util.concurrent.Latch;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.ClassRule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 public class HttpOutboundThrowExceptionTestCase extends AbstractMockHttpServerTestCase
 {
@@ -52,7 +51,8 @@ public class HttpOutboundThrowExceptionTestCase extends AbstractMockHttpServerTe
     public void errorStatusPropagation() throws Exception
     {
         MuleClient client = muleContext.getClient();
-        MuleMessage result = client.send("errorPropagationEndpoint", MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse("text/plain;charset=UTF-8")).build());
+        MuleMessage result = client.send("errorPropagationEndpoint",
+                MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse("text/plain;charset=UTF-8")).build());
         assertThat((String) result.getInboundProperty("http.status"), is("400"));
     }
 
@@ -60,7 +60,8 @@ public class HttpOutboundThrowExceptionTestCase extends AbstractMockHttpServerTe
     public void errorStatusThrowException() throws Exception
     {
         MuleClient client = muleContext.getClient();
-        MuleMessage result = client.send("exceptionOnErrorStatusEndpoint", MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse("text/plain;charset=UTF-8")).build());
+        MuleMessage result = client.send("exceptionOnErrorStatusEndpoint",
+                MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse("text/plain;charset=UTF-8")).build());
         assertThat((String) result.getInboundProperty("http.status"), is("500"));
     }
 

@@ -19,6 +19,7 @@ public interface Agent extends Lifecycle, NameableObject
     /**
      * A description of the agent that gets displayed in the splash
      * screen when the Mule Context starts up.
+     *
      * @return a 1 line description of the agent.
      */
     String getDescription();

@@ -6,8 +6,7 @@
  */
 package org.mule.compatibility.config.spring.parsers.specific;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
 import org.mule.compatibility.core.endpoint.URIBuilder;
 import org.mule.runtime.core.api.MuleContext;
@@ -16,7 +15,7 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class URIBuilderTestCase extends AbstractMuleTestCase
 {
@@ -31,7 +30,7 @@ public class URIBuilderTestCase extends AbstractMuleTestCase
     }
 
     private MuleContext unusedMuleContext = null;
-    
+
     @Test
     public void testAddressForProtocol()
     {

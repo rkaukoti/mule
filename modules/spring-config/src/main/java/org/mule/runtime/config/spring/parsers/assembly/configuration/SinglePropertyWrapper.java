@@ -47,5 +47,5 @@ public class SinglePropertyWrapper implements SingleProperty
     {
         config.addReference(oldName);
     }
-    
+
 }

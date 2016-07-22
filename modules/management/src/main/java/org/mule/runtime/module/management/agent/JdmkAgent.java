@@ -25,17 +25,18 @@ import javax.management.ReflectionException;
 /**
  * <code>JdmkAgent</code> configures an Jdmk Http Adaptor for Jmx management,
  * statistics and configuration viewing of a Mule instance.
-* <p/>
- * TODO MULE-1353 
+ * <p/>
+ * TODO MULE-1353
  */
 public class JdmkAgent extends AbstractAgent
 {
-    /** A FQN of the adaptor class to instantiate via reflection. */
+    /**
+     * A FQN of the adaptor class to instantiate via reflection.
+     */
     public static final String CLASSNAME_ADAPTER = "com.sun.jdmk.comm.HtmlAdaptorServer";
-
-    private static final String PROTOCOL_PREFIX = "http://";
     public static final String DEFAULT_HOSTNAME = "localhost";
     public static final int DEFAULT_PORT = 9092;
+    private static final String PROTOCOL_PREFIX = "http://";
     public static final String DEFAULT_JMX_ADAPTOR_URL = PROTOCOL_PREFIX + DEFAULT_HOSTNAME + ":" + DEFAULT_PORT;
 
     private String jmxAdaptorUrl;
@@ -56,7 +57,7 @@ public class JdmkAgent extends AbstractAgent
         final URI uri = new URI(jmxAdaptorUrl);
         final int port = uri.getPort();
         return ClassUtils.instanciateClass(CLASSNAME_ADAPTER,
-                                           new Object[] {new Integer(port)}, this.getClass());
+                new Object[] {new Integer(port)}, this.getClass());
     }
 
     @Override
@@ -75,12 +76,12 @@ public class JdmkAgent extends AbstractAgent
         catch (InstanceNotFoundException e)
         {
             throw new JmxManagementException(
-                CoreMessages.failedToStart("Jdmk agent"), adaptorName, e);
+                    CoreMessages.failedToStart("Jdmk agent"), adaptorName, e);
         }
         catch (MBeanException e)
         {
             throw new JmxManagementException(
-                CoreMessages.failedToStart("Jdmk agent"), adaptorName, e);
+                    CoreMessages.failedToStart("Jdmk agent"), adaptorName, e);
         }
         catch (ReflectionException e)
         {
@@ -95,7 +96,7 @@ public class JdmkAgent extends AbstractAgent
         {
             return;
         }
-        
+
         try
         {
             mBeanServer.invoke(adaptorName, "stop", null, null);
@@ -103,12 +104,12 @@ public class JdmkAgent extends AbstractAgent
         catch (InstanceNotFoundException e)
         {
             throw new JmxManagementException(
-                CoreMessages.failedToStop("Jdmk agent"), adaptorName, e);
+                    CoreMessages.failedToStop("Jdmk agent"), adaptorName, e);
         }
         catch (MBeanException e)
         {
             throw new JmxManagementException(
-                CoreMessages.failedToStop("Jdmk agent"), adaptorName, e);
+                    CoreMessages.failedToStop("Jdmk agent"), adaptorName, e);
         }
         catch (ReflectionException e)
         {

@@ -17,8 +17,8 @@ public class XmlMessageEOFProtocol extends XmlMessageProtocol
      * Continue reading til EOF or new document found
      *
      * @param patternIndex The index of the xml tag (or -1 if the next message not found)
-     * @param len The amount of data read this loop (or -1 if EOF)
-     * @param available The amount of data available to read
+     * @param len          The amount of data read this loop (or -1 if EOF)
+     * @param available    The amount of data available to read
      * @return true if the read should continue
      */
     @Override

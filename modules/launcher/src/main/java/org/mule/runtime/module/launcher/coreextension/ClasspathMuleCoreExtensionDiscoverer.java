@@ -6,11 +6,12 @@
  */
 package org.mule.runtime.module.launcher.coreextension;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.container.api.MuleCoreExtension;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.Enumeration;
@@ -19,12 +20,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Discovers {@link MuleCoreExtension} classes that are defined in the
- *  classpath using core-extensions.properties files.
+ * classpath using core-extensions.properties files.
  */
 public class ClasspathMuleCoreExtensionDiscoverer implements MuleCoreExtensionDiscoverer
 {

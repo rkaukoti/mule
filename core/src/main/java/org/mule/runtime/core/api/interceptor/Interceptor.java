@@ -22,7 +22,7 @@ public interface Interceptor extends InterceptingMessageProcessor
     /**
      * Invoked when the component should be called. The implementation can call
      * next.process(event) to call the component or the next filer in the chain.
-     * 
+     *
      * @param event the event containing info about the current message and service
      * @return A result message that may have been altered by this invocation
      * @throws org.mule.runtime.core.api.MuleException if the invocation fails

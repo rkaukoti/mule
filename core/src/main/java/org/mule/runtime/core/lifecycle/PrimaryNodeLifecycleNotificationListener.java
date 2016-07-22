@@ -14,22 +14,21 @@ import org.mule.runtime.core.api.lifecycle.LifecycleState;
 import org.mule.runtime.core.api.lifecycle.LifecycleStateEnabled;
 import org.mule.runtime.core.api.lifecycle.Startable;
 import org.mule.runtime.core.context.notification.NotificationException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
  * This class will start an Startable mule object that must only be started in the primary node.
- *
  */
-public class PrimaryNodeLifecycleNotificationListener implements ClusterNodeNotificationListener {
+public class PrimaryNodeLifecycleNotificationListener implements ClusterNodeNotificationListener
+{
 
     protected transient Logger logger = LoggerFactory.getLogger(getClass());
     private Startable startMeOnPrimaryNodeNotification;
     private MuleContext muleContext;
 
-    public PrimaryNodeLifecycleNotificationListener(Startable startMeOnPrimaryNodeNotification, MuleContext muleContext) {
+    public PrimaryNodeLifecycleNotificationListener(Startable startMeOnPrimaryNodeNotification, MuleContext muleContext)
+    {
         this.startMeOnPrimaryNodeNotification = startMeOnPrimaryNodeNotification;
         this.muleContext = muleContext;
     }
@@ -56,7 +55,7 @@ public class PrimaryNodeLifecycleNotificationListener implements ClusterNodeNoti
         {
             if (startMeOnPrimaryNodeNotification instanceof LifecycleState)
             {
-                if (((LifecycleState)startMeOnPrimaryNodeNotification).isStarted())
+                if (((LifecycleState) startMeOnPrimaryNodeNotification).isStarted())
                 {
                     startMeOnPrimaryNodeNotification.start();
                 }
@@ -67,7 +66,7 @@ public class PrimaryNodeLifecycleNotificationListener implements ClusterNodeNoti
             }
             else if (startMeOnPrimaryNodeNotification instanceof LifecycleStateEnabled)
             {
-                if (((LifecycleStateEnabled)startMeOnPrimaryNodeNotification).getLifecycleState().isStarted())
+                if (((LifecycleStateEnabled) startMeOnPrimaryNodeNotification).getLifecycleState().isStarted())
                 {
                     startMeOnPrimaryNodeNotification.start();
                 }
@@ -76,7 +75,7 @@ public class PrimaryNodeLifecycleNotificationListener implements ClusterNodeNoti
                     logStartableNotStartedMessage();
                 }
             }
-            else 
+            else
             {
                 startMeOnPrimaryNodeNotification.start();
             }

@@ -7,7 +7,6 @@
 package org.mule.compatibility.transport.http.builder;
 
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
-
 import org.springframework.beans.factory.config.MapFactoryBean;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.ManagedMap;
@@ -46,12 +45,12 @@ public class HttpResponseDefinitionParser extends ChildDefinitionParser
         String[] words = elementName.split("-");
         StringBuilder result = new StringBuilder();
 
-        for(int index = 0; index < words.length; index++)
+        for (int index = 0; index < words.length; index++)
         {
             result.append(Character.toUpperCase(words[index].charAt(0)));
             result.append(words[index].substring(1, words[index].length()));
 
-            if(index < (words.length - 1))
+            if (index < (words.length - 1))
             {
                 result.append("-");
             }

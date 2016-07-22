@@ -18,7 +18,7 @@ import javax.jms.Session;
 public class WebsphereTransactedJmsMessageReceiver extends XaTransactedJmsMessageReceiver
 {
     public WebsphereTransactedJmsMessageReceiver(Connector connector, FlowConstruct flowConstruct,
-        InboundEndpoint endpoint) throws InitialisationException, CreateException
+                                                 InboundEndpoint endpoint) throws InitialisationException, CreateException
     {
         super(connector, flowConstruct, endpoint);
     }

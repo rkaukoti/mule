@@ -14,42 +14,42 @@
     <petstore:config name="defaultPoolingPoolable">
         <petstore:poolable-connection username="john" password="doe"/>
         <petstore:pets>
-            <petstore:pet value="Lassie" />
-            <petstore:pet value="Sapo Pepe" />
-            <petstore:pet value="My mother's parrot" />
+            <petstore:pet value="Lassie"/>
+            <petstore:pet value="Sapo Pepe"/>
+            <petstore:pet value="My mother's parrot"/>
         </petstore:pets>
     </petstore:config>
 
     <petstore:config name="customPoolingPoolable">
         <petstore:poolable-connection username="john" password="doe">
-            <pooling-profile maxActive="3" exhaustedAction="WHEN_EXHAUSTED_FAIL" />
+            <pooling-profile maxActive="3" exhaustedAction="WHEN_EXHAUSTED_FAIL"/>
         </petstore:poolable-connection>
         <petstore:pets>
-            <petstore:pet value="Lassie" />
-            <petstore:pet value="Sapo Pepe" />
-            <petstore:pet value="My mother's parrot" />
+            <petstore:pet value="Lassie"/>
+            <petstore:pet value="Sapo Pepe"/>
+            <petstore:pet value="My mother's parrot"/>
         </petstore:pets>
     </petstore:config>
 
     <petstore:config name="noPooling">
         <petstore:poolable-connection username="john" password="doe">
-            <pooling-profile disabled="true" />
+            <pooling-profile disabled="true"/>
         </petstore:poolable-connection>
         <petstore:pets>
-            <petstore:pet value="Lassie" />
-            <petstore:pet value="Sapo Pepe" />
-            <petstore:pet value="My mother's parrot" />
+            <petstore:pet value="Lassie"/>
+            <petstore:pet value="Sapo Pepe"/>
+            <petstore:pet value="My mother's parrot"/>
         </petstore:pets>
     </petstore:config>
 
     <petstore:config name="customPoolingPooled">
         <petstore:pooled-connection username="john" password="doe">
-            <pooling-profile maxActive="3" exhaustedAction="WHEN_EXHAUSTED_FAIL" />
+            <pooling-profile maxActive="3" exhaustedAction="WHEN_EXHAUSTED_FAIL"/>
         </petstore:pooled-connection>
         <petstore:pets>
-            <petstore:pet value="Lassie" />
-            <petstore:pet value="Sapo Pepe" />
-            <petstore:pet value="My mother's parrot" />
+            <petstore:pet value="Lassie"/>
+            <petstore:pet value="Sapo Pepe"/>
+            <petstore:pet value="My mother's parrot"/>
         </petstore:pets>
     </petstore:config>
 

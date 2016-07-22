@@ -6,8 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
-import org.mule.runtime.extension.api.runtime.operation.Interceptor;
 import org.mule.runtime.extension.api.runtime.RetryRequest;
+import org.mule.runtime.extension.api.runtime.operation.Interceptor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,8 +37,8 @@ final class InterceptorsRetryRequest implements RetryRequest
      * If {@code previous} is {@code null}, then a blank history is used.
      *
      * @param interceptor the {@link Interceptor} to which this instance will be handed over
-     * @param previous    a {@link InterceptorsRetryRequest} which was previously handed to this or another interceptor.
-     *                    Could also be {@code null}
+     * @param previous    a {@link InterceptorsRetryRequest} which was previously handed to this or another interceptor. Could also be
+     *                    {@code null}
      */
     public InterceptorsRetryRequest(Interceptor interceptor, InterceptorsRetryRequest previous)
     {
@@ -51,6 +51,7 @@ final class InterceptorsRetryRequest implements RetryRequest
 
     /**
      * {@inheritDoc}
+     *
      * @throws IllegalStateException if the {@link #owner} is already in the {@link #history}
      */
     @Override
@@ -58,8 +59,9 @@ final class InterceptorsRetryRequest implements RetryRequest
     {
         if (!history.add(owner))
         {
-            throw new IllegalStateException("A Interceptor requested to retry the same failed operation twice but only one retry is allowed " +
-                                            "per execution. Interceptor is " + owner);
+            throw new IllegalStateException(
+                    "A Interceptor requested to retry the same failed operation twice but only one retry is allowed " +
+                    "per execution. Interceptor is " + owner);
         }
         requested = true;
     }

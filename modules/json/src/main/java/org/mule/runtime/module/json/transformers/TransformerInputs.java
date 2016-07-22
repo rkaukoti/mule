@@ -26,10 +26,10 @@ import javax.xml.validation.SchemaFactory;
 public class TransformerInputs
 {
     private static final String PREFERRED_TRANSFORMATION_FACTORY_CLASS_NAME =
-        "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl";
+            "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl";
 
     private static final String PREFERRED_SCHEMA_FACTORY_CLASS_NAME =
-        "com.sun.org.apache.xerces.internal.jaxp.validation.XMLSchemaFactory";
+            "com.sun.org.apache.xerces.internal.jaxp.validation.XMLSchemaFactory";
     /**
      * Turn whatever we got as the transformer's source into either an input stream or a reader
      */
@@ -74,17 +74,7 @@ public class TransformerInputs
             throw new TransformerException(xform, ex);
         }
         throw new TransformerException(
-            CoreMessages.transformFailed(src.getClass().getName(), "xml"));
-    }
-
-    public InputStream getInputStream()
-    {
-        return is;
-    }
-
-    public Reader getReader()
-    {
-        return reader;
+                CoreMessages.transformFailed(src.getClass().getName(), "xml"));
     }
 
     public static TransformerFactory createTransformerFactory()
@@ -128,6 +118,16 @@ public class TransformerInputs
     public static String getPreferredTransactionFactoryClassname()
     {
         return PREFERRED_TRANSFORMATION_FACTORY_CLASS_NAME;
+    }
+
+    public InputStream getInputStream()
+    {
+        return is;
+    }
+
+    public Reader getReader()
+    {
+        return reader;
     }
 
 }

@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.module.launcher;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class CompositeDeploymentListenerTestCase extends AbstractMuleTestCase
 {

@@ -30,8 +30,8 @@ public interface Artifact<D extends ArtifactDescriptor>
     D getDescriptor();
 
     /**
-     * @return an array with the configuration files of the artifact. Never returns null.
-     *         If there's no configuration file then returns an empty array.
+     * @return an array with the configuration files of the artifact. Never returns null. If there's no configuration file then returns an
+     * empty array.
      */
     File[] getResourceFiles();
 

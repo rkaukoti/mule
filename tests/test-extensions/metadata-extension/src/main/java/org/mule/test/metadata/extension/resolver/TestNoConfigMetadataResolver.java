@@ -6,7 +6,6 @@
  */
 package org.mule.test.metadata.extension.resolver;
 
-import static org.mule.metadata.java.api.JavaTypeLoader.JAVA;
 import org.mule.metadata.api.builder.BaseTypeBuilder;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.api.connection.ConnectionException;
@@ -24,6 +23,8 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.mule.metadata.java.api.JavaTypeLoader.JAVA;
+
 public class TestNoConfigMetadataResolver
         implements MetadataKeysResolver, MetadataContentResolver<Object>, MetadataOutputResolver<Object>, MetadataAttributesResolver<Object>
 {
@@ -32,8 +33,8 @@ public class TestNoConfigMetadataResolver
     public Set<MetadataKey> getMetadataKeys(MetadataContext context)
     {
         return Arrays.stream(KeyIds.values())
-                .map(e -> MetadataKeyBuilder.newKey(e.name()).build())
-                .collect(Collectors.toSet());
+                     .map(e -> MetadataKeyBuilder.newKey(e.name()).build())
+                     .collect(Collectors.toSet());
     }
 
     @Override

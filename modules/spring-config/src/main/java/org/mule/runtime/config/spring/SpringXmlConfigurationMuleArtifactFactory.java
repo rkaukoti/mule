@@ -6,7 +6,12 @@
  */
 package org.mule.runtime.config.spring;
 
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.Namespace;
+import org.dom4j.QName;
+import org.dom4j.io.DOMReader;
 import org.mule.common.MuleArtifact;
 import org.mule.common.MuleArtifactFactoryException;
 import org.mule.common.config.XmlConfigurationCallback;
@@ -16,10 +21,10 @@ import org.mule.runtime.core.api.config.ConfigurationException;
 import org.mule.runtime.core.api.construct.Pipeline;
 import org.mule.runtime.core.api.context.MuleContextFactory;
 import org.mule.runtime.core.config.ConfigResource;
-import org.mule.runtime.core.config.bootstrap.ArtifactType;
 import org.mule.runtime.core.context.DefaultMuleContextFactory;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.w3c.dom.Node;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -32,13 +37,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.dom4j.Namespace;
-import org.dom4j.QName;
-import org.dom4j.io.DOMReader;
-import org.w3c.dom.Node;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 
 public class SpringXmlConfigurationMuleArtifactFactory implements XmlConfigurationMuleArtifactFactory
 {
@@ -68,7 +67,8 @@ public class SpringXmlConfigurationMuleArtifactFactory implements XmlConfigurati
         return doGetArtifact(element, callback, true);
     }
 
-    protected String getArtifactMuleConfig(String flowName, org.w3c.dom.Element element, final XmlConfigurationCallback callback, boolean embedInFlow) throws MuleArtifactFactoryException
+    protected String getArtifactMuleConfig(String flowName, org.w3c.dom.Element element, final XmlConfigurationCallback callback,
+                                           boolean embedInFlow) throws MuleArtifactFactoryException
     {
         Map<String, String> schemaLocations = new HashMap<String, String>();
         schemaLocations.put("http://www.mulesoft.org/schema/mule/core", "http://www.mulesoft.org/schema/mule/core/current/mule.xsd");
@@ -129,14 +129,16 @@ public class SpringXmlConfigurationMuleArtifactFactory implements XmlConfigurati
 
     }
 
-    private void processGlobalReferences(org.w3c.dom.Element element, XmlConfigurationCallback callback, Element rootElement, Map<String, String> schemaLocations) throws ParserConfigurationException
+    private void processGlobalReferences(org.w3c.dom.Element element, XmlConfigurationCallback callback, Element rootElement,
+                                         Map<String, String> schemaLocations) throws ParserConfigurationException
     {
         processGlobalReferencesInAttributes(element, callback, rootElement, schemaLocations);
 
         processGlobalReferencesInChildElements(element, callback, rootElement, schemaLocations);
     }
 
-    private void processGlobalReferencesInChildElements(org.w3c.dom.Element element, XmlConfigurationCallback callback, Element rootElement, Map<String, String> schemaLocations) throws ParserConfigurationException
+    private void processGlobalReferencesInChildElements(org.w3c.dom.Element element, XmlConfigurationCallback callback, Element rootElement,
+                                                        Map<String, String> schemaLocations) throws ParserConfigurationException
     {
         if (element != null && element.getChildNodes() != null)
         {
@@ -148,25 +150,27 @@ public class SpringXmlConfigurationMuleArtifactFactory implements XmlConfigurati
         }
     }
 
-    private void processGlobalReferencesInAttributes(Node element, XmlConfigurationCallback callback, Element rootElement, Map<String, String> schemaLocations) throws ParserConfigurationException
+    private void processGlobalReferencesInAttributes(Node element, XmlConfigurationCallback callback, Element rootElement,
+                                                     Map<String, String> schemaLocations) throws ParserConfigurationException
     {
         if (element != null && element.getAttributes() != null)
         {
             for (int i = 0; i < element.getAttributes().getLength(); i++)
             {
                 String attributeName = element.getAttributes().item(i).getLocalName();
-                if (attributeName != null && ((attributeName.endsWith(REF_SUFFIX) || attributeName.equals(REF_ATTRIBUTE_NAME)) || (element.getNodeName().endsWith(REF_SUFFIX) && attributeName.equals(NAME_ATTRIBUTE_NAME))))
+                if (attributeName != null && ((attributeName.endsWith(REF_SUFFIX) || attributeName.equals(REF_ATTRIBUTE_NAME)) ||
+                                              (element.getNodeName().endsWith(REF_SUFFIX) && attributeName.equals(NAME_ATTRIBUTE_NAME))))
                 {
                     org.w3c.dom.Element dependentElement = callback.getGlobalElement(element.getAttributes()
-                                                                                             .item(i)
-                                                                                             .getNodeValue());
+                                                                                            .item(i)
+                                                                                            .getNodeValue());
                     addReferencedGlobalElement(callback, rootElement, dependentElement, schemaLocations);
                 }
                 else if (attributeName != null && attributeName.endsWith(REFS_SUFFIX))
                 {
                     StringTokenizer refs = new StringTokenizer(element.getAttributes().item(i).getNodeValue(), REFS_TOKENS);
 
-                    while(refs.hasMoreTokens())
+                    while (refs.hasMoreTokens())
                     {
                         String referenceName = refs.nextToken();
                         if (StringUtils.isNotBlank(referenceName))
@@ -183,7 +187,8 @@ public class SpringXmlConfigurationMuleArtifactFactory implements XmlConfigurati
 
     }
 
-    private void addReferencedGlobalElement(XmlConfigurationCallback callback, Element rootElement, org.w3c.dom.Element dependentElement, Map<String, String> schemaLocations) throws ParserConfigurationException
+    private void addReferencedGlobalElement(XmlConfigurationCallback callback, Element rootElement, org.w3c.dom.Element dependentElement,
+                                            Map<String, String> schemaLocations) throws ParserConfigurationException
     {
         if (dependentElement != null)
         {
@@ -200,7 +205,8 @@ public class SpringXmlConfigurationMuleArtifactFactory implements XmlConfigurati
         }
     }
 
-    private void wrapElementInSpringBeanContainer(Element rootElement, org.w3c.dom.Element dependentElement) throws ParserConfigurationException
+    private void wrapElementInSpringBeanContainer(Element rootElement, org.w3c.dom.Element dependentElement)
+            throws ParserConfigurationException
     {
         String namespaceUri = dependentElement.getNamespaceURI();
         Namespace namespace = new Namespace(dependentElement.getPrefix(), namespaceUri);
@@ -316,8 +322,6 @@ public class SpringXmlConfigurationMuleArtifactFactory implements XmlConfigurati
 
     /**
      * Convert w3c element to dom4j element
-     *
-     * @throws ParserConfigurationException
      */
     public org.dom4j.Element convert(org.w3c.dom.Element element) throws ParserConfigurationException
     {

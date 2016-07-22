@@ -17,7 +17,7 @@ public class DefaultMuleMessageFactory extends AbstractMuleMessageFactory
     @Override
     protected Class<?>[] getSupportedTransportMessageTypes()
     {
-        return new Class[]{Object.class};
+        return new Class[] {Object.class};
     }
 
     @Override

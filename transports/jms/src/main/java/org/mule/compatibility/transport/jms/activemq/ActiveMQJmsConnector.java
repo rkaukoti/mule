@@ -58,7 +58,7 @@ public class ActiveMQJmsConnector extends JmsConnector
             Object redeliveryPolicy = getRedeliveryPolicyMethod.invoke(connectionFactory);
             Method setMaximumRedeliveriesMethod = redeliveryPolicy.getClass().getMethod("setMaximumRedeliveries", Integer.TYPE);
             int maxRedelivery = getMaxRedelivery();
-            if (maxRedelivery != REDELIVERY_IGNORE )
+            if (maxRedelivery != REDELIVERY_IGNORE)
             {
                 // redelivery = deliveryCount - 1, but AMQ is considering the first delivery attempt as a redelivery (wrong!). adjust for it
                 maxRedelivery++;
@@ -105,7 +105,7 @@ public class ActiveMQJmsConnector extends JmsConnector
                     TargetInvocationHandler targetInvocationHandler = (TargetInvocationHandler) invocationHandler;
                     connection = (Connection) targetInvocationHandler.getTargetObject();
                     Class realConnectionClass = connection.getClass();
-                    cleanupMethod = realConnectionClass.getMethod("cleanup", (Class[])null);
+                    cleanupMethod = realConnectionClass.getMethod("cleanup", (Class[]) null);
                 }
                 else
                 {
@@ -118,19 +118,19 @@ public class ActiveMQJmsConnector extends JmsConnector
             }
             else
             {
-                cleanupMethod = clazz.getMethod("cleanup", (Class[])null);
+                cleanupMethod = clazz.getMethod("cleanup", (Class[]) null);
             }
 
             try
             {
                 if (cleanupMethod != null)
                 {
-                    cleanupMethod.invoke(connection, (Object[])null);
+                    cleanupMethod.invoke(connection, (Object[]) null);
                 }
             }
             catch (InvocationTargetException ex)
             {
-                logger.warn("Exception cleaning up JMS connection: " + ex.getMessage());        
+                logger.warn("Exception cleaning up JMS connection: " + ex.getMessage());
             }
             finally
             {

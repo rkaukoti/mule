@@ -6,18 +6,20 @@
  */
 package org.mule.runtime.module.extension.internal.capability.xml.schema;
 
+import com.google.common.collect.ImmutableMap;
+
+import com.sun.tools.javac.code.Attribute;
+import com.sun.tools.javac.code.Symbol.MethodSymbol;
+import com.sun.tools.javac.code.Symbol.VarSymbol;
+
+import org.apache.commons.lang.StringUtils;
+import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.extension.api.annotation.Extension;
 import org.mule.runtime.extension.api.annotation.Operations;
 import org.mule.runtime.extension.api.annotation.Parameter;
 import org.mule.runtime.extension.api.annotation.ParameterGroup;
 import org.mule.runtime.extension.api.annotation.param.Ignore;
 import org.mule.runtime.module.extension.internal.util.IntrospectionUtils;
-import org.mule.runtime.core.util.ClassUtils;
-
-import com.google.common.collect.ImmutableMap;
-import com.sun.tools.javac.code.Attribute;
-import com.sun.tools.javac.code.Symbol.MethodSymbol;
-import com.sun.tools.javac.code.Symbol.VarSymbol;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -38,8 +40,6 @@ import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.util.ElementFilter;
 
-import org.apache.commons.lang.StringUtils;
-
 /**
  * Utility class for annotation processing using the {@link javax.annotation.processing.Processor} API
  *
@@ -48,10 +48,14 @@ import org.apache.commons.lang.StringUtils;
 public final class AnnotationProcessorUtils
 {
 
-    private static final char NEW_LINE_CHAR = '\n';
-    private static final char AT_CHAR = '@';
     public static final String PARAM = "@param";
     public static final String VALUE = "value";
+    private static final char NEW_LINE_CHAR = '\n';
+    private static final char AT_CHAR = '@';
+
+    private AnnotationProcessorUtils()
+    {
+    }
 
     /**
      * Returns the {@link Class} object that is associated to the {@code typeElement}
@@ -65,16 +69,13 @@ public final class AnnotationProcessorUtils
     {
         try
         {
-            return ClassUtils.loadClass(processingEnvironment.getElementUtils().getBinaryName(typeElement).toString(), typeElement.getClass());
+            return ClassUtils.loadClass(processingEnvironment.getElementUtils().getBinaryName(typeElement).toString(),
+                    typeElement.getClass());
         }
         catch (ClassNotFoundException e)
         {
             throw new RuntimeException(e);
         }
-    }
-
-    private AnnotationProcessorUtils()
-    {
     }
 
     /**
@@ -86,7 +87,8 @@ public final class AnnotationProcessorUtils
      * @param roundEnvironment the current {@link RoundEnvironment}
      * @return a {@link Set} with the {@link TypeElement}s annotated with {@code annotationType}
      */
-    public static Set<TypeElement> getTypeElementsAnnotatedWith(Class<? extends Annotation> annotationType, RoundEnvironment roundEnvironment)
+    public static Set<TypeElement> getTypeElementsAnnotatedWith(Class<? extends Annotation> annotationType,
+                                                                RoundEnvironment roundEnvironment)
     {
         return ElementFilter.typesIn(roundEnvironment.getElementsAnnotatedWith(annotationType));
     }
@@ -97,8 +99,7 @@ public final class AnnotationProcessorUtils
      * which are public and are not annotated with {@link Ignore}
      *
      * @param roundEnvironment the current {@link RoundEnvironment}
-     * @return a {@link Map} which keys are the method names and the values are the
-     * method represented as a {@link ExecutableElement}
+     * @return a {@link Map} which keys are the method names and the values are the method represented as a {@link ExecutableElement}
      */
     static Map<String, Element> getOperationMethods(RoundEnvironment roundEnvironment, ProcessingEnvironment processingEnvironment)
     {
@@ -123,9 +124,12 @@ public final class AnnotationProcessorUtils
                     {
                         for (Method operation : IntrospectionUtils.getOperationMethods(operationClass))
                         {
-                            operationClassElement.getEnclosedElements().stream()
-                                    .filter(e -> e.getSimpleName().toString().equals(operation.getName()))
-                                    .findFirst().ifPresent(operationMethodElement -> methods.put(operation.getName(), operationMethodElement));
+                            operationClassElement.getEnclosedElements()
+                                                 .stream()
+                                                 .filter(e -> e.getSimpleName().toString().equals(operation.getName()))
+                                                 .findFirst()
+                                                 .ifPresent(operationMethodElement -> methods.put(operation.getName(),
+                                                         operationMethodElement));
                         }
                     }
                 }
@@ -135,7 +139,8 @@ public final class AnnotationProcessorUtils
         return methods.build();
     }
 
-    private static <T> T getAnnotationFromType(ProcessingEnvironment processingEnvironment, TypeElement rootElement, Class<? extends Annotation> annotationClass)
+    private static <T> T getAnnotationFromType(ProcessingEnvironment processingEnvironment, TypeElement rootElement,
+                                               Class<? extends Annotation> annotationClass)
     {
         return (T) classFor(rootElement, processingEnvironment).getAnnotation(annotationClass);
     }
@@ -143,8 +148,8 @@ public final class AnnotationProcessorUtils
     private static Element getElementForClass(List<AnnotationValue> annotationValues, Class<?> clazz)
     {
         return annotationValues.stream()
-                .map(e -> ((DeclaredType) e.getValue()).asElement())
-                .filter(e -> e.getSimpleName().toString().equals(clazz.getSimpleName())).findFirst().orElse(null);
+                               .map(e -> ((DeclaredType) e.getValue()).asElement())
+                               .filter(e -> e.getSimpleName().toString().equals(clazz.getSimpleName())).findFirst().orElse(null);
     }
 
     static Map<String, VariableElement> getFieldsAnnotatedWith(TypeElement typeElement, Class<? extends Annotation> annotation)
@@ -208,7 +213,8 @@ public final class AnnotationProcessorUtils
      * @param methodElement the operation method being processed
      * @param parameterDocs a {@link Map} which keys are attribute names and values are their documentation
      */
-    private static void parseOperationParameterGroups(ProcessingEnvironment processingEnv, MethodSymbol methodElement, Map<String, String> parameterDocs)
+    private static void parseOperationParameterGroups(ProcessingEnvironment processingEnv, MethodSymbol methodElement,
+                                                      Map<String, String> parameterDocs)
     {
         for (VarSymbol parameterSymbol : methodElement.getParameters())
         {
@@ -217,12 +223,15 @@ public final class AnnotationProcessorUtils
                 DeclaredType annotationType = compound.getAnnotationType();
                 if (annotationType != null)
                 {
-                    Class<? extends Annotation> annotationClass = classFor((TypeElement) compound.getAnnotationType().asElement(), processingEnv);
+                    Class<? extends Annotation> annotationClass =
+                            classFor((TypeElement) compound.getAnnotationType().asElement(), processingEnv);
                     if (ParameterGroup.class.isAssignableFrom(annotationClass))
                     {
                         try
                         {
-                            getOperationParameterGroupDocumentation((TypeElement) processingEnv.getTypeUtils().asElement(parameterSymbol.asType()), parameterDocs, processingEnv);
+                            getOperationParameterGroupDocumentation(
+                                    (TypeElement) processingEnv.getTypeUtils().asElement(parameterSymbol.asType()), parameterDocs,
+                                    processingEnv);
                         }
                         catch (Exception e)
                         {
@@ -268,7 +277,7 @@ public final class AnnotationProcessorUtils
         {
 
             getOperationParameterGroupDocumentation((TypeElement) processingEnvironment.getTypeUtils().asElement(field.asType()),
-                                                    parameterDocs, processingEnvironment);
+                    parameterDocs, processingEnvironment);
         }
     }
 
@@ -385,15 +394,6 @@ public final class AnnotationProcessorUtils
         return comment.trim();
     }
 
-    private static abstract class JavadocParseHandler
-    {
-
-        abstract void onParam(String param);
-
-        abstract void onBodyLine(String bodyLine);
-
-    }
-
     /**
      * Returns the content of a field for a given annotation.
      */
@@ -408,7 +408,8 @@ public final class AnnotationProcessorUtils
             {
                 if (fullQualifiedAnnotationName.equals(annotationMirror.getAnnotationType().toString()))
                 {
-                    for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : annotationMirror.getElementValues().entrySet())
+                    for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : annotationMirror.getElementValues()
+                                                                                                                   .entrySet())
                     {
                         if (annotationField.equals(entry.getKey().getSimpleName().toString()))
                         {
@@ -424,5 +425,14 @@ public final class AnnotationProcessorUtils
         {
             return null;
         }
+    }
+
+    private static abstract class JavadocParseHandler
+    {
+
+        abstract void onParam(String param);
+
+        abstract void onBodyLine(String bodyLine);
+
     }
 }

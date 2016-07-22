@@ -6,11 +6,9 @@
  */
 package org.mule.test.construct;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
@@ -23,9 +21,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 @Ignore("MULE-9630")
 public class FlowUseCaseProcessingStrategyTestCase extends FunctionalTestCase
@@ -45,7 +45,8 @@ public class FlowUseCaseProcessingStrategyTestCase extends FunctionalTestCase
     {
         MuleClient client = muleContext.getClient();
         final HttpRequestOptions httpRequestOptions = newOptions().disableStatusCodeValidation().build();
-        MuleMessage exception = client.send("http://localhost:" + dynamicPort.getNumber(), MuleMessage.builder().nullPayload().build(), httpRequestOptions);
+        MuleMessage exception =
+                client.send("http://localhost:" + dynamicPort.getNumber(), MuleMessage.builder().nullPayload().build(), httpRequestOptions);
         assertThat(exception.getInboundProperty("http.status", 0), is(500));
     }
 
@@ -58,17 +59,17 @@ public class FlowUseCaseProcessingStrategyTestCase extends FunctionalTestCase
 
         assertTrue(tempFile.exists());
     }
-    
+
     @Test
     public void testFileAutoDeleteAsyncStrategy() throws Exception
     {
         MuleClient client = muleContext.getClient();
         File tempFile = createTempFile("mule-file-test-async-");
         client.request("vm://exception", 5000);
-        
+
         assertFalse(tempFile.exists());
     }
-    
+
     private File createTempFile(String fileName) throws IOException
     {
         File directory = getWorkingDirectory();
@@ -77,10 +78,10 @@ public class FlowUseCaseProcessingStrategyTestCase extends FunctionalTestCase
         FileOutputStream fos = new FileOutputStream(file);
         IOUtils.write("The quick brown fox jumps over the lazy dog", fos);
         IOUtils.closeQuietly(fos);
-        
+
         return file;
     }
-         
+
 }
 
 

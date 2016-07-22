@@ -37,14 +37,14 @@ public class FruitBasket
         }
     }
 
-    public void setFruit(List<Fruit> fruit)
-    {
-        this.setFruit(fruit.toArray(new Fruit[fruit.size()]));
-    }
-
     public List<Fruit> getFruit()
     {
         return new ArrayList<Fruit>(basket.values());
+    }
+
+    public void setFruit(List<Fruit> fruit)
+    {
+        this.setFruit(fruit.toArray(new Fruit[fruit.size()]));
     }
 
     public Apple getApple()

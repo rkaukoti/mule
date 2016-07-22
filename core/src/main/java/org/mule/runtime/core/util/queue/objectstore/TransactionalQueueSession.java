@@ -13,23 +13,20 @@ import org.mule.runtime.core.util.queue.QueueSession;
 import org.mule.runtime.core.util.queue.objectstore.xa.AbstractXAResourceManager;
 import org.mule.runtime.core.util.queue.objectstore.xa.DefaultXASession;
 import org.mule.runtime.core.util.store.DeserializationPostInitialisable;
-
-import java.io.Serializable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
 
 /**
  * A Queue session that is used to manage the transaction context of a Queue
  *
  * @deprecated this class will be removed in Mule 4.0 in favor of the new queue implementation
  */
-@Deprecated
-class TransactionalQueueSession extends DefaultXASession implements QueueSession
+@Deprecated class TransactionalQueueSession extends DefaultXASession implements QueueSession
 {
-    private Logger logger = LoggerFactory.getLogger(org.mule.runtime.core.util.queue.TransactionalQueueSession.class);
-
     protected TransactionalQueueManager queueManager;
+    private Logger logger = LoggerFactory.getLogger(org.mule.runtime.core.util.queue.TransactionalQueueSession.class);
 
     public TransactionalQueueSession(AbstractXAResourceManager resourceManager,
                                      TransactionalQueueManager queueManager)
@@ -82,7 +79,7 @@ class TransactionalQueueSession extends DefaultXASession implements QueueSession
 
         @Override
         public boolean offer(Serializable item, long timeout)
-            throws InterruptedException, ObjectStoreException
+                throws InterruptedException, ObjectStoreException
         {
             if (localContext != null && !queue.isQueueTransactional())
             {
@@ -209,7 +206,7 @@ class TransactionalQueueSession extends DefaultXASession implements QueueSession
                 throw new RuntimeException(e);
             }
         }
-        
+
         @Override
         public void dispose() throws MuleException, InterruptedException
         {

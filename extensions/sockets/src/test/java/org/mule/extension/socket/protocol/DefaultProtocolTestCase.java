@@ -6,14 +6,14 @@
  */
 package org.mule.extension.socket.protocol;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 import org.mule.extension.socket.api.connection.tcp.protocol.DirectProtocol;
 import org.mule.extension.socket.api.socket.tcp.TcpProtocol;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 @SmallTest
 public class DefaultProtocolTestCase extends AbstractMuleTestCase

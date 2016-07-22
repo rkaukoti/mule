@@ -6,13 +6,14 @@
  */
 package org.mule.runtime.core.serialization.internal;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.core.api.serialization.SerializationException;
 import org.mule.runtime.core.util.SerializationUtils;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Implementation of {@link org.mule.runtime.core.api.serialization.ObjectSerializer} that uses Java's default serialization

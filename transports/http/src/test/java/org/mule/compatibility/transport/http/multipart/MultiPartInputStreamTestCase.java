@@ -6,12 +6,9 @@
  */
 package org.mule.compatibility.transport.http.multipart;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-
-import org.mule.compatibility.transport.http.multipart.MultiPartInputStream;
-import org.mule.compatibility.transport.http.multipart.MultipartConfiguration;
-import org.mule.compatibility.transport.http.multipart.Part;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.util.FileUtils;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.tck.junit4.AbstractMuleTestCase;
@@ -24,9 +21,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Test class for the {@link MultiPartInputStream}.
@@ -40,6 +36,20 @@ public class MultiPartInputStreamTestCase extends AbstractMuleTestCase
     private File tmpDir;
     private Set<String> partContents;
     private String multipartMessage;
+
+    /**
+     * Creates an empty temporary directory.
+     *
+     * @param tmpDirName The name of the temporary directory.
+     * @return The created temporary directory.
+     * @throws java.io.IOException If there is an error creating the file
+     */
+    private static File createTempDirectory(String tmpDirName) throws IOException
+    {
+        File tmpDir = FileUtils.openDirectory(tmpDirName);
+        FileUtils.deleteTree(tmpDir);
+        return tmpDir;
+    }
 
     @Before
     public void setUp() throws IOException
@@ -86,7 +96,7 @@ public class MultiPartInputStreamTestCase extends AbstractMuleTestCase
     {
         ByteArrayInputStream bis = new ByteArrayInputStream(body.getBytes("UTF-8"));
         MultiPartInputStream mpis = new MultiPartInputStream(bis, "multipart/form-data; boundary=" + MULTIPART_BOUNDARY,
-                                                             new MultipartConfiguration(TMP_DIR));
+                new MultipartConfiguration(TMP_DIR));
 
         Collection<Part> parts = mpis.getParts();
         assertEquals(NUMBER_OF_PARTS, parts.size());
@@ -105,19 +115,5 @@ public class MultiPartInputStreamTestCase extends AbstractMuleTestCase
 
         // Assert that no temp files remain in place.
         assertTrue("Temporary directory should be empty", FileUtils.listFiles(tmpDir, null, false).isEmpty());
-    }
-
-    /**
-     * Creates an empty temporary directory.
-     *
-     * @param tmpDirName The name of the temporary directory.
-     * @return The created temporary directory.
-     * @throws java.io.IOException If there is an error creating the file
-     */
-    private static File createTempDirectory(String tmpDirName) throws IOException
-    {
-        File tmpDir = FileUtils.openDirectory(tmpDirName);
-        FileUtils.deleteTree(tmpDir);
-        return tmpDir;
     }
 }

@@ -6,15 +6,10 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
+import org.apache.cxf.interceptor.Fault;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleMessage;
@@ -27,15 +22,22 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.nio.charset.Charset;
 
-import org.apache.cxf.interceptor.Fault;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class CxfErrorBehaviorTestCase extends FunctionalTestCase
 {
+    public static final HttpRequestOptions HTTP_REQUEST_OPTIONS =
+            newOptions().method(org.mule.runtime.module.http.api.HttpConstants.Methods.POST.name()).disableStatusCodeValidation().build();
     private static final String requestFaultPayload =
-        "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
+            "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
             "           xmlns:hi=\"http://cxf.module.runtime.mule.org/\">\n" +
             "<soap:Body>\n" +
             "<hi:sayHi>\n" +
@@ -43,7 +45,6 @@ public class CxfErrorBehaviorTestCase extends FunctionalTestCase
             "</hi:sayHi>\n" +
             "</soap:Body>\n" +
             "</soap:Envelope>";
-
     private static final String requestPayload =
             "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
             "           xmlns:hi=\"http://example.cxf.module.runtime.mule.org/\">\n" +
@@ -53,15 +54,11 @@ public class CxfErrorBehaviorTestCase extends FunctionalTestCase
             "</hi:sayHi>\n" +
             "</soap:Body>\n" +
             "</soap:Envelope>";
-
-
     @Rule
     public DynamicPort dynamicPort = new DynamicPort("port1");
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    public static final HttpRequestOptions HTTP_REQUEST_OPTIONS = newOptions().method(org.mule.runtime.module.http.api.HttpConstants.Methods.POST.name()).disableStatusCodeValidation().build();
-    
     @Override
     protected String getConfigFile()
     {
@@ -73,7 +70,8 @@ public class CxfErrorBehaviorTestCase extends FunctionalTestCase
     {
         MuleMessage request = MuleMessage.builder().payload(requestFaultPayload).build();
         MuleClient client = muleContext.getClient();
-        MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/testServiceWithFault", request, HTTP_REQUEST_OPTIONS);
+        MuleMessage response =
+                client.send("http://localhost:" + dynamicPort.getNumber() + "/testServiceWithFault", request, HTTP_REQUEST_OPTIONS);
         assertNotNull(response);
         assertTrue(getPayloadAsString(response).contains("<faultstring>"));
         assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()), response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
@@ -84,7 +82,8 @@ public class CxfErrorBehaviorTestCase extends FunctionalTestCase
     {
         MuleMessage request = MuleMessage.builder().payload(requestPayload).build();
         MuleClient client = muleContext.getClient();
-        MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/testSimpleServiceWithFault", request, HTTP_REQUEST_OPTIONS);
+        MuleMessage response =
+                client.send("http://localhost:" + dynamicPort.getNumber() + "/testSimpleServiceWithFault", request, HTTP_REQUEST_OPTIONS);
         assertNotNull(response);
         assertTrue(getPayloadAsString(response).contains("<faultstring>"));
         assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()), response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
@@ -95,7 +94,8 @@ public class CxfErrorBehaviorTestCase extends FunctionalTestCase
     {
         MuleMessage request = MuleMessage.builder().payload(requestPayload).build();
         MuleClient client = muleContext.getClient();
-        MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/testTransformerException", request, HTTP_REQUEST_OPTIONS);
+        MuleMessage response =
+                client.send("http://localhost:" + dynamicPort.getNumber() + "/testTransformerException", request, HTTP_REQUEST_OPTIONS);
         assertNotNull(response);
         assertTrue(getPayloadAsString(response).contains("<faultstring>"));
         assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()), response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
@@ -106,7 +106,8 @@ public class CxfErrorBehaviorTestCase extends FunctionalTestCase
     {
         MuleMessage request = MuleMessage.builder().payload(requestPayload).build();
         MuleClient client = muleContext.getClient();
-        MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/testUnwrapException", request, HTTP_REQUEST_OPTIONS);
+        MuleMessage response =
+                client.send("http://localhost:" + dynamicPort.getNumber() + "/testUnwrapException", request, HTTP_REQUEST_OPTIONS);
         assertNotNull(response);
         assertTrue(getPayloadAsString(response).contains("Illegal argument!!"));
         assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()), response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
@@ -130,7 +131,9 @@ public class CxfErrorBehaviorTestCase extends FunctionalTestCase
     public void testServerClientProxyWithFault() throws Exception
     {
         MuleClient client = muleContext.getClient();
-        MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/testProxyWithFault", getTestMuleMessage(requestFaultPayload), HTTP_REQUEST_OPTIONS);
+        MuleMessage result =
+                client.send("http://localhost:" + dynamicPort.getNumber() + "/testProxyWithFault", getTestMuleMessage(requestFaultPayload),
+                        HTTP_REQUEST_OPTIONS);
         String resString = getPayloadAsString(result);
         assertThat(resString, containsString("<faultstring>Cxf Exception Message</faultstring>"));
         assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()), result.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
@@ -140,16 +143,20 @@ public class CxfErrorBehaviorTestCase extends FunctionalTestCase
     public void testServerClientProxyWithTransformerException() throws Exception
     {
         MuleClient client = muleContext.getClient();
-        MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/testProxyWithTransformerException", getTestMuleMessage(requestPayload), HTTP_REQUEST_OPTIONS);
+        MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/testProxyWithTransformerException",
+                getTestMuleMessage(requestPayload), HTTP_REQUEST_OPTIONS);
         String resString = getPayloadAsString(result);
         assertTrue(resString.contains("TransformerException"));
         assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()), result.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
     }
+
     @Test
     public void testServerClientJaxwsWithUnwrapFault() throws Exception
     {
         MuleClient client = muleContext.getClient();
-        MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/testUnwrapProxyFault", getTestMuleMessage(requestPayload), HTTP_REQUEST_OPTIONS);
+        MuleMessage result =
+                client.send("http://localhost:" + dynamicPort.getNumber() + "/testUnwrapProxyFault", getTestMuleMessage(requestPayload),
+                        HTTP_REQUEST_OPTIONS);
         String resString = getPayloadAsString(result);
         assertThat(resString, containsString("Illegal argument!!"));
         assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()), result.getInboundProperty(HTTP_STATUS_PROPERTY).toString());

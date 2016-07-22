@@ -18,7 +18,6 @@ import org.mule.runtime.core.context.notification.FlowConstructNotification;
 import org.mule.runtime.core.lifecycle.SimpleLifecycleManager;
 import org.mule.runtime.core.service.Pausable;
 import org.mule.runtime.core.service.Resumable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

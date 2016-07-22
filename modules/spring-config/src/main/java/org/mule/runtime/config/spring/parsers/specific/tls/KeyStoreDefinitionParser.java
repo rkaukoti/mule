@@ -6,8 +6,8 @@
  */
 package org.mule.runtime.config.spring.parsers.specific.tls;
 
-import org.mule.runtime.config.spring.parsers.generic.ParentDefinitionParser;
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
+import org.mule.runtime.config.spring.parsers.generic.ParentDefinitionParser;
 import org.mule.runtime.config.spring.parsers.processors.CheckExclusiveAttributes;
 
 public class KeyStoreDefinitionParser extends ParentDefinitionParser
@@ -15,8 +15,8 @@ public class KeyStoreDefinitionParser extends ParentDefinitionParser
 
     public KeyStoreDefinitionParser()
     {
-        registerPreProcessor(new CheckExclusiveAttributes(new String[][]{
-                new String[]{AbstractMuleBeanDefinitionParser.ATTRIBUTE_CLASS}, new String[]{"type"}}));
+        registerPreProcessor(new CheckExclusiveAttributes(new String[][] {
+                new String[] {AbstractMuleBeanDefinitionParser.ATTRIBUTE_CLASS}, new String[] {"type"}}));
         addAlias("path", "keyStore");
         addAlias(AbstractMuleBeanDefinitionParser.ATTRIBUTE_CLASS, "keyStoreType");
         addAlias("type", "keyStoreType");

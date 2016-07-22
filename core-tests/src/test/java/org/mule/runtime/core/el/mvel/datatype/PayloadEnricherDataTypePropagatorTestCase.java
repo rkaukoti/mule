@@ -7,14 +7,7 @@
 
 package org.mule.runtime.core.el.mvel.datatype;
 
-import static java.nio.charset.StandardCharsets.UTF_16;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mule.mvel2.MVEL.compileExpression;
-import static org.mule.runtime.api.metadata.MediaType.JSON;
-import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.MESSAGE_PAYLOAD;
-import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.PAYLOAD;
-import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
-
+import org.junit.Test;
 import org.mule.mvel2.ParserContext;
 import org.mule.mvel2.compiler.CompiledExpression;
 import org.mule.runtime.api.metadata.DataType;
@@ -25,7 +18,13 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.UTF_16;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mule.mvel2.MVEL.compileExpression;
+import static org.mule.runtime.api.metadata.MediaType.JSON;
+import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.MESSAGE_PAYLOAD;
+import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.PAYLOAD;
+import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
 
 public class PayloadEnricherDataTypePropagatorTestCase extends AbstractMuleContextTestCase
 {
@@ -37,13 +36,13 @@ public class PayloadEnricherDataTypePropagatorTestCase extends AbstractMuleConte
     @Test
     public void propagatesPayloadDataType() throws Exception
     {
-       doPayloadDataTypeTest(PAYLOAD + " = 'unused'");
+        doPayloadDataTypeTest(PAYLOAD + " = 'unused'");
     }
 
     @Test
     public void propagatesMessagePayloadDataType() throws Exception
     {
-       doPayloadDataTypeTest(MESSAGE_PAYLOAD + " = 'unused'");
+        doPayloadDataTypeTest(MESSAGE_PAYLOAD + " = 'unused'");
     }
 
     private void doPayloadDataTypeTest(String expression) throws Exception
@@ -51,7 +50,8 @@ public class PayloadEnricherDataTypePropagatorTestCase extends AbstractMuleConte
         final DataType expectedDataType = DataType.builder().type(String.class).mediaType(JSON).charset(CUSTOM_ENCODING).build();
 
         MVELExpressionLanguage expressionLanguage = (MVELExpressionLanguage) muleContext.getExpressionLanguage();
-        final CompiledExpression compiledExpression = (CompiledExpression) compileExpression(expression, new ParserContext(expressionLanguage.getParserConfiguration()));
+        final CompiledExpression compiledExpression =
+                (CompiledExpression) compileExpression(expression, new ParserContext(expressionLanguage.getParserConfiguration()));
 
         MuleEvent testEvent = getTestEvent(TEST_MESSAGE);
 

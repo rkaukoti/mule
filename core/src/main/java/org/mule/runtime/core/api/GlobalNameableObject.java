@@ -13,5 +13,6 @@ package org.mule.runtime.core.api;
 public interface GlobalNameableObject
 {
     String getGlobalName();
+
     void setGlobalName(String name);
 }

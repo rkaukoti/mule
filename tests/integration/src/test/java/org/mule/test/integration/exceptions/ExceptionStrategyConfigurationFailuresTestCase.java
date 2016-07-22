@@ -6,6 +6,11 @@
  */
 package org.mule.test.integration.exceptions;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.mule.runtime.config.spring.SpringXmlConfigurationBuilder;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.config.ConfigurationBuilder;
@@ -13,15 +18,14 @@ import org.mule.runtime.core.api.config.ConfigurationException;
 import org.mule.runtime.core.api.context.MuleContextBuilder;
 import org.mule.runtime.core.api.context.MuleContextFactory;
 import org.mule.runtime.core.api.context.notification.MuleContextNotificationListener;
-import org.mule.runtime.config.spring.SpringXmlConfigurationBuilder;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.context.DefaultMuleContextBuilder;
 import org.mule.runtime.core.context.DefaultMuleContextFactory;
 import org.mule.runtime.core.context.notification.MuleContextNotification;
+import org.mule.runtime.core.util.concurrent.Latch;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.junit4.rule.ForceXalanTransformerFactory;
 import org.mule.tck.junit4.rule.SystemProperty;
-import org.mule.runtime.core.util.concurrent.Latch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,30 +34,12 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
 @RunWith(Parameterized.class)
 public class ExceptionStrategyConfigurationFailuresTestCase extends AbstractMuleTestCase
 {
 
     @Rule
     public SystemProperty useXalan;
-
-    /**
-     * Verify that regardless of the XML library used, validation errors are handled correctly.
-     * @return
-     */
-    @Parameterized.Parameters
-    public static Collection<Object[]> parameters()
-    {
-        return Arrays.asList(new Object[][] {
-                {false},
-                {true}
-        });
-    }
 
     public ExceptionStrategyConfigurationFailuresTestCase(boolean isUseXalan)
     {
@@ -65,6 +51,18 @@ public class ExceptionStrategyConfigurationFailuresTestCase extends AbstractMule
         {
             useXalan = null;
         }
+    }
+
+    /**
+     * Verify that regardless of the XML library used, validation errors are handled correctly.
+     */
+    @Parameterized.Parameters
+    public static Collection<Object[]> parameters()
+    {
+        return Arrays.asList(new Object[][] {
+                {false},
+                {true}
+        });
     }
 
     @Test(expected = ConfigurationException.class)

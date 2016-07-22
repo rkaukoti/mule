@@ -6,14 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
-import static java.util.Arrays.asList;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.arrayOf;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.dictionaryOf;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.objectTypeBuilder;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.toMetadataType;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getField;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.extension.api.annotation.Parameter;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
 import org.mule.runtime.extension.api.introspection.operation.OperationModel;
@@ -32,11 +29,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.util.Arrays.asList;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.arrayOf;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.dictionaryOf;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.objectTypeBuilder;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.toMetadataType;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getField;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -110,7 +110,8 @@ public class ParameterModelValidatorTestCase extends AbstractMuleTestCase
     @Test(expected = IllegalParameterModelDefinitionException.class)
     public void invalidParameterDictionaryDueToReservedName()
     {
-        when(invalidParameterModel.getType()).thenReturn(dictionaryOf(Map.class, objectTypeBuilder(String.class), objectTypeBuilder(InvalidPojo.class)));
+        when(invalidParameterModel.getType()).thenReturn(
+                dictionaryOf(Map.class, objectTypeBuilder(String.class), objectTypeBuilder(InvalidPojo.class)));
         when(invalidParameterModel.getName()).thenReturn("pojos");
         when(operationModel.getParameterModels()).thenReturn(asList(invalidParameterModel));
         validator.validate(extensionModel);
@@ -158,7 +159,8 @@ public class ParameterModelValidatorTestCase extends AbstractMuleTestCase
     public void invalidModelDueToNonInstantiableParameterGroup()
     {
         ParameterGroup child = new ParameterGroup(Serializable.class, getField(InvalidPojoParameterGroup.class, "nonInstantiableField"));
-        when(invalidParameterModel.getModelProperty(ParameterGroupModelProperty.class)).thenReturn(Optional.of(new ParameterGroupModelProperty(asList(child))));
+        when(invalidParameterModel.getModelProperty(ParameterGroupModelProperty.class)).thenReturn(
+                Optional.of(new ParameterGroupModelProperty(asList(child))));
         when(invalidParameterModel.getType()).thenReturn(toMetadataType(Serializable.class));
         when(invalidParameterModel.getName()).thenReturn("nonInstantiableField");
         when(operationModel.getParameterModels()).thenReturn(asList(invalidParameterModel));
@@ -168,13 +170,13 @@ public class ParameterModelValidatorTestCase extends AbstractMuleTestCase
     private static class InvalidPojo
     {
 
+        @Parameter
+        private String name;
+
         public InvalidPojo()
         {
             // needs to be instantiable
         }
-
-        @Parameter
-        private String name;
     }
 
     public static class NestedInvalidPojo

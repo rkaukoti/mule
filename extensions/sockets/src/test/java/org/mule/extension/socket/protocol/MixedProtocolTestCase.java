@@ -6,9 +6,8 @@
  */
 package org.mule.extension.socket.protocol;
 
-import org.mule.extension.socket.SocketExtensionTestCase;
-
 import org.junit.Test;
+import org.mule.extension.socket.SocketExtensionTestCase;
 
 public class MixedProtocolTestCase extends SocketExtensionTestCase
 {

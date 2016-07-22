@@ -12,7 +12,6 @@ import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.api.model.EntryPointResolverSet;
 import org.mule.runtime.core.component.DefaultComponentLifecycleAdapter;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,9 +27,10 @@ public class DefaultComponentLifecycleAdapterWithBindings extends DefaultCompone
     protected static final Logger logger = LoggerFactory.getLogger(DefaultComponentLifecycleAdapterWithBindings.class);
 
     public DefaultComponentLifecycleAdapterWithBindings(Object componentObject,
-            JavaWithBindingsComponent component,
-                                            FlowConstruct flowConstruct,
-                                            EntryPointResolverSet entryPointResolver, MuleContext muleContext) throws MuleException
+                                                        JavaWithBindingsComponent component,
+                                                        FlowConstruct flowConstruct,
+                                                        EntryPointResolverSet entryPointResolver, MuleContext muleContext)
+            throws MuleException
     {
 
         super(componentObject, component, flowConstruct, muleContext);

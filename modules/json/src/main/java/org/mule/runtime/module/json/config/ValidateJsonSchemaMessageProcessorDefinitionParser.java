@@ -8,14 +8,13 @@ package org.mule.runtime.module.json.config;
 
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
 import org.mule.runtime.module.json.validation.ValidateJsonSchemaMessageProcessor;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.util.xml.DomUtils;
 import org.w3c.dom.Element;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ValidateJsonSchemaMessageProcessorDefinitionParser extends ChildDefinitionParser
 {

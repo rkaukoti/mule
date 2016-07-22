@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.core.management;
 
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-
 import org.junit.Test;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import static org.junit.Assert.assertTrue;
 
@@ -19,16 +18,16 @@ public class LifecycleNotificationTestCase extends AbstractMuleContextTestCase
     public void testManageLifecycle() throws Exception
     {
         assertTrue(muleContext.isInitialised());
-//        muleContext.start();
-//        assertTrue(muleContext.isStarted());
-//        muleContext.stop();
-//        assertFalse(muleContext.isStarted());
-//        muleContext.dispose();
-//        assertTrue(muleContext.isDisposed());
-//        muleContext.initialise();
-//        assertTrue(muleContext.isInitialised());
-//        muleContext.start();
-//        assertTrue(muleContext.isStarted());
+        //        muleContext.start();
+        //        assertTrue(muleContext.isStarted());
+        //        muleContext.stop();
+        //        assertFalse(muleContext.isStarted());
+        //        muleContext.dispose();
+        //        assertTrue(muleContext.isDisposed());
+        //        muleContext.initialise();
+        //        assertTrue(muleContext.isInitialised());
+        //        muleContext.start();
+        //        assertTrue(muleContext.isStarted());
 
 
     }

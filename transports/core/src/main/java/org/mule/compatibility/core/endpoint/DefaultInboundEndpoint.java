@@ -60,17 +60,17 @@ public class DefaultInboundEndpoint extends AbstractEndpoint implements InboundE
                                   RetryPolicyTemplate retryPolicyTemplate,
                                   AbstractRedeliveryPolicy redeliveryPolicy,
                                   EndpointMessageProcessorChainFactory messageProcessorsFactory,
-                                  List <MessageProcessor> messageProcessors,
-                                  List <MessageProcessor> responseMessageProcessors,
+                                  List<MessageProcessor> messageProcessors,
+                                  List<MessageProcessor> responseMessageProcessors,
                                   boolean disableTransportTransformer,
                                   MediaType mimeType)
     {
-        super(connector, endpointUri, name, properties, 
-            transactionConfig, deleteUnacceptedMessage,
-            messageExchangePattern, responseTimeout, initialState, endpointEncoding, 
-            endpointBuilderName, muleContext, retryPolicyTemplate, redeliveryPolicy, messageProcessorsFactory,
-            messageProcessors, responseMessageProcessors, disableTransportTransformer,
-            mimeType);
+        super(connector, endpointUri, name, properties,
+                transactionConfig, deleteUnacceptedMessage,
+                messageExchangePattern, responseTimeout, initialState, endpointEncoding,
+                endpointBuilderName, muleContext, retryPolicyTemplate, redeliveryPolicy, messageProcessorsFactory,
+                messageProcessors, responseMessageProcessors, disableTransportTransformer,
+                mimeType);
     }
 
     @Override
@@ -138,7 +138,7 @@ public class DefaultInboundEndpoint extends AbstractEndpoint implements InboundE
     {
         EndpointMessageProcessorChainFactory factory = getMessageProcessorsFactory();
         MessageProcessor processorChain = factory.createInboundMessageProcessorChain(this, flowConstruct,
-            listener);
+                listener);
         if (processorChain instanceof MuleContextAware)
         {
             ((MuleContextAware) processorChain).setMuleContext(getMuleContext());
@@ -152,12 +152,6 @@ public class DefaultInboundEndpoint extends AbstractEndpoint implements InboundE
             ((Initialisable) processorChain).initialise();
         }
         return processorChain;
-    }
-
-    @Override
-    public void setFlowConstruct(FlowConstruct flowConstruct)
-    {
-        this.flowConstruct = flowConstruct;
     }
 
     public ExceptionListener getExceptionListener()
@@ -177,7 +171,7 @@ public class DefaultInboundEndpoint extends AbstractEndpoint implements InboundE
         this.flowConstruct = null;
         this.listener = null;
     }
-    
+
     @Override
     public int hashCode()
     {
@@ -208,7 +202,8 @@ public class DefaultInboundEndpoint extends AbstractEndpoint implements InboundE
                 ChoiceMessagingExceptionStrategy choiceMessagingExceptionStrategy = (ChoiceMessagingExceptionStrategy) exceptionListener;
                 for (MessagingExceptionHandlerAcceptor messagingExceptionHandlerAcceptor : choiceMessagingExceptionStrategy.getExceptionListeners())
                 {
-                    if (messagingExceptionHandlerAcceptor instanceof RollbackMessagingExceptionStrategy && ((RollbackMessagingExceptionStrategy) messagingExceptionHandlerAcceptor).hasMaxRedeliveryAttempts())
+                    if (messagingExceptionHandlerAcceptor instanceof RollbackMessagingExceptionStrategy &&
+                        ((RollbackMessagingExceptionStrategy) messagingExceptionHandlerAcceptor).hasMaxRedeliveryAttempts())
                     {
                         rollbackMessagingExceptionStrategy = (RollbackMessagingExceptionStrategy) messagingExceptionHandlerAcceptor;
                         break;
@@ -235,10 +230,16 @@ public class DefaultInboundEndpoint extends AbstractEndpoint implements InboundE
     {
         return getConnector().createDefaultRedeliveryPolicy(maxRedelivery);
     }
-    
+
     public FlowConstruct getFlowConstruct()
     {
         return flowConstruct;
+    }
+
+    @Override
+    public void setFlowConstruct(FlowConstruct flowConstruct)
+    {
+        this.flowConstruct = flowConstruct;
     }
 
     @Override

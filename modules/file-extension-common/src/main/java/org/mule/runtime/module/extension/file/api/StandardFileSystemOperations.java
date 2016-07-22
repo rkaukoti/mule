@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.module.extension.file.api;
 
-import static java.lang.String.format;
-import static java.nio.file.Paths.get;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.module.extension.file.api.FileDisplayConstants.MATCHER;
 import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -32,6 +28,11 @@ import java.util.function.Predicate;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.inject.Inject;
+
+import static java.lang.String.format;
+import static java.nio.file.Paths.get;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.module.extension.file.api.FileDisplayConstants.MATCHER;
 
 /**
  * Basic set of operations for extensions which perform operations
@@ -154,9 +155,8 @@ public class StandardFileSystemOperations
      * @param mode                    a {@link FileWriteMode}. Defaults to {@code OVERWRITE}
      * @param lock                    whether or not to lock the file. Defaults to false
      * @param createParentDirectories whether or not to attempt creating any parent directories which don't exists.
-     * @param encoding                when {@code content} is a {@link String}, this attribute specifies the encoding
-     *                                to be used when writing. If not set, then it defaults to
-     *                                {@link FileConnectorConfig#getDefaultWriteEncoding()}
+     * @param encoding                when {@code content} is a {@link String}, this attribute specifies the encoding to be used when
+     *                                writing. If not set, then it defaults to {@link FileConnectorConfig#getDefaultWriteEncoding()}
      * @param event                   The current {@link MuleEvent}
      * @throws IllegalArgumentException if an illegal combination of arguments is supplied
      */
@@ -348,7 +348,8 @@ public class StandardFileSystemOperations
                        @DisplayName("New Name") String to,
                        @Optional(defaultValue = "false") boolean overwrite, MuleEvent event)
     {
-        checkArgument(get(to).getNameCount() == 1, format("'to' parameter of rename operation should not contain any file separator character but '%s' was received", to));
+        checkArgument(get(to).getNameCount() == 1,
+                format("'to' parameter of rename operation should not contain any file separator character but '%s' was received", to));
         fileSystem.changeToBaseDir(config);
         path = resolvePath(path, event, "path");
         fileSystem.rename(config, path, to, overwrite);
@@ -381,7 +382,9 @@ public class StandardFileSystemOperations
             return ((FileAttributes) message.getAttributes()).getPath();
         }
 
-        throw new IllegalArgumentException(format("A %s was not specified and a default one could not be obtained from the current message attributes", attributeName));
+        throw new IllegalArgumentException(
+                format("A %s was not specified and a default one could not be obtained from the current message attributes",
+                        attributeName));
     }
 
     private Predicate<FileAttributes> getPredicate(FilePredicateBuilder builder)

@@ -6,17 +6,16 @@
  */
 package org.mule.runtime.config.spring.factories;
 
-import static org.mule.runtime.core.config.i18n.CoreMessages.failedToCreate;
-
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.transaction.TransactionManagerFactory;
+import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.TransactionManager;
 
-import org.springframework.beans.factory.FactoryBean;
-import org.springframework.beans.factory.annotation.Autowired;
+import static org.mule.runtime.core.config.i18n.CoreMessages.failedToCreate;
 
 /**
  * {@link FactoryBean} adapter for the configured {@link TransactionManagerFactory}.

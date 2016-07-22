@@ -6,10 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.model.property;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.extension.api.annotation.Extensible;
 import org.mule.runtime.extension.api.annotation.Extension;
 import org.mule.runtime.extension.api.introspection.ModelProperty;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * A custom model property which marks that an operation is augmenting

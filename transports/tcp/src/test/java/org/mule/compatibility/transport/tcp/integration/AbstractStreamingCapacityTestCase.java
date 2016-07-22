@@ -6,9 +6,7 @@
  */
 package org.mule.compatibility.transport.tcp.integration;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.functional.functional.EventCallback;
 import org.mule.functional.functional.FunctionalStreamingTestComponent;
@@ -22,7 +20,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * IMPORTANT - DO NOT RUN THIS TEST IN AN IDE WITH LOG LEVEL OF DEBUG. USE INFO TO
@@ -69,7 +69,7 @@ public abstract class AbstractStreamingCapacityTestCase extends FunctionalTestCa
 
         Object ftc = getComponent("testComponent");
         assertTrue("FunctionalStreamingTestComponent expected",
-            ftc instanceof FunctionalStreamingTestComponent);
+                ftc instanceof FunctionalStreamingTestComponent);
         assertNotNull(ftc);
         ((FunctionalStreamingTestComponent) ftc).setEventCallback(callback, size);
 

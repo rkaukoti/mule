@@ -12,10 +12,6 @@ import org.mule.runtime.module.db.internal.config.domain.param.InputParamDefinit
 import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
 import org.mule.runtime.module.db.internal.parser.SimpleQueryTemplateParser;
 import org.mule.runtime.module.db.internal.util.DefaultFileReader;
-
-import java.util.Arrays;
-import java.util.List;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.ManagedList;
@@ -24,6 +20,9 @@ import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.util.xml.DomUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class QueryTemplateBeanDefinitionParser extends AbstractMuleBeanDefinitionParser
 {
@@ -78,7 +77,8 @@ public class QueryTemplateBeanDefinitionParser extends AbstractMuleBeanDefinitio
                 }
                 else
                 {
-                    throw new IllegalArgumentException("Template must contain one of the following elements: " + Arrays.toString(QUERY_DEFINITION_ELEMENTS));
+                    throw new IllegalArgumentException(
+                            "Template must contain one of the following elements: " + Arrays.toString(QUERY_DEFINITION_ELEMENTS));
                 }
             }
         }
@@ -115,10 +115,12 @@ public class QueryTemplateBeanDefinitionParser extends AbstractMuleBeanDefinitio
 
         if (hasFileAttribute && hasTextContent)
         {
-            throw new IllegalArgumentException(String.format("Element %s cannot contain attribute file and text content simultaneously", element.getTagName()));
+            throw new IllegalArgumentException(
+                    String.format("Element %s cannot contain attribute file and text content simultaneously", element.getTagName()));
         }
 
-        BeanDefinitionBuilder queryTemplateFactory = BeanDefinitionBuilder.genericBeanDefinition(ParameterizedQueryTemplateFactoryBean.class);
+        BeanDefinitionBuilder queryTemplateFactory =
+                BeanDefinitionBuilder.genericBeanDefinition(ParameterizedQueryTemplateFactoryBean.class);
 
         if (hasFileAttribute)
         {

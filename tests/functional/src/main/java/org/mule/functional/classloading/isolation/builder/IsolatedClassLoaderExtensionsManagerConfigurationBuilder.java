@@ -7,7 +7,6 @@
 
 package org.mule.functional.classloading.isolation.builder;
 
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.EXTENSION_MANIFEST_FILE_NAME;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.config.builders.AbstractConfigurationBuilder;
@@ -16,19 +15,20 @@ import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
 import org.mule.runtime.module.extension.internal.manager.DefaultExtensionManagerAdapterFactory;
 import org.mule.runtime.module.extension.internal.manager.ExtensionManagerAdapter;
 import org.mule.runtime.module.extension.internal.manager.ExtensionManagerAdapterFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.EXTENSION_MANIFEST_FILE_NAME;
 
 /**
  * A {@link org.mule.runtime.core.api.config.ConfigurationBuilder} that creates an {@link org.mule.runtime.extension.api.ExtensionManager}.
- * It reads the extension manifest file using the extension class loader that loads the extension annotated class and register the extension to the
- * manager.
+ * It reads the extension manifest file using the extension class loader that loads the extension annotated class and register the extension
+ * to the manager.
  *
  * @since 4.0
  */
@@ -46,7 +46,8 @@ public class IsolatedClassLoaderExtensionsManagerConfigurationBuilder extends Ab
      * The extension will be loaded and registered with its corresponding class loader in order to get access
      * to the isolated {@link ClassLoader} defined for the extension.
      *
-     * @param pluginsClassLoaders the list of {@link ArtifactClassLoader} created for each plugin found in the dependencies (either plugin or extension plugin).
+     * @param pluginsClassLoaders the list of {@link ArtifactClassLoader} created for each plugin found in the dependencies (either plugin
+     *                            or extension plugin).
      */
     public IsolatedClassLoaderExtensionsManagerConfigurationBuilder(final List<ArtifactClassLoader> pluginsClassLoaders)
     {
@@ -86,7 +87,9 @@ public class IsolatedClassLoaderExtensionsManagerConfigurationBuilder extends Ab
             }
             else
             {
-                LOGGER.debug("Discarding plugin artifact class loader with artifactName '{}' due to it doesn't have an extension descriptor", artifactName);
+                LOGGER.debug(
+                        "Discarding plugin artifact class loader with artifactName '{}' due to it doesn't have an extension descriptor",
+                        artifactName);
             }
         }
     }
@@ -96,11 +99,12 @@ public class IsolatedClassLoaderExtensionsManagerConfigurationBuilder extends Ab
      *
      * @param classLoader the plugin {@link ClassLoader} to look for the resource
      * @return a {@link URL} or null if it is not present
-     * @throws NoSuchMethodException if findResources {@link Method} is no found by reflection
-     * @throws IllegalAccessException if findResources {@link Method} cannot be accessed
+     * @throws NoSuchMethodException     if findResources {@link Method} is no found by reflection
+     * @throws IllegalAccessException    if findResources {@link Method} cannot be accessed
      * @throws InvocationTargetException if findResources {@link Method} throws an error
      */
-    private URL getExtensionManifest(final ClassLoader classLoader) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException
+    private URL getExtensionManifest(final ClassLoader classLoader)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException
     {
         Method findResourceMethod = classLoader.getClass().getMethod("findResource", String.class);
         findResourceMethod.setAccessible(true);

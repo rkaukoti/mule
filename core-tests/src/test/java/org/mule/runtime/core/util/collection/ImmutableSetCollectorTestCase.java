@@ -6,19 +6,19 @@
  */
 package org.mule.runtime.core.util.collection;
 
-import static java.util.Arrays.asList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.util.ArrayList;
 import java.util.Set;
 
-import org.junit.Test;
+import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class ImmutableSetCollectorTestCase extends AbstractMuleTestCase
@@ -28,7 +28,7 @@ public class ImmutableSetCollectorTestCase extends AbstractMuleTestCase
     {
         Set<String> collected = asList(new String[] {"a", "b", "a", "c"}).stream().collect(new ImmutableSetCollector<>());
         assertThat(collected, hasSize(3));
-        assertThat(collected, containsInAnyOrder(new String[]{"a", "b", "c"}));
+        assertThat(collected, containsInAnyOrder(new String[] {"a", "b", "c"}));
     }
 
     @Test

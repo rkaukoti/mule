@@ -14,6 +14,12 @@ import org.mule.runtime.module.management.i18n.ManagementMessages;
 import org.mule.runtime.module.management.support.AutoDiscoveryJmxSupportFactory;
 import org.mule.runtime.module.management.support.JmxSupport;
 import org.mule.runtime.module.management.support.JmxSupportFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.tanukisoftware.wrapper.WrapperSystemPropertyUtil;
+import org.tanukisoftware.wrapper.jmx.WrapperManager;
+import org.tanukisoftware.wrapper.jmx.WrapperManagerMBean;
+import org.tanukisoftware.wrapper.security.WrapperPermission;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -24,13 +30,6 @@ import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.tanukisoftware.wrapper.WrapperSystemPropertyUtil;
-import org.tanukisoftware.wrapper.jmx.WrapperManager;
-import org.tanukisoftware.wrapper.jmx.WrapperManagerMBean;
-import org.tanukisoftware.wrapper.security.WrapperPermission;
 
 /**
  * This agent integrates Java Service Wrapper into Mule. See
@@ -56,20 +55,59 @@ public class WrapperManagerAgent extends AbstractAgent
      * This property is set by the native launcher, used for extra checks.
      */
     private static final String WRAPPER_SYSTEM_PROPERTY_NAME = "wrapper.native_library";
-
-    private MBeanServer mBeanServer;
-    private ObjectName wrapperName;
-
-    private JmxSupportFactory jmxSupportFactory = AutoDiscoveryJmxSupportFactory.getInstance();
-    private JmxSupport jmxSupport = jmxSupportFactory.getJmxSupport();
-
     // atomic reference to avoid unnecessary construction calls
     private final AtomicReference<WrapperManagerMBean> wrapperManagerRef = new AtomicReference<WrapperManagerMBean>();
+    private MBeanServer mBeanServer;
+    private ObjectName wrapperName;
+    private JmxSupportFactory jmxSupportFactory = AutoDiscoveryJmxSupportFactory.getInstance();
+    private JmxSupport jmxSupport = jmxSupportFactory.getJmxSupport();
 
 
     public WrapperManagerAgent()
     {
         super("wrapper-manager");
+    }
+
+    /**
+     * This method is a copy of the implementation of
+     * {@link WrapperManagerMBean#getJavaPID()} and it is here because that method is
+     * not present in the {@link WrapperManagerMBean} until version 3.2.3.
+     * SpringSource's TC Server uses The wrapper version 3.2.0 so having this method
+     * here allows us to be compatible with TC Server.
+     *
+     * @return The PID of the Java process.
+     * @see <a href="http://www.mulesoft.org/jira/browse/MULE-5106">MULE-5106</a>
+     */
+    public static int getJavaPID()
+    {
+        SecurityManager sm = System.getSecurityManager();
+        if (sm != null)
+        {
+            sm.checkPermission(new WrapperPermission("getJavaPID"));
+        }
+
+        return WrapperSystemPropertyUtil.getIntProperty("wrapper.java.pid", 0);
+    }
+
+    /**
+     * This method is a copy of the implementation of
+     * {@link WrapperManagerMBean#getWrapperPID()} and it is here because that method
+     * is not present in the {@link WrapperManagerMBean} until version 3.2.3.
+     * SpringSource's TC Server uses The wrapper version 3.2.0 so having this method
+     * here allows us to be compatible with TC Server.
+     *
+     * @return The PID of the Wrapper process.
+     * @see <a href="http://www.mulesoft.org/jira/browse/MULE-5106">MULE-5106</a>
+     */
+    public static int getWrapperPID()
+    {
+        SecurityManager sm = System.getSecurityManager();
+        if (sm != null)
+        {
+            sm.checkPermission(new WrapperPermission("getWrapperPID"));
+        }
+
+        return WrapperSystemPropertyUtil.getIntProperty("wrapper.pid", 0);
     }
 
     @Override
@@ -155,6 +193,11 @@ public class WrapperManagerAgent extends AbstractAgent
         // nothing to do
     }
 
+
+    // /////////////////////////////////////////////////////////////////////////
+    // Getters and setters
+    // /////////////////////////////////////////////////////////////////////////
+
     @Override
     public void stop() throws MuleException
     {
@@ -175,11 +218,6 @@ public class WrapperManagerAgent extends AbstractAgent
         }
     }
 
-
-    // /////////////////////////////////////////////////////////////////////////
-    // Getters and setters
-    // /////////////////////////////////////////////////////////////////////////
-
     @Override
     public String getDescription()
     {
@@ -192,48 +230,6 @@ public class WrapperManagerAgent extends AbstractAgent
         {
             return "Wrapper Manager: Mule PID #" + getJavaPID() + ", Wrapper PID #" + getWrapperPID();
         }
-    }
-
-    /**
-     * This method is a copy of the implementation of
-     * {@link WrapperManagerMBean#getJavaPID()} and it is here because that method is
-     * not present in the {@link WrapperManagerMBean} until version 3.2.3.
-     * SpringSource's TC Server uses The wrapper version 3.2.0 so having this method
-     * here allows us to be compatible with TC Server.
-     *
-     * @return The PID of the Java process.
-     * @see <a href="http://www.mulesoft.org/jira/browse/MULE-5106">MULE-5106</a>
-     */
-    public static int getJavaPID()
-    {
-        SecurityManager sm = System.getSecurityManager();
-        if (sm != null)
-        {
-            sm.checkPermission(new WrapperPermission("getJavaPID"));
-        }
-
-        return WrapperSystemPropertyUtil.getIntProperty("wrapper.java.pid", 0);
-    }
-
-    /**
-     * This method is a copy of the implementation of
-     * {@link WrapperManagerMBean#getWrapperPID()} and it is here because that method
-     * is not present in the {@link WrapperManagerMBean} until version 3.2.3.
-     * SpringSource's TC Server uses The wrapper version 3.2.0 so having this method
-     * here allows us to be compatible with TC Server.
-     *
-     * @return The PID of the Wrapper process.
-     * @see <a href="http://www.mulesoft.org/jira/browse/MULE-5106">MULE-5106</a>
-     */
-    public static int getWrapperPID()
-    {
-        SecurityManager sm = System.getSecurityManager();
-        if (sm != null)
-        {
-            sm.checkPermission(new WrapperPermission("getWrapperPID"));
-        }
-
-        return WrapperSystemPropertyUtil.getIntProperty("wrapper.pid", 0);
     }
 
     protected void lazyInitWrapperManager()

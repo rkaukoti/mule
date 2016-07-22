@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.core.processor;
 
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.runtime.core.DefaultMuleEvent;
@@ -28,6 +27,8 @@ import org.mule.runtime.core.transformer.TransformerTemplate;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.TemplateParser;
 import org.mule.runtime.core.util.TemplateParser.PatternInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -39,8 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 /**
  * <code>InvokerMessageProcessor</code> invokes a specified method of an object. An
@@ -88,7 +88,7 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
             if (method == null)
             {
                 throw new InitialisationException(CoreMessages.methodWithParamsNotFoundOnObject(methodName,
-                    argumentTypes, object.getClass()), this);
+                        argumentTypes, object.getClass()), this);
             }
         }
         else
@@ -109,7 +109,7 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
             else
             {
                 throw new InitialisationException(CoreMessages.methodWithNumParamsNotFoundOnObject(
-                    methodName, arguments.size(), object), this);
+                        methodName, arguments.size(), object), this);
             }
         }
 
@@ -124,8 +124,8 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
         if (logger.isDebugEnabled())
         {
             logger.debug(String.format(
-                "No object instance speciedied.  Looking up single instance of type %s in mule registry",
-                objectType));
+                    "No object instance speciedied.  Looking up single instance of type %s in mule registry",
+                    objectType));
         }
 
         try
@@ -135,14 +135,14 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
         catch (RegistrationException e)
         {
             throw new InitialisationException(
-                CoreMessages.initialisationFailure(String.format(
-                    "Muliple instances of '%s' were found in the registry so you need to configure a specific instance",
-                    objectType)), this);
+                    CoreMessages.initialisationFailure(String.format(
+                            "Muliple instances of '%s' were found in the registry so you need to configure a specific instance",
+                            objectType)), this);
         }
         if (object == null)
         {
             throw new InitialisationException(CoreMessages.initialisationFailure(String.format(
-                "No instance of '%s' was found in the registry", objectType)), this);
+                    "No instance of '%s' was found in the registry", objectType)), this);
 
         }
     }
@@ -156,7 +156,7 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
         if (logger.isDebugEnabled())
         {
             logger.debug(String.format("Invoking  '%s' of '%s' with arguments: '%s'", method.getName(),
-                object, args));
+                    object, args));
         }
 
         try
@@ -175,7 +175,7 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
     }
 
     protected Object[] evaluateArguments(MuleEvent event, List<?> argumentTemplates)
-        throws MessagingException
+            throws MessagingException
     {
         int argSize = argumentTemplates != null ? argumentTemplates.size() : 0;
         Object[] args = new Object[argSize];
@@ -187,7 +187,7 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
                 if (argumentTemplate != null)
                 {
                     args[i] = transformArgument(evaluateExpressionCandidate(argumentTemplate, event),
-                        argumentTypes[i]);
+                            argumentTypes[i]);
                 }
             }
             return args;
@@ -200,7 +200,7 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
 
     @SuppressWarnings("unchecked")
     protected Object evaluateExpressionCandidate(Object expressionCandidate, MuleEvent event)
-        throws TransformerException
+            throws TransformerException
     {
         if (expressionCandidate instanceof Collection<?>)
         {
@@ -219,7 +219,7 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
             for (Entry<Object, Object> entry : mapTemplate.entrySet())
             {
                 newMap.put(evaluateExpressionCandidate(entry.getKey(), event), evaluateExpressionCandidate(
-                    entry.getValue(), event));
+                        entry.getValue(), event));
             }
             return newMap;
         }
@@ -305,7 +305,7 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
             final TransformerTemplate template = new TransformerTemplate(new TransformerTemplate.OverwitePayloadCallback(result));
             template.setReturnDataType(DataType.builder(DataType.OBJECT).charset(getDefaultEncoding(muleContext)).build());
             event.setMessage(muleContext.getTransformationService().applyTransformers(event.getMessage(), event,
-                             Collections.<Transformer>singletonList(template)));
+                    Collections.<Transformer>singletonList(template)));
             return event;
         }
         else
@@ -333,8 +333,8 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
     public String toString()
     {
         return String.format(
-            "InvokerMessageProcessor [name=%s, object=%s, methodName=%s, argExpressions=%s, argTypes=%s]",
-            name, object, methodName, arguments, argumentTypes);
+                "InvokerMessageProcessor [name=%s, object=%s, methodName=%s, argExpressions=%s, argTypes=%s]",
+                name, object, methodName, arguments, argumentTypes);
     }
 
     @Override

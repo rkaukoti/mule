@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.core.api;
 
+import java.util.Optional;
+
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
-
-import java.util.Optional;
 
 /**
  * Defines a customization of a service within the {@code MuleContext}.

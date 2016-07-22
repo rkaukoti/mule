@@ -6,8 +6,6 @@
  */
 package org.mule.test.infrastructure.process;
 
-import static org.mule.test.infrastructure.process.MuleContextProcessBuilder.MULE_CORE_EXTENSIONS_PROPERTY;
-
 import org.mule.runtime.container.api.MuleCoreExtension;
 import org.mule.runtime.core.MuleServer;
 import org.mule.runtime.core.api.config.MuleProperties;
@@ -22,6 +20,8 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mule.test.infrastructure.process.MuleContextProcessBuilder.MULE_CORE_EXTENSIONS_PROPERTY;
 
 public class MuleContextProcessApplication
 {
@@ -52,7 +52,8 @@ public class MuleContextProcessApplication
             System.out.println("Test app directory created");
             System.out.println("Creating app config file");
             String applicationConfiguration = System.getProperty(MuleContextProcessBuilder.CONFIG_FILE_KEY);
-            File applicationConfigurationFile = new File(MuleContextProcessApplication.class.getClassLoader().getResource(applicationConfiguration).getFile());
+            File applicationConfigurationFile =
+                    new File(MuleContextProcessApplication.class.getClassLoader().getResource(applicationConfiguration).getFile());
             if (!applicationConfigurationFile.exists())
             {
                 throw new RuntimeException("Could not find file for application configuration " + applicationConfiguration);
@@ -71,7 +72,8 @@ public class MuleContextProcessApplication
 
             while (true)
             {
-                if (System.currentTimeMillis() - initialTime > (Integer.valueOf(System.getProperty(MuleContextProcessBuilder.TIMEOUT_IN_SECONDS)) * 1000))
+                if (System.currentTimeMillis() - initialTime >
+                    (Integer.valueOf(System.getProperty(MuleContextProcessBuilder.TIMEOUT_IN_SECONDS)) * 1000))
                 {
                     System.exit(-1);
                 }
@@ -127,7 +129,7 @@ public class MuleContextProcessApplication
 
     private static void replaceSystemOutputWithSocketOutput() throws IOException
     {
-        String tcpPortForLoggingPropertyValue  = System.getProperty(MuleContextProcessBuilder.LOG_PORT_PROPERTY);
+        String tcpPortForLoggingPropertyValue = System.getProperty(MuleContextProcessBuilder.LOG_PORT_PROPERTY);
         logSocket = new Socket("localhost", Integer.valueOf(tcpPortForLoggingPropertyValue));
         System.setOut(new PrintStream(logSocket.getOutputStream(), true));
         System.setErr(new PrintStream(logSocket.getOutputStream(), true));

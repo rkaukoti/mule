@@ -6,19 +6,18 @@
  */
 package org.mule.compatibility.transport.file;
 
+import org.junit.Test;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.api.client.MuleClient;
+
+import java.nio.charset.Charset;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mule.compatibility.transport.file.FileTestUtils.createDataFile;
 import static org.mule.compatibility.transport.file.FileTestUtils.createFolder;
-
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.client.MuleClient;
-
-import java.nio.charset.Charset;
-
-import org.junit.Test;
 
 public class FileEncodingFunctionalTestCase extends AbstractFileFunctionalTestCase
 {

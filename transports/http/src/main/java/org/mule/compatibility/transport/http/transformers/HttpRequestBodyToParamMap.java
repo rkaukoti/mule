@@ -6,9 +6,7 @@
  */
 package org.mule.compatibility.transport.http.transformers;
 
-import static org.mule.compatibility.transport.http.HttpConstants.FORM_URLENCODED_CONTENT_TYPE;
-import static org.mule.compatibility.transport.http.HttpConstants.METHOD_GET;
-
+import org.apache.commons.codec.net.URLCodec;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MuleEvent;
@@ -23,7 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.codec.net.URLCodec;
+import static org.mule.compatibility.transport.http.HttpConstants.FORM_URLENCODED_CONTENT_TYPE;
+import static org.mule.compatibility.transport.http.HttpConstants.METHOD_GET;
 
 public class HttpRequestBodyToParamMap extends AbstractMessageTransformer
 {

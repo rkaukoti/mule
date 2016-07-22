@@ -6,9 +6,7 @@
  */
 package org.mule.runtime.core.interceptor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
@@ -22,7 +20,8 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class InterceptorTestCase extends AbstractMuleContextTestCase
 {
@@ -141,7 +140,16 @@ public class InterceptorTestCase extends AbstractMuleContextTestCase
                      + INTERCEPTOR_ONE + BEFORE + INTERCEPTOR_TWO + BEFORE + INTERCEPTOR_THREE + BEFORE
                      + COMPONENT + INTERCEPTOR_THREE + AFTER + INTERCEPTOR_TWO + AFTER + INTERCEPTOR_ONE
                      + AFTER + INTERCEPTOR_THREE + AFTER + INTERCEPTOR_TWO + AFTER + INTERCEPTOR_ONE + AFTER,
-            result.getMessageAsString());
+                result.getMessageAsString());
+    }
+
+    protected Flow createUninitializedFlow() throws Exception
+    {
+        TestComponent component = new TestComponent();
+        Flow flow = new Flow("name", muleContext);
+        flow.setMessageProcessors(new ArrayList<MessageProcessor>());
+        flow.getMessageProcessors().add(component);
+        return flow;
     }
 
     class TestInterceptor extends AbstractEnvelopeInterceptor
@@ -190,15 +198,6 @@ public class InterceptorTestCase extends AbstractMuleContextTestCase
         {
             return event;
         }
-    }
-
-    protected Flow createUninitializedFlow() throws Exception
-    {
-        TestComponent component = new TestComponent();
-        Flow flow = new Flow("name",muleContext);
-        flow.setMessageProcessors(new ArrayList<MessageProcessor>());
-        flow.getMessageProcessors().add(component);
-        return flow;
     }
 
     class TestComponent extends AbstractComponent

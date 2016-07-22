@@ -8,24 +8,21 @@ package org.mule.compatibility.core.endpoint;
 
 import org.mule.compatibility.core.api.endpoint.MalformedEndpointException;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * <code>ResourceNameEndpointBuilder</code> extracts a resource name from a uri
  * endpointUri
- * 
  */
 public class ResourceNameEndpointURIBuilder extends AbstractEndpointURIBuilder
 {
 
-    protected static final Logger logger = LoggerFactory.getLogger(ResourceNameEndpointURIBuilder.class);
-    
     public static final String RESOURCE_INFO_PROPERTY = "resourceInfo";
+    protected static final Logger logger = LoggerFactory.getLogger(ResourceNameEndpointURIBuilder.class);
 
     @Override
     protected void setEndpoint(URI uri, Properties props) throws MalformedEndpointException
@@ -39,7 +36,7 @@ public class ResourceNameEndpointURIBuilder extends AbstractEndpointURIBuilder
 
         String path = uri.getPath();
         String authority = uri.getAuthority();
-        
+
         if (path != null && path.length() != 0)
         {
             if (address.length() > 0)
@@ -51,7 +48,7 @@ public class ResourceNameEndpointURIBuilder extends AbstractEndpointURIBuilder
         else if (authority != null && !authority.equals(address))
         {
             address += authority;
-            
+
             int atCharIndex = -1;
             if (address != null && address.length() != 0 && ((atCharIndex = address.indexOf("@")) > -1))
             {
@@ -60,7 +57,7 @@ public class ResourceNameEndpointURIBuilder extends AbstractEndpointURIBuilder
             }
 
         }
-        
+
         // is user info specified?
         int y = address.indexOf("@");
         if (y > -1)
@@ -75,7 +72,7 @@ public class ResourceNameEndpointURIBuilder extends AbstractEndpointURIBuilder
         {
             userInfo = credentials;
         }
-        
+
         int x = address.indexOf(":", y);
         if (x > -1)
         {

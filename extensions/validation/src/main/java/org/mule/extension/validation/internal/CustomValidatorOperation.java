@@ -6,18 +6,18 @@
  */
 package org.mule.extension.validation.internal;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
 import org.mule.extension.validation.api.ObjectSource;
 import org.mule.extension.validation.api.ValidationExtension;
 import org.mule.extension.validation.api.ValidationOptions;
+import org.mule.extension.validation.api.Validator;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.registry.MuleRegistry;
 import org.mule.runtime.extension.api.annotation.ParameterGroup;
 import org.mule.runtime.extension.api.annotation.param.UseConfig;
-import org.mule.extension.validation.api.Validator;
-
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 
 /**
  * Defines a stateful operation of {@link ValidationExtension} which
@@ -43,14 +43,15 @@ import com.google.common.cache.LoadingCache;
 public final class CustomValidatorOperation extends ValidationSupport
 {
 
-    private final LoadingCache<ValidatorSource, Validator> class2ValidatorCache = CacheBuilder.newBuilder().build(new CacheLoader<ValidatorSource, Validator>()
-    {
-        @Override
-        public Validator load(ValidatorSource validatorSource) throws Exception
-        {
-            return validatorSource.createValidator();
-        }
-    });
+    private final LoadingCache<ValidatorSource, Validator> class2ValidatorCache =
+            CacheBuilder.newBuilder().build(new CacheLoader<ValidatorSource, Validator>()
+            {
+                @Override
+                public Validator load(ValidatorSource validatorSource) throws Exception
+                {
+                    return validatorSource.createValidator();
+                }
+            });
 
     public void customValidator(@ParameterGroup ObjectSource<Validator> source,
                                 @ParameterGroup ValidationOptions options,
@@ -68,7 +69,8 @@ public final class CustomValidatorOperation extends ValidationSupport
     {
         if (logger.isDebugEnabled())
         {
-            logger.debug("Successfully executed custom validator of type {} on message: {}", validator.getClass().getName(), event.getMessage());
+            logger.debug("Successfully executed custom validator of type {} on message: {}", validator.getClass().getName(),
+                    event.getMessage());
         }
     }
 

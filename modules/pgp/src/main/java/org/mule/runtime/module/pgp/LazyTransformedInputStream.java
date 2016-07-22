@@ -6,20 +6,20 @@
  */
 package org.mule.runtime.module.pgp;
 
+import org.apache.commons.lang.Validate;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-import org.apache.commons.lang.Validate;
-
 /**
  * A {@link LazyTransformedInputStream} represents an {@link InputStream} that
  * has been transformed when someone needs to read from it.
- * 
+ *
  * Internally, the {@link LazyTransformedInputStream} has a pipe that is written by an
  * {@link StreamTransformer} according to a {@link TransformPolicy}.
- * 
+ *
  * The {@link LazyTransformedInputStream} uses a separate thread for writing on the pipe
  * and delays it destruction till this {@link InputStream} is closed of finalized. In this way
  * we avoid any problems with broken pipes.
@@ -30,7 +30,7 @@ public class LazyTransformedInputStream extends InputStream
     private PipedOutputStream out;
     private TransformPolicy transformPolicy;
     private StreamTransformer transformer;
-    
+
     public LazyTransformedInputStream(TransformPolicy transformPolicy, StreamTransformer transformer) throws IOException
     {
         Validate.notNull(transformPolicy, "The transformPolicy should not be null");
@@ -56,13 +56,13 @@ public class LazyTransformedInputStream extends InputStream
         this.in.close();
         this.transformPolicy.release();
     }
-    
+
     @Override
     protected void finalize() throws Throwable
     {
         this.transformPolicy.release();
     }
-    
+
     @Override
     public synchronized void mark(int readlimit)
     {
@@ -113,7 +113,7 @@ public class LazyTransformedInputStream extends InputStream
     {
         return out;
     }
-    
+
     StreamTransformer getTransformer()
     {
         return transformer;

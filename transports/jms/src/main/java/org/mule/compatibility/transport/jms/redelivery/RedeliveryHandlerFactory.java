@@ -15,10 +15,10 @@ package org.mule.compatibility.transport.jms.redelivery;
  */
 public interface RedeliveryHandlerFactory
 {
-    
+
     /**
      * @return {@link RedeliveryHandler} new redelivery handler instance.
      */
     RedeliveryHandler create();
-    
+
 }

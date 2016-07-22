@@ -6,7 +6,8 @@
  */
 package org.mule.runtime.module.json.transformers;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
+import de.odysseus.staxon.json.JsonXMLInputFactory;
+import de.odysseus.staxon.json.JsonXMLOutputFactory;
 
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleEvent;
@@ -28,8 +29,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stax.StAXResult;
 import javax.xml.transform.stax.StAXSource;
 
-import de.odysseus.staxon.json.JsonXMLInputFactory;
-import de.odysseus.staxon.json.JsonXMLOutputFactory;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Convert Json to Json using XSLT
@@ -63,7 +63,8 @@ public class JsonXsltTransformer extends XsltTransformer
         {
             if (inputs.getInputStream() != null)
             {
-                source = new StAXSource(inputFactory.createXMLStreamReader(inputs.getInputStream(), enc == null ? UTF_8.name() : enc.name()));
+                source = new StAXSource(
+                        inputFactory.createXMLStreamReader(inputs.getInputStream(), enc == null ? UTF_8.name() : enc.name()));
             }
             else
             {

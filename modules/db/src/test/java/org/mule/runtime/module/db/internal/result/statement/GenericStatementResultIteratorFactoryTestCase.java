@@ -7,11 +7,7 @@
 
 package org.mule.runtime.module.db.internal.result.statement;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.db.internal.domain.query.QueryType.STORE_PROCEDURE_CALL;
+import org.junit.Test;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
 import org.mule.runtime.module.db.internal.domain.param.QueryParam;
 import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
@@ -24,7 +20,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collections;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.db.internal.domain.query.QueryType.STORE_PROCEDURE_CALL;
 
 @SmallTest
 public class GenericStatementResultIteratorFactoryTestCase extends AbstractMuleTestCase
@@ -38,7 +38,8 @@ public class GenericStatementResultIteratorFactoryTestCase extends AbstractMuleT
     {
         DbConnection connection = createMockConnection(true);
 
-        StatementResultIterator statementResultIterator = resultIteratorFactory.create(connection, statement, new QueryTemplate(null, STORE_PROCEDURE_CALL, Collections.<QueryParam>emptyList()), null);
+        StatementResultIterator statementResultIterator = resultIteratorFactory.create(connection, statement,
+                new QueryTemplate(null, STORE_PROCEDURE_CALL, Collections.<QueryParam>emptyList()), null);
 
         assertThat(statementResultIterator, instanceOf(StatementResultIterator.class));
     }

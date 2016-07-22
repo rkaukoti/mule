@@ -23,7 +23,7 @@ public class RemoveFlowVariableTransformer extends AbstractRemoveVariablePropert
     @Override
     protected void removeProperty(MuleEvent event, String propertyName)
     {
-       event.removeFlowVariable(propertyName);
+        event.removeFlowVariable(propertyName);
     }
 
     @Override

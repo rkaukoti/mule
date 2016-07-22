@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.core.el.mvel;
 
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.mvel2.ParserConfiguration;
 import org.mule.mvel2.integration.VariableResolver;
 import org.mule.mvel2.integration.VariableResolverFactory;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.construct.FlowConstruct;
 
 public class EventVariableResolverFactory extends MessageVariableResolverFactory
 {
@@ -32,9 +32,6 @@ public class EventVariableResolverFactory extends MessageVariableResolverFactory
     /**
      * Convenience constructor to allow for more concise creation of VariableResolverFactory chains without
      * and performance overhead incurred by using a builder.
-     * 
-     * @param delegate
-     * @param next
      */
     public EventVariableResolverFactory(ParserConfiguration parserConfiguration,
                                         MuleContext muleContext,
@@ -53,12 +50,12 @@ public class EventVariableResolverFactory extends MessageVariableResolverFactory
             if (FLOW.equals(name))
             {
                 return new MuleImmutableVariableResolver<FlowContext>(FLOW, (new FlowContext(
-                    event.getFlowConstruct())), null);
+                        event.getFlowConstruct())), null);
             }
             else if (MVELExpressionLanguageContext.MULE_EVENT_INTERNAL_VARIABLE.equals(name))
             {
                 return new MuleImmutableVariableResolver<MuleEvent>(
-                    MVELExpressionLanguageContext.MULE_EVENT_INTERNAL_VARIABLE, event, null);
+                        MVELExpressionLanguageContext.MULE_EVENT_INTERNAL_VARIABLE, event, null);
             }
         }
         return super.getVariableResolver(name);

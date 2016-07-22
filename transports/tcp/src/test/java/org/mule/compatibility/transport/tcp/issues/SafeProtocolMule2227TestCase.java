@@ -6,11 +6,10 @@
  */
 package org.mule.compatibility.transport.tcp.issues;
 
+import org.junit.Test;
 import org.mule.compatibility.transport.tcp.protocols.SafeProtocolTestCase;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.client.MuleClient;
-
-import org.junit.Test;
 
 public class SafeProtocolMule2227TestCase extends SafeProtocolTestCase
 {
@@ -37,7 +36,7 @@ public class SafeProtocolMule2227TestCase extends SafeProtocolTestCase
         {
             client.send("tcp://localhost:" + dynamicPort1.getNumber() + "?connector=safe", TEST_MESSAGE, null);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             // an error is ok - we were losing the JVM before
         }

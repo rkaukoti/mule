@@ -6,14 +6,14 @@
  */
 package org.mule.test.config.spring;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.api.serialization.DefaultObjectSerializer;
 import org.mule.runtime.core.api.serialization.ObjectSerializer;
 import org.mule.runtime.core.serialization.internal.AbstractObjectSerializer;
-import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -21,13 +21,21 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
 public class InjectDefaultObjectSerializerTestCase extends FunctionalTestCase
 {
+
+    private final String name;
+    private final String[] configFiles;
+    public InjectDefaultObjectSerializerTestCase(String name, String[] configFiles)
+    {
+        this.name = name;
+        this.configFiles = configFiles;
+    }
 
     @Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> data()
@@ -36,15 +44,6 @@ public class InjectDefaultObjectSerializerTestCase extends FunctionalTestCase
                 {"Default Serializer", new String[] {}},
                 {"Custom Serializer", new String[] {"custom-object-serializer-config.xml"}}
         });
-    }
-
-    private final String name;
-    private final String[] configFiles;
-
-    public InjectDefaultObjectSerializerTestCase(String name, String[] configFiles)
-    {
-        this.name = name;
-        this.configFiles = configFiles;
     }
 
     @Override
@@ -58,7 +57,8 @@ public class InjectDefaultObjectSerializerTestCase extends FunctionalTestCase
     {
         TestObjectSerializerInjectionTarget injectionTarget = muleContext.getInjector().inject(new TestObjectSerializerInjectionTarget());
         assertThat(muleContext.getObjectSerializer(), is(sameInstance(injectionTarget.getObjectSerializer())));
-        assertThat(injectionTarget.getObjectSerializer(), is(sameInstance(muleContext.getRegistry().get(MuleProperties.OBJECT_SERIALIZER))));
+        assertThat(injectionTarget.getObjectSerializer(),
+                is(sameInstance(muleContext.getRegistry().get(MuleProperties.OBJECT_SERIALIZER))));
     }
 
     public static class TestObjectSerializerInjectionTarget

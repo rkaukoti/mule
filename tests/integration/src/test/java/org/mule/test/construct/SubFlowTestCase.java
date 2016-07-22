@@ -6,12 +6,12 @@
  */
 package org.mule.test.construct;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.lifecycle.LifecycleTrackerProcessor;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class SubFlowTestCase extends FunctionalTestCase
 {
@@ -28,9 +28,9 @@ public class SubFlowTestCase extends FunctionalTestCase
         assertEquals("1xyz2", result.getMessageAsString());
 
         assertEquals("[setMuleContext, setService, setMuleContext, initialise, start]",
-            result.getMessage().getOutboundProperty(LifecycleTrackerProcessor.LIFECYCLE_TRACKER_PROCESSOR_PROPERTY));
+                result.getMessage().getOutboundProperty(LifecycleTrackerProcessor.LIFECYCLE_TRACKER_PROCESSOR_PROPERTY));
         assertEquals(muleContext.getRegistry().lookupFlowConstruct("ProcessorChainViaProcessorRef"),
-            result.getFlowVariable(LifecycleTrackerProcessor.FLOW_CONSRUCT_PROPERTY));
+                result.getFlowVariable(LifecycleTrackerProcessor.FLOW_CONSRUCT_PROPERTY));
     }
 
     @Test
@@ -41,11 +41,11 @@ public class SubFlowTestCase extends FunctionalTestCase
         assertEquals("1xyz2", result.getMessageAsString());
 
         assertEquals("[setMuleContext, setService, setMuleContext, initialise, start]",
-            result.getMessage().getOutboundProperty(LifecycleTrackerProcessor.LIFECYCLE_TRACKER_PROCESSOR_PROPERTY));
+                result.getMessage().getOutboundProperty(LifecycleTrackerProcessor.LIFECYCLE_TRACKER_PROCESSOR_PROPERTY));
         assertEquals(muleContext.getRegistry().lookupFlowConstruct("ProcessorChainViaFlowRef"),
-            result.getFlowVariable(LifecycleTrackerProcessor.FLOW_CONSRUCT_PROPERTY));
+                result.getFlowVariable(LifecycleTrackerProcessor.FLOW_CONSRUCT_PROPERTY));
     }
-    
+
     @Test
     public void testSubFlowViaProcessorRef() throws Exception
     {
@@ -53,9 +53,9 @@ public class SubFlowTestCase extends FunctionalTestCase
         assertEquals("1xyz2", result.getMessageAsString());
 
         assertEquals("[setMuleContext, setService, setMuleContext, initialise, start]",
-            result.getMessage().getOutboundProperty(LifecycleTrackerProcessor.LIFECYCLE_TRACKER_PROCESSOR_PROPERTY));
+                result.getMessage().getOutboundProperty(LifecycleTrackerProcessor.LIFECYCLE_TRACKER_PROCESSOR_PROPERTY));
         assertEquals(muleContext.getRegistry().lookupFlowConstruct("SubFlowViaProcessorRef"),
-            result.getFlowVariable(LifecycleTrackerProcessor.FLOW_CONSRUCT_PROPERTY));
+                result.getFlowVariable(LifecycleTrackerProcessor.FLOW_CONSRUCT_PROPERTY));
     }
 
     @Test
@@ -66,9 +66,9 @@ public class SubFlowTestCase extends FunctionalTestCase
         assertEquals("1xyz2", result.getMessageAsString());
 
         assertEquals("[setMuleContext, setService, setMuleContext, initialise, start]",
-            result.getMessage().getOutboundProperty(LifecycleTrackerProcessor.LIFECYCLE_TRACKER_PROCESSOR_PROPERTY));
+                result.getMessage().getOutboundProperty(LifecycleTrackerProcessor.LIFECYCLE_TRACKER_PROCESSOR_PROPERTY));
         assertEquals(muleContext.getRegistry().lookupFlowConstruct("SubFlowViaFlowRef"),
-            result.getFlowVariable(LifecycleTrackerProcessor.FLOW_CONSRUCT_PROPERTY));
+                result.getFlowVariable(LifecycleTrackerProcessor.FLOW_CONSRUCT_PROPERTY));
     }
 
     @Test
@@ -111,7 +111,8 @@ public class SubFlowTestCase extends FunctionalTestCase
     @Test
     public void testFlowWithSameGlobalChainSingletonTwice() throws Exception
     {
-        assertEquals("0xyzxyz", getPayloadAsString(flowRunner("flowWithSameGlobalChainSingletonTwice").withPayload("0").run().getMessage()));
+        assertEquals("0xyzxyz",
+                getPayloadAsString(flowRunner("flowWithSameGlobalChainSingletonTwice").withPayload("0").run().getMessage()));
     }
 
 }

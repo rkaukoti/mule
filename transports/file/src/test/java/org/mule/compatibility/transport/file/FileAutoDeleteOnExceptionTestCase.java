@@ -6,8 +6,8 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.junit.Assert.assertFalse;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.tck.probe.PollingProber;
@@ -18,8 +18,7 @@ import org.mule.tck.probe.file.FileExists;
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
 
 public class FileAutoDeleteOnExceptionTestCase extends FunctionalTestCase
 {

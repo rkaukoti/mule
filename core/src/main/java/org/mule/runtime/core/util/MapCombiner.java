@@ -6,6 +6,9 @@
  */
 package org.mule.runtime.core.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,9 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * This allows a collection (list) of maps to be defined in Spring, via the "list" property, and
  * then presents all the maps as a single combine map at run time.  For efficiency the combination
@@ -24,11 +24,9 @@ import org.slf4j.LoggerFactory;
  */
 public class MapCombiner implements Map<Object, Object>, Serializable
 {
-    private static final long serialVersionUID = -6291404712112000383L;
- 
     public static final String LIST = "list"; // the setter/getter
     public static final int UNLIMITED_DEPTH = -1;
-
+    private static final long serialVersionUID = -6291404712112000383L;
     private transient Logger logger = LoggerFactory.getLogger(getClass());
     private int maxDepth = UNLIMITED_DEPTH;
     private List list;
@@ -39,7 +37,7 @@ public class MapCombiner implements Map<Object, Object>, Serializable
     {
         if (!isMerged)
         {
-            for (Iterator maps = list.iterator(); maps.hasNext();)
+            for (Iterator maps = list.iterator(); maps.hasNext(); )
             {
                 mergeMaps(maxDepth, cachedMerge, (Map) maps.next());
             }
@@ -55,7 +53,7 @@ public class MapCombiner implements Map<Object, Object>, Serializable
 
     private void mergeMaps(int headroom, Map accumulator, Map extra)
     {
-        for (Iterator keys = extra.keySet().iterator(); keys.hasNext();)
+        for (Iterator keys = extra.keySet().iterator(); keys.hasNext(); )
         {
             Object key = keys.next();
             Object valueExtra = extra.get(key);
@@ -86,16 +84,16 @@ public class MapCombiner implements Map<Object, Object>, Serializable
         }
     }
 
-    public void setList(List list)
-    {
-        assertNotMerged();
-        this.list = list;
-    }
-
     public List getList()
     {
         assertNotMerged();
         return list;
+    }
+
+    public void setList(List list)
+    {
+        assertNotMerged();
+        this.list = list;
     }
 
     private synchronized void assertNotMerged()

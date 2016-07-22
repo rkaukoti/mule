@@ -7,14 +7,9 @@
 
 package org.mule.runtime.module.db.integration.storedprocedure;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertMessageContains;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.getAllPlanetRecords;
-import static org.mule.runtime.module.db.integration.model.Planet.EARTH;
-import static org.mule.runtime.module.db.integration.model.Planet.MARS;
-import static org.mule.runtime.module.db.integration.model.Planet.VENUS;
-
+import org.hamcrest.core.AllOf;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -25,9 +20,13 @@ import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.hamcrest.core.AllOf;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertMessageContains;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.getAllPlanetRecords;
+import static org.mule.runtime.module.db.integration.model.Planet.EARTH;
+import static org.mule.runtime.module.db.integration.model.Planet.MARS;
+import static org.mule.runtime.module.db.integration.model.Planet.VENUS;
 
 public abstract class AbstractStoredProcedureStreamingReturningResultsetTestCase extends AbstractDbIntegrationTestCase
 {
@@ -52,7 +51,9 @@ public abstract class AbstractStoredProcedureStreamingReturningResultsetTestCase
         responses.add(response);
 
         assertEquals(3, responses.size());
-        assertThat(responses, AllOf.allOf(ContainsMessage.mapPayloadWith("NAME", MARS.getName()), ContainsMessage.mapPayloadWith("NAME", EARTH.getName()), ContainsMessage.mapPayloadWith("NAME", VENUS.getName())));
+        assertThat(responses,
+                AllOf.allOf(ContainsMessage.mapPayloadWith("NAME", MARS.getName()), ContainsMessage.mapPayloadWith("NAME", EARTH.getName()),
+                        ContainsMessage.mapPayloadWith("NAME", VENUS.getName())));
     }
 
     @Test

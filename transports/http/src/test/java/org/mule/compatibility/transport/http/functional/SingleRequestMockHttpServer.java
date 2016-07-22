@@ -6,14 +6,13 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
+import org.apache.commons.httpclient.HttpParser;
 import org.mule.compatibility.transport.http.HttpRequest;
 import org.mule.compatibility.transport.http.RequestLine;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-
-import org.apache.commons.httpclient.HttpParser;
 
 public abstract class SingleRequestMockHttpServer extends MockHttpServer
 {

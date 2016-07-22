@@ -71,7 +71,7 @@ public class ExpressionConfig
         {
             expressionString = expressionString.substring(expressionPrefix.length());
             expressionString = expressionString.substring(0,
-                expressionString.length() - expressionPostfix.length());
+                    expressionString.length() - expressionPostfix.length());
         }
         this.expression = expressionString;
     }

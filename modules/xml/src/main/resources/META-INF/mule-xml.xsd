@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/xml"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:mule="http://www.mulesoft.org/schema/mule/core"
             xmlns:spring="http://www.springframework.org/schema/beans"
             xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
+            xmlns="http://www.mulesoft.org/schema/mule/xml"
             targetNamespace="http://www.mulesoft.org/schema/mule/xml"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">
@@ -45,7 +45,7 @@
     <xsd:element name="xpath-filter" type="xpathFilterType" substitutionGroup="mule:abstract-filter">
         <xsd:annotation>
             <xsd:documentation>
-        The XPath filter uses the JAXP libraries to filter XPath expressions. Available as of Mule 2.2.
+                The XPath filter uses the JAXP libraries to filter XPath expressions. Available as of Mule 2.2.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -75,9 +75,9 @@
     <xsd:element name="schema-validation-filter" type="schemaValidationFilterType" substitutionGroup="mule:abstract-filter">
         <xsd:annotation>
             <xsd:documentation>
-            The schema validation filter uses the JAXP libraries to validate your message against a schema. Available as of Mule 2.2.
+                The schema validation filter uses the JAXP libraries to validate your message against a schema. Available as of Mule 2.2.
             </xsd:documentation>
-         </xsd:annotation>
+        </xsd:annotation>
     </xsd:element>
 
     <xsd:complexType name="schemaValidationFilterType">
@@ -107,7 +107,8 @@
                 <xsd:attribute name="resourceResolver-ref" type="xsd:string">
                     <xsd:annotation>
                         <xsd:documentation>
-                            Reference to a Spring bean that implements <code>org.w3c.dom.ls.LSResourceResolver</code>. By default a <code>oorg.mule.runtime.module.xml.util.MuleResourceResolver</code> instance will be used to resolve from the file system, from a URL, or from the classpath, in that specific order.
+                            Reference to a Spring bean that implements <code>org.w3c.dom.ls.LSResourceResolver</code>. By default a <code>oorg.mule.runtime.module.xml.util.MuleResourceResolver</code> instance
+                            will be used to resolve from the file system, from a URL, or from the classpath, in that specific order.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -167,7 +168,9 @@
                  substitutionGroup="mule:abstract-transformer">
         <xsd:annotation>
             <xsd:documentation>
-                The JXPathExtractor is a simple transformer that evaluates an XPath expression against the given bean and returns the result. By default, a single result will be returned. If multiple values are expected, set the {{singleResult}} property to {{false}}. In this case a {{List}} of values will be returned. Note the property is currently ignored for non-String/XML payloads.
+                The JXPathExtractor is a simple transformer that evaluates an XPath expression against the given bean and returns the result. By default, a single result will be returned. If multiple
+                values are expected, set the {{singleResult}} property to {{false}}. In this case a {{List}} of values will be returned. Note the property is currently ignored for non-String/XML
+                payloads.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -185,12 +188,12 @@
                     </xsd:element>
                 </xsd:sequence>
                 <xsd:attribute name="expression" type="xsd:string">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                The XPath expression.
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:attribute>
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            The XPath expression.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
                 <xsd:attribute name="outputType">
                     <xsd:annotation>
                         <xsd:documentation>
@@ -217,7 +220,7 @@
     </xsd:complexType>
 
     <xsd:element name="xpath-extractor-transformer" type="xpathExtractorType"
-        substitutionGroup="mule:abstract-transformer">
+                 substitutionGroup="mule:abstract-transformer">
         <xsd:annotation>
             <xsd:documentation>
                 The XPathExtractor is a simple transformer that evaluates an XPath expression
@@ -265,11 +268,11 @@
             </xsd:simpleType>
             <xsd:simpleType>
                 <xsd:restriction base="xsd:NMTOKEN">
-                    <xsd:enumeration value="NODESET" />
-                    <xsd:enumeration value="NODE" />
-                    <xsd:enumeration value="STRING" />
-                    <xsd:enumeration value="BOOLEAN" />
-                    <xsd:enumeration value="NUMBER" />
+                    <xsd:enumeration value="NODESET"/>
+                    <xsd:enumeration value="NODE"/>
+                    <xsd:enumeration value="STRING"/>
+                    <xsd:enumeration value="BOOLEAN"/>
+                    <xsd:enumeration value="NUMBER"/>
                 </xsd:restriction>
             </xsd:simpleType>
         </xsd:union>
@@ -317,7 +320,7 @@
     <xsd:complexType name="xstreamTransformerType">
         <xsd:complexContent>
             <xsd:extension base="mule:abstractTransformerType">
-                 <xsd:sequence>
+                <xsd:sequence>
                     <xsd:element name="alias" type="aliasType" minOccurs="0" maxOccurs="unbounded">
                         <xsd:annotation>
                             <xsd:documentation>
@@ -340,7 +343,7 @@
                 <xsd:attribute name="driverClass" type="mule:substitutableClass">
                     <xsd:annotation>
                         <xsd:documentation>
-                            Which XStream driver class to use.  Unless you know what you are doing the default will be fine for most cases.
+                            Which XStream driver class to use. Unless you know what you are doing the default will be fine for most cases.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -370,11 +373,11 @@
         <xsd:complexContent>
             <xsd:extension base="mule:abstractTransformerType">
                 <xsd:attribute name="jaxbContext-ref" type="xsd:string" use="required">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                A reference to a JaxbContext created as a Spring bean
-                            </xsd:documentation>
-                        </xsd:annotation>
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            A reference to a JaxbContext created as a Spring bean
+                        </xsd:documentation>
+                    </xsd:annotation>
                 </xsd:attribute>
             </xsd:extension>
         </xsd:complexContent>
@@ -383,23 +386,23 @@
     <xsd:element name="jaxb-context" type="jaxbContextType" substitutionGroup="mule:abstract-extension"/>
 
     <xsd:complexType name="jaxbContextType">
-         <xsd:complexContent>
+        <xsd:complexContent>
             <xsd:extension base="mule:abstractExtensionType">
-        <xsd:attribute name="name" type="xsd:string" use="required">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        The reference name of this context.  Usually this will be referenced by a JAXB transformer
-                    </xsd:documentation>
-                </xsd:annotation>
-        </xsd:attribute>
-        <xsd:attribute name="packageNames" type="xsd:string" use="required">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        A colon-separated list of packages where JAXB classes live
-                    </xsd:documentation>
-                </xsd:annotation>
-        </xsd:attribute>
-        </xsd:extension>
+                <xsd:attribute name="name" type="xsd:string" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            The reference name of this context. Usually this will be referenced by a JAXB transformer
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="packageNames" type="xsd:string" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            A colon-separated list of packages where JAXB classes live
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
 
@@ -407,7 +410,8 @@
 
     <xsd:element name="xslt-transformer" type="xsltTransformerType" substitutionGroup="mule:abstract-transformer">
         <xsd:annotation>
-            <xsd:documentation>The XSLT transformer uses XSLT to transform the message payload. Transformation objects are pooled for better performance. You can set transformation context properties on the transformer and can pull these properties from the message using an Expression.
+            <xsd:documentation>The XSLT transformer uses XSLT to transform the message payload. Transformation objects are pooled for better performance. You can set transformation context properties
+                on the transformer and can pull these properties from the message using an Expression.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -431,7 +435,8 @@
                 </xsd:sequence>
                 <xsd:attribute name="maxIdleTransformers" type="mule:substitutableInt">
                     <xsd:annotation>
-                        <xsd:documentation>Transformers are pooled for better throughput, since performing and XSL transformation can be expensive. This attribute controls how many instances will remain idle in the transformer pool.
+                        <xsd:documentation>Transformers are pooled for better throughput, since performing and XSL transformation can be expensive. This attribute controls how many instances will
+                            remain idle in the transformer pool.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -443,19 +448,22 @@
                 </xsd:attribute>
                 <xsd:attribute name="xsl-file" type="xsd:string">
                     <xsd:annotation>
-                        <xsd:documentation>The full path to the XSL template file to use when performing the transformation. This can be a path on the local file system or on the classpath. This attribute is not required if the &lt;xslt-text&gt; element has been set.
+                        <xsd:documentation>The full path to the XSL template file to use when performing the transformation. This can be a path on the local file system or on the classpath. This
+                            attribute is not required if the &lt;xslt-text&gt; element has been set.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
                 <xsd:attribute name="uriResolver-ref" type="xsd:string">
                     <xsd:annotation>
-                        <xsd:documentation>References the URI resolver to use when validating the XSL output. If not set, a default resolver will be used that checks for resources on the local file system and classpath.
+                        <xsd:documentation>References the URI resolver to use when validating the XSL output. If not set, a default resolver will be used that checks for resources on the local file
+                            system and classpath.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
                 <xsd:attribute name="transformerFactoryClass" type="xsd:string">
                     <xsd:annotation>
-                        <xsd:documentation>The fully qualified class name of the {{javax.xml.TransformerFactory}} instance to use. If not specified, the default JDK factory {{TransformerFactory.newInstance()}} will be used.
+                        <xsd:documentation>The fully qualified class name of the {{javax.xml.TransformerFactory}} instance to use. If not specified, the default JDK factory
+                            {{TransformerFactory.newInstance()}} will be used.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -465,7 +473,8 @@
 
     <xsd:element name="xquery-transformer" type="xqueryTransformerType" substitutionGroup="mule:abstract-transformer">
         <xsd:annotation>
-            <xsd:documentation>An Xml transformer uses XQuery to transform the message payload. Transformation objects are pooled for better performance. You can set transformation context properties on the transformer and can pull these properties from the message using an expression.
+            <xsd:documentation>An Xml transformer uses XQuery to transform the message payload. Transformation objects are pooled for better performance. You can set transformation context properties
+                on the transformer and can pull these properties from the message using an expression.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -491,7 +500,8 @@
                 </xsd:sequence>
                 <xsd:attribute name="maxIdleTransformers" type="mule:substitutableInt">
                     <xsd:annotation>
-                        <xsd:documentation>Transformers are pooled for better throughput, since performing and XQuery transformation can be expensive. This attribute controls how many instances will remain idle in the transformer pool.
+                        <xsd:documentation>Transformers are pooled for better throughput, since performing and XQuery transformation can be expensive. This attribute controls how many instances will
+                            remain idle in the transformer pool.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -503,7 +513,8 @@
                 </xsd:attribute>
                 <xsd:attribute name="xquery-file" type="xsd:string">
                     <xsd:annotation>
-                        <xsd:documentation>The full path to the XQuery template file to use when performing the transformation. This can be a path on the local file system or on the classpath. This attribute is not required if the &lt;xquery-text&gt; element has been set.
+                        <xsd:documentation>The full path to the XQuery template file to use when performing the transformation. This can be a path on the local file system or on the classpath. This
+                            attribute is not required if the &lt;xquery-text&gt; element has been set.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>

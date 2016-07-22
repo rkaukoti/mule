@@ -6,10 +6,7 @@
  */
 package org.mule.compatibility.config.spring.parsers.endpoint;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
@@ -26,10 +23,12 @@ import org.mule.tck.testmodels.mule.TestResponseTransformer;
 
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class EndpointTranformersInAttributesTestCase extends FunctionalTestCase
-{    
+{
 
     @Override
     protected String getConfigFile()
@@ -211,7 +210,7 @@ public class EndpointTranformersInAttributesTestCase extends FunctionalTestCase
         assertNotNull(processors);
         assertEquals(2, processors.size());
         assertTrue(processors.get(0) instanceof MessageProcessorChain);
-        assertTrue(((MessageProcessorChain)processors.get(0)).getMessageProcessors().get(0) instanceof StringAppendTransformer);
+        assertTrue(((MessageProcessorChain) processors.get(0)).getMessageProcessors().get(0) instanceof StringAppendTransformer);
         assertTrue(processors.get(1) instanceof TestResponseTransformer);
 
         endpoint = (ImmutableEndpoint) ((Flow) flow).getMessageProcessors().get(0);
@@ -230,14 +229,14 @@ public class EndpointTranformersInAttributesTestCase extends FunctionalTestCase
         assertTrue(processors.get(1) instanceof TestResponseTransformer);
     }
 
-    public interface MessagePropertiesTransformer
-    {
-
-    }
-
     public EndpointFactory getEndpointFactory()
     {
         return (EndpointFactory) muleContext.getRegistry().lookupObject(MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY);
+    }
+
+    public interface MessagePropertiesTransformer
+    {
+
     }
 
 }

@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.core.routing.filters;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
 
 public class MessagePropertyFilterTestCase extends AbstractMuleTestCase
 {

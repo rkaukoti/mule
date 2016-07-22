@@ -6,8 +6,11 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
+import org.apache.commons.httpclient.Cookie;
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.HttpVersion;
+import org.apache.commons.httpclient.cookie.MalformedCookieException;
 import org.mule.compatibility.core.api.transport.MessageTypeNotSupportedException;
 import org.mule.compatibility.core.transport.AbstractMuleMessageFactory;
 import org.mule.runtime.api.metadata.MediaType;
@@ -18,6 +21,8 @@ import org.mule.runtime.core.util.CaseInsensitiveHashMap;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.core.util.PropertiesUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,19 +38,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.apache.commons.httpclient.Cookie;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.HttpVersion;
-import org.apache.commons.httpclient.cookie.MalformedCookieException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class HttpMuleMessageFactory extends AbstractMuleMessageFactory
 {
-    private static Logger log = LoggerFactory.getLogger(HttpMuleMessageFactory.class);
     private static final Charset DEFAULT_ENCODING = UTF_8;
-
+    private static Logger log = LoggerFactory.getLogger(HttpMuleMessageFactory.class);
     private boolean enableCookies = false;
     private String cookieSpec;
     private MessageExchangePattern exchangePattern = MessageExchangePattern.REQUEST_RESPONSE;
@@ -57,7 +55,7 @@ public class HttpMuleMessageFactory extends AbstractMuleMessageFactory
     @Override
     protected Class<?>[] getSupportedTransportMessageTypes()
     {
-        return new Class[]{HttpRequest.class, HttpMethod.class};
+        return new Class[] {HttpRequest.class, HttpMethod.class};
     }
 
     @Override
@@ -158,7 +156,7 @@ public class HttpMuleMessageFactory extends AbstractMuleMessageFactory
         httpHeaders.put(HttpConnector.HTTP_HEADERS, new HashMap<String, Object>(headers));
 
         Charset encoding = getEncoding(messageBuilder, headers);
-        
+
         queryParameters.put(HttpConnector.HTTP_QUERY_PARAMS, processQueryParams(uri, encoding));
 
         //Make any URI params available ans inbound message headers
@@ -204,7 +202,7 @@ public class HttpMuleMessageFactory extends AbstractMuleMessageFactory
     }
 
     Map<String, Serializable> convertHeadersToMap(Header[] headersArray, String uri)
-        throws URISyntaxException
+            throws URISyntaxException
     {
         Map<String, Serializable> headersMap = new CaseInsensitiveHashMap();
         for (final Header header : headersArray)
@@ -228,7 +226,7 @@ public class HttpMuleMessageFactory extends AbstractMuleMessageFactory
                     {
                         // concat
                         headersMap.put(header.getName(),
-                            headersMap.get(header.getName()) + "," + header.getValue());
+                                headersMap.get(header.getName()) + "," + header.getValue());
                     }
                     else
                     {
@@ -246,12 +244,12 @@ public class HttpMuleMessageFactory extends AbstractMuleMessageFactory
     }
 
     private void putCookieHeaderInMapAsAClient(Map<String, Serializable> headersMap, final Header header, String uri)
-        throws URISyntaxException
+            throws URISyntaxException
     {
         try
         {
             final Cookie[] newCookies = CookieHelper.parseCookiesAsAClient(header.getValue(), cookieSpec,
-                new URI(uri));
+                    new URI(uri));
             final Serializable preExistentCookies = headersMap.get(HttpConstants.HEADER_COOKIE_SET);
             final Serializable mergedCookie = (Serializable) CookieHelper.putAndMergeCookie(preExistentCookies, newCookies);
             headersMap.put(HttpConstants.HEADER_COOKIE_SET, mergedCookie);
@@ -263,7 +261,7 @@ public class HttpMuleMessageFactory extends AbstractMuleMessageFactory
     }
 
     private void putCookieHeaderInMapAsAServer(Map<String, Serializable> headersMap, final Header header, String uri)
-        throws URISyntaxException
+            throws URISyntaxException
     {
         if (enableCookies)
         {
@@ -289,7 +287,7 @@ public class HttpMuleMessageFactory extends AbstractMuleMessageFactory
         }
         return encoding;
     }
-    
+
     private void rewriteConnectionAndKeepAliveHeaders(Map<String, Serializable> headers)
     {
         // rewrite Connection and Keep-Alive headers based on HTTP version
@@ -327,23 +325,23 @@ public class HttpMuleMessageFactory extends AbstractMuleMessageFactory
     {
         int i = uri.indexOf("?");
         String queryString = "";
-        if(i > -1)
+        if (i > -1)
         {
             queryString = uri.substring(i + 1);
             headers.putAll(PropertiesUtils.getPropertiesFromQueryString(queryString));
         }
         headers.put(HttpConnector.HTTP_QUERY_STRING, queryString);
     }
-    
+
     protected HashMap<String, Serializable> processQueryParams(String uri, Charset encoding) throws UnsupportedEncodingException
     {
         HashMap<String, Serializable> httpParams = new HashMap<>();
-        
+
         int i = uri.indexOf("?");
-        if(i > -1)
+        if (i > -1)
         {
             String queryString = uri.substring(i + 1);
-            for (StringTokenizer st = new StringTokenizer(queryString, "&"); st.hasMoreTokens();)
+            for (StringTokenizer st = new StringTokenizer(queryString, "&"); st.hasMoreTokens(); )
             {
                 String token = st.nextToken();
                 int idx = token.indexOf('=');
@@ -354,11 +352,11 @@ public class HttpMuleMessageFactory extends AbstractMuleMessageFactory
                 else if (idx > 0)
                 {
                     addQueryParamToMap(httpParams, unescape(token.substring(0, idx), encoding),
-                        unescape(token.substring(idx + 1), encoding));
+                            unescape(token.substring(idx + 1), encoding));
                 }
             }
         }
-            
+
         return httpParams;
     }
 
@@ -382,16 +380,16 @@ public class HttpMuleMessageFactory extends AbstractMuleMessageFactory
             httpParams.put(key, list);
         }
     }
-    
+
     private String unescape(String escapedValue, Charset encoding) throws UnsupportedEncodingException
     {
-        if(escapedValue != null)
+        if (escapedValue != null)
         {
             return URLDecoder.decode(escapedValue, encoding.name());
         }
         return escapedValue;
     }
-    
+
 
     protected void convertMultiPartHeaders(Map<String, Serializable> headers)
     {

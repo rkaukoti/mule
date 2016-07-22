@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.core.util;
 
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.util.Calendar;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -60,7 +59,7 @@ public class NumberUtilsTestCase extends AbstractMuleTestCase
         {
             // need to cast to Object, otherwise compiler would resolve method to
             // superclass' implementation
-            NumberUtils.toLong((Object)null);
+            NumberUtils.toLong((Object) null);
             fail();
         }
         catch (IllegalArgumentException e)

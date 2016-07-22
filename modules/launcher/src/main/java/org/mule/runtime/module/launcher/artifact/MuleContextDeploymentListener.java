@@ -11,8 +11,8 @@ import org.mule.runtime.core.api.context.notification.MuleContextListener;
 import org.mule.runtime.module.launcher.DeploymentListener;
 
 /**
-* Delegates {@link MuleContextListener} notifications to a {@link DeploymentListener}
-*/
+ * Delegates {@link MuleContextListener} notifications to a {@link DeploymentListener}
+ */
 public class MuleContextDeploymentListener implements MuleContextListener
 {
 

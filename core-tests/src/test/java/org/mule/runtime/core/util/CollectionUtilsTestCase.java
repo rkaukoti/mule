@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.util;
 
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
@@ -15,8 +16,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-
-import org.junit.Test;
 
 import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
@@ -57,7 +56,7 @@ public class CollectionUtilsTestCase extends AbstractMuleTestCase
     {
         String[] objects = new String[] {"foo", "bar", "baz"};
         assertTrue(Arrays.equals(objects, CollectionUtils.toArrayOfComponentType(Arrays.asList(objects),
-                                                                                 String.class)));
+                String.class)));
     }
 
     @Test
@@ -83,7 +82,7 @@ public class CollectionUtilsTestCase extends AbstractMuleTestCase
 
         assertEquals("[foo]", CollectionUtils.toString(c, false));
         assertEquals("[" + SystemUtils.LINE_SEPARATOR + "foo" + SystemUtils.LINE_SEPARATOR + "]",
-                     CollectionUtils.toString(c, true));
+                CollectionUtils.toString(c, true));
     }
 
     @Test

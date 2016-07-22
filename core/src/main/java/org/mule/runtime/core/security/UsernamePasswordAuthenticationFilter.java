@@ -42,7 +42,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
      */
     @Override
     public void authenticate(MuleEvent event)
-        throws SecurityException, SecurityProviderNotFoundException, UnknownAuthenticationTypeException
+            throws SecurityException, SecurityProviderNotFoundException, UnknownAuthenticationTypeException
     {
         Authentication authentication = getAuthenticationToken(event);
         Authentication authResult;
@@ -79,11 +79,13 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
         Object usernameEval = expressionManager.evaluate(username, event);
         Object passwordEval = expressionManager.evaluate(password, event);
 
-        if (usernameEval == null) {
+        if (usernameEval == null)
+        {
             throw new UnauthorisedException(CoreMessages.authNoCredentials());
         }
 
-        if (passwordEval == null) {
+        if (passwordEval == null)
+        {
             throw new UnauthorisedException(CoreMessages.authNoCredentials());
         }
 

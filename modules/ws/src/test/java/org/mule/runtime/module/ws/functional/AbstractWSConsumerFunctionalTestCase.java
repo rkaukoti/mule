@@ -7,10 +7,8 @@
 package org.mule.runtime.module.ws.functional;
 
 
-import static java.util.Collections.emptyMap;
-import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
-import static org.mule.runtime.module.ws.functional.SoapFaultCodeMatcher.hasFaultCode;
-
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.ws.consumer.SoapFaultException;
@@ -19,23 +17,22 @@ import org.mule.tck.junit4.rule.DynamicPort;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
+import static java.util.Collections.emptyMap;
+import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
+import static org.mule.runtime.module.ws.functional.SoapFaultCodeMatcher.hasFaultCode;
 
 public abstract class AbstractWSConsumerFunctionalTestCase extends FunctionalTestCase
 {
 
+    protected static final String ECHO_REQUEST = "<tns:echo xmlns:tns=\"http://consumer.ws.module.runtime.mule.org/\">" +
+                                                 "<text>Hello</text></tns:echo>";
+    protected static final String EXPECTED_ECHO_RESPONSE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+                                                           "<ns2:echoResponse xmlns:ns2=\"http://consumer.ws.module.runtime.mule.org/\">" +
+                                                           "<text>Hello</text></ns2:echoResponse>";
     @Rule
     public DynamicPort dynamicPort = new DynamicPort("port");
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-
-    protected static final String ECHO_REQUEST = "<tns:echo xmlns:tns=\"http://consumer.ws.module.runtime.mule.org/\">" +
-                                                 "<text>Hello</text></tns:echo>";
-
-    protected static final String EXPECTED_ECHO_RESPONSE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-                                                           "<ns2:echoResponse xmlns:ns2=\"http://consumer.ws.module.runtime.mule.org/\">" +
-                                                           "<text>Hello</text></ns2:echoResponse>";
 
     protected void assertValidResponse(String flowName) throws Exception
     {
@@ -58,7 +55,8 @@ public abstract class AbstractWSConsumerFunctionalTestCase extends FunctionalTes
         assertSoapFault(flowName, message, emptyMap(), expectedFaultCode);
     }
 
-    protected void assertSoapFault(String flowName, String message, Map<String, Serializable> properties, String expectedFaultCode) throws Exception
+    protected void assertSoapFault(String flowName, String message, Map<String, Serializable> properties, String expectedFaultCode)
+            throws Exception
     {
         expectedException.expect(SoapFaultException.class);
         expectedException.expect(hasFaultCode(expectedFaultCode));

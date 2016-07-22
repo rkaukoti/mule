@@ -6,9 +6,7 @@
  */
 package org.mule.compatibility.transport.http.filters;
 
-import static org.mule.compatibility.transport.http.HttpConnector.HTTP_PARAMS_PROPERTY;
-import static org.mule.compatibility.transport.http.HttpConstants.HEADER_AUTHORIZATION;
-import org.mule.compatibility.transport.http.HttpConstants;
+import org.apache.commons.codec.binary.Base64;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.security.Authentication;
@@ -16,10 +14,10 @@ import org.mule.runtime.core.api.security.SecurityContext;
 import org.mule.runtime.core.api.security.SecurityException;
 import org.mule.runtime.core.api.security.SecurityProviderNotFoundException;
 import org.mule.runtime.core.api.security.UnauthorisedException;
-
-import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.mule.compatibility.transport.http.HttpConstants.HEADER_AUTHORIZATION;
 
 
 /**

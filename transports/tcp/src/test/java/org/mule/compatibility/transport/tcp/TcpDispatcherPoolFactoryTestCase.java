@@ -6,18 +6,16 @@
  */
 package org.mule.compatibility.transport.tcp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.core.transport.ConfigurableKeyedObjectPool;
 import org.mule.compatibility.core.transport.ConfigurableKeyedObjectPoolFactory;
 import org.mule.compatibility.core.transport.DefaultConfigurableKeyedObjectPool;
 import org.mule.compatibility.core.transport.DefaultConfigurableKeyedObjectPoolFactory;
-import org.mule.compatibility.transport.tcp.TcpConnector;
 import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TcpDispatcherPoolFactoryTestCase extends FunctionalTestCase
 {
@@ -25,20 +23,6 @@ public class TcpDispatcherPoolFactoryTestCase extends FunctionalTestCase
     protected String getConfigFile()
     {
         return "tcp-dispatcher-pool-factory-config.xml";
-    }
-
-    public static class StubConfigurableKeyedObjectPool extends DefaultConfigurableKeyedObjectPool
-    {
-
-    }
-
-    public static class StubDispatcherPoolFactory implements ConfigurableKeyedObjectPoolFactory
-    {
-        @Override
-        public ConfigurableKeyedObjectPool createObjectPool()
-        {
-            return new StubConfigurableKeyedObjectPool();
-        }
     }
 
     @Test
@@ -61,5 +45,19 @@ public class TcpDispatcherPoolFactoryTestCase extends FunctionalTestCase
         TcpConnector tcpConnector = (TcpConnector) connector;
         assertEquals(StubDispatcherPoolFactory.class, tcpConnector.getDispatcherPoolFactory().getClass());
         assertEquals(StubConfigurableKeyedObjectPool.class, tcpConnector.getDispatchers().getClass());
+    }
+
+    public static class StubConfigurableKeyedObjectPool extends DefaultConfigurableKeyedObjectPool
+    {
+
+    }
+
+    public static class StubDispatcherPoolFactory implements ConfigurableKeyedObjectPoolFactory
+    {
+        @Override
+        public ConfigurableKeyedObjectPool createObjectPool()
+        {
+            return new StubConfigurableKeyedObjectPool();
+        }
     }
 }

@@ -7,13 +7,10 @@
 
 package org.mule.compatibility.transport.file;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.timeout;
-import static org.mockito.Mockito.verify;
-
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
-import org.mule.compatibility.transport.file.FileMessageReceiver;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
 import org.mule.tck.size.SmallTest;
@@ -22,9 +19,10 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Comparator;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.verify;
 
 @SmallTest
 public class FileMessageReceiverComparatorCreationTestCase extends AbstractMuleContextEndpointTestCase
@@ -42,7 +40,7 @@ public class FileMessageReceiverComparatorCreationTestCase extends AbstractMuleC
         InboundEndpoint endpoint = createEndpoint();
 
         FileMessageReceiver receiver = new FileMessageReceiver(endpoint.getConnector(), mock(Flow.class), endpoint,
-                                                               readFolder.getRoot().getAbsolutePath(), null, null, RECEIVE_TIMEOUT);
+                readFolder.getRoot().getAbsolutePath(), null, null, RECEIVE_TIMEOUT);
 
         receiver.connect();
 

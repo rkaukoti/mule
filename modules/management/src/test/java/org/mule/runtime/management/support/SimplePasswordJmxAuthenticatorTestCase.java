@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.management.support;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.module.management.support.SimplePasswordJmxAuthenticator;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
@@ -19,9 +21,6 @@ import java.util.Set;
 import javax.management.remote.JMXPrincipal;
 import javax.security.auth.Subject;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -34,7 +33,7 @@ public class SimplePasswordJmxAuthenticatorTestCase extends AbstractMuleTestCase
     private SimplePasswordJmxAuthenticator authenticator;
 
     @Before
-    public void setUpAuthenticator () throws Exception
+    public void setUpAuthenticator() throws Exception
     {
         authenticator = new SimplePasswordJmxAuthenticator();
     }
@@ -119,7 +118,7 @@ public class SimplePasswordJmxAuthenticatorTestCase extends AbstractMuleTestCase
     }
 
     @Test
-    public void testInvalidAuthToken ()
+    public void testInvalidAuthToken()
     {
         try
         {
@@ -182,7 +181,7 @@ public class SimplePasswordJmxAuthenticatorTestCase extends AbstractMuleTestCase
     public void testInvalidPassword()
     {
         authenticator.setCredentials(getValidCredentials());
-        
+
         try
         {
             final String[] token = {"mule", "wrongpassword"};
@@ -195,7 +194,7 @@ public class SimplePasswordJmxAuthenticatorTestCase extends AbstractMuleTestCase
         }
     }
 
-    protected Map<String, String> getValidCredentials ()
+    protected Map<String, String> getValidCredentials()
     {
         Map<String, String> credentials = new HashMap<String, String>(1);
         credentials.put(VALID_AUTH_TOKEN[0], VALID_AUTH_TOKEN[1]);

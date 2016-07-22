@@ -10,7 +10,7 @@ import org.mule.runtime.core.retry.PolicyStatus;
 
 /**
  * A RetryPolicy takes some action each time an exception occurs and returns a {@link PolicyStatus}
- * which indicates whether the policy is exhausted or should continue to retry.  
+ * which indicates whether the policy is exhausted or should continue to retry.
  */
 public interface RetryPolicy
 {

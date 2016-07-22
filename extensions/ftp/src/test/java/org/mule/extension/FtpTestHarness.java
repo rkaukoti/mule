@@ -6,10 +6,9 @@
  */
 package org.mule.extension;
 
-import org.mule.extension.ftp.api.FtpFileAttributes;
-
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TestRule;
+import org.mule.extension.ftp.api.FtpFileAttributes;
 
 /**
  * A {@link TestRule} which provides tools and environment for

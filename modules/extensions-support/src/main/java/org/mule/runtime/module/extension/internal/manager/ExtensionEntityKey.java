@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.manager;
 
-import org.mule.runtime.extension.api.annotation.Extension;
-
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.mule.runtime.extension.api.annotation.Extension;
 
 /**
  * This class is the key that represents an Extension in the {@link ExtensionRegistry}

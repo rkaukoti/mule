@@ -6,13 +6,8 @@
  */
 package org.mule.runtime.core.routing;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
@@ -25,21 +20,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class ForeachTestCase extends AbstractMuleContextTestCase
 {
+    private static String ERR_NUMBER_MESSAGES = "Not a correct number of messages processed";
+    private static String ERR_PAYLOAD_TYPE = "Type error on processed payloads";
+    private static String ERR_OUTPUT = "Messages processed incorrectly";
     protected Foreach simpleForeach;
     protected Foreach nestedForeach;
     protected ArrayList<MuleEvent> processedEvents;
 
-    private static String ERR_NUMBER_MESSAGES = "Not a correct number of messages processed";
-    private static String ERR_PAYLOAD_TYPE = "Type error on processed payloads";
-    private static String ERR_OUTPUT = "Messages processed incorrectly";
-
     @Before
-    public void initialise() throws MuleException 
+    public void initialise() throws MuleException
     {
         processedEvents = new ArrayList<>();
         simpleForeach = createForeach(getSimpleMessageProcessors());
@@ -92,7 +90,7 @@ public class ForeachTestCase extends AbstractMuleContextTestCase
 
     @Test
     public void arrayPayload() throws Exception
-    {        
+    {
         String[] array = new String[2];
         array[0] = "bar";
         array[1] = "zip";
@@ -130,7 +128,7 @@ public class ForeachTestCase extends AbstractMuleContextTestCase
 
         assertSimpleProcessedMessages();
     }
-    
+
     @Test
     public void nestedArrayListPayload() throws Exception
     {
@@ -208,7 +206,7 @@ public class ForeachTestCase extends AbstractMuleContextTestCase
         nestedForeach.process(getTestEvent(iterable.iterator()));
         assertNestedProcessedMessages();
     }
-    
+
     @Test
     public void addProcessorPathElementsBeforeInit() throws MuleException
     {
@@ -259,18 +257,18 @@ public class ForeachTestCase extends AbstractMuleContextTestCase
     private void assertNestedProcessedMessages()
     {
         String[] expectedOutputs =
-               {"a1:foo:zas",
-                "a2:foo:zas",
-                "a3:foo:zas",
-                "b1:foo:zas",
-                "b2:foo:zas",
-                "c1:foo:zas" };
+                {"a1:foo:zas",
+                 "a2:foo:zas",
+                 "a3:foo:zas",
+                 "b1:foo:zas",
+                 "b2:foo:zas",
+                 "c1:foo:zas"};
         assertEquals(ERR_NUMBER_MESSAGES, 6, processedEvents.size());
-        for(int i = 0; i < processedEvents.size(); i++)
+        for (int i = 0; i < processedEvents.size(); i++)
         {
-            assertTrue(ERR_PAYLOAD_TYPE, processedEvents.get(i).getMessage().getPayload() instanceof String);    
+            assertTrue(ERR_PAYLOAD_TYPE, processedEvents.get(i).getMessage().getPayload() instanceof String);
         }
-        for(int i = 0; i < processedEvents.size(); i++)
+        for (int i = 0; i < processedEvents.size(); i++)
         {
             assertEquals(ERR_OUTPUT, expectedOutputs[i], processedEvents.get(i).getMessage().getPayload());
         }
@@ -279,6 +277,7 @@ public class ForeachTestCase extends AbstractMuleContextTestCase
     public class DummySimpleIterableClass implements Iterable<String>
     {
         public List<String> strings = new ArrayList<>();
+
         public DummySimpleIterableClass()
         {
             strings.add("bar");
@@ -286,7 +285,8 @@ public class ForeachTestCase extends AbstractMuleContextTestCase
         }
 
         @Override
-        public Iterator<String> iterator() {
+        public Iterator<String> iterator()
+        {
             return strings.iterator();
         }
     }
@@ -294,6 +294,7 @@ public class ForeachTestCase extends AbstractMuleContextTestCase
     private class DummyNestedIterableClass implements Iterable<DummySimpleIterableClass>
     {
         private List<DummySimpleIterableClass> iterables = new ArrayList<>();
+
         public DummyNestedIterableClass()
         {
             DummySimpleIterableClass dsi1 = new DummySimpleIterableClass();
@@ -311,7 +312,8 @@ public class ForeachTestCase extends AbstractMuleContextTestCase
         }
 
         @Override
-        public Iterator<DummySimpleIterableClass> iterator() {
+        public Iterator<DummySimpleIterableClass> iterator()
+        {
             return iterables.iterator();
         }
     }

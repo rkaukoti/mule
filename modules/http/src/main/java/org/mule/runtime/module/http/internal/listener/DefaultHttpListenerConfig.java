@@ -6,12 +6,9 @@
  */
 package org.mule.runtime.module.http.internal.listener;
 
-import static java.lang.String.format;
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
-
 import org.mule.compatibility.transport.socket.api.TcpServerSocketProperties;
 import org.mule.compatibility.transport.socket.internal.DefaultTcpServerSocketProperties;
+import org.mule.runtime.api.tls.TlsContextFactory;
 import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleContext;
@@ -25,34 +22,34 @@ import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.lifecycle.LifecycleUtils;
 import org.mule.runtime.core.config.MutableThreadingProfile;
 import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.mule.runtime.core.util.NetworkUtils;
+import org.mule.runtime.core.util.Preconditions;
+import org.mule.runtime.core.util.StringUtils;
+import org.mule.runtime.core.util.concurrent.ThreadNameHelper;
 import org.mule.runtime.module.http.api.HttpConstants;
 import org.mule.runtime.module.http.api.HttpListenerConnectionManager;
 import org.mule.runtime.module.http.api.listener.HttpListenerConfig;
 import org.mule.runtime.module.http.internal.HttpParser;
 import org.mule.runtime.module.http.internal.listener.async.RequestHandler;
 import org.mule.runtime.module.http.internal.listener.matcher.ListenerRequestMatcher;
-import org.mule.runtime.api.tls.TlsContextFactory;
-import org.mule.runtime.core.util.NetworkUtils;
-import org.mule.runtime.core.util.Preconditions;
-import org.mule.runtime.core.util.StringUtils;
-import org.mule.runtime.core.util.concurrent.ThreadNameHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
 
 public class DefaultHttpListenerConfig extends AbstractAnnotatedObject implements HttpListenerConfig, Initialisable, MuleContextAware
 {
 
     public static final int DEFAULT_MAX_THREADS = 128;
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
     public static final int DEFAULT_CONNECTION_IDLE_TIMEOUT = 30 * 1000;
-
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private HttpConstants.Protocols protocol = HttpConstants.Protocols.HTTP;
     private String name;
     private String host;
@@ -87,34 +84,14 @@ public class DefaultHttpListenerConfig extends AbstractAnnotatedObject implement
         this.workerThreadingProfile = workerThreadingProfile;
     }
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
     public void setProtocol(HttpConstants.Protocols protocol)
     {
         this.protocol = protocol;
     }
 
-    public void setHost(String host)
-    {
-        this.host = host;
-    }
-
-    public void setPort(int port)
-    {
-        this.port = port;
-    }
-
     public void setBasePath(String basePath)
     {
         this.basePath = basePath;
-    }
-
-    public void setTlsContext(TlsContextFactory tlsContext)
-    {
-        this.tlsContext = tlsContext;
     }
 
     public void setServerSocketProperties(TcpServerSocketProperties serverSocketProperties)
@@ -155,11 +132,13 @@ public class DefaultHttpListenerConfig extends AbstractAnnotatedObject implement
         if (protocol.equals(HTTP) && tlsContext != null)
         {
             throw new InitialisationException(CoreMessages.createStaticMessage("TlsContext cannot be configured with protocol HTTP. " +
-                      "If you defined a tls:context element in your listener-config then you must set protocol=\"HTTPS\""), this);
+                                                                               "If you defined a tls:context element in your listener-config then you must set protocol=\"HTTPS\""),
+                    this);
         }
         if (protocol.equals(HTTPS) && tlsContext == null)
         {
-            throw new InitialisationException(CoreMessages.createStaticMessage("Configured protocol is HTTPS but there's no TlsContext configured"), this);
+            throw new InitialisationException(
+                    CoreMessages.createStaticMessage("Configured protocol is HTTPS but there's no TlsContext configured"), this);
         }
         if (tlsContext != null && !tlsContext.isKeyStoreConfigured())
         {
@@ -182,12 +161,14 @@ public class DefaultHttpListenerConfig extends AbstractAnnotatedObject implement
 
         if (tlsContext == null)
         {
-            server = connectionManager.createServer(serverAddress, createWorkManagerSource(), usePersistentConnections, connectionIdleTimeout);
+            server = connectionManager.createServer(serverAddress, createWorkManagerSource(), usePersistentConnections,
+                    connectionIdleTimeout);
         }
         else
         {
             LifecycleUtils.initialiseIfNeeded(tlsContext);
-            server = connectionManager.createSslServer(serverAddress, createWorkManagerSource(), tlsContext, usePersistentConnections, connectionIdleTimeout);
+            server = connectionManager.createSslServer(serverAddress, createWorkManagerSource(), tlsContext, usePersistentConnections,
+                    connectionIdleTimeout);
         }
         initialised = true;
     }
@@ -215,7 +196,9 @@ public class DefaultHttpListenerConfig extends AbstractAnnotatedObject implement
 
     private WorkManager createWorkManager()
     {
-        final WorkManager workManager = workerThreadingProfile.createWorkManager(format("%s%s.%s", ThreadNameHelper.getPrefix(muleContext), name, "worker"), muleContext.getConfiguration().getShutdownTimeout());
+        final WorkManager workManager =
+                workerThreadingProfile.createWorkManager(format("%s%s.%s", ThreadNameHelper.getPrefix(muleContext), name, "worker"),
+                        muleContext.getConfiguration().getShutdownTimeout());
         if (workManager instanceof MuleContextAware)
         {
             ((MuleContextAware) workManager).setMuleContext(muleContext);
@@ -251,15 +234,30 @@ public class DefaultHttpListenerConfig extends AbstractAnnotatedObject implement
         return port;
     }
 
+    public void setPort(int port)
+    {
+        this.port = port;
+    }
+
     public String getHost()
     {
         return host;
+    }
+
+    public void setHost(String host)
+    {
+        this.host = host;
     }
 
     @Override
     public TlsContextFactory getTlsContext()
     {
         return tlsContext;
+    }
+
+    public void setTlsContext(TlsContextFactory tlsContext)
+    {
+        this.tlsContext = tlsContext;
     }
 
     @Override
@@ -324,6 +322,11 @@ public class DefaultHttpListenerConfig extends AbstractAnnotatedObject implement
     public String getName()
     {
         return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
     WorkManager getWorkManager()

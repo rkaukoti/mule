@@ -7,32 +7,19 @@
 package org.mule.compatibility.transport.jms;
 
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.apache.activemq.command.ActiveMQTextMessage;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.compatibility.core.endpoint.EndpointURIEndpointBuilder;
-import org.mule.compatibility.transport.jms.Jms102bSupport;
-import org.mule.compatibility.transport.jms.Jms11Support;
-import org.mule.compatibility.transport.jms.JmsConnector;
 import org.mule.runtime.core.retry.policies.SimpleRetryPolicyTemplate;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
+import org.springframework.jms.connection.SingleConnectionFactory;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -51,14 +38,23 @@ import javax.jms.QueueConnectionFactory;
 import javax.jms.QueueSession;
 import javax.jms.Session;
 
-import org.apache.activemq.command.ActiveMQTextMessage;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
-import org.springframework.jms.connection.SingleConnectionFactory;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests that JMS message are correctly sent when caching elements
@@ -194,7 +190,7 @@ public class OutboundSessionAndProducerReuseTestCase extends AbstractMuleContext
                 messageSentLatch.countDown();
                 return null;
             }
-        }).when(mock).send(any(Message.class),anyInt(),anyInt(), anyLong());
+        }).when(mock).send(any(Message.class), anyInt(), anyInt(), anyLong());
         return mock;
     }
 
@@ -206,7 +202,7 @@ public class OutboundSessionAndProducerReuseTestCase extends AbstractMuleContext
         connector.connect();
         assertThat(connector.getConnectionFactory(), is(instanceOf(SingleConnectionFactory.class)));
         assertThat(((SingleConnectionFactory) connector.getConnectionFactory()).getTargetConnectionFactory(),
-                   is(connectionFactory));
+                is(connectionFactory));
     }
 
     @Test

@@ -21,7 +21,7 @@ import java.util.Set;
 
 public interface LifecyclePhase extends NamedObject
 {
-    
+
     String ALL_PHASES = "all";
 
     void addOrderedLifecycleObject(LifecycleObject lco);

@@ -6,8 +6,6 @@
  */
 package org.mule.extension.email.internal.retriever;
 
-import static org.mule.extension.email.internal.util.EmailConnectorUtils.INBOX_FOLDER;
-
 import org.mule.extension.email.api.EmailAttributes;
 import org.mule.extension.email.api.EmailPredicateBuilder;
 import org.mule.extension.email.internal.commands.DeleteCommand;
@@ -22,6 +20,8 @@ import org.mule.runtime.extension.api.annotation.param.display.Summary;
 
 import java.util.List;
 import java.util.function.Predicate;
+
+import static org.mule.extension.email.internal.util.EmailConnectorUtils.INBOX_FOLDER;
 
 /**
  * A set of operations for all email configurations that aims to retrieve and manage
@@ -73,7 +73,8 @@ public class RetrieverOperations
      * @param muleMessage    The incoming {@link MuleMessage}.
      * @param mailboxFolder  Name of the folder where the email(s) is going to be stored.
      * @param localDirectory Local directory where the emails are going to be stored.
-     * @param fileName       Name of the file that is going to be stored. The operation will append the email number and received date in the end.
+     * @param fileName       Name of the file that is going to be stored. The operation will append the email number and received date in
+     *                       the end.
      * @param emailId        Email ID Number of the email to store. By default the email is taken from the incoming {@link MuleMessage}.
      * @param overwrite      Whether to overwrite a file that already exist
      */

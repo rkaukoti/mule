@@ -17,13 +17,14 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @WebService(targetNamespace = "http://ws.cdyne.com/WeatherWS/", name = "WeatherHttpGet")
 @XmlSeeAlso({ObjectFactory.class})
 @SOAPBinding(parameterStyle = ParameterStyle.BARE)
-public interface WeatherHttpGet {
+public interface WeatherHttpGet
+{
 
     @WebResult(name = "WeatherReturn", targetNamespace = "http://ws.cdyne.com/WeatherWS/", partName = "Body")
     @WebMethod(operationName = "GetCityWeatherByZIP")
     public WeatherReturn getCityWeatherByZIP(
-        @WebParam(partName = "ZIP", name = "ZIP", targetNamespace = "")
-        String zip
+            @WebParam(partName = "ZIP", name = "ZIP", targetNamespace = "")
+                    String zip
     );
 
     @WebResult(name = "ArrayOfWeatherDescription", targetNamespace = "http://ws.cdyne.com/WeatherWS/", partName = "Body")
@@ -33,7 +34,7 @@ public interface WeatherHttpGet {
     @WebResult(name = "ForecastReturn", targetNamespace = "http://ws.cdyne.com/WeatherWS/", partName = "Body")
     @WebMethod(operationName = "GetCityForecastByZIP")
     public ForecastReturn getCityForecastByZIP(
-        @WebParam(partName = "ZIP", name = "ZIP", targetNamespace = "")
-        String zip
+            @WebParam(partName = "ZIP", name = "ZIP", targetNamespace = "")
+                    String zip
     );
 }

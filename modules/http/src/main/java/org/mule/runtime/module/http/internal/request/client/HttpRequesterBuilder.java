@@ -6,19 +6,19 @@
  */
 package org.mule.runtime.module.http.internal.request.client;
 
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
-import static org.mule.runtime.module.http.internal.request.SuccessStatusCodeValidator.NULL_VALIDATOR;
-
+import org.mule.runtime.api.tls.TlsContextFactory;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.util.ObjectNameHelper;
 import org.mule.runtime.module.http.api.client.HttpRequestOptions;
 import org.mule.runtime.module.http.api.requester.HttpRequestOperationConfig;
 import org.mule.runtime.module.http.api.requester.HttpRequesterConfig;
 import org.mule.runtime.module.http.api.requester.HttpStreamingType;
 import org.mule.runtime.module.http.internal.request.DefaultHttpRequester;
 import org.mule.runtime.module.http.internal.request.DefaultHttpRequesterConfig;
-import org.mule.runtime.api.tls.TlsContextFactory;
-import org.mule.runtime.core.util.ObjectNameHelper;
+
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
+import static org.mule.runtime.module.http.internal.request.SuccessStatusCodeValidator.NULL_VALIDATOR;
 
 public class HttpRequesterBuilder implements HttpRequestOperationConfig<HttpRequesterBuilder>
 {
@@ -126,7 +126,8 @@ public class HttpRequesterBuilder implements HttpRequestOperationConfig<HttpRequ
             DefaultHttpRequesterConfig requesterConfig = new DefaultHttpRequesterConfig();
             requesterConfig.setTlsContext(tlsContextFactory);
             requesterConfig.setProtocol(HTTPS);
-            muleContext.getRegistry().registerObject(new ObjectNameHelper(muleContext).getUniqueName("auto-generated-request-config"), requesterConfig);
+            muleContext.getRegistry()
+                       .registerObject(new ObjectNameHelper(muleContext).getUniqueName("auto-generated-request-config"), requesterConfig);
             httpRequester.setConfig(requesterConfig);
         }
         else if (httpRequester.getConfig() == null)

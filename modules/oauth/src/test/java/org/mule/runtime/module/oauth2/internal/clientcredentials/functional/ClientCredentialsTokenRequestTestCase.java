@@ -6,23 +6,23 @@
  */
 package org.mule.runtime.module.oauth2.internal.clientcredentials.functional;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.runtime.module.http.api.HttpHeaders;
+import org.mule.runtime.module.oauth2.AbstractOAuthAuthorizationTestCase;
+import org.mule.tck.junit4.rule.SystemProperty;
+
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.containing;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
-import org.mule.runtime.module.http.api.HttpHeaders;
-import org.mule.runtime.module.oauth2.AbstractOAuthAuthorizationTestCase;
-import org.mule.tck.junit4.rule.SystemProperty;
-
-import org.junit.Rule;
-import org.junit.Test;
-
 public class ClientCredentialsTokenRequestTestCase extends AbstractOAuthAuthorizationTestCase
 {
 
     @Rule
-    public SystemProperty tokenUrl = new SystemProperty("token.url", String.format("http://localhost:%d" + TOKEN_PATH, oauthServerPort.getNumber()));
+    public SystemProperty tokenUrl =
+            new SystemProperty("token.url", String.format("http://localhost:%d" + TOKEN_PATH, oauthServerPort.getNumber()));
 
     @Override
     protected String getConfigFile()
@@ -35,10 +35,10 @@ public class ClientCredentialsTokenRequestTestCase extends AbstractOAuthAuthoriz
     {
         configureWireMockToExpectTokenPathRequestForClientCredentialsGrantTypeWithMapResponse(ACCESS_TOKEN);
         wireMockRule.stubFor(post(urlEqualTo("/resource"))
-                                     .withHeader(HttpHeaders.Names.AUTHORIZATION, containing(ACCESS_TOKEN))
-                                     .willReturn(aResponse()
-                                                         .withBody(TEST_MESSAGE)
-                                                         .withStatus(200)));
+                .withHeader(HttpHeaders.Names.AUTHORIZATION, containing(ACCESS_TOKEN))
+                .willReturn(aResponse()
+                        .withBody(TEST_MESSAGE)
+                        .withStatus(200)));
     }
 
 

@@ -11,6 +11,8 @@ import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.module.json.filters.IsJsonFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -19,9 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Converts a java object to a JSON encoded object that can be consumed by other languages such as
@@ -35,11 +34,8 @@ public class ObjectToJson extends AbstractJsonTransformer
      * logger used by this class
      */
     protected transient final Logger logger = LoggerFactory.getLogger(ObjectToJson.class);
-
-    private Map<Class<?>, Class<?>> serializationMixins = new HashMap<>();
-
     protected Class<?> sourceClass;
-
+    private Map<Class<?>, Class<?>> serializationMixins = new HashMap<>();
     private boolean handleException = false;
 
     private IsJsonFilter isJsonFilter = new IsJsonFilter();
@@ -102,7 +98,7 @@ public class ObjectToJson extends AbstractJsonTransformer
         {
             throw new TransformerException(this, e);
         }
-        
+
         if (byte[].class.equals(getReturnDataType().getType()))
         {
             return writer.toString().getBytes(outputEncoding);

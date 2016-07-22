@@ -27,12 +27,12 @@ public class StreamingProtocol extends EOFProtocol implements TcpProtocol
         {
             ((TcpInputStream) is).setStreaming(true);
         }
-        
+
         return is;
     }
 
     /**
-     * 
+     *
      * @param is
      * @param os
      * @throws IOException
@@ -53,7 +53,7 @@ public class StreamingProtocol extends EOFProtocol implements TcpProtocol
                 total += len;
                 remain = remaining(limit, remain, len);
                 repeat = EOF != len && remain > 0 && isRepeat(len, is.available());
-                
+
                 // Flush the data if we didn't fill up the whole buffer
                 // in case we're at the end of the stream and the receiving
                 // side is waiting for the end of the data before closing the socket

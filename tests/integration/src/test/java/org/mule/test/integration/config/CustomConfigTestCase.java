@@ -6,15 +6,14 @@
  */
 package org.mule.test.integration.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.tck.testmodels.mule.TestCompressionTransformer;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class CustomConfigTestCase extends FunctionalTestCase
 {
@@ -30,8 +29,8 @@ public class CustomConfigTestCase extends FunctionalTestCase
         Transformer trans = muleContext.getRegistry().lookupTransformer("testTransformer");
         assertNotNull("testTransformer should not be null", trans);
         assertTrue("Transformer should be an instance of TestCompressionTransformer", trans instanceof TestCompressionTransformer);
-        assertEquals(((TestCompressionTransformer)trans).getBeanProperty1(), "soo");
-        assertEquals(((TestCompressionTransformer)trans).getBeanProperty2(), 12345);
+        assertEquals(((TestCompressionTransformer) trans).getBeanProperty1(), "soo");
+        assertEquals(((TestCompressionTransformer) trans).getBeanProperty2(), 12345);
     }
 
 }

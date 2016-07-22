@@ -62,8 +62,6 @@ public class FileMessageRequester extends AbstractMessageRequester
 
     /**
      * There is no associated session for a file connector
-     *
-     * @throws org.mule.api.MuleException
      */
     public Object getDelegateSession() throws MuleException
     {
@@ -76,9 +74,7 @@ public class FileMessageRequester extends AbstractMessageRequester
      * directory according to the filename filter configured on the connector.
      *
      * @param timeout this is ignored when doing a receive on this dispatcher
-     * @return a message containing file contents or null if there was notthing to
-     *         receive
-     * @throws Exception
+     * @return a message containing file contents or null if there was notthing to receive
      */
     @Override
     protected MuleMessage doRequest(long timeout) throws Exception
@@ -97,12 +93,12 @@ public class FileMessageRequester extends AbstractMessageRequester
                 if (fileFilter != null)
                 {
                     result = FileMessageDispatcher.getNextFile(
-                        endpoint.getEndpointURI().getAddress(), fileFilter);
+                            endpoint.getEndpointURI().getAddress(), fileFilter);
                 }
                 else
                 {
                     result = FileMessageDispatcher.getNextFile(
-                        endpoint.getEndpointURI().getAddress(), filenameFilter);
+                            endpoint.getEndpointURI().getAddress(), filenameFilter);
                 }
             }
 
@@ -166,7 +162,7 @@ public class FileMessageRequester extends AbstractMessageRequester
                     if (fileConnector.isStreaming())
                     {
                         ReceiverFileInputStream receiverStream = new ReceiverFileInputStream(result,
-                            fileConnector.isAutoDelete(), destinationFile);
+                                fileConnector.isAutoDelete(), destinationFile);
                         returnMessage = createMuleMessage(receiverStream, encoding);
                     }
                     else
@@ -183,9 +179,9 @@ public class FileMessageRequester extends AbstractMessageRequester
                 }
 
                 returnMessage = MuleMessage.builder(returnMessage)
-                        .addInboundProperty(FileConnector.PROPERTY_ORIGINAL_FILENAME, originalSourceFileName)
-                        .addInboundProperty(FileConnector.PROPERTY_ORIGINAL_DIRECTORY, originalSourceDirectory)
-                        .build();
+                                           .addInboundProperty(FileConnector.PROPERTY_ORIGINAL_FILENAME, originalSourceFileName)
+                                           .addInboundProperty(FileConnector.PROPERTY_ORIGINAL_DIRECTORY, originalSourceDirectory)
+                                           .build();
 
                 if (!fileConnector.isStreaming())
                 {
@@ -205,9 +201,9 @@ public class FileMessageRequester extends AbstractMessageRequester
         // This isn't nice but is needed as MuleMessage is required to resolve
         // destination file name
         MuleMessage fileParserMessasge = MuleMessage.builder().nullPayload()
-                .addInboundProperty(FileConnector.PROPERTY_ORIGINAL_FILENAME, originalFileName)
-                .addInboundProperty(FileConnector.PROPERTY_ORIGINAL_DIRECTORY, originalDirectory)
-                .build();
+                                                    .addInboundProperty(FileConnector.PROPERTY_ORIGINAL_FILENAME, originalFileName)
+                                                    .addInboundProperty(FileConnector.PROPERTY_ORIGINAL_DIRECTORY, originalDirectory)
+                                                    .build();
 
         final DefaultMuleEvent event = new DefaultMuleEvent(fileParserMessasge, (FlowConstruct) null);
 
@@ -227,7 +223,7 @@ public class FileMessageRequester extends AbstractMessageRequester
             catch (IOException e)
             {
                 throw new DefaultMuleException(FileMessages.failedToMoveFile(sourceFile.getAbsolutePath(),
-                    destinationFile.getAbsolutePath()));
+                        destinationFile.getAbsolutePath()));
             }
         }
         if (fileConnector.isAutoDelete())

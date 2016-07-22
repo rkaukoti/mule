@@ -6,8 +6,6 @@
  */
 package org.mule.extension.email.internal.util;
 
-import static java.lang.String.format;
-import static java.util.stream.Collectors.toList;
 import org.mule.extension.email.api.EmailAttachment;
 import org.mule.extension.email.api.EmailAttributes;
 import org.mule.extension.email.api.exception.EmailException;
@@ -22,6 +20,9 @@ import javax.activation.DataHandler;
 import javax.mail.Address;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+
+import static java.lang.String.format;
+import static java.util.stream.Collectors.toList;
 
 /**
  * this class contains common methods for email handling.
@@ -120,7 +121,7 @@ public final class EmailConnectorUtils
     /**
      * Extracts the incoming {@link MuleMessage} attributes of {@link EmailAttributes} type.
      *
-     * @param muleMessage      the incoming {@link MuleMessage}.
+     * @param muleMessage the incoming {@link MuleMessage}.
      * @return an {@link Optional} value with the {@link EmailAttributes}.
      */
     public static Optional<EmailAttributes> getAttributesFromMessage(MuleMessage muleMessage)

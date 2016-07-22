@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.module.db.internal.domain.transaction;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.tck.junit4.AbstractMuleTestCase;
@@ -22,11 +21,12 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class DbTransactionTestCase extends AbstractMuleTestCase

@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.core.transformer;
 
+import org.apache.commons.beanutils.MethodUtils;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Converter;
 import org.mule.runtime.core.api.transformer.Transformer;
 
 import java.util.List;
-
-import org.apache.commons.beanutils.MethodUtils;
 
 /**
  * Given a {@link org.mule.runtime.core.api.transformer.Transformer} instance, an input class and output class
@@ -57,18 +56,16 @@ public class TransformerWeighting implements Comparable
     }
 
     /**
-     * This is a very basic algorithm for creating a match rating for two classes. An offset weighting
-     * can also be passed in. Where w is weighting,
-     * if the classes are not assignable but the src is a primitive type, the w for the corresponding object type will be returned, otherwise return -1
-     * if the classes match exactly and dest is Object then w+3 is returned
-     * if the classes match exactly and dest is not Object then w+1 is returned
-     * if the classes are assignable and there is a direct equality to an interface on the class, w+2  is returned,
-     * If there a super class, that will get matched using the above criteria but using w = w + 1
-     * If there is no match -1 is returned
+     * This is a very basic algorithm for creating a match rating for two classes. An offset weighting can also be passed in. Where w is
+     * weighting, if the classes are not assignable but the src is a primitive type, the w for the corresponding object type will be
+     * returned, otherwise return -1 if the classes match exactly and dest is Object then w+3 is returned if the classes match exactly and
+     * dest is not Object then w+1 is returned if the classes are assignable and there is a direct equality to an interface on the class,
+     * w+2  is returned, If there a super class, that will get matched using the above criteria but using w = w + 1 If there is no match -1
+     * is returned
      *
      * @param weighting an offset weighting, by default -1 should be used
-     * @param src the src class being matched
-     * @param dest the destination class to match to
+     * @param src       the src class being matched
+     * @param dest      the destination class to match to
      * @return a weighting where 0 would be an exact match, -1 would be no match and a positive integer that defines how close the match is
      */
     protected int getWeighting(int weighting, Class src, Class dest)
@@ -155,12 +152,12 @@ public class TransformerWeighting implements Comparable
     {
         TransformerWeighting weighting = (TransformerWeighting) o;
         if (weighting.getInputWeighting() == getInputWeighting() &&
-                weighting.getOutputWeighting() == getOutputWeighting())
+            weighting.getOutputWeighting() == getOutputWeighting())
         {
             //We only check the weighting if we have an exact match
             //These transformers should always implement Converter, but jic we check here
             if (weighting.getTransformer() instanceof Converter
-                    && this.getTransformer() instanceof Converter)
+                && this.getTransformer() instanceof Converter)
             {
                 int x = ((Converter) weighting.getTransformer()).getPriorityWeighting();
                 int y = ((Converter) this.getTransformer()).getPriorityWeighting();
@@ -194,19 +191,19 @@ public class TransformerWeighting implements Comparable
                 return -1;
             }
             else if (weighting.getInputWeighting() < getInputWeighting() &&
-                    weighting.getOutputWeighting() < getOutputWeighting())
+                     weighting.getOutputWeighting() < getOutputWeighting())
             {
                 return -1;
             }
             //If the outputWeighting is closer to 0 its a better match
             else if (weighting.getInputWeighting() == getInputWeighting() &&
-                    weighting.getOutputWeighting() < getOutputWeighting())
+                     weighting.getOutputWeighting() < getOutputWeighting())
             {
                 return -1;
             }
 
             else if (weighting.getInputWeighting() < getInputWeighting() &&
-                    weighting.getOutputWeighting() == getOutputWeighting())
+                     weighting.getOutputWeighting() == getOutputWeighting())
             {
                 return -1;
             }

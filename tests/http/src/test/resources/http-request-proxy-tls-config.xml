@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:httpn="http://www.mulesoft.org/schema/mule/httpn"
       xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
       xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
@@ -16,7 +16,7 @@
                 <tls:trust-store path="${trustStorePath}" password="changeit"/>
             </tls:context>
             <httpn:proxy-config>
-                <httpn:proxy host="localhost" port="${proxyPort}" />
+                <httpn:proxy host="localhost" port="${proxyPort}"/>
             </httpn:proxy-config>
         </httpn:request-connection>
     </httpn:request-config>
@@ -30,13 +30,13 @@
     </httpn:listener-config>
 
     <flow name="clientFlow">
-        <httpn:request config-ref="requestConfig" path="#[path]" method="POST"  key="ANY"/>
+        <httpn:request config-ref="requestConfig" path="#[path]" method="POST" key="ANY"/>
     </flow>
 
     <flow name="serverFlow">
-        <httpn:listener config-ref="listenerConfig" path="/*" />
-        <test:component />
-        <set-payload value="OK" />
+        <httpn:listener config-ref="listenerConfig" path="/*"/>
+        <test:component/>
+        <set-payload value="OK"/>
     </flow>
 
 </mule>

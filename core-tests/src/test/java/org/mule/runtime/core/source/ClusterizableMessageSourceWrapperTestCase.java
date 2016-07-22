@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.core.source;
 
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.lifecycle.Lifecycle;
 import org.mule.runtime.core.api.processor.MessageProcessor;
@@ -20,10 +19,11 @@ import org.mule.runtime.core.lifecycle.PrimaryNodeLifecycleNotificationListener;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class ClusterizableMessageSourceWrapperTestCase extends AbstractMuleTestCase
@@ -125,7 +125,8 @@ public class ClusterizableMessageSourceWrapperTestCase extends AbstractMuleTestC
             @Override
             public Void answer(InvocationOnMock invocationOnMock) throws Throwable
             {
-                ((PrimaryNodeLifecycleNotificationListener) invocationOnMock.getArguments()[0]).onNotification(new ClusterNodeNotification("",1));
+                ((PrimaryNodeLifecycleNotificationListener) invocationOnMock.getArguments()[0]).onNotification(
+                        new ClusterNodeNotification("", 1));
                 return null;
             }
         }).when(muleContext).registerListener(isA(PrimaryNodeLifecycleNotificationListener.class));
@@ -139,7 +140,8 @@ public class ClusterizableMessageSourceWrapperTestCase extends AbstractMuleTestC
     {
         when(muleContext.isPrimaryPollingInstance()).thenReturn(false);
         wrapper.setMuleContext(muleContext);
-        final PrimaryNodeLifecycleNotificationListener[] primaryNodeLifecycleNotificationListener = new PrimaryNodeLifecycleNotificationListener[1];
+        final PrimaryNodeLifecycleNotificationListener[] primaryNodeLifecycleNotificationListener =
+                new PrimaryNodeLifecycleNotificationListener[1];
         Mockito.doAnswer(new Answer<Void>()
         {
             @Override

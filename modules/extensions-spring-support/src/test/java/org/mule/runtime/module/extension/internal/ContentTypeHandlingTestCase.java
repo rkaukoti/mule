@@ -6,14 +6,9 @@
  */
 package org.mule.runtime.module.extension.internal;
 
-import static java.nio.charset.Charset.availableCharsets;
-import static java.nio.charset.Charset.defaultCharset;
-import static java.nio.charset.StandardCharsets.ISO_8859_1;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.functional.junit4.FlowRunner;
 import org.mule.runtime.api.metadata.DataType;
@@ -25,9 +20,13 @@ import org.mule.test.heisenberg.extension.HeisenbergExtension;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import static java.nio.charset.Charset.availableCharsets;
+import static java.nio.charset.Charset.defaultCharset;
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 public class ContentTypeHandlingTestCase extends ExtensionFunctionalTestCase
 {
@@ -36,6 +35,12 @@ public class ContentTypeHandlingTestCase extends ExtensionFunctionalTestCase
 
     @Rule
     public SystemProperty customEncodingProperty = new SystemProperty("customEncoding", customEncoding.name());
+
+    @BeforeClass
+    public static void before() throws Exception
+    {
+        customEncoding = defaultCharset().name().equals(UTF_8) ? ISO_8859_1 : UTF_8;
+    }
 
     @Override
     protected String getConfigFile()
@@ -47,12 +52,6 @@ public class ContentTypeHandlingTestCase extends ExtensionFunctionalTestCase
     protected Class<?>[] getAnnotatedExtensionClasses()
     {
         return new Class<?>[] {HeisenbergExtension.class};
-    }
-
-    @BeforeClass
-    public static void before() throws Exception
-    {
-        customEncoding = defaultCharset().name().equals(UTF_8) ? ISO_8859_1 : UTF_8;
     }
 
     @Test

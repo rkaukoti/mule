@@ -12,7 +12,6 @@ import org.mule.compatibility.core.api.endpoint.EndpointFactory;
 import org.mule.compatibility.core.endpoint.EndpointURIEndpointBuilder;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
@@ -21,7 +20,7 @@ import org.springframework.beans.factory.FactoryBean;
  * Abstract spring FactoryBean used to creating endpoints via spring.
  */
 public abstract class AbstractEndpointFactoryBean extends EndpointURIEndpointBuilder
-    implements FactoryBean, Initialisable
+        implements FactoryBean, Initialisable
 {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -53,7 +52,7 @@ public abstract class AbstractEndpointFactoryBean extends EndpointURIEndpointBui
     {
         // subclasses may override this method
     }
-    
+
     protected abstract Object doGetObject() throws Exception;
 
     public EndpointFactory getEndpointFactory()

@@ -6,6 +6,19 @@
  */
 package org.mule.runtime.core.transaction;
 
+import org.hamcrest.core.IsNull;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.transaction.Transaction;
+import org.mule.runtime.core.api.transaction.TransactionException;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+import org.mule.tck.testmodels.mule.TestTransaction;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -18,19 +31,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.transaction.Transaction;
-import org.mule.runtime.core.api.transaction.TransactionException;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-import org.mule.tck.testmodels.mule.TestTransaction;
-
-import org.hamcrest.core.IsNull;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -118,7 +118,7 @@ public class TransactionCoordinationTestCase extends AbstractMuleTestCase
 
         tc.bindTransaction(testTransaction);
         tc.commitCurrentTransaction();
-        assertThat(tc.getTransaction(),IsNull.<Object>nullValue());
+        assertThat(tc.getTransaction(), IsNull.<Object>nullValue());
         verify(testTransaction, times(1)).commit();
     }
 
@@ -160,7 +160,7 @@ public class TransactionCoordinationTestCase extends AbstractMuleTestCase
 
         tc.bindTransaction(testTransaction);
         tc.rollbackCurrentTransaction();
-        assertThat(tc.getTransaction(),IsNull.<Object>nullValue());
+        assertThat(tc.getTransaction(), IsNull.<Object>nullValue());
         verify(testTransaction, times(1)).rollback();
     }
 
@@ -254,8 +254,8 @@ public class TransactionCoordinationTestCase extends AbstractMuleTestCase
         tc.bindTransaction(tx);
         tx.setRollbackOnly();
         tc.resolveTransaction();
-        assertThat(tc.getTransaction(),IsNull.<Object>nullValue());
-        verify(tx,times(1)).rollback();
+        assertThat(tc.getTransaction(), IsNull.<Object>nullValue());
+        verify(tx, times(1)).rollback();
     }
 
     @Test
@@ -266,8 +266,8 @@ public class TransactionCoordinationTestCase extends AbstractMuleTestCase
         tx.setXA(true);
         tc.bindTransaction(tx);
         tc.resolveTransaction();
-        assertThat(tc.getTransaction(),IsNull.<Object>nullValue());
-        verify(tx,times(1)).commit();
+        assertThat(tc.getTransaction(), IsNull.<Object>nullValue());
+        verify(tx, times(1)).commit();
     }
 
 }

@@ -6,16 +6,12 @@
  */
 package org.mule.runtime.core.internal.connection;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.api.config.PoolingProfile;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionHandler;
@@ -28,12 +24,16 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.testmodels.fruit.Apple;
 import org.mule.tck.testmodels.fruit.Banana;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultConnectionManagerTestCase extends AbstractMuleTestCase
@@ -56,7 +56,8 @@ public class DefaultConnectionManagerTestCase extends AbstractMuleTestCase
     {
         when(connectionProvider.connect()).thenReturn(connection);
         when(connectionProvider.validate(connection)).thenReturn(ConnectionValidationResult.success());
-        when(connectionProvider.getHandlingStrategy(any(ConnectionHandlingStrategyFactory.class))).thenAnswer(invocation -> {
+        when(connectionProvider.getHandlingStrategy(any(ConnectionHandlingStrategyFactory.class))).thenAnswer(invocation ->
+        {
             ConnectionHandlingStrategyFactory factory = (ConnectionHandlingStrategyFactory) invocation.getArguments()[0];
             return factory.cached();
         });

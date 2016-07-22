@@ -6,22 +6,21 @@
  */
 package org.mule.runtime.module.cxf.support;
 
+import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.AbstractPhaseInterceptor;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.xml.namespace.QName;
 
-import org.apache.cxf.message.Message;
-import org.apache.cxf.phase.AbstractPhaseInterceptor;
-
-import static org.mule.runtime.module.cxf.MuleSoapHeaders.MULE_10_ACTOR;
-import static org.mule.runtime.module.cxf.MuleSoapHeaders.MULE_HEADER;
-import static org.mule.runtime.module.cxf.MuleSoapHeaders.MULE_NAMESPACE;
-
 import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_GROUP_SIZE_PROPERTY;
 import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_ID_PROPERTY;
 import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_SEQUENCE_PROPERTY;
 import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROPERTY;
+import static org.mule.runtime.module.cxf.MuleSoapHeaders.MULE_10_ACTOR;
+import static org.mule.runtime.module.cxf.MuleSoapHeaders.MULE_HEADER;
+import static org.mule.runtime.module.cxf.MuleSoapHeaders.MULE_NAMESPACE;
 
 /**
  *
@@ -36,12 +35,12 @@ abstract class AbstractMuleHeaderInterceptor extends AbstractPhaseInterceptor<Me
     protected static final QName MULE_HEADER_Q = new QName(MULE_NS_URI, MULE_HEADER);
 
     protected static final Set<QName> UNDERSTOOD_HEADERS = new HashSet<QName>();
+    protected static final Set<String> SUPPORTED_HEADERS = new HashSet<String>();
+
     static
     {
         UNDERSTOOD_HEADERS.add(MULE_HEADER_Q);
     }
-
-    protected static final Set<String> SUPPORTED_HEADERS = new HashSet<String>();
 
     static
     {

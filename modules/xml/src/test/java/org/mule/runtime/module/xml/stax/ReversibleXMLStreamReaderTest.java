@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.module.xml.stax;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import javax.xml.namespace.QName;
@@ -14,9 +16,6 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -24,7 +23,7 @@ public class ReversibleXMLStreamReaderTest extends AbstractMuleTestCase
 {
 
     private JaxpStreamReaderAsserter asserter = null;
-    
+
     @Before
     public void setUp() throws Exception
     {
@@ -45,7 +44,7 @@ public class ReversibleXMLStreamReaderTest extends AbstractMuleTestCase
 
     @Test
     public void testReverse() throws Exception
-    {        
+    {
         ReversibleXMLStreamReader xsr = createReader();
 
         asserter.assertDocumentStart(xsr);
@@ -62,62 +61,62 @@ public class ReversibleXMLStreamReaderTest extends AbstractMuleTestCase
         assertEquals(start.getNamespaceURI(), xsr.getNamespaceURI());
         assertEquals(XMLStreamConstants.CHARACTERS, xsr.next()); // this is the last event we saved
         assertEquals(text, xsr.getText());
-        assertEquals(XMLStreamConstants.END_ELEMENT, xsr.next());  
+        assertEquals(XMLStreamConstants.END_ELEMENT, xsr.next());
         asserter.assertDocumentEnd(xsr);
-        
+
         xsr.reset();
 
         assertEquals(XMLStreamConstants.START_ELEMENT, xsr.next());
         assertEquals(start, xsr.getName());
         assertEquals(XMLStreamConstants.CHARACTERS, xsr.next()); // this is the last event we saved
         assertEquals(text, xsr.getText());
-        assertEquals(XMLStreamConstants.END_ELEMENT, xsr.next());  
+        assertEquals(XMLStreamConstants.END_ELEMENT, xsr.next());
         assertEquals(XMLStreamConstants.END_DOCUMENT, xsr.next());
     }
-    
+
     @Test
     public void testFullReverse() throws Exception
     {
         ReversibleXMLStreamReader xsr = createReader();
-        
+
         asserter.assertDocumentStart(xsr);
         assertEquals(XMLStreamConstants.CHARACTERS, xsr.next());
         assertEquals(XMLStreamConstants.END_ELEMENT, xsr.next());
         asserter.assertDocumentEnd(xsr);
-        
+
         xsr.reset();
 
         assertEquals(XMLStreamConstants.START_ELEMENT, xsr.next());
         assertEquals(XMLStreamConstants.CHARACTERS, xsr.next());
-        assertEquals(XMLStreamConstants.END_ELEMENT, xsr.next());  
+        assertEquals(XMLStreamConstants.END_ELEMENT, xsr.next());
         assertEquals(XMLStreamConstants.END_DOCUMENT, xsr.next());
     }
-    
+
     private ReversibleXMLStreamReader createReader() throws Exception
     {
         XMLInputFactory xif = XMLInputFactory.newInstance();
         XMLStreamReader coreReader = xif.createXMLStreamReader(getClass().getResourceAsStream("/simple.xml"));
-        
+
         //com.ctc.wstx.sr.ValidatingStreamReader
         //com.sun.org.apache.xerces.internal.impl.XMLStreamReaderImpl
         ReversibleXMLStreamReader xsr = new ReversibleXMLStreamReader(coreReader);
         xsr.setTracking(true);
         return xsr;
     }
-    
+
     private static class JaxpStreamReaderAsserter
     {
         public void assertDocumentStart(XMLStreamReader xsr) throws XMLStreamException
         {
             assertEquals(XMLStreamConstants.START_ELEMENT, xsr.next());
         }
-        
+
         public void assertDocumentEnd(XMLStreamReader xsr) throws XMLStreamException
         {
             assertEquals(XMLStreamConstants.END_DOCUMENT, xsr.next());
         }
     }
-    
+
     private static class StaxStreamReaderAsserter extends JaxpStreamReaderAsserter
     {
         @Override

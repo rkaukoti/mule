@@ -6,10 +6,6 @@
  */
 package org.mule.test.config.dsl;
 
-import static org.mule.test.config.dsl.LifecycleAction.DISPOSE;
-import static org.mule.test.config.dsl.LifecycleAction.INITIALISE;
-import static org.mule.test.config.dsl.LifecycleAction.START;
-import static org.mule.test.config.dsl.LifecycleAction.STOP;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -19,16 +15,16 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.mule.test.config.dsl.LifecycleAction.DISPOSE;
+import static org.mule.test.config.dsl.LifecycleAction.INITIALISE;
+import static org.mule.test.config.dsl.LifecycleAction.START;
+import static org.mule.test.config.dsl.LifecycleAction.STOP;
+
 public class LifecycleSensingMessageProcessor implements Lifecycle, MessageProcessor
 {
 
     private List<LifecycleAction> lifecycleActions = new LinkedList<>();
     private LifecycleSensingObjectFactory objectFactory;
-
-    public void setObjectFactory(LifecycleSensingObjectFactory objectFactory)
-    {
-        this.objectFactory = objectFactory;
-    }
 
     @Override
     public void dispose()
@@ -62,6 +58,11 @@ public class LifecycleSensingMessageProcessor implements Lifecycle, MessageProce
     public LifecycleSensingObjectFactory getObjectFactory()
     {
         return objectFactory;
+    }
+
+    public void setObjectFactory(LifecycleSensingObjectFactory objectFactory)
+    {
+        this.objectFactory = objectFactory;
     }
 
     @Override

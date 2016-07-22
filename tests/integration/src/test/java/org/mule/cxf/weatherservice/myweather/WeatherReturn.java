@@ -41,27 +41,26 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "WeatherReturn", namespace = "http://ws.cdyne.com/WeatherWS/", propOrder = {
-    "success",
-    "responseText",
-    "state",
-    "city",
-    "weatherStationCity",
-    "weatherID",
-    "description",
-    "temperature",
-    "relativeHumidity",
-    "wind",
-    "pressure",
-    "visibility",
-    "windChill",
-    "remarks"
+        "success",
+        "responseText",
+        "state",
+        "city",
+        "weatherStationCity",
+        "weatherID",
+        "description",
+        "temperature",
+        "relativeHumidity",
+        "wind",
+        "pressure",
+        "visibility",
+        "windChill",
+        "remarks"
 })
-public class WeatherReturn {
+public class WeatherReturn
+{
 
     @XmlElement(name = "Success", namespace = "http://ws.cdyne.com/WeatherWS/")
     protected boolean success;
@@ -94,321 +93,273 @@ public class WeatherReturn {
 
     /**
      * Gets the value of the success property.
-     *
      */
-    public boolean isSuccess() {
+    public boolean isSuccess()
+    {
         return success;
     }
 
     /**
      * Sets the value of the success property.
-     *
      */
-    public void setSuccess(boolean value) {
+    public void setSuccess(boolean value)
+    {
         this.success = value;
     }
 
     /**
      * Gets the value of the responseText property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getResponseText() {
+    public String getResponseText()
+    {
         return responseText;
     }
 
     /**
      * Sets the value of the responseText property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setResponseText(String value) {
+    public void setResponseText(String value)
+    {
         this.responseText = value;
     }
 
     /**
      * Gets the value of the state property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getState() {
+    public String getState()
+    {
         return state;
     }
 
     /**
      * Sets the value of the state property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setState(String value) {
+    public void setState(String value)
+    {
         this.state = value;
     }
 
     /**
      * Gets the value of the city property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getCity() {
+    public String getCity()
+    {
         return city;
     }
 
     /**
      * Sets the value of the city property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setCity(String value) {
+    public void setCity(String value)
+    {
         this.city = value;
     }
 
     /**
      * Gets the value of the weatherStationCity property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getWeatherStationCity() {
+    public String getWeatherStationCity()
+    {
         return weatherStationCity;
     }
 
     /**
      * Sets the value of the weatherStationCity property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setWeatherStationCity(String value) {
+    public void setWeatherStationCity(String value)
+    {
         this.weatherStationCity = value;
     }
 
     /**
      * Gets the value of the weatherID property.
-     *
      */
-    public short getWeatherID() {
+    public short getWeatherID()
+    {
         return weatherID;
     }
 
     /**
      * Sets the value of the weatherID property.
-     *
      */
-    public void setWeatherID(short value) {
+    public void setWeatherID(short value)
+    {
         this.weatherID = value;
     }
 
     /**
      * Gets the value of the description property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
     /**
      * Sets the value of the description property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setDescription(String value) {
+    public void setDescription(String value)
+    {
         this.description = value;
     }
 
     /**
      * Gets the value of the temperature property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getTemperature() {
+    public String getTemperature()
+    {
         return temperature;
     }
 
     /**
      * Sets the value of the temperature property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setTemperature(String value) {
+    public void setTemperature(String value)
+    {
         this.temperature = value;
     }
 
     /**
      * Gets the value of the relativeHumidity property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getRelativeHumidity() {
+    public String getRelativeHumidity()
+    {
         return relativeHumidity;
     }
 
     /**
      * Sets the value of the relativeHumidity property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setRelativeHumidity(String value) {
+    public void setRelativeHumidity(String value)
+    {
         this.relativeHumidity = value;
     }
 
     /**
      * Gets the value of the wind property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getWind() {
+    public String getWind()
+    {
         return wind;
     }
 
     /**
      * Sets the value of the wind property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setWind(String value) {
+    public void setWind(String value)
+    {
         this.wind = value;
     }
 
     /**
      * Gets the value of the pressure property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getPressure() {
+    public String getPressure()
+    {
         return pressure;
     }
 
     /**
      * Sets the value of the pressure property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setPressure(String value) {
+    public void setPressure(String value)
+    {
         this.pressure = value;
     }
 
     /**
      * Gets the value of the visibility property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getVisibility() {
+    public String getVisibility()
+    {
         return visibility;
     }
 
     /**
      * Sets the value of the visibility property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setVisibility(String value) {
+    public void setVisibility(String value)
+    {
         this.visibility = value;
     }
 
     /**
      * Gets the value of the windChill property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getWindChill() {
+    public String getWindChill()
+    {
         return windChill;
     }
 
     /**
      * Sets the value of the windChill property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setWindChill(String value) {
+    public void setWindChill(String value)
+    {
         this.windChill = value;
     }
 
     /**
      * Gets the value of the remarks property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getRemarks() {
+    public String getRemarks()
+    {
         return remarks;
     }
 
     /**
      * Sets the value of the remarks property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setRemarks(String value) {
+    public void setRemarks(String value)
+    {
         this.remarks = value;
     }
 

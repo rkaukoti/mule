@@ -17,14 +17,13 @@ import org.mule.runtime.module.db.internal.domain.query.QueryParamValue;
 import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
 import org.mule.runtime.module.db.internal.domain.statement.StatementFactory;
 import org.mule.runtime.module.db.internal.domain.type.DbType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base class for query executors
@@ -41,7 +40,8 @@ public abstract class AbstractExecutor
         this.statementFactory = statementFactory;
     }
 
-    protected void doProcessParameters(PreparedStatement statement, QueryTemplate queryTemplate, List<QueryParamValue> paramValues, SingleQueryLogger queryLogger) throws SQLException
+    protected void doProcessParameters(PreparedStatement statement, QueryTemplate queryTemplate, List<QueryParamValue> paramValues,
+                                       SingleQueryLogger queryLogger) throws SQLException
     {
         int valueIndex = 0;
 

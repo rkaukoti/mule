@@ -41,13 +41,14 @@ public class TransactionalQueueManager extends AbstractQueueManager
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @return an instance of {@link TransactionalQueueSession}
      */
     @Override
     public synchronized QueueSession getQueueSession()
     {
-        return new TransactionalQueueSession(this, queueXaResourceManager, queueXaResourceManager, xaTransactionRecoverer, localTxTransactionJournal,getMuleContext());
+        return new TransactionalQueueSession(this, queueXaResourceManager, queueXaResourceManager, xaTransactionRecoverer,
+                localTxTransactionJournal, getMuleContext());
     }
 
     protected DefaultQueueStore createQueueStore(String name, QueueConfiguration config)
@@ -67,9 +68,11 @@ public class TransactionalQueueManager extends AbstractQueueManager
     {
         String workingDirectory = getMuleContext().getConfiguration().getWorkingDirectory();
         int queueTransactionFilesSizeInMegabytes = getMuleContext().getConfiguration().getMaxQueueTransactionFilesSizeInMegabytes();
-        localTxTransactionJournal = new LocalTxQueueTransactionJournal(workingDirectory + File.separator + "queue-tx-log", getMuleContext(), queueTransactionFilesSizeInMegabytes);
+        localTxTransactionJournal = new LocalTxQueueTransactionJournal(workingDirectory + File.separator + "queue-tx-log", getMuleContext(),
+                queueTransactionFilesSizeInMegabytes);
         localTxQueueTransactionRecoverer = new LocalTxQueueTransactionRecoverer(localTxTransactionJournal, this);
-        xaTransactionJournal = new XaTxQueueTransactionJournal(workingDirectory + File.separator + "queue-xa-tx-log", getMuleContext(), queueTransactionFilesSizeInMegabytes);
+        xaTransactionJournal = new XaTxQueueTransactionJournal(workingDirectory + File.separator + "queue-xa-tx-log", getMuleContext(),
+                queueTransactionFilesSizeInMegabytes);
         xaTransactionRecoverer = new XaTransactionRecoverer(xaTransactionJournal, this);
     }
 
@@ -105,8 +108,8 @@ public class TransactionalQueueManager extends AbstractQueueManager
         if (getMuleContext() != null)
         {
             for (ListableObjectStore store : getMuleContext().getRegistry()
-                    .lookupByType(ListableObjectStore.class)
-                    .values())
+                                                             .lookupByType(ListableObjectStore.class)
+                                                             .values())
             {
                 try
                 {

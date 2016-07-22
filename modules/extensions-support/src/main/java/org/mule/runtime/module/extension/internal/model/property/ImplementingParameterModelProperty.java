@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.module.extension.internal.model.property;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
 import org.mule.runtime.extension.api.introspection.EnrichableModel;
 import org.mule.runtime.extension.api.introspection.ModelProperty;
 import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
 
 import java.lang.reflect.Parameter;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * An immutable model property which indicates that the owning {@link EnrichableModel}

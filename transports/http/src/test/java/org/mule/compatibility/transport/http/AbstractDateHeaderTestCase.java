@@ -6,19 +6,16 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-
-import org.mule.compatibility.transport.http.HttpConstants;
-import org.mule.compatibility.transport.http.HttpResponse;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.junit4.rule.CustomTimeZone;
-
 import org.apache.commons.httpclient.Header;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.junit4.rule.CustomTimeZone;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public abstract class AbstractDateHeaderTestCase extends AbstractMuleTestCase
 {
@@ -49,8 +46,10 @@ public abstract class AbstractDateHeaderTestCase extends AbstractMuleTestCase
 
     //Set up the object to be tested
     protected abstract void initialise() throws Exception;
+
     //Perform the specific date header setting
     protected abstract void setDateHeader(HttpResponse response, long millis);
+
     //Set up the expected header outcome
     protected abstract String getExpectedHeaderValue();
 }

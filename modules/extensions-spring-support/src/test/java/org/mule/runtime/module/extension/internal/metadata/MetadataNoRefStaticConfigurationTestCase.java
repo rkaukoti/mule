@@ -6,19 +6,18 @@
  */
 package org.mule.runtime.module.extension.internal.metadata;
 
+import org.junit.Test;
+import org.mule.runtime.api.metadata.MetadataKey;
+import org.mule.runtime.api.metadata.ProcessorId;
+import org.mule.runtime.api.metadata.descriptor.ComponentMetadataDescriptor;
+import org.mule.runtime.api.metadata.resolving.MetadataResult;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mule.runtime.module.extension.internal.metadata.PartAwareMetadataKeyBuilder.newKey;
 import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.AMERICA;
 import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.SAN_FRANCISCO;
 import static org.mule.test.metadata.extension.resolver.TestMultiLevelKeyResolver.USA;
-
-import org.mule.runtime.api.metadata.MetadataKey;
-import org.mule.runtime.api.metadata.ProcessorId;
-import org.mule.runtime.api.metadata.descriptor.ComponentMetadataDescriptor;
-import org.mule.runtime.api.metadata.resolving.MetadataResult;
-
-import org.junit.Test;
 
 public class MetadataNoRefStaticConfigurationTestCase extends MetadataExtensionFunctionalTestCase
 {

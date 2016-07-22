@@ -6,6 +6,11 @@
  */
 package org.mule.extension.email;
 
+import org.junit.Test;
+
+import javax.mail.Address;
+import javax.mail.internet.InternetAddress;
+
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.not;
@@ -19,11 +24,6 @@ import static org.mule.extension.email.util.EmailTestUtils.ALE_EMAIL;
 import static org.mule.extension.email.util.EmailTestUtils.ESTEBAN_EMAIL;
 import static org.mule.extension.email.util.EmailTestUtils.JUANI_EMAIL;
 import static org.mule.extension.email.util.EmailTestUtils.PABLON_EMAIL;
-
-import javax.mail.Address;
-import javax.mail.internet.InternetAddress;
-
-import org.junit.Test;
 
 public class EmailConnectorUtilsTestCase
 {
@@ -48,7 +48,8 @@ public class EmailConnectorUtilsTestCase
     @Test
     public void listAddressesToInternetAddressArray()
     {
-        Address[] addresses = toAddressArray(asList(JUANI_EMAIL, ESTEBAN_EMAIL, ALE_EMAIL, PABLON_EMAIL, getNameAddressFormatInternetAddress()));
+        Address[] addresses =
+                toAddressArray(asList(JUANI_EMAIL, ESTEBAN_EMAIL, ALE_EMAIL, PABLON_EMAIL, getNameAddressFormatInternetAddress()));
         assertThat(addresses.length, is(5));
         for (Address address : addresses)
         {

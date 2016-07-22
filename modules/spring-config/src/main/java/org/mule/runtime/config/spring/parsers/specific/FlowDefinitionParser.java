@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
-import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.config.spring.parsers.generic.OrphanDefinitionParser;
 import org.mule.runtime.config.spring.util.ProcessingStrategyUtils;
+import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.construct.Flow;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
@@ -31,7 +30,7 @@ public class FlowDefinitionParser extends OrphanDefinitionParser
         builder.addConstructorArgValue(element.getAttribute(ATTRIBUTE_NAME));
         builder.addConstructorArgReference(MuleProperties.OBJECT_MULE_CONTEXT);
         ProcessingStrategyUtils.configureProcessingStrategy(element, builder,
-            ProcessingStrategyUtils.ASYNC_PROCESSING_STRATEGY);
+                ProcessingStrategyUtils.ASYNC_PROCESSING_STRATEGY);
         super.doParse(element, parserContext, builder);
     }
 }

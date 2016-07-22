@@ -10,7 +10,7 @@ import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.config.i18n.Message;
 
-public class CorrelationTimeoutException  extends MessagingException
+public class CorrelationTimeoutException extends MessagingException
 {
     public CorrelationTimeoutException(Message message, MuleEvent event)
     {

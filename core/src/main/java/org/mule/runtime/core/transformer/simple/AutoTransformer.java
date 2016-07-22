@@ -26,9 +26,6 @@ public class AutoTransformer extends AbstractMessageTransformer
     /**
      * Template method where deriving classes can do any initialisation after the
      * properties have been set on this transformer
-     *
-     * @throws org.mule.runtime.core.api.lifecycle.InitialisationException
-     *
      */
     @Override
     public void initialise() throws InitialisationException
@@ -43,6 +40,8 @@ public class AutoTransformer extends AbstractMessageTransformer
     @Override
     public Object transformMessage(MuleEvent event, Charset outputEncoding) throws TransformerException
     {
-        return muleContext.getTransformationService().transform(event.getMessage(), DataType.fromType(getReturnDataType().getType())).getPayload();
+        return muleContext.getTransformationService()
+                          .transform(event.getMessage(), DataType.fromType(getReturnDataType().getType()))
+                          .getPayload();
     }
 }

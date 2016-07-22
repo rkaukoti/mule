@@ -13,6 +13,7 @@ import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.runtime.module.xml.stax.ReversibleXMLStreamReader;
 import org.mule.runtime.module.xml.util.XMLUtils;
+import org.w3c.dom.Document;
 
 import java.nio.charset.Charset;
 
@@ -20,14 +21,12 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.Source;
 
-import org.w3c.dom.Document;
-
 public class XmlToXMLStreamReader extends AbstractXmlTransformer implements DiscoverableTransformer
 {
 
     private int priorityWeighting = DiscoverableTransformer.DEFAULT_PRIORITY_WEIGHTING;
     private boolean reversible;
-    
+
     public XmlToXMLStreamReader()
     {
         super();
@@ -50,9 +49,9 @@ public class XmlToXMLStreamReader extends AbstractXmlTransformer implements Disc
             if (xsr == null)
             {
                 throw new TransformerException(MessageFactory
-                    .createStaticMessage("Unable to convert " + src.getClass() + " to XMLStreamReader."), this);
+                        .createStaticMessage("Unable to convert " + src.getClass() + " to XMLStreamReader."), this);
             }
-        
+
             if (reversible && !(xsr instanceof ReversibleXMLStreamReader))
             {
                 return new ReversibleXMLStreamReader(xsr);

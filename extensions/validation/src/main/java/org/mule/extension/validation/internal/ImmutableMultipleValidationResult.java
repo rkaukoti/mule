@@ -6,10 +6,10 @@
  */
 package org.mule.extension.validation.internal;
 
+import com.google.common.collect.ImmutableList;
+
 import org.mule.extension.validation.api.MultipleValidationResult;
 import org.mule.extension.validation.api.ValidationResult;
-
-import com.google.common.collect.ImmutableList;
 
 import java.util.List;
 
@@ -26,6 +26,13 @@ public final class ImmutableMultipleValidationResult implements MultipleValidati
     private final List<ValidationResult> failedResults;
     private final boolean error;
     private final String message;
+
+    private ImmutableMultipleValidationResult(List<ValidationResult> failedResults, boolean error, String message)
+    {
+        this.failedResults = failedResults;
+        this.error = error;
+        this.message = message;
+    }
 
     /**
      * A {@link Iterable} with all the {@link ValidationResult} that were generated
@@ -56,13 +63,6 @@ public final class ImmutableMultipleValidationResult implements MultipleValidati
         }
 
         return new ImmutableMultipleValidationResult(failedResultsBuilder.build(), error, message.toString());
-    }
-
-    private ImmutableMultipleValidationResult(List<ValidationResult> failedResults, boolean error, String message)
-    {
-        this.failedResults = failedResults;
-        this.error = error;
-        this.message = message;
     }
 
     /**

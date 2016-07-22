@@ -6,6 +6,24 @@
  */
 package org.mule.runtime.module.extension.internal;
 
+import org.junit.Test;
+import org.mule.metadata.api.model.BinaryType;
+import org.mule.metadata.api.model.NumberType;
+import org.mule.metadata.api.model.ObjectType;
+import org.mule.metadata.api.model.StringType;
+import org.mule.runtime.extension.api.introspection.config.ConfigurationModel;
+import org.mule.runtime.extension.api.introspection.connection.ConnectionProviderModel;
+import org.mule.runtime.extension.api.introspection.connection.RuntimeConnectionProviderModel;
+import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclarer;
+import org.mule.runtime.extension.api.introspection.operation.OperationModel;
+import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
+import org.mule.runtime.extension.api.introspection.source.SourceModel;
+import org.mule.runtime.extension.tck.introspection.TestHttpConnectorDeclarer;
+import org.mule.tck.size.SmallTest;
+
+import java.io.InputStream;
+import java.io.Serializable;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.empty;
@@ -26,24 +44,6 @@ import static org.mule.runtime.extension.tck.introspection.TestHttpConnectorDecl
 import static org.mule.runtime.extension.tck.introspection.TestHttpConnectorDeclarer.STATIC_RESOURCE_OPERATION_NAME;
 import static org.mule.runtime.extension.tck.introspection.TestHttpConnectorDeclarer.VENDOR;
 import static org.mule.runtime.extension.tck.introspection.TestHttpConnectorDeclarer.VERSION;
-import org.mule.metadata.api.model.BinaryType;
-import org.mule.metadata.api.model.NumberType;
-import org.mule.metadata.api.model.ObjectType;
-import org.mule.metadata.api.model.StringType;
-import org.mule.runtime.extension.api.introspection.config.ConfigurationModel;
-import org.mule.runtime.extension.api.introspection.connection.ConnectionProviderModel;
-import org.mule.runtime.extension.api.introspection.connection.RuntimeConnectionProviderModel;
-import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclarer;
-import org.mule.runtime.extension.api.introspection.operation.OperationModel;
-import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
-import org.mule.runtime.extension.api.introspection.source.SourceModel;
-import org.mule.runtime.extension.tck.introspection.TestHttpConnectorDeclarer;
-import org.mule.tck.size.SmallTest;
-
-import java.io.InputStream;
-import java.io.Serializable;
-
-import org.junit.Test;
 
 
 @SmallTest
@@ -102,7 +102,8 @@ public class ComplexExtensionDeclarationTestCase extends BaseExtensionDeclaratio
     @Test
     public void requestOperation()
     {
-        OperationModel operation = extensionModel.getConfigurationModel(REQUESTER_CONFIG_NAME).get().getOperationModel(REQUEST_OPERATION_NAME).get();
+        OperationModel operation =
+                extensionModel.getConfigurationModel(REQUESTER_CONFIG_NAME).get().getOperationModel(REQUEST_OPERATION_NAME).get();
         assertThat(operation.getName(), is(REQUEST_OPERATION_NAME));
         assertDataType(operation.getOutput().getType(), InputStream.class, BinaryType.class);
         assertThat(operation.getParameterModels(), hasSize(1));
@@ -128,7 +129,8 @@ public class ComplexExtensionDeclarationTestCase extends BaseExtensionDeclaratio
     @Test
     public void connectionProvider()
     {
-        ConnectionProviderModel provider = extensionModel.getConfigurationModel(REQUESTER_CONFIG_NAME).get().getConnectionProviders().get(0);
+        ConnectionProviderModel provider =
+                extensionModel.getConfigurationModel(REQUESTER_CONFIG_NAME).get().getConnectionProviders().get(0);
         assertThat(provider.getName(), is(REQUESTER_PROVIDER));
         assertThat(((RuntimeConnectionProviderModel) provider).getConnectionType(), equalTo(REQUESTER_CONNECTION_PROVIDER_CONNECTION_TYPE));
     }

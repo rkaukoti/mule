@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.management.agents;
 
+import mx4j.tools.adaptor.http.HttpAdaptor;
+
+import org.junit.Test;
 import org.mule.runtime.management.AbstractMuleJmxTestCase;
 import org.mule.runtime.module.management.agent.Mx4jAgent;
-
-import mx4j.tools.adaptor.http.HttpAdaptor;
-import org.junit.Test;
 
 /**
  * Test that the lifecycle is properly managed.

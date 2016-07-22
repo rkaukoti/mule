@@ -6,8 +6,8 @@
  */
 package org.mule.extension.socket.protocol;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.extension.socket.api.connection.tcp.protocol.XmlMessageProtocol;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.tck.junit4.AbstractMuleTestCase;
@@ -17,8 +17,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Test by reading characters from a fixed StringBuilder instead of a TCP port.
@@ -61,14 +61,14 @@ public class XmlMessageProtocolTestCase extends AbstractMuleTestCase
         assertEquals(msgData, IOUtils.toString(result));
 
 
-        assertEquals(bais.available(),  0);
+        assertEquals(bais.available(), 0);
     }
 
     @Test
     public void testTwoMessages() throws Exception
     {
         String[] msgData = {"<?xml version=\"1.0\"?><data>hello</data>",
-            "<?xml version=\"1.0\"?><data>goodbye</data>"};
+                            "<?xml version=\"1.0\"?><data>goodbye</data>"};
 
         ByteArrayInputStream bais = new ByteArrayInputStream((msgData[0] + msgData[1]).getBytes());
 
@@ -80,26 +80,26 @@ public class XmlMessageProtocolTestCase extends AbstractMuleTestCase
         assertNotNull(result);
         assertEquals(msgData[1], IOUtils.toString(result));
 
-        assertEquals(bais.available(),  0);
+        assertEquals(bais.available(), 0);
     }
 
     @Test
     public void testMultipleMessages() throws Exception
     {
         String[] msgData = {"<?xml version=\"1.0\"?><data>1</data>",
-            "<?xml version=\"1.0\"?><data>22</data>", "<?xml version=\"1.0\"?><data>333</data>",
-            "<?xml version=\"1.0\"?><data>4444</data>",
-            "<?xml version=\"1.0\"?><data>55555</data>",
-            "<?xml version=\"1.0\"?><data>666666</data>",
-            "<?xml version=\"1.0\"?><data>7777777</data>",
-            "<?xml version=\"1.0\"?><data>88888888</data>",
-            "<?xml version=\"1.0\"?><data>999999999</data>",
-            "<?xml version=\"1.0\"?><data>aaaaaaaaaa</data>",
-            "<?xml version=\"1.0\"?><data>bbbbbbbbbbb</data>",
-            "<?xml version=\"1.0\"?><data>cccccccccccc</data>",
-            "<?xml version=\"1.0\"?><data>ddddddddddddd</data>",
-            "<?xml version=\"1.0\"?><data>eeeeeeeeeeeeee</data>",
-            "<?xml version=\"1.0\"?><data>fffffffffffffff</data>"};
+                            "<?xml version=\"1.0\"?><data>22</data>", "<?xml version=\"1.0\"?><data>333</data>",
+                            "<?xml version=\"1.0\"?><data>4444</data>",
+                            "<?xml version=\"1.0\"?><data>55555</data>",
+                            "<?xml version=\"1.0\"?><data>666666</data>",
+                            "<?xml version=\"1.0\"?><data>7777777</data>",
+                            "<?xml version=\"1.0\"?><data>88888888</data>",
+                            "<?xml version=\"1.0\"?><data>999999999</data>",
+                            "<?xml version=\"1.0\"?><data>aaaaaaaaaa</data>",
+                            "<?xml version=\"1.0\"?><data>bbbbbbbbbbb</data>",
+                            "<?xml version=\"1.0\"?><data>cccccccccccc</data>",
+                            "<?xml version=\"1.0\"?><data>ddddddddddddd</data>",
+                            "<?xml version=\"1.0\"?><data>eeeeeeeeeeeeee</data>",
+                            "<?xml version=\"1.0\"?><data>fffffffffffffff</data>"};
 
         StringBuilder allMsgData = new StringBuilder();
 
@@ -119,7 +119,7 @@ public class XmlMessageProtocolTestCase extends AbstractMuleTestCase
             assertEquals(msgData[i], IOUtils.toString(result));
         }
 
-        assertEquals(bais.available(),  0);
+        assertEquals(bais.available(), 0);
     }
 
     @Test

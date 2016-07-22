@@ -7,18 +7,18 @@
 
 package org.mule.tck.junit4.matcher;
 
-import static java.lang.String.format;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItem;
+import org.hamcrest.Description;
+import org.hamcrest.Factory;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.mule.runtime.core.api.debug.FieldDebugInfo;
 import org.mule.runtime.core.api.debug.ObjectFieldDebugInfo;
 
 import java.util.List;
 
-import org.hamcrest.Description;
-import org.hamcrest.Factory;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
+import static java.lang.String.format;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 
 public class ObjectDebugInfoMatcher extends TypeSafeMatcher<FieldDebugInfo<?>>
 {
@@ -32,6 +32,12 @@ public class ObjectDebugInfoMatcher extends TypeSafeMatcher<FieldDebugInfo<?>>
         this.name = name;
         this.type = type.getName();
         this.fieldMatchers = fieldMatchers;
+    }
+
+    @Factory
+    public static Matcher<FieldDebugInfo<?>> objectLike(String name, Class<?> type, List<Matcher<FieldDebugInfo<?>>> fieldMatchers)
+    {
+        return new ObjectDebugInfoMatcher(name, type, fieldMatchers);
     }
 
     @Override
@@ -49,7 +55,7 @@ public class ObjectDebugInfoMatcher extends TypeSafeMatcher<FieldDebugInfo<?>>
 
         if (type != null && !type.equals(fieldDebugInfo.getType()) || type == null && fieldDebugInfo.getType() != null)
         {
-             return false;
+            return false;
         }
 
         final ObjectFieldDebugInfo objectFieldDebugInfo = (ObjectFieldDebugInfo) fieldDebugInfo;
@@ -79,7 +85,8 @@ public class ObjectDebugInfoMatcher extends TypeSafeMatcher<FieldDebugInfo<?>>
     @Override
     public void describeTo(Description description)
     {
-        description.appendText(format("an %s with name: '%s' type: '%s' and containing [ ", ObjectFieldDebugInfo.class.getSimpleName(), name, type));
+        description.appendText(
+                format("an %s with name: '%s' type: '%s' and containing [ ", ObjectFieldDebugInfo.class.getSimpleName(), name, type));
         boolean firstMatcher = true;
         for (Matcher<FieldDebugInfo<?>> fieldMatcher : fieldMatchers)
         {
@@ -94,11 +101,5 @@ public class ObjectDebugInfoMatcher extends TypeSafeMatcher<FieldDebugInfo<?>>
             fieldMatcher.describeTo(description);
         }
         description.appendText("]");
-    }
-
-    @Factory
-    public static Matcher<FieldDebugInfo<?>> objectLike(String name, Class<?> type, List<Matcher<FieldDebugInfo<?>>> fieldMatchers)
-    {
-        return new ObjectDebugInfoMatcher(name, type, fieldMatchers);
     }
 }

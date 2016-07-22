@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptySet;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.toMetadataType;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.api.message.MuleEvent;
 import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
@@ -20,11 +20,11 @@ import org.mule.runtime.module.extension.internal.exception.IllegalOperationMode
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptySet;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.toMetadataType;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -43,7 +43,8 @@ public class OperationReturnTypeModelValidatorTestCase extends AbstractMuleTestC
     public void before()
     {
         when(extensionModel.getOperationModels()).thenReturn(asList(operationModel));
-        when(operationModel.getOutput()).thenReturn(new ImmutableOutputModel("MuleMessage.Payload", toMetadataType(String.class), false, emptySet()));
+        when(operationModel.getOutput()).thenReturn(
+                new ImmutableOutputModel("MuleMessage.Payload", toMetadataType(String.class), false, emptySet()));
         when(operationModel.getName()).thenReturn("operation");
     }
 
@@ -56,14 +57,16 @@ public class OperationReturnTypeModelValidatorTestCase extends AbstractMuleTestC
     @Test(expected = IllegalOperationModelDefinitionException.class)
     public void muleEventReturnType()
     {
-        when(operationModel.getOutput()).thenReturn(new ImmutableOutputModel("MuleMessage.Payload", toMetadataType(MuleEvent.class), false, emptySet()));
+        when(operationModel.getOutput()).thenReturn(
+                new ImmutableOutputModel("MuleMessage.Payload", toMetadataType(MuleEvent.class), false, emptySet()));
         validator.validate(extensionModel);
     }
 
     @Test(expected = IllegalOperationModelDefinitionException.class)
     public void muleMessageReturnType()
     {
-        when(operationModel.getOutput()).thenReturn(new ImmutableOutputModel("MuleMessage.Payload", toMetadataType(MuleMessage.class), false, emptySet()));
+        when(operationModel.getOutput()).thenReturn(
+                new ImmutableOutputModel("MuleMessage.Payload", toMetadataType(MuleMessage.class), false, emptySet()));
         validator.validate(extensionModel);
     }
 }

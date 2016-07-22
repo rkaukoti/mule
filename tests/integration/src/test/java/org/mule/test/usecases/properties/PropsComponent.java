@@ -10,18 +10,29 @@ import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.lifecycle.Callable;
 import org.mule.tck.testmodels.fruit.Apple;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class PropsComponent implements Callable
 {
     private static final Logger logger = LoggerFactory.getLogger(PropsComponent.class);
 
     protected static Apple testObjectProperty = new Apple();
+
+    static protected void assertEquals(Object theObject, Object theProperty)
+    {
+        if (!theObject.equals(theProperty))
+        {
+            logger.error(String.valueOf(theObject) + " does not equal:" + String.valueOf(theProperty));
+        }
+        else
+        {
+            logger.debug("Woohoo!");
+        }
+    }
 
     @Override
     public Object onCall(MuleEventContext context) throws Exception
@@ -47,18 +58,6 @@ public class PropsComponent implements Callable
         }
 
         return context;
-    }
-
-    static protected void assertEquals(Object theObject, Object theProperty)
-    {
-        if (!theObject.equals(theProperty))
-        {
-            logger.error(String.valueOf(theObject) + " does not equal:" + String.valueOf(theProperty));
-        }
-        else
-        {
-            logger.debug("Woohoo!");
-        }
     }
 
 }

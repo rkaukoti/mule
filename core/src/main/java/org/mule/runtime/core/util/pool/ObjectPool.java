@@ -28,8 +28,8 @@ public interface ObjectPool extends Initialisable, Disposable
 
     void close();
 
-    void setObjectFactory(ObjectFactory objectFactory);
-    
     ObjectFactory getObjectFactory();
+
+    void setObjectFactory(ObjectFactory objectFactory);
 
 }

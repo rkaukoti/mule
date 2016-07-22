@@ -8,8 +8,6 @@ package org.mule.test.config.spring.parsers;
 
 import org.mule.runtime.config.spring.handlers.AbstractMuleNamespaceHandler;
 import org.mule.runtime.config.spring.parsers.IndependentDefinitionParser;
-import org.mule.test.config.spring.parsers.beans.ChildBean;
-import org.mule.test.config.spring.parsers.beans.OrphanBean;
 import org.mule.runtime.config.spring.parsers.collection.ChildListEntryDefinitionParser;
 import org.mule.runtime.config.spring.parsers.collection.ChildMapDefinitionParser;
 import org.mule.runtime.config.spring.parsers.collection.ChildMapEntryDefinitionParser;
@@ -21,10 +19,11 @@ import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.NamedDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.OrphanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.ParentDefinitionParser;
+import org.mule.test.config.spring.parsers.beans.ChildBean;
+import org.mule.test.config.spring.parsers.beans.OrphanBean;
 
 /**
  * Registers a Bean Definition Parser for handling <code><parsers-test:...></code> elements.
- *
  */
 public class ParsersTestNamespaceHandler extends AbstractMuleNamespaceHandler
 {
@@ -32,12 +31,24 @@ public class ParsersTestNamespaceHandler extends AbstractMuleNamespaceHandler
     @Override
     public void init()
     {
-        registerMuleBeanDefinitionParser("orphan", new OrphanDefinitionParser(OrphanBean.class, true)).addAlias("bar", "foo").addIgnored("ignored").addCollection("offspring");
-        registerMuleBeanDefinitionParser("child", new ChildDefinitionParser("child", ChildBean.class)).addAlias("bar", "foo").addIgnored("ignored").addCollection("offspring");
-        registerMuleBeanDefinitionParser("mapped-child", new MapDefinitionParserMutator("map", new ChildDefinitionParser("child", ChildBean.class))).addAlias("bar", "foo").addIgnored("ignored").addCollection("offspring");
-        registerMuleBeanDefinitionParser("kid", new ChildDefinitionParser("kid", ChildBean.class)).addAlias("bar", "foo").addIgnored("ignored");
-        registerMuleBeanDefinitionParser("parent", new ParentDefinitionParser()).addAlias("bar", "foo").addIgnored("ignored").addCollection("offspring");
-        registerMuleBeanDefinitionParser("orphan1", new NamedDefinitionParser("orphan1")).addAlias("bar", "foo").addIgnored("ignored").addCollection("offspring");
+        registerMuleBeanDefinitionParser("orphan", new OrphanDefinitionParser(OrphanBean.class, true)).addAlias("bar", "foo")
+                                                                                                      .addIgnored("ignored")
+                                                                                                      .addCollection("offspring");
+        registerMuleBeanDefinitionParser("child", new ChildDefinitionParser("child", ChildBean.class)).addAlias("bar", "foo")
+                                                                                                      .addIgnored("ignored")
+                                                                                                      .addCollection("offspring");
+        registerMuleBeanDefinitionParser("mapped-child",
+                new MapDefinitionParserMutator("map", new ChildDefinitionParser("child", ChildBean.class))).addAlias("bar", "foo")
+                                                                                                           .addIgnored("ignored")
+                                                                                                           .addCollection("offspring");
+        registerMuleBeanDefinitionParser("kid", new ChildDefinitionParser("kid", ChildBean.class)).addAlias("bar", "foo")
+                                                                                                  .addIgnored("ignored");
+        registerMuleBeanDefinitionParser("parent", new ParentDefinitionParser()).addAlias("bar", "foo")
+                                                                                .addIgnored("ignored")
+                                                                                .addCollection("offspring");
+        registerMuleBeanDefinitionParser("orphan1", new NamedDefinitionParser("orphan1")).addAlias("bar", "foo")
+                                                                                         .addIgnored("ignored")
+                                                                                         .addCollection("offspring");
         registerMuleBeanDefinitionParser("orphan2", new NamedDefinitionParser("orphan2")).addAlias("bar", "foo").addIgnored("ignored");
         registerMuleBeanDefinitionParser("map-entry", new ChildMapEntryDefinitionParser("map", "key", "value")).addCollection("map");
         registerMuleBeanDefinitionParser("map-entry-combiner", new ChildSingletonMapDefinitionParser("map")).addCollection("map");
@@ -56,7 +67,7 @@ public class ParsersTestNamespaceHandler extends AbstractMuleNamespaceHandler
                         .addChildDelegate("kid1", new ChildListEntryDefinitionParser("kids", "kid1"))
                         .addChildDelegate("kid2", new ChildListEntryDefinitionParser("kids", "kid2")));
         // simpler list element parser doesn't support dynamic attribute
-//        registerBeanDefinitionParser("list-element-test-3", new AllAttributeChildDefinitionParser(new ChildListEntryDefinitionParser("kids")));
+        //        registerBeanDefinitionParser("list-element-test-3", new AllAttributeChildDefinitionParser(new ChildListEntryDefinitionParser("kids")));
 
         registerBeanDefinitionParser("no-name", new OrphanDefinitionParser(OrphanBean.class, true));
         registerBeanDefinitionParser("no-name-2", new IndependentDefinitionParser());

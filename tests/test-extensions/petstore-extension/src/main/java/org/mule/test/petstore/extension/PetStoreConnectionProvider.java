@@ -77,7 +77,8 @@ public abstract class PetStoreConnectionProvider implements ConnectionProvider<P
         }
         else
         {
-            return ConnectionValidationResult.failure("Invalid credentials", ConnectionExceptionCode.INCORRECT_CREDENTIALS, new Exception("Invalid credentials"));
+            return ConnectionValidationResult.failure("Invalid credentials", ConnectionExceptionCode.INCORRECT_CREDENTIALS,
+                    new Exception("Invalid credentials"));
         }
     }
 
@@ -135,14 +136,14 @@ public abstract class PetStoreConnectionProvider implements ConnectionProvider<P
         return username;
     }
 
-    public String getPassword()
-    {
-        return password;
-    }
-
     public void setUsername(String username)
     {
         this.username = username;
+    }
+
+    public String getPassword()
+    {
+        return password;
     }
 
     public void setPassword(String password)

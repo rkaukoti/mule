@@ -6,12 +6,9 @@
  */
 package org.mule.runtime.module.cxf.functional;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.not;
-import static org.mule.runtime.module.cxf.CxfBasicTestCase.APP_SOAP_XML;
-import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
-
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MuleEventContext;
@@ -22,14 +19,16 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.io.InputStream;
 
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
+import static org.mule.runtime.module.cxf.CxfBasicTestCase.APP_SOAP_XML;
+import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class CxfDataTypeTestCase extends FunctionalTestCase
 {
     private static final String requestPayload =
-        "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
+            "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
             "           xmlns:hi=\"http://example.cxf.module.runtime.mule.org/\">\n" +
             "<soap:Body>\n" +
             "<hi:sayHi>\n" +
@@ -51,7 +50,9 @@ public class CxfDataTypeTestCase extends FunctionalTestCase
     public void testCxfService() throws Exception
     {
         MuleMessage request = MuleMessage.builder().payload(requestPayload).build();
-        MuleMessage received = muleContext.getClient().send("http://localhost:" + dynamicPort.getNumber() + "/hello", request, newOptions().method(POST.name()).disableStatusCodeValidation().build());
+        MuleMessage received = muleContext.getClient()
+                                          .send("http://localhost:" + dynamicPort.getNumber() + "/hello", request,
+                                                  newOptions().method(POST.name()).disableStatusCodeValidation().build());
         Assert.assertThat(getPayloadAsString(received), not(containsString("Fault")));
     }
 
@@ -66,7 +67,9 @@ public class CxfDataTypeTestCase extends FunctionalTestCase
     public void testCxfProxy() throws Exception
     {
         MuleMessage request = MuleMessage.builder().payload(requestPayload).build();
-MuleMessage received = muleContext.getClient().send("http://localhost:" + dynamicPort.getNumber() + "/hello-proxy", request, newOptions().method(POST.name()).disableStatusCodeValidation().build());
+        MuleMessage received = muleContext.getClient()
+                                          .send("http://localhost:" + dynamicPort.getNumber() + "/hello-proxy", request,
+                                                  newOptions().method(POST.name()).disableStatusCodeValidation().build());
         Assert.assertThat(getPayloadAsString(received), not(containsString("Fault")));
     }
 
@@ -75,7 +78,8 @@ MuleMessage received = muleContext.getClient().send("http://localhost:" + dynami
     {
         MuleClient client = muleContext.getClient();
         InputStream xml = getClass().getResourceAsStream("/direct/direct-request.xml");
-        MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/echo", MuleMessage.builder().payload(xml).mediaType(APP_SOAP_XML).build(),
+        MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/echo",
+                MuleMessage.builder().payload(xml).mediaType(APP_SOAP_XML).build(),
                 newOptions().method(POST.name())
                             .disableStatusCodeValidation()
                             .build());

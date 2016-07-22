@@ -6,18 +6,17 @@
  */
 package org.mule.issues;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.test.xml.functional.AbstractXmlFunctionalTestCase;
 import org.mule.test.xml.functional.XmlTransformerFunctionalTestCase;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 /**
  * This is a simplified version of
@@ -27,8 +26,8 @@ import org.junit.Test;
 public class MulticastRouterMule2136TestCase extends AbstractXmlFunctionalTestCase
 {
     public static final int TEST_COUNT = 2000; // cut down from 10k messages, since
-                                               // it seems a little much for the
-                                               // continuous build
+    // it seems a little much for the
+    // continuous build
     public static final String SERIALIZED = "<org.mule.issues.MulticastRouterMule2136TestCase_-Parent>\n"
                                             + "  <child/>\n"
                                             + "</org.mule.issues.MulticastRouterMule2136TestCase_-Parent>";

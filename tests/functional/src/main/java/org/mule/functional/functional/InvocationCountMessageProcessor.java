@@ -26,6 +26,21 @@ public class InvocationCountMessageProcessor implements MessageProcessor, Initia
     private final AtomicInteger invocationCount = new AtomicInteger();
     private String name;
 
+    /**
+     * @param componentName name of the message processor in the configuration
+     * @return the number of invocations for the message processor with name componentName
+     */
+    public static int getNumberOfInvocationsFor(String componentName)
+    {
+        AtomicInteger count = invocationCountPerMessageProcessor.get(componentName);
+        if (count == null)
+        {
+            throw new IllegalArgumentException(
+                    "No invocation-counter component registered under name: " + componentName + " + registered components: " +
+                    invocationCountPerMessageProcessor.keySet());
+        }
+        return count.get();
+    }
 
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException
@@ -44,19 +59,5 @@ public class InvocationCountMessageProcessor implements MessageProcessor, Initia
     {
         this.invocationCount.set(0);
         this.invocationCountPerMessageProcessor.put(this.name, this.invocationCount);
-    }
-
-    /**
-     * @param componentName name of the message processor in the configuration
-     * @return the number of invocations for the message processor with name componentName
-     */
-    public static int getNumberOfInvocationsFor(String componentName)
-    {
-        AtomicInteger count = invocationCountPerMessageProcessor.get(componentName);
-        if (count == null)
-        {
-            throw new IllegalArgumentException("No invocation-counter component registered under name: " + componentName + " + registered components: " + invocationCountPerMessageProcessor.keySet());
-        }
-        return count.get();
     }
 }

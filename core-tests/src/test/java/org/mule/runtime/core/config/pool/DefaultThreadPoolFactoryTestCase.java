@@ -6,11 +6,7 @@
  */
 package org.mule.runtime.core.config.pool;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.config.ThreadingProfile;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
@@ -21,7 +17,10 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertThat;
 
 public class DefaultThreadPoolFactoryTestCase extends AbstractMuleContextTestCase
 {
@@ -58,7 +57,7 @@ public class DefaultThreadPoolFactoryTestCase extends AbstractMuleContextTestCas
         assertThat(scheduledPool.getContinueExistingPeriodicTasksAfterShutdownPolicy(), is(false));
         assertThat(scheduledPool.getExecuteExistingDelayedTasksAfterShutdownPolicy(), is(true));
         assertThat(scheduledPool.getCorePoolSize(), is(threadingProfile.getMaxThreadsIdle()));
-        assertThat(scheduledPool.getKeepAliveTime(TimeUnit.MILLISECONDS),is(threadingProfile.getThreadTTL()));
+        assertThat(scheduledPool.getKeepAliveTime(TimeUnit.MILLISECONDS), is(threadingProfile.getThreadTTL()));
     }
 
     @Test

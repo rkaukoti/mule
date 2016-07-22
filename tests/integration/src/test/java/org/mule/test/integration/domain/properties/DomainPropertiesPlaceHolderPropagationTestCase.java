@@ -6,18 +6,17 @@
  */
 package org.mule.test.integration.domain.properties;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.After;
+import org.junit.Test;
 import org.mule.functional.junit4.ApplicationContextBuilder;
 import org.mule.functional.junit4.DomainContextBuilder;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
-import org.junit.After;
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
-public class DomainPropertiesPlaceHolderPropagationTestCase  extends AbstractMuleTestCase
+public class DomainPropertiesPlaceHolderPropagationTestCase extends AbstractMuleTestCase
 {
 
     private MuleContext domainContext;
@@ -86,7 +85,8 @@ public class DomainPropertiesPlaceHolderPropagationTestCase  extends AbstractMul
     private void configureContexts(String domainConfig, String appConfig) throws Exception
     {
         domainContext = new DomainContextBuilder().setDomainConfig(domainConfig).build();
-        applicationContext = new ApplicationContextBuilder().setApplicationResources(new String[] {appConfig}).setDomainContext(domainContext).build();
+        applicationContext =
+                new ApplicationContextBuilder().setApplicationResources(new String[] {appConfig}).setDomainContext(domainContext).build();
     }
 
     @After

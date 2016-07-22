@@ -6,17 +6,15 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static com.google.common.base.Charsets.UTF_8;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.startsWith;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
-import static org.mule.runtime.module.http.api.HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED;
-import static org.mule.runtime.module.http.functional.matcher.ParamMapMatcher.isEqual;
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.client.fluent.Response;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.message.BasicNameValuePair;
+import org.hamcrest.core.Is;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
@@ -28,15 +26,17 @@ import org.mule.tck.junit4.rule.SystemProperty;
 import java.io.IOException;
 import java.net.URLDecoder;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.client.fluent.Response;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.message.BasicNameValuePair;
-import org.hamcrest.core.Is;
-import org.junit.Rule;
-import org.junit.Test;
+import static com.google.common.base.Charsets.UTF_8;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
+import static org.mule.runtime.module.http.api.HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED;
+import static org.mule.runtime.module.http.functional.matcher.ParamMapMatcher.isEqual;
 
 public class HttpListenerUrlEncodedTestCase extends AbstractHttpTestCase
 {
@@ -65,8 +65,8 @@ public class HttpListenerUrlEncodedTestCase extends AbstractHttpTestCase
     public void urlEncodedParamsGenerateAMapPayload() throws Exception
     {
         final Response response = Request.Post(getListenerUrl())
-                .bodyForm(new BasicNameValuePair(PARAM_1_NAME, PARAM_1_VALUE),
-                          new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE)).execute();
+                                         .bodyForm(new BasicNameValuePair(PARAM_1_NAME, PARAM_1_VALUE),
+                                                 new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE)).execute();
         final MuleMessage receivedMessage = muleContext.getClient().request(OUT_QUEUE_URL, 1000);
         assertThat(receivedMessage.getPayload(), instanceOf(ParameterMap.class));
         ParameterMap payloadAsMap = (ParameterMap) receivedMessage.getPayload();
@@ -81,24 +81,25 @@ public class HttpListenerUrlEncodedTestCase extends AbstractHttpTestCase
     public void invalidUrlEncodedParamsReturnInvalidRequestStatusCode() throws Exception
     {
         final Response response = Request.Post(getListenerUrl())
-                .body(new StringEntity("Invalid url encoded content"))
-                .addHeader(CONTENT_TYPE, APPLICATION_X_WWW_FORM_URLENCODED.toRfcString())
-                .execute();
+                                         .body(new StringEntity("Invalid url encoded content"))
+                                         .addHeader(CONTENT_TYPE, APPLICATION_X_WWW_FORM_URLENCODED.toRfcString())
+                                         .execute();
 
         final HttpResponse httpResponse = response.returnResponse();
 
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(200));
 
-        assertThat(URLDecoder.decode(IOUtils.toString(httpResponse.getEntity().getContent()), UTF_8.name()), is("Invalid url encoded content"));
+        assertThat(URLDecoder.decode(IOUtils.toString(httpResponse.getEntity().getContent()), UTF_8.name()),
+                is("Invalid url encoded content"));
     }
 
     @Test
     public void urlEncodedMultiValueParamsHasOldValues() throws Exception
     {
         final Response response = Request.Post(getListenerUrl())
-                .bodyForm(new BasicNameValuePair(PARAM_1_NAME, PARAM_1_VALUE),
-                          new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE_1),
-                          new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE_2)).execute();
+                                         .bodyForm(new BasicNameValuePair(PARAM_1_NAME, PARAM_1_VALUE),
+                                                 new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE_1),
+                                                 new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE_2)).execute();
         final MuleMessage receivedMessage = muleContext.getClient().request(OUT_QUEUE_URL, 1000);
         assertThat(receivedMessage.getPayload(), instanceOf(ParameterMap.class));
         ParameterMap payloadAsMap = (ParameterMap) receivedMessage.getPayload();
@@ -122,8 +123,8 @@ public class HttpListenerUrlEncodedTestCase extends AbstractHttpTestCase
     public void urlEncodedEmptyParamsUrlEncodedContentTypeGenerateANullPayload() throws Exception
     {
         final Response response = Request.Post(getListenerUrl())
-                .addHeader(CONTENT_TYPE, APPLICATION_X_WWW_FORM_URLENCODED.toRfcString())
-                .execute();
+                                         .addHeader(CONTENT_TYPE, APPLICATION_X_WWW_FORM_URLENCODED.toRfcString())
+                                         .execute();
 
         assertNullPayloadAndEmptyResponse(response);
     }

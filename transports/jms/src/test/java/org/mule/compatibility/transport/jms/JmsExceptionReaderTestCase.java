@@ -6,11 +6,8 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import org.mule.compatibility.transport.jms.JmsExceptionReader;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.config.ExceptionHelper;
 import org.mule.runtime.core.config.i18n.MessageFactory;
@@ -23,8 +20,9 @@ import java.util.Map;
 
 import javax.jms.JMSException;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 @SmallTest
 public class JmsExceptionReaderTestCase extends AbstractMuleTestCase
@@ -66,7 +64,7 @@ public class JmsExceptionReaderTestCase extends AbstractMuleTestCase
         e.setLinkedException(new IOException("blah"));
 
         return new DefaultMuleException(MessageFactory.createStaticMessage("foo"), new DefaultMuleException(
-            MessageFactory.createStaticMessage("bar"), e));
+                MessageFactory.createStaticMessage("bar"), e));
     }
 
 }

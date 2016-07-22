@@ -6,11 +6,9 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import org.apache.commons.httpclient.Cookie;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -22,9 +20,11 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.httpclient.Cookie;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 
 public class HttpResponseTestCase extends FunctionalTestCase
@@ -91,7 +91,7 @@ public class HttpResponseTestCase extends FunctionalTestCase
         Map<String, Serializable> properties = populateProperties();
 
         MuleMessage muleMessage = MuleMessage.builder().payload(HTTP_BODY).outboundProperties(properties).build();
-        MuleMessage response = client.send("http://localhost:" + dynamicPort1.getNumber() + "/resources/allExpressions",  muleMessage);
+        MuleMessage response = client.send("http://localhost:" + dynamicPort1.getNumber() + "/resources/allExpressions", muleMessage);
         assertEquals("" + HttpConstants.SC_NOT_FOUND, response.getInboundProperty("http.status"));
         assertEquals("max-age=3600", response.getInboundProperty("Cache-Control"));
         assertEquals("Thu, 01 Dec 2014 16:00:00 GMT", response.getInboundProperty("Expires"));
@@ -161,7 +161,7 @@ public class HttpResponseTestCase extends FunctionalTestCase
 
     private void validateCookie(Cookie cookie)
     {
-        if("cookie1".equals(cookie.getName()))
+        if ("cookie1".equals(cookie.getName()))
         {
             assertEquals("value1", cookie.getValue());
             assertEquals("/", cookie.getPath());

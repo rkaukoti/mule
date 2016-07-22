@@ -10,7 +10,7 @@
 
     <configuration>
         <extension:extensions-config>
-            <extension:dynamic-configuration-expiration frequency="1000" timeUnit="MILLISECONDS" />
+            <extension:dynamic-configuration-expiration frequency="1000" timeUnit="MILLISECONDS"/>
         </extension:extensions-config>
     </configuration>
 
@@ -26,12 +26,12 @@
                        monthlyIncomes="monthlyIncomes"
                        finalHealth="CANCER">
         <extension:dynamic-config-policy>
-            <extension:expiration-policy maxIdleTime="100" timeUnit="MILLISECONDS" />
+            <extension:expiration-policy maxIdleTime="100" timeUnit="MILLISECONDS"/>
         </extension:dynamic-config-policy>
     </heisenberg:config>
 
     <flow name="dynamic">
-        <heisenberg:say-my-name />
+        <heisenberg:say-my-name/>
     </flow>
 
 </mule>

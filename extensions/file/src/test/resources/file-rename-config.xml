@@ -16,7 +16,7 @@
     </flow>
 
     <flow name="readAndRename">
-        <file:read path="#[path]" />
+        <file:read path="#[path]"/>
         <file:rename to="#[to]"/>
     </flow>
 

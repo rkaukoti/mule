@@ -35,7 +35,7 @@ public final class MuleExceptionReader implements ExceptionReader
 
     /**
      * Returns a map of the non-stanard information stored on the exception
-     * 
+     *
      * @return a map of the non-stanard information stored on the exception
      */
     public Map<?, ?> getInfo(Throwable t)

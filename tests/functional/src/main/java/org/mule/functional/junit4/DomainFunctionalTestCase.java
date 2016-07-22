@@ -6,6 +6,8 @@
  */
 package org.mule.functional.junit4;
 
+import org.junit.After;
+import org.junit.Before;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleMessage;
@@ -18,9 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.After;
-import org.junit.Before;
 
 public abstract class DomainFunctionalTestCase extends AbstractMuleTestCase
 {
@@ -103,6 +102,18 @@ public abstract class DomainFunctionalTestCase extends AbstractMuleTestCase
         return null;
     }
 
+    /**
+     * Uses {@link org.mule.runtime.core.TransformationService} to get a {@link String} representation of a message.
+     *
+     * @param message message to get payload from
+     * @return String representation of the message payload
+     * @throws Exception if there is an unexpected error obtaining the payload representation
+     */
+    protected String getPayloadAsString(MuleMessage message, MuleContext muleContext) throws Exception
+    {
+        return (String) muleContext.getTransformationService().transform(message, DataType.STRING).getPayload();
+    }
+
     public class ApplicationConfig
     {
 
@@ -114,18 +125,6 @@ public abstract class DomainFunctionalTestCase extends AbstractMuleTestCase
             this.applicationName = applicationName;
             this.applicationResources = applicationResources;
         }
-    }
-
-    /**
-     * Uses {@link org.mule.runtime.core.TransformationService} to get a {@link String} representation of a message.
-     *
-     * @param message message to get payload from
-     * @return String representation of the message payload
-     * @throws Exception if there is an unexpected error obtaining the payload representation
-     */
-    protected String getPayloadAsString(MuleMessage message, MuleContext muleContext) throws Exception
-    {
-        return (String) muleContext.getTransformationService().transform(message, DataType.STRING).getPayload();
     }
 
 }

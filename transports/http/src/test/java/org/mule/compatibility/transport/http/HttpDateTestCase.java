@@ -6,9 +6,10 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
+import org.joda.time.DateTimeZone;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.compatibility.transport.http.transformers.MuleMessageToHttpResponse;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
@@ -17,10 +18,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-import org.joda.time.DateTimeZone;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 @SmallTest
 public class HttpDateTestCase extends AbstractMuleTestCase
@@ -49,15 +48,15 @@ public class HttpDateTestCase extends AbstractMuleTestCase
         SimpleDateFormat originalFormatter = new SimpleDateFormat(originalFormat, Locale.US);
 
         String[] dates = new String[] {
-            "Tue, 15 Nov 1994 08:12:31 GMT",
-            "Tue, 15 Nov 1994 08:12:31 -0300",
-            "Tue, 15 Nov 1994 08:12:31 +0400",
-            "Tue, 15 Nov 1994 08:12:31 +0230",
-            "Tue, 15 Nov 1994 08:12:31 PST",
-            "Tue, 15 Jun 1994 08:12:31 PDT",
-            "Tue, 15 Nov 2013 00:00:00 EST",
-            "Tue, 15 Nov 2013 23:59:59 EST",
-            "Thu, 28 Mar 2013 13:15:40 -0700"
+                "Tue, 15 Nov 1994 08:12:31 GMT",
+                "Tue, 15 Nov 1994 08:12:31 -0300",
+                "Tue, 15 Nov 1994 08:12:31 +0400",
+                "Tue, 15 Nov 1994 08:12:31 +0230",
+                "Tue, 15 Nov 1994 08:12:31 PST",
+                "Tue, 15 Jun 1994 08:12:31 PDT",
+                "Tue, 15 Nov 2013 00:00:00 EST",
+                "Tue, 15 Nov 2013 23:59:59 EST",
+                "Thu, 28 Mar 2013 13:15:40 -0700"
         };
         //, "Tue, 15 Nov 2013 23:12:31 UT" >> UT fails to parse in original parser even though it is valid in rfc822
 
@@ -82,7 +81,8 @@ public class HttpDateTestCase extends AbstractMuleTestCase
             }
             catch (ParseException e)
             {
-                fail("Old formatter failed to parse output of new formatter so it isn't backwards compatible. original: " + date + " new: " + newDateStr);
+                fail("Old formatter failed to parse output of new formatter so it isn't backwards compatible. original: " + date +
+                     " new: " + newDateStr);
             }
         }
     }

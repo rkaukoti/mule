@@ -15,7 +15,8 @@ public class CreateZipQuery
     /**
      * Create a request to query by zip code.
      */
-    public GetCityWeatherByZIP createRequest(Object input) {
+    public GetCityWeatherByZIP createRequest(Object input)
+    {
         GetCityWeatherByZIP request = new GetCityWeatherByZIP();
         request.setZIP("30075");
         return request;

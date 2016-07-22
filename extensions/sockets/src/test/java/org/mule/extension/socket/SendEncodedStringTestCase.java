@@ -6,17 +6,17 @@
  */
 package org.mule.extension.socket;
 
-import static java.nio.charset.Charset.availableCharsets;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.core.util.IOUtils;
 
 import java.io.InputStream;
 import java.util.Arrays;
 
-import org.junit.Test;
+import static java.nio.charset.Charset.availableCharsets;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 public class SendEncodedStringTestCase extends SocketExtensionTestCase
 {
@@ -35,9 +35,9 @@ public class SendEncodedStringTestCase extends SocketExtensionTestCase
         assertThat(defaultEncoding, is(notNullValue()));
 
         final String customEncoding = availableCharsets().keySet().stream()
-                .filter(encoding -> !encoding.equals(defaultEncoding))
-                .findFirst()
-                .orElse(null);
+                                                         .filter(encoding -> !encoding.equals(defaultEncoding))
+                                                         .findFirst()
+                                                         .orElse(null);
 
         assertThat(customEncoding, is(notNullValue()));
 

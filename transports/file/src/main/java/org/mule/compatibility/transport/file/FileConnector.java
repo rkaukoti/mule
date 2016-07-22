@@ -28,6 +28,8 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.transformer.simple.ByteArrayToSerializable;
 import org.mule.runtime.core.transformer.simple.SerializableToByteArray;
 import org.mule.runtime.core.util.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,9 +37,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
 import java.util.Properties;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>FileConnector</code> is used for setting up listeners on a directory and
@@ -48,11 +47,7 @@ import org.slf4j.LoggerFactory;
 public class FileConnector extends AbstractConnector
 {
 
-    private static Logger logger = LoggerFactory.getLogger(FileConnector.class);
-
     public static final String FILE = "file";
-    private static final String DEFAULT_WORK_FILENAME_PATTERN = "#[org.mule.runtime.core.util.UUID.getUUID()].#[server.dateTime.toDate()].#[message.inboundProperties.originalFilename]";
-
     // These are properties that can be overridden on the Receiver by the endpoint declaration
     // inbound only
     public static final String PROPERTY_FILE_AGE = "fileAge";
@@ -61,7 +56,6 @@ public class FileConnector extends AbstractConnector
     public static final String PROPERTY_READ_FROM_DIRECTORY = "readFromDirectoryName";
     // outbound only
     public static final String PROPERTY_OUTPUT_PATTERN = "outputPattern";
-
     // message properties
     public static final String PROPERTY_FILENAME = "filename";
     public static final String PROPERTY_ORIGINAL_FILENAME = "originalFilename";
@@ -72,44 +66,29 @@ public class FileConnector extends AbstractConnector
     public static final String PROPERTY_WRITE_TO_DIRECTORY = "writeToDirectoryName";
     public static final String PROPERTY_FILE_SIZE = "fileSize";
     public static final String PROPERTY_FILE_TIMESTAMP = "timestamp";
-
     public static final long DEFAULT_POLLING_FREQUENCY = 1000;
-
+    private static final String DEFAULT_WORK_FILENAME_PATTERN =
+            "#[org.mule.runtime.core.util.UUID.getUUID()].#[server.dateTime.toDate()].#[message.inboundProperties.originalFilename]";
+    private static Logger logger = LoggerFactory.getLogger(FileConnector.class);
+    public FilenameParser filenameParser;
     /**
      * Time in milliseconds to poll. On each poll the poll() method is called
      */
     private long pollingFrequency = 0;
-
     private String moveToPattern = null;
-
     private String writeToDirectoryName = null;
-
     private String moveToDirectoryName = null;
-
     private String workDirectoryName = null;
-
     private String workFileNamePattern = DEFAULT_WORK_FILENAME_PATTERN;
-
     private String readFromDirectoryName = null;
-
     private String outputPattern = null;
-
     private boolean outputAppend = false;
-
     private boolean autoDelete = true;
-
     private boolean checkFileAge = false;
-
     private long fileAge = 0;
-
     private FileOutputStream outputStream = null;
-
     private boolean serialiseObjects = false;
-
     private boolean streaming = true;
-
-    public FilenameParser filenameParser;
-
     private boolean recursive = false;
 
     public FileConnector(MuleContext context)
@@ -150,7 +129,7 @@ public class FileConnector extends AbstractConnector
         if (endpoint.getFilter() != null && endpoint.getFilter() instanceof FilenameWildcardFilter)
         {
             return endpoint.getEndpointURI().getAddress() + "/"
-                    + ((FilenameWildcardFilter) endpoint.getFilter()).getPattern();
+                   + ((FilenameWildcardFilter) endpoint.getFilter()).getPattern();
         }
         return endpoint.getEndpointURI().getAddress();
     }
@@ -234,8 +213,9 @@ public class FileConnector extends AbstractConnector
 
         try
         {
-            return serviceDescriptor.createMessageReceiver(this, flowConstruct, endpoint, new Object[]{readDir,
-                    moveTo, moveToPattern, Long.valueOf(polling)});
+            return serviceDescriptor.createMessageReceiver(this, flowConstruct, endpoint, new Object[] {readDir,
+                                                                                                        moveTo, moveToPattern,
+                                                                                                        Long.valueOf(polling)});
 
         }
         catch (Exception e)
@@ -340,6 +320,11 @@ public class FileConnector extends AbstractConnector
         this.moveToDirectoryName = dir;
     }
 
+    public String getWorkDirectory()
+    {
+        return workDirectoryName;
+    }
+
     public void setWorkDirectory(String workDirectoryName) throws IOException
     {
         this.workDirectoryName = workDirectoryName;
@@ -349,24 +334,19 @@ public class FileConnector extends AbstractConnector
             if (!workDirectory.canWrite())
             {
                 throw new IOException(
-                        "Error on initialization, Work Directory '" + workDirectory +"' is not writeable");
+                        "Error on initialization, Work Directory '" + workDirectory + "' is not writeable");
             }
         }
-    }
-
-    public String getWorkDirectory()
-    {
-        return workDirectoryName;
-    }
-
-    public void setWorkFileNamePattern(String workFileNamePattern)
-    {
-        this.workFileNamePattern = workFileNamePattern;
     }
 
     public String getWorkFileNamePattern()
     {
         return workFileNamePattern;
+    }
+
+    public void setWorkFileNamePattern(String workFileNamePattern)
+    {
+        this.workFileNamePattern = workFileNamePattern;
     }
 
     public boolean isOutputAppend()
@@ -414,15 +394,15 @@ public class FileConnector extends AbstractConnector
         return fileAge;
     }
 
-    public boolean getCheckFileAge()
-    {
-        return checkFileAge;
-    }
-
     public void setFileAge(long fileAge)
     {
         this.fileAge = fileAge;
         this.checkFileAge = true;
+    }
+
+    public boolean getCheckFileAge()
+    {
+        return checkFileAge;
     }
 
     public String getWriteToDirectory()
@@ -508,10 +488,8 @@ public class FileConnector extends AbstractConnector
      * will be called only when Streaming is being used on an outbound endpoint
      *
      * @param endpoint the endpoint that releates to this Dispatcher
-     * @param event  the current event being processed
-     * @return the output stream to use for this request or null if the transport
-     *         does not support streaming
-     * @throws org.mule.api.MuleException
+     * @param event    the current event being processed
+     * @return the output stream to use for this request or null if the transport does not support streaming
      */
     @Override
     public OutputStream getOutputStream(OutboundEndpoint endpoint, MuleEvent event) throws MuleException
@@ -584,7 +562,7 @@ public class FileConnector extends AbstractConnector
             if (!fileWasMoved)
             {
                 throw new DefaultMuleException(FileMessages.failedToMoveFile(sourceFile.getAbsolutePath(),
-                    destinationFile.getAbsolutePath()));
+                        destinationFile.getAbsolutePath()));
             }
         }
     }
@@ -621,6 +599,7 @@ public class FileConnector extends AbstractConnector
             return super.createMuleMessageFactory();
         }
     }
+
     public boolean isRecursive()
     {
         return recursive;

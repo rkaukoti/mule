@@ -6,21 +6,19 @@
  */
 package org.mule.runtime.core.el.mvel;
 
-import org.mule.runtime.core.api.el.ExpressionLanguageContext;
-import org.mule.runtime.core.api.el.ExpressionLanguageFunction;
-
 import org.mule.mvel2.ParserContext;
 import org.mule.mvel2.ast.Function;
 import org.mule.mvel2.integration.VariableResolverFactory;
+import org.mule.runtime.core.api.el.ExpressionLanguageContext;
+import org.mule.runtime.core.api.el.ExpressionLanguageFunction;
 
-@SuppressWarnings("serial")
-class MVELFunctionAdaptor extends Function
+@SuppressWarnings("serial") class MVELFunctionAdaptor extends Function
 {
     private ExpressionLanguageFunction function;
 
     public MVELFunctionAdaptor(String name, ExpressionLanguageFunction function, ParserContext parserContext)
     {
-        super(name, new char[]{}, 0, 0, 0, 0, 0, parserContext);
+        super(name, new char[] {}, 0, 0, 0, 0, 0, parserContext);
         this.function = function;
     }
 

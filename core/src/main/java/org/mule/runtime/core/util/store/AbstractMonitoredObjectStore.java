@@ -15,19 +15,18 @@ import org.mule.runtime.core.api.store.ObjectStore;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.UUID;
 import org.mule.runtime.core.util.concurrent.DaemonThreadFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * TODO
  */
-public abstract class AbstractMonitoredObjectStore<T extends Serializable> 
-    implements ObjectStore<T>, Runnable, MuleContextAware, Initialisable, Disposable
+public abstract class AbstractMonitoredObjectStore<T extends Serializable>
+        implements ObjectStore<T>, Runnable, MuleContextAware, Initialisable, Disposable
 {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -35,21 +34,21 @@ public abstract class AbstractMonitoredObjectStore<T extends Serializable>
     protected ScheduledThreadPoolExecutor scheduler;
 
     /**
-     * the maximum number of entries that this store keeps around. Specify <em>-1</em> if the store 
+     * the maximum number of entries that this store keeps around. Specify <em>-1</em> if the store
      * is supposed to be "unbounded".
      */
     protected int maxEntries = 4000;
 
     /**
-     * The time-to-live for each message ID, specified in milliseconds, or <em>-1</em> for entries 
+     * The time-to-live for each message ID, specified in milliseconds, or <em>-1</em> for entries
      * that should never expire. <b>DO NOT</b> combine this with an unbounded store!
      */
     protected int entryTTL = -1;
 
     /**
-     * The interval for periodic bounded size enforcement and entry expiration, specified in 
-     * milliseconds. Arbitrary positive values between 1 millisecond and several hours or days are 
-     * possible, but should be chosen carefully according to the expected message rate to prevent 
+     * The interval for periodic bounded size enforcement and entry expiration, specified in
+     * milliseconds. Arbitrary positive values between 1 millisecond and several hours or days are
+     * possible, but should be chosen carefully according to the expected message rate to prevent
      * out of memory conditions.
      */
     protected int expirationInterval = 1000;
@@ -101,31 +100,6 @@ public abstract class AbstractMonitoredObjectStore<T extends Serializable>
         return this.context;
     }
 
-    public void setEntryTTL(int entryTTL)
-    {
-        this.entryTTL = entryTTL;
-    }
-
-    public void setExpirationInterval(int expirationInterval)
-    {
-        this.expirationInterval = expirationInterval;
-    }
-
-    public void setMaxEntries(int maxEntries)
-    {
-        this.maxEntries = maxEntries;
-    }
-
-    public void setScheduler(ScheduledThreadPoolExecutor scheduler)
-    {
-        this.scheduler = scheduler;
-    }
-
-    public void setName(String id)
-    {
-        this.name = id;
-    }
-
     public void setMuleContext(MuleContext context)
     {
         this.context = context;
@@ -136,9 +110,19 @@ public abstract class AbstractMonitoredObjectStore<T extends Serializable>
         return entryTTL;
     }
 
+    public void setEntryTTL(int entryTTL)
+    {
+        this.entryTTL = entryTTL;
+    }
+
     public int getExpirationInterval()
     {
         return expirationInterval;
+    }
+
+    public void setExpirationInterval(int expirationInterval)
+    {
+        this.expirationInterval = expirationInterval;
     }
 
     public int getMaxEntries()
@@ -146,14 +130,29 @@ public abstract class AbstractMonitoredObjectStore<T extends Serializable>
         return maxEntries;
     }
 
+    public void setMaxEntries(int maxEntries)
+    {
+        this.maxEntries = maxEntries;
+    }
+
     public String getName()
     {
         return name;
     }
 
+    public void setName(String id)
+    {
+        this.name = id;
+    }
+
     public ScheduledThreadPoolExecutor getScheduler()
     {
         return scheduler;
+    }
+
+    public void setScheduler(ScheduledThreadPoolExecutor scheduler)
+    {
+        this.scheduler = scheduler;
     }
 
     protected abstract void expire();

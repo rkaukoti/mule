@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.module.cxf.support;
 
+import org.apache.cxf.service.factory.AbstractServiceConfiguration;
 import org.mule.runtime.module.cxf.builder.AbstractInboundMessageProcessorBuilder;
 
 import javax.xml.namespace.QName;
-
-import org.apache.cxf.service.factory.AbstractServiceConfiguration;
 
 /**
  * This is the {@link AbstractServiceConfiguration ServiceConfiguration} that is

@@ -10,13 +10,21 @@ import java.io.File;
 
 public class FilenameUtils extends org.apache.commons.io.FilenameUtils
 {
+    /**
+     * Never create instances of this class.
+     */
+    private FilenameUtils()
+    {
+        super();
+    }
+
     public static File fileWithPathComponents(String[] pathComponents)
     {
         if (pathComponents == null)
         {
             return null;
         }
-        
+
         StringBuilder buf = new StringBuilder(64);
         for (int i = 0; i < pathComponents.length; i++)
         {
@@ -25,7 +33,7 @@ public class FilenameUtils extends org.apache.commons.io.FilenameUtils
             {
                 continue;
             }
-            
+
             buf.append(component);
             if (i < pathComponents.length - 1)
             {
@@ -33,14 +41,6 @@ public class FilenameUtils extends org.apache.commons.io.FilenameUtils
             }
         }
         return FileUtils.newFile(buf.toString());
-    }
-    
-    /**
-     * Never create instances of this class.
-     */
-    private FilenameUtils()
-    {
-        super();
     }
 }
 

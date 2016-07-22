@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * Keeps context information about the processors that a flow executed.
- * 
+ *
  * @since 3.8.0
  */
 public class FlowStackElement implements Serializable

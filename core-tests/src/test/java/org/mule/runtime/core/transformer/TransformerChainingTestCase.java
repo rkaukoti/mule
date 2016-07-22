@@ -6,12 +6,8 @@
  */
 package org.mule.runtime.core.transformer;
 
-import static java.util.Collections.singletonList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.TransformationService;
 import org.mule.runtime.core.api.MuleException;
@@ -23,8 +19,11 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import java.nio.charset.Charset;
 
-import org.junit.Before;
-import org.junit.Test;
+import static java.util.Collections.singletonList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 public class TransformerChainingTestCase extends AbstractMuleContextTestCase
 {
@@ -42,7 +41,7 @@ public class TransformerChainingTestCase extends AbstractMuleContextTestCase
     {
         AbstractTransformer validTransformer = (AbstractTransformer) this.getIncreaseByOneTransformer();
         assertNotNull(validTransformer);
-        
+
         MuleMessage message = MuleMessage.builder().payload(new Integer(0)).build();
         Transformer messageTransformer = new TransformerChain(validTransformer);
         message = transformationService.applyTransformers(message, getTestEvent(0), messageTransformer);
@@ -57,7 +56,7 @@ public class TransformerChainingTestCase extends AbstractMuleContextTestCase
     {
         AbstractTransformer validTransformer = (AbstractTransformer) this.getIncreaseByOneTransformer();
         assertNotNull(validTransformer);
-        
+
         MuleMessage message = MuleMessage.builder().payload(new Integer(0)).build();
         Transformer messageTransformer = new TransformerChain(validTransformer, validTransformer);
         message = transformationService.applyTransformers(message, getTestEvent(0), singletonList(messageTransformer));
@@ -72,7 +71,7 @@ public class TransformerChainingTestCase extends AbstractMuleContextTestCase
     {
         AbstractTransformer validTransformer = (AbstractTransformer) this.getIncreaseByOneTransformer();
         assertNotNull(validTransformer);
-        
+
         MuleMessage message = MuleMessage.builder().payload(new Integer(0)).build();
         Transformer messageTransformer = new TransformerChain(validTransformer, validTransformer, validTransformer);
         message = transformationService.applyTransformers(message, getTestEvent(0), messageTransformer);
@@ -103,13 +102,13 @@ public class TransformerChainingTestCase extends AbstractMuleContextTestCase
         AbstractTransformer invalidTransformer = (AbstractTransformer) this.getInvalidTransformer();
         assertNotNull(invalidTransformer);
         invalidTransformer.setIgnoreBadInput(false);
-        
+
         AbstractTransformer validTransformer = (AbstractTransformer) this.getIncreaseByOneTransformer();
         assertNotNull(validTransformer);
-        
+
         MuleMessage message = MuleMessage.builder().payload(new Integer(0)).build();
         Transformer messageTransformer = new TransformerChain(invalidTransformer, validTransformer);
-        
+
         try
         {
             transformationService.applyTransformers(message, getTestEvent(0), messageTransformer);
@@ -158,10 +157,10 @@ public class TransformerChainingTestCase extends AbstractMuleContextTestCase
 
         // Use this class as a bogus source type to enforce a simple invalid transformer
         transformer.registerSourceType(DataType.fromType(this.getClass()));
-        
+
         return transformer;
     }
-    
+
     private Transformer getIncreaseByOneTransformer() throws Exception
     {
         AbstractTransformer transformer = new AbstractTransformer()
@@ -172,12 +171,12 @@ public class TransformerChainingTestCase extends AbstractMuleContextTestCase
                 return new Integer(((Integer) src).intValue() + 1);
             }
         };
-        
+
         DataType integerDataType = DataType.fromType(Integer.class);
         transformer.registerSourceType(integerDataType);
         transformer.setReturnDataType(DataType.builder(integerDataType).charset(getDefaultEncoding(muleContext)).build());
 
         return transformer;
     }
-    
+
 }

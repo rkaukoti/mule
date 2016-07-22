@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.core.object;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 public abstract class AbstractObjectFactoryTestCase extends AbstractMuleContextTestCase
 {
@@ -32,7 +32,7 @@ public abstract class AbstractObjectFactoryTestCase extends AbstractMuleContextT
             // OK
         }
     }
-    
+
     @Test
     public void testInstanceFailureGetInstanceWithoutObjectClass() throws Exception
     {
@@ -48,21 +48,21 @@ public abstract class AbstractObjectFactoryTestCase extends AbstractMuleContextT
             // OK
         }
     }
-    
+
     @Test
     public void testCreateWithClassButDoNotInitialise() throws Exception
     {
         AbstractObjectFactory factory = new DummyObjectFactory(Object.class);
         assertObjectClassAndName(factory);
     }
-    
+
     @Test
     public void testCreateWithClassNameButDoNotInitialise() throws Exception
     {
         AbstractObjectFactory factory = new DummyObjectFactory(Object.class.getName());
         assertObjectClassAndName(factory);
     }
-    
+
     @Test
     public void testSetObjectClassNameButDoNotInitialise() throws Exception
     {
@@ -77,16 +77,16 @@ public abstract class AbstractObjectFactoryTestCase extends AbstractMuleContextT
     {
         AbstractObjectFactory factory = getUninitialisedObjectFactory();
         factory.setObjectClass(Object.class);
-        
+
         assertObjectClassAndName(factory);
     }
-    
+
     private void assertObjectClassAndName(AbstractObjectFactory factory)
     {
         assertEquals(Object.class, factory.getObjectClass());
         assertEquals(Object.class.getName(), factory.getObjectClassName());
     }
-    
+
     @Test
     public void testInitialiseWithClass() throws Exception
     {
@@ -105,7 +105,7 @@ public abstract class AbstractObjectFactoryTestCase extends AbstractMuleContextT
         factory.setObjectClassName(Object.class.getName());
         // Will init the object
         muleContext.getRegistry().applyProcessorsAndLifecycle(factory);
-        
+
         assertNotNull(factory.getInstance(muleContext));
     }
 
@@ -116,7 +116,7 @@ public abstract class AbstractObjectFactoryTestCase extends AbstractMuleContextT
         factory.setObjectClass(Object.class);
         // Will init the object
         muleContext.getRegistry().applyProcessorsAndLifecycle(factory);
-        
+
         factory.dispose();
 
         try
@@ -129,7 +129,7 @@ public abstract class AbstractObjectFactoryTestCase extends AbstractMuleContextT
             // OK
         }
     }
-    
+
     public abstract AbstractObjectFactory getUninitialisedObjectFactory();
 
     @Test
@@ -137,14 +137,14 @@ public abstract class AbstractObjectFactoryTestCase extends AbstractMuleContextT
 
     @Test
     public abstract void testGet() throws Exception;
-    
+
     private static class DummyObjectFactory extends AbstractObjectFactory
     {
         public DummyObjectFactory(String className)
         {
             super(className);
         }
-        
+
         public DummyObjectFactory(Class<?> klass)
         {
             super(klass);

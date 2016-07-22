@@ -7,8 +7,6 @@
 package org.mule.extension.email.api;
 
 
-import static org.mule.extension.email.internal.util.EmailConnectorUtils.TEXT_PLAIN;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.extension.api.annotation.Parameter;
@@ -16,6 +14,8 @@ import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.annotation.param.display.Text;
+
+import static org.mule.extension.email.internal.util.EmailConnectorUtils.TEXT_PLAIN;
 
 /**
  * Represents and enables the construction of the content of an email
@@ -69,8 +69,7 @@ public class EmailContent
     }
 
     /**
-     * @return the body of the message content. The body
-     * aims to be text.
+     * @return the body of the message content. The body aims to be text.
      */
     public String getBody()
     {

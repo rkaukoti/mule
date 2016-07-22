@@ -6,10 +6,7 @@
  */
 package org.mule.runtime.module.xml.transformers.xml.xslt;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -30,7 +27,10 @@ import java.util.Map;
 
 import javax.xml.stream.XMLStreamReader;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class XsltTransformerJDKTransformerTestCase extends AbstractXmlTransformerTestCase
 {
@@ -150,30 +150,30 @@ public class XsltTransformerJDKTransformerTestCase extends AbstractXmlTransforme
 
         String xml =
                 "<node1>" +
-                     "<subnode1>sub node 1 original value</subnode1>" +
-                     "<subnode2>sub node 2 original value</subnode2>" +
-                 "</node1>";
+                "<subnode1>sub node 1 original value</subnode1>" +
+                "<subnode2>sub node 2 original value</subnode2>" +
+                "</node1>";
 
         String param = "sub node 2 cool new value";
 
         String expectedTransformedxml =
                 "<node1>" +
-                    "<subnode1>sub node 1 original value</subnode1>" +
-                    "<subnode2>" + param + "</subnode2>" +
+                "<subnode1>sub node 1 original value</subnode1>" +
+                "<subnode2>" + param + "</subnode2>" +
                 "</node1>";
 
         String xsl =
                 "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"2.0\"" +
-                     " xmlns:wsdlsoap=\"http://schemas.xmlsoap.org/wsdl/soap/\"" +
-                     " xmlns:wsdl=\"http://schemas.xmlsoap.org/wsdl/\">" +
-                     "<xsl:param name=\"param1\"/>" +
-                     "<xsl:template match=\"@*|node()\">" +
-                         "<xsl:copy><xsl:apply-templates select=\"@*|node()\"/></xsl:copy>" +
-                     "</xsl:template>" +
-                         "<xsl:template match=\"/node1/subnode2/text()\">" +
-                         "<xsl:value-of select=\"$param1\"/>" +
-                     "</xsl:template>" +
-                 "</xsl:stylesheet>";
+                " xmlns:wsdlsoap=\"http://schemas.xmlsoap.org/wsdl/soap/\"" +
+                " xmlns:wsdl=\"http://schemas.xmlsoap.org/wsdl/\">" +
+                "<xsl:param name=\"param1\"/>" +
+                "<xsl:template match=\"@*|node()\">" +
+                "<xsl:copy><xsl:apply-templates select=\"@*|node()\"/></xsl:copy>" +
+                "</xsl:template>" +
+                "<xsl:template match=\"/node1/subnode2/text()\">" +
+                "<xsl:value-of select=\"$param1\"/>" +
+                "</xsl:template>" +
+                "</xsl:stylesheet>";
 
         XsltTransformer transformer = new XsltTransformer();
 
@@ -206,29 +206,29 @@ public class XsltTransformerJDKTransformerTestCase extends AbstractXmlTransforme
 
         String xml =
                 "<node1>" +
-                     "<subnode1>sub node 1 original value</subnode1>" +
-                     "<subnode2>sub node 2 original value</subnode2>" +
-                 "</node1>";
+                "<subnode1>sub node 1 original value</subnode1>" +
+                "<subnode2>sub node 2 original value</subnode2>" +
+                "</node1>";
 
         String param = "sub node 2 cool new value";
 
         String expectedTransformedxml =
                 "<node1>" +
-                    "<subnode1>sub node 1 original value</subnode1>" +
-                    "<subnode2>" + param + "</subnode2>" +
+                "<subnode1>sub node 1 original value</subnode1>" +
+                "<subnode2>" + param + "</subnode2>" +
                 "</node1>";
 
         String xsl =
                 "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"2.0\"" +
-                    " xmlns:wsdlsoap=\"http://schemas.xmlsoap.org/wsdl/soap/\"" +
-                    " xmlns:wsdl=\"http://schemas.xmlsoap.org/wsdl/\">" +
-                    "<xsl:param name=\"param1\"/>" +
-                    "<xsl:template match=\"@*|node()\">" +
-                        "<xsl:copy><xsl:apply-templates select=\"@*|node()\"/></xsl:copy>" +
-                    "</xsl:template>" +
-                    "<xsl:template match=\"/node1/subnode2/text()\">" +
-                        "<xsl:value-of select=\"$param1\"/>" +
-                    "</xsl:template>" +
+                " xmlns:wsdlsoap=\"http://schemas.xmlsoap.org/wsdl/soap/\"" +
+                " xmlns:wsdl=\"http://schemas.xmlsoap.org/wsdl/\">" +
+                "<xsl:param name=\"param1\"/>" +
+                "<xsl:template match=\"@*|node()\">" +
+                "<xsl:copy><xsl:apply-templates select=\"@*|node()\"/></xsl:copy>" +
+                "</xsl:template>" +
+                "<xsl:template match=\"/node1/subnode2/text()\">" +
+                "<xsl:value-of select=\"$param1\"/>" +
+                "</xsl:template>" +
                 "</xsl:stylesheet>";
 
         XsltTransformer transformer = new XsltTransformer();

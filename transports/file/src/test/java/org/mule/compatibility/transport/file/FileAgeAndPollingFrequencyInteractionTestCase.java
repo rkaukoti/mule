@@ -6,11 +6,7 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mule.compatibility.transport.file.FileTestUtils.createDataFile;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.functional.junit4.FunctionalTestCase;
@@ -21,7 +17,10 @@ import org.mule.runtime.core.util.FileUtils;
 
 import java.io.File;
 
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mule.compatibility.transport.file.FileTestUtils.createDataFile;
 
 public class FileAgeAndPollingFrequencyInteractionTestCase extends FunctionalTestCase
 {
@@ -56,7 +55,8 @@ public class FileAgeAndPollingFrequencyInteractionTestCase extends FunctionalTes
     public static class TestFileMessageReceiver extends FileMessageReceiver
     {
 
-        public TestFileMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint, String readDir, String moveDir, String moveToPattern, long frequency) throws CreateException
+        public TestFileMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint, String readDir,
+                                       String moveDir, String moveToPattern, long frequency) throws CreateException
         {
             super(connector, flowConstruct, endpoint, readDir, moveDir, moveToPattern, frequency);
         }

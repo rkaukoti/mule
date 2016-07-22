@@ -7,11 +7,7 @@
 
 package org.mule.runtime.core.el.mvel.datatype;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mule.mvel2.MVEL.compileExpression;
-import static org.mule.runtime.api.metadata.MediaType.JSON;
-import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
-
+import org.junit.Test;
 import org.mule.mvel2.MVEL;
 import org.mule.mvel2.ParserConfiguration;
 import org.mule.mvel2.ParserContext;
@@ -32,7 +28,10 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mule.mvel2.MVEL.compileExpression;
+import static org.mule.runtime.api.metadata.MediaType.JSON;
+import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
 
 public abstract class AbstractVarExpressionDataTypeResolverTestCase extends AbstractMuleContextTestCase
 {
@@ -59,7 +58,7 @@ public abstract class AbstractVarExpressionDataTypeResolverTestCase extends Abst
     @Test
     public void returnsFlowVarDataTypeUsingDotSyntax() throws Exception
     {
-        doVarDataTypeTest(variableName + "." + PROPERTY_NAME );
+        doVarDataTypeTest(variableName + "." + PROPERTY_NAME);
     }
 
     @Test
@@ -85,16 +84,18 @@ public abstract class AbstractVarExpressionDataTypeResolverTestCase extends Abst
         assertThat(expressionDataTypeResolver.resolve(testEvent, compiledExpression), like(String.class, JSON, CUSTOM_ENCODING));
     }
 
-    protected MVELExpressionLanguageContext createMvelExpressionLanguageContext(MuleEvent testEvent, ParserConfiguration parserConfiguration)
+    protected MVELExpressionLanguageContext createMvelExpressionLanguageContext(MuleEvent testEvent,
+                                                                                ParserConfiguration parserConfiguration)
     {
         final MVELExpressionLanguageContext context = new MVELExpressionLanguageContext(parserConfiguration, muleContext);
         final StaticVariableResolverFactory staticContext = new StaticVariableResolverFactory(parserConfiguration, muleContext);
-        final GlobalVariableResolverFactory globalContext = new GlobalVariableResolverFactory(Collections.EMPTY_MAP, Collections.EMPTY_MAP, parserConfiguration, muleContext);
+        final GlobalVariableResolverFactory globalContext =
+                new GlobalVariableResolverFactory(Collections.EMPTY_MAP, Collections.EMPTY_MAP, parserConfiguration, muleContext);
 
         context.setNextFactory(new CachedMapVariableResolverFactory(Collections.EMPTY_MAP,
-                                                                    new DelegateVariableResolverFactory(staticContext, new MessageVariableResolverFactory(
-                                                                            parserConfiguration, muleContext, testEvent, new DelegateVariableResolverFactory(
-                                                                            globalContext, new VariableVariableResolverFactory(parserConfiguration, muleContext, testEvent))))));
+                new DelegateVariableResolverFactory(staticContext, new MessageVariableResolverFactory(
+                        parserConfiguration, muleContext, testEvent, new DelegateVariableResolverFactory(
+                        globalContext, new VariableVariableResolverFactory(parserConfiguration, muleContext, testEvent))))));
         return context;
     }
 

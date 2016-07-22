@@ -6,10 +6,7 @@
  */
 package org.mule.runtime.core.mule.model;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -32,15 +29,21 @@ import org.mule.tck.testmodels.fruit.WaterMelon;
 
 import java.util.Arrays;
 
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class LegacyEntryPointResolverTestCase extends AbstractMuleContextTestCase
 {
 
-    /** Name of the method override property on the event. */
+    /**
+     * Name of the method override property on the event.
+     */
     private static final String METHOD_PROPERTY_NAME = MuleProperties.MULE_METHOD_PROPERTY;
 
-    /** Name of the non-existent method. */
+    /**
+     * Name of the non-existent method.
+     */
     private static final String INVALID_METHOD_NAME = "nosuchmethod";
 
     @Test
@@ -77,7 +80,7 @@ public class LegacyEntryPointResolverTestCase extends AbstractMuleContextTestCas
         try
         {
             LegacyEntryPointResolverSet resolver = new LegacyEntryPointResolverSet();
-            resolver.invoke(new FruitBowl(), getTestEventContext(new Fruit[]{new Apple(), new Orange()}));
+            resolver.invoke(new FruitBowl(), getTestEventContext(new Fruit[] {new Apple(), new Orange()}));
             fail("Test should have failed because the arguments were not wrapped properly: ");
         }
         catch (MuleException e)
@@ -92,7 +95,7 @@ public class LegacyEntryPointResolverTestCase extends AbstractMuleContextTestCas
         try
         {
             LegacyEntryPointResolverSet resolver = new LegacyEntryPointResolverSet();
-            resolver.invoke(new FruitBowl(), getTestEventContext(new Object[]{new Fruit[]{new Apple(), new Orange()}}));
+            resolver.invoke(new FruitBowl(), getTestEventContext(new Object[] {new Fruit[] {new Apple(), new Orange()}}));
         }
         catch (MuleException e)
         {
@@ -109,7 +112,7 @@ public class LegacyEntryPointResolverTestCase extends AbstractMuleContextTestCas
         {
             LegacyEntryPointResolverSet resolver = new LegacyEntryPointResolverSet();
             resolver.addEntryPointResolver(new ArrayEntryPointResolver());
-            resolver.invoke(new FruitBowl(), getTestEventContext(new Fruit[]{new Apple(), new Orange()}));
+            resolver.invoke(new FruitBowl(), getTestEventContext(new Fruit[] {new Apple(), new Orange()}));
         }
         catch (MuleException e)
         {
@@ -223,14 +226,16 @@ public class LegacyEntryPointResolverTestCase extends AbstractMuleContextTestCas
         }
     }
 
-    /** Test for proper resolution of a method that takes an array as argument. */
+    /**
+     * Test for proper resolution of a method that takes an array as argument.
+     */
     // TODO MULE-1088: currently fails, therefore disabled
     @Test
     public void testArrayArgumentResolution() throws Exception
     {
         EntryPointResolverSet resolverSet = new LegacyEntryPointResolverSet();
 
-        Object payload = new Object[]{new Fruit[]{new Apple(), new Banana()}};
+        Object payload = new Object[] {new Fruit[] {new Apple(), new Banana()}};
         RequestContext.setEvent(getTestEvent(payload));
 
         FruitBowl bowl = new FruitBowl();
@@ -243,12 +248,14 @@ public class LegacyEntryPointResolverTestCase extends AbstractMuleContextTestCas
         assertTrue(bowl.hasBanana());
     }
 
-    /** Test for proper resolution of a method that takes a List as argument. */
+    /**
+     * Test for proper resolution of a method that takes a List as argument.
+     */
     @Test
     public void testListArgumentResolution() throws Exception
     {
         EntryPointResolverSet resolverSet = new LegacyEntryPointResolverSet();
-        Object payload = Arrays.asList(new Fruit[]{new Apple(), new Banana()});
+        Object payload = Arrays.asList(new Fruit[] {new Apple(), new Banana()});
         RequestContext.setEvent(getTestEvent(payload));
 
         FruitBowl bowl = new FruitBowl();
@@ -261,13 +268,15 @@ public class LegacyEntryPointResolverTestCase extends AbstractMuleContextTestCas
         assertTrue(bowl.hasBanana());
     }
 
-    /** Test for proper resolution of an existing method specified as override */
+    /**
+     * Test for proper resolution of an existing method specified as override
+     */
     @Test
     public void testExplicitOverride() throws Exception
     {
         EntryPointResolverSet resolverSet = new LegacyEntryPointResolverSet();
 
-        Object payload = Arrays.asList(new Fruit[]{new Apple(), new Banana()});
+        Object payload = Arrays.asList(new Fruit[] {new Apple(), new Banana()});
         RequestContext.setEvent(getTestEvent(payload));
 
         final String methodName = "setFruit";

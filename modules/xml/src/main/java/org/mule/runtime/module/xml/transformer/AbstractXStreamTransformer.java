@@ -6,6 +6,9 @@
  */
 package org.mule.runtime.module.xml.transformer;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.converters.Converter;
+
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.config.i18n.MessageFactory;
@@ -19,9 +22,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.converters.Converter;
-
 /**
  * <code>AbstractXStreamTransformer</code> is a base class for all XStream based
  * transformers. It takes care of creating and configuring the XStream parser.
@@ -32,7 +32,7 @@ public abstract class AbstractXStreamTransformer extends AbstractMessageTransfor
     private final AtomicReference<XStream> xstream = new AtomicReference<>();
     private volatile String driverClass = XStreamFactory.XSTREAM_XPP_DRIVER;
     private volatile Map<String, Class<?>> aliases = new HashMap<>();
-    private volatile Set<Class <? extends Converter>> converters = new HashSet<>();
+    private volatile Set<Class<? extends Converter>> converters = new HashSet<>();
 
     @Override
     public void initialise() throws InitialisationException
@@ -120,12 +120,12 @@ public abstract class AbstractXStreamTransformer extends AbstractMessageTransfor
         this.xstream.set(null);
     }
 
-    public Set<Class <? extends Converter>> getConverters()
+    public Set<Class<? extends Converter>> getConverters()
     {
         return converters;
     }
 
-    public void setConverters(Set<Class <? extends Converter>> converters)
+    public void setConverters(Set<Class<? extends Converter>> converters)
     {
         this.converters = converters;
         // force XStream instance update

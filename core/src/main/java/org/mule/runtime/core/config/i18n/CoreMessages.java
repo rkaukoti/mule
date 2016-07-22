@@ -191,7 +191,7 @@ public class CoreMessages extends MessageFactory
     public static Message transformUnexpectedType(Class<?> class1, Class<?> returnClass)
     {
         return factory.createMessage(BUNDLE_PATH, 53, ClassUtils.getSimpleName(class1),
-            ClassUtils.getSimpleName(returnClass));
+                ClassUtils.getSimpleName(returnClass));
     }
 
     public static Message transformUnexpectedType(DataType dt1, DataType dt2)
@@ -228,7 +228,7 @@ public class CoreMessages extends MessageFactory
     public static Message tooManyAcceptableMethodsOnObjectForTypes(Object object, Object types)
     {
         return factory.createMessage(BUNDLE_PATH, 60, StringMessageUtils.toString(object),
-            StringMessageUtils.toString(types));
+                StringMessageUtils.toString(types));
     }
 
     public static Message cannotSetPropertyOnObjectWithParamType(String property,
@@ -236,7 +236,7 @@ public class CoreMessages extends MessageFactory
                                                                  Class<?> class2)
     {
         return factory.createMessage(BUNDLE_PATH, 61, property, StringMessageUtils.toString(class1),
-            StringMessageUtils.toString(class2));
+                StringMessageUtils.toString(class2));
     }
 
     public static Message noComponentForEndpoint()
@@ -407,7 +407,7 @@ public class CoreMessages extends MessageFactory
     public static Message methodWithParamsNotFoundOnObject(String method, Object class1, Class<?> class2)
     {
         return factory.createMessage(BUNDLE_PATH, 109, method, StringMessageUtils.toString(class1),
-            StringMessageUtils.toString(class2));
+                StringMessageUtils.toString(class2));
     }
 
     public static Message transformFailed(String from, String to)
@@ -428,7 +428,7 @@ public class CoreMessages extends MessageFactory
     public static Message noEntryPointFoundWithArgs(Object object, Object args)
     {
         return factory.createMessage(BUNDLE_PATH, 116, StringMessageUtils.toString(object),
-            StringMessageUtils.toString(args));
+                StringMessageUtils.toString(args));
     }
 
     public static Message authNoSecurityProvider(String providerName)
@@ -539,13 +539,13 @@ public class CoreMessages extends MessageFactory
     public static Message propertyIsNotSupportedType(String property, Class<?> expected, Class<?> actual)
     {
         return factory.createMessage(BUNDLE_PATH, 157, property, StringMessageUtils.toString(expected),
-            StringMessageUtils.toString(actual));
+                StringMessageUtils.toString(actual));
     }
 
     public static Message propertyIsNotSupportedType(String property, Class<?>[] expected, Class<?> actual)
     {
         return factory.createMessage(BUNDLE_PATH, 157, property, StringMessageUtils.toString(expected),
-            StringMessageUtils.toString(actual));
+                StringMessageUtils.toString(actual));
     }
 
     public static Message containerAlreadyRegistered(String name)
@@ -616,7 +616,7 @@ public class CoreMessages extends MessageFactory
     public static Message transformOnObjectNotOfSpecifiedType(DataType resultType, Object expectedType)
     {
         return factory.createMessage(BUNDLE_PATH, 177, resultType.getType().getName(),
-            expectedType.getClass());
+                expectedType.getClass());
     }
 
     public static Message cannotUseTxAndRemoteSync()
@@ -637,13 +637,13 @@ public class CoreMessages extends MessageFactory
     public static Message objectNotOfCorrectType(Class<?> actualClass, Class<?>[] expectedClass)
     {
         return factory.createMessage(BUNDLE_PATH, 185, StringMessageUtils.toString(actualClass),
-            StringMessageUtils.toString(expectedClass));
+                StringMessageUtils.toString(expectedClass));
     }
 
     public static Message objectNotOfCorrectType(Class<?> actualClass, Class<?> expectedClass)
     {
         return factory.createMessage(BUNDLE_PATH, 185, StringMessageUtils.toString(actualClass),
-            StringMessageUtils.toString(expectedClass));
+                StringMessageUtils.toString(expectedClass));
     }
 
     public static Message failedToConvertStringUsingEncoding(String encoding)
@@ -739,13 +739,13 @@ public class CoreMessages extends MessageFactory
     public static Message tooManyMatchingMethodsOnObjectWhichReturn(Object object, Object returnType)
     {
         return factory.createMessage(BUNDLE_PATH, 216, StringMessageUtils.toString(object),
-            StringMessageUtils.toString(returnType));
+                StringMessageUtils.toString(returnType));
     }
 
     public static Message noMatchingMethodsOnObjectReturning(Object object, Class<?> returnType)
     {
         return factory.createMessage(BUNDLE_PATH, 220, StringMessageUtils.toString(object),
-            StringMessageUtils.toString(returnType));
+                StringMessageUtils.toString(returnType));
     }
 
     public static Message noEntryPointFoundForNoArgsMethod(final Object component, final String methodName)
@@ -760,19 +760,19 @@ public class CoreMessages extends MessageFactory
 
     /**
      * Returns a message that is a product informatin.
-     * 
+     *
      * @return message
      */
     public static Message productInformation()
     {
         String notset = CoreMessages.notSet().getMessage();
         return factory.createMessage(
-            BUNDLE_PATH,
-            236,
-            StringUtils.defaultString(MuleManifest.getProductDescription(), notset),
-            StringUtils.defaultString(MuleManifest.getProductVersion(), notset),
-            StringUtils.defaultString(MuleManifest.getVendorName(), notset) + " "
-                            + StringUtils.defaultString(MuleManifest.getVendorUrl(), notset));
+                BUNDLE_PATH,
+                236,
+                StringUtils.defaultString(MuleManifest.getProductDescription(), notset),
+                StringUtils.defaultString(MuleManifest.getProductVersion(), notset),
+                StringUtils.defaultString(MuleManifest.getVendorName(), notset) + " "
+                + StringUtils.defaultString(MuleManifest.getVendorUrl(), notset));
     }
 
     public static Message noTransformerFoundForMessage(DataType input, DataType output)
@@ -794,13 +794,13 @@ public class CoreMessages extends MessageFactory
     public static Message noEntryPointFoundWithArgsUsingResolver(Object object, Object args)
     {
         return factory.createMessage(BUNDLE_PATH, 240, StringMessageUtils.toString(object),
-            StringMessageUtils.toString(args));
+                StringMessageUtils.toString(args));
     }
 
     public static Message noMatchingMethodsOnObjectReturningUsingResolver(Object object, Class<?> returnType)
     {
         return factory.createMessage(BUNDLE_PATH, 241, StringMessageUtils.toString(object),
-            returnType.getClass().getName());
+                returnType.getClass().getName());
     }
 
     public static Message tooManyAcceptableMethodsOnObjectUsingResolverForTypes(Object object,
@@ -808,14 +808,14 @@ public class CoreMessages extends MessageFactory
                                                                                 String methods)
     {
         return factory.createMessage(BUNDLE_PATH, 242, StringMessageUtils.toString(object),
-            StringMessageUtils.toString(types), methods);
+                StringMessageUtils.toString(types), methods);
     }
 
     public static Message tooManyMatchingMethodsOnObjectUsingResolverWhichReturn(Object object,
                                                                                  Object returnType)
     {
         return factory.createMessage(BUNDLE_PATH, 243, StringMessageUtils.toString(returnType),
-            StringMessageUtils.toString(object));
+                StringMessageUtils.toString(object));
     }
 
     public static Message objectDoesNotImplementInterface(Object object, Class<?> interfaceClass)
@@ -861,7 +861,7 @@ public class CoreMessages extends MessageFactory
     public static Message objectAlreadyRegistered(String name, Object origObject, Object newObject)
     {
         return factory.createMessage(BUNDLE_PATH, 254, name, origObject + "." + origObject.getClass(),
-            newObject + "." + newObject.getClass());
+                newObject + "." + newObject.getClass());
     }
 
     public static Message transformerNotImplementDiscoverable(Transformer transformer)
@@ -890,7 +890,7 @@ public class CoreMessages extends MessageFactory
                                                       int numResources)
     {
         return factory.createMessage(BUNDLE_PATH, 257, configurationBuilder.getClass().getName(),
-            new Integer(numResources));
+                new Integer(numResources));
     }
 
     public static Message configurationBuilderSuccess(ConfigurationBuilder configurationBuilder,
@@ -907,7 +907,7 @@ public class CoreMessages extends MessageFactory
     public static Message configurationBuilderError(ConfigurationBuilder configurationBuilder)
     {
         return factory.createMessage(BUNDLE_PATH, 260,
-            StringMessageUtils.toString(configurationBuilder.getClass()));
+                StringMessageUtils.toString(configurationBuilder.getClass()));
     }
 
     public static Message nestedRetry()
@@ -1095,7 +1095,7 @@ public class CoreMessages extends MessageFactory
     public static Message methodWithNumParamsNotFoundOnObject(String method, int numArgments, Object object)
     {
         return factory.createMessage(BUNDLE_PATH, 329, method, numArgments,
-            StringMessageUtils.toString(object));
+                StringMessageUtils.toString(object));
     }
 
     public static Message expressionEnricherNotRegistered(String key)

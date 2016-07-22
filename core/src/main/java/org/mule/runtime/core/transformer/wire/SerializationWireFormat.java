@@ -20,5 +20,5 @@ public class SerializationWireFormat extends TransformerPairWireFormat
         setInboundTransformer(new ByteArrayToSerializable());
         setOutboundTransformer(new SerializableToByteArray());
     }
-    
+
 }

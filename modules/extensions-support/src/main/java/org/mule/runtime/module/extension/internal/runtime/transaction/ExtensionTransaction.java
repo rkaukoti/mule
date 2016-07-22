@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.transaction;
 
-import static java.lang.String.format;
-import static java.util.Optional.empty;
-import static org.mule.runtime.core.config.i18n.CoreMessages.transactionCanOnlyBindToResources;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.transaction.AbstractSingleResourceTransaction;
@@ -16,6 +13,10 @@ import org.mule.runtime.core.transaction.IllegalTransactionStateException;
 
 import java.util.Objects;
 import java.util.Optional;
+
+import static java.lang.String.format;
+import static java.util.Optional.empty;
+import static org.mule.runtime.core.config.i18n.CoreMessages.transactionCanOnlyBindToResources;
 
 /**
  * Generic single resource transaction for Extensions

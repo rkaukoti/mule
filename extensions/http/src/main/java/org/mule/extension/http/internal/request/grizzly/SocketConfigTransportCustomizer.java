@@ -7,12 +7,11 @@
 package org.mule.extension.http.internal.request.grizzly;
 
 
-import org.mule.extension.socket.api.socket.tcp.TcpClientSocketProperties;
-
 import com.ning.http.client.providers.grizzly.TransportCustomizer;
 
 import org.glassfish.grizzly.filterchain.FilterChainBuilder;
 import org.glassfish.grizzly.nio.transport.TCPNIOTransport;
+import org.mule.extension.socket.api.socket.tcp.TcpClientSocketProperties;
 
 /**
  * Transport customizer that configures socket properties.

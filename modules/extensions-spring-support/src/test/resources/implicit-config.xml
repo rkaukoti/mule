@@ -6,11 +6,11 @@
                http://www.mulesoft.org/schema/mule/implicit http://www.mulesoft.org/schema/mule/implicit/current/mule-implicit.xsd">
 
     <flow name="implicitConfig">
-        <implicit:get-config />
+        <implicit:get-config/>
     </flow>
 
     <flow name="implicitConnection">
-        <implicit:get-connection />
+        <implicit:get-connection/>
     </flow>
 
 </mule>

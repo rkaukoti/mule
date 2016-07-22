@@ -6,10 +6,7 @@
  */
 package org.mule.runtime.core.transformer;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleMessage;
@@ -22,7 +19,9 @@ import org.mule.tck.testmodels.fruit.InvalidSatsuma;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.fail;
 
 public abstract class AbstractTransformerTestCase extends AbstractMuleContextTestCase
 {
@@ -61,7 +60,7 @@ public abstract class AbstractTransformerTestCase extends AbstractMuleContextTes
         if (!match)
         {
             fail(String.format("Transformation result does not match expected result. Expected '%s', but got '%s'",
-                               expectedResult, result));
+                    expectedResult, result));
         }
     }
 
@@ -80,7 +79,7 @@ public abstract class AbstractTransformerTestCase extends AbstractMuleContextTes
             if (!match)
             {
                 fail(String.format("The result of the roundtrip transform does not match expected result. Expected '%s', but got '%s'",
-                                   this.getTestData(), result));
+                        this.getTestData(), result));
             }
         }
     }
@@ -168,7 +167,7 @@ public abstract class AbstractTransformerTestCase extends AbstractMuleContextTes
         }
         else if (expected instanceof InputStream)
         {
-            expected = IOUtils.toString((InputStream)expected);
+            expected = IOUtils.toString((InputStream) expected);
         }
 
         // Special case for Strings: normalize comparison arguments

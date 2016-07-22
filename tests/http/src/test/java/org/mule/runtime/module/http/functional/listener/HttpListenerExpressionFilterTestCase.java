@@ -6,19 +6,19 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.entity.StringEntity;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.io.IOException;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.entity.StringEntity;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class HttpListenerExpressionFilterTestCase extends AbstractHttpTestCase
 {
@@ -47,8 +47,8 @@ public class HttpListenerExpressionFilterTestCase extends AbstractHttpTestCase
     private void sendRequestAndAssertResponse(boolean filterExpression, String expectedBody) throws IOException
     {
         Request request = Request.Post(String.format("http://localhost:%s", listenPort.getValue()))
-                .body(new StringEntity(TEST_MESSAGE))
-                .addHeader("filterExpression", Boolean.toString(filterExpression));
+                                 .body(new StringEntity(TEST_MESSAGE))
+                                 .addHeader("filterExpression", Boolean.toString(filterExpression));
 
         HttpResponse response = request.execute().returnResponse();
 

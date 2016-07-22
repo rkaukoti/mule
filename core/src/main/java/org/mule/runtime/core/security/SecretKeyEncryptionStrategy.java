@@ -25,11 +25,10 @@ import javax.crypto.spec.SecretKeySpec;
  * A keyFactory is an implementation of {@link SecretKeyFactory} and must return a
  * byte array. The default algorthm used by this strategy is Blowfish, but users can
  * specify any valid algorithm supported by JCE.
- * 
+ *
  * @see SecretKeyFactory
- * @deprecated This class is deprecated and will be removed in Mule 4.0. Use
- * {@link PasswordBasedEncryptionStrategy} instead, which follows the correct
- * way of transforming a string password into a cryptographic key
+ * @deprecated This class is deprecated and will be removed in Mule 4.0. Use {@link PasswordBasedEncryptionStrategy} instead, which follows
+ * the correct way of transforming a string password into a cryptographic key
  */
 @Deprecated
 public class SecretKeyEncryptionStrategy extends AbstractJCEEncryptionStrategy
@@ -86,6 +85,7 @@ public class SecretKeyEncryptionStrategy extends AbstractJCEEncryptionStrategy
             decryptCipher.init(Cipher.DECRYPT_MODE, (SecretKeySpec) keySpec);
         }
     }
+
     protected KeySpec createKeySpec()
     {
         return new SecretKeySpec(key, algorithm);

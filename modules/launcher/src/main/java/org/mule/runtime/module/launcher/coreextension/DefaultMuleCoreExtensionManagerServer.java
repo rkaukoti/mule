@@ -16,12 +16,11 @@ import org.mule.runtime.module.launcher.DeploymentService;
 import org.mule.runtime.module.launcher.DeploymentServiceAware;
 import org.mule.runtime.module.launcher.RepositoryServiceAware;
 import org.mule.runtime.module.repository.api.RepositoryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class DefaultMuleCoreExtensionManagerServer implements MuleCoreExtensionManagerServer
 {
@@ -35,7 +34,8 @@ public class DefaultMuleCoreExtensionManagerServer implements MuleCoreExtensionM
     private RepositoryService repositoryService;
     private List<MuleCoreExtension> orderedCoreExtensions;
 
-    public DefaultMuleCoreExtensionManagerServer(MuleCoreExtensionDiscoverer coreExtensionDiscoverer, MuleCoreExtensionDependencyResolver coreExtensionDependencyResolver)
+    public DefaultMuleCoreExtensionManagerServer(MuleCoreExtensionDiscoverer coreExtensionDiscoverer,
+                                                 MuleCoreExtensionDependencyResolver coreExtensionDependencyResolver)
     {
         this.coreExtensionDiscoverer = coreExtensionDiscoverer;
         this.coreExtensionDependencyResolver = coreExtensionDependencyResolver;

@@ -13,7 +13,7 @@ public class DelegatingInputStream extends InputStream
 {
 
     private InputStream delegate;
-    
+
     public DelegatingInputStream(InputStream delegate)
     {
         this.delegate = delegate;

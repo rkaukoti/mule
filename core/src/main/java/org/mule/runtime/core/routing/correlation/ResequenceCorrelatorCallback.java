@@ -29,8 +29,8 @@ public class ResequenceCorrelatorCallback extends CollectionCorrelatorCallback
     protected Comparator<MuleEvent> eventComparator;
 
     public ResequenceCorrelatorCallback(Comparator<MuleEvent> eventComparator,
-            MuleContext muleContext,
-            String storePrefix)
+                                        MuleContext muleContext,
+                                        String storePrefix)
     {
         super(muleContext, storePrefix);
         this.eventComparator = eventComparator;
@@ -40,12 +40,11 @@ public class ResequenceCorrelatorCallback extends CollectionCorrelatorCallback
      * This method is invoked if the shouldAggregate method is called and returns
      * true. Once this method returns an aggregated message, the event group is
      * removed from the router.
-     * 
+     *
      * @param events the event group for this request
      * @return an aggregated message
-     * @throws AggregationException if the aggregation fails. in this scenario the
-     *             whole event group is removed and passed to the exception handler
-     *             for this componenet
+     * @throws AggregationException if the aggregation fails. in this scenario the whole event group is removed and passed to the exception
+     *                              handler for this componenet
      */
     @Override
     public MuleEvent aggregateEvents(EventGroup events) throws AggregationException

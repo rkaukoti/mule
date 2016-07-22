@@ -75,7 +75,7 @@ public class TransformPerRequestInChunksPolicy extends AbstractTransformPolicy
                  * it is safe to manipulate getBytesRequested() as I'm the only thread accessing the object
                  */
                 long requested = bytesActuallyRequested;
-                long updatedRequest = (long) (Math.ceil((double)requested / (double)chunkSize) * chunkSize);
+                long updatedRequest = (long) (Math.ceil((double) requested / (double) chunkSize) * chunkSize);
                 getBytesRequested().set(updatedRequest);
 
                 finishWriting = getTransformer().write(getInputStream().getOut(), getBytesRequested());

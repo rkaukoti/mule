@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.module.http.internal.request.client;
 
+import org.apache.commons.io.IOUtils;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
@@ -14,8 +15,6 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.apache.commons.io.IOUtils;
 
 /**
  * Adapts an HTTP operation to be one-way.

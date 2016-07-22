@@ -6,8 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.execution.TransactionalExecutionTemplate.createTransactionalExecutionTemplate;
+import com.google.common.collect.ImmutableList;
+
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.execution.ExecutionTemplate;
@@ -29,8 +29,8 @@ import org.mule.runtime.extension.api.runtime.operation.OperationContext;
 import org.mule.runtime.extension.api.runtime.operation.OperationExecutor;
 import org.mule.runtime.module.extension.internal.runtime.config.MutableConfigurationStats;
 import org.mule.runtime.module.extension.internal.runtime.exception.ExceptionEnricherManager;
-
-import com.google.common.collect.ImmutableList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +38,8 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static org.mule.runtime.core.execution.TransactionalExecutionTemplate.createTransactionalExecutionTemplate;
 
 /**
  * Default implementation of {@link ExecutionMediator}.
@@ -70,7 +70,8 @@ public final class DefaultExecutionMediator implements ExecutionMediator
     private final ConnectionManagerAdapter connectionManager;
     private final ExecutionTemplate<?> defaultExecutionTemplate = callback -> callback.process();
 
-    public DefaultExecutionMediator(RuntimeExtensionModel extensionModel, RuntimeOperationModel operationModel, ConnectionManagerAdapter connectionManager)
+    public DefaultExecutionMediator(RuntimeExtensionModel extensionModel, RuntimeOperationModel operationModel,
+                                    ConnectionManagerAdapter connectionManager)
     {
         this.connectionManager = connectionManager;
         this.exceptionEnricherManager = new ExceptionEnricherManager(extensionModel, operationModel);
@@ -105,7 +106,8 @@ public final class DefaultExecutionMediator implements ExecutionMediator
         }
     }
 
-    private Object executeWithRetryPolicy(OperationExecutor executor, OperationContextAdapter context, List<Interceptor> interceptors) throws Throwable
+    private Object executeWithRetryPolicy(OperationExecutor executor, OperationContextAdapter context, List<Interceptor> interceptors)
+            throws Throwable
     {
         RetryPolicyTemplate retryPolicyTemplate = getRetryPolicyTemplate(context.getConfiguration().getConnectionProvider());
 
@@ -187,9 +189,10 @@ public final class DefaultExecutionMediator implements ExecutionMediator
     private void onSuccess(OperationContext operationContext, Object result, List<Interceptor> interceptors)
     {
         intercept(interceptors,
-                  interceptor -> interceptor.onSuccess(operationContext, result),
-                  interceptor -> format("Interceptor %s threw exception executing 'onSuccess' phase. Exception will be ignored. Next interceptors (if any)" +
-                                        "will be executed and the operation's result will be returned", interceptor));
+                interceptor -> interceptor.onSuccess(operationContext, result),
+                interceptor -> format(
+                        "Interceptor %s threw exception executing 'onSuccess' phase. Exception will be ignored. Next interceptors (if any)" +
+                        "will be executed and the operation's result will be returned", interceptor));
     }
 
     private Throwable onError(OperationContext operationContext,
@@ -200,18 +203,20 @@ public final class DefaultExecutionMediator implements ExecutionMediator
         ValueHolder<Throwable> exceptionHolder = new ValueHolder<>(e);
 
         intercept(interceptors,
-                  interceptor -> {
-                      InterceptorsRetryRequest retryRequest = new InterceptorsRetryRequest(interceptor, retryRequestHolder.get());
-                      retryRequestHolder.set(retryRequest);
+                interceptor ->
+                {
+                    InterceptorsRetryRequest retryRequest = new InterceptorsRetryRequest(interceptor, retryRequestHolder.get());
+                    retryRequestHolder.set(retryRequest);
 
-                      Throwable decoratedException = interceptor.onError(operationContext, retryRequest, exceptionHolder.get());
-                      if (decoratedException != null)
-                      {
-                          exceptionHolder.set(decoratedException);
-                      }
-                  },
-                  interceptor -> format("Interceptor %s threw exception executing 'onError' phase. Exception will be ignored. Next interceptors (if any)" +
-                                        "will be executed and the operation's exception will be returned", interceptor));
+                    Throwable decoratedException = interceptor.onError(operationContext, retryRequest, exceptionHolder.get());
+                    if (decoratedException != null)
+                    {
+                        exceptionHolder.set(decoratedException);
+                    }
+                },
+                interceptor -> format(
+                        "Interceptor %s threw exception executing 'onError' phase. Exception will be ignored. Next interceptors (if any)" +
+                        "will be executed and the operation's exception will be returned", interceptor));
 
         return exceptionHolder.get();
     }
@@ -220,15 +225,18 @@ public final class DefaultExecutionMediator implements ExecutionMediator
     {
         {
             intercept(interceptors,
-                      interceptor -> interceptor.after(operationContext, result),
-                      interceptor -> format("Interceptor %s threw exception executing 'after' phase. Exception will be ignored. Next interceptors (if any)" +
-                                            "will be executed and the operation's result be returned", interceptor));
+                    interceptor -> interceptor.after(operationContext, result),
+                    interceptor -> format(
+                            "Interceptor %s threw exception executing 'after' phase. Exception will be ignored. Next interceptors (if any)" +
+                            "will be executed and the operation's result be returned", interceptor));
         }
     }
 
-    private void intercept(List<Interceptor> interceptors, Consumer<Interceptor> closure, Function<Interceptor, String> exceptionMessageFunction)
+    private void intercept(List<Interceptor> interceptors, Consumer<Interceptor> closure,
+                           Function<Interceptor, String> exceptionMessageFunction)
     {
-        interceptors.forEach(interceptor -> {
+        interceptors.forEach(interceptor ->
+        {
             try
             {
                 closure.accept(interceptor);
@@ -246,8 +254,8 @@ public final class DefaultExecutionMediator implements ExecutionMediator
     private <T> ExecutionTemplate<T> getExecutionTemplate(OperationContextAdapter context)
     {
         return context.getTransactionConfig()
-                .map(txConfig -> (ExecutionTemplate<T>) createTransactionalExecutionTemplate(context.getMuleContext(), txConfig))
-                .orElse((ExecutionTemplate<T>) defaultExecutionTemplate);
+                      .map(txConfig -> (ExecutionTemplate<T>) createTransactionalExecutionTemplate(context.getMuleContext(), txConfig))
+                      .orElse((ExecutionTemplate<T>) defaultExecutionTemplate);
     }
 
     private RetryPolicyTemplate getRetryPolicyTemplate(Optional<ConnectionProvider> optionalConnectionProvider)
@@ -267,8 +275,8 @@ public final class DefaultExecutionMediator implements ExecutionMediator
     {
         ConfigurationStats stats = context.getConfiguration().getStatistics();
         return stats instanceof MutableConfigurationStats
-               ? (MutableConfigurationStats) stats
-               : null;
+                ? (MutableConfigurationStats) stats
+                : null;
     }
 
     private List<Interceptor> collectInterceptors(Object... interceptableCandidates)
@@ -294,7 +302,8 @@ public final class DefaultExecutionMediator implements ExecutionMediator
         private OperationExecutor operationExecutor;
         private OperationExecutionResult operationExecutionResult;
 
-        private OperationRetryCallBack(OperationExecutor operationExecutor, OperationContextAdapter context, List<Interceptor> interceptorList)
+        private OperationRetryCallBack(OperationExecutor operationExecutor, OperationContextAdapter context,
+                                       List<Interceptor> interceptorList)
         {
             this.operationExecutor = operationExecutor;
             this.context = context;
@@ -304,11 +313,13 @@ public final class DefaultExecutionMediator implements ExecutionMediator
         @Override
         public void doWork(RetryContext retryContext) throws Exception
         {
-            operationExecutionResult = (OperationExecutionResult) getExecutionTemplate(context).execute(() -> executeWithInterceptors(operationExecutor, context, interceptorList, new ValueHolder<>()));
+            operationExecutionResult = (OperationExecutionResult) getExecutionTemplate(context).execute(
+                    () -> executeWithInterceptors(operationExecutor, context, interceptorList, new ValueHolder<>()));
 
             if (!operationExecutionResult.isOk())
             {
-                if (operationExecutionResult.getRetryRequest().isPresent() && operationExecutionResult.getRetryRequest().get().isRetryRequested())
+                if (operationExecutionResult.getRetryRequest().isPresent() &&
+                    operationExecutionResult.getRetryRequest().get().isRetryRequested())
                 {
                     Throwable throwable = operationExecutionResult.getException();
                     if (throwable instanceof Exception)
@@ -330,7 +341,8 @@ public final class DefaultExecutionMediator implements ExecutionMediator
         @Override
         public String getWorkDescription()
         {
-            return String.format("Extension [%s] with configuration [%s]", context.getConfiguration().getModel().getExtensionModel().getName(), context.getConfiguration().getName());
+            return String.format("Extension [%s] with configuration [%s]",
+                    context.getConfiguration().getModel().getExtensionModel().getName(), context.getConfiguration().getName());
         }
 
         @Override

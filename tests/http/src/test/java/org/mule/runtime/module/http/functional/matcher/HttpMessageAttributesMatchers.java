@@ -6,10 +6,9 @@
  */
 package org.mule.runtime.module.http.functional.matcher;
 
-import org.mule.extension.http.api.HttpResponseAttributes;
-
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
+import org.mule.extension.http.api.HttpResponseAttributes;
 
 public class HttpMessageAttributesMatchers
 {

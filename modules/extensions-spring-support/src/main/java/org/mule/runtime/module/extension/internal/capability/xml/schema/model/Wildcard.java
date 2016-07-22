@@ -56,8 +56,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "wildcard")
 @XmlSeeAlso({
-                    Any.class
-            })
+        Any.class
+})
 public class Wildcard extends Annotated
 {
 
@@ -100,8 +100,7 @@ public class Wildcard extends Annotated
     /**
      * Gets the value of the processContents property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getProcessContents()
     {
@@ -118,8 +117,7 @@ public class Wildcard extends Annotated
     /**
      * Sets the value of the processContents property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setProcessContents(String value)
     {

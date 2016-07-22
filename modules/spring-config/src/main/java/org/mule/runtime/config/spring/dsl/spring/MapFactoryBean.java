@@ -8,11 +8,10 @@ package org.mule.runtime.config.spring.dsl.spring;
 
 import org.mule.runtime.config.spring.dsl.api.MapEntry;
 import org.mule.runtime.core.util.ClassUtils;
+import org.springframework.beans.factory.FactoryBean;
 
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.beans.factory.FactoryBean;
 
 /**
  * {@code FactoryBean} that creates a {@code Map} from a collection of
@@ -26,7 +25,7 @@ public class MapFactoryBean implements FactoryBean
 
     /**
      * @param mapEntries the collection of entries to store in the map
-     * @param mapType the map type
+     * @param mapType    the map type
      */
     public MapFactoryBean(List<MapEntry> mapEntries, Class<? extends Map> mapType)
     {

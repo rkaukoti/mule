@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.module.http.functional;
 
+import org.junit.Rule;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.core.util.concurrent.Latch;
 import org.mule.tck.junit4.rule.DynamicPort;
@@ -19,8 +20,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import org.junit.Rule;
 
 /**
  * Abstract class for tests that require a mock HTTP server that handles the "Expect" header. Provides methods

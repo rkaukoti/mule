@@ -7,17 +7,14 @@
 package org.mule.runtime.config.spring.factories;
 
 import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.construct.FlowConstruct;
-import org.mule.runtime.core.api.construct.FlowConstructAware;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.processor.MessageProcessorBuilder;
 import org.mule.runtime.core.processor.ResponseMessageProcessorAdapter;
 import org.mule.runtime.core.processor.chain.DefaultMessageProcessorChainBuilder;
+import org.springframework.beans.factory.FactoryBean;
 
 import java.util.List;
-
-import org.springframework.beans.factory.FactoryBean;
 
 public class ResponseMessageProcessorsFactoryBean implements FactoryBean, MuleContextAware
 {
@@ -52,7 +49,7 @@ public class ResponseMessageProcessorsFactoryBean implements FactoryBean, MuleCo
             else
             {
                 throw new IllegalArgumentException(
-                    "MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
+                        "MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
             }
         }
         ResponseMessageProcessorAdapter responseAdapter = new ResponseMessageProcessorAdapter();

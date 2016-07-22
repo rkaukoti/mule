@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.module.launcher.application;
 
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.EXTENSION_MANIFEST_FILE_NAME;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.ConfigurationBuilder;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -16,12 +15,13 @@ import org.mule.runtime.extension.api.manifest.ExtensionManifest;
 import org.mule.runtime.module.extension.internal.manager.DefaultExtensionManagerAdapterFactory;
 import org.mule.runtime.module.extension.internal.manager.ExtensionManagerAdapter;
 import org.mule.runtime.module.extension.internal.manager.ExtensionManagerAdapterFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.EXTENSION_MANIFEST_FILE_NAME;
 
 /**
  * Implementation of {@link ConfigurationBuilder} that registers a {@link ExtensionManager}
@@ -41,7 +41,8 @@ public class ApplicationExtensionsManagerConfigurationBuilder extends AbstractCo
         this(artifactPlugins, new DefaultExtensionManagerAdapterFactory());
     }
 
-    public ApplicationExtensionsManagerConfigurationBuilder(List<ArtifactPlugin> artifactPlugins, ExtensionManagerAdapterFactory extensionManagerAdapterFactory)
+    public ApplicationExtensionsManagerConfigurationBuilder(List<ArtifactPlugin> artifactPlugins,
+                                                            ExtensionManagerAdapterFactory extensionManagerAdapterFactory)
     {
         this.artifactPlugins = artifactPlugins;
         this.extensionManagerAdapterFactory = extensionManagerAdapterFactory;

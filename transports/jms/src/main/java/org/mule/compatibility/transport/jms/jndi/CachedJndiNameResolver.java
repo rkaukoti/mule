@@ -32,7 +32,8 @@ public class CachedJndiNameResolver extends AbstractJndiNameResolver
     {
         Object result = findInCache(name);
 
-        if (result == null) {
+        if (result == null)
+        {
             result = findInContext(name);
         }
 
@@ -69,7 +70,7 @@ public class CachedJndiNameResolver extends AbstractJndiNameResolver
             result = cache.get(name);
             if (logger.isDebugEnabled())
             {
-                logger.debug(String.format("Object: " + name + " was %sfound in the cache", (result == null)? "not ": ""));
+                logger.debug(String.format("Object: " + name + " was %sfound in the cache", (result == null) ? "not " : ""));
             }
         }
 
@@ -77,7 +78,8 @@ public class CachedJndiNameResolver extends AbstractJndiNameResolver
     }
 
     @Override
-    public void initialise() {
+    public void initialise()
+    {
         cache = new ConcurrentHashMap<String, Object>();
     }
 

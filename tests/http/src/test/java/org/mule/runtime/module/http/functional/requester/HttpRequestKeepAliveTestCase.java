@@ -6,16 +6,15 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FlowRunner;
+import org.mule.runtime.core.util.StringUtils;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONNECTION;
 import static org.mule.runtime.module.http.api.HttpHeaders.Values.CLOSE;
 import static org.mule.runtime.module.http.api.HttpHeaders.Values.KEEP_ALIVE;
-
-import org.mule.functional.junit4.FlowRunner;
-import org.mule.runtime.core.util.StringUtils;
-
-import org.junit.Test;
 
 public class HttpRequestKeepAliveTestCase extends AbstractHttpRequestTestCase
 {

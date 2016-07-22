@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class TestMultiuserSecurityProvider extends TestSingleUserSecurityProvider
 {
-    private Map <String, Authentication> authentications;
+    private Map<String, Authentication> authentications;
 
     public TestMultiuserSecurityProvider()
     {
@@ -49,7 +49,7 @@ public class TestMultiuserSecurityProvider extends TestSingleUserSecurityProvide
             props.put(PROPERTY_NUMBER_LOGINS, numberLogins + 1);
             authentication.setProperties(props);
             authentications.put(user, authentication);
-            logger.info("Welcome back " + user + " (" + numberLogins+1 + " logins), we remembered your favorite color: " + favoriteColor);
+            logger.info("Welcome back " + user + " (" + numberLogins + 1 + " logins), we remembered your favorite color: " + favoriteColor);
         }
         else
         {

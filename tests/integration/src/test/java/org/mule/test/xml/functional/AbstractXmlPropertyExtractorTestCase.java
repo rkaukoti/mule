@@ -6,15 +6,14 @@
  */
 package org.mule.test.xml.functional;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MessagingException;
+import org.mule.runtime.core.api.MuleMessage;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.MessagingException;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import org.junit.Test;
 
 public abstract class AbstractXmlPropertyExtractorTestCase extends FunctionalTestCase
 {
@@ -22,7 +21,7 @@ public abstract class AbstractXmlPropertyExtractorTestCase extends FunctionalTes
     @Override
     protected String getConfigFile()
     {
-        return  "org/mule/module/xml/property-extractor-test.xml";
+        return "org/mule/module/xml/property-extractor-test.xml";
     }
 
     protected abstract Object getMatchMessage() throws Exception;
@@ -42,6 +41,7 @@ public abstract class AbstractXmlPropertyExtractorTestCase extends FunctionalTes
     public void testError() throws Exception
     {
         MessagingException e = flowRunner("test").withPayload(getErrorMessage()).runExpectingException();
-        assertThat(e.getMessage(), is("Execution of the expression \"payload.childBean.value\" failed. (org.mule.runtime.core.api.expression.ExpressionRuntimeException)."));
+        assertThat(e.getMessage(),
+                is("Execution of the expression \"payload.childBean.value\" failed. (org.mule.runtime.core.api.expression.ExpressionRuntimeException)."));
     }
 }

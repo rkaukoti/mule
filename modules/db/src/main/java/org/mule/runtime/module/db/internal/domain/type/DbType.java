@@ -31,11 +31,10 @@ public interface DbType
      * Sets the value of an input parameter
      *
      * @param statement statement that contains the parameter
-     * @param index index of the parameter in the statement (first parameter is 1, the second is 2, etc)
-     * @param value value to assign
-     * @throws SQLException if parameterIndex does not correspond to a parameter marker in the SQL statement;
-     * if a database access error occurs; this method is called on a closed PreparedStatement or the type of
-     * the given object is ambiguous
+     * @param index     index of the parameter in the statement (first parameter is 1, the second is 2, etc)
+     * @param value     value to assign
+     * @throws SQLException if parameterIndex does not correspond to a parameter marker in the SQL statement; if a database access error
+     *                      occurs; this method is called on a closed PreparedStatement or the type of the given object is ambiguous
      */
     void setParameterValue(PreparedStatement statement, int index, Object value) throws SQLException;
 
@@ -43,9 +42,9 @@ public interface DbType
      * Gets the value of an output parameter
      *
      * @param statement statement that contains the parameter
-     * @param index index of the parameter in the statement (first parameter is 1, the second is 2, etc)
-     * @throws SQLException if parameterIndex does not correspond to a parameter marker in the SQL statement;
-     * if a database access error occurs; this method is called on a closed statement
+     * @param index     index of the parameter in the statement (first parameter is 1, the second is 2, etc)
+     * @throws SQLException if parameterIndex does not correspond to a parameter marker in the SQL statement; if a database access error
+     *                      occurs; this method is called on a closed statement
      */
     Object getParameterValue(CallableStatement statement, int index) throws SQLException;
 
@@ -53,9 +52,9 @@ public interface DbType
      * Registers an output parameter
      *
      * @param statement statement that contains the parameter
-     * @param index index of the parameter in the statement (first parameter is 1, the second is 2, etc)
-     * @throws SQLException if the parameterIndex is not valid; if a database access error occurs or this method
-     * is called on a closed CallableStatement
+     * @param index     index of the parameter in the statement (first parameter is 1, the second is 2, etc)
+     * @throws SQLException if the parameterIndex is not valid; if a database access error occurs or this method is called on a closed
+     *                      CallableStatement
      */
     void registerOutParameter(CallableStatement statement, int index) throws SQLException;
 }

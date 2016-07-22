@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.CREATED;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.client.fluent.Response;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.core.util.ArrayUtils;
 import org.mule.runtime.module.http.api.HttpHeaders;
 import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
@@ -22,46 +21,56 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.client.fluent.Response;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.CREATED;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.OK;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
 
 public class HttpListenerResponseBuilderTestCase extends AbstractHttpTestCase
 {
 
-    private static final String FAIL = "fail";
     public static final int TIMEOUT = 100000;
-
+    private static final String FAIL = "fail";
     @Rule
     public DynamicPort listenPort = new DynamicPort("port");
     @Rule
-    public SystemProperty emptyResponseBuilderPath = new SystemProperty("emptyResponseBuilderPath","emptyResponseBuilderPath");
+    public SystemProperty emptyResponseBuilderPath = new SystemProperty("emptyResponseBuilderPath", "emptyResponseBuilderPath");
     @Rule
-    public SystemProperty statusResponseBuilderPath = new SystemProperty("statusResponseBuilderPath","statusResponseBuilderPath");
+    public SystemProperty statusResponseBuilderPath = new SystemProperty("statusResponseBuilderPath", "statusResponseBuilderPath");
     @Rule
-    public SystemProperty headerResponseBuilderPath = new SystemProperty("headerResponseBuilderPath","headerResponseBuilderPath");
+    public SystemProperty headerResponseBuilderPath = new SystemProperty("headerResponseBuilderPath", "headerResponseBuilderPath");
     @Rule
-    public SystemProperty headersResponseBuilderPath = new SystemProperty("headersResponseBuilderPath","headersResponseBuilderPath");
+    public SystemProperty headersResponseBuilderPath = new SystemProperty("headersResponseBuilderPath", "headersResponseBuilderPath");
     @Rule
-    public SystemProperty headersOverrideResponseBuilderPath = new SystemProperty("headersOverrideResponseBuilderPath","headersOverrideResponseBuilderPath");
+    public SystemProperty headersOverrideResponseBuilderPath =
+            new SystemProperty("headersOverrideResponseBuilderPath", "headersOverrideResponseBuilderPath");
     @Rule
-    public SystemProperty defaultReasonPhraseResponseBuilderPath = new SystemProperty("defaultReasonPhraseResponseBuilderPath", "defaultReasonPhraseResponseBuilderPath");
+    public SystemProperty defaultReasonPhraseResponseBuilderPath =
+            new SystemProperty("defaultReasonPhraseResponseBuilderPath", "defaultReasonPhraseResponseBuilderPath");
     @Rule
-    public SystemProperty noReasonPhraseUnknownStatusCodeResponseBuilderPath = new SystemProperty("noReasonPhraseUnknownStatusCodeResponseBuilderPath", "noReasonPhraseUnknownStatusCodeResponseBuilderPath");
+    public SystemProperty noReasonPhraseUnknownStatusCodeResponseBuilderPath =
+            new SystemProperty("noReasonPhraseUnknownStatusCodeResponseBuilderPath", "noReasonPhraseUnknownStatusCodeResponseBuilderPath");
     @Rule
-    public SystemProperty errorEmptyResponseBuilderPath = new SystemProperty("errorEmptyResponseBuilderPath","errorEmptyResponseBuilderPath");
+    public SystemProperty errorEmptyResponseBuilderPath =
+            new SystemProperty("errorEmptyResponseBuilderPath", "errorEmptyResponseBuilderPath");
     @Rule
-    public SystemProperty errorStatusResponseBuilderPath = new SystemProperty("errorStatusResponseBuilderPath","errorStatusResponseBuilderPath");
+    public SystemProperty errorStatusResponseBuilderPath =
+            new SystemProperty("errorStatusResponseBuilderPath", "errorStatusResponseBuilderPath");
     @Rule
-    public SystemProperty errorHeaderResponseBuilderPath = new SystemProperty("errorHeaderResponseBuilderPath","errorHeaderResponseBuilderPath");
+    public SystemProperty errorHeaderResponseBuilderPath =
+            new SystemProperty("errorHeaderResponseBuilderPath", "errorHeaderResponseBuilderPath");
     @Rule
-    public SystemProperty errorHeadersResponseBuilderPath = new SystemProperty("errorHeadersResponseBuilderPath","errorHeadersResponseBuilderPath");
+    public SystemProperty errorHeadersResponseBuilderPath =
+            new SystemProperty("errorHeadersResponseBuilderPath", "errorHeadersResponseBuilderPath");
     @Rule
-    public SystemProperty errorHeadersOverrideResponseBuilderPath = new SystemProperty("errorHeadersOverrideResponseBuilderPath","errorHeadersOverrideResponseBuilderPath");
+    public SystemProperty errorHeadersOverrideResponseBuilderPath =
+            new SystemProperty("errorHeadersOverrideResponseBuilderPath", "errorHeadersOverrideResponseBuilderPath");
     @Rule
-    public SystemProperty responseBuilderAndErrorResponseBuilderNotTheSamePath = new SystemProperty("responseBuilderAndErrorResponseBuilderNotTheSamePath","responseBuilderAndErrorResponseBuilderNotTheSamePath");
+    public SystemProperty responseBuilderAndErrorResponseBuilderNotTheSamePath =
+            new SystemProperty("responseBuilderAndErrorResponseBuilderNotTheSamePath",
+                    "responseBuilderAndErrorResponseBuilderNotTheSamePath");
 
     @Override
     protected String getConfigFile()
@@ -201,11 +210,15 @@ public class HttpListenerResponseBuilderTestCase extends AbstractHttpTestCase
         assertThat(isDateValid(httpResponse.getFirstHeader(HttpHeaders.Names.DATE).getValue()), is(true));
     }
 
-    public boolean isDateValid(String dateToValidate){
+    public boolean isDateValid(String dateToValidate)
+    {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        try {
+        try
+        {
             sdf.parse(dateToValidate);
-        } catch (ParseException e) {
+        }
+        catch (ParseException e)
+        {
             e.printStackTrace();
             return false;
         }

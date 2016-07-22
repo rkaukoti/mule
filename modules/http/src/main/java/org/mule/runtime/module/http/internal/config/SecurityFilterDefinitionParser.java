@@ -6,21 +6,21 @@
  */
 package org.mule.runtime.module.http.internal.config;
 
-import org.mule.runtime.core.api.security.SecurityFilter;
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.delegate.ParentContextDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.MuleOrphanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.OrphanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.WrappingChildDefinitionParser;
+import org.mule.runtime.core.api.security.SecurityFilter;
 import org.mule.runtime.core.processor.SecurityFilterMessageProcessor;
-
 import org.w3c.dom.Element;
 
 /**
  * This allows a security filter to be defined globally, or embedded within an endpoint. The filter is
  * always wrapped in a SecurityFilterMessageProcessorBuilder instance before being injected into the parent.
  */
-public class SecurityFilterDefinitionParser extends ParentContextDefinitionParser  implements WrappingChildDefinitionParser.WrappingController
+public class SecurityFilterDefinitionParser extends ParentContextDefinitionParser
+        implements WrappingChildDefinitionParser.WrappingController
 {
 
     public static final String SECURITY_FILTER = "filter";
@@ -30,9 +30,9 @@ public class SecurityFilterDefinitionParser extends ParentContextDefinitionParse
     {
         super(MuleOrphanDefinitionParser.ROOT_ELEMENT, new OrphanDefinitionParser(filter, false));
         otherwise(
-            new WrappingChildDefinitionParser(
-                "messageProcessor", filter, SecurityFilter.class, false, SecurityFilterMessageProcessor.class,
-                SECURITY_FILTER, SECURITY_FILTER, this));
+                new WrappingChildDefinitionParser(
+                        "messageProcessor", filter, SecurityFilter.class, false, SecurityFilterMessageProcessor.class,
+                        SECURITY_FILTER, SECURITY_FILTER, this));
         addIgnored(ATTRIBUTE_NAME);
     }
 
@@ -40,9 +40,9 @@ public class SecurityFilterDefinitionParser extends ParentContextDefinitionParse
     {
         super(MuleOrphanDefinitionParser.ROOT_ELEMENT, new OrphanDefinitionParser(false));
         otherwise(
-            new WrappingChildDefinitionParser(
-                "messageProcessor", null, SecurityFilter.class, true, SecurityFilterMessageProcessor.class,
-                SECURITY_FILTER, SECURITY_FILTER, this));
+                new WrappingChildDefinitionParser(
+                        "messageProcessor", null, SecurityFilter.class, true, SecurityFilterMessageProcessor.class,
+                        SECURITY_FILTER, SECURITY_FILTER, this));
         addIgnored(ATTRIBUTE_NAME);
     }
 

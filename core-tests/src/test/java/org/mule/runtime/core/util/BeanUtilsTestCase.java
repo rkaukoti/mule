@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.core.util;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.testmodels.fruit.Orange;
 import org.mule.tck.testmodels.fruit.OrangeInterface;
@@ -15,9 +17,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -41,8 +40,8 @@ public class BeanUtilsTestCase extends AbstractMuleTestCase
     @Test
     public void testBeanPropertiesOnAProxy() throws Exception
     {
-        OrangeInterface o = (OrangeInterface)Proxy.newProxyInstance(getClass().getClassLoader(),
-                new Class[]{OrangeInterface.class}, new OrangeInvocationHandler(new Orange()));
+        OrangeInterface o = (OrangeInterface) Proxy.newProxyInstance(getClass().getClassLoader(),
+                new Class[] {OrangeInterface.class}, new OrangeInvocationHandler(new Orange()));
 
         BeanUtils.populateWithoutFail(o, map, true);
 
@@ -91,7 +90,7 @@ public class BeanUtilsTestCase extends AbstractMuleTestCase
 
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
         {
-            return method.invoke(orange, args); 
+            return method.invoke(orange, args);
         }
     }
 }

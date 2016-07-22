@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class TestDependentObject implements PropertyFactory
 {
-    
+
     public Object create(Map<?, ?> properties) throws Exception
     {
         // make sure that both test properties are set here
@@ -26,5 +26,5 @@ public class TestDependentObject implements PropertyFactory
         }
         return new Orange();
     }
-    
+
 }

@@ -6,10 +6,14 @@
  */
 package org.mule.runtime.module.xml.transformer;
 
+import org.dom4j.io.DocumentResult;
+import org.dom4j.io.SAXContentHandler;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.transformer.DiscoverableTransformer;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.module.xml.util.XMLUtils;
+import org.w3c.dom.Document;
+import org.xml.sax.ContentHandler;
 
 import java.nio.charset.Charset;
 
@@ -18,11 +22,6 @@ import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-
-import org.dom4j.io.DocumentResult;
-import org.dom4j.io.SAXContentHandler;
-import org.w3c.dom.Document;
-import org.xml.sax.ContentHandler;
 
 /**
  * <code>XmlToDomDocument</code> transforms a XML String to org.w3c.dom.Document.

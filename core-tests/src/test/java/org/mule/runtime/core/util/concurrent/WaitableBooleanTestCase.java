@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.core.util.concurrent;
 
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
 import org.junit.Test;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -36,13 +35,13 @@ public class WaitableBooleanTestCase extends AbstractMuleTestCase
         assertEquals(1, TRUE.compareTo(new WaitableBoolean(false)));
         assertEquals(0, FALSE.compareTo(new WaitableBoolean(false)));
         assertEquals(-1, FALSE.compareTo(new WaitableBoolean(true)));
-        assertEquals(0, TRUE.compareTo((Object)TRUE));
+        assertEquals(0, TRUE.compareTo((Object) TRUE));
     }
 
     @Test
     public void testCompareToObject()
     {
-        assertEquals(0, TRUE.compareTo((Object)TRUE));
+        assertEquals(0, TRUE.compareTo((Object) TRUE));
     }
 
     @Test

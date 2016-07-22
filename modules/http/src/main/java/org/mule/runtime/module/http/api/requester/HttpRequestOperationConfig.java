@@ -18,7 +18,6 @@ public interface HttpRequestOperationConfig<BuilderType> extends OperationOption
 
     /**
      * @param method HTTP method for the HTTP request
-     *
      * @return the builder
      */
     BuilderType method(String method);

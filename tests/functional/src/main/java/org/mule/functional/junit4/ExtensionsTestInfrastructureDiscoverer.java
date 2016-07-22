@@ -7,10 +7,7 @@
 
 package org.mule.functional.junit4;
 
-import static com.google.common.collect.ImmutableList.copyOf;
-import static java.util.Arrays.stream;
-import static org.apache.commons.lang.ArrayUtils.isEmpty;
-import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
+import org.apache.commons.io.FileUtils;
 import org.mule.runtime.core.api.registry.ServiceRegistry;
 import org.mule.runtime.core.config.MuleManifest;
 import org.mule.runtime.core.registry.SpiServiceRegistry;
@@ -38,7 +35,10 @@ import java.util.Map;
 import java.util.jar.Manifest;
 import java.util.stream.Collectors;
 
-import org.apache.commons.io.FileUtils;
+import static com.google.common.collect.ImmutableList.copyOf;
+import static java.util.Arrays.stream;
+import static org.apache.commons.lang.ArrayUtils.isEmpty;
+import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
 
 /**
  * Discovers and registers the extensions to a {@link org.mule.runtime.extension.api.ExtensionManager}.
@@ -63,7 +63,7 @@ public class ExtensionsTestInfrastructureDiscoverer
      * Creates a {@link ExtensionsTestInfrastructureDiscoverer} that will use the extensionManager passed here in order
      * to register the extensions, resources for the extensions will be created in the generatedResourcesDirectory.
      *
-     * @param extensionManagerAdapter {@link ExtensionManagerAdapter} to be used for registering the extensions
+     * @param extensionManagerAdapter     {@link ExtensionManagerAdapter} to be used for registering the extensions
      * @param generatedResourcesDirectory the {@link File} where the resources for the extensions would be created
      * @throws {@link RuntimeException} if there was an error while creating the MANIFEST.MF file
      */
@@ -85,16 +85,19 @@ public class ExtensionsTestInfrastructureDiscoverer
      * It will register the extensions described or annotated and it will generate their resources.
      * If no describers are defined the annotatedClasses would be used to generate the describers.
      *
-     * @param describers if empty it will use annotatedClasses param to build the describers
+     * @param describers       if empty it will use annotatedClasses param to build the describers
      * @param annotatedClasses used to build the describers
-     * @throws IllegalStateException if no extensions can be described
      * @return a {@link List} of the resources generated for the given describers or annotated classes
+     * @throws IllegalStateException if no extensions can be described
      */
     public List<GeneratedResource> discoverExtensions(Describer[] describers, Class<?>[] annotatedClasses)
     {
         if (isEmpty(describers) && !isEmpty(annotatedClasses))
         {
-            describers = stream(annotatedClasses).map(annotatedClass -> new AnnotationsBasedDescriber(annotatedClass, new StaticVersionResolver(getProductVersion()))).collect(Collectors.toList()).toArray(new Describer[annotatedClasses.length]);
+            describers = stream(annotatedClasses).map(
+                    annotatedClass -> new AnnotationsBasedDescriber(annotatedClass, new StaticVersionResolver(getProductVersion())))
+                                                 .collect(Collectors.toList())
+                                                 .toArray(new Describer[annotatedClasses.length]);
             if (isEmpty(describers))
             {
                 throw new IllegalStateException("No extension found");
@@ -102,7 +105,8 @@ public class ExtensionsTestInfrastructureDiscoverer
         }
         loadExtensionsFromDescribers(extensionManager, describers);
 
-        ExtensionsTestInfrastructureResourcesGenerator generator = new ExtensionsTestInfrastructureResourcesGenerator(getResourceFactories(), generatedResourcesDirectory);
+        ExtensionsTestInfrastructureResourcesGenerator generator =
+                new ExtensionsTestInfrastructureResourcesGenerator(getResourceFactories(), generatedResourcesDirectory);
         extensionManager.getExtensions().forEach(generator::generateFor);
         return generator.dumpAll();
     }
@@ -119,6 +123,25 @@ public class ExtensionsTestInfrastructureDiscoverer
             final DescribingContext context = new DefaultDescribingContext(getClass().getClassLoader());
             extensionManager.registerExtension(extensionFactory.createFrom(describer.describe(context), context));
         }
+    }
+
+    private File createManifestFileIfNecessary(File targetDirectory) throws IOException
+    {
+        return createManifestFileIfNecessary(targetDirectory, MuleManifest.getManifest());
+    }
+
+    private File createManifestFileIfNecessary(File targetDirectory, Manifest sourceManifest) throws IOException
+    {
+        File manifestFile = new File(targetDirectory.getPath(), "MANIFEST.MF");
+        if (!manifestFile.exists())
+        {
+            Manifest manifest = new Manifest(sourceManifest);
+            try (FileOutputStream fileOutputStream = new FileOutputStream(manifestFile))
+            {
+                manifest.write(fileOutputStream);
+            }
+        }
+        return manifestFile;
     }
 
     /**
@@ -158,10 +181,12 @@ public class ExtensionsTestInfrastructureDiscoverer
         List<GeneratedResource> dumpAll()
         {
             List<GeneratedResource> allResources = contents.entrySet().stream()
-                    .map(entry -> new GeneratedResource(entry.getKey(), entry.getValue().toString().getBytes()))
-                    .collect(new ImmutableListCollector<>());
+                                                           .map(entry -> new GeneratedResource(entry.getKey(),
+                                                                   entry.getValue().toString().getBytes()))
+                                                           .collect(new ImmutableListCollector<>());
 
-            allResources.forEach(resource -> {
+            allResources.forEach(resource ->
+            {
                 File targetFile = new File(targetDirectory, resource.getPath());
                 try
                 {
@@ -175,25 +200,6 @@ public class ExtensionsTestInfrastructureDiscoverer
 
             return allResources;
         }
-    }
-
-    private File createManifestFileIfNecessary(File targetDirectory) throws IOException
-    {
-        return createManifestFileIfNecessary(targetDirectory, MuleManifest.getManifest());
-    }
-
-    private File createManifestFileIfNecessary(File targetDirectory, Manifest sourceManifest) throws IOException
-    {
-        File manifestFile = new File(targetDirectory.getPath(), "MANIFEST.MF");
-        if (!manifestFile.exists())
-        {
-            Manifest manifest = new Manifest(sourceManifest);
-            try (FileOutputStream fileOutputStream = new FileOutputStream(manifestFile))
-            {
-                manifest.write(fileOutputStream);
-            }
-        }
-        return manifestFile;
     }
 
 }

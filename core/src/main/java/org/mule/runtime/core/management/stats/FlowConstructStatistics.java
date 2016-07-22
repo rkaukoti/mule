@@ -14,11 +14,10 @@ import java.util.concurrent.atomic.AtomicLong;
 public class FlowConstructStatistics extends AbstractFlowConstructStatistics implements QueueStatistics
 {
     private static final long serialVersionUID = 5337576392583767442L;
+    protected final ComponentStatistics flowStatistics = new ComponentStatistics();
     private final AtomicLong executionError = new AtomicLong(0);
     private final AtomicLong fatalError = new AtomicLong(0);
     private int threadPoolSize = 0;
-    protected final ComponentStatistics flowStatistics = new ComponentStatistics();
-    
     // these can't sensibly converted to AtomicLong as they are processed together
     // in incQueuedEvent
     private long queuedEvent = 0;
@@ -40,7 +39,7 @@ public class FlowConstructStatistics extends AbstractFlowConstructStatistics imp
             clear();
         }
     }
-    
+
     public FlowConstructStatistics(String flowConstructType, String name, int maxThreadSize)
     {
         super(flowConstructType, name);
@@ -56,13 +55,22 @@ public class FlowConstructStatistics extends AbstractFlowConstructStatistics imp
     {
         this(flowConstructType, name, null);
     }
-    
+
     /**
      * Are statistics logged
      */
     public boolean isEnabled()
     {
         return enabled;
+    }
+
+    /**
+     * Enable statistics logs (this is a dynamic parameter)
+     */
+    public synchronized void setEnabled(boolean b)
+    {
+        super.setEnabled(b);
+        flowStatistics.setEnabled(enabled);
     }
 
     public void incExecutionError()
@@ -75,21 +83,12 @@ public class FlowConstructStatistics extends AbstractFlowConstructStatistics imp
         fatalError.addAndGet(1);
     }
 
-    /**
-     * Enable statistics logs (this is a dynamic parameter)
-     */
-    public synchronized void setEnabled(boolean b)
-    {
-        super.setEnabled(b);
-        flowStatistics.setEnabled(enabled);
-    }
-
     public synchronized void clear()
     {
         super.clear();
 
         executionError.set(0);
-        fatalError.set(0);        
+        fatalError.set(0);
         if (flowStatistics != null)
         {
             flowStatistics.clear();
@@ -161,7 +160,7 @@ public class FlowConstructStatistics extends AbstractFlowConstructStatistics imp
     {
         queuedEvent--;
     }
-    
+
     public synchronized long getAverageQueueSize()
     {
         return averageQueueSize;

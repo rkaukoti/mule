@@ -6,10 +6,8 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import org.apache.commons.io.output.NullOutputStream;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
@@ -19,26 +17,27 @@ import org.mule.runtime.module.cxf.builder.WebServiceMessageProcessorBuilder;
 import org.mule.runtime.module.cxf.testmodels.Echo;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.apache.commons.io.output.NullOutputStream;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class CxfInboundMessageProcessorTestCase extends AbstractMuleContextTestCase
 {
-    String msg = 
-        "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body>" +
+    String msg =
+            "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body>" +
             "<ns1:echo xmlns:ns1=\"http://testmodels.cxf.module.runtime.mule.org/\">" +
-                "<text>echo</text>" +
+            "<text>echo</text>" +
             "</ns1:echo>" +
-        "</soap:Body></soap:Envelope>";
+            "</soap:Body></soap:Envelope>";
 
     boolean gotEvent = false;
     Object payload;
-    
+
     @Test
     public void testInbound() throws Exception
     {
         CxfInboundMessageProcessor processor = createCxfMessageProcessor();
-        
+
         MessageProcessor messageProcessor = event ->
         {
             payload = event.getMessage().getPayload();
@@ -48,23 +47,23 @@ public class CxfInboundMessageProcessorTestCase extends AbstractMuleContextTestC
             return event;
         };
         processor.setListener(messageProcessor);
-        
+
         MuleEvent event = getTestEvent(msg);
-        
+
         MuleEvent response = processor.process(event);
-        
+
         Object payload = response.getMessage().getPayload();
         assertTrue(payload instanceof OutputHandler);
-        
+
         ((OutputHandler) payload).write(response, new NullOutputStream());
         assertTrue(gotEvent);
     }
-    
+
     @Test
     public void testOneWay() throws Exception
     {
         CxfInboundMessageProcessor processor = createCxfMessageProcessor();
-        
+
         MessageProcessor messageProcessor = event ->
         {
             payload = event.getMessage().getPayload();
@@ -74,11 +73,11 @@ public class CxfInboundMessageProcessorTestCase extends AbstractMuleContextTestC
             return null;
         };
         processor.setListener(messageProcessor);
-        
+
         MuleEvent event = getTestEvent(msg);
-        
+
         MuleEvent response = processor.process(event);
-        
+
         assertTrue(gotEvent);
         assertNull(response);
     }
@@ -88,13 +87,13 @@ public class CxfInboundMessageProcessorTestCase extends AbstractMuleContextTestC
         CxfConfiguration config = new CxfConfiguration();
         config.setMuleContext(muleContext);
         config.initialise();
-        
+
         // Build a CXF MessageProcessor
         WebServiceMessageProcessorBuilder builder = new WebServiceMessageProcessorBuilder();
         builder.setConfiguration(config);
         builder.setServiceClass(Echo.class);
         builder.setMuleContext(muleContext);
-        
+
         CxfInboundMessageProcessor processor = builder.build();
         processor.initialise();
         processor.start();

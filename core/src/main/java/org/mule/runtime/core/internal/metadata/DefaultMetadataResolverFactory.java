@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.core.internal.metadata;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.ClassUtils.getClassName;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.api.metadata.resolving.MetadataAttributesResolver;
 import org.mule.runtime.api.metadata.resolving.MetadataContentResolver;
 import org.mule.runtime.api.metadata.resolving.MetadataKeysResolver;
@@ -16,6 +13,10 @@ import org.mule.runtime.api.metadata.resolving.MetadataOutputResolver;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.extension.api.introspection.metadata.MetadataResolverFactory;
+
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.ClassUtils.getClassName;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 
 /**
@@ -91,7 +92,8 @@ public final class DefaultMetadataResolverFactory implements MetadataResolverFac
         }
         catch (Exception e)
         {
-            throw new MuleRuntimeException(createStaticMessage("Could not create MetadataResolver of type " + getClassName(factoryType)), e);
+            throw new MuleRuntimeException(createStaticMessage("Could not create MetadataResolver of type " + getClassName(factoryType)),
+                    e);
         }
     }
 }

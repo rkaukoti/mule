@@ -6,18 +6,18 @@
  */
 package org.mule.runtime.module.ws.security;
 
-import static org.apache.ws.security.handler.WSHandlerConstants.ACTION;
-import static org.apache.ws.security.handler.WSHandlerConstants.TIMESTAMP;
-import static org.apache.ws.security.handler.WSHandlerConstants.TTL_TIMESTAMP;
-import static org.apache.ws.security.handler.WSHandlerConstants.USERNAME_TOKEN;
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.apache.ws.security.handler.WSHandlerConstants.ACTION;
+import static org.apache.ws.security.handler.WSHandlerConstants.TIMESTAMP;
+import static org.apache.ws.security.handler.WSHandlerConstants.TTL_TIMESTAMP;
+import static org.apache.ws.security.handler.WSHandlerConstants.USERNAME_TOKEN;
+import static org.junit.Assert.assertEquals;
 
 @SmallTest
 public class WssTimestampSecurityStrategyTestCase extends AbstractMuleTestCase

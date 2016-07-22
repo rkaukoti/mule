@@ -7,9 +7,9 @@
 
 package org.mule.runtime.module.db.integration.select;
 
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertMessageContains;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.getAllPlanetRecords;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.getVenusRecord;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
@@ -19,11 +19,11 @@ import org.mule.tck.junit4.rule.SystemProperty;
 
 import java.util.List;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertMessageContains;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.getAllPlanetRecords;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.getVenusRecord;
 
-public class SelectWithPlaceHolderTestCase  extends AbstractDbIntegrationTestCase
+public class SelectWithPlaceHolderTestCase extends AbstractDbIntegrationTestCase
 {
 
     @Rule

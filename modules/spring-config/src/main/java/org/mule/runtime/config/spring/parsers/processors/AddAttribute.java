@@ -10,9 +10,8 @@ import org.mule.runtime.config.spring.parsers.PostProcessor;
 import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
-
-import org.w3c.dom.Element;
 import org.springframework.beans.factory.xml.ParserContext;
+import org.w3c.dom.Element;
 
 public class AddAttribute implements PreProcessor, PostProcessor
 {

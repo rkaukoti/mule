@@ -6,7 +6,13 @@
  */
 package org.mule.compatibility.module.cxf.transport;
 
-import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_DISABLE_STATUS_CODE_EXCEPTION_CHECK;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.message.Exchange;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.AbstractPhaseInterceptor;
+import org.apache.cxf.phase.Phase;
+import org.apache.cxf.service.model.EndpointInfo;
+import org.apache.cxf.ws.addressing.EndpointReferenceType;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
@@ -41,22 +47,22 @@ import java.util.Map;
 
 import javax.xml.ws.Holder;
 
-import org.apache.cxf.interceptor.Fault;
-import org.apache.cxf.message.Exchange;
-import org.apache.cxf.message.Message;
-import org.apache.cxf.phase.AbstractPhaseInterceptor;
-import org.apache.cxf.phase.Phase;
-import org.apache.cxf.service.model.EndpointInfo;
-import org.apache.cxf.ws.addressing.EndpointReferenceType;
+import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_DISABLE_STATUS_CODE_EXCEPTION_CHECK;
 
 public class EndpointMuleUniversalConduit extends MuleUniversalConduit
 {
 
     private Map<String, OutboundEndpoint> endpoints = new HashMap<String, OutboundEndpoint>();
 
-    public EndpointMuleUniversalConduit(MuleUniversalTransport transport, CxfConfiguration configuration, EndpointInfo ei, EndpointReferenceType t)
+    public EndpointMuleUniversalConduit(MuleUniversalTransport transport, CxfConfiguration configuration, EndpointInfo ei,
+                                        EndpointReferenceType t)
     {
         super(transport, configuration, ei, t);
+    }
+
+    private static EndpointFactory getEndpointFactory(MuleContext muleContext)
+    {
+        return (EndpointFactory) muleContext.getRegistry().lookupObject(MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY);
     }
 
     protected synchronized OutboundEndpoint getEndpoint(MuleContext muleContext, String uri) throws MuleException
@@ -69,11 +75,6 @@ public class EndpointMuleUniversalConduit extends MuleUniversalConduit
         OutboundEndpoint endpoint = getEndpointFactory(muleContext).getOutboundEndpoint(uri);
         endpoints.put(uri, endpoint);
         return endpoint;
-    }
-
-    private static EndpointFactory getEndpointFactory(MuleContext muleContext)
-    {
-        return (EndpointFactory) muleContext.getRegistry().lookupObject(MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY);
     }
 
     /**
@@ -159,8 +160,8 @@ public class EndpointMuleUniversalConduit extends MuleUniversalConduit
         try
         {
             reqEvent.setMessage(MuleMessage.builder(reqEvent.getMessage())
-                                        .addOutboundProperty(HTTP_DISABLE_STATUS_CODE_EXCEPTION_CHECK, Boolean.TRUE.toString())
-                                        .build());
+                                           .addOutboundProperty(HTTP_DISABLE_STATUS_CODE_EXCEPTION_CHECK, Boolean.TRUE.toString())
+                                           .build());
 
             if (reqEvent.isAllowNonBlocking())
             {

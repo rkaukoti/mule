@@ -7,11 +7,11 @@
 package org.mule.runtime.module.http.functional.requester;
 
 
+import org.junit.Test;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-
-import org.junit.Test;
 
 public class HttpRequestSendBodyTestCase extends AbstractHttpRequestTestCase
 {
@@ -45,6 +45,7 @@ public class HttpRequestSendBodyTestCase extends AbstractHttpRequestTestCase
     {
         assertEmptyBody("sendBodyNever", TEST_MESSAGE, "POST");
     }
+
     @Test
     public void sendBodyNeverIgnoresNullPayloadPost() throws Exception
     {

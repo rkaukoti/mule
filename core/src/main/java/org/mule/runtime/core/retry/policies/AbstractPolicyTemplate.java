@@ -18,12 +18,11 @@ import org.mule.runtime.core.retry.DefaultRetryContext;
 import org.mule.runtime.core.retry.PolicyStatus;
 import org.mule.runtime.core.retry.RetryPolicyExhaustedException;
 import org.mule.runtime.core.retry.notifiers.ConnectNotifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InterruptedIOException;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base class for RetryPolicyTemplate implementations.  Uses ConnectNotifier as RetryNotifier
@@ -31,14 +30,13 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractPolicyTemplate implements RetryPolicyTemplate, MuleContextAware
 {
-    protected RetryNotifier notifier = new ConnectNotifier();
-    
-    /** This data will be made available to the RetryPolicy via the RetryContext. */
-    private Map<Object, Object> metaInfo;
-
-    private MuleContext muleContext;
-
     protected transient final Logger logger = LoggerFactory.getLogger(getClass());
+    protected RetryNotifier notifier = new ConnectNotifier();
+    /**
+     * This data will be made available to the RetryPolicy via the RetryContext.
+     */
+    private Map<Object, Object> metaInfo;
+    private MuleContext muleContext;
 
     public void setMuleContext(MuleContext context)
     {
@@ -49,8 +47,8 @@ public abstract class AbstractPolicyTemplate implements RetryPolicyTemplate, Mul
     {
         PolicyStatus status = null;
         RetryPolicy policy = createRetryInstance();
-        DefaultRetryContext context = new DefaultRetryContext(callback.getWorkDescription(), 
-            metaInfo);
+        DefaultRetryContext context = new DefaultRetryContext(callback.getWorkDescription(),
+                metaInfo);
         context.setMuleContext(muleContext);
 
         try
@@ -112,7 +110,7 @@ public abstract class AbstractPolicyTemplate implements RetryPolicyTemplate, Mul
             }
         }
     }
-    
+
     public RetryNotifier getNotifier()
     {
         return notifier;

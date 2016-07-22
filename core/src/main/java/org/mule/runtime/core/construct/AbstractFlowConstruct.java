@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.core.construct;
 
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.startIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
 import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
@@ -32,21 +28,25 @@ import org.mule.runtime.core.lifecycle.EmptyLifecycleCallback;
 import org.mule.runtime.core.management.stats.FlowConstructStatistics;
 import org.mule.runtime.core.routing.MuleMessageInfoMapping;
 import org.mule.runtime.core.util.ClassUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.ExceptionListener;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.startIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
 
 /**
  * Abstract implementation of {@link FlowConstruct} that:
  * <ul>
- *  <li>Is constructed with unique name and {@link MuleContext}.
- *  <li>Uses a {@link MessageSource} as the source of messages.
- *  <li>Uses a chain of {@link MessageProcessor}s to process messages.
- *  <li>Has lifecycle and propagates this lifecycle to both {@link MessageSource} and
- *  {@link MessageProcessor}s in the correct order depending on the lifecycle phase.
- *  <li>Allows an {@link ExceptionListener} to be set.
+ * <li>Is constructed with unique name and {@link MuleContext}.
+ * <li>Uses a {@link MessageSource} as the source of messages.
+ * <li>Uses a chain of {@link MessageProcessor}s to process messages.
+ * <li>Has lifecycle and propagates this lifecycle to both {@link MessageSource} and
+ * {@link MessageProcessor}s in the correct order depending on the lifecycle phase.
+ * <li>Allows an {@link ExceptionListener} to be set.
  * </ul>
  * Implementations of <code>AbstractFlowConstuct</code> should implement
  * {@link #validateConstruct()} validate the resulting construct. Validation may
@@ -58,21 +58,18 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractFlowConstruct extends AbstractAnnotatedObject implements FlowConstruct, Lifecycle
 {
-    protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractFlowConstruct.class);
-
-    protected String name;
-    protected MessagingExceptionHandler exceptionListener;
-    protected final FlowConstructLifecycleManager lifecycleManager;
-    protected final MuleContext muleContext;
-    protected FlowConstructStatistics statistics;
-    protected MessageInfoMapping messageInfoMapping = new MuleMessageInfoMapping();
-
     /**
      * The initial states that the flow can be started in
      */
     public static final String INITIAL_STATE_STOPPED = "stopped";
     public static final String INITIAL_STATE_STARTED = "started";
-
+    protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractFlowConstruct.class);
+    protected final FlowConstructLifecycleManager lifecycleManager;
+    protected final MuleContext muleContext;
+    protected String name;
+    protected MessagingExceptionHandler exceptionListener;
+    protected FlowConstructStatistics statistics;
+    protected MessageInfoMapping messageInfoMapping = new MuleMessageInfoMapping();
     /**
      * Determines the initial state of this flow when the mule starts. Can be
      * 'stopped' or 'started' (default)
@@ -119,7 +116,7 @@ public abstract class AbstractFlowConstruct extends AbstractAnnotatedObject impl
     public final void start() throws MuleException
     {
         // Check if Initial State is Stopped
-        if(!isStopped() && initialState.equals(INITIAL_STATE_STOPPED))
+        if (!isStopped() && initialState.equals(INITIAL_STATE_STOPPED))
         {
             lifecycleManager.fireStartPhase(new EmptyLifecycleCallback<FlowConstruct>());
             lifecycleManager.fireStopPhase(new EmptyLifecycleCallback<FlowConstruct>());
@@ -269,17 +266,18 @@ public abstract class AbstractFlowConstruct extends AbstractAnnotatedObject impl
     /**
      * Validates configured flow construct
      *
-     * @throws FlowConstructInvalidException if the flow construct does not pass
-     *             validation
+     * @throws FlowConstructInvalidException if the flow construct does not pass validation
      */
     protected void validateConstruct() throws FlowConstructInvalidException
     {
         if (exceptionListener instanceof MessagingExceptionHandlerAcceptor)
         {
-            if (!((MessagingExceptionHandlerAcceptor)exceptionListener).acceptsAll())
+            if (!((MessagingExceptionHandlerAcceptor) exceptionListener).acceptsAll())
             {
-                throw new FlowConstructInvalidException(CoreMessages.createStaticMessage("Flow exception listener contains an exception strategy that doesn't handle all request," +
-                        " Perhaps there's an exception strategy with a when attribute set but it's not part of a catch exception strategy"),this);
+                throw new FlowConstructInvalidException(CoreMessages.createStaticMessage(
+                        "Flow exception listener contains an exception strategy that doesn't handle all request," +
+                        " Perhaps there's an exception strategy with a when attribute set but it's not part of a catch exception strategy"),
+                        this);
             }
         }
     }

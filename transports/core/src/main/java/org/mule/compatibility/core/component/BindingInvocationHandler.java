@@ -14,14 +14,13 @@ import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.util.StringMessageUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * TODO MULE-9449 Remove Java Component Bindings
@@ -82,7 +81,7 @@ public class BindingInvocationHandler implements InvocationHandler
         }
 
         MuleEvent currentEvent = RequestContext.getEvent();
-        MuleEvent replyEvent = router.process(new DefaultMuleEvent(message,currentEvent));
+        MuleEvent replyEvent = router.process(new DefaultMuleEvent(message, currentEvent));
 
         if (replyEvent != null && !VoidMuleEvent.getInstance().equals(replyEvent)
             && replyEvent.getMessage() != null)

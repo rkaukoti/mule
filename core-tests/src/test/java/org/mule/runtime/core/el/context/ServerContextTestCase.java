@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.core.el.context;
 
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.lessThan;
-import static org.junit.Assert.assertThat;
+import org.junit.Assert;
+import org.junit.Test;
 import org.mule.runtime.core.el.datetime.DateTime;
 import org.mule.runtime.core.util.NetworkUtils;
 
@@ -17,8 +16,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.lessThan;
+import static org.junit.Assert.assertThat;
 
 public class ServerContextTestCase extends AbstractELTestCase
 {

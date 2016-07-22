@@ -7,9 +7,9 @@
 package org.mule.runtime.core.exception;
 
 import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.exception.MessageRedeliveredException;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.api.exception.MessageRedeliveredException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.lifecycle.LifecycleUtils;
 import org.mule.runtime.core.api.processor.MessageProcessor;
@@ -36,14 +36,14 @@ public class RollbackMessagingExceptionStrategy extends TemplateMessagingExcepti
         this.redeliveryExceeded = redeliveryExceeded;
     }
 
-    public void setMaxRedeliveryAttempts(Integer maxRedeliveryAttempts)
-    {
-        this.maxRedeliveryAttempts = maxRedeliveryAttempts;
-    }
-
     public Integer getMaxRedeliveryAttempts()
     {
         return maxRedeliveryAttempts;
+    }
+
+    public void setMaxRedeliveryAttempts(Integer maxRedeliveryAttempts)
+    {
+        this.maxRedeliveryAttempts = maxRedeliveryAttempts;
     }
 
     public boolean hasMaxRedeliveryAttempts()
@@ -53,7 +53,7 @@ public class RollbackMessagingExceptionStrategy extends TemplateMessagingExcepti
 
     @Override
     protected MuleEvent beforeRouting(Exception exception, MuleEvent event)
-    {        
+    {
         if (!isRedeliveryExhausted(exception))
         {
             rollback(exception);
@@ -64,7 +64,8 @@ public class RollbackMessagingExceptionStrategy extends TemplateMessagingExcepti
     @Override
     protected List<MessageProcessor> getOwnedMessageProcessors()
     {
-        List<MessageProcessor> messageProcessors = new ArrayList<MessageProcessor>(super.getMessageProcessors().size() + (redeliveryExceeded == null ? 0 : redeliveryExceeded.getMessageProcessors().size()));
+        List<MessageProcessor> messageProcessors = new ArrayList<MessageProcessor>(
+                super.getMessageProcessors().size() + (redeliveryExceeded == null ? 0 : redeliveryExceeded.getMessageProcessors().size()));
         messageProcessors.addAll(super.getMessageProcessors());
         if (redeliveryExceeded != null)
         {
@@ -84,7 +85,8 @@ public class RollbackMessagingExceptionStrategy extends TemplateMessagingExcepti
     @Override
     protected boolean acceptsEvent(MuleEvent event)
     {
-        return event.getMessage().getExceptionPayload().getException() instanceof MessageRedeliveredException && this.hasMaxRedeliveryAttempts();
+        return event.getMessage().getExceptionPayload().getException() instanceof MessageRedeliveredException &&
+               this.hasMaxRedeliveryAttempts();
     }
 
     @Override

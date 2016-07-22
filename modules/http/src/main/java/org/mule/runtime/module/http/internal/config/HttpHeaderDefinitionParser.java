@@ -12,7 +12,6 @@ import org.mule.runtime.config.spring.parsers.collection.ChildMapEntryDefinition
 import org.mule.runtime.config.spring.parsers.delegate.AbstractParallelDelegatingDefinitionParser;
 import org.mule.runtime.module.http.internal.HttpParamType;
 import org.mule.runtime.module.http.internal.HttpSingleParam;
-
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -35,7 +34,7 @@ public class HttpHeaderDefinitionParser extends AbstractParallelDelegatingDefini
             String responseBuilderParent = parentNode.getParentNode().getLocalName();
 
             if (responseBuilderParent.equals(AbstractMuleBeanDefinitionParser.ROOT_ELEMENT) ||
-                    responseBuilderParent.equals("listener"))
+                responseBuilderParent.equals("listener"))
             {
                 // header element is used in a response-builder element from the HTTP module
                 return new HttpMessageSingleParamDefinitionParser(HttpSingleParam.class, HttpParamType.HEADER);

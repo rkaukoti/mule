@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.core.transformer.wire;
 
-import static org.junit.Assert.assertEquals;
-
 import org.mule.runtime.core.api.transformer.wire.WireFormat;
 import org.mule.runtime.core.transformer.simple.ByteArrayToMuleMessage;
 import org.mule.runtime.core.transformer.simple.MuleMessageToByteArray;
+
+import static org.junit.Assert.assertEquals;
 
 public class SerializedMuleMessageWireFormatTestCase extends AbstractMuleMessageWireFormatTestCase
 {

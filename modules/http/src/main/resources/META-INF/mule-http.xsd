@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/http"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:mule="http://www.mulesoft.org/schema/mule/core"
             xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
             xmlns:sockets="http://www.mulesoft.org/schema/mule/transport/sockets"
             xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
+            xmlns="http://www.mulesoft.org/schema/mule/http"
             targetNamespace="http://www.mulesoft.org/schema/mule/http"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">
 
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/core"
-                schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd" />
+                schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd"/>
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/tls"
-                schemaLocation="http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd" />
+                schemaLocation="http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd"/>
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/transport/sockets"
-                schemaLocation="http://www.mulesoft.org/schema/mule/transport/sockets/current/mule-transport-sockets.xsd" />
+                schemaLocation="http://www.mulesoft.org/schema/mule/transport/sockets/current/mule-transport-sockets.xsd"/>
 
     <xsd:annotation>
         <xsd:documentation>
@@ -118,7 +118,7 @@
         <xsd:complexContent>
             <xsd:extension base="mule:abstractExtensionType">
                 <xsd:sequence>
-                    <xsd:element ref="tls:context" minOccurs="0" maxOccurs="1" />
+                    <xsd:element ref="tls:context" minOccurs="0" maxOccurs="1"/>
                     <xsd:element name="worker-threading-profile" type="mule:asynchronousThreadingProfileType" minOccurs="0" maxOccurs="1"/>
                 </xsd:sequence>
                 <xsd:attribute name="name" type="mule:substitutableName" use="required">
@@ -253,9 +253,9 @@
                         </xsd:element>
                     </xsd:choice>
                 </xsd:sequence>
-                <xsd:attribute name="statusCode" type="mule:substitutableInt" />
-                <xsd:attribute name="reasonPhrase" type="xsd:string" />
-                <xsd:attribute name="disablePropertiesAsHeaders" type="mule:substitutableBoolean" default="false" />
+                <xsd:attribute name="statusCode" type="mule:substitutableInt"/>
+                <xsd:attribute name="reasonPhrase" type="xsd:string"/>
+                <xsd:attribute name="disablePropertiesAsHeaders" type="mule:substitutableBoolean" default="false"/>
             </xsd:extension>
         </xsd:complexContent>
 
@@ -322,7 +322,7 @@
 
                 </xsd:sequence>
 
-                <xsd:attributeGroup ref="commonRequestAttributes" />
+                <xsd:attributeGroup ref="commonRequestAttributes"/>
 
                 <xsd:attribute name="path" type="xsd:string" use="required">
                     <xsd:annotation>
@@ -369,7 +369,7 @@
     </xsd:complexType>
 
 
-    <xsd:element name="request-builder" type="globalRequestBuilderType" substitutionGroup="mule:abstract-extension" />
+    <xsd:element name="request-builder" type="globalRequestBuilderType" substitutionGroup="mule:abstract-extension"/>
 
     <xsd:complexType name="globalRequestBuilderType">
         <xsd:complexContent>
@@ -529,8 +529,8 @@
 
                     <xsd:element ref="abstract-http-request-authentication-provider" minOccurs="0"/>
 
-                    <xsd:element ref="sockets:client-socket-properties" minOccurs="0" maxOccurs="1" />
-                    <xsd:element ref="tls:context" minOccurs="0" maxOccurs="1" />
+                    <xsd:element ref="sockets:client-socket-properties" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="tls:context" minOccurs="0" maxOccurs="1"/>
 
                     <xsd:element name="raml-api-configuration" minOccurs="0" maxOccurs="1">
                         <xsd:annotation>
@@ -550,7 +550,7 @@
                     </xsd:element>
 
                     <xsd:choice>
-                        <xsd:element name="proxy" type="proxyType" minOccurs="0" maxOccurs="1" >
+                        <xsd:element name="proxy" type="proxyType" minOccurs="0" maxOccurs="1">
                             <xsd:annotation>
                                 <xsd:documentation>
                                     Reusable configuration element for outbound connections through a proxy.
@@ -560,7 +560,7 @@
                             </xsd:annotation>
                         </xsd:element>
 
-                        <xsd:element name="ntlm-proxy" type="NtlmProxyType" minOccurs="0" maxOccurs="1" >
+                        <xsd:element name="ntlm-proxy" type="NtlmProxyType" minOccurs="0" maxOccurs="1">
                             <xsd:annotation>
                                 <xsd:documentation>
                                     Reusable configuration element for outbound connections through a proxy.
@@ -573,7 +573,7 @@
 
                 </xsd:sequence>
 
-                <xsd:attributeGroup ref="commonRequestAttributes" />
+                <xsd:attributeGroup ref="commonRequestAttributes"/>
                 <xsd:attribute name="protocol" type="httpProtocol" default="HTTP">
                     <xsd:annotation>
                         <xsd:documentation>
@@ -732,7 +732,8 @@
     <xsd:element name="abstract-http-request-authentication-provider" type="abstractHttpRequestAuthenticationProvider" abstract="true">
         <xsd:annotation>
             <xsd:documentation>
-                A security manager is a container for security providers. More than one security manager may be configured; each contains providers from a particular module and has that module type. This element is abstract - a security-related module or transport will provide a suitable implementation.
+                A security manager is a container for security providers. More than one security manager may be configured; each contains providers from a particular module and has that module type.
+                This element is abstract - a security-related module or transport will provide a suitable implementation.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -889,10 +890,10 @@
     <xsd:complexType name="proxyType">
         <xsd:complexContent>
             <xsd:extension base="mule:abstractExtensionType">
-                <xsd:attribute name="host" type="xsd:string" />
-                <xsd:attribute name="port" type="mule:substitutableInt" />
-                <xsd:attribute name="username" type="xsd:string" use="optional" />
-                <xsd:attribute name="password" type="xsd:string" use="optional" />
+                <xsd:attribute name="host" type="xsd:string"/>
+                <xsd:attribute name="port" type="mule:substitutableInt"/>
+                <xsd:attribute name="username" type="xsd:string" use="optional"/>
+                <xsd:attribute name="password" type="xsd:string" use="optional"/>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
@@ -924,7 +925,7 @@
     <xsd:complexType name="NtlmProxyType">
         <xsd:complexContent>
             <xsd:extension base="proxyType">
-                <xsd:attribute name="ntlmDomain" type="xsd:string" use="required" />
+                <xsd:attribute name="ntlmDomain" type="xsd:string" use="required"/>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>

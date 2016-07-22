@@ -7,15 +7,15 @@
 
 package org.mule.runtime.module.db.integration.storedprocedure;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.module.db.internal.domain.param.InputQueryParam;
 import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
 import org.mule.runtime.module.db.internal.domain.query.QueryType;
 import org.mule.runtime.module.db.internal.domain.type.UnknownDbType;
-import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class StoredProcedureTemplateSqlTestCase extends FunctionalTestCase
 {

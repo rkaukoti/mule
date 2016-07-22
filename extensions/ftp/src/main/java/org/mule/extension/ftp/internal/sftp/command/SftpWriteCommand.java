@@ -6,9 +6,8 @@
  */
 package org.mule.extension.ftp.internal.sftp.command;
 
-import static java.lang.String.format;
-import org.mule.extension.ftp.internal.sftp.connection.SftpFileSystem;
 import org.mule.extension.ftp.internal.sftp.connection.SftpClient;
+import org.mule.extension.ftp.internal.sftp.connection.SftpFileSystem;
 import org.mule.runtime.api.message.MuleEvent;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.module.extension.file.api.FileAttributes;
@@ -17,12 +16,13 @@ import org.mule.runtime.module.extension.file.api.FileContentWrapper;
 import org.mule.runtime.module.extension.file.api.FileWriteMode;
 import org.mule.runtime.module.extension.file.api.FileWriterVisitor;
 import org.mule.runtime.module.extension.file.api.command.WriteCommand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.OutputStream;
 import java.nio.file.Path;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
 
 /**
  * A {@link SftpCommand} which implements the {@link WriteCommand} contract
@@ -68,8 +68,9 @@ public final class SftpWriteCommand extends SftpCommand implements WriteCommand
         {
             if (mode == FileWriteMode.CREATE_NEW)
             {
-                throw new IllegalArgumentException(String.format("Cannot write to path '%s' because it already exists and write mode '%s' was selected. " +
-                                                                 "Use a different write mode or point to a path which doesn't exists", path, mode));
+                throw new IllegalArgumentException(
+                        String.format("Cannot write to path '%s' because it already exists and write mode '%s' was selected. " +
+                                      "Use a different write mode or point to a path which doesn't exists", path, mode));
             }
         }
 

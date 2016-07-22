@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.expression.transformers;
 
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -18,16 +16,18 @@ import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.expression.ExpressionConfig;
 
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+
 /**
  * TODO
  */
 public class ExpressionArgument implements MuleContextAware
 {
+    protected ClassLoader expressionEvaluationClassLoader = ExpressionArgument.class.getClassLoader();
     private ExpressionConfig expressionConfig = new ExpressionConfig();
     private String name;
     private boolean optional;
     private Class<?> returnClass;
-    protected ClassLoader expressionEvaluationClassLoader = ExpressionArgument.class.getClassLoader();
     private MuleContext muleContext;
 
     public ExpressionArgument()
@@ -40,8 +40,8 @@ public class ExpressionArgument implements MuleContextAware
         this(name, expressionConfig, optional, null);
     }
 
-    public ExpressionArgument(String name, ExpressionConfig expressionConfig, boolean optional, 
-        Class<?> returnClass)
+    public ExpressionArgument(String name, ExpressionConfig expressionConfig, boolean optional,
+                              Class<?> returnClass)
     {
         this.expressionConfig = expressionConfig;
         this.name = name;
@@ -98,6 +98,7 @@ public class ExpressionArgument implements MuleContextAware
     /**
      * Evaluates this Expression against the passed in Message.  If a returnClass is set on this Expression Argument it
      * will be checked to ensure the Argument returns the correct class type.
+     *
      * @param event the event to execute the expression on
      * @return the result of the expression
      * @throws ExpressionRuntimeException if the wrong return type is returned from the expression.
@@ -123,20 +124,20 @@ public class ExpressionArgument implements MuleContextAware
                 try
                 {
                     Transformer t = muleContext.getRegistry().lookupTransformer(DataType.fromObject(result),
-                                                                                DataType.fromType(getReturnClass()));
+                            DataType.fromType(getReturnClass()));
                     result = t.transform(result);
                 }
                 catch (TransformerException e)
                 {
                     throw new ExpressionRuntimeException(CoreMessages.transformUnexpectedType(result.getClass(),
-                    getReturnClass()), e);
+                            getReturnClass()), e);
                 }
 
             }
-//            if(result instanceof Collection && ((Collection)result).size()==0 && !isOptional())
-//            {
-//                throw new ExpressionRuntimeException(CoreMessages.expressionEvaluatorReturnedNull(this.getEvaluator(), this.getExpression()));
-//            }
+            //            if(result instanceof Collection && ((Collection)result).size()==0 && !isOptional())
+            //            {
+            //                throw new ExpressionRuntimeException(CoreMessages.expressionEvaluatorReturnedNull(this.getEvaluator(), this.getExpression()));
+            //            }
         }
         return result;
     }
@@ -160,7 +161,7 @@ public class ExpressionArgument implements MuleContextAware
     {
         this.returnClass = returnClass;
     }
-    
+
     public void setExpressionEvaluationClassLoader(ClassLoader expressionEvaluationClassLoader)
     {
         this.expressionEvaluationClassLoader = expressionEvaluationClassLoader;

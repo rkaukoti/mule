@@ -6,16 +6,10 @@
  */
 package org.mule.compatibility.core.endpoint;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointURI;
 import org.mule.compatibility.core.api.endpoint.EndpointURIBuilder;
 import org.mule.compatibility.core.api.endpoint.MalformedEndpointException;
-import org.mule.compatibility.core.endpoint.UrlEndpointURIBuilder;
-import org.mule.compatibility.core.endpoint.UserInfoEndpointURIBuilder;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
@@ -23,18 +17,21 @@ import org.mule.tck.size.SmallTest;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class EndpointURIBuilderTestCase extends AbstractMuleTestCase
 {
     private static final String PLAIN_USERNAME_URI = "test://user:secret@theHost:42/path?key=value#fragment";
     private static final String EXPECTED_PLAIN_URI_STRING = "test://user:****@theHost:42/path?key=value#fragment";
-    
+
     private static final String USERNAME_WITH_AT_SIGN_URI = "test://user%40host:secret@theHost:42/path?key=value#fragment";
     private static final String EXPECTED_AT_SIGN_URI_STRING = "test://user%40host:****@theHost:42/path?key=value#fragment";
     private MuleContext unusedMuleContext = null;
-    
+
     // Test for MULE-2720
     @Test
     public void testGetPropertiesForURI() throws MalformedEndpointException, URISyntaxException
@@ -43,21 +40,21 @@ public class EndpointURIBuilderTestCase extends AbstractMuleTestCase
         endpointURIBuilder.build(new URI("ftp://test%25user:test@192.168.1.12:21"), unusedMuleContext);
         assertEquals("test%user:test", endpointURIBuilder.userInfo);
     }
-    
+
     @Test
     public void testUrlEndpointBuilderPasswordMasking() throws Exception
     {
         UrlEndpointURIBuilder builder = new UrlEndpointURIBuilder();
         checkUriWithPlainUsername(builder);
     }
-    
+
     @Test
     public void testUrlEndpointBuilderPasswordMaskingWithAtSign() throws Exception
     {
         UrlEndpointURIBuilder builder = new UrlEndpointURIBuilder();
         checkUriWithUsernameContainingAtSign(builder);
     }
-    
+
     @Test
     public void testUserInfoEndpointBuilderPasswordMasking() throws Exception
     {
@@ -86,10 +83,10 @@ public class EndpointURIBuilderTestCase extends AbstractMuleTestCase
     {
         URI inputUri = new URI(PLAIN_USERNAME_URI);
         EndpointURI uri = builder.build(inputUri, unusedMuleContext);
-        
+
         assertEquals("user", uri.getUser());
         assertUriParts(uri);
-        
+
         // assert that the password is properly masked
         assertEquals(EXPECTED_PLAIN_URI_STRING, uri.toString());
     }
@@ -98,10 +95,10 @@ public class EndpointURIBuilderTestCase extends AbstractMuleTestCase
     {
         URI inputUri = new URI(USERNAME_WITH_AT_SIGN_URI);
         EndpointURI uri = builder.build(inputUri, unusedMuleContext);
-        
+
         assertEquals("user@host", uri.getUser());
         assertUriParts(uri);
-        
+
         // assert that the password is properly masked
         assertEquals(EXPECTED_AT_SIGN_URI_STRING, uri.toString());
     }

@@ -6,11 +6,7 @@
  */
 package org.mule.runtime.core.routing;
 
-import static java.util.Optional.of;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -25,7 +21,10 @@ import org.mule.tck.testmodels.fruit.Apple;
 
 import java.util.Iterator;
 
-import org.junit.Test;
+import static java.util.Optional.of;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class AggregatorTestCase extends AbstractMuleContextTestCase
 {
@@ -112,7 +111,7 @@ public class AggregatorTestCase extends AbstractMuleContextTestCase
 
                     try
                     {
-                        for (Iterator iterator = events.iterator(false); iterator.hasNext();)
+                        for (Iterator iterator = events.iterator(false); iterator.hasNext(); )
                         {
                             MuleEvent event = (MuleEvent) iterator.next();
                             try
@@ -127,11 +126,11 @@ public class AggregatorTestCase extends AbstractMuleContextTestCase
                     }
                     catch (ObjectStoreException e)
                     {
-                        throw new AggregationException(events, next, e); 
+                        throw new AggregationException(events, next, e);
                     }
 
                     return new DefaultMuleEvent(MuleMessage.builder().payload(newPayload.toString()).build(),
-                        events.getMessageCollectionEvent());
+                            events.getMessageCollectionEvent());
                 }
             };
         }

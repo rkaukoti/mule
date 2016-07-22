@@ -29,7 +29,7 @@ public class MapperFactoryBean extends AbstractFactoryBean<ObjectMapper>
     protected ObjectMapper createInstance() throws Exception
     {
         ObjectMapper mapper = new ObjectMapper();
-        if(mixins!=null)
+        if (mixins != null)
         {
             for (Map.Entry<Class<?>, Class<?>> entry : mixins.entrySet())
             {

@@ -27,7 +27,8 @@ import org.mule.runtime.core.api.processor.MessageProcessorPathElement;
  * Wraps a {@link MessageProcessorBuilder} and configures it lazily so it can
  * be injected with the {@link FlowConstruct}.
  */
-public class FlowConfiguringMessageProcessor implements FlowConstructAware, Lifecycle, InterceptingMessageProcessor, MessageProcessorContainer, NonBlockingSupported
+public class FlowConfiguringMessageProcessor
+        implements FlowConstructAware, Lifecycle, InterceptingMessageProcessor, MessageProcessorContainer, NonBlockingSupported
 {
 
     private MessageProcessorBuilder builder;

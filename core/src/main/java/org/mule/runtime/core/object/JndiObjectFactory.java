@@ -11,6 +11,8 @@ import org.mule.runtime.core.api.lifecycle.InitialisationCallback;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.object.ObjectFactory;
 import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -19,41 +21,31 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class JndiObjectFactory implements ObjectFactory
 {
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
     /**
      * If true, the object is looked up from JNDI each time create() is called, otherwise it
      * is looked up once and stored locally.  Default value is false.
      */
     private boolean lookupOnEachCall = false;
-    
     private String objectName;
-
     private String initialFactory;
-
     private String url;
-
     private Map properties;
-    
     private Context _context;
-    
     private Object _object;
 
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
-    
     public JndiObjectFactory()
     {
         // for IoC only
     }
-    
+
     public JndiObjectFactory(String objectName, String initialFactory, String url)
     {
         this(objectName, initialFactory, url, null);
     }
-    
+
     public JndiObjectFactory(String objectName, String initialFactory, String url, Map properties)
     {
         this.objectName = objectName;
@@ -61,7 +53,7 @@ public class JndiObjectFactory implements ObjectFactory
         this.url = url;
         this.properties = properties;
     }
-    
+
     public void initialise() throws InitialisationException
     {
         if (_context == null)
@@ -73,7 +65,7 @@ public class JndiObjectFactory implements ObjectFactory
                 props.put(Context.INITIAL_CONTEXT_FACTORY, initialFactory);
             }
             else if (properties == null
-                    || !properties.containsKey(Context.INITIAL_CONTEXT_FACTORY))
+                     || !properties.containsKey(Context.INITIAL_CONTEXT_FACTORY))
             {
                 throw new InitialisationException(CoreMessages.objectIsNull("jndiInitialFactory"), this);
             }
@@ -87,7 +79,7 @@ public class JndiObjectFactory implements ObjectFactory
             {
                 props.putAll(properties);
             }
-            
+
             try
             {
                 _context = new InitialContext(props);
@@ -98,8 +90,8 @@ public class JndiObjectFactory implements ObjectFactory
             }
         }
     }
-    
-    public void dispose() 
+
+    public void dispose()
     {
         if (_context != null)
         {
@@ -117,17 +109,19 @@ public class JndiObjectFactory implements ObjectFactory
             }
         }
     }
-    
+
     public Object getInstance(MuleContext muleContext) throws Exception
     {
         if (_object == null || lookupOnEachCall == true)
         {
             _object = _context.lookup(objectName);
-        }    
+        }
         return _object;
     }
-    
-    /** {@inheritDoc} */
+
+    /**
+     * {@inheritDoc}
+     */
     public Class<?> getObjectClass()
     {
         throw new UnsupportedOperationException();

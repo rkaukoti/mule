@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.module.launcher.artifact;
 
-import static java.util.Arrays.asList;
 import org.mule.runtime.core.util.SplashScreen;
 import org.mule.runtime.module.artifact.Artifact;
 import org.mule.runtime.module.artifact.descriptor.ArtifactDescriptor;
@@ -14,6 +13,8 @@ import org.mule.runtime.module.artifact.descriptor.ArtifactDescriptor;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Arrays.asList;
 
 /**
  * Base splash screen to log messages when an {@link Artifact} is started based on it's {@link ArtifactDescriptor}.

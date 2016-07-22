@@ -12,7 +12,7 @@ import org.mule.runtime.core.config.i18n.MessageFactory;
 public class PGPMessages extends MessageFactory
 {
     private static final PGPMessages factory = new PGPMessages();
-    
+
     private static final String BUNDLE_PATH = getBundlePath("pgp");
 
     public static Message noPublicKeyForUser(String userId)
@@ -39,12 +39,12 @@ public class PGPMessages extends MessageFactory
     {
         return factory.createMessage(BUNDLE_PATH, 5);
     }
-    
+
     public static Message pgpPublicKeyExpired()
     {
         return factory.createMessage(BUNDLE_PATH, 6);
     }
-    
+
     public static Message noSecretKeyFoundButAvailable(String availableKeys)
     {
         return factory.createMessage(BUNDLE_PATH, 7, availableKeys);

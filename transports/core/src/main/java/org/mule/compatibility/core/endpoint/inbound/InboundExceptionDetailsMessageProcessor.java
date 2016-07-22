@@ -16,7 +16,6 @@ import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.config.ExceptionHelper;
 import org.mule.runtime.core.util.ObjectUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +52,7 @@ public class InboundExceptionDetailsMessageProcessor implements MessageProcessor
                 if (resultMessage.getExceptionPayload() != null)
                 {
                     setExceptionDetails(event, connector, resultMessage.getExceptionPayload()
-                        .getException());
+                                                                       .getException());
                 }
             }
         }
@@ -63,9 +62,6 @@ public class InboundExceptionDetailsMessageProcessor implements MessageProcessor
     /**
      * This method is used to set any additional and possibly transport specific
      * information on the return message where it has an exception payload.
-     * 
-     * @param event
-     * @param exception
      */
     protected void setExceptionDetails(MuleEvent event, Connector connector, Throwable exception)
     {

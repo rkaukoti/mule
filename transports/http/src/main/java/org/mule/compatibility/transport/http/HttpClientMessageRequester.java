@@ -6,6 +6,10 @@
  */
 package org.mule.compatibility.transport.http;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.ReceiveException;
 import org.mule.compatibility.core.transport.AbstractMessageRequester;
@@ -15,11 +19,6 @@ import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.util.StringUtils;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
-
 /**
  * Rquests Mule events over HTTP.
  */
@@ -27,8 +26,8 @@ public class HttpClientMessageRequester extends AbstractMessageRequester
 {
 
     protected final HttpConnector connector;
-    protected volatile HttpClient client = null;
     protected final Transformer receiveTransformer;
+    protected volatile HttpClient client = null;
 
     public HttpClientMessageRequester(InboundEndpoint endpoint)
     {
@@ -56,12 +55,9 @@ public class HttpClientMessageRequester extends AbstractMessageRequester
     /**
      * Make a specific request to the underlying transport
      *
-     * @param timeout the maximum time the operation should block before returning.
-     *            The call should return immediately if there is data available. If
-     *            no data becomes available before the timeout elapses, null will be
-     *            returned
-     * @return the result of the request wrapped in a MuleMessage object. Null will be
-     *         returned if no data was avaialable
+     * @param timeout the maximum time the operation should block before returning. The call should return immediately if there is data
+     *                available. If no data becomes available before the timeout elapses, null will be returned
+     * @return the result of the request wrapped in a MuleMessage object. Null will be returned if no data was avaialable
      * @throws Exception if the call to the underlying protocal cuases an exception
      */
     @Override
@@ -89,8 +85,8 @@ public class HttpClientMessageRequester extends AbstractMessageRequester
             {
                 releaseConn = true;
                 throw new ReceiveException(
-                    HttpMessages.requestFailedWithStatus(httpMethod.getStatusLine().toString()),
-                    endpoint, timeout);
+                        HttpMessages.requestFailedWithStatus(httpMethod.getStatusLine().toString()),
+                        endpoint, timeout);
             }
         }
         catch (ReceiveException e)

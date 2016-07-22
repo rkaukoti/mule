@@ -6,16 +6,10 @@
  */
 package org.mule.runtime.module.extension.internal;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.when;
-import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.core.api.registry.ServiceRegistry;
 import org.mule.runtime.extension.api.introspection.ExtensionFactory;
@@ -31,10 +25,16 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.junit.Before;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.same;
+import static org.mockito.Mockito.when;
+import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
 
 @RunWith(MockitoJUnitRunner.class)
 abstract class BaseExtensionDeclarationTestCase extends AbstractMuleTestCase
@@ -65,13 +65,13 @@ abstract class BaseExtensionDeclarationTestCase extends AbstractMuleTestCase
     }
 
     protected void assertParameter(ParameterModel parameterModel,
-                                 String name,
-                                 String description,
-                                 ExpressionSupport expressionSupport,
-                                 boolean required,
-                                 MetadataType metadataType,
-                                 Class<? extends MetadataType> qualifier,
-                                 Object defaultValue)
+                                   String name,
+                                   String description,
+                                   ExpressionSupport expressionSupport,
+                                   boolean required,
+                                   MetadataType metadataType,
+                                   Class<? extends MetadataType> qualifier,
+                                   Object defaultValue)
     {
         assertThat(parameterModel, is(notNullValue()));
         assertThat(parameterModel.getName(), equalTo(name));

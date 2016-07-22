@@ -19,14 +19,13 @@ import org.mule.runtime.core.api.lifecycle.Stoppable;
 import org.mule.runtime.core.api.transport.LegacyConnector;
 import org.mule.runtime.core.connector.ConnectException;
 import org.mule.runtime.core.lifecycle.phases.NotInLifecyclePhase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeMap;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This is a base implementation of the {@link org.mule.runtime.core.api.lifecycle.LifecycleManager} interface
@@ -47,12 +46,11 @@ public abstract class AbstractLifecycleManager<O> implements LifecycleManager
     protected String lifecycleManagerId;
     protected String currentPhase = NotInLifecyclePhase.PHASE_NAME;
     protected String executingPhase = null;
-    private Set<String> directTransitions = new HashSet<>();
     protected Set<String> phaseNames = new LinkedHashSet<>(4);
     protected Set<String> completedPhases = new LinkedHashSet<>(4);
     protected O object;
     protected LifecycleState state;
-
+    private Set<String> directTransitions = new HashSet<>();
     private TreeMap<String, LifecycleCallback> callbacks = new TreeMap<>();
 
     public AbstractLifecycleManager(String id, O object)
@@ -117,7 +115,8 @@ public abstract class AbstractLifecycleManager<O> implements LifecycleManager
                 return;
             }
 
-            throw new IllegalStateException("Lifecycle Manager '" + lifecycleManagerId + "' phase '" + currentPhase + "' does not support phase '" + name + "'");
+            throw new IllegalStateException(
+                    "Lifecycle Manager '" + lifecycleManagerId + "' phase '" + currentPhase + "' does not support phase '" + name + "'");
         }
     }
 
@@ -253,7 +252,7 @@ public abstract class AbstractLifecycleManager<O> implements LifecycleManager
         {
             completedPhases.remove(Startable.PHASE_NAME);
         }
-        else  if (currentPhase.equals(Startable.PHASE_NAME))
+        else if (currentPhase.equals(Startable.PHASE_NAME))
         {
             completedPhases.remove(Stoppable.PHASE_NAME);
         }

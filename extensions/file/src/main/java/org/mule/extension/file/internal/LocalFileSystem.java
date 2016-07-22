@@ -6,7 +6,6 @@
  */
 package org.mule.extension.file.internal;
 
-import static java.nio.file.StandardOpenOption.WRITE;
 import org.mule.extension.file.api.LocalFileAttributes;
 import org.mule.extension.file.internal.command.LocalCopyCommand;
 import org.mule.extension.file.internal.command.LocalCreateDirectoryCommand;
@@ -35,6 +34,8 @@ import org.mule.runtime.module.extension.file.api.lock.PathLock;
 
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
+
+import static java.nio.file.StandardOpenOption.WRITE;
 
 /**
  * Implementation of {@link FileSystem} for file systems
@@ -129,8 +130,8 @@ public final class LocalFileSystem extends AbstractFileSystem
     protected PathLock createLock(Path path, Object... params)
     {
         return new LocalPathLock(path, ArrayUtils.isEmpty(params)
-                                       ? new OpenOption[] {WRITE}
-                                       : (OpenOption[]) params);
+                ? new OpenOption[] {WRITE}
+                : (OpenOption[]) params);
     }
 
     /**

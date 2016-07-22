@@ -15,10 +15,9 @@ import org.mule.runtime.core.processor.DelegateTransactionFactory;
 import org.mule.runtime.core.processor.TransactionalInterceptingMessageProcessor;
 import org.mule.runtime.core.processor.chain.DefaultMessageProcessorChainBuilder;
 import org.mule.runtime.core.transaction.MuleTransactionConfig;
+import org.springframework.beans.factory.FactoryBean;
 
 import java.util.List;
-
-import org.springframework.beans.factory.FactoryBean;
 
 public class TransactionalMessageProcessorsFactoryBean implements FactoryBean
 {
@@ -42,7 +41,7 @@ public class TransactionalMessageProcessorsFactoryBean implements FactoryBean
         DefaultMessageProcessorChainBuilder builder = new DefaultMessageProcessorChainBuilder();
         builder.setName("'transaction' child processor chain");
         TransactionalInterceptingMessageProcessor txProcessor =
-            new TransactionalInterceptingMessageProcessor();
+                new TransactionalInterceptingMessageProcessor();
         txProcessor.setExceptionListener(this.exceptionListener);
         MuleTransactionConfig transactionConfig = createTransactionConfig(this.action);
         txProcessor.setTransactionConfig(transactionConfig);
@@ -61,7 +60,7 @@ public class TransactionalMessageProcessorsFactoryBean implements FactoryBean
             else
             {
                 throw new IllegalArgumentException(
-                    "MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
+                        "MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
             }
             if (processor instanceof MessagingExceptionHandlerAware)
             {

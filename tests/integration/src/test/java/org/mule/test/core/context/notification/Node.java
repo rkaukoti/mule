@@ -8,14 +8,13 @@ package org.mule.test.core.context.notification;
 
 import org.mule.runtime.core.api.context.notification.BlockingServerEvent;
 import org.mule.runtime.core.api.context.notification.ServerNotification;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * We test notifications by defining a "tree" of expected responses (this is needed because the system is
@@ -37,16 +36,13 @@ public class Node implements RestrictedNode
     public static final int SUCCESS = 0;
     public static final int FAILURE = 1;
     public static final int EMPTY = 2;
-
+    protected final transient Logger logger = LoggerFactory.getLogger(this.getClass());
     // the data for this node
     private Class clazz = null;
     private int action;
     private String id;
     private boolean isIdDefined = false; // allow null IDs to be specified
     private boolean nodeOk = false;
-
-    protected final transient Logger logger = LoggerFactory.getLogger(this.getClass());
-
     // any of these can run after this
     private Set parallel = new HashSet();
     // only once the parallel are done, this runs
@@ -83,7 +79,7 @@ public class Node implements RestrictedNode
 
     /**
      * Avoid warnings when we need to add a synch event as parallel for other reasons
-     * (typically because there's more than one model generating some event) 
+     * (typically because there's more than one model generating some event)
      */
     public Node parallelSynch(RestrictedNode node)
     {
@@ -99,7 +95,7 @@ public class Node implements RestrictedNode
     public RestrictedNode serial(RestrictedNode node)
     {
         if (null != node.getNotificationClass() &&
-                !BlockingServerEvent.class.isAssignableFrom(node.getNotificationClass()))
+            !BlockingServerEvent.class.isAssignableFrom(node.getNotificationClass()))
         {
             logger.warn("Registered non-blocking event as serial: " + node);
         }
@@ -108,7 +104,6 @@ public class Node implements RestrictedNode
     }
 
     /**
-     * @param notification
      * @return whether the notification was matched or not (for this node or any child)
      */
     public int match(ServerNotification notification)
@@ -130,7 +125,7 @@ public class Node implements RestrictedNode
         // otherwise, if we have parallel children, try them
         if (parallel.size() > 0)
         {
-            for (Iterator children = parallel.iterator(); children.hasNext();)
+            for (Iterator children = parallel.iterator(); children.hasNext(); )
             {
                 Node child = (Node) children.next();
                 switch (child.match(notification))
@@ -157,7 +152,7 @@ public class Node implements RestrictedNode
         // otherwise, serial children
         if (serial.size() > 0)
         {
-            for (Iterator children = serial.iterator(); children.hasNext();)
+            for (Iterator children = serial.iterator(); children.hasNext(); )
             {
                 Node child = (Node) children.next();
                 switch (child.match(notification))
@@ -189,10 +184,10 @@ public class Node implements RestrictedNode
     private boolean testLocal(ServerNotification notification)
     {
         return clazz.equals(notification.getClass())
-                && action == notification.getAction()
-                && (!isIdDefined ||
-                (null == id && null == notification.getResourceIdentifier()) ||
-                (null != id && id.equals(notification.getResourceIdentifier())));
+               && action == notification.getAction()
+               && (!isIdDefined ||
+                   (null == id && null == notification.getResourceIdentifier()) ||
+                   (null != id && id.equals(notification.getResourceIdentifier())));
     }
 
     public boolean contains(Class clazz, int action)
@@ -201,14 +196,14 @@ public class Node implements RestrictedNode
         {
             return true;
         }
-        for (Iterator children = parallel.iterator(); children.hasNext();)
+        for (Iterator children = parallel.iterator(); children.hasNext(); )
         {
             if (((RestrictedNode) children.next()).contains(clazz, action))
             {
                 return true;
             }
         }
-        for (Iterator children = serial.iterator(); children.hasNext();)
+        for (Iterator children = serial.iterator(); children.hasNext(); )
         {
             if (((RestrictedNode) children.next()).contains(clazz, action))
             {
@@ -220,11 +215,11 @@ public class Node implements RestrictedNode
 
     public RestrictedNode getAnyRemaining()
     {
-        if (! nodeOk)
+        if (!nodeOk)
         {
             return this;
         }
-        for (Iterator children = parallel.iterator(); children.hasNext();)
+        for (Iterator children = parallel.iterator(); children.hasNext(); )
         {
             RestrictedNode any = ((RestrictedNode) children.next()).getAnyRemaining();
             if (null != any)
@@ -232,7 +227,7 @@ public class Node implements RestrictedNode
                 return any;
             }
         }
-        for (Iterator children = serial.iterator(); children.hasNext();)
+        for (Iterator children = serial.iterator(); children.hasNext(); )
         {
             RestrictedNode any = ((RestrictedNode) children.next()).getAnyRemaining();
             if (null != any)

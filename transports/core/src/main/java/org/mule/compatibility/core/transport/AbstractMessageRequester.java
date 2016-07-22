@@ -6,9 +6,6 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_ROOT_MESSAGE_ID_PROPERTY;
-import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_REQUEST_BEGIN;
-import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_REQUEST_END;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.MessageRequester;
 import org.mule.compatibility.core.api.transport.ReceiveException;
@@ -20,6 +17,10 @@ import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.transformer.Transformer;
 
 import java.util.List;
+
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_ROOT_MESSAGE_ID_PROPERTY;
+import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_REQUEST_BEGIN;
+import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_REQUEST_END;
 
 /**
  * The Message Requester is used to explicitly request messages from a message channel or
@@ -49,16 +50,14 @@ public abstract class AbstractMessageRequester extends AbstractTransportMessageH
      * retrying to connect, a <code>RecoverableException</code> should be thrown.
      * There is no guarantee that by throwing a Recoverable exception that the Mule
      * instance will not shut down.
-     * 
-     * @throws org.mule.api.lifecycle.InitialisationException if a fatal error occurs
-     *             causing the Mule instance to shutdown
-     * @throws org.mule.api.lifecycle.RecoverableException if an error occurs that
-     *             can be recovered from
+     *
+     * @throws org.mule.api.lifecycle.InitialisationException if a fatal error occurs causing the Mule instance to shutdown
+     * @throws org.mule.api.lifecycle.RecoverableException    if an error occurs that can be recovered from
      */
     @Override
     public final void initialise() throws InitialisationException
     {
-        defaultInboundTransformers = connector.getDefaultInboundTransformers(endpoint);               
+        defaultInboundTransformers = connector.getDefaultInboundTransformers(endpoint);
         super.initialise();
     }
 
@@ -70,12 +69,9 @@ public abstract class AbstractMessageRequester extends AbstractTransportMessageH
     /**
      * Make a specific request to the underlying transport
      *
-     * @param timeout the maximum time the operation should block before returning.
-     *            The call should return immediately if there is data available. If
-     *            no data becomes available before the timeout elapses, null will be
-     *            returned
-     * @return the result of the request wrapped in a MuleMessage object. Null will be
-     *         returned if no data was available
+     * @param timeout the maximum time the operation should block before returning. The call should return immediately if there is data
+     *                available. If no data becomes available before the timeout elapses, null will be returned
+     * @return the result of the request wrapped in a MuleMessage object. Null will be returned if no data was available
      * @throws Exception if the call to the underlying protocol causes an exception
      */
     @Override
@@ -86,7 +82,8 @@ public abstract class AbstractMessageRequester extends AbstractTransportMessageH
             EndpointMessageNotification beginNotification = null;
             if (connector.isEnableMessageEvents())
             {
-                beginNotification = new EndpointMessageNotification(MuleMessage.builder().nullPayload().build(), endpoint, null, MESSAGE_REQUEST_BEGIN);
+                beginNotification =
+                        new EndpointMessageNotification(MuleMessage.builder().nullPayload().build(), endpoint, null, MESSAGE_REQUEST_BEGIN);
             }
             // Make sure we are connected
             connect();
@@ -121,7 +118,7 @@ public abstract class AbstractMessageRequester extends AbstractTransportMessageH
                 {
                     connector.fireNotification(beginNotification);
                     connector.fireNotification(new EndpointMessageNotification(result, endpoint, null,
-                        MESSAGE_REQUEST_END));
+                            MESSAGE_REQUEST_END));
                 }
             }
             return result;
@@ -156,22 +153,19 @@ public abstract class AbstractMessageRequester extends AbstractTransportMessageH
     {
         return connector.getRequesterWorkManager();
     }
-    
+
     @Override
     public InboundEndpoint getEndpoint()
     {
         return (InboundEndpoint) super.getEndpoint();
     }
-    
+
     /**
      * Make a specific request to the underlying transport
      *
-     * @param timeout the maximum time the operation should block before returning.
-     *            The call should return immediately if there is data available. If
-     *            no data becomes available before the timeout elapses, null will be
-     *            returned
-     * @return the result of the request wrapped in a MuleMessage object. Null will be
-     *         returned if no data was avaialable
+     * @param timeout the maximum time the operation should block before returning. The call should return immediately if there is data
+     *                available. If no data becomes available before the timeout elapses, null will be returned
+     * @return the result of the request wrapped in a MuleMessage object. Null will be returned if no data was avaialable
      * @throws Exception if the call to the underlying protocal cuases an exception
      */
     protected abstract MuleMessage doRequest(long timeout) throws Exception;

@@ -15,12 +15,12 @@ import javax.net.ssl.SSLSocket;
 
 public class MockHandshakeCompletedEvent extends HandshakeCompletedEvent
 {
-    
+
     public MockHandshakeCompletedEvent()
     {
         this(new MockSslSocket());
     }
-    
+
     public MockHandshakeCompletedEvent(SSLSocket socket)
     {
         super(socket, null);
@@ -37,6 +37,6 @@ public class MockHandshakeCompletedEvent extends HandshakeCompletedEvent
     {
         return new Certificate[0];
     }
-    
+
 }
 

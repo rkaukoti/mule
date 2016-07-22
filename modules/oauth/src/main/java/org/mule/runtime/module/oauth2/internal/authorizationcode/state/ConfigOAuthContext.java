@@ -22,7 +22,8 @@ public class ConfigOAuthContext
     private final String configName;
     private final ObjectStoreToMapAdapter<ResourceOwnerOAuthContext> oauthContextStore;
 
-    public ConfigOAuthContext(final LockFactory lockFactory, ListableObjectStore<ResourceOwnerOAuthContext> objectStore, final String configName)
+    public ConfigOAuthContext(final LockFactory lockFactory, ListableObjectStore<ResourceOwnerOAuthContext> objectStore,
+                              final String configName)
     {
         this.lockFactory = lockFactory;
         this.oauthContextStore = new ObjectStoreToMapAdapter(objectStore);
@@ -70,8 +71,6 @@ public class ConfigOAuthContext
 
     /**
      * Updates the resource owner oauth context information
-     *
-     * @param resourceOwnerOAuthContext
      */
     public void updateResourceOwnerOAuthContext(ResourceOwnerOAuthContext resourceOwnerOAuthContext)
     {

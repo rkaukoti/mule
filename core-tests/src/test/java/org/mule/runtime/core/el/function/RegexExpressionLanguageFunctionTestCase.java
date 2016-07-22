@@ -6,6 +6,27 @@
  */
 package org.mule.runtime.core.el.function;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.mule.mvel2.CompileException;
+import org.mule.mvel2.ParserConfiguration;
+import org.mule.runtime.api.metadata.DataType;
+import org.mule.runtime.core.TransformationService;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.api.el.ExpressionExecutor;
+import org.mule.runtime.core.api.lifecycle.InitialisationException;
+import org.mule.runtime.core.api.transformer.TransformerException;
+import org.mule.runtime.core.el.context.MessageContext;
+import org.mule.runtime.core.el.mvel.MVELExpressionExecutor;
+import org.mule.runtime.core.el.mvel.MVELExpressionLanguageContext;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.util.Date;
+import java.util.regex.Pattern;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -13,27 +34,6 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import org.mule.runtime.core.TransformationService;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.el.ExpressionExecutor;
-import org.mule.runtime.core.api.lifecycle.InitialisationException;
-import org.mule.runtime.api.metadata.DataType;
-import org.mule.runtime.core.api.transformer.TransformerException;
-import org.mule.runtime.core.el.context.MessageContext;
-import org.mule.runtime.core.el.mvel.MVELExpressionExecutor;
-import org.mule.runtime.core.el.mvel.MVELExpressionLanguageContext;
-import org.mule.mvel2.CompileException;
-import org.mule.mvel2.ParserConfiguration;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import java.util.Date;
-import java.util.regex.Pattern;
-
-import org.junit.Before;
-import org.junit.Test;
 
 @SmallTest
 public class RegexExpressionLanguageFunctionTestCase extends AbstractMuleTestCase
@@ -61,7 +61,7 @@ public class RegexExpressionLanguageFunctionTestCase extends AbstractMuleTestCas
     public void testReturnNullWhenDoesNotMatches() throws Exception
     {
         addMessageToContextWithPayload("TEST");
-        Object result = regexFuntion.call(new Object[]{"'TESTw+TEST'"}, context);
+        Object result = regexFuntion.call(new Object[] {"'TESTw+TEST'"}, context);
         assertNull(result);
     }
 
@@ -77,7 +77,7 @@ public class RegexExpressionLanguageFunctionTestCase extends AbstractMuleTestCas
     public void testReturnsPayloadWhenMatchesIfNoCaptureGroupDefined() throws Exception
     {
         addMessageToContextWithPayload("TESTfooTEST");
-        Object result = regexFuntion.call(new Object[]{"TEST\\w+TEST"}, context);
+        Object result = regexFuntion.call(new Object[] {"TEST\\w+TEST"}, context);
         assertEquals("TESTfooTEST", result);
     }
 
@@ -93,7 +93,7 @@ public class RegexExpressionLanguageFunctionTestCase extends AbstractMuleTestCas
     public void testReturnsMatchedValueIfCaptureGroupDefined() throws Exception
     {
         addMessageToContextWithPayload("TESTfooTEST");
-        Object result = regexFuntion.call(new Object[]{"TEST(\\w+)TEST"}, context);
+        Object result = regexFuntion.call(new Object[] {"TEST(\\w+)TEST"}, context);
         assertEquals("foo", result);
     }
 
@@ -109,7 +109,7 @@ public class RegexExpressionLanguageFunctionTestCase extends AbstractMuleTestCas
     public void testReturnsMultipleValuesIfMultipleCaptureGroupDefine() throws Exception
     {
         addMessageToContextWithPayload("TESTfooTESTbar");
-        Object result = regexFuntion.call(new Object[]{"TEST(\\w+)TEST(\\w+)"}, context);
+        Object result = regexFuntion.call(new Object[] {"TEST(\\w+)TEST(\\w+)"}, context);
 
         assertTrue(result instanceof String[]);
         String[] values = (String[]) result;
@@ -134,7 +134,7 @@ public class RegexExpressionLanguageFunctionTestCase extends AbstractMuleTestCas
     @Test
     public void testReturnsPayloadWhenMatchesIfNoCaptureGroupDefinedTextArgument() throws Exception
     {
-        Object result = regexFuntion.call(new Object[]{"TEST\\w+TEST", "TESTfooTEST"}, context);
+        Object result = regexFuntion.call(new Object[] {"TEST\\w+TEST", "TESTfooTEST"}, context);
         assertEquals("TESTfooTEST", result);
     }
 
@@ -148,24 +148,24 @@ public class RegexExpressionLanguageFunctionTestCase extends AbstractMuleTestCas
     @Test
     public void testReturnsPayloadWhenMatchesIfNoCaptureGroupDefinedTextAndFlagsArgument() throws Exception
     {
-        Object result = regexFuntion.call(new Object[]{"test\\w+test", "TESTfooTEST",
-            Pattern.CASE_INSENSITIVE}, context);
+        Object result = regexFuntion.call(new Object[] {"test\\w+test", "TESTfooTEST",
+                                                        Pattern.CASE_INSENSITIVE}, context);
         assertEquals("TESTfooTEST", result);
     }
 
     @Test
     public void testReturnsPayloadWhenMatchesIfNoCaptureGroupDefinedTextAndFlagsArgumentMVEL()
-        throws Exception
+            throws Exception
     {
         Object result = expressionExecutor.execute(
-            "regex('test\\\\w+test','TESTfooTEST', java.util.regex.Pattern.CASE_INSENSITIVE)", context);
+                "regex('test\\\\w+test','TESTfooTEST', java.util.regex.Pattern.CASE_INSENSITIVE)", context);
         assertEquals("TESTfooTEST", result);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidNullRegex() throws Exception
     {
-        regexFuntion.call(new Object[]{null}, context);
+        regexFuntion.call(new Object[] {null}, context);
     }
 
     @Test(expected = CompileException.class)
@@ -177,7 +177,7 @@ public class RegexExpressionLanguageFunctionTestCase extends AbstractMuleTestCas
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidNonStringRegex() throws Exception
     {
-        regexFuntion.call(new Object[]{new Date()}, context);
+        regexFuntion.call(new Object[] {new Date()}, context);
     }
 
     @Test(expected = CompileException.class)
@@ -189,7 +189,7 @@ public class RegexExpressionLanguageFunctionTestCase extends AbstractMuleTestCas
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidNullText() throws Exception
     {
-        regexFuntion.call(new Object[]{"TESTw+TEST", null}, context);
+        regexFuntion.call(new Object[] {"TESTw+TEST", null}, context);
     }
 
     @Test(expected = CompileException.class)
@@ -201,7 +201,7 @@ public class RegexExpressionLanguageFunctionTestCase extends AbstractMuleTestCas
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidNonStringText() throws Exception
     {
-        regexFuntion.call(new Object[]{"TESTw+TEST", new Date()}, context);
+        regexFuntion.call(new Object[] {"TESTw+TEST", new Date()}, context);
     }
 
     @Test(expected = CompileException.class)
@@ -213,7 +213,7 @@ public class RegexExpressionLanguageFunctionTestCase extends AbstractMuleTestCas
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidNonIntFlags() throws Exception
     {
-        regexFuntion.call(new Object[]{"TESTw+TEST", "text", "foo"}, context);
+        regexFuntion.call(new Object[] {"TESTw+TEST", "text", "foo"}, context);
     }
 
     @Test(expected = CompileException.class)
@@ -226,7 +226,8 @@ public class RegexExpressionLanguageFunctionTestCase extends AbstractMuleTestCas
     {
         event = mock(MuleEvent.class);
         message = mock(MuleMessage.class);
-        doAnswer(invocation -> {
+        doAnswer(invocation ->
+        {
             message = (MuleMessage) invocation.getArguments()[0];
             return null;
         }).when(event).setMessage(any(MuleMessage.class));

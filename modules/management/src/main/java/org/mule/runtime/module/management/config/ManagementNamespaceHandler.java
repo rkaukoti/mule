@@ -35,10 +35,11 @@ public class ManagementNamespaceHandler extends AbstractMuleNamespaceHandler
         registerBeanDefinitionParser("jmx-mx4j-adaptor", new DefaultNameMuleOrphanDefinitionParser(Mx4jAgent.class));
         registerBeanDefinitionParser("jmx-notifications", new DefaultNameMuleOrphanDefinitionParser(JmxServerNotificationAgent.class));
 
-        MuleDefinitionParserConfiguration defaultJmxParser = registerMuleBeanDefinitionParser("jmx-default-config", new DefaultNameMuleOrphanDefinitionParser(DefaultJmxSupportAgent.class));
+        MuleDefinitionParserConfiguration defaultJmxParser = registerMuleBeanDefinitionParser("jmx-default-config",
+                new DefaultNameMuleOrphanDefinitionParser(DefaultJmxSupportAgent.class));
         defaultJmxParser.addAlias("registerMx4jAdapter", "loadMx4jAgent");
         defaultJmxParser.addAlias("registerLog4j", "loadLog4jAgent");
-        
+
         registerBeanDefinitionParser("level-mapping", new ChildMapEntryDefinitionParser("levelMappings", "severity", "eventId"));
 
         registerBeanDefinitionParser("rmi-server", new DefaultNameMuleOrphanDefinitionParser(RmiRegistryAgent.class));
@@ -47,5 +48,5 @@ public class ManagementNamespaceHandler extends AbstractMuleNamespaceHandler
         // This gets processed by the jmx-server parser
         registerIgnoredElement("connector-server");
     }
-    
+
 }

@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.management.agents;
 
-import static org.mule.runtime.management.agents.DefaultJmxSupportAgentTestCase.doTestHostPropertyEnablesClientSocketFactory;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.mule.runtime.management.agents.DefaultJmxSupportAgentTestCase.doTestHostPropertyEnablesClientSocketFactory;
 
 public class DefaultJmxSupportAgentDefaultDomainTestCase extends FunctionalTestCase
 {
@@ -21,7 +21,7 @@ public class DefaultJmxSupportAgentDefaultDomainTestCase extends FunctionalTestC
     }
 
     @Test
-    public void testHostPropertyEnablesClientSocketFactory () throws Exception
+    public void testHostPropertyEnablesClientSocketFactory() throws Exception
     {
         doTestHostPropertyEnablesClientSocketFactory(muleContext);
     }

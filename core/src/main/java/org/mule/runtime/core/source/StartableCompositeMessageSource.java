@@ -25,14 +25,13 @@ import org.mule.runtime.core.api.source.CompositeMessageSource;
 import org.mule.runtime.core.api.source.MessageSource;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.ObjectUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of {@link CompositeMessageSource} that propagates both injection of {@link FlowConstruct}
@@ -45,17 +44,16 @@ import org.slf4j.LoggerFactory;
  * <li>Message will only be received from endpoints if the connector is also started.
  */
 public class StartableCompositeMessageSource
-    implements CompositeMessageSource, Lifecycle, FlowConstructAware, MuleContextAware
+        implements CompositeMessageSource, Lifecycle, FlowConstructAware, MuleContextAware
 {
     protected static final Logger logger = LoggerFactory.getLogger(StartableCompositeMessageSource.class);
-
+    protected final List<MessageSource> sources = Collections.synchronizedList(new ArrayList<MessageSource>());
+    private final MessageProcessor internalListener = new InternalMessageProcessor();
     protected MessageProcessor listener;
     protected AtomicBoolean initialised = new AtomicBoolean(false);
     protected AtomicBoolean started = new AtomicBoolean(false);
-    protected final List<MessageSource> sources = Collections.synchronizedList(new ArrayList<MessageSource>());
     protected AtomicBoolean starting = new AtomicBoolean(false);
     protected FlowConstruct flowConstruct;
-    private final MessageProcessor internalListener = new InternalMessageProcessor();
     protected MuleContext muleContext;
 
     @Override
@@ -118,7 +116,7 @@ public class StartableCompositeMessageSource
             sources.remove(source);
         }
     }
-    
+
     public void setMessageSources(List<MessageSource> sources) throws MuleException
     {
         this.sources.clear();
@@ -127,7 +125,7 @@ public class StartableCompositeMessageSource
             addSource(messageSource);
         }
     }
-    
+
     @Override
     public void initialise() throws InitialisationException
     {
@@ -185,7 +183,7 @@ public class StartableCompositeMessageSource
             started.set(false);
         }
     }
-    
+
     @Override
     public void dispose()
     {
@@ -213,7 +211,7 @@ public class StartableCompositeMessageSource
         this.flowConstruct = pattern;
 
     }
-    
+
     @Override
     public List<MessageSource> getSources()
     {
@@ -224,7 +222,7 @@ public class StartableCompositeMessageSource
     public String toString()
     {
         return String.format("%s [listener=%s, sources=%s, started=%s]", getClass().getSimpleName(),
-            listener, sources, started);
+                listener, sources, started);
     }
 
     @Override
@@ -251,8 +249,8 @@ public class StartableCompositeMessageSource
             {
                 // TODO i18n
                 throw new IllegalStateException(String.format(
-                    "A message was receieved from MessageSource, but CompositeMessageSource is stopped.%n"
-                                    + "  Message: %s%n" + "  CompositeMessageSource: %s", event, this));
+                        "A message was receieved from MessageSource, but CompositeMessageSource is stopped.%n"
+                        + "  Message: %s%n" + "  CompositeMessageSource: %s", event, this));
             }
         }
 

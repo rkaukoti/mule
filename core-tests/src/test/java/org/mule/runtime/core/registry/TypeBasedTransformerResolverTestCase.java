@@ -6,14 +6,8 @@
  */
 package org.mule.runtime.core.registry;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.MuleConfiguration;
@@ -27,8 +21,13 @@ import org.mule.tck.size.SmallTest;
 
 import java.util.ArrayList;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class TypeBasedTransformerResolverTestCase extends AbstractMuleTestCase
@@ -36,15 +35,6 @@ public class TypeBasedTransformerResolverTestCase extends AbstractMuleTestCase
 
     private MuleContext muleContext = mock(MuleContext.class, RETURNS_DEEP_STUBS);
     private MuleConfiguration muleConfiguration = mock(MuleConfiguration.class);
-
-    public static class A
-    {
-    }
-
-    public static class B
-    {
-    }
-
     private DataType dataTypeA = DataType.fromType(A.class);
     private DataType dataTypeB = DataType.fromType(B.class);
 
@@ -116,6 +106,14 @@ public class TypeBasedTransformerResolverTestCase extends AbstractMuleTestCase
         resolver.initialise();
 
         verify(muleContext, never()).getRegistry();
+    }
+
+    public static class A
+    {
+    }
+
+    public static class B
+    {
     }
 
 }

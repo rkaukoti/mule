@@ -6,14 +6,12 @@
  */
 package org.mule.extension.validation.api.el;
 
-import static org.mule.extension.validation.api.ValidationExtension.DEFAULT_LOCALE;
-import org.mule.runtime.core.VoidMuleEvent;
-import org.mule.runtime.core.api.MuleEvent;
+import org.mule.extension.validation.api.NumberType;
+import org.mule.extension.validation.api.ValidationExtension;
+import org.mule.extension.validation.api.ValidationOptions;
 import org.mule.extension.validation.api.Validator;
 import org.mule.extension.validation.internal.ValidationContext;
-import org.mule.extension.validation.api.ValidationExtension;
 import org.mule.extension.validation.internal.ValidationMessages;
-import org.mule.extension.validation.api.ValidationOptions;
 import org.mule.extension.validation.internal.validator.EmailValidator;
 import org.mule.extension.validation.internal.validator.EmptyValidator;
 import org.mule.extension.validation.internal.validator.IpValidator;
@@ -21,13 +19,16 @@ import org.mule.extension.validation.internal.validator.MatchesRegexValidator;
 import org.mule.extension.validation.internal.validator.NotEmptyValidator;
 import org.mule.extension.validation.internal.validator.NotNullValidator;
 import org.mule.extension.validation.internal.validator.NullValidator;
-import org.mule.extension.validation.api.NumberType;
 import org.mule.extension.validation.internal.validator.NumberValidator;
 import org.mule.extension.validation.internal.validator.SizeValidator;
 import org.mule.extension.validation.internal.validator.TimeValidator;
 import org.mule.extension.validation.internal.validator.UrlValidator;
+import org.mule.runtime.core.VoidMuleEvent;
+import org.mule.runtime.core.api.MuleEvent;
 
 import java.util.Locale;
+
+import static org.mule.extension.validation.api.ValidationExtension.DEFAULT_LOCALE;
 
 /**
  * A class which allows executing instances of

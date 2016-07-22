@@ -46,9 +46,9 @@ public interface LifecycleManager
      * Applies lifecycle phase to an object independent of the current lifecycle phase. All phases  between the
      * {@code startPhase} (not inclusive) and the {@code endPhase} will be executed.
      *
-     * @param object    the object to apply lifecycle to
+     * @param object     the object to apply lifecycle to
      * @param startPhase the lifecycle phase the object is currently in. Must not be null.
-     * @param toPhase   the lifecycle phase to transition the object to. Must not be null.
+     * @param toPhase    the lifecycle phase to transition the object to. Must not be null.
      * @throws LifecycleException if there is an exception while invoking lifecycle on the object
      */
     void applyPhase(Object object, String startPhase, String toPhase) throws LifecycleException;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/domain"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:mule="http://www.mulesoft.org/schema/mule/core"
             xmlns:spring="http://www.springframework.org/schema/beans"
             xmlns:spring-context="http://www.springframework.org/schema/context"
+            xmlns="http://www.mulesoft.org/schema/mule/domain"
             targetNamespace="http://www.mulesoft.org/schema/mule/domain"
             attributeFormDefault="unqualified"
             elementFormDefault="qualified">
@@ -15,7 +15,6 @@
                 schemaLocation="http://www.springframework.org/schema/beans/spring-beans-current.xsd"/>
     <xsd:import namespace="http://www.springframework.org/schema/context"
                 schemaLocation="http://www.springframework.org/schema/context/spring-context-current.xsd"/>
-
 
 
     <xsd:element name="mule-domain" type="muleDomainType">
@@ -40,7 +39,7 @@
                         <xsd:group ref="sharedElements"/>
                     </xsd:choice>
                 </xsd:sequence>
-                <xsd:attribute name="version" type ="xsd:string"/>
+                <xsd:attribute name="version" type="xsd:string"/>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
@@ -70,7 +69,7 @@
             </xsd:element>
             <xsd:element ref="mule:abstract-shared-connector"/>
             <xsd:element ref="mule:abstract-shared-transaction-manager"/>
-            <xsd:element ref="mule:abstract-shared-extension" />
+            <xsd:element ref="mule:abstract-shared-extension"/>
         </xsd:choice>
     </xsd:group>
 

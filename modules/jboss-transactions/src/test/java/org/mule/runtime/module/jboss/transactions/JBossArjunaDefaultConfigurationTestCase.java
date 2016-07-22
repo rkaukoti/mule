@@ -21,7 +21,8 @@ public class JBossArjunaDefaultConfigurationTestCase extends AbstractJbossArjuna
     public void testConfiguration()
     {
         assertTransactionManagerPresent();
-        assertObjectStoreDir(muleContext.getConfiguration().getWorkingDirectory() + "/transaction-log", muleContext.getConfiguration().getWorkingDirectory());
+        assertObjectStoreDir(muleContext.getConfiguration().getWorkingDirectory() + "/transaction-log",
+                muleContext.getConfiguration().getWorkingDirectory());
     }
 
 }

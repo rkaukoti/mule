@@ -6,11 +6,7 @@
  */
 package org.mule.test.core.transformers.simple;
 
-import static java.nio.charset.StandardCharsets.ISO_8859_1;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.transformer.Transformer;
@@ -18,7 +14,10 @@ import org.mule.runtime.core.api.transformer.Transformer;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 public class TransformationContentTypeTestCase extends FunctionalTestCase
 {

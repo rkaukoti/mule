@@ -6,9 +6,7 @@
  */
 package org.mule.test.config.spring;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
@@ -23,7 +21,9 @@ import org.mule.runtime.core.util.store.TextFileObjectStore;
 
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class CoreNamespaceRoutersFlowTestCase extends FunctionalTestCase
 {
@@ -39,12 +39,12 @@ public class CoreNamespaceRoutersFlowTestCase extends FunctionalTestCase
         MessageProcessor router = lookupMessageProcessorFromFlow("IdempotentSecureHashReceiverRouter");
         assertTrue(router instanceof IdempotentSecureHashMessageFilter);
 
-        IdempotentSecureHashMessageFilter filter = (IdempotentSecureHashMessageFilter)router;
+        IdempotentSecureHashMessageFilter filter = (IdempotentSecureHashMessageFilter) router;
         assertEquals("SHA-128", filter.getMessageDigestAlgorithm());
         assertNotNull(filter.getStore());
         assertTrue(filter.getStore() instanceof InMemoryObjectStore);
 
-        InMemoryObjectStore<String> store = (InMemoryObjectStore<String>)filter.getStore();
+        InMemoryObjectStore<String> store = (InMemoryObjectStore<String>) filter.getStore();
         assertEquals(1001, store.getEntryTTL());
         assertEquals(1001, store.getExpirationInterval());
         assertEquals(1001, store.getMaxEntries());
@@ -58,12 +58,12 @@ public class CoreNamespaceRoutersFlowTestCase extends FunctionalTestCase
         MessageProcessor router = lookupMessageProcessorFromFlow("IdempotentReceiverRouter");
         assertTrue(router instanceof IdempotentMessageFilter);
 
-        IdempotentMessageFilter filter = (IdempotentMessageFilter)router;
+        IdempotentMessageFilter filter = (IdempotentMessageFilter) router;
         assertEquals("#[message:id]-#[message:correlationId]", filter.getIdExpression());
         assertNotNull(filter.getStore());
         assertTrue(filter.getStore() instanceof TextFileObjectStore);
 
-        TextFileObjectStore store = (TextFileObjectStore)filter.getStore();
+        TextFileObjectStore store = (TextFileObjectStore) filter.getStore();
         assertEquals(-1, store.getEntryTTL());
         assertEquals(1000, store.getExpirationInterval());
         assertEquals(10000000, store.getMaxEntries());
@@ -99,7 +99,7 @@ public class CoreNamespaceRoutersFlowTestCase extends FunctionalTestCase
         assertNotNull(flow);
         return flow;
     }
-    
+
     public static class CustomRouter extends AbstractOutboundRouter
     {
         public boolean isMatch(MuleEvent message) throws MuleException

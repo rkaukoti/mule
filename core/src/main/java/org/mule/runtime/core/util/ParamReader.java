@@ -53,9 +53,6 @@ public class ParamReader extends ClassReader
     /**
      * process a class file, given it's class. We'll use the defining classloader to
      * locate the bytecode.
-     *
-     * @param c
-     * @throws IOException
      */
     public ParamReader(Class c) throws IOException
     {
@@ -64,9 +61,6 @@ public class ParamReader extends ClassReader
 
     /**
      * process the given class bytes directly.
-     *
-     * @param b
-     * @throws IOException
      */
     public ParamReader(byte[] b) throws IOException
     {
@@ -178,7 +172,6 @@ public class ParamReader extends ClassReader
      * per parameter. The length of the array will be the same as the length of the
      * Class[] array returned by Constructor.getParameterTypes().
      *
-     * @param ctor
      * @return String[] array of names, one per parameter, or null
      */
     public String[] getParameterNames(Constructor ctor)
@@ -193,7 +186,6 @@ public class ParamReader extends ClassReader
      * parameter. The length of the array will be the same as the length of the
      * Class[] array returned by Method.getParameterTypes().
      *
-     * @param method
      * @return String[] array of names, one per parameter, or null
      */
     public String[] getParameterNames(Method method)
@@ -246,17 +238,6 @@ public class ParamReader extends ClassReader
         }
     }
 
-    private static class MethodInfo
-    {
-
-        String[] names;
-
-        public MethodInfo(int maxLocals)
-        {
-            names = new String[maxLocals];
-        }
-    }
-
     private MethodInfo getMethodInfo()
     {
         MethodInfo info = null;
@@ -269,8 +250,6 @@ public class ParamReader extends ClassReader
 
     /**
      * this is invoked when a LocalVariableTable attribute is encountered.
-     *
-     * @throws IOException
      */
     public void readLocalVariableTable() throws IOException
     {
@@ -287,6 +266,17 @@ public class ParamReader extends ClassReader
             {
                 info.names[index] = resolveUtf8(nameIndex);
             }
+        }
+    }
+
+    private static class MethodInfo
+    {
+
+        String[] names;
+
+        public MethodInfo(int maxLocals)
+        {
+            names = new String[maxLocals];
         }
     }
 }

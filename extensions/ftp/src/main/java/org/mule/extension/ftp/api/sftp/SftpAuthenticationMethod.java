@@ -18,12 +18,12 @@ public enum SftpAuthenticationMethod
     KEYBOARD_INTERACTIVE("keyboard_interactive"),
     PASSWORD("password");
 
+    private final String code;
+
     SftpAuthenticationMethod(String code)
     {
         this.code = code;
     }
-
-    private final String code;
 
     /**
      * @return the method's protocol name

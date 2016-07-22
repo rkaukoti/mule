@@ -16,7 +16,7 @@ import org.mule.compatibility.core.endpoint.URIBuilder;
  * elements.
  *
  * <p>It generates both an endpoint (which should subclass {@link ImmutableEndpoint}) and a
- * {@link URIBuilder}.  The URI is then injected into the endpoint. So the associated schema 
+ * {@link URIBuilder}.  The URI is then injected into the endpoint. So the associated schema
  * can enable any of the suitable {@link URIBuilder#ALL_ATTRIBUTES} or add appropriate mappings.
  */
 public class TransportEndpointDefinitionParser extends AddressedEndpointDefinitionParser
@@ -30,16 +30,15 @@ public class TransportEndpointDefinitionParser extends AddressedEndpointDefiniti
     public TransportEndpointDefinitionParser(String metaOrProtocol, boolean isMeta, Class endpoint,
                                              String[] requiredAddressAttributes)
     {
-        this(metaOrProtocol, isMeta, endpoint, requiredAddressAttributes, new String[]{});
+        this(metaOrProtocol, isMeta, endpoint, requiredAddressAttributes, new String[] {});
     }
 
     /**
-     * @param metaOrProtocol The transport metaOrProtocol ("tcp" etc)
-     * @param isMeta Whether transport is "meta" or not (eg cxf)
-     * @param endpoint The endpoint class to construct
-     * @param requiredAddressAttributes A list of attribute names that are required if "address"
-     * isn't present
-     * @param requiredProperties A list of property names that are required if "address" isn't present
+     * @param metaOrProtocol            The transport metaOrProtocol ("tcp" etc)
+     * @param isMeta                    Whether transport is "meta" or not (eg cxf)
+     * @param endpoint                  The endpoint class to construct
+     * @param requiredAddressAttributes A list of attribute names that are required if "address" isn't present
+     * @param requiredProperties        A list of property names that are required if "address" isn't present
      */
     public TransportEndpointDefinitionParser(String metaOrProtocol, boolean isMeta, Class endpoint,
                                              String[] requiredAddressAttributes, String[] requiredProperties)

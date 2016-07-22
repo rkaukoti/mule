@@ -6,8 +6,6 @@
  */
 package org.mule.functional.util.ftp;
 
-import java.io.IOException;
-
 import org.apache.ftpserver.ftplet.DefaultFtplet;
 import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.ftpserver.ftplet.FtpRequest;
@@ -15,28 +13,23 @@ import org.apache.ftpserver.ftplet.FtpSession;
 import org.apache.ftpserver.ftplet.Ftplet;
 import org.apache.ftpserver.ftplet.FtpletResult;
 
+import java.io.IOException;
+
 /**
- * {@link Ftplet} implementation that calls methods on its callback. Although this seems a bit 
+ * {@link Ftplet} implementation that calls methods on its callback. Although this seems a bit
  * like jumping through hoops, it frees the individual test classes from having to deal with
  * creating custom Ftplets.
  */
 public class MuleFtplet extends DefaultFtplet
 {
-    public interface Callback
-    {
-        void fileUploadCompleted();
-        
-        void fileMoveCompleted();
-    }
-
     private Callback callback;
-    
+
     public MuleFtplet(Callback callback)
     {
         super();
         this.callback = callback;
     }
-    
+
     @Override
     public FtpletResult onUploadEnd(FtpSession session, FtpRequest request) throws FtpException, IOException
     {
@@ -49,5 +42,12 @@ public class MuleFtplet extends DefaultFtplet
     {
         callback.fileMoveCompleted();
         return null;
+    }
+
+    public interface Callback
+    {
+        void fileUploadCompleted();
+
+        void fileMoveCompleted();
     }
 }

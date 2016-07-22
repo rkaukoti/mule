@@ -7,13 +7,7 @@
 
 package org.mule.runtime.module.db.internal.processor;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.SQL_TEXT_DEBUG_FIELD;
-import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.debug.FieldDebugInfo;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
@@ -30,7 +24,13 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.SQL_TEXT_DEBUG_FIELD;
+import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
 
 public abstract class AbstractSingleQueryMessageProcessorDebugInfoTestCase extends AbstractMuleTestCase
 {

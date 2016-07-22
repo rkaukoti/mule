@@ -14,7 +14,7 @@ import java.io.Serializable;
 public enum PropertyScope implements Serializable
 {
 
-    INBOUND (PropertyScope.INBOUND_NAME), OUTBOUND (PropertyScope.OUTBOUND_NAME);
+    INBOUND(PropertyScope.INBOUND_NAME), OUTBOUND(PropertyScope.OUTBOUND_NAME);
 
     public static final String INBOUND_NAME = "inbound";
     public static final String OUTBOUND_NAME = "outbound";

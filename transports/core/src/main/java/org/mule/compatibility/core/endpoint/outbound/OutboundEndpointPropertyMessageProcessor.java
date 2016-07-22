@@ -6,8 +6,6 @@
  */
 package org.mule.compatibility.core.endpoint.outbound;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_ENDPOINT_PROPERTY;
-
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.OptimizedRequestContext;
@@ -19,6 +17,8 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.util.ObjectUtils;
 
 import java.io.Serializable;
+
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_ENDPOINT_PROPERTY;
 
 /**
  * Sets the outbound endpoint uri on as a property of the message using the following key:
@@ -40,7 +40,7 @@ public class OutboundEndpointPropertyMessageProcessor implements MessageProcesso
     public MuleEvent process(MuleEvent event) throws MuleException
     {
         MuleMessage.Builder messageBuilder = MuleMessage.builder(event.getMessage())
-                .addOutboundProperty(MULE_ENDPOINT_PROPERTY, endpoint.getEndpointURI().toString());
+                                                        .addOutboundProperty(MULE_ENDPOINT_PROPERTY, endpoint.getEndpointURI().toString());
 
         if (endpoint.getProperties() != null)
         {

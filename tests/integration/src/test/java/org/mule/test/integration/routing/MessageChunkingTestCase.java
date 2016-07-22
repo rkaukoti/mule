@@ -6,9 +6,8 @@
  */
 package org.mule.test.integration.routing;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.apache.commons.lang.SerializationUtils;
+import org.junit.Test;
 import org.mule.functional.functional.FunctionalTestNotification;
 import org.mule.functional.functional.FunctionalTestNotificationListener;
 import org.mule.functional.junit4.FunctionalTestCase;
@@ -20,8 +19,8 @@ import org.mule.runtime.core.util.concurrent.Latch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.commons.lang.SerializationUtils;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MessageChunkingTestCase extends FunctionalTestCase
 {
@@ -48,9 +47,9 @@ public class MessageChunkingTestCase extends FunctionalTestCase
     public void testMessageChunkingWith100Splits() throws Exception
     {
         doMessageChunking(
-            "0123456789012345678901234567890123456789012345678901234567890123456789"
-                            + "01234567890123456789012345678901234567890123456789012345678901234567890123456789"
-                            + "01234567890123456789012345678901234567890123456789", 100);
+                "0123456789012345678901234567890123456789012345678901234567890123456789"
+                + "01234567890123456789012345678901234567890123456789012345678901234567890123456789"
+                + "01234567890123456789012345678901234567890123456789", 100);
     }
 
     @Test
@@ -65,7 +64,7 @@ public class MessageChunkingTestCase extends FunctionalTestCase
         final AtomicInteger messagePartsCount = new AtomicInteger(0);
         final Latch chunkingReceiverLatch = new Latch();
         final SimpleSerializableObject simpleSerializableObject = new SimpleSerializableObject("Test String",
-            true, 99);
+                true, 99);
 
         // find number of chunks
         final int parts = (int) Math.ceil((SerializationUtils.serialize(simpleSerializableObject).length / (double) 2));
@@ -81,8 +80,8 @@ public class MessageChunkingTestCase extends FunctionalTestCase
                 assertEquals("ChunkingObjectReceiver", notification.getResourceIdentifier());
                 // Test that we have received all chunks in the correct order
                 Object reply = ((FunctionalTestNotification) notification).getEventContext()
-                    .getMessage()
-                    .getPayload();
+                                                                          .getMessage()
+                                                                          .getPayload();
                 // Check if Object is of Correct Type
                 assertTrue(reply instanceof SimpleSerializableObject);
                 SimpleSerializableObject replySimpleSerializableObject = (SimpleSerializableObject) reply;

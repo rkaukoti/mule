@@ -24,7 +24,7 @@ public class ArtistArray
 
     public List<Artist> getItem()
     {
-        if(item == null)
+        if (item == null)
         {
             item = new ArrayList<Artist>();
         }

@@ -51,7 +51,8 @@ public class SubTypesConnectionProvider implements ConnectionProvider<SubTypesCo
     }
 
     @Override
-    public ConnectionHandlingStrategy<SubTypesConnectorConnection> getHandlingStrategy(ConnectionHandlingStrategyFactory<SubTypesConnectorConnection> handlingStrategyFactory)
+    public ConnectionHandlingStrategy<SubTypesConnectorConnection> getHandlingStrategy(
+            ConnectionHandlingStrategyFactory<SubTypesConnectorConnection> handlingStrategyFactory)
     {
         return handlingStrategyFactory.supportsPooling();
     }

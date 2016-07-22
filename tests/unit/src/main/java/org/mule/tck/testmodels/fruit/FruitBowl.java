@@ -6,14 +6,14 @@
  */
 package org.mule.tck.testmodels.fruit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class FruitBowl
 {
@@ -62,20 +62,25 @@ public class FruitBowl
     {
         bowl.put(Apple.class, apple);
         bowl.put(Banana.class, banana);
-        return new Fruit[]{apple, banana};
+        return new Fruit[] {apple, banana};
     }
 
     public Fruit[] addBananaAndApple(Banana banana, Apple apple)
     {
         bowl.put(Apple.class, apple);
         bowl.put(Banana.class, banana);
-        return new Fruit[]{banana, apple};
+        return new Fruit[] {banana, apple};
 
     }
 
     public List<Fruit> getFruit()
     {
         return new ArrayList<Fruit>(bowl.values());
+    }
+
+    public void setFruit(List<Fruit> fruit)
+    {
+        this.setFruit(fruit.toArray(new Fruit[fruit.size()]));
     }
 
     public Object consumeFruit(FruitLover fruitlover)
@@ -94,11 +99,6 @@ public class FruitBowl
         {
             bowl.put(fruit[i].getClass(), fruit[i]);
         }
-    }
-
-    public void setFruit(List<Fruit> fruit)
-    {
-        this.setFruit(fruit.toArray(new Fruit[fruit.size()]));
     }
 
     public Apple getApple()

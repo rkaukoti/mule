@@ -6,10 +6,7 @@
  */
 package org.mule.test.spring.config;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.mule.common.MuleArtifact;
 import org.mule.common.MuleArtifactFactoryException;
 import org.mule.common.TestResult;
@@ -18,18 +15,27 @@ import org.mule.common.config.XmlConfigurationCallback;
 import org.mule.common.config.XmlConfigurationMuleArtifactFactory;
 import org.mule.common.metadata.OperationMetaDataEnabled;
 import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import java.util.Map;
 import java.util.ServiceLoader;
 
-import org.custommonkey.xmlunit.XMLUnit;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 
 public abstract class XmlConfigurationMuleArtifactFactoryTestCase extends AbstractMuleTestCase
 {
 
-    protected void doTestMessageProcessorArtifactRetrieval(Document document, XmlConfigurationCallback callback) throws MuleArtifactFactoryException
+    protected static XmlConfigurationMuleArtifactFactory lookupArtifact()
+    {
+        return ServiceLoader.load(XmlConfigurationMuleArtifactFactory.class).iterator().next();
+    }
+
+    protected void doTestMessageProcessorArtifactRetrieval(Document document, XmlConfigurationCallback callback)
+            throws MuleArtifactFactoryException
     {
         XmlConfigurationMuleArtifactFactory factory = lookupArtifact();
         MuleArtifact artifact = null;
@@ -49,7 +55,8 @@ public abstract class XmlConfigurationMuleArtifactFactoryTestCase extends Abstra
         }
     }
 
-    protected void doTestMessageProcessorCapabilities(Document document, XmlConfigurationCallback callback) throws MuleArtifactFactoryException
+    protected void doTestMessageProcessorCapabilities(Document document, XmlConfigurationCallback callback)
+            throws MuleArtifactFactoryException
     {
         doTestMessageProcessor(document, callback, null);
     }
@@ -122,11 +129,6 @@ public abstract class XmlConfigurationMuleArtifactFactoryTestCase extends Abstra
 
     }
 
-    protected static XmlConfigurationMuleArtifactFactory lookupArtifact()
-    {
-        return ServiceLoader.load(XmlConfigurationMuleArtifactFactory.class).iterator().next();
-    }
-
     protected static class MapXmlConfigurationCallback implements XmlConfigurationCallback
     {
         private Map<String, String> refNameToXml;
@@ -144,7 +146,8 @@ public abstract class XmlConfigurationMuleArtifactFactoryTestCase extends Abstra
         }
 
         @Override
-        public Element getGlobalElement(String globalElementName) {
+        public Element getGlobalElement(String globalElementName)
+        {
             if (refNameToXml != null)
             {
                 String xml = refNameToXml.get(globalElementName);

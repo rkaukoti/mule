@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.core.el.datetime;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import junit.framework.Assert;
 
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
@@ -24,9 +24,8 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import junit.framework.Assert;
-
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @SmallTest
 public class DateTimeDateTestCase extends AbstractMuleTestCase
@@ -186,7 +185,7 @@ public class DateTimeDateTestCase extends AbstractMuleTestCase
     public void fromXMLCalendar() throws DatatypeConfigurationException
     {
         XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(
-            new GregorianCalendar());
+                new GregorianCalendar());
         xmlCal.setYear(1900);
         xmlCal.setMonth(1);
         xmlCal.setDay(1);

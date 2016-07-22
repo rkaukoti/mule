@@ -6,14 +6,9 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -23,9 +18,14 @@ import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class SetPayloadTransformerTestCase extends AbstractMuleTestCase
@@ -52,7 +52,7 @@ public class SetPayloadTransformerTestCase extends AbstractMuleTestCase
         when(mockMuleEvent.getMessage()).thenReturn(mockMuleMessage);
         when(mockMuleContext.getExpressionManager()).thenReturn(mockExpressionManager);
         Mockito.when(mockExpressionManager.parse(anyString(), Mockito.any(MuleEvent.class))).thenAnswer(
-            invocation -> (String) invocation.getArguments()[0]);
+                invocation -> (String) invocation.getArguments()[0]);
     }
 
     @Test

@@ -14,7 +14,6 @@ import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.lifecycle.Callable;
 import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.runtime.core.util.StringMessageUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,14 +33,24 @@ import org.slf4j.LoggerFactory;
 
 public class NoTransformFunctionalTestComponent implements Callable
 {
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
     public static final int STREAM_SAMPLE_SIZE = 4;
     public static final int STREAM_BUFFER_SIZE = 4096;
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
     private EventCallback eventCallback;
     private Object returnMessage = null;
     private boolean appendComponentName = false;
     private boolean throwException = false;
+
+    /**
+     * Append " Received" to contents.  Exposed as static method so tests can call to
+     * construct string for comparison.
+     *
+     * @return Extended message
+     */
+    public static String received(String contents)
+    {
+        return contents + " Received";
+    }
 
     /**
      * {@inheritDoc}
@@ -51,8 +60,8 @@ public class NoTransformFunctionalTestComponent implements Callable
     {
         String contents = context.getMessageAsString();
         String msg = StringMessageUtils.getBoilerPlate("Message Received in service: "
-                + context.getFlowConstruct().getName() + ". Content is: "
-                + StringMessageUtils.truncate(contents, 100, true), '*', 80);
+                                                       + context.getFlowConstruct().getName() + ". Content is: "
+                                                       + StringMessageUtils.truncate(contents, 100, true), '*', 80);
 
         logger.info(msg);
 
@@ -83,22 +92,8 @@ public class NoTransformFunctionalTestComponent implements Callable
     }
 
     /**
-     * Append " Received" to contents.  Exposed as static method so tests can call to
-     * construct string for comparison.
-     *
-     * @param contents
-     * @return Extended message
-     */
-    public static String received(String contents)
-    {
-        return contents + " Received";
-    }
-
-    /**
      * @param data the event data received
      * @return the processed message
-     * @throws Exception
-     *
      * @deprecated Not sure why we have this duplicate method here. Need to investigate...
      */
     @Deprecated
@@ -108,8 +103,8 @@ public class NoTransformFunctionalTestComponent implements Callable
 
         String contents = data.toString();
         String msg = StringMessageUtils.getBoilerPlate("Message Received in service: "
-                + context.getFlowConstruct().getName() + ". Content is: "
-                + StringMessageUtils.truncate(contents, 100, true), '*', 80);
+                                                       + context.getFlowConstruct().getName() + ". Content is: "
+                                                       + StringMessageUtils.truncate(contents, 100, true), '*', 80);
 
         logger.info(msg);
 
@@ -133,9 +128,9 @@ public class NoTransformFunctionalTestComponent implements Callable
 
         if (throwException)
         {
-            if(returnMessage!=null && returnMessage instanceof Exception)
+            if (returnMessage != null && returnMessage instanceof Exception)
             {
-                throw (Exception)returnMessage;
+                throw (Exception) returnMessage;
             }
             else
             {
@@ -212,9 +207,8 @@ public class NoTransformFunctionalTestComponent implements Callable
      * Sometimes you will want the service to always throw an exception, if this is the case you can
      * set the 'throwException' property to true.
      *
-     * @return throwException true if an exception should always be thrown from this instance.
-     *         If the {@link #returnMessage} property is set and is of type
-     *         java.lang.Exception, that exception will be thrown.
+     * @return throwException true if an exception should always be thrown from this instance. If the {@link #returnMessage} property is set
+     * and is of type java.lang.Exception, that exception will be thrown.
      */
     public boolean isThrowException()
     {
@@ -225,9 +219,8 @@ public class NoTransformFunctionalTestComponent implements Callable
      * Sometimes you will want the service to always throw an exception, if this is the case you can
      * set the 'throwException' property to true.
      *
-     * @param throwException true if an exception should always be thrown from this instance.
-     *                       If the {@link #returnMessage} property is set and is of type
-     *                       java.lang.Exception, that exception will be thrown.
+     * @param throwException true if an exception should always be thrown from this instance. If the {@link #returnMessage} property is set
+     *                       and is of type java.lang.Exception, that exception will be thrown.
      */
     public void setThrowException(boolean throwException)
     {

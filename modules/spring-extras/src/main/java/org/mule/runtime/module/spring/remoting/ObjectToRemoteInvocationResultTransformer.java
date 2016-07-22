@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.module.spring.remoting;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.transformer.AbstractTransformer;
+import org.springframework.remoting.support.RemoteInvocationResult;
 
 import java.io.ObjectOutputStream;
 import java.nio.charset.Charset;
-
-import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.springframework.remoting.support.RemoteInvocationResult;
 
 /**
  * Converts an Object to a Spring RemoteInvocationResult and then into a byte[].
@@ -42,7 +41,7 @@ public class ObjectToRemoteInvocationResultTransformer extends AbstractTransform
 
             if (src instanceof RemoteInvocationResult)
             {
-                rval = (RemoteInvocationResult)src;
+                rval = (RemoteInvocationResult) src;
             }
             else
             {

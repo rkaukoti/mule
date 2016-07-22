@@ -20,9 +20,8 @@ import java.util.List;
 public class IdentifiableCustomRouteResolver implements IdentifiableDynamicRouteResolver
 {
 
-    private final String ID_EXPRESSION = "#[flowVars['id']]";
-
     static List<MessageProcessor> routes = new ArrayList<>();
+    private final String ID_EXPRESSION = "#[flowVars['id']]";
 
     @Override
     public List<MessageProcessor> resolveRoutes(MuleEvent event)

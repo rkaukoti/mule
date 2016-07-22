@@ -14,15 +14,15 @@ import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.config.i18n.MessageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * A redelivery handler which relies on JMS provider's redelivery count facilities.
+ *
  * @see org.mule.compatibility.transport.jms.JmsConstants#JMS_X_DELIVERY_COUNT
  */
 public class JmsXRedeliveryHandler extends AbstractRedeliveryHandler
@@ -37,13 +37,12 @@ public class JmsXRedeliveryHandler extends AbstractRedeliveryHandler
      * message, it should be returned. Otherwise the connector should throw a
      * <code>EndpointMessageRedeliveredException</code> to indicate that the message should
      * be handled by the connector Exception Handler.
-     * 
      */
     @Override
     public void handleRedelivery(Message message, InboundEndpoint endpoint, FlowConstruct flow) throws JMSException, MuleException
     {
         final int connectorRedelivery = connector.getMaxRedelivery();
-        if (connectorRedelivery == JmsConnector.REDELIVERY_IGNORE || connectorRedelivery < 0 ) // just in case, for manual setting)
+        if (connectorRedelivery == JmsConnector.REDELIVERY_IGNORE || connectorRedelivery < 0) // just in case, for manual setting)
         {
             if (logger.isDebugEnabled())
             {

@@ -6,10 +6,7 @@
  */
 package org.mule.test.components;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.Startable;
@@ -17,7 +14,9 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.source.MessageSource;
 import org.mule.runtime.core.construct.Flow;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class FlowStateTestCase extends FunctionalTestCase
 {
@@ -42,7 +41,7 @@ public class FlowStateTestCase extends FunctionalTestCase
     protected void doTestStarted(String flowName) throws Exception
     {
         Flow flow = (Flow) muleContext.getRegistry().lookupFlowConstruct(
-            flowName + "Flow");
+                flowName + "Flow");
         // Flow initially started
         assertTrue(flow.isStarted());
         assertFalse(flow.isStopped());
@@ -53,7 +52,7 @@ public class FlowStateTestCase extends FunctionalTestCase
     public void testInitialStateStopped() throws Exception
     {
         Flow flow = (Flow) muleContext.getRegistry().lookupFlowConstruct(
-            "stoppedFlow");
+                "stoppedFlow");
         assertEquals("stopped", flow.getInitialState());
         // Flow initially stopped
         assertFalse(flow.isStarted());

@@ -15,7 +15,7 @@ import org.mule.runtime.core.api.lifecycle.LifecycleUtils;
 import org.mule.runtime.core.api.security.SecurityFilter;
 
 /**
- * Filters the flow using the specified {@link SecurityFilter}. 
+ * Filters the flow using the specified {@link SecurityFilter}.
  * If unauthorised the flow is stopped and therefore the
  * message is not send or dispatched by the transport. When unauthorised the request
  * message is returned as the response.
@@ -26,6 +26,7 @@ public class SecurityFilterMessageProcessor extends AbstractInterceptingMessageP
 
     /**
      * For IoC only
+     *
      * @deprecated Use SecurityFilterMessageProcessor(SecurityFilter filter) instead
      */
     @Deprecated
@@ -34,20 +35,25 @@ public class SecurityFilterMessageProcessor extends AbstractInterceptingMessageP
         super();
     }
 
+    public SecurityFilterMessageProcessor(SecurityFilter filter)
+    {
+        this.filter = filter;
+    }
+
     @Override
     public void initialise() throws InitialisationException
     {
         LifecycleUtils.initialiseIfNeeded(filter, muleContext);
     }
 
-    public SecurityFilterMessageProcessor(SecurityFilter filter)
-    {
-        this.filter = filter;
-    }
-
     public SecurityFilter getFilter()
     {
         return filter;
+    }
+
+    public void setFilter(SecurityFilter filter)
+    {
+        this.filter = filter;
     }
 
     @Override
@@ -58,11 +64,6 @@ public class SecurityFilterMessageProcessor extends AbstractInterceptingMessageP
             filter.doFilter(event);
         }
         return processNext(event);
-    }
-
-    public void setFilter(SecurityFilter filter)
-    {
-        this.filter = filter;
     }
 
 }

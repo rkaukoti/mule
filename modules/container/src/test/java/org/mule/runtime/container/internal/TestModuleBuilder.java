@@ -7,12 +7,12 @@
 
 package org.mule.runtime.container.internal;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Builds instances of {@link MuleModule}.

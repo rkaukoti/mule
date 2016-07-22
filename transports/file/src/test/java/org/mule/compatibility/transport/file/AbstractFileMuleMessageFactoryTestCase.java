@@ -6,18 +6,17 @@
  */
 package org.mule.compatibility.transport.file;
 
+import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 import org.mule.compatibility.core.transport.AbstractMuleMessageFactoryTestCase;
 
 import java.io.File;
-
-import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
 
 public abstract class AbstractFileMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTestCase
 {
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder();
-    
+
     protected File tempFile;
 
     @Override
@@ -26,7 +25,7 @@ public abstract class AbstractFileMuleMessageFactoryTestCase extends AbstractMul
         super.doSetUp();
         tempFile = tempFolder.newFile("simple.mule");
     }
-    
+
     @Override
     protected Object getValidTransportMessage()
     {

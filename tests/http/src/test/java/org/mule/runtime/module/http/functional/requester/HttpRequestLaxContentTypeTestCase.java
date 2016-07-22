@@ -7,20 +7,19 @@
 
 package org.mule.runtime.module.http.functional.requester;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.api.client.MuleClient;
+import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
+import org.mule.tck.junit4.rule.DynamicPort;
+
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
-
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.client.MuleClient;
-import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-
-import org.junit.Rule;
-import org.junit.Test;
 
 public class HttpRequestLaxContentTypeTestCase extends AbstractHttpTestCase
 {

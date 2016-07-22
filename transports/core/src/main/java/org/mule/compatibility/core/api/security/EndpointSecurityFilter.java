@@ -17,7 +17,7 @@ import org.mule.runtime.core.api.security.AuthenticationFilter;
 @Deprecated
 public interface EndpointSecurityFilter extends AuthenticationFilter, EndpointAware
 {
-    void setEndpoint(ImmutableEndpoint endpoint);
-
     ImmutableEndpoint getEndpoint();
+
+    void setEndpoint(ImmutableEndpoint endpoint);
 }

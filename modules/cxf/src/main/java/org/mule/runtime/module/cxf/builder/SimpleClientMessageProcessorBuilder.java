@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.module.cxf.builder;
 
-import org.mule.runtime.core.api.lifecycle.CreateException;
-import org.mule.runtime.module.cxf.support.CxfUtils;
-
 import org.apache.cxf.aegis.databinding.AegisDatabinding;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.frontend.ClientFactoryBean;
+import org.mule.runtime.core.api.lifecycle.CreateException;
+import org.mule.runtime.module.cxf.support.CxfUtils;
 
 public class SimpleClientMessageProcessorBuilder extends AbstractClientMessageProcessorBuilder
 {
@@ -20,11 +19,11 @@ public class SimpleClientMessageProcessorBuilder extends AbstractClientMessagePr
     {
         ClientFactoryBean cpf = new ClientFactoryBean();
         cpf.setServiceClass(serviceClass);
-        if (databinding == null) 
+        if (databinding == null)
         {
             cpf.setDataBinding(new AegisDatabinding());
         }
-        else 
+        else
         {
             cpf.setDataBinding(databinding);
         }
@@ -38,7 +37,7 @@ public class SimpleClientMessageProcessorBuilder extends AbstractClientMessagePr
         }
 
         // If there's a soapVersion defined then the corresponding bindingId will be set
-        if(soapVersion != null)
+        if (soapVersion != null)
         {
             cpf.setBindingId(CxfUtils.getBindingIdForSoapVersion(soapVersion));
         }

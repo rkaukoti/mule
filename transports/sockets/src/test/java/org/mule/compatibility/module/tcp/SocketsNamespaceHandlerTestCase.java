@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.module.tcp;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.compatibility.transport.socket.api.TcpClientSocketProperties;
 import org.mule.compatibility.transport.socket.api.TcpServerSocketProperties;
 import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertThat;
 
 public class SocketsNamespaceHandlerTestCase extends FunctionalTestCase
 {

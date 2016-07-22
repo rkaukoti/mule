@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.core;
 
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-import org.mule.runtime.core.util.UUID;
-
 import org.databene.contiperf.PerfTest;
 import org.databene.contiperf.junit.ContiPerfRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.util.UUID;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UUIDPerformanceTestCase extends AbstractMuleContextTestCase

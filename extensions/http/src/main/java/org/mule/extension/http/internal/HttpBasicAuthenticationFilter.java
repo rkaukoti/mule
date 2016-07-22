@@ -6,13 +6,8 @@
  */
 package org.mule.extension.http.internal;
 
-import static com.google.common.net.HttpHeaders.AUTHORIZATION;
-import static com.google.common.net.HttpHeaders.WWW_AUTHENTICATE;
-import static org.apache.commons.codec.binary.Base64.decodeBase64;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.UNAUTHORIZED;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.mule.extension.http.api.HttpRequestAttributes;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -33,8 +28,12 @@ import org.mule.runtime.core.security.MuleCredentials;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import static com.google.common.net.HttpHeaders.AUTHORIZATION;
+import static com.google.common.net.HttpHeaders.WWW_AUTHENTICATE;
+import static org.apache.commons.codec.binary.Base64.decodeBase64;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.UNAUTHORIZED;
 
 /**
  * Filter for basic authentication over an HTTP request
@@ -43,12 +42,10 @@ public class HttpBasicAuthenticationFilter extends AbstractAuthenticationFilter
 {
 
     protected static final Log logger = LogFactory.getLog(HttpBasicAuthenticationFilter.class);
-
-    private String realm;
-
-    private boolean realmRequired = true;
     private final String headersFlowVar;
     private final String statusCodeFlowVar;
+    private String realm;
+    private boolean realmRequired = true;
 
     /**
      * Creates a filter based on the HTTP listener error response builder status code and headers configuration.
@@ -130,9 +127,12 @@ public class HttpBasicAuthenticationFilter extends AbstractAuthenticationFilter
      * @throws SecurityException if authentication fails
      */
     @Override
-    public void authenticate(MuleEvent event) throws SecurityException, UnknownAuthenticationTypeException, CryptoFailureException, SecurityProviderNotFoundException, EncryptionStrategyNotFoundException, InitialisationException
+    public void authenticate(MuleEvent event)
+            throws SecurityException, UnknownAuthenticationTypeException, CryptoFailureException, SecurityProviderNotFoundException,
+            EncryptionStrategyNotFoundException, InitialisationException
     {
-        checkArgument(event.getMessage().getAttributes() instanceof HttpRequestAttributes, "Message attributes must be HttpRequestAttributes.");
+        checkArgument(event.getMessage().getAttributes() instanceof HttpRequestAttributes,
+                "Message attributes must be HttpRequestAttributes.");
         String header = ((HttpRequestAttributes) event.getMessage().getAttributes()).getHeaders().get(AUTHORIZATION.toLowerCase());
 
         if (logger.isDebugEnabled())
@@ -189,7 +189,8 @@ public class HttpBasicAuthenticationFilter extends AbstractAuthenticationFilter
         else
         {
             setUnauthenticated(event);
-            throw new UnsupportedAuthenticationSchemeException(createStaticMessage("Http Basic filter doesn't know how to handle header " + header), event);
+            throw new UnsupportedAuthenticationSchemeException(
+                    createStaticMessage("Http Basic filter doesn't know how to handle header " + header), event);
         }
     }
 }

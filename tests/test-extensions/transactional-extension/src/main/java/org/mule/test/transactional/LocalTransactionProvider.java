@@ -6,12 +6,13 @@
  */
 package org.mule.test.transactional;
 
-import static org.mule.runtime.api.connection.ConnectionValidationResult.success;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionHandlingStrategy;
 import org.mule.runtime.api.connection.ConnectionHandlingStrategyFactory;
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.api.connection.ConnectionValidationResult;
+
+import static org.mule.runtime.api.connection.ConnectionValidationResult.success;
 
 public class LocalTransactionProvider implements ConnectionProvider<TestTransactionalConnection>
 {
@@ -35,7 +36,8 @@ public class LocalTransactionProvider implements ConnectionProvider<TestTransact
     }
 
     @Override
-    public ConnectionHandlingStrategy<TestTransactionalConnection> getHandlingStrategy(ConnectionHandlingStrategyFactory<TestTransactionalConnection> handlingStrategyFactory)
+    public ConnectionHandlingStrategy<TestTransactionalConnection> getHandlingStrategy(
+            ConnectionHandlingStrategyFactory<TestTransactionalConnection> handlingStrategyFactory)
     {
         return handlingStrategyFactory.cached();
     }

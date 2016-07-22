@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://consumer.ws.module.runtime.mule.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="TestService" targetNamespace="http://consumer.ws.module.runtime.mule.org/">
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://consumer.ws.module.runtime.mule.org/"
+                  name="TestService" targetNamespace="http://consumer.ws.module.runtime.mule.org/">
 
     <!--
     This WSDL contains the type definitions for the TestService, and imports the schema from a separate file "TestSchema.xsd".

@@ -25,11 +25,11 @@ public interface TestReconnectionConnectionFactoryWrapper extends ConnectionFact
 
     public abstract Object getTargetObject();
 
+    public abstract boolean isEnabled();
+
     public abstract void setEnabled(boolean enabled);
 
-    public abstract boolean isEnabled();
-    
     public abstract List getCalledMethods();
-    
+
     public abstract void closeConnection();
 }

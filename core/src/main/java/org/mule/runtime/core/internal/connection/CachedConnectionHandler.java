@@ -6,20 +6,20 @@
  */
 package org.mule.runtime.core.internal.connection;
 
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.assertNotStopping;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionExceptionCode;
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.api.connection.ConnectionValidationResult;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.assertNotStopping;
 
 /**
  * A {@link ConnectionHandlerAdapter} which always returns the same connection (therefore cached),
@@ -152,13 +152,17 @@ final class CachedConnectionHandler<Connection> implements ConnectionHandlerAdap
         }
         catch (Exception e)
         {
-            validationResult = ConnectionValidationResult.failure("Error validating connection. Unexpected exception was thrown by the extension when validating the connection", ConnectionExceptionCode.UNKNOWN, e);
+            validationResult = ConnectionValidationResult.failure(
+                    "Error validating connection. Unexpected exception was thrown by the extension when validating the connection",
+                    ConnectionExceptionCode.UNKNOWN, e);
         }
 
         if (validationResult == null)
         {
-            String errorMessage = "Error validating connection. validate() method from the connection provider can not return a null ConnectionValidationResult";
-            validationResult = ConnectionValidationResult.failure(errorMessage, ConnectionExceptionCode.UNKNOWN, new ConnectionException(errorMessage));
+            String errorMessage =
+                    "Error validating connection. validate() method from the connection provider can not return a null ConnectionValidationResult";
+            validationResult = ConnectionValidationResult.failure(errorMessage, ConnectionExceptionCode.UNKNOWN,
+                    new ConnectionException(errorMessage));
         }
 
         return validationResult;

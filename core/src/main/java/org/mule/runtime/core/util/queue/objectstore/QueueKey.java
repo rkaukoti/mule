@@ -53,20 +53,27 @@ public class QueueKey implements Serializable
     @Override
     public boolean equals(Object obj)
     {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
-        QueueKey other = (QueueKey)obj;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        QueueKey other = (QueueKey) obj;
         if (id == null)
         {
-            if (other.id != null) return false;
+            if (other.id != null)
+                return false;
         }
-        else if (!id.equals(other.id)) return false;
+        else if (!id.equals(other.id))
+            return false;
         if (queueName == null)
         {
-            if (other.queueName != null) return false;
+            if (other.queueName != null)
+                return false;
         }
-        else if (!queueName.equals(other.queueName)) return false;
+        else if (!queueName.equals(other.queueName))
+            return false;
         return true;
     }
 }

@@ -6,17 +6,16 @@
  */
 package org.mule.test.infrastructure.process.rules;
 
+import org.junit.rules.ExternalResource;
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
 import org.mule.runtime.core.util.FileUtils;
 import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.tck.junit4.rule.SystemProperty;
 import org.mule.test.infrastructure.server.ftp.EmbeddedFtpServer;
 
 import java.io.File;
-
-import org.junit.rules.ExternalResource;
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 
 /**
  * A {@link TestRule} which starts an {@link EmbeddedFtpServer}.
@@ -29,8 +28,8 @@ import org.junit.runners.model.Statement;
 public class FtpServer extends ExternalResource
 {
 
-    private final File baseDir;
     protected final DynamicPort dynamicPort;
+    private final File baseDir;
     private final SystemProperty dynamicPortSystemProperty;
 
     private EmbeddedFtpServer server = null;

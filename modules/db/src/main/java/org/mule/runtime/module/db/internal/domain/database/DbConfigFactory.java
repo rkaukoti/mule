@@ -21,8 +21,7 @@ public interface DbConfigFactory
     /**
      * Creates a {@link DbConfig} to access a given {@link DataSource}
      *
-     * @param name name of the config
-     * @param annotations 
+     * @param name       name of the config
      * @param dataSource dataSource to access from the created DbConfig
      * @return a non null DbConfig
      */

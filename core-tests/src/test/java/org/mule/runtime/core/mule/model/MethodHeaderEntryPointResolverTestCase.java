@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.core.mule.model;
 
-import static java.util.Collections.singletonMap;
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleEventContext;
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.MuleMessage;
@@ -20,7 +19,8 @@ import org.mule.tck.testmodels.fruit.Fruit;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.junit.Test;
+import static java.util.Collections.singletonMap;
+import static org.junit.Assert.assertEquals;
 
 public class MethodHeaderEntryPointResolverTestCase extends AbstractMuleContextTestCase
 {
@@ -121,7 +121,8 @@ public class MethodHeaderEntryPointResolverTestCase extends AbstractMuleContextT
 
     private MuleEventContext createMuleEventContext(Object payload, Map<String, Serializable> inboundProperties) throws Exception
     {
-        return new DefaultMuleEventContext(getTestEvent(MuleMessage.builder().payload(payload).inboundProperties(inboundProperties).build()));
+        return new DefaultMuleEventContext(
+                getTestEvent(MuleMessage.builder().payload(payload).inboundProperties(inboundProperties).build()));
     }
 
     public static class TestFruitCleaner

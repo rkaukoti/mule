@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.mockClassLoaderModelProperty;
+import com.google.common.collect.ImmutableList;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.extension.api.runtime.ExpirationPolicy;
@@ -24,18 +24,18 @@ import org.mule.tck.size.SmallTest;
 import org.mule.test.heisenberg.extension.HeisenbergConnectionProvider;
 import org.mule.test.heisenberg.extension.HeisenbergExtension;
 
-import com.google.common.collect.ImmutableList;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.mockClassLoaderModelProperty;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -80,11 +80,12 @@ public class StaticConfigurationProviderTestCase extends AbstractConfigurationPr
         when(resolverSet.getResolvers()).thenReturn(parameters);
         when(resolverSet.isDynamic()).thenReturn(false);
 
-        provider = (LifecycleAwareConfigurationProvider) new DefaultConfigurationProviderFactory().createStaticConfigurationProvider(CONFIG_NAME,
-                                                                                                                                     configurationModel,
-                                                                                                                                     resolverSet,
-                                                                                                                                     new StaticValueResolver<>(connectionProvider),
-                                                                                                                                     muleContext);
+        provider = (LifecycleAwareConfigurationProvider) new DefaultConfigurationProviderFactory().createStaticConfigurationProvider(
+                CONFIG_NAME,
+                configurationModel,
+                resolverSet,
+                new StaticValueResolver<>(connectionProvider),
+                muleContext);
         super.before();
     }
 

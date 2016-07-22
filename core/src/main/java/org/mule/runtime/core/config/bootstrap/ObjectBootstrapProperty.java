@@ -7,8 +7,9 @@
 
 package org.mule.runtime.core.config.bootstrap;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.core.util.StringUtils;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Defines a bootstrap property for a generic object
@@ -24,8 +25,8 @@ public class ObjectBootstrapProperty extends AbstractBootstrapProperty
      *
      * @param service      service that provides the property. Not null.
      * @param artifactType defines what is the artifact this bootstrap object applies to
-     * @param optional     indicates whether or not the bootstrap object is optional. When a bootstrap
-     *                     object is optional, any error creating it will be ignored.
+     * @param optional     indicates whether or not the bootstrap object is optional. When a bootstrap object is optional, any error
+     *                     creating it will be ignored.
      * @param key          key used to register the object. Not empty.
      * @param className    className of the bootstrapped object. Not empty.
      */

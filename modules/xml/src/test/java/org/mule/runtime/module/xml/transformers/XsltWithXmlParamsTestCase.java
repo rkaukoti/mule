@@ -6,20 +6,20 @@
  */
 package org.mule.runtime.module.xml.transformers;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.runtime.module.xml.util.XMLTestUtils;
-
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.module.xml.util.XMLTestUtils;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class XsltWithXmlParamsTestCase extends FunctionalTestCase
 {
 
-    private static final String EXPECTED = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><result><body><just>testing</just></body><fromParam>value element</fromParam></result>";
+    private static final String EXPECTED =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><result><body><just>testing</just></body><fromParam>value element</fromParam></result>";
 
     @Override
     protected String getConfigFile()

@@ -6,11 +6,10 @@
  */
 package org.mule.extension.socket;
 
+import org.junit.Test;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.tck.probe.JUnitLambdaProbe;
 import org.mule.tck.probe.PollingProber;
-
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,12 +26,14 @@ public class SocketListenerTestCase extends ParameterizedProtocolTestCase
     @Test
     public void stopAndRestart() throws Exception
     {
-        muleContext.getRegistry().lookupObjects(Flow.class).forEach(flow -> {
+        muleContext.getRegistry().lookupObjects(Flow.class).forEach(flow ->
+        {
             try
             {
                 flow.stop();
                 PollingProber prober = new PollingProber(100, 5000);
-                prober.check(new JUnitLambdaProbe(() -> {
+                prober.check(new JUnitLambdaProbe(() ->
+                {
                     try
                     {
                         flow.start();

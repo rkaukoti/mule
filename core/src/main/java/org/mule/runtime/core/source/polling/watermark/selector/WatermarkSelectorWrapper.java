@@ -11,12 +11,11 @@ import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.source.polling.watermark.WatermarkUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.NotSerializableException;
 import java.io.Serializable;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class WatermarkSelectorWrapper extends WatermarkSelector
 {
@@ -48,9 +47,9 @@ public class WatermarkSelectorWrapper extends WatermarkSelector
         catch (NotSerializableException e)
         {
             logger.warn(
-                String.format(
-                    "Watermark selector expression '%s' did not resolved to a Serializable value. Value will be ignored",
-                    this.selectorExpression), e);
+                    String.format(
+                            "Watermark selector expression '%s' did not resolved to a Serializable value. Value will be ignored",
+                            this.selectorExpression), e);
         }
     }
 

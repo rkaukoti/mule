@@ -6,9 +6,7 @@
  */
 package org.mule.functional.junit4;
 
-import static java.util.Collections.emptyMap;
-import static org.junit.Assert.fail;
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
+import org.junit.After;
 import org.mule.functional.functional.FlowAssert;
 import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.runtime.config.spring.SpringXmlConfigurationBuilder;
@@ -36,7 +34,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 
-import org.junit.After;
+import static java.util.Collections.emptyMap;
+import static org.junit.Assert.fail;
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 
 /**
  * A base test case for tests that initialize Mule using a configuration file. The
@@ -62,7 +62,6 @@ public abstract class FunctionalTestCase extends AbstractMuleContextTestCase
     }
 
     /**
-     * @return
      * @deprecated use getConfigFile instead.
      */
     @Deprecated
@@ -85,7 +84,8 @@ public abstract class FunctionalTestCase extends AbstractMuleContextTestCase
         {
             if (configResources.contains(","))
             {
-                throw new RuntimeException("Do not use this method when the config is composed of several files. Use getConfigFiles method instead.");
+                throw new RuntimeException(
+                        "Do not use this method when the config is composed of several files. Use getConfigFiles method instead.");
             }
             return new SpringXmlConfigurationBuilder(configResources, emptyMap(), APP);
         }
@@ -154,17 +154,17 @@ public abstract class FunctionalTestCase extends AbstractMuleContextTestCase
         }
 
         throw new RegistrationException(
-            MessageFactory.createStaticMessage("Can't get component from flow construct "
-                                               + flowConstruct.getName()));
+                MessageFactory.createStaticMessage("Can't get component from flow construct "
+                                                   + flowConstruct.getName()));
     }
 
     /**
      * A convenience method to get a type-safe reference to the FunctionTestComponent
-     * 
+     *
      * @param serviceName service name as declared in the config
      * @return test component
-     * @since 2.2
      * @see FunctionalTestComponent
+     * @since 2.2
      */
     protected FunctionalTestComponent getFunctionalTestComponent(String serviceName) throws Exception
     {
@@ -226,8 +226,7 @@ public abstract class FunctionalTestCase extends AbstractMuleContextTestCase
 
     /**
      * Initializes a builder to construct an event and the running context to run it through a flow.
-     * 
-     * @param flowName
+     *
      * @return the {@link FlowRunner}
      */
     protected FlowRunner flowRunner(String flowName)
@@ -237,10 +236,9 @@ public abstract class FunctionalTestCase extends AbstractMuleContextTestCase
 
     /**
      * Runs the given flow with a default event
-     * 
+     *
      * @param flowName the name of the flow to be executed
      * @return the resulting <code>MuleEvent</code>
-     * @throws Exception
      */
     protected MuleEvent runFlow(String flowName) throws Exception
     {
@@ -249,7 +247,7 @@ public abstract class FunctionalTestCase extends AbstractMuleContextTestCase
 
     /**
      * Retrieve a flow by name from the registry
-     * 
+     *
      * @param name Name of the flow to retrieve
      */
     protected Flow lookupFlowConstruct(String name)
@@ -265,7 +263,8 @@ public abstract class FunctionalTestCase extends AbstractMuleContextTestCase
 
     protected void stopFlowSchedulers(String flowName) throws MuleException
     {
-        final Collection<Scheduler> schedulers = muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers(flowName));
+        final Collection<Scheduler> schedulers =
+                muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers(flowName));
         for (final Scheduler scheduler : schedulers)
         {
             scheduler.stop();
@@ -279,7 +278,8 @@ public abstract class FunctionalTestCase extends AbstractMuleContextTestCase
 
     protected void runSchedulersOnce(String flowConstructName) throws Exception
     {
-        final Collection<Scheduler> schedulers = muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers(flowConstructName));
+        final Collection<Scheduler> schedulers =
+                muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers(flowConstructName));
 
         for (final Scheduler scheduler : schedulers)
         {

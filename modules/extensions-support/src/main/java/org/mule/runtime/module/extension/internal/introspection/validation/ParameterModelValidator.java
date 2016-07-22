@@ -6,15 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
-import static java.lang.String.format;
-import static java.util.Collections.emptyMap;
-import static java.util.stream.Collectors.toList;
-import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
-import static org.mule.runtime.extension.api.introspection.parameter.ParameterModel.RESERVED_NAMES;
-import static org.mule.runtime.extension.api.util.NameUtils.getTopLevelTypeName;
-import static org.mule.runtime.extension.api.util.NameUtils.hyphenize;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.isInstantiable;
-import static org.mule.runtime.module.extension.internal.util.MetadataTypeUtils.getAliasName;
 import org.mule.metadata.api.model.ArrayType;
 import org.mule.metadata.api.model.DictionaryType;
 import org.mule.metadata.api.model.MetadataType;
@@ -39,6 +30,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import static java.lang.String.format;
+import static java.util.Collections.emptyMap;
+import static java.util.stream.Collectors.toList;
+import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
+import static org.mule.runtime.extension.api.introspection.parameter.ParameterModel.RESERVED_NAMES;
+import static org.mule.runtime.extension.api.util.NameUtils.getTopLevelTypeName;
+import static org.mule.runtime.extension.api.util.NameUtils.hyphenize;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.isInstantiable;
+import static org.mule.runtime.module.extension.internal.util.MetadataTypeUtils.getAliasName;
 
 /**
  * Validates that all {@link ParameterModel parameters} provided by the {@link ConfigurationModel configurations},
@@ -98,8 +99,9 @@ public final class ParameterModelValidator implements ModelValidator
                         if (RESERVED_NAMES.contains(fieldName))
                         {
                             throw new IllegalParameterModelDefinitionException(
-                                    String.format("The field named '%s' [%s] from class [%s] cannot have that name since it is a reserved one",
-                                                  fieldName, fieldType.getName(), type.getName()));
+                                    String.format(
+                                            "The field named '%s' [%s] from class [%s] cannot have that name since it is a reserved one",
+                                            fieldName, fieldType.getName(), type.getName()));
                         }
                         else
                         {
@@ -111,7 +113,7 @@ public final class ParameterModelValidator implements ModelValidator
         };
 
         Optional<SubTypesMappingContainer> typesMapping = extensionModel.getModelProperty(SubTypesModelProperty.class)
-                .map(p -> new SubTypesMappingContainer(p.getSubTypesMapping()));
+                                                                        .map(p -> new SubTypesMappingContainer(p.getSubTypesMapping()));
         subTypesMapping = typesMapping.isPresent() ? typesMapping.get() : new SubTypesMappingContainer(emptyMap());
 
 
@@ -126,58 +128,68 @@ public final class ParameterModelValidator implements ModelValidator
                 validateParameter(model, visitor, ownerName, ownerModelType, extensionModelName);
                 validateParameterGroup(model, ownerName, ownerModelType, extensionModelName);
                 validateNameCollisionWithTypes(model, ownerName, ownerModelType, extensionModelName,
-                                               owner.getParameterModels().stream().map(p -> hyphenize(p.getName())).collect(toList()));
+                        owner.getParameterModels().stream().map(p -> hyphenize(p.getName())).collect(toList()));
             }
         }.walk(extensionModel);
     }
 
-    private void validateParameter(ParameterModel parameterModel, MetadataTypeVisitor visitor, String ownerName, String ownerModelType, String extensionName)
+    private void validateParameter(ParameterModel parameterModel, MetadataTypeVisitor visitor, String ownerName, String ownerModelType,
+                                   String extensionName)
     {
         if (RESERVED_NAMES.contains(parameterModel.getName()))
         {
-            throw new IllegalParameterModelDefinitionException(String.format("The parameter in the %s [%s] from the extension [%s] cannot have the name ['%s'] since it is a reserved one", ownerModelType, ownerName, extensionName, parameterModel.getName()));
+            throw new IllegalParameterModelDefinitionException(String.format(
+                    "The parameter in the %s [%s] from the extension [%s] cannot have the name ['%s'] since it is a reserved one",
+                    ownerModelType, ownerName, extensionName, parameterModel.getName()));
         }
 
         if (parameterModel.getType() == null)
         {
-            throw new IllegalParameterModelDefinitionException(String.format("The parameter [%s] in the %s [%s] from the extension [%s] must provide a type", parameterModel.getName(), ownerModelType, ownerName, extensionName));
+            throw new IllegalParameterModelDefinitionException(
+                    String.format("The parameter [%s] in the %s [%s] from the extension [%s] must provide a type", parameterModel.getName(),
+                            ownerModelType, ownerName, extensionName));
         }
 
         if (parameterModel.isRequired() && parameterModel.getDefaultValue() != null)
         {
-            throw new IllegalParameterModelDefinitionException(String.format("The parameter [%s] in the %s [%s] from the extension [%s] is required, and must not provide a default value", parameterModel.getName(), ownerModelType, ownerName, extensionName));
+            throw new IllegalParameterModelDefinitionException(String.format(
+                    "The parameter [%s] in the %s [%s] from the extension [%s] is required, and must not provide a default value",
+                    parameterModel.getName(), ownerModelType, ownerName, extensionName));
         }
 
         parameterModel.getType().accept(visitor);
     }
 
-    private void validateNameCollisionWithTypes(ParameterModel parameterModel, String ownerName, String ownerModelType, String extensionName, List<String> parameterNames)
+    private void validateNameCollisionWithTypes(ParameterModel parameterModel, String ownerName, String ownerModelType,
+                                                String extensionName, List<String> parameterNames)
     {
         Optional<MetadataType> subTypeWithNameCollision = subTypesMapping.getSubTypes(parameterModel.getType()).stream()
-                .filter(subtype -> parameterNames.contains(getTopLevelTypeName(subtype))).findFirst();
+                                                                         .filter(subtype -> parameterNames.contains(
+                                                                                 getTopLevelTypeName(subtype))).findFirst();
         if (subTypeWithNameCollision.isPresent())
         {
             throw new IllegalParameterModelDefinitionException(
-                    String.format("The parameter [%s] in the %s [%s] from the extension [%s] can't have the same name as the ClassName or Alias of the declared subType [%s] for parameter [%s]",
-                                  getTopLevelTypeName(subTypeWithNameCollision.get()), ownerModelType, ownerName, extensionName,
-                                  getType(subTypeWithNameCollision.get()).getSimpleName(), parameterModel.getName()));
+                    String.format(
+                            "The parameter [%s] in the %s [%s] from the extension [%s] can't have the same name as the ClassName or Alias of the declared subType [%s] for parameter [%s]",
+                            getTopLevelTypeName(subTypeWithNameCollision.get()), ownerModelType, ownerName, extensionName,
+                            getType(subTypeWithNameCollision.get()).getSimpleName(), parameterModel.getName()));
         }
     }
 
     private void validateParameterGroup(ParameterModel parameterModel, String ownerName, String ownerModelType, String extensionName)
     {
         parameterModel.getModelProperty(ParameterGroupModelProperty.class)
-                .ifPresent(parameterGroupModelProperty -> parameterGroupModelProperty
-                        .getGroups().stream()
-                        .filter(p -> !isInstantiable(p.getType()))
-                        .findFirst()
-                        .ifPresent(p ->
-                                   {
-                                       throw new IllegalParameterModelDefinitionException(
-                                               format("The parameter group of type '%s' in %s [%s] from the extension [%s] should be non abstract with a default constructor.",
-                                                      p.getType(), ownerModelType, ownerName, extensionName));
-                                   }
-                        ));
+                      .ifPresent(parameterGroupModelProperty -> parameterGroupModelProperty
+                              .getGroups().stream()
+                              .filter(p -> !isInstantiable(p.getType()))
+                              .findFirst()
+                              .ifPresent(p ->
+                                      {
+                                          throw new IllegalParameterModelDefinitionException(
+                                                  format("The parameter group of type '%s' in %s [%s] from the extension [%s] should be non abstract with a default constructor.",
+                                                          p.getType(), ownerModelType, ownerName, extensionName));
+                                      }
+                              ));
     }
 
     private String getComponentModelTypeName(Object component)
@@ -200,7 +212,7 @@ public final class ParameterModelValidator implements ModelValidator
         }
 
         throw new IllegalArgumentException(format("Component '%s' is not an instance of any known model type [%s, %s, %s, %s]",
-                                                  component.toString(),
-                                                  CONFIGURATION, CONNECTION_PROVIDER, OPERATION, SOURCE));
+                component.toString(),
+                CONFIGURATION, CONNECTION_PROVIDER, OPERATION, SOURCE));
     }
 }

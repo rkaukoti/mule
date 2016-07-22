@@ -7,12 +7,12 @@
 
 package org.mule.runtime.module.db.integration.matcher;
 
+import org.hamcrest.Description;
+
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.hamcrest.Description;
 
 public class SupportsReturningStoredProcedureResultsWithoutParameters extends AbstractDataSourceFeatureMatcher
 {
@@ -21,9 +21,9 @@ public class SupportsReturningStoredProcedureResultsWithoutParameters extends Ab
 
     static
     {
-       supportedProducts = new HashSet<String>();
-       supportedProducts.add("MYSQL");
-       supportedProducts.add("APACHE DERBY");
+        supportedProducts = new HashSet<String>();
+        supportedProducts.add("MYSQL");
+        supportedProducts.add("APACHE DERBY");
     }
 
     @Override

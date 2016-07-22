@@ -6,13 +6,13 @@
  */
 package org.mule.test.routing;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 
-import org.junit.Test;
+import static com.google.common.collect.Lists.newArrayList;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class ForeachUntilSuccessfulTestCase extends FunctionalTestCase
 {
@@ -45,7 +45,7 @@ public class ForeachUntilSuccessfulTestCase extends FunctionalTestCase
 
     private MuleEvent runAndAssert(String flowName) throws Exception
     {
-         return runAndAssert(flowName, newArrayList(1, 2, 3));
+        return runAndAssert(flowName, newArrayList(1, 2, 3));
     }
 
     private MuleEvent runAndAssert(String flowName, Object payload) throws Exception

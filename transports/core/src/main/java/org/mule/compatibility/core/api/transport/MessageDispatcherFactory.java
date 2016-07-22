@@ -6,17 +6,16 @@
  */
 package org.mule.compatibility.core.api.transport;
 
+import org.apache.commons.pool.KeyedPoolableObjectFactory;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.runtime.core.api.MuleException;
-
-import org.apache.commons.pool.KeyedPoolableObjectFactory;
 
 /**
  * <code>MessageDispatcherFactory</code> is a factory interface for managing the lifecycles of a transport's message
  * dispatchers. The methods basically implement the {@link KeyedPoolableObjectFactory} lifecycle, with a
  * {@link ImmutableEndpoint} as the key and the dispatcher as pooled object.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -39,10 +38,9 @@ public interface MessageDispatcherFactory
     /**
      * Creates a new message dispatcher instance, initialised with the passed
      * endpoint. The returned instance should be immediately useable.
-     * 
+     *
      * @param endpoint the endoint for which this dispatcher should be created
-     * @return a properly created <code>MessageDispatcher</code> for this
-     *         transport
+     * @return a properly created <code>MessageDispatcher</code> for this transport
      * @throws MuleException if the dispatcher cannot be created
      */
     MessageDispatcher create(OutboundEndpoint endpoint) throws MuleException;
@@ -50,8 +48,8 @@ public interface MessageDispatcherFactory
     /**
      * Invoked <strong>before</strong> the given dispatcher is handed out to a
      * client, but <strong>not</strong> after {@link #create(OutboundEndpoint)}.
-     * 
-     * @param endpoint the endpoint of the dispatcher
+     *
+     * @param endpoint   the endpoint of the dispatcher
      * @param dispatcher the dispatcher to be activated
      * @throws MuleException if the dispatcher cannot be activated
      */
@@ -61,19 +59,18 @@ public interface MessageDispatcherFactory
      * Invoked <strong>after</strong> the dispatcher is returned from a client but
      * <strong>before</strong> it is prepared for return to its pool via
      * {@link #passivate(OutboundEndpoint, MessageDispatcher)}.
-     * 
-     * @param endpoint the endpoint of the dispatcher
+     *
+     * @param endpoint   the endpoint of the dispatcher
      * @param dispatcher the dispatcher to be validated
-     * @return <code>true</code> if the dispatcher is valid for reuse,
-     *         <code>false</code> otherwise.
+     * @return <code>true</code> if the dispatcher is valid for reuse, <code>false</code> otherwise.
      */
     boolean validate(OutboundEndpoint endpoint, MessageDispatcher dispatcher);
 
     /**
      * Invoked immediately <strong>before</strong> the given dispatcher is returned
      * to its pool.
-     * 
-     * @param endpoint the endpoint of the dispatcher
+     *
+     * @param endpoint   the endpoint of the dispatcher
      * @param dispatcher the dispatcher to be passivated
      */
     void passivate(OutboundEndpoint endpoint, MessageDispatcher dispatcher);
@@ -81,8 +78,8 @@ public interface MessageDispatcherFactory
     /**
      * Invoked when a dispatcher returned <code>false</code> for
      * {@link #validate(OutboundEndpoint, MessageDispatcher)}.
-     * 
-     * @param endpoint the endpoint of the dispatcher
+     *
+     * @param endpoint   the endpoint of the dispatcher
      * @param dispatcher the dispatcher to be validated
      */
     void destroy(OutboundEndpoint endpoint, MessageDispatcher dispatcher);

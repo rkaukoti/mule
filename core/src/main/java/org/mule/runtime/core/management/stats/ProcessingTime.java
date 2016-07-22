@@ -28,6 +28,18 @@ public class ProcessingTime implements Serializable
     private FlowConstructStatistics statistics;
 
     /**
+     * Create a Processing Time
+     *
+     * @param stats never null
+     */
+    private ProcessingTime(FlowConstructStatistics stats, MuleContext muleContext)
+    {
+        this.statistics = stats;
+        ProcessingTimeWatcher processorTimeWatcher = muleContext.getProcessorTimeWatcher();
+        processorTimeWatcher.addProcessingTime(this);
+    }
+
+    /**
      * Create a ProcessingTime for the specified MuleSession.
      *
      * @return ProcessingTime if the session has an enabled FlowConstructStatistics or null otherwise
@@ -50,16 +62,12 @@ public class ProcessingTime implements Serializable
     }
 
     /**
-     * Create a Processing Time
-     *
-     * @param stats       never null
-     * @param muleContext
+     * Convert processing time to effective processing time.  If processing took less than a tick, we consider
+     * it to have been one millisecond
      */
-    private ProcessingTime(FlowConstructStatistics stats, MuleContext muleContext)
+    public static long getEffectiveTime(long time)
     {
-        this.statistics = stats;
-        ProcessingTimeWatcher processorTimeWatcher = muleContext.getProcessorTimeWatcher();
-        processorTimeWatcher.addProcessingTime(this);
+        return (time <= 0) ? 1L : time;
     }
 
     /**
@@ -74,15 +82,6 @@ public class ProcessingTime implements Serializable
             long elapsedTime = getEffectiveTime(System.currentTimeMillis() - startTime);
             statistics.addFlowExecutionBranchTime(elapsedTime, accumulator.addAndGet(elapsedTime));
         }
-    }
-
-    /**
-     * Convert processing time to effective processing time.  If processing took less than a tick, we consider
-     * it to have been one millisecond
-     */
-    public static long getEffectiveTime(long time)
-    {
-        return (time <= 0) ? 1L : time;
     }
 
     public FlowConstructStatistics getStatistics()

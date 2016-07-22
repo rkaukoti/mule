@@ -18,17 +18,19 @@ import java.util.Map;
  */
 public class WebsphereJmsConnector extends JmsConnector
 {
-    
+
     public static final String DEFAULT_XA_RECEIVER_CLASS = WebsphereTransactedJmsMessageReceiver.class.getName();
-    
-    /** Constructs a new WebsphereJmsConnector. */
+
+    /**
+     * Constructs a new WebsphereJmsConnector.
+     */
     public WebsphereJmsConnector(MuleContext context)
     {
         super(context);
         if (serviceOverrides == null || serviceOverrides.isEmpty())
         {
             Map overrides = Collections.singletonMap(MuleProperties.CONNECTOR_XA_TRANSACTED_MESSAGE_RECEIVER_CLASS,
-                DEFAULT_XA_RECEIVER_CLASS);
+                    DEFAULT_XA_RECEIVER_CLASS);
             setServiceOverrides(overrides);
         }
     }

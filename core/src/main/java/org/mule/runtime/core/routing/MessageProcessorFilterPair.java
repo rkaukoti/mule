@@ -72,7 +72,7 @@ public class MessageProcessorFilterPair implements FlowConstructAware, MuleConte
 
     public void setMuleContext(MuleContext context)
     {
-         if (messageProcessor instanceof MuleContextAware)
+        if (messageProcessor instanceof MuleContextAware)
         {
             ((MuleContextAware) messageProcessor).setMuleContext(context);
         }

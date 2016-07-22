@@ -6,22 +6,21 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
-import org.mule.compatibility.transport.http.HttpConstants;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.runtime.core.construct.Flow;
-import org.mule.tck.junit4.rule.DynamicPort;
-
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpVersion;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpClientParams;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
+import org.mule.compatibility.transport.http.HttpConstants;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.construct.Flow;
+import org.mule.tck.junit4.rule.DynamicPort;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
  * Tests as per http://www.io.com/~maus/HttpKeepAlive.html
@@ -48,7 +47,8 @@ public class Http10FunctionalTestCase extends FunctionalTestCase
     public void testHttp10EnforceNonChunking() throws Exception
     {
         HttpClient client = setupHttpClient();
-        GetMethod request = new GetMethod(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("Streaming")).getMessageSource()).getAddress());
+        GetMethod request = new GetMethod(
+                ((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("Streaming")).getMessageSource()).getAddress());
         client.executeMethod(request);
         assertEquals("hello", request.getResponseBodyAsString());
 

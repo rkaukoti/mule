@@ -19,11 +19,10 @@ import org.mule.runtime.core.api.processor.MessageProcessorContainer;
 import org.mule.runtime.core.api.processor.MessageProcessorPathElement;
 import org.mule.runtime.core.util.NotificationUtils;
 import org.mule.runtime.core.util.ObjectUtils;
-
-import java.util.Arrays;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
 
 /**
  * Abstract implementation that provides the infrastructure for intercepting message processors.
@@ -38,11 +37,7 @@ public abstract class AbstractInterceptingMessageProcessorBase extends AbstractA
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     protected MuleContext muleContext;
-
-    public void setMuleContext(MuleContext context)
-    {
-        this.muleContext = context;
-    }
+    protected MessageProcessor next;
 
     public final MessageProcessor getListener()
     {
@@ -53,8 +48,6 @@ public abstract class AbstractInterceptingMessageProcessorBase extends AbstractA
     {
         this.next = next;
     }
-
-    protected MessageProcessor next;
 
     protected MuleEvent processNext(MuleEvent event) throws MuleException
     {
@@ -90,6 +83,11 @@ public abstract class AbstractInterceptingMessageProcessorBase extends AbstractA
         return muleContext;
     }
 
+    public void setMuleContext(MuleContext context)
+    {
+        this.muleContext = context;
+    }
+
     @Override
     public String toString()
     {
@@ -110,7 +108,8 @@ public abstract class AbstractInterceptingMessageProcessorBase extends AbstractA
         }
         if (next instanceof MessageProcessorChain)
         {
-            NotificationUtils.addMessageProcessorPathElements(((MessageProcessorChain) next).getMessageProcessors(), pathElement.getParent());
+            NotificationUtils.addMessageProcessorPathElements(((MessageProcessorChain) next).getMessageProcessors(),
+                    pathElement.getParent());
         }
         else if (next != null)
         {

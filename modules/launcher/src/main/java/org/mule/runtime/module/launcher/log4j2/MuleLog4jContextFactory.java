@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.module.launcher.log4j2;
 
-import org.mule.runtime.core.api.lifecycle.Disposable;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.core.config.xml.XmlConfigurationFactory;
 import org.apache.logging.log4j.core.impl.Log4jContextFactory;
 import org.apache.logging.log4j.core.selector.ContextSelector;
+import org.mule.runtime.core.api.lifecycle.Disposable;
 
 /**
  * Implementation of {@link org.apache.logging.log4j.spi.LoggerContextFactory} which

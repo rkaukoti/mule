@@ -29,15 +29,14 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "zip"
+        "zip"
 })
 @XmlRootElement(name = "GetCityForecastByZIP", namespace = "http://ws.cdyne.com/WeatherWS/")
-public class GetCityForecastByZIP {
+public class GetCityForecastByZIP
+{
 
     @XmlElement(name = "ZIP", namespace = "http://ws.cdyne.com/WeatherWS/")
     protected String zip;
@@ -45,24 +44,20 @@ public class GetCityForecastByZIP {
     /**
      * Gets the value of the zip property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getZIP() {
+    public String getZIP()
+    {
         return zip;
     }
 
     /**
      * Sets the value of the zip property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setZIP(String value) {
+    public void setZIP(String value)
+    {
         this.zip = value;
     }
 

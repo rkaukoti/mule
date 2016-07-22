@@ -45,7 +45,8 @@ public class CompositeConnectionFactoryDecorator implements ConnectionFactoryDec
 
     public void init(MuleContext muleContext)
     {
-        Collection<ConnectionFactoryDecorator> connectionFactoryDecorators = muleContext.getRegistry().lookupObjects(ConnectionFactoryDecorator.class);
+        Collection<ConnectionFactoryDecorator> connectionFactoryDecorators =
+                muleContext.getRegistry().lookupObjects(ConnectionFactoryDecorator.class);
         for (ConnectionFactoryDecorator connectionFactoryDecorator : connectionFactoryDecorators)
         {
             decorators.addFirst(connectionFactoryDecorator);

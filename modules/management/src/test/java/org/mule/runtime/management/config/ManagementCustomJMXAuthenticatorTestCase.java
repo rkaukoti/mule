@@ -6,19 +6,18 @@
  */
 package org.mule.runtime.management.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.agent.Agent;
 import org.mule.runtime.module.management.agent.ConfigurableJMXAuthenticator;
 import org.mule.runtime.module.management.agent.JmxApplicationAgent;
-import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.util.Map;
 
 import javax.security.auth.Subject;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ManagementCustomJMXAuthenticatorTestCase extends FunctionalTestCase
 {

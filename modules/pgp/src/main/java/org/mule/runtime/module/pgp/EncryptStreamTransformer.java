@@ -6,17 +6,8 @@
  */
 package org.mule.runtime.module.pgp;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.security.Provider;
-import java.util.Date;
-import java.util.concurrent.atomic.AtomicLong;
-
 import org.apache.commons.lang.Validate;
 import org.bouncycastle.bcpg.ArmoredOutputStream;
-import org.bouncycastle.openpgp.operator.bc.BcPGPDataEncryptorBuilder;
-import org.bouncycastle.openpgp.operator.bc.BcPublicKeyKeyEncryptionMethodGenerator;
 import org.bouncycastle.openpgp.PGPCompressedData;
 import org.bouncycastle.openpgp.PGPCompressedDataGenerator;
 import org.bouncycastle.openpgp.PGPEncryptedData;
@@ -24,6 +15,15 @@ import org.bouncycastle.openpgp.PGPEncryptedDataGenerator;
 import org.bouncycastle.openpgp.PGPLiteralData;
 import org.bouncycastle.openpgp.PGPLiteralDataGenerator;
 import org.bouncycastle.openpgp.PGPPublicKey;
+import org.bouncycastle.openpgp.operator.bc.BcPGPDataEncryptorBuilder;
+import org.bouncycastle.openpgp.operator.bc.BcPublicKeyKeyEncryptionMethodGenerator;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.security.Provider;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class EncryptStreamTransformer implements StreamTransformer
 {
@@ -69,7 +69,7 @@ public class EncryptStreamTransformer implements StreamTransformer
 
         PGPLiteralDataGenerator lData = new PGPLiteralDataGenerator();
         pgpOutputStream = lData.open(compressedEncryptedOutputStream, PGPLiteralData.BINARY, "stream",
-            new Date(), new byte[1 << 16]);
+                new Date(), new byte[1 << 16]);
     }
 
     /**

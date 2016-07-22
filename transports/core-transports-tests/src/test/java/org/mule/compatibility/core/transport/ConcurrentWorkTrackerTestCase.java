@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.hamcrest.core.IsCollectionContaining.hasItem;
-import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-
+import org.junit.Test;
 import org.mule.runtime.core.work.ConcurrentWorkTracker;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
+import static org.hamcrest.core.IsNot.not;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 @SmallTest
 public class ConcurrentWorkTrackerTestCase extends AbstractMuleTestCase

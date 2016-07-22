@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.config.spring;
 
+import com.google.common.collect.TreeTraverser;
+
 import org.mule.runtime.core.api.lifecycle.Lifecycle;
 import org.mule.runtime.core.lifecycle.LifecycleObject;
 import org.mule.runtime.core.lifecycle.RegistryLifecycleCallback;
 import org.mule.runtime.core.lifecycle.RegistryLifecycleManager;
-
-import com.google.common.collect.TreeTraverser;
 
 import java.util.Collection;
 import java.util.HashSet;

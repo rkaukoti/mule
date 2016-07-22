@@ -6,22 +6,21 @@
  */
 package org.mule.runtime.module.http.internal.listener;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
-
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.mule.runtime.api.tls.TlsContextFactory;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.module.http.api.HttpListenerConnectionManager;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
-import org.mule.runtime.api.tls.TlsContextFactory;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
 
 @SmallTest
 public class HttpListenerConfigTestCase extends AbstractMuleTestCase
@@ -38,7 +37,8 @@ public class HttpListenerConfigTestCase extends AbstractMuleTestCase
         httpListenerConfig.setMuleContext(mockMuleContext);
         final TlsContextFactory mockTlsContextFactory = mock(TlsContextFactory.class);
         httpListenerConfig.setTlsContext(mockTlsContextFactory);
-        when((Object) (mockMuleContext.getRegistry().lookupObject(HttpListenerConnectionManager.class))).thenReturn(mock(HttpListenerConnectionManager.class));
+        when((Object) (mockMuleContext.getRegistry().lookupObject(HttpListenerConnectionManager.class))).thenReturn(
+                mock(HttpListenerConnectionManager.class));
         when(mockTlsContextFactory.isKeyStoreConfigured()).thenReturn(false);
         expectedException.expect(InitialisationException.class);
         expectedException.expectMessage(containsString("KeyStore must be configured for server side SSL"));

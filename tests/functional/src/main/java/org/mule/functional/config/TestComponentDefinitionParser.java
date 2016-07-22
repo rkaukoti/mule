@@ -6,22 +6,17 @@
  */
 package org.mule.functional.config;
 
+import org.mule.functional.functional.EventCallback;
+import org.mule.functional.functional.FunctionalTestComponent;
+import org.mule.runtime.config.spring.parsers.specific.ComponentDefinitionParser;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.component.DefaultJavaComponent;
-import org.mule.runtime.config.spring.parsers.specific.ComponentDefinitionParser;
 import org.mule.runtime.core.object.AbstractObjectFactory;
 import org.mule.runtime.core.object.SingletonObjectFactory;
-import org.mule.functional.functional.EventCallback;
-import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.core.util.StringUtils;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -30,6 +25,10 @@ import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Configures a FunctionalTestComponent wrapped as a JavaComponent.  This parser provides a short form way of
@@ -109,7 +108,7 @@ public class TestComponentDefinitionParser extends ComponentDefinitionParser
                 String c = ele.getAttribute("class");
                 try
                 {
-                    EventCallback cb = (EventCallback)ClassUtils.instanciateClass(c);
+                    EventCallback cb = (EventCallback) ClassUtils.instanciateClass(c);
                     props.put("eventCallback", cb);
 
                 }

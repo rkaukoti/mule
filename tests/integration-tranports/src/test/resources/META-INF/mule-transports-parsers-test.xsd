@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/transports-parsers-test"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:mule="http://www.mulesoft.org/schema/mule/core"
             xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
-            xmlns:parsers-test="http://www.mulesoft.org/schema/mule/parsers-test"
+            xmlns="http://www.mulesoft.org/schema/mule/transports-parsers-test"
             targetNamespace="http://www.mulesoft.org/schema/mule/transports-parsers-test"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">
 
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/core"
-                schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd" />
+                schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd"/>
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/transports"
-                schemaLocation="http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd" />
+                schemaLocation="http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd"/>
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/parsers-test"
-                schemaLocation="http://www.mulesoft.org/schema/mule/parsers-test/current/mule-parsers-test.xsd" />
+                schemaLocation="http://www.mulesoft.org/schema/mule/parsers-test/current/mule-parsers-test.xsd"/>
 
-    <xsd:element name="orphan-endpoint" type="stringEndpointType" substitutionGroup="mule:abstract-global-endpoint" />
+    <xsd:element name="orphan-endpoint" type="stringEndpointType" substitutionGroup="mule:abstract-global-endpoint"/>
     <xsd:complexType name="stringEndpointType">
         <xsd:complexContent>
             <xsd:extension base="mule:abstractGlobalEndpointType">
-                <xsd:group ref="transports:defaultEndpointElements" />
-                <xsd:attributeGroup ref="transports:defaultEndpointAttributes" />
+                <xsd:group ref="transports:defaultEndpointElements"/>
+                <xsd:attributeGroup ref="transports:defaultEndpointAttributes"/>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>

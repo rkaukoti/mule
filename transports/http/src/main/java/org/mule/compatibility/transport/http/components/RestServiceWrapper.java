@@ -6,9 +6,6 @@
  */
 package org.mule.compatibility.transport.http.components;
 
-import static org.mule.compatibility.transport.http.HttpConnector.HTTP_METHOD_PROPERTY;
-import static org.mule.compatibility.transport.http.HttpConstants.FORM_URLENCODED_CONTENT_TYPE;
-import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.compatibility.core.endpoint.EndpointURIEndpointBuilder;
@@ -25,6 +22,8 @@ import org.mule.runtime.core.component.AbstractComponent;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.routing.filters.ExpressionFilter;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -33,8 +32,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.compatibility.transport.http.HttpConnector.HTTP_METHOD_PROPERTY;
+import static org.mule.compatibility.transport.http.HttpConstants.FORM_URLENCODED_CONTENT_TYPE;
+import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
 
 /**
  * This service can used to proxy REST style services as local Mule Components. It
@@ -80,8 +80,6 @@ public class RestServiceWrapper extends AbstractComponent
      * the call will fail Note that you can use
      * {@link org.mule.api.expression.ExpressionEvaluator} expressions such as
      * xpath, header, xquery, etc
-     *
-     * @param requiredParams
      */
     public void setRequiredParams(Map requiredParams)
     {
@@ -208,7 +206,8 @@ public class RestServiceWrapper extends AbstractComponent
 
         MuleEventContext eventContext = new DefaultMuleEventContext(event);
         MuleEvent result = new DefaultMuleEvent(eventContext.sendEvent(
-                MuleMessage.builder(event.getMessage()).payload(requestBody).build(), outboundEndpoint.getEndpointURI().toString()), flowConstruct);
+                MuleMessage.builder(event.getMessage()).payload(requestBody).build(), outboundEndpoint.getEndpointURI().toString()),
+                flowConstruct);
 
         if (isErrorPayload(result))
         {
@@ -262,7 +261,7 @@ public class RestServiceWrapper extends AbstractComponent
         {
             sep = getSeparator(url.toString());
         }
-        else if(requestBodyBuffer.length() > 0)
+        else if (requestBodyBuffer.length() > 0)
         {
             sep = "&";
         }
@@ -271,7 +270,7 @@ public class RestServiceWrapper extends AbstractComponent
             sep = StringUtils.EMPTY;
         }
 
-        for (Iterator iterator = args.entrySet().iterator(); iterator.hasNext();)
+        for (Iterator iterator = args.entrySet().iterator(); iterator.hasNext(); )
         {
             Map.Entry entry = (Map.Entry) iterator.next();
             String name = (String) entry.getKey();

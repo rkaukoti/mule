@@ -6,7 +6,15 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import org.apache.commons.httpclient.ChunkedInputStream;
+import org.apache.commons.httpclient.ContentLengthInputStream;
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HeaderElement;
+import org.apache.commons.httpclient.HeaderGroup;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.HttpVersion;
+import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.StatusLine;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleContext;
@@ -19,15 +27,7 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Iterator;
 
-import org.apache.commons.httpclient.ChunkedInputStream;
-import org.apache.commons.httpclient.ContentLengthInputStream;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HeaderElement;
-import org.apache.commons.httpclient.HeaderGroup;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.HttpVersion;
-import org.apache.commons.httpclient.NameValuePair;
-import org.apache.commons.httpclient.StatusLine;
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
 
 /**
  * A generic HTTP response wrapper.
@@ -50,7 +50,7 @@ public class HttpResponse
     }
 
     public HttpResponse(final StatusLine statusline, final Header[] headers, final InputStream content)
-        throws IOException
+            throws IOException
     {
         super();
         if (statusline == null)
@@ -58,7 +58,7 @@ public class HttpResponse
             throw new IllegalArgumentException("Status line may not be null");
         }
         setStatusLine(HttpVersion.parse(statusline.getHttpVersion()), statusline.getStatusCode(),
-            statusline.getReasonPhrase());
+                statusline.getReasonPhrase());
         setHeaders(headers);
         if (content != null)
         {
@@ -117,8 +117,8 @@ public class HttpResponse
     }
 
     /**
-     * @deprecated use {@link #getStatusCode()} instead
      * @return HTTP status code
+     * @deprecated use {@link #getStatusCode()} instead
      */
     @Deprecated
     public int getStatuscode()
@@ -160,6 +160,15 @@ public class HttpResponse
         return this.headers.getAllHeaders();
     }
 
+    public void setHeaders(final Header[] headers)
+    {
+        if (headers == null)
+        {
+            return;
+        }
+        this.headers.setHeaders(headers);
+    }
+
     public Header getFirstHeader(final String name)
     {
         return this.headers.getFirstHeader(name);
@@ -195,15 +204,6 @@ public class HttpResponse
         }
         removeHeaders(header.getName());
         addHeader(header);
-    }
-
-    public void setHeaders(final Header[] headers)
-    {
-        if (headers == null)
-        {
-            return;
-        }
-        this.headers.setHeaders(headers);
     }
 
     public Iterator getHeaderIterator()
@@ -257,48 +257,7 @@ public class HttpResponse
 
     public OutputHandler getBody() throws IOException
     {
-        return outputHandler; 
-    }
-    
-    public void setBody(MuleMessage msg, MuleContext muleContext) throws Exception
-    {
-        if (msg == null) return;
-
-        //TODO MULE-5005 response attachments
-//        if(msg.getOutboundAttachmentNames().size() > 0)
-//        {
-//            setBody(createMultipart());
-//            setHeader(new Header(HttpConstants.HEADER_CONTENT_TYPE, MimeTypes.MULTIPART_MIXED));
-//            return;
-//        }
-        
-        Object payload = msg.getPayload();
-        if (payload instanceof String)
-        {
-            setBody(payload.toString());
-        }
-        else if (payload == null)
-        {
-            return;
-        }
-        else if (payload instanceof byte[]) 
-        {
-            setBody((byte[]) payload);
-        }
-        else 
-        {
-            setBody((OutputHandler) muleContext.getTransformationService().transform(msg, DataType.fromType(OutputHandler.class)).getPayload());
-        }
-    }
-    
-    public void setBody(OutputHandler outputHandler) 
-    {
-        this.outputHandler = outputHandler;
-    }
-    
-    public void setBody(final String string)
-    {
-        setBody(string.getBytes(getCharset()));
+        return outputHandler;
     }
 
     private void setBody(final byte[] raw)
@@ -310,22 +269,67 @@ public class HttpResponse
         if (!containsHeader(HttpConstants.HEADER_TRANSFER_ENCODING))
         {
             setHeader(new Header(HttpConstants.HEADER_CONTENT_LENGTH, Long.toString(raw.length)));
-        }        
-        
+        }
+
         this.outputHandler = (event, out) -> out.write(raw);
     }
-    
-    public String getBodyAsString() throws IOException 
+
+    public void setBody(MuleMessage msg, MuleContext muleContext) throws Exception
     {
-        if (!hasBody()) return "";
-        
+        if (msg == null)
+            return;
+
+        //TODO MULE-5005 response attachments
+        //        if(msg.getOutboundAttachmentNames().size() > 0)
+        //        {
+        //            setBody(createMultipart());
+        //            setHeader(new Header(HttpConstants.HEADER_CONTENT_TYPE, MimeTypes.MULTIPART_MIXED));
+        //            return;
+        //        }
+
+        Object payload = msg.getPayload();
+        if (payload instanceof String)
+        {
+            setBody(payload.toString());
+        }
+        else if (payload == null)
+        {
+            return;
+        }
+        else if (payload instanceof byte[])
+        {
+            setBody((byte[]) payload);
+        }
+        else
+        {
+            setBody((OutputHandler) muleContext.getTransformationService()
+                                               .transform(msg, DataType.fromType(OutputHandler.class))
+                                               .getPayload());
+        }
+    }
+
+    public void setBody(OutputHandler outputHandler)
+    {
+        this.outputHandler = outputHandler;
+    }
+
+    public void setBody(final String string)
+    {
+        setBody(string.getBytes(getCharset()));
+    }
+
+    public String getBodyAsString() throws IOException
+    {
+        if (!hasBody())
+            return "";
+
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        
+
         outputHandler.write(RequestContext.getEvent(), out);
-        
+
         return new String(out.toByteArray(), getCharset());
     }
-    
+
     public boolean isKeepAlive()
     {
         return !disableKeepAlive && keepAlive;
@@ -335,9 +339,9 @@ public class HttpResponse
     {
         this.keepAlive = keepAlive;
     }
-    
+
     /**
-     * The HTTTP spec suggests that for HTTP 1.1 persistent connections should be used, 
+     * The HTTTP spec suggests that for HTTP 1.1 persistent connections should be used,
      * for HTTP 1.0 the connection should not be kept alive. This method sets up the keepAlive flag
      * according to the <code>version</code> that was passed in.
      */
@@ -361,45 +365,45 @@ public class HttpResponse
         this.fallbackCharset = overrideCharset;
     }
 
-      //TODO MULE-5005 response attachments
-//    protected OutputHandler createMultipart() throws Exception
-//    {
-//
-//        return new OutputHandler() {
-//            public void write(MuleEvent event, OutputStream out) throws IOException
-//            {
-//                MultiPartOutputStream partStream = new MultiPartOutputStream(out, event.getEncoding());
-//                try
-//                {
-//                    MuleMessage msg = event.getMessage();
-//                    if (!(msg.getPayload() instanceof NullPayload))
-//                    {
-//                        String contentType = msg.getOutboundProperty(HttpConstants.HEADER_CONTENT_TYPE, MimeTypes.BINARY);
-//                        partStream.startPart(contentType);
-//                        try
-//                        {
-//                            partStream.getOut().write(msg.getPayloadAsBytes());
-//                        }
-//                        catch (Exception e)
-//                        {
-//                            throw new IOException(e);
-//                        }
-//                    }
-//                    //Write attachments
-//                    for (String name : event.getMessage().getOutboundAttachmentNames())
-//                    {
-//                        DataHandler dh = event.getMessage().getOutboundAttachment(name);
-//                        partStream.startPart(dh.getContentType());
-//                        partStream.getOut().write(IOUtils.toByteArray(dh.getInputStream()));
-//                    }
-//                }
-//                finally
-//                {
-//                    partStream.close();
-//                }
-//            }
-//        };
-//
-//    }
+    //TODO MULE-5005 response attachments
+    //    protected OutputHandler createMultipart() throws Exception
+    //    {
+    //
+    //        return new OutputHandler() {
+    //            public void write(MuleEvent event, OutputStream out) throws IOException
+    //            {
+    //                MultiPartOutputStream partStream = new MultiPartOutputStream(out, event.getEncoding());
+    //                try
+    //                {
+    //                    MuleMessage msg = event.getMessage();
+    //                    if (!(msg.getPayload() instanceof NullPayload))
+    //                    {
+    //                        String contentType = msg.getOutboundProperty(HttpConstants.HEADER_CONTENT_TYPE, MimeTypes.BINARY);
+    //                        partStream.startPart(contentType);
+    //                        try
+    //                        {
+    //                            partStream.getOut().write(msg.getPayloadAsBytes());
+    //                        }
+    //                        catch (Exception e)
+    //                        {
+    //                            throw new IOException(e);
+    //                        }
+    //                    }
+    //                    //Write attachments
+    //                    for (String name : event.getMessage().getOutboundAttachmentNames())
+    //                    {
+    //                        DataHandler dh = event.getMessage().getOutboundAttachment(name);
+    //                        partStream.startPart(dh.getContentType());
+    //                        partStream.getOut().write(IOUtils.toByteArray(dh.getInputStream()));
+    //                    }
+    //                }
+    //                finally
+    //                {
+    //                    partStream.close();
+    //                }
+    //            }
+    //        };
+    //
+    //    }
 
 }

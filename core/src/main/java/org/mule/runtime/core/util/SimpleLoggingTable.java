@@ -16,9 +16,8 @@ public class SimpleLoggingTable
 {
     protected static final String NEW_LINE = String.format("%n");
     private static final char SEPARATOR_CHAR = '*';
-
-    private List<TableColumn> columns = new LinkedList<TableColumn>();
     private final List<String[]> data = new LinkedList<String[]>();
+    private List<TableColumn> columns = new LinkedList<TableColumn>();
     private int width;
 
     /**
@@ -36,8 +35,7 @@ public class SimpleLoggingTable
     /**
      * Adds a new row of data into the table.
      *
-     * @param dataRow the data to be added. DataRow must contain a value for
-     *                each declared column.
+     * @param dataRow the data to be added. DataRow must contain a value for each declared column.
      */
     public void addDataRow(String[] dataRow)
     {

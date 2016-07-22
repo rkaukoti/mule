@@ -6,11 +6,7 @@
  */
 package org.mule.compatibility.core.endpoint.outbound;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.compatibility.core.endpoint.AbstractEndpointBuilder;
@@ -20,7 +16,10 @@ import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.processor.InterceptingMessageProcessor;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
 
 public class OutboundResponsePropertiesMessageProcessorTestCase extends AbstractMessageProcessorTestCase
 {
@@ -39,8 +38,9 @@ public class OutboundResponsePropertiesMessageProcessorTestCase extends Abstract
             // return event with same payload but no properties
             try
             {
-                return new DefaultMuleEvent(MuleMessage.builder().payload(event.getMessage().getPayload()).build(), REQUEST_RESPONSE, getTestFlow(),
-                    getTestSession(null, muleContext));
+                return new DefaultMuleEvent(MuleMessage.builder().payload(event.getMessage().getPayload()).build(), REQUEST_RESPONSE,
+                        getTestFlow(),
+                        getTestSession(null, muleContext));
             }
             catch (Exception e)
             {

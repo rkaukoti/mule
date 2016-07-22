@@ -8,7 +8,6 @@ package org.mule.runtime.config.spring.parsers.collection;
 
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
-
 import org.springframework.beans.factory.config.MapFactoryBean;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;

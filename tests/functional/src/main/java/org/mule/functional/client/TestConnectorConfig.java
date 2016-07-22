@@ -7,7 +7,6 @@
 
 package org.mule.functional.client;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.util.StringUtils;
 
@@ -16,6 +15,8 @@ import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Maintains test connector configuration
@@ -31,7 +32,7 @@ public class TestConnectorConfig
      * for an element to become available.
      *
      * @param queueName name of the queue which the event is read from. Non empty
-     * @param timeout maximum  number of milliseconds to wait for an available event. Non negative
+     * @param timeout   maximum  number of milliseconds to wait for an available event. Non negative
      * @return a non null event if available before the timeout expires, null otherwise.
      */
     public MuleEvent poll(String queueName, long timeout)
@@ -77,7 +78,7 @@ public class TestConnectorConfig
      * Writes a even to to a given queue waiting if necessary for space to become available
      *
      * @param queueName name of the queue which the event is write to. Non empty
-     * @param event event to be stored. Non null
+     * @param event     event to be stored. Non null
      */
     public void write(String queueName, MuleEvent event)
     {

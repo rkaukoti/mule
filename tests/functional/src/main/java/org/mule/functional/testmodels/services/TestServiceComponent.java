@@ -6,9 +6,9 @@
  */
 package org.mule.functional.testmodels.services;
 
+import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.runtime.core.api.component.simple.EchoService;
 import org.mule.runtime.core.api.lifecycle.Disposable;
-import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.runtime.core.util.StringUtils;
 
 import java.util.Collections;
@@ -20,13 +20,13 @@ import java.util.Map;
  * <code>TestServiceComponent</code> is a test WebServices service.
  */
 public class TestServiceComponent extends FunctionalTestComponent
-    implements EchoService, DateService, PeopleService, Disposable
+        implements EchoService, DateService, PeopleService, Disposable
 {
     // we keep two collections - one static for testing the return of complex types
     // and one for modifying by methods invoked on the TestComponent instance
 
-    private static final Person[] originalPeople = new Person[]{new Person("Barney", "Rubble"),
-        new Person("Fred", "Flintstone"), new Person("Wilma", "Flintstone")};
+    private static final Person[] originalPeople = new Person[] {new Person("Barney", "Rubble"),
+                                                                 new Person("Fred", "Flintstone"), new Person("Wilma", "Flintstone")};
 
     private final Map people = Collections.synchronizedMap(new HashMap());
 
@@ -54,7 +54,7 @@ public class TestServiceComponent extends FunctionalTestComponent
         {
             throw new IllegalArgumentException("Name parameter cannot be null");
         }
-        return (Person)people.get(firstName);
+        return (Person) people.get(firstName);
     }
 
     public Person[] getPeople()

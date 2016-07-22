@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.module.cxf.wssec;
 
+import org.apache.hello_world_soap_http.GreeterImpl;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.security.SecurityContext;
 import org.mule.runtime.core.util.concurrent.Latch;
-
-import org.apache.hello_world_soap_http.GreeterImpl;
 
 public class GreeterWithLatch extends GreeterImpl
 {
@@ -25,12 +24,12 @@ public class GreeterWithLatch extends GreeterImpl
         securityContext = RequestContext.getEvent().getSession().getSecurityContext();
         return result;
     }
-    
+
     public Latch getLatch()
     {
         return greetLatch;
     }
-    
+
     public SecurityContext getSecurityContext()
     {
         return securityContext;

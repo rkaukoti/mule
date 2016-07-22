@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.core.config.builders;
 
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.config.ConfigurationBuilder;
@@ -35,13 +34,15 @@ public class AutoConfigurationBuilder extends AbstractResourceConfigurationBuild
     private final ArtifactType artifactType;
     private MuleContext parentContext;
 
-    public AutoConfigurationBuilder(String resource, Map<String, String> artifactProperties, ArtifactType artifactType) throws ConfigurationException
+    public AutoConfigurationBuilder(String resource, Map<String, String> artifactProperties, ArtifactType artifactType)
+            throws ConfigurationException
     {
         super(resource, artifactProperties);
         this.artifactType = artifactType;
     }
 
-    public AutoConfigurationBuilder(String[] resources, Map<String, String> artifactProperties, ArtifactType artifactType) throws ConfigurationException
+    public AutoConfigurationBuilder(String[] resources, Map<String, String> artifactProperties, ArtifactType artifactType)
+            throws ConfigurationException
     {
         super(resources, artifactProperties);
         this.artifactType = artifactType;
@@ -66,7 +67,7 @@ public class AutoConfigurationBuilder extends AbstractResourceConfigurationBuild
         for (int i = 0; i < resources.length; i++)
         {
             String configExtension = StringUtils.substringAfterLast(
-                (resources[i]).getUrl().getFile(), ".");
+                    (resources[i]).getUrl().getFile(), ".");
             List<ConfigResource> configs = configsMap.get(configExtension);
             if (configs == null)
             {
@@ -91,19 +92,21 @@ public class AutoConfigurationBuilder extends AbstractResourceConfigurationBuild
                 if (className == null || !ClassUtils.isClassOnPath(className, this.getClass()))
                 {
                     throw new ConfigurationException(
-                        CoreMessages.configurationBuilderNoMatching(createConfigResourcesString()));
+                            CoreMessages.configurationBuilderNoMatching(createConfigResourcesString()));
                 }
 
                 ConfigResource[] constructorArg = new ConfigResource[configs.size()];
                 System.arraycopy(configs.toArray(), 0, constructorArg, 0, configs.size());
-                ConfigurationBuilder cb = (ConfigurationBuilder) ClassUtils.instanciateClass(className, new Object[] {constructorArg, getArtifactProperties(), artifactType});
+                ConfigurationBuilder cb = (ConfigurationBuilder) ClassUtils.instanciateClass(className,
+                        new Object[] {constructorArg, getArtifactProperties(), artifactType});
                 if (parentContext != null && cb instanceof ParentMuleContextAwareConfigurationBuilder)
                 {
                     ((ParentMuleContextAwareConfigurationBuilder) cb).setParentContext(parentContext);
                 }
                 else if (parentContext != null)
                 {
-                    throw new MuleRuntimeException(CoreMessages.createStaticMessage(String.format("ConfigurationBuilder %s does not support domain context", cb.getClass().getCanonicalName())));
+                    throw new MuleRuntimeException(CoreMessages.createStaticMessage(
+                            String.format("ConfigurationBuilder %s does not support domain context", cb.getClass().getCanonicalName())));
                 }
                 cb.configure(muleContext);
             }

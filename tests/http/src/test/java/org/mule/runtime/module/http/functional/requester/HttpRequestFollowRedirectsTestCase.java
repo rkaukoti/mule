@@ -6,37 +6,33 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
+import org.eclipse.jetty.server.Request;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.mule.functional.junit4.FlowRunner;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
-import org.mule.functional.junit4.FlowRunner;
 
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.Request;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class HttpRequestFollowRedirectsTestCase extends AbstractHttpRequestTestCase
 {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     private static final String REDIRECTED = "Redirected.";
     private static final String MOVED = "Moved.";
     private static final String FLOW_VAR_KEY = "redirect";
-
     private static final String MOVED_URI = "/testPath";
     private static final String REDIRECT_URI = "/redirect";
     private static final String REDIRECT_WITH_PARAMS_URI = REDIRECT_URI + "?param1=value1&param2=value2";
-
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
     private MuleEvent testEvent;
     private boolean addParams = false;
 
@@ -62,7 +58,7 @@ public class HttpRequestFollowRedirectsTestCase extends AbstractHttpRequestTestC
     protected void handleRequest(Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException
     {
         extractBaseRequestParts(baseRequest);
-        if(baseRequest.getUri().getPath().startsWith("/redirect"))
+        if (baseRequest.getUri().getPath().startsWith("/redirect"))
         {
             response.getWriter().print(REDIRECTED);
         }
@@ -112,7 +108,7 @@ public class HttpRequestFollowRedirectsTestCase extends AbstractHttpRequestTestC
     @Test
     public void followRedirectsWithStringExpression() throws Exception
     {
-        testRedirectExpression("followRedirectsExpression",MOVED, MOVED_URI, "false");
+        testRedirectExpression("followRedirectsExpression", MOVED, MOVED_URI, "false");
     }
 
     @Test

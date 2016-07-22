@@ -21,7 +21,6 @@ import org.mule.runtime.config.spring.parsers.specific.TransformerMessageProcess
 
 /**
  * Reigsters a Bean Definition Parser for handling <code><file:connector></code> elements.
- *
  */
 public class FileNamespaceHandler extends AbstractMuleTransportsNamespaceHandler
 {
@@ -33,11 +32,13 @@ public class FileNamespaceHandler extends AbstractMuleTransportsNamespaceHandler
         registerConnectorDefinitionParser(FileConnector.class);
 
         registerBeanDefinitionParser("custom-filename-parser", new ChildDefinitionParser("filenameParser", null, FilenameParser.class));
-        registerBeanDefinitionParser("expression-filename-parser", new ChildDefinitionParser("filenameParser", ExpressionFilenameParser.class));
+        registerBeanDefinitionParser("expression-filename-parser",
+                new ChildDefinitionParser("filenameParser", ExpressionFilenameParser.class));
 
-        registerBeanDefinitionParser("file-to-byte-array-transformer", new TransformerMessageProcessorDefinitionParser(FileToByteArray.class));
+        registerBeanDefinitionParser("file-to-byte-array-transformer",
+                new TransformerMessageProcessorDefinitionParser(FileToByteArray.class));
         registerBeanDefinitionParser("file-to-string-transformer", new TransformerMessageProcessorDefinitionParser(FileToString.class));
-        
+
         registerBeanDefinitionParser("filename-wildcard-filter", new FilterDefinitionParser(FilenameWildcardFilter.class));
         registerBeanDefinitionParser("filename-regex-filter", new FilterDefinitionParser(FilenameRegexFilter.class));
     }

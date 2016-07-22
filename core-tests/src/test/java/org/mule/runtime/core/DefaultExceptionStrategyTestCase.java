@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.core;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.notification.ExceptionNotificationListener;
 import org.mule.runtime.core.api.context.notification.ServerNotification;
@@ -19,7 +18,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class DefaultExceptionStrategyTestCase extends AbstractMuleContextTestCase
 {

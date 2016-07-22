@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.module.pgp;
 
+import org.apache.commons.io.IOUtils;
+import org.junit.Test;
 import org.mule.runtime.core.api.security.Authentication;
 
 import java.io.FileInputStream;
 import java.net.URL;
-
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 

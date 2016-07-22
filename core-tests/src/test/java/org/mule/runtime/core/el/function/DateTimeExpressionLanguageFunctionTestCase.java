@@ -6,25 +6,24 @@
  */
 package org.mule.runtime.core.el.function;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.mule.mvel2.ParserConfiguration;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.el.ExpressionExecutor;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.el.datetime.DateTime;
 import org.mule.runtime.core.el.mvel.MVELExpressionExecutor;
 import org.mule.runtime.core.el.mvel.MVELExpressionLanguageContext;
-import org.mule.mvel2.ParserConfiguration;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @SmallTest
 public class DateTimeExpressionLanguageFunctionTestCase extends AbstractMuleTestCase
@@ -47,7 +46,7 @@ public class DateTimeExpressionLanguageFunctionTestCase extends AbstractMuleTest
     @Test
     public void parseISO8601String() throws Exception
     {
-        DateTime dateTime = (DateTime) dateTimeFunction.call(new Object[]{"2013-03-17T00:23:00Z"}, context);
+        DateTime dateTime = (DateTime) dateTimeFunction.call(new Object[] {"2013-03-17T00:23:00Z"}, context);
         assertNotNull(dateTime);
         assertEquals(2013, dateTime.getYear());
         assertEquals(3, dateTime.getMonth());
@@ -61,8 +60,8 @@ public class DateTimeExpressionLanguageFunctionTestCase extends AbstractMuleTest
     @Test
     public void parseISO8601StringWithTimeZome() throws Exception
     {
-        DateTime dateTime = (DateTime) dateTimeFunction.call(new Object[]{"2013-03-17T00:23:00+07:00"},
-            context);
+        DateTime dateTime = (DateTime) dateTimeFunction.call(new Object[] {"2013-03-17T00:23:00+07:00"},
+                context);
         assertNotNull(dateTime);
         assertEquals(2013, dateTime.getYear());
         assertEquals(3, dateTime.getMonth());
@@ -76,8 +75,8 @@ public class DateTimeExpressionLanguageFunctionTestCase extends AbstractMuleTest
     @Test
     public void parseFormattedString() throws Exception
     {
-        DateTime dateTime = (DateTime) dateTimeFunction.call(new Object[]{"17/3/13 00:23:00",
-            "dd/M/yy hh:mm:ss"}, context);
+        DateTime dateTime = (DateTime) dateTimeFunction.call(new Object[] {"17/3/13 00:23:00",
+                                                                           "dd/M/yy hh:mm:ss"}, context);
         assertNotNull(dateTime);
         assertEquals(2013, dateTime.getYear());
         assertEquals(3, dateTime.getMonth());
@@ -91,8 +90,8 @@ public class DateTimeExpressionLanguageFunctionTestCase extends AbstractMuleTest
     @Test
     public void parseFormattedStringWithTimeZone() throws Exception
     {
-        DateTime dateTime = (DateTime) dateTimeFunction.call(new Object[]{"17/3/13 00:23:00 -0700",
-            "dd/M/yy hh:mm:ss ZZ"}, context);
+        DateTime dateTime = (DateTime) dateTimeFunction.call(new Object[] {"17/3/13 00:23:00 -0700",
+                                                                           "dd/M/yy hh:mm:ss ZZ"}, context);
         assertNotNull(dateTime);
         assertEquals(2013, dateTime.getYear());
         assertEquals(3, dateTime.getMonth());
@@ -107,7 +106,7 @@ public class DateTimeExpressionLanguageFunctionTestCase extends AbstractMuleTest
     public void convertDate() throws Exception
     {
         Date date = new Date();
-        DateTime dateTime = (DateTime) dateTimeFunction.call(new Object[]{date}, context);
+        DateTime dateTime = (DateTime) dateTimeFunction.call(new Object[] {date}, context);
         assertNotNull(dateTime);
         assertEquals(date.getYear() + 1900, dateTime.getYear());
         assertEquals(date.getMonth() + 1, dateTime.getMonth());
@@ -121,7 +120,7 @@ public class DateTimeExpressionLanguageFunctionTestCase extends AbstractMuleTest
     public void convertCalendar() throws Exception
     {
         Calendar cal = Calendar.getInstance();
-        DateTime dateTime = (DateTime) dateTimeFunction.call(new Object[]{cal}, context);
+        DateTime dateTime = (DateTime) dateTimeFunction.call(new Object[] {cal}, context);
         assertNotNull(dateTime);
         assertEquals(cal.get(Calendar.YEAR), dateTime.getYear());
         assertEquals(cal.get(Calendar.MONTH) + 1, dateTime.getMonth());

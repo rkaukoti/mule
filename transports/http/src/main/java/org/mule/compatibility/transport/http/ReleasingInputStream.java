@@ -6,12 +6,11 @@
  */
 package org.mule.compatibility.transport.http;
 
+import org.apache.commons.httpclient.HttpMethod;
 import org.mule.runtime.core.model.streaming.DelegatingInputStream;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.apache.commons.httpclient.HttpMethod;
 
 public class ReleasingInputStream extends DelegatingInputStream
 {
@@ -20,15 +19,15 @@ public class ReleasingInputStream extends DelegatingInputStream
     public ReleasingInputStream(InputStream is, HttpMethod method)
     {
         super(is);
-        
+
         this.method = method;
     }
 
     @Override
-    public void close() throws IOException 
+    public void close() throws IOException
     {
         super.close();
-        
+
         if (method != null)
         {
             method.releaseConnection();

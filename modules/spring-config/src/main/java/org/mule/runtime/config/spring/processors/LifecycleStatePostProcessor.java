@@ -8,7 +8,6 @@ package org.mule.runtime.config.spring.processors;
 
 import org.mule.runtime.core.api.lifecycle.LifecycleState;
 import org.mule.runtime.core.api.lifecycle.LifecycleStateAware;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 

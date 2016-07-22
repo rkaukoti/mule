@@ -6,7 +6,6 @@
  */
 package org.mule.extension.socket.api.provider.tcp;
 
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
 import org.mule.extension.socket.api.ConnectionSettings;
 import org.mule.extension.socket.api.connection.tcp.TcpListenerConnection;
 import org.mule.extension.socket.api.connection.tcp.protocol.SafeProtocol;
@@ -35,6 +34,8 @@ import org.mule.runtime.extension.api.annotation.param.Optional;
 import java.net.ServerSocket;
 
 import javax.net.ssl.SSLServerSocket;
+
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
 
 
 /**
@@ -83,8 +84,8 @@ public final class TcpListenerProvider implements ConnectionProvider<TcpListener
         try
         {
             serverSocketFactory = tlsContext != null
-                                  ? new SslServerSocketFactory(tlsContext)
-                                  : new TcpServerSocketFactory();
+                    ? new SslServerSocketFactory(tlsContext)
+                    : new TcpServerSocketFactory();
         }
         catch (Exception e)
         {
@@ -92,8 +93,8 @@ public final class TcpListenerProvider implements ConnectionProvider<TcpListener
         }
 
         TcpListenerConnection connection = new TcpListenerConnection(connectionSettings, protocol,
-                                                                     tcpServerSocketProperties,
-                                                                     serverSocketFactory);
+                tcpServerSocketProperties,
+                serverSocketFactory);
         connection.connect();
         return connection;
     }
@@ -120,7 +121,8 @@ public final class TcpListenerProvider implements ConnectionProvider<TcpListener
      * {@inheritDoc}
      */
     @Override
-    public ConnectionHandlingStrategy<TcpListenerConnection> getHandlingStrategy(ConnectionHandlingStrategyFactory<TcpListenerConnection> handlingStrategyFactory)
+    public ConnectionHandlingStrategy<TcpListenerConnection> getHandlingStrategy(
+            ConnectionHandlingStrategyFactory<TcpListenerConnection> handlingStrategyFactory)
     {
         return handlingStrategyFactory.none();
     }

@@ -9,8 +9,10 @@ package org.mule.runtime.module.db.integration.model;
 
 public class Contact
 {
-    public static final Contact CONTACT1 = new Contact("Contact1", new ContactDetails[] {new ContactDetails("home", "1-111-111", "1@1111.com")});
-    public static final Contact CONTACT2 = new Contact("Contact2", new ContactDetails[] {new ContactDetails("work", "2-222-222", "2@2222.com")});
+    public static final Contact CONTACT1 =
+            new Contact("Contact1", new ContactDetails[] {new ContactDetails("home", "1-111-111", "1@1111.com")});
+    public static final Contact CONTACT2 =
+            new Contact("Contact2", new ContactDetails[] {new ContactDetails("work", "2-222-222", "2@2222.com")});
 
     private final String name;
     private final ContactDetails[] details;

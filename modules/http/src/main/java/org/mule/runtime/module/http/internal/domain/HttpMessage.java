@@ -39,12 +39,14 @@ public interface HttpMessage
 
     /**
      * @param headerName name of the header
-     * @return all the values of that headers, regardless of the case. If not such headers exists return null, otherwise the collection of header values
+     * @return all the values of that headers, regardless of the case. If not such headers exists return null, otherwise the collection of
+     * header values
      */
     Collection<String> getHeaderValuesIgnoreCase(String headerName);
 
     /**
-     * @return the entity of the message. If there's no entity an {@link org.mule.runtime.module.http.internal.domain.EmptyHttpEntity} is returned
+     * @return the entity of the message. If there's no entity an {@link org.mule.runtime.module.http.internal.domain.EmptyHttpEntity} is
+     * returned
      */
     HttpEntity getEntity();
 

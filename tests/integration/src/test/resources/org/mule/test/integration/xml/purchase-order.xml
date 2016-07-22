@@ -9,10 +9,10 @@
         xmlns="http://www.example.com"
         orderDate="1999-10-20">
     <!--<purchaseOrder-->
-            <!--xmlns="http://www.example.com"-->
-            <!--xmlns:xsi="http://www.w3.org/2001/XMLSchema"-->
-            <!--xsi:schemaLocation="http://www.example.com purchase-order.xsd"-->
-            <!--orderDate="1999-10-20">    -->
+    <!--xmlns="http://www.example.com"-->
+    <!--xmlns:xsi="http://www.w3.org/2001/XMLSchema"-->
+    <!--xsi:schemaLocation="http://www.example.com purchase-order.xsd"-->
+    <!--orderDate="1999-10-20">    -->
     <shipTo country="US">
         <name>Alice Smith</name>
         <street>123 Maple Street</street>

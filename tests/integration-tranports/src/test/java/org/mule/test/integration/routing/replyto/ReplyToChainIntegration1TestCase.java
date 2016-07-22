@@ -6,15 +6,14 @@
  */
 package org.mule.test.integration.routing.replyto;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_PROPERTY;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_PROPERTY;
 
 public class ReplyToChainIntegration1TestCase extends FunctionalTestCase
 {
@@ -30,7 +29,8 @@ public class ReplyToChainIntegration1TestCase extends FunctionalTestCase
         String message = "test";
 
         MuleClient client = muleContext.getClient();
-        MuleMessage result = client.send("vm://pojo1", MuleMessage.builder().payload(message).addOutboundProperty(MULE_REMOTE_SYNC_PROPERTY, "false").build());
+        MuleMessage result = client.send("vm://pojo1",
+                MuleMessage.builder().payload(message).addOutboundProperty(MULE_REMOTE_SYNC_PROPERTY, "false").build());
         assertNotNull(result);
         assertEquals("Received: " + message, getPayloadAsString(result));
     }

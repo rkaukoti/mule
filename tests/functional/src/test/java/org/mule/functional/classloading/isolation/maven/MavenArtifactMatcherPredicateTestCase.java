@@ -7,25 +7,38 @@
 
 package org.mule.functional.classloading.isolation.maven;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mule.functional.classloading.isolation.maven.MavenArtifactMatcherPredicate.ANY_WILDCARD;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.util.function.Predicate;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mule.functional.classloading.isolation.maven.MavenArtifactMatcherPredicate.ANY_WILDCARD;
 
 @SmallTest
 public class MavenArtifactMatcherPredicateTestCase extends AbstractMuleTestCase
 {
 
-    private final MavenArtifact muleCoreArtifact = MavenArtifact.builder().withGroupId("org.mule").withArtifactId("mule-core").withType("jar").withScope("compile").build();
-    private final MavenArtifact muleCoreArtifactTest = MavenArtifact.builder().withGroupId("org.mule").withArtifactId("mule-core").withType("test-jar").withScope("compile").build();
-    private final MavenArtifact muleValidationArtifact = MavenArtifact.builder().withGroupId("org.mule").withArtifactId("mule-validations").withType("jar").withScope("compile").build();
-    private final MavenArtifact muleValidationTransportArtifact = MavenArtifact.builder().withGroupId("org.mule.transports").withArtifactId("mule-validations").withType("jar").withScope("compile").build();
-    private final MavenArtifact commonsCollections = MavenArtifact.builder().withGroupId("commons-collections").withArtifactId("commons-collections").withType("jar").withScope("compile").build();
+    private final MavenArtifact muleCoreArtifact =
+            MavenArtifact.builder().withGroupId("org.mule").withArtifactId("mule-core").withType("jar").withScope("compile").build();
+    private final MavenArtifact muleCoreArtifactTest =
+            MavenArtifact.builder().withGroupId("org.mule").withArtifactId("mule-core").withType("test-jar").withScope("compile").build();
+    private final MavenArtifact muleValidationArtifact =
+            MavenArtifact.builder().withGroupId("org.mule").withArtifactId("mule-validations").withType("jar").withScope("compile").build();
+    private final MavenArtifact muleValidationTransportArtifact = MavenArtifact.builder()
+                                                                               .withGroupId("org.mule.transports")
+                                                                               .withArtifactId("mule-validations")
+                                                                               .withType("jar")
+                                                                               .withScope("compile")
+                                                                               .build();
+    private final MavenArtifact commonsCollections = MavenArtifact.builder()
+                                                                  .withGroupId("commons-collections")
+                                                                  .withArtifactId("commons-collections")
+                                                                  .withType("jar")
+                                                                  .withScope("compile")
+                                                                  .build();
 
     @Test
     public void matchByGroupId()
@@ -95,7 +108,8 @@ public class MavenArtifactMatcherPredicateTestCase extends AbstractMuleTestCase
     @Test
     public void orMatching()
     {
-        Predicate<MavenArtifact> predicate = new MavenArtifactMatcherPredicate("org.mule", "mule-core", "jar").or(new MavenArtifactMatcherPredicate("org.mule.transports", ANY_WILDCARD, ANY_WILDCARD));
+        Predicate<MavenArtifact> predicate = new MavenArtifactMatcherPredicate("org.mule", "mule-core", "jar").or(
+                new MavenArtifactMatcherPredicate("org.mule.transports", ANY_WILDCARD, ANY_WILDCARD));
 
         assertThat(predicate.test(muleCoreArtifact), equalTo(true));
 

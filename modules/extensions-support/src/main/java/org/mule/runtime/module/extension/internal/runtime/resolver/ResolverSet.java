@@ -6,16 +6,17 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import com.google.common.collect.ImmutableMap;
+
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
 import org.mule.runtime.module.extension.internal.runtime.ObjectBuilder;
 
-import com.google.common.collect.ImmutableMap;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * A {@link ValueResolver} which is based on associating a set of
@@ -83,7 +84,6 @@ public class ResolverSet implements ValueResolver<ResolverSetResult>
      *
      * @param event a not {@code null} {@link MuleEvent}
      * @return a {@link ResolverSetResult}
-     * @throws Exception
      */
     @Override
     public ResolverSetResult resolve(MuleEvent event) throws MuleException

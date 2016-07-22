@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mule xmlns:spring="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:test="http://www.mulesoft.org/schema/mule/test"
-       xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
-       xmlns="http://www.mulesoft.org/schema/mule/core"
-       xsi:schemaLocation="
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
@@ -16,7 +16,7 @@
 
     <configuration defaultResponseTimeout="10" defaultTransactionTimeout="20" shutdownTimeout="30">
         <default-threading-profile maxBufferSize="42" maxThreadsActive="16"
-                                        maxThreadsIdle="3" poolExhaustedAction="WAIT" threadTTL="60001"/>
+                                   maxThreadsIdle="3" poolExhaustedAction="WAIT" threadTTL="60001"/>
     </configuration>
 
     <custom-transaction-manager class="org.mule.tck.testmodels.mule.TestTransactionManagerFactory"/>
@@ -30,8 +30,8 @@
     <transports:endpoint name="TestQueue" address="test://test.queue" exchange-pattern="one-way"/>
 
     <custom-transformer name="TestCompressionTransformer"
-                             class="org.mule.tck.testmodels.mule.TestCompressionTransformer"
-                             returnClass="java.lang.String">
+                        class="org.mule.tck.testmodels.mule.TestCompressionTransformer"
+                        returnClass="java.lang.String">
         <spring:property name="beanProperty1" value="${beanProperty1}"/>
         <spring:property name="beanProperty2" value="12"/>
         <spring:property name="containerProperty" value="a string"/>
@@ -44,10 +44,10 @@
     <!-- cannot have aliases -->
     <!-- mule:endpoint name="waterMelonEndpoint" ref="TestQueue"/ -->
     <transports:endpoint name="waterMelonEndpoint" address="test://test.queue" exchange-pattern="one-way"
-                   encoding="UTF-8"/>
+                         encoding="UTF-8"/>
     <transports:endpoint name="appleInEndpoint" address="test://AppleQueue" exchange-pattern="one-way"/>
     <transports:endpoint name="appleResponseEndpoint" address="test://AppleResponseQueue"
-                   exchange-pattern="one-way"/>
+                         exchange-pattern="one-way"/>
     <transports:endpoint name="orangeEndpoint" address="test://orangeQ" exchange-pattern="one-way">
         <properties>
             <spring:entry key="testGlobal" value="value1"/>
@@ -114,9 +114,9 @@
     <flow name="msgInfoMappingTestComponent">
         <component class="org.mule.tck.testmodels.fruit.Apple"/>
         <transports:outbound-endpoint address="test://msgInfoMappingTestComponent"
-                                exchange-pattern="one-way"/>
+                                      exchange-pattern="one-way"/>
         <expression-message-info-mapping messageIdExpression="#[message.outboundProperties.id]"
-                                              correlationIdExpression="#[message.outboundProperties.correlation]"/>
+                                         correlationIdExpression="#[message.outboundProperties.correlation]"/>
     </flow>
 
     <interceptor-stack name="testInterceptorStack">

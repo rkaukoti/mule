@@ -6,11 +6,9 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mule.functional.functional.FlowAssert.verify;
-import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
@@ -19,9 +17,11 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.io.IOException;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mule.functional.functional.FlowAssert.verify;
+import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class HttpListenerValidateCertificateTestCase extends AbstractHttpTestCase
 {
@@ -83,7 +83,7 @@ public class HttpListenerValidateCertificateTestCase extends AbstractHttpTestCas
     private String sendRequest(String url, String payload) throws Exception
     {
         MuleMessage response = muleContext.getClient().send(url, getTestMuleMessage(payload),
-                                                            newOptions().method(POST.name()).tlsContextFactory(tlsContextFactory).build());
+                newOptions().method(POST.name()).tlsContextFactory(tlsContextFactory).build());
         return getPayloadAsString(response);
     }
 

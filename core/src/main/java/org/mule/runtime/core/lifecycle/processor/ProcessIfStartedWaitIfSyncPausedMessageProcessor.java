@@ -14,7 +14,7 @@ import org.mule.runtime.core.api.lifecycle.Startable;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 
 public class ProcessIfStartedWaitIfSyncPausedMessageProcessor extends
-    ProcessIfStartedWaitIfPausedMessageProcessor
+        ProcessIfStartedWaitIfPausedMessageProcessor
 {
 
     public ProcessIfStartedWaitIfSyncPausedMessageProcessor(Startable startable, LifecycleState lifecycleState)
@@ -46,7 +46,7 @@ public class ProcessIfStartedWaitIfSyncPausedMessageProcessor extends
                 catch (InterruptedException e)
                 {
                     throw new MessagingException(
-                        CoreMessages.interruptedWaitingForPaused(getStartableName(startable)), event, e, this);
+                            CoreMessages.interruptedWaitingForPaused(getStartableName(startable)), event, e, this);
                 }
             }
             return processNext(event);

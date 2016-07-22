@@ -6,12 +6,7 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.source;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.reflections.ReflectionUtils.getAllFields;
-import static org.reflections.ReflectionUtils.withAnnotation;
+import org.apache.commons.collections.CollectionUtils;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionHandler;
 import org.mule.runtime.core.api.DefaultMuleException;
@@ -31,6 +26,8 @@ import org.mule.runtime.extension.api.runtime.source.Source;
 import org.mule.runtime.extension.api.runtime.source.SourceContext;
 import org.mule.runtime.module.extension.internal.util.FieldSetter;
 import org.mule.runtime.module.extension.internal.util.IntrospectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -39,9 +36,12 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.disposeIfNeeded;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.reflections.ReflectionUtils.getAllFields;
+import static org.reflections.ReflectionUtils.withAnnotation;
 
 /**
  * A decorator for {@link Source} which propagates lifecycle and performs injection of
@@ -155,8 +155,9 @@ final class SourceWrapper extends Source implements Lifecycle, FlowConstructAwar
             }
             catch (ConnectionException e)
             {
-                throw new MuleRuntimeException(createStaticMessage(String.format("Could not obtain connection for message source '%s' on flow '%s'",
-                                                                                 getName(), flowConstruct.getName())), e);
+                throw new MuleRuntimeException(
+                        createStaticMessage(String.format("Could not obtain connection for message source '%s' on flow '%s'",
+                                getName(), flowConstruct.getName())), e);
             }
         }
     }
@@ -188,9 +189,10 @@ final class SourceWrapper extends Source implements Lifecycle, FlowConstructAwar
         if (fields.size() > 1)
         {
             //TODO: MULE-9220 Move this to a syntax validator
-            throw new IllegalModelDefinitionException(format("Message Source defined on class '%s' has more than one field annotated with '@%s'. " +
-                                                             "Only one field in the class can bare such annotation",
-                                                             delegate.getClass().getName(), annotation.getClass().getSimpleName()));
+            throw new IllegalModelDefinitionException(
+                    format("Message Source defined on class '%s' has more than one field annotated with '@%s'. " +
+                           "Only one field in the class can bare such annotation",
+                            delegate.getClass().getName(), annotation.getClass().getSimpleName()));
         }
 
         return Optional.of(new FieldSetter<>(fields.iterator().next()));

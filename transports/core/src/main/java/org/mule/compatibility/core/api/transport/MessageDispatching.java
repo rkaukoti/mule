@@ -13,7 +13,7 @@ import org.mule.runtime.core.api.connector.DispatchException;
 /**
  * Define generic methods for dispatching events. The exact behaviour of the action is defined by the implementing
  * class.
- * 
+ *
  * @see org.mule.compatibility.core.api.endpoint.OutboundEndpoint
  * @see org.mule.compatibility.core.api.transport.MessageDispatcher
  * @deprecated Transport infrastructure is deprecated.
@@ -26,7 +26,7 @@ public interface MessageDispatching
 
     /**
      * Dispatches an event from the endpoint to the external system
-     * 
+     *
      * @param event The event to dispatch
      * @throws DispatchException if the event fails to be dispatched
      */
@@ -34,7 +34,7 @@ public interface MessageDispatching
 
     /**
      * Sends an event from the endpoint to the external system
-     * 
+     *
      * @param event The event to send
      * @return event the response form the external system wrapped in a MuleEvent
      * @throws DispatchException if the event fails to be dispatched

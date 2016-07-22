@@ -7,12 +7,12 @@
 
 package org.mule.runtime.module.http.internal;
 
+import org.junit.Test;
+
 import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
-
-import org.junit.Test;
 
 public class CaseInsensitiveParameterMapTestCase extends ParameterMapTestCase
 {

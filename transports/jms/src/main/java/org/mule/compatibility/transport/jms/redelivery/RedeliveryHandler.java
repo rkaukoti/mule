@@ -37,14 +37,12 @@ public interface RedeliveryHandler
      * {@link EndpointMessageRedeliveredException} to indicate that the message should be
      * handled by the connector's exception handler.
      *
-     * @param message the redelivered message
+     * @param message  the redelivered message
      * @param endpoint from which the message was received
-     * @param flow in which the exception occured, this is used to obtain the
-     *            appropriate exception handler
-     * @throws JMSException if properties cannot be read from the JMSMessage
-     * @throws EndpointMessageRedeliveredException should be thrown if the message should be
-     *             handled by the connection exception handler
-     * @throws MuleException if there is a problem reading or proessing the message
+     * @param flow     in which the exception occured, this is used to obtain the appropriate exception handler
+     * @throws JMSException                        if properties cannot be read from the JMSMessage
+     * @throws EndpointMessageRedeliveredException should be thrown if the message should be handled by the connection exception handler
+     * @throws MuleException                       if there is a problem reading or proessing the message
      */
     public void handleRedelivery(Message message, InboundEndpoint endpoint, FlowConstruct flow) throws JMSException, MuleException;
 

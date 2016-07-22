@@ -6,10 +6,10 @@
  */
 package org.mule.extension.ftp.api.sftp;
 
+import com.jcraft.jsch.SftpATTRS;
+
 import org.mule.extension.ftp.api.FtpFileAttributes;
 import org.mule.runtime.module.extension.file.api.AbstractFileAttributes;
-
-import com.jcraft.jsch.SftpATTRS;
 
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -28,7 +28,7 @@ public class SftpFileAttributes extends AbstractFileAttributes implements FtpFil
     /**
      * Creates a new instance
      *
-     * @param path    the file's {@link Path}
+     * @param path  the file's {@link Path}
      * @param attrs the {@link SftpATTRS} which represents the file on the SFTP server
      */
     public SftpFileAttributes(Path path, SftpATTRS attrs)

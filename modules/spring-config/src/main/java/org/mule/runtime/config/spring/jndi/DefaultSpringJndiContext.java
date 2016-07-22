@@ -38,18 +38,15 @@ import javax.naming.spi.NamingManager;
 public class DefaultSpringJndiContext implements Context, Serializable
 {
 
-    private static final long serialVersionUID = -5754338187296859149L;
+    public static final String SEPARATOR = "/";
     protected static final NameParser nameParser = new DefaultNameParser();
-
-    private boolean freeze = false;
-
+    private static final long serialVersionUID = -5754338187296859149L;
     protected final Hashtable environment;        // environment for this context
     protected final Map bindings;         // bindings at my level
     protected final Map treeBindings;     // all bindings under me
-
+    private boolean freeze = false;
     private boolean frozen = false;
     private String nameInNamespace = "";
-    public static final String SEPARATOR = "/";
 
     public DefaultSpringJndiContext()
     {
@@ -365,61 +362,6 @@ public class DefaultSpringJndiContext implements Context, Serializable
         internalBind(name, null, true);
     }
 
-    private abstract class AbstractLocalNamingEnumeration implements NamingEnumeration
-    {
-
-        private Iterator i = bindings.entrySet().iterator();
-
-        public boolean hasMore() throws NamingException
-        {
-            return i.hasNext();
-        }
-
-        public boolean hasMoreElements()
-        {
-            return i.hasNext();
-        }
-
-        protected Map.Entry getNext()
-        {
-            return (Map.Entry) i.next();
-        }
-
-        public void close() throws NamingException
-        {
-        }
-    }
-
-    private class ListEnumeration extends AbstractLocalNamingEnumeration
-    {
-
-        public Object next() throws NamingException
-        {
-            return nextElement();
-        }
-
-        public Object nextElement()
-        {
-            Map.Entry entry = getNext();
-            return new NameClassPair((String) entry.getKey(), entry.getValue().getClass().getName());
-        }
-    }
-
-    private class ListBindingEnumeration extends AbstractLocalNamingEnumeration
-    {
-
-        public Object next() throws NamingException
-        {
-            return nextElement();
-        }
-
-        public Object nextElement()
-        {
-            Map.Entry entry = getNext();
-            return new Binding((String) entry.getKey(), entry.getValue());
-        }
-    }
-
     public Map getEntries()
     {
         return new HashMap(bindings);
@@ -429,7 +371,7 @@ public class DefaultSpringJndiContext implements Context, Serializable
     {
         if (entries != null)
         {
-            for (Iterator iter = entries.entrySet().iterator(); iter.hasNext();)
+            for (Iterator iter = entries.entrySet().iterator(); iter.hasNext(); )
             {
                 Map.Entry entry = (Map.Entry) iter.next();
                 String name = (String) entry.getKey();
@@ -456,10 +398,6 @@ public class DefaultSpringJndiContext implements Context, Serializable
      * to bind the remaining name.  It returns a map containing all the bindings from the next context, plus
      * the context it just created (if it in fact created it). (the names are suitably extended by the segment
      * originally lopped off).
-     *
-     * @param name
-     * @param value
-     * @throws javax.naming.NamingException
      */
     protected Map internalBind(String name, Object value) throws NamingException
     {
@@ -513,7 +451,7 @@ public class DefaultSpringJndiContext implements Context, Serializable
             DefaultSpringJndiContext defaultContext = (DefaultSpringJndiContext) o;
             String remainder = name.substring(pos + 1);
             Map subBindings = defaultContext.internalBind(remainder, value, allowRebind);
-            for (Iterator iterator = subBindings.entrySet().iterator(); iterator.hasNext();)
+            for (Iterator iterator = subBindings.entrySet().iterator(); iterator.hasNext(); )
             {
                 Map.Entry entry = (Map.Entry) iterator.next();
                 String subName = segment + "/" + (String) entry.getKey();
@@ -536,6 +474,61 @@ public class DefaultSpringJndiContext implements Context, Serializable
     protected DefaultSpringJndiContext newContext()
     {
         return new DefaultSpringJndiContext();
+    }
+
+    private abstract class AbstractLocalNamingEnumeration implements NamingEnumeration
+    {
+
+        private Iterator i = bindings.entrySet().iterator();
+
+        public boolean hasMore() throws NamingException
+        {
+            return i.hasNext();
+        }
+
+        public boolean hasMoreElements()
+        {
+            return i.hasNext();
+        }
+
+        protected Map.Entry getNext()
+        {
+            return (Map.Entry) i.next();
+        }
+
+        public void close() throws NamingException
+        {
+        }
+    }
+
+    private class ListEnumeration extends AbstractLocalNamingEnumeration
+    {
+
+        public Object next() throws NamingException
+        {
+            return nextElement();
+        }
+
+        public Object nextElement()
+        {
+            Map.Entry entry = getNext();
+            return new NameClassPair((String) entry.getKey(), entry.getValue().getClass().getName());
+        }
+    }
+
+    private class ListBindingEnumeration extends AbstractLocalNamingEnumeration
+    {
+
+        public Object next() throws NamingException
+        {
+            return nextElement();
+        }
+
+        public Object nextElement()
+        {
+            Map.Entry entry = getNext();
+            return new Binding((String) entry.getKey(), entry.getValue());
+        }
     }
 
 }

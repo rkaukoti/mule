@@ -6,18 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
-import static org.mule.test.heisenberg.extension.HeisenbergExtension.PARAMETER_ORIGINAL_OVERRIDED_DISPLAY_NAME;
-import static org.mule.test.heisenberg.extension.HeisenbergExtension.PARAMETER_OVERRIDED_DISPLAY_NAME;
-import static org.mule.test.heisenberg.extension.HeisenbergExtension.RICIN_PACKS_SUMMARY;
-import static org.mule.test.heisenberg.extension.HeisenbergOperations.DOOR_PARAMETER;
-import static org.mule.test.heisenberg.extension.HeisenbergOperations.KNOCKEABLE_DOORS_SUMMARY;
-import static org.mule.test.heisenberg.extension.HeisenbergOperations.OPERATION_PARAMETER_ORIGINAL_OVERRIDED_DISPLAY_NAME;
-import static org.mule.test.heisenberg.extension.HeisenbergOperations.OPERATION_PARAMETER_OVERRIDED_DISPLAY_NAME;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.util.CollectionUtils;
 import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclaration;
 import org.mule.runtime.extension.api.introspection.declaration.fluent.ExtensionDeclarer;
@@ -33,8 +23,17 @@ import org.mule.test.heisenberg.extension.HeisenbergOperations;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
+import static org.mule.test.heisenberg.extension.HeisenbergExtension.PARAMETER_ORIGINAL_OVERRIDED_DISPLAY_NAME;
+import static org.mule.test.heisenberg.extension.HeisenbergExtension.PARAMETER_OVERRIDED_DISPLAY_NAME;
+import static org.mule.test.heisenberg.extension.HeisenbergExtension.RICIN_PACKS_SUMMARY;
+import static org.mule.test.heisenberg.extension.HeisenbergOperations.DOOR_PARAMETER;
+import static org.mule.test.heisenberg.extension.HeisenbergOperations.KNOCKEABLE_DOORS_SUMMARY;
+import static org.mule.test.heisenberg.extension.HeisenbergOperations.OPERATION_PARAMETER_ORIGINAL_OVERRIDED_DISPLAY_NAME;
+import static org.mule.test.heisenberg.extension.HeisenbergOperations.OPERATION_PARAMETER_OVERRIDED_DISPLAY_NAME;
 
 public class DisplayModelEnricherTestCase extends AbstractMuleTestCase
 {
@@ -46,7 +45,8 @@ public class DisplayModelEnricherTestCase extends AbstractMuleTestCase
     @Before
     public void setUp()
     {
-        final AnnotationsBasedDescriber basedDescriber = new AnnotationsBasedDescriber(HeisenbergExtension.class, new StaticVersionResolver(getProductVersion()));
+        final AnnotationsBasedDescriber basedDescriber =
+                new AnnotationsBasedDescriber(HeisenbergExtension.class, new StaticVersionResolver(getProductVersion()));
         declarer = basedDescriber.describe(new DefaultDescribingContext(getClass().getClassLoader()));
         new DisplayModelEnricher().enrich(new DefaultDescribingContext(declarer, this.getClass().getClassLoader()));
     }
@@ -78,7 +78,8 @@ public class DisplayModelEnricherTestCase extends AbstractMuleTestCase
         assertThat(operation, is(notNullValue()));
         List<ParameterDeclaration> parameters = operation.getParameters();
 
-        assertParameterDisplayName(findParameter(parameters, OPERATION_PARAMETER_ORIGINAL_OVERRIDED_DISPLAY_NAME), OPERATION_PARAMETER_OVERRIDED_DISPLAY_NAME);
+        assertParameterDisplayName(findParameter(parameters, OPERATION_PARAMETER_ORIGINAL_OVERRIDED_DISPLAY_NAME),
+                OPERATION_PARAMETER_OVERRIDED_DISPLAY_NAME);
     }
 
     @Test
@@ -116,7 +117,8 @@ public class DisplayModelEnricherTestCase extends AbstractMuleTestCase
 
     private OperationDeclaration getOperation(ExtensionDeclaration extensionDeclaration, final String operationName)
     {
-        return (OperationDeclaration) CollectionUtils.find(extensionDeclaration.getOperations(), object -> ((OperationDeclaration) object).getName().equals(operationName));
+        return (OperationDeclaration) CollectionUtils.find(extensionDeclaration.getOperations(),
+                object -> ((OperationDeclaration) object).getName().equals(operationName));
     }
 
     private ParameterDeclaration findParameter(List<ParameterDeclaration> parameters, final String name)

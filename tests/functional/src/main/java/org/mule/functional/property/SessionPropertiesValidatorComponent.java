@@ -6,18 +6,19 @@
  */
 package org.mule.functional.property;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.lifecycle.Callable;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
 public class SessionPropertiesValidatorComponent implements Callable
 {
 
-    private Map<String,String> expectedProperties = new HashMap<String,String>();
+    private Map<String, String> expectedProperties = new HashMap<String, String>();
 
     public void setExpectedProperties(Map<String, String> expectedProperties)
     {

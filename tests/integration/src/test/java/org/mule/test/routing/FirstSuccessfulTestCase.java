@@ -6,18 +6,17 @@
  */
 package org.mule.test.routing;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.api.routing.CouldNotRouteOutboundMessageException;
-import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 public class FirstSuccessfulTestCase extends FunctionalTestCase
 {
@@ -41,7 +40,7 @@ public class FirstSuccessfulTestCase extends FunctionalTestCase
 
         try
         {
-        response = flowRunner("test-router").withPayload(Boolean.TRUE).run().getMessage();
+            response = flowRunner("test-router").withPayload(Boolean.TRUE).run().getMessage();
         }
         catch (MessagingException e)
         {

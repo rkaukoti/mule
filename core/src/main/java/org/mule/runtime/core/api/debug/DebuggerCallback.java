@@ -28,9 +28,9 @@ public interface DebuggerCallback
     /**
      * Notifies when the execution is paused for debugging the current execution state.
      *
-     * @param event The event that is being debugged. Non null
+     * @param event      The event that is being debugged. Non null
      * @param frameStack The frame stack. Non null
-     * @param location The location where it was stopped. Non null
+     * @param location   The location where it was stopped. Non null
      */
     void onExecutionPaused(MuleEvent event, List<DebuggerFrame> frameStack, String location);
 

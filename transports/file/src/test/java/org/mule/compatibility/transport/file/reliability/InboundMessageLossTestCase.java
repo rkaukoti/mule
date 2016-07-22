@@ -6,10 +6,8 @@
  */
 package org.mule.compatibility.transport.file.reliability;
 
-import static org.junit.Assert.fail;
-import static org.mule.compatibility.transport.file.FileTestUtils.createDataFile;
-import static org.mule.compatibility.transport.file.FileTestUtils.createFolder;
-
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.compatibility.transport.file.AbstractFileMoveDeleteTestCase;
 import org.mule.functional.functional.EventCallback;
 import org.mule.functional.functional.FunctionalTestComponent;
@@ -28,8 +26,9 @@ import java.io.File;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.fail;
+import static org.mule.compatibility.transport.file.FileTestUtils.createDataFile;
+import static org.mule.compatibility.transport.file.FileTestUtils.createFolder;
 
 /**
  * Verify that no inbound messages are lost when exceptions occur. The message must
@@ -41,7 +40,9 @@ import org.junit.Test;
  */
 public class InboundMessageLossTestCase extends AbstractFileMoveDeleteTestCase
 {
-    /** Polling mechanism to replace Thread.sleep() for testing a delayed result. */
+    /**
+     * Polling mechanism to replace Thread.sleep() for testing a delayed result.
+     */
     protected Prober prober = new PollingProber(10000, 100);
 
     @Override
@@ -58,7 +59,7 @@ public class InboundMessageLossTestCase extends AbstractFileMoveDeleteTestCase
         // Set SystemExceptionStrategy to redeliver messages (this can only be
         // configured programatically for now)
         ((DefaultSystemExceptionStrategy) muleContext.getExceptionListener()).setRollbackTxFilter(new WildcardFilter(
-            "*"));
+                "*"));
     }
 
     @Test
@@ -160,7 +161,8 @@ public class InboundMessageLossTestCase extends AbstractFileMoveDeleteTestCase
     public void testRollbackExceptionStrategyConsumesMessage() throws Exception
     {
         final CountDownLatch exceptionStrategyLatch = new CountDownLatch(4);
-        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
+        muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>()
+        {
             @Override
             public void onNotification(ExceptionNotification notification)
             {
@@ -256,7 +258,7 @@ public class InboundMessageLossTestCase extends AbstractFileMoveDeleteTestCase
                 throw new RuntimeException();
             }
         });
-        Flow flow = (Flow)getFlowConstruct("FlowRefException");
+        Flow flow = (Flow) getFlowConstruct("FlowRefException");
         flow.stop();
         prober.check(new Probe()
         {

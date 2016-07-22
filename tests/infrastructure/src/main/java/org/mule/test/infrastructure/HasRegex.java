@@ -6,8 +6,6 @@
  */
 package org.mule.test.infrastructure;
 
-import java.lang.String;
-
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;

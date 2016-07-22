@@ -7,22 +7,22 @@
 
 package org.mule.runtime.module.db.internal.config.domain.database;
 
-import org.mule.runtime.module.db.internal.domain.database.ConfigurableDbConfigFactory;
 import org.mule.runtime.core.util.StringUtils;
+import org.mule.runtime.module.db.internal.domain.database.ConfigurableDbConfigFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
 
 /**
- *  Base class for creating vendor's {@link DbConfigResolverFactoryBean}
+ * Base class for creating vendor's {@link DbConfigResolverFactoryBean}
  */
 public abstract class AbstractVendorConfigResolverFactoryBean extends DbConfigResolverFactoryBean
 {
 
+    private final String urlPrefix;
     private String host;
     private int port = -1;
-    private final String urlPrefix;
     private String database;
 
     protected AbstractVendorConfigResolverFactoryBean(String urlPrefix, ConfigurableDbConfigFactory dbConfigFactory)
@@ -129,8 +129,8 @@ public abstract class AbstractVendorConfigResolverFactoryBean extends DbConfigRe
             }
 
             params.append(entry.getKey())
-                    .append('=')
-                    .append(entry.getValue());
+                  .append('=')
+                  .append(entry.getValue());
         }
 
         return params.toString();

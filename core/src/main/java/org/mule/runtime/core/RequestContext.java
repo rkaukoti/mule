@@ -20,10 +20,8 @@ import org.mule.runtime.core.api.MuleMessage;
  * are not otherwise available in the scope.  so this is a good place to create a new
  * thread local copy - it will be read because supporting code is expecting mutation.</p>
  *
- * @deprecated
- *    If access to MuleEvent or MuleMessage is required,
- *    then implement a {@link org.mule.runtime.core.api.processor.MessageProcessor}
- *    or {@link org.mule.runtime.core.api.lifecycle.Callable} instead
+ * @deprecated If access to MuleEvent or MuleMessage is required, then implement a {@link org.mule.runtime.core.api.processor.MessageProcessor}
+ * or {@link org.mule.runtime.core.api.lifecycle.Callable} instead
  */
 @Deprecated
 public final class RequestContext
@@ -37,7 +35,9 @@ public final class RequestContext
 
     private static final ThreadLocal currentEvent = new ThreadLocal();
 
-    /** Do not instanciate. */
+    /**
+     * Do not instanciate.
+     */
     protected RequestContext()
     {
         // no-op
@@ -101,21 +101,19 @@ public final class RequestContext
         setEvent(null);
     }
 
+    public static ExceptionPayload getExceptionPayload()
+    {
+        return getEvent().getMessage().getExceptionPayload();
+    }
+
     /**
      * There is no unsafe version of this because it shouldn't be performance critical
-     *
-     * @param exceptionPayload
      */
     public static void setExceptionPayload(ExceptionPayload exceptionPayload)
     {
         MuleEvent newEvent = newEvent(getEvent(), SAFE);
         newEvent.setMessage(MuleMessage.builder(newEvent.getMessage()).exceptionPayload(exceptionPayload).build());
         internalSetEvent(newEvent);
-    }
-
-    public static ExceptionPayload getExceptionPayload()
-    {
-        return getEvent().getMessage().getExceptionPayload();
     }
 
     protected static MuleEvent newEvent(MuleEvent event, boolean safe)

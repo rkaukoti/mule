@@ -23,7 +23,8 @@ import org.mule.runtime.core.construct.Flow;
  * Abstract implementation of {@link org.mule.runtime.core.processor.NonBlockingMessageProcessor} that determines if processing should
  * be performed blocking or non-blocking..
  */
-public abstract class AbstractNonBlockingMessageProcessor extends AbstractAnnotatedObject implements NonBlockingMessageProcessor, MessagingExceptionHandlerAware
+public abstract class AbstractNonBlockingMessageProcessor extends AbstractAnnotatedObject
+        implements NonBlockingMessageProcessor, MessagingExceptionHandlerAware
 {
 
     private MessagingExceptionHandler messagingExceptionHandler;
@@ -62,7 +63,8 @@ public abstract class AbstractNonBlockingMessageProcessor extends AbstractAnnota
 
     protected ExceptionCallback<Void, ? extends Exception> createCompletionExceptionCallback(MuleEvent event)
     {
-        return (ExceptionCallback<Void, Exception>) exception -> {
+        return (ExceptionCallback<Void, Exception>) exception ->
+        {
             messagingExceptionHandler.handleException(exception, event);
             return null;
         };

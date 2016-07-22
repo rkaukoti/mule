@@ -6,15 +6,14 @@
  */
 package org.mule.compatibility.transport.vm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.functional.functional.StringAppendTestTransformer;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class TransformerAttributeTestCase extends FunctionalTestCase
 {
@@ -33,7 +32,7 @@ public class TransformerAttributeTestCase extends FunctionalTestCase
         MuleClient client = muleContext.getClient();
         MuleMessage message = client.send("vm://simple", OUTBOUND_MESSAGE, null);
         assertNotNull(message);
-        assertEquals(StringAppendTestTransformer.appendDefault(OUTBOUND_MESSAGE)  + " Received",
+        assertEquals(StringAppendTestTransformer.appendDefault(OUTBOUND_MESSAGE) + " Received",
                 getPayloadAsString(message));
     }
 
@@ -43,7 +42,7 @@ public class TransformerAttributeTestCase extends FunctionalTestCase
         MuleClient client = muleContext.getClient();
         MuleMessage message = client.send("vm://chained", OUTBOUND_MESSAGE, null);
         assertNotNull(message);
-        assertEquals(StringAppendTestTransformer.appendDefault(OUTBOUND_MESSAGE)  + " Received",
+        assertEquals(StringAppendTestTransformer.appendDefault(OUTBOUND_MESSAGE) + " Received",
                 getPayloadAsString(message));
     }
 }

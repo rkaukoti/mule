@@ -6,6 +6,18 @@
  */
 package org.mule.compatibility.core.endpoint;
 
+import org.junit.Test;
+import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
+import org.mule.compatibility.core.api.endpoint.EndpointFactory;
+import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
+import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
+import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
+import org.mule.runtime.core.MessageExchangePattern;
+import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.api.registry.Registry;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+import org.mule.tck.testmodels.mule.TestConnector;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
@@ -13,23 +25,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.registerConnector;
 import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.registerEndpointBuilder;
-
-import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
-import org.mule.compatibility.core.api.endpoint.EndpointFactory;
-import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
-import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
-import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
-import org.mule.compatibility.core.endpoint.DefaultEndpointFactory;
-import org.mule.compatibility.core.endpoint.DefaultInboundEndpoint;
-import org.mule.compatibility.core.endpoint.DefaultOutboundEndpoint;
-import org.mule.compatibility.core.endpoint.EndpointURIEndpointBuilder;
-import org.mule.runtime.core.MessageExchangePattern;
-import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.core.api.registry.Registry;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-import org.mule.tck.testmodels.mule.TestConnector;
-
-import org.junit.Test;
 
 public class EndpointFactoryTestCase extends AbstractMuleContextTestCase
 {

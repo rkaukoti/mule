@@ -17,26 +17,22 @@ import org.mule.runtime.core.api.routing.CouldNotRouteOutboundMessageException;
 import org.mule.runtime.core.api.routing.RoutePathNotFoundException;
 import org.mule.runtime.core.api.routing.RouterResultsHandler;
 import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- *
  * Routing strategy that will route a message through a set of {@link MessageProcessor}
  * and return an aggregation of the results.
- *
  */
 public class MulticastingRoutingStrategy extends AbstractRoutingStrategy
 {
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
     private final RouterResultsHandler resultsHandler;
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
-     * @param muleContext
      * @param resultAggregator aggregator used to create a response event
      */
     public MulticastingRoutingStrategy(MuleContext muleContext, RouterResultsHandler resultAggregator)
@@ -77,7 +73,6 @@ public class MulticastingRoutingStrategy extends AbstractRoutingStrategy
         }
         return resultsHandler.aggregateResults(results, event);
     }
-
 
 
 }

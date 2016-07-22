@@ -14,15 +14,13 @@ import org.mule.runtime.core.api.transaction.TransactionConfig;
 /**
  * Context for processing one message from a {@link org.mule.runtime.core.api.source.MessageSource}.
  *
- * Mule {@link org.mule.runtime.core.api.source.MessageSource} implementations should create one instance of MessageProcessContext per message
- * that generates.
+ * Mule {@link org.mule.runtime.core.api.source.MessageSource} implementations should create one instance of MessageProcessContext per
+ * message that generates.
  *
- * MessageProcessContext is responsible for
- * - Define if the incoming message can be processed in a separate thread
- * - Provide access to the {@link MessageSource} of the message
- * - Provide access to the {@link FlowConstruct} were the message is going to be executed
- * - Provide access, if available, to the {@link WorkManager} to use for processing the message
- * - Provide the {@link MessageSource} transaction configuration
+ * MessageProcessContext is responsible for - Define if the incoming message can be processed in a separate thread - Provide access to the
+ * {@link MessageSource} of the message - Provide access to the {@link FlowConstruct} were the message is going to be executed - Provide
+ * access, if available, to the {@link WorkManager} to use for processing the message - Provide the {@link MessageSource} transaction
+ * configuration
  */
 public interface MessageProcessContext
 {
@@ -43,14 +41,14 @@ public interface MessageProcessContext
     FlowConstruct getFlowConstruct();
 
     /**
-     * @return the {@link WorkManager} were the incoming message must be processed.
-     * If null it will be executed in the same thread were the message was received
+     * @return the {@link WorkManager} were the incoming message must be processed. If null it will be executed in the same thread were the
+     * message was received
      */
     WorkManager getFlowExecutionWorkManager();
 
     /**
-     * @return the {@link TransactionConfig} associated to the {@link MessageSource} that received the message.
-     * If null then no transaction config will be used.
+     * @return the {@link TransactionConfig} associated to the {@link MessageSource} that received the message. If null then no transaction
+     * config will be used.
      */
     TransactionConfig getTransactionConfig();
 

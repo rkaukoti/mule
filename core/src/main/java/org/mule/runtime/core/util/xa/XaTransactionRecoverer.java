@@ -6,13 +6,16 @@
  */
 package org.mule.runtime.core.util.xa;
 
+import com.google.common.collect.Multimap;
+
+import org.apache.commons.collections.Predicate;
 import org.mule.runtime.core.util.CollectionUtils;
 import org.mule.runtime.core.util.journal.queue.XaQueueTxJournalEntry;
 import org.mule.runtime.core.util.journal.queue.XaTxQueueTransactionJournal;
 import org.mule.runtime.core.util.queue.PersistentXaTransactionContext;
 import org.mule.runtime.core.util.queue.QueueProvider;
-
-import com.google.common.collect.Multimap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,17 +25,12 @@ import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 import javax.transaction.xa.Xid;
 
-import org.apache.commons.collections.Predicate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class XaTransactionRecoverer
 {
 
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
     private final XaTxQueueTransactionJournal xaTxQueueTransactionJournal;
     private final QueueProvider queueProvider;
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
 
     public XaTransactionRecoverer(XaTxQueueTransactionJournal xaTxQueueTransactionJournal, QueueProvider queueProvider)
     {
@@ -55,7 +53,7 @@ public class XaTransactionRecoverer
         //For XAResource.TMSTARTRSCAN and XAResource.TMNOFLAGS (only possible values despite XAResource.TMENDRSCAN we returns
         //the set of Xid to recover (no commit, no rollback) and bitronix will commit, rollback for Xid that are
         //dangling transactions and will do nothing for those that are currently being executed.
-        Multimap<Xid,XaQueueTxJournalEntry> xidXaJournalEntryMultimap = xaTxQueueTransactionJournal.getAllLogEntries();
+        Multimap<Xid, XaQueueTxJournalEntry> xidXaJournalEntryMultimap = xaTxQueueTransactionJournal.getAllLogEntries();
         if (logger.isDebugEnabled())
         {
             logger.debug("Executing XA recover");

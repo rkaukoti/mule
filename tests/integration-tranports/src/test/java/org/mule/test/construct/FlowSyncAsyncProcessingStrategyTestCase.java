@@ -6,6 +6,10 @@
  */
 package org.mule.test.construct;
 
+import junit.framework.Assert;
+
+import org.junit.After;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.functional.listener.FlowExecutionListener;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -13,24 +17,18 @@ import org.mule.runtime.core.util.FileUtils;
 import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
 import org.mule.tck.probe.Prober;
-
-import java.io.File;
-import java.io.IOException;
-
-import org.junit.After;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import junit.framework.Assert;
+import java.io.File;
+import java.io.IOException;
 
 public class FlowSyncAsyncProcessingStrategyTestCase extends FunctionalTestCase
 {
     public static final String SLEEP_TIME = "sleepTime";
     private static final String FILE_PATH = "./test/testfile.txt";
-    private File file;
-
     private static final Logger logger = LoggerFactory.getLogger(FlowSyncAsyncProcessingStrategyTestCase.class);
+    private File file;
 
     @Override
     protected String getConfigFile()
@@ -79,7 +77,7 @@ public class FlowSyncAsyncProcessingStrategyTestCase extends FunctionalTestCase
         @Override
         public boolean isSatisfied()
         {
-            if(file.exists())
+            if (file.exists())
             {
                 try
                 {

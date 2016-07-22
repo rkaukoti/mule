@@ -6,9 +6,8 @@
  */
 package org.mule.tck.junit4.rule;
 
-import org.mule.runtime.core.util.BackwardsCompatibilityPropertyChecker;
-
 import org.junit.rules.ExternalResource;
+import org.mule.runtime.core.util.BackwardsCompatibilityPropertyChecker;
 
 /**
  * Sets up the override feature of a BackwardsCompatibilityPropertyChecker allowing for it to be

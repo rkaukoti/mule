@@ -38,12 +38,12 @@ public final class FileInputStream extends AbstractFileInputStream
     /**
      * Creates a new instance
      *
-     * @param path
      * @param lock a {@link PathLock}
      */
     public FileInputStream(Path path, PathLock lock)
     {
-        super(new LazyStreamSupplier(() -> {
+        super(new LazyStreamSupplier(() ->
+        {
             try
             {
                 return new BufferedInputStream(Files.newInputStream(path));

@@ -6,6 +6,28 @@
  */
 package org.mule.extension.ftp.internal.sftp.connection;
 
+import com.google.common.collect.ImmutableSet;
+
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.extension.ftp.internal.FtpConnector;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.io.File;
+import java.util.Properties;
+
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.apache.commons.io.FileUtils.write;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -18,27 +40,6 @@ import static org.mule.extension.ftp.internal.sftp.connection.SftpClient.PREFERR
 import static org.mule.extension.ftp.internal.sftp.connection.SftpClient.STRICT_HOST_KEY_CHECKING;
 import static org.mule.functional.util.sftp.SftpServer.PASSWORD;
 import static org.mule.functional.util.sftp.SftpServer.USERNAME;
-import org.mule.extension.ftp.internal.FtpConnector;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import com.google.common.collect.ImmutableSet;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-
-import java.io.File;
-import java.util.Properties;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -48,13 +49,10 @@ public class SftpConnectionProviderTestCase extends AbstractMuleTestCase
     private static final String HOST = "localhost";
     private static final int TIMEOUT = 10;
     private static final String PASSPHRASE = "francis";
-
-    private File hostFile;
-    private File identityFile;
-
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
-
+    private File hostFile;
+    private File identityFile;
     @Mock
     private FtpConnector config;
 

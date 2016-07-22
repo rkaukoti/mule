@@ -39,18 +39,15 @@ public abstract class TransactedPollingMessageReceiver extends AbstractPollingMe
      * time to sleep when there are no messages in the queue to avoid busy waiting *
      */
     private static final long NO_MESSAGES_SLEEP_TIME = Long.parseLong(System.getProperty("mule.vm.pollingSleepWaitTime", "50"));
-
+    private final DefaultRouterResultsHandler defaultRouterResultsHandler = new DefaultRouterResultsHandler(false);
     /**
      * determines whether messages will be received in a transaction template
      */
     private boolean receiveMessagesInTransaction = true;
-
     /**
      * determines whether Multiple receivers are created to improve throughput
      */
     private boolean useMultipleReceivers = true;
-
-    private final DefaultRouterResultsHandler defaultRouterResultsHandler = new DefaultRouterResultsHandler(false);
 
     public TransactedPollingMessageReceiver(Connector connector,
                                             FlowConstruct flowConstruct,
@@ -61,9 +58,7 @@ public abstract class TransactedPollingMessageReceiver extends AbstractPollingMe
     }
 
     /**
-     * @deprecated please use
-     *             {@link #TransactedPollingMessageReceiver(Connector, FlowConstruct, InboundEndpoint)}
-     *             instead
+     * @deprecated please use {@link #TransactedPollingMessageReceiver(Connector, FlowConstruct, InboundEndpoint)} instead
      */
     @Deprecated
     public TransactedPollingMessageReceiver(Connector connector,
@@ -105,7 +100,7 @@ public abstract class TransactedPollingMessageReceiver extends AbstractPollingMe
         int numReceiversToStart = 1;
 
         if (this.isReceiveMessagesInTransaction() && this.isUseMultipleTransactedReceivers()
-                && tp.isDoThreading())
+            && tp.isDoThreading())
         {
             numReceiversToStart = connector.getNumberOfConcurrentTransactedReceivers();
         }
@@ -205,6 +200,10 @@ public abstract class TransactedPollingMessageReceiver extends AbstractPollingMe
         return false;
     }
 
+    protected abstract List<MuleMessage> getMessages() throws Exception;
+
+    protected abstract MuleEvent processMessage(Object message) throws Exception;
+
     protected class MessageProcessorWorker implements Work, ExecutionCallback<MuleEvent>
     {
         private final ExecutionTemplate<MuleEvent> pt;
@@ -212,7 +211,8 @@ public abstract class TransactedPollingMessageReceiver extends AbstractPollingMe
         private final CountDownLatch latch;
         private final SystemExceptionHandler exceptionHandler;
 
-        public MessageProcessorWorker(ExecutionTemplate<MuleEvent> pt, CountDownLatch latch, SystemExceptionHandler exceptionHandler, Object message)
+        public MessageProcessorWorker(ExecutionTemplate<MuleEvent> pt, CountDownLatch latch, SystemExceptionHandler exceptionHandler,
+                                      Object message)
         {
             this.pt = pt;
             this.message = message;
@@ -254,9 +254,5 @@ public abstract class TransactedPollingMessageReceiver extends AbstractPollingMe
             return null;
         }
     }
-
-    protected abstract List<MuleMessage> getMessages() throws Exception;
-
-    protected abstract MuleEvent processMessage(Object message) throws Exception;
 
 }

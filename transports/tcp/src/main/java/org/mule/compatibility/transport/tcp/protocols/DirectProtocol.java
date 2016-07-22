@@ -6,13 +6,13 @@
  */
 package org.mule.compatibility.transport.tcp.protocols;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.MessageFormat;
-
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.MessageFormat;
 
 /**
  * The DirectProtocol class is an application level tcp protocol that does nothing.
@@ -31,7 +31,7 @@ public class DirectProtocol extends AbstractByteProtocol
 
     private static final Logger logger = LoggerFactory.getLogger(DirectProtocol.class);
     private static final int DEFAULT_BUFFER_SIZE = 8192;
-    
+
     protected int bufferSize;
 
     public DirectProtocol()
@@ -54,7 +54,7 @@ public class DirectProtocol extends AbstractByteProtocol
     {
         // this can grow on repeated reads
         ByteArrayOutputStream baos = new ByteArrayOutputStream(bufferSize);
-        
+
         try
         {
             byte[] buffer = new byte[bufferSize];
@@ -107,15 +107,15 @@ public class DirectProtocol extends AbstractByteProtocol
      * there was also the additional requirement that the previous transfer
      * completely used the transfer buffer.
      *
-     * @param len Amount transferred last call (-1 on EOF or socket error)
+     * @param len       Amount transferred last call (-1 on EOF or socket error)
      * @param available Amount available
      * @return true if the transfer should continue
      */
     protected boolean isRepeat(int len, int available)
     {
         // previous logic - less reliable on slow networks
-//        return len == bufferSize && available > 0;
-        
+        //        return len == bufferSize && available > 0;
+
         return available > 0;
     }
 

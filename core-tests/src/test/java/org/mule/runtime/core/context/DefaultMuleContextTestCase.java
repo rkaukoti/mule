@@ -6,18 +6,10 @@
  */
 package org.mule.runtime.core.context;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_CONVERTER_RESOLVER;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.internal.verification.VerificationModeFactory;
 import org.mule.runtime.core.DataTypeConversionResolver;
 import org.mule.runtime.core.DefaultMuleContext;
 import org.mule.runtime.core.DynamicDataTypeConversionResolver;
@@ -41,10 +33,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.internal.verification.VerificationModeFactory;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_CONVERTER_RESOLVER;
 
 public class DefaultMuleContextTestCase extends AbstractMuleTestCase
 {
@@ -82,12 +81,13 @@ public class DefaultMuleContextTestCase extends AbstractMuleTestCase
     public void testClearExceptionHelperCacheForAppWhenDispose() throws Exception
     {
         URL baseUrl = DefaultMuleContextTestCase.class.getClassLoader().getResource(".");
-        File file = new File(baseUrl.getFile() + ExceptionHelper.SERVICE_ROOT + ServiceType.EXCEPTION.getPath() + "/" + TEST_PROTOCOL + "-exception-mappings.properties");
+        File file = new File(baseUrl.getFile() + ExceptionHelper.SERVICE_ROOT + ServiceType.EXCEPTION.getPath() + "/" + TEST_PROTOCOL +
+                             "-exception-mappings.properties");
         createExceptionMappingFile(file, INITIAL_VALUE);
 
         context = muleContextFactory.createMuleContext();
         String value = ExceptionHelper.getErrorMapping(TEST_PROTOCOL, IllegalArgumentException.class, context);
-        assertThat(value,is(INITIAL_VALUE));
+        assertThat(value, is(INITIAL_VALUE));
         context.dispose();
 
         createExceptionMappingFile(file, VALUE_AFTER_REDEPLOY);
@@ -121,9 +121,9 @@ public class DefaultMuleContextTestCase extends AbstractMuleTestCase
         context = muleContextFactory.createMuleContext();
         context.setExceptionListener(mockSystemExceptionHandler);
         context.handleException(mockMessagingException);
-        verify(mockSystemExceptionHandler, VerificationModeFactory.times(1)).handleException(mockMessagingException,null);
+        verify(mockSystemExceptionHandler, VerificationModeFactory.times(1)).handleException(mockMessagingException, null);
     }
-    
+
     @Test
     public void getObjectStoreManager() throws Exception
     {

@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
-import static org.springframework.beans.factory.support.BeanDefinitionBuilder.genericBeanDefinition;
 import org.mule.runtime.config.spring.dsl.api.TypeConverter;
 import org.mule.runtime.config.spring.factories.ConstantFactoryBean;
+import org.springframework.beans.factory.config.BeanDefinition;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.config.BeanDefinition;
+import static org.springframework.beans.factory.support.BeanDefinitionBuilder.genericBeanDefinition;
 
 /**
  * Abstract construct of a chain of responsibility to create a {@link org.springframework.beans.factory.config.BeanDefinition}
@@ -36,8 +36,6 @@ abstract class BeanDefinitionCreator
     /**
      * Will iterate over the chain of processors until there's one that handle
      * the request by return true to {@code #handleRequest}.
-     *
-     * @param request
      */
     public final void processRequest(CreateBeanDefinitionRequest request)
     {
@@ -65,7 +63,8 @@ abstract class BeanDefinitionCreator
     {
         if (converter.isPresent())
         {
-            return genericBeanDefinition(ConstantFactoryBean.class).addConstructorArgValue(converter.get().convert(value)).getBeanDefinition();
+            return genericBeanDefinition(ConstantFactoryBean.class).addConstructorArgValue(converter.get().convert(value))
+                                                                   .getBeanDefinition();
         }
         else
         {

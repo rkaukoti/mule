@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.mule</groupId>
@@ -12,8 +13,8 @@
     <description>These are the tools used by the Mule's build procedure</description>
 
     <properties>
-      <api.version>1.0-beta-1</api.version>
-      <maven.version>2.0.9</maven.version>
+        <api.version>1.0-beta-1</api.version>
+        <maven.version>2.0.9</maven.version>
     </properties>
 
     <build>
@@ -45,7 +46,7 @@
             </plugin>
         </plugins>
     </build>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.apache.maven.enforcer</groupId>

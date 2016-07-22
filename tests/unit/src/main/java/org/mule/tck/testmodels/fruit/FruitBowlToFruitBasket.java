@@ -29,7 +29,7 @@ public class FruitBowlToFruitBasket extends AbstractTransformer implements Disco
     @Override
     protected Object doTransform(Object src, Charset encoding) throws TransformerException
     {
-        FruitBowl bowl = (FruitBowl)src;
+        FruitBowl bowl = (FruitBowl) src;
         FruitBasket basket = new FruitBasket();
         basket.setFruit(bowl.getFruit());
         return basket;
@@ -38,8 +38,8 @@ public class FruitBowlToFruitBasket extends AbstractTransformer implements Disco
     /**
      * If 2 or more discoverable transformers are equal, this value can be used to select the correct one
      *
-     * @return the priority weighting for this transformer. This is a value between
-     *         {@link #MIN_PRIORITY_WEIGHTING} and {@link #MAX_PRIORITY_WEIGHTING}.
+     * @return the priority weighting for this transformer. This is a value between {@link #MIN_PRIORITY_WEIGHTING} and {@link
+     * #MAX_PRIORITY_WEIGHTING}.
      */
     @Override
     public int getPriorityWeighting()
@@ -50,8 +50,8 @@ public class FruitBowlToFruitBasket extends AbstractTransformer implements Disco
     /**
      * If 2 or more discoverable transformers are equal, this value can be used to select the correct one
      *
-     * @param weighting the priority weighting for this transformer. This is a value between
-     *                  {@link #MIN_PRIORITY_WEIGHTING} and {@link #MAX_PRIORITY_WEIGHTING}.
+     * @param weighting the priority weighting for this transformer. This is a value between {@link #MIN_PRIORITY_WEIGHTING} and {@link
+     *                  #MAX_PRIORITY_WEIGHTING}.
      */
     @Override
     public void setPriorityWeighting(int weighting)

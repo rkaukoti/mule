@@ -41,14 +41,14 @@ public class ParseTemplateTransformer extends AbstractMessageTransformer
     {
         try
         {
-            if(location == null)
+            if (location == null)
             {
                 throw new IllegalArgumentException("Location cannot be null");
             }
             template = IOUtils.getResourceAsString(location, this.getClass());
 
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             throw new InitialisationException(e, this);
         }
@@ -58,7 +58,7 @@ public class ParseTemplateTransformer extends AbstractMessageTransformer
     @Override
     public Object transformMessage(MuleEvent event, Charset outputEncoding) throws TransformerException
     {
-        if(template == null)
+        if (template == null)
         {
             throw new IllegalArgumentException("Template cannot be null");
         }

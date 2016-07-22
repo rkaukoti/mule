@@ -6,14 +6,13 @@
  */
 package org.mule.runtime.core.util.pool;
 
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.object.ObjectFactory;
 import org.mule.runtime.core.config.PoolingProfile;
 import org.mule.tck.testmodels.fruit.BananaFactory;
 
 import java.util.NoSuchElementException;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -26,9 +25,9 @@ public class CommonsPoolObjectPoolTestCase extends AbstractPoolingTestCase
     {
         ObjectPool pool = createPoolWithExhaustedAction(PoolingProfile.WHEN_EXHAUSTED_FAIL);
         assertEquals(0, pool.getNumActive());
-                
+
         borrowObjectsUntilPoolIsFull(pool);
-        
+
         // borrow one more, this must fail
         try
         {
@@ -40,28 +39,28 @@ public class CommonsPoolObjectPoolTestCase extends AbstractPoolingTestCase
             // this one was expected
         }
     }
-    
+
     @Test
     public void testPoolExhaustedGrow() throws Exception
     {
         ObjectPool pool = createPoolWithExhaustedAction(PoolingProfile.WHEN_EXHAUSTED_GROW);
         assertEquals(0, pool.getNumActive());
-        
+
         borrowObjectsUntilPoolIsFull(pool);
-        
+
         // borrow one more, this must make the pool grow
         pool.borrowObject();
         assertEquals(MAX_ACTIVE + 1, pool.getNumActive());
     }
-    
+
     @Test
     public void testPoolExhaustedWait() throws Exception
     {
         ObjectPool pool = createPoolWithExhaustedAction(PoolingProfile.WHEN_EXHAUSTED_WAIT);
         assertEquals(0, pool.getNumActive());
-        
+
         borrowObjectsUntilPoolIsFull(pool);
-        
+
         // borrow one more, this must make the pool grow
         long before = System.currentTimeMillis();
         try
@@ -75,7 +74,7 @@ public class CommonsPoolObjectPoolTestCase extends AbstractPoolingTestCase
             assertTrue(delta >= MAX_WAIT);
         }
     }
-    
+
     @Test
     public void testInitPoolNone() throws Exception
     {
@@ -83,7 +82,7 @@ public class CommonsPoolObjectPoolTestCase extends AbstractPoolingTestCase
         CountingObjectFactory objectFactory = (CountingObjectFactory) pool.getObjectFactory();
         assertEquals(0, objectFactory.getInstanceCount());
     }
-    
+
     @Test
     public void testInitPoolOne() throws Exception
     {
@@ -91,10 +90,10 @@ public class CommonsPoolObjectPoolTestCase extends AbstractPoolingTestCase
         CountingObjectFactory objectFactory = (CountingObjectFactory) pool.getObjectFactory();
         assertEquals(1, objectFactory.getInstanceCount());
     }
-    
+
     @Test
     public void testInitPoolAll() throws Exception
-    {   
+    {
         ObjectPool pool = createPoolWithInitialisationPolicy(PoolingProfile.INITIALISE_ALL);
         CountingObjectFactory objectFactory = (CountingObjectFactory) pool.getObjectFactory();
         assertEquals(MAX_ACTIVE, objectFactory.getInstanceCount());
@@ -113,13 +112,13 @@ public class CommonsPoolObjectPoolTestCase extends AbstractPoolingTestCase
     {
         PoolingProfile poolingProfile = createDefaultPoolingProfile();
         poolingProfile.setInitialisationPolicy(initPolicy);
-        
+
         ObjectFactory objectFactory = new CountingObjectFactory();
         return createPool(poolingProfile, objectFactory);
     }
-    
+
     private ObjectPool createPool(PoolingProfile poolingProfile, ObjectFactory objectFactory) throws Exception
-    {        
+    {
         CommonsPoolObjectPool pool = new CommonsPoolObjectPool(objectFactory, poolingProfile, muleContext);
         pool.initialise();
         return pool;
@@ -133,11 +132,11 @@ public class CommonsPoolObjectPoolTestCase extends AbstractPoolingTestCase
             assertEquals(i, pool.getNumActive());
         }
     }
-    
+
     private static class CountingObjectFactory extends BananaFactory
     {
         private int instanceCount = 0;
-        
+
         @Override
         public Object getInstance(MuleContext muleContext) throws Exception
         {

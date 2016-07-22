@@ -7,11 +7,8 @@
 
 package org.mule.runtime.module.db.internal.result.statement;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.Closeable;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.tck.junit4.AbstractMuleTestCase;
@@ -20,8 +17,11 @@ import org.mule.tck.size.SmallTest;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 @SmallTest
 public class CloseableMapTest extends AbstractMuleTestCase

@@ -8,10 +8,10 @@
 package org.mule.runtime.module.db.integration.storedprocedure;
 
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mule.runtime.module.db.integration.TestDbConfig.getOracleResource;
-import static org.mule.runtime.module.db.integration.model.Contact.CONTACT1;
-import static org.mule.runtime.module.db.integration.model.Region.SOUTHWEST;
+import org.hamcrest.Matchers;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
@@ -23,10 +23,10 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mule.runtime.module.db.integration.TestDbConfig.getOracleResource;
+import static org.mule.runtime.module.db.integration.model.Contact.CONTACT1;
+import static org.mule.runtime.module.db.integration.model.Region.SOUTHWEST;
 
 public class StoredProcedureJavaArrayUdtTestCase extends AbstractDbIntegrationTestCase
 {

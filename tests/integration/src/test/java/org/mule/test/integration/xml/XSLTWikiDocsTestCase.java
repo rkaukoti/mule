@@ -6,10 +6,8 @@
  */
 package org.mule.test.integration.xml;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import org.custommonkey.xmlunit.XMLUnit;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -19,8 +17,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.custommonkey.xmlunit.XMLUnit;
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class XSLTWikiDocsTestCase extends FunctionalTestCase
 {

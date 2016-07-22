@@ -7,16 +7,15 @@
 
 package org.mule.runtime.module.db.internal.domain.query;
 
+import org.apache.commons.lang.Validate;
+import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.module.db.internal.domain.param.InputQueryParam;
 import org.mule.runtime.module.db.internal.domain.param.OutputQueryParam;
 import org.mule.runtime.module.db.internal.domain.param.QueryParam;
-import org.mule.runtime.core.util.StringUtils;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.apache.commons.lang.Validate;
 
 /**
  * Defines a SQL query that could be executed against a database connection.
@@ -67,6 +66,7 @@ public class QueryTemplate
 
     /**
      * Creates a SQL template from another query template
+     *
      * @param source query template to clone
      */
     public QueryTemplate(QueryTemplate source)
@@ -183,8 +183,7 @@ public class QueryTemplate
     /**
      * Indicates whether or not the query uses named parameters.
      *
-     * @return true if the query uses named parameters, false if there are
-     * inline or no parameters
+     * @return true if the query uses named parameters, false if there are inline or no parameters
      */
     public boolean usesNamedParameters()
     {

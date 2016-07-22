@@ -7,10 +7,6 @@
 
 package org.mule.runtime.module.launcher.application;
 
-import static org.apache.commons.io.FileUtils.listFiles;
-import static org.apache.commons.lang.ClassUtils.getPackageName;
-import static org.mule.runtime.module.launcher.application.MuleApplicationClassLoaderFactory.CLASS_EXTENSION;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,6 +18,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
+import static org.apache.commons.io.FileUtils.listFiles;
+import static org.apache.commons.lang.ClassUtils.getPackageName;
+import static org.mule.runtime.module.launcher.application.MuleApplicationClassLoaderFactory.CLASS_EXTENSION;
 
 /**
  * Discovers Java packages from files and folders
@@ -46,7 +46,8 @@ public class FilePackageDiscoverer implements PackageDiscoverer
                 for (File classFile : classFiles)
                 {
                     final String relativePath = classFile.getAbsolutePath().substring(libraryFile.getAbsolutePath().length() + 1);
-                    final String packageName = getPackageName(relativePath.substring(0, relativePath.length() - CLASS_EXTENSION.length()).replace("/", "."));
+                    final String packageName =
+                            getPackageName(relativePath.substring(0, relativePath.length() - CLASS_EXTENSION.length()).replace("/", "."));
                     packageNames.add(packageName);
                 }
             }
@@ -63,7 +64,8 @@ public class FilePackageDiscoverer implements PackageDiscoverer
                     {
                         if (!entry.isDirectory() && entry.getName().endsWith(CLASS_EXTENSION))
                         {
-                            final String packageName = getPackageName(entry.getName().substring(0, entry.getName().length() - CLASS_EXTENSION.length()).replace("/", "."));
+                            final String packageName = getPackageName(
+                                    entry.getName().substring(0, entry.getName().length() - CLASS_EXTENSION.length()).replace("/", "."));
                             packageNames.add(packageName);
                         }
                     }

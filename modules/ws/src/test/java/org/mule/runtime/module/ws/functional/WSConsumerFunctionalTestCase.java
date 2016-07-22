@@ -7,12 +7,12 @@
 
 package org.mule.runtime.module.ws.functional;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 @RunWith(Parameterized.class)
 public class WSConsumerFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase
@@ -21,20 +21,20 @@ public class WSConsumerFunctionalTestCase extends AbstractWSConsumerFunctionalTe
     @Parameterized.Parameter(value = 0)
     public String configFile;
 
-    @Override
-    protected String getConfigFile()
-    {
-        return configFile;
-    }
-
     @Parameterized.Parameters
     public static Collection<Object[]> parameters()
     {
         //TODO add test cases for JMS once MULE-9210 gets fixed
         return Arrays.asList(new Object[] {"ws-consumer-http-module-config.xml"},
-                             new Object[] {"ws-consumer-http-module-config.xml"}
+                new Object[] {"ws-consumer-http-module-config.xml"}
 
         );
+    }
+
+    @Override
+    protected String getConfigFile()
+    {
+        return configFile;
     }
 
     @Test

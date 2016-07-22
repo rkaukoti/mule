@@ -6,9 +6,7 @@
  */
 package org.mule.test.core.transformers.simple;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -22,7 +20,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Highlights the issue: MULE-4599 where dispose cannot be called on a transformer
@@ -40,7 +39,7 @@ public class RegistryTransformerLifecycleTestCase extends FunctionalTestCase
     public void testLifecycleInSpring() throws Exception
     {
         TransformerLifecycleTracker transformer = (TransformerLifecycleTracker) muleContext.getRegistry()
-            .lookupTransformer("lifecycle");
+                                                                                           .lookupTransformer("lifecycle");
         assertNotNull(transformer);
         muleContext.dispose();
         assertInitialise(transformer);

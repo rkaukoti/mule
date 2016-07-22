@@ -6,21 +6,6 @@
  */
 package org.mule.extension.http.internal.listener;
 
-import static java.lang.String.format;
-import static org.mule.extension.http.internal.HttpConnector.OTHER_SETTINGS;
-import static org.mule.extension.http.internal.HttpConnector.TLS;
-import static org.mule.extension.http.internal.HttpConnector.TLS_CONFIGURATION;
-import static org.mule.extension.http.internal.HttpConnector.URL_CONFIGURATION;
-import static org.mule.runtime.api.connection.ConnectionExceptionCode.UNKNOWN;
-import static org.mule.runtime.api.connection.ConnectionValidationResult.failure;
-import static org.mule.runtime.core.api.config.ThreadingProfile.DEFAULT_THREADING_PROFILE;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.concurrent.ThreadNameHelper.getPrefix;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
-
 import org.mule.extension.http.api.server.HttpListenerConnectionManager;
 import org.mule.extension.http.internal.listener.server.HttpServerConfiguration;
 import org.mule.runtime.api.connection.ConnectionException;
@@ -55,6 +40,21 @@ import org.mule.runtime.module.http.internal.listener.ServerAddress;
 import java.io.IOException;
 
 import javax.inject.Inject;
+
+import static java.lang.String.format;
+import static org.mule.extension.http.internal.HttpConnector.OTHER_SETTINGS;
+import static org.mule.extension.http.internal.HttpConnector.TLS;
+import static org.mule.extension.http.internal.HttpConnector.TLS_CONFIGURATION;
+import static org.mule.extension.http.internal.HttpConnector.URL_CONFIGURATION;
+import static org.mule.runtime.api.connection.ConnectionExceptionCode.UNKNOWN;
+import static org.mule.runtime.api.connection.ConnectionValidationResult.failure;
+import static org.mule.runtime.core.api.config.ThreadingProfile.DEFAULT_THREADING_PROFILE;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.concurrent.ThreadNameHelper.getPrefix;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
 
 /**
  * Connection provider for a {@link HttpListener}, handles the creation of {@link Server} instances.
@@ -151,11 +151,13 @@ public class HttpListenerProvider implements ConnectionProvider<Server>, Initial
         if (protocol.equals(HTTP) && tlsContext != null)
         {
             throw new InitialisationException(createStaticMessage("TlsContext cannot be configured with protocol HTTP. " +
-                                                                  "If you defined a tls:context element in your listener-config then you must set protocol=\"HTTPS\""), this);
+                                                                  "If you defined a tls:context element in your listener-config then you must set protocol=\"HTTPS\""),
+                    this);
         }
         if (protocol.equals(HTTPS) && tlsContext == null)
         {
-            throw new InitialisationException(createStaticMessage("Configured protocol is HTTPS but there's no TlsContext configured"), this);
+            throw new InitialisationException(createStaticMessage("Configured protocol is HTTPS but there's no TlsContext configured"),
+                    this);
         }
         if (tlsContext != null && !tlsContext.isKeyStoreConfigured())
         {
@@ -245,8 +247,8 @@ public class HttpListenerProvider implements ConnectionProvider<Server>, Initial
         {
             ServerAddress serverAddress = server.getServerAddress();
             return failure(format("Server on host %s and port %s is stopped.", serverAddress.getIp(), serverAddress.getPort()),
-                           UNKNOWN,
-                           new ConnectionException("Server stopped."));
+                    UNKNOWN,
+                    new ConnectionException("Server stopped."));
         }
         else
         {
@@ -270,7 +272,8 @@ public class HttpListenerProvider implements ConnectionProvider<Server>, Initial
 
     private WorkManager createWorkManager(String name)
     {
-        final WorkManager workManager = workerThreadingProfile.createWorkManager(format("%s%s.%s", getPrefix(muleContext), name, "worker"), muleContext.getConfiguration().getShutdownTimeout());
+        final WorkManager workManager = workerThreadingProfile.createWorkManager(format("%s%s.%s", getPrefix(muleContext), name, "worker"),
+                muleContext.getConfiguration().getShutdownTimeout());
         if (workManager instanceof MuleContextAware)
         {
             ((MuleContextAware) workManager).setMuleContext(muleContext);

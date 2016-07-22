@@ -6,10 +6,8 @@
  */
 package org.mule.extension.socket.ssl;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.extension.socket.SocketExtensionTestCase;
 import org.mule.extension.socket.api.SocketAttributes;
 import org.mule.runtime.api.message.MuleMessage;
@@ -18,8 +16,10 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.io.InputStream;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 
 public class TcpSslTestCase extends SocketExtensionTestCase
 {
@@ -64,8 +64,8 @@ public class TcpSslTestCase extends SocketExtensionTestCase
     private MuleMessage sendStringAndAssertResponse(String flowName) throws Exception
     {
         org.mule.runtime.core.api.MuleMessage muleMessage = flowRunner(flowName).
-                withPayload(TEST_STRING).
-                run().getMessage();
+                                                                                        withPayload(TEST_STRING).
+                                                                                        run().getMessage();
 
         InputStream inputStream = (InputStream) muleMessage.getPayload();
 

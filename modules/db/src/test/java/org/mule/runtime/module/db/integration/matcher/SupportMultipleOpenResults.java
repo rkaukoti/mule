@@ -7,10 +7,10 @@
 
 package org.mule.runtime.module.db.integration.matcher;
 
+import org.hamcrest.Description;
+
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-
-import org.hamcrest.Description;
 
 /**
  * Checks whether or not a dataSource supports to have multiple ResultSet

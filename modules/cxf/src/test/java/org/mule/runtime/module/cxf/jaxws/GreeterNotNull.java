@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.module.cxf.jaxws;
 
-import org.mule.tck.probe.Probe;
-
 import org.apache.hello_world_soap_http.GreeterImpl;
+import org.mule.tck.probe.Probe;
 
 public class GreeterNotNull implements Probe
 {

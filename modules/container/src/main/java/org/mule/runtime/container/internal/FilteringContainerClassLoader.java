@@ -33,8 +33,7 @@ public class FilteringContainerClassLoader extends FilteringArtifactClassLoader
      * Creates a new instance
      *
      * @param containerClassLoader delegate classLoader. Not null.
-     * @param filter filter used to determine which classes and resources are exported
-     *               on the delegate classLoader.
+     * @param filter               filter used to determine which classes and resources are exported on the delegate classLoader.
      */
     public FilteringContainerClassLoader(ArtifactClassLoader containerClassLoader, ClassLoaderFilter filter)
     {

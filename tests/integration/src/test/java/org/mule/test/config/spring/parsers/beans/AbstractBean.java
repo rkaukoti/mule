@@ -84,5 +84,5 @@ public class AbstractBean
     {
         this.ignored = ignored;
     }
-    
+
 }

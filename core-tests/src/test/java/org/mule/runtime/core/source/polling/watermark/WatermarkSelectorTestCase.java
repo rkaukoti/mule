@@ -7,18 +7,17 @@
 
 package org.mule.runtime.core.source.polling.watermark;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
+import org.junit.Test;
 import org.mule.runtime.core.source.polling.watermark.selector.MaxValueWatermarkSelector;
 import org.mule.runtime.core.source.polling.watermark.selector.MinValueWatermarkSelector;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 @SmallTest
 public class WatermarkSelectorTestCase extends AbstractMuleTestCase

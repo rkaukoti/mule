@@ -6,12 +6,7 @@
  */
 package org.mule.compatibility.transport.ssl;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.construct.Flow;
@@ -23,7 +18,12 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 /**
  * Whitebox test for the SSL latch in SslMessageReceiver. The use of reflection here is hacky
@@ -88,6 +88,6 @@ public class SslHandshakeTimingTestCase extends AbstractMuleContextEndpointTestC
         assertNotNull(preRouteMessage);
         preRouteMessage.setAccessible(true);
 
-        return (MuleMessage) preRouteMessage.invoke(receiver, new Object[] { message });
+        return (MuleMessage) preRouteMessage.invoke(receiver, new Object[] {message});
     }
 }

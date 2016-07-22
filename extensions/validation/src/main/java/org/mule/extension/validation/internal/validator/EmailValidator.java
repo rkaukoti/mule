@@ -6,11 +6,12 @@
  */
 package org.mule.extension.validation.internal.validator;
 
-import static org.mule.extension.validation.internal.ImmutableValidationResult.ok;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.config.i18n.Message;
 import org.mule.extension.validation.api.ValidationResult;
 import org.mule.extension.validation.internal.ValidationContext;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.config.i18n.Message;
+
+import static org.mule.extension.validation.internal.ImmutableValidationResult.ok;
 
 /**
  * An {@link AbstractValidator} which verifies that a {@link #email} address
@@ -38,8 +39,8 @@ public class EmailValidator extends AbstractValidator
         }
 
         return org.apache.commons.validator.routines.EmailValidator.getInstance().isValid(email)
-               ? ok()
-               : fail();
+                ? ok()
+                : fail();
     }
 
     @Override

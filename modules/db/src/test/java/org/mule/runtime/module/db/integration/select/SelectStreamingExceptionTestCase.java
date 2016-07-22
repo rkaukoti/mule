@@ -7,10 +7,8 @@
 
 package org.mule.runtime.module.db.integration.select;
 
-import static java.lang.Boolean.FALSE;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
@@ -24,8 +22,9 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static java.lang.Boolean.FALSE;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class SelectStreamingExceptionTestCase extends AbstractDbIntegrationTestCase
 {

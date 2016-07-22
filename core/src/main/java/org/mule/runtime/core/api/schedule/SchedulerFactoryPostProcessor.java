@@ -37,7 +37,7 @@ public interface SchedulerFactoryPostProcessor
      * </p>
      *
      * @param scheduler The {@link Scheduler} that was created by the {@SchedulerFactory}. It will never be Null.
-     * @param job, The job that the {@link Scheduler} is going to execute
+     * @param job,      The job that the {@link Scheduler} is going to execute
      * @return A Post processed instance of a {@link Scheduler}
      */
     Scheduler process(Object job, Scheduler scheduler);

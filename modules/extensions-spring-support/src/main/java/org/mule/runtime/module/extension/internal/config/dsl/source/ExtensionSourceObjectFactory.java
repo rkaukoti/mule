@@ -6,10 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.config.dsl.source;
 
-import static java.lang.String.format;
-import static java.util.stream.Collectors.toList;
-import static org.mule.runtime.core.api.config.ThreadingProfile.DEFAULT_THREADING_PROFILE;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import com.google.common.base.Joiner;
+
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleRuntimeException;
@@ -29,11 +27,14 @@ import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSet;
 import org.mule.runtime.module.extension.internal.runtime.source.ExtensionMessageSource;
 import org.mule.runtime.module.extension.internal.runtime.source.SourceConfigurer;
 
-import com.google.common.base.Joiner;
-
 import java.util.List;
 
 import javax.inject.Inject;
+
+import static java.lang.String.format;
+import static java.util.stream.Collectors.toList;
+import static org.mule.runtime.core.api.config.ThreadingProfile.DEFAULT_THREADING_PROFILE;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
  * An {@link AbstractExtensionObjectFactory} that produces instances of {@link ExtensionMessageSource}
@@ -70,12 +71,12 @@ public class ExtensionSourceObjectFactory extends AbstractExtensionObjectFactory
         }
 
         ExtensionMessageSource messageSource = new ExtensionMessageSource(extensionModel,
-                                                                          sourceModel,
-                                                                          getSourceFactory(resolverSet),
-                                                                          configurationProviderName,
-                                                                          getThreadingProfile(),
-                                                                          getRetryPolicyTemplate(),
-                                                                          (ExtensionManagerAdapter) muleContext.getExtensionManager());
+                sourceModel,
+                getSourceFactory(resolverSet),
+                configurationProviderName,
+                getThreadingProfile(),
+                getRetryPolicyTemplate(),
+                (ExtensionManagerAdapter) muleContext.getExtensionManager());
         try
         {
             muleContext.getInjector().inject(messageSource);
@@ -99,7 +100,8 @@ public class ExtensionSourceObjectFactory extends AbstractExtensionObjectFactory
 
     private SourceFactory getSourceFactory(ResolverSet resolverSet)
     {
-        return () -> {
+        return () ->
+        {
             Source source = sourceModel.getSourceFactory().createSource();
             try
             {
@@ -107,7 +109,8 @@ public class ExtensionSourceObjectFactory extends AbstractExtensionObjectFactory
             }
             catch (Exception e)
             {
-                throw new MuleRuntimeException(createStaticMessage(format("Could not create generator for source '%s'", sourceModel.getName())));
+                throw new MuleRuntimeException(
+                        createStaticMessage(format("Could not create generator for source '%s'", sourceModel.getName())));
             }
         };
     }
@@ -117,25 +120,26 @@ public class ExtensionSourceObjectFactory extends AbstractExtensionObjectFactory
         return retryPolicyTemplate != null ? retryPolicyTemplate : connectionManager.getDefaultRetryPolicyTemplate();
     }
 
+    public void setRetryPolicyTemplate(RetryPolicyTemplate retryPolicyTemplate)
+    {
+        this.retryPolicyTemplate = retryPolicyTemplate;
+    }
+
     private ConfigurationException dynamicParameterException(ResolverSet resolverSet, SourceModel model)
     {
         List<String> dynamicParams = resolverSet.getResolvers().entrySet().stream()
-                .filter(entry -> entry.getValue().isDynamic())
-                .map(entry -> entry.getKey())
-                .collect(toList());
+                                                .filter(entry -> entry.getValue().isDynamic())
+                                                .map(entry -> entry.getKey())
+                                                .collect(toList());
 
-        return new ConfigurationException(createStaticMessage(format("The '%s' message source is using expressions, which are not allowed on message sources. " +
-                                                                     "Offending parameters are: [%s]",
-                                                                     model.getName(), Joiner.on(',').join(dynamicParams))));
+        return new ConfigurationException(
+                createStaticMessage(format("The '%s' message source is using expressions, which are not allowed on message sources. " +
+                                           "Offending parameters are: [%s]",
+                        model.getName(), Joiner.on(',').join(dynamicParams))));
     }
 
     public void setConfigurationProviderName(String configurationProviderName)
     {
         this.configurationProviderName = configurationProviderName;
-    }
-
-    public void setRetryPolicyTemplate(RetryPolicyTemplate retryPolicyTemplate)
-    {
-        this.retryPolicyTemplate = retryPolicyTemplate;
     }
 }

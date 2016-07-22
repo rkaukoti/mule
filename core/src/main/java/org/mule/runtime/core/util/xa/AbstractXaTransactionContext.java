@@ -14,8 +14,6 @@ public abstract class AbstractXaTransactionContext extends AbstractTransactionCo
 
     /**
      * Two phase commit prepare phase
-     *
-     * @throws ResourceManagerException
      */
     public abstract void doPrepare() throws ResourceManagerException;
 

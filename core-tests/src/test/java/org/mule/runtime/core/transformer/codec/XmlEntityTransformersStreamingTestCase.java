@@ -14,14 +14,14 @@ public class XmlEntityTransformersStreamingTestCase extends XMLEntityTransformer
     @Override
     public Object getTestData()
     {
-        String string = (String)super.getTestData();
+        String string = (String) super.getTestData();
         return new ByteArrayInputStream(string.getBytes());
     }
 
     @Override
     public Object getResultData()
     {
-        String string = (String)super.getResultData();
+        String string = (String) super.getResultData();
         return new ByteArrayInputStream(string.getBytes());
     }
 

@@ -12,8 +12,6 @@ import java.util.Arrays;
 
 import javax.transaction.xa.Xid;
 
-import org.apache.commons.lang.builder.HashCodeBuilder;
-
 /**
  * Mule {@link javax.transaction.xa.Xid} implementation
  */
@@ -64,7 +62,8 @@ public class MuleXid implements Xid, Comparable<Xid>
             return false;
         }
         Xid other = (Xid) obj;
-        return Arrays.equals(getGlobalTransactionId(), other.getGlobalTransactionId()) && Arrays.equals(getBranchQualifier(),other.getBranchQualifier()) && getFormatId() == other.getFormatId();
+        return Arrays.equals(getGlobalTransactionId(), other.getGlobalTransactionId()) &&
+               Arrays.equals(getBranchQualifier(), other.getBranchQualifier()) && getFormatId() == other.getFormatId();
     }
 
     @Override
@@ -76,7 +75,8 @@ public class MuleXid implements Xid, Comparable<Xid>
     @Override
     public int compareTo(Xid o)
     {
-        if (formatId == o.getFormatId() && Arrays.equals(globalTransactionId, o.getGlobalTransactionId()) && Arrays.equals(branchQualifier, o.getBranchQualifier()))
+        if (formatId == o.getFormatId() && Arrays.equals(globalTransactionId, o.getGlobalTransactionId()) &&
+            Arrays.equals(branchQualifier, o.getBranchQualifier()))
         {
             return 0;
         }

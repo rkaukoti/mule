@@ -31,6 +31,8 @@ import org.mule.runtime.module.management.support.AutoDiscoveryJmxSupportFactory
 import org.mule.runtime.module.management.support.JmxSupport;
 import org.mule.runtime.module.management.support.JmxSupportFactory;
 import org.mule.runtime.module.management.support.SimplePasswordJmxAuthenticator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.management.ManagementFactory;
 import java.net.URI;
@@ -56,9 +58,6 @@ import javax.management.remote.JMXConnectorServerFactory;
 import javax.management.remote.JMXServiceURL;
 import javax.management.remote.rmi.RMIConnectorServer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * <code>AbstractJmxAgent</code> registers Mule Jmx management beans with an MBean server.
  */
@@ -81,13 +80,20 @@ public abstract class AbstractJmxAgent extends AbstractAgent
      */
     protected static final Logger logger = LoggerFactory.getLogger(AbstractJmxAgent.class);
 
+    static
+    {
+        Map<String, String> props = new HashMap<String, String>(1);
+        props.put(RMIConnectorServer.JNDI_REBIND_ATTRIBUTE, "true");
+        DEFAULT_CONNECTOR_SERVER_PROPERTIES = Collections.unmodifiableMap(props);
+    }
+
+    private final AtomicBoolean serverCreated = new AtomicBoolean(false);
+    private final AtomicBoolean initialized = new AtomicBoolean(false);
     /**
      * Should MBeanServer be discovered.
      */
     protected boolean locateServer = true;
-
     protected boolean containerMode = true;
-
     // don't create mbean server by default, use a platform mbean server
     private boolean createServer = false;
     private String connectorServerUrl;
@@ -95,31 +101,18 @@ public abstract class AbstractJmxAgent extends AbstractAgent
     private JMXConnectorServer connectorServer;
     private Map<String, Object> connectorServerProperties = null;
     private boolean enableStatistics = true;
-    private final AtomicBoolean serverCreated = new AtomicBoolean(false);
-    private final AtomicBoolean initialized = new AtomicBoolean(false);
-
     private JmxSupportFactory jmxSupportFactory = AutoDiscoveryJmxSupportFactory.getInstance();
     protected JmxSupport jmxSupport = jmxSupportFactory.getJmxSupport();
     private ConfigurableJMXAuthenticator jmxAuthenticator;
-
     //Used is RMI is being used
     private Registry rmiRegistry;
     private boolean createRmiRegistry = true;
-
     /**
      * Username/password combinations for JMX Remoting authentication.
      */
     private Map<String, String> credentials = new HashMap<String, String>();
-
     private AbstractJmxAgent.MuleContextStartedListener muleContextStartedListener;
     private AbstractJmxAgent.MuleContextStoppedListener muleContextStoppedListener;
-
-    static
-    {
-        Map<String, String> props = new HashMap<String, String>(1);
-        props.put(RMIConnectorServer.JNDI_REBIND_ATTRIBUTE, "true");
-        DEFAULT_CONNECTOR_SERVER_PROPERTIES = Collections.unmodifiableMap(props);
-    }
 
     public AbstractJmxAgent()
     {
@@ -231,7 +224,7 @@ public abstract class AbstractJmxAgent extends AbstractAgent
                         }
                         catch (ExportException e)
                         {
-                            logger.info("Registry on " + uri  + " already bound. Attempting to use that instead");
+                            logger.info("Registry on " + uri + " already bound. Attempting to use that instead");
                             rmiRegistry = LocateRegistry.getRegistry(uri.getHost(), uri.getPort());
                         }
                     }
@@ -272,8 +265,8 @@ public abstract class AbstractJmxAgent extends AbstractAgent
                         this.getJmxAuthenticator());
             }
             connectorServer = JMXConnectorServerFactory.newJMXConnectorServer(url,
-                                                                              connectorServerProperties,
-                                                                              mBeanServer);
+                    connectorServerProperties,
+                    mBeanServer);
             connectorServer.start();
         }
         catch (ExportException e)
@@ -341,28 +334,32 @@ public abstract class AbstractJmxAgent extends AbstractAgent
     }
 
     protected void registerStatisticsService() throws NotCompliantMBeanException, MBeanRegistrationException,
-        InstanceAlreadyExistsException, MalformedObjectNameException
+            InstanceAlreadyExistsException, MalformedObjectNameException
     {
-        ObjectName on = jmxSupport.getObjectName(String.format("%s:%s", jmxSupport.getDomainName(muleContext, !containerMode), StatisticsServiceMBean.DEFAULT_JMX_NAME));
+        ObjectName on = jmxSupport.getObjectName(
+                String.format("%s:%s", jmxSupport.getDomainName(muleContext, !containerMode), StatisticsServiceMBean.DEFAULT_JMX_NAME));
         StatisticsService service = new StatisticsService();
         service.setMuleContext(muleContext);
         service.setEnabled(isEnableStatistics());
-        ClassloaderSwitchingMBeanWrapper mBean = new ClassloaderSwitchingMBeanWrapper(service, StatisticsServiceMBean.class, muleContext.getExecutionClassLoader());
+        ClassloaderSwitchingMBeanWrapper mBean =
+                new ClassloaderSwitchingMBeanWrapper(service, StatisticsServiceMBean.class, muleContext.getExecutionClassLoader());
         logger.debug("Registering statistics with name: " + on);
         mBeanServer.registerMBean(mBean, on);
     }
 
     protected void registerMuleService() throws NotCompliantMBeanException, MBeanRegistrationException,
-        InstanceAlreadyExistsException, MalformedObjectNameException
+            InstanceAlreadyExistsException, MalformedObjectNameException
     {
-        ObjectName on = jmxSupport.getObjectName(String.format("%s:%s", jmxSupport.getDomainName(muleContext, !containerMode), MuleServiceMBean.DEFAULT_JMX_NAME));
+        ObjectName on = jmxSupport.getObjectName(
+                String.format("%s:%s", jmxSupport.getDomainName(muleContext, !containerMode), MuleServiceMBean.DEFAULT_JMX_NAME));
         if (muleContext.getConfiguration().isContainerMode() && mBeanServer.isRegistered(on))
         {
             // while in container mode, a previous stop() action leaves MuleContext MBean behind for remote start() operation
             return;
         }
         MuleService service = new MuleService(muleContext);
-        ClassloaderSwitchingMBeanWrapper serviceMBean = new ClassloaderSwitchingMBeanWrapper(service, MuleServiceMBean.class, muleContext.getExecutionClassLoader());
+        ClassloaderSwitchingMBeanWrapper serviceMBean =
+                new ClassloaderSwitchingMBeanWrapper(service, MuleServiceMBean.class, muleContext.getExecutionClassLoader());
         logger.debug("Registering mule with name: " + on);
         mBeanServer.registerMBean(serviceMBean, on);
     }
@@ -370,41 +367,48 @@ public abstract class AbstractJmxAgent extends AbstractAgent
     protected void registerConfigurationService() throws NotCompliantMBeanException, MBeanRegistrationException,
             InstanceAlreadyExistsException, MalformedObjectNameException
     {
-        ObjectName on = jmxSupport.getObjectName(String.format("%s:%s", jmxSupport.getDomainName(muleContext, !containerMode), MuleConfigurationServiceMBean.DEFAULT_JMX_NAME));
+        ObjectName on = jmxSupport.getObjectName(String.format("%s:%s", jmxSupport.getDomainName(muleContext, !containerMode),
+                MuleConfigurationServiceMBean.DEFAULT_JMX_NAME));
         MuleConfigurationServiceMBean service = new MuleConfigurationService(muleContext.getConfiguration());
-        ClassloaderSwitchingMBeanWrapper mBean = new ClassloaderSwitchingMBeanWrapper(service, MuleConfigurationServiceMBean.class, muleContext.getExecutionClassLoader());
+        ClassloaderSwitchingMBeanWrapper mBean =
+                new ClassloaderSwitchingMBeanWrapper(service, MuleConfigurationServiceMBean.class, muleContext.getExecutionClassLoader());
         logger.debug("Registering configuration with name: " + on);
         mBeanServer.registerMBean(mBean, on);
     }
 
     protected void registerFlowConstructServices() throws NotCompliantMBeanException, MBeanRegistrationException,
-        InstanceAlreadyExistsException, MalformedObjectNameException
+            InstanceAlreadyExistsException, MalformedObjectNameException
     {
         for (AbstractFlowConstruct flowConstruct : muleContext.getRegistry().lookupObjects(AbstractFlowConstruct.class))
         {
             final String rawName = flowConstruct.getName();
             final String name = jmxSupport.escape(rawName);
-            final String jmxName = String.format("%s:type=%s,name=%s", jmxSupport.getDomainName(muleContext, !containerMode), flowConstruct.getConstructType(), name);
+            final String jmxName = String.format("%s:type=%s,name=%s", jmxSupport.getDomainName(muleContext, !containerMode),
+                    flowConstruct.getConstructType(), name);
             ObjectName on = jmxSupport.getObjectName(jmxName);
-            FlowConstructServiceMBean fcMBean = new FlowConstructService(flowConstruct.getConstructType(), rawName, muleContext, flowConstruct.getStatistics());
-            ClassloaderSwitchingMBeanWrapper wrapper = new ClassloaderSwitchingMBeanWrapper(fcMBean, FlowConstructServiceMBean.class, muleContext.getExecutionClassLoader());
+            FlowConstructServiceMBean fcMBean =
+                    new FlowConstructService(flowConstruct.getConstructType(), rawName, muleContext, flowConstruct.getStatistics());
+            ClassloaderSwitchingMBeanWrapper wrapper =
+                    new ClassloaderSwitchingMBeanWrapper(fcMBean, FlowConstructServiceMBean.class, muleContext.getExecutionClassLoader());
             logger.debug("Registering service with name: " + on);
             mBeanServer.registerMBean(wrapper, on);
         }
     }
 
     protected void registerApplicationServices() throws NotCompliantMBeanException, MBeanRegistrationException,
-        InstanceAlreadyExistsException, MalformedObjectNameException
+            InstanceAlreadyExistsException, MalformedObjectNameException
     {
         FlowConstructStatistics appStats = muleContext.getStatistics().getApplicationStatistics();
         if (appStats != null)
         {
             final String rawName = appStats.getName();
             final String name = jmxSupport.escape(rawName);
-            final String jmxName = String.format("%s:type=%s,name=%s", jmxSupport.getDomainName(muleContext, !containerMode), appStats.getFlowConstructType(), name);
+            final String jmxName = String.format("%s:type=%s,name=%s", jmxSupport.getDomainName(muleContext, !containerMode),
+                    appStats.getFlowConstructType(), name);
             ObjectName on = jmxSupport.getObjectName(jmxName);
-            FlowConstructServiceMBean fcMBean = new ApplicationService(appStats.getFlowConstructType(), rawName, muleContext,appStats);
-            ClassloaderSwitchingMBeanWrapper wrapper = new ClassloaderSwitchingMBeanWrapper(fcMBean, FlowConstructServiceMBean.class, muleContext.getExecutionClassLoader());
+            FlowConstructServiceMBean fcMBean = new ApplicationService(appStats.getFlowConstructType(), rawName, muleContext, appStats);
+            ClassloaderSwitchingMBeanWrapper wrapper =
+                    new ClassloaderSwitchingMBeanWrapper(fcMBean, FlowConstructServiceMBean.class, muleContext.getExecutionClassLoader());
             logger.debug("Registering application statistics with name: " + on);
             mBeanServer.registerMBean(wrapper, on);
         }
@@ -577,6 +581,25 @@ public abstract class AbstractJmxAgent extends AbstractAgent
         this.createRmiRegistry = createRmiRegistry;
     }
 
+    protected abstract void registerServices()
+            throws MuleException, NotCompliantMBeanException, MBeanRegistrationException, InstanceAlreadyExistsException,
+            MalformedObjectNameException;
+
+    public ConfigurableJMXAuthenticator getJmxAuthenticator()
+    {
+        if (this.jmxAuthenticator == null)
+        {
+            this.jmxAuthenticator = new SimplePasswordJmxAuthenticator();
+            this.jmxAuthenticator.configure(credentials);
+        }
+        return jmxAuthenticator;
+    }
+
+    public void setJmxAuthenticator(ConfigurableJMXAuthenticator jmxAuthenticator)
+    {
+        this.jmxAuthenticator = jmxAuthenticator;
+    }
+
     protected class MuleContextStartedListener implements MuleContextNotificationListener<MuleContextNotification>
     {
 
@@ -597,8 +620,6 @@ public abstract class AbstractJmxAgent extends AbstractAgent
         }
     }
 
-    protected abstract void registerServices() throws MuleException, NotCompliantMBeanException, MBeanRegistrationException, InstanceAlreadyExistsException, MalformedObjectNameException;
-
     protected class MuleContextStoppedListener implements MuleContextNotificationListener<MuleContextNotification>
     {
 
@@ -611,20 +632,5 @@ public abstract class AbstractJmxAgent extends AbstractAgent
                 unregisterMBeansIfNecessary(containerMode);
             }
         }
-    }
-
-    public ConfigurableJMXAuthenticator getJmxAuthenticator()
-    {
-        if (this.jmxAuthenticator == null)
-        {
-            this.jmxAuthenticator = new SimplePasswordJmxAuthenticator();
-            this.jmxAuthenticator.configure(credentials);
-        }
-        return jmxAuthenticator;
-    }
-
-    public void setJmxAuthenticator(ConfigurableJMXAuthenticator jmxAuthenticator)
-    {
-        this.jmxAuthenticator = jmxAuthenticator;
     }
 }

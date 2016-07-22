@@ -6,14 +6,14 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.junit.Test;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mule.compatibility.transport.http.HttpConstants.SC_INTERNAL_SERVER_ERROR;
 import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
-
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.junit.Test;
 
 public class HttpBadEncodingFunctionalTestCase extends HttpEncodingFunctionalTestCase
 {

@@ -50,12 +50,14 @@ public abstract class AbstractFilterCollection implements Filter, ObjectFilter
     {
         this.filters = filters;
     }
-    
+
     @Override
     public boolean equals(Object obj)
     {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
 
         final AbstractFilterCollection other = (AbstractFilterCollection) obj;
         return ClassUtils.equal(filters, other.filters);
@@ -64,7 +66,7 @@ public abstract class AbstractFilterCollection implements Filter, ObjectFilter
     @Override
     public int hashCode()
     {
-        return ClassUtils.hash(new Object[]{this.getClass(), filters});
+        return ClassUtils.hash(new Object[] {this.getClass(), filters});
     }
 
 }

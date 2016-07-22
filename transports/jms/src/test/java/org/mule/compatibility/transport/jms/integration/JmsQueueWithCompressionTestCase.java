@@ -6,10 +6,9 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
-import org.mule.tck.testmodels.fruit.Apple;
-
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mule.tck.testmodels.fruit.Apple;
 
 /**
  * Message is sent to and received from simple queue using compression in between

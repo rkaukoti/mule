@@ -6,7 +6,6 @@
  */
 package org.mule.extension.file.internal.command;
 
-import static java.lang.String.format;
 import org.mule.extension.file.internal.LocalFileSystem;
 import org.mule.runtime.api.message.MuleEvent;
 import org.mule.runtime.module.extension.file.api.FileConnectorConfig;
@@ -17,6 +16,8 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+
+import static java.lang.String.format;
 
 /**
  * Base class for commands that generates copies of a local file, either
@@ -53,7 +54,8 @@ abstract class AbstractLocalCopyCommand extends LocalFileCommand
      * @param overwrite             whether to overwrite existing target paths
      * @param createParentDirectory whether to create the target's parent directory if it doesn't exists
      */
-    protected final void execute(FileConnectorConfig config, String sourcePath, String target, boolean overwrite, boolean createParentDirectory)
+    protected final void execute(FileConnectorConfig config, String sourcePath, String target, boolean overwrite,
+                                 boolean createParentDirectory)
     {
         Path source = resolveExistingPath(config, sourcePath);
         Path targetPath = resolvePath(config, target);
@@ -88,7 +90,7 @@ abstract class AbstractLocalCopyCommand extends LocalFileCommand
             {
                 throw new IllegalArgumentException(format("Can't copy '%s' to '%s' because the destination path " +
                                                           "doesn't exists",
-                                                          source.toAbsolutePath(), targetPath.toAbsolutePath()));
+                        source.toAbsolutePath(), targetPath.toAbsolutePath()));
             }
         }
 
@@ -100,15 +102,15 @@ abstract class AbstractLocalCopyCommand extends LocalFileCommand
         try
         {
             doExecute(source,
-                      targetPath,
-                      overwrite,
-                      copyOption != null ? new CopyOption[] {copyOption} : new CopyOption[] {});
+                    targetPath,
+                    overwrite,
+                    copyOption != null ? new CopyOption[] {copyOption} : new CopyOption[] {});
         }
         catch (FileAlreadyExistsException e)
         {
             throw new IllegalArgumentException(format("Can't copy '%s' to '%s' because the destination path " +
                                                       "already exists. Consider setting the 'overwrite' parameter to 'true'",
-                                                      source.toAbsolutePath(), targetPath.toAbsolutePath()));
+                    source.toAbsolutePath(), targetPath.toAbsolutePath()));
         }
         catch (Exception e)
         {

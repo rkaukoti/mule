@@ -6,15 +6,15 @@
  */
 package org.mule.properties;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FlowRunner;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleEvent;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.functional.junit4.FlowRunner;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import org.junit.Test;
 
 public class SessionPropertiesTestCase extends FunctionalTestCase
 {
@@ -51,8 +51,8 @@ public class SessionPropertiesTestCase extends FunctionalTestCase
         Object nonSerializable = new Object();
 
         FlowRunner runner = flowRunner("FlowRefWithSessionProperties").withPayload("data")
-                                                                    .withSessionProperty("keyNonSerializable", nonSerializable)
-                                                                    .withSessionProperty("key", "value");
+                                                                      .withSessionProperty("keyNonSerializable", nonSerializable)
+                                                                      .withSessionProperty("key", "value");
         MuleEvent event = runner.buildEvent();
         MuleEvent result = runner.run();
 
@@ -64,7 +64,6 @@ public class SessionPropertiesTestCase extends FunctionalTestCase
         assertThat(result.getSession().getProperty("key2"), is("value2"));
         assertThat(result.getSession().getProperty("keyNonSerializable"), is(nonSerializable));
     }
-
 
 
     @Test

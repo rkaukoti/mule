@@ -23,7 +23,7 @@ public class MessageProcessorExecutionTemplate
     {
         this.executionInterceptor = executionInterceptor;
     }
-    
+
     public static MessageProcessorExecutionTemplate createExceptionTransformerExecutionTemplate()
     {
         return new MessageProcessorExecutionTemplate(new ExceptionToMessagingExceptionExecutionInterceptor());
@@ -31,7 +31,8 @@ public class MessageProcessorExecutionTemplate
 
     public static MessageProcessorExecutionTemplate createExecutionTemplate()
     {
-        return new MessageProcessorExecutionTemplate(new MessageProcessorNotificationExecutionInterceptor(new ExceptionToMessagingExceptionExecutionInterceptor()));
+        return new MessageProcessorExecutionTemplate(
+                new MessageProcessorNotificationExecutionInterceptor(new ExceptionToMessagingExceptionExecutionInterceptor()));
     }
 
     public static MessageProcessorExecutionTemplate createNotificationExecutionTemplate()
@@ -41,6 +42,6 @@ public class MessageProcessorExecutionTemplate
 
     public MuleEvent execute(MessageProcessor messageProcessor, MuleEvent event) throws MessagingException
     {
-        return this.executionInterceptor.execute(messageProcessor,event);
+        return this.executionInterceptor.execute(messageProcessor, event);
     }
 }

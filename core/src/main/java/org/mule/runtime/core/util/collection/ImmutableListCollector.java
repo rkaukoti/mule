@@ -41,7 +41,8 @@ public class ImmutableListCollector<T> implements Collector<T, ImmutableList.Bui
     @Override
     public BinaryOperator<ImmutableList.Builder<T>> combiner()
     {
-        return (left, right) -> {
+        return (left, right) ->
+        {
             left.addAll(right.build());
             return left;
         };

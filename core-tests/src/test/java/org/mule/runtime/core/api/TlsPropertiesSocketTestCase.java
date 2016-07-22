@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.core.api;
 
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.runtime.core.api.security.tls.TlsConfiguration;
 import org.mule.runtime.core.api.security.tls.TlsPropertiesSocketFactory;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 public class TlsPropertiesSocketTestCase extends AbstractMuleTestCase
 {
@@ -25,8 +25,8 @@ public class TlsPropertiesSocketTestCase extends AbstractMuleTestCase
         configuration.setKeyStore("clientKeystore");
         configuration.initialise(false, TlsConfiguration.JSSE_NAMESPACE);
 
-        TlsPropertiesSocketFactory socketFactory = 
-            new TlsPropertiesSocketFactory(true, TlsConfiguration.JSSE_NAMESPACE);
+        TlsPropertiesSocketFactory socketFactory =
+                new TlsPropertiesSocketFactory(true, TlsConfiguration.JSSE_NAMESPACE);
         assertTrue("socket is useless", socketFactory.getSupportedCipherSuites().length > 0);
     }
 

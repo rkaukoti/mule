@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.core.util.store;
 
+import org.junit.After;
+import org.junit.Test;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -52,19 +52,19 @@ public class InMemoryStoreTestCase extends AbstractMuleTestCase
     {
         int entryTTL = 3000;
         createTimedObjectStore(entryTTL);
-        
+
         // store an entry ...
         storeObjects("1");
-        
+
         // ... wait half of the expiry time ...
         Thread.sleep(entryTTL / 2);
-        
+
         // ... and store another object ...
         storeObjects("2");
-        
+
         // ... now wait until the first one is expired
         Thread.sleep((entryTTL / 2) + 500);
-        
+
         assertObjectsExpired("1");
         assertObjectsInStore("2");
     }
@@ -74,16 +74,16 @@ public class InMemoryStoreTestCase extends AbstractMuleTestCase
     {
         String key = "key";
         String value = "hello";
-        
+
         createBoundedObjectStore(1);
-        
+
         store.store(key, value);
         assertObjectsInStore(key);
-        
+
         String retrieved = store.retrieve(key);
         assertEquals(value, retrieved);
-        
-        store.remove(key);        
+
+        store.remove(key);
         assertObjectsExpired(key);
     }
 
@@ -91,13 +91,13 @@ public class InMemoryStoreTestCase extends AbstractMuleTestCase
     public void testExpiringUnboundedStore() throws Exception
     {
         createUnboundedObjectStore();
-        
+
         // put some items into the store
         storeObjects("1", "2", "3");
-        
+
         // expire ... this should keep all objects in the store
         store.expire();
-        
+
         assertObjectsInStore("1", "2", "3");
     }
 
@@ -141,7 +141,7 @@ public class InMemoryStoreTestCase extends AbstractMuleTestCase
             store.store(entry, entry);
         }
     }
-    
+
     private void assertObjectsInStore(String... identifiers) throws Exception
     {
         for (String id : identifiers)
@@ -150,7 +150,7 @@ public class InMemoryStoreTestCase extends AbstractMuleTestCase
             assertTrue(message, store.contains(id));
         }
     }
-    
+
     private void assertObjectsExpired(String... identifiers) throws Exception
     {
         for (String id : identifiers)
@@ -162,9 +162,9 @@ public class InMemoryStoreTestCase extends AbstractMuleTestCase
     private void createTimedObjectStore(int timeToLive) throws InitialisationException
     {
         int expireInterval = 1000;
-        assertTrue("objects' time to live must be greater than the expire interval", 
-            timeToLive > expireInterval);
-        
+        assertTrue("objects' time to live must be greater than the expire interval",
+                timeToLive > expireInterval);
+
         store = new InMemoryObjectStore<String>();
         store.setName("timed");
         store.setMaxEntries(3);
@@ -180,7 +180,7 @@ public class InMemoryStoreTestCase extends AbstractMuleTestCase
         store.setMaxEntries(numberOfEntries);
         store.initialise();
     }
-    
+
     private void createUnboundedObjectStore() throws InitialisationException
     {
         createNonexpiringObjectStore();
@@ -192,12 +192,12 @@ public class InMemoryStoreTestCase extends AbstractMuleTestCase
     {
         store = new NonExpiringInMemoryObjectStore();
     }
-    
+
     /**
      * Special subclass that coordinates with the expire thread. Upon calling <code>initialize</code>
      * the scheduler in {@link AbstractMonitoredObjectStore} runs once. The tests in this test case
      * rely on the fact that no expiry happens during their execution. This implementation waits for
-     * the first run of the expire method in initialize and only then continues with the execution 
+     * the first run of the expire method in initialize and only then continues with the execution
      * of the current thread.
      */
     private static class NonExpiringInMemoryObjectStore extends InMemoryObjectStore<String>
@@ -211,15 +211,15 @@ public class InMemoryStoreTestCase extends AbstractMuleTestCase
             setEntryTTL(-1);
             // run the expire thread in very, very large intervals (irreleavent to this test)
             setExpirationInterval(Integer.MAX_VALUE);
-            
+
             expireLatch = new CountDownLatch(1);
         }
-        
+
         @Override
         public void initialise() throws InitialisationException
         {
             super.initialise();
-            
+
             // now wait for the first expire to happen
             try
             {

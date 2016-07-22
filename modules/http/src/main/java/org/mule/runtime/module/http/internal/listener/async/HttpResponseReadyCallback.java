@@ -17,7 +17,7 @@ public interface HttpResponseReadyCallback
     /**
      * method to send response to the client
      *
-     * @param response http response content
+     * @param response               http response content
      * @param responseStatusCallback callback to be called if there's a failure while sending the response
      */
     void responseReady(HttpResponse response, ResponseStatusCallback responseStatusCallback);

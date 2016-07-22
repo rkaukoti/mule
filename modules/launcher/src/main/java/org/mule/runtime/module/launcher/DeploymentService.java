@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- *  Manages deploy of mule applications
+ * Manages deploy of mule applications
  */
 public interface DeploymentService extends DeploymentListenerManager, DomainDeploymentListenerManager
 {
@@ -74,7 +74,6 @@ public interface DeploymentService extends DeploymentListenerManager, DomainDepl
      * Deploys and application bundled as a zip from the given URL to the mule container
      *
      * @param appArchiveUrl location of the zip application file
-     * @throws IOException
      */
     void deploy(URL appArchiveUrl) throws IOException;
 
@@ -96,7 +95,6 @@ public interface DeploymentService extends DeploymentListenerManager, DomainDepl
      * Deploys a domain bundled as a zip from the given URL to the mule container
      *
      * @param domainArchiveUrl location of the zip domain file
-     * @throws IOException
      */
     void deployDomain(URL domainArchiveUrl) throws IOException;
 

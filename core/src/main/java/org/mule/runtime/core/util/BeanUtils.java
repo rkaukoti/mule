@@ -7,6 +7,8 @@
 package org.mule.runtime.core.util;
 
 import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -14,9 +16,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>BeanUtils</code> provides functions for altering the way commons BeanUtils
@@ -43,7 +42,7 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils
     {
         // Check to see if our object has a setProperties method where the properties
         // map should be set
-        if (ClassUtils.getMethod(object.getClass(), SET_PROPERTIES_METHOD, new Class[]{Map.class}) != null)
+        if (ClassUtils.getMethod(object.getClass(), SET_PROPERTIES_METHOD, new Class[] {Map.class}) != null)
         {
             try
             {
@@ -56,13 +55,13 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils
                 if (logWarnings)
                 {
                     logger.warn("Property: " + SET_PROPERTIES_METHOD + "=" + Map.class.getName()
-                            + " not found on object: " + object.getClass().getName());
+                                + " not found on object: " + object.getClass().getName());
                 }
             }
         }
         else
         {
-            for (Iterator iterator = props.entrySet().iterator(); iterator.hasNext();)
+            for (Iterator iterator = props.entrySet().iterator(); iterator.hasNext(); )
             {
                 Map.Entry entry = (Map.Entry) iterator.next();
 
@@ -75,7 +74,7 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils
                     if (logWarnings)
                     {
                         logger.warn("Property: " + entry.getKey() + "=" + entry.getValue()
-                                + " not found on object: " + object.getClass().getName());
+                                    + " not found on object: " + object.getClass().getName());
                     }
                 }
             }
@@ -88,21 +87,19 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils
      *
      * @param bean  the bean on which to set the properties
      * @param props a Map of properties to set on the bean
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
      */
     public static void populate(Object bean, Map props) throws IllegalAccessException, InvocationTargetException
     {
         // Check to see if our object has a setProperties method where the properties
         // map should be set
-        if (ClassUtils.getMethod(bean.getClass(), SET_PROPERTIES_METHOD, new Class[]{Map.class}) != null)
+        if (ClassUtils.getMethod(bean.getClass(), SET_PROPERTIES_METHOD, new Class[] {Map.class}) != null)
         {
             BeanUtils.setProperty(bean, "properties", props);
         }
         else
         {
             Map master = describe(bean);
-            for (Iterator iterator = props.keySet().iterator(); iterator.hasNext();)
+            for (Iterator iterator = props.keySet().iterator(); iterator.hasNext(); )
             {
                 Object o = iterator.next();
                 if (!master.containsKey(o))

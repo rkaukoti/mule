@@ -7,6 +7,27 @@
 
 package org.mule.extension.email.retriever;
 
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+import org.mule.extension.email.EmailConnectorTestCase;
+import org.mule.extension.email.api.EmailAttributes;
+import org.mule.runtime.api.message.MuleMessage;
+import org.mule.tck.junit4.rule.SystemProperty;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
+import java.util.Map;
+
+import javax.activation.DataHandler;
+import javax.mail.Flags.Flag;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import static java.lang.String.format;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.arrayWithSize;
@@ -32,27 +53,6 @@ import static org.mule.extension.email.util.EmailTestUtils.JUANI_EMAIL;
 import static org.mule.extension.email.util.EmailTestUtils.assertAttachmentContent;
 import static org.mule.extension.email.util.EmailTestUtils.getMultipartTestMessage;
 import static org.mule.extension.email.util.EmailTestUtils.testSession;
-import org.mule.extension.email.EmailConnectorTestCase;
-import org.mule.extension.email.api.EmailAttributes;
-import org.mule.runtime.api.message.MuleMessage;
-import org.mule.tck.junit4.rule.SystemProperty;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.List;
-import java.util.Map;
-
-import javax.activation.DataHandler;
-import javax.mail.Flags.Flag;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 public abstract class AbstractEmailRetrieverTestCase extends EmailConnectorTestCase
 {
@@ -83,12 +83,12 @@ public abstract class AbstractEmailRetrieverTestCase extends EmailConnectorTestC
         for (int i = 0; i < 10; i++)
         {
             user.deliver(newMessage(testSession)
-                                 .to(singletonList(JUANI_EMAIL))
-                                 .fromAddresses(ESTEBAN_EMAIL)
-                                 .cc(singletonList(ALE_EMAIL))
-                                 .withContent(EMAIL_CONTENT)
-                                 .withSubject(EMAIL_SUBJECT)
-                                 .build());
+                    .to(singletonList(JUANI_EMAIL))
+                    .fromAddresses(ESTEBAN_EMAIL)
+                    .cc(singletonList(ALE_EMAIL))
+                    .withContent(EMAIL_CONTENT)
+                    .withSubject(EMAIL_SUBJECT)
+                    .build());
         }
     }
 
@@ -108,12 +108,12 @@ public abstract class AbstractEmailRetrieverTestCase extends EmailConnectorTestC
         {
             String fromEmail = format("address.%s@enterprise.com", i);
             user.deliver(newMessage(testSession)
-                                 .to(singletonList(ESTEBAN_EMAIL))
-                                 .cc(singletonList(ALE_EMAIL))
-                                 .withContent(EMAIL_CONTENT)
-                                 .withSubject("Non Matching Subject")
-                                 .fromAddresses(fromEmail)
-                                 .build());
+                    .to(singletonList(ESTEBAN_EMAIL))
+                    .cc(singletonList(ALE_EMAIL))
+                    .withContent(EMAIL_CONTENT)
+                    .withSubject("Non Matching Subject")
+                    .fromAddresses(fromEmail)
+                    .build());
         }
 
         List<MuleMessage> messages = runFlowAndGetMessages(RETRIEVE_MATCH_SUBJECT_AND_FROM);

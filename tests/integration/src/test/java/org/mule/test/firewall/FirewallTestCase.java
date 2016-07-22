@@ -6,11 +6,12 @@
  */
 package org.mule.test.firewall;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
+import org.junit.Test;
 import org.mule.runtime.core.config.factories.HostNameFactory;
 import org.mule.runtime.core.util.NetworkUtils;
 import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -21,9 +22,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.security.SecureRandom;
 
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 public class FirewallTestCase extends AbstractMuleTestCase
 {
@@ -39,9 +39,9 @@ public class FirewallTestCase extends AbstractMuleTestCase
     public void testLoopback() throws Exception
     {
         // this gives localhost.localdomain on sourceforge
-//        consistentAddress(LOCALHOST, true);
+        //        consistentAddress(LOCALHOST, true);
         consistentAddress(LOCALHOST, false);
-//        assertEquals("Strange name for loopback", LOCALHOST, InetAddress.getByName(LOCALADDR).getCanonicalHostName());
+        //        assertEquals("Strange name for loopback", LOCALHOST, InetAddress.getByName(LOCALADDR).getCanonicalHostName());
     }
 
     @Test
@@ -158,7 +158,7 @@ public class FirewallTestCase extends AbstractMuleTestCase
             logger.debug("Testing UDP on " + addressToString(address, port));
             DatagramSocket server = openUdpServer(address, port);
             DatagramSocket client = openUdpClient();
-            client.send(new DatagramPacket(new byte[]{1}, 1, address, port));
+            client.send(new DatagramPacket(new byte[] {1}, 1, address, port));
             DatagramPacket packet = new DatagramPacket(new byte[1], 1);
             server.receive(packet);
             assertEquals("Failed to send packet via " + addressToString(address, port),
@@ -241,8 +241,6 @@ public class FirewallTestCase extends AbstractMuleTestCase
     }
 
     /**
-     * @param lo
-     * @param hi
      * @return A number between lo and hi (inclusive)
      */
     protected int randomPort(int lo, int hi)

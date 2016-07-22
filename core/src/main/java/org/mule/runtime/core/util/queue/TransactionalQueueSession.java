@@ -71,7 +71,8 @@ public class TransactionalQueueSession extends AbstractQueueSession implements Q
                 throw new IllegalStateException(
                         "Cannot start local transaction. A local transaction already in progress.");
             }
-            singleResourceTxContext = new LocalTxQueueTransactionContext(localTxTransactionJournal, getQueueProvider(), txContextReadWriteLock.readLock());
+            singleResourceTxContext =
+                    new LocalTxQueueTransactionContext(localTxTransactionJournal, getQueueProvider(), txContextReadWriteLock.readLock());
             resourceManager.beginTransaction((AbstractTransactionContext) singleResourceTxContext);
         }
         finally

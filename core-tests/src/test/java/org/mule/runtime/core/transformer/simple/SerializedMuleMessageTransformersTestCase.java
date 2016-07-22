@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.junit.Ignore;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleMessage;
@@ -21,12 +23,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.junit.Ignore;
-
 public class SerializedMuleMessageTransformersTestCase extends AbstractTransformerTestCase
 {
-    
+
     private MuleMessage testObject = null;
 
     @Override
@@ -37,7 +36,7 @@ public class SerializedMuleMessageTransformersTestCase extends AbstractTransform
         props.put("number", 1);
         props.put("string", "hello");
         testObject = MuleMessage.builder().payload("test").outboundProperties(props).build();
-        
+
         RequestContext.setEvent(
                 new DefaultMuleEvent(testObject, getTestFlow(), MuleTestUtils.getTestSession(muleContext)));
     }
@@ -106,7 +105,7 @@ public class SerializedMuleMessageTransformersTestCase extends AbstractTransform
         {
             return false;
         }
-        return Arrays.equals((byte[])src, (byte[])result);
+        return Arrays.equals((byte[]) src, (byte[]) result);
     }
 
     @Override
@@ -130,37 +129,37 @@ public class SerializedMuleMessageTransformersTestCase extends AbstractTransform
         {
             MuleMessage sourceMuleMessage = (MuleMessage) src;
             MuleMessage resultMuleMessage = (MuleMessage) result;
-            
+
             boolean payloadsAreEqual = comparePayloads(sourceMuleMessage, resultMuleMessage);
             boolean objectPropertiesAreEqual = compareObjectProperties(sourceMuleMessage, resultMuleMessage);
             boolean stringPropertiesAreEqual = compareStringProperties(sourceMuleMessage, resultMuleMessage);
             boolean intPropertiesAreEqual = compareIntProperties(sourceMuleMessage, resultMuleMessage);
-                        
-            return payloadsAreEqual 
-                && objectPropertiesAreEqual
-                && stringPropertiesAreEqual 
-                && intPropertiesAreEqual;
+
+            return payloadsAreEqual
+                   && objectPropertiesAreEqual
+                   && stringPropertiesAreEqual
+                   && intPropertiesAreEqual;
         }
         else
         {
             return false;
         }
     }
-    
+
     private boolean comparePayloads(MuleMessage src, MuleMessage result)
     {
         Object sourcePayload = src.getPayload();
         Object resultPayload = result.getPayload();
         return sourcePayload.equals(resultPayload);
     }
-    
+
     private boolean compareObjectProperties(MuleMessage src, MuleMessage result)
     {
         Object sourceObjectProperty = src.getOutboundProperty("object");
         Object resultObjectProperty = result.getOutboundProperty("object");
         return sourceObjectProperty.equals(resultObjectProperty);
     }
-    
+
     private boolean compareStringProperties(MuleMessage src, MuleMessage result)
     {
         Object sourceStringProperty = src.getOutboundProperty("string");

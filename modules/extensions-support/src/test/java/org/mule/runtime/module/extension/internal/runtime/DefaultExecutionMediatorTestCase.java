@@ -6,6 +6,45 @@
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
+import com.google.common.collect.ImmutableList;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.mockito.InOrder;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.verification.VerificationMode;
+import org.mule.runtime.api.connection.ConnectionException;
+import org.mule.runtime.api.connection.ConnectionProvider;
+import org.mule.runtime.core.api.lifecycle.LifecycleUtils;
+import org.mule.runtime.core.internal.connection.CachedConnectionProviderWrapper;
+import org.mule.runtime.core.internal.connection.ConnectionManagerAdapter;
+import org.mule.runtime.core.internal.connection.DefaultConnectionManager;
+import org.mule.runtime.core.retry.RetryPolicyExhaustedException;
+import org.mule.runtime.core.retry.policies.SimpleRetryPolicyTemplate;
+import org.mule.runtime.extension.api.introspection.Interceptable;
+import org.mule.runtime.extension.api.introspection.RuntimeExtensionModel;
+import org.mule.runtime.extension.api.introspection.config.RuntimeConfigurationModel;
+import org.mule.runtime.extension.api.introspection.exception.ExceptionEnricher;
+import org.mule.runtime.extension.api.introspection.exception.ExceptionEnricherFactory;
+import org.mule.runtime.extension.api.introspection.operation.RuntimeOperationModel;
+import org.mule.runtime.extension.api.runtime.ConfigurationInstance;
+import org.mule.runtime.extension.api.runtime.RetryRequest;
+import org.mule.runtime.extension.api.runtime.operation.Interceptor;
+import org.mule.runtime.extension.api.runtime.operation.OperationContext;
+import org.mule.runtime.extension.api.runtime.operation.OperationExecutor;
+import org.mule.runtime.module.extension.internal.runtime.config.MutableConfigurationStats;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+import org.mule.tck.size.SmallTest;
+import org.mule.test.heisenberg.extension.exception.HeisenbergException;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
+
 import static java.util.Arrays.asList;
 import static java.util.Optional.empty;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -23,45 +62,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import org.mule.runtime.api.connection.ConnectionException;
-import org.mule.runtime.api.connection.ConnectionProvider;
-import org.mule.runtime.core.api.lifecycle.LifecycleUtils;
-import org.mule.runtime.core.internal.connection.CachedConnectionProviderWrapper;
-import org.mule.runtime.core.internal.connection.ConnectionManagerAdapter;
-import org.mule.runtime.core.internal.connection.DefaultConnectionManager;
-import org.mule.runtime.core.retry.RetryPolicyExhaustedException;
-import org.mule.runtime.core.retry.policies.SimpleRetryPolicyTemplate;
-import org.mule.runtime.extension.api.introspection.Interceptable;
-import org.mule.runtime.extension.api.introspection.RuntimeExtensionModel;
-import org.mule.runtime.extension.api.introspection.config.RuntimeConfigurationModel;
-import org.mule.runtime.extension.api.introspection.exception.ExceptionEnricher;
-import org.mule.runtime.extension.api.introspection.exception.ExceptionEnricherFactory;
-import org.mule.runtime.extension.api.introspection.operation.RuntimeOperationModel;
-import org.mule.runtime.extension.api.runtime.ConfigurationInstance;
-import org.mule.runtime.extension.api.runtime.operation.Interceptor;
-import org.mule.runtime.extension.api.runtime.operation.OperationContext;
-import org.mule.runtime.extension.api.runtime.operation.OperationExecutor;
-import org.mule.runtime.extension.api.runtime.RetryRequest;
-import org.mule.runtime.module.extension.internal.runtime.config.MutableConfigurationStats;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-import org.mule.tck.size.SmallTest;
-import org.mule.test.heisenberg.extension.exception.HeisenbergException;
-
-import com.google.common.collect.ImmutableList;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.mockito.InOrder;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.verification.VerificationMode;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -126,7 +126,8 @@ public class DefaultExecutionMediatorTestCase extends AbstractMuleContextTestCas
 
         mediator = new DefaultExecutionMediator(extensionModel, operationModel, new DefaultConnectionManager(muleContext));
 
-        final CachedConnectionProviderWrapper<Object> connectionProviderWrapper = new CachedConnectionProviderWrapper<>(null, false, new SimpleRetryPolicyTemplate(10, RETRY_COUNT));
+        final CachedConnectionProviderWrapper<Object> connectionProviderWrapper =
+                new CachedConnectionProviderWrapper<>(null, false, new SimpleRetryPolicyTemplate(10, RETRY_COUNT));
         LifecycleUtils.initialiseIfNeeded(connectionProviderWrapper, true, muleContext);
         Optional<ConnectionProvider> connectionProvider = Optional.of(connectionProviderWrapper);
 
@@ -154,7 +155,8 @@ public class DefaultExecutionMediatorTestCase extends AbstractMuleContextTestCas
     public void interceptorsInvokedOnError() throws Throwable
     {
         stubException();
-        assertException(e -> {
+        assertException(e ->
+        {
             assertThat(e, is(instanceOf(ConnectionException.class)));
 
             try
@@ -176,8 +178,10 @@ public class DefaultExecutionMediatorTestCase extends AbstractMuleContextTestCas
     {
         stubException();
         final Exception decoratedException = mock(Exception.class);
-        when(configurationInterceptor2.onError(same(operationContext), any(RetryRequest.class), same(connectionException))).thenReturn(decoratedException);
-        assertException(e -> {
+        when(configurationInterceptor2.onError(same(operationContext), any(RetryRequest.class), same(connectionException))).thenReturn(
+                decoratedException);
+        assertException(e ->
+        {
             assertThat(e, is(sameInstance(decoratedException)));
             assertAfter(null);
         });
@@ -187,7 +191,8 @@ public class DefaultExecutionMediatorTestCase extends AbstractMuleContextTestCas
     public void exceptionOnBefore() throws Throwable
     {
         stubExceptionOnBeforeInterceptor();
-        assertException(e -> {
+        assertException(e ->
+        {
             try
             {
                 assertThat(e, is(sameInstance(exception)));
@@ -231,7 +236,8 @@ public class DefaultExecutionMediatorTestCase extends AbstractMuleContextTestCas
         ExceptionEnricherFactory exceptionEnricherFactory = mock(ExceptionEnricherFactory.class);
         when(exceptionEnricherFactory.createEnricher()).thenReturn(exceptionEnricher);
         when(operationModel.getExceptionEnricherFactory()).thenReturn(Optional.of(exceptionEnricherFactory));
-        new DefaultExecutionMediator(extensionModel, operationModel, new DefaultConnectionManager(muleContext)).execute(operationExceptionExecutor, operationContext);
+        new DefaultExecutionMediator(extensionModel, operationModel, new DefaultConnectionManager(muleContext)).execute(
+                operationExceptionExecutor, operationContext);
     }
 
     @Test
@@ -243,7 +249,8 @@ public class DefaultExecutionMediatorTestCase extends AbstractMuleContextTestCas
         setInterceptors((Interceptable) operationExecutor, new DummyConnectionInterceptor());
 
         defineOrder(interceptor);
-        assertException(exception -> {
+        assertException(exception ->
+        {
             assertThat(exception, instanceOf(RetryPolicyExhaustedException.class));
             try
             {
@@ -284,7 +291,8 @@ public class DefaultExecutionMediatorTestCase extends AbstractMuleContextTestCas
 
     private void assertBefore() throws Exception
     {
-        verifyInOrder(interceptor -> {
+        verifyInOrder(interceptor ->
+        {
             try
             {
                 interceptor.before(operationContext);
@@ -304,7 +312,8 @@ public class DefaultExecutionMediatorTestCase extends AbstractMuleContextTestCas
 
     private void assertOnError(VerificationMode verificationMode)
     {
-        verifyInOrder(interceptor -> interceptor.onError(same(operationContext), any(RetryRequest.class), same(connectionException)), verificationMode);
+        verifyInOrder(interceptor -> interceptor.onError(same(operationContext), any(RetryRequest.class), same(connectionException)),
+                verificationMode);
     }
 
     private void assertAfter(Object expected)

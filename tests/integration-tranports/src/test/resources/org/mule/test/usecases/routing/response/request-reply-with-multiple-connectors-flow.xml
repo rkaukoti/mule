@@ -31,7 +31,7 @@
     <flow name="request-reply">
         <composite-source>
             <vm:inbound-endpoint path="request" connector-ref="default"/>
-            <http:inbound-endpoint path="requestHttp" host="localhost" port="8080" />
+            <http:inbound-endpoint path="requestHttp" host="localhost" port="8080"/>
         </composite-source>
         <test:component appendString="-and-back-in"/>
     </flow>

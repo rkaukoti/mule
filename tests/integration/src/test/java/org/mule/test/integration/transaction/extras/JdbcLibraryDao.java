@@ -6,9 +6,9 @@
  */
 package org.mule.test.integration.transaction.extras;
 
-import java.sql.Types;
-
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.sql.Types;
 
 public class JdbcLibraryDao implements LibraryDao
 {

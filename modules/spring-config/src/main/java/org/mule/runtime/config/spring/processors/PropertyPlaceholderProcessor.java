@@ -10,14 +10,13 @@ import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.PropertyFactory;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
-
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
 /**
  * TODO
@@ -40,10 +39,10 @@ public class PropertyPlaceholderProcessor extends PropertyPlaceholderConfigurer 
 
         // MuleContext/MuleConfiguration properties
         props.put("mule.working.dir", muleContext.getConfiguration().getWorkingDirectory());
-        
+
         if (factories != null)
         {
-            for (Iterator iterator = factories.entrySet().iterator(); iterator.hasNext();)
+            for (Iterator iterator = factories.entrySet().iterator(); iterator.hasNext(); )
             {
                 Map.Entry entry = (Map.Entry) iterator.next();
                 if (entry.getKey() == null)
@@ -77,6 +76,12 @@ public class PropertyPlaceholderProcessor extends PropertyPlaceholderConfigurer 
         this.factories = factories;
     }
 
+    public void setMuleContext(MuleContext muleContext)
+    {
+        this.muleContext = muleContext;
+
+    }
+
     private class RegistryProperties extends Properties
     {
         public String getProperty(String key)
@@ -86,15 +91,9 @@ public class PropertyPlaceholderProcessor extends PropertyPlaceholderConfigurer 
             {
                 oval = muleContext.getRegistry().lookupObject(key);
             }
-            String sval = (oval instanceof String) ? (String)oval : null;
+            String sval = (oval instanceof String) ? (String) oval : null;
             return ((sval == null) && (defaults != null)) ? defaults.getProperty(key) : sval;
         }
-    }
-
-    public void setMuleContext(MuleContext muleContext)
-    {
-        this.muleContext = muleContext;
-        
     }
 
 }

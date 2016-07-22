@@ -6,19 +6,18 @@
  */
 package org.mule.compatibility.transport.tcp.protocols;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class SafeProtocolTestCase extends FunctionalTestCase
 {
@@ -42,7 +41,7 @@ public class SafeProtocolTestCase extends FunctionalTestCase
     {
         MuleClient client = muleContext.getClient();
         assertResponseOk(client.send("tcp://localhost:" + dynamicPort1.getNumber() + "?connector=safe",
-            TEST_MESSAGE, null));
+                TEST_MESSAGE, null));
     }
 
     @Test
@@ -50,7 +49,7 @@ public class SafeProtocolTestCase extends FunctionalTestCase
     {
         MuleClient client = muleContext.getClient();
         assertResponseBad(client.send("tcp://localhost:" + dynamicPort1.getNumber() + "?connector=unsafe",
-            TEST_MESSAGE, null));
+                TEST_MESSAGE, null));
     }
 
     private void assertResponseOk(MuleMessage message)

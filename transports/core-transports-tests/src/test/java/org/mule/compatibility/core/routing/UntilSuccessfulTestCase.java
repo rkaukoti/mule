@@ -6,15 +6,9 @@
  */
 package org.mule.compatibility.core.routing;
 
-import static org.junit.Assert.assertSame;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
-import org.mule.compatibility.core.routing.EndpointDlqUntilSuccessful;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -26,46 +20,15 @@ import org.mule.tck.probe.JUnitProbe;
 import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Prober;
 
-import org.junit.Test;
+import static org.junit.Assert.assertSame;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class UntilSuccessfulTestCase extends AbstractMuleContextTestCase
 {
-    public static class ConfigurableMessageProcessor implements MessageProcessor
-    {
-        private volatile int eventCount;
-        private volatile MuleEvent event;
-        private volatile int numberOfFailuresToSimulate;
-
-        @Override
-        public MuleEvent process(final MuleEvent evt) throws MuleException
-        {
-            eventCount++;
-            if (numberOfFailuresToSimulate-- > 0)
-            {
-                throw new RuntimeException("simulated problem");
-            }
-            this.event = evt;
-            return evt;
-        }
-
-        public MuleEvent getEventReceived()
-        {
-            return event;
-        }
-
-        public int getEventCount()
-        {
-            return eventCount;
-        }
-
-        public void setNumberOfFailuresToSimulate(int numberOfFailuresToSimulate)
-        {
-            this.numberOfFailuresToSimulate = numberOfFailuresToSimulate;
-        }
-    }
-
     private EndpointDlqUntilSuccessful untilSuccessful;
-
     private ListableObjectStore<MuleEvent> objectStore;
     private ConfigurableMessageProcessor targetMessageProcessor;
     private Prober pollingProber = new PollingProber(10000, 500l);
@@ -134,5 +97,39 @@ public class UntilSuccessfulTestCase extends AbstractMuleContextTestCase
                 return "Dead letter queue was not called";
             }
         });
+    }
+
+    public static class ConfigurableMessageProcessor implements MessageProcessor
+    {
+        private volatile int eventCount;
+        private volatile MuleEvent event;
+        private volatile int numberOfFailuresToSimulate;
+
+        @Override
+        public MuleEvent process(final MuleEvent evt) throws MuleException
+        {
+            eventCount++;
+            if (numberOfFailuresToSimulate-- > 0)
+            {
+                throw new RuntimeException("simulated problem");
+            }
+            this.event = evt;
+            return evt;
+        }
+
+        public MuleEvent getEventReceived()
+        {
+            return event;
+        }
+
+        public int getEventCount()
+        {
+            return eventCount;
+        }
+
+        public void setNumberOfFailuresToSimulate(int numberOfFailuresToSimulate)
+        {
+            this.numberOfFailuresToSimulate = numberOfFailuresToSimulate;
+        }
     }
 }

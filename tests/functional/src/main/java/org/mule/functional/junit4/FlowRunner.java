@@ -6,9 +6,7 @@
  */
 package org.mule.functional.junit4;
 
-import static org.junit.Assert.fail;
-import static org.mule.runtime.core.execution.TransactionalExecutionTemplate.createTransactionalExecutionTemplate;
-import static org.mule.tck.junit4.AbstractMuleContextTestCase.RECEIVE_TIMEOUT;
+import org.apache.commons.collections.Transformer;
 import org.mule.functional.functional.FlowAssert;
 import org.mule.runtime.core.NonBlockingVoidMuleEvent;
 import org.mule.runtime.core.api.MessagingException;
@@ -25,11 +23,13 @@ import org.mule.tck.SensingNullReplyToHandler;
 
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.collections.Transformer;
+import static org.junit.Assert.fail;
+import static org.mule.runtime.core.execution.TransactionalExecutionTemplate.createTransactionalExecutionTemplate;
+import static org.mule.tck.junit4.AbstractMuleContextTestCase.RECEIVE_TIMEOUT;
 
 /**
  * Provides a fluent API for running events through flows.
- * 
+ *
  * This runner is <b>not</b> thread-safe.
  */
 public class FlowRunner extends FlowConstructRunner<FlowRunner>
@@ -45,9 +45,9 @@ public class FlowRunner extends FlowConstructRunner<FlowRunner>
 
     /**
      * Initializes this flow runner.
-     * 
+     *
      * @param muleContext the context of the mule application
-     * @param flowName the name of the flow to run events through
+     * @param flowName    the name of the flow to run events through
      */
     public FlowRunner(MuleContext muleContext, String flowName)
     {
@@ -57,8 +57,8 @@ public class FlowRunner extends FlowConstructRunner<FlowRunner>
 
     /**
      * Configures the flow to run inside a transaction.
-     * 
-     * @param action The action to do at the start of the transactional block. See {@link TransactionConfig} constants.
+     *
+     * @param action  The action to do at the start of the transactional block. See {@link TransactionConfig} constants.
      * @param factory See {@link MuleTransactionConfig#setFactory(TransactionFactory)}.
      * @return this {@link FlowRunner}
      */
@@ -75,7 +75,7 @@ public class FlowRunner extends FlowConstructRunner<FlowRunner>
 
     /**
      * Configures this runner's flow to be run non-blocking.
-     * 
+     *
      * @return this {@link FlowRunner}
      */
     public FlowRunner nonBlocking()
@@ -83,7 +83,8 @@ public class FlowRunner extends FlowConstructRunner<FlowRunner>
         replyToHandler = new SensingNullReplyToHandler();
         eventBuilder.withReplyToHandler(replyToHandler);
 
-        responseEventTransformer = input -> {
+        responseEventTransformer = input ->
+        {
             MuleEvent responseEvent = (MuleEvent) input;
             SensingNullReplyToHandler nullSensingReplyToHandler = (SensingNullReplyToHandler) replyToHandler;
             try
@@ -122,12 +123,11 @@ public class FlowRunner extends FlowConstructRunner<FlowRunner>
     /**
      * Runs the specified flow with the provided event and configuration, and performs a
      * {@link FlowAssert#verify(String))} afterwards.
-     * 
+     *
      * If this is called multiple times, the <b>same</b> event will be sent. To force the creation of a new event, use
      * {@link #reset()}.
-     * 
+     *
      * @return the resulting <code>MuleEvent</code>
-     * @throws Exception
      */
     public MuleEvent run() throws Exception
     {
@@ -136,12 +136,11 @@ public class FlowRunner extends FlowConstructRunner<FlowRunner>
 
     /**
      * Runs the specified flow with the provided event and configuration.
-     * 
+     *
      * If this is called multiple times, the <b>same</b> event will be sent. To force the creation of a new event, use
      * {@link #reset()}.
-     * 
+     *
      * @return the resulting <code>MuleEvent</code>
-     * @throws Exception
      */
     public MuleEvent runNoVerify() throws Exception
     {
@@ -151,13 +150,12 @@ public class FlowRunner extends FlowConstructRunner<FlowRunner>
     /**
      * Runs the specified flow with the provided event and configuration, and performs a
      * {@link FlowAssert#verify(String))} for each {@code flowNamesToVerify} afterwards.
-     * 
+     *
      * If this is called multiple times, the <b>same</b> event will be sent. To force the creation of a new event, use
      * {@link #reset()}.
-     * 
+     *
      * @param flowNamesToVerify the names of the flows to {@link FlowAssert#verify(String))} afterwards.
      * @return the resulting <code>MuleEvent</code>
-     * @throws Exception
      */
     public MuleEvent runAndVerify(String... flowNamesToVerify) throws Exception
     {
@@ -176,7 +174,6 @@ public class FlowRunner extends FlowConstructRunner<FlowRunner>
      * failure running the flow.
      *
      * @return the message exception return by the flow
-     * @throws Exception
      */
     public MessagingException runExpectingException() throws Exception
     {

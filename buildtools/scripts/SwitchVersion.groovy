@@ -15,15 +15,13 @@ cliBuilder.r(longOpt: "root", args: 1, required: true, "start scanning at this r
 cliBuilder.t(longOpt: "to", args: 1, required: true, "switch to version (e.g. 2.1)")
 
 options = cliBuilder.parse(args)
-if (!options)
-{
+if (!options) {
     println ""
     println "Error parsing options " + args
     println ""
     System.exit(1)
 }
-if (options.h)
-{
+if (options.h) {
     cliBuilder.usage()
     System.exit(0)
 }
@@ -35,20 +33,16 @@ newVersion = options.t
 versionPattern = Pattern.compile("\\s*<version>.*</version>.*")
 
 root.eachFileRecurse()
-{ file ->
+        { file ->
 
-    if (file.directory == false)
-    {
-        if (file.name == 'pom.xml')
-        {
-            process(file)
+            if (file.directory == false) {
+                if (file.name == 'pom.xml') {
+                    process(file)
+                } else if (file.name == 'setup.xml') {
+                    switchSetupXmlFile(file)
+                }
+            }
         }
-        else if (file.name == 'setup.xml')
-        {
-            switchSetupXmlFile(file)
-        }
-    }
-}
 
 //-----------------------------------------------------------------------------
 def process(input)
@@ -62,46 +56,34 @@ def process(input)
     def versionProcessed = false
 
     outputFile.withWriter
-    { output ->
+            { output ->
 
-        input.eachLine
-        { line ->
+                input.eachLine
+                        { line ->
 
-            if (line.indexOf("<parent>") > -1)
-            {
-                processingParentElement = true
-            }
-            else if (line.indexOf("</parent>") > -1)
-            {
-                processingParentElement = false
-            }
-            def versionMatch = versionPattern.matcher(line).matches();
+                            if (line.indexOf("<parent>") > -1) {
+                                processingParentElement = true
+                            } else if (line.indexOf("</parent>") > -1) {
+                                processingParentElement = false
+                            }
+                            def versionMatch = versionPattern.matcher(line).matches();
 
-            if (processingParentElement && versionMatch)
-            {
-                outputLine(output, switchVersion(line, "version", oldVersion, newVersion))
+                            if (processingParentElement && versionMatch) {
+                                outputLine(output, switchVersion(line, "version", oldVersion, newVersion))
+                            } else {
+                                if ((versionProcessed == false) && versionMatch) {
+                                    versionProcessed = true
+                                    outputLine(output, switchVersion(line, "version", oldVersion, newVersion))
+                                } else {
+                                    if (line.indexOf("<muleVersion>") > -1) {
+                                        outputLine(output, switchVersion(line, "muleVersion", oldVersion, newVersion))
+                                    } else {
+                                        outputLine(output, line)
+                                    }
+                                }
+                            }
+                        }
             }
-            else
-            {
-                if ((versionProcessed == false) && versionMatch)
-                {
-                    versionProcessed = true
-                    outputLine(output, switchVersion(line, "version", oldVersion, newVersion))
-                }
-                else
-                {
-                    if (line.indexOf("<muleVersion>") > -1)
-                    {
-                        outputLine(output, switchVersion(line, "muleVersion", oldVersion, newVersion))
-                    }
-                    else
-                    {
-                        outputLine(output, line)
-                    }
-                }
-            }
-        }
-    }
 
     replaceFile(input, outputFile)
 }
@@ -114,21 +96,18 @@ def switchSetupXmlFile(file)
 
     def outputFile = new File(file.getParent(), "setup.xml.new")
     outputFile.withWriter
-    { output ->
+            { output ->
 
-        file.eachLine
-        { line ->
+                file.eachLine
+                        { line ->
 
-            if (line.indexOf("<version>") > -1)
-            {
-                outputLine(output, switchVersion(line, "version", oldVersion, newVersion))
+                            if (line.indexOf("<version>") > -1) {
+                                outputLine(output, switchVersion(line, "version", oldVersion, newVersion))
+                            } else {
+                                outputLine(output, line)
+                            }
+                        }
             }
-            else
-            {
-                outputLine(output, line)
-            }
-        }
-    }
 
     replaceFile(file, outputFile)
 }
@@ -145,8 +124,7 @@ def switchVersion(line, versionTag, oldVersion, newVersion)
     int end = line.indexOf(endVersionTag);
     def version = line.substring(start, end);
 
-    if ((version == oldVersion) == false)
-    {
+    if ((version == oldVersion) == false) {
         return line;
     }
 

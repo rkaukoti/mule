@@ -6,8 +6,8 @@
  */
 package org.mule.test.integration.transport.jms;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 
 import javax.jms.Connection;
@@ -20,8 +20,8 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class QosHeadersTestCase extends FunctionalTestCase
 {
@@ -56,7 +56,7 @@ public class QosHeadersTestCase extends FunctionalTestCase
                                       final boolean honorProperties) throws JMSException
     {
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
-            "vm://localhost?broker.persistent=false&broker.useJmx=false");
+                "vm://localhost?broker.persistent=false&broker.useJmx=false");
         Connection producerConnection = null;
         Connection consumerConnection = null;
 
@@ -132,7 +132,7 @@ public class QosHeadersTestCase extends FunctionalTestCase
         assertNotNull(response);
         assertEquals("JMS Priority should've been honored.", 7, response.getJMSPriority());
         assertEquals("JMS Delivery mode should've been honored", DeliveryMode.PERSISTENT,
-            response.getJMSDeliveryMode());
+                response.getJMSDeliveryMode());
     }
 
     protected void performHeadersNotHonoredAssertions(final Message response) throws JMSException
@@ -141,6 +141,6 @@ public class QosHeadersTestCase extends FunctionalTestCase
         // default priority
         assertEquals("JMS Priority should have not been honored.", 4, response.getJMSPriority());
         assertEquals("JMS Delivery mode should have not been honored", DeliveryMode.NON_PERSISTENT,
-            response.getJMSDeliveryMode());
+                response.getJMSDeliveryMode());
     }
 }

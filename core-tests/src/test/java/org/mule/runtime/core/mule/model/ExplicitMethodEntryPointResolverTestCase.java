@@ -6,9 +6,7 @@
  */
 package org.mule.runtime.core.mule.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.model.InvocationResult;
 import org.mule.runtime.core.model.resolvers.ExplicitMethodEntryPointResolver;
@@ -16,7 +14,8 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import org.mule.tck.testmodels.fruit.Apple;
 import org.mule.tck.testmodels.fruit.Fruit;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class ExplicitMethodEntryPointResolverTestCase extends AbstractMuleContextTestCase
 {
@@ -68,8 +67,6 @@ public class ExplicitMethodEntryPointResolverTestCase extends AbstractMuleContex
      * If a method with correct name is available then it should be used is the
      * parameter type is assignable from the payload type and not just if there is an
      * exact match. See MULE-3636.
-     *
-     * @throws Exception
      */
     @Test
     public void testMethodPropertyParameterAssignableFromPayload() throws Exception
@@ -85,8 +82,6 @@ public class ExplicitMethodEntryPointResolverTestCase extends AbstractMuleContex
      * If a method with correct name is available then it should be used even if one
      * or more parameter types in the payload are null, as long as the parameter
      * count matches.
-     *
-     * @throws Exception
      */
     @Test
     public void testMethodPropertyParameterNull() throws Exception
@@ -94,7 +89,7 @@ public class ExplicitMethodEntryPointResolverTestCase extends AbstractMuleContex
         ExplicitMethodEntryPointResolver resolver = new ExplicitMethodEntryPointResolver();
         resolver.addMethod("someOtherBusinessMethod");
         InvocationResult result = resolver.invoke(new MultiplePayloadsTestObject(),
-            getTestEventContext(new Object[]{null, "blah"}));
+                getTestEventContext(new Object[] {null, "blah"}));
         assertEquals(result.getState(), InvocationResult.State.SUCCESSFUL);
     }
 

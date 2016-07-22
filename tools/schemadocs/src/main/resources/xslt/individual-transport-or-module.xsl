@@ -1,8 +1,8 @@
 <xsl:stylesheet
-        version="2.0"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        >
+        version="2.0"
+>
 
     <!-- $Id: -->
 
@@ -50,7 +50,7 @@
         @name!=concat($prefix, 'inbound-endpoint') and
         @name!=concat($prefix, 'outbound-endpoint') and
         not(starts-with(@name, 'abstract'))]" mode="single-element"/>
-        <xsl:text>
+                <xsl:text>
 
 </xsl:text>
             </body>

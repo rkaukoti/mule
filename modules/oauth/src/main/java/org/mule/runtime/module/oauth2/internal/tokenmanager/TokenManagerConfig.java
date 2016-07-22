@@ -12,9 +12,9 @@ import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.registry.RegistrationException;
 import org.mule.runtime.core.api.store.ListableObjectStore;
+import org.mule.runtime.core.util.store.MuleObjectStoreManager;
 import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ConfigOAuthContext;
 import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ResourceOwnerOAuthContext;
-import org.mule.runtime.core.util.store.MuleObjectStoreManager;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -33,6 +33,21 @@ public class TokenManagerConfig implements Initialisable, MuleContextAware
     private MuleContext muleContext;
     private boolean initialised;
 
+    public static TokenManagerConfig createDefault(final MuleContext context) throws InitialisationException
+    {
+        final TokenManagerConfig tokenManagerConfig = new TokenManagerConfig();
+        final String tokenManagerConfigName = "default-token-manager-config-" + defaultTokenManagerConfigIndex.getAndIncrement();
+        tokenManagerConfig.setName(tokenManagerConfigName);
+        try
+        {
+            context.getRegistry().registerObject(tokenManagerConfigName, tokenManagerConfig);
+        }
+        catch (RegistrationException e)
+        {
+            throw new InitialisationException(e, tokenManagerConfig);
+        }
+        return tokenManagerConfig;
+    }
 
     public void setObjectStore(ListableObjectStore objectStore)
     {
@@ -53,26 +68,11 @@ public class TokenManagerConfig implements Initialisable, MuleContextAware
         }
         if (objectStore == null)
         {
-            objectStore = (ListableObjectStore) ((MuleObjectStoreManager) muleContext.getObjectStoreManager()).getUserObjectStore("token-manager-store-" + this.name, true);
+            objectStore = (ListableObjectStore) ((MuleObjectStoreManager) muleContext.getObjectStoreManager()).getUserObjectStore(
+                    "token-manager-store-" + this.name, true);
         }
         configOAuthContext = new ConfigOAuthContext(muleContext.getLockFactory(), objectStore, name);
         initialised = true;
-    }
-
-    public static TokenManagerConfig createDefault(final MuleContext context) throws InitialisationException
-    {
-        final TokenManagerConfig tokenManagerConfig = new TokenManagerConfig();
-        final String tokenManagerConfigName = "default-token-manager-config-" + defaultTokenManagerConfigIndex.getAndIncrement();
-        tokenManagerConfig.setName(tokenManagerConfigName);
-        try
-        {
-            context.getRegistry().registerObject(tokenManagerConfigName, tokenManagerConfig);
-        }
-        catch (RegistrationException e)
-        {
-            throw new InitialisationException(e, tokenManagerConfig);
-        }
-        return tokenManagerConfig;
     }
 
     public ConfigOAuthContext getConfigOAuthContext()
@@ -96,7 +96,8 @@ public class TokenManagerConfig implements Initialisable, MuleContextAware
     {
         if (params.length > 1)
         {
-            throw new IllegalArgumentException(String.format("oauthContext for config type %s does not accepts more than two arguments", "authorization-code"));
+            throw new IllegalArgumentException(
+                    String.format("oauthContext for config type %s does not accepts more than two arguments", "authorization-code"));
         }
         String resourceOwnerId = ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID;
         if (params.length == 1)

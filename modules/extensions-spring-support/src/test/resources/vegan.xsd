@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xs:schema xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.mulesoft.org/schema/mule/vegan" attributeFormDefault="unqualified" elementFormDefault="qualified">
+<xs:schema xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.mulesoft.org/schema/mule/vegan"
+           attributeFormDefault="unqualified" elementFormDefault="qualified">
     <xs:import namespace="http://www.w3.org/XML/1998/namespace"></xs:import>
     <xs:import namespace="http://www.springframework.org/schema/beans" schemaLocation="http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"></xs:import>
     <xs:import namespace="http://www.mulesoft.org/schema/mule/core" schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></xs:import>
@@ -65,7 +66,8 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
-    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="PaulMcCartneySourceType" substitutionGroup="mule:abstract-message-source" name="paul-mc-cartney-source"></xs:element>
+    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="PaulMcCartneySourceType" substitutionGroup="mule:abstract-message-source"
+                name="paul-mc-cartney-source"></xs:element>
     <xs:complexType name="PaulMcCartneySourceType">
         <xs:complexContent>
             <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageSourceType">
@@ -80,7 +82,8 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="Harvest-applesType" substitutionGroup="mule:abstract-message-source" name="harvest-apples"></xs:element>
+    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="Harvest-applesType" substitutionGroup="mule:abstract-message-source"
+                name="harvest-apples"></xs:element>
     <xs:complexType name="Harvest-applesType">
         <xs:complexContent>
             <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageSourceType">
@@ -95,7 +98,8 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="EatAppleType" substitutionGroup="mule:abstract-message-processor" name="eat-apple"></xs:element>
+    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="EatAppleType" substitutionGroup="mule:abstract-message-processor"
+                name="eat-apple"></xs:element>
     <xs:complexType name="EatAppleType">
         <xs:complexContent>
             <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
@@ -112,7 +116,8 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="SpreadTheWordType" substitutionGroup="mule:abstract-message-processor" name="spread-the-word"></xs:element>
+    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="SpreadTheWordType" substitutionGroup="mule:abstract-message-processor"
+                name="spread-the-word"></xs:element>
     <xs:complexType name="SpreadTheWordType">
         <xs:complexContent>
             <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
@@ -149,7 +154,8 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
-    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="EatBananaType" substitutionGroup="mule:abstract-message-processor" name="eat-banana"></xs:element>
+    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="EatBananaType" substitutionGroup="mule:abstract-message-processor"
+                name="eat-banana"></xs:element>
     <xs:complexType name="EatBananaType">
         <xs:complexContent>
             <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
@@ -185,7 +191,8 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
-    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="EatKiwiType" substitutionGroup="mule:abstract-message-processor" name="eat-kiwi"></xs:element>
+    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="EatKiwiType" substitutionGroup="mule:abstract-message-processor"
+                name="eat-kiwi"></xs:element>
     <xs:complexType name="EatKiwiType">
         <xs:complexContent>
             <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
@@ -202,7 +209,8 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="EatWatermelonType" substitutionGroup="mule:abstract-message-processor" name="eat-watermelon"></xs:element>
+    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="EatWatermelonType" substitutionGroup="mule:abstract-message-processor"
+                name="eat-watermelon"></xs:element>
     <xs:complexType name="org.mule.tck.testmodels.fruit.WaterMelon">
         <xs:complexContent>
             <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractExtensionType">
@@ -269,7 +277,8 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
-    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="Harvest-peachesType" substitutionGroup="mule:abstract-message-source" name="harvest-peaches"></xs:element>
+    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="Harvest-peachesType" substitutionGroup="mule:abstract-message-source"
+                name="harvest-peaches"></xs:element>
     <xs:complexType name="Harvest-peachesType">
         <xs:complexContent>
             <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageSourceType">
@@ -284,7 +293,8 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="TryEatType" substitutionGroup="mule:abstract-message-processor" name="try-eat"></xs:element>
+    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/vegan" type="TryEatType" substitutionGroup="mule:abstract-message-processor"
+                name="try-eat"></xs:element>
     <xs:complexType name="TryEatType">
         <xs:complexContent>
             <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">

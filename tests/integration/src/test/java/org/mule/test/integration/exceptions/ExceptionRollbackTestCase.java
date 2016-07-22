@@ -6,9 +6,7 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.transaction.Transaction;
 import org.mule.runtime.core.config.i18n.CoreMessages;
@@ -20,7 +18,8 @@ import org.mule.tck.testmodels.mule.TestTransaction;
 
 import java.io.FileNotFoundException;
 
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ExceptionRollbackTestCase extends AbstractMuleContextTestCase
 {

@@ -6,16 +6,16 @@
  */
 package org.mule.test.infrastructure.process;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.commons.exec.environment.EnvironmentUtils;
 import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
 
 public class MuleUtils
 {
@@ -28,20 +28,6 @@ public class MuleUtils
     {
         this.muleHome = muleHome;
         this.populateM2repoCommand = muleHome + "/bin/populate_m2_repo";
-    }
-
-    public void populateM2Repo(String repo) throws IOException
-    {
-        File repository = new File(repo);
-        if (!repository.exists())
-        {
-            FileUtils.forceMkdir(repository);
-        }
-        if (!repository.isDirectory())
-        {
-            throw new IllegalArgumentException("Repository should be a directory.");
-        }
-        executeCommand(populateM2repoCommand + " " + repo, "MULE_HOME=" + muleHome);
     }
 
     public static int executeCommand(String command, String... envVars) throws IOException
@@ -73,6 +59,20 @@ public class MuleUtils
             EnvironmentUtils.addVariableToEnvironment(env, envVar);
         }
         return env;
+    }
+
+    public void populateM2Repo(String repo) throws IOException
+    {
+        File repository = new File(repo);
+        if (!repository.exists())
+        {
+            FileUtils.forceMkdir(repository);
+        }
+        if (!repository.isDirectory())
+        {
+            throw new IllegalArgumentException("Repository should be a directory.");
+        }
+        executeCommand(populateM2repoCommand + " " + repo, "MULE_HOME=" + muleHome);
     }
 
 }

@@ -41,20 +41,28 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class ExpressionFilenameParser implements FilenameParser, MuleContextAware
 {
+    public static final String DEFAULT_DATE_FORMAT = "dd-MM-yy_HH-mm-ss.SSS";
+    public static final String DEFAULT_EXPRESSION = MessageFormat.format("{0}org.mule.runtime.core.util.UUID.getUUID(){1}.dat",
+            ExpressionManager.DEFAULT_EXPRESSION_PREFIX,
+            ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
     /**
      * A local counter that will increment for each call. If the server is re-started the counter will return to zero
      */
     private static final AtomicLong count = new AtomicLong(0);
-
-    public static final String DEFAULT_DATE_FORMAT = "dd-MM-yy_HH-mm-ss.SSS";
-    public static final String DEFAULT_EXPRESSION = MessageFormat.format("{0}org.mule.runtime.core.util.UUID.getUUID(){1}.dat",
-                                                                         ExpressionManager.DEFAULT_EXPRESSION_PREFIX,
-                                                                         ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
-
     private final TemplateParser wigglyMuleParser = TemplateParser.createMuleStyleParser();
     private final TemplateParser squareParser = TemplateParser.createSquareBracesStyleParser();
 
     protected MuleContext muleContext;
+
+    public static Long count()
+    {
+        return count.getAndIncrement();
+    }
+
+    public static void resetCount()
+    {
+        count.set(0L);
+    }
 
     @Override
     public void setMuleContext(MuleContext context)
@@ -90,15 +98,5 @@ public class ExpressionFilenameParser implements FilenameParser, MuleContextAwar
                 return muleContext.getExpressionManager().evaluate(token, event);
             }
         }, expression);
-    }
-
-    public static Long count()
-    {
-        return count.getAndIncrement();
-    }
-
-    public static void resetCount()
-    {
-        count.set(0L);
     }
 }

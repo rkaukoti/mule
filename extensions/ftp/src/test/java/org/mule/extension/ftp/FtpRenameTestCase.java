@@ -6,17 +6,17 @@
  */
 package org.mule.extension.ftp;
 
+import org.junit.Test;
+import org.mule.extension.FtpTestHarness;
+
+import java.nio.file.Paths;
+
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mule.extension.FtpTestHarness.HELLO_FILE_NAME;
 import static org.mule.extension.FtpTestHarness.HELLO_PATH;
 import static org.mule.extension.FtpTestHarness.HELLO_WORLD;
-import org.mule.extension.FtpTestHarness;
-
-import java.nio.file.Paths;
-
-import org.junit.Test;
 
 public class FtpRenameTestCase extends FtpConnectorTestCase
 {
@@ -103,7 +103,8 @@ public class FtpRenameTestCase extends FtpConnectorTestCase
 
     private void assertRenamedFile() throws Exception
     {
-        final String targetPath = Paths.get(testHarness.getWorkingDirectory()).resolve(HELLO_PATH).getParent().resolve(RENAME_TO).toString();
+        final String targetPath =
+                Paths.get(testHarness.getWorkingDirectory()).resolve(HELLO_PATH).getParent().resolve(RENAME_TO).toString();
 
         assertThat(testHarness.fileExists(targetPath), is((true)));
         assertThat(testHarness.fileExists(HELLO_PATH), is((false)));

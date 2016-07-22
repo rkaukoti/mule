@@ -8,7 +8,6 @@ package org.mule.runtime.config.spring.parsers.specific;
 
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.generic.TextDefinitionParser;
-
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
@@ -29,8 +28,8 @@ public class GlobalFunctionsDefintionParser extends TextDefinitionParser
         if (element.hasAttribute(FUNCTION_FILE_ATTRIBUTE_NAME))
         {
             assembler.getTarget()
-                .getPropertyValues()
-                .add("globalFunctionsFile", element.getAttribute(FUNCTION_FILE_ATTRIBUTE_NAME));
+                     .getPropertyValues()
+                     .add("globalFunctionsFile", element.getAttribute(FUNCTION_FILE_ATTRIBUTE_NAME));
         }
     }
 }

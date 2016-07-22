@@ -6,24 +6,24 @@
  */
 package org.mule.runtime.module.launcher.application;
 
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.util.FileUtils.newFile;
+import com.google.common.collect.Sets;
+
+import org.hamcrest.Matcher;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.mule.runtime.module.launcher.AbstractSplashScreenTestCase;
 import org.mule.runtime.module.launcher.descriptor.ApplicationDescriptor;
 import org.mule.runtime.module.launcher.plugin.ArtifactPluginDescriptor;
-
-import com.google.common.collect.Sets;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
 
-import org.hamcrest.Matcher;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.util.FileUtils.newFile;
 
 public class ApplicationStartedSplashScreenTestCase extends AbstractSplashScreenTestCase<ApplicationStartedSplashScreen>
 {
@@ -47,6 +47,11 @@ public class ApplicationStartedSplashScreenTestCase extends AbstractSplashScreen
         newFile(workingDirectory.getRoot(), getAppPathFor(MY_ZIP)).mkdir();
     }
 
+    private static String getAppPathFor(String fileName)
+    {
+        return String.format(APP_LIB_PATH + "/%s", fileName);
+    }
+
     @Before
     public void setUp()
     {
@@ -67,24 +72,19 @@ public class ApplicationStartedSplashScreenTestCase extends AbstractSplashScreen
     protected Matcher<String> getSimpleLogMatcher()
     {
         return is("\n**********************************************************************\n" +
-                    "* Started app '" + APP_NAME + "'                                            *\n" +
-                    "**********************************************************************");
+                  "* Started app '" + APP_NAME + "'                                            *\n" +
+                  "**********************************************************************");
     }
 
     @Override
     protected Matcher<String> getComplexLogMatcher()
     {
         return is("\n**********************************************************************\n" +
-                    "* Started app '" + APP_NAME + "'                                            *\n" +
-                    "* Application plugins:                                               *\n" +
-                    "*  - " + PLUGIN_NAME + "                                                    *\n" +
-                    "* Application libraries:                                             *\n" +
-                    "*  - " + MY_JAR + "                                                       *\n" +
-                    "**********************************************************************");
-    }
-
-    private static String getAppPathFor(String fileName)
-    {
-        return String.format(APP_LIB_PATH + "/%s", fileName);
+                  "* Started app '" + APP_NAME + "'                                            *\n" +
+                  "* Application plugins:                                               *\n" +
+                  "*  - " + PLUGIN_NAME + "                                                    *\n" +
+                  "* Application libraries:                                             *\n" +
+                  "*  - " + MY_JAR + "                                                       *\n" +
+                  "**********************************************************************");
     }
 }

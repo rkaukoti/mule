@@ -6,18 +6,9 @@
  */
 package org.mule.runtime.core.routing;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.hamcrest.core.IsSame.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Answers;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MessagingException;
@@ -32,9 +23,17 @@ import org.mule.runtime.core.api.store.ListableObjectStore;
 import org.mule.runtime.core.routing.filters.ExpressionFilter;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Answers;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.hamcrest.core.IsSame.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 public class SynchronousUntilSuccessfulProcessingStrategyTestCase extends AbstractMuleContextTestCase
 {
@@ -42,7 +41,8 @@ public class SynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstra
     private static final int DEFAULT_RETRIES = 4;
     private static final String TEST_DATA = "Test Data";
     private static final String PROCESSED_DATA = "Processed Data";
-    private UntilSuccessfulConfiguration mockUntilSuccessfulConfiguration = mock(UntilSuccessfulConfiguration.class, Answers.RETURNS_DEEP_STUBS.get());
+    private UntilSuccessfulConfiguration mockUntilSuccessfulConfiguration =
+            mock(UntilSuccessfulConfiguration.class, Answers.RETURNS_DEEP_STUBS.get());
     private MuleEvent event;
     private MessageProcessor mockRoute = mock(MessageProcessor.class, Answers.RETURNS_DEEP_STUBS.get());
     private ExpressionFilter mockAlwaysTrueFailureExpressionFilter = mock(ExpressionFilter.class, Answers.RETURNS_DEEP_STUBS.get());
@@ -163,7 +163,8 @@ public class SynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstra
         String ackExpression = "some-expression";
         String expressionEvalutaionResult = "new payload";
         when(mockUntilSuccessfulConfiguration.getAckExpression()).thenReturn(ackExpression);
-        when(mockUntilSuccessfulConfiguration.getMuleContext().getExpressionManager().evaluate(ackExpression, event)).thenReturn(expressionEvalutaionResult);
+        when(mockUntilSuccessfulConfiguration.getMuleContext().getExpressionManager().evaluate(ackExpression, event)).thenReturn(
+                expressionEvalutaionResult);
         SynchronousUntilSuccessfulProcessingStrategy processingStrategy = createProcessingStrategy();
         when(mockRoute.process(any(MuleEvent.class))).thenAnswer(invocation -> (MuleEvent) invocation.getArguments()[0]);
         MuleEvent response = processingStrategy.route(event);

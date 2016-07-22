@@ -8,7 +8,6 @@ package org.mule.runtime.module.scripting.config;
 
 import org.mule.runtime.config.spring.parsers.generic.MuleOrphanDefinitionParser;
 import org.mule.runtime.module.scripting.component.GroovyRefreshableBeanBuilder;
-
 import org.w3c.dom.Element;
 
 public class GroovyRefreshableBeanBuilderParser extends MuleOrphanDefinitionParser
@@ -19,12 +18,12 @@ public class GroovyRefreshableBeanBuilderParser extends MuleOrphanDefinitionPars
         super(singleton);
         addIgnored("name");
     }
-    
+
     protected Class getBeanClass(Element element)
     {
         return GroovyRefreshableBeanBuilder.class;
     }
-    
+
 
 }
 

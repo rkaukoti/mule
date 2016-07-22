@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/json"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:mule="http://www.mulesoft.org/schema/mule/core"
             xmlns:validation="http://www.mulesoft.org/schema/mule/validation"
             xmlns:mxml="http://www.mulesoft.org/schema/mule/xml"
             xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
+            xmlns="http://www.mulesoft.org/schema/mule/json"
             targetNamespace="http://www.mulesoft.org/schema/mule/json"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">
@@ -85,7 +85,7 @@
     </xsd:element>
 
     <xsd:element name="json-to-xml-transformer" type="mule:abstractTransformerType"
-        substitutionGroup="mule:abstract-transformer">
+                 substitutionGroup="mule:abstract-transformer">
         <xsd:annotation>
             <xsd:documentation>
                 Converts a JSON string to an XML string
@@ -116,7 +116,7 @@
                 Validate JSON against an XML schema.
                 This element is deprecated. Use validate-schema instead
             </xsd:documentation>
-         </xsd:annotation>
+        </xsd:annotation>
     </xsd:element>
 
     <xsd:element name="object-to-json-transformer" type="objectToJsonTransformerType"
@@ -167,7 +167,7 @@
                         <xsd:documentation>
                             The JSON engine can be configured using this attribute. This is an object
                             reference to an instance of:
-                            {{org.codehaus.jackson.map.ObjectMapperpper}}. This can be created as a bean and injected.  This can be created using the &lt;mapper/&gt; element.
+                            {{org.codehaus.jackson.map.ObjectMapperpper}}. This can be created as a bean and injected. This can be created using the &lt;mapper/&gt; element.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -209,7 +209,7 @@
                         </xsd:annotation>
                         <xsd:complexType>
                             <xsd:sequence>
-                                <xsd:element name="schema-redirect" minOccurs="1" maxOccurs="unbounded" type="schemaRedirectType" />
+                                <xsd:element name="schema-redirect" minOccurs="1" maxOccurs="unbounded" type="schemaRedirectType"/>
                             </xsd:sequence>
                         </xsd:complexType>
                     </xsd:element>
@@ -242,8 +242,8 @@
                 A redirection between a "from" and a "to" location
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:attribute name="from" type="xsd:string" use="required" />
-        <xsd:attribute name="to" type="xsd:string" use="required" />
+        <xsd:attribute name="from" type="xsd:string" use="required"/>
+        <xsd:attribute name="to" type="xsd:string" use="required"/>
     </xsd:complexType>
 
     <xsd:simpleType name="dereferencingType">
@@ -303,12 +303,12 @@
                     <xsd:element type="mixin" name="mixin"/>
                 </xsd:sequence>
                 <xsd:attribute name="name" type="xsd:string" use="required">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        The name of the mapper that is used to make a reference to it by the transformer elements.
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:attribute>
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            The name of the mapper that is used to make a reference to it by the transformer elements.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>

@@ -6,16 +6,17 @@
  */
 package org.mule.extension.validation.internal.validator;
 
-import static org.mule.extension.validation.internal.ImmutableValidationResult.ok;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.config.i18n.Message;
 import org.mule.extension.validation.api.ValidationResult;
 import org.mule.extension.validation.internal.ValidationContext;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.config.i18n.Message;
 import org.mule.runtime.core.util.ArrayUtils;
 
 import java.util.Collection;
 import java.util.Map;
+
+import static org.mule.extension.validation.internal.ImmutableValidationResult.ok;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * An {@link AbstractValidator} which verifies that {@link #value} has a size between certain inclusive boundaries. This

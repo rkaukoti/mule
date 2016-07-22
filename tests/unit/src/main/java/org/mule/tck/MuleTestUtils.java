@@ -6,8 +6,6 @@
  */
 package org.mule.tck;
 
-import static org.mockito.Mockito.spy;
-
 import org.mule.runtime.core.DefaultMuleContext;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.MessageExchangePattern;
@@ -33,6 +31,8 @@ import org.mule.tck.testmodels.mule.TestCompressionTransformer;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+import static org.mockito.Mockito.spy;
 
 /**
  * Utilities for creating test and Mock Mule objects
@@ -251,10 +251,10 @@ public final class MuleTestUtils
     }
 
     public static Flow getTestFlow(String name,
-                                         Class<?> clazz,
-                                         Map props,
-                                         MuleContext context,
-                                         boolean initialize) throws Exception
+                                   Class<?> clazz,
+                                   Map props,
+                                   MuleContext context,
+                                   boolean initialize) throws Exception
     {
         final SingletonObjectFactory of = new SingletonObjectFactory(clazz, props);
         of.initialise();
@@ -276,7 +276,7 @@ public final class MuleTestUtils
         return flow;
     }
 
-    public static Flow getTestFlow(String name, Object component,  boolean initialize, MuleContext context)
+    public static Flow getTestFlow(String name, Object component, boolean initialize, MuleContext context)
             throws Exception
     {
         final Flow flow = new Flow(name, context);
@@ -303,19 +303,18 @@ public final class MuleTestUtils
         t.initialise();
         return t;
     }
-    
+
     /**
      * Execute callback with a given system property set and replaces the system property with it's original
      * value once done. Useful for asserting behaviour that is dependent on the presence of a system property.
-     * 
-     * @param propertyName Name of system property to set
+     *
+     * @param propertyName  Name of system property to set
      * @param propertyValue Value of system property
-     * @param callback Callback implementing the the test code and assertions to be run with system property
-     *            set.
+     * @param callback      Callback implementing the the test code and assertions to be run with system property set.
      * @throws Exception any exception thrown by the execution of callback
      */
     public static void testWithSystemProperty(String propertyName, String propertyValue, TestCallback callback)
-        throws Exception
+            throws Exception
     {
         assert propertyName != null && callback != null;
         String originalPropertyValue = null;
@@ -344,11 +343,6 @@ public final class MuleTestUtils
         }
     }
 
-    public static interface TestCallback
-    {
-        void run() throws Exception;
-    }
-
     /**
      * Returns a currently running {@link Thread} of the given {@code name}
      *
@@ -366,5 +360,10 @@ public final class MuleTestUtils
         }
 
         return null;
+    }
+
+    public static interface TestCallback
+    {
+        void run() throws Exception;
     }
 }

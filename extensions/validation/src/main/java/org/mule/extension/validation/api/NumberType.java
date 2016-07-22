@@ -6,13 +6,13 @@
  */
 package org.mule.extension.validation.api;
 
-import java.util.Locale;
-
 import org.apache.commons.validator.routines.DoubleValidator;
 import org.apache.commons.validator.routines.FloatValidator;
 import org.apache.commons.validator.routines.IntegerValidator;
 import org.apache.commons.validator.routines.LongValidator;
 import org.apache.commons.validator.routines.ShortValidator;
+
+import java.util.Locale;
 
 /**
  * Defines types of {@link Number}s against which validations can be
@@ -28,8 +28,8 @@ public enum NumberType
                 public Number toNumber(String value, String pattern, Locale locale)
                 {
                     return pattern != null
-                           ? IntegerValidator.getInstance().validate(value, pattern, locale)
-                           : IntegerValidator.getInstance().validate(value, locale);
+                            ? IntegerValidator.getInstance().validate(value, pattern, locale)
+                            : IntegerValidator.getInstance().validate(value, locale);
                 }
             },
     LONG
@@ -38,8 +38,8 @@ public enum NumberType
                 public Number toNumber(String value, String pattern, Locale locale)
                 {
                     return pattern != null
-                           ? LongValidator.getInstance().validate(value, pattern, locale)
-                           : LongValidator.getInstance().validate(value, locale);
+                            ? LongValidator.getInstance().validate(value, pattern, locale)
+                            : LongValidator.getInstance().validate(value, locale);
                 }
             },
     SHORT
@@ -48,8 +48,8 @@ public enum NumberType
                 public Number toNumber(String value, String pattern, Locale locale)
                 {
                     return pattern != null
-                           ? ShortValidator.getInstance().validate(value, pattern, locale)
-                           : ShortValidator.getInstance().validate(value, locale);
+                            ? ShortValidator.getInstance().validate(value, pattern, locale)
+                            : ShortValidator.getInstance().validate(value, locale);
                 }
             },
     DOUBLE
@@ -58,8 +58,8 @@ public enum NumberType
                 public Number toNumber(String value, String pattern, Locale locale)
                 {
                     return pattern != null
-                           ? DoubleValidator.getInstance().validate(value, pattern, locale)
-                           : DoubleValidator.getInstance().validate(value, locale);
+                            ? DoubleValidator.getInstance().validate(value, pattern, locale)
+                            : DoubleValidator.getInstance().validate(value, locale);
                 }
             },
     FLOAT
@@ -68,8 +68,8 @@ public enum NumberType
                 public Number toNumber(String value, String pattern, Locale locale)
                 {
                     return pattern != null
-                           ? FloatValidator.getInstance().validate(value, pattern, locale)
-                           : FloatValidator.getInstance().validate(value, locale);
+                            ? FloatValidator.getInstance().validate(value, pattern, locale)
+                            : FloatValidator.getInstance().validate(value, locale);
                 }
             };
 

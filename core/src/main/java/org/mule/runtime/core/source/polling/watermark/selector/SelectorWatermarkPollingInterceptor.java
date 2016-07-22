@@ -23,7 +23,7 @@ import java.util.Iterator;
  * Implementation of
  * {@link org.mule.runtime.core.source.polling.watermark.WatermarkPollingInterceptor} that uses
  * a {@link WatermarkSelector} to return the new watermark value.
- * 
+ *
  * @since 3.5.0
  */
 public class SelectorWatermarkPollingInterceptor extends WatermarkPollingInterceptor
@@ -67,7 +67,7 @@ public class SelectorWatermarkPollingInterceptor extends WatermarkPollingInterce
         event = super.prepareRouting(sourceEvent, event);
         Object payload = event.getMessage().getPayload();
         final WatermarkSelector selector = new WatermarkSelectorWrapper(this.selector,
-            this.selectorExpression, event);
+                this.selectorExpression, event);
 
         if (payload instanceof Iterable)
         {
@@ -87,9 +87,9 @@ public class SelectorWatermarkPollingInterceptor extends WatermarkPollingInterce
         else
         {
             throw new ConfigurationException(
-                CoreMessages.createStaticMessage(String.format(
-                    "Poll executing with payload of class %s but selector can only handle Iterator and Iterable objects when watermark is to be updated via selectors",
-                    payload.getClass().getCanonicalName())));
+                    CoreMessages.createStaticMessage(String.format(
+                            "Poll executing with payload of class %s but selector can only handle Iterator and Iterable objects when watermark is to be updated via selectors",
+                            payload.getClass().getCanonicalName())));
         }
 
         return event;

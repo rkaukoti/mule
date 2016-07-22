@@ -26,7 +26,6 @@ import javax.management.ObjectName;
 
 /**
  * An agent that propergates Mule Server notifications to Jmx.
- *
  */
 public class JmxServerNotificationAgent extends AbstractNotificationLoggerAgent
 {
@@ -99,7 +98,8 @@ public class JmxServerNotificationAgent extends AbstractNotificationLoggerAgent
             {
                 logger.warn(e.getMessage(), e);
             }
-        }        super.dispose();
+        }
+        super.dispose();
     }
 
     @Override
@@ -133,11 +133,6 @@ public class JmxServerNotificationAgent extends AbstractNotificationLoggerAgent
         // no methods
     }
 
-    public static class BroadcastNotificationService extends NotificationBroadcasterSupport implements BroadcastNotificationServiceMBean
-    {
-        // no methods
-    }
-
     public static interface NotificationListenerMBean
     {
         List<Notification> getNotificationsList();
@@ -145,6 +140,11 @@ public class JmxServerNotificationAgent extends AbstractNotificationLoggerAgent
         int getListSize();
 
         void setListSize(int listSize);
+    }
+
+    public static class BroadcastNotificationService extends NotificationBroadcasterSupport implements BroadcastNotificationServiceMBean
+    {
+        // no methods
     }
 
     public static class NotificationListener implements NotificationListenerMBean, javax.management.NotificationListener

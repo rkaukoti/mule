@@ -7,9 +7,9 @@
 
 package org.mule.runtime.core.api.debug;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
 import org.mule.runtime.core.util.StringUtils;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Provides debug information for an object field.
@@ -32,8 +32,8 @@ public abstract class FieldDebugInfo<T>
     /**
      * Creates a new debug info for a field
      *
-     * @param name field's name. A non blank {@link String}
-     * @param type field's type.
+     * @param name  field's name. A non blank {@link String}
+     * @param type  field's type.
      * @param value field's value. Can be null.
      */
     FieldDebugInfo(String name, String type, T value)

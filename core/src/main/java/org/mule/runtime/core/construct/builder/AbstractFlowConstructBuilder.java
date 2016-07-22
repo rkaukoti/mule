@@ -6,15 +6,15 @@
  */
 package org.mule.runtime.core.construct.builder;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.exception.MessagingExceptionHandler;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.source.MessageSource;
 import org.mule.runtime.core.construct.AbstractFlowConstruct;
+
+import java.util.Collections;
+import java.util.List;
 
 @SuppressWarnings("unchecked")
 public abstract class AbstractFlowConstructBuilder<T extends AbstractFlowConstructBuilder<?, ?>, F extends AbstractFlowConstruct>
@@ -56,7 +56,7 @@ public abstract class AbstractFlowConstructBuilder<T extends AbstractFlowConstru
     {
         final F flowConstruct = buildFlowConstruct(muleContext);
         addExceptionListener(flowConstruct);
-        if(initialState!=null)
+        if (initialState != null)
         {
             flowConstruct.setInitialState(initialState);
         }

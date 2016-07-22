@@ -7,10 +7,6 @@
 
 package org.mule.runtime.module.db.internal.processor;
 
-import static org.mule.runtime.core.api.debug.FieldDebugInfoFactory.createFieldDebugInfo;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERIES_DEBUG_FIELD;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERY_DEBUG_FIELD;
-import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.createQueryFieldDebugInfo;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -32,6 +28,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.mule.runtime.core.api.debug.FieldDebugInfoFactory.createFieldDebugInfo;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERIES_DEBUG_FIELD;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUERY_DEBUG_FIELD;
+import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.createQueryFieldDebugInfo;
+
 /**
  * Executes an update dynamic query in bulk mode on a database
  * * <p/>
@@ -44,7 +45,9 @@ import java.util.List;
 public class DynamicBulkUpdateMessageProcessor extends AbstractBulkUpdateMessageProcessor
 {
 
-    public DynamicBulkUpdateMessageProcessor(DbConfigResolver dbConfigResolver, QueryResolver queryResolver, BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction, List<QueryType> validQueryTypes)
+    public DynamicBulkUpdateMessageProcessor(DbConfigResolver dbConfigResolver, QueryResolver queryResolver,
+                                             BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction,
+                                             List<QueryType> validQueryTypes)
     {
         super(dbConfigResolver, transactionalAction, validQueryTypes, queryResolver, bulkUpdateExecutorFactory);
     }

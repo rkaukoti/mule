@@ -23,7 +23,7 @@ public class XsltTransformerUTF8TestCase extends AbstractXmlTransformerTestCase
     {
         srcData = IOUtils.toString(IOUtils.getResourceAsStream("cdcatalog-utf-8.xml", getClass()), "UTF-8");
         resultData = IOUtils.toString(IOUtils.getResourceAsStream("cdcatalog-utf-8.html", getClass()),
-            "UTF-8");
+                "UTF-8");
     }
 
     @Override

@@ -7,13 +7,13 @@
 
 package org.mule.runtime.module.db.integration.matcher;
 
+import org.junit.internal.matchers.TypeSafeMatcher;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
-
-import org.junit.internal.matchers.TypeSafeMatcher;
 
 /**
  * Provides a base implementation for {@link DataSource} matchers

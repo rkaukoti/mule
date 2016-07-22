@@ -6,10 +6,11 @@
  */
 package org.mule.compatibility.transport.vm.functional.transactions;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import org.hamcrest.core.Is;
+import org.hamcrest.core.IsInstanceOf;
+import org.hamcrest.core.IsNull;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.MuleMessage;
@@ -25,11 +26,10 @@ import org.mule.runtime.core.util.concurrent.Latch;
 import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 
-import org.hamcrest.core.Is;
-import org.hamcrest.core.IsInstanceOf;
-import org.hamcrest.core.IsNull;
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class VmExceptionStrategyRequestResponseTestCase extends FunctionalTestCase
 {
@@ -59,7 +59,8 @@ public class VmExceptionStrategyRequestResponseTestCase extends FunctionalTestCa
     {
         MuleClient muleClient = muleContext.getClient();
         MuleMessage response = muleClient.send("vm://in1", ORIGINAL_MESSAGE, null);
-        if (!deadLetterQueueLatch.await(TIMEOUT, TimeUnit.MILLISECONDS)) {
+        if (!deadLetterQueueLatch.await(TIMEOUT, TimeUnit.MILLISECONDS))
+        {
             fail("dead letter queue must be reached");
         }
         assertThat(outboundComponentReached, is(false));
@@ -95,7 +96,8 @@ public class VmExceptionStrategyRequestResponseTestCase extends FunctionalTestCa
     {
         MuleClient muleClient = muleContext.getClient();
         MuleMessage response = muleClient.send("vm://in3", ORIGINAL_MESSAGE, null);
-        if (!deadLetterQueueLatch.await(TIMEOUT, TimeUnit.MILLISECONDS)) {
+        if (!deadLetterQueueLatch.await(TIMEOUT, TimeUnit.MILLISECONDS))
+        {
             fail("dead letter queue must be reached");
         }
         assertThat(outboundComponentReached, Is.is(false));
@@ -111,7 +113,8 @@ public class VmExceptionStrategyRequestResponseTestCase extends FunctionalTestCa
     {
         MuleClient muleClient = muleContext.getClient();
         MuleMessage response = muleClient.send("vm://in4", ORIGINAL_MESSAGE, null);
-        if (!deadLetterQueueLatch.await(TIMEOUT, TimeUnit.MILLISECONDS)) {
+        if (!deadLetterQueueLatch.await(TIMEOUT, TimeUnit.MILLISECONDS))
+        {
             fail("dead letter queue must be reached");
         }
         assertThat(outboundComponentReached, Is.is(false));

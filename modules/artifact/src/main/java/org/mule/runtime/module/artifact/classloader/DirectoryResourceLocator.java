@@ -38,7 +38,8 @@ public class DirectoryResourceLocator implements LocalResourceLocator
                     }
                     catch (MalformedURLException e)
                     {
-                        throw new MuleRuntimeException(CoreMessages.createStaticMessage(String.format("Can not load resource with name %s.", resourceName)), e);
+                        throw new MuleRuntimeException(
+                                CoreMessages.createStaticMessage(String.format("Can not load resource with name %s.", resourceName)), e);
                     }
                 }
             }

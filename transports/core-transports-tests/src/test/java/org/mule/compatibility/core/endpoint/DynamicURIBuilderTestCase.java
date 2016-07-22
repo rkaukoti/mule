@@ -7,14 +7,8 @@
 
 package org.mule.compatibility.core.endpoint;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.MalformedEndpointException;
-import org.mule.compatibility.core.endpoint.DynamicURIBuilder;
-import org.mule.compatibility.core.endpoint.URIBuilder;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.expression.ExpressionManager;
@@ -24,16 +18,19 @@ import org.mule.tck.size.SmallTest;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class DynamicURIBuilderTestCase extends AbstractMuleTestCase
 {
 
     public static final String EXPECTED_ADDRESS = "http://admin%40abc:admin%40123@localhost:8080/test?foo=bar";
+    public static final String ATTRIBUTE_EXPRESSION = "#[expression]";
     private final MuleEvent event = mock(MuleEvent.class);
     private final MuleContext muleContext = mock(MuleContext.class);
-    public static final String ATTRIBUTE_EXPRESSION = "#[expression]";
 
     @Test
     public void resolvesDynamicAddress() throws Exception
@@ -122,7 +119,8 @@ public class DynamicURIBuilderTestCase extends AbstractMuleTestCase
         when(expressionManager.parse(expression, event, true)).thenReturn(expressionValue);
     }
 
-    private void doDynamicUriResolverTest(URIBuilder uriBuilder) throws URISyntaxException, UnsupportedEncodingException, MalformedEndpointException
+    private void doDynamicUriResolverTest(URIBuilder uriBuilder)
+            throws URISyntaxException, UnsupportedEncodingException, MalformedEndpointException
     {
         DynamicURIBuilder dynamicURIBuilder = new DynamicURIBuilder(uriBuilder);
         String uri = dynamicURIBuilder.build(event);

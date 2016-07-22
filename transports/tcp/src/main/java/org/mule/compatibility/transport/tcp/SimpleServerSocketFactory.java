@@ -11,15 +11,14 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.URI;
 
-public interface SimpleServerSocketFactory 
+public interface SimpleServerSocketFactory
 {
 
     /**
-     * @param uri The address and port to connect to
+     * @param uri     The address and port to connect to
      * @param backlog The backlog (or {@link org.mule.api.transport.Connector#INT_VALUE_NOT_SET})
-     * @param reuse Whether to reuse addresses (null for default)
+     * @param reuse   Whether to reuse addresses (null for default)
      * @return A new, bound server socket
-     * @throws IOException
      */
     ServerSocket createServerSocket(URI uri, int backlog, Boolean reuse) throws IOException;
 

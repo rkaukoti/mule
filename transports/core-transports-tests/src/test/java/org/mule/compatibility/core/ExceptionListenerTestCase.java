@@ -6,10 +6,8 @@
  */
 package org.mule.compatibility.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.exception.AbstractExceptionListener;
@@ -19,8 +17,9 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import org.mockito.Mockito;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class ExceptionListenerTestCase extends AbstractMuleTestCase
 {

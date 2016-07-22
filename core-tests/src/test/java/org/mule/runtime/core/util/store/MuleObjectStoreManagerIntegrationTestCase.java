@@ -6,10 +6,11 @@
  */
 package org.mule.runtime.core.util.store;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.api.store.ObjectStoreManager.UNBOUNDED;
-
+import org.hamcrest.core.Is;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.api.store.ListableObjectStore;
 import org.mule.runtime.core.api.store.ObjectStore;
@@ -21,11 +22,9 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.hamcrest.core.Is;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.api.store.ObjectStoreManager.UNBOUNDED;
 
 @RunWith(Parameterized.class)
 /**
@@ -40,12 +39,12 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
     public static final String OBJECT_KEY_VALUE_2 = "anotherValue";
     private final ObjectStoreFactory objectStoreFactory;
 
-    private enum ObjectStoreType {DEFAULT,USER};
-
     public MuleObjectStoreManagerIntegrationTestCase(ObjectStoreFactory objectStoreFactory)
     {
         this.objectStoreFactory = objectStoreFactory;
     }
+
+    ;
 
     @Parameterized.Parameters
     public static Collection<Object[]> parameters()
@@ -61,7 +60,8 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
     @Before
     public void injectMuleContext()
     {
-        objectStoreFactory.setMuleObjectStoreManager(muleContext.getRegistry().<MuleObjectStoreManager>get(MuleProperties.OBJECT_STORE_MANAGER));
+        objectStoreFactory.setMuleObjectStoreManager(
+                muleContext.getRegistry().<MuleObjectStoreManager>get(MuleProperties.OBJECT_STORE_MANAGER));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
         os2.store(OBJECT_KEY, OBJECT_KEY_VALUE_2);
         assertThat(os.contains(OBJECT_KEY), is(true));
         assertThat((String) os.retrieve(OBJECT_KEY), is(OBJECT_KEY_VALUE_1));
-        assertThat(os2.contains(OBJECT_KEY),is(true));
+        assertThat(os2.contains(OBJECT_KEY), is(true));
         assertThat((String) os2.retrieve(OBJECT_KEY), is(OBJECT_KEY_VALUE_2));
         assertThat((String) os.remove(OBJECT_KEY), is(OBJECT_KEY_VALUE_1));
         assertThat((String) os2.remove(OBJECT_KEY), is(OBJECT_KEY_VALUE_2));
@@ -90,7 +90,7 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
         ensureMilisecondChanged();
 
 
-        for (int i = 1; i < maxEntries +1; i++)
+        for (int i = 1; i < maxEntries + 1; i++)
         {
             os.store(i, i);
         }
@@ -129,7 +129,7 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
 
         for (int i = 0; i < maxEntries; i++)
         {
-            os.store(i,i);
+            os.store(i, i);
         }
 
         PollingProber prober = new PollingProber(1000, expirationInterval);
@@ -154,7 +154,7 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
     {
         int maxEntries = 5;
         int entryTTL = 10000;
-        ListableObjectStore os = objectStoreFactory.createObjectStore("myOs", maxEntries, entryTTL,100);
+        ListableObjectStore os = objectStoreFactory.createObjectStore("myOs", maxEntries, entryTTL, 100);
 
         os.store(0, 0);
 
@@ -167,7 +167,7 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
 
         os.store(OBJECT_KEY, OBJECT_KEY_VALUE_1);
 
-        Thread.sleep(entryTTL/5);
+        Thread.sleep(entryTTL / 5);
 
         assertThat(os.allKeys().size(), is(maxEntries));
 
@@ -209,7 +209,7 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
             {
                 assertThat(os.allKeys().size(), is(maxEntries));
 
-                for (int i = 1; i < maxEntries +1; i++)
+                for (int i = 1; i < maxEntries + 1; i++)
                 {
                     assertThat(os.contains(i), is(true));
                 }
@@ -234,11 +234,14 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
         {
             bigKey.append("abcdefghijklmnopqrstuvwxyz");
         }
-        os.store(bigKey.toString(),1);
+        os.store(bigKey.toString(), 1);
         assertThat((Integer) os.retrieve(bigKey.toString()), Is.is(1));
     }
 
-
+    private enum ObjectStoreType
+    {
+        DEFAULT, USER
+    }
 
     private static class ObjectStoreFactory
     {
@@ -261,23 +264,24 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
         {
             if (objectStoreType.equals(ObjectStoreType.USER))
             {
-                return muleObjectStoreManager.getUserObjectStore(name,isPersistent);
+                return muleObjectStoreManager.getUserObjectStore(name, isPersistent);
             }
             else
             {
-                return muleObjectStoreManager.getObjectStore(name,isPersistent);
+                return muleObjectStoreManager.getObjectStore(name, isPersistent);
             }
         }
 
-        public <T extends ObjectStore<? extends Serializable>> T createObjectStore(String name, int maxEntries, int entryTTL, int expirationInterval)
+        public <T extends ObjectStore<? extends Serializable>> T createObjectStore(String name, int maxEntries, int entryTTL,
+                                                                                   int expirationInterval)
         {
             if (objectStoreType.equals(ObjectStoreType.USER))
             {
-                return muleObjectStoreManager.getUserObjectStore(name,isPersistent, maxEntries, entryTTL, expirationInterval);
+                return muleObjectStoreManager.getUserObjectStore(name, isPersistent, maxEntries, entryTTL, expirationInterval);
             }
             else
             {
-                return muleObjectStoreManager.getObjectStore(name,isPersistent, maxEntries, entryTTL, expirationInterval);
+                return muleObjectStoreManager.getObjectStore(name, isPersistent, maxEntries, entryTTL, expirationInterval);
             }
         }
     }

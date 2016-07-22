@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.runtime.module.oauth2.internal.StateDecoder;
 import org.mule.runtime.module.oauth2.internal.StateEncoder;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertThat;
 
 public class StateEncoderTestCase extends AbstractMuleTestCase
 {

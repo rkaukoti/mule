@@ -18,6 +18,7 @@ public interface JmsTopicResolver
 {
     /**
      * Use endpoint configuration to detect a topic.
+     *
      * @param endpoint endpoint to test
      * @return true if endpoint's config tells it's a topic
      * @see #isTopic(org.mule.api.endpoint.ImmutableEndpoint, boolean)
@@ -29,9 +30,9 @@ public interface JmsTopicResolver
      * specify a fallback mechanism to search in endpoint's properties
      * in case resource info yields {@code false}. In case resource info
      * returned {@code true} no endpoint properties would be consulted.
-     * @param endpoint endpoint to test
-     * @param fallbackToEndpointProperties  whether to check endpoint's properties if
-     *        resource info returned false
+     *
+     * @param endpoint                     endpoint to test
+     * @param fallbackToEndpointProperties whether to check endpoint's properties if resource info returned false
      * @return true if endpoint's config tells it's a topic
      */
     boolean isTopic(ImmutableEndpoint endpoint, boolean fallbackToEndpointProperties);
@@ -39,7 +40,8 @@ public interface JmsTopicResolver
     /**
      * Use any means suitable to detect a topic. This can
      * be as simple as an {@code instanceof} call or utilize
-     * reflection and/or vendor API instead. 
+     * reflection and/or vendor API instead.
+     *
      * @param destination a jms destination to test
      * @return {@code true} for topic
      */

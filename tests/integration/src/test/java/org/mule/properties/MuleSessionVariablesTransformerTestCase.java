@@ -6,9 +6,8 @@
  */
 package org.mule.properties;
 
-import org.mule.functional.junit4.FunctionalTestCase;
-
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 
 public class MuleSessionVariablesTransformerTestCase extends FunctionalTestCase
 {
@@ -35,7 +34,7 @@ public class MuleSessionVariablesTransformerTestCase extends FunctionalTestCase
     {
         runScenario("addVariableWithParsedStringKeyFlow");
     }
-    
+
     @Test
     public void testRemoveVariable() throws Exception
     {

@@ -104,14 +104,14 @@ final class ParsedParameter implements AnnotatedElement
         return (T) annotations.get(annotationType);
     }
 
-    public void setImplementingParameter(Parameter implementingParameter)
-    {
-        this.implementingParameter = Optional.of(implementingParameter);
-    }
-
     public Optional<Parameter> getImplementingParameter()
     {
         return this.implementingParameter;
+    }
+
+    public void setImplementingParameter(Parameter implementingParameter)
+    {
+        this.implementingParameter = Optional.of(implementingParameter);
     }
 
     @Override

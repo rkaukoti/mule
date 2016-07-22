@@ -6,6 +6,15 @@
  */
 package org.mule.extension.ftp;
 
+import org.junit.Test;
+import org.mule.extension.FtpTestHarness;
+import org.mule.runtime.core.util.IOUtils;
+import org.mule.runtime.module.extension.file.api.FileAttributes;
+import org.mule.runtime.module.extension.file.api.TreeNode;
+
+import java.nio.file.Paths;
+import java.util.List;
+
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -15,15 +24,6 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
-import org.mule.extension.FtpTestHarness;
-import org.mule.runtime.core.util.IOUtils;
-import org.mule.runtime.module.extension.file.api.FileAttributes;
-import org.mule.runtime.module.extension.file.api.TreeNode;
-
-import java.nio.file.Paths;
-import java.util.List;
-
-import org.junit.Test;
 
 public class FtpListTestCase extends FtpConnectorTestCase
 {
@@ -69,8 +69,8 @@ public class FtpListTestCase extends FtpConnectorTestCase
         assertThat(assertListedFiles(childs), is(true));
 
         List<TreeNode> subDirectories = childs.stream()
-                .filter(child -> child.getAttributes().isDirectory())
-                .collect(toList());
+                                              .filter(child -> child.getAttributes().isDirectory())
+                                              .collect(toList());
 
         assertThat(subDirectories, hasSize(1));
         TreeNode subDirectory = subDirectories.get(0);

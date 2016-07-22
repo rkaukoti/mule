@@ -70,7 +70,10 @@ public final class SftpReadCommand extends SftpCommand implements ReadCommand
         {
             InputStream payload = SftpInputStream.newInstance((FtpConnector) config, attributes, pathLock);
             MediaType mediaType = fileSystem.getFileMessageMediaType(message.getDataType().getMediaType(), attributes);
-            return OperationResult.<InputStream, FileAttributes>builder().output(payload).mediaType(mediaType).attributes(attributes).build();
+            return OperationResult.<InputStream, FileAttributes>builder().output(payload)
+                                                                         .mediaType(mediaType)
+                                                                         .attributes(attributes)
+                                                                         .build();
         }
         catch (ConnectionException e)
         {

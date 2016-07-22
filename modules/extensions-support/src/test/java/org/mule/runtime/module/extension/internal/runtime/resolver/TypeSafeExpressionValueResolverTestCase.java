@@ -6,6 +6,13 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
+import org.junit.Test;
+import org.mockito.verification.VerificationMode;
+import org.mule.runtime.core.DefaultMuleContext;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.expression.DefaultExpressionManager;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+
 import static org.apache.commons.lang.StringUtils.EMPTY;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
@@ -16,13 +23,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import org.mule.runtime.core.DefaultMuleContext;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.expression.DefaultExpressionManager;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-
-import org.junit.Test;
-import org.mockito.verification.VerificationMode;
 
 public class TypeSafeExpressionValueResolverTestCase extends AbstractMuleContextTestCase
 {

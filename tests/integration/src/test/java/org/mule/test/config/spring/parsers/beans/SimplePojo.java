@@ -20,14 +20,14 @@ public class SimplePojo
         this.someParameter = someParameter;
     }
 
-    public void setSomeParameter(String someParameter)
-    {
-        this.someParameter = someParameter;
-    }
-
     public String getSomeParameter()
     {
         return someParameter;
+    }
+
+    public void setSomeParameter(String someParameter)
+    {
+        this.someParameter = someParameter;
     }
 
     @Override

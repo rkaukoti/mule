@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.module.artifact.classloader;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
 import java.net.URL;
 import java.util.List;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Base {@link ArtifactClassLoader} implementation of deployable artifacts.
@@ -23,13 +23,14 @@ public class MuleDeployableArtifactClassLoader extends MuleArtifactClassLoader
     /**
      * Creates a {@link MuleDeployableArtifactClassLoader} with the provided configuration.
      *
-     * @param name artifact name
-     * @param urls the URLs from which to load classes and resources
-     * @param parent parent class loader in the hierarchy
-     * @param lookupPolicy policy for resolving classes and resources
+     * @param name                       artifact name
+     * @param urls                       the URLs from which to load classes and resources
+     * @param parent                     parent class loader in the hierarchy
+     * @param lookupPolicy               policy for resolving classes and resources
      * @param artifactPluginClassLoaders class loaders for the plugin artifacts contained by this artifact. Must be not null.
      */
-    public MuleDeployableArtifactClassLoader(String name, URL[] urls, ClassLoader parent, ClassLoaderLookupPolicy lookupPolicy, List<ArtifactClassLoader> artifactPluginClassLoaders)
+    public MuleDeployableArtifactClassLoader(String name, URL[] urls, ClassLoader parent, ClassLoaderLookupPolicy lookupPolicy,
+                                             List<ArtifactClassLoader> artifactPluginClassLoaders)
     {
         super(name, urls, parent, lookupPolicy);
         checkArgument(artifactPluginClassLoaders != null, "artifact plugin class loaders cannot be null");

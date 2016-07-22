@@ -7,7 +7,6 @@
 
 package org.mule.runtime.module.db.internal.config.domain.database;
 
-import static org.springframework.util.xml.DomUtils.getChildElementByTagName;
 import org.mule.runtime.config.spring.parsers.generic.MuleOrphanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.processors.CheckExclusiveAttributes;
 import org.mule.runtime.core.util.StringUtils;
@@ -15,6 +14,10 @@ import org.mule.runtime.module.db.internal.domain.type.ArrayResolvedDbType;
 import org.mule.runtime.module.db.internal.domain.type.DbType;
 import org.mule.runtime.module.db.internal.domain.type.MappedStructResolvedDbType;
 import org.mule.runtime.module.db.internal.domain.type.ResolvedDbType;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.xml.ParserContext;
+import org.springframework.util.xml.DomUtils;
+import org.w3c.dom.Element;
 
 import java.sql.Connection;
 import java.sql.Types;
@@ -23,10 +26,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.xml.ParserContext;
-import org.springframework.util.xml.DomUtils;
-import org.w3c.dom.Element;
+import static org.springframework.util.xml.DomUtils.getChildElementByTagName;
 
 public class DbConfigDefinitionParser extends MuleOrphanDefinitionParser
 {
@@ -35,9 +35,19 @@ public class DbConfigDefinitionParser extends MuleOrphanDefinitionParser
     public static final String DATA_TYPES_ELEMENT = "data-types";
     public static final String DATA_TYPE_ELEMENT = "data-type";
     public static final String TYPE_ID_ATTRIBUTE = "id";
-
+    public static final String TRANSACTION_ISOLATION_ATTRIBUTE = "transactionIsolation";
+    public static final String URL_ATTRIBUTE = "url";
+    public static final String USER_ATTRIBUTE = "user";
+    public static final String PASSWORD_ATTRIBUTE = "password";
+    public static final String DRIVER_ATTRIBUTE = "driver";
+    public static final String HOST_ATTRIBUTE = "host";
+    public static final String PORT_ATTRIBUTE = "port";
+    public static final String DATABASE_ATTRIBUTE = "database";
+    public static final String LOGIN_TIMEOUT_ATTRIBUTE = "connectionTimeout";
+    public static final String DATA_SOURCE_REF_ATTRIBUTE = "dataSource-ref";
+    public static final String USE_XA_TRANSACTIONS_ATTRIBUTE = "useXaTransactions";
+    public static final String TYPE_NAME_ATTIRBUTE = "name";
     private static final Map<String, Integer> TRANSACTION_ISOLATION_MAPPING;
-
     private static final String KEY_ATTRIBUTE_NAME = "key";
     private static final String VALUE_ATTRIBUTE_NAME = "value";
 
@@ -52,20 +62,8 @@ public class DbConfigDefinitionParser extends MuleOrphanDefinitionParser
         TRANSACTION_ISOLATION_MAPPING.put("SERIALIZABLE", Connection.TRANSACTION_SERIALIZABLE);
     }
 
-    public static final String TRANSACTION_ISOLATION_ATTRIBUTE = "transactionIsolation";
-    public static final String URL_ATTRIBUTE = "url";
-    public static final String USER_ATTRIBUTE = "user";
-    public static final String PASSWORD_ATTRIBUTE = "password";
-    public static final String DRIVER_ATTRIBUTE = "driver";
-    public static final String HOST_ATTRIBUTE = "host";
-    public static final String PORT_ATTRIBUTE = "port";
-    public static final String DATABASE_ATTRIBUTE = "database";
-    public static final String LOGIN_TIMEOUT_ATTRIBUTE = "connectionTimeout";
-    public static final String DATA_SOURCE_REF_ATTRIBUTE = "dataSource-ref";
-    public static final String USE_XA_TRANSACTIONS_ATTRIBUTE = "useXaTransactions";
-    public static final String TYPE_NAME_ATTIRBUTE = "name";
-
-    public DbConfigDefinitionParser(Class<? extends DbConfigResolverFactoryBean> dbConfigFactoryClass, CheckExclusiveAttributes exclusiveAttributes)
+    public DbConfigDefinitionParser(Class<? extends DbConfigResolverFactoryBean> dbConfigFactoryClass,
+                                    CheckExclusiveAttributes exclusiveAttributes)
     {
         super(dbConfigFactoryClass, true);
 

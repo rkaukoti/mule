@@ -6,9 +6,7 @@
  */
 package org.mule.compatibility.transport.file.transformers;
 
-import static org.junit.Assert.assertTrue;
-
-import org.mule.compatibility.transport.file.transformers.FileToByteArray;
+import org.junit.Test;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
 import org.mule.runtime.core.util.FileUtils;
@@ -19,7 +17,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.util.Arrays;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 public class FileToByteArrayTestCase extends AbstractTransformerTestCase
 {

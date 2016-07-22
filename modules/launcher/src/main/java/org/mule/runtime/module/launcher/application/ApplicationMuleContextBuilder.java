@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.module.launcher.application;
 
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 import org.mule.runtime.core.DefaultMuleContext;
 import org.mule.runtime.core.api.config.ThreadingProfile;
 import org.mule.runtime.core.config.DefaultMuleConfiguration;
@@ -16,6 +15,8 @@ import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.core.work.MuleWorkManager;
 
 import java.util.Map;
+
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 
 /**
  * Takes Mule application descriptor into account when building the context.

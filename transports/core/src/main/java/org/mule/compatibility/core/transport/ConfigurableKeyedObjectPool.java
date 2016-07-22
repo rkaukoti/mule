@@ -33,8 +33,7 @@ public interface ConfigurableKeyedObjectPool extends KeyedObjectPool
     /**
      * Sets the cap on the total number of instances from all pools combined.
      *
-     * @param maxTotal The cap on the total number of instances across pools.
-     *                 Use a negative value for no limit.
+     * @param maxTotal The cap on the total number of instances across pools. Use a negative value for no limit.
      */
     void setMaxTotal(int maxTotal);
 
@@ -47,8 +46,7 @@ public interface ConfigurableKeyedObjectPool extends KeyedObjectPool
     /**
      * Sets the cap on the number of active instances per key.
      *
-     * @param maxActive The cap on the number of active instances per key.
-     *                  Use a negative value for no limit.
+     * @param maxActive The cap on the number of active instances per key. Use a negative value for no limit.
      */
     void setMaxActive(int maxActive);
 
@@ -86,27 +84,24 @@ public interface ConfigurableKeyedObjectPool extends KeyedObjectPool
     /**
      * Sets the cap on the number of "idle" instances in the pool.
      *
-     * @param maxIdle the maximum number of "idle" instances that can be held
-     *                in a given keyed pool. Use a negative value for no limit.
+     * @param maxIdle the maximum number of "idle" instances that can be held in a given keyed pool. Use a negative value for no limit.
      */
     void setMaxIdle(int maxIdle);
-
-    /**
-     * Sets the action to take when the {@link #borrowObject} method
-     * is invoked when the pool is exhausted.
-     *
-     * @param whenExhaustedAction the action code, which must be one of
-     *                            {@link #WHEN_EXHAUSTED_BLOCK}, {@link #WHEN_EXHAUSTED_FAIL},
-     *                            or {@link #WHEN_EXHAUSTED_GROW}
-     */
-    void setWhenExhaustedAction(byte whenExhaustedAction);
 
     /**
      * Returns the action to take when the {@link #borrowObject} method
      * is invoked when the pool is exhausted.
      *
-     * @return one of {@link #WHEN_EXHAUSTED_BLOCK},
-     *         {@link #WHEN_EXHAUSTED_FAIL} or {@link #WHEN_EXHAUSTED_GROW}
+     * @return one of {@link #WHEN_EXHAUSTED_BLOCK}, {@link #WHEN_EXHAUSTED_FAIL} or {@link #WHEN_EXHAUSTED_GROW}
      */
     byte getWhenExhaustedAction();
+
+    /**
+     * Sets the action to take when the {@link #borrowObject} method
+     * is invoked when the pool is exhausted.
+     *
+     * @param whenExhaustedAction the action code, which must be one of {@link #WHEN_EXHAUSTED_BLOCK}, {@link #WHEN_EXHAUSTED_FAIL}, or
+     *                            {@link #WHEN_EXHAUSTED_GROW}
+     */
+    void setWhenExhaustedAction(byte whenExhaustedAction);
 }

@@ -13,9 +13,6 @@ import org.mule.runtime.config.spring.parsers.assembly.DefaultBeanAssemblerFacto
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.config.spring.parsers.generic.ParentDefinitionParser;
 import org.mule.runtime.core.routing.MessageFilter;
-
-import java.util.List;
-
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -23,6 +20,8 @@ import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.ManagedList;
 import org.w3c.dom.Element;
+
+import java.util.List;
 
 /**
  * This allows a filter to be defined globally, or embedded within an endpoint. IF required the filter is

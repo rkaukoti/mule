@@ -6,13 +6,9 @@
  */
 package org.mule.test.transformers;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.DefaultMuleContext;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.ConfigurationBuilder;
@@ -20,15 +16,19 @@ import org.mule.runtime.core.api.registry.TransformerResolver;
 import org.mule.runtime.core.api.transformer.Converter;
 import org.mule.runtime.core.config.builders.AbstractConfigurationBuilder;
 import org.mule.runtime.core.registry.MuleRegistryHelper;
-import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Test;
-import org.mockito.ArgumentCaptor;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.same;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 public class ConvertersNotRegisteredTwiceTestCase extends FunctionalTestCase
 {
@@ -66,7 +66,8 @@ public class ConvertersNotRegisteredTwiceTestCase extends FunctionalTestCase
         assertNoDuplicatesNorEmpty(transformerResolverCaptor.getAllValues());
 
         ArgumentCaptor<Converter> converterArgumentCaptor = ArgumentCaptor.forClass(Converter.class);
-        verify(registryHelper, atLeastOnce()).notifyTransformerResolvers(converterArgumentCaptor.capture(), same(TransformerResolver.RegistryAction.ADDED));
+        verify(registryHelper, atLeastOnce()).notifyTransformerResolvers(converterArgumentCaptor.capture(),
+                same(TransformerResolver.RegistryAction.ADDED));
         assertNoDuplicatesNorEmpty(converterArgumentCaptor.getAllValues());
     }
 

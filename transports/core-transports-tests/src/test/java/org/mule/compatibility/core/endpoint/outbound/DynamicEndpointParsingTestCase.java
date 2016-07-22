@@ -6,11 +6,7 @@
  */
 package org.mule.compatibility.core.endpoint.outbound;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointException;
 import org.mule.compatibility.core.api.endpoint.MalformedEndpointException;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
@@ -23,7 +19,10 @@ import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class DynamicEndpointParsingTestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -52,7 +51,8 @@ public class DynamicEndpointParsingTestCase extends AbstractMuleContextEndpointT
     @Test(expected = MalformedEndpointException.class)
     public void testExpressionInSchemeIsForbidden() throws Exception
     {
-        createRequestResponseEndpoint("#[message.outboundProperties.scheme]://#[message.outboundProperties.host]:#[message.outboundProperties:port]");
+        createRequestResponseEndpoint(
+                "#[message.outboundProperties.scheme]://#[message.outboundProperties.host]:#[message.outboundProperties:port]");
     }
 
     @Test(expected = MalformedEndpointException.class)
@@ -64,14 +64,16 @@ public class DynamicEndpointParsingTestCase extends AbstractMuleContextEndpointT
     @Test(expected = MalformedEndpointException.class)
     public void testDynamicInboundEndpointNotAllowed() throws Exception
     {
-        EndpointURIEndpointBuilder endpointBuilder = new EndpointURIEndpointBuilder("test://#[message.outboundProperties.host]:#[message.outboundProperties.port]", muleContext);
+        EndpointURIEndpointBuilder endpointBuilder =
+                new EndpointURIEndpointBuilder("test://#[message.outboundProperties.host]:#[message.outboundProperties.port]", muleContext);
         endpointBuilder.buildInboundEndpoint();
     }
 
     @Test
     public void testMEPOverridingInUri() throws Exception
     {
-        OutboundEndpoint endpoint = createEndpoint("test://#[message.outboundProperties.host]:#[message.outboundProperties.port]", MessageExchangePattern.ONE_WAY);
+        OutboundEndpoint endpoint = createEndpoint("test://#[message.outboundProperties.host]:#[message.outboundProperties.port]",
+                MessageExchangePattern.ONE_WAY);
 
         assertTrue(endpoint instanceof DynamicOutboundEndpoint);
 
@@ -85,7 +87,8 @@ public class DynamicEndpointParsingTestCase extends AbstractMuleContextEndpointT
         assertSame(VoidMuleEvent.getInstance(), response);
 
         // Now test set on the endpoint
-        endpoint = createRequestResponseEndpoint("test://#[message.outboundProperties.host]:#[message.outboundProperties.port]?exchangePattern=REQUEST_RESPONSE");
+        endpoint = createRequestResponseEndpoint(
+                "test://#[message.outboundProperties.host]:#[message.outboundProperties.port]?exchangePattern=REQUEST_RESPONSE");
 
         assertTrue(endpoint instanceof DynamicOutboundEndpoint);
 
@@ -105,7 +108,8 @@ public class DynamicEndpointParsingTestCase extends AbstractMuleContextEndpointT
         return createEndpoint(uri, MessageExchangePattern.REQUEST_RESPONSE);
     }
 
-    private OutboundEndpoint createEndpoint(String uri, MessageExchangePattern exchangePattern) throws EndpointException, InitialisationException
+    private OutboundEndpoint createEndpoint(String uri, MessageExchangePattern exchangePattern)
+            throws EndpointException, InitialisationException
     {
         EndpointURIEndpointBuilder endpointBuilder = new EndpointURIEndpointBuilder(uri, muleContext);
         endpointBuilder.setExchangePattern(exchangePattern);

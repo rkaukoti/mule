@@ -6,14 +6,14 @@
  */
 package org.mule.functional.functional;
 
+import junit.framework.AssertionFailedError;
+
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.config.i18n.MessageFactory;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-
-import junit.framework.AssertionFailedError;
 
 public class CountdownCallback implements EventCallback
 {
@@ -27,7 +27,7 @@ public class CountdownCallback implements EventCallback
     public void eventReceived(MuleEventContext context, Object Component) throws Exception
     {
         synchronized (this)
-        {            
+        {
             if (countDown.getCount() > 0)
             {
                 countDown.countDown();
@@ -45,7 +45,7 @@ public class CountdownCallback implements EventCallback
         {
             return countDown.getCount();
         }
-        else 
+        else
         {
             throw new InitialisationException(MessageFactory.createStaticMessage("CountDownLatch has not been initialized."), null);
         }
@@ -55,5 +55,5 @@ public class CountdownCallback implements EventCallback
     {
         return countDown.await(timeout, TimeUnit.MILLISECONDS);
     }
-    
+
 }

@@ -9,6 +9,8 @@ package org.mule.runtime.module.management.support;
 import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.module.management.agent.ConfigurableJMXAuthenticator;
 import org.mule.runtime.module.management.agent.JmxApplicationAgent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.Principal;
 import java.util.Collections;
@@ -20,9 +22,6 @@ import java.util.Set;
 import javax.management.remote.JMXAuthenticator;
 import javax.management.remote.JMXPrincipal;
 import javax.security.auth.Subject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A JMX authenticator for a simple username/password scheme.
@@ -40,7 +39,7 @@ public class SimplePasswordJmxAuthenticator implements JMXAuthenticator, Configu
      */
     private Map<String, Object> credentials = new HashMap<String, Object>();
 
-    public Subject authenticate (Object authToken)
+    public Subject authenticate(Object authToken)
     {
         if (authToken == null)
         {
@@ -72,7 +71,7 @@ public class SimplePasswordJmxAuthenticator implements JMXAuthenticator, Configu
         return new Subject(true, principals, Collections.EMPTY_SET, Collections.EMPTY_SET);
     }
 
-    public void setCredentials (Map<String, String> newCredentials)
+    public void setCredentials(Map<String, String> newCredentials)
     {
         this.credentials.clear();
         if (newCredentials == null || newCredentials.isEmpty())

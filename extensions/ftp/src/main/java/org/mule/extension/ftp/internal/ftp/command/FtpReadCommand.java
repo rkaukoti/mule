@@ -6,6 +6,7 @@
  */
 package org.mule.extension.ftp.internal.ftp.command;
 
+import org.apache.commons.net.ftp.FTPClient;
 import org.mule.extension.ftp.api.FtpFileAttributes;
 import org.mule.extension.ftp.api.ftp.ClassicFtpFileAttributes;
 import org.mule.extension.ftp.internal.FtpConnector;
@@ -24,8 +25,6 @@ import org.mule.runtime.module.extension.file.api.lock.PathLock;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import org.apache.commons.net.ftp.FTPClient;
 
 /**
  * A {@link ClassicFtpCommand} which implements the {@link FtpReadCommand}
@@ -81,7 +80,10 @@ public final class FtpReadCommand extends ClassicFtpCommand implements ReadComma
         {
             InputStream payload = ClassicFtpInputStream.newInstance((FtpConnector) config, attributes, pathLock);
             MediaType mediaType = fileSystem.getFileMessageMediaType(message.getDataType().getMediaType(), attributes);
-            return OperationResult.<InputStream, FileAttributes>builder().output(payload).mediaType(mediaType).attributes(attributes).build();
+            return OperationResult.<InputStream, FileAttributes>builder().output(payload)
+                                                                         .mediaType(mediaType)
+                                                                         .attributes(attributes)
+                                                                         .build();
         }
         catch (ConnectionException e)
         {

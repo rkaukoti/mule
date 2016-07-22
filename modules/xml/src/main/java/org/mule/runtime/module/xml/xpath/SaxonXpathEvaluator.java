@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.module.xml.xpath;
 
-import javax.xml.xpath.XPathFactory;
-
 import net.sf.saxon.xpath.XPathFactoryImpl;
+
+import javax.xml.xpath.XPathFactory;
 
 /**
  * Implementation of {@link JaxpXPathEvaluator} which uses

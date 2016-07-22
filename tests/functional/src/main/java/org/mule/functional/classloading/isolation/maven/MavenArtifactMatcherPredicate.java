@@ -7,24 +7,23 @@
 
 package org.mule.functional.classloading.isolation.maven;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
-
 import java.util.function.Predicate;
 
+import static org.apache.commons.lang.StringUtils.isEmpty;
+
 /**
- * {@link Predicate} to match a {@link MavenArtifact} based on groupId, artifactId and type.
- * It support wildcard for any of groutId/artifactId/type fields. It is also supported partial wildcard for startsWith for groupId and artifactId.
+ * {@link Predicate} to match a {@link MavenArtifact} based on groupId, artifactId and type. It support wildcard for any of
+ * groutId/artifactId/type fields. It is also supported partial wildcard for startsWith for groupId and artifactId.
  *
  * @since 4.0
  */
 public class MavenArtifactMatcherPredicate implements Predicate<MavenArtifact>
 {
 
+    public static final String ANY_WILDCARD = "*";
     private String groupId;
     private String artifactId;
     private String type;
-
-    public static final String ANY_WILDCARD = "*";
 
     /**
      * Creates a {@link Predicate} to match artifacts by groupId, artifactId and type.
@@ -33,9 +32,9 @@ public class MavenArtifactMatcherPredicate implements Predicate<MavenArtifact>
      * <p/>
      * For instance: org.mule.*
      *
-     * @param groupId non-null and cannot be empty, groupId for exclusion
+     * @param groupId    non-null and cannot be empty, groupId for exclusion
      * @param artifactId non-null and cannot be empty, artifactId for exclusion
-     * @param type non-null and cannot be empty, type for exclusion
+     * @param type       non-null and cannot be empty, type for exclusion
      * @throws IllegalArgumentException if any of the passed arguments is null or empty
      */
     public MavenArtifactMatcherPredicate(String groupId, String artifactId, String type)
@@ -73,7 +72,8 @@ public class MavenArtifactMatcherPredicate implements Predicate<MavenArtifact>
     {
         if (groupId.equals(ANY_WILDCARD) || groupId.equals(mavenArtifact.getGroupId()) || startsWith(groupId, mavenArtifact.getGroupId()))
         {
-            if (artifactId.equals(ANY_WILDCARD) || artifactId.equals(mavenArtifact.getArtifactId()) || startsWith(artifactId, mavenArtifact.getArtifactId()))
+            if (artifactId.equals(ANY_WILDCARD) || artifactId.equals(mavenArtifact.getArtifactId()) ||
+                startsWith(artifactId, mavenArtifact.getArtifactId()))
             {
                 if (type == null)
                 {

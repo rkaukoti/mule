@@ -17,7 +17,7 @@ public class SampleClassWithAnnotations
     @Marker("MethodLevel / Main")
     public static void main(@Marker("ParamLevel")
                             @MultiMarker(value = "ParamLevel", param1 = "12", param2 = "abc")
-                            String[] args) throws Exception
+                                    String[] args) throws Exception
     {
         // no-op
     }

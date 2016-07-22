@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.tck.size.SmallTest;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class AddPropertyTransformerTestCase extends AbstractAddVariablePropertyTransformerTestCase

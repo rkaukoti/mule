@@ -6,21 +6,20 @@
  */
 package org.mule.test.integration.security;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.config.ExceptionHelper;
-import org.mule.functional.junit4.FunctionalTestCase;
+import org.springframework.security.authentication.BadCredentialsException;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
-import org.springframework.security.authentication.BadCredentialsException;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 /**
  * See MULE-4916: spring beans inside a security filter

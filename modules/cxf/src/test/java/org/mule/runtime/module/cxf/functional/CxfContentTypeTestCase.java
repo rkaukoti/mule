@@ -6,23 +6,22 @@
  */
 package org.mule.runtime.module.cxf.functional;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class CxfContentTypeTestCase extends FunctionalTestCase
 {
     private static final String requestPayload =
-        "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
+            "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
             "           xmlns:hi=\"http://example.org/\">\n" +
             "<soap:Body>\n" +
             "<hi:sayHi>\n" +
@@ -45,7 +44,8 @@ public class CxfContentTypeTestCase extends FunctionalTestCase
     {
         MuleMessage request = MuleMessage.builder().payload(requestPayload).build();
         MuleClient client = muleContext.getClient();
-        MuleMessage received = client.send("http://localhost:" + dynamicPort.getNumber() + "/hello", request, newOptions().method(POST.name()).disableStatusCodeValidation().build());
+        MuleMessage received = client.send("http://localhost:" + dynamicPort.getNumber() + "/hello", request,
+                newOptions().method(POST.name()).disableStatusCodeValidation().build());
         String contentType = received.getDataType().getMediaType().toRfcString();
         assertNotNull(contentType);
         assertTrue(contentType.contains("charset"));

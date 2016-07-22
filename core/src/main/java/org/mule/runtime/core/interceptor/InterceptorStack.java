@@ -22,7 +22,7 @@ import java.util.List;
  * Maintains a list of interceptors that can be applied to components.
  */
 public class InterceptorStack extends AbstractInterceptingMessageProcessor
-    implements Interceptor, Initialisable, Disposable
+        implements Interceptor, Initialisable, Disposable
 {
 
     private List<Interceptor> interceptors;
@@ -102,15 +102,20 @@ public class InterceptorStack extends AbstractInterceptingMessageProcessor
     @Override
     public boolean equals(Object obj)
     {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
         InterceptorStack other = (InterceptorStack) obj;
         if (interceptors == null)
         {
-            if (other.interceptors != null) return false;
+            if (other.interceptors != null)
+                return false;
         }
-        else if (!interceptors.equals(other.interceptors)) return false;
+        else if (!interceptors.equals(other.interceptors))
+            return false;
         return true;
     }
 

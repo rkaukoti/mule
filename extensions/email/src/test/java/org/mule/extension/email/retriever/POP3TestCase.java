@@ -7,10 +7,9 @@
 
 package org.mule.extension.email.retriever;
 
-import static java.lang.String.format;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
-import static org.junit.runners.Parameterized.Parameters;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
 import org.mule.functional.junit4.runners.RunnerDelegateTo;
 import org.mule.runtime.api.message.MuleMessage;
 
@@ -18,9 +17,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
+import static java.lang.String.format;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
+import static org.junit.runners.Parameterized.Parameters;
 
 @RunnerDelegateTo(Parameterized.class)
 public class POP3TestCase extends AbstractEmailRetrieverTestCase
@@ -29,7 +29,8 @@ public class POP3TestCase extends AbstractEmailRetrieverTestCase
     public String protocol;
 
     @Parameters
-    public static Collection<Object[]> data() {
+    public static Collection<Object[]> data()
+    {
         return Arrays.asList(new Object[][] {
                 {"pop3"}, {"pop3s"}
         });

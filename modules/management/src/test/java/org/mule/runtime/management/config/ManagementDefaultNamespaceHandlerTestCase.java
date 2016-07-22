@@ -6,16 +6,16 @@
  */
 package org.mule.runtime.management.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.agent.Agent;
 import org.mule.runtime.module.management.agent.JmxApplicationAgent;
 import org.mule.runtime.module.management.agent.JmxServerNotificationAgent;
 import org.mule.runtime.module.management.agent.Mx4jAgent;
 import org.mule.runtime.module.management.support.SimplePasswordJmxAuthenticator;
-import org.mule.functional.junit4.FunctionalTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ManagementDefaultNamespaceHandlerTestCase extends FunctionalTestCase
 {
@@ -32,7 +32,7 @@ public class ManagementDefaultNamespaceHandlerTestCase extends FunctionalTestCas
         assertNotNull(agent);
         assertEquals(JmxApplicationAgent.class, agent.getClass());
         JmxApplicationAgent jmxAgent = (JmxApplicationAgent) agent;
-        
+
         assertEquals(false, jmxAgent.isCreateServer());
         assertEquals(true, jmxAgent.isLocateServer());
         assertEquals(true, jmxAgent.isEnableStatistics());
@@ -47,10 +47,10 @@ public class ManagementDefaultNamespaceHandlerTestCase extends FunctionalTestCas
         assertNotNull(agent);
         assertEquals(Mx4jAgent.class, agent.getClass());
 
-        
+
         agent = muleContext.getRegistry().lookupAgent("jmx-default-config");
         // see TODO in agent
-//        assertNull(agent);
+        //        assertNull(agent);
     }
 
 }

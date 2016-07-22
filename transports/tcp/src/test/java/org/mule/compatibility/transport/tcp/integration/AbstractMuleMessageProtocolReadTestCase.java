@@ -6,9 +6,8 @@
  */
 package org.mule.compatibility.transport.tcp.integration;
 
-import static org.junit.Assert.assertEquals;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.compatibility.transport.tcp.TcpProtocol;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
@@ -23,8 +22,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 public abstract class AbstractMuleMessageProtocolReadTestCase extends FunctionalTestCase
 {

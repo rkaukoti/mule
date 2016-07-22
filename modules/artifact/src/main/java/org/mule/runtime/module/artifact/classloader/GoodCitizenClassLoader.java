@@ -8,6 +8,8 @@ package org.mule.runtime.module.artifact.classloader;
 
 import org.mule.runtime.core.util.ClassUtils;
 
+import sun.net.www.protocol.jar.Handler;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.JarURLConnection;
@@ -18,14 +20,12 @@ import java.net.URLStreamHandlerFactory;
 import java.util.Collection;
 import java.util.jar.JarFile;
 
-import sun.net.www.protocol.jar.Handler;
-
 /**
  * Fixes major classloader woes by:
  * <ol>
- *  <li>Providing a {@link #dispose()} method to release any connections to resources.</li>
- *  <li>Disabling caching of jar resources fix e.g. java.util.ResourceBundle 'tagging' the app
- *      and preventing it from being undeployed correctly (no leaving locked jars behind).</li>
+ * <li>Providing a {@link #dispose()} method to release any connections to resources.</li>
+ * <li>Disabling caching of jar resources fix e.g. java.util.ResourceBundle 'tagging' the app
+ * and preventing it from being undeployed correctly (no leaving locked jars behind).</li>
  * </ol>
  */
 public class GoodCitizenClassLoader extends URLClassLoader implements DisposableClassLoader

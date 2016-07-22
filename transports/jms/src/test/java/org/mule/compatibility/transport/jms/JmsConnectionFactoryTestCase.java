@@ -6,17 +6,15 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import org.mule.compatibility.transport.jms.JmsConnector;
+import org.junit.Test;
 import org.mule.compatibility.transport.jms.test.TestConnectionFactory;
 import org.mule.functional.junit4.FunctionalTestCase;
 
 import javax.jms.ConnectionFactory;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class JmsConnectionFactoryTestCase extends FunctionalTestCase
 {
@@ -39,7 +37,7 @@ public class JmsConnectionFactoryTestCase extends FunctionalTestCase
         ConnectionFactory cf = c.getConnectionFactory();
         assertTrue(cf instanceof TestConnectionFactory);
         assertEquals("Provider properties should not be passed to the ConnectionFactory.", "NOT_SET",
-            ((TestConnectionFactory)cf).getProviderProperty());
+                ((TestConnectionFactory) cf).getProviderProperty());
     }
 
     /**
@@ -55,6 +53,6 @@ public class JmsConnectionFactoryTestCase extends FunctionalTestCase
         ConnectionFactory cf = c.getConnectionFactory();
         assertTrue(cf instanceof TestConnectionFactory);
         assertEquals("ConnectionFactory properties should be passed to the ConnectionFactory.", "TEST_VALUE",
-            ((TestConnectionFactory)cf).getConnectionFactoryProperty());
+                ((TestConnectionFactory) cf).getConnectionFactoryProperty());
     }
 }

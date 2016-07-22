@@ -44,7 +44,7 @@ public class CustomXsltTransformerFactory extends TransformerFactory
     }
 
     public Source getAssociatedStylesheet(Source source, String s, String s1, String s2)
-        throws TransformerConfigurationException
+            throws TransformerConfigurationException
     {
         return delegate.getAssociatedStylesheet(source, s, s1, s2);
     }
@@ -59,6 +59,11 @@ public class CustomXsltTransformerFactory extends TransformerFactory
         return delegate.getErrorListener();
     }
 
+    public void setErrorListener(ErrorListener errorlistener)
+    {
+        delegate.setErrorListener(errorlistener);
+    }
+
     public boolean getFeature(String s)
     {
         return delegate.getFeature(s);
@@ -67,6 +72,11 @@ public class CustomXsltTransformerFactory extends TransformerFactory
     public URIResolver getURIResolver()
     {
         return delegate.getURIResolver();
+    }
+
+    public void setURIResolver(URIResolver uriresolver)
+    {
+        delegate.setURIResolver(uriresolver);
     }
 
     public int hashCode()
@@ -94,19 +104,9 @@ public class CustomXsltTransformerFactory extends TransformerFactory
         delegate.setAttribute(s, obj);
     }
 
-    public void setErrorListener(ErrorListener errorlistener)
-    {
-        delegate.setErrorListener(errorlistener);
-    }
-
     public void setFeature(String s, boolean flag) throws TransformerConfigurationException
     {
         delegate.setFeature(s, flag);
-    }
-
-    public void setURIResolver(URIResolver uriresolver)
-    {
-        delegate.setURIResolver(uriresolver);
     }
 
     public String toString()

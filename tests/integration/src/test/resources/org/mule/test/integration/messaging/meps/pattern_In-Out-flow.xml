@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:mule="http://www.mulesoft.org/schema/mule/core"
-    xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
-    xmlns:http="http://www.mulesoft.org/schema/mule/http"
-    xsi:schemaLocation="
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mule="http://www.mulesoft.org/schema/mule/core"
+      xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="
        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
        http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
@@ -25,12 +25,12 @@
         <script:component>
             <script:script engine="groovy">
                 if (message.getInboundProperty("foo"))
-                    return "foo header received"
+                return "foo header received"
                 else
-                    return "foo header not received"
+                return "foo header not received"
             </script:script>
         </script:component>
 
-        <mule:echo-component />
+        <mule:echo-component/>
     </flow>
 </mule>

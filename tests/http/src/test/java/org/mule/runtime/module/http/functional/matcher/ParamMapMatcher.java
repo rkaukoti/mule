@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.module.http.functional.matcher;
 
-import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.module.http.internal.ParameterMap;
-
-import java.util.List;
-import java.util.Map;
-
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.Is;
+import org.mule.runtime.module.http.internal.ParameterMap;
+
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.Assert.assertThat;
 
 public class ParamMapMatcher
 {
@@ -33,10 +32,12 @@ public class ParamMapMatcher
                 assertThat(parameterMap.size(), Is.is(parameters.size()));
                 for (String key : parameters.keySet())
                 {
-                    assertThat(parameterMap.keySet(), Matchers.containsInAnyOrder(parameters.keySet().toArray(new String[parameterMap.size()])));
+                    assertThat(parameterMap.keySet(),
+                            Matchers.containsInAnyOrder(parameters.keySet().toArray(new String[parameterMap.size()])));
                     final List<String> parameterKeyValues = parameters.get(key);
                     final List<String> parameterMapValues = parameterMap.getAll(key);
-                    assertThat(parameterMapValues, Matchers.containsInAnyOrder(parameterKeyValues.toArray(new String[parameterKeyValues.size()])));
+                    assertThat(parameterMapValues,
+                            Matchers.containsInAnyOrder(parameterKeyValues.toArray(new String[parameterKeyValues.size()])));
                 }
                 return true;
             }

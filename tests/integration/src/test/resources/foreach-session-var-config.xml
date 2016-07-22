@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 
     <flow name="test-foreachFlow1">
@@ -9,7 +9,7 @@
 
         <foreach>
             <flow-ref name="secondFlow"/>
-            <object-to-string-transformer />
+            <object-to-string-transformer/>
             <expression-transformer expression="#[sessionVars['mySessionList'].add(payload)]"/>
         </foreach>
 
@@ -18,8 +18,8 @@
 
 
     <flow name="secondFlow">
-        <object-to-string-transformer />
-        <set-payload value="Hello World #[payload]" />
+        <object-to-string-transformer/>
+        <set-payload value="Hello World #[payload]"/>
     </flow>
 
 </mule>

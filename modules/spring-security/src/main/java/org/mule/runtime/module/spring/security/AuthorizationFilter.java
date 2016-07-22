@@ -19,15 +19,14 @@ import org.mule.runtime.core.api.security.UnknownAuthenticationTypeException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.security.AbstractSecurityFilter;
 import org.mule.runtime.module.spring.security.i18n.SpringSecurityMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.core.GrantedAuthority;
 
 /**
  * Authorizes user access based on the required authorities for a user.
@@ -38,8 +37,8 @@ public class AuthorizationFilter extends AbstractSecurityFilter
     private Collection<String> requiredAuthorities = new HashSet<String>();
 
     public void doFilter(MuleEvent event)
-        throws SecurityException, UnknownAuthenticationTypeException, CryptoFailureException,
-        SecurityProviderNotFoundException, EncryptionStrategyNotFoundException, InitialisationException
+            throws SecurityException, UnknownAuthenticationTypeException, CryptoFailureException,
+            SecurityProviderNotFoundException, EncryptionStrategyNotFoundException, InitialisationException
     {
         Authentication auth = event.getSession().getSecurityContext().getAuthentication();
         if (auth == null)
@@ -79,8 +78,9 @@ public class AuthorizationFilter extends AbstractSecurityFilter
 
         if (!authorized)
         {
-            logger.info(MessageFormat.format("Could not find required authorities for {0}. Required authorities: {1}. Authorities found: {2}.", 
-                principalName, Arrays.toString(requiredAuthorities.toArray()), Arrays.toString(authorities)));
+            logger.info(
+                    MessageFormat.format("Could not find required authorities for {0}. Required authorities: {1}. Authorities found: {2}.",
+                            principalName, Arrays.toString(requiredAuthorities.toArray()), Arrays.toString(authorities)));
             throw new NotPermittedException(SpringSecurityMessages.noGrantedAuthority(principalName));
         }
     }

@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.core.routing.filters;
 
-import static org.mule.runtime.core.util.ClassUtils.equal;
-import static org.mule.runtime.core.util.ClassUtils.hash;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.MuleContext;
@@ -18,11 +15,14 @@ import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.runtime.core.expression.ExpressionConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.ClassUtils.equal;
+import static org.mule.runtime.core.util.ClassUtils.hash;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 
 /**
  * Allows boolean expressions to be executed on a message. Note that when using this filter you must be able

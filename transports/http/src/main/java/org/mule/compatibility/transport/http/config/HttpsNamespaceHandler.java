@@ -35,8 +35,8 @@ public class HttpsNamespaceHandler extends HttpNamespaceHandler
     public void init()
     {
         registerStandardTransportEndpoints(HttpsConnector.HTTPS, URIBuilder.SOCKET_ATTRIBUTES)
-            .addAlias("contentType", HttpConstants.HEADER_CONTENT_TYPE)
-            .addAlias("method", HttpConnector.HTTP_METHOD_PROPERTY);
+                .addAlias("contentType", HttpConstants.HEADER_CONTENT_TYPE)
+                .addAlias("method", HttpConnector.HTTP_METHOD_PROPERTY);
 
         registerDeprecatedConnectorDefinitionParser(HttpsConnector.class);
         registerDeprecatedBeanDefinitionParser("polling-connector", new MuleOrphanDefinitionParser(HttpsPollingConnector.class, true));
@@ -47,7 +47,7 @@ public class HttpsNamespaceHandler extends HttpNamespaceHandler
         registerDeprecatedBeanDefinitionParser("tls-protocol-handler", new ProtocolHandlerDefinitionParser());
 
         registerDeprecatedMuleBeanDefinitionParser("static-resource-handler",
-                                                   new MessageProcessorDefinitionParser(StaticResourceMessageProcessor.class));
+                new MessageProcessorDefinitionParser(StaticResourceMessageProcessor.class));
     }
 
     @Override
@@ -85,11 +85,14 @@ public class HttpsNamespaceHandler extends HttpNamespaceHandler
         public TransportRegisteredMdps(String protocol, boolean isMeta, String[] requiredAttributes)
         {
             registerBeanDefinitionParser("endpoint",
-                    add(new TransportGlobalEndpointDefinitionParser(protocol, isMeta, getGlobalEndpointBuilderBeanClass(), requiredAttributes, new String[] {})));
+                    add(new TransportGlobalEndpointDefinitionParser(protocol, isMeta, getGlobalEndpointBuilderBeanClass(),
+                            requiredAttributes, new String[] {})));
             registerBeanDefinitionParser("inbound-endpoint",
-                    add(new TransportEndpointDefinitionParser(protocol, isMeta, getInboundEndpointFactoryBeanClass(), requiredAttributes, new String[] {})));
+                    add(new TransportEndpointDefinitionParser(protocol, isMeta, getInboundEndpointFactoryBeanClass(), requiredAttributes,
+                            new String[] {})));
             registerBeanDefinitionParser("outbound-endpoint",
-                    add(new TransportEndpointDefinitionParser(protocol, isMeta, getOutboundEndpointFactoryBeanClass(), requiredAttributes, new String[] {})));
+                    add(new TransportEndpointDefinitionParser(protocol, isMeta, getOutboundEndpointFactoryBeanClass(), requiredAttributes,
+                            new String[] {})));
         }
     }
 }

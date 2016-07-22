@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.core.processor;
 
-import org.mule.runtime.core.api.connector.NonBlockingReplyToHandler;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.NonBlockingVoidMuleEvent;
@@ -16,17 +15,17 @@ import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.NonBlockingSupported;
+import org.mule.runtime.core.api.connector.NonBlockingReplyToHandler;
+import org.mule.runtime.core.api.connector.ReplyToHandler;
 import org.mule.runtime.core.api.processor.InterceptingMessageProcessor;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.processor.MessageProcessorContainer;
-import org.mule.runtime.core.api.connector.ReplyToHandler;
 import org.mule.runtime.core.execution.MessageProcessorExecutionTemplate;
 import org.mule.runtime.core.util.OneTimeWarning;
-
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * Specialized {@link org.mule.runtime.core.processor.BlockingProcessorExecutor} that pauses iteration in the case a {@link org
@@ -39,11 +38,12 @@ public class NonBlockingProcessorExecutor extends BlockingProcessorExecutor
 {
 
     private static final Logger logger = LoggerFactory.getLogger(NonBlockingProcessorExecutor.class);
+    final OneTimeWarning fallbackWarning =
+            new OneTimeWarning(logger, "The message processor {} does not currently support non-blocking execution and " +
+                                       "processing will now fall back to blocking.  The 'non-blocking' processing strategy is " +
+                                       "not recommended if unsupported message processors are being used.  ");
     private final ReplyToHandler replyToHandler;
     private final MessageExchangePattern messageExchangePattern;
-    final OneTimeWarning fallbackWarning = new OneTimeWarning(logger, "The message processor {} does not currently support non-blocking execution and " +
-                                                                      "processing will now fall back to blocking.  The 'non-blocking' processing strategy is " +
-                                                                      "not recommended if unsupported message processors are being used.  ");
 
 
     public NonBlockingProcessorExecutor(MuleEvent event, List<MessageProcessor> processors,
@@ -63,7 +63,8 @@ public class NonBlockingProcessorExecutor extends BlockingProcessorExecutor
             {
                 fallbackWarning.warn(processor.getClass());
                 // Make event synchronous so that non-blocking is not used
-                event = new DefaultMuleEvent(event, event.getFlowConstruct(), event.getReplyToHandler(), event.getReplyToDestination(), true);
+                event = new DefaultMuleEvent(event, event.getFlowConstruct(), event.getReplyToHandler(), event.getReplyToDestination(),
+                        true);
                 // Update RequestContext ThreadLocal for backwards compatibility
                 OptimizedRequestContext.unsafeSetEvent(event);
             }

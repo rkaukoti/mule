@@ -44,7 +44,25 @@ public class MuleMQJmsConnector extends JmsConnector
     public static final int DEFAULT_INITIAL_RETRY_COUNT = 2;
     public static final boolean DEFAULT_RETRY_COMMIT = false;
     public static final boolean DEFAULT_ENABLE_MULTIPLEXED_CONNECTIONS = false;
-
+    // property names
+    protected static final String BUFFER_OUTPUT = "BufferOutput";
+    protected static final String SYNC_WRITES = "nirvana.syncWrites";
+    protected static final String SYNC_BATCH_SIZE = "nirvana.syncBatchSize";
+    protected static final String SYNC_TIME = "nirvana.syncTime";
+    protected static final String GLOBAL_STORE_CAPACITY = "nirvana.globalStoreCapacity";
+    protected static final String MAX_UNACKED_SIZE = "nirvana.maxUnackedSize";
+    protected static final String USE_JMS_ENGINE = "nirvana.useJMSEngine";
+    protected static final String QUEUE_WINDOW_SIZE = "nirvana.queueWindowSize";
+    protected static final String AUTO_ACK_COUNT = "nirvana.autoAckCount";
+    protected static final String ENABLE_SHARED_DURABLE = "nirvana.enableSharedDurable";
+    protected static final String RANDOMISE_R_NAMES = "nirvana.randomiseRNames";
+    protected static final String MAX_REDELIVERY = "nirvana.maxRedelivery";
+    protected static final String MESSAGE_THREAD_POOL_SIZE = "nirvana.messageThreadPoolSize";
+    protected static final String DISC_ON_CLUSTER_FAILURE = "nirvana.discOnClusterFailure";
+    protected static final String INITIAL_RETRY_COUNT = "nirvana.initialRetryCount";
+    protected static final String RETRY_COMMIT = "nirvana.retryCommit";
+    protected static final String ENABLE_MULTIPLEXED_CONNECTIONS = "nirvana.enableMultiplexedConnections";
+    public boolean supportJms102bSpec = false;
     // properties to be set on the connector all initialised to their respective
     // default value
     private String realmURL = DEFAULT_REALM_URL;
@@ -65,30 +83,8 @@ public class MuleMQJmsConnector extends JmsConnector
     private int initialRetryCount = DEFAULT_INITIAL_RETRY_COUNT;
     private boolean retryCommit = DEFAULT_RETRY_COMMIT;
     private boolean enableMultiplexedConnections = DEFAULT_ENABLE_MULTIPLEXED_CONNECTIONS;
-
-    // property names
-    protected static final String BUFFER_OUTPUT = "BufferOutput";
-    protected static final String SYNC_WRITES = "nirvana.syncWrites";
-    protected static final String SYNC_BATCH_SIZE = "nirvana.syncBatchSize";
-    protected static final String SYNC_TIME = "nirvana.syncTime";
-    protected static final String GLOBAL_STORE_CAPACITY = "nirvana.globalStoreCapacity";
-    protected static final String MAX_UNACKED_SIZE = "nirvana.maxUnackedSize";
-    protected static final String USE_JMS_ENGINE = "nirvana.useJMSEngine";
-    protected static final String QUEUE_WINDOW_SIZE = "nirvana.queueWindowSize";
-    protected static final String AUTO_ACK_COUNT = "nirvana.autoAckCount";
-    protected static final String ENABLE_SHARED_DURABLE = "nirvana.enableSharedDurable";
-    protected static final String RANDOMISE_R_NAMES = "nirvana.randomiseRNames";
-    protected static final String MAX_REDELIVERY = "nirvana.maxRedelivery";
-    protected static final String MESSAGE_THREAD_POOL_SIZE = "nirvana.messageThreadPoolSize";
-    protected static final String DISC_ON_CLUSTER_FAILURE = "nirvana.discOnClusterFailure";
-    protected static final String INITIAL_RETRY_COUNT = "nirvana.initialRetryCount";
-    protected static final String RETRY_COMMIT = "nirvana.retryCommit";
-    protected static final String ENABLE_MULTIPLEXED_CONNECTIONS = "nirvana.enableMultiplexedConnections";
-
-    public boolean supportJms102bSpec = false;
-
     private boolean inCluster = false;
-    
+
     public MuleMQJmsConnector(MuleContext context)
     {
         super(context);
@@ -135,7 +131,7 @@ public class MuleMQJmsConnector extends JmsConnector
     protected ConnectionFactory getDefaultConnectionFactory() throws Exception
     {
         ConnectionFactory connectionFactory = (ConnectionFactory) ClassUtils.instanciateClass(
-            getMuleMQFactoryClass(), getRealmURL());
+                getMuleMQFactoryClass(), getRealmURL());
         applyVendorSpecificConnectionFactoryProperties(connectionFactory);
         return connectionFactory;
     }
@@ -174,7 +170,7 @@ public class MuleMQJmsConnector extends JmsConnector
         {
             // use reflection to set the properties on the connection factory
             Method setPropertiesMethod = connectionFactory.getClass().getMethod("setProperties",
-                Hashtable.class);
+                    Hashtable.class);
             setPropertiesMethod.invoke(connectionFactory, props);
         }
         catch (Exception e)
@@ -359,14 +355,14 @@ public class MuleMQJmsConnector extends JmsConnector
         this.muleMqMaxRedelivery = mulqMqMaxRedelivery;
     }
 
-    public void setRetryCommit(boolean retryCommit)
-    {
-        this.retryCommit = retryCommit;
-    }
-
     public boolean isRetryCommit()
     {
         return retryCommit;
+    }
+
+    public void setRetryCommit(boolean retryCommit)
+    {
+        this.retryCommit = retryCommit;
     }
 
     public boolean isEnableMultiplexedConnections()
@@ -393,21 +389,23 @@ public class MuleMQJmsConnector extends JmsConnector
     public void onException(JMSException jmsException)
     {
         Throwable th = ExceptionHelper.getRootException(jmsException);
-        if (th == null) th = jmsException;
+        if (th == null)
+            th = jmsException;
         String errMsg = th.getMessage();
 
         if (errMsg.contains("Channel is full :"))
         {
-            if(logger.isWarnEnabled())
+            if (logger.isWarnEnabled())
             {
                 // TODO : externalize strings
                 StringBuilder msg = new StringBuilder("MuleMQJmsConnector.onException() received exception: ");
                 msg.append(th.getMessage());
                 msg.append("Older Messages will be discarded by MULE MQ.To prevent message loss use transacted outbound-endpoint");
-                msg.append("Refer to 'Queue Capacity' at http://www.mulesoft.org/display/MQ/Configuring+Mule+MQ#ConfiguringMuleMQ-ConfiguringQueues");
+                msg.append(
+                        "Refer to 'Queue Capacity' at http://www.mulesoft.org/display/MQ/Configuring+Mule+MQ#ConfiguringMuleMQ-ConfiguringQueues");
                 // This error does not mean that connection has been closed. Log Capacity
                 // is full warn and return.
-                logger.warn(msg.toString(),th);
+                logger.warn(msg.toString(), th);
             }
         }
         else if (this.isInCluster() && errMsg.contains("Disconnected from :"))
@@ -417,7 +415,7 @@ public class MuleMQJmsConnector extends JmsConnector
             msg.append(th.getMessage());
             msg.append("If using Mule MQ in a cluster Mule Runtime will reconnect automatically in a few seconds");
             // Nothing to do here, log error and return
-            logger.warn(msg.toString(),th);
+            logger.warn(msg.toString(), th);
         }
         else if (this.isInCluster() && errMsg.contains("Reconnected to :"))
         {
@@ -426,7 +424,7 @@ public class MuleMQJmsConnector extends JmsConnector
             msg.append(th.getMessage());
             msg.append("If using Mule MQ in a cluster Mule Runtime will reconnect automatically in a few seconds");
             // Nothing to do here, log message and return
-            logger.warn(msg.toString(),th);
+            logger.warn(msg.toString(), th);
         }
         else
         {

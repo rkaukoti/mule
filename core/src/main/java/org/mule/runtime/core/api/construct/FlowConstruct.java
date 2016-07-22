@@ -6,8 +6,8 @@
  */
 package org.mule.runtime.core.api.construct;
 
-import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.api.meta.NamedObject;
+import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.exception.MessagingExceptionHandler;
 import org.mule.runtime.core.api.lifecycle.LifecycleStateEnabled;
 import org.mule.runtime.core.api.processor.MessageProcessor;
@@ -24,8 +24,8 @@ public interface FlowConstruct extends NamedObject, LifecycleStateEnabled
 {
 
     /**
-     * @return The exception listener that will be used to handle exceptions that may be thrown at different
-     *         points during the message flow defined by this construct.
+     * @return The exception listener that will be used to handle exceptions that may be thrown at different points during the message flow
+     * defined by this construct.
      */
     MessagingExceptionHandler getExceptionListener();
 
@@ -35,8 +35,8 @@ public interface FlowConstruct extends NamedObject, LifecycleStateEnabled
     FlowConstructStatistics getStatistics();
 
     /**
-     * @return This implementation of {@link MessageInfoMapping} used to control how Important message
-     *         information is pulled from the current message.
+     * @return This implementation of {@link MessageInfoMapping} used to control how Important message information is pulled from the
+     * current message.
      */
     MessageInfoMapping getMessageInfoMapping();
 

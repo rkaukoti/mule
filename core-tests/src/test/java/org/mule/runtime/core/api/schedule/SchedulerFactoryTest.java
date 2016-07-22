@@ -6,12 +6,7 @@
  */
 package org.mule.runtime.core.api.schedule;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.registry.MuleRegistry;
 import org.mule.tck.size.SmallTest;
@@ -19,7 +14,11 @@ import org.mule.tck.size.SmallTest;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Test to validate the interface {@link SchedulerFactory} interface
@@ -126,7 +125,7 @@ public class SchedulerFactoryTest
     {
         when(muleContext.getRegistry()).thenReturn(muleRegistry);
         when(muleRegistry.lookupByType(SchedulerFactoryPostProcessor.class)).thenReturn(
-            registeredPostProcessors);
+                registeredPostProcessors);
     }
 
     private Map<String, SchedulerFactoryPostProcessor> singlePostProcessor()

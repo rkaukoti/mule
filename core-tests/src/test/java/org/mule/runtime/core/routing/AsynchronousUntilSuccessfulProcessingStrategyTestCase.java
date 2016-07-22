@@ -6,27 +6,14 @@
  */
 package org.mule.runtime.core.routing;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.routing.UntilSuccessful.PROCESS_ATTEMPT_COUNT_PROPERTY_NAME;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatcher;
+import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.TransformationService;
 import org.mule.runtime.core.api.MessagingException;
@@ -50,31 +37,38 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatcher;
-import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.routing.UntilSuccessful.PROCESS_ATTEMPT_COUNT_PROPERTY_NAME;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
 public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends AbstractMuleTestCase
 {
 
-    private static interface FailCallback
-    {
-        void doFail() throws Exception;
-    }
-
     private static final String EXPECTED_FAILURE_MSG = "expected failure";
     private static final int DEFAULT_RETRIES = 4;
     private static final int DEFAULT_TRIES = DEFAULT_RETRIES + 1;
-
     private final Latch exceptionHandlingLatch = new Latch();
-    private UntilSuccessfulConfiguration mockUntilSuccessfulConfiguration = mock(UntilSuccessfulConfiguration.class, RETURNS_DEEP_STUBS.get());
+    private UntilSuccessfulConfiguration mockUntilSuccessfulConfiguration =
+            mock(UntilSuccessfulConfiguration.class, RETURNS_DEEP_STUBS.get());
     private MuleEvent mockEvent = mock(MuleEvent.class, RETURNS_DEEP_STUBS.get());
     private MessageProcessor mockRoute = mock(MessageProcessor.class, RETURNS_DEEP_STUBS.get());
     private ExpressionFilter mockAlwaysTrueFailureExpressionFilter = mock(ExpressionFilter.class, RETURNS_DEEP_STUBS.get());
@@ -82,7 +76,9 @@ public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstr
     private ScheduledThreadPoolExecutor mockScheduledPool = mock(ScheduledThreadPoolExecutor.class, RETURNS_DEEP_STUBS.get());
     private SimpleMemoryObjectStore<MuleEvent> objectStore = new SimpleMemoryObjectStore<>();
     private MessageProcessor mockDLQ = mock(MessageProcessor.class);
-    private FailCallback failRoute = () -> {};
+    private FailCallback failRoute = () ->
+    {
+    };
     private CountDownLatch routeCountDownLatch;
     @Mock
     private MuleContext muleContext;
@@ -156,7 +152,8 @@ public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstr
             @Override
             public boolean matches(Object item)
             {
-                return item instanceof RetryPolicyExhaustedException && EXPECTED_FAILURE_MSG.equals(((RetryPolicyExhaustedException) item).getCause().getMessage());
+                return item instanceof RetryPolicyExhaustedException &&
+                       EXPECTED_FAILURE_MSG.equals(((RetryPolicyExhaustedException) item).getCause().getMessage());
             }
         }), eq(mockEvent));
         verify(mockDLQ, never()).process(any(MuleEvent.class));
@@ -180,7 +177,10 @@ public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstr
             public boolean matches(Object item)
             {
                 return item instanceof RetryPolicyExhaustedException
-                       && ((RetryPolicyExhaustedException) item).getMessage().contains("until-successful retries exhausted. Last exception message was: " + EXPECTED_FAILURE_MSG);
+                       && ((RetryPolicyExhaustedException) item).getMessage()
+                                                                .contains(
+                                                                        "until-successful retries exhausted. Last exception message was: " +
+                                                                        EXPECTED_FAILURE_MSG);
             }
         }), eq(mockEvent));
         verify(mockDLQ, never()).process(any(MuleEvent.class));
@@ -204,7 +204,9 @@ public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstr
             public boolean matches(Object item)
             {
                 return item instanceof RetryPolicyExhaustedException &&
-                       ((RetryPolicyExhaustedException) item).getMessage().contains("until-successful retries exhausted. Last exception message was: " + EXPECTED_FAILURE_MSG);
+                       ((RetryPolicyExhaustedException) item).getMessage()
+                                                             .contains("until-successful retries exhausted. Last exception message was: " +
+                                                                       EXPECTED_FAILURE_MSG);
             }
         }), eq(mockEvent));
         verify(mockDLQ, never()).process(any(MuleEvent.class));
@@ -273,7 +275,7 @@ public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstr
                     public boolean matches(Object argument)
                     {
                         assertThat(((MuleMessage) argument).getExceptionPayload().getException().getMessage(),
-                                   containsString("until-successful retries exhausted. Last exception message was: " + EXPECTED_FAILURE_MSG));
+                                containsString("until-successful retries exhausted. Last exception message was: " + EXPECTED_FAILURE_MSG));
                         return true;
                     }
                 }));
@@ -309,7 +311,7 @@ public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstr
                     public boolean matches(Object argument)
                     {
                         assertThat(((MuleMessage) argument).getExceptionPayload().getException().getMessage(),
-                                   containsString("until-successful retries exhausted. Last exception message was: " + EXPECTED_FAILURE_MSG));
+                                containsString("until-successful retries exhausted. Last exception message was: " + EXPECTED_FAILURE_MSG));
                         return true;
                     }
                 }));
@@ -334,7 +336,8 @@ public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstr
         String ackExpression = "some-expression";
         String expressionEvalutaionResult = "new payload";
         when(mockUntilSuccessfulConfiguration.getAckExpression()).thenReturn(ackExpression);
-        when(mockUntilSuccessfulConfiguration.getMuleContext().getExpressionManager().evaluate(ackExpression, mockEvent)).thenReturn(expressionEvalutaionResult);
+        when(mockUntilSuccessfulConfiguration.getMuleContext().getExpressionManager().evaluate(ackExpression, mockEvent)).thenReturn(
+                expressionEvalutaionResult);
         executeUntilSuccessful();
         waitUntilRouteIsExecuted();
         verify(mockRoute, times(1)).process(mockEvent);
@@ -442,11 +445,12 @@ public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstr
 
     private void configureExceptionStrategyToReleaseLatchWhenExecuted()
     {
-        when(mockEvent.getFlowConstruct().getExceptionListener().handleException(any(Exception.class), any(MuleEvent.class))).thenAnswer(invocationOnMock ->
-        {
-            exceptionHandlingLatch.release();
-            return null;
-        });
+        when(mockEvent.getFlowConstruct().getExceptionListener().handleException(any(Exception.class), any(MuleEvent.class))).thenAnswer(
+                invocationOnMock ->
+                {
+                    exceptionHandlingLatch.release();
+                    return null;
+                });
     }
 
     private void configureDLQToReleaseLatchWhenExecuted() throws MuleException
@@ -456,6 +460,11 @@ public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstr
             exceptionHandlingLatch.release();
             return null;
         });
+    }
+
+    private static interface FailCallback
+    {
+        void doFail() throws Exception;
     }
 
 }

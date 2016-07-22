@@ -64,8 +64,8 @@ public final class ValidationMessages extends MessageFactory
         }
         final ResourceBundle.Control control = getReloadControl();
         ResourceBundle bundle = control != null
-                                ? ResourceBundle.getBundle(bundlePath, locale, getClassLoader(), control)
-                                : ResourceBundle.getBundle(bundlePath, locale, getClassLoader());
+                ? ResourceBundle.getBundle(bundlePath, locale, getClassLoader(), control)
+                : ResourceBundle.getBundle(bundlePath, locale, getClassLoader());
 
         return bundle;
     }

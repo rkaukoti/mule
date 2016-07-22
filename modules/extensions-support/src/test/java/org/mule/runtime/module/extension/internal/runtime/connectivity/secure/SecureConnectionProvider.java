@@ -45,7 +45,8 @@ public class SecureConnectionProvider implements ConnectionProvider<Object>
     }
 
     @Override
-    public ConnectionHandlingStrategy<Object> getHandlingStrategy(ConnectionHandlingStrategyFactory<Object> connectionHandlingStrategyFactory)
+    public ConnectionHandlingStrategy<Object> getHandlingStrategy(
+            ConnectionHandlingStrategyFactory<Object> connectionHandlingStrategyFactory)
     {
         return null;
     }

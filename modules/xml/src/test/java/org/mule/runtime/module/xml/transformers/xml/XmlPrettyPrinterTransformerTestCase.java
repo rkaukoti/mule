@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.module.xml.transformers.xml;
 
-import org.mule.runtime.core.api.transformer.Transformer;
-import org.mule.runtime.module.xml.transformer.XmlPrettyPrinter;
-import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
-
 import org.dom4j.io.OutputFormat;
 import org.junit.Test;
+import org.mule.runtime.core.api.transformer.Transformer;
+import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
+import org.mule.runtime.module.xml.transformer.XmlPrettyPrinter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mule
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns="http://www.mulesoft.org/schema/mule/core"
         xmlns:http="http://www.mulesoft.org/schema/mule/http"
         xmlns:script="http://www.mulesoft.org/schema/mule/scripting"
+        xmlns="http://www.mulesoft.org/schema/mule/core"
         xsi:schemaLocation="
         http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
 		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
@@ -33,7 +33,7 @@
         <http:listener path="expressionTransformer" config-ref="listenerConfig"/>
         <custom-processor class="org.mule.shutdown.AbstractShutdownTimeoutRequestResponseTestCase$BlockMessageProcessor"/>
         <expression-transformer>
-            <return-argument expression="return &quot;expressionTransformerResponse&quot;;" />
+            <return-argument expression="return &quot;expressionTransformerResponse&quot;;"/>
         </expression-transformer>
     </flow>
 </mule>

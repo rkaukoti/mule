@@ -9,7 +9,7 @@ package org.mule.runtime.core.api.context.notification;
 import org.mule.runtime.core.api.MuleContext;
 
 /**
- *  Listens to events raised during the creation of a {@link MuleContext}
+ * Listens to events raised during the creation of a {@link MuleContext}
  */
 public interface MuleContextListener
 {

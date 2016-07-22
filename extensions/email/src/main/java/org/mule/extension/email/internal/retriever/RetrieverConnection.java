@@ -6,17 +6,14 @@
  */
 package org.mule.extension.email.internal.retriever;
 
-import static java.lang.String.format;
-import static org.mule.runtime.api.connection.ConnectionExceptionCode.DISCONNECTED;
-import static org.mule.runtime.api.connection.ConnectionValidationResult.failure;
-import static org.mule.runtime.api.connection.ConnectionValidationResult.success;
-
 import org.mule.extension.email.api.exception.EmailConnectionException;
 import org.mule.extension.email.api.exception.EmailException;
 import org.mule.extension.email.internal.AbstractEmailConnection;
 import org.mule.extension.email.internal.EmailProtocol;
 import org.mule.runtime.api.connection.ConnectionValidationResult;
 import org.mule.runtime.api.tls.TlsContextFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -24,8 +21,10 @@ import javax.mail.Folder;
 import javax.mail.MessagingException;
 import javax.mail.Store;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static org.mule.runtime.api.connection.ConnectionExceptionCode.DISCONNECTED;
+import static org.mule.runtime.api.connection.ConnectionValidationResult.failure;
+import static org.mule.runtime.api.connection.ConnectionValidationResult.success;
 
 /**
  * A connection with a mail server for retrieving emails from an specific folder.
@@ -203,7 +202,7 @@ public class RetrieverConnection extends AbstractEmailConnection
     {
         String errorMessage = "Store is not connected";
         return store.isConnected() ? success()
-                                   : failure(errorMessage, DISCONNECTED, new EmailConnectionException(errorMessage));
+                : failure(errorMessage, DISCONNECTED, new EmailConnectionException(errorMessage));
     }
 
     /**

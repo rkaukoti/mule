@@ -6,24 +6,23 @@
  */
 package org.mule.compatibility.core.transport;
 
+import org.apache.commons.pool.KeyedPoolableObjectFactory;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.compatibility.core.api.transport.MessageDispatcher;
 import org.mule.compatibility.core.api.transport.MessageDispatcherFactory;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 
-import org.apache.commons.pool.KeyedPoolableObjectFactory;
-
 /**
  * <code>KeyedPoolMessageDispatcherFactoryAdapter</code> adapts a
  * <code>MessageDispatcherFactory</code> with methods from commons-pool
  * <code>KeyedPoolableObjectFactory</code>. It is only required for dispatcher
  * factories that do not inherit from <code>AbstractMessageDispatcherFactory</code>.
- * 
+ *
  * @see AbstractMessageDispatcherFactory
  */
 public class KeyedPoolMessageDispatcherFactoryAdapter
-    implements MessageDispatcherFactory, KeyedPoolableObjectFactory
+        implements MessageDispatcherFactory, KeyedPoolableObjectFactory
 {
     private final MessageDispatcherFactory factory;
 
@@ -42,9 +41,9 @@ public class KeyedPoolMessageDispatcherFactoryAdapter
     @Override
     public void activateObject(Object key, Object obj) throws Exception
     {
-        OutboundEndpoint endpoint = (OutboundEndpoint)key;
+        OutboundEndpoint endpoint = (OutboundEndpoint) key;
         //Ensure dispatcher has the same lifecycle as the connector
-        applyLifecycle((MessageDispatcher)obj);
+        applyLifecycle((MessageDispatcher) obj);
 
         factory.activate((OutboundEndpoint) key, (MessageDispatcher) obj);
     }

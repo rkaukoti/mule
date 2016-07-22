@@ -6,6 +6,7 @@
  */
 package org.mule.compatibility.transport.file.transformers;
 
+import org.apache.commons.io.IOUtils;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.DiscoverableTransformer;
 import org.mule.runtime.core.api.transformer.TransformerException;
@@ -18,8 +19,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
-
-import org.apache.commons.io.IOUtils;
 
 /**
  * <code>FileToByteArray</code> reads the contents of a file as a byte array.

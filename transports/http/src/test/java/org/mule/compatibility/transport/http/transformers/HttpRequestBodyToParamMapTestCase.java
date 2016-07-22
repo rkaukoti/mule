@@ -6,18 +6,11 @@
  */
 package org.mule.compatibility.transport.http.transformers;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
-import static org.mule.compatibility.transport.http.HttpConstants.DEFAULT_CONTENT_TYPE;
-import static org.mule.compatibility.transport.http.HttpConstants.FORM_URLENCODED_CONTENT_TYPE;
-import static org.mule.compatibility.transport.http.HttpConstants.METHOD_GET;
-import static org.mule.compatibility.transport.http.HttpConstants.METHOD_POST;
-import static org.mule.compatibility.transport.http.HttpConstants.METHOD_PUT;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.DefaultMuleEvent;
@@ -33,11 +26,17 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
+import static org.mule.compatibility.transport.http.HttpConstants.DEFAULT_CONTENT_TYPE;
+import static org.mule.compatibility.transport.http.HttpConstants.FORM_URLENCODED_CONTENT_TYPE;
+import static org.mule.compatibility.transport.http.HttpConstants.METHOD_GET;
+import static org.mule.compatibility.transport.http.HttpConstants.METHOD_POST;
+import static org.mule.compatibility.transport.http.HttpConstants.METHOD_PUT;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
@@ -53,7 +52,8 @@ public class HttpRequestBodyToParamMapTestCase extends AbstractMuleContextTestCa
     public void setup() throws Exception
     {
         when(muleContext.getTransformationService()).thenReturn(transformationService);
-        when(transformationService.transform(any(MuleMessage.class), any(DataType.class))).thenAnswer(inv -> (MuleMessage) inv.getArguments()[0]);
+        when(transformationService.transform(any(MuleMessage.class), any(DataType.class))).thenAnswer(
+                inv -> (MuleMessage) inv.getArguments()[0]);
     }
 
     @Test

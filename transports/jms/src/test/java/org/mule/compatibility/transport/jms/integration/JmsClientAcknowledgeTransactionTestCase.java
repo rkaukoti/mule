@@ -6,7 +6,8 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
-import static org.junit.Assert.assertNotNull;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -14,30 +15,13 @@ import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Test jms using JmsClientAcknowledgeTransactionFactory
  */
 public class JmsClientAcknowledgeTransactionTestCase extends AbstractJmsFunctionalTestCase
 {
-    @Override
-    protected String getConfigFile()
-    {
-        return "integration/jms-client-acknowledge-tx.xml";
-    }
-
-    @Test
-    @Ignore("MULE-6926: flaky test")
-    public void testJmsClientAcknowledgeTransaction() throws Exception
-    {
-        send(scenarioAcknowledge);
-        receive(scenarioWithoutAcknowledge);
-        receive(scenarioAcknowledge);
-        receive(scenarioNotReceive);
-    }
-
     Scenario scenarioAcknowledge = new NonTransactedScenario()
     {
         @Override
@@ -61,7 +45,6 @@ public class JmsClientAcknowledgeTransactionTestCase extends AbstractJmsFunction
             return message;
         }
     };
-
     Scenario scenarioWithoutAcknowledge = new NonTransactedScenario()
     {
         @Override
@@ -70,4 +53,20 @@ public class JmsClientAcknowledgeTransactionTestCase extends AbstractJmsFunction
             return Session.CLIENT_ACKNOWLEDGE;
         }
     };
+
+    @Override
+    protected String getConfigFile()
+    {
+        return "integration/jms-client-acknowledge-tx.xml";
+    }
+
+    @Test
+    @Ignore("MULE-6926: flaky test")
+    public void testJmsClientAcknowledgeTransaction() throws Exception
+    {
+        send(scenarioAcknowledge);
+        receive(scenarioWithoutAcknowledge);
+        receive(scenarioAcknowledge);
+        receive(scenarioNotReceive);
+    }
 }

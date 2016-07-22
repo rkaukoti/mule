@@ -79,13 +79,19 @@ public class DummyMuleContextAware implements MuleContextAware, Transformer
     }
 
     @Override
+    public String getName()
+    {
+        return null;
+    }
+
+    @Override
     public void setName(String name)
     {
         // empty
     }
 
     @Override
-    public String getName()
+    public DataType getReturnDataType()
     {
         return null;
     }
@@ -94,12 +100,6 @@ public class DummyMuleContextAware implements MuleContextAware, Transformer
     public void setReturnDataType(DataType type)
     {
         //empty
-    }
-
-    @Override
-    public DataType getReturnDataType()
-    {
-        return null;
     }
 
     @Override

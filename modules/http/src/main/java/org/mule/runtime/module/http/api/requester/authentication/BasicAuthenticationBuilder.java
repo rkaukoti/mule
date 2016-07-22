@@ -6,13 +6,14 @@
  */
 package org.mule.runtime.module.http.api.requester.authentication;
 
-import static org.mule.runtime.module.http.internal.request.HttpAuthenticationType.BASIC;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.module.http.api.HttpAuthentication;
 import org.mule.runtime.module.http.internal.request.DefaultHttpAuthentication;
+
+import static org.mule.runtime.module.http.internal.request.HttpAuthenticationType.BASIC;
 
 /**
  * Builder for HTTP basic authentication credentials
@@ -48,8 +49,7 @@ public class BasicAuthenticationBuilder
     }
 
     /**
-     * @param preemptive configures preemptive authentication or not (when true, the authentication
-     *                   header is sent in the first request).
+     * @param preemptive configures preemptive authentication or not (when true, the authentication header is sent in the first request).
      * @return this
      */
     public BasicAuthenticationBuilder setPreemptive(boolean preemptive)
@@ -58,8 +58,8 @@ public class BasicAuthenticationBuilder
     }
 
     /**
-     * @param preemptive an expression that resolves to a boolean value that defines if preemptive authentication
-     *                   should be used or not (when true, the authentication header is sent in the first request).
+     * @param preemptive an expression that resolves to a boolean value that defines if preemptive authentication should be used or not
+     *                   (when true, the authentication header is sent in the first request).
      * @return this
      */
     public BasicAuthenticationBuilder setPreemptiveExpression(String preemptive)

@@ -7,18 +7,17 @@
 
 package org.mule.compatibility.core.transport;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.connector.EndpointConnectException;
 import org.mule.runtime.core.api.connector.Connectable;
 import org.mule.runtime.core.connector.ConnectException;
 import org.mule.tck.SerializationTestUtils;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 
 public class ConnectExceptionTestCase extends AbstractMuleContextTestCase
 {
@@ -47,7 +46,7 @@ public class ConnectExceptionTestCase extends AbstractMuleContextTestCase
     public void testNonSerializableConnectException() throws Exception
     {
         ConnectException e = new EndpointConnectException(new Exception(message),
-            new TestNotSerializableConnectable());
+                new TestNotSerializableConnectable());
         e = SerializationTestUtils.testException(e, muleContext);
 
         assertTrue(e.getMessage().contains(message));

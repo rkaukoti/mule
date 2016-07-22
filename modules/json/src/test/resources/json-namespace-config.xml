@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:json="http://www.mulesoft.org/schema/mule/json"
       xmlns:mxml="http://www.mulesoft.org/schema/mule/xml"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
        http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd">
@@ -11,9 +11,9 @@
 
     <json:mapper name="myMapper">
         <json:mixin mixinClass="org.mule.runtime.module.json.transformers.FruitCollectionMixin"
-                        targetClass="org.mule.runtime.module.json.transformers.FruitCollection"/>
+                    targetClass="org.mule.runtime.module.json.transformers.FruitCollection"/>
         <json:mixin mixinClass="org.mule.runtime.module.json.transformers.AppleMixin"
-                        targetClass="org.mule.tck.testmodels.fruit.Apple"/>
+                    targetClass="org.mule.tck.testmodels.fruit.Apple"/>
     </json:mapper>
 
     <json:json-to-object-transformer name="jsonToFruitCollection" returnClass="org.mule.runtime.module.json.transformers.FruitCollection"
@@ -22,7 +22,7 @@
         <json:deserialization-mixin
                 mixinClass="org.mule.runtime.module.json.transformers.OrangeMixin"
                 targetClass="org.mule.tck.testmodels.fruit.Orange"/>
-        </json:json-to-object-transformer>
+    </json:json-to-object-transformer>
 
     <json:object-to-json-transformer name="fruitCollectionToJson"
                                      sourceClass="org.mule.runtime.module.json.transformers.FruitCollection">
@@ -43,7 +43,7 @@
 
     <json:json-xslt-transformer name="jToJ">
         <mxml:xslt-text>
-            <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+            <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
                 <xsl:template match="@*|node()">
                     <xsl:copy>
                         <xsl:apply-templates select="@*|node()"/>

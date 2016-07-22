@@ -12,7 +12,7 @@ import org.mule.runtime.config.spring.parsers.delegate.AttributeSelectionDefinit
 import org.mule.runtime.config.spring.parsers.processors.CheckExclusiveAttributes;
 import org.mule.runtime.config.spring.parsers.processors.CheckRequiredAttributes;
 
- public class NotificationDisableDefinitionParser extends AttributeSelectionDefinitionParser
+public class NotificationDisableDefinitionParser extends AttributeSelectionDefinitionParser
 {
 
     public static final String DISABLED_EVENT = "disabledType";

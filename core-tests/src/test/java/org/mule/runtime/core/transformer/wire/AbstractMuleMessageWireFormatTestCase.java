@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.core.transformer.wire;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.tck.testmodels.fruit.Orange;
 
@@ -17,6 +13,10 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public abstract class AbstractMuleMessageWireFormatTestCase extends AbstractWireFormatTestCase
 {

@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.core.util;
 
+import org.apache.commons.lang.CharUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.lang.CharUtils;
 
 /**
  * <code>StringUtils</code> contains useful methods for manipulating Strings.
@@ -21,7 +21,10 @@ public class StringUtils extends org.apache.commons.lang.StringUtils
 {
 
     public static final String WHITE_SPACE = " ";
-    
+    // lookup tables needed for toHexString(byte[], boolean)
+    private static final String HEX_CHARACTERS = "0123456789abcdef";
+    private static final String HEX_CHARACTERS_UC = HEX_CHARACTERS.toUpperCase();
+
     /**
      * Like {@link org.mule.runtime.core.util.StringUtils#split(String, String)}, but additionally
      * trims whitespace from the result tokens.
@@ -56,7 +59,7 @@ public class StringUtils extends org.apache.commons.lang.StringUtils
 
     /**
      * Convert a hexadecimal string into its byte representation.
-     * 
+     *
      * @param hex The hexadecimal string.
      * @return The converted bytes or <code>null</code> if the hex String is null.
      */
@@ -104,10 +107,9 @@ public class StringUtils extends org.apache.commons.lang.StringUtils
 
     /**
      * Convert a byte array to a hexadecimal string.
-     * 
-     * @param bytes The bytes to format.
-     * @param uppercase When <code>true</code> creates uppercase hex characters
-     *            instead of lowercase (the default).
+     *
+     * @param bytes     The bytes to format.
+     * @param uppercase When <code>true</code> creates uppercase hex characters instead of lowercase (the default).
      * @return A hexadecimal representation of the specified bytes.
      */
     public static String toHexString(byte[] bytes, boolean uppercase)
@@ -134,12 +136,11 @@ public class StringUtils extends org.apache.commons.lang.StringUtils
     /**
      * Matches the given value to the given pattern. Then returns the group at
      * matchIndex.
-     * 
-     * @param pattern the pattern to use as regexp
-     * @param value the value to evaluate
+     *
+     * @param pattern    the pattern to use as regexp
+     * @param value      the value to evaluate
      * @param matchIndex the group index to be returned
-     * @return the value of the group at the given index. <code>null</code> if no
-     *         match found
+     * @return the value of the group at the given index. <code>null</code> if no match found
      * @throws IllegalArgumentException if pattern or value are null.
      */
     public static String match(Pattern pattern, String value, int matchIndex) throws IllegalArgumentException
@@ -156,8 +157,4 @@ public class StringUtils extends org.apache.commons.lang.StringUtils
 
         return null;
     }
-
-    // lookup tables needed for toHexString(byte[], boolean)
-    private static final String HEX_CHARACTERS = "0123456789abcdef";
-    private static final String HEX_CHARACTERS_UC = HEX_CHARACTERS.toUpperCase();
 }

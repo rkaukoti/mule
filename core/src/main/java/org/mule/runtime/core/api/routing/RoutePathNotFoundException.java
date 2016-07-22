@@ -38,7 +38,7 @@ public class RoutePathNotFoundException extends RoutingException
     }
 
     public RoutePathNotFoundException(Message message, MuleEvent event, MessageProcessor target,
-        Throwable cause)
+                                      Throwable cause)
     {
         super(message, event, target, cause);
     }

@@ -10,8 +10,9 @@ import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.transaction.AbstractSingleResourceTransaction;
 
-import javax.transaction.Transaction;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import javax.transaction.Transaction;
 
 /**
  * A test transaction that does nothing on commit or rollback. The transaction does retain a status so that
@@ -30,6 +31,12 @@ public class TestTransaction extends AbstractSingleResourceTransaction
         super(muleContext);
     }
 
+    public TestTransaction(MuleContext mockMuleContext, boolean isXa)
+    {
+        super(mockMuleContext);
+        this.isXA = isXa;
+    }
+
     @Override
     protected Class getResourceType()
     {
@@ -42,17 +49,8 @@ public class TestTransaction extends AbstractSingleResourceTransaction
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public TestTransaction(MuleContext mockMuleContext, boolean isXa)
-    {
-        super(mockMuleContext);
-        this.isXA = isXa;
-    }
-
     /**
      * Really begin the transaction. Note that resources are enlisted yet.
-     *
-     * @throws org.mule.runtime.core.api.transaction.TransactionException
-     *
      */
     protected void doBegin() throws TransactionException
     {
@@ -61,9 +59,6 @@ public class TestTransaction extends AbstractSingleResourceTransaction
 
     /**
      * Commit the transaction on the underlying resource
-     *
-     * @throws org.mule.runtime.core.api.transaction.TransactionException
-     *
      */
     protected void doCommit() throws TransactionException
     {
@@ -72,9 +67,6 @@ public class TestTransaction extends AbstractSingleResourceTransaction
 
     /**
      * Rollback the transaction on the underlying resource
-     *
-     * @throws org.mule.runtime.core.api.transaction.TransactionException
-     *
      */
     protected void doRollback() throws TransactionException
     {

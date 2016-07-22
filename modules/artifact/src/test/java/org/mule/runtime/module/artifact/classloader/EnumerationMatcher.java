@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.module.artifact.classloader;
 
-import java.util.Collection;
-import java.util.Enumeration;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+
+import java.util.Collection;
+import java.util.Enumeration;
 
 /**
  * Matches a {@link Enumeration} against a collection of expected items.
@@ -24,6 +24,11 @@ public class EnumerationMatcher<T> extends TypeSafeMatcher<Enumeration<T>>
     public EnumerationMatcher(Collection<T> items)
     {
         this.items = items;
+    }
+
+    public static <T> Matcher<Enumeration<T>> equalTo(Collection<T> items)
+    {
+        return new EnumerationMatcher<>(items);
     }
 
     @Override
@@ -48,10 +53,5 @@ public class EnumerationMatcher<T> extends TypeSafeMatcher<Enumeration<T>>
     public void describeTo(Description description)
     {
         description.appendText("an Enumeration containing " + items.toString());
-    }
-
-    public static <T> Matcher<Enumeration<T>> equalTo(Collection<T> items)
-    {
-        return new EnumerationMatcher<>(items);
     }
 }

@@ -7,15 +7,14 @@
 
 package org.mule.runtime.module.db.integration.config;
 
+import org.junit.Before;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
 import org.mule.runtime.module.db.integration.TestDbConfig;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-
-import org.junit.Before;
-import org.junit.runners.Parameterized;
 
 public abstract class AbstractDatasourcePoolingTestCase extends AbstractDbIntegrationTestCase
 {

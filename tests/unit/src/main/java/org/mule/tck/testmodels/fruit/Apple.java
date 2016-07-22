@@ -9,7 +9,6 @@ package org.mule.tck.testmodels.fruit;
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.Callable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +59,11 @@ public class Apple implements Fruit, Callable
         return washed;
     }
 
+    public void setWashed(boolean washed)
+    {
+        this.washed = washed;
+    }
+
     @Override
     public void bite()
     {
@@ -70,6 +74,11 @@ public class Apple implements Fruit, Callable
     public boolean isBitten()
     {
         return bitten;
+    }
+
+    public void setBitten(boolean bitten)
+    {
+        this.bitten = bitten;
     }
 
     public Seed getSeed()
@@ -86,11 +95,10 @@ public class Apple implements Fruit, Callable
     public Object onCall(MuleEventContext context) throws MuleException
     {
         logger.debug("Apple received an event in Callable.onEvent! MuleEvent says: "
-                        + context.getMessageAsString());
+                     + context.getMessageAsString());
         wash();
         return null;
     }
-
 
     public FruitCleaner getAppleCleaner()
     {
@@ -146,15 +154,5 @@ public class Apple implements Fruit, Callable
     public String toString()
     {
         return "Just an apple.";
-    }
-
-    public void setBitten(boolean bitten)
-    {
-        this.bitten = bitten;
-    }
-
-    public void setWashed(boolean washed)
-    {
-        this.washed = washed;
     }
 }

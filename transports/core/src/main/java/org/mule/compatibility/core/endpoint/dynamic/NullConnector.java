@@ -16,8 +16,8 @@ import org.mule.runtime.core.api.lifecycle.InitialisationException;
  * not created until the first message is received for processing. At that point the real endpoint is created and the 'NullEndpoint'
  * including this NullConnector is overwritten.
  *
- * @since 3.0
  * @see org.mule.compatibility.core.endpoint.DynamicOutboundEndpoint
+ * @since 3.0
  */
 public class NullConnector extends AbstractConnector
 {

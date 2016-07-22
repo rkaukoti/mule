@@ -73,7 +73,7 @@ public class HttpPart implements Part
     {
         Object headerValue = headers.get(headerName);
 
-        if (headerValue instanceof  Collection)
+        if (headerValue instanceof Collection)
         {
             return (Collection<String>) headerValue;
         }

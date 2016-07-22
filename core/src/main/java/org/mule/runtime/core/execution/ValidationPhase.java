@@ -22,7 +22,8 @@ public class ValidationPhase implements MessageProcessPhase<ValidationPhaseTempl
     }
 
     @Override
-    public void runPhase(ValidationPhaseTemplate validationPhaseTemplate, MessageProcessContext messageProcessContext, PhaseResultNotifier phaseResultNotifier)
+    public void runPhase(ValidationPhaseTemplate validationPhaseTemplate, MessageProcessContext messageProcessContext,
+                         PhaseResultNotifier phaseResultNotifier)
     {
         try
         {

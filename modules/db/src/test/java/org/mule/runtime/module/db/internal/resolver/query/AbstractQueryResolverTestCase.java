@@ -7,7 +7,6 @@
 
 package org.mule.runtime.module.db.internal.resolver.query;
 
-import static org.mockito.Mockito.mock;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.module.db.internal.domain.param.DefaultInputQueryParam;
 import org.mule.runtime.module.db.internal.domain.param.InputQueryParam;
@@ -21,6 +20,8 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.Mockito.mock;
 
 public class AbstractQueryResolverTestCase extends AbstractMuleTestCase
 {

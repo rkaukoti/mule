@@ -25,7 +25,6 @@ public final class DependenciesFilter
      * {@link Predicate} to be used to filter which dependencies should be included and used
      * to traverse the tree in order to collect their transitive dependencies.
      *
-     * @param predicate
      * @return this
      */
     public DependenciesFilter match(Predicate<MavenArtifact> predicate)
@@ -40,8 +39,6 @@ public final class DependenciesFilter
      * in order to collect their transitive dependencies
      * A frequently use case for this is, I would like to get all the transitive dependencies of one of my dependencies
      * but I don't want the dependency as part of the result.
-     *
-     * @return
      */
     public DependenciesFilter onlyCollectTransitiveDependencies()
     {

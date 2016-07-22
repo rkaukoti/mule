@@ -6,17 +6,11 @@
  */
 package org.mule.compatibility.transport.http.components;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.apache.commons.httpclient.Cookie;
+import org.apache.commons.httpclient.Header;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.mule.compatibility.transport.http.CacheControlHeader;
 import org.mule.compatibility.transport.http.CookieHelper;
 import org.mule.compatibility.transport.http.CookieWrapper;
@@ -44,11 +38,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 
-import org.apache.commons.httpclient.Cookie;
-import org.apache.commons.httpclient.Header;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class HttpResponseBuilderTestCase extends AbstractMuleTestCase
@@ -84,7 +83,8 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase
         muleContext = mock(MuleContext.class, RETURNS_DEEP_STUBS);
         mockEvent = mock(MuleEvent.class);
         mockMuleMessage = mock(MuleMessage.class);
-        doAnswer(invocation -> {
+        doAnswer(invocation ->
+        {
             mockMuleMessage = (MuleMessage) invocation.getArguments()[0];
             return null;
         }).when(mockEvent).setMessage(any(MuleMessage.class));
@@ -222,8 +222,10 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase
 
         Map<String, String> responseCookies = getHeaderCookie(response.getHeaders());
         assertNotNull(responseCookies);
-        assertEquals("userName=John_Galt; Version=1; Domain=localhost; Path=/; Secure; Expires=Sun, 15-Dec-2013 16:00:00 GMT", responseCookies.get("userName"));
-        assertEquals("userId=1; Version=1; Domain=localhost; Path=/; Secure; Expires=Sun, 1-Dec-2013 16:00:00 GMT", responseCookies.get("userId"));
+        assertEquals("userName=John_Galt; Version=1; Domain=localhost; Path=/; Secure; Expires=Sun, 15-Dec-2013 16:00:00 GMT",
+                responseCookies.get("userName"));
+        assertEquals("userId=1; Version=1; Domain=localhost; Path=/; Secure; Expires=Sun, 1-Dec-2013 16:00:00 GMT",
+                responseCookies.get("userId"));
     }
 
     @Test
@@ -249,7 +251,8 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase
 
         Map<String, String> responseCookies = getHeaderCookie(response.getHeaders());
         assertNotNull(responseCookies);
-        assertEquals("userName=John_Galt; Version=1; Domain=localhost; Path=/; Secure; Expires=Sun, 15-Dec-2013 16:00:00 GMT", responseCookies.get("userName"));
+        assertEquals("userName=John_Galt; Version=1; Domain=localhost; Path=/; Secure; Expires=Sun, 15-Dec-2013 16:00:00 GMT",
+                responseCookies.get("userName"));
     }
 
     @Test
@@ -304,7 +307,8 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase
 
         HttpResponse response = new HttpResponse();
         httpResponseBuilder.setCacheControl(response, mockEvent);
-        assertEquals("public,no-cache,no-store,must-revalidate,max-age=3600", response.getFirstHeader(HttpConstants.HEADER_CACHE_CONTROL).getValue());
+        assertEquals("public,no-cache,no-store,must-revalidate,max-age=3600",
+                response.getFirstHeader(HttpConstants.HEADER_CACHE_CONTROL).getValue());
     }
 
     @Test
@@ -327,7 +331,8 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase
 
         HttpResponse response = new HttpResponse();
         httpResponseBuilder.setCacheControl(response, mockEvent);
-        assertEquals("public,no-cache,no-store,must-revalidate,max-age=3600", response.getFirstHeader(HttpConstants.HEADER_CACHE_CONTROL).getValue());
+        assertEquals("public,no-cache,no-store,must-revalidate,max-age=3600",
+                response.getFirstHeader(HttpConstants.HEADER_CACHE_CONTROL).getValue());
     }
 
     @Test
@@ -362,9 +367,9 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase
         cookies[1] = new Cookie(null, "category", "premium");
         outboundProperties.put(HttpConstants.HEADER_COOKIE_SET, cookies);
 
-        Set<String> propertyNames =  outboundProperties.keySet();
+        Set<String> propertyNames = outboundProperties.keySet();
         when(mockMuleMessage.getOutboundPropertyNames()).thenReturn(propertyNames);
-        for(String propertyName : propertyNames)
+        for (String propertyName : propertyNames)
         {
             when(mockMuleMessage.getOutboundProperty(propertyName)).thenReturn(outboundProperties.get(propertyName));
             when(mockMuleMessage.getDataType()).thenReturn(DataType.builder(DataType.OBJECT).charset(StandardCharsets.UTF_8).build());
@@ -374,11 +379,11 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase
         httpResponseBuilder.copyOutboundProperties(response, mockMuleMessage);
 
         Header[] headers = response.getHeaders();
-        for(Header header : headers)
+        for (Header header : headers)
         {
-            if(HttpConstants.HEADER_COOKIE_SET.equals(header.getName()))
+            if (HttpConstants.HEADER_COOKIE_SET.equals(header.getName()))
             {
-                if(header.getValue().startsWith(cookies[0].getName()))
+                if (header.getValue().startsWith(cookies[0].getName()))
                 {
                     assertEquals(cookies[0].toString(), header.getValue());
                 }
@@ -388,9 +393,10 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase
                 }
 
             }
-            else if(header.getName().startsWith(HttpConstants.CUSTOM_HEADER_PREFIX))
+            else if (header.getName().startsWith(HttpConstants.CUSTOM_HEADER_PREFIX))
             {
-                assertEquals(outboundProperties.get(header.getName().substring(HttpConstants.CUSTOM_HEADER_PREFIX.length())), header.getValue());
+                assertEquals(outboundProperties.get(header.getName().substring(HttpConstants.CUSTOM_HEADER_PREFIX.length())),
+                        header.getValue());
             }
             else
             {
@@ -500,7 +506,8 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase
         assertEquals(HTTP_BODY, response.getBodyAsString());
     }
 
-    private CookieWrapper createCookie(String name, String value, String domain, String path, String expiryDate, String secure, String version)
+    private CookieWrapper createCookie(String name, String value, String domain, String path, String expiryDate, String secure,
+                                       String version)
     {
         CookieWrapper cookie = new CookieWrapper();
         cookie.setName(name);
@@ -516,9 +523,9 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase
     private Map<String, String> getHeaderCookie(Header[] headers)
     {
         Map<String, String> cookies = new HashMap<>();
-        for(Header header : headers)
+        for (Header header : headers)
         {
-            if("Set-Cookie".equals(header.getName()))
+            if ("Set-Cookie".equals(header.getName()))
             {
                 cookies.put(header.getValue().split("=")[0], header.getValue());
             }
@@ -543,9 +550,9 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase
 
     private void validateHeader(Header[] headers, String headerName, String expectedValue)
     {
-        for(Header header : headers)
+        for (Header header : headers)
         {
-            if(headerName.equals(header.getName()))
+            if (headerName.equals(header.getName()))
             {
                 assertEquals(expectedValue, header.getValue());
                 return;
@@ -557,7 +564,7 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase
     private void mockParse()
     {
         when(mockExpressionManager.parse(anyString(), Mockito.any(MuleEvent.class))).thenAnswer(
-                 invocation -> invocation.getArguments()[0]
-         );
+                invocation -> invocation.getArguments()[0]
+        );
     }
 }

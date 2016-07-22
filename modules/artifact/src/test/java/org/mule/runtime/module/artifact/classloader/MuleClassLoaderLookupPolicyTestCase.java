@@ -7,6 +7,12 @@
 
 package org.mule.runtime.module.artifact.classloader;
 
+import org.junit.Test;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.util.Collections;
+
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
@@ -16,12 +22,6 @@ import static org.hamcrest.Matchers.is;
 import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.CHILD_FIRST;
 import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_FIRST;
 import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_ONLY;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import java.util.Collections;
-
-import org.junit.Test;
 
 @SmallTest
 public class MuleClassLoaderLookupPolicyTestCase extends AbstractMuleTestCase
@@ -30,13 +30,15 @@ public class MuleClassLoaderLookupPolicyTestCase extends AbstractMuleTestCase
     @Test(expected = IllegalArgumentException.class)
     public void extendingCustomLookupStrategyForSystemPackage() throws Exception
     {
-        new MuleClassLoaderLookupPolicy(Collections.emptyMap(), singleton("java")).extend(Collections.singletonMap(Object.class.getName(), CHILD_FIRST));
+        new MuleClassLoaderLookupPolicy(Collections.emptyMap(), singleton("java")).extend(
+                Collections.singletonMap(Object.class.getName(), CHILD_FIRST));
     }
 
     @Test
     public void returnsConfiguredLookupStrategy() throws Exception
     {
-        MuleClassLoaderLookupPolicy lookupPolicy = new MuleClassLoaderLookupPolicy(Collections.singletonMap("java.lang", CHILD_FIRST), emptySet());
+        MuleClassLoaderLookupPolicy lookupPolicy =
+                new MuleClassLoaderLookupPolicy(Collections.singletonMap("java.lang", CHILD_FIRST), emptySet());
 
         ClassLoaderLookupStrategy lookupStrategy = lookupPolicy.getLookupStrategy(Object.class.getName());
         assertThat(lookupStrategy, is(CHILD_FIRST));

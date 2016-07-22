@@ -7,16 +7,15 @@
 
 package org.mule.compatibility.transport.http;
 
-import static junit.framework.Assert.assertNotNull;
-
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static junit.framework.Assert.assertNotNull;
 
 @Ignore("Session properties are not supported anymore")
 public class NullSessionHandlerTestCase extends FunctionalTestCase

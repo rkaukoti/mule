@@ -6,28 +6,28 @@
  */
 package org.mule.test.transformers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
-import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.core.util.compression.GZipCompression;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Functional test case for the GZipCompressTransformer and GZipUncompressTransformer.
  */
 public class GZipTransformerFunctionalTestCase extends FunctionalTestCase
 {
-    private static final String TEST_DATA = "the quick brown fox jumped over the lazy dog the quick brown fox jumped over the lazy dog the quick brown fox jumped over the lazy dog";
+    private static final String TEST_DATA =
+            "the quick brown fox jumped over the lazy dog the quick brown fox jumped over the lazy dog the quick brown fox jumped over the lazy dog";
 
     @Override
     protected String getConfigFile()

@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * <code>Connector</code> is the mechanism used to connect to external systems and protocols in order to send and
  * receive data.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -42,17 +42,14 @@ public interface Connector extends LegacyConnector
      * Only a single listener can be registered for a given endpoints. Attempts to
      * register a listener when one is already registered will fail.
      *
-     * @param endpoint defines both the transport and channel/resource uri as well
-     *            the processing (transformation/filtering) that should occur when
-     *            the endpoint processes a new message from the transport receiver.
-     * @param listener the listener that will be invoked when messages are received
-     *            on the endpoint.
-     * @param flowConstruct reference to the flow construct that the listener is part
-     *            of for use as context for logging, notifications and error
-     *            handling.
+     * @param endpoint      defines both the transport and channel/resource uri as well the processing (transformation/filtering) that
+     *                      should occur when the endpoint processes a new message from the transport receiver.
+     * @param listener      the listener that will be invoked when messages are received on the endpoint.
+     * @param flowConstruct reference to the flow construct that the listener is part of for use as context for logging, notifications and
+     *                      error handling.
      */
     public void registerListener(InboundEndpoint endpoint, MessageProcessor listener, FlowConstruct flowConstruct)
-        throws Exception;
+            throws Exception;
 
     /**
      * Unregisters the listener for the given endpoints. This will mean that the
@@ -70,8 +67,7 @@ public interface Connector extends LegacyConnector
     boolean isConnected();
 
     /**
-     * @return false if the connector is alive and well or true if the connector is
-     *         being destroyed
+     * @return false if the connector is alive and well or true if the connector is being destroyed
      */
     boolean isDisposed();
 
@@ -95,25 +91,17 @@ public interface Connector extends LegacyConnector
      * The dispatcher factory is used to create a message dispatcher of the current
      * request
      *
-     * @param factory the factory to use when a dispatcher request is madr
-     */
-    void setDispatcherFactory(MessageDispatcherFactory factory);
-
-    /**
-     * The dispatcher factory is used to create a message dispatcher of the current
-     * request
-     *
      * @return the factory to use when a dispatcher request is madr
      */
     MessageDispatcherFactory getDispatcherFactory();
 
     /**
-     * The requester factory is used to create a message requester of the current
+     * The dispatcher factory is used to create a message dispatcher of the current
      * request
      *
-     * @param factory the factory to use when a request is made
+     * @param factory the factory to use when a dispatcher request is madr
      */
-    void setRequesterFactory(MessageRequesterFactory factory);
+    void setDispatcherFactory(MessageDispatcherFactory factory);
 
     /**
      * The requester factory is used to create a message requester of the current
@@ -123,18 +111,23 @@ public interface Connector extends LegacyConnector
      */
     MessageRequesterFactory getRequesterFactory();
 
+    /**
+     * The requester factory is used to create a message requester of the current
+     * request
+     *
+     * @param factory the factory to use when a request is made
+     */
+    void setRequesterFactory(MessageRequesterFactory factory);
+
     boolean isResponseEnabled();
 
     /**
      * Make a specific request to the underlying transport
      *
      * @param endpoint the endpoint to use when connecting to the resource
-     * @param timeout the maximum time the operation should block before returning.
-     *            The call should return immediately if there is data available. If
-     *            no data becomes available before the timeout elapses, null will be
-     *            returned
-     * @return the result of the request wrapped in a MuleMessage object. Null will be
-     *         returned if no data was avaialable
+     * @param timeout  the maximum time the operation should block before returning. The call should return immediately if there is data
+     *                 available. If no data becomes available before the timeout elapses, null will be returned
+     * @return the result of the request wrapped in a MuleMessage object. Null will be returned if no data was avaialable
      * @throws Exception if the call to the underlying protocal cuases an exception
      */
     MuleMessage request(InboundEndpoint endpoint, long timeout) throws Exception;
@@ -147,7 +140,7 @@ public interface Connector extends LegacyConnector
      * so, see {@link CallbackOutputStream}.
      *
      * @param endpoint the endpoint that releates to this Dispatcher
-     * @param event the current event being processed
+     * @param event    the current event being processed
      * @return the output stream to use for this request
      */
     OutputStream getOutputStream(OutboundEndpoint endpoint, MuleEvent event) throws MuleException;
@@ -155,8 +148,7 @@ public interface Connector extends LegacyConnector
     RetryPolicyTemplate getRetryPolicyTemplate();
 
     /**
-     * @return the default {@link MessageExchangePattern} as configured in the
-     *         transport's service descriptor.
+     * @return the default {@link MessageExchangePattern} as configured in the transport's service descriptor.
      */
     MessageExchangePattern getDefaultExchangePattern();
 

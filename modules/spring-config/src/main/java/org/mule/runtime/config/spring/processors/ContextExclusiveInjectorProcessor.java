@@ -7,12 +7,11 @@
 package org.mule.runtime.config.spring.processors;
 
 import org.mule.runtime.core.api.Injector;
-
-import java.beans.PropertyDescriptor;
-
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import org.springframework.context.ApplicationContext;
+
+import java.beans.PropertyDescriptor;
 
 /**
  * Specialization of {@link SelectiveInjectorProcessor} which only considers

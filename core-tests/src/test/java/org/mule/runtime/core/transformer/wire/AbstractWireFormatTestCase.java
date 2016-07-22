@@ -6,11 +6,7 @@
  */
 package org.mule.runtime.core.transformer.wire;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.transformer.wire.WireFormat;
 import org.mule.runtime.core.transformer.simple.ObjectToString;
@@ -24,7 +20,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractWireFormatTestCase extends AbstractMuleContextTestCase
 {

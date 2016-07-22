@@ -9,8 +9,6 @@ package org.mule.runtime.module.repository.api;
 import static com.google.common.base.Preconditions.checkState;
 import static java.lang.String.format;
 
-import com.google.common.base.Preconditions;
-
 /**
  * Descriptor to identify a bundle
  *

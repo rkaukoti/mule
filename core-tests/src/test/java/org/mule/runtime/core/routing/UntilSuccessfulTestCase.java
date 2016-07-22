@@ -6,11 +6,7 @@
  */
 package org.mule.runtime.core.routing;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -24,46 +20,14 @@ import org.mule.tck.probe.Prober;
 
 import java.io.ByteArrayInputStream;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
 
 public class UntilSuccessfulTestCase extends AbstractMuleContextTestCase
 {
-    public static class ConfigurableMessageProcessor implements MessageProcessor
-    {
-        private volatile int eventCount;
-        private volatile MuleEvent event;
-        private volatile int numberOfFailuresToSimulate;
-
-        @Override
-        public MuleEvent process(final MuleEvent evt) throws MuleException
-        {
-            eventCount++;
-            if (numberOfFailuresToSimulate-- > 0)
-            {
-                throw new RuntimeException("simulated problem");
-            }
-            this.event = evt;
-            return evt;
-        }
-
-        public MuleEvent getEventReceived()
-        {
-            return event;
-        }
-
-        public int getEventCount()
-        {
-            return eventCount;
-        }
-
-        public void setNumberOfFailuresToSimulate(int numberOfFailuresToSimulate)
-        {
-            this.numberOfFailuresToSimulate = numberOfFailuresToSimulate;
-        }
-    }
-
     private UntilSuccessful untilSuccessful;
-
     private ListableObjectStore<MuleEvent> objectStore;
     private ConfigurableMessageProcessor targetMessageProcessor;
     private Prober pollingProber = new PollingProber(10000, 500l);
@@ -239,7 +203,6 @@ public class UntilSuccessfulTestCase extends AbstractMuleContextTestCase
         untilSuccessful.initialise();
     }
 
-
     private void ponderUntilEventProcessed(final MuleEvent testEvent)
             throws InterruptedException, MuleException
     {
@@ -274,13 +237,13 @@ public class UntilSuccessfulTestCase extends AbstractMuleContextTestCase
             protected boolean test() throws Exception
             {
                 return targetMessageProcessor.getEventCount() > untilSuccessful.getMaxRetries()
-                       &&  objectStore.allKeys().isEmpty();
+                       && objectStore.allKeys().isEmpty();
             }
 
             @Override
             public String describeFailure()
             {
-                return String.format("Processing not retried %s times.",untilSuccessful.getMaxRetries());
+                return String.format("Processing not retried %s times.", untilSuccessful.getMaxRetries());
             }
         });
         assertEquals(0, objectStore.allKeys().size());
@@ -288,11 +251,45 @@ public class UntilSuccessfulTestCase extends AbstractMuleContextTestCase
     }
 
     private void assertLogicallyEqualEvents(final MuleEvent testEvent, MuleEvent eventReceived)
-        throws MuleException
+            throws MuleException
     {
         // events have been rewritten so are different but the correlation ID has been carried around
         assertEquals(testEvent.getMessage().getCorrelation().getId(), eventReceived.getMessage().getCorrelation().getId());
         // and their payload
         assertEquals(testEvent.getMessageAsString(), eventReceived.getMessageAsString());
+    }
+
+    public static class ConfigurableMessageProcessor implements MessageProcessor
+    {
+        private volatile int eventCount;
+        private volatile MuleEvent event;
+        private volatile int numberOfFailuresToSimulate;
+
+        @Override
+        public MuleEvent process(final MuleEvent evt) throws MuleException
+        {
+            eventCount++;
+            if (numberOfFailuresToSimulate-- > 0)
+            {
+                throw new RuntimeException("simulated problem");
+            }
+            this.event = evt;
+            return evt;
+        }
+
+        public MuleEvent getEventReceived()
+        {
+            return event;
+        }
+
+        public int getEventCount()
+        {
+            return eventCount;
+        }
+
+        public void setNumberOfFailuresToSimulate(int numberOfFailuresToSimulate)
+        {
+            this.numberOfFailuresToSimulate = numberOfFailuresToSimulate;
+        }
     }
 }

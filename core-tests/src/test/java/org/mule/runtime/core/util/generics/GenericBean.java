@@ -21,49 +21,25 @@ import java.util.Set;
 public class GenericBean<T>
 {
 
-    enum CustomEnum
-    {
-
-        VALUE_1, VALUE_2;
-
-        public String toString()
-        {
-            return "CustomEnum: " + name();
-        }
-    }
-
     private Set<Integer> integerSet;
-
     private List<String> resourceList;
-
     private List<List<Integer>> listOfLists;
-
     private ArrayList<String[]> listOfArrays;
-
     private List<Map<Integer, Long>> listOfMaps;
-
     private Map plainMap;
-
     private Map<Short, Integer> shortMap;
-
     private HashMap<Long, ?> longMap;
-
     private Map<Number, Collection<? extends Object>> collectionMap;
-
     private Map<String, Map<Integer, Long>> mapOfMaps;
-
     private Map<Integer, List<Integer>> mapOfLists;
-
     private CustomEnum customEnum;
-
     private T genericProperty;
-
     private List<T> genericListProperty;
-
 
     public GenericBean()
     {
     }
+
 
     public GenericBean(Set<Integer> integerSet)
     {
@@ -104,6 +80,40 @@ public class GenericBean<T>
         this.collectionMap = collectionMap;
     }
 
+    public static GenericBean createInstance(Set<Integer> integerSet)
+    {
+        return new GenericBean(integerSet);
+    }
+
+    public static GenericBean createInstance(Set<Integer> integerSet, List<String> resourceList)
+    {
+        return new GenericBean(integerSet, resourceList);
+    }
+
+    public static GenericBean createInstance(HashSet<Integer> integerSet, Map<Short, Integer> shortMap)
+    {
+        return new GenericBean(integerSet, shortMap);
+    }
+
+    public static GenericBean createInstance(Map<Short, Integer> shortMap, String resource)
+    {
+        return new GenericBean(shortMap, resource);
+    }
+
+    public static GenericBean createInstance(Map map, Map<Short, Integer> shortMap)
+    {
+        return new GenericBean(map, shortMap);
+    }
+
+    public static GenericBean createInstance(HashMap<Long, ?> longMap)
+    {
+        return new GenericBean(longMap);
+    }
+
+    public static GenericBean createInstance(boolean someFlag, Map<Number, Collection<? extends Object>> collectionMap)
+    {
+        return new GenericBean(someFlag, collectionMap);
+    }
 
     public Set<Integer> getIntegerSet()
     {
@@ -130,6 +140,11 @@ public class GenericBean<T>
         return listOfLists;
     }
 
+    public void setListOfLists(List<List<Integer>> listOfLists)
+    {
+        this.listOfLists = listOfLists;
+    }
+
     public ArrayList<String[]> getListOfArrays()
     {
         return listOfArrays;
@@ -138,11 +153,6 @@ public class GenericBean<T>
     public void setListOfArrays(ArrayList<String[]> listOfArrays)
     {
         this.listOfArrays = listOfArrays;
-    }
-
-    public void setListOfLists(List<List<Integer>> listOfLists)
-    {
-        this.listOfLists = listOfLists;
     }
 
     public List<Map<Integer, Long>> getListOfMaps()
@@ -240,40 +250,15 @@ public class GenericBean<T>
         this.customEnum = customEnum;
     }
 
-
-    public static GenericBean createInstance(Set<Integer> integerSet)
+    enum CustomEnum
     {
-        return new GenericBean(integerSet);
-    }
 
-    public static GenericBean createInstance(Set<Integer> integerSet, List<String> resourceList)
-    {
-        return new GenericBean(integerSet, resourceList);
-    }
+        VALUE_1, VALUE_2;
 
-    public static GenericBean createInstance(HashSet<Integer> integerSet, Map<Short, Integer> shortMap)
-    {
-        return new GenericBean(integerSet, shortMap);
-    }
-
-    public static GenericBean createInstance(Map<Short, Integer> shortMap, String resource)
-    {
-        return new GenericBean(shortMap, resource);
-    }
-
-    public static GenericBean createInstance(Map map, Map<Short, Integer> shortMap)
-    {
-        return new GenericBean(map, shortMap);
-    }
-
-    public static GenericBean createInstance(HashMap<Long, ?> longMap)
-    {
-        return new GenericBean(longMap);
-    }
-
-    public static GenericBean createInstance(boolean someFlag, Map<Number, Collection<? extends Object>> collectionMap)
-    {
-        return new GenericBean(someFlag, collectionMap);
+        public String toString()
+        {
+            return "CustomEnum: " + name();
+        }
     }
 
 }

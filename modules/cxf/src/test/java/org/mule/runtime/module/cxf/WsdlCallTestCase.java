@@ -6,7 +6,11 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.junit.Assert.assertEquals;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
 
@@ -14,11 +18,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class WsdlCallTestCase extends FunctionalTestCase
 {

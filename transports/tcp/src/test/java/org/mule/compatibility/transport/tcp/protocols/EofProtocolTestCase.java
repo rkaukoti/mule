@@ -6,8 +6,6 @@
  */
 package org.mule.compatibility.transport.tcp.protocols;
 
-import org.mule.compatibility.transport.tcp.protocols.EOFProtocol;
-
 public class EofProtocolTestCase extends DefaultProtocolTestCase
 {
 

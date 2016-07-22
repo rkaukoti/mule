@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
-import static java.lang.String.format;
-import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
 import org.mule.metadata.api.model.DictionaryType;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.metadata.api.model.ObjectType;
@@ -24,6 +22,9 @@ import org.mule.runtime.extension.api.introspection.source.HasSourceModels;
 import org.mule.runtime.extension.api.introspection.source.SourceModel;
 
 import java.util.Map;
+
+import static java.lang.String.format;
+import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
 
 /**
  * Validates that all {@link OperationModel operations} which
@@ -75,9 +76,10 @@ public class MetadataComponentModelValidator implements ModelValidator
     {
         if (Object.class.equals(returnType) && component.getMetadataResolverFactory().getOutputResolver() instanceof NullMetadataResolver)
         {
-            throw new IllegalModelDefinitionException(format("Component '%s' in Extension '%s' specifies '%s' as a return type. Operations and Sources with " +
-                                                             "return type such as Object or Map must have defined a not null MetadataOutputResolver",
-                                                             component.getName(), extensionModel.getName(), returnType.getName()));
+            throw new IllegalModelDefinitionException(
+                    format("Component '%s' in Extension '%s' specifies '%s' as a return type. Operations and Sources with " +
+                           "return type such as Object or Map must have defined a not null MetadataOutputResolver",
+                            component.getName(), extensionModel.getName(), returnType.getName()));
         }
     }
 }

@@ -5,14 +5,14 @@
       xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
         http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
 
-    <file:config name="file" baseDir="${baseDir}" />
+    <file:config name="file" baseDir="${baseDir}"/>
 
     <flow name="delete">
-        <file:delete path="#[delete]" />
+        <file:delete path="#[delete]"/>
     </flow>
 
     <flow name="readAndDelete">
-        <file:read path="#[delete]" />
-        <file:delete />
+        <file:read path="#[delete]"/>
+        <file:delete/>
     </flow>
 </mule>

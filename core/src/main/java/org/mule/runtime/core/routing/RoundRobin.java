@@ -23,11 +23,13 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class RoundRobin extends AbstractOutboundRouter
 {
-    /** Index of target route to use */
+    /**
+     * Index of target route to use
+     */
     AtomicInteger index = new AtomicInteger(1);
 
     /**
-     *  Process the event using the next target route in sequence
+     * Process the event using the next target route in sequence
      */
     @Override
     public MuleEvent route(MuleEvent event) throws MessagingException
@@ -37,7 +39,7 @@ public class RoundRobin extends AbstractOutboundRouter
         {
             throw new CouldNotRouteOutboundMessageException(event, this);
         }
-        
+
         MessageProcessor mp = routes.get(modulo);
         try
         {

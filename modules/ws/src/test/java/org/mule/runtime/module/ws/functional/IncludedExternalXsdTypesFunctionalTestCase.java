@@ -6,10 +6,14 @@
  */
 package org.mule.runtime.module.ws.functional;
 
-import static org.mule.runtime.core.util.ClassUtils.getClassPathRoot;
+import org.apache.commons.io.FileUtils;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.junit.Rule;
+import org.mule.runtime.core.util.IOUtils;
 import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.tck.junit4.rule.SystemProperty;
-import org.mule.runtime.core.util.IOUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,11 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FileUtils;
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.AbstractHandler;
-import org.junit.Rule;
+import static org.mule.runtime.core.util.ClassUtils.getClassPathRoot;
 
 /**
  * Uses a WSDL definition file that imports the types from another WSDL file, which includes the schema from yet another
@@ -34,9 +34,8 @@ public class IncludedExternalXsdTypesFunctionalTestCase extends IncludedXsdTypes
     public DynamicPort httpPort = new DynamicPort("httpPort");
     @Rule
     public SystemProperty wsdlLocation = new SystemProperty("wsdlLocation", "TestExternalIncludedTypes.wsdl");
-
-    private Server server;
     File wsdl;
+    private Server server;
 
     @Override
     protected void doSetUpBeforeMuleContextCreation() throws Exception
@@ -49,7 +48,8 @@ public class IncludedExternalXsdTypesFunctionalTestCase extends IncludedXsdTypes
     private void createWsdlFile() throws IOException
     {
         //the WSDL must reference a dynamic HTTP port so we have to create it
-        String modifiedWsdl = String.format(IOUtils.getResourceAsString("TestIncludedExternalTypeDefinitionsFormat.wsdl", this.getClass()), httpPort.getValue());
+        String modifiedWsdl = String.format(IOUtils.getResourceAsString("TestIncludedExternalTypeDefinitionsFormat.wsdl", this.getClass()),
+                httpPort.getValue());
         String testRoot = getClassPathRoot(IncludedExternalXsdTypesFunctionalTestCase.class).getPath();
         wsdl = new File(testRoot + "TestIncludedExternalTypeDefinitions.wsdl");
         FileUtils.writeStringToFile(wsdl, modifiedWsdl);
@@ -73,7 +73,8 @@ public class IncludedExternalXsdTypesFunctionalTestCase extends IncludedXsdTypes
     private class SchemaProviderHandler extends AbstractHandler
     {
         @Override
-        public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+        public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
+                throws IOException, ServletException
         {
             response.setContentType("application/xml");
             response.setStatus(HttpServletResponse.SC_OK);

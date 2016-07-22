@@ -7,14 +7,13 @@
 
 package org.mule.runtime.module.db.integration.config;
 
+import org.junit.runners.Parameterized;
 import org.mule.runtime.module.db.integration.TestDbConfig;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import org.mule.runtime.module.db.integration.model.OracleTestDatabase;
 
 import java.util.Collections;
 import java.util.List;
-
-import org.junit.runners.Parameterized;
 
 public class OracleUrlWithUserPasswordConfigTestCase extends AbstractDatabaseConfigTestCase
 {
@@ -33,7 +32,8 @@ public class OracleUrlWithUserPasswordConfigTestCase extends AbstractDatabaseCon
         }
         else
         {
-            return Collections.singletonList(new Object[] {"integration/config/oracle-url-user-and-password-config.xml", new OracleTestDatabase()});
+            return Collections.singletonList(
+                    new Object[] {"integration/config/oracle-url-user-and-password-config.xml", new OracleTestDatabase()});
         }
     }
 }

@@ -17,7 +17,7 @@ public interface RequestHandler
     /**
      * Called to handle an incoming http request
      *
-     * @param requestContext http request content
+     * @param requestContext   http request content
      * @param responseCallback callback to call when the response content is ready.
      */
     void handleRequest(HttpRequestContext requestContext, HttpResponseReadyCallback responseCallback);

@@ -6,9 +6,9 @@
  */
 package org.mule.extension.socket.api.config;
 
+import org.mule.extension.socket.api.SocketOperations;
 import org.mule.extension.socket.api.provider.tcp.TcpRequesterProvider;
 import org.mule.extension.socket.api.provider.udp.UdpRequesterProvider;
-import org.mule.extension.socket.api.SocketOperations;
 import org.mule.runtime.extension.api.annotation.Configuration;
 import org.mule.runtime.extension.api.annotation.Operations;
 import org.mule.runtime.extension.api.annotation.connector.Providers;

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mule-configuration PUBLIC "-//MuleSoft //DTD mule-configuration XML V1.0//EN"
-                                "http://mule.mulesoft.org/dtds/mule-configuration.dtd">
+        "http://mule.mulesoft.org/dtds/mule-configuration.dtd">
 
 <mule-configuration id="Dummy" version="1.0">
 
-    <mule-environment-properties />
+    <mule-environment-properties/>
 
     <connector name="SystemStreamConnector" className="org.mule.providers.stdio.SystemStreamConnector">
         <properties>

@@ -18,18 +18,19 @@ import javax.naming.NamingException;
  */
 public final class JndiContextHelper
 {
-    /** Do not instanciate. */
-    private JndiContextHelper ()
+    /**
+     * Do not instanciate.
+     */
+    private JndiContextHelper()
     {
         // no-op
     }
 
     /**
      * Create a new initial context.
-     * 
-     * @param environment JNDI properties or <code>null</code>. In the latter case
-     *            a default constructor of <code>InitialContext</code> will be
-     *            called with standard JNDI lookup properties semantics.
+     *
+     * @param environment JNDI properties or <code>null</code>. In the latter case a default constructor of <code>InitialContext</code> will
+     *                    be called with standard JNDI lookup properties semantics.
      * @return jndi context
      * @throws NamingException if there was a JNDI error
      */

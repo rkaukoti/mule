@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.transaction;
 
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.notification.TransactionNotificationListener;
 import org.mule.runtime.core.api.transaction.Transaction;
@@ -15,7 +16,6 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -100,7 +100,7 @@ public class TransactionNotificationsTestCase extends AbstractMuleContextTestCas
 
         protected void doRollback() throws TransactionException
         {
-            
+
         }
     }
 

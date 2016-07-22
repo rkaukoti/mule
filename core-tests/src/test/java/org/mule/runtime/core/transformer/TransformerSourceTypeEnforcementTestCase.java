@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.core.transformer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import com.google.common.base.Charsets;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.MuleConfiguration;
@@ -18,12 +17,12 @@ import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import com.google.common.base.Charsets;
-
 import java.nio.charset.Charset;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class TransformerSourceTypeEnforcementTestCase extends AbstractMuleTestCase

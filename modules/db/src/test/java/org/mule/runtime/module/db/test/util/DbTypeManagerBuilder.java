@@ -7,8 +7,6 @@
 
 package org.mule.runtime.module.db.test.util;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
 import org.mule.runtime.module.db.internal.domain.type.DbType;
 import org.mule.runtime.module.db.internal.domain.type.DbTypeManager;
@@ -16,6 +14,9 @@ import org.mule.runtime.module.db.internal.domain.type.UnknownDbTypeException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Builds {@link DbTypeManager} mocks
@@ -59,7 +60,8 @@ public class DbTypeManagerBuilder
 
         for (DbType type : unknownTypes)
         {
-            when(dbTypeManager.lookup(connection, type.getId(), type.getName())).thenThrow(new UnknownDbTypeException(type.getId(), type.getName()));
+            when(dbTypeManager.lookup(connection, type.getId(), type.getName())).thenThrow(
+                    new UnknownDbTypeException(type.getId(), type.getName()));
         }
 
         return dbTypeManager;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:http="http://www.mulesoft.org/schema/mule/transport/http"
       xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
       http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
@@ -70,18 +70,24 @@
 
         <set-property propertyName="flow1-p1" value="flow1-p1-value"/>
 
-        <component><spring-object bean="property-f1p1"/></component>
+        <component>
+            <spring-object bean="property-f1p1"/>
+        </component>
 
         <http:outbound-endpoint connector-ref="httpConnector"
-                              path="Flow2s1" exchange-pattern="request-response"
-                              host="localhost" port="${port2}">
+                                path="Flow2s1" exchange-pattern="request-response"
+                                host="localhost" port="${port2}">
         </http:outbound-endpoint>
 
-        <component><spring-object bean="property-f1p1-f2p1-f3p1"/></component>
+        <component>
+            <spring-object bean="property-f1p1-f2p1-f3p1"/>
+        </component>
 
         <set-property propertyName="flow1-p2" value="flow1-p2-value"/>
 
-        <component><spring-object bean="property-f1p1-f2p1-f1p2-f3p1"/></component>
+        <component>
+            <spring-object bean="property-f1p1-f2p1-f1p2-f3p1"/>
+        </component>
 
     </flow>
 
@@ -91,18 +97,24 @@
                                host="localhost" port="${port2}" path="Flow2s1">
         </http:inbound-endpoint>
 
-        <component><spring-object bean="property-f1p1"/></component>
+        <component>
+            <spring-object bean="property-f1p1"/>
+        </component>
 
         <set-property propertyName="flow2-p1" value="flow2-p1-value"/>
 
-        <component><spring-object bean="property-f1p1-f2p1"/></component>
+        <component>
+            <spring-object bean="property-f1p1-f2p1"/>
+        </component>
 
         <http:outbound-endpoint connector-ref="httpConnector"
-                              path="Flow3s1" exchange-pattern="request-response"
-                              host="localhost" port="${port3}">
+                                path="Flow3s1" exchange-pattern="request-response"
+                                host="localhost" port="${port3}">
         </http:outbound-endpoint>
 
-        <component><spring-object bean="property-f1p1-f2p1-f3p1"/></component>
+        <component>
+            <spring-object bean="property-f1p1-f2p1-f3p1"/>
+        </component>
 
     </flow>
 
@@ -112,11 +124,15 @@
                                host="localhost" port="${port3}" path="Flow3s1">
         </http:inbound-endpoint>
 
-        <component><spring-object bean="property-f1p1-f2p1"/></component>
+        <component>
+            <spring-object bean="property-f1p1-f2p1"/>
+        </component>
 
         <set-property propertyName="flow3-p1" value="flow3-p1-value"/>
 
-        <component><spring-object bean="property-f1p1-f2p1-f3p1"/></component>
+        <component>
+            <spring-object bean="property-f1p1-f2p1-f3p1"/>
+        </component>
 
     </flow>
 
@@ -132,23 +148,29 @@
 
         <set-property propertyName="flow1-p1" value="flow1-p1-value"/>
 
-        <component><spring-object bean="property-f1p1"/></component>
+        <component>
+            <spring-object bean="property-f1p1"/>
+        </component>
 
         <http:outbound-endpoint connector-ref="httpConnector"
-                              path="Flow2s2" exchange-pattern="request-response"
-                              host="localhost" port="${port5}">
+                                path="Flow2s2" exchange-pattern="request-response"
+                                host="localhost" port="${port5}">
         </http:outbound-endpoint>
 
-        <component><spring-object bean="property-f1p1-f2p1"/></component>
+        <component>
+            <spring-object bean="property-f1p1-f2p1"/>
+        </component>
 
         <set-property propertyName="flow1-p2" value="flow1-p2-value"/>
 
         <http:outbound-endpoint connector-ref="httpConnector"
-                              path="Flow3s2" exchange-pattern="request-response"
-                              host="localhost" port="${port6}">
+                                path="Flow3s2" exchange-pattern="request-response"
+                                host="localhost" port="${port6}">
         </http:outbound-endpoint>
 
-        <component><spring-object bean="property-f1p1-f2p1-f1p2-f3p1"/></component>
+        <component>
+            <spring-object bean="property-f1p1-f2p1-f1p2-f3p1"/>
+        </component>
 
     </flow>
 
@@ -158,11 +180,15 @@
                                host="localhost" port="${port5}" path="Flow2s2">
         </http:inbound-endpoint>
 
-        <component><spring-object bean="property-f1p1"/></component>
+        <component>
+            <spring-object bean="property-f1p1"/>
+        </component>
 
         <set-property propertyName="flow2-p1" value="flow2-p1-value"/>
 
-        <component><spring-object bean="property-f1p1-f2p1"/></component>
+        <component>
+            <spring-object bean="property-f1p1-f2p1"/>
+        </component>
 
     </flow>
 
@@ -172,11 +198,15 @@
                                host="localhost" port="${port6}" path="Flow3s2">
         </http:inbound-endpoint>
 
-        <component><spring-object bean="property-f1p1-f2p1"/></component>
+        <component>
+            <spring-object bean="property-f1p1-f2p1"/>
+        </component>
 
         <set-property propertyName="flow3-p1" value="flow3-p1-value"/>
 
-        <component><spring-object bean="property-f1p1-f2p1-f1p2-f3p1"/></component>
+        <component>
+            <spring-object bean="property-f1p1-f2p1-f1p2-f3p1"/>
+        </component>
 
     </flow>
 

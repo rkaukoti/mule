@@ -6,14 +6,6 @@
  */
 package org.mule.runtime.module.cxf.wssec;
 
-import java.io.IOException;
-import java.security.cert.X509Certificate;
-import java.util.Collections;
-
-import javax.security.auth.callback.Callback;
-import javax.security.auth.callback.CallbackHandler;
-import javax.security.auth.callback.UnsupportedCallbackException;
-
 import org.apache.ws.security.WSSecurityException;
 import org.apache.ws.security.components.crypto.Crypto;
 import org.apache.ws.security.components.crypto.CryptoFactory;
@@ -25,8 +17,16 @@ import org.apache.ws.security.saml.ext.bean.SubjectBean;
 import org.apache.ws.security.saml.ext.builder.SAML2Constants;
 import org.opensaml.common.SAMLVersion;
 
+import java.io.IOException;
+import java.security.cert.X509Certificate;
+import java.util.Collections;
+
+import javax.security.auth.callback.Callback;
+import javax.security.auth.callback.CallbackHandler;
+import javax.security.auth.callback.UnsupportedCallbackException;
+
 /**
- *  Callback handler that populates a SAML 2 assertion based on the SAML properties file
+ * Callback handler that populates a SAML 2 assertion based on the SAML properties file
  */
 public class SAML2CallbackHandler implements CallbackHandler
 {
@@ -38,7 +38,8 @@ public class SAML2CallbackHandler implements CallbackHandler
 
     public SAML2CallbackHandler() throws WSSecurityException
     {
-        if (certs == null) {
+        if (certs == null)
+        {
             Crypto crypto = CryptoFactory.getInstance("org/mule/runtime/module/cxf/wssec/wssecurity.properties");
             CryptoType cryptoType = new CryptoType(CryptoType.TYPE.ALIAS);
             cryptoType.setAlias("joe");
@@ -55,8 +56,10 @@ public class SAML2CallbackHandler implements CallbackHandler
     public void handle(Callback[] callbacks)
             throws IOException, UnsupportedCallbackException
     {
-        for (int i = 0; i < callbacks.length; i++) {
-            if (callbacks[i] instanceof SAMLCallback) {
+        for (int i = 0; i < callbacks.length; i++)
+        {
+            if (callbacks[i] instanceof SAMLCallback)
+            {
                 SAMLCallback callback = (SAMLCallback) callbacks[i];
                 callback.setSamlVersion(SAMLVersion.VERSION_20);
                 SubjectBean subjectBean =
@@ -65,16 +68,20 @@ public class SAML2CallbackHandler implements CallbackHandler
                         );
                 callback.setSubject(subjectBean);
                 createAndSetStatement(null, callback);
-            } else {
+            }
+            else
+            {
                 throw new UnsupportedCallbackException(callbacks[i], "Unrecognized Callback");
             }
         }
     }
 
 
-    private void createAndSetStatement(SubjectBean subjectBean, SAMLCallback callback) {
+    private void createAndSetStatement(SubjectBean subjectBean, SAMLCallback callback)
+    {
         AuthenticationStatementBean authBean = new AuthenticationStatementBean();
-        if (subjectBean != null) {
+        if (subjectBean != null)
+        {
             authBean.setSubject(subjectBean);
         }
         authBean.setAuthenticationMethod("Password");

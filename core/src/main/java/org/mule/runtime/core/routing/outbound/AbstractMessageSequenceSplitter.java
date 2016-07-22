@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.routing.outbound;
 
-import static org.mule.runtime.core.routing.CorrelationMode.NEVER;
-
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.VoidMuleEvent;
@@ -28,21 +26,23 @@ import org.mule.runtime.core.routing.MessageSequence;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mule.runtime.core.routing.CorrelationMode.NEVER;
+
 /**
- * Base implementation of a {@link MuleMessage} splitter, that converts its payload 
- * in a {@link MessageSequence}, and process each element of it.     
- * Implementations must implement {@link #splitMessageIntoSequence(MuleEvent)} and determine how 
+ * Base implementation of a {@link MuleMessage} splitter, that converts its payload
+ * in a {@link MessageSequence}, and process each element of it.
+ * Implementations must implement {@link #splitMessageIntoSequence(MuleEvent)} and determine how
  * the message is split.
  * <p>
  * <b>EIP Reference:</b> <a
  * href="http://www.eaipatterns.com/Sequencer.html">http://www
  * .eaipatterns.com/Sequencer.html</a>
- * 
+ *
  * @author flbulgarelli
  * @see AbstractSplitter
  */
 public abstract class AbstractMessageSequenceSplitter extends AbstractInterceptingMessageProcessor
-    implements MuleContextAware
+        implements MuleContextAware
 {
     protected MuleContext muleContext;
     protected RouterResultsHandler resultsHandler = new DefaultRouterResultsHandler();
@@ -89,10 +89,9 @@ public abstract class AbstractMessageSequenceSplitter extends AbstractIntercepti
     /**
      * Converts the event into a {@link MessageSequence} that will retrieve each of
      * the event elements
-     * 
+     *
      * @param event the event to split
      * @return a sequence of elements
-     * @throws MuleException
      */
     protected abstract MessageSequence<?> splitMessageIntoSequence(MuleEvent event) throws MuleException;
 
@@ -111,7 +110,7 @@ public abstract class AbstractMessageSequenceSplitter extends AbstractIntercepti
             messageSequence = new PartitionedMessageSequence(seq, batchSize);
         }
         Integer count = messageSequence.size();
-        for (; messageSequence.hasNext();)
+        for (; messageSequence.hasNext(); )
         {
             MuleEvent event = createEvent(messageSequence.next(), originalEvent);
 

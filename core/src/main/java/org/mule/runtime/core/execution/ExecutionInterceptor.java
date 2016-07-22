@@ -14,10 +14,9 @@ interface ExecutionInterceptor<T>
     /**
      * Executes the callback
      *
-     * @param callback callback to execute
+     * @param callback         callback to execute
      * @param executionContext information about the current execution context
      * @return the result of the callback
-     * @throws Exception
      */
     T execute(ExecutionCallback<T> callback, ExecutionContext executionContext) throws Exception;
 

@@ -30,21 +30,21 @@ public interface MuleSession extends Serializable
 
     /**
      * Determines if this session is valid. A session becomes invalid if an exception occurs while processing
-     * 
+     *
      * @return true if the session is valid, false otherwise
      */
     boolean isValid();
 
     /**
      * Determines if this session is valid. A session becomes invalid if an exception occurs while processing
-     * 
+     *
      * @param value true if the session is valid, false otherwise
      */
     void setValid(boolean value);
 
     /**
      * Returns the unique id for this session
-     * 
+     *
      * @return the unique id for this session
      */
     String getId();
@@ -52,23 +52,23 @@ public interface MuleSession extends Serializable
     /**
      * The security context for this session. If not null outbound, inbound and/or method invocations will be
      * authenticated using this context
-     * 
-     * @param context the context for this session or null if the request is not secure.
-     */
-    void setSecurityContext(SecurityContext context);
-
-    /**
-     * The security context for this session. If not null outbound, inbound and/or method invocations will be
-     * authenticated using this context
-     * 
+     *
      * @return the context for this session or null if the request is not secure.
      */
     SecurityContext getSecurityContext();
 
     /**
+     * The security context for this session. If not null outbound, inbound and/or method invocations will be
+     * authenticated using this context
+     *
+     * @param context the context for this session or null if the request is not secure.
+     */
+    void setSecurityContext(SecurityContext context);
+
+    /**
      * Will set a session scope property.
-     * 
-     * @param key the key for the object data being stored on the session
+     *
+     * @param key   the key for the object data being stored on the session
      * @param value the value of the session data
      */
     void setProperty(String key, Serializable value);
@@ -76,12 +76,12 @@ public interface MuleSession extends Serializable
     /**
      * Will set a session scope property.
      *
-     * @param key the key for the object data being stored on the session
-     * @param value the value of the session data
+     * @param key      the key for the object data being stored on the session
+     * @param value    the value of the session data
      * @param dataType the data type for the property value
      */
     void setProperty(String key, Serializable value, DataType dataType);
-    
+
     @Deprecated
     void setProperty(String key, Object value);
 
@@ -91,7 +91,7 @@ public interface MuleSession extends Serializable
 
     /**
      * Will retrieve a session scope property.
-     * 
+     *
      * @param key the key for the object data being stored on the session
      * @return the value of the session data or null if the property does not exist
      */
@@ -99,7 +99,7 @@ public interface MuleSession extends Serializable
 
     /**
      * Will retrieve a session scope property and remove it from the session
-     * 
+     *
      * @param key the key for the object data being stored on the session
      * @return the value of the session data or null if the property does not exist
      */
@@ -114,13 +114,13 @@ public interface MuleSession extends Serializable
      * Merge current session with an updated version Result session will contain all the properties from
      * updatedSession plus those properties in the current session that couldn't be serialized In case
      * updatedSession is null, then no change will be applied.
-     * 
+     *
      * @param updatedSession mule session with updated properties
      */
     void merge(MuleSession updatedSession);
-    
+
     void clearProperties();
-    
+
     /**
      * Retrieves a session scope property data type
      *

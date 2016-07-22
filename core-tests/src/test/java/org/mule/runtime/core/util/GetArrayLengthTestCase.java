@@ -6,8 +6,9 @@
  */
 package org.mule.runtime.core.util;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 import org.mule.tck.testmodels.fruit.Apple;
@@ -15,9 +16,8 @@ import org.mule.tck.testmodels.fruit.Apple;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 @RunWith(Parameterized.class)
@@ -26,6 +26,12 @@ public class GetArrayLengthTestCase extends AbstractMuleTestCase
 
     private final Object unaryArray;
     private final Object emptyArray;
+
+    public GetArrayLengthTestCase(Object unaryArray, Object emptyArray)
+    {
+        this.unaryArray = unaryArray;
+        this.emptyArray = emptyArray;
+    }
 
     @Parameterized.Parameters
     public static Collection<Object[]> data()
@@ -43,15 +49,8 @@ public class GetArrayLengthTestCase extends AbstractMuleTestCase
                 {new double[] {0}, new double[] {}},
                 {new String[] {""}, new String[] {}},
                 {new String[] {""}, null},
-        });
+                });
     }
-
-    public GetArrayLengthTestCase(Object unaryArray, Object emptyArray)
-    {
-        this.unaryArray = unaryArray;
-        this.emptyArray = emptyArray;
-    }
-
 
     @Test
     public void unaryArray()

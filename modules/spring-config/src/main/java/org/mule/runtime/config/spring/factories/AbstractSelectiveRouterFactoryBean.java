@@ -12,10 +12,9 @@ import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.routing.AbstractSelectiveRouter;
 import org.mule.runtime.core.routing.MessageProcessorFilterPair;
+import org.springframework.beans.factory.FactoryBean;
 
 import java.util.Collection;
-
-import org.springframework.beans.factory.FactoryBean;
 
 public abstract class AbstractSelectiveRouterFactoryBean extends AbstractAnnotatedObject implements FactoryBean, MuleContextAware
 {

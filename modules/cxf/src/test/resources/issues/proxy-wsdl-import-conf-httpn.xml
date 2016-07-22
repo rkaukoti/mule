@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
-      xmlns="http://www.mulesoft.org/schema/mule/core"
       xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
                http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
@@ -12,7 +12,8 @@
 
     <flow name="proxy-wsdl">
         <http:listener path="test" config-ref="listenerConfig"/>
-        <cxf:proxy-service namespace="http://cxf.module.runtime.mule.org/" payload="envelope" service="TestService" wsdlLocation="issues/TestImportedTypes.wsdl" soapVersion="1.2" validationEnabled="true"/>
+        <cxf:proxy-service namespace="http://cxf.module.runtime.mule.org/" payload="envelope" service="TestService" wsdlLocation="issues/TestImportedTypes.wsdl" soapVersion="1.2"
+                           validationEnabled="true"/>
     </flow>
 
 </mule>

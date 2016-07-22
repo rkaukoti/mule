@@ -12,7 +12,7 @@ import org.mule.runtime.core.api.MuleContext;
 public class GenericTestJmsConnector extends JmsConnector
 {
     private String providerProperty = "NOT_SET";
-    
+
     public GenericTestJmsConnector(MuleContext context)
     {
         super(context);

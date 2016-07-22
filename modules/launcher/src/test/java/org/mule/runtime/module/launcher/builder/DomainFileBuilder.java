@@ -7,16 +7,17 @@
 
 package org.mule.runtime.module.launcher.builder;
 
-import static org.mule.runtime.module.launcher.descriptor.DeployableArtifactDescriptor.DEFAULT_DEPLOY_PROPERTIES_RESOURCE;
-import static org.mule.runtime.module.launcher.domain.Domain.DOMAIN_CONFIG_FILE_LOCATION;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import org.mule.tck.ZipUtils.ZipResource;
 import org.mule.runtime.core.util.StringUtils;
+import org.mule.tck.ZipUtils.ZipResource;
 
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.module.launcher.descriptor.DeployableArtifactDescriptor.DEFAULT_DEPLOY_PROPERTIES_RESOURCE;
+import static org.mule.runtime.module.launcher.domain.Domain.DOMAIN_CONFIG_FILE_LOCATION;
 
 /**
  * Creates Mule Domain files.
@@ -51,7 +52,7 @@ public class DomainFileBuilder extends AbstractArtifactFileBuilder<DomainFileBui
     /**
      * Create a new builder from another instance and different ID.
      *
-     * @param id artifact identifier. Non empty.
+     * @param id     artifact identifier. Non empty.
      * @param source instance used as template to build the new one. Non null.
      */
     public DomainFileBuilder(String id, DomainFileBuilder source)
@@ -99,7 +100,7 @@ public class DomainFileBuilder extends AbstractArtifactFileBuilder<DomainFileBui
     /**
      * Adds a property into the domain deployment properties file.
      *
-     * @param propertyName name fo the property to add. Non empty
+     * @param propertyName  name fo the property to add. Non empty
      * @param propertyValue value of the property to add. Non null.
      * @return the same builder instance
      */

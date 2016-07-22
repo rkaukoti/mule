@@ -6,11 +6,7 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
@@ -18,7 +14,11 @@ import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.component.ComponentException;
 import org.mule.runtime.core.exception.AbstractMessagingExceptionStrategy;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 public class ExceptionStrategyReturnMessageTestCase extends FunctionalTestCase
 {
@@ -35,7 +35,7 @@ public class ExceptionStrategyReturnMessageTestCase extends FunctionalTestCase
         {
             flowRunner("InputService2").withPayload("Test Message").run();
         }
-        catch(ComponentException e)
+        catch (ComponentException e)
         {
             assertThat(e.getEvent().getMessage().getPayload(), is(nullValue()));
         }
@@ -63,7 +63,7 @@ public class ExceptionStrategyReturnMessageTestCase extends FunctionalTestCase
             event.setMessage(MuleMessage.builder(event.getMessage()).payload("Ka-boom!").build());
             if (exception instanceof MessagingException)
             {
-                ((MessagingException)exception).setHandled(true);
+                ((MessagingException) exception).setHandled(true);
             }
 
             return result;

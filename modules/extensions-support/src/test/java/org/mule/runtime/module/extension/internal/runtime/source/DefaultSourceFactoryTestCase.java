@@ -6,9 +6,10 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.source;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.hamcrest.Matchers;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.runtime.extension.api.runtime.source.Source;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
@@ -16,10 +17,9 @@ import org.mule.test.heisenberg.extension.HeisenbergSource;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.hamcrest.Matchers;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class DefaultSourceFactoryTestCase extends AbstractMuleTestCase

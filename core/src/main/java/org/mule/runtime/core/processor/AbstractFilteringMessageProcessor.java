@@ -21,16 +21,16 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
  * used for filtering message flow through a {@link MessageProcessor} chain. The
  * default behaviour when the filter is not accepted is to return the request event.
  */
-public abstract class AbstractFilteringMessageProcessor extends AbstractInterceptingMessageProcessor  implements NonBlockingSupported
+public abstract class AbstractFilteringMessageProcessor extends AbstractInterceptingMessageProcessor implements NonBlockingSupported
 {
-    /** 
-     * Throw a FilterUnacceptedException when a message is rejected by the filter? 
+    /**
+     * Throw a FilterUnacceptedException when a message is rejected by the filter?
      */
     protected boolean throwOnUnaccepted = false;
     protected boolean onUnacceptedFlowConstruct;
 
-    
-    /** 
+
+    /**
      * The <code>MessageProcessor</code> that should be used to handle messages that are not accepted by the filter.
      */
     protected MessageProcessor unacceptedMessageProcessor;
@@ -60,7 +60,7 @@ public abstract class AbstractFilteringMessageProcessor extends AbstractIntercep
     protected abstract boolean accept(MuleEvent event);
 
     protected MuleEvent handleUnaccepted(MuleEvent event) throws MuleException
-    {        
+    {
         if (unacceptedMessageProcessor != null)
         {
             return unacceptedMessageProcessor.process(event);
@@ -84,7 +84,7 @@ public abstract class AbstractFilteringMessageProcessor extends AbstractIntercep
     {
         return new FilterUnacceptedException(CoreMessages.messageRejectedByFilter(), event, this);
     }
-    
+
     public MessageProcessor getUnacceptedMessageProcessor()
     {
         return unacceptedMessageProcessor;

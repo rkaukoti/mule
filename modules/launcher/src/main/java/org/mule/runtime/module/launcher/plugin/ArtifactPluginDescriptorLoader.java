@@ -6,14 +6,12 @@
  */
 package org.mule.runtime.module.launcher.plugin;
 
+import java.io.File;
+import java.io.IOException;
+
 import static org.apache.commons.lang.StringUtils.removeEnd;
 import static org.mule.runtime.core.util.FileUtils.unzip;
 import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
-import org.mule.runtime.core.util.Preconditions;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Loads a {@link ArtifactPluginDescriptor} from a file resource.
@@ -33,10 +31,11 @@ public class ArtifactPluginDescriptorLoader
     /**
      * Load a {@code ArtifactPluginDescriptor} from a file with the resource of an artifact plugin.
      *
-     * @param pluginZip the artifact plugin zip file
+     * @param pluginZip         the artifact plugin zip file
      * @param unpackDestination the destination to use to unpack the zip file
      * @return the plugin {@code ArtifactPluginDescriptor}
-     * @throws IOException if there was a problem trying to read the artifact plugin zip file or using the {@code unpackDestination} location
+     * @throws IOException if there was a problem trying to read the artifact plugin zip file or using the {@code unpackDestination}
+     *                     location
      */
     public ArtifactPluginDescriptor load(File pluginZip, File unpackDestination) throws IOException
     {

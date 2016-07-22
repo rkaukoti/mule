@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.core.exception;
 
-import static java.text.MessageFormat.format;
-import static org.apache.commons.lang.StringUtils.defaultString;
-
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.GlobalNameableObject;
 import org.mule.runtime.core.api.MessagingException;
@@ -33,14 +30,16 @@ import org.mule.runtime.core.routing.filters.WildcardFilter;
 import org.mule.runtime.core.routing.outbound.MulticastingRouter;
 import org.mule.runtime.core.transaction.TransactionCoordination;
 import org.mule.runtime.core.util.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.text.MessageFormat.format;
+import static org.apache.commons.lang.StringUtils.defaultString;
 
 /**
  * This is the base class for exception strategies which contains several helper methods.  However, you should
@@ -66,6 +65,11 @@ public abstract class AbstractExceptionListener extends AbstractMessageProcessor
 
     protected String globalName;
 
+    public AbstractExceptionListener()
+    {
+        super.setMessagingExceptionHandler(new MessagingExceptionHandlerToSystemAdapter());
+    }
+
     @Override
     public String getGlobalName()
     {
@@ -77,12 +81,6 @@ public abstract class AbstractExceptionListener extends AbstractMessageProcessor
     {
         this.globalName = globalName;
     }
-
-    public AbstractExceptionListener()
-    {
-        super.setMessagingExceptionHandler(new MessagingExceptionHandlerToSystemAdapter());
-    }
-
 
     protected boolean isRollback(Throwable t)
     {
@@ -150,8 +148,6 @@ public abstract class AbstractExceptionListener extends AbstractMessageProcessor
      * a service or connector. This implementation ensures that initialise is called
      * only once. The actual initialisation code is contained in the
      * <code>doInitialise()</code> method.
-     *
-     * @throws InitialisationException
      */
     @Override
     public final synchronized void initialise() throws InitialisationException
@@ -192,7 +188,7 @@ public abstract class AbstractExceptionListener extends AbstractMessageProcessor
      * MuleMessage and any context information.
      *
      * @param event the MuleEvent being processed when the exception occurred
-     * @param t the exception thrown. This will be sent with the ExceptionMessage
+     * @param t     the exception thrown. This will be sent with the ExceptionMessage
      * @see ExceptionMessage
      */
     protected void routeException(MuleEvent event, Throwable t)
@@ -203,7 +199,8 @@ public abstract class AbstractExceptionListener extends AbstractMessageProcessor
             {
                 if (logger.isDebugEnabled())
                 {
-                    logger.debug("Message being processed is: " + (muleContext.getTransformationService().getPayloadForLogging(event.getMessage())));
+                    logger.debug("Message being processed is: " +
+                                 (muleContext.getTransformationService().getPayloadForLogging(event.getMessage())));
                 }
                 String component = "Unknown";
                 if (event.getFlowConstruct() != null)
@@ -291,7 +288,7 @@ public abstract class AbstractExceptionListener extends AbstractMessageProcessor
      * the the message itself to the logs if it is not null
      *
      * @param event The MuleEvent currently being processed
-     * @param t the fatal exception to log
+     * @param t     the fatal exception to log
      */
     protected void logFatal(MuleEvent event, Throwable t)
     {
@@ -308,8 +305,8 @@ public abstract class AbstractExceptionListener extends AbstractMessageProcessor
                 logUniqueId, logMessage.getCorrelation());
 
         logger.error(
-            "Failed to dispatch message to error queue after it failed to process.  This may cause message loss. "
-                            + (event.getMessage() == null ? "" : printableLogMessage), t);
+                "Failed to dispatch message to error queue after it failed to process.  This may cause message loss. "
+                + (event.getMessage() == null ? "" : printableLogMessage), t);
     }
 
     public boolean isInitialised()

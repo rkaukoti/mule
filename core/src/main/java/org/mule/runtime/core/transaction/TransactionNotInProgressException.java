@@ -29,7 +29,7 @@ public class TransactionNotInProgressException extends TransactionStatusExceptio
 
     /**
      * @param message the exception message
-     * @param cause the exception that cause this exception to be thrown
+     * @param cause   the exception that cause this exception to be thrown
      */
     public TransactionNotInProgressException(Message message, Throwable cause)
     {

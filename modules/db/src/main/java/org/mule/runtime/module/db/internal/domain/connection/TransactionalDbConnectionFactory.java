@@ -13,17 +13,17 @@ import org.mule.runtime.module.db.internal.domain.transaction.DbTransactionManag
 import org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction;
 import org.mule.runtime.module.db.internal.domain.type.DbTypeManager;
 import org.mule.runtime.module.db.internal.resolver.param.GenericParamTypeResolverFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * Creates connections using a {@link org.mule.runtime.module.db.internal.domain.transaction.DbTransactionManager} to track active transactions.
+ * Creates connections using a {@link org.mule.runtime.module.db.internal.domain.transaction.DbTransactionManager} to track active
+ * transactions.
  */
 public class TransactionalDbConnectionFactory implements DbConnectionFactory
 {
@@ -35,7 +35,8 @@ public class TransactionalDbConnectionFactory implements DbConnectionFactory
     private final ConnectionFactory connectionFactory;
     private final DataSource dataSource;
 
-    public TransactionalDbConnectionFactory(DbTransactionManager dbTransactionManager, DbTypeManager dbTypeManager, ConnectionFactory connectionFactory, DataSource dataSource)
+    public TransactionalDbConnectionFactory(DbTransactionManager dbTransactionManager, DbTypeManager dbTypeManager,
+                                            ConnectionFactory connectionFactory, DataSource dataSource)
     {
         this.dbTransactionManager = dbTransactionManager;
         this.dbTypeManager = dbTypeManager;
@@ -101,7 +102,8 @@ public class TransactionalDbConnectionFactory implements DbConnectionFactory
 
     protected DbConnection doCreateDbConnection(Connection connection, TransactionalAction transactionalAction)
     {
-        return new DefaultDbConnection(connection, transactionalAction, new DefaultDbConnectionReleaser(this), new GenericParamTypeResolverFactory(dbTypeManager));
+        return new DefaultDbConnection(connection, transactionalAction, new DefaultDbConnectionReleaser(this),
+                new GenericParamTypeResolverFactory(dbTypeManager));
     }
 
     private Connection getConnectionFromTransaction(Transaction tx, DataSource dataSource) throws SQLException

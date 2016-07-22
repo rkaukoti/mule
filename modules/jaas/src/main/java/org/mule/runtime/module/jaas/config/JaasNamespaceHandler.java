@@ -6,14 +6,13 @@
  */
 package org.mule.runtime.module.jaas.config;
 
-import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.NamedDefinitionParser;
 import org.mule.runtime.config.spring.parsers.specific.SecurityFilterDefinitionParser;
+import org.mule.runtime.core.api.config.MuleProperties;
+import org.mule.runtime.core.security.PasswordBasedEncryptionStrategy;
 import org.mule.runtime.module.jaas.JaasSimpleAuthenticationProvider;
 import org.mule.runtime.module.jaas.filters.JaasSecurityFilter;
-import org.mule.runtime.core.security.PasswordBasedEncryptionStrategy;
-
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
 public class JaasNamespaceHandler extends NamespaceHandlerSupport
@@ -22,7 +21,8 @@ public class JaasNamespaceHandler extends NamespaceHandlerSupport
     {
         registerBeanDefinitionParser("security-manager", new NamedDefinitionParser(MuleProperties.OBJECT_SECURITY_MANAGER));
         registerBeanDefinitionParser("security-provider", new ChildDefinitionParser("provider", JaasSimpleAuthenticationProvider.class));
-        registerBeanDefinitionParser("password-encryption-strategy", new ChildDefinitionParser("encryptionStrategy", PasswordBasedEncryptionStrategy.class));
+        registerBeanDefinitionParser("password-encryption-strategy",
+                new ChildDefinitionParser("encryptionStrategy", PasswordBasedEncryptionStrategy.class));
         registerBeanDefinitionParser("jaas-security-filter", new SecurityFilterDefinitionParser(JaasSecurityFilter.class));
     }
 

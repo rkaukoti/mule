@@ -7,7 +7,7 @@
 package org.mule.runtime.core.management.stats;
 
 /**
- * TODO MULE-2233 Pooling functionality has been abstracted out of the SedaService. 
+ * TODO MULE-2233 Pooling functionality has been abstracted out of the SedaService.
  * This class should be updated accordingly.
  */
 @Deprecated

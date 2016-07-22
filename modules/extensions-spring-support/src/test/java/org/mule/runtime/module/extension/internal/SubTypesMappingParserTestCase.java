@@ -6,12 +6,7 @@
  */
 package org.mule.runtime.module.extension.internal;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.runtime.module.extension.internal.config.AbstractConfigParserTestCase;
@@ -33,7 +28,12 @@ import org.mule.test.vegan.extension.VeganExtension;
 
 import java.util.List;
 
-import org.junit.Test;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class SubTypesMappingParserTestCase extends AbstractConfigParserTestCase
 {

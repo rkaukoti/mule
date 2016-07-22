@@ -7,10 +7,7 @@
 
 package org.mule.extension.socket.ssl;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
-
+import org.junit.Test;
 import org.mule.extension.socket.SocketExtensionTestCase;
 import org.mule.extension.socket.api.SocketAttributes;
 import org.mule.runtime.api.message.MuleMessage;
@@ -19,7 +16,9 @@ import org.mule.runtime.core.util.IOUtils;
 import java.io.InputStream;
 import java.security.cert.Certificate;
 
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
 
 /**
  * Test {@link Certificate} are present in {@link SocketAttributes}
@@ -54,8 +53,8 @@ public class SslCertificatesTestCase extends SocketExtensionTestCase
         for (int i = 0; i < numberOfMessages; ++i)
         {
             org.mule.runtime.core.api.MuleMessage muleMessage = flowRunner("ssl-send-and-receive").
-                    withPayload(TEST_STRING).
-                    run().getMessage();
+                                                                                                          withPayload(TEST_STRING).
+                                                                                                          run().getMessage();
 
             String payload = IOUtils.toString((InputStream) muleMessage.getPayload());
             assertThat(payload, is(notNullValue()));

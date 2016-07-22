@@ -23,7 +23,7 @@ public interface SocketAttributes extends Attributes
 {
 
     /**
-     *  @return the port number from which the sender is bounded.
+     * @return the port number from which the sender is bounded.
      */
     int getPort();
 
@@ -44,10 +44,8 @@ public interface SocketAttributes extends Attributes
     Certificate[] getLocalCertificates();
 
     /**
-     * @return  the identity of the peer which was established as part of defining the session.
-     * Note: This method can be used only when using certificate-based cipher suites;
-     * using it with non-certificate-based cipher suites, such as Kerberos,
-     * will be return {@code null}
+     * @return the identity of the peer which was established as part of defining the session. Note: This method can be used only when using
+     * certificate-based cipher suites; using it with non-certificate-based cipher suites, such as Kerberos, will be return {@code null}
      */
     Certificate[] getPeerCertificates();
 }

@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.core.el.context;
 
+import org.apache.commons.collections.keyvalue.DefaultMapEntry;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 
 public abstract class AbstractMapContext<V> implements Map<String, V>
 {

@@ -7,12 +7,10 @@
 package org.mule.runtime.module.http.functional.requester;
 
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
-import org.mule.runtime.core.api.MessagingException;
+import org.eclipse.jetty.server.Request;
+import org.junit.Test;
 import org.mule.functional.junit4.FlowRunner;
+import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.util.concurrent.Latch;
 
 import java.io.IOException;
@@ -22,8 +20,9 @@ import java.util.concurrent.TimeoutException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.Request;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class HttpRequestTimeoutTestCase extends AbstractHttpRequestTestCase
 {

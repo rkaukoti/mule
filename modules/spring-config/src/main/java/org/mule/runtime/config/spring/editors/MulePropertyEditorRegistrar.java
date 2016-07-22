@@ -12,6 +12,8 @@ import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.processor.ProcessingStrategy;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.IOUtils;
+import org.springframework.beans.PropertyEditorRegistrar;
+import org.springframework.beans.PropertyEditorRegistry;
 
 import java.beans.PropertyEditor;
 import java.io.InputStream;
@@ -23,18 +25,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.springframework.beans.PropertyEditorRegistrar;
-import org.springframework.beans.PropertyEditorRegistry;
-
 /**
  * The preferred way to configure property editors in Spring 2/3 is to implement a
  * registrar
  */
 public class MulePropertyEditorRegistrar implements PropertyEditorRegistrar, MuleContextAware
 {
+    private static final String CUSTOM_PROPERTY_EDITOR_RESOURCE_NAME = "META-INF/mule.custom-property-editors";
     private MuleContext muleContext;
     private Map<Class<?>, Class<PropertyEditor>> customPropertyEditorsCache;
-    private static final String CUSTOM_PROPERTY_EDITOR_RESOURCE_NAME = "META-INF/mule.custom-property-editors";
 
     @Override
     public void setMuleContext(MuleContext context)
@@ -46,8 +45,9 @@ public class MulePropertyEditorRegistrar implements PropertyEditorRegistrar, Mul
     public void registerCustomEditors(PropertyEditorRegistry registry)
     {
         registry.registerCustomEditor(MessageExchangePattern.class,
-            new MessageExchangePatternPropertyEditor());
-        registry.registerCustomEditor(Date.class, new DatePropertyEditor(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"), new SimpleDateFormat("yyyy-MM-dd"), true));
+                new MessageExchangePatternPropertyEditor());
+        registry.registerCustomEditor(Date.class,
+                new DatePropertyEditor(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"), new SimpleDateFormat("yyyy-MM-dd"), true));
         registry.registerCustomEditor(ProcessingStrategy.class, new ProcessingStrategyEditor());
 
         if (customPropertyEditorsCache == null)

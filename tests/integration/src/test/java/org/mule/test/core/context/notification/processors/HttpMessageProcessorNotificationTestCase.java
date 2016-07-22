@@ -6,23 +6,23 @@
  */
 package org.mule.test.core.context.notification.processors;
 
-import static org.junit.Assert.assertNotNull;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.mule.runtime.config.spring.util.ProcessingStrategyUtils;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.runtime.core.api.config.MuleProperties;
-import org.mule.runtime.config.spring.util.ProcessingStrategyUtils;
-import org.mule.test.core.context.notification.Node;
-import org.mule.test.core.context.notification.RestrictedNode;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.tck.junit4.rule.SystemProperty;
+import org.mule.test.core.context.notification.Node;
+import org.mule.test.core.context.notification.RestrictedNode;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.Rule;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(Parameterized.class)
 public class HttpMessageProcessorNotificationTestCase extends AbstractMessageProcessorNotificationTestCase
@@ -40,7 +40,7 @@ public class HttpMessageProcessorNotificationTestCase extends AbstractMessagePro
         if (nonBlocking)
         {
             systemProperty = new SystemProperty(MuleProperties.MULE_DEFAULT_PROCESSING_STRATEGY,
-                                                ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
+                    ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
         }
     }
 

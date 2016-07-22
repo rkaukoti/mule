@@ -6,10 +6,8 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.functional.matcher.HttpMessageAttributesMatchers.hasStatusCode;
+import org.eclipse.jetty.server.Request;
+import org.junit.Test;
 import org.mule.extension.http.api.HttpResponseAttributes;
 import org.mule.runtime.core.api.MuleMessage;
 
@@ -18,8 +16,10 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.Request;
-import org.junit.Test;
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.functional.matcher.HttpMessageAttributesMatchers.hasStatusCode;
 
 public class HttpRequest401TestCase extends AbstractHttpRequestTestCase
 {

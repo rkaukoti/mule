@@ -20,7 +20,8 @@ public class TcpSocketFactory extends AbstractTcpSocketFactory
     {
         Socket socket = new Socket();
 
-        int timeout = getConnectionTimeout() != Connector.INT_VALUE_NOT_SET ? getConnectionTimeout() : key.getEndpoint().getResponseTimeout();
+        int timeout =
+                getConnectionTimeout() != Connector.INT_VALUE_NOT_SET ? getConnectionTimeout() : key.getEndpoint().getResponseTimeout();
 
         socket.connect(new InetSocketAddress(key.getInetAddress(), key.getPort()), timeout);
         return socket;

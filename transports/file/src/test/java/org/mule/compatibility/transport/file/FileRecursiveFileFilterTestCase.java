@@ -6,7 +6,6 @@
  */
 package org.mule.compatibility.transport.file;
 
-import org.mule.compatibility.transport.file.FileConnector;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.routing.filter.Filter;
 
@@ -22,7 +21,7 @@ public class FileRecursiveFileFilterTestCase extends AbstractFileRecursiveFilter
         return "file-recursive-file-filter-config.xml";
     }
 
-    public static class TxtFileFilter implements Filter,FileFilter
+    public static class TxtFileFilter implements Filter, FileFilter
     {
 
         @Override

@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.module.launcher;
 
-import static java.util.Arrays.asList;
-import static java.util.Arrays.sort;
-import static org.mule.runtime.core.api.config.MuleProperties.SYSTEM_PROPERTY_PREFIX;
-import static org.mule.runtime.module.launcher.MuleFoldersUtil.getUserLibFolder;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.agent.Agent;
 import org.mule.runtime.core.config.MuleManifest;
@@ -28,6 +24,11 @@ import java.util.Map;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
+import static java.util.Arrays.asList;
+import static java.util.Arrays.sort;
+import static org.mule.runtime.core.api.config.MuleProperties.SYSTEM_PROPERTY_PREFIX;
+import static org.mule.runtime.module.launcher.MuleFoldersUtil.getUserLibFolder;
+
 public class MuleContainerStartupSplashScreen extends SplashScreen
 {
     public void doBody()
@@ -41,8 +42,8 @@ public class MuleContainerStartupSplashScreen extends SplashScreen
         {
             doBody(StringUtils.defaultString(MuleManifest.getProductDescription(), notset));
             doBody(String.format("%s Build: %s",
-                                 CoreMessages.version().getMessage(),
-                                 StringUtils.defaultString(MuleManifest.getBuildNumber(), notset)));
+                    CoreMessages.version().getMessage(),
+                    StringUtils.defaultString(MuleManifest.getBuildNumber(), notset)));
 
             doBody(StringUtils.defaultString(MuleManifest.getVendorName(), notset));
             doBody(StringUtils.defaultString(MuleManifest.getProductMoreInfo(), notset));
@@ -57,16 +58,16 @@ public class MuleContainerStartupSplashScreen extends SplashScreen
         doBody(CoreMessages.serverStartedAt(System.currentTimeMillis()).getMessage());
 
         doBody(String.format("JDK: %s (%s)",
-                             System.getProperty("java.version"),
-                             System.getProperty("java.vm.info")));
+                System.getProperty("java.version"),
+                System.getProperty("java.vm.info")));
 
         String patch = System.getProperty("sun.os.patch.level", null);
 
         doBody(String.format("OS: %s%s (%s, %s)",
-                             System.getProperty("os.name"),
-                             (patch != null && !"unknown".equalsIgnoreCase(patch) ? " - " + patch : ""),
-                             System.getProperty("os.version"),
-                             System.getProperty("os.arch")));
+                System.getProperty("os.name"),
+                (patch != null && !"unknown".equalsIgnoreCase(patch) ? " - " + patch : ""),
+                System.getProperty("os.version"),
+                System.getProperty("os.arch")));
         try
         {
             InetAddress host = NetworkUtils.getLocalHost();
@@ -102,8 +103,8 @@ public class MuleContainerStartupSplashScreen extends SplashScreen
     {
         Map<String, String> muleProperties = new HashMap<>();
         System.getProperties().stringPropertyNames().stream()
-                .filter(property -> property.startsWith(SYSTEM_PROPERTY_PREFIX))
-                .forEach(property -> muleProperties.put(property, System.getProperty(property)));
+              .filter(property -> property.startsWith(SYSTEM_PROPERTY_PREFIX))
+              .forEach(property -> muleProperties.put(property, System.getProperty(property)));
         listItems(muleProperties, "Mule system properties:");
     }
 
@@ -120,7 +121,7 @@ public class MuleContainerStartupSplashScreen extends SplashScreen
         if (agents.size() == 0)
         {
             footer.add(CoreMessages.agentsRunning().getMessage() + " "
-                    + CoreMessages.none().getMessage());
+                       + CoreMessages.none().getMessage());
         }
         else
         {

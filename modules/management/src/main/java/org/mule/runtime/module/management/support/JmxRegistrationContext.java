@@ -10,7 +10,6 @@ import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.notification.MuleContextNotificationListener;
 import org.mule.runtime.core.context.notification.MuleContextNotification;
 import org.mule.runtime.core.context.notification.NotificationException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,20 +27,20 @@ import org.slf4j.LoggerFactory;
 public class JmxRegistrationContext
 {
     /**
-     * The logger used for this class
-     */
-    private final transient Logger logger = LoggerFactory.getLogger(getClass());
-
-    /**
      * Normally ThreadLocal is fine, as Mule is being initialised and destroyed
      * by a single thread. We only need to share this info between random agents
      * during startup.
      */
     private static final ThreadLocal<JmxRegistrationContext> contexts = new ThreadLocal<JmxRegistrationContext>();
-
+    /**
+     * The logger used for this class
+     */
+    private final transient Logger logger = LoggerFactory.getLogger(getClass());
     private String resolvedDomain;
 
-    /** Do not instantiate JmxRegistrationContext. */
+    /**
+     * Do not instantiate JmxRegistrationContext.
+     */
     private JmxRegistrationContext(MuleContext context)
     {
         try
@@ -63,7 +62,7 @@ public class JmxRegistrationContext
                     }
                 }
             });
-        } 
+        }
         catch (NotificationException e)
         {
             logger.warn("Did not cleanup properly.", e);
@@ -72,6 +71,7 @@ public class JmxRegistrationContext
 
     /**
      * Get current context or create one if none exist for the current startup cycle.
+     *
      * @return jmx registration context
      */
     public static JmxRegistrationContext getCurrent(MuleContext context)

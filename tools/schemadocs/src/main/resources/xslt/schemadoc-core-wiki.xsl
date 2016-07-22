@@ -1,9 +1,9 @@
 <xsl:stylesheet
-        version="2.0"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
         xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
-        >
+        version="2.0"
+>
 
     <!-- the base path mapping for snippet URLS.  These are configured in the Confluence Snippet macro -->
     <xsl:param name="snippetBase"/>
@@ -19,8 +19,8 @@
     <xsl:variable name="fullParentSchema0">
         <xsl:choose>
             <xsl:when test="$parentSchemaBase">
-                <xsl:value-of 
-                     select="concat($parentSchemaBase, '/modules/spring-config/src/main/resources/META-INF/mule.xsd')"/>
+                <xsl:value-of
+                        select="concat($parentSchemaBase, '/modules/spring-config/src/main/resources/META-INF/mule.xsd')"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="''"/>
@@ -30,8 +30,8 @@
     <xsl:variable name="fullParentSchema1">
         <xsl:choose>
             <xsl:when test="$parentSchemaBase and $parentSchema1">
-                <xsl:value-of 
-                     select="concat($parentSchemaBase, '/', $parentSchema1)"/>
+                <xsl:value-of
+                        select="concat($parentSchemaBase, '/', $parentSchema1)"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="$parentSchema1"/>
@@ -41,8 +41,8 @@
     <xsl:variable name="fullParentSchema2">
         <xsl:choose>
             <xsl:when test="$parentSchemaBase and $parentSchema2">
-                <xsl:value-of 
-                     select="concat($parentSchemaBase, '/', $parentSchema2)"/>
+                <xsl:value-of
+                        select="concat($parentSchemaBase, '/', $parentSchema2)"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="$parentSchema2"/>
@@ -52,8 +52,8 @@
     <xsl:variable name="fullParentSchema3">
         <xsl:choose>
             <xsl:when test="$parentSchemaBase and $parentSchema3">
-                <xsl:value-of 
-                     select="concat($parentSchemaBase, '/', $parentSchema3)"/>
+                <xsl:value-of
+                        select="concat($parentSchemaBase, '/', $parentSchema3)"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="$parentSchema3"/>
@@ -63,8 +63,8 @@
     <xsl:variable name="fullParentSchema4">
         <xsl:choose>
             <xsl:when test="$parentSchemaBase and $parentSchema4">
-                <xsl:value-of 
-                     select="concat($parentSchemaBase, '/', $parentSchema4)"/>
+                <xsl:value-of
+                        select="concat($parentSchemaBase, '/', $parentSchema4)"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="$parentSchema4"/>
@@ -74,8 +74,8 @@
     <xsl:variable name="fullParentSchema5">
         <xsl:choose>
             <xsl:when test="$parentSchemaBase and $parentSchema5">
-                <xsl:value-of 
-                     select="concat($parentSchemaBase, '/', $parentSchema5)"/>
+                <xsl:value-of
+                        select="concat($parentSchemaBase, '/', $parentSchema5)"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="$parentSchema5"/>
@@ -111,10 +111,14 @@
         <xsl:value-of select="$topstyle"/><xsl:value-of select="$t"/>
         <xsl:value-of select="xsd:annotation/xsd:documentation"/>
 
-        <xsl:variable name="type"><xsl:value-of select="@type"/> </xsl:variable>
+        <xsl:variable name="type">
+            <xsl:value-of select="@type"/>
+        </xsl:variable>
 
         <xsl:apply-templates select="//xsd:complexType[@name=$type]" mode="table">
-            <xsl:with-param name="name"><xsl:value-of select="@name"/> </xsl:with-param>
+            <xsl:with-param name="name">
+                <xsl:value-of select="@name"/>
+            </xsl:with-param>
         </xsl:apply-templates>
 
         <xsl:if test="@type">
@@ -310,13 +314,14 @@
         </xsl:variable>
         <xsl:variable name="doc">
             <xsl:if test="xsd:annotation/xsd:documentation/text()|xsd:annotation/xsd:documentation/*">
-                        <xsl:apply-templates
-                                select="xsd:annotation/xsd:documentation/*|xsd:annotation/xsd:documentation/text()"
-                                mode="copy"/>
-                </xsl:if>
+                <xsl:apply-templates
+                        select="xsd:annotation/xsd:documentation/*|xsd:annotation/xsd:documentation/text()"
+                        mode="copy"/>
+            </xsl:if>
             <!-- leave this line as-is -->
-        </xsl:variable>|<xsl:value-of select="@name"/> |<xsl:value-of select="$type"/> |<xsl:value-of select="$required"/> |<xsl:value-of select="$default"/> |<xsl:value-of select="normalize-space($doc)"/>|
-        </xsl:template>
+        </xsl:variable>
+        |<xsl:value-of select="@name"/> |<xsl:value-of select="$type"/> |<xsl:value-of select="$required"/> |<xsl:value-of select="$default"/> |<xsl:value-of select="normalize-space($doc)"/>|
+    </xsl:template>
 
 
     <xsl:template match="xsd:element" mode="attributes">
@@ -350,9 +355,9 @@
 
         <xsl:if test="$parentSchema">
             <xsl:if test="document($parentSchema)/*/@targetNamespace=$typeNamespace">
-                <xsl:apply-templates 
-                     select="document($parentSchema)/xsd:schema/xsd:complexType[@name=$typeLocalName]" 
-                     mode="attributes"/>
+                <xsl:apply-templates
+                        select="document($parentSchema)/xsd:schema/xsd:complexType[@name=$typeLocalName]"
+                        mode="attributes"/>
             </xsl:if>
         </xsl:if>
     </xsl:template>
@@ -363,9 +368,9 @@
         <xsl:param name="typeNamespace"/>
         <xsl:if test="$parentSchema">
             <xsl:if test="document($parentSchema)/*/@targetNamespace=$typeNamespace">
-                <xsl:apply-templates 
-                     select="document($parentSchema)/xsd:schema/xsd:complexType[@name=$typeLocalName]" 
-                     mode="elements"/>
+                <xsl:apply-templates
+                        select="document($parentSchema)/xsd:schema/xsd:complexType[@name=$typeLocalName]"
+                        mode="elements"/>
             </xsl:if>
         </xsl:if>
     </xsl:template>
@@ -404,8 +409,8 @@
         <xsl:variable name="local">
             <xsl:choose>
                 <xsl:when test="contains($base, ':')">
-                    <xsl:value-of 
-                      select="substring-after($base, ':')"/>
+                    <xsl:value-of
+                            select="substring-after($base, ':')"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$base"/>
@@ -415,8 +420,8 @@
         <xsl:variable name="itemNs">
             <xsl:choose>
                 <xsl:when test="$prefix">
-                    <xsl:value-of 
-                      select="$topElement/namespace::*[local-name()=$prefix]"/>
+                    <xsl:value-of
+                            select="$topElement/namespace::*[local-name()=$prefix]"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$schemaNs"/>
@@ -426,35 +431,35 @@
         <xsl:if test="/*/@targetNamespace=$itemNs">
             <xsl:apply-templates select="/xsd:schema/xsd:complexType[@name=$base]" mode="attributes"/>
         </xsl:if>
-        <xsl:call-template name ="attributes-from-parent-schema">
-            <xsl:with-param name="parentSchema" select="$fullParentSchema0"/> 
-            <xsl:with-param name="typeLocalName" select="$local"/> 
-            <xsl:with-param name="typeNamespace" select="$itemNs"/> 
+        <xsl:call-template name="attributes-from-parent-schema">
+            <xsl:with-param name="parentSchema" select="$fullParentSchema0"/>
+            <xsl:with-param name="typeLocalName" select="$local"/>
+            <xsl:with-param name="typeNamespace" select="$itemNs"/>
         </xsl:call-template>
-        <xsl:call-template name ="attributes-from-parent-schema">
-            <xsl:with-param name="parentSchema" select="$fullParentSchema1"/> 
-            <xsl:with-param name="typeLocalName" select="$local"/> 
-            <xsl:with-param name="typeNamespace" select="$itemNs"/> 
+        <xsl:call-template name="attributes-from-parent-schema">
+            <xsl:with-param name="parentSchema" select="$fullParentSchema1"/>
+            <xsl:with-param name="typeLocalName" select="$local"/>
+            <xsl:with-param name="typeNamespace" select="$itemNs"/>
         </xsl:call-template>
-        <xsl:call-template name ="attributes-from-parent-schema">
-            <xsl:with-param name="parentSchema" select="$fullParentSchema2"/> 
-            <xsl:with-param name="typeLocalName" select="$local"/> 
-            <xsl:with-param name="typeNamespace" select="$itemNs"/> 
+        <xsl:call-template name="attributes-from-parent-schema">
+            <xsl:with-param name="parentSchema" select="$fullParentSchema2"/>
+            <xsl:with-param name="typeLocalName" select="$local"/>
+            <xsl:with-param name="typeNamespace" select="$itemNs"/>
         </xsl:call-template>
-        <xsl:call-template name ="attributes-from-parent-schema">
-            <xsl:with-param name="parentSchema" select="$fullParentSchema3"/> 
-            <xsl:with-param name="typeLocalName" select="$local"/> 
-            <xsl:with-param name="typeNamespace" select="$itemNs"/> 
+        <xsl:call-template name="attributes-from-parent-schema">
+            <xsl:with-param name="parentSchema" select="$fullParentSchema3"/>
+            <xsl:with-param name="typeLocalName" select="$local"/>
+            <xsl:with-param name="typeNamespace" select="$itemNs"/>
         </xsl:call-template>
-        <xsl:call-template name ="attributes-from-parent-schema">
-            <xsl:with-param name="parentSchema" select="$fullParentSchema4"/> 
-            <xsl:with-param name="typeLocalName" select="$local"/> 
-            <xsl:with-param name="typeNamespace" select="$itemNs"/> 
+        <xsl:call-template name="attributes-from-parent-schema">
+            <xsl:with-param name="parentSchema" select="$fullParentSchema4"/>
+            <xsl:with-param name="typeLocalName" select="$local"/>
+            <xsl:with-param name="typeNamespace" select="$itemNs"/>
         </xsl:call-template>
-        <xsl:call-template name ="attributes-from-parent-schema">
-            <xsl:with-param name="parentSchema" select="$fullParentSchema5"/> 
-            <xsl:with-param name="typeLocalName" select="$local"/> 
-            <xsl:with-param name="typeNamespace" select="$itemNs"/> 
+        <xsl:call-template name="attributes-from-parent-schema">
+            <xsl:with-param name="parentSchema" select="$fullParentSchema5"/>
+            <xsl:with-param name="typeLocalName" select="$local"/>
+            <xsl:with-param name="typeNamespace" select="$itemNs"/>
         </xsl:call-template>
         <xsl:call-template name="attribute-children"/>
     </xsl:template>
@@ -486,11 +491,12 @@
         <xsl:variable name="ref" select="@ref"/>
         <xsl:variable name="doc">
             <xsl:apply-templates select="." mode="elements-doc"/>
-                <xsl:apply-templates
-                        select="/xsd:schema/xsd:element[@name=$ref]" mode="elements-doc"/>
-                <xsl:apply-templates
-                        select="/xsd:schema/xsd:element[@name=$ref]" mode="elements-abstract"/>
-        </xsl:variable>|<xsl:value-of select="@ref"/> |<xsl:value-of select="$min"/>..<xsl:value-of select="$max"/> |<xsl:value-of select="normalize-space($doc)"/> |
+            <xsl:apply-templates
+                    select="/xsd:schema/xsd:element[@name=$ref]" mode="elements-doc"/>
+            <xsl:apply-templates
+                    select="/xsd:schema/xsd:element[@name=$ref]" mode="elements-abstract"/>
+        </xsl:variable>
+        |<xsl:value-of select="@ref"/> |<xsl:value-of select="$min"/>..<xsl:value-of select="$max"/> |<xsl:value-of select="normalize-space($doc)"/> |
     </xsl:template>
 
     <xsl:template match="xsd:element[contains(@name, ':abstract-')]"
@@ -522,7 +528,8 @@
 
     <xsl:template match="xsd:element[@name]" mode="elements-list">
         <!--element (list) <xsl:value-of select="@name"/>-->
-          * <xsl:call-template name="link">
+        *
+        <xsl:call-template name="link">
             <xsl:with-param name="item">
                 <xsl:value-of select="@name"/>
             </xsl:with-param>
@@ -583,7 +590,8 @@
         <xsl:variable name="ref" select="@ref"/>
         <xsl:variable name="doc">
             <xsl:apply-templates select="." mode="elements-doc"/>
-        </xsl:variable>| <xsl:value-of select="@name"/>| <xsl:value-of select="$min"/>..<xsl:value-of select="$max"/>| <xsl:value-of select="normalize-space($doc)"/>|
+        </xsl:variable>
+        | <xsl:value-of select="@name"/>| <xsl:value-of select="$min"/>..<xsl:value-of select="$max"/>| <xsl:value-of select="normalize-space($doc)"/>|
     </xsl:template>
 
     <xsl:template match="xsd:group" mode="elements">
@@ -631,8 +639,8 @@
         <xsl:variable name="local">
             <xsl:choose>
                 <xsl:when test="contains($base, ':')">
-                    <xsl:value-of 
-                      select="substring-after($base, ':')"/>
+                    <xsl:value-of
+                            select="substring-after($base, ':')"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$base"/>
@@ -642,8 +650,8 @@
         <xsl:variable name="itemNs">
             <xsl:choose>
                 <xsl:when test="$prefix">
-                    <xsl:value-of 
-                      select="$topElement/namespace::*[local-name()=$prefix]"/>
+                    <xsl:value-of
+                            select="$topElement/namespace::*[local-name()=$prefix]"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$schemaNs"/>
@@ -654,35 +662,35 @@
         <xsl:if test="/*/@targetNamespace=$itemNs">
             <xsl:apply-templates select="/xsd:schema/xsd:complexType[@name=$base]" mode="elements"/>
         </xsl:if>
-        <xsl:call-template name ="elements-from-parent-schema">
-            <xsl:with-param name="parentSchema" select="$fullParentSchema0"/> 
-            <xsl:with-param name="typeLocalName" select="$local"/> 
-            <xsl:with-param name="typeNamespace" select="$itemNs"/> 
+        <xsl:call-template name="elements-from-parent-schema">
+            <xsl:with-param name="parentSchema" select="$fullParentSchema0"/>
+            <xsl:with-param name="typeLocalName" select="$local"/>
+            <xsl:with-param name="typeNamespace" select="$itemNs"/>
         </xsl:call-template>
-        <xsl:call-template name ="elements-from-parent-schema">
-            <xsl:with-param name="parentSchema" select="$fullParentSchema1"/> 
-            <xsl:with-param name="typeLocalName" select="$local"/> 
-            <xsl:with-param name="typeNamespace" select="$itemNs"/> 
+        <xsl:call-template name="elements-from-parent-schema">
+            <xsl:with-param name="parentSchema" select="$fullParentSchema1"/>
+            <xsl:with-param name="typeLocalName" select="$local"/>
+            <xsl:with-param name="typeNamespace" select="$itemNs"/>
         </xsl:call-template>
-        <xsl:call-template name ="elements-from-parent-schema">
-            <xsl:with-param name="parentSchema" select="$fullParentSchema2"/> 
-            <xsl:with-param name="typeLocalName" select="$local"/> 
-            <xsl:with-param name="typeNamespace" select="$itemNs"/> 
+        <xsl:call-template name="elements-from-parent-schema">
+            <xsl:with-param name="parentSchema" select="$fullParentSchema2"/>
+            <xsl:with-param name="typeLocalName" select="$local"/>
+            <xsl:with-param name="typeNamespace" select="$itemNs"/>
         </xsl:call-template>
-        <xsl:call-template name ="elements-from-parent-schema">
-            <xsl:with-param name="parentSchema" select="$fullParentSchema3"/> 
-            <xsl:with-param name="typeLocalName" select="$local"/> 
-            <xsl:with-param name="typeNamespace" select="$itemNs"/> 
+        <xsl:call-template name="elements-from-parent-schema">
+            <xsl:with-param name="parentSchema" select="$fullParentSchema3"/>
+            <xsl:with-param name="typeLocalName" select="$local"/>
+            <xsl:with-param name="typeNamespace" select="$itemNs"/>
         </xsl:call-template>
-        <xsl:call-template name ="elements-from-parent-schema">
-            <xsl:with-param name="parentSchema" select="$fullParentSchema4"/> 
-            <xsl:with-param name="typeLocalName" select="$local"/> 
-            <xsl:with-param name="typeNamespace" select="$itemNs"/> 
+        <xsl:call-template name="elements-from-parent-schema">
+            <xsl:with-param name="parentSchema" select="$fullParentSchema4"/>
+            <xsl:with-param name="typeLocalName" select="$local"/>
+            <xsl:with-param name="typeNamespace" select="$itemNs"/>
         </xsl:call-template>
-        <xsl:call-template name ="elements-from-parent-schema">
-            <xsl:with-param name="parentSchema" select="$fullParentSchema5"/> 
-            <xsl:with-param name="typeLocalName" select="$local"/> 
-            <xsl:with-param name="typeNamespace" select="$itemNs"/> 
+        <xsl:call-template name="elements-from-parent-schema">
+            <xsl:with-param name="parentSchema" select="$fullParentSchema5"/>
+            <xsl:with-param name="typeLocalName" select="$local"/>
+            <xsl:with-param name="typeNamespace" select="$itemNs"/>
         </xsl:call-template>
         <xsl:call-template name="element-children"/>
         <!--extension done-->
@@ -693,10 +701,10 @@
 
     <xsl:template match="xsd:element[@substitutionGroup]" mode="substitution">
         <xsl:variable name="sub" select="@substitutionGroup"/>
-            This element can be used as a substitute for
-            &lt;
-            <xsl:value-of select="$sub"/>
-            ...&gt;
+        This element can be used as a substitute for
+        &lt;
+        <xsl:value-of select="$sub"/>
+        ...&gt;
         <xsl:apply-templates
                 select="/xsd:schema/xsd:element[@name=$sub]" mode="documentation"/>
     </xsl:template>

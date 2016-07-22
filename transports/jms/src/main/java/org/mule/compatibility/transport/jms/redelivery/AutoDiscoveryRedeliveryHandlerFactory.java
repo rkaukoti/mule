@@ -9,15 +9,14 @@ package org.mule.compatibility.transport.jms.redelivery;
 import org.mule.compatibility.transport.jms.JmsConnector;
 import org.mule.compatibility.transport.jms.JmsConstants;
 import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Enumeration;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.jms.ConnectionMetaData;
 import javax.jms.JMSException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This factory will consult JMS connection metadata for supported optional properties and use

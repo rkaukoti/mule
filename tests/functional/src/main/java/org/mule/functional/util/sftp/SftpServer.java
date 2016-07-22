@@ -6,12 +6,6 @@
  */
 package org.mule.functional.util.sftp;
 
-import static java.util.Arrays.asList;
-
-import java.io.File;
-import java.io.IOException;
-import java.security.Security;
-
 import org.apache.sshd.server.SshServer;
 import org.apache.sshd.server.auth.password.PasswordAuthenticator;
 import org.apache.sshd.server.command.ScpCommandFactory;
@@ -19,6 +13,12 @@ import org.apache.sshd.server.keyprovider.SimpleGeneratorHostKeyProvider;
 import org.apache.sshd.server.shell.ProcessShellFactory;
 import org.apache.sshd.server.subsystem.sftp.SftpSubsystemFactory;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
+import java.io.File;
+import java.io.IOException;
+import java.security.Security;
+
+import static java.util.Arrays.asList;
 
 public class SftpServer
 {
@@ -37,6 +37,11 @@ public class SftpServer
         configureSshdServer(factory, passwordAuthenticator());
     }
 
+    private static PasswordAuthenticator passwordAuthenticator()
+    {
+        return (arg0, arg1, arg2) -> USERNAME.equals(arg0) && PASSWORD.equals(arg1);
+    }
+
     public void setPasswordAuthenticator(PasswordAuthenticator passwordAuthenticator)
     {
         sshdServer.setPasswordAuthenticator(passwordAuthenticator);
@@ -52,19 +57,14 @@ public class SftpServer
         sshdServer.setPasswordAuthenticator(passwordAuthenticator);
     }
 
-        private SftpSubsystemFactory createFtpSubsystemFactory()
-        {
-            return new SftpSubsystemFactory();
-        }
+    private SftpSubsystemFactory createFtpSubsystemFactory()
+    {
+        return new SftpSubsystemFactory();
+    }
 
     private void configureSecurityProvider()
     {
         Security.addProvider(new BouncyCastleProvider());
-    }
-
-    private static PasswordAuthenticator passwordAuthenticator()
-    {
-        return (arg0, arg1, arg2) -> USERNAME.equals(arg0) && PASSWORD.equals(arg1);
     }
 
     public void start()

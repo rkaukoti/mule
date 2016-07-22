@@ -6,12 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.checkInstantiable;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getAlias;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getExposedFields;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getParameterGroupFields;
-
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.extension.api.annotation.Parameter;
 import org.mule.runtime.extension.api.annotation.ParameterGroup;
@@ -22,6 +16,12 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.checkInstantiable;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getAlias;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getExposedFields;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getParameterGroupFields;
 
 /**
  * Resolves arguments annotated with {@link ParameterGroup} in a {@link ReflectiveMethodOperationExecutor}.

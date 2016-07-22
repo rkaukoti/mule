@@ -105,7 +105,7 @@ public class SslMessageReceiver extends TcpMessageReceiver implements HandshakeC
             }
             catch (SSLPeerUnverifiedException e)
             {
-                logger.debug("Cannot get peer certificate chain: "+ e.getMessage());
+                logger.debug("Cannot get peer certificate chain: " + e.getMessage());
             }
         }
         finally

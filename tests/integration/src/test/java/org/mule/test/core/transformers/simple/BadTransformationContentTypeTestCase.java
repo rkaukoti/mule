@@ -6,9 +6,8 @@
  */
 package org.mule.test.core.transformers.simple;
 
-import org.mule.functional.junit4.FunctionalTestCase;
-
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.springframework.beans.factory.BeanCreationException;
 
 public class BadTransformationContentTypeTestCase extends FunctionalTestCase

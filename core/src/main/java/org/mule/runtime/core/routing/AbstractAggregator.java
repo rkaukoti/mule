@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.routing;
 
+import org.apache.commons.collections.Factory;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleContext;
@@ -36,8 +37,6 @@ import org.mule.runtime.core.util.store.DefaultObjectStoreFactoryBean;
 import org.mule.runtime.core.util.store.ProvidedObjectStoreWrapper;
 import org.mule.runtime.core.util.store.ProvidedPartitionableObjectStoreWrapper;
 
-import org.apache.commons.collections.Factory;
-
 /**
  * <code>AbstractEventAggregator</code> will aggregate a set of messages into a
  * single message. <b>EIP Reference:</b> <a
@@ -46,7 +45,7 @@ import org.apache.commons.collections.Factory;
  */
 
 public abstract class AbstractAggregator extends AbstractInterceptingMessageProcessor
-    implements Initialisable, MuleContextAware, FlowConstructAware, Aggregator, Startable, Stoppable, Disposable
+        implements Initialisable, MuleContextAware, FlowConstructAware, Aggregator, Startable, Stoppable, Disposable
 {
 
     public static final int MAX_PROCESSED_GROUPS = 50000;
@@ -56,17 +55,13 @@ public abstract class AbstractAggregator extends AbstractInterceptingMessageProc
     protected MuleContext muleContext;
     protected FlowConstruct flowConstruct;
     protected MessageInfoMapping messageInfoMapping;
-
-    private long timeout = 0;
-    private boolean failOnTimeout = true;
-
-    private ObjectStore<Long> processedGroupsObjectStore;
-    private PartitionableObjectStore eventGroupsObjectStore;
-
     protected boolean persistentStores;
     protected String storePrefix = null;
-
     protected String eventsObjectStoreKey;
+    private long timeout = 0;
+    private boolean failOnTimeout = true;
+    private ObjectStore<Long> processedGroupsObjectStore;
+    private PartitionableObjectStore eventGroupsObjectStore;
 
     @Override
     public void initialise() throws InitialisationException
@@ -78,7 +73,7 @@ public abstract class AbstractAggregator extends AbstractInterceptingMessageProc
         if (storePrefix == null)
         {
             storePrefix = String.format("%s%s.%s.", ThreadNameHelper.getPrefix(muleContext),
-                flowConstruct.getName(), this.getClass().getName());
+                    flowConstruct.getName(), this.getClass().getName());
         }
 
         initProcessedGroupsObjectStore();
@@ -107,7 +102,8 @@ public abstract class AbstractAggregator extends AbstractInterceptingMessageProc
             public Object create()
             {
                 ObjectStoreManager objectStoreManager = muleContext.getRegistry().get(MuleProperties.OBJECT_STORE_MANAGER);
-                return objectStoreManager.getObjectStore(storePrefix + ".processedGroups", persistentStores, MAX_PROCESSED_GROUPS, -1, 1000);
+                return objectStoreManager.getObjectStore(storePrefix + ".processedGroups", persistentStores, MAX_PROCESSED_GROUPS, -1,
+                        1000);
             }
         };
     }
@@ -141,11 +137,15 @@ public abstract class AbstractAggregator extends AbstractInterceptingMessageProc
                     ObjectStore objectStore;
                     if (persistentStores)
                     {
-                        objectStore = muleContext.getRegistry().lookupObject(DefaultObjectStoreFactoryBean.class).createDefaultPersistentObjectStore();
+                        objectStore = muleContext.getRegistry()
+                                                 .lookupObject(DefaultObjectStoreFactoryBean.class)
+                                                 .createDefaultPersistentObjectStore();
                     }
                     else
                     {
-                        objectStore = muleContext.getRegistry().lookupObject(DefaultObjectStoreFactoryBean.class).createDefaultInMemoryObjectStore();
+                        objectStore = muleContext.getRegistry()
+                                                 .lookupObject(DefaultObjectStoreFactoryBean.class)
+                                                 .createDefaultInMemoryObjectStore();
                     }
                     if (objectStore instanceof MuleContextAware)
                     {
@@ -236,12 +236,14 @@ public abstract class AbstractAggregator extends AbstractInterceptingMessageProc
 
     public void setProcessedGroupsObjectStore(ObjectStore<Long> processedGroupsObjectStore)
     {
-        this.processedGroupsObjectStore = new ProvidedObjectStoreWrapper<>(processedGroupsObjectStore, internalProcessedGroupsObjectStoreFactory());
+        this.processedGroupsObjectStore =
+                new ProvidedObjectStoreWrapper<>(processedGroupsObjectStore, internalProcessedGroupsObjectStoreFactory());
     }
 
     public void setEventGroupsObjectStore(PartitionableObjectStore<MuleEvent> eventGroupsObjectStore)
     {
-        this.eventGroupsObjectStore = new ProvidedPartitionableObjectStoreWrapper<>(eventGroupsObjectStore, internalEventsGroupsObjectStoreFactory());
+        this.eventGroupsObjectStore =
+                new ProvidedPartitionableObjectStoreWrapper<>(eventGroupsObjectStore, internalEventsGroupsObjectStoreFactory());
     }
 
     public boolean isPersistentStores()

@@ -6,13 +6,14 @@
  */
 package org.mule.runtime.module.extension.internal.config.dsl.object;
 
-import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
 import org.mule.metadata.api.model.MetadataType;
 import org.mule.runtime.extension.xml.dsl.api.DslElementDeclaration;
 import org.mule.runtime.module.extension.internal.runtime.resolver.StaticValueResolver;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ValueResolver;
 
 import java.nio.charset.Charset;
+
+import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
 
 /**
  * A {@link ValueResolverParsingDelegate} for parsing instances of {@link Charset}
@@ -35,7 +36,7 @@ public class CharsetValueResolverParsingDelegate implements ValueResolverParsing
     /**
      * @param key          the parsed entity key
      * @param metadataType a {@link MetadataType}
-     * @param elementDsl the {@link DslElementDeclaration} of the parsed element
+     * @param elementDsl   the {@link DslElementDeclaration} of the parsed element
      * @return A {@link ValueResolver} which resolves to the {@link Charset} corresponding with the given {@code key}
      */
     @Override

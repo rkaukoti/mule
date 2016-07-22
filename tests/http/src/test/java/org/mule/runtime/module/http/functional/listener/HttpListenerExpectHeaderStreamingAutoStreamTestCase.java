@@ -13,15 +13,15 @@ import org.junit.runners.Parameterized;
 public class HttpListenerExpectHeaderStreamingAutoStreamTestCase extends HttpListenerExpectHeaderStreamingAlwaysTestCase
 {
 
+    public HttpListenerExpectHeaderStreamingAutoStreamTestCase(String persistentConnections)
+    {
+        super(persistentConnections);
+    }
+
     @Override
     protected String getConfigFile()
     {
         return "http-listener-expect-header-streaming-auto-stream-config.xml";
-    }
-
-    public HttpListenerExpectHeaderStreamingAutoStreamTestCase(String persistentConnections)
-    {
-        super(persistentConnections);
     }
 
 }

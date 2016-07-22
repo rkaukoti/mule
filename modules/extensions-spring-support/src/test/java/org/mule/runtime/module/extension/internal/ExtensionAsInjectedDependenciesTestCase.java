@@ -6,9 +6,7 @@
  */
 package org.mule.runtime.module.extension.internal;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.extension.api.runtime.ConfigurationProvider;
@@ -18,7 +16,9 @@ import org.mule.test.heisenberg.extension.HeisenbergExtension;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
 
 public class ExtensionAsInjectedDependenciesTestCase extends ExtensionFunctionalTestCase
 {

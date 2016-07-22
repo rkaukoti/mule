@@ -6,9 +6,8 @@
  */
 package org.mule.compatibility.transport.http.issues;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.functional.StringAppendTestTransformer;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
@@ -16,8 +15,8 @@ import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
 import org.mule.tck.junit4.rule.DynamicPort;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class HttpTransformersMule1815TestCase extends FunctionalTestCase
 {
@@ -51,8 +50,6 @@ public class HttpTransformersMule1815TestCase extends FunctionalTestCase
 
     /**
      * With no transformer we expect just the modification from the FTC
-     *
-     * @throws Exception
      */
     @Test
     public void testBase() throws Exception
@@ -62,8 +59,6 @@ public class HttpTransformersMule1815TestCase extends FunctionalTestCase
 
     /**
      * Adapted model, which should not apply transformers
-     *
-     * @throws Exception
      */
     @Test
     public void testAdapted() throws Exception
@@ -74,28 +69,24 @@ public class HttpTransformersMule1815TestCase extends FunctionalTestCase
     /**
      * Change in behaviour: transformers are now always applied as part of inbound flow even if component doesn't invoke them.
      * was: Transformers on the adapted model should be ignored
-     *
-     * @throws Exception
      */
     @Test
     public void testIgnored() throws Exception
     {
-        assertEquals(OUTBOUND_MESSAGE +" transformed" +" transformed 2" + " Received",
-                     getPayloadAsString(sendTo("ignored")));
+        assertEquals(OUTBOUND_MESSAGE + " transformed" + " transformed 2" + " Received",
+                getPayloadAsString(sendTo("ignored")));
     }
 
     /**
      * But transformers on the base model should be applied
-     *
-     * @throws Exception
      */
     @Test
     public void testInbound() throws Exception
     {
         assertEquals(
-            // this reads backwards - innermost is first in chain
-            StringAppendTestTransformer.append(" transformed 2",
-                StringAppendTestTransformer.appendDefault(OUTBOUND_MESSAGE)) + " Received",
+                // this reads backwards - innermost is first in chain
+                StringAppendTestTransformer.append(" transformed 2",
+                        StringAppendTestTransformer.appendDefault(OUTBOUND_MESSAGE)) + " Received",
                 getPayloadAsString(sendTo("inbound")));
     }
 }

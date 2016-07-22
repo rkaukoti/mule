@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.config.spring.parsers.specific;
 
-import static org.junit.Assert.assertEquals;
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupEndpointBuilder;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.processor.NullMessageProcessor;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupEndpointBuilder;
 
 public class CompositeMessageProcessorDefinitionParserTestCase extends FunctionalTestCase
 {
@@ -33,7 +32,7 @@ public class CompositeMessageProcessorDefinitionParserTestCase extends Functiona
         assertEquals(2, endpoint.getMessageProcessors().size());
 
         MessageProcessor endpointProcessor = endpoint.getMessageProcessorsFactory()
-            .createInboundMessageProcessorChain(endpoint, null, new NullMessageProcessor());
+                                                     .createInboundMessageProcessorChain(endpoint, null, new NullMessageProcessor());
 
         assertEquals("01231abc2", endpointProcessor.process(getTestEvent("0")).getMessageAsString());
     }

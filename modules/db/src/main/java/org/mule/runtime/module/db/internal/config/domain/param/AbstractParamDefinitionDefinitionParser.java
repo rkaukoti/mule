@@ -12,7 +12,6 @@ import org.mule.runtime.config.spring.parsers.generic.AutoIdUtils;
 import org.mule.runtime.module.db.internal.domain.type.DbType;
 import org.mule.runtime.module.db.internal.domain.type.DynamicDbType;
 import org.mule.runtime.module.db.internal.domain.type.UnknownDbType;
-
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.xml.ParserContext;
@@ -26,7 +25,8 @@ public abstract class AbstractParamDefinitionDefinitionParser extends AbstractMu
     public static final String TYPE_ATTRIBUTE = "type";
 
     @Override
-    protected String resolveId(Element element, AbstractBeanDefinition definition, ParserContext context) throws BeanDefinitionStoreException
+    protected String resolveId(Element element, AbstractBeanDefinition definition, ParserContext context)
+            throws BeanDefinitionStoreException
     {
         return getBeanName(element);
     }

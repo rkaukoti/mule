@@ -102,8 +102,8 @@ public abstract class AbstractArgumentEntryPointResolver extends ReflectionEntry
 
             if (method == null)
             {
-                method = ClassUtils.getMethod(component.getClass(), methodName, 
-                    getMethodArgumentTypes(payload));
+                method = ClassUtils.getMethod(component.getClass(), methodName,
+                        getMethodArgumentTypes(payload));
             }
             if (method != null)
             {
@@ -124,15 +124,15 @@ public abstract class AbstractArgumentEntryPointResolver extends ReflectionEntry
                 {
                     InvocationResult result = new InvocationResult(this, InvocationResult.State.FAILED);
                     // too many methods match the payload argument
-                    result.setErrorTooManyMatchingMethods(component, argTypes, 
-                        StringMessageUtils.toString(methods));
+                    result.setErrorTooManyMatchingMethods(component, argTypes,
+                            StringMessageUtils.toString(methods));
                     return result;
                 }
                 else if (methods.size() == 1)
                 {
                     // found exact match for payload argument
-                    method = this.addMethodByArguments(component, methods.get(0), 
-                        getPayloadFromMessage(context));
+                    method = this.addMethodByArguments(component, methods.get(0),
+                            getPayloadFromMessage(context));
                 }
                 else
                 {

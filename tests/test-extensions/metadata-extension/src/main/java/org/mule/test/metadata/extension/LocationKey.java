@@ -6,9 +6,10 @@
  */
 package org.mule.test.metadata.extension;
 
-import static org.apache.commons.lang.builder.EqualsBuilder.reflectionEquals;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyPart;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
+
+import static org.apache.commons.lang.builder.EqualsBuilder.reflectionEquals;
 
 public class LocationKey
 {
@@ -28,9 +29,19 @@ public class LocationKey
         return continent;
     }
 
+    public void setContinent(String continent)
+    {
+        this.continent = continent;
+    }
+
     public String getCountry()
     {
         return country;
+    }
+
+    public void setCountry(String country)
+    {
+        this.country = country;
     }
 
     public String getCity()
@@ -41,16 +52,6 @@ public class LocationKey
     public void setCity(String city)
     {
         this.city = city;
-    }
-
-    public void setContinent(String continent)
-    {
-        this.continent = continent;
-    }
-
-    public void setCountry(String country)
-    {
-        this.country = country;
     }
 
     @Override

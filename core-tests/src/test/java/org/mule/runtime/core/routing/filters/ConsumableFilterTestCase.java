@@ -6,17 +6,16 @@
  */
 package org.mule.runtime.core.routing.filters;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ConsumableFilterTestCase extends AbstractMuleTestCase
 {

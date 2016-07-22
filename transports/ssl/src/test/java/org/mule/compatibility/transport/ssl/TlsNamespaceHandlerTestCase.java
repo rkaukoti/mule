@@ -6,14 +6,12 @@
  */
 package org.mule.compatibility.transport.ssl;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
-import org.mule.compatibility.transport.ssl.SslConnector;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import org.junit.Test;
 
 public class TlsNamespaceHandlerTestCase extends FunctionalTestCase
 {

@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.module.cxf.testmodels;
 
-import javax.xml.namespace.QName;
-
 import org.apache.cxf.frontend.FaultInfoException;
+
+import javax.xml.namespace.QName;
 
 public class CxfEnabledFaultMessage extends FaultInfoException
 {
@@ -26,15 +26,15 @@ public class CxfEnabledFaultMessage extends FaultInfoException
         this.faultInfo = fault;
     }
 
-    public CustomFault getFaultInfo()
-    {
-        return faultInfo;
-    }
-
     public static QName getFaultName()
     {
         return new QName("http://org.mule.runtime.module.cxf.testmodels/CxfTestService/",
-            "CxfEnabledFaultMessage");
+                "CxfEnabledFaultMessage");
+    }
+
+    public CustomFault getFaultInfo()
+    {
+        return faultInfo;
     }
 
 }

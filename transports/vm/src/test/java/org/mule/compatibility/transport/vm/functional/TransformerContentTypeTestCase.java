@@ -6,11 +6,8 @@
  */
 package org.mule.compatibility.transport.vm.functional;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.MuleEvent;
@@ -24,8 +21,10 @@ import org.mule.runtime.core.transformer.AbstractMessageTransformer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 public class TransformerContentTypeTestCase extends FunctionalTestCase
 {
@@ -47,7 +46,8 @@ public class TransformerContentTypeTestCase extends FunctionalTestCase
     public void testContentTypesPlainXmlXml() throws Exception
     {
         EchoComponent.setExpectedMimeType("text/xml");
-        MuleMessage response = client.send("vm://in1?connector=vm-in1", MuleMessage.builder().payload("OK").mediaType(MediaType.TEXT).build());
+        MuleMessage response =
+                client.send("vm://in1?connector=vm-in1", MuleMessage.builder().payload("OK").mediaType(MediaType.TEXT).build());
         assertNotNull(response);
         assertEquals("OK", response.getPayload());
     }
@@ -65,7 +65,8 @@ public class TransformerContentTypeTestCase extends FunctionalTestCase
     public void testContentTypesXmlPlainPlain() throws Exception
     {
         EchoComponent.setExpectedMimeType("text/plain");
-        MuleMessage response = client.send("vm://in2?connector=vm-in2", MuleMessage.builder().payload("OK").mediaType(MediaType.XML).build());
+        MuleMessage response =
+                client.send("vm://in2?connector=vm-in2", MuleMessage.builder().payload("OK").mediaType(MediaType.XML).build());
         assertNotNull(response);
         assertEquals("OK", response.getPayload());
     }
@@ -83,6 +84,11 @@ public class TransformerContentTypeTestCase extends FunctionalTestCase
     {
         static String expectedMimeType;
 
+        public static void setExpectedMimeType(String expectedContentType)
+        {
+            EchoComponent.expectedMimeType = expectedContentType;
+        }
+
         @Override
         public Object onCall(MuleEventContext eventContext) throws Exception
         {
@@ -90,11 +96,6 @@ public class TransformerContentTypeTestCase extends FunctionalTestCase
             String contentType = message.getDataType().getMediaType().withoutParameters().toRfcString();
             assertThat(contentType, is(expectedMimeType));
             return message;
-        }
-
-        public static void setExpectedMimeType(String expectedContentType)
-        {
-            EchoComponent.expectedMimeType = expectedContentType;
         }
     }
 

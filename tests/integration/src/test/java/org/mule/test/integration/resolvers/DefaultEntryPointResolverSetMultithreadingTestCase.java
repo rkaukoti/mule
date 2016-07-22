@@ -6,22 +6,21 @@
  */
 package org.mule.test.integration.resolvers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
-import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.util.Base64;
 
 import java.util.List;
 import java.util.Random;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class DefaultEntryPointResolverSetMultithreadingTestCase extends FunctionalTestCase
 {
@@ -71,6 +70,14 @@ public class DefaultEntryPointResolverSetMultithreadingTestCase extends Function
             {
                 // ignore
             }
+        }
+    }
+
+    public static class EchoBytes
+    {
+        public byte[] echo(byte[] input)
+        {
+            return input;
         }
     }
 
@@ -129,14 +136,6 @@ public class DefaultEntryPointResolverSetMultithreadingTestCase extends Function
             byte[] payload = new byte[size];
             random.nextBytes(payload);
             return payload;
-        }
-    }
-
-    public static class EchoBytes
-    {
-        public byte[] echo(byte[] input)
-        {
-            return input;
         }
     }
 }

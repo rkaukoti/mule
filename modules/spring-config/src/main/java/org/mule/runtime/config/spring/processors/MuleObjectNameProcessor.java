@@ -10,7 +10,6 @@ import org.mule.runtime.api.meta.NameableObject;
 import org.mule.runtime.core.api.agent.Agent;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.api.transport.LegacyConnector;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
@@ -22,12 +21,12 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 
 public class MuleObjectNameProcessor implements BeanPostProcessor
 {
-    private boolean overwrite = false;
     private final Class<? extends NameableObject> managedTypes[] = new Class[] {
-                                                                                LegacyConnector.class,
-                                                                                Transformer.class,
-                                                                                Agent.class
+            LegacyConnector.class,
+            Transformer.class,
+            Agent.class
     };
+    private boolean overwrite = false;
 
     @Override
     public Object postProcessBeforeInitialization(Object object, String beanName) throws BeansException

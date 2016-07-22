@@ -38,9 +38,9 @@ public final class SecurityUtils
      * system variable is defined with a provider name.
      *
      * <p>
-     *     <b>Note:</b> Use this method as a last resort for cases were a library always requires you to
-     *     provide one. JCE already provides an excellent provider selection algorithm, and many operations
-     *     will automatically choose the best provider if you don't force one in particular
+     * <b>Note:</b> Use this method as a last resort for cases were a library always requires you to
+     * provide one. JCE already provides an excellent provider selection algorithm, and many operations
+     * will automatically choose the best provider if you don't force one in particular
      * </p>
      */
     public static Provider getDefaultSecurityProvider()
@@ -64,12 +64,13 @@ public final class SecurityUtils
         }
         else
         {
-            provider =  Security.getProvider(providerName);
+            provider = Security.getProvider(providerName);
         }
 
         if (provider == null)
         {
-            throw new IllegalStateException("Can't find a suitable security provider. " + (providerName == null ? "" : "Provider name " + providerName + " was not found."));
+            throw new IllegalStateException("Can't find a suitable security provider. " +
+                                            (providerName == null ? "" : "Provider name " + providerName + " was not found."));
         }
         return provider;
     }

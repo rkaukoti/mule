@@ -40,7 +40,7 @@ public class VMMessageReceiver extends TransactedPollingMessageReceiver
     private VMConnector connector;
 
     public VMMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint)
-        throws CreateException
+            throws CreateException
     {
         super(connector, flowConstruct, endpoint);
         this.setReceiveMessagesInTransaction(endpoint.getTransactionConfig().isTransacted());

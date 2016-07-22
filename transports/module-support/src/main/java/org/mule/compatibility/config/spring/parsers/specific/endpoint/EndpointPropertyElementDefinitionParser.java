@@ -26,12 +26,13 @@ public class EndpointPropertyElementDefinitionParser extends AbstractSingleParen
     {
         setReturnFirstResult(false);
         addDelegate(new ChildSingletonMapDefinitionParser(ENDPOINT_PROPERTIES_ATTRIBUTE)).registerPreProcessor(
-            new AddAttribute(MapEntryCombiner.KEY, propertyKey))
-            .addCollection(ENDPOINT_PROPERTIES_ATTRIBUTE)
-            .setIgnoredDefault(true)
-            .removeIgnored(MapEntryCombiner.KEY)
-            .addIgnored(AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME);
+                new AddAttribute(MapEntryCombiner.KEY, propertyKey))
+                                                                                         .addCollection(ENDPOINT_PROPERTIES_ATTRIBUTE)
+                                                                                         .setIgnoredDefault(true)
+                                                                                         .removeIgnored(MapEntryCombiner.KEY)
+                                                                                         .addIgnored(
+                                                                                                 AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME);
         addChildDelegate(new ChildDefinitionParser(MapEntryCombiner.VALUE, beanClass)).addIgnored(
-            AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME).addIgnored(MapEntryCombiner.KEY);
+                AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME).addIgnored(MapEntryCombiner.KEY);
     }
 }

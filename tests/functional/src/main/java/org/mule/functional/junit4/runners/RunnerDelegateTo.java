@@ -7,14 +7,14 @@
 
 package org.mule.functional.junit4.runners;
 
+import org.junit.runner.Runner;
+import org.junit.runners.BlockJUnit4ClassRunner;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import org.junit.runner.Runner;
-import org.junit.runners.BlockJUnit4ClassRunner;
 
 /**
  * Specifies the {@link Runner} that {@link ArtifactClassLoaderRunner} delegates to.

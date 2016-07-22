@@ -6,7 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getOperationsConnectionType;
+import com.sun.org.apache.xpath.internal.ExtensionsProvider;
+
 import org.mule.runtime.extension.api.exception.IllegalModelDefinitionException;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
 import org.mule.runtime.extension.api.introspection.config.ConfigurationModel;
@@ -15,7 +16,7 @@ import org.mule.runtime.extension.api.introspection.connection.RuntimeConnection
 import org.mule.runtime.extension.api.introspection.operation.OperationModel;
 import org.mule.runtime.module.extension.internal.exception.IllegalConnectionProviderModelDefinitionException;
 
-import com.sun.org.apache.xpath.internal.ExtensionsProvider;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getOperationsConnectionType;
 
 /**
  * {@link ModelValidator} which applies to {@link ExtensionModel}s which either contains
@@ -42,7 +43,8 @@ public final class ConnectionProviderModelValidator implements ModelValidator
 
     private void validateConnectionProviders(ExtensionModel extensionModel, Class<?> connectionType)
     {
-        extensionModel.getConnectionProviders().stream().forEach(providerModel -> {
+        extensionModel.getConnectionProviders().stream().forEach(providerModel ->
+        {
             if (connectionType != null)
             {
                 validateConnectionTypes((RuntimeConnectionProviderModel) providerModel, extensionModel, connectionType);
@@ -50,18 +52,20 @@ public final class ConnectionProviderModelValidator implements ModelValidator
         });
     }
 
-    private void validateConnectionTypes(RuntimeConnectionProviderModel providerModel, ExtensionModel extensionModel, Class<?> connectionType)
+    private void validateConnectionTypes(RuntimeConnectionProviderModel providerModel, ExtensionModel extensionModel,
+                                         Class<?> connectionType)
     {
         final Class extensionConnectionType = providerModel.getConnectionType();
         if (!connectionType.isAssignableFrom(extensionConnectionType))
         {
-            throw new IllegalConnectionProviderModelDefinitionException(String.format("Extension '%s' defines a connection provider of name '%s' which yields connections of type '%s'. " +
-                                                                                      "However, the extension's operations expect connections of type '%s'. Please make sure that all connection " +
-                                                                                      "providers in the extension can be used with all its operations",
-                                                                                      extensionModel.getName(),
-                                                                                      providerModel.getName(),
-                                                                                      extensionConnectionType.getName(),
-                                                                                      connectionType.getName()));
+            throw new IllegalConnectionProviderModelDefinitionException(
+                    String.format("Extension '%s' defines a connection provider of name '%s' which yields connections of type '%s'. " +
+                                  "However, the extension's operations expect connections of type '%s'. Please make sure that all connection " +
+                                  "providers in the extension can be used with all its operations",
+                            extensionModel.getName(),
+                            providerModel.getName(),
+                            extensionConnectionType.getName(),
+                            connectionType.getName()));
         }
     }
 }

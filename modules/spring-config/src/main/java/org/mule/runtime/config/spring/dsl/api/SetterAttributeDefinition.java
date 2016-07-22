@@ -20,7 +20,7 @@ public class SetterAttributeDefinition
     private AttributeDefinition attributeDefinition;
 
     /**
-     * @param attributeName name of the attribute to be set
+     * @param attributeName       name of the attribute to be set
      * @param attributeDefinition definition of the attribute to be set
      */
     public SetterAttributeDefinition(String attributeName, AttributeDefinition attributeDefinition)

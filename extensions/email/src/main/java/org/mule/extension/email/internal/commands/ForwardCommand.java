@@ -70,10 +70,11 @@ public final class ForwardCommand
         String body = muleMessage.getPayload().toString();
         String forwardBody = content != null ? format("%s\r\n\r\n%s", content.getBody(), body) : body;
         EmailContent forwardContent = content != null
-                                      ? new EmailContent(forwardBody, content.getContentType(), content.getCharset())
-                                      : new EmailContent(forwardBody, defaultCharset);
+                ? new EmailContent(forwardBody, content.getContentType(), content.getCharset())
+                : new EmailContent(forwardBody, defaultCharset);
         List<EmailAttachment> emailAttachments = mapToEmailAttachments(attributes.getAttachments());
-        sendCommand.send(connection, forwardContent, subject, toAddresses, from, defaultCharset, ccAddresses, bccAddresses, headers, emailAttachments);
+        sendCommand.send(connection, forwardContent, subject, toAddresses, from, defaultCharset, ccAddresses, bccAddresses, headers,
+                emailAttachments);
 
     }
 }

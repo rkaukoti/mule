@@ -6,19 +6,18 @@
  */
 package org.mule.runtime.module.cxf.transport;
 
-import org.mule.runtime.module.cxf.support.DelegatingOutputStream;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.logging.Logger;
-
 import org.apache.cxf.message.Message;
 import org.apache.cxf.service.model.EndpointInfo;
 import org.apache.cxf.transport.AbstractConduit;
 import org.apache.cxf.transport.AbstractDestination;
 import org.apache.cxf.transport.Conduit;
 import org.apache.cxf.ws.addressing.EndpointReferenceType;
+import org.mule.runtime.module.cxf.support.DelegatingOutputStream;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.logging.Logger;
 
 public class MuleUniversalDestination extends AbstractDestination
 {
@@ -31,7 +30,7 @@ public class MuleUniversalDestination extends AbstractDestination
                                     EndpointReferenceType ref,
                                     EndpointInfo ei)
     {
-        super(ref, ei); 
+        super(ref, ei);
         this.transport = transport;
     }
 
@@ -63,7 +62,8 @@ public class MuleUniversalDestination extends AbstractDestination
             super(arg0);
         }
 
-        public void prepare(Message message) throws IOException {
+        public void prepare(Message message) throws IOException
+        {
             // set an outputstream which will be used for things like attachment headers.
             // we'll stream the body later on down the line via the OutputHandler in CxfServiceComponent
             DelegatingOutputStream stream = new DelegatingOutputStream(new ByteArrayOutputStream());

@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.module.http.functional.matcher;
 
+import org.hamcrest.Description;
+import org.hamcrest.TypeSafeMatcher;
 import org.mule.extension.http.api.HttpAttributes;
 
 import java.util.Map;
-
-import org.hamcrest.Description;
-import org.hamcrest.TypeSafeMatcher;
 
 public class HttpMessageAttributesHeadersMatcher extends TypeSafeMatcher<HttpAttributes>
 {

@@ -6,20 +6,20 @@
  */
 package org.mule.runtime.module.extension.internal.capability.xml;
 
-import static com.google.common.truth.Truth.assert_;
-import static com.google.testing.compile.JavaSourcesSubjectFactory.javaSources;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import com.google.common.io.ByteSource;
+import com.google.testing.compile.JavaFileObjects;
+
+import net.sf.saxon.xpath.XPathFactoryImpl;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.extension.internal.resources.ExtensionResourcesGeneratorAnnotationProcessor;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
-import org.mule.runtime.core.util.IOUtils;
-
-import com.google.common.io.ByteSource;
-import com.google.testing.compile.JavaFileObjects;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -34,12 +34,13 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 
-import net.sf.saxon.xpath.XPathFactoryImpl;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
+import static com.google.common.truth.Truth.assert_;
+import static com.google.testing.compile.JavaSourcesSubjectFactory.javaSources;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class ExtensionResourcesGeneratorAnnotationProcessorTestCase extends AbstractMuleTestCase
@@ -69,12 +70,12 @@ public class ExtensionResourcesGeneratorAnnotationProcessorTestCase extends Abst
         when(byteSource.contentEquals(byteSourceCaptor.capture())).thenReturn(true);
 
         assert_().about(javaSources())
-                .that(testSourceFiles())
-                .withCompilerOptions("-Aextension.version=1.0.0-dev")
-                .processedWith(new ExtensionResourcesGeneratorAnnotationProcessor())
-                .compilesWithoutError()
-                .and().generatesFileNamed(StandardLocation.SOURCE_OUTPUT, "", "mule-documentation.xsd")
-                .withContents(byteSource);
+                 .that(testSourceFiles())
+                 .withCompilerOptions("-Aextension.version=1.0.0-dev")
+                 .processedWith(new ExtensionResourcesGeneratorAnnotationProcessor())
+                 .compilesWithoutError()
+                 .and().generatesFileNamed(StandardLocation.SOURCE_OUTPUT, "", "mule-documentation.xsd")
+                 .withContents(byteSource);
 
         ByteSource generatedByteSource = byteSourceCaptor.getValue();
         assertThat(generatedByteSource, is(notNullValue()));
@@ -86,15 +87,24 @@ public class ExtensionResourcesGeneratorAnnotationProcessorTestCase extends Abst
 
 
         assertXpath(generatedSchema, "//xs:element[@name='operation']/xs:annotation/xs:documentation", "Test Operation");
-        assertXpath(generatedSchema, "//xs:complexType[@name='OperationType']/xs:complexContent/xs:extension/xs:attribute[@name='value']/xs:annotation/xs:documentation", "test value");
-        assertXpath(generatedSchema, "//xs:complexType[@name='OperationType']/xs:complexContent/xs:extension/xs:attribute[@name='value1']/xs:annotation/xs:documentation", GROUP_PARAMETER_1);
-        assertXpath(generatedSchema, "//xs:complexType[@name='OperationType']/xs:complexContent/xs:extension/xs:attribute[@name='value2']/xs:annotation/xs:documentation", GROUP_PARAMETER_2);
+        assertXpath(generatedSchema,
+                "//xs:complexType[@name='OperationType']/xs:complexContent/xs:extension/xs:attribute[@name='value']/xs:annotation/xs:documentation",
+                "test value");
+        assertXpath(generatedSchema,
+                "//xs:complexType[@name='OperationType']/xs:complexContent/xs:extension/xs:attribute[@name='value1']/xs:annotation/xs:documentation",
+                GROUP_PARAMETER_1);
+        assertXpath(generatedSchema,
+                "//xs:complexType[@name='OperationType']/xs:complexContent/xs:extension/xs:attribute[@name='value2']/xs:annotation/xs:documentation",
+                GROUP_PARAMETER_2);
 
         assertXpath(generatedSchema, "//xs:element[@name='ignore-operation-should-be-ignored']/xs:annotation/xs:documentation", "");
         assertXpath(generatedSchema, "//xs:element[@name='private-operation-should-be-ignored']/xs:annotation/xs:documentation", "");
 
-        assertXpath(generatedSchema, "//xs:element[@name='operation-with-blank-parameter-description']/xs:annotation/xs:documentation", "Test Operation with blank parameter description");
-        assertXpath(generatedSchema, "//xs:complexType[@name='OperationWithBlankParameterDescriptionType']/xs:complexContent/xs:extension/xs:attribute[@name='value']/xs:annotation/xs:documentation", "");
+        assertXpath(generatedSchema, "//xs:element[@name='operation-with-blank-parameter-description']/xs:annotation/xs:documentation",
+                "Test Operation with blank parameter description");
+        assertXpath(generatedSchema,
+                "//xs:complexType[@name='OperationWithBlankParameterDescriptionType']/xs:complexContent/xs:extension/xs:attribute[@name='value']/xs:annotation/xs:documentation",
+                "");
     }
 
     private void assertXpath(String input, String expression, String expected) throws Exception

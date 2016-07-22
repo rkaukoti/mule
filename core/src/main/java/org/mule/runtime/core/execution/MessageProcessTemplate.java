@@ -11,7 +11,6 @@ package org.mule.runtime.core.execution;
  *
  * A {@link MessageProcessTemplate} must contain all the required method that redefines behavior
  * inside a {@link MessageProcessPhase} and it's particular from the {@link org.mule.runtime.core.api.source.MessageSource}
- *
  */
 public interface MessageProcessTemplate
 {

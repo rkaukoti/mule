@@ -6,10 +6,10 @@
  */
 package org.mule.tck.testmodels.fruit;
 
-import java.util.EventObject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.EventObject;
 
 public class Banana implements Fruit
 {
@@ -34,7 +34,7 @@ public class Banana implements Fruit
     public void peelEvent(EventObject e)
     {
         logger.debug("Banana got peel event in peelEvent(EventObject)! MuleEvent says: "
-                        + e.getSource().toString());
+                     + e.getSource().toString());
         peel();
     }
 

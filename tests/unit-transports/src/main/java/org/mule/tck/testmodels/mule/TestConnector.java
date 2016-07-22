@@ -41,9 +41,9 @@ public class TestConnector extends AbstractConnector
     private int stopCount = 0;
     private int disconnectCount = 0;
     private int disposeCount = 0;
-    
+
     private boolean failAtStartup = false;
-    
+
     public TestConnector(MuleContext context)
     {
         super(context);
@@ -66,7 +66,7 @@ public class TestConnector extends AbstractConnector
         });
 
         setRetryPolicyTemplate((RetryPolicyTemplate) muleContext.getRegistry().lookupObject(
-                                MuleProperties.OBJECT_DEFAULT_RETRY_POLICY_TEMPLATE));
+                MuleProperties.OBJECT_DEFAULT_RETRY_POLICY_TEMPLATE));
     }
 
     @Override
@@ -76,19 +76,19 @@ public class TestConnector extends AbstractConnector
     }
 
     @Override
-    protected void doInitialise() 
+    protected void doInitialise()
     {
         initialiseCount++;
     }
 
     @Override
-    protected void doConnect() 
+    protected void doConnect()
     {
         connectCount++;
     }
 
     @Override
-    protected void doStart() 
+    protected void doStart()
     {
         if (isFailAtStartup())
         {
@@ -98,19 +98,19 @@ public class TestConnector extends AbstractConnector
     }
 
     @Override
-    protected void doStop() 
+    protected void doStop()
     {
         stopCount++;
     }
 
     @Override
-    protected void doDisconnect() 
+    protected void doDisconnect()
     {
         disconnectCount++;
     }
 
     @Override
-    protected void doDispose() 
+    protected void doDispose()
     {
         disposeCount++;
     }
@@ -124,7 +124,7 @@ public class TestConnector extends AbstractConnector
     {
         this.someProperty = someProperty;
     }
-    
+
     @Override
     protected Object getReceiverKey(FlowConstruct flowConstruct, InboundEndpoint endpoint)
     {
@@ -202,49 +202,49 @@ public class TestConnector extends AbstractConnector
         return dispatchers;
     }
 
-    public int getInitialiseCount() 
+    public int getInitialiseCount()
     {
         return initialiseCount;
     }
-    
-    public int getConnectCount() 
+
+    public int getConnectCount()
     {
         return connectCount;
     }
-    
-    public int getStartCount() 
+
+    public int getStartCount()
     {
         return startCount;
     }
-    
-    public int getStopCount() 
+
+    public int getStopCount()
     {
         return stopCount;
     }
-    
-    public int getDisconnectCount() 
+
+    public int getDisconnectCount()
     {
         return disconnectCount;
     }
-    
-    public int getDisposeCount() 
+
+    public int getDisposeCount()
     {
         return disposeCount;
     }
 
     public MessageProcessor getOutboundEndpointMessageProcessor(OutboundEndpoint endpoint)
-        throws MuleException
+            throws MuleException
     {
         return ((AbstractEndpoint) endpoint).getMessageProcessorChain(null);
+    }
+
+    public boolean isFailAtStartup()
+    {
+        return failAtStartup;
     }
 
     public void setFailAtStartup(boolean failAtStartup)
     {
         this.failAtStartup = failAtStartup;
     }
-
-    public boolean isFailAtStartup()
-    {
-        return failAtStartup;
-    }    
 }

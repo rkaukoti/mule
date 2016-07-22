@@ -6,11 +6,11 @@
  */
 package org.mule.extension.socket;
 
-import static org.hamcrest.Matchers.instanceOf;
+import org.junit.Test;
 import org.mule.extension.socket.api.exceptions.ReadingTimeoutException;
 import org.mule.runtime.core.api.MessagingException;
 
-import org.junit.Test;
+import static org.hamcrest.Matchers.instanceOf;
 
 public class UdpTimeoutTestCase extends SocketExtensionTestCase
 {

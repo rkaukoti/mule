@@ -22,11 +22,11 @@ import java.nio.charset.Charset;
 
 public class ObjectArrayToString extends AbstractTransformer implements DiscoverableTransformer
 {
-    /** Give core transformers a slighty higher priority */
-    private int priorityWeighting = DiscoverableTransformer.DEFAULT_PRIORITY_WEIGHTING + 1;
-
     private static final String DEFAULT_DELIMITER = " ";
-
+    /**
+     * Give core transformers a slighty higher priority
+     */
+    private int priorityWeighting = DiscoverableTransformer.DEFAULT_PRIORITY_WEIGHTING + 1;
     private String delimiter = null;
 
     public ObjectArrayToString()

@@ -6,11 +6,12 @@
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
-import static java.util.Optional.empty;
 import org.mule.runtime.config.spring.dsl.api.TypeConverter;
 import org.mule.runtime.config.spring.dsl.processor.AbstractAttributeDefinitionVisitor;
 
 import java.util.Optional;
+
+import static java.util.Optional.empty;
 
 /**
  * Visitor to acquire the default value, if any, defined for the attribute.

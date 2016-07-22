@@ -6,12 +6,6 @@
  */
 package org.mule.extension.email.internal.sender;
 
-import static org.mule.extension.email.internal.EmailConnector.TLS_CONFIGURATION;
-import static org.mule.extension.email.internal.EmailProtocol.SMTPS;
-import static org.mule.extension.email.internal.util.EmailConnectorUtils.SMTPS_PORT;
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-import static org.mule.runtime.extension.api.annotation.param.display.Placement.CONNECTION;
-
 import org.mule.extension.email.internal.retriever.RetrieverConnection;
 import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.connection.ConnectionProvider;
@@ -24,6 +18,12 @@ import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.annotation.param.display.Summary;
+
+import static org.mule.extension.email.internal.EmailConnector.TLS_CONFIGURATION;
+import static org.mule.extension.email.internal.EmailProtocol.SMTPS;
+import static org.mule.extension.email.internal.util.EmailConnectorUtils.SMTPS_PORT;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
+import static org.mule.runtime.extension.api.annotation.param.display.Placement.CONNECTION;
 
 /**
  * A {@link ConnectionProvider} that returns instances of smtps based {@link RetrieverConnection}s.
@@ -71,14 +71,14 @@ public class SMTPSProvider extends AbstractSenderProvider implements Initialisab
     public SenderConnection connect() throws ConnectionException
     {
         return new SenderConnection(SMTPS,
-                                    settings.getUser(),
-                                    settings.getPassword(),
-                                    settings.getHost(),
-                                    port,
-                                    getConnectionTimeout(),
-                                    getReadTimeout(),
-                                    getWriteTimeout(),
-                                    getProperties(),
-                                    tlsContextFactory);
+                settings.getUser(),
+                settings.getPassword(),
+                settings.getHost(),
+                port,
+                getConnectionTimeout(),
+                getReadTimeout(),
+                getWriteTimeout(),
+                getProperties(),
+                tlsContextFactory);
     }
 }

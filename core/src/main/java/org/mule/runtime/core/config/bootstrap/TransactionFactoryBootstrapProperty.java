@@ -7,8 +7,9 @@
 
 package org.mule.runtime.core.config.bootstrap;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.core.util.StringUtils;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Defines a bootstrap property for a transaction factory
@@ -24,12 +25,13 @@ public class TransactionFactoryBootstrapProperty extends AbstractBootstrapProper
      *
      * @param service                      service that provides the property. Not null.
      * @param artifactType                 defines what is the artifact this bootstrap object applies to
-     * @param optional                     indicates whether or not the bootstrap object is optional. When a bootstrap
-     *                                     object is optional, any error creating it will be ignored.
+     * @param optional                     indicates whether or not the bootstrap object is optional. When a bootstrap object is optional,
+     *                                     any error creating it will be ignored.
      * @param transactionFactoryClassName  key used to register the object. Not empty.
      * @param transactionResourceClassName className of the bootstrapped object. Not empty.
      */
-    public TransactionFactoryBootstrapProperty(BootstrapService service, ArtifactType artifactType, Boolean optional, String transactionFactoryClassName, String transactionResourceClassName)
+    public TransactionFactoryBootstrapProperty(BootstrapService service, ArtifactType artifactType, Boolean optional,
+                                               String transactionFactoryClassName, String transactionResourceClassName)
     {
         super(service, artifactType, optional);
         checkArgument(!StringUtils.isEmpty(transactionFactoryClassName), "key cannot be empty");

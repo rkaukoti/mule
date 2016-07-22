@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:spring="http://www.springframework.org/schema/beans"
-       xmlns:mxml="http://www.mulesoft.org/schema/mule/xml"
-       xmlns:test="http://www.mulesoft.org/schema/mule/test"
-    xsi:schemaLocation="
-       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
-       http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:mxml="http://www.mulesoft.org/schema/mule/xml"
+      xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd">
 
@@ -15,38 +12,38 @@
 
     <mxml:object-to-xml-transformer name="objectToXml"/>
     <mxml:xml-to-object-transformer name="xmlToObject"/>
-<!--// END SNIPPET: xml-transformers1 -->
+    <!--// END SNIPPET: xml-transformers1 -->
 
     <mxml:xslt-transformer name="xslt" returnClass="org.dom4j.Document">
         <mxml:xslt-text>
-        <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-            <!-- test for this string in test -->
-            <!-- Whenever you match any node or any attribute -->
-            <xsl:template match="node()|@*">
-                <!-- Copy the current node -->
-                <xsl:copy>
-                    <!-- don't copy inner contents -->
-                </xsl:copy>
-            </xsl:template>
-        </xsl:stylesheet>
+            <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <!-- test for this string in test -->
+                <!-- Whenever you match any node or any attribute -->
+                <xsl:template match="node()|@*">
+                    <!-- Copy the current node -->
+                    <xsl:copy>
+                        <!-- don't copy inner contents -->
+                    </xsl:copy>
+                </xsl:template>
+            </xsl:stylesheet>
         </mxml:xslt-text>
     </mxml:xslt-transformer>
 
     <mxml:xslt-transformer name="xslt-string" returnClass="java.lang.String">
         <mxml:xslt-text>
-        <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-            <!-- test for this string in test -->
-            <!-- Whenever you match any node or any attribute -->
-            <xsl:template match="node()|@*">
-                <!-- Copy the current node -->
-                <xsl:copy>
-                    <!-- don't copy inner contents -->
-                </xsl:copy>
-            </xsl:template>
-        </xsl:stylesheet>
+            <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+                <!-- test for this string in test -->
+                <!-- Whenever you match any node or any attribute -->
+                <xsl:template match="node()|@*">
+                    <!-- Copy the current node -->
+                    <xsl:copy>
+                        <!-- don't copy inner contents -->
+                    </xsl:copy>
+                </xsl:template>
+            </xsl:stylesheet>
         </mxml:xslt-text>
     </mxml:xslt-transformer>
-<!--// START SNIPPET: xml-transformers2 -->
+    <!--// START SNIPPET: xml-transformers2 -->
 
     <flow name="xml to ...">
         <all>
@@ -89,5 +86,5 @@
     </flow>
 
 
-<!--// END SNIPPET: xml-transformers2 -->
+    <!--// END SNIPPET: xml-transformers2 -->
 </mule>

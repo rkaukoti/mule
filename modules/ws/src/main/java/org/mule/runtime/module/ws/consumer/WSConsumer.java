@@ -7,8 +7,14 @@
 
 package org.mule.runtime.module.ws.consumer;
 
-import static java.util.Collections.emptyMap;
-import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
+import org.apache.cxf.attachment.AttachmentImpl;
+import org.apache.cxf.binding.soap.SoapFault;
+import org.apache.cxf.binding.soap.interceptor.CheckFaultInterceptor;
+import org.apache.cxf.interceptor.Interceptor;
+import org.apache.cxf.message.Attachment;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
+import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -34,6 +40,9 @@ import org.mule.runtime.module.cxf.CxfOutboundMessageProcessor;
 import org.mule.runtime.module.cxf.builder.ProxyClientMessageProcessorBuilder;
 import org.mule.runtime.module.ws.security.SecurityStrategy;
 import org.mule.runtime.module.ws.security.WSSecurity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xml.sax.InputSource;
 
 import java.io.IOException;
 import java.net.URL;
@@ -57,17 +66,8 @@ import javax.wsdl.factory.WSDLFactory;
 import javax.wsdl.xml.WSDLReader;
 import javax.xml.namespace.QName;
 
-import org.apache.cxf.attachment.AttachmentImpl;
-import org.apache.cxf.binding.soap.SoapFault;
-import org.apache.cxf.binding.soap.interceptor.CheckFaultInterceptor;
-import org.apache.cxf.interceptor.Interceptor;
-import org.apache.cxf.message.Attachment;
-import org.apache.cxf.message.Message;
-import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
-import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.xml.sax.InputSource;
+import static java.util.Collections.emptyMap;
+import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
 
 
 public class WSConsumer implements MessageProcessor, Initialisable, MuleContextAware, Disposable, NonBlockingMessageProcessor
@@ -196,11 +196,11 @@ public class WSConsumer implements MessageProcessor, Initialisable, MuleContextA
 
                         event.setMessage(MuleMessage.builder(event.getMessage()).payload(soapFault.getDetail() !=
                                                                                          null ? soapFault.getDetail()
-                                                                                              : null)
-                                                 .build());
+                                : null)
+                                                    .build());
 
                         throw new SoapFaultException(event, soapFault.getFaultCode(), soapFault.getSubCode(),
-                                                     soapFault.getMessage(), soapFault.getDetail(), this);
+                                soapFault.getMessage(), soapFault.getDetail(), this);
                     }
                     else
                     {
@@ -343,7 +343,6 @@ public class WSConsumer implements MessageProcessor, Initialisable, MuleContextA
         cxfOutboundMessageProcessor.getClient().getInInterceptors().add(new OutputSoapHeadersInterceptor(muleContext));
 
 
-
         return cxfOutboundMessageProcessor;
     }
 
@@ -381,7 +380,8 @@ public class WSConsumer implements MessageProcessor, Initialisable, MuleContextA
         Service service = wsdlDefinition.getService(new QName(wsdlDefinition.getTargetNamespace(), config.getService()));
         if (service == null)
         {
-            throw new InitialisationException(MessageFactory.createStaticMessage("Service %s not found in WSDL", config.getService()), this);
+            throw new InitialisationException(MessageFactory.createStaticMessage("Service %s not found in WSDL", config.getService()),
+                    this);
         }
 
         Port port = service.getPort(config.getPort());
@@ -474,7 +474,7 @@ public class WSConsumer implements MessageProcessor, Initialisable, MuleContextA
                 catch (Exception e)
                 {
                     throw new MessagingException(CoreMessages.createStaticMessage("Could not set inbound attachment %s",
-                                                                                  attachment.getId()), event, e, this);
+                            attachment.getId()), event, e, this);
                 }
             }
             event.setMessage(builder.build());

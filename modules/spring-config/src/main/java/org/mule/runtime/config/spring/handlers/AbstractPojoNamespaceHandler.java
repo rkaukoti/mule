@@ -19,6 +19,17 @@ import java.lang.reflect.Method;
  */
 public abstract class AbstractPojoNamespaceHandler extends AbstractMuleNamespaceHandler
 {
+    protected static String splitCamelCase(String s)
+    {
+        if (s.contains("get"))
+        {
+            s = s.substring(3);
+        }
+        return s.replaceAll(
+                String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z][0-9])", "(?<=[^A-Z])(?=[A-Z])",
+                        "(?<=[A-Za-z0-9])(?=[^A-Za-z0-9])"), "-").toLowerCase();
+    }
+
     public void registerPojo(String configElementName, Class<?> cls)
     {
         // register a generic configuration element
@@ -39,8 +50,8 @@ public abstract class AbstractPojoNamespaceHandler extends AbstractMuleNamespace
                     String[] parameterNames = paramReader.getParameterNames(m);
 
                     registerMuleBeanDefinitionParser(splitCamelCase(m.getName()),
-                        new InvokerMessageProcessorDefinitionParser("messageProcessor", cls, m.getName(),
-                            parameterNames));
+                            new InvokerMessageProcessorDefinitionParser("messageProcessor", cls, m.getName(),
+                                    parameterNames));
                 }
             }
         }
@@ -50,15 +61,4 @@ public abstract class AbstractPojoNamespaceHandler extends AbstractMuleNamespace
         }
     }
 
-    protected static String splitCamelCase(String s)
-    {
-        if (s.contains("get"))
-        {
-            s = s.substring(3);
-        }
-        return s.replaceAll(
-            String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z][0-9])", "(?<=[^A-Z])(?=[A-Z])",
-                "(?<=[A-Za-z0-9])(?=[^A-Za-z0-9])"), "-").toLowerCase();
-    }
-    
 }

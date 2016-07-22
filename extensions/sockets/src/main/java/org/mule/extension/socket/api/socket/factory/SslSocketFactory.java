@@ -21,7 +21,7 @@ import javax.net.ssl.SSLSocketFactory;
  *
  * @since 4.0
  */
-public class SslSocketFactory  implements SimpleSocketFactory
+public class SslSocketFactory implements SimpleSocketFactory
 {
     private final SSLSocketFactory sslSocketFactory;
 
@@ -31,7 +31,7 @@ public class SslSocketFactory  implements SimpleSocketFactory
     }
 
     /**
-     *{@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public Socket createSocket() throws IOException

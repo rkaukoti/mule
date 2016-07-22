@@ -21,7 +21,7 @@ public class ArrayResolvedDbType extends ResolvedDbType
     /**
      * Creates a new instance
      *
-     * @param id identifier for the type
+     * @param id   identifier for the type
      * @param name type name. Non Empty.
      */
     public ArrayResolvedDbType(int id, String name)

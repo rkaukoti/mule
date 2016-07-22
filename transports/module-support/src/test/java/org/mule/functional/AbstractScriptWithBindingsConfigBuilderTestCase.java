@@ -6,11 +6,7 @@
  */
 package org.mule.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.component.InterfaceBinding;
 import org.mule.compatibility.core.api.component.JavaWithBindingsComponent;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
@@ -30,7 +26,10 @@ import org.mule.tck.testmodels.mule.TestCompressionTransformer;
 
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractScriptWithBindingsConfigBuilderTestCase extends FunctionalTestCase
 {
@@ -46,6 +45,11 @@ public abstract class AbstractScriptWithBindingsConfigBuilderTestCase extends Fu
     protected AbstractScriptWithBindingsConfigBuilderTestCase(boolean legacy)
     {
         this.legacy = legacy;
+    }
+
+    private static EndpointFactory getEndpointFactory(MuleContext muleContext)
+    {
+        return (EndpointFactory) muleContext.getRegistry().lookupObject(MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY);
     }
 
     @Test
@@ -66,7 +70,8 @@ public abstract class AbstractScriptWithBindingsConfigBuilderTestCase extends Fu
         assertFalse(responseTransformers.isEmpty());
         final Object responseTransformer = responseTransformers.get(0);
         assertTrue(responseTransformer instanceof InterceptingChainLifecycleWrapper);
-        assertTrue(((InterceptingChainLifecycleWrapper) responseTransformer).getMessageProcessors().get(0) instanceof TestCompressionTransformer);
+        assertTrue(((InterceptingChainLifecycleWrapper) responseTransformer).getMessageProcessors()
+                                                                            .get(0) instanceof TestCompressionTransformer);
     }
 
     @Test
@@ -102,11 +107,5 @@ public abstract class AbstractScriptWithBindingsConfigBuilderTestCase extends Fu
         OutboundEndpoint ep = (OutboundEndpoint) ((AbstractExceptionListener) flow.getExceptionListener()).getMessageProcessors().get(0);
 
         assertEquals("test://orange.exceptions", ep.getEndpointURI().toString());
-    }
-
-
-    private static EndpointFactory getEndpointFactory(MuleContext muleContext)
-    {
-        return (EndpointFactory) muleContext.getRegistry().lookupObject(MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY);
     }
 }

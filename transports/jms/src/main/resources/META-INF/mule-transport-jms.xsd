@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/transport/jms"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:mule="http://www.mulesoft.org/schema/mule/core"
             xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
             xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
             xmlns:spring="http://www.springframework.org/schema/beans"
+            xmlns="http://www.mulesoft.org/schema/mule/transport/jms"
             targetNamespace="http://www.mulesoft.org/schema/mule/transport/jms"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">
@@ -13,11 +13,11 @@
     <xsd:import namespace="http://www.springframework.org/schema/beans"
                 schemaLocation="http://www.springframework.org/schema/beans/spring-beans-3.1.xsd"/>
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/core"
-                schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd" />
+                schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd"/>
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/transports"
-                schemaLocation="http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd" />
-    <xsd:import namespace = "http://www.mulesoft.org/schema/mule/schemadoc"
-                schemaLocation = "http://www.mulesoft.org/schema/mule/schemadoc/current/mule-schemadoc.xsd"/>
+                schemaLocation="http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd"/>
+    <xsd:import namespace="http://www.mulesoft.org/schema/mule/schemadoc"
+                schemaLocation="http://www.mulesoft.org/schema/mule/schemadoc/current/mule-schemadoc.xsd"/>
 
     <xsd:annotation>
         <xsd:documentation>The JMS transport provides support for sending messages via JMS queues.</xsd:documentation>
@@ -72,9 +72,9 @@
             <xsd:complexContent>
                 <xsd:extension base="transports:customConnectorType">
                     <xsd:sequence minOccurs="0" maxOccurs="unbounded">
-                        <xsd:element ref="abstract-jndi-name-resolver" minOccurs="0" maxOccurs="1" />
+                        <xsd:element ref="abstract-jndi-name-resolver" minOccurs="0" maxOccurs="1"/>
                     </xsd:sequence>
-                    <xsd:attributeGroup ref="jmsConnectorAttributes" />
+                    <xsd:attributeGroup ref="jmsConnectorAttributes"/>
                 </xsd:extension>
             </xsd:complexContent>
         </xsd:complexType>
@@ -128,11 +128,15 @@
                 <xsd:documentation>
                     If set to true, the JMS provider logs the message to stable storage as it is sent so that it can be recovered if delivery is unsuccessful.
 
-                    A client marks a message as persistent if it feels that the application will have problems if the message is lost in transit. A client marks a message as non-persistent if an occasional lost message is tolerable. Clients use delivery mode to tell a JMS provider how to balance message transport reliability/throughput.
+                    A client marks a message as persistent if it feels that the application will have problems if the message is lost in transit. A client marks a message as non-persistent if an
+                    occasional lost message is tolerable. Clients use delivery mode to tell a JMS provider how to balance message transport reliability/throughput.
 
-                    Delivery mode only covers the transport of the message to its destination. Retention of a message at the destination until its receipt is acknowledged is not guaranteed by a PERSISTENT delivery mode. Clients should assume that message retention policies are set administratively. Message retention policy governs the reliability of message delivery from destination to message consumer. For example, if a client's message storage space is exhausted, some messages as defined by a site specific message retention policy may be dropped.
+                    Delivery mode only covers the transport of the message to its destination. Retention of a message at the destination until its receipt is acknowledged is not guaranteed by a
+                    PERSISTENT delivery mode. Clients should assume that message retention policies are set administratively. Message retention policy governs the reliability of message delivery from
+                    destination to message consumer. For example, if a client's message storage space is exhausted, some messages as defined by a site specific message retention policy may be dropped.
 
-                    A message is guaranteed to be delivered once-and-only-once by a JMS Provider if the delivery mode of the messge is persistent and if the destination has a sufficient message retention policy.
+                    A message is guaranteed to be delivered once-and-only-once by a JMS Provider if the delivery mode of the messge is persistent and if the destination has a sufficient message
+                    retention policy.
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
@@ -153,7 +157,8 @@
         <xsd:attribute name="cacheJmsSessions" type="mule:substitutableBoolean" default="true">
             <xsd:annotation>
                 <xsd:documentation>
-                    Whether to cache and re-use the JMS session and producer object instead of recreating them for each request. The default behaviour is to cache JMS Sessions and Producers (previous to 3.6, the default behaviuor was to not cache them). NOTE: This is NOT supported with XA transactions or JMS 1.0.2b.
+                    Whether to cache and re-use the JMS session and producer object instead of recreating them for each request. The default behaviour is to cache JMS Sessions and Producers (previous
+                    to 3.6, the default behaviuor was to not cache them). NOTE: This is NOT supported with XA transactions or JMS 1.0.2b.
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
@@ -195,7 +200,8 @@
         <xsd:attribute name="numberOfConsumers" type="mule:substitutableInt">
             <xsd:annotation>
                 <xsd:documentation>
-                    The number of concurrent consumers that will be used to receive JMS messages. (Note: If you use this attribute, you should not configure the 'numberOfConcurrentTransactedReceivers', which has the same effect.)
+                    The number of concurrent consumers that will be used to receive JMS messages. (Note: If you use this attribute, you should not configure the
+                    'numberOfConcurrentTransactedReceivers', which has the same effect.)
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
@@ -305,7 +311,7 @@
                 <xsd:attribute name="brokerURL" type="xsd:string">
                     <xsd:annotation>
                         <xsd:documentation>
-                        The URL used to connect to the JMS server. If not set, the default is vm://localhost?broker.persistent=false&amp;broker.useJmx=false.
+                            The URL used to connect to the JMS server. If not set, the default is vm://localhost?broker.persistent=false&amp;broker.useJmx=false.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -321,7 +327,7 @@
         </xsd:annotation>
     </xsd:element>
     <xsd:element name="mulemq-xa-connector" type="muleMqConnectorType"
-        substitutionGroup="mule:abstract-connector">
+                 substitutionGroup="mule:abstract-connector">
         <xsd:annotation>
             <xsd:documentation>
                 The mulemq-xa-connector element configures a MuleMQ version of the JMS XA connector.
@@ -341,7 +347,10 @@
                 <xsd:attribute name="bufferOutput" type="xsd:string" default="queued">
                     <xsd:annotation>
                         <xsd:documentation>
-                           Specifies the type of write handler the client will use to send events to the realm. This can be either standard, direct or queued. Unless specified, standard is used. For better latencies use direct, however, this will impact CPU since each write is not buffered but flushed directly. The queued handler will improve CPU and may give better overall throughput since there will be some buffering between client and server. The best of both options is the standard, which attempts to write directly but will back off and buffer the IO flushes when throughput increases and impacts CPU.
+                            Specifies the type of write handler the client will use to send events to the realm. This can be either standard, direct or queued. Unless specified, standard is used. For
+                            better latencies use direct, however, this will impact CPU since each write is not buffered but flushed directly. The queued handler will improve CPU and may give better
+                            overall throughput since there will be some buffering between client and server. The best of both options is the standard, which attempts to write directly but will back
+                            off and buffer the IO flushes when throughput increases and impacts CPU.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -369,21 +378,24 @@
                 <xsd:attribute name="globalStoreCapacity" type="mule:substitutableInt" default="5000">
                     <xsd:annotation>
                         <xsd:documentation>
-                            Sets that the default channel/queue capacity setting which will prevent publishing of further events once topic or queue is full, default is 5000, valid range is 1 to Integer.MAX_VALUE.
+                            Sets that the default channel/queue capacity setting which will prevent publishing of further events once topic or queue is full, default is 5000, valid range is 1 to
+                            Integer.MAX_VALUE.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
                 <xsd:attribute name="maxUnackedSize" type="mule:substitutableInt" default="100">
                     <xsd:annotation>
                         <xsd:documentation>
-                            Specifies the maximum number of unacknowledged events a connection will keep in memory before beginning to remove the oldest, default is 100, range is 1 to Integer.MAX_VALUE.
+                            Specifies the maximum number of unacknowledged events a connection will keep in memory before beginning to remove the oldest, default is 100, range is 1 to
+                            Integer.MAX_VALUE.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
                 <xsd:attribute name="useJMSEngine" type="mule:substitutableBoolean" default="true">
                     <xsd:annotation>
                         <xsd:documentation>
-                            All JMS Topics require this setting to be true, however, if you wish to use different channel types with different fanout engines (in MULEMQ+ only), this can be set to false.
+                            All JMS Topics require this setting to be true, however, if you wish to use different channel types with different fanout engines (in MULEMQ+ only), this can be set to
+                            false.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -404,7 +416,8 @@
                 <xsd:attribute name="enableSharedDurable" type="mule:substitutableBoolean" default="false">
                     <xsd:annotation>
                         <xsd:documentation>
-                            Allows more than 1 durable subscriber on a topic sharing the same name, with only 1 consuming the events. When the first durable disconnects, the second will take over and so on. Default is false.
+                            Allows more than 1 durable subscriber on a topic sharing the same name, with only 1 consuming the events. When the first durable disconnects, the second will take over and
+                            so on. Default is false.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -425,7 +438,7 @@
                 <xsd:attribute name="discOnClusterFailure" type="mule:substitutableBoolean" default="true">
                     <xsd:annotation>
                         <xsd:documentation>
-                                Indicates whether the client connection will be disconnected when the cluster fails, which will cause automatic reconnect to occur, default is true.
+                            Indicates whether the client connection will be disconnected when the cluster fails, which will cause automatic reconnect to occur, default is true.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -439,21 +452,22 @@
                 <xsd:attribute name="muleMqMaxRedelivery" type="mule:substitutableInt" default="100">
                     <xsd:annotation>
                         <xsd:documentation>
-                            This indicates the size of the map of redelivered events to store for each consumer, once this limit is reached the oldest will be removed, default is 100, range is 1 to 100
+                            This indicates the size of the map of redelivered events to store for each consumer, once this limit is reached the oldest will be removed, default is 100, range is 1 to
+                            100
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
                 <xsd:attribute name="retryCommit" type="mule:substitutableBoolean" default="false">
                     <xsd:annotation>
                         <xsd:documentation>
-                          If a transacted session commit fails, if this is true, the commit will be retried until either it succeeds or fails with a transaction timeout, default is false.
+                            If a transacted session commit fails, if this is true, the commit will be retried until either it succeeds or fails with a transaction timeout, default is false.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
                 <xsd:attribute name="enableMultiplexedConnections" type="mule:substitutableBoolean" default="false">
                     <xsd:annotation>
                         <xsd:documentation>
-                          if this is true, the session will be multiplexed on a single connection else a new socket is created for each session, default is false.
+                            if this is true, the session will be multiplexed on a single connection else a new socket is created for each session, default is false.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -479,14 +493,16 @@
     <xsd:element name="transaction" type="mule:baseTransactionType" substitutionGroup="mule:abstract-transaction">
         <xsd:annotation>
             <xsd:documentation>
-                The transaction element configures a transaction. Transactions allow a series of operations to be grouped together so that they can be rolled back if a failure occurs. Set the action (such as ALWAYS_BEGIN or JOIN_IF_POSSIBLE) and the timeout setting for the transaction.
+                The transaction element configures a transaction. Transactions allow a series of operations to be grouped together so that they can be rolled back if a failure occurs. Set the action
+                (such as ALWAYS_BEGIN or JOIN_IF_POSSIBLE) and the timeout setting for the transaction.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
     <xsd:element name="client-ack-transaction" type="mule:baseTransactionType" substitutionGroup="mule:abstract-transaction">
         <xsd:annotation>
             <xsd:documentation>
-                The client-ack-transaction element configures a client acknowledgment transaction, which is identical to a transaction but with message acknowledgements. There is no notion of rollback with client acknowledgement, but this transaction can be useful for controlling how messages are consumed from a destination.
+                The client-ack-transaction element configures a client acknowledgment transaction, which is identical to a transaction but with message acknowledgements. There is no notion of rollback
+                with client acknowledgement, but this transaction can be useful for controlling how messages are consumed from a destination.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -501,7 +517,10 @@
     <xsd:element name="object-to-jmsmessage-transformer" type="mule:abstractTransformerType" substitutionGroup="mule:abstract-transformer">
         <xsd:annotation>
             <xsd:documentation>
-                The object-to-jmsmessage-transformer element configures a transformer that converts an object into one of five types of JMS messages, depending on the object passed in: java.lang.String -> javax.jms.TextMessage, byte[] -> javax.jms.BytesMessage, java.util.Map (primitive types) -> javax.jms.MapMessage, java.io.InputStream (or java.util.List of primitive types) -> javax.jms.StreamMessage, and java.lang.Serializable including java.util.Map, java.util.List, and java.util.Set objects that contain serializable objects (including primitives) -> javax.jms.ObjectMessage.
+                The object-to-jmsmessage-transformer element configures a transformer that converts an object into one of five types of JMS messages, depending on the object passed in:
+                java.lang.String -> javax.jms.TextMessage, byte[] -> javax.jms.BytesMessage, java.util.Map (primitive types) -> javax.jms.MapMessage, java.io.InputStream (or java.util.List of
+                primitive types) -> javax.jms.StreamMessage, and java.lang.Serializable including java.util.Map, java.util.List, and java.util.Set objects that contain serializable objects (including
+                primitives) -> javax.jms.ObjectMessage.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -532,7 +551,8 @@
                         <xsd:documentation>
                             The number of milliseconds that a transacted message receiver will wait for an incoming message inside an active XA transaction.
                             When no polling timeout is configured, the transaction timeout will be used instead. This attribute is ignored when no XA transaction is configured.
-                            NOTE: this value must be considered when the transaction timeout is configured. This means that the transaction timeout must be large enough to cover the polling timeout and the message processing times.
+                            NOTE: this value must be considered when the transaction timeout is configured. This means that the transaction timeout must be large enough to cover the polling timeout
+                            and the message processing times.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -769,7 +789,8 @@
     <xsd:element name="caching-connection-factory" type="connectionFactoryPoolType" substitutionGroup="mule:abstract-shared-extension">
         <xsd:annotation>
             <xsd:documentation>
-                DEPRECATED: This element is deprecated from Mule 3.6.  This can still but used in 3.6, but it not necessary given that from Mule 3.6 JMS connections cache Sessions/Producers by default when a CachingConnectionFactory has not been configured explicitly.
+                DEPRECATED: This element is deprecated from Mule 3.6. This can still but used in 3.6, but it not necessary given that from Mule 3.6 JMS connections cache Sessions/Producers by default
+                when a CachingConnectionFactory has not been configured explicitly.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -789,7 +810,8 @@
                         <xsd:documentation>
                             Defines the maximum amount of connections that can be in the pool.
                             NOTE: This cache size is the maximum limit for the number of cached Sessions per session acknowledgement type (auto, client, dups_ok, transacted).
-                            As a consequence, the actual number of cached Sessions may be up to four times as high as the specified value - in the unlikely case of mixing and matching different acknowledgement types.
+                            As a consequence, the actual number of cached Sessions may be up to four times as high as the specified value - in the unlikely case of mixing and matching different
+                            acknowledgement types.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>

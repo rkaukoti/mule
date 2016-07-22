@@ -9,12 +9,11 @@ package org.mule.runtime.module.db.internal.result.statement;
 
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
 import org.mule.runtime.module.db.internal.result.resultset.StreamingResultSetCloser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base class for implementing {@link StreamingResultSetCloser}

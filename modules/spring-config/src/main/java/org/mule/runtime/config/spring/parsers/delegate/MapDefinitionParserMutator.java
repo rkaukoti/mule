@@ -12,14 +12,13 @@ import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.assembly.TwoStageMapBeanAssemblerFactory;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This changes a {@link org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser}
@@ -37,7 +36,7 @@ public class MapDefinitionParserMutator
 
     public MapDefinitionParserMutator(String setter, ChildDefinitionParser delegate)
     {
-        super(new MuleDefinitionParser[]{delegate});
+        super(new MuleDefinitionParser[] {delegate});
         this.setter = setter;
         // this is where we set the callback
         delegate.setBeanAssemblerFactory(new TwoStageMapBeanAssemblerFactory(this));

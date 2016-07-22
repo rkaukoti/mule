@@ -35,23 +35,6 @@ public class TestRetryPolicyTemplate extends AbstractPolicyTemplate
         return new TestRetryPolicy(fooBar, revolutions);
     }
 
-    protected static class TestRetryPolicy implements RetryPolicy
-    {
-        protected boolean fooBar;
-        protected int revolutions;
-
-        public TestRetryPolicy(boolean fooBar, int revolutions)
-        {
-            this.fooBar = fooBar;
-            this.revolutions = revolutions;
-        }
-        
-        public PolicyStatus applyPolicy(Throwable cause)
-        {
-            return PolicyStatus.policyExhausted(cause);
-        }
-    }
-
     public boolean isFooBar()
     {
         return fooBar;
@@ -80,5 +63,22 @@ public class TestRetryPolicyTemplate extends AbstractPolicyTemplate
     public void setConnectionUrls(List connectionUrls)
     {
         this.connectionUrls = connectionUrls;
+    }
+
+    protected static class TestRetryPolicy implements RetryPolicy
+    {
+        protected boolean fooBar;
+        protected int revolutions;
+
+        public TestRetryPolicy(boolean fooBar, int revolutions)
+        {
+            this.fooBar = fooBar;
+            this.revolutions = revolutions;
+        }
+
+        public PolicyStatus applyPolicy(Throwable cause)
+        {
+            return PolicyStatus.policyExhausted(cause);
+        }
     }
 }

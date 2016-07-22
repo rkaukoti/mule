@@ -39,7 +39,7 @@ public class JmsTransaction extends AbstractSingleResourceTransaction
                     CoreMessages.transactionCanOnlyBindToResources("javax.jms.Connection/javax.jms.Session"));
         }
 
-        Session session = (Session)resource;
+        Session session = (Session) resource;
         try
         {
             if (!session.getTransacted())
@@ -54,7 +54,6 @@ public class JmsTransaction extends AbstractSingleResourceTransaction
 
         super.bindResource(key, resource);
     }
-
 
 
     @Override

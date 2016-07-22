@@ -6,21 +6,21 @@
  */
 package org.mule.runtime.module.spring.security;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.config.MuleProperties;
+import org.mule.runtime.core.api.security.SecurityProvider;
+import org.mule.runtime.core.security.MuleSecurityManager;
+
+import java.util.Collection;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import org.mule.runtime.core.api.config.MuleProperties;
-import org.mule.runtime.core.api.security.SecurityProvider;
-import org.mule.runtime.core.security.MuleSecurityManager;
-import org.mule.functional.junit4.FunctionalTestCase;
-
-import java.util.Collection;
-
-import org.junit.Test;
 
 public abstract class AuthenticationNamespaceHandlerTestCase extends FunctionalTestCase
-{    
+{
     @Test
     public void testSecurityManagerConfigured()
     {
@@ -36,7 +36,7 @@ public abstract class AuthenticationNamespaceHandlerTestCase extends FunctionalT
 
     private boolean containsSecurityProvider(Collection<SecurityProvider> providers, Class authenticationProviderClass)
     {
-        for(SecurityProvider provider : providers)
+        for (SecurityProvider provider : providers)
         {
             assertEquals(SpringProviderAdapter.class, provider.getClass());
             if (authenticationProviderClass.equals(((SpringProviderAdapter) provider).getAuthenticationProvider().getClass()))

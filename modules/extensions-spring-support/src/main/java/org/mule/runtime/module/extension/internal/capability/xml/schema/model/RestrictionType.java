@@ -70,7 +70,8 @@ import javax.xml.namespace.QName;
         ComplexRestrictionType.class,
         SimpleRestrictionType.class
 })
-public class RestrictionType extends Annotated {
+public class RestrictionType extends Annotated
+{
 
     protected GroupRef group;
     protected All all;
@@ -104,100 +105,100 @@ public class RestrictionType extends Annotated {
     /**
      * Gets the value of the group property.
      *
-     * @return possible object is
-     *         {@link GroupRef }
+     * @return possible object is {@link GroupRef }
      */
-    public GroupRef getGroup() {
+    public GroupRef getGroup()
+    {
         return group;
     }
 
     /**
      * Sets the value of the group property.
      *
-     * @param value allowed object is
-     *              {@link GroupRef }
+     * @param value allowed object is {@link GroupRef }
      */
-    public void setGroup(GroupRef value) {
+    public void setGroup(GroupRef value)
+    {
         this.group = value;
     }
 
     /**
      * Gets the value of the all property.
      *
-     * @return possible object is
-     *         {@link All }
+     * @return possible object is {@link All }
      */
-    public All getAll() {
+    public All getAll()
+    {
         return all;
     }
 
     /**
      * Sets the value of the all property.
      *
-     * @param value allowed object is
-     *              {@link All }
+     * @param value allowed object is {@link All }
      */
-    public void setAll(All value) {
+    public void setAll(All value)
+    {
         this.all = value;
     }
 
     /**
      * Gets the value of the choice property.
      *
-     * @return possible object is
-     *         {@link ExplicitGroup }
+     * @return possible object is {@link ExplicitGroup }
      */
-    public ExplicitGroup getChoice() {
+    public ExplicitGroup getChoice()
+    {
         return choice;
     }
 
     /**
      * Sets the value of the choice property.
      *
-     * @param value allowed object is
-     *              {@link ExplicitGroup }
+     * @param value allowed object is {@link ExplicitGroup }
      */
-    public void setChoice(ExplicitGroup value) {
+    public void setChoice(ExplicitGroup value)
+    {
         this.choice = value;
     }
 
     /**
      * Gets the value of the sequence property.
      *
-     * @return possible object is
-     *         {@link ExplicitGroup }
+     * @return possible object is {@link ExplicitGroup }
      */
-    public ExplicitGroup getSequence() {
+    public ExplicitGroup getSequence()
+    {
         return sequence;
     }
 
     /**
      * Sets the value of the sequence property.
      *
-     * @param value allowed object is
-     *              {@link ExplicitGroup }
+     * @param value allowed object is {@link ExplicitGroup }
      */
-    public void setSequence(ExplicitGroup value) {
+    public void setSequence(ExplicitGroup value)
+    {
         this.sequence = value;
     }
 
     /**
      * Gets the value of the simpleType property.
      *
-     * @return possible object is
-     *         {@link LocalSimpleType }
+     * @return possible object is {@link LocalSimpleType }
      */
-    public LocalSimpleType getSimpleType() {
+    public LocalSimpleType getSimpleType()
+    {
         return simpleType;
     }
 
     /**
      * Sets the value of the simpleType property.
      *
-     * @param value allowed object is
-     *              {@link LocalSimpleType }
+     * @param value allowed object is {@link LocalSimpleType }
      */
-    public void setSimpleType(LocalSimpleType value) {
+    public void setSimpleType(LocalSimpleType value)
+    {
         this.simpleType = value;
     }
 
@@ -232,8 +233,10 @@ public class RestrictionType extends Annotated {
      * {@link JAXBElement }{@code <}{@link NumFacet }{@code >}
      * {@link JAXBElement }{@code <}{@link Facet }{@code >}
      */
-    public List<Object> getFacets() {
-        if (facets == null) {
+    public List<Object> getFacets()
+    {
+        if (facets == null)
+        {
             facets = new ArrayList<Object>();
         }
         return this.facets;
@@ -260,8 +263,10 @@ public class RestrictionType extends Annotated {
      * {@link AttributeGroupRef }
      * {@link Attribute }
      */
-    public List<Annotated> getAttributeOrAttributeGroup() {
-        if (attributeOrAttributeGroup == null) {
+    public List<Annotated> getAttributeOrAttributeGroup()
+    {
+        if (attributeOrAttributeGroup == null)
+        {
             attributeOrAttributeGroup = new ArrayList<Annotated>();
         }
         return this.attributeOrAttributeGroup;
@@ -270,40 +275,40 @@ public class RestrictionType extends Annotated {
     /**
      * Gets the value of the anyAttribute property.
      *
-     * @return possible object is
-     *         {@link Wildcard }
+     * @return possible object is {@link Wildcard }
      */
-    public Wildcard getAnyAttribute() {
+    public Wildcard getAnyAttribute()
+    {
         return anyAttribute;
     }
 
     /**
      * Sets the value of the anyAttribute property.
      *
-     * @param value allowed object is
-     *              {@link Wildcard }
+     * @param value allowed object is {@link Wildcard }
      */
-    public void setAnyAttribute(Wildcard value) {
+    public void setAnyAttribute(Wildcard value)
+    {
         this.anyAttribute = value;
     }
 
     /**
      * Gets the value of the base property.
      *
-     * @return possible object is
-     *         {@link QName }
+     * @return possible object is {@link QName }
      */
-    public QName getBase() {
+    public QName getBase()
+    {
         return base;
     }
 
     /**
      * Sets the value of the base property.
      *
-     * @param value allowed object is
-     *              {@link QName }
+     * @param value allowed object is {@link QName }
      */
-    public void setBase(QName value) {
+    public void setBase(QName value)
+    {
         this.base = value;
     }
 

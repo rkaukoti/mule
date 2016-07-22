@@ -6,9 +6,7 @@
  */
 package org.mule.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
@@ -19,7 +17,8 @@ import org.mule.runtime.core.routing.filters.MessagePropertyFilter;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public abstract class AbstractScriptConfigBuilderTestCase extends FunctionalTestCase
 {
@@ -41,11 +40,11 @@ public abstract class AbstractScriptConfigBuilderTestCase extends FunctionalTest
     public void testGlobalEndpointConfig() throws MuleException
     {
         ImmutableEndpoint endpoint = getEndpointFactory().getInboundEndpoint(
-            "fruitBowlEndpoint");
+                "fruitBowlEndpoint");
         assertNotNull(endpoint);
         assertEquals(endpoint.getEndpointURI().getAddress(), "fruitBowlPublishQ");
-        
-        MessagePropertyFilter filter = (MessagePropertyFilter)endpoint.getFilter();
+
+        MessagePropertyFilter filter = (MessagePropertyFilter) endpoint.getFilter();
         assertNotNull(filter);
         assertEquals("foo=bar", filter.getPattern());
 
@@ -61,7 +60,7 @@ public abstract class AbstractScriptConfigBuilderTestCase extends FunctionalTest
     public void testEndpointPropertiesConfig() throws Exception
     {
         ImmutableEndpoint endpoint = getEndpointFactory().getInboundEndpoint(
-            "endpointWithProps");
+                "endpointWithProps");
 
         Map props = endpoint.getProperties();
         assertNotNull(props);

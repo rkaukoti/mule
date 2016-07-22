@@ -6,14 +6,14 @@
  */
 package org.mule.test.config.dsl;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.test.config.spring.parsers.beans.SimpleCollectionObject;
-import org.mule.tck.junit4.rule.SystemProperty;
-
 import org.junit.Rule;
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.tck.junit4.rule.SystemProperty;
+import org.mule.test.config.spring.parsers.beans.SimpleCollectionObject;
+
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class PropertiesTestCase extends FunctionalTestCase
 {

@@ -6,6 +6,29 @@
  */
 package org.mule.runtime.module.extension.internal.capability.xml.schema;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.registry.ServiceRegistry;
+import org.mule.runtime.extension.api.introspection.ExtensionModel;
+import org.mule.runtime.extension.api.introspection.property.ExportModelProperty;
+import org.mule.runtime.extension.api.introspection.property.ImportedTypesModelProperty;
+import org.mule.runtime.extension.api.introspection.property.SubTypesModelProperty;
+import org.mule.runtime.extension.api.resources.GeneratedResource;
+import org.mule.runtime.extension.api.resources.ResourcesGenerator;
+import org.mule.runtime.extension.api.resources.spi.GeneratedResourceFactory;
+import org.mule.runtime.extension.xml.dsl.api.property.XmlModelProperty;
+import org.mule.runtime.module.extension.internal.config.ExtensionNamespaceHandler;
+import org.mule.runtime.module.extension.internal.resources.AbstractGeneratedResourceFactoryTestCase;
+import org.mule.runtime.module.extension.internal.resources.AnnotationProcessorResourceGenerator;
+import org.mule.tck.size.SmallTest;
+
+import java.util.Optional;
+
+import javax.annotation.processing.ProcessingEnvironment;
+
 import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.isBlank;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -16,29 +39,6 @@ import static org.mockito.Mockito.when;
 import static org.mule.runtime.module.extension.internal.capability.xml.schema.SpringSchemaBundleResourceFactory.BUNDLE_MASK;
 import static org.mule.runtime.module.extension.internal.capability.xml.schema.SpringSchemaBundleResourceFactory.GENERATED_FILE_NAME;
 import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.CURRENT_VERSION;
-import org.mule.runtime.core.api.registry.ServiceRegistry;
-import org.mule.runtime.extension.api.introspection.ExtensionModel;
-import org.mule.runtime.extension.api.introspection.property.ExportModelProperty;
-import org.mule.runtime.extension.api.introspection.property.ImportedTypesModelProperty;
-import org.mule.runtime.extension.api.introspection.property.SubTypesModelProperty;
-import org.mule.runtime.extension.xml.dsl.api.property.XmlModelProperty;
-import org.mule.runtime.extension.api.resources.GeneratedResource;
-import org.mule.runtime.extension.api.resources.ResourcesGenerator;
-import org.mule.runtime.extension.api.resources.spi.GeneratedResourceFactory;
-import org.mule.runtime.module.extension.internal.config.ExtensionNamespaceHandler;
-import org.mule.runtime.module.extension.internal.resources.AbstractGeneratedResourceFactoryTestCase;
-import org.mule.runtime.module.extension.internal.resources.AnnotationProcessorResourceGenerator;
-import org.mule.tck.size.SmallTest;
-
-import java.util.Optional;
-
-import javax.annotation.processing.ProcessingEnvironment;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -73,17 +73,18 @@ public class XmlGeneratedResourcesTestCase extends AbstractGeneratedResourceFact
     public void before()
     {
         xmlModelProperty = new XmlModelProperty(EXTENSION_VERSION, EXTENSION_NAME,
-                                                UNESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION,
-                                                SCHEMA_NAME,
-                                                String.format("%s/%s/%s", UNESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION,
-                                                              CURRENT_VERSION, SCHEMA_NAME));
+                UNESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION,
+                SCHEMA_NAME,
+                String.format("%s/%s/%s", UNESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION,
+                        CURRENT_VERSION, SCHEMA_NAME));
 
         when(extensionModel.getModelProperty(XmlModelProperty.class)).thenReturn(Optional.of(xmlModelProperty));
         when(extensionModel.getModelProperty(SubTypesModelProperty.class)).thenReturn(Optional.empty());
         when(extensionModel.getModelProperty(ImportedTypesModelProperty.class)).thenReturn(Optional.empty());
         when(extensionModel.getModelProperty(ExportModelProperty.class)).thenReturn(Optional.empty());
 
-        generator = new AnnotationProcessorResourceGenerator(asList(springHandlerFactory, springSchemaBundleResourceFactory, schemaResourceFactory), processingEnvironment);
+        generator = new AnnotationProcessorResourceGenerator(
+                asList(springHandlerFactory, springSchemaBundleResourceFactory, schemaResourceFactory), processingEnvironment);
 
         when(extensionModel.getName()).thenReturn(EXTENSION_NAME);
         when(extensionModel.getVersion()).thenReturn(EXTENSION_VERSION);
@@ -109,7 +110,8 @@ public class XmlGeneratedResourcesTestCase extends AbstractGeneratedResourceFact
 
         assertThat(SpringHandlerBundleResourceFactory.GENERATED_FILE_NAME, equalTo(resource.getPath()));
         assertThat(new String(resource.getContent()),
-                   equalTo(String.format(SpringHandlerBundleResourceFactory.BUNDLE_MASK, ESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION, ExtensionNamespaceHandler.class.getName())));
+                equalTo(String.format(SpringHandlerBundleResourceFactory.BUNDLE_MASK, ESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION,
+                        ExtensionNamespaceHandler.class.getName())));
     }
 
     @Test

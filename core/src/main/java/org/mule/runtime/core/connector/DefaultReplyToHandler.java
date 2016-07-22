@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.core.connector;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROPERTY;
-
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -16,6 +13,8 @@ import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.connector.ReplyToHandler;
 import org.mule.runtime.core.util.store.DeserializationPostInitialisable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -24,8 +23,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROPERTY;
 
 /**
  * <code>DefaultReplyToHandler</code> is responsible for processing a message
@@ -79,8 +78,8 @@ public class DefaultReplyToHandler implements ReplyToHandler, Serializable, Dese
     @Override
     public void processExceptionReplyTo(MessagingException exception, Object replyTo)
     {
-       // DefaultReplyToHandler does not send a reply message when an exception errors, this is rather handled by
-       // using an exception strategy.
+        // DefaultReplyToHandler does not send a reply message when an exception errors, this is rather handled by
+        // using an exception strategy.
     }
 
     public void initAfterDeserialisation(MuleContext context) throws MuleException

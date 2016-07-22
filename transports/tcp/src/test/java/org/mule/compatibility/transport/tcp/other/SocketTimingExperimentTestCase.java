@@ -6,7 +6,7 @@
  */
 package org.mule.compatibility.transport.tcp.other;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 /**
  * This was an attempt to understand the issue we saw with HTTP closing early.
@@ -54,7 +54,7 @@ public class SocketTimingExperimentTestCase extends AbstractMuleTestCase
     {
         for (int i = 0; i < MAX_COUNT; ++i)
         {
-            if (! expectBadClientSingle())
+            if (!expectBadClientSingle())
             {
                 return false;
             }
@@ -65,7 +65,8 @@ public class SocketTimingExperimentTestCase extends AbstractMuleTestCase
     protected boolean expectBadClientSingle() throws IOException, InterruptedException
     {
         ServerSocket server = new ServerSocket();
-        try {
+        try
+        {
             server.bind(new InetSocketAddress(LOCALHOST, SERVER_PORT));
             return badSend(new Socket(LOCALHOST, SERVER_PORT), server.accept(), null);
         }
@@ -83,7 +84,7 @@ public class SocketTimingExperimentTestCase extends AbstractMuleTestCase
             to.setReceiveBufferSize(1);
             from.setSendBufferSize(1);
             // just in case this reduces close time
-//            from.setReuseAddress(true);
+            //            from.setReuseAddress(true);
             // make linger very small (same result if false or zero, or omitted)
             from.setSoLinger(false, 0);
             to.setSoLinger(false, 0);
@@ -98,13 +99,13 @@ public class SocketTimingExperimentTestCase extends AbstractMuleTestCase
             // OH NO IT DOESN'T
             from.getOutputStream().write(3);
             // this appears to block (no timeout)
-//            from.getOutputStream().write(new byte[100000]);
+            //            from.getOutputStream().write(new byte[100000]);
             // close (before buffer sent)
             // close everything we can think of...
-//            from.shutdownInput();
-//            from.shutdownOutput();
+            //            from.shutdownInput();
+            //            from.shutdownOutput();
             from.close();
-//            to.shutdownOutput();
+            //            to.shutdownOutput();
             if (null != server)
             {
                 server.close();
@@ -127,15 +128,15 @@ public class SocketTimingExperimentTestCase extends AbstractMuleTestCase
             }
             // now try reading - this should fail on second value?
             return 1 == to.getInputStream().read()
-                    && 2 == to.getInputStream().read()
-                    && 3 == to.getInputStream().read();
+                   && 2 == to.getInputStream().read()
+                   && 3 == to.getInputStream().read();
         }
         finally
         {
             to.close();
             if (!from.isClosed())
             {
-                 from.close();
+                from.close();
             }
         }
     }
@@ -144,7 +145,7 @@ public class SocketTimingExperimentTestCase extends AbstractMuleTestCase
     {
         for (int i = 0; i < MAX_COUNT; ++i)
         {
-            if (! expectBadServerSingle())
+            if (!expectBadServerSingle())
             {
                 return false;
             }
@@ -155,7 +156,8 @@ public class SocketTimingExperimentTestCase extends AbstractMuleTestCase
     protected boolean expectBadServerSingle() throws IOException, InterruptedException
     {
         ServerSocket server = new ServerSocket();
-        try {
+        try
+        {
             server.bind(new InetSocketAddress(LOCALHOST, SERVER_PORT));
             Socket client = new Socket(LOCALHOST, SERVER_PORT);
             return badSend(server.accept(), client, server);

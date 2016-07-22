@@ -19,6 +19,7 @@ public interface Server
 
     /**
      * Binds the ServerSocket to the network interface and starts listening for requests
+     *
      * @throws IOException if there was a problem binding to the host and port specified
      */
     void start() throws IOException;

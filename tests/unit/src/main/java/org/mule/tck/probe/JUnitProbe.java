@@ -7,7 +7,6 @@
 package org.mule.tck.probe;
 
 import org.mule.runtime.core.util.ExceptionUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +56,6 @@ public abstract class JUnitProbe implements Probe
      * Implement this method to provide your actual probing logic
      *
      * @return <code>true</code> if the acceptance conditions was met. <code>false</code> otherwise
-     * @throws Exception
      */
     protected abstract boolean test() throws Exception;
 

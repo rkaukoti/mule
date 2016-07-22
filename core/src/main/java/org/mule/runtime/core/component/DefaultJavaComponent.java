@@ -40,7 +40,7 @@ public class DefaultJavaComponent extends AbstractJavaComponent
     }
 
     public DefaultJavaComponent(ObjectFactory objectFactory,
-            EntryPointResolverSet entryPointResolverSet)
+                                EntryPointResolverSet entryPointResolverSet)
     {
         super(objectFactory, entryPointResolverSet);
     }
@@ -67,7 +67,7 @@ public class DefaultJavaComponent extends AbstractJavaComponent
             catch (Exception e)
             {
                 throw new InitialisationException(
-                    MessageFactory.createStaticMessage("Unable to create instance of POJO service"), e, this);
+                        MessageFactory.createStaticMessage("Unable to create instance of POJO service"), e, this);
 
             }
             // On all calls, start if not started.

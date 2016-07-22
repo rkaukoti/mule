@@ -20,7 +20,7 @@ public class MessageProcessorChainDefinitionParser extends ParentContextDefiniti
     public MessageProcessorChainDefinitionParser()
     {
         super(MuleOrphanDefinitionParser.ROOT_ELEMENT, new MuleOrphanDefinitionParser(
-            MessageProcessorChainFactoryBean.class, false));
+                MessageProcessorChainFactoryBean.class, false));
         otherwise(new ChildDefinitionParser("messageProcessor", MessageProcessorChainFactoryBean.class));
     }
 

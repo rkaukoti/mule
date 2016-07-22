@@ -31,7 +31,7 @@ public class NameConverterFilter implements ConverterFilter
         List<Converter> finteredConverters = new LinkedList<>(converters);
         sortConvertersByName(finteredConverters);
 
-        String firstConverterName= finteredConverters.get(0).getName();
+        String firstConverterName = finteredConverters.get(0).getName();
         int index = 1;
         for (; index < finteredConverters.size(); index++)
         {

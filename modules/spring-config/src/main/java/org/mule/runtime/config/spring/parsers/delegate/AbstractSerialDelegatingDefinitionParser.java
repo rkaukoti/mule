@@ -13,15 +13,14 @@ import org.mule.runtime.config.spring.parsers.MuleDefinitionParserConfiguration;
 import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.core.util.StringUtils;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
+import org.springframework.beans.factory.xml.ParserContext;
+import org.w3c.dom.Element;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
-import org.springframework.beans.factory.xml.ParserContext;
-import org.w3c.dom.Element;
 
 /**
  * This allows a set of definition parsers to be used, one after another, to process
@@ -51,12 +50,73 @@ public abstract class AbstractSerialDelegatingDefinitionParser extends AbstractD
     }
 
     /**
-     * @param doReset Should the name be reset after called.  This is typically true (it protects the
-     * parent from changes made by children) unless this is itself nested.
+     * @param doReset Should the name be reset after called.  This is typically true (it protects the parent from changes made by children)
+     *                unless this is itself nested.
      */
     public AbstractSerialDelegatingDefinitionParser(boolean doReset)
     {
         this.doReset = doReset;
+    }
+
+    /**
+     * A utility class for selecting certain attributes.  If the attributes are enabled,
+     * the default is set to block others; if specific attributes are disabled the default
+     * is set to allow others.
+     */
+    public static void enableAttributes(MuleDefinitionParser delegate, String[] attributes, boolean enable)
+    {
+        // if enabling specific attributes, block globally
+        delegate.setIgnoredDefault(enable);
+
+        Iterator names = Arrays.asList(attributes).iterator();
+        while (names.hasNext())
+        {
+            String name = (String) names.next();
+            if (enable)
+            {
+                delegate.removeIgnored(name);
+            }
+            else
+            {
+                delegate.addIgnored(name);
+            }
+        }
+    }
+
+    public static void enableAttributes(MuleDefinitionParser delegate, String[][] attributes)
+    {
+        for (int i = 0; i < attributes.length; ++i)
+        {
+            enableAttributes(delegate, attributes[i], true);
+        }
+    }
+
+    public static void enableAttributes(MuleDefinitionParser delegate, String[] attributes)
+    {
+        enableAttributes(delegate, attributes, true);
+    }
+
+    public static void enableAttribute(MuleDefinitionParser delegate, String attribute)
+    {
+        enableAttributes(delegate, new String[] {attribute}, true);
+    }
+
+    public static void disableAttributes(MuleDefinitionParser delegate, String[][] attributes)
+    {
+        for (int i = 0; i < attributes.length; ++i)
+        {
+            enableAttributes(delegate, attributes[i], false);
+        }
+    }
+
+    public static void disableAttributes(MuleDefinitionParser delegate, String[] attributes)
+    {
+        enableAttributes(delegate, attributes, false);
+    }
+
+    public static void disableAttribute(MuleDefinitionParser delegate, String attribute)
+    {
+        enableAttributes(delegate, new String[] {attribute}, false);
     }
 
     public AbstractBeanDefinition muleParse(Element element, ParserContext parserContext)
@@ -159,71 +219,6 @@ public abstract class AbstractSerialDelegatingDefinitionParser extends AbstractD
     protected void addHandledException(Class exception)
     {
         handledExceptions.add(exception);
-    }
-
-    /**
-     * A utility class for selecting certain attributes.  If the attributes are enabled,
-     * the default is set to block others; if specific attributes are disabled the default
-     * is set to allow others.
-     *
-     * @param delegate
-     * @param attributes
-     * @param enable
-     */
-    public static void enableAttributes(MuleDefinitionParser delegate, String[] attributes, boolean enable)
-    {
-        // if enabling specific attributes, block globally
-        delegate.setIgnoredDefault(enable);
-
-        Iterator names = Arrays.asList(attributes).iterator();
-        while (names.hasNext())
-        {
-            String name = (String) names.next();
-            if (enable)
-            {
-                delegate.removeIgnored(name);
-            }
-            else
-            {
-                delegate.addIgnored(name);
-            }
-        }
-    }
-
-    public static void enableAttributes(MuleDefinitionParser delegate, String[][] attributes)
-    {
-        for (int i = 0; i < attributes.length; ++i)
-        {
-            enableAttributes(delegate, attributes[i], true);
-        }
-    }
-
-    public static void enableAttributes(MuleDefinitionParser delegate, String[] attributes)
-    {
-        enableAttributes(delegate, attributes, true);
-    }
-
-    public static void enableAttribute(MuleDefinitionParser delegate, String attribute)
-    {
-        enableAttributes(delegate, new String[]{attribute}, true);
-    }
-
-    public static void disableAttributes(MuleDefinitionParser delegate, String[][] attributes)
-    {
-        for (int i = 0; i < attributes.length; ++i)
-        {
-            enableAttributes(delegate, attributes[i], false);
-        }
-    }
-
-    public static void disableAttributes(MuleDefinitionParser delegate, String[] attributes)
-    {
-        enableAttributes(delegate, attributes, false);
-    }
-
-    public static void disableAttribute(MuleDefinitionParser delegate, String attribute)
-    {
-        enableAttributes(delegate, new String[]{attribute}, false);
     }
 
 }

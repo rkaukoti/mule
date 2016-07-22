@@ -6,11 +6,11 @@
  */
 package org.mule.test.integration.config;
 
-import static org.junit.Assert.assertTrue;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.functional.junit4.FunctionalTestCase;
-
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleMessage;
+
+import static org.junit.Assert.assertTrue;
 
 /*
  * This test has been added due to MULE-610
@@ -27,7 +27,7 @@ public class GlobalTransformerTestCase extends FunctionalTestCase
     @Test
     public void testNormal() throws Exception
     {
-        MuleMessage msg= flowRunner("Test").withPayload(getTestMuleMessage("HELLO!")).run().getMessage();
+        MuleMessage msg = flowRunner("Test").withPayload(getTestMuleMessage("HELLO!")).run().getMessage();
         assertTrue(msg.getPayload() instanceof byte[]);
     }
 }

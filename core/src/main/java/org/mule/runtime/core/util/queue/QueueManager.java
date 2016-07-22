@@ -19,7 +19,7 @@ public interface QueueManager extends Startable, Stoppable
     /**
      * Returns a new instance of {@link QueueSession} bounded to this
      * {@link QueueManager}
-     * 
+     *
      * @return session for retrieving queues and handle transactions
      */
     QueueSession getQueueSession();
@@ -27,7 +27,7 @@ public interface QueueManager extends Startable, Stoppable
     /**
      * Sets the default {@link org.mule.runtime.core.util.queue.QueueConfiguration} for any created {@link Queue} for
      * which a custom configuration hasn't been specified
-     * 
+     *
      * @param config an instance of {@link org.mule.runtime.core.util.queue.QueueConfiguration}
      */
     void setDefaultQueueConfiguration(QueueConfiguration config);
@@ -35,9 +35,9 @@ public interface QueueManager extends Startable, Stoppable
     /**
      * Specifies a {@link org.mule.runtime.core.util.queue.QueueConfiguration} for the queue which name matches
      * queueName
-     * 
+     *
      * @param queueName the name of a {@link Queue}
-     * @param config an instance of {@link org.mule.runtime.core.util.queue.QueueConfiguration}
+     * @param config    an instance of {@link org.mule.runtime.core.util.queue.QueueConfiguration}
      */
     void setQueueConfiguration(String queueName, QueueConfiguration config);
 }

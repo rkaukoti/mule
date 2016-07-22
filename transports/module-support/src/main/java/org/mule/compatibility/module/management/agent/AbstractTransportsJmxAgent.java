@@ -44,7 +44,8 @@ public abstract class AbstractTransportsJmxAgent extends AbstractJmxAgent
                         }
 
                         ObjectName on = jmxSupport.getObjectName(fullName);
-                        ClassloaderSwitchingMBeanWrapper mBean = new ClassloaderSwitchingMBeanWrapper(service, EndpointServiceMBean.class, muleContext.getExecutionClassLoader());
+                        ClassloaderSwitchingMBeanWrapper mBean = new ClassloaderSwitchingMBeanWrapper(service, EndpointServiceMBean.class,
+                                muleContext.getExecutionClassLoader());
                         getMBeanServer().registerMBean(mBean, on);
                         if (logger.isInfoEnabled())
                         {
@@ -80,17 +81,19 @@ public abstract class AbstractTransportsJmxAgent extends AbstractJmxAgent
             NotCompliantMBeanException, MBeanRegistrationException, InstanceAlreadyExistsException
     {
         for (Connector connector : muleContext.getRegistry().lookupLocalObjects(Connector.class))
-{
+        {
             ConnectorServiceMBean service = new ConnectorService(connector);
             final String rawName = service.getName();
             final String name = jmxSupport.escape(rawName);
-            final String jmxName = String.format("%s:%s%s", jmxSupport.getDomainName(muleContext, !containerMode), ConnectorServiceMBean.DEFAULT_JMX_NAME_PREFIX, name);
+            final String jmxName = String.format("%s:%s%s", jmxSupport.getDomainName(muleContext, !containerMode),
+                    ConnectorServiceMBean.DEFAULT_JMX_NAME_PREFIX, name);
             if (logger.isDebugEnabled())
             {
                 logger.debug("Attempting to register service with name: " + jmxName);
             }
             ObjectName oName = jmxSupport.getObjectName(jmxName);
-            ClassloaderSwitchingMBeanWrapper mBean = new ClassloaderSwitchingMBeanWrapper(service, ConnectorServiceMBean.class, muleContext.getExecutionClassLoader());
+            ClassloaderSwitchingMBeanWrapper mBean =
+                    new ClassloaderSwitchingMBeanWrapper(service, ConnectorServiceMBean.class, muleContext.getExecutionClassLoader());
             getMBeanServer().registerMBean(mBean, oName);
             logger.info("Registered Connector Service with name " + oName);
         }

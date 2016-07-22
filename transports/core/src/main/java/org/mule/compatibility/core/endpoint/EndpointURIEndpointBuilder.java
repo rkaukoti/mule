@@ -24,20 +24,20 @@ public class EndpointURIEndpointBuilder extends AbstractEndpointBuilder
 
     /**
      * Called from Spring
-     * 
+     *
      * @param global The global endpoint "Policy"
      */
     public EndpointURIEndpointBuilder(EndpointURIEndpointBuilder global) throws EndpointException
     {
         super();
-        
+
         // can't (concisely) use setters where null is a possibility
         // for consistency, set directly on all fields (this also avoids logic in
         // getters)
         uriBuilder = global.uriBuilder;
         connector = global.connector;
         name = global.name; // this seems a bit odd, but is tested for in the big
-                            // spring config test case
+        // spring config test case
         properties = global.properties;
         transactionConfig = global.transactionConfig;
         deleteUnacceptedMessages = global.deleteUnacceptedMessages;
@@ -88,8 +88,11 @@ public class EndpointURIEndpointBuilder extends AbstractEndpointBuilder
         setRetryPolicyTemplate(source.getRetryPolicyTemplate());
         setExchangePattern(source.getExchangePattern());
         setMuleContext(source.getMuleContext());
-        setMessageProcessors(source.getMessageProcessors().isEmpty() ? Collections.<MessageProcessor>emptyList() : source.getMessageProcessors());
-        setResponseMessageProcessors(source.getResponseMessageProcessors().isEmpty() ? Collections.<MessageProcessor>emptyList() : source.getResponseMessageProcessors());
+        setMessageProcessors(
+                source.getMessageProcessors().isEmpty() ? Collections.<MessageProcessor>emptyList() : source.getMessageProcessors());
+        setResponseMessageProcessors(source.getResponseMessageProcessors().isEmpty() ?
+                Collections.<MessageProcessor>emptyList() :
+                source.getResponseMessageProcessors());
         setDisableTransportTransformer(source.isDisableTransportTransformer());
         setMimeType(source.getMimeType() != null ? source.getMimeType().toRfcString() : null);
         setRedeliveryPolicy(source.getRedeliveryPolicy());

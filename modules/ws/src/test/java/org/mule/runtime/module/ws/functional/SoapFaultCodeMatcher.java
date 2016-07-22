@@ -6,10 +6,9 @@
  */
 package org.mule.runtime.module.ws.functional;
 
-import org.mule.runtime.module.ws.consumer.SoapFaultException;
-
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
+import org.mule.runtime.module.ws.consumer.SoapFaultException;
 
 public class SoapFaultCodeMatcher extends TypeSafeMatcher<SoapFaultException>
 {
@@ -19,6 +18,11 @@ public class SoapFaultCodeMatcher extends TypeSafeMatcher<SoapFaultException>
     public SoapFaultCodeMatcher(String code)
     {
         this.code = code;
+    }
+
+    public static SoapFaultCodeMatcher hasFaultCode(final String code)
+    {
+        return new SoapFaultCodeMatcher(code);
     }
 
     @Override
@@ -37,10 +41,5 @@ public class SoapFaultCodeMatcher extends TypeSafeMatcher<SoapFaultException>
     protected void describeMismatchSafely(SoapFaultException item, Description mismatchDescription)
     {
         mismatchDescription.appendText("is not a SoapFaultException with fault code ").appendValue(item.getFaultCode().getLocalPart());
-    }
-
-    public static SoapFaultCodeMatcher hasFaultCode(final String code)
-    {
-        return new SoapFaultCodeMatcher(code);
     }
 }

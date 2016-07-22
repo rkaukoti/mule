@@ -6,11 +6,7 @@
  */
 package org.mule.runtime.core.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
@@ -20,7 +16,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @SmallTest
 public class TemplateParserTestCase extends AbstractMuleTestCase
@@ -149,7 +148,7 @@ public class TemplateParserTestCase extends AbstractMuleTestCase
         TemplateParser tp = TemplateParser.createAntStyleParser();
 
         Map<String, Object> map = buildMap();
-        List<?> result = tp.parse(map, (List<?>)null);
+        List<?> result = tp.parse(map, (List<?>) null);
         assertNotNull(result);
         assertEquals(0, result.size());
     }

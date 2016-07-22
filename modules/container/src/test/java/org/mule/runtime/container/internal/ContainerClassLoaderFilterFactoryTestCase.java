@@ -7,9 +7,7 @@
 
 package org.mule.runtime.container.internal;
 
-import static java.util.Collections.singleton;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import org.junit.Test;
 import org.mule.runtime.module.artifact.classloader.ClassLoaderFilter;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
@@ -18,7 +16,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Test;
+import static java.util.Collections.singleton;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContainerClassLoaderFilterFactoryTestCase extends AbstractMuleTestCase
 {
@@ -30,8 +30,11 @@ public class ContainerClassLoaderFilterFactoryTestCase extends AbstractMuleTestC
     public void acceptsExportedModulePackages() throws Exception
     {
         final List<MuleModule> muleModules = new ArrayList<>();
-        muleModules.add(new TestModuleBuilder("module1").exportingPackages("org.foo1", "org.foo1.bar").exportingPaths("META-INF", "META-INF/docs1").build());
-        muleModules.add(new TestModuleBuilder("module2").exportingPackages("org.foo2").exportingPaths("META-INF", "META-INF/docs2").build());
+        muleModules.add(new TestModuleBuilder("module1").exportingPackages("org.foo1", "org.foo1.bar")
+                                                        .exportingPaths("META-INF", "META-INF/docs1")
+                                                        .build());
+        muleModules.add(
+                new TestModuleBuilder("module2").exportingPackages("org.foo2").exportingPaths("META-INF", "META-INF/docs2").build());
 
         final ClassLoaderFilter classLoaderFilter = factory.create(Collections.emptySet(), muleModules);
 

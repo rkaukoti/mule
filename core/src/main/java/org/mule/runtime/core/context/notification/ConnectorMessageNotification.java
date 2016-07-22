@@ -10,7 +10,6 @@ import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.api.context.notification.BlockingServerEvent;
 import org.mule.runtime.core.api.context.notification.ServerNotification;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,22 +19,19 @@ import org.slf4j.LoggerFactory;
 public class ConnectorMessageNotification extends ServerNotification implements BlockingServerEvent
 {
 
-    /**
-     * Serial version
-     */
-    private static final long serialVersionUID = -5118299601117624094L;
-
+    public static final int MESSAGE_RECEIVED = MESSAGE_EVENT_ACTION_START_RANGE + 1;
+    public static final int MESSAGE_RESPONSE = MESSAGE_EVENT_ACTION_START_RANGE + 5;
+    public static final int MESSAGE_ERROR_RESPONSE = MESSAGE_EVENT_ACTION_START_RANGE + 6;
+    public static final int MESSAGE_REQUEST_BEGIN = MESSAGE_EVENT_ACTION_START_RANGE + 4;
+    public static final int MESSAGE_REQUEST_END = MESSAGE_EVENT_END_ACTION_START_RANGE + 3;
     /**
      * logger used by this class
      */
     protected static final Logger logger = LoggerFactory.getLogger(ConnectorMessageNotification.class);
-
-    public static final int MESSAGE_RECEIVED = MESSAGE_EVENT_ACTION_START_RANGE + 1;
-    public static final int MESSAGE_RESPONSE = MESSAGE_EVENT_ACTION_START_RANGE + 5;
-    public static final int MESSAGE_ERROR_RESPONSE = MESSAGE_EVENT_ACTION_START_RANGE + 6;
-
-    public static final int MESSAGE_REQUEST_BEGIN = MESSAGE_EVENT_ACTION_START_RANGE + 4;
-    public static final int MESSAGE_REQUEST_END = MESSAGE_EVENT_END_ACTION_START_RANGE + 3;
+    /**
+     * Serial version
+     */
+    private static final long serialVersionUID = -5118299601117624094L;
 
     static
     {
@@ -52,11 +48,11 @@ public class ConnectorMessageNotification extends ServerNotification implements 
     private FlowConstruct flowConstruct;
 
     public ConnectorMessageNotification(
-        Object component,
-        MuleMessage resource,
-        String endpoint,
-        FlowConstruct flowConstruct,
-        int action)
+            Object component,
+            MuleMessage resource,
+            String endpoint,
+            FlowConstruct flowConstruct,
+            int action)
     {
         super(resource, action, flowConstruct != null ? flowConstruct.getName() : null);
         this.component = component;

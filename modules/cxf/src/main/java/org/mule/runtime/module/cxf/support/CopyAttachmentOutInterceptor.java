@@ -6,17 +6,16 @@
  */
 package org.mule.runtime.module.cxf.support;
 
-import org.mule.runtime.core.NonBlockingVoidMuleEvent;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.module.cxf.CxfConstants;
-
-import java.util.Collection;
-
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Attachment;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
 import org.apache.cxf.phase.Phase;
+import org.mule.runtime.core.NonBlockingVoidMuleEvent;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.module.cxf.CxfConstants;
+
+import java.util.Collection;
 
 /**
  * Copies any attachments which were stored by the proxy to the outbound CXF message.
@@ -38,8 +37,8 @@ public class CopyAttachmentOutInterceptor extends AbstractPhaseInterceptor
         }
 
         Collection<Attachment> a = event.getFlowVariable(CxfConstants.ATTACHMENTS);
-        
-        if (a != null) 
+
+        if (a != null)
         {
             message.setAttachments(a);
         }

@@ -6,6 +6,10 @@
  */
 package org.mule.runtime.module.cxf.support;
 
+import org.apache.ws.security.WSSecurityException;
+import org.apache.ws.security.handler.RequestData;
+import org.apache.ws.security.validate.Credential;
+import org.apache.ws.security.validate.Validator;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.security.Authentication;
 import org.mule.runtime.core.api.security.SecurityContext;
@@ -13,47 +17,43 @@ import org.mule.runtime.core.api.security.SecurityProviderNotFoundException;
 import org.mule.runtime.core.api.security.UnknownAuthenticationTypeException;
 import org.mule.runtime.core.security.DefaultMuleAuthentication;
 import org.mule.runtime.core.security.MuleCredentials;
-
-import org.apache.ws.security.WSSecurityException;
-import org.apache.ws.security.handler.RequestData;
-import org.apache.ws.security.validate.Credential;
-import org.apache.ws.security.validate.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *  Integrates mule spring security with CXF ws-security
+ * Integrates mule spring security with CXF ws-security
  */
 public class MuleSecurityManagerValidator implements Validator
 {
     private static Logger logger = LoggerFactory.getLogger(MuleSecurityManagerValidator.class);
-    
+
     private org.mule.runtime.core.api.security.SecurityManager securityManager;
 
     public Credential validate(Credential credential, RequestData data) throws WSSecurityException
     {
-        if (credential == null || credential.getUsernametoken() == null) {
+        if (credential == null || credential.getUsernametoken() == null)
+        {
             throw new WSSecurityException(WSSecurityException.FAILURE, "noCredential");
         }
 
         DefaultMuleAuthentication auth = new DefaultMuleAuthentication(
-            new MuleCredentials(credential.getUsernametoken().getName(), credential.getUsernametoken().getPassword().toCharArray()));
+                new MuleCredentials(credential.getUsernametoken().getName(), credential.getUsernametoken().getPassword().toCharArray()));
 
         try
         {
-          Authentication authentication = securityManager.authenticate(auth);
+            Authentication authentication = securityManager.authenticate(auth);
 
-          SecurityContext secContext = null;
-          try
-          {
-              secContext = securityManager.createSecurityContext(authentication);
-              secContext.setAuthentication(authentication);
-          }
-          catch (UnknownAuthenticationTypeException e)
-          {
-              logger.warn("Could not create security context after having successfully authenticated.", e);
-          }
-          RequestContext.getEvent().getSession().setSecurityContext(secContext);
+            SecurityContext secContext = null;
+            try
+            {
+                secContext = securityManager.createSecurityContext(authentication);
+                secContext.setAuthentication(authentication);
+            }
+            catch (UnknownAuthenticationTypeException e)
+            {
+                logger.warn("Could not create security context after having successfully authenticated.", e);
+            }
+            RequestContext.getEvent().getSession().setSecurityContext(secContext);
         }
         catch (org.mule.runtime.core.api.security.SecurityException e)
         {

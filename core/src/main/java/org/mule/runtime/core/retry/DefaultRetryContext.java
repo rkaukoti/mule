@@ -38,14 +38,14 @@ public class DefaultRetryContext implements RetryContext, MuleContextAware
         }
     }
 
-    public void setMuleContext(MuleContext context)
-    {
-        this.muleContext = context;
-    }
-
     public MuleContext getMuleContext()
     {
         return muleContext;
+    }
+
+    public void setMuleContext(MuleContext context)
+    {
+        this.muleContext = context;
     }
 
     public Map<Object, Object> getMetaInfo()
@@ -58,14 +58,14 @@ public class DefaultRetryContext implements RetryContext, MuleContextAware
         return returnMessages;
     }
 
-    public MuleMessage getFirstReturnMessage()
-    {
-        return (returnMessages == null ? null : returnMessages[0]);
-    }
-
     public void setReturnMessages(MuleMessage[] returnMessages)
     {
         this.returnMessages = returnMessages;
+    }
+
+    public MuleMessage getFirstReturnMessage()
+    {
+        return (returnMessages == null ? null : returnMessages[0]);
     }
 
     public void addReturnMessage(MuleMessage result)

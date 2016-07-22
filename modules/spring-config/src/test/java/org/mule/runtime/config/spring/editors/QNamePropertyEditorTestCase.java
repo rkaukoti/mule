@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.config.spring.editors;
 
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import javax.xml.namespace.QName;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

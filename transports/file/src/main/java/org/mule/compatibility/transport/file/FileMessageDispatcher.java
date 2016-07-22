@@ -6,8 +6,6 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.apache.commons.lang.StringUtils.EMPTY;
-import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_FILENAME;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.compatibility.core.transport.AbstractMessageDispatcher;
 import org.mule.compatibility.transport.file.i18n.FileMessages;
@@ -26,6 +24,9 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.InputStream;
 
+import static org.apache.commons.lang.StringUtils.EMPTY;
+import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_FILENAME;
+
 /**
  * <code>FileMessageDispatcher</code> is used to read/write files to the filesystem
  */
@@ -40,61 +41,9 @@ public class FileMessageDispatcher extends AbstractMessageDispatcher
 
         if (endpoint.getProperty("outputAppend") != null)
         {
-            throw new IllegalArgumentException("Configuring 'outputAppend' on a file endpoint is no longer supported. You may configure it on a file connector instead.");
+            throw new IllegalArgumentException(
+                    "Configuring 'outputAppend' on a file endpoint is no longer supported. You may configure it on a file connector instead.");
         }
-    }
-
-    @Override
-    protected void doDispatch(MuleEvent event) throws Exception
-    {
-        Object data = event.getMessage().getPayload();
-        // Wrap the transformed message before passing it to the filename parser
-        MuleMessage.Builder messageBuilder = MuleMessage.builder(event.getMessage()).payload(data);
-
-        FileOutputStream fos = (FileOutputStream) connector.getOutputStream(getEndpoint(), event);
-        try
-        {
-            if (event.getMessage().getOutboundProperty(PROPERTY_FILENAME) == null)
-            {
-                messageBuilder.addOutboundProperty(PROPERTY_FILENAME, event.getMessage().getOutboundProperty(PROPERTY_FILENAME, EMPTY));
-            }
-            event.setMessage(messageBuilder.build());
-
-
-            if (data instanceof byte[])
-            {
-                fos.write((byte[]) data);
-            }
-            else if (data instanceof String)
-            {
-                fos.write(data.toString().getBytes(resolveEncoding(event)));
-            }
-            else if (data instanceof OutputHandler)
-            {
-                ((OutputHandler) data).write(event, fos);
-            }
-            else
-            {
-                InputStream is = (InputStream) event.transformMessage(DataType.fromType(InputStream.class));
-                IOUtils.copyLarge(is, fos);
-                is.close();
-            }
-        }
-        finally
-        {
-            logger.debug("Closing file");
-            fos.close();
-        }
-    }
-
-    /**
-     * There is no associated session for a file connector
-     *
-     * @throws MuleException
-     */
-    public Object getDelegateSession() throws MuleException
-    {
-        return null;
     }
 
     protected static File getNextFile(String dir, Object filter) throws MuleException
@@ -151,10 +100,61 @@ public class FileMessageDispatcher extends AbstractMessageDispatcher
         {
             if (file.isFile())
             {
-                return  file;
+                return file;
             }
         }
 
+        return null;
+    }
+
+    @Override
+    protected void doDispatch(MuleEvent event) throws Exception
+    {
+        Object data = event.getMessage().getPayload();
+        // Wrap the transformed message before passing it to the filename parser
+        MuleMessage.Builder messageBuilder = MuleMessage.builder(event.getMessage()).payload(data);
+
+        FileOutputStream fos = (FileOutputStream) connector.getOutputStream(getEndpoint(), event);
+        try
+        {
+            if (event.getMessage().getOutboundProperty(PROPERTY_FILENAME) == null)
+            {
+                messageBuilder.addOutboundProperty(PROPERTY_FILENAME, event.getMessage().getOutboundProperty(PROPERTY_FILENAME, EMPTY));
+            }
+            event.setMessage(messageBuilder.build());
+
+
+            if (data instanceof byte[])
+            {
+                fos.write((byte[]) data);
+            }
+            else if (data instanceof String)
+            {
+                fos.write(data.toString().getBytes(resolveEncoding(event)));
+            }
+            else if (data instanceof OutputHandler)
+            {
+                ((OutputHandler) data).write(event, fos);
+            }
+            else
+            {
+                InputStream is = (InputStream) event.transformMessage(DataType.fromType(InputStream.class));
+                IOUtils.copyLarge(is, fos);
+                is.close();
+            }
+        }
+        finally
+        {
+            logger.debug("Closing file");
+            fos.close();
+        }
+    }
+
+    /**
+     * There is no associated session for a file connector
+     */
+    public Object getDelegateSession() throws MuleException
+    {
         return null;
     }
 

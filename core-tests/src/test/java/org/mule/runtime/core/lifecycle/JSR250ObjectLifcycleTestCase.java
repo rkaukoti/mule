@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.core.lifecycle;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Test lifecycle behaviour and restrictions on lifecyce methods
@@ -115,6 +115,15 @@ public class JSR250ObjectLifcycleTestCase extends AbstractMuleContextTestCase
         }
     }
 
+    public static class BadStaticMethodPostConstructLifecycleMethodObject
+    {
+        @PostConstruct
+        public static void init()
+        {
+
+        }
+    }
+
     public class DupePostConstructJSR250ObjectLifecycleTracker extends JSR250ObjectLifecycleTracker
     {
         //You cannot have an object with two {@link PostConstruct} annotated methods
@@ -148,15 +157,6 @@ public class JSR250ObjectLifcycleTestCase extends AbstractMuleContextTestCase
     {
         @PreDestroy
         public void destroy(boolean foo)
-        {
-
-        }
-    }
-
-    public static class BadStaticMethodPostConstructLifecycleMethodObject
-    {
-        @PostConstruct
-        public static void init()
         {
 
         }

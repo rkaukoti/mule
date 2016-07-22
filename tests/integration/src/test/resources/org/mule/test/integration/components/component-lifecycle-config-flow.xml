@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd">
 
     <spring:bean id="SpringBeanLifecycleTrackerComponent" class="org.mule.runtime.core.lifecycle.LifecycleTrackerComponentObject"
                  init-method="springInitialize" destroy-method="springDestroy" scope="singleton">
-        <spring:property name="property" value="sbltc" />
+        <spring:property name="property" value="sbltc"/>
     </spring:bean>
 
     <spring:bean id="SpringBeanLifecycleTrackerComponent2" class="org.mule.runtime.core.lifecycle.LifecycleTrackerComponentObject"

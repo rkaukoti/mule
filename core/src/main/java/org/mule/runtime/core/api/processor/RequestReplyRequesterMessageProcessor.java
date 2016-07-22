@@ -19,7 +19,7 @@ import org.mule.runtime.core.api.source.MessageSource;
  *
  * @since 3.0
  */
-public interface RequestReplyRequesterMessageProcessor 
+public interface RequestReplyRequesterMessageProcessor
 {
     /**
      * @param replyMessageSource the message source that will be used to receive the reply message

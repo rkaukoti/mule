@@ -7,8 +7,6 @@
 
 package org.mule.runtime.core.api;
 
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 
 public class TestNotSerializableMessageProcessor implements MessageProcessor

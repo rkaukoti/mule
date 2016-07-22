@@ -27,7 +27,8 @@ class Policy
 {
 
     // map from event to set of senders
-    private Map<Class<? extends ServerNotification>, Collection<Sender>> eventToSenders = new HashMap<Class<? extends ServerNotification>, Collection<Sender>>();
+    private Map<Class<? extends ServerNotification>, Collection<Sender>> eventToSenders =
+            new HashMap<Class<? extends ServerNotification>, Collection<Sender>>();
 
     // these are cumulative - set values should never change, they are just a cache of known info
     // they are co and contra-variant wrt to exact event type (see code below).
@@ -37,10 +38,10 @@ class Policy
     /**
      * For each listener, we check each interface and see what events can be delivered.
      */
-    Policy(Map<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>> interfaceToEvents, 
-        Set<ListenerSubscriptionPair> listenerSubscriptionPairs, 
-        Set<Class<? extends ServerNotificationListener>> disabledInterfaces, 
-        Set<Class<? extends ServerNotification>> disabledEvents)
+    Policy(Map<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>> interfaceToEvents,
+           Set<ListenerSubscriptionPair> listenerSubscriptionPairs,
+           Set<Class<? extends ServerNotificationListener>> disabledInterfaces,
+           Set<Class<? extends ServerNotification>> disabledEvents)
     {
         for (ListenerSubscriptionPair pair : listenerSubscriptionPairs)
         {
@@ -72,9 +73,9 @@ class Policy
         }
     }
 
-    protected static boolean notASubclassOfAnyClassInSet(Set set,  Class clazz)
+    protected static boolean notASubclassOfAnyClassInSet(Set set, Class clazz)
     {
-        for (Iterator iterator = set.iterator(); iterator.hasNext();)
+        for (Iterator iterator = set.iterator(); iterator.hasNext(); )
         {
             Class disabled = (Class) iterator.next();
             if (disabled.isAssignableFrom(clazz))
@@ -87,7 +88,7 @@ class Policy
 
     protected static boolean notASuperclassOfAnyClassInSet(Set set, Class clazz)
     {
-        for (Iterator iterator = set.iterator(); iterator.hasNext();)
+        for (Iterator iterator = set.iterator(); iterator.hasNext(); )
         {
             Class disabled = (Class) iterator.next();
             if (clazz.isAssignableFrom(disabled))
@@ -153,7 +154,7 @@ class Policy
         {
             boolean found = false;
             // this is exhaustive because we initialise to include all events handled.
-            for (Iterator events = knownEventsSuper.keySet().iterator(); events.hasNext() && !found;)
+            for (Iterator events = knownEventsSuper.keySet().iterator(); events.hasNext() && !found; )
             {
                 Class event = (Class) events.next();
                 found = ((Boolean) knownEventsSuper.get(event)).booleanValue() && notfnClass.isAssignableFrom(event);
@@ -163,7 +164,7 @@ class Policy
         if (!knownEventsExact.containsKey(notfnClass))
         {
             boolean found = false;
-            for (Iterator events = eventToSenders.keySet().iterator(); events.hasNext() && !found;)
+            for (Iterator events = eventToSenders.keySet().iterator(); events.hasNext() && !found; )
             {
                 Class event = (Class) events.next();
                 found = event.isAssignableFrom(notfnClass);
@@ -172,7 +173,7 @@ class Policy
 
         }
         return ((Boolean) knownEventsSuper.get(notfnClass)).booleanValue()
-                || ((Boolean) knownEventsExact.get(notfnClass)).booleanValue();
+               || ((Boolean) knownEventsExact.get(notfnClass)).booleanValue();
     }
 
 }

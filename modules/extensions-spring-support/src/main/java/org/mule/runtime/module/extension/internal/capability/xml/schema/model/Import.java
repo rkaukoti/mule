@@ -59,8 +59,7 @@ public class Import
     /**
      * Gets the value of the namespace property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getNamespace()
     {
@@ -70,8 +69,7 @@ public class Import
     /**
      * Sets the value of the namespace property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setNamespace(String value)
     {
@@ -81,8 +79,7 @@ public class Import
     /**
      * Gets the value of the schemaLocation property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getSchemaLocation()
     {
@@ -92,8 +89,7 @@ public class Import
     /**
      * Sets the value of the schemaLocation property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setSchemaLocation(String value)
     {

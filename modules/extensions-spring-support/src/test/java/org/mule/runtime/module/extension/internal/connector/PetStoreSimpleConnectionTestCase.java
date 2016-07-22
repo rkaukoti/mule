@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.connector;
 
-import org.mule.tck.junit4.rule.SystemProperty;
-
 import org.junit.Rule;
+import org.mule.tck.junit4.rule.SystemProperty;
 
 public class PetStoreSimpleConnectionTestCase extends PetStoreConnectionTestCase
 {

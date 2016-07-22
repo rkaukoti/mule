@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.core.util.queue;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.util.queue.QueueConfiguration.MAXIMUM_CAPACITY;
+import org.hamcrest.core.Is;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+import org.mockito.Answers;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.store.ObjectStoreException;
@@ -20,11 +19,12 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import org.hamcrest.core.Is;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import org.mockito.Answers;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.util.queue.QueueConfiguration.MAXIMUM_CAPACITY;
 
 public abstract class QueueStoreTestCase extends AbstractMuleContextTestCase
 {
@@ -116,7 +116,7 @@ public abstract class QueueStoreTestCase extends AbstractMuleContextTestCase
     public void offerSeveralRetrieveAll() throws Exception
     {
         QueueStore queue = createQueue();
-        for (int i = 0;  i < NUMBER_OF_ITEMS; i++)
+        for (int i = 0; i < NUMBER_OF_ITEMS; i++)
         {
             queue.offer(String.valueOf(i), 0, NUMBER_OF_ITEMS);
         }
@@ -131,7 +131,7 @@ public abstract class QueueStoreTestCase extends AbstractMuleContextTestCase
     {
         QueueStore queue = createQueue();
         ArrayList<MuleEvent> events = new ArrayList<MuleEvent>(NUMBER_OF_ITEMS);
-        for (int i = 0;  i < NUMBER_OF_ITEMS; i++)
+        for (int i = 0; i < NUMBER_OF_ITEMS; i++)
         {
             MuleEvent testEvent = getTestEvent("some data");
             events.add(testEvent);

@@ -6,11 +6,12 @@
  */
 package org.mule.runtime.module.extension.internal.config.dsl;
 
-import static java.util.Arrays.asList;
 import org.mule.runtime.config.spring.dsl.api.xml.XmlNamespaceInfo;
 import org.mule.runtime.config.spring.dsl.api.xml.XmlNamespaceInfoProvider;
 
 import java.util.Collection;
+
+import static java.util.Arrays.asList;
 
 /**
  * A {@link XmlNamespaceInfoProvider} which provides the information

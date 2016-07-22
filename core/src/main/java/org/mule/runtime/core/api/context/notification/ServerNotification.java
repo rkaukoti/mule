@@ -30,7 +30,9 @@ public abstract class ServerNotification extends EventObject implements MuleCont
     public static final String TYPE_WARNING = "warn";
     public static final String TYPE_ERROR = "error";
     public static final String TYPE_FATAL = "fatal";
-
+    public static final int CUSTOM_EVENT_ACTION_START_RANGE = 100000;
+    public static final int NULL_ACTION = 0;
+    public static final Object NULL_MESSAGE = "";
     protected static final int CONTEXT_EVENT_ACTION_START_RANGE = 100;
     protected static final int SECURITY_EVENT_ACTION_START_RANGE = 400;
     protected static final int MANAGEMENT_EVENT_ACTION_START_RANGE = 500;
@@ -50,24 +52,12 @@ public abstract class ServerNotification extends EventObject implements MuleCont
     protected static final int PIPELINE_MESSAGE_EVENT_ACTION_START_RANGE = 1800;
     protected static final int ASYNC_MESSAGE_EVENT_ACTION_START_RANGE = 1900;
     protected static final int EXCEPTION_STRATEGY_MESSAGE_EVENT_ACTION_START_RANGE = 2000;
-
-    public static final int CUSTOM_EVENT_ACTION_START_RANGE = 100000;
-
-    public static final int NULL_ACTION = 0;
-    public static final Object NULL_MESSAGE = "";
-
-    public final String EVENT_NAME = ClassUtils.getClassName(getClass());
-
-    protected String serverId;
-
-    protected long timestamp;
-
-    protected int action = NULL_ACTION;
-
     private static Map<Integer, String> actionIdToName = new ConcurrentHashMap<>();
-
     private static Map<String, Integer> actionNameToId = new ConcurrentHashMap<>();
-
+    public final String EVENT_NAME = ClassUtils.getClassName(getClass());
+    protected String serverId;
+    protected long timestamp;
+    protected int action = NULL_ACTION;
     /**
      * The resourceIdentifier is used when firing inbound server notifications such
      * as Admin notifications or other action notifications triggered by an external
@@ -92,57 +82,13 @@ public abstract class ServerNotification extends EventObject implements MuleCont
         timestamp = System.currentTimeMillis();
     }
 
-    @Override
-    public void setMuleContext(MuleContext context)
-    {
-        muleContext = context;
-        serverId = generateId(context);
-    }
-
     protected static String generateId(MuleContext context)
     {
         MuleConfiguration conf = context.getConfiguration();
         return String.format("%s.%s.%s",
-                             conf.getDomainId(),
-                             context.getClusterId(),
-                             conf.getId());
-    }
-
-    public int getAction()
-    {
-        return action;
-    }
-
-    public String getServerId()
-    {
-        return serverId;
-    }
-
-    public String getResourceIdentifier()
-    {
-        return resourceIdentifier;
-    }
-
-    public long getTimestamp()
-    {
-        return timestamp;
-    }
-
-    @Override
-    public String toString()
-    {
-        return EVENT_NAME + "{" + "action=" + getActionName(action) + ", resourceId=" + resourceIdentifier
-               + ", serverId=" + serverId + ", timestamp=" + timestamp + "}";
-    }
-
-    public String getType()
-    {
-        return TYPE_INFO;
-    }
-
-    public String getActionName()
-    {
-        return getActionName(action);
+                conf.getDomainId(),
+                context.getClusterId(),
+                conf.getId());
     }
 
     protected static synchronized void registerAction(String name, int i)
@@ -189,6 +135,50 @@ public abstract class ServerNotification extends EventObject implements MuleCont
         {
             throw new IllegalArgumentException("No action called: " + action);
         }
+    }
+
+    @Override
+    public void setMuleContext(MuleContext context)
+    {
+        muleContext = context;
+        serverId = generateId(context);
+    }
+
+    public int getAction()
+    {
+        return action;
+    }
+
+    public String getServerId()
+    {
+        return serverId;
+    }
+
+    public String getResourceIdentifier()
+    {
+        return resourceIdentifier;
+    }
+
+    public long getTimestamp()
+    {
+        return timestamp;
+    }
+
+    @Override
+    public String toString()
+    {
+        return EVENT_NAME + "{" + "action=" + getActionName(action) + ", resourceId=" + resourceIdentifier
+               + ", serverId=" + serverId + ", timestamp=" + timestamp + "}";
+    }
+
+    public String getType()
+    {
+        return TYPE_INFO;
+    }
+
+    public String getActionName()
+    {
+        return getActionName(action);
     }
 
 }

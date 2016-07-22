@@ -6,11 +6,7 @@
  */
 package org.mule.runtime.core.routing.outbound;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
+import org.junit.Test;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -21,7 +17,11 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 public class OutboundRouterTestCase extends AbstractMuleContextTestCase
 {
@@ -70,7 +70,7 @@ public class OutboundRouterTestCase extends AbstractMuleContextTestCase
             router.setRoutes(list);
             fail("Invalid endpoint: Expecting an exception");
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             assertEquals(ClassCastException.class, e.getClass());
         }
@@ -90,7 +90,7 @@ public class OutboundRouterTestCase extends AbstractMuleContextTestCase
             router.setRoutes(list);
             fail("Invalid endpoint: Expecting an exception");
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             assertEquals(ClassCastException.class, e.getClass());
         }

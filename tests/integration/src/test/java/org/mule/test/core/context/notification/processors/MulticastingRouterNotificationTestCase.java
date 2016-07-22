@@ -6,13 +6,14 @@
  */
 package org.mule.test.core.context.notification.processors;
 
-import static org.junit.Assert.assertNotNull;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.test.core.context.notification.Node;
 import org.mule.test.core.context.notification.RestrictedNode;
-import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.Assert.assertNotNull;
 
 public class MulticastingRouterNotificationTestCase extends AbstractMessageProcessorNotificationTestCase
 {

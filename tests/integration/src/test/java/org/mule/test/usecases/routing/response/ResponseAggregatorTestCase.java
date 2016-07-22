@@ -6,14 +6,8 @@
  */
 package org.mule.test.usecases.routing.response;
 
-import static java.lang.String.format;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -27,8 +21,13 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.util.Map;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static java.lang.String.format;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class ResponseAggregatorTestCase extends FunctionalTestCase
 {
@@ -47,7 +46,8 @@ public class ResponseAggregatorTestCase extends FunctionalTestCase
     {
         MuleClient client = muleContext.getClient();
         final HttpRequestOptions httpRequestOptions = newOptions().method(POST.name()).build();
-        MuleMessage message = client.send(format("http://localhost:%s", port.getNumber()), MuleMessage.builder().payload("request").build(), httpRequestOptions);
+        MuleMessage message = client.send(format("http://localhost:%s", port.getNumber()), MuleMessage.builder().payload("request").build(),
+                httpRequestOptions);
         assertNotNull(message);
         assertThat(new String(getPayloadAsBytes(message)), is("Received: request"));
     }

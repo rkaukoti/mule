@@ -6,23 +6,6 @@
  */
 package org.mule.runtime.module.launcher.log4j2;
 
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.core.api.config.MuleProperties;
-import org.mule.runtime.core.config.i18n.MessageFactory;
-import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
-import org.mule.runtime.module.artifact.classloader.ShutdownListener;
-import org.mule.runtime.module.reboot.MuleContainerBootstrapUtils;
-import org.mule.runtime.core.util.ClassUtils;
-import org.mule.runtime.core.util.FileUtils;
-
-import java.io.File;
-import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.util.List;
-import java.util.zip.Deflater;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Appender;
@@ -44,6 +27,22 @@ import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.apache.logging.log4j.core.config.Reconfigurable;
 import org.apache.logging.log4j.core.layout.PatternLayout;
 import org.apache.logging.log4j.core.util.FileWatcher;
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.core.api.config.MuleProperties;
+import org.mule.runtime.core.config.i18n.MessageFactory;
+import org.mule.runtime.core.util.ClassUtils;
+import org.mule.runtime.core.util.FileUtils;
+import org.mule.runtime.module.artifact.classloader.ArtifactClassLoader;
+import org.mule.runtime.module.artifact.classloader.ShutdownListener;
+import org.mule.runtime.module.reboot.MuleContainerBootstrapUtils;
+
+import java.io.File;
+import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.util.List;
+import java.util.zip.Deflater;
 
 /**
  * This component grabs a {link MuleLoggerContext} which has just been created reading a configuration file
@@ -66,12 +65,12 @@ import org.apache.logging.log4j.core.util.FileWatcher;
 final class LoggerContextConfigurer
 {
 
+    static final String FORCED_CONSOLE_APPENDER_NAME = "Forced-Console";
+    static final String PER_APP_FILE_APPENDER_NAME = "defaultFileAppender";
     private static final String MULE_APP_LOG_FILE_TEMPLATE = "mule-app-%s.log";
     private static final String MULE_DOMAIN_LOG_FILE_TEMPLATE = "mule-domain-%s.log";
     private static final String PATTERN_LAYOUT = "%-5p %d [%t] %c: %m%n";
     private static final int DEFAULT_MONITOR_INTERVAL_SECS = 60;
-    static final String FORCED_CONSOLE_APPENDER_NAME = "Forced-Console";
-    static final String PER_APP_FILE_APPENDER_NAME = "defaultFileAppender";
 
     protected void configure(MuleLoggerContext context)
     {
@@ -111,7 +110,8 @@ final class LoggerContextConfigurer
         }
         catch (Exception e)
         {
-            throw new MuleRuntimeException(MessageFactory.createStaticMessage("Could not configure shutdown hook. Unexpected configuration type"), e);
+            throw new MuleRuntimeException(
+                    MessageFactory.createStaticMessage("Could not configure shutdown hook. Unexpected configuration type"), e);
         }
 
     }
@@ -151,13 +151,16 @@ final class LoggerContextConfigurer
 
     private void addDefaultAppender(MuleLoggerContext context, String logFilePath)
     {
-        RollingFileAppender appender = createRollingFileAppender(logFilePath, ".%d{yyyy-MM-dd}", PER_APP_FILE_APPENDER_NAME, context.getConfiguration());
+        RollingFileAppender appender =
+                createRollingFileAppender(logFilePath, ".%d{yyyy-MM-dd}", PER_APP_FILE_APPENDER_NAME, context.getConfiguration());
         doAddAppender(context, appender);
     }
 
     private void forceConsoleAppender(MuleLoggerContext context)
     {
-        Appender appender = ConsoleAppender.createAppender(createLayout(context.getConfiguration()), null, null, FORCED_CONSOLE_APPENDER_NAME, null, null);
+        Appender appender =
+                ConsoleAppender.createAppender(createLayout(context.getConfiguration()), null, null, FORCED_CONSOLE_APPENDER_NAME, null,
+                        null);
         doAddAppender(context, appender);
     }
 
@@ -168,22 +171,24 @@ final class LoggerContextConfigurer
         getRootLogger(context).addAppender(appender, Level.ALL, null);
     }
 
-    private RollingFileAppender createRollingFileAppender(String logFilePath, String filePattern, String appenderName, Configuration configuration)
+    private RollingFileAppender createRollingFileAppender(String logFilePath, String filePattern, String appenderName,
+                                                          Configuration configuration)
     {
         TriggeringPolicy triggeringPolicy = TimeBasedTriggeringPolicy.createPolicy("1", "true");
-        RolloverStrategy rolloverStrategy = DefaultRolloverStrategy.createStrategy("30", "1", null, String.valueOf(Deflater.NO_COMPRESSION), null, true, configuration);
+        RolloverStrategy rolloverStrategy =
+                DefaultRolloverStrategy.createStrategy("30", "1", null, String.valueOf(Deflater.NO_COMPRESSION), null, true, configuration);
 
         return RollingFileAppender.createAppender(logFilePath,
-                                                  logFilePath + filePattern,
-                                                  "true",
-                                                  appenderName,
-                                                  "true",
-                                                  null, null,
-                                                  triggeringPolicy,
-                                                  rolloverStrategy,
-                                                  createLayout(configuration),
-                                                  null, null, null, null,
-                                                  configuration);
+                logFilePath + filePattern,
+                "true",
+                appenderName,
+                "true",
+                null, null,
+                triggeringPolicy,
+                rolloverStrategy,
+                createLayout(configuration),
+                null, null, null, null,
+                configuration);
     }
 
     private Layout<? extends Serializable> createLayout(Configuration configuration)

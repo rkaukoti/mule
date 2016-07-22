@@ -6,17 +6,13 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static java.lang.String.format;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-
+import org.hamcrest.core.IsInstanceOf;
+import org.hamcrest.core.IsNull;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.compatibility.transport.tcp.TcpConnector;
 import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
@@ -36,13 +32,16 @@ import javax.net.ssl.HandshakeCompletedEvent;
 import javax.net.ssl.HandshakeCompletedListener;
 import javax.net.ssl.SSLSocket;
 
-import org.hamcrest.core.IsInstanceOf;
-import org.hamcrest.core.IsNull;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.lang.String.format;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
@@ -78,7 +77,8 @@ public class HttpServerConnectionTestCase extends AbstractMuleContextEndpointTes
             ((HandshakeCompletedListener) invocationOnMock.getArguments()[0]).handshakeCompleted(mockHandshakeCompleteEvent);
             return null;
         }).when(mockSslSocket).addHandshakeCompletedListener(any(HandshakeCompletedListener.class));
-        HttpServerConnection httpServerConnection = new HttpServerConnection(mockSslSocket, getDefaultEncoding(muleContext), mockHttpConnector);
+        HttpServerConnection httpServerConnection =
+                new HttpServerConnection(mockSslSocket, getDefaultEncoding(muleContext), mockHttpConnector);
         verify(mockSslSocket, times(1)).addHandshakeCompletedListener(httpServerConnection);
         assertThat(httpServerConnection.getLocalCertificateChain(), is(mockLocalCertificate));
         assertThat(httpServerConnection.getPeerCertificateChain(), is(mockPeerCertificates));
@@ -88,28 +88,32 @@ public class HttpServerConnectionTestCase extends AbstractMuleContextEndpointTes
     @Test
     public void inputStreamIsWrappedWithBufferedInputStream() throws Exception
     {
-        HttpServerConnection httpServerConnection = new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
+        HttpServerConnection httpServerConnection =
+                new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
         assertThat(httpServerConnection.getInputStream(), IsInstanceOf.instanceOf(BufferedInputStream.class));
     }
 
     @Test(expected = IllegalStateException.class)
     public void createHttpServerConnectionWithSocketAndFailForLocalCertificates() throws Exception
     {
-        HttpServerConnection httpServerConnection = new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
+        HttpServerConnection httpServerConnection =
+                new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
         httpServerConnection.getLocalCertificateChain();
     }
 
     @Test(expected = IllegalStateException.class)
     public void createHttpServerConnectionWithSocketAndFailForPeerCertificates() throws Exception
     {
-        HttpServerConnection httpServerConnection = new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
+        HttpServerConnection httpServerConnection =
+                new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
         httpServerConnection.getPeerCertificateChain();
     }
 
     @Test(expected = IllegalStateException.class)
     public void createHttpServerConnectionWithSocketAndFailForHandshakeLatch() throws Exception
     {
-        HttpServerConnection httpServerConnection = new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
+        HttpServerConnection httpServerConnection =
+                new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
         httpServerConnection.getSslSocketHandshakeCompleteLatch();
     }
 
@@ -117,7 +121,8 @@ public class HttpServerConnectionTestCase extends AbstractMuleContextEndpointTes
     public void resetConnectionReadNextRequest() throws Exception
     {
         configureValidRequestForSocketInputStream();
-        HttpServerConnection httpServerConnection = new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
+        HttpServerConnection httpServerConnection =
+                new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
         assertThat(httpServerConnection.getUrlWithoutRequestParams(), is("/service/order"));
         httpServerConnection.reset();
         assertThat(httpServerConnection.getUrlWithoutRequestParams(), is("/"));
@@ -125,13 +130,16 @@ public class HttpServerConnectionTestCase extends AbstractMuleContextEndpointTes
 
     private void configureValidRequestForSocketInputStream() throws IOException
     {
-        when(mockSocket.getInputStream()).thenReturn(new ByteArrayInputStream(String.format("GET %s HTTP/1.1\n\nGET %s HTTP/1.1\n", "/service/order?param1=value1&param2=value2", "/?param1=value1&param2=value2").getBytes()));
+        when(mockSocket.getInputStream()).thenReturn(new ByteArrayInputStream(
+                String.format("GET %s HTTP/1.1\n\nGET %s HTTP/1.1\n", "/service/order?param1=value1&param2=value2",
+                        "/?param1=value1&param2=value2").getBytes()));
     }
 
     @Test
     public void getRemoteSocketAddressWithNullSocketAddress() throws Exception
     {
-        HttpServerConnection httpServerConnection = new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
+        HttpServerConnection httpServerConnection =
+                new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
         when(mockSocket.getRemoteSocketAddress()).thenReturn(null);
         assertThat(httpServerConnection.getRemoteClientAddress(), IsNull.nullValue());
     }
@@ -139,7 +147,8 @@ public class HttpServerConnectionTestCase extends AbstractMuleContextEndpointTes
     @Test
     public void getRemoteSocketAddress() throws Exception
     {
-        HttpServerConnection httpServerConnection = new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
+        HttpServerConnection httpServerConnection =
+                new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
         when(mockSocket.getRemoteSocketAddress()).thenReturn(new InetSocketAddress("host_abc", 1000));
         assertThat(httpServerConnection.getRemoteClientAddress(), is("host_abc:1000"));
     }
@@ -167,7 +176,7 @@ public class HttpServerConnectionTestCase extends AbstractMuleContextEndpointTes
     {
         ByteArrayOutputStream responseContent = new ByteArrayOutputStream();
         HttpServerConnection httpServerConnection = createHttpServerConnectionForResponseTest(responseContent);
-        httpServerConnection.writeResponse(new HttpResponse(),new HashMap<String,String>());
+        httpServerConnection.writeResponse(new HttpResponse(), new HashMap<String, String>());
         String response = new String(responseContent.toByteArray());
         assertThat(response.startsWith("HTTP/1.1 200 OK"), is(true));
         assertThat(response.contains("Connection: close"), is(true));
@@ -179,8 +188,8 @@ public class HttpServerConnectionTestCase extends AbstractMuleContextEndpointTes
         ByteArrayOutputStream responseContent = new ByteArrayOutputStream();
         HttpServerConnection httpServerConnection = createHttpServerConnectionForResponseTest(responseContent);
         HashMap<String, String> headers = new HashMap<>();
-        headers.put("header1","value1");
-        headers.put("header2","value2");
+        headers.put("header1", "value1");
+        headers.put("header2", "value2");
         httpServerConnection.writeResponse(new HttpResponse(), headers);
         String response = new String(responseContent.toByteArray());
         assertThat(response.startsWith("HTTP/1.1 200 OK"), is(true));
@@ -193,7 +202,7 @@ public class HttpServerConnectionTestCase extends AbstractMuleContextEndpointTes
     {
         ByteArrayOutputStream responseContent = new ByteArrayOutputStream();
         HttpServerConnection httpServerConnection = createHttpServerConnectionForResponseTest(responseContent);
-        httpServerConnection.writeFailureResponse(400, "failureMessage",null);
+        httpServerConnection.writeFailureResponse(400, "failureMessage", null);
     }
 
     @Test
@@ -201,7 +210,7 @@ public class HttpServerConnectionTestCase extends AbstractMuleContextEndpointTes
     {
         ByteArrayOutputStream responseContent = new ByteArrayOutputStream();
         HttpServerConnection httpServerConnection = createHttpServerConnectionForResponseTest(responseContent);
-        httpServerConnection.writeFailureResponse(500, "failureMessage", new HashMap<String,String>());
+        httpServerConnection.writeFailureResponse(500, "failureMessage", new HashMap<String, String>());
         String response = new String(responseContent.toByteArray());
         assertThat(response.startsWith("HTTP/1.1 500"), is(true));
         assertThat(response.contains("Connection: close"), is(true));
@@ -214,8 +223,8 @@ public class HttpServerConnectionTestCase extends AbstractMuleContextEndpointTes
         ByteArrayOutputStream responseContent = new ByteArrayOutputStream();
         HttpServerConnection httpServerConnection = createHttpServerConnectionForResponseTest(responseContent);
         HashMap<String, String> headers = new HashMap<>();
-        headers.put("header1","value1");
-        headers.put("header2","value2");
+        headers.put("header1", "value1");
+        headers.put("header2", "value2");
         httpServerConnection.writeFailureResponse(429, "failureMessage", headers);
         String response = new String(responseContent.toByteArray());
         assertThat(response.startsWith("HTTP/1.1 429"), is(true));
@@ -301,7 +310,8 @@ public class HttpServerConnectionTestCase extends AbstractMuleContextEndpointTes
     private void testUrlWithoutParams(String requestUrl, String expectedUrlWithoutParams) throws IOException
     {
         when(mockSocket.getInputStream()).thenReturn(new ByteArrayInputStream(format("GET %s HTTP/1.0\n", requestUrl).getBytes()));
-        HttpServerConnection httpServerConnection = new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
+        HttpServerConnection httpServerConnection =
+                new HttpServerConnection(mockSocket, getDefaultEncoding(muleContext), mockHttpConnector);
         String urlWithoutParams = httpServerConnection.getUrlWithoutRequestParams();
         assertThat(urlWithoutParams, is(expectedUrlWithoutParams));
     }

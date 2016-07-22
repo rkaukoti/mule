@@ -22,5 +22,5 @@ public class MapHolder
     {
         this.map = map;
     }
-    
+
 }

@@ -59,21 +59,21 @@ import javax.xml.namespace.QName;
         "particle"
 })
 @XmlSeeAlso({
-                    ExplicitGroup.class,
-                    RealGroup.class
-            })
+        ExplicitGroup.class,
+        RealGroup.class
+})
 public abstract class Group
         extends Annotated
 {
 
     @XmlElementRefs({
-                            @XmlElementRef(name = "any", namespace = "http://www.w3.org/2001/XMLSchema", type = Any.class),
-                            @XmlElementRef(name = "all", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
-                            @XmlElementRef(name = "sequence", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
-                            @XmlElementRef(name = "choice", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
-                            @XmlElementRef(name = "group", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
-                            @XmlElementRef(name = "element", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class)
-                    })
+            @XmlElementRef(name = "any", namespace = "http://www.w3.org/2001/XMLSchema", type = Any.class),
+            @XmlElementRef(name = "all", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
+            @XmlElementRef(name = "sequence", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
+            @XmlElementRef(name = "choice", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
+            @XmlElementRef(name = "group", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class),
+            @XmlElementRef(name = "element", namespace = "http://www.w3.org/2001/XMLSchema", type = JAXBElement.class)
+    })
     protected List<Object> particle;
     @XmlAttribute(name = "minOccurs")
     @XmlSchemaType(name = "nonNegativeInteger")
@@ -125,8 +125,7 @@ public abstract class Group
     /**
      * Gets the value of the minOccurs property.
      *
-     * @return possible object is
-     * {@link BigInteger }
+     * @return possible object is {@link BigInteger }
      */
     public BigInteger getMinOccurs()
     {
@@ -143,8 +142,7 @@ public abstract class Group
     /**
      * Sets the value of the minOccurs property.
      *
-     * @param value allowed object is
-     *              {@link BigInteger }
+     * @param value allowed object is {@link BigInteger }
      */
     public void setMinOccurs(BigInteger value)
     {
@@ -154,8 +152,7 @@ public abstract class Group
     /**
      * Gets the value of the maxOccurs property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getMaxOccurs()
     {
@@ -172,8 +169,7 @@ public abstract class Group
     /**
      * Sets the value of the maxOccurs property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setMaxOccurs(String value)
     {
@@ -183,8 +179,7 @@ public abstract class Group
     /**
      * Gets the value of the name property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getName()
     {
@@ -194,8 +189,7 @@ public abstract class Group
     /**
      * Sets the value of the name property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setName(String value)
     {
@@ -205,8 +199,7 @@ public abstract class Group
     /**
      * Gets the value of the ref property.
      *
-     * @return possible object is
-     * {@link QName }
+     * @return possible object is {@link QName }
      */
     public QName getRef()
     {
@@ -216,8 +209,7 @@ public abstract class Group
     /**
      * Sets the value of the ref property.
      *
-     * @param value allowed object is
-     *              {@link QName }
+     * @param value allowed object is {@link QName }
      */
     public void setRef(QName value)
     {

@@ -6,17 +6,12 @@
  */
 package org.mule.runtime.module.extension.internal.capability.xml.schema;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import com.google.common.collect.ImmutableSet;
+
+import org.junit.Test;
 import org.mule.runtime.extension.api.annotation.Extension;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
-
-import com.google.common.collect.ImmutableSet;
 
 import java.util.Map;
 import java.util.Set;
@@ -26,7 +21,12 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class AnnotationProcessorUtilsTestCase extends AbstractMuleTestCase

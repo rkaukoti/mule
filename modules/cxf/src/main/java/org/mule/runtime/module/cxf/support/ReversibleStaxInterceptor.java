@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.module.cxf.support;
 
-import org.mule.runtime.module.xml.stax.ReversibleXMLStreamReader;
-
-import javax.xml.stream.XMLStreamReader;
-
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
+import org.mule.runtime.module.xml.stax.ReversibleXMLStreamReader;
+
+import javax.xml.stream.XMLStreamReader;
 
 /**
  * Creates a ReversibleXMLStreamReader to be able to track and replay events from the XMLStreamReader.

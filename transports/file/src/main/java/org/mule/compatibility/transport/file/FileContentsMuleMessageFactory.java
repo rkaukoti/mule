@@ -25,7 +25,7 @@ public class FileContentsMuleMessageFactory extends FileMuleMessageFactory
     @Override
     protected Class<?>[] getSupportedTransportMessageTypes()
     {
-        return new Class[]{InputStream.class, File.class};
+        return new Class[] {InputStream.class, File.class};
     }
 
     @Override

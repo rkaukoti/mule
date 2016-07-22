@@ -6,14 +6,13 @@
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode.functional;
 
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.module.oauth2.asserter.OAuthContextFunctionAsserter;
 import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ConfigOAuthContext;
 import org.mule.runtime.module.oauth2.internal.authorizationcode.state.ResourceOwnerOAuthContext;
 import org.mule.runtime.module.oauth2.internal.tokenmanager.TokenManagerConfig;
 import org.mule.tck.junit4.rule.SystemProperty;
-
-import org.junit.Rule;
-import org.junit.Test;
 
 public class AuthorizationCodeRefreshTokenMultitenantConfigTestCase extends AbstractAuthorizationCodeRefreshTokenConfigTestCase
 {
@@ -51,11 +50,11 @@ public class AuthorizationCodeRefreshTokenMultitenantConfigTestCase extends Abst
         executeRefreshToken("testMultitenantFlow", MULTITENANT_OAUTH_CONFIG, multitenantUser.getValue(), 500);
 
         OAuthContextFunctionAsserter.createFrom(muleContext.getExpressionLanguage(), MULTITENANT_OAUTH_CONFIG, USER_ID_JOHN)
-                .assertAccessTokenIs(REFRESHED_ACCESS_TOKEN)
-                .assertState(null);
+                                    .assertAccessTokenIs(REFRESHED_ACCESS_TOKEN)
+                                    .assertState(null);
         OAuthContextFunctionAsserter.createFrom(muleContext.getExpressionLanguage(), MULTITENANT_OAUTH_CONFIG, USER_ID_TONY)
-                .assertAccessTokenIs(TONY_ACCESS_TOKEN)
-                .assertState(null);
+                                    .assertAccessTokenIs(TONY_ACCESS_TOKEN)
+                                    .assertState(null);
     }
 
 }

@@ -6,10 +6,9 @@
  */
 package org.mule.runtime.management.agents;
 
+import org.junit.Test;
 import org.mule.runtime.module.management.agent.RmiRegistryAgent;
 import org.mule.tck.junit4.AbstractMuleTestCase;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -43,7 +42,7 @@ public class RmiRegistryAgentTestCase extends AbstractMuleTestCase
         agent.initialise();
         assertEquals("rmi://www.example.com:1095", agent.getServerUri());
     }
-  
+
     @Test
     public void testStart() throws Exception
     {

@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-
 import org.junit.Ignore;
 import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 @Ignore("Currently not supported: Builders meant to be replaced by DW.")
 public class HttpRequestBuilderCompositionTestCase extends AbstractHttpRequestTestCase
@@ -27,7 +27,8 @@ public class HttpRequestBuilderCompositionTestCase extends AbstractHttpRequestTe
     {
         flowRunner("testFlow").withPayload(TEST_MESSAGE).run();
 
-        assertThat(uri, equalTo("/testPath?queryParam1=testValue1&queryParam2=testValue2&queryParam2=newTestValue2&queryParam3=testValue3"));
+        assertThat(uri,
+                equalTo("/testPath?queryParam1=testValue1&queryParam2=testValue2&queryParam2=newTestValue2&queryParam3=testValue3"));
         assertThat(getFirstReceivedHeader("testHeader1"), equalTo("headerValue1"));
         assertThat(getFirstReceivedHeader("testHeader2"), equalTo("headerValue2"));
     }

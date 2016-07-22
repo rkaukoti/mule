@@ -6,9 +6,8 @@
  */
 package org.mule.test.transformers;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
+import org.apache.tools.ant.filters.StringInputStream;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleMessage;
@@ -20,8 +19,8 @@ import org.mule.runtime.core.util.StringUtils;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
-import org.apache.tools.ant.filters.StringInputStream;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class ImplicitTransformationTestCase extends FunctionalTestCase
 {

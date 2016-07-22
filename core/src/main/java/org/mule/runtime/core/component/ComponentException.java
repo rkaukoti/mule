@@ -44,11 +44,6 @@ public class ComponentException extends MessagingException
         this.component = component;
     }
 
-    public Component getComponent()
-    {
-        return component;
-    }
-
     private static Message generateMessage(Message previousMessage, Component component)
     {
         Message returnMessage = CoreMessages.componentCausedErrorIs(component);
@@ -61,5 +56,10 @@ public class ComponentException extends MessagingException
         {
             return returnMessage;
         }
+    }
+
+    public Component getComponent()
+    {
+        return component;
     }
 }

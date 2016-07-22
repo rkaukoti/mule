@@ -6,11 +6,10 @@
  */
 package org.mule.extension.file;
 
+import org.junit.Test;
 import org.mule.runtime.core.util.FileUtils;
 
 import java.io.File;
-
-import org.junit.Test;
 
 public class FileDeleteTestCase extends FileConnectorTestCase
 {

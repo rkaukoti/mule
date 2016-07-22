@@ -30,8 +30,6 @@ public interface FlowProcessingPhaseTemplate extends MessageProcessTemplate
 
     /**
      * Pre processing of the {@link MuleEvent} to route
-     *
-     * @param muleEvent
      */
     MuleEvent beforeRouteEvent(MuleEvent muleEvent) throws MuleException;
 
@@ -40,22 +38,17 @@ public interface FlowProcessingPhaseTemplate extends MessageProcessTemplate
      *
      * @param muleEvent {@link MuleEvent} created from the raw message of this context
      * @return the response {@link MuleEvent}
-     * @throws MuleException
      */
     MuleEvent routeEvent(MuleEvent muleEvent) throws MuleException;
 
     /**
      * Post processing of the routed {@link MuleEvent}
-     *
-     * @param muleEvent
      */
     MuleEvent afterRouteEvent(MuleEvent muleEvent) throws MuleException;
 
     /**
      * Call after successfully processing the message through the flow
      * This method will always be called when the flow execution was successful.
-     *
-     * @param muleEvent
      */
     void afterSuccessfulProcessingFlow(MuleEvent muleEvent) throws MuleException;
 
@@ -63,15 +56,11 @@ public interface FlowProcessingPhaseTemplate extends MessageProcessTemplate
     /**
      * Call when the processing of the message through the flow fails.
      * This method will always be called when the flow execution failed.
-     *
-     * @param messagingException
      */
     void afterFailureProcessingFlow(MessagingException messagingException) throws MuleException;
 
     /**
      * Call when the processing of the message through the flow fails in an exception strategy
-     *
-     * @param exception
      */
     void afterFailureProcessingFlow(MuleException exception) throws MuleException;
 

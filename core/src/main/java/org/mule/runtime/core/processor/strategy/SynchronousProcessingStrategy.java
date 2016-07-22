@@ -38,7 +38,7 @@ public class SynchronousProcessingStrategy implements ProcessingStrategy
             else
             {
                 throw new IllegalArgumentException(
-                    "MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
+                        "MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
             }
         }
     }

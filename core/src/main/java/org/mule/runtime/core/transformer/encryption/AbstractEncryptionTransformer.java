@@ -23,7 +23,6 @@ import java.nio.charset.Charset;
 /**
  * <code>EncryptionTransformer</code> will transform an array of bytes or string
  * into an encrypted array of bytes
- *
  */
 public abstract class AbstractEncryptionTransformer extends AbstractTransformer implements MuleContextAware
 {
@@ -83,8 +82,6 @@ public abstract class AbstractEncryptionTransformer extends AbstractTransformer 
     /**
      * Template method were deriving classes can do any initialisation after the
      * properties have been set on this transformer
-     * 
-     * @throws org.mule.runtime.core.api.lifecycle.InitialisationException
      */
     @Override
     public void initialise() throws InitialisationException

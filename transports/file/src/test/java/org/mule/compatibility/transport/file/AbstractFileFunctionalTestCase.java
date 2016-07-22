@@ -6,13 +6,8 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
-import org.mule.compatibility.transport.file.FileConnector;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.util.FileUtils;
@@ -24,6 +19,10 @@ import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.Writer;
 import java.net.MalformedURLException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * We are careful here to access the file system in a generic way. This means setting
@@ -63,7 +62,7 @@ public abstract class AbstractFileFunctionalTestCase extends FunctionalTestCase
 
         // define the readFromDirectory on the connector
         FileConnector connector = (FileConnector) muleContext.getRegistry().lookupObject(
-            "receiveConnector");
+                "receiveConnector");
         connector.setReadFromDirectory(tmpDir.getAbsolutePath());
         logger.debug("Directory is " + connector.getReadFromDirectory());
 

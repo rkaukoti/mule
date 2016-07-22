@@ -6,8 +6,6 @@
  */
 package org.mule.compatibility.transport.file.transformers;
 
-import static org.junit.Assert.assertTrue;
-
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
 import org.mule.runtime.core.util.FileUtils;
@@ -16,14 +14,16 @@ import org.mule.runtime.core.util.SystemUtils;
 import java.io.File;
 import java.io.FileWriter;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * Test case for FileToString transformer
  */
 public class FileToStringTestCase extends AbstractTransformerTestCase
 {
+    final String _resultData = "The dog is on the table, where's the dog?";
     FileToString _fts;
     File _testData = null;
-    final String _resultData = "The dog is on the table, where's the dog?";
 
     @Override
     protected void doSetUp() throws Exception

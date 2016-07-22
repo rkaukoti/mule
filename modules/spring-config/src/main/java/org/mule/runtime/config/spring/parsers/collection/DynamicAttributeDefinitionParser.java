@@ -7,7 +7,6 @@
 package org.mule.runtime.config.spring.parsers.collection;
 
 import org.mule.runtime.config.spring.parsers.MuleDefinitionParser;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 
 public interface DynamicAttributeDefinitionParser extends MuleDefinitionParser

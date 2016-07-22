@@ -6,15 +6,6 @@
  */
 package org.mule.extension.email.api;
 
-import static javax.mail.Message.RecipientType.BCC;
-import static javax.mail.Message.RecipientType.CC;
-import static javax.mail.Message.RecipientType.TO;
-import static javax.mail.Part.ATTACHMENT;
-import static javax.mail.Part.INLINE;
-import static org.mule.extension.email.internal.util.EmailConnectorUtils.MULTIPART;
-import static org.mule.extension.email.internal.util.EmailConnectorUtils.toAddressArray;
-import static org.mule.runtime.api.metadata.MediaType.TEXT;
-import static org.mule.runtime.core.util.IOUtils.toDataHandler;
 import org.mule.extension.email.api.exception.EmailException;
 import org.mule.extension.email.internal.util.EmailConnectorUtils;
 import org.mule.runtime.api.metadata.DataType;
@@ -34,6 +25,16 @@ import javax.mail.Session;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+
+import static javax.mail.Message.RecipientType.BCC;
+import static javax.mail.Message.RecipientType.CC;
+import static javax.mail.Message.RecipientType.TO;
+import static javax.mail.Part.ATTACHMENT;
+import static javax.mail.Part.INLINE;
+import static org.mule.extension.email.internal.util.EmailConnectorUtils.MULTIPART;
+import static org.mule.extension.email.internal.util.EmailConnectorUtils.toAddressArray;
+import static org.mule.runtime.api.metadata.MediaType.TEXT;
+import static org.mule.runtime.core.util.IOUtils.toDataHandler;
 
 /**
  * an implementation of the builder design pattern to create
@@ -81,7 +82,6 @@ public final class MessageBuilder
      *
      * @param subject the subject of the email.
      * @return this {@link MessageBuilder}
-     * @throws MessagingException
      */
     public MessageBuilder withSubject(String subject) throws MessagingException
     {
@@ -94,7 +94,6 @@ public final class MessageBuilder
      *
      * @param fromAddresses the from addresses of the email.
      * @return this {@link MessageBuilder}
-     * @throws MessagingException
      */
     public MessageBuilder fromAddresses(List<String> fromAddresses) throws MessagingException
     {
@@ -107,7 +106,6 @@ public final class MessageBuilder
      *
      * @param from the from address of the email.
      * @return this {@link MessageBuilder}
-     * @throws MessagingException
      */
     public MessageBuilder fromAddresses(String from) throws MessagingException
     {
@@ -127,7 +125,6 @@ public final class MessageBuilder
      *
      * @param toAddresses the primary addresses of the email.
      * @return this {@link MessageBuilder}
-     * @throws MessagingException
      */
     public MessageBuilder to(List<String> toAddresses) throws MessagingException
     {
@@ -143,7 +140,6 @@ public final class MessageBuilder
      *
      * @param bccAddresses the blind carbon copy addresses of the email.
      * @return this {@link MessageBuilder}
-     * @throws MessagingException
      */
     public MessageBuilder bcc(List<String> bccAddresses) throws MessagingException
     {
@@ -159,7 +155,6 @@ public final class MessageBuilder
      *
      * @param ccAddresses the carbon copy addresses of the email.
      * @return this {@link MessageBuilder}
-     * @throws MessagingException
      */
     public MessageBuilder cc(List<String> ccAddresses) throws MessagingException
     {
@@ -176,7 +171,6 @@ public final class MessageBuilder
      *
      * @param headers the custom headers of the email.
      * @return this {@link MessageBuilder}
-     * @throws MessagingException
      */
     public MessageBuilder withHeaders(Map<String, String> headers) throws MessagingException
     {
@@ -199,7 +193,8 @@ public final class MessageBuilder
     public MessageBuilder withAttachments(List<EmailAttachment> attachments)
     {
         Map<String, DataHandler> attachmentsMap = new HashMap<>();
-        attachments.forEach(a -> {
+        attachments.forEach(a ->
+        {
             try
             {
                 DataHandler dataHandler = toDataHandler(a.getId(), a.getContent(), a.getContentType());
@@ -232,7 +227,6 @@ public final class MessageBuilder
      *
      * @param date the date in which the email was sent.
      * @return this {@link MessageBuilder}
-     * @throws MessagingException
      */
     public MessageBuilder withSentDate(Date date) throws MessagingException
     {
@@ -246,7 +240,6 @@ public final class MessageBuilder
      * @param content     the text content of the email.
      * @param contentType the contentType of the {@code content} of the email. One of "text/plain" or "text/html" expected.
      * @return this {@link MessageBuilder}
-     * @throws MessagingException
      */
     public MessageBuilder withContent(String content, MediaType contentType, String charset) throws MessagingException
     {
@@ -262,7 +255,6 @@ public final class MessageBuilder
      *
      * @param content the text content of the email.
      * @return this {@link MessageBuilder}
-     * @throws MessagingException
      */
     public MessageBuilder withContent(String content) throws MessagingException
     {
@@ -276,7 +268,6 @@ public final class MessageBuilder
      *
      * @param replyAddresses the reply to addresses of the email.
      * @return this {@link MessageBuilder}
-     * @throws MessagingException
      */
     public MessageBuilder replyTo(List<String> replyAddresses) throws MessagingException
     {
@@ -288,7 +279,6 @@ public final class MessageBuilder
      * Builds the {@link Message} with all the data provided.
      *
      * @return a new {@link MimeMessage} instance.
-     * @throws MessagingException
      */
     public MimeMessage build() throws MessagingException
     {

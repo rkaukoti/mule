@@ -63,7 +63,7 @@ public class JmsReplyToHandler extends EndpointReplyToHandler
     @Override
     public void processReplyTo(MuleEvent event, MuleMessage returnMessage, Object replyTo) throws MuleException
     {
-        Destination replyToDestination = null;  
+        Destination replyToDestination = null;
         MessageProducer replyToProducer = null;
         Session session = null;
         try
@@ -71,7 +71,7 @@ public class JmsReplyToHandler extends EndpointReplyToHandler
             // now we need to send the response
             if (replyTo instanceof Destination)
             {
-                replyToDestination = (Destination)replyTo;
+                replyToDestination = (Destination) replyTo;
             }
             if (replyToDestination == null)
             {
@@ -81,17 +81,19 @@ public class JmsReplyToHandler extends EndpointReplyToHandler
 
             Class srcType = returnMessage.getDataType().getType();
 
-            EndpointBuilder endpointBuilder = new EndpointURIEndpointBuilder(String.format("%s://temporary",connector.getProtocol()), muleContext);
+            EndpointBuilder endpointBuilder =
+                    new EndpointURIEndpointBuilder(String.format("%s://temporary", connector.getProtocol()), muleContext);
             endpointBuilder.setConnector(jmsConnector);
             OutboundEndpoint tempEndpoint = getEndpointFactory().getOutboundEndpoint(endpointBuilder);
-            
-            List<Transformer> defaultTransportTransformers = ((org.mule.compatibility.core.transport.AbstractConnector) jmsConnector).getDefaultOutboundTransformers(tempEndpoint);
-            
+
+            List<Transformer> defaultTransportTransformers =
+                    ((org.mule.compatibility.core.transport.AbstractConnector) jmsConnector).getDefaultOutboundTransformers(tempEndpoint);
+
             returnMessage = muleContext.getTransformationService().applyTransformers(returnMessage, null, defaultTransportTransformers);
             Object payload = returnMessage.getPayload();
 
             if (replyToDestination instanceof Topic && replyToDestination instanceof Queue
-                    && jmsConnector.getJmsSupport() instanceof Jms102bSupport)
+                && jmsConnector.getJmsSupport() instanceof Jms102bSupport)
             {
                 logger.error(StringMessageUtils.getBoilerPlate("ReplyTo destination implements both Queue and Topic "
                                                                + "while complying with JMS 1.0.2b specification. "
@@ -118,9 +120,9 @@ public class JmsReplyToHandler extends EndpointReplyToHandler
 
             // QoS support
             MuleMessage eventMsg = event.getMessage();
-            String ttlString = (String)eventMsg.getOutboundProperty(JmsConstants.TIME_TO_LIVE_PROPERTY);
-            String priorityString = (String)eventMsg.getOutboundProperty(JmsConstants.PRIORITY_PROPERTY);
-            String persistentDeliveryString = (String)eventMsg.getOutboundProperty(JmsConstants.PERSISTENT_DELIVERY_PROPERTY);
+            String ttlString = (String) eventMsg.getOutboundProperty(JmsConstants.TIME_TO_LIVE_PROPERTY);
+            String priorityString = (String) eventMsg.getOutboundProperty(JmsConstants.PRIORITY_PROPERTY);
+            String persistentDeliveryString = (String) eventMsg.getOutboundProperty(JmsConstants.PERSISTENT_DELIVERY_PROPERTY);
 
             String correlationIDString = replyToMessage.getJMSCorrelationID();
             if (StringUtils.isBlank(correlationIDString))
@@ -147,11 +149,11 @@ public class JmsReplyToHandler extends EndpointReplyToHandler
                     priority = Integer.parseInt(priorityString);
                 }
                 boolean persistent = StringUtils.isNotBlank(persistentDeliveryString)
-                                ? Boolean.valueOf(persistentDeliveryString)
-                                : jmsConnector.isPersistentDelivery();
+                        ? Boolean.valueOf(persistentDeliveryString)
+                        : jmsConnector.isPersistentDelivery();
 
                 jmsConnector.getJmsSupport().send(replyToProducer, replyToMessage, persistent, priority, ttl,
-                    topic, null);
+                        topic, null);
             }
 
             if (logger.isInfoEnabled())
@@ -162,7 +164,7 @@ public class JmsReplyToHandler extends EndpointReplyToHandler
         catch (Exception e)
         {
             throw new DispatchException(
-                JmsMessages.failedToCreateAndDispatchResponse(replyToDestination), event, null, e);
+                    JmsMessages.failedToCreateAndDispatchResponse(replyToDestination), event, null, e);
         }
         finally
         {

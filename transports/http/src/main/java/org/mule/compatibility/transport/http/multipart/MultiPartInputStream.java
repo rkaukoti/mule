@@ -19,6 +19,7 @@ package org.mule.compatibility.transport.http.multipart;
 // ========================================================================
 
 
+import org.apache.commons.io.input.AutoCloseInputStream;
 import org.mule.runtime.core.model.streaming.DeleteOnCloseFileInputStream;
 
 import java.io.BufferedInputStream;
@@ -38,16 +39,17 @@ import java.util.StringTokenizer;
 
 import javax.servlet.ServletException;
 
-import org.apache.commons.io.input.AutoCloseInputStream;
-
 /**
-* MultipartInputStream
-*
-* Handle a MultiPart Mime input stream, breaking it up on the boundary into files and strings.
-*/
+ * MultipartInputStream
+ *
+ * Handle a MultiPart Mime input stream, breaking it up on the boundary into files and strings.
+ */
 public class MultiPartInputStream
 {
-    public static final MultipartConfiguration __DEFAULT_MULTIPART_CONFIG = new MultipartConfiguration(System.getProperty("java.io.tmpdir"));
+    public static final MultipartConfiguration __DEFAULT_MULTIPART_CONFIG =
+            new MultipartConfiguration(System.getProperty("java.io.tmpdir"));
+    public static int CR = '\015';
+    public static int LF = '\012';
     protected InputStream _in;
     protected MultipartConfiguration _config;
     protected String _contentType;
@@ -56,7 +58,324 @@ public class MultiPartInputStream
     protected File _tmpDir;
 
 
+    /**
+     * @param in          Request input stream
+     * @param contentType Content-Type header
+     * @param config      MultipartConfiguration
+     */
+    public MultiPartInputStream(InputStream in, String contentType, MultipartConfiguration config)
+    {
+        _in = new BufferedInputStream(in);
+        _contentType = contentType;
+        _config = config;
+        if (_config == null)
+            _config = __DEFAULT_MULTIPART_CONFIG;
+    }
 
+    public Collection<Part> getParts()
+            throws IOException
+    {
+        parse();
+        return _parts.values();
+    }
+
+    public Part getPart(String name)
+            throws IOException, ServletException
+    {
+        parse();
+        return _parts.get(name);
+    }
+
+    public MultiMap getMap()
+            throws IOException, ServletException
+    {
+        parse();
+        return _map;
+    }
+
+    protected void parse()
+            throws IOException
+    {
+        //have we already parsed the input?
+        if (_parts != null)
+            return;
+
+        //initialize
+        long total =
+                0; //keep running total of size of bytes read from input and throw an exception if exceeds MultipartConfiguration._maxRequestSize
+        _parts = new HashMap<String, Part>();
+
+        //if its not a multipart request, don't parse it
+        if (_contentType == null || !_contentType.startsWith("multipart/form-data"))
+            return;
+
+        //sort out the location to which to write the files
+        String location = __DEFAULT_MULTIPART_CONFIG.getLocation();
+        location = ("".equals(_config.getLocation()) ? location : _config.getLocation());
+
+        _tmpDir = new File(location);
+        if (!_tmpDir.exists())
+            _tmpDir.mkdirs();
+
+
+        String boundary = "--" + value(_contentType.substring(_contentType.indexOf("boundary=")));
+        byte[] byteBoundary = (boundary + "--").getBytes("ISO-8859-1");
+
+        // Get first boundary
+        byte[] bytes;
+        String line;
+        do
+        {
+            bytes = readLine(_in);
+            line = bytes == null ? null : new String(bytes, "UTF-8");
+        }
+        while (line != null && !line.equals(boundary));
+
+        if (line == null)
+        {
+            throw new IOException("Missing initial multi part boundary");
+        }
+
+        // Read each part
+        boolean lastPart = false;
+        String contentDisposition = null;
+        String contentType = null;
+        outer:
+        while (!lastPart)
+        {
+            MultiMap<String> headers = new MultiMap<String>();
+            while (true)
+            {
+                bytes = readLine(_in);
+                if (bytes == null)
+                    break outer;
+
+                // If blank line, end of part headers
+                if (bytes.length == 0)
+                    break;
+
+                total += bytes.length;
+                if (_config.getMaxRequestSize() > 0 && total > _config.getMaxRequestSize())
+                    throw new IOException("Request exceeds maxRequestSize (" + _config.getMaxRequestSize() + ")");
+
+                line = new String(bytes, "UTF-8");
+
+                //get content-disposition and content-type
+                int c = line.indexOf(':', 0);
+                if (c > 0)
+                {
+                    String key = line.substring(0, c).trim().toLowerCase();
+                    String value = line.substring(c + 1, line.length()).trim();
+                    headers.put(key, value);
+                    if (key.equalsIgnoreCase("content-disposition"))
+                        contentDisposition = value;
+                    if (key.equalsIgnoreCase("content-type"))
+                        contentType = value;
+                }
+            }
+
+            // Extract content-disposition
+            boolean form_data = false;
+            if (contentDisposition == null)
+            {
+                throw new IOException("Missing content-disposition");
+            }
+
+            StringTokenizer tok = new StringTokenizer(contentDisposition, ";");
+            String name = null;
+            String filename = null;
+            while (tok.hasMoreTokens())
+            {
+                String t = tok.nextToken().trim();
+                String tl = t.toLowerCase();
+                if (t.startsWith("form-data"))
+                    form_data = true;
+                else if (tl.startsWith("name="))
+                    name = value(t);
+                else if (tl.startsWith("filename="))
+                    filename = value(t);
+            }
+
+            // Check disposition
+            if (!form_data)
+            {
+                continue;
+            }
+            //It is valid for reset and submit buttons to have an empty name.
+            //If no name is supplied, the browser skips sending the info for that field.
+            //However, if you supply the empty string as the name, the browser sends the
+            //field, with name as the empty string. So, only continue this loop if we
+            //have not yet seen a name field.
+            if (name == null)
+            {
+                continue;
+            }
+
+            //Have a new Part
+            MultiPart part = new MultiPart(name, filename);
+            part.setHeaders(headers);
+            part.setContentType(contentType);
+            _parts.put(name, part);
+
+            part.open();
+
+            try
+            {
+                int state = -2;
+                int c;
+                boolean cr = false;
+                boolean lf = false;
+
+                // loop for all lines`
+                while (true)
+                {
+                    int b = 0;
+                    while ((c = (state != -2) ? state : _in.read()) != -1)
+                    {
+                        total++;
+                        if (_config.getMaxRequestSize() > 0 && total > _config.getMaxRequestSize())
+                            throw new IOException("Request exceeds maxRequestSize (" + _config.getMaxRequestSize() + ")");
+
+                        state = -2;
+                        // look for CR and/or LF
+                        if (c == 13 || c == 10)
+                        {
+                            if (c == 13)
+                                state = _in.read();
+                            break;
+                        }
+                        // look for boundary
+                        if (b >= 0 && b < byteBoundary.length && c == byteBoundary[b])
+                            b++;
+                        else
+                        {
+                            // this is not a boundary
+                            if (cr)
+                                part.write(13);
+
+                            if (lf)
+                                part.write(10);
+
+                            cr = lf = false;
+                            if (b > 0)
+                                part.write(byteBoundary, 0, b);
+
+                            b = -1;
+                            part.write(c);
+                        }
+                    }
+                    // check partial boundary
+                    if ((b > 0 && b < byteBoundary.length - 2) || (b == byteBoundary.length - 1))
+                    {
+                        if (cr)
+                            part.write(13);
+
+                        if (lf)
+                            part.write(10);
+
+                        cr = lf = false;
+                        part.write(byteBoundary, 0, b);
+                        b = -1;
+                    }
+                    // boundary match
+                    if (b > 0 || c == -1)
+                    {
+                        if (b == byteBoundary.length)
+                            lastPart = true;
+                        if (state == 10)
+                            state = -2;
+                        break;
+                    }
+                    // handle CR LF
+                    if (cr)
+                        part.write(13);
+
+                    if (lf)
+                        part.write(10);
+
+                    cr = (c == 13);
+                    lf = (c == 10 || state == 10);
+                    if (state == 10)
+                        state = -2;
+                }
+            }
+            finally
+            {
+
+                part.close();
+            }
+        }
+    }
+
+    /* ------------------------------------------------------------ */
+    private String value(String nameEqualsValue)
+    {
+        String value = nameEqualsValue.substring(nameEqualsValue.indexOf('=') + 1).trim();
+        int i = value.indexOf(';');
+        if (i > 0)
+            value = value.substring(0, i);
+        if (value.startsWith("\""))
+        {
+            value = value.substring(1, value.indexOf('"', 1));
+        }
+        else
+        {
+            i = value.indexOf(' ');
+            if (i > 0)
+                value = value.substring(0, i);
+        }
+        return value;
+    }
+
+    private byte[] readLine(InputStream in) throws IOException
+    {
+        byte[] buf = new byte[256];
+
+        int i = 0;
+        int loops = 0;
+        int ch = 0;
+
+        while (true)
+        {
+            ch = in.read();
+            if (ch < 0)
+                break;
+            loops++;
+
+            // skip a leading LF's
+            if (loops == 1 && ch == LF)
+                continue;
+
+            if (ch == CR || ch == LF)
+                break;
+
+            if (i >= buf.length)
+            {
+                byte[] old_buf = buf;
+                buf = new byte[old_buf.length + 256];
+                System.arraycopy(old_buf, 0, buf, 0, old_buf.length);
+            }
+            buf[i++] = (byte) ch;
+        }
+
+        if (ch == -1 && i == 0)
+            return null;
+
+        // skip a trailing LF if it exists
+        if (ch == CR && in.available() >= 1 && in.markSupported())
+        {
+            in.mark(1);
+            ch = in.read();
+            if (ch != LF)
+                in.reset();
+        }
+
+        byte[] old_buf = buf;
+        buf = new byte[i];
+        System.arraycopy(old_buf, 0, buf, 0, i);
+
+        return buf;
+    }
 
     public class MultiPart implements Part
     {
@@ -68,21 +387,15 @@ public class MultiPartInputStream
         protected MultiMap<String> _headers;
         protected long _size = 0;
 
-        public MultiPart (String name, String filename)
-        throws IOException
+        public MultiPart(String name, String filename)
+                throws IOException
         {
             _name = name;
             _filename = filename;
         }
 
-        protected void setContentType (String contentType)
-        {
-            _contentType = contentType;
-        }
-
-
         protected void open()
-        throws FileNotFoundException, IOException
+                throws FileNotFoundException, IOException
         {
             //We will either be writing to a file, if it has a filename on the content-disposition
             //and otherwise a byte-array-input-stream, OR if we exceed the getFileSizeThreshold, we
@@ -100,39 +413,41 @@ public class MultiPartInputStream
         }
 
         protected void close()
-        throws IOException
+                throws IOException
         {
             _out.close();
         }
 
-
-        protected void write (int b)
-        throws IOException
+        protected void write(int b)
+                throws IOException
         {
             if (MultiPartInputStream.this._config.getMaxFileSize() > 0 && _size + 1 > MultiPartInputStream.this._config.getMaxFileSize())
-                throw new IOException ("Multipart Mime part "+_name+" exceeds max filesize");
+                throw new IOException("Multipart Mime part " + _name + " exceeds max filesize");
 
-            if (MultiPartInputStream.this._config.getFileSizeThreshold() > 0 && _size + 1 > MultiPartInputStream.this._config.getFileSizeThreshold() && _file==null)
+            if (MultiPartInputStream.this._config.getFileSizeThreshold() > 0 &&
+                _size + 1 > MultiPartInputStream.this._config.getFileSizeThreshold() && _file == null)
                 createFile();
             _out.write(b);
-            _size ++;
+            _size++;
         }
 
-        protected void write (byte[] bytes, int offset, int length)
-        throws IOException
+        protected void write(byte[] bytes, int offset, int length)
+                throws IOException
         {
-            if (MultiPartInputStream.this._config.getMaxFileSize() > 0 && _size + length > MultiPartInputStream.this._config.getMaxFileSize())
-                throw new IOException ("Multipart Mime part "+_name+" exceeds max filesize");
+            if (MultiPartInputStream.this._config.getMaxFileSize() > 0 &&
+                _size + length > MultiPartInputStream.this._config.getMaxFileSize())
+                throw new IOException("Multipart Mime part " + _name + " exceeds max filesize");
 
-            if (MultiPartInputStream.this._config.getFileSizeThreshold() > 0 && _size + length > MultiPartInputStream.this._config.getFileSizeThreshold() && _file==null)
+            if (MultiPartInputStream.this._config.getFileSizeThreshold() > 0 &&
+                _size + length > MultiPartInputStream.this._config.getFileSizeThreshold() && _file == null)
                 createFile();
 
             _out.write(bytes, offset, length);
             _size += length;
         }
 
-        protected void createFile ()
-        throws IOException
+        protected void createFile()
+                throws IOException
         {
             _file = File.createTempFile("MultiPart", "", MultiPartInputStream.this._tmpDir);
             FileOutputStream fos = new FileOutputStream(_file);
@@ -142,13 +457,11 @@ public class MultiPartInputStream
             {
                 //already written some bytes, so need to copy them into the file
                 _out.flush();
-                ((ByteArrayOutputStream)_out).writeTo(bos);
+                ((ByteArrayOutputStream) _out).writeTo(bos);
                 _out.close();
             }
             _out = bos;
         }
-
-
 
         protected void setHeaders(MultiMap<String> headers)
         {
@@ -164,13 +477,18 @@ public class MultiPartInputStream
             return _contentType;
         }
 
+        protected void setContentType(String contentType)
+        {
+            _contentType = contentType;
+        }
+
         /**
          * @see Part#getHeader(java.lang.String)
          */
         @Override
         public String getHeader(String name)
         {
-            return (String)_headers.getValue(name, 0);
+            return (String) _headers.getValue(name, 0);
         }
 
         /**
@@ -188,7 +506,7 @@ public class MultiPartInputStream
         @Override
         public Collection<String> getHeaders(String name)
         {
-           return _headers.getValues(name);
+            return _headers.getValues(name);
         }
 
         /**
@@ -197,16 +515,16 @@ public class MultiPartInputStream
         @Override
         public InputStream getInputStream() throws IOException
         {
-           if (_file != null)
-           {
-               // Automatically close and delete the temp file when end of input has been reached (MULE-6732).
-               return new BufferedInputStream(new AutoCloseInputStream(new DeleteOnCloseFileInputStream(_file)));
-           }
-           else
-           {
-               //part content is in a ByteArrayOutputStream
-               return new ByteArrayInputStream(((ByteArrayOutputStream)_out).toByteArray());
-           }
+            if (_file != null)
+            {
+                // Automatically close and delete the temp file when end of input has been reached (MULE-6732).
+                return new BufferedInputStream(new AutoCloseInputStream(new DeleteOnCloseFileInputStream(_file)));
+            }
+            else
+            {
+                //part content is in a ByteArrayOutputStream
+                return new ByteArrayInputStream(((ByteArrayOutputStream) _out).toByteArray());
+            }
         }
 
         /**
@@ -215,7 +533,7 @@ public class MultiPartInputStream
         @Override
         public String getName()
         {
-           return _name;
+            return _name;
         }
 
         /**
@@ -236,12 +554,12 @@ public class MultiPartInputStream
             if (_file == null)
             {
                 //part data is only in the ByteArrayOutputStream and never been written to disk
-                _file = new File (_tmpDir, fileName);
+                _file = new File(_tmpDir, fileName);
                 BufferedOutputStream bos = null;
                 try
                 {
                     bos = new BufferedOutputStream(new FileOutputStream(_file));
-                    ((ByteArrayOutputStream)_out).writeTo(bos);
+                    ((ByteArrayOutputStream) _out).writeTo(bos);
                     bos.flush();
                 }
                 finally
@@ -270,9 +588,8 @@ public class MultiPartInputStream
 
         /**
          * Get the file, if any, the data has been written to.
-         * @return
          */
-        public File getFile ()
+        public File getFile()
         {
             return _file;
         }
@@ -280,341 +597,13 @@ public class MultiPartInputStream
 
         /**
          * Get the filename from the content-disposition.
+         *
          * @return null or the filename
          */
-        public String getContentDispositionFilename ()
+        public String getContentDispositionFilename()
         {
             return _filename;
         }
-    }
-
-
-
-
-    /**
-     * @param in Request input stream
-     * @param contentType Content-Type header
-     * @param config MultipartConfiguration
-     */
-    public MultiPartInputStream(InputStream in, String contentType, MultipartConfiguration config)
-    {
-        _in = new BufferedInputStream(in);
-       _contentType = contentType;
-       _config = config;
-       if (_config == null)
-           _config = __DEFAULT_MULTIPART_CONFIG;
-    }
-
-
-
-    public Collection<Part> getParts()
-    throws IOException
-    {
-        parse();
-        return _parts.values();
-    }
-
-
-    public Part getPart(String name)
-    throws IOException, ServletException
-    {
-        parse();
-        return _parts.get(name);
-    }
-
-
-    public MultiMap getMap ()
-    throws IOException, ServletException
-    {
-        parse();
-        return _map;
-    }
-
-
-    protected void parse ()
-    throws IOException
-    {
-        //have we already parsed the input?
-        if (_parts != null)
-            return;
-
-        //initialize
-        long total = 0; //keep running total of size of bytes read from input and throw an exception if exceeds MultipartConfiguration._maxRequestSize
-        _parts = new HashMap<String, Part>();
-
-        //if its not a multipart request, don't parse it
-        if (_contentType == null || !_contentType.startsWith("multipart/form-data"))
-            return;
-
-        //sort out the location to which to write the files
-        String location = __DEFAULT_MULTIPART_CONFIG.getLocation();
-        location = ("".equals(_config.getLocation())? location : _config.getLocation());
-
-        _tmpDir = new File(location);
-        if (!_tmpDir.exists())
-            _tmpDir.mkdirs();
-
-
-        String boundary="--"+value(_contentType.substring(_contentType.indexOf("boundary=")));
-        byte[] byteBoundary=(boundary+"--").getBytes("ISO-8859-1");
-
-        // Get first boundary
-        byte[] bytes;
-        String line;
-        do
-        {
-            bytes = readLine(_in);
-            line = bytes == null ? null : new String(bytes, "UTF-8");
-        }
-        while (line != null && !line.equals(boundary));
-
-        if (line == null)
-        {
-            throw new IOException("Missing initial multi part boundary");
-        }
-
-        // Read each part
-        boolean lastPart=false;
-        String contentDisposition=null;
-        String contentType=null;
-        outer:while(!lastPart)
-        {
-            MultiMap<String> headers = new MultiMap<String>();
-            while(true)
-            {
-                bytes=readLine(_in);
-                if(bytes==null)
-                    break outer;
-
-                // If blank line, end of part headers
-                if(bytes.length==0)
-                    break;
-
-                total += bytes.length;
-                if (_config.getMaxRequestSize() > 0 && total > _config.getMaxRequestSize())
-                    throw new IOException ("Request exceeds maxRequestSize ("+_config.getMaxRequestSize()+")");
-
-                line=new String(bytes,"UTF-8");
-
-                //get content-disposition and content-type
-                int c=line.indexOf(':',0);
-                if(c>0)
-                {
-                    String key=line.substring(0,c).trim().toLowerCase();
-                    String value=line.substring(c+1,line.length()).trim();
-                    headers.put(key, value);
-                    if (key.equalsIgnoreCase("content-disposition"))
-                        contentDisposition=value;
-                    if (key.equalsIgnoreCase("content-type"))
-                        contentType = value;
-                }
-            }
-
-            // Extract content-disposition
-            boolean form_data=false;
-            if(contentDisposition==null)
-            {
-                throw new IOException("Missing content-disposition");
-            }
-
-            StringTokenizer tok=new StringTokenizer(contentDisposition,";");
-            String name=null;
-            String filename=null;
-            while(tok.hasMoreTokens())
-            {
-                String t=tok.nextToken().trim();
-                String tl=t.toLowerCase();
-                if(t.startsWith("form-data"))
-                    form_data=true;
-                else if(tl.startsWith("name="))
-                    name=value(t);
-                else if(tl.startsWith("filename="))
-                    filename=value(t);
-            }
-
-            // Check disposition
-            if(!form_data)
-            {
-                continue;
-            }
-            //It is valid for reset and submit buttons to have an empty name.
-            //If no name is supplied, the browser skips sending the info for that field.
-            //However, if you supply the empty string as the name, the browser sends the
-            //field, with name as the empty string. So, only continue this loop if we
-            //have not yet seen a name field.
-            if(name==null)
-            {
-                continue;
-            }
-
-            //Have a new Part
-            MultiPart part = new MultiPart(name, filename);
-            part.setHeaders(headers);
-            part.setContentType(contentType);
-            _parts.put(name, part);
-
-            part.open();
-
-            try
-            {
-                int state=-2;
-                int c;
-                boolean cr=false;
-                boolean lf=false;
-
-                // loop for all lines`
-                while(true)
-                {
-                    int b=0;
-                    while((c=(state!=-2)?state:_in.read())!=-1)
-                    {
-                        total ++;
-                        if (_config.getMaxRequestSize() > 0 && total > _config.getMaxRequestSize())
-                            throw new IOException("Request exceeds maxRequestSize ("+_config.getMaxRequestSize()+")");
-
-                        state=-2;
-                        // look for CR and/or LF
-                        if(c==13||c==10)
-                        {
-                            if(c==13)
-                                state=_in.read();
-                            break;
-                        }
-                        // look for boundary
-                        if(b>=0&&b<byteBoundary.length&&c==byteBoundary[b])
-                            b++;
-                        else
-                        {
-                            // this is not a boundary
-                            if(cr)
-                                part.write(13);
-
-                            if(lf)
-                                part.write(10);
-
-                            cr=lf=false;
-                            if(b>0)
-                                part.write(byteBoundary,0,b);
-
-                            b=-1;
-                            part.write(c);
-                        }
-                    }
-                    // check partial boundary
-                    if((b>0&&b<byteBoundary.length-2)||(b==byteBoundary.length-1))
-                    {
-                        if(cr)
-                            part.write(13);
-
-                        if(lf)
-                            part.write(10);
-
-                        cr=lf=false;
-                        part.write(byteBoundary,0,b);
-                        b=-1;
-                    }
-                    // boundary match
-                    if(b>0||c==-1)
-                    {
-                        if(b==byteBoundary.length)
-                            lastPart=true;
-                        if(state==10)
-                            state=-2;
-                        break;
-                    }
-                    // handle CR LF
-                    if(cr)
-                        part.write(13);
-
-                    if(lf)
-                        part.write(10);
-
-                    cr=(c==13);
-                    lf=(c==10||state==10);
-                    if(state==10)
-                        state=-2;
-                }
-            }
-            finally
-            {
-
-                part.close();
-            }
-        }
-    }
-
-
-    /* ------------------------------------------------------------ */
-    private String value(String nameEqualsValue)
-    {
-        String value=nameEqualsValue.substring(nameEqualsValue.indexOf('=')+1).trim();
-        int i=value.indexOf(';');
-        if(i>0)
-            value=value.substring(0,i);
-        if(value.startsWith("\""))
-        {
-            value=value.substring(1,value.indexOf('"',1));
-        }
-        else
-        {
-            i=value.indexOf(' ');
-            if(i>0)
-                value=value.substring(0,i);
-        }
-        return value;
-    }
-
-    public static int CR = '\015';
-    public static int LF = '\012';
-
-    private byte[] readLine(InputStream in) throws IOException
-    {
-        byte[] buf = new byte[256];
-
-        int i=0;
-        int loops=0;
-        int ch=0;
-
-        while (true)
-        {
-            ch=in.read();
-            if (ch<0)
-                break;
-            loops++;
-
-            // skip a leading LF's
-            if (loops==1 && ch==LF)
-                continue;
-
-            if (ch==CR || ch==LF)
-                break;
-
-            if (i>=buf.length)
-            {
-                byte[] old_buf=buf;
-                buf=new byte[old_buf.length+256];
-                System.arraycopy(old_buf, 0, buf, 0, old_buf.length);
-            }
-            buf[i++]=(byte)ch;
-        }
-
-        if (ch==-1 && i==0)
-            return null;
-
-        // skip a trailing LF if it exists
-        if (ch==CR && in.available()>=1 && in.markSupported())
-        {
-            in.mark(1);
-            ch=in.read();
-            if (ch!=LF)
-                in.reset();
-        }
-
-        byte[] old_buf=buf;
-        buf=new byte[i];
-        System.arraycopy(old_buf, 0, buf, 0, i);
-
-        return buf;
     }
 
 }

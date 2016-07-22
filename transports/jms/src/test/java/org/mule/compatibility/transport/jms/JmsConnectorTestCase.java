@@ -6,6 +6,29 @@
  */
 package org.mule.compatibility.transport.jms;
 
+import org.junit.Test;
+import org.mockito.Matchers;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.mule.compatibility.transport.jms.xa.DefaultXAConnectionFactoryWrapper;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.api.context.notification.ClusterNodeNotificationListener;
+import org.mule.runtime.core.api.transaction.Transaction;
+import org.mule.runtime.core.context.notification.ClusterNodeNotification;
+import org.mule.runtime.core.transaction.TransactionCoordination;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+import org.springframework.jms.connection.CachingConnectionFactory;
+
+import java.lang.reflect.UndeclaredThrowableException;
+
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
+import javax.jms.JMSException;
+import javax.jms.Session;
+import javax.jms.XAConnectionFactory;
+import javax.transaction.TransactionManager;
+
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.junit.Assert.assertEquals;
@@ -20,34 +43,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import org.mule.compatibility.transport.jms.CustomCachingConnectionFactory;
-import org.mule.compatibility.transport.jms.Jms11Support;
-import org.mule.compatibility.transport.jms.JmsConnector;
-import org.mule.compatibility.transport.jms.JmsSupport;
-import org.mule.compatibility.transport.jms.xa.DefaultXAConnectionFactoryWrapper;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.core.api.context.notification.ClusterNodeNotificationListener;
-import org.mule.runtime.core.api.transaction.Transaction;
-import org.mule.runtime.core.context.notification.ClusterNodeNotification;
-import org.mule.runtime.core.transaction.TransactionCoordination;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-
-import java.lang.reflect.UndeclaredThrowableException;
-
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.Session;
-import javax.jms.XAConnectionFactory;
-import javax.transaction.TransactionManager;
-
-import org.junit.Test;
-import org.mockito.Matchers;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import org.springframework.jms.connection.CachingConnectionFactory;
 
 public class JmsConnectorTestCase extends AbstractMuleContextTestCase
 {
@@ -64,7 +59,7 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase
         when(connection.getClientID()).thenReturn(null);
 
         JmsSupport jmsSupport = mock(JmsSupport.class);
-        when(jmsSupport.createConnection(Matchers.<ConnectionFactory> any())).thenReturn(connection);
+        when(jmsSupport.createConnection(Matchers.<ConnectionFactory>any())).thenReturn(connection);
 
         JmsConnector connector = new JmsConnector(muleContext);
         connector.setClientId(CLIENT_ID1);
@@ -89,7 +84,7 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase
         when(connection.getClientID()).thenReturn(CLIENT_ID1);
 
         JmsSupport jmsSupport = mock(JmsSupport.class);
-        when(jmsSupport.createConnection(Matchers.<ConnectionFactory> any())).thenReturn(connection);
+        when(jmsSupport.createConnection(Matchers.<ConnectionFactory>any())).thenReturn(connection);
 
         JmsConnector connector = new JmsConnector(muleContext);
         ConnectionFactory mockConnectionFactory = mock(ConnectionFactory.class);
@@ -115,8 +110,8 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase
         when(connection.getClientID()).thenReturn(CLIENT_ID1);
 
         JmsSupport jmsSupport = mock(JmsSupport.class);
-        when(jmsSupport.createConnection(Matchers.<ConnectionFactory> any())).thenReturn(connection);
-        
+        when(jmsSupport.createConnection(Matchers.<ConnectionFactory>any())).thenReturn(connection);
+
         JmsConnector connector = new JmsConnector(muleContext);
         connector.setClientId(CLIENT_ID1);
         connector.setJmsSupport(jmsSupport);
@@ -193,7 +188,7 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase
         JmsConnector connector = createConnectionFactoryWhenGettingConnection(mockConnectionFactory);
         assertThat(connector.getConnectionFactory(), instanceOf(CustomCachingConnectionFactory.class));
         assertThat(((CachingConnectionFactory) connector.getConnectionFactory()).getTargetConnectionFactory(),
-                   is(mockConnectionFactory));
+                is(mockConnectionFactory));
     }
 
     @Test
@@ -211,29 +206,30 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase
         JmsConnector connector = createConnectionFactoryWhenGettingConnection(mock(TestXAConnectionFactory.class));
         assertThat(connector.getConnectionFactory(), instanceOf(DefaultXAConnectionFactoryWrapper.class));
     }
-    
+
     @Test
     public void changesClassLoaderOnNotification() throws Exception
     {
         /**
          * Fetches a ClusterNodeNotificationListener added to a mock mule context
          */
-        class NotificationAnswer implements Answer 
+        class NotificationAnswer implements Answer
         {
             ClusterNodeNotificationListener listener;
-            
+
             @Override
-            public Void answer(InvocationOnMock invocation) throws Throwable 
+            public Void answer(InvocationOnMock invocation) throws Throwable
             {
                 listener = (ClusterNodeNotificationListener) invocation.getArguments()[0];
                 return null;
             }
-            
+
             public ClusterNodeNotificationListener getListener()
             {
                 return listener;
             }
-        };
+        }
+        ;
 
         /**
          * Validates the classloader used in connector's connect is the app classloader
@@ -241,12 +237,12 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase
         class ConnectClassLoaderCheckAnswer implements Answer
         {
             ClassLoader expectedClassLoader;
-            
+
             public ConnectClassLoaderCheckAnswer(ClassLoader expectedClassLoader)
             {
-                  this.expectedClassLoader = expectedClassLoader;
+                this.expectedClassLoader = expectedClassLoader;
             }
-            
+
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable
             {
@@ -254,23 +250,24 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase
                 assertThat(connectClassLoader, is(expectedClassLoader));
                 return null;
             }
-        };
+        }
+        ;
 
         /**
          * On testing the muleContext.getExecutionClassLoader wont be different than the test thread.
          * This is used to check the class loader is effectively changed when performing the connection 
          */
-        ClassLoader expectedClassLoader = new ClassLoader() 
+        ClassLoader expectedClassLoader = new ClassLoader()
         {
             String thismakesme = "different";
         };
-        
+
         NotificationAnswer notificationAnswer = new NotificationAnswer();
         MuleContext muleContextSpy = spy(muleContext);
         doReturn(false).when(muleContextSpy).isPrimaryPollingInstance();
         doReturn(expectedClassLoader).when(muleContextSpy).getExecutionClassLoader();
         doAnswer(notificationAnswer).when(muleContextSpy).registerListener(any(ClusterNodeNotificationListener.class));
-        
+
         JmsConnector connectorSpy = spy(createConnectionFactoryWhenGettingConnection(mock(TestXAConnectionFactory.class),
                 muleContextSpy));
         connectorSpy.setClientId("MyClientId");
@@ -287,12 +284,14 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase
         assertThat(preNotificationClassLoader, is(afterNotificationClassLoader));
     }
 
-    private JmsConnector createConnectionFactoryWhenGettingConnection(ConnectionFactory mockConnectionFactory) throws JMSException, MuleException
+    private JmsConnector createConnectionFactoryWhenGettingConnection(ConnectionFactory mockConnectionFactory)
+            throws JMSException, MuleException
     {
         return createConnectionFactoryWhenGettingConnection(mockConnectionFactory, muleContext);
     }
-    
-    private JmsConnector createConnectionFactoryWhenGettingConnection(ConnectionFactory mockConnectionFactory, MuleContext muleContext) throws JMSException, MuleException
+
+    private JmsConnector createConnectionFactoryWhenGettingConnection(ConnectionFactory mockConnectionFactory, MuleContext muleContext)
+            throws JMSException, MuleException
     {
         final Connection connection = mock(Connection.class);
 

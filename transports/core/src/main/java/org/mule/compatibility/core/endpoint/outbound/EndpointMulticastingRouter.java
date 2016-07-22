@@ -20,12 +20,11 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.routing.CouldNotRouteOutboundMessageException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.routing.outbound.MulticastingRouter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class EndpointMulticastingRouter extends MulticastingRouter
 {

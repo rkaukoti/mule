@@ -6,6 +6,10 @@
  */
 package org.mule.compatibility.core.connector;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
 import org.mule.compatibility.core.api.config.MuleEndpointProperties;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.EndpointFactory;
@@ -23,10 +27,6 @@ import org.mule.runtime.core.api.MuleMessage.Builder;
 import org.mule.runtime.core.api.connector.DispatchException;
 import org.mule.runtime.core.api.registry.MuleRegistry;
 import org.mule.runtime.core.connector.DefaultReplyToHandler;
-
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 
 import java.io.Serializable;
 
@@ -145,7 +145,7 @@ public class EndpointReplyToHandler extends DefaultReplyToHandler
     {
         return CacheBuilder.newBuilder()
                            .maximumSize(CACHE_MAX_SIZE)
-                           .<String, OutboundEndpoint> build(buildCacheLoader(muleContext));
+                .<String, OutboundEndpoint>build(buildCacheLoader(muleContext));
     }
 
     private CacheLoader buildCacheLoader(final MuleContext muleContext)

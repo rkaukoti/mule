@@ -15,7 +15,7 @@
                        recipe="recipes"
                        initialHealth="CANCER"
                        monthlyIncomes="monthlyIncomes"
-                       finalHealth="CANCER" />
+                       finalHealth="CANCER"/>
 
     <heisenberg:config name="staticHeisenberg"
                        myName="heisenberg"
@@ -27,15 +27,15 @@
                        recipe="recipes"
                        initialHealth="CANCER"
                        monthlyIncomes="monthlyIncomes"
-                       finalHealth="CANCER" />
+                       finalHealth="CANCER"/>
 
 
     <flow name="laundry">
-        <heisenberg:launder config-ref="heisenberg" amount="#[payload]" />
+        <heisenberg:launder config-ref="heisenberg" amount="#[payload]"/>
     </flow>
 
     <flow name="staticLaundry">
-        <heisenberg:launder config-ref="staticHeisenberg" amount="#[payload]" />
+        <heisenberg:launder config-ref="staticHeisenberg" amount="#[payload]"/>
     </flow>
 
 </mule>

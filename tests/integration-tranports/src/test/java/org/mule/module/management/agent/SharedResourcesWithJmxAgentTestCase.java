@@ -6,6 +6,8 @@
  */
 package org.mule.module.management.agent;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.mule.functional.junit4.DomainFunctionalTestCase;
 import org.mule.runtime.module.management.agent.JmxDomainAgent;
 
@@ -15,9 +17,6 @@ import java.util.Set;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class SharedResourcesWithJmxAgentTestCase extends DomainFunctionalTestCase
 {

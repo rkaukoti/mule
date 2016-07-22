@@ -39,10 +39,11 @@ import org.mule.runtime.core.work.MuleWorkManager;
  * present then an exception is thrown.
  */
 public class AsyncInterceptingMessageProcessor extends AbstractInterceptingMessageProcessor
-    implements Startable, Stoppable, MessagingExceptionHandlerAware, NonBlockingSupported
+        implements Startable, Stoppable, MessagingExceptionHandlerAware, NonBlockingSupported
 {
 
-    public static final String SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE = "Unable to process a synchronous or non-blocking event asynchronously";
+    public static final String SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE =
+            "Unable to process a synchronous or non-blocking event asynchronously";
 
     protected WorkManagerSource workManagerSource;
     protected boolean doThreading = true;
@@ -137,8 +138,8 @@ public class AsyncInterceptingMessageProcessor extends AbstractInterceptingMessa
         if (!canProcessAsync(event))
         {
             throw new MessagingException(
-                CoreMessages.createStaticMessage(SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE),
-                event, this);
+                    CoreMessages.createStaticMessage(SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE),
+                    event, this);
         }
         return doThreading && canProcessAsync(event);
     }
@@ -154,13 +155,13 @@ public class AsyncInterceptingMessageProcessor extends AbstractInterceptingMessa
         try
         {
             workManagerSource.getWorkManager().scheduleWork(new AsyncMessageProcessorWorker(event),
-                WorkManager.INDEFINITE, null, new AsyncWorkListener(next));
+                    WorkManager.INDEFINITE, null, new AsyncWorkListener(next));
             fireAsyncScheduledNotification(event);
         }
         catch (Exception e)
         {
             new MessagingException(CoreMessages.errorSchedulingMessageProcessorForAsyncInvocation(next),
-                event, e, this);
+                    event, e, this);
         }
     }
 
@@ -170,7 +171,7 @@ public class AsyncInterceptingMessageProcessor extends AbstractInterceptingMessa
         {
             muleContext.getNotificationManager().fireNotification(
                     new AsyncMessageNotification(event.getFlowConstruct(), event, next,
-                                                 AsyncMessageNotification.PROCESS_ASYNC_SCHEDULED));
+                            AsyncMessageNotification.PROCESS_ASYNC_SCHEDULED));
         }
 
     }
@@ -181,6 +182,17 @@ public class AsyncInterceptingMessageProcessor extends AbstractInterceptingMessa
         if (this.messagingExceptionHandler == null)
         {
             this.messagingExceptionHandler = messagingExceptionHandler;
+        }
+    }
+
+    protected void firePipelineNotification(MuleEvent event, MessagingException exception)
+    {
+        // Async completed notification uses same event instance as async listener
+        if (event.getFlowConstruct() instanceof MessageProcessorPathResolver)
+        {
+            muleContext.getNotificationManager().fireNotification(
+                    new AsyncMessageNotification(event.getFlowConstruct(), event,
+                            next, AsyncMessageNotification.PROCESS_ASYNC_COMPLETE, exception));
         }
     }
 
@@ -241,17 +253,6 @@ public class AsyncInterceptingMessageProcessor extends AbstractInterceptingMessa
             {
                 muleContext.getExceptionListener().handleException(e);
             }
-        }
-    }
-
-    protected void firePipelineNotification(MuleEvent event, MessagingException exception)
-    {
-        // Async completed notification uses same event instance as async listener
-        if (event.getFlowConstruct() instanceof MessageProcessorPathResolver)
-        {
-            muleContext.getNotificationManager().fireNotification(
-                new AsyncMessageNotification(event.getFlowConstruct(), event,
-                    next, AsyncMessageNotification.PROCESS_ASYNC_COMPLETE, exception));
         }
     }
 

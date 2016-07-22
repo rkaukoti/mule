@@ -6,11 +6,8 @@
  */
 package org.mule.runtime.module.artifact.classloader;
 
-import static java.lang.Integer.toHexString;
-import static java.lang.String.format;
-import static java.lang.management.ManagementFactory.getPlatformMBeanServer;
-import static java.sql.DriverManager.deregisterDriver;
-import static java.sql.DriverManager.getDrivers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Driver;
 import java.util.Enumeration;
@@ -19,8 +16,11 @@ import java.util.Hashtable;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.Integer.toHexString;
+import static java.lang.String.format;
+import static java.lang.management.ManagementFactory.getPlatformMBeanServer;
+import static java.sql.DriverManager.deregisterDriver;
+import static java.sql.DriverManager.getDrivers;
 
 public class DefaultResourceReleaser implements ResourceReleaser
 {
@@ -50,7 +50,9 @@ public class DefaultResourceReleaser implements ResourceReleaser
             {
                 if (logger.isDebugEnabled())
                 {
-                    logger.debug(format("Skipping deregister driver %s. It wasn't loaded by the classloader of the artifact being released.", driver.getClass()));
+                    logger.debug(
+                            format("Skipping deregister driver %s. It wasn't loaded by the classloader of the artifact being released.",
+                                    driver.getClass()));
                 }
             }
         }
@@ -58,8 +60,8 @@ public class DefaultResourceReleaser implements ResourceReleaser
 
     /**
      * @param driver the JDBC driver to check its {@link ClassLoader} for.
-     * @return {@code true} if the {@link ClassLoader} of the driver is a descendant of the {@link ClassLoader} of this
-     *         releaser, {@code false} otherwise.
+     * @return {@code true} if the {@link ClassLoader} of the driver is a descendant of the {@link ClassLoader} of this releaser, {@code
+     * false} otherwise.
      */
     private boolean isDriverLoadedByThisClassLoader(Driver driver)
     {

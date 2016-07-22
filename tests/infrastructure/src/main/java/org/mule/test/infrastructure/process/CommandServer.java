@@ -6,6 +6,9 @@
  */
 package org.mule.test.infrastructure.process;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,9 +17,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class CommandServer
 {
@@ -56,7 +56,8 @@ public class CommandServer
                 try
                 {
                     Socket processClientConnection = commandSocket.accept();
-                    BufferedReader processClientLogEntriesInputStream = new BufferedReader(new InputStreamReader(processClientConnection.getInputStream()));
+                    BufferedReader processClientLogEntriesInputStream =
+                            new BufferedReader(new InputStreamReader(processClientConnection.getInputStream()));
                     while (!Thread.interrupted())
                     {
                         String commandLine = processClientLogEntriesInputStream.readLine();
@@ -126,7 +127,8 @@ public class CommandServer
         }
     }
 
-    public interface CommandListener {
+    public interface CommandListener
+    {
 
         void commandReceived(String command);
 

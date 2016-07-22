@@ -6,6 +6,10 @@
  */
 package org.mule.runtime.core.util;
 
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,18 +25,12 @@ import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
 
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public final class JarUtils
 {
+    public static final String MULE_LOCAL_JAR_FILENAME = "mule-local-install.jar";
     private static final String MULE_MODULE_FILENAME = "lib" + File.separator + "module";
     private static final String MULE_LIB_FILENAME = "lib" + File.separator + "mule";
     private static final String MULE_HOME = System.getProperty("mule.home");
-    
-    public static final String MULE_LOCAL_JAR_FILENAME = "mule-local-install.jar";
-
     private static final Logger logger = LoggerFactory.getLogger(JarUtils.class);
 
     private JarUtils()
@@ -85,7 +83,7 @@ public final class JarUtils
         }
         return entries;
     }
-    
+
     public static void appendJarFileEntries(File jarFile, LinkedHashMap entries) throws Exception
     {
         if (entries != null)
@@ -98,13 +96,13 @@ public final class JarUtils
             FileUtils.renameFile(tmpJarFile, jarFile);
         }
     }
-    
+
     public static void createJarFileEntries(File jarFile, LinkedHashMap entries) throws Exception
     {
         JarOutputStream jarStream = null;
         FileOutputStream fileStream = null;
-        
-        if (jarFile != null) 
+
+        if (jarFile != null)
         {
             logger.debug("Creating jar file " + jarFile.getAbsolutePath());
 
@@ -112,20 +110,20 @@ public final class JarUtils
             {
                 fileStream = new FileOutputStream(jarFile);
                 jarStream = new JarOutputStream(fileStream);
-                
-                if (entries != null &&  !entries.isEmpty())
+
+                if (entries != null && !entries.isEmpty())
                 {
                     Iterator iter = entries.keySet().iterator();
                     while (iter.hasNext())
                     {
                         String jarFilePath = (String) iter.next();
                         Object content = entries.get(jarFilePath);
-                        
+
                         JarEntry entry = new JarEntry(jarFilePath);
                         jarStream.putNextEntry(entry);
-                        
+
                         logger.debug("Adding jar entry " + jarFilePath + " to " + jarFile.getAbsolutePath());
-                        
+
                         if (content instanceof String)
                         {
                             writeJarEntry(jarStream, ((String) content).getBytes());
@@ -140,7 +138,7 @@ public final class JarUtils
                         }
                     }
                 }
-                
+
                 jarStream.flush();
                 fileStream.getFD().sync();
             }
@@ -161,7 +159,7 @@ public final class JarUtils
                 {
                     try
                     {
-                        fileStream.close();    
+                        fileStream.close();
                     }
                     catch (Exception fileNotClosed)
                     {
@@ -171,19 +169,19 @@ public final class JarUtils
             }
         }
     }
-    
+
     private static void writeJarEntry(OutputStream stream, byte[] entry) throws IOException
     {
         stream.write(entry, 0, entry.length);
     }
-    
+
     private static void writeJarEntry(OutputStream stream, File entry) throws IOException
     {
         FileInputStream fileContentStream = null;
         try
         {
             fileContentStream = new FileInputStream(entry);
-            IOUtils.copy(fileContentStream, stream);         
+            IOUtils.copy(fileContentStream, stream);
         }
         finally
         {
@@ -205,19 +203,19 @@ public final class JarUtils
     {
         return new File(MULE_HOME);
     }
-    
+
     public static File getMuleLibDir()
-    {   
+    {
         return new File(MULE_HOME + File.separator + MULE_LIB_FILENAME);
     }
-    
+
     public static File getMuleModuleDir()
-    {   
+    {
         return new File(MULE_HOME + File.separator + MULE_MODULE_FILENAME);
     }
-    
+
     public static File getMuleLocalJarFile()
     {
         return new File(getMuleLibDir(), MULE_LOCAL_JAR_FILENAME);
-    }    
+    }
 }

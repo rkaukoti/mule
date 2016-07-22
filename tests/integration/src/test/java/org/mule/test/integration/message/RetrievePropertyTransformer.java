@@ -14,7 +14,7 @@ import java.nio.charset.Charset;
 public class RetrievePropertyTransformer extends AbstractMessageTransformer
 {
     private String property;
-    
+
     @Override
     public Object transformMessage(MuleEvent event, Charset encoding)
     {

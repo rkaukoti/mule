@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.core.config;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Test;
 import org.mule.runtime.core.api.config.ThreadingProfile;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class DefaultThreadingProfileTestCase extends AbstractMuleContextTestCase
 {
@@ -21,19 +21,19 @@ public class DefaultThreadingProfileTestCase extends AbstractMuleContextTestCase
     {
         assertNotNull(muleContext.getDefaultThreadingProfile());
         assertEquals(ThreadingProfile.DEFAULT_MAX_THREADS_ACTIVE, muleContext.getDefaultThreadingProfile()
-            .getMaxThreadsActive());
+                                                                             .getMaxThreadsActive());
         assertEquals(ThreadingProfile.DEFAULT_MAX_THREADS_IDLE, muleContext.getDefaultThreadingProfile()
-            .getMaxThreadsIdle());
+                                                                           .getMaxThreadsIdle());
         assertEquals(ThreadingProfile.DEFAULT_MAX_THREAD_TTL, muleContext.getDefaultThreadingProfile()
-            .getThreadTTL());
+                                                                         .getThreadTTL());
         assertEquals(ThreadingProfile.DEFAULT_MAX_BUFFER_SIZE, muleContext.getDefaultThreadingProfile()
-            .getMaxBufferSize());
+                                                                          .getMaxBufferSize());
         assertEquals(ThreadingProfile.DEFAULT_POOL_EXHAUST_ACTION, muleContext.getDefaultThreadingProfile()
-            .getPoolExhaustedAction());
+                                                                              .getPoolExhaustedAction());
         assertEquals(ThreadingProfile.DEFAULT_THREAD_WAIT_TIMEOUT, muleContext.getDefaultThreadingProfile()
-            .getThreadWaitTimeout());
+                                                                              .getThreadWaitTimeout());
         assertEquals(ThreadingProfile.DEFAULT_DO_THREADING, muleContext.getDefaultThreadingProfile()
-            .isDoThreading());
+                                                                       .isDoThreading());
     }
 
 }

@@ -6,13 +6,14 @@
  */
 package org.mule.compatibility.transport.http.ntlm;
 
-import java.io.IOException;
-
 import jcifs.ntlmssp.Type1Message;
 import jcifs.ntlmssp.Type2Message;
 import jcifs.ntlmssp.Type3Message;
 import jcifs.util.Base64;
+
 import org.apache.commons.httpclient.NTCredentials;
+
+import java.io.IOException;
 
 public class NtlmMessageFactory
 {
@@ -40,7 +41,7 @@ public class NtlmMessageFactory
     /**
      * Creates a {@link Type1Message} for NTLM authentication.
      *
-     * @param host the client host
+     * @param host   the client host
      * @param domain the client domain
      * @return a {@link Type1Message} to initiate the authentication process.
      */
@@ -62,8 +63,7 @@ public class NtlmMessageFactory
      * Creates a {@link Type2Message} for NTLM authentication from a challenge
      * received from the NTLM server.
      *
-     * @param challenge the challenge received from the server in response to a
-     *        {@link Type1Message} message previously sent.
+     * @param challenge the challenge received from the server in response to a {@link Type1Message} message previously sent.
      * @return a {@link Type2Message} to continue the authentication process.
      */
     public Type2Message createType2Message(String challenge)
@@ -82,13 +82,13 @@ public class NtlmMessageFactory
      * Creates a {@link Type3Message} for NTLM authentication.
      *
      * @param ntCredentials the credentials used for the authentication
-     * @param type2Message the {@link Type2Message} received from the server
-     *        in response to a {@link Type1Message} message previously sent.
+     * @param type2Message  the {@link Type2Message} received from the server in response to a {@link Type1Message} message previously
+     *                      sent.
      * @return a {@link Type3Message} to continue the authentication process.
      */
     public Type3Message createType3Message(NTCredentials ntCredentials, Type2Message type2Message)
     {
         return new Type3Message(type2Message, ntCredentials.getPassword(), type2Message.getTarget(),
-                                ntCredentials.getUserName(), ntCredentials.getHost(), DEFAULT_TYPE_3_MESSAGE_FLAGS);
+                ntCredentials.getUserName(), ntCredentials.getHost(), DEFAULT_TYPE_3_MESSAGE_FLAGS);
     }
 }

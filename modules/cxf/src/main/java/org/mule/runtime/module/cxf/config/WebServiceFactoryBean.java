@@ -7,7 +7,6 @@
 package org.mule.runtime.module.cxf.config;
 
 import org.mule.runtime.module.cxf.builder.WebServiceMessageProcessorBuilder;
-
 import org.springframework.beans.factory.FactoryBean;
 
 public class WebServiceFactoryBean extends WebServiceMessageProcessorBuilder implements FactoryBean

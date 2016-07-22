@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.util.store;
 
-import static org.mule.runtime.core.api.store.ObjectStoreManager.UNBOUNDED;
-
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
@@ -21,6 +19,8 @@ import org.mule.runtime.core.api.store.ObjectStoreException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.UUID;
 import org.mule.runtime.core.util.concurrent.DaemonThreadFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -29,35 +29,30 @@ import java.util.PriorityQueue;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.store.ObjectStoreManager.UNBOUNDED;
 
 /**
  * The MonitoredObjectStoreWrapper wraps an ObjectStore which does not support direct
  * expiry and adds this behavior
  */
 public class MonitoredObjectStoreWrapper<T extends Serializable>
-    implements ListableObjectStore<T>, Runnable, MuleContextAware, Initialisable, Disposable
+        implements ListableObjectStore<T>, Runnable, MuleContextAware, Initialisable, Disposable
 {
     private static Logger logger = LoggerFactory.getLogger(MonitoredObjectStoreWrapper.class);
 
     protected MuleContext context;
     protected ScheduledThreadPoolExecutor scheduler;
-    ListableObjectStore<StoredObject<T>> baseStore;
-
     /**
      * the maximum number of entries that this store keeps around. Specify
      * <em>-1</em> if the store is supposed to be "unbounded".
      */
     protected int maxEntries = 4000;
-
     /**
      * The time-to-live for each message ID, specified in milliseconds, or
      * <em>-1</em> for entries that should never expire. <b>DO NOT</b> combine this
      * with an unbounded store!
      */
     protected int entryTTL = -1;
-
     /**
      * The interval for periodic bounded size enforcement and entry expiration,
      * specified in milliseconds. Arbitrary positive values between 1 millisecond and
@@ -65,11 +60,11 @@ public class MonitoredObjectStoreWrapper<T extends Serializable>
      * to the expected message rate to prevent out of memory conditions.
      */
     protected int expirationInterval = 1000;
-
     /**
      * A name for this store, can be used for logging and identification purposes.
      */
     protected String name = null;
+    ListableObjectStore<StoredObject<T>> baseStore;
 
     public MonitoredObjectStoreWrapper(ListableObjectStore<StoredObject<T>> baseStore)
     {
@@ -105,7 +100,7 @@ public class MonitoredObjectStoreWrapper<T extends Serializable>
     {
         return getStore().retrieve(key).getItem();
     }
-    
+
     @Override
     public void clear() throws ObjectStoreException
     {
@@ -155,7 +150,7 @@ public class MonitoredObjectStoreWrapper<T extends Serializable>
         if (baseStore == null)
         {
             baseStore = context.getRegistry().lookupObject(
-                MuleProperties.OBJECT_STORE_DEFAULT_PERSISTENT_NAME);
+                    MuleProperties.OBJECT_STORE_DEFAULT_PERSISTENT_NAME);
         }
         return baseStore;
     }
@@ -188,15 +183,15 @@ public class MonitoredObjectStoreWrapper<T extends Serializable>
             if (excess > 0)
             {
                 sortedMaxEntries = new PriorityQueue<StoredObject<T>>(excess,
-                      new Comparator<StoredObject<T>>()
-                      {
+                        new Comparator<StoredObject<T>>()
+                        {
 
-                          @Override
-                          public int compare(StoredObject<T> paramT1, StoredObject<T> paramT2)
-                          {
-                              return paramT1.timestamp.compareTo(paramT2.timestamp);
-                          }
-                      }
+                            @Override
+                            public int compare(StoredObject<T> paramT1, StoredObject<T> paramT2)
+                            {
+                                return paramT1.timestamp.compareTo(paramT2.timestamp);
+                            }
+                        }
                 );
             }
 
@@ -253,7 +248,7 @@ public class MonitoredObjectStoreWrapper<T extends Serializable>
         if (expirationInterval <= 0)
         {
             throw new IllegalArgumentException(CoreMessages.propertyHasInvalidValue("expirationInterval",
-                new Integer(expirationInterval)).toString());
+                    new Integer(expirationInterval)).toString());
         }
 
         if (scheduler == null)

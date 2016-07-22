@@ -6,8 +6,9 @@
  */
 package org.mule.extension.email.internal.commands;
 
-import static javax.mail.Folder.READ_WRITE;
 import org.mule.extension.email.internal.retriever.RetrieverConnection;
+
+import static javax.mail.Folder.READ_WRITE;
 
 /**
  * Represents the expungeFolder (eliminate completely) emails from folder operation.

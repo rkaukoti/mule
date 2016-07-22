@@ -10,7 +10,6 @@ package org.mule.runtime.module.db.internal.config.processor;
 import org.mule.runtime.module.db.internal.domain.executor.SelectExecutorFactory;
 import org.mule.runtime.module.db.internal.metadata.SelectMetadataProvider;
 import org.mule.runtime.module.db.internal.processor.SelectMessageProcessor;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.w3c.dom.Element;
 

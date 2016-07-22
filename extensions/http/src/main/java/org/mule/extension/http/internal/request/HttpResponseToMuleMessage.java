@@ -6,12 +6,6 @@
  */
 package org.mule.extension.http.internal.request;
 
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.SET_COOKIE;
-import static org.mule.runtime.module.http.api.HttpHeaders.Names.SET_COOKIE2;
-import static org.mule.runtime.module.http.api.HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED;
-import static org.mule.runtime.module.http.internal.util.HttpToMuleMessage.getMediaType;
 import org.mule.extension.http.api.HttpResponseAttributes;
 import org.mule.extension.http.internal.request.builder.HttpResponseAttributesBuilder;
 import org.mule.extension.http.internal.request.validator.HttpRequesterConfig;
@@ -26,6 +20,8 @@ import org.mule.runtime.module.http.internal.HttpParser;
 import org.mule.runtime.module.http.internal.domain.InputStreamHttpEntity;
 import org.mule.runtime.module.http.internal.domain.response.HttpResponse;
 import org.mule.runtime.module.http.internal.multipart.HttpPartDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,8 +35,12 @@ import java.util.Map;
 
 import javax.activation.DataHandler;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_TYPE;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.SET_COOKIE;
+import static org.mule.runtime.module.http.api.HttpHeaders.Names.SET_COOKIE2;
+import static org.mule.runtime.module.http.api.HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED;
+import static org.mule.runtime.module.http.internal.util.HttpToMuleMessage.getMediaType;
 
 /**
  * Component that transforms an HTTP response to a proper {@link MuleMessage}.
@@ -105,7 +105,7 @@ public class HttpResponseToMuleMessage
 
         dataType = DataType.builder(dataType).charset(encoding).build();
         return MuleMessage.builder(muleEvent.getMessage()).payload(payload).mediaType(dataType.getMediaType())
-                .attributes(responseAttributes).build();
+                          .attributes(responseAttributes).build();
     }
 
     private HttpResponseAttributes createAttributes(HttpResponse response, Map<String, DataHandler> parts)
@@ -115,7 +115,8 @@ public class HttpResponseToMuleMessage
 
     private Map<String, DataHandler> processParts(InputStream responseInputStream, String responseContentType) throws IOException
     {
-        Collection<HttpPartDataSource> httpParts = HttpPartDataSource.createFrom(HttpParser.parseMultipartContent(responseInputStream, responseContentType));
+        Collection<HttpPartDataSource> httpParts =
+                HttpPartDataSource.createFrom(HttpParser.parseMultipartContent(responseInputStream, responseContentType));
         Map<String, DataHandler> attachments = new HashMap<>();
 
         for (HttpPartDataSource httpPart : httpParts)

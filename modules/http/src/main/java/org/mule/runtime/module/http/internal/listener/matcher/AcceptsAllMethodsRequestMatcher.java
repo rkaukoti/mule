@@ -20,14 +20,14 @@ public class AcceptsAllMethodsRequestMatcher extends MethodRequestMatcher
     {
     }
 
-    public boolean matches(HttpRequest httpRequest)
-    {
-        return true;
-    }
-
     public static AcceptsAllMethodsRequestMatcher instance()
     {
         return instance;
+    }
+
+    public boolean matches(HttpRequest httpRequest)
+    {
+        return true;
     }
 
     @Override

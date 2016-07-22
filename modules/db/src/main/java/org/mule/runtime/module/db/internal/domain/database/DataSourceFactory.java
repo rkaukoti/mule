@@ -7,14 +7,18 @@
 
 package org.mule.runtime.module.db.internal.domain.database;
 
+import com.mchange.v2.c3p0.DataSources;
+
+import org.enhydra.jdbc.standard.StandardDataSource;
+import org.enhydra.jdbc.standard.StandardXADataSource;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.lifecycle.Disposable;
+import org.mule.runtime.core.util.concurrent.ConcurrentHashSet;
 import org.mule.runtime.module.db.internal.domain.connection.DbPoolingProfile;
 import org.mule.runtime.module.db.internal.domain.xa.CompositeDataSourceDecorator;
-import org.mule.runtime.core.util.concurrent.ConcurrentHashSet;
-
-import com.mchange.v2.c3p0.DataSources;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -22,11 +26,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.sql.DataSource;
-
-import org.enhydra.jdbc.standard.StandardDataSource;
-import org.enhydra.jdbc.standard.StandardXADataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Creates {@link DataSource} instances
@@ -44,12 +43,6 @@ public class DataSourceFactory implements MuleContextAware, Disposable
     public DataSourceFactory(String name)
     {
         this.name = name;
-    }
-
-    @Override
-    public void setMuleContext(MuleContext context)
-    {
-        this.muleContext = context;
     }
 
     /**
@@ -99,7 +92,8 @@ public class DataSourceFactory implements MuleContextAware, Disposable
 
     protected DataSource createSingleDataSource(DataSourceConfig resolvedDataSourceConfig) throws SQLException
     {
-        StandardDataSource dataSource = resolvedDataSourceConfig.isUseXaTransactions() ? new StandardXADataSource() : new StandardDataSource();
+        StandardDataSource dataSource =
+                resolvedDataSourceConfig.isUseXaTransactions() ? new StandardXADataSource() : new StandardDataSource();
         dataSource.setDriverName(resolvedDataSourceConfig.getDriverClassName());
         if (resolvedDataSourceConfig.getConnectionTimeout() >= 0)
         {
@@ -171,5 +165,11 @@ public class DataSourceFactory implements MuleContextAware, Disposable
     public MuleContext getMuleContext()
     {
         return muleContext;
+    }
+
+    @Override
+    public void setMuleContext(MuleContext context)
+    {
+        this.muleContext = context;
     }
 }

@@ -6,13 +6,13 @@
  */
 package org.mule.compatibility.core.endpoint.outbound;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_ROOT_MESSAGE_ID_PROPERTY;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.util.ObjectUtils;
+
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_ROOT_MESSAGE_ID_PROPERTY;
 
 /**
  * Sets the outbound root message id on as a property of the message using the following key:
@@ -24,8 +24,8 @@ public class OutboundRootMessageIdPropertyMessageProcessor implements MessagePro
     public MuleEvent process(MuleEvent event) throws MuleException
     {
         event.setMessage(MuleMessage.builder(event.getMessage())
-                                 .addOutboundProperty(MULE_ROOT_MESSAGE_ID_PROPERTY, event.getMessage().getMessageRootId())
-                                 .build());
+                                    .addOutboundProperty(MULE_ROOT_MESSAGE_ID_PROPERTY, event.getMessage().getMessageRootId())
+                                    .build());
         return event;
     }
 

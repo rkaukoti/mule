@@ -34,7 +34,7 @@ public class TestAggregator extends AbstractAggregator
 
                 try
                 {
-                    for (Iterator<MuleEvent> iterator = events.iterator(); iterator.hasNext();)
+                    for (Iterator<MuleEvent> iterator = events.iterator(); iterator.hasNext(); )
                     {
                         MuleEvent event = iterator.next();
                         try
@@ -49,7 +49,7 @@ public class TestAggregator extends AbstractAggregator
                 }
                 catch (ObjectStoreException e)
                 {
-                    throw new AggregationException(events,null,e);
+                    throw new AggregationException(events, null, e);
                 }
 
                 logger.debug("event payload is: " + buffer.toString());

@@ -6,10 +6,8 @@
  */
 package org.mule.test.integration.domain.lifecycle;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.ApplicationContextBuilder;
 import org.mule.functional.junit4.DomainContextBuilder;
 import org.mule.runtime.api.metadata.DataType;
@@ -20,8 +18,9 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.junit4.rule.DynamicPort;
 import org.mule.tck.junit4.rule.SystemProperty;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertThat;
 
 public class AppAndDomainLifecycleTestCase extends AbstractMuleTestCase
 {
@@ -40,11 +39,17 @@ public class AppAndDomainLifecycleTestCase extends AbstractMuleTestCase
         try
         {
             domainContext = new DomainContextBuilder().setDomainConfig("domain/http/http-shared-listener-config.xml").build();
-            firstAppContext = new ApplicationContextBuilder().setApplicationResources(new String[] {"domain/http/http-hello-mule-app.xml"}).setDomainContext(domainContext).build();
+            firstAppContext = new ApplicationContextBuilder().setApplicationResources(new String[] {"domain/http/http-hello-mule-app.xml"})
+                                                             .setDomainContext(domainContext)
+                                                             .build();
             ApplicationContextBuilder secondApp = new ApplicationContextBuilder();
-            secondAppContext = secondApp.setApplicationResources(new String[] {"domain/http/http-hello-world-app.xml"}).setDomainContext(domainContext).build();
+            secondAppContext = secondApp.setApplicationResources(new String[] {"domain/http/http-hello-world-app.xml"})
+                                        .setDomainContext(domainContext)
+                                        .build();
             firstAppContext.stop();
-            MuleMessage response = secondAppContext.getClient().send("http://localhost:" + dynamicPort.getNumber() + "/service/helloWorld", MuleMessage.builder().payload("test").build());
+            MuleMessage response = secondAppContext.getClient()
+                                                   .send("http://localhost:" + dynamicPort.getNumber() + "/service/helloWorld",
+                                                           MuleMessage.builder().payload("test").build());
             assertThat(response, notNullValue());
             assertThat(secondAppContext.getTransformationService().transform(response, DataType.STRING).getPayload(), is("hello world"));
             assertThat((domainContext.getRegistry().<DefaultHttpListenerConfig>get("sharedListenerConfig")).isStarted(), is(true));

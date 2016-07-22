@@ -6,9 +6,6 @@
  */
 package org.mule.extension.http.api;
 
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.IOUtils.toDataHandler;
-
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.extension.api.annotation.Parameter;
 import org.mule.runtime.extension.api.annotation.param.Optional;
@@ -19,6 +16,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.activation.DataHandler;
+
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.IOUtils.toDataHandler;
 
 /**
  * Base component to create HTTP messages.
@@ -55,7 +55,8 @@ public class HttpMessageBuilder
     {
         Map<String, DataHandler> resolvedAttachments = new HashMap<>();
 
-        parts.forEach(attachment -> {
+        parts.forEach(attachment ->
+        {
             String filename = attachment.getFilename();
             String name = filename != null ? filename : attachment.getId();
             DataHandler dataHandler;

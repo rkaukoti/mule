@@ -51,7 +51,9 @@ public class DefaultDbConfigResolver extends AbstractDbConfigResolver
                 stringBuilder.append(dbConfigResolver.resolve(null).getName());
             }
 
-            throw new UnresolvableDbConfigException("Database config must be explicitly defined using 'config-ref' attribute there are multiple database configs defined: " + stringBuilder);
+            throw new UnresolvableDbConfigException(
+                    "Database config must be explicitly defined using 'config-ref' attribute there are multiple database configs defined: " +
+                    stringBuilder);
         }
 
         return dbConfigResolvers.iterator().next();

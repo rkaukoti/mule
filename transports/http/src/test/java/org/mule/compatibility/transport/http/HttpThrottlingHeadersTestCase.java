@@ -6,15 +6,13 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static junit.framework.Assert.assertEquals;
-
-import org.mule.compatibility.transport.http.HttpMessageProcessTemplate;
+import org.junit.Test;
 import org.mule.runtime.module.http.internal.listener.HttpThrottlingHeadersMapBuilder;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
 import java.util.Map;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
 
 public class HttpThrottlingHeadersTestCase extends AbstractMuleTestCase
 {

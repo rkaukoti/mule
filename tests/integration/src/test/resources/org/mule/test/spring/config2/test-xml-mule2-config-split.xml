@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mule xmlns:spring="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:test="http://www.mulesoft.org/schema/mule/test"
-       xmlns="http://www.mulesoft.org/schema/mule/core"
-       xsi:schemaLocation="
-       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
-       http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 
     <spring:bean name="txFactory" class="org.mule.tck.testmodels.mule.TestTransactionFactory"/>
 
     <asynchronous-processing-strategy name="customStrategy" maxBufferSize="6" maxThreads="12"
-                                                 poolExhaustedAction="DISCARD" />
+                                      poolExhaustedAction="DISCARD"/>
 
     <flow name="appleComponent2" processingStrategy="customStrategy">
         <pooled-component class="org.mule.tck.testmodels.fruit.Apple">

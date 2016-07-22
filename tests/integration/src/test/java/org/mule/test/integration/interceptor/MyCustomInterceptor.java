@@ -14,11 +14,11 @@ import org.mule.runtime.core.processor.AbstractInterceptingMessageProcessor;
 
 public class MyCustomInterceptor extends AbstractInterceptingMessageProcessor implements Interceptor
 {
-    
+
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException
     {
-        String payload = (String)event.getMessage().getPayload();
+        String payload = (String) event.getMessage().getPayload();
         event.setMessage(MuleMessage.builder(event.getMessage()).payload(payload + "!").build());
         return processNext(event);
     }

@@ -6,12 +6,10 @@
  */
 package org.mule.runtime.core.config.bootstrap;
 
-import static org.apache.commons.lang.StringUtils.isNotEmpty;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.api.metadata.DataTypeParamsBuilder;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.registry.ObjectProcessor;
 import org.mule.runtime.core.api.registry.RegistrationException;
 import org.mule.runtime.core.api.registry.TransformerResolver;
@@ -23,9 +21,10 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.registry.MuleRegistryHelper;
 import org.mule.runtime.core.registry.SimpleRegistry;
 import org.mule.runtime.core.util.ClassUtils;
-import org.mule.runtime.core.util.StringUtils;
 
 import java.util.Map;
+
+import static org.apache.commons.lang.StringUtils.isNotEmpty;
 
 /**
  * An implementation of {@link AbstractRegistryBootstrap} to populate instances
@@ -38,9 +37,9 @@ public class SimpleRegistryBootstrap extends AbstractRegistryBootstrap
 {
 
     /**
-     * @param supportedArtifactType type of the artifact to support. This attributes defines which types of registry bootstrap entries will be
-     *                              created depending on the entry applyToArtifactType parameter value.
-     * @param muleContext {@code MuleContext} in which the objects will be registered
+     * @param supportedArtifactType type of the artifact to support. This attributes defines which types of registry bootstrap entries will
+     *                              be created depending on the entry applyToArtifactType parameter value.
+     * @param muleContext           {@code MuleContext} in which the objects will be registered
      */
     public SimpleRegistryBootstrap(ArtifactType supportedArtifactType, MuleContext muleContext)
     {
@@ -48,7 +47,8 @@ public class SimpleRegistryBootstrap extends AbstractRegistryBootstrap
     }
 
     @Override
-    protected void doRegisterTransformer(TransformerBootstrapProperty bootstrapProperty, Class<?> returnClass, Class<? extends Transformer> transformerClass) throws Exception
+    protected void doRegisterTransformer(TransformerBootstrapProperty bootstrapProperty, Class<?> returnClass,
+                                         Class<? extends Transformer> transformerClass) throws Exception
     {
         Transformer trans = ClassUtils.instanciateClass(transformerClass);
         if (!(trans instanceof DiscoverableTransformer))
@@ -58,7 +58,7 @@ public class SimpleRegistryBootstrap extends AbstractRegistryBootstrap
         if (returnClass != null)
         {
             DataTypeParamsBuilder builder = DataType.builder().type(returnClass);
-            if(isNotEmpty(bootstrapProperty.getMimeType()))
+            if (isNotEmpty(bootstrapProperty.getMimeType()))
             {
                 builder = builder.mediaType(bootstrapProperty.getMimeType());
             }

@@ -6,8 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
-import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.api.connection.ConnectionProvider;
+import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.extension.api.introspection.config.RuntimeConfigurationModel;
 import org.mule.runtime.extension.api.runtime.ConfigurationProvider;
 import org.mule.runtime.module.extension.internal.runtime.DynamicConfigPolicy;

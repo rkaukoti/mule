@@ -36,10 +36,10 @@ public class RegistryLifecycleManager extends AbstractLifecycleManager<Registry>
 {
 
 
+    private final LifecycleInterceptor initDisposeLifecycleInterceptor = new InitDisposeLifecycleInterceptor();
     protected Map<String, LifecyclePhase> phases = new HashMap<>();
     protected SortedMap<String, LifecycleCallback> callbacks = new TreeMap<>();
     protected MuleContext muleContext;
-    private final LifecycleInterceptor initDisposeLifecycleInterceptor = new InitDisposeLifecycleInterceptor();
 
     public RegistryLifecycleManager(String id, Registry object, MuleContext muleContext)
     {
@@ -47,18 +47,6 @@ public class RegistryLifecycleManager extends AbstractLifecycleManager<Registry>
         this.muleContext = muleContext;
 
         registerPhases();
-    }
-
-    protected void registerPhases()
-    {
-        final RegistryLifecycleCallback<Object> callback = new RegistryLifecycleCallback<>(this);
-        final LifecycleCallback<AbstractRegistryBroker> emptyCallback = new EmptyLifecycleCallback<>();
-
-        registerPhase(NotInLifecyclePhase.PHASE_NAME, NOT_IN_LIFECYCLE_PHASE, emptyCallback);
-        registerPhase(Initialisable.PHASE_NAME, new MuleContextInitialisePhase(), callback);
-        registerPhase(Startable.PHASE_NAME, new MuleContextStartPhase(), emptyCallback);
-        registerPhase(Stoppable.PHASE_NAME, new MuleContextStopPhase(), emptyCallback);
-        registerPhase(Disposable.PHASE_NAME, new MuleContextDisposePhase(), callback);
     }
 
     public RegistryLifecycleManager(String id, Registry object, Map<String, LifecyclePhase> phases)
@@ -72,6 +60,18 @@ public class RegistryLifecycleManager extends AbstractLifecycleManager<Registry>
         {
             registerPhase(entry.getKey(), entry.getValue(), callback);
         }
+    }
+
+    protected void registerPhases()
+    {
+        final RegistryLifecycleCallback<Object> callback = new RegistryLifecycleCallback<>(this);
+        final LifecycleCallback<AbstractRegistryBroker> emptyCallback = new EmptyLifecycleCallback<>();
+
+        registerPhase(NotInLifecyclePhase.PHASE_NAME, NOT_IN_LIFECYCLE_PHASE, emptyCallback);
+        registerPhase(Initialisable.PHASE_NAME, new MuleContextInitialisePhase(), callback);
+        registerPhase(Startable.PHASE_NAME, new MuleContextStartPhase(), emptyCallback);
+        registerPhase(Stoppable.PHASE_NAME, new MuleContextStopPhase(), emptyCallback);
+        registerPhase(Disposable.PHASE_NAME, new MuleContextDisposePhase(), callback);
     }
 
     @Override

@@ -33,14 +33,14 @@ class InboundPropertiesMapContext extends AbstractMapContext<Serializable>
     public void doPut(String key, Serializable value)
     {
         throw new UnsupportedOperationException(CoreMessages.inboundMessagePropertiesImmutable(key)
-            .getMessage());
+                                                            .getMessage());
     }
 
     @Override
     public void doRemove(String key)
     {
         throw new UnsupportedOperationException(CoreMessages.inboundMessagePropertiesImmutable(key)
-            .getMessage());
+                                                            .getMessage());
     }
 
     @Override
@@ -53,7 +53,7 @@ class InboundPropertiesMapContext extends AbstractMapContext<Serializable>
     public void clear()
     {
         throw new UnsupportedOperationException(CoreMessages.inboundMessagePropertiesImmutable()
-            .getMessage());
+                                                            .getMessage());
     }
 
     @Override

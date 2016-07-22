@@ -6,9 +6,8 @@
  */
 package org.mule.compatibility.core.routing;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.mule.compatibility.core.DefaultMuleEventEndpointUtils;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.runtime.core.DefaultMuleEvent;
@@ -27,8 +26,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.CountDownLatch;
 
-import org.junit.Test;
-import org.mockito.Mockito;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class IdempotentMessageFilterMule6079TestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -71,7 +70,7 @@ public class IdempotentMessageFilterMule6079TestCase extends AbstractMuleContext
         t2.join(5000);
         assertFalse("Exception in child threads", errorHappenedInChildThreads);
         assertEquals("None or more than one message was processed by IdempotentMessageFilter",
-                     new Integer(1), processedEvents);
+                new Integer(1), processedEvents);
     }
 
     private class TestForRaceConditionRunnable implements Runnable
@@ -138,7 +137,7 @@ public class IdempotentMessageFilterMule6079TestCase extends AbstractMuleContext
             }
             return containsKey;
         }
-        
+
         @Override
         public void store(Serializable key, String value) throws ObjectStoreException
         {
@@ -187,7 +186,7 @@ public class IdempotentMessageFilterMule6079TestCase extends AbstractMuleContext
         {
             return false;
         }
-        
+
         @Override
         public void clear() throws ObjectStoreException
         {

@@ -6,6 +6,17 @@
  */
 package org.mule.runtime.config.spring.dsl.api;
 
+import org.mule.runtime.config.spring.dsl.model.ComponentIdentifier;
+import org.mule.runtime.config.spring.dsl.processor.TypeDefinitionVisitor;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
+
 import static com.google.common.collect.ImmutableSet.copyOf;
 import static java.lang.String.format;
 import static java.util.Optional.empty;
@@ -13,17 +24,6 @@ import static java.util.Optional.of;
 import static java.util.Optional.ofNullable;
 import static org.mule.runtime.config.spring.dsl.spring.DslSimpleType.isSimpleType;
 import static org.mule.runtime.core.util.Preconditions.checkState;
-import org.mule.runtime.config.spring.dsl.model.ComponentIdentifier;
-import org.mule.runtime.config.spring.dsl.processor.TypeDefinitionVisitor;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Defines the mapping between a component configuration and how the object that represents
@@ -34,8 +34,10 @@ import java.util.concurrent.atomic.AtomicReference;
 public class ComponentBuildingDefinition
 {
 
-    public static final String TYPE_CONVERTER_AND_UNKNOWN_TYPE_MESSAGE = "Type converter cannot be used with a type definition from a configuration attribute.";
-    public static final String TYPE_CONVERTER_AND_NO_SIMPLE_TYPE_MESSAGE_TEMPLATE = "Type converter can only be used with simple types. You can't use it with %s";
+    public static final String TYPE_CONVERTER_AND_UNKNOWN_TYPE_MESSAGE =
+            "Type converter cannot be used with a type definition from a configuration attribute.";
+    public static final String TYPE_CONVERTER_AND_NO_SIMPLE_TYPE_MESSAGE_TEMPLATE =
+            "Type converter can only be used with simple types. You can't use it with %s";
     public static final String KEY_TYPE_CONVERTER_AND_NO_MAP_TYPE = "key type converter can only be used with objects of type Map";
 
     private TypeDefinition typeDefinition;
@@ -92,7 +94,8 @@ public class ComponentBuildingDefinition
     }
 
     /**
-     * @return the factory for the domain object. For complex object creations it's possible to define an object builder that will end up creating the domain object.
+     * @return the factory for the domain object. For complex object creations it's possible to define an object builder that will end up
+     * creating the domain object.
      */
     public Class<?> getObjectFactoryType()
     {
@@ -218,8 +221,6 @@ public class ComponentBuildingDefinition
          * any of java primitive types, its wrapper or string.
          *
          * @param typeConverter converter from the configuration value to a custom type.
-         * @return the builder
-         * @return
          */
         public Builder withTypeConverter(TypeConverter typeConverter)
         {
@@ -234,8 +235,6 @@ public class ComponentBuildingDefinition
          * any of java primitive types, its wrapper or string.
          *
          * @param typeConverter converter from the configuration value to a custom type.
-         * @return the builder
-         * @return
          */
         public Builder withKeyTypeConverter(TypeConverter typeConverter)
         {
@@ -313,9 +312,14 @@ public class ComponentBuildingDefinition
             checkState(identifier != null, "You must specify the identifier");
             checkState(namespace != null, "You must specify the namespace");
             Optional<Class> componentType = getType();
-            checkState(!definition.typeConverter.isPresent() || (definition.typeConverter.isPresent() && componentType.isPresent()), TYPE_CONVERTER_AND_UNKNOWN_TYPE_MESSAGE);
-            checkState(!definition.typeConverter.isPresent() || (definition.typeConverter.isPresent() && (isSimpleType(componentType.get()) || isMapType(componentType.get()))), format(TYPE_CONVERTER_AND_NO_SIMPLE_TYPE_MESSAGE_TEMPLATE, componentType.orElse(Object.class).getName()));
-            checkState(!definition.keyTypeConverter.isPresent() || (definition.keyTypeConverter.isPresent() && componentType.isPresent() && isMapType(componentType.get())), KEY_TYPE_CONVERTER_AND_NO_MAP_TYPE);
+            checkState(!definition.typeConverter.isPresent() || (definition.typeConverter.isPresent() && componentType.isPresent()),
+                    TYPE_CONVERTER_AND_UNKNOWN_TYPE_MESSAGE);
+            checkState(!definition.typeConverter.isPresent() ||
+                       (definition.typeConverter.isPresent() && (isSimpleType(componentType.get()) || isMapType(componentType.get()))),
+                    format(TYPE_CONVERTER_AND_NO_SIMPLE_TYPE_MESSAGE_TEMPLATE, componentType.orElse(Object.class).getName()));
+            checkState(!definition.keyTypeConverter.isPresent() ||
+                       (definition.keyTypeConverter.isPresent() && componentType.isPresent() && isMapType(componentType.get())),
+                    KEY_TYPE_CONVERTER_AND_NO_MAP_TYPE);
             definition.componentIdentifier = new ComponentIdentifier.Builder().withName(identifier).withNamespace(namespace).build();
             return definition;
         }

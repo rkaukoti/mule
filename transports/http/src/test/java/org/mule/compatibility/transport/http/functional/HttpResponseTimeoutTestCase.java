@@ -6,12 +6,8 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
@@ -24,8 +20,12 @@ import org.mule.tck.junit4.rule.DynamicPort;
 import java.util.Date;
 import java.util.concurrent.TimeoutException;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 /**
  * See MULE-4491 "Http outbound endpoint does not use responseTimeout attribute"
@@ -35,10 +35,9 @@ public class HttpResponseTimeoutTestCase extends FunctionalTestCase
 {
     protected static String PAYLOAD = "Eugene";
     protected static int DEFAULT_RESPONSE_TIMEOUT = 2000;
-    protected MuleClient muleClient;
-
     @Rule
     public DynamicPort dynamicPort = new DynamicPort("port1");
+    protected MuleClient muleClient;
 
     @Override
     protected String getConfigFile()

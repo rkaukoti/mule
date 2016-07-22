@@ -14,8 +14,6 @@ public interface MessageProcessorContainer
 
     /**
      * Add the child nodes to the path element tree.
-     *
-     * @param pathElement
      */
     void addMessageProcessorPathElements(MessageProcessorPathElement pathElement);
 }

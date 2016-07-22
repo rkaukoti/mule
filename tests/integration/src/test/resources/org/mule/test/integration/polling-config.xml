@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<mule xmlns="http://www.mulesoft.org/schema/mule/core"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 
     <flow name="echo" processingStrategy="synchronous">
@@ -24,7 +24,7 @@
                 <return-data>bar</return-data>
             </static-component>
         </poll>
-        <component class="org.mule.test.integration.PollingTestCase$BarComponent" />
+        <component class="org.mule.test.integration.PollingTestCase$BarComponent"/>
     </flow>
 
     <flow name="pollbarNever">
@@ -35,15 +35,15 @@
                 <return-data>barNever</return-data>
             </static-component>
         </poll>
-        <component class="org.mule.test.integration.PollingTestCase$BarComponent" />
+        <component class="org.mule.test.integration.PollingTestCase$BarComponent"/>
     </flow>
 
     <flow name="pollWithRequestContextEvent">
         <poll>
-            <fixed-frequency-scheduler frequency="1000" />
-            <custom-processor class="org.mule.test.integration.PollingTestCase$EventWireTrap" />
+            <fixed-frequency-scheduler frequency="1000"/>
+            <custom-processor class="org.mule.test.integration.PollingTestCase$EventWireTrap"/>
         </poll>
-        <logger message="hello" />
+        <logger message="hello"/>
     </flow>
 
 </mule>

@@ -17,15 +17,14 @@ import org.mule.runtime.config.spring.parsers.assembly.configuration.ValueMap;
 import org.mule.runtime.config.spring.parsers.collection.DynamicAttributeDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.AutoIdUtils;
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
-
-import java.util.Map;
-
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
+
+import java.util.Map;
 
 /**
  * This is a very hurried demonstration.  It needs improving!

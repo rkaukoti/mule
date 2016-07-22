@@ -6,17 +6,8 @@
  */
 package org.mule.runtime.module.extension.internal.capability.xml.schema.builder;
 
-import static java.math.BigInteger.ONE;
-import static java.math.BigInteger.ZERO;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_EXTENSION;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_EXTENSION_TYPE;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_EXTENSION_CONNECTION_PROVIDER_ELEMENT;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_EXTENSION_DYNAMIC_CONFIG_POLICY_ELEMENT;
-import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.UNBOUNDED;
-import static org.mule.runtime.module.extension.internal.introspection.utils.ImplicitObjectUtils.getFirstImplicit;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getDynamicParameters;
-import org.mule.runtime.extension.api.introspection.config.ConfigurationModel;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
+import org.mule.runtime.extension.api.introspection.config.ConfigurationModel;
 import org.mule.runtime.extension.api.introspection.config.RuntimeConfigurationModel;
 import org.mule.runtime.module.extension.internal.capability.xml.schema.model.ComplexContent;
 import org.mule.runtime.module.extension.internal.capability.xml.schema.model.Element;
@@ -26,6 +17,16 @@ import org.mule.runtime.module.extension.internal.capability.xml.schema.model.Lo
 import org.mule.runtime.module.extension.internal.capability.xml.schema.model.ObjectFactory;
 import org.mule.runtime.module.extension.internal.capability.xml.schema.model.Schema;
 import org.mule.runtime.module.extension.internal.capability.xml.schema.model.TopLevelElement;
+
+import static java.math.BigInteger.ONE;
+import static java.math.BigInteger.ZERO;
+import static org.mule.runtime.module.extension.internal.introspection.utils.ImplicitObjectUtils.getFirstImplicit;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getDynamicParameters;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_EXTENSION;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_ABSTRACT_EXTENSION_TYPE;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_EXTENSION_CONNECTION_PROVIDER_ELEMENT;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MULE_EXTENSION_DYNAMIC_CONFIG_POLICY_ELEMENT;
+import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.UNBOUNDED;
 
 /**
  * Builder delegation class to generate a XSD schema that describes a
@@ -91,8 +92,8 @@ final class ConfigurationSchemaDelegate
             TopLevelElement objectElement = new TopLevelElement();
 
             objectElement.setMinOccurs(getFirstImplicit(extensionModel.getConnectionProviders()) != null
-                                       ? ZERO
-                                       : ONE);
+                    ? ZERO
+                    : ONE);
 
             objectElement.setMaxOccurs("1");
             objectElement.setRef(MULE_EXTENSION_CONNECTION_PROVIDER_ELEMENT);

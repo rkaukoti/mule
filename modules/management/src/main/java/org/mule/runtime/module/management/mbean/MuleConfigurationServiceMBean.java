@@ -9,7 +9,6 @@ package org.mule.runtime.module.management.mbean;
 /**
  * <code>MuleConfigurationServiceMBean</code> is a JMx service interface for the
  * Mule server configuration. This is read-only after start-up
- * 
  */
 public interface MuleConfigurationServiceMBean
 {
@@ -20,9 +19,9 @@ public interface MuleConfigurationServiceMBean
     String getWorkingDirectory();
 
     int getTransactionTimeout();
-    
+
     int getShutdownTimeout();
-    
+
     String getEncoding();
 
     boolean isContainerMode();

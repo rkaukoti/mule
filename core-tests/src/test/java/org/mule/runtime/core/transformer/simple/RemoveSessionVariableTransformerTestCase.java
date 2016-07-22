@@ -6,17 +6,16 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
-
+import org.junit.Ignore;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleSession;
 import org.mule.tck.size.SmallTest;
 
 import java.util.HashSet;
 
-import org.junit.Ignore;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @SmallTest
 @Ignore("MULE-9072 - Remove MuleSession")

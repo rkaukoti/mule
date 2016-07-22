@@ -6,9 +6,7 @@
  */
 package org.mule.test.transformers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleEvent;
@@ -19,10 +17,26 @@ import org.mule.runtime.core.transformer.AbstractTransformer;
 
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class GraphTransformerResolutionTestCase extends FunctionalTestCase
 {
+    @Override
+    protected String getConfigFile()
+    {
+        return "org/mule/test/transformers/graph-transformer-resolution-config.xml";
+    }
+
+    @Test
+    public void resolvesNonDirectTransformation() throws Exception
+    {
+        final MuleEvent muleEvent = flowRunner("stringEchoService").withPayload(new A("Hello")).run();
+        MuleMessage response = muleEvent.getMessage();
+        assertTrue(response.getPayload() instanceof C);
+        assertEquals("HelloAFromB", ((C) response.getPayload()).value);
+    }
+
     public static class A
     {
 
@@ -53,21 +67,6 @@ public class GraphTransformerResolutionTestCase extends FunctionalTestCase
         {
             this.value = value;
         }
-    }
-
-    @Override
-    protected String getConfigFile()
-    {
-        return "org/mule/test/transformers/graph-transformer-resolution-config.xml";
-    }
-
-    @Test
-    public void resolvesNonDirectTransformation() throws Exception
-    {
-        final MuleEvent muleEvent = flowRunner("stringEchoService").withPayload(new A("Hello")).run();
-        MuleMessage response = muleEvent.getMessage();
-        assertTrue(response.getPayload() instanceof C);
-        assertEquals("HelloAFromB", ((C)response.getPayload()).value);
     }
 
     public static class AtoBConverter extends AbstractTransformer implements DiscoverableTransformer

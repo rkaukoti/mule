@@ -6,11 +6,7 @@
  */
 package org.mule.test.core;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.mule.functional.functional.FlowAssert.verify;
-
+import org.junit.Test;
 import org.mule.functional.exceptions.FunctionalTestException;
 import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.functional.junit4.FlowRunner;
@@ -21,7 +17,10 @@ import org.mule.runtime.core.util.concurrent.Latch;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mule.functional.functional.FlowAssert.verify;
 
 public class NonBlockingNotSupportedFunctionalTestCase extends FunctionalTestCase
 {

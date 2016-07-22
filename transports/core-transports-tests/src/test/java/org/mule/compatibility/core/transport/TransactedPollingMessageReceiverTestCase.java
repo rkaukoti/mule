@@ -6,16 +6,14 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.timeout;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.core.config.i18n.TransportCoreMessages;
-import org.mule.compatibility.core.transport.AbstractConnector;
-import org.mule.compatibility.core.transport.TransactedPollingMessageReceiver;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.MuleRuntimeException;
@@ -24,11 +22,10 @@ import org.mule.runtime.core.api.lifecycle.CreateException;
 
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactedPollingMessageReceiverTestCase
@@ -46,7 +43,8 @@ public class TransactedPollingMessageReceiverTestCase
     public void callSystemExceptionHandlerReceivingMessage() throws Exception
     {
         when(mockEndpoint.getConnector()).thenReturn(mockConnector);
-        TransactedPollingMessageReceiver messageReceiver = new TestTransactedPollingMessageReceiver(mockConnector, mockFlowConstruct, mockEndpoint);
+        TransactedPollingMessageReceiver messageReceiver =
+                new TestTransactedPollingMessageReceiver(mockConnector, mockFlowConstruct, mockEndpoint);
         messageReceiver.poll();
         verify(mockEndpoint.getMuleContext(), timeout(1)).handleException(any(Exception.class));
     }
@@ -55,7 +53,8 @@ public class TransactedPollingMessageReceiverTestCase
     public void callSystemExceptionHandlerReceivingMessageInTransaction() throws Exception
     {
         when(mockEndpoint.getConnector()).thenReturn(mockConnector);
-        TransactedPollingMessageReceiver messageReceiver = new TestTransactedPollingMessageReceiver(mockConnector, mockFlowConstruct, mockEndpoint);
+        TransactedPollingMessageReceiver messageReceiver =
+                new TestTransactedPollingMessageReceiver(mockConnector, mockFlowConstruct, mockEndpoint);
         messageReceiver.setReceiveMessagesInTransaction(true);
         messageReceiver.poll();
         verify(mockEndpoint.getMuleContext(), timeout(1)).handleException(any(Exception.class));
@@ -64,7 +63,8 @@ public class TransactedPollingMessageReceiverTestCase
     public static class TestTransactedPollingMessageReceiver extends TransactedPollingMessageReceiver
     {
 
-        public TestTransactedPollingMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint) throws CreateException
+        public TestTransactedPollingMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint)
+                throws CreateException
         {
             super(connector, flowConstruct, endpoint);
         }

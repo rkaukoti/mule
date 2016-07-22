@@ -15,7 +15,7 @@ import java.io.File;
 public class FileMessages extends MessageFactory
 {
     private static final FileMessages factory = new FileMessages();
-    
+
     private static final String BUNDLE_PATH = getBundlePath("file");
 
     public static Message errorWhileListingFiles()

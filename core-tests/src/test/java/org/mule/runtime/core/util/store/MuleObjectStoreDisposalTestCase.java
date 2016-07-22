@@ -6,16 +6,16 @@
  */
 package org.mule.runtime.core.util.store;
 
-import static junit.framework.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import org.junit.Test;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.store.ObjectStore;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 public class MuleObjectStoreDisposalTestCase extends AbstractMuleContextTestCase
 {

@@ -6,17 +6,17 @@
  */
 package org.mule.runtime.module.cxf;
 
-import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.ws.handler.MessageContext.Scope;
-
 import org.apache.cxf.jaxws.JAXWSMethodInvoker;
 import org.apache.cxf.jaxws.context.WebServiceContextImpl;
 import org.apache.cxf.jaxws.context.WrappedMessageContext;
 import org.apache.cxf.message.Exchange;
 import org.apache.cxf.service.invoker.Invoker;
+
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.ws.handler.MessageContext.Scope;
 
 public class MuleJAXWSInvoker extends JAXWSMethodInvoker
 {

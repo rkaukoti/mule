@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.core.expression;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import java.util.Date;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class ExpressionManagerTestCase extends AbstractMuleContextTestCase
 {
@@ -37,28 +36,28 @@ public class ExpressionManagerTestCase extends AbstractMuleContextTestCase
     {
         // fail for old-style ${}
         assertFalse(muleContext.getExpressionManager().isValidExpression(
-            "http://${bean:user}:${bean:password}@${header:host}:${header:port}/foo/bar"));
+                "http://${bean:user}:${bean:password}@${header:host}:${header:port}/foo/bar"));
         assertFalse(muleContext.getExpressionManager().isValidExpression("${bean:user}"));
 
         // wiggly mule style!
         assertTrue(muleContext.getExpressionManager().isValidExpression("#[bean:user]"));
         assertTrue(muleContext.getExpressionManager().isValidExpression(
-            "http://#[bean:user]:#[bean:password]@#[header:host]:#[header:port]/foo/bar"));
+                "http://#[bean:user]:#[bean:password]@#[header:host]:#[header:port]/foo/bar"));
 
         assertFalse(muleContext.getExpressionManager().isValidExpression("{bean:user}"));
         assertFalse(muleContext.getExpressionManager().isValidExpression("#{bean:user"));
         assertFalse(muleContext.getExpressionManager().isValidExpression("user"));
 
         assertFalse(muleContext.getExpressionManager().isValidExpression(
-            "http://#[bean:user:#[bean:password]@#[header:host]:#[header:port]/foo/bar"));
+                "http://#[bean:user:#[bean:password]@#[header:host]:#[header:port]/foo/bar"));
         assertTrue(muleContext.getExpressionManager().isValidExpression(
-            "http://#[bean:user]:##[bean:password]@#[header:host]:#[header:port]/foo/bar"));
+                "http://#[bean:user]:##[bean:password]@#[header:host]:#[header:port]/foo/bar"));
         assertTrue(muleContext.getExpressionManager().isValidExpression(
-            "http://#[bean:user]]:##[bean:password]@#[header:host]:#[header:port]/foo/bar"));
+                "http://#[bean:user]]:##[bean:password]@#[header:host]:#[header:port]/foo/bar"));
         assertFalse(muleContext.getExpressionManager().isValidExpression(
-            "http://#[bean:user]:#[[bean:password]@#[header:host]:#[header:port]/foo/bar"));
+                "http://#[bean:user]:#[[bean:password]@#[header:host]:#[header:port]/foo/bar"));
         assertTrue(muleContext.getExpressionManager().isValidExpression(
-            "http://#[bean:user]:#[#bean:password]@#[header:host]:#[header:port]/foo/bar"));
+                "http://#[bean:user]:#[#bean:password]@#[header:host]:#[header:port]/foo/bar"));
     }
 
     @Test
@@ -73,7 +72,8 @@ public class ExpressionManagerTestCase extends AbstractMuleContextTestCase
                                     .build());
 
         String result = muleContext.getExpressionManager().parse(
-            "http://#[message.outboundProperties.user]:#[message.outboundProperties.password]@#[message.outboundProperties.host]:#[message.outboundProperties.port]/foo/bar", event);
+                "http://#[message.outboundProperties.user]:#[message.outboundProperties.password]@#[message.outboundProperties.host]:#[message.outboundProperties.port]/foo/bar",
+                event);
         assertNotNull(result);
         assertEquals("http://vasya:pupkin@example.com:12345/foo/bar", result);
     }

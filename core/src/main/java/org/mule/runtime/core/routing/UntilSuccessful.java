@@ -55,7 +55,8 @@ public class UntilSuccessful extends AbstractOutboundRouter implements UntilSucc
     public static final String PROCESS_ATTEMPT_COUNT_PROPERTY_NAME = "process.attempt.count";
     static final int DEFAULT_PROCESS_ATTEMPT_COUNT_PROPERTY_VALUE = 1;
     private static final long DEFAULT_MILLIS_BETWEEN_RETRIES = 60 * 1000;
-
+    protected Object deadLetterQueue;
+    protected MessageProcessor dlqMP;
     private ListableObjectStore<MuleEvent> objectStore;
     private int maxRetries = 5;
     private Long millisBetweenRetries = null;
@@ -64,8 +65,6 @@ public class UntilSuccessful extends AbstractOutboundRouter implements UntilSucc
     private String ackExpression;
     private ExpressionFilter failureExpressionFilter;
     private String eventKeyPrefix;
-    protected Object deadLetterQueue;
-    protected MessageProcessor dlqMP;
     private boolean synchronous = false;
     private ThreadingProfile threadingProfile;
     private UntilSuccessfulProcessingStrategy untilSuccessfulStrategy;
@@ -76,16 +75,16 @@ public class UntilSuccessful extends AbstractOutboundRouter implements UntilSucc
         if (routes.isEmpty())
         {
             throw new InitialisationException(
-                MessageFactory.createStaticMessage("One message processor must be configured within UntilSuccessful."),
-                this);
+                    MessageFactory.createStaticMessage("One message processor must be configured within UntilSuccessful."),
+                    this);
         }
 
         if (routes.size() > 1)
         {
             throw new InitialisationException(
-                MessageFactory.createStaticMessage("Only one message processor is allowed within UntilSuccessful."
-                                                   + " Use a Processor Chain to group several message processors into one."),
-                this);
+                    MessageFactory.createStaticMessage("Only one message processor is allowed within UntilSuccessful."
+                                                       + " Use a Processor Chain to group several message processors into one."),
+                    this);
         }
 
         setWaitTime();
@@ -150,8 +149,8 @@ public class UntilSuccessful extends AbstractOutboundRouter implements UntilSucc
         else
         {
             throw new InitialisationException(
-                MessageFactory.createStaticMessage("deadLetterQueue-ref is not a valid mesage processor: "
-                                                   + deadLetterQueue), null, this);
+                    MessageFactory.createStaticMessage("deadLetterQueue-ref is not a valid mesage processor: "
+                                                       + deadLetterQueue), null, this);
         }
     }
 
@@ -161,12 +160,13 @@ public class UntilSuccessful extends AbstractOutboundRouter implements UntilSucc
         boolean hasMillis = millisBetweenRetries != null;
 
         Preconditions.checkArgument(!(hasSeconds && hasMillis),
-                                    "Can't specify millisBetweenRetries and secondsBetweenRetries properties at the same time. Please specify only one and remember that secondsBetweenRetries is deprecated.");
+                "Can't specify millisBetweenRetries and secondsBetweenRetries properties at the same time. Please specify only one and remember that secondsBetweenRetries is deprecated.");
 
         if (hasSeconds)
         {
-            logger.warn("You're using the secondsBetweenRetries in the until-successful router. That attribute was deprecated in favor of the new millisBetweenRetries." +
-                        "Please consider updating your config since the old attribute will be removed in Mule 4");
+            logger.warn(
+                    "You're using the secondsBetweenRetries in the until-successful router. That attribute was deprecated in favor of the new millisBetweenRetries." +
+                    "Please consider updating your config since the old attribute will be removed in Mule 4");
 
             setMillisBetweenRetries(TimeUnit.SECONDS.toMillis(secondsBetweenRetries));
         }
@@ -189,7 +189,8 @@ public class UntilSuccessful extends AbstractOutboundRouter implements UntilSucc
     @Override
     public ScheduledThreadPoolExecutor createScheduledRetriesPool(final String threadPrefix)
     {
-        return new ScheduledThreadPoolExecutor(1, new NamedThreadFactory(threadPrefix + "_retries", Thread.currentThread().getContextClassLoader()));
+        return new ScheduledThreadPoolExecutor(1,
+                new NamedThreadFactory(threadPrefix + "_retries", Thread.currentThread().getContextClassLoader()));
     }
 
     @Override
@@ -237,8 +238,8 @@ public class UntilSuccessful extends AbstractOutboundRouter implements UntilSucc
     }
 
     /**
-     * @deprecated use {@link #setMillisBetweenRetries(long)} instead
      * @param secondsBetweenRetries the number of seconds to wait between retries
+     * @deprecated use {@link #setMillisBetweenRetries(long)} instead
      */
     @Deprecated
     public void setSecondsBetweenRetries(final long secondsBetweenRetries)
@@ -278,14 +279,14 @@ public class UntilSuccessful extends AbstractOutboundRouter implements UntilSucc
         this.ackExpression = ackExpression;
     }
 
-    public void setDeadLetterQueue(final Object deadLetterQueue)
-    {
-        this.deadLetterQueue = deadLetterQueue;
-    }
-
     public Object getDeadLetterQueue()
     {
         return deadLetterQueue;
+    }
+
+    public void setDeadLetterQueue(final Object deadLetterQueue)
+    {
+        this.deadLetterQueue = deadLetterQueue;
     }
 
     public String getEventKeyPrefix()
@@ -299,15 +300,15 @@ public class UntilSuccessful extends AbstractOutboundRouter implements UntilSucc
         return failureExpressionFilter;
     }
 
-    public void setThreadingProfile(ThreadingProfile threadingProfile)
-    {
-        this.threadingProfile = threadingProfile;
-    }
-
     @Override
     public ThreadingProfile getThreadingProfile()
     {
         return threadingProfile;
+    }
+
+    public void setThreadingProfile(ThreadingProfile threadingProfile)
+    {
+        this.threadingProfile = threadingProfile;
     }
 
     @Override

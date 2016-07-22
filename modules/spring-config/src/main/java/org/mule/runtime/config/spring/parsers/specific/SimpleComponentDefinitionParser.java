@@ -9,10 +9,6 @@ package org.mule.runtime.config.spring.parsers.specific;
 import org.mule.runtime.core.component.DefaultJavaComponent;
 import org.mule.runtime.core.object.AbstractObjectFactory;
 import org.mule.runtime.core.object.SingletonObjectFactory;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
@@ -20,6 +16,9 @@ import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Used to parse shortcut elements for simple built-in components such as
@@ -37,7 +36,7 @@ public class SimpleComponentDefinitionParser extends ComponentDefinitionParser
     private static Class OBJECT_FACTORY_TYPE = SingletonObjectFactory.class;
     private Class componentInstanceClass;
     private Map properties = new HashMap();
-    
+
     public SimpleComponentDefinitionParser(Class component, Class componentInstanceClass)
     {
         super(DefaultJavaComponent.class);
@@ -50,10 +49,10 @@ public class SimpleComponentDefinitionParser extends ComponentDefinitionParser
         super.preProcess(element);
 
         NamedNodeMap attrs = element.getAttributes();
-        
+
         int numAttrs = attrs.getLength();
         Node attr;
-        for (int i = numAttrs-1; i >= 0; --i)
+        for (int i = numAttrs - 1; i >= 0; --i)
         {
             attr = attrs.item(i);
             if (attr.getNamespaceURI() == null)
@@ -72,12 +71,13 @@ public class SimpleComponentDefinitionParser extends ComponentDefinitionParser
 
         super.parseChild(element, parserContext, builder);
     }
-    
+
     protected AbstractBeanDefinition getObjectFactoryDefinition(Element element)
     {
         AbstractBeanDefinition objectFactoryBeanDefinition = new GenericBeanDefinition();
         objectFactoryBeanDefinition.setBeanClass(OBJECT_FACTORY_TYPE);
-        objectFactoryBeanDefinition.getPropertyValues().addPropertyValue(AbstractObjectFactory.ATTRIBUTE_OBJECT_CLASS, componentInstanceClass);
+        objectFactoryBeanDefinition.getPropertyValues()
+                                   .addPropertyValue(AbstractObjectFactory.ATTRIBUTE_OBJECT_CLASS, componentInstanceClass);
         objectFactoryBeanDefinition.getPropertyValues().addPropertyValue("properties", properties);
 
         return objectFactoryBeanDefinition;

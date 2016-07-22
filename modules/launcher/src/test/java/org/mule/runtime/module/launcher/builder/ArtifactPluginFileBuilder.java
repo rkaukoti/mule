@@ -7,15 +7,16 @@
 
 package org.mule.runtime.module.launcher.builder;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import org.mule.tck.ZipUtils.ZipResource;
-import static org.mule.runtime.module.launcher.plugin.ArtifactPluginDescriptor.PLUGIN_PROPERTIES;
 import org.mule.runtime.core.util.StringUtils;
+import org.mule.tck.ZipUtils.ZipResource;
 
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static org.mule.runtime.module.launcher.plugin.ArtifactPluginDescriptor.PLUGIN_PROPERTIES;
 
 /**
  * Creates Mule Application Plugin files.
@@ -48,7 +49,7 @@ public class ArtifactPluginFileBuilder extends AbstractArtifactFileBuilder<Artif
     /**
      * Create a new builder from another instance and different ID.
      *
-     * @param id artifact identifier. Non empty.
+     * @param id     artifact identifier. Non empty.
      * @param source instance used as template to build the new one. Non null.
      */
     public ArtifactPluginFileBuilder(String id, ArtifactPluginFileBuilder source)
@@ -66,7 +67,7 @@ public class ArtifactPluginFileBuilder extends AbstractArtifactFileBuilder<Artif
     /**
      * Adds a property into the plugin properties file.
      *
-     * @param propertyName name fo the property to add. Non empty
+     * @param propertyName  name fo the property to add. Non empty
      * @param propertyValue value of the property to add. Non null.
      * @return the same builder instance
      */

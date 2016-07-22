@@ -7,6 +7,13 @@
 
 package org.mule.runtime.module.launcher.nativelib;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+import org.mule.tck.size.SmallTest;
+
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,13 +21,6 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assume.assumeThat;
-import org.mule.tck.size.SmallTest;
-
-import java.io.File;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 @SmallTest
 public class PerAppCopyNativeLibraryFinderTestCase extends AbstractNativeLibraryFinderTestCase

@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.core.util;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.config.i18n.CoreMessages;
@@ -27,9 +29,6 @@ import java.security.PrivilegedAction;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 // @ThreadSafe
 

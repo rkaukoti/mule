@@ -6,8 +6,8 @@
  */
 package org.mule.runtime.module.db.integration.update;
 
-import static junit.framework.Assert.assertTrue;
-import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
 import org.mule.runtime.module.db.integration.TestDbConfig;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
@@ -15,21 +15,21 @@ import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static junit.framework.Assert.assertTrue;
+import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
 
 public class TruncateTableTestCase extends AbstractDbIntegrationTestCase
 {
+
+    public TruncateTableTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
+    {
+        super(dataSourceConfigResource, testDatabase);
+    }
 
     @Parameterized.Parameters
     public static List<Object[]> parameters()
     {
         return TestDbConfig.getResources();
-    }
-
-    public TruncateTableTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
     }
 
     @Override

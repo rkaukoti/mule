@@ -6,12 +6,12 @@
  */
 package org.mule.extension.file;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
+import org.junit.Test;
 
 import java.io.File;
 import java.nio.file.Paths;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.instanceOf;
 
 public class FileCreateDirectoryTestCase extends FileConnectorTestCase
 {
@@ -49,6 +49,7 @@ public class FileCreateDirectoryTestCase extends FileConnectorTestCase
 
         assertExists(true, new File(folder, DIRECTORY));
     }
+
     private void doCreateDirectory(String directory) throws Exception
     {
         flowRunner("createDirectory").withFlowVariable("directory", directory).run();

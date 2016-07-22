@@ -6,6 +6,12 @@
  */
 package org.mule.runtime.module.oauth2.internal.clientcredentials.functional;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.runtime.module.http.api.HttpHeaders;
+import org.mule.runtime.module.oauth2.AbstractOAuthAuthorizationTestCase;
+import org.mule.tck.junit4.rule.SystemProperty;
+
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.containing;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
@@ -14,21 +20,15 @@ import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.mule.runtime.module.oauth2.internal.AbstractGrantType.buildAuthorizationHeaderContent;
 
-import org.mule.runtime.module.http.api.HttpHeaders;
-import org.mule.runtime.module.oauth2.AbstractOAuthAuthorizationTestCase;
-import org.mule.tck.junit4.rule.SystemProperty;
-
-import org.junit.Rule;
-import org.junit.Test;
-
 public abstract class AbstractClientCredentialsBasicTestCase extends AbstractOAuthAuthorizationTestCase
 {
 
+    public static final String TEST_FLOW_NAME = "testFlow";
     private static final String RESOURCE_PATH = "/resource";
     private static final String NEW_ACCESS_TOKEN = "abcdefghjkl";
-    public static final String TEST_FLOW_NAME = "testFlow";
     @Rule
-    public SystemProperty tokenUrl = new SystemProperty("token.url", String.format("http://localhost:%d" + TOKEN_PATH, oauthServerPort.getNumber()));
+    public SystemProperty tokenUrl =
+            new SystemProperty("token.url", String.format("http://localhost:%d" + TOKEN_PATH, oauthServerPort.getNumber()));
 
     @Override
     protected String getConfigFile()
@@ -46,13 +46,13 @@ public abstract class AbstractClientCredentialsBasicTestCase extends AbstractOAu
     public void authenticationHeaderIsSentWithRequest() throws Exception
     {
         wireMockRule.stubFor(post(urlEqualTo(RESOURCE_PATH))
-                                     .willReturn(aResponse()
-                                                         .withBody(TEST_MESSAGE)));
+                .willReturn(aResponse()
+                        .withBody(TEST_MESSAGE)));
 
         flowRunner(TEST_FLOW_NAME).withPayload(TEST_MESSAGE).run();
 
         wireMockRule.verify(postRequestedFor(urlEqualTo(RESOURCE_PATH))
-                                    .withHeader(HttpHeaders.Names.AUTHORIZATION, equalTo(buildAuthorizationHeaderContent(ACCESS_TOKEN))));
+                .withHeader(HttpHeaders.Names.AUTHORIZATION, equalTo(buildAuthorizationHeaderContent(ACCESS_TOKEN))));
     }
 
     @Test
@@ -61,21 +61,21 @@ public abstract class AbstractClientCredentialsBasicTestCase extends AbstractOAu
         configureWireMockToExpectTokenPathRequestForClientCredentialsGrantType(NEW_ACCESS_TOKEN);
 
         wireMockRule.stubFor(post(urlEqualTo(RESOURCE_PATH))
-                                     .withHeader(HttpHeaders.Names.AUTHORIZATION, containing(ACCESS_TOKEN))
-                                     .willReturn(aResponse()
-                                                         .withStatus(401).withHeader(HttpHeaders.Names.WWW_AUTHENTICATE, "Basic realm=\"myRealm\"")));
+                .withHeader(HttpHeaders.Names.AUTHORIZATION, containing(ACCESS_TOKEN))
+                .willReturn(aResponse()
+                        .withStatus(401).withHeader(HttpHeaders.Names.WWW_AUTHENTICATE, "Basic realm=\"myRealm\"")));
 
         wireMockRule.stubFor(post(urlEqualTo(RESOURCE_PATH))
-                                     .withHeader(HttpHeaders.Names.AUTHORIZATION, containing(NEW_ACCESS_TOKEN))
-                                     .willReturn(aResponse()
-                                                         .withBody(TEST_MESSAGE)
-                                                         .withStatus(200)));
+                .withHeader(HttpHeaders.Names.AUTHORIZATION, containing(NEW_ACCESS_TOKEN))
+                .willReturn(aResponse()
+                        .withBody(TEST_MESSAGE)
+                        .withStatus(200)));
 
         flowRunner("testFlow").withPayload(TEST_MESSAGE).run();
 
         verifyRequestDoneToTokenUrlForClientCredentials();
 
         wireMockRule.verify(postRequestedFor(urlEqualTo(RESOURCE_PATH))
-                                    .withHeader(HttpHeaders.Names.AUTHORIZATION, equalTo(buildAuthorizationHeaderContent(NEW_ACCESS_TOKEN))));
+                .withHeader(HttpHeaders.Names.AUTHORIZATION, equalTo(buildAuthorizationHeaderContent(NEW_ACCESS_TOKEN))));
     }
 }

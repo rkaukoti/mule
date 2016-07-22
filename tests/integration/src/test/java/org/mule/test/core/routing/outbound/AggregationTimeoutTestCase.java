@@ -7,12 +7,7 @@
 
 package org.mule.test.core.routing.outbound;
 
-import static java.util.stream.Collectors.toList;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -21,15 +16,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import org.junit.Test;
+import static java.util.stream.Collectors.toList;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.junit.Assert.assertThat;
 
 public class AggregationTimeoutTestCase extends FunctionalTestCase
 {
 
-    private static final CountDownLatch blockExecution = new CountDownLatch(1);
     public static final String PROCESS_EVENT = "process";
     public static final String BLOCK_EVENT = "block";
     public static final String PROCESSED_EVENT = "processed";
+    private static final CountDownLatch blockExecution = new CountDownLatch(1);
 
     @Override
     protected String getConfigFile()

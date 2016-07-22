@@ -6,10 +6,11 @@
  */
 package org.mule.runtime.core.work;
 
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.transaction.TransactionCoordination;
 import org.mule.runtime.core.util.concurrent.Latch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.resource.spi.work.ExecutionContext;
 import javax.resource.spi.work.Work;
@@ -20,8 +21,7 @@ import javax.resource.spi.work.WorkException;
 import javax.resource.spi.work.WorkListener;
 import javax.resource.spi.work.WorkRejectedException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 
 /**
  * <code>WorkerContext</code> TODO
@@ -56,59 +56,48 @@ public class WorkerContext implements Work
             }
         }
     };
-
+    /**
+     * Execution context of the actual work to be executed.
+     */
+    private final ExecutionContext executionContext;
+    /**
+     * A latch, which is released when the work is started.
+     */
+    private final Latch startLatch = new Latch();
+    /**
+     * A latch, which is released when the work is completed.
+     */
+    private final Latch endLatch = new Latch();
     protected ClassLoader executionClassLoader;
-
     /**
      * Priority of the thread, which will execute this work.
      */
     private int threadPriority;
-
     /**
      * Actual work to be executed.
      */
     private Work worker;
-
     /**
      * System.currentTimeMillis() when the wrapped Work has been accepted.
      */
     private long acceptedTime;
-
     /**
      * Number of times that the execution of this work has been tried.
      */
     private int retryCount;
-
     /**
      * Time duration (in milliseconds) within which the execution of the Work
      * instance must start.
      */
     private long startTimeOut;
-
-    /**
-     * Execution context of the actual work to be executed.
-     */
-    private final ExecutionContext executionContext;
-
     /**
      * Listener to be notified during the life-cycle of the work treatment.
      */
     private WorkListener workListener = NULL_WORK_LISTENER;
-
     /**
      * Work exception, if any.
      */
     private WorkException workException;
-
-    /**
-     * A latch, which is released when the work is started.
-     */
-    private final Latch startLatch = new Latch();
-
-    /**
-     * A latch, which is released when the work is completed.
-     */
-    private final Latch endLatch = new Latch();
 
     {
         this.executionClassLoader = Thread.currentThread().getContextClassLoader();
@@ -116,7 +105,7 @@ public class WorkerContext implements Work
 
     /**
      * Create a WorkWrapper.
-     * 
+     *
      * @param work Work to be wrapped.
      */
     public WorkerContext(Work work)
@@ -127,14 +116,12 @@ public class WorkerContext implements Work
 
     /**
      * Create a WorkWrapper with the specified execution context.
-     * 
-     * @param aWork Work to be wrapped.
-     * @param aStartTimeout a time duration (in milliseconds) within which the
-     *            execution of the Work instance must start.
-     * @param execContext an object containing the execution context with which the
-     *            submitted Work instance must be executed.
-     * @param workListener an object which would be notified when the various Work
-     *            processing events (work accepted, work rejected, work started,
+     *
+     * @param aWork         Work to be wrapped.
+     * @param aStartTimeout a time duration (in milliseconds) within which the execution of the Work instance must start.
+     * @param execContext   an object containing the execution context with which the submitted Work instance must be executed.
+     * @param workListener  an object which would be notified when the various Work processing events (work accepted, work rejected, work
+     *                      started,
      */
     public WorkerContext(Work aWork,
                          long aStartTimeout,
@@ -156,25 +143,11 @@ public class WorkerContext implements Work
     }
 
     /**
-     * Defines the thread priority level of the thread, which will be dispatched to
-     * process this work. This priority level must be the same one for a given
-     * resource adapter.
-     * 
-     * @param aPriority Priority of the thread to be used to process the wrapped Work
-     *            instance.
-     */
-    public void setThreadPriority(int aPriority)
-    {
-        threadPriority = aPriority;
-    }
-
-    /**
      * Gets the priority level of the thread, which will be dispatched to process
      * this work. This priority level must be the same one for a given resource
      * adapter.
-     * 
-     * @return The priority level of the thread to be dispatched to process the
-     *         wrapped Work instance.
+     *
+     * @return The priority level of the thread to be dispatched to process the wrapped Work instance.
      */
     public int getThreadPriority()
     {
@@ -182,11 +155,22 @@ public class WorkerContext implements Work
     }
 
     /**
+     * Defines the thread priority level of the thread, which will be dispatched to
+     * process this work. This priority level must be the same one for a given
+     * resource adapter.
+     *
+     * @param aPriority Priority of the thread to be used to process the wrapped Work instance.
+     */
+    public void setThreadPriority(int aPriority)
+    {
+        threadPriority = aPriority;
+    }
+
+    /**
      * Call-back method used by a Work executor in order to notify this instance that
      * the wrapped Work instance has been accepted.
-     * 
-     * @param anObject Object on which the event initially occurred. It should be the
-     *            work executor.
+     *
+     * @param anObject Object on which the event initially occurred. It should be the work executor.
      */
     public synchronized void workAccepted(Object anObject)
     {
@@ -197,7 +181,7 @@ public class WorkerContext implements Work
     /**
      * System.currentTimeMillis() when the Work has been accepted. This method can be
      * used to compute the duration of a work.
-     * 
+     *
      * @return When the work has been accepted.
      */
     public synchronized long getAcceptedTime()
@@ -208,7 +192,7 @@ public class WorkerContext implements Work
     /**
      * Gets the time duration (in milliseconds) within which the execution of the
      * Work instance must start.
-     * 
+     *
      * @return Time out duration.
      */
     public long getStartTimeout()
@@ -220,7 +204,7 @@ public class WorkerContext implements Work
      * Used by a Work executor in order to know if this work, which should be
      * accepted but not started has timed out. This method MUST be called prior to
      * retry the execution of a Work.
-     * 
+     *
      * @return true if the Work has timed out and false otherwise.
      */
     public synchronized boolean isTimedOut()
@@ -251,7 +235,7 @@ public class WorkerContext implements Work
 
     /**
      * Gets the WorkException, if any, thrown during the execution.
-     * 
+     *
      * @return WorkException, if any.
      */
     public synchronized WorkException getWorkException()
@@ -284,9 +268,9 @@ public class WorkerContext implements Work
         }
         catch (Throwable e)
         {
-            workException = (WorkException)(e instanceof WorkCompletedException
-                            ? e : new WorkCompletedException("Unknown error",
-                                WorkCompletedException.UNDEFINED).initCause(e));
+            workException = (WorkException) (e instanceof WorkCompletedException
+                    ? e : new WorkCompletedException("Unknown error",
+                    WorkCompletedException.UNDEFINED).initCause(e));
             workListener.workCompleted(new WorkEvent(this, WorkEvent.WORK_REJECTED, worker, workException));
         }
         finally
@@ -299,9 +283,8 @@ public class WorkerContext implements Work
 
     /**
      * Provides a latch, which can be used to wait the start of a work execution.
-     * 
-     * @return Latch that a caller can acquire to wait for the start of a work
-     *         execution.
+     *
+     * @return Latch that a caller can acquire to wait for the start of a work execution.
      */
     public Latch provideStartLatch()
     {
@@ -310,9 +293,8 @@ public class WorkerContext implements Work
 
     /**
      * Provides a latch, which can be used to wait the end of a work execution.
-     * 
-     * @return Latch that a caller can acquire to wait for the end of a work
-     *         execution.
+     *
+     * @return Latch that a caller can acquire to wait for the end of a work execution.
      */
     public Latch provideEndLatch()
     {

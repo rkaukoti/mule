@@ -30,16 +30,15 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "WeatherDescription", namespace = "http://ws.cdyne.com/WeatherWS/", propOrder = {
-    "weatherID",
-    "description",
-    "pictureURL"
+        "weatherID",
+        "description",
+        "pictureURL"
 })
-public class WeatherDescription {
+public class WeatherDescription
+{
 
     @XmlElement(name = "WeatherID", namespace = "http://ws.cdyne.com/WeatherWS/")
     protected short weatherID;
@@ -50,65 +49,57 @@ public class WeatherDescription {
 
     /**
      * Gets the value of the weatherID property.
-     *
      */
-    public short getWeatherID() {
+    public short getWeatherID()
+    {
         return weatherID;
     }
 
     /**
      * Sets the value of the weatherID property.
-     *
      */
-    public void setWeatherID(short value) {
+    public void setWeatherID(short value)
+    {
         this.weatherID = value;
     }
 
     /**
      * Gets the value of the description property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
     /**
      * Sets the value of the description property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setDescription(String value) {
+    public void setDescription(String value)
+    {
         this.description = value;
     }
 
     /**
      * Gets the value of the pictureURL property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is {@link String }
      */
-    public String getPictureURL() {
+    public String getPictureURL()
+    {
         return pictureURL;
     }
 
     /**
      * Sets the value of the pictureURL property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is {@link String }
      */
-    public void setPictureURL(String value) {
+    public void setPictureURL(String value)
+    {
         this.pictureURL = value;
     }
 

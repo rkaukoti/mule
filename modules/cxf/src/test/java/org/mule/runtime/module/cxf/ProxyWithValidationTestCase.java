@@ -6,21 +6,19 @@
  */
 package org.mule.runtime.module.cxf;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.module.http.api.client.HttpRequestOptions;
+import org.mule.tck.junit4.rule.DynamicPort;
+
 import static org.junit.Assert.assertTrue;
 import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
 import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.module.http.api.client.HttpRequestOptions;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
-
-import org.junit.Rule;
-import org.junit.Test;
 
 public class ProxyWithValidationTestCase extends FunctionalTestCase
 {
-
-    private static final HttpRequestOptions HTTP_REQUEST_OPTIONS = newOptions().method(POST.name()).disableStatusCodeValidation().build();
 
     public static final String SAMPLE_REQUEST = "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"
                                                 + "<soap:Body> " +
@@ -29,7 +27,7 @@ public class ProxyWithValidationTestCase extends FunctionalTestCase
                                                 "</echo>"
                                                 + "</soap:Body>"
                                                 + "</soap:Envelope>";
-
+    private static final HttpRequestOptions HTTP_REQUEST_OPTIONS = newOptions().method(POST.name()).disableStatusCodeValidation().build();
     @Rule
     public final DynamicPort httpPort = new DynamicPort("port1");
 
@@ -42,7 +40,9 @@ public class ProxyWithValidationTestCase extends FunctionalTestCase
     @Test
     public void acceptsRequestWithCData() throws Exception
     {
-        MuleMessage response = muleContext.getClient().send("http://localhost:" + httpPort.getNumber() + "/services/Echo", getTestMuleMessage(SAMPLE_REQUEST), HTTP_REQUEST_OPTIONS);
+        MuleMessage response = muleContext.getClient()
+                                          .send("http://localhost:" + httpPort.getNumber() + "/services/Echo",
+                                                  getTestMuleMessage(SAMPLE_REQUEST), HTTP_REQUEST_OPTIONS);
 
         assertTrue(getPayloadAsString(response).contains("bla"));
     }

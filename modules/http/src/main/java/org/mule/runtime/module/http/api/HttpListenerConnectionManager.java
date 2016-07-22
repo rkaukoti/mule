@@ -7,6 +7,11 @@
 package org.mule.runtime.module.http.api;
 
 
+import com.google.common.collect.Iterables;
+
+import org.mule.compatibility.transport.socket.api.TcpServerSocketProperties;
+import org.mule.compatibility.transport.socket.internal.DefaultTcpServerSocketProperties;
+import org.mule.runtime.api.tls.TlsContextFactory;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.context.MuleContextAware;
@@ -15,17 +20,12 @@ import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.mule.runtime.core.util.concurrent.ThreadNameHelper;
 import org.mule.runtime.module.http.internal.listener.HttpListenerRegistry;
 import org.mule.runtime.module.http.internal.listener.HttpServerManager;
 import org.mule.runtime.module.http.internal.listener.Server;
 import org.mule.runtime.module.http.internal.listener.ServerAddress;
 import org.mule.runtime.module.http.internal.listener.grizzly.GrizzlyServerManager;
-import org.mule.compatibility.transport.socket.api.TcpServerSocketProperties;
-import org.mule.compatibility.transport.socket.internal.DefaultTcpServerSocketProperties;
-import org.mule.runtime.api.tls.TlsContextFactory;
-import org.mule.runtime.core.util.concurrent.ThreadNameHelper;
-
-import com.google.common.collect.Iterables;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -34,7 +34,8 @@ public class HttpListenerConnectionManager implements Initialisable, Disposable,
 {
 
     public static final String HTTP_LISTENER_CONNECTION_MANAGER = "_httpListenerConnectionManager";
-    public static final String SERVER_ALREADY_EXISTS_FORMAT = "A server in port(%s) already exists for ip(%s) or one overlapping it (0.0.0.0).";
+    public static final String SERVER_ALREADY_EXISTS_FORMAT =
+            "A server in port(%s) already exists for ip(%s) or one overlapping it (0.0.0.0).";
     private static final String LISTENER_THREAD_NAME_PREFIX = "http.listener";
 
     private HttpListenerRegistry httpListenerRegistry = new HttpListenerRegistry();
@@ -45,7 +46,8 @@ public class HttpListenerConnectionManager implements Initialisable, Disposable,
     @Override
     public void initialise() throws InitialisationException
     {
-        Collection<TcpServerSocketProperties> tcpServerSocketPropertiesBeans = muleContext.getRegistry().lookupObjects(TcpServerSocketProperties.class);
+        Collection<TcpServerSocketProperties> tcpServerSocketPropertiesBeans =
+                muleContext.getRegistry().lookupObjects(TcpServerSocketProperties.class);
         TcpServerSocketProperties tcpServerSocketProperties = new DefaultTcpServerSocketProperties();
 
         if (tcpServerSocketPropertiesBeans.size() == 1)
@@ -54,7 +56,9 @@ public class HttpListenerConnectionManager implements Initialisable, Disposable,
         }
         else if (tcpServerSocketPropertiesBeans.size() > 1)
         {
-            throw new InitialisationException(CoreMessages.createStaticMessage("Only one global TCP server socket properties bean should be defined in the config"), this);
+            throw new InitialisationException(
+                    CoreMessages.createStaticMessage("Only one global TCP server socket properties bean should be defined in the config"),
+                    this);
         }
 
         String threadNamePrefix = ThreadNameHelper.getPrefix(muleContext) + LISTENER_THREAD_NAME_PREFIX;
@@ -81,7 +85,8 @@ public class HttpListenerConnectionManager implements Initialisable, Disposable,
         this.muleContext = muleContext;
     }
 
-    public Server createServer(ServerAddress serverAddress, WorkManagerSource workManagerSource, boolean usePersistentConnections, int connectionIdleTimeout)
+    public Server createServer(ServerAddress serverAddress, WorkManagerSource workManagerSource, boolean usePersistentConnections,
+                               int connectionIdleTimeout)
     {
         if (!containsServerFor(serverAddress))
         {
@@ -96,7 +101,8 @@ public class HttpListenerConnectionManager implements Initialisable, Disposable,
         }
         else
         {
-            throw new MuleRuntimeException(CoreMessages.createStaticMessage(String.format(SERVER_ALREADY_EXISTS_FORMAT, serverAddress.getPort(), serverAddress.getIp())));
+            throw new MuleRuntimeException(CoreMessages.createStaticMessage(
+                    String.format(SERVER_ALREADY_EXISTS_FORMAT, serverAddress.getPort(), serverAddress.getIp())));
         }
     }
 
@@ -105,13 +111,15 @@ public class HttpListenerConnectionManager implements Initialisable, Disposable,
         return httpServerManager.containsServerFor(serverAddress);
     }
 
-    public Server createSslServer(ServerAddress serverAddress, WorkManagerSource workManagerSource, TlsContextFactory tlsContext, boolean usePersistentConnections, int connectionIdleTimeout)
+    public Server createSslServer(ServerAddress serverAddress, WorkManagerSource workManagerSource, TlsContextFactory tlsContext,
+                                  boolean usePersistentConnections, int connectionIdleTimeout)
     {
         if (!containsServerFor(serverAddress))
         {
             try
             {
-                return httpServerManager.createSslServerFor(tlsContext, workManagerSource, serverAddress, usePersistentConnections, connectionIdleTimeout);
+                return httpServerManager.createSslServerFor(tlsContext, workManagerSource, serverAddress, usePersistentConnections,
+                        connectionIdleTimeout);
             }
             catch (IOException e)
             {
@@ -120,7 +128,8 @@ public class HttpListenerConnectionManager implements Initialisable, Disposable,
         }
         else
         {
-            throw new MuleRuntimeException(CoreMessages.createStaticMessage(String.format(SERVER_ALREADY_EXISTS_FORMAT, serverAddress.getPort(), serverAddress.getIp())));
+            throw new MuleRuntimeException(CoreMessages.createStaticMessage(
+                    String.format(SERVER_ALREADY_EXISTS_FORMAT, serverAddress.getPort(), serverAddress.getIp())));
         }
     }
 

@@ -9,7 +9,6 @@ package org.mule.compatibility.config.spring.parsers.specific.endpoint;
 import org.mule.runtime.config.spring.parsers.generic.ParentDefinitionParser;
 import org.mule.runtime.config.spring.parsers.processors.CheckExclusiveAttributes;
 import org.mule.runtime.core.util.StringUtils;
-
 import org.w3c.dom.Element;
 
 /**
@@ -29,16 +28,15 @@ public class EndpointRefParser extends ParentDefinitionParser
         addAlias("address", propertyName);
         addAlias("ref", propertyName);
         addAlias("reference", propertyName);
-        registerPreProcessor(new CheckExclusiveAttributes(new String[][]{new String[]{"ref"}, new String[]{"address"}}));
+        registerPreProcessor(new CheckExclusiveAttributes(new String[][] {new String[] {"ref"}, new String[] {"address"}}));
     }
-
 
 
     @Override
     protected void preProcess(Element element)
     {
         //This causes the Bean framework to process the "ref" as a string rather than a ref to another object
-        if(StringUtils.isNotEmpty(element.getAttribute("ref")))
+        if (StringUtils.isNotEmpty(element.getAttribute("ref")))
         {
             element.setAttribute("reference", element.getAttribute("ref"));
             element.removeAttribute("ref");

@@ -7,19 +7,18 @@
 package org.mule.test.integration.schedule;
 
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.context.notification.ConnectorMessageNotificationListener;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.runtime.core.context.notification.ConnectorMessageNotification;
-import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.source.polling.PollingMessageSource;
 import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
 import org.mule.tck.probe.Prober;
-import org.mule.runtime.core.source.polling.PollingMessageSource;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.Test;
 
 public class PollScheduleNotificationTestCase extends FunctionalTestCase
 {
@@ -43,7 +42,8 @@ public class PollScheduleNotificationTestCase extends FunctionalTestCase
             @Override
             public boolean isSatisfied()
             {
-                return listener.getNotifications().size() > 1 && pollingMessageSource.getPollingUniqueName().equals(listener.getNotifications().get(0).getEndpoint());
+                return listener.getNotifications().size() > 1 &&
+                       pollingMessageSource.getPollingUniqueName().equals(listener.getNotifications().get(0).getEndpoint());
             }
 
             @Override
@@ -54,6 +54,7 @@ public class PollScheduleNotificationTestCase extends FunctionalTestCase
         });
 
     }
+
     class MyListener implements ConnectorMessageNotificationListener<ConnectorMessageNotification>
     {
 

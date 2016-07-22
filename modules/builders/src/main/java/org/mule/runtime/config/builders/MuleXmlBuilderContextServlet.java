@@ -36,13 +36,13 @@ public class MuleXmlBuilderContextServlet extends HttpServlet
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException
+            throws ServletException, IOException
     {
         getServletContext().log(
-            "("
-            + request.getRequestURI()
-            + ")"
-            + "MuleXmlBuilderContextServlet.service(HttpServletRequest request, HttpServletResponse response) call ignored.");
+                "("
+                + request.getRequestURI()
+                + ")"
+                + "MuleXmlBuilderContextServlet.service(HttpServletRequest request, HttpServletResponse response) call ignored.");
         response.sendError(HttpServletResponse.SC_BAD_REQUEST);
     }
 

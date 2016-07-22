@@ -50,8 +50,8 @@ public class DefaultEntryPointResolverSet implements EntryPointResolverSet
     }
 
     /**
-     * @return the entry point resolves configured in this resolver set. Note that access to the
-     * set is not thread safe. Client code must take proper precautions to synchronize.
+     * @return the entry point resolves configured in this resolver set. Note that access to the set is not thread safe. Client code must
+     * take proper precautions to synchronize.
      */
     public Set<EntryPointResolver> getEntryPointResolvers()
     {

@@ -6,16 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.fail;
-import static org.junit.rules.ExpectedException.none;
-import org.mule.functional.junit4.ExtensionFunctionalTestCase;
-import org.mule.runtime.core.api.lifecycle.InitialisationException;
-import org.mule.test.heisenberg.extension.HeisenbergExtension;
-
-import java.util.Arrays;
-import java.util.Collection;
-
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
@@ -24,6 +14,16 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.mule.functional.junit4.ExtensionFunctionalTestCase;
+import org.mule.runtime.core.api.lifecycle.InitialisationException;
+import org.mule.test.heisenberg.extension.HeisenbergExtension;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.fail;
+import static org.junit.rules.ExpectedException.none;
 
 @RunWith(Parameterized.class)
 public class ExpressionSupportTestCase extends ExtensionFunctionalTestCase

@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.module.extension.internal.capability.xml;
 
-import static java.util.Arrays.asList;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.compareXML;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.registry.ServiceRegistry;
 import org.mule.runtime.core.registry.SpiServiceRegistry;
 import org.mule.runtime.core.util.IOUtils;
@@ -42,10 +41,11 @@ import org.mule.test.vegan.extension.VeganExtension;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static java.util.Arrays.asList;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.compareXML;
 
 @SmallTest
 @RunWith(Parameterized.class)
@@ -93,8 +93,11 @@ public class SchemaGeneratorTestCase extends AbstractMuleTestCase
     {
         String expectedSchema = IOUtils.getResourceAsString(expectedXSD, getClass());
 
-        ExtensionDeclarer declarer = new AnnotationsBasedDescriber(extensionUnderTest, new StaticVersionResolver(getProductVersion())).describe(new DefaultDescribingContext(extensionUnderTest.getClassLoader()));
-        ExtensionModel extensionModel = extensionFactory.createFrom(declarer, new DefaultDescribingContext(declarer, getClass().getClassLoader()));
+        ExtensionDeclarer declarer =
+                new AnnotationsBasedDescriber(extensionUnderTest, new StaticVersionResolver(getProductVersion())).describe(
+                        new DefaultDescribingContext(extensionUnderTest.getClassLoader()));
+        ExtensionModel extensionModel =
+                extensionFactory.createFrom(declarer, new DefaultDescribingContext(declarer, getClass().getClassLoader()));
         XmlModelProperty capability = extensionModel.getModelProperty(XmlModelProperty.class).get();
 
         String schema = generator.generate(extensionModel, capability);

@@ -16,15 +16,11 @@ public interface LocalQueueTransactionContext extends QueueTransactionContext
 
     /**
      * Commits the current transaction context operations
-     *
-     * @throws ResourceManagerException
      */
     public void doCommit() throws ResourceManagerException;
 
     /**
      * Rollbacks the current transaction context operations
-     *
-     * @throws ResourceManagerException
      */
     public void doRollback() throws ResourceManagerException;
 

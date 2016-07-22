@@ -6,6 +6,23 @@
  */
 package org.mule.runtime.core.internal.connection;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.api.config.PoolingProfile;
+import org.mule.runtime.api.connection.ConnectionException;
+import org.mule.runtime.api.connection.ConnectionExceptionCode;
+import org.mule.runtime.api.connection.ConnectionHandler;
+import org.mule.runtime.api.connection.ConnectionProvider;
+import org.mule.runtime.api.connection.ConnectionValidationResult;
+import org.mule.runtime.api.connection.PoolingListener;
+import org.mule.runtime.core.api.Injector;
+import org.mule.runtime.core.api.lifecycle.Lifecycle;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+
+import java.util.Arrays;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -26,23 +43,6 @@ import static org.mule.runtime.api.config.PoolingProfile.INITIALISE_NONE;
 import static org.mule.runtime.api.config.PoolingProfile.WHEN_EXHAUSTED_FAIL;
 import static org.mule.runtime.api.config.PoolingProfile.WHEN_EXHAUSTED_WAIT;
 import static org.mule.tck.MuleTestUtils.spyInjector;
-import org.mule.runtime.api.config.PoolingProfile;
-import org.mule.runtime.api.connection.ConnectionException;
-import org.mule.runtime.api.connection.ConnectionExceptionCode;
-import org.mule.runtime.api.connection.ConnectionHandler;
-import org.mule.runtime.api.connection.ConnectionProvider;
-import org.mule.runtime.api.connection.ConnectionValidationResult;
-import org.mule.runtime.api.connection.PoolingListener;
-import org.mule.runtime.core.api.Injector;
-import org.mule.runtime.core.api.lifecycle.Lifecycle;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-
-import java.util.Arrays;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PoolingConnectionHandlingStrategyTestCase extends AbstractMuleContextTestCase
@@ -53,8 +53,9 @@ public class PoolingConnectionHandlingStrategyTestCase extends AbstractMuleConte
     private ConnectionProvider<Lifecycle> connectionProvider;
 
     private Object config = new Object();
-    private PoolingProfile poolingProfile = new PoolingProfile(MAX_ACTIVE, MAX_ACTIVE, DEFAULT_MAX_POOL_WAIT, WHEN_EXHAUSTED_WAIT, INITIALISE_NONE);
-    private PoolingConnectionHandlingStrategy< Lifecycle> strategy;
+    private PoolingProfile poolingProfile =
+            new PoolingProfile(MAX_ACTIVE, MAX_ACTIVE, DEFAULT_MAX_POOL_WAIT, WHEN_EXHAUSTED_WAIT, INITIALISE_NONE);
+    private PoolingConnectionHandlingStrategy<Lifecycle> strategy;
     private PoolingListener<Lifecycle> poolingListener;
     private Injector injector;
 
@@ -155,7 +156,9 @@ public class PoolingConnectionHandlingStrategyTestCase extends AbstractMuleConte
     @Test(expected = ConnectionException.class)
     public void failDueToInvalidConnection() throws ConnectionException
     {
-        when(connectionProvider.validate(anyVararg())).thenReturn(ConnectionValidationResult.failure("Invalid username or password", ConnectionExceptionCode.INCORRECT_CREDENTIALS, new Exception("401: UNAUTHORIZED")));
+        when(connectionProvider.validate(anyVararg())).thenReturn(
+                ConnectionValidationResult.failure("Invalid username or password", ConnectionExceptionCode.INCORRECT_CREDENTIALS,
+                        new Exception("401: UNAUTHORIZED")));
         strategy.getConnectionHandler().getConnection();
     }
 
@@ -186,7 +189,8 @@ public class PoolingConnectionHandlingStrategyTestCase extends AbstractMuleConte
 
     private <T> void verifyThat(Assertion<T> assertion, T... subjects)
     {
-        Arrays.stream(subjects).forEach(subject -> {
+        Arrays.stream(subjects).forEach(subject ->
+        {
             try
             {
                 assertion.test(verify(subject));

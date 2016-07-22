@@ -6,14 +6,14 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-
-import org.mule.compatibility.transport.file.InputStreamCloseListener;
-import org.mule.compatibility.transport.file.ReceiverFileInputStream;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.util.UUID;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
@@ -29,14 +29,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
@@ -96,7 +93,8 @@ public class ReceiverFileInputStreamTestCase extends AbstractMuleTestCase
     }
 
     @Test
-    public void testMultipleThreadedStreamingError() throws IOException, InterruptedException, ExecutionException {
+    public void testMultipleThreadedStreamingError() throws IOException, InterruptedException, ExecutionException
+    {
         ReceiverFileInputStream receiver = createReceiver(inputFileSpy, outputFileSpy, true, listener, true);
         receiverCloseThreaded(receiver, 2);
         receiver.close();
@@ -106,7 +104,8 @@ public class ReceiverFileInputStreamTestCase extends AbstractMuleTestCase
     }
 
     @Test
-    public void testMultipleThreadedNonStreamingError() throws IOException, InterruptedException, ExecutionException {
+    public void testMultipleThreadedNonStreamingError() throws IOException, InterruptedException, ExecutionException
+    {
         ReceiverFileInputStream receiver = createReceiver(inputFileSpy, outputFileSpy, true, listener, false);
         receiverCloseThreaded(receiver, 2);
 
@@ -119,14 +118,17 @@ public class ReceiverFileInputStreamTestCase extends AbstractMuleTestCase
         return temporaryFolder.newFile(UUID.getUUID());
     }
 
-    private ReceiverFileInputStream createReceiver(File input, File output, boolean deleteOnClose, InputStreamCloseListener listener, boolean streamingError) throws IOException
+    private ReceiverFileInputStream createReceiver(File input, File output, boolean deleteOnClose, InputStreamCloseListener listener,
+                                                   boolean streamingError) throws IOException
     {
         ReceiverFileInputStream receiverStream = new ReceiverFileInputStream(input, true, output, listener);
         receiverStream.setStreamProcessingError(streamingError);
         return receiverStream;
     }
 
-    private void receiverCloseThreaded(final ReceiverFileInputStream receiver, int numberThreads) throws IOException, ExecutionException, InterruptedException {
+    private void receiverCloseThreaded(final ReceiverFileInputStream receiver, int numberThreads)
+            throws IOException, ExecutionException, InterruptedException
+    {
         final CountDownLatch latch = new CountDownLatch(numberThreads);
         ExecutorService pool = Executors.newFixedThreadPool(numberThreads);
 
@@ -145,11 +147,11 @@ public class ReceiverFileInputStreamTestCase extends AbstractMuleTestCase
         try
         {
             List<Future> futures = new ArrayList<Future>(numberThreads);
-            for(int i=0; i<numberThreads; i++)
+            for (int i = 0; i < numberThreads; i++)
             {
                 futures.add(pool.submit(receiverCloseRunnable));
             }
-            for(Future future: futures)
+            for (Future future : futures)
             {
                 future.get();
             }

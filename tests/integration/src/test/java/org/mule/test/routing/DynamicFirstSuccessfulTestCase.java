@@ -6,9 +6,8 @@
  */
 package org.mule.test.routing;
 
-import org.mule.runtime.core.api.MessagingException;
-
 import org.junit.Test;
+import org.mule.runtime.core.api.MessagingException;
 
 public class DynamicFirstSuccessfulTestCase extends DynamicRouterTestCase
 {

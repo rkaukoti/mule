@@ -6,6 +6,7 @@
  */
 package org.mule.module.pgp;
 
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.util.FileUtils;
 import org.mule.tck.probe.PollingProber;
@@ -15,8 +16,6 @@ import org.mule.tck.probe.file.FileExists;
 
 import java.io.File;
 import java.io.IOException;
-
-import org.junit.Test;
 
 public class FileEncryptionTestCase extends FunctionalTestCase
 {

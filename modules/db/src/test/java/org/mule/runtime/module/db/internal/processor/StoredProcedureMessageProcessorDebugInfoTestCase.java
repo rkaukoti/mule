@@ -7,9 +7,10 @@
 
 package org.mule.runtime.module.db.internal.processor;
 
-import static org.mule.runtime.module.db.internal.domain.query.QueryType.STORE_PROCEDURE_CALL;
 import org.mule.runtime.module.db.internal.domain.query.QueryType;
 import org.mule.tck.size.SmallTest;
+
+import static org.mule.runtime.module.db.internal.domain.query.QueryType.STORE_PROCEDURE_CALL;
 
 @SmallTest
 public class StoredProcedureMessageProcessorDebugInfoTestCase extends AbstractParameterizedSingleQueryMessageProcessorDebugInfoTestCase

@@ -6,28 +6,10 @@
  */
 package org.mule.compatibility.core.endpoint.outbound;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mule.compatibility.core.context.notification.EndpointMessageNotification.MESSAGE_DISPATCH_BEGIN;
-import static org.mule.compatibility.core.context.notification.EndpointMessageNotification.MESSAGE_DISPATCH_END;
-import static org.mule.compatibility.core.context.notification.EndpointMessageNotification.MESSAGE_SEND_BEGIN;
-import static org.mule.compatibility.core.context.notification.EndpointMessageNotification.MESSAGE_SEND_END;
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupServiceDescriptor;
-import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_EVENT_TIMEOUT_PROPERTY;
-
+import org.apache.commons.collections.Closure;
+import org.apache.commons.collections.functors.NOPClosure;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.EndpointBuilder;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.compatibility.core.api.registry.LegacyServiceType;
@@ -61,12 +43,28 @@ import org.mule.tck.testmodels.mule.TestMessageDispatcherFactory;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.collections.Closure;
-import org.apache.commons.collections.functors.NOPClosure;
-import org.junit.Before;
-import org.junit.Test;
-
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mule.compatibility.core.context.notification.EndpointMessageNotification.MESSAGE_DISPATCH_BEGIN;
+import static org.mule.compatibility.core.context.notification.EndpointMessageNotification.MESSAGE_DISPATCH_END;
+import static org.mule.compatibility.core.context.notification.EndpointMessageNotification.MESSAGE_SEND_BEGIN;
+import static org.mule.compatibility.core.context.notification.EndpointMessageNotification.MESSAGE_SEND_END;
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupServiceDescriptor;
+import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_EVENT_TIMEOUT_PROPERTY;
 
 /**
  * Tests flow of messages from {@link org.mule.compatibility.core.endpoint.DynamicOutboundEndpoint#process(org.mule.api.MuleEvent)} down to
@@ -122,7 +120,8 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
     @Test
     public void testSecurityFilterAccept() throws Exception
     {
-        OutboundEndpoint endpoint = createOutboundEndpoint(null, new TestSecurityFilter(true), null, null, MessageExchangePattern.REQUEST_RESPONSE, null);
+        OutboundEndpoint endpoint =
+                createOutboundEndpoint(null, new TestSecurityFilter(true), null, null, MessageExchangePattern.REQUEST_RESPONSE, null);
         testOutboundEvent = createTestOutboundEvent();
 
         MuleEvent result = endpoint.process(testOutboundEvent);
@@ -139,7 +138,8 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
         TestSecurityNotificationListener securityNotificationListener = new TestSecurityNotificationListener();
         muleContext.registerListener(securityNotificationListener);
 
-        OutboundEndpoint endpoint = createOutboundEndpoint(null, new TestSecurityFilter(false), null, null, MessageExchangePattern.REQUEST_RESPONSE, null);
+        OutboundEndpoint endpoint =
+                createOutboundEndpoint(null, new TestSecurityFilter(false), null, null, MessageExchangePattern.REQUEST_RESPONSE, null);
         testOutboundEvent = createTestOutboundEvent();
 
         try
@@ -156,9 +156,9 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
 
         assertTrue(securityNotificationListener.latch.await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS));
         assertEquals(SecurityNotification.SECURITY_AUTHENTICATION_FAILED,
-                     securityNotificationListener.securityNotification.getAction());
+                securityNotificationListener.securityNotification.getAction());
         assertEquals(securityNotificationListener.securityNotification.getResourceIdentifier(),
-                     TestSecurityFilter.StaticMessageUnauthorisedException.class.getName());
+                TestSecurityFilter.StaticMessageUnauthorisedException.class.getName());
     }
 
     @Test
@@ -248,14 +248,15 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
     public void testTransformers() throws Exception
     {
         OutboundEndpoint endpoint = createOutboundEndpoint(null, null, new OutboundAppendTransformer(),
-                                                           new ResponseAppendTransformer(), MessageExchangePattern.REQUEST_RESPONSE, null);
+                new ResponseAppendTransformer(), MessageExchangePattern.REQUEST_RESPONSE, null);
 
         testOutboundEvent = createTestOutboundEvent();
 
         MuleEvent result = endpoint.process(testOutboundEvent);
 
         assertNotNull(result);
-        assertEquals(TEST_MESSAGE + OutboundAppendTransformer.APPEND_STRING, MyMessageDispatcherFactory.dispatcher.sensedSendEvent.getMessageAsString());
+        assertEquals(TEST_MESSAGE + OutboundAppendTransformer.APPEND_STRING,
+                MyMessageDispatcherFactory.dispatcher.sensedSendEvent.getMessageAsString());
         assertEquals(RESPONSE_MESSAGE + ResponseAppendTransformer.APPEND_STRING, result.getMessageAsString());
     }
 
@@ -276,8 +277,8 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
 
         testOutboundEvent = createTestOutboundEvent();
         testOutboundEvent.setMessage(MuleMessage.builder(testOutboundEvent.getMessage())
-                                             .addOutboundProperty(MULE_EVENT_TIMEOUT_PROPERTY, testTimeout)
-                                             .build());
+                                                .addOutboundProperty(MULE_EVENT_TIMEOUT_PROPERTY, testTimeout)
+                                                .build());
 
         MuleEvent response = endpoint.process(testOutboundEvent);
 
@@ -297,7 +298,8 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
         when(endpointBuilder.buildOutboundEndpoint()).thenReturn(prototypeEndpoint);
         when(endpointBuilder.clone()).thenReturn(staticEndpointBuilder);
 
-        DynamicOutboundEndpoint dynamicOutboundEndpoint = new DynamicOutboundEndpoint(endpointBuilder, new DynamicURIBuilder(new URIBuilder("test://localhost:#[message.outboundProperties.port]", muleContext)));
+        DynamicOutboundEndpoint dynamicOutboundEndpoint = new DynamicOutboundEndpoint(endpointBuilder,
+                new DynamicURIBuilder(new URIBuilder("test://localhost:#[message.outboundProperties.port]", muleContext)));
 
         testOutboundEvent = createTestOutboundEvent();
         dynamicOutboundEndpoint.process(testOutboundEvent);
@@ -371,7 +373,8 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
         Properties props = new Properties();
         props.put(MuleProperties.CONNECTOR_DISPATCHER_FACTORY, MyMessageDispatcherFactory.class.getName());
         DefaultTransportServiceDescriptor serviceDescriptor =
-                (DefaultTransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT, "test", null);
+                (DefaultTransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT, "test",
+                        null);
         props.put(MuleProperties.CONNECTOR_INBOUND_EXCHANGE_PATTERNS, "ONE_WAY, REQUEST_RESPONSE");
         props.put(MuleProperties.CONNECTOR_OUTBOUND_EXCHANGE_PATTERNS, "ONE_WAY, REQUEST_RESPONSE");
         serviceDescriptor.setOverrides(props);
@@ -386,7 +389,7 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
     {
 
         return createTestOutboundEndpoint("test://localhost:#[message.outboundProperties.port]", filter, securityFilter, in, response,
-                                          exchangePattern, txConfig);
+                exchangePattern, txConfig);
     }
 
     private static class FakeMessageDispatcher extends TestMessageDispatcher

@@ -6,8 +6,10 @@
  */
 package org.mule.runtime.module.http.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.core.api.security.tls.TlsConfiguration;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.module.tls.internal.DefaultTlsContextFactory;
@@ -23,22 +25,18 @@ import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractServerTlsRestrictedProtocolsAndCiphersTestCase extends AbstractHttpTestCase
 {
 
-    @Rule
-    public DynamicPort httpsPort = new DynamicPort("port");
-
     private static final String SERVER_CIPHER_SUITE_ENABLED = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA256";
     private static final String SERVER_CIPHER_SUITE_DISABLED = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA";
-
     private static final String SERVER_PROTOCOL_ENABLED = "TLSv1.2";
     private static final String SERVER_PROTOCOL_DISABLED = "TLSv1";
+    @Rule
+    public DynamicPort httpsPort = new DynamicPort("port");
 
     @BeforeClass
     public static void createTlsPropertiesFile() throws Exception
@@ -67,7 +65,7 @@ public abstract class AbstractServerTlsRestrictedProtocolsAndCiphersTestCase ext
         final CountDownLatch latch = new CountDownLatch(1);
 
         SSLSocket socket = createSocket(new String[] {SERVER_CIPHER_SUITE_ENABLED, SERVER_CIPHER_SUITE_DISABLED},
-                                        new String[] {SERVER_PROTOCOL_ENABLED, SERVER_PROTOCOL_DISABLED});
+                new String[] {SERVER_PROTOCOL_ENABLED, SERVER_PROTOCOL_DISABLED});
 
         socket.addHandshakeCompletedListener(handshakeCompletedEvent -> latch.countDown());
 

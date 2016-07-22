@@ -6,8 +6,13 @@
  */
 package org.mule.runtime.core.el.mvel;
 
-import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
-
+import org.databene.contiperf.PerfTest;
+import org.databene.contiperf.Required;
+import org.databene.contiperf.junit.ContiPerfRule;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -16,35 +21,26 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import java.util.Random;
 
-import org.databene.contiperf.PerfTest;
-import org.databene.contiperf.Required;
-import org.databene.contiperf.junit.ContiPerfRule;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
 
 public class MVELDeepInvokePerformanceTestCase extends AbstractMuleContextTestCase
 {
-    @Rule
-    public ContiPerfRule rule = new ContiPerfRule();
-
-    @Override
-    public int getTestTimeoutSecs()
-    {
-        return 180;
-    }
-
     final protected String mel = "payload.setFirstName('Tom');"
                                  + "payload.setLastName('Fennelly');"
                                  + "payload.contact.setAddress('Male');"
                                  + "payload.contact.setTelnum('4');"
                                  + "payload.setSin('Ireland');"
                                  + "payload;";
-
     final protected Payload payload = new Payload();
-
+    @Rule
+    public ContiPerfRule rule = new ContiPerfRule();
     protected MuleEvent event;
+
+    @Override
+    public int getTestTimeoutSecs()
+    {
+        return 180;
+    }
 
     @Before
     public void before()

@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.model.resolvers;
 
+import org.apache.commons.lang.BooleanUtils;
 import org.mule.runtime.core.api.MuleEventContext;
 import org.mule.runtime.core.api.config.MuleProperties;
 import org.mule.runtime.core.api.lifecycle.Callable;
@@ -15,11 +16,9 @@ import org.mule.runtime.core.util.ClassUtils;
 
 import java.lang.reflect.Method;
 
-import org.apache.commons.lang.BooleanUtils;
-
 /**
  * This resolver will look for a {@link org.mule.runtime.core.api.config.MuleProperties#MULE_METHOD_PROPERTY}
- * property on the incoming event to determine which method to invoke Users can customise the name 
+ * property on the incoming event to determine which method to invoke Users can customise the name
  * of the property used to look up the method name on the event
  */
 public class MethodHeaderPropertyEntryPointResolver extends AbstractEntryPointResolver
@@ -40,7 +39,8 @@ public class MethodHeaderPropertyEntryPointResolver extends AbstractEntryPointRe
     public InvocationResult invoke(Object component, MuleEventContext context) throws Exception
     {
         // Transports such as SOAP need to ignore the method property
-        boolean ignoreMethod = BooleanUtils.toBoolean(context.getMessage().<Boolean>getInboundProperty(MuleProperties.MULE_IGNORE_METHOD_PROPERTY));
+        boolean ignoreMethod =
+                BooleanUtils.toBoolean(context.getMessage().<Boolean>getInboundProperty(MuleProperties.MULE_IGNORE_METHOD_PROPERTY));
 
         if (ignoreMethod)
         {
@@ -90,7 +90,7 @@ public class MethodHeaderPropertyEntryPointResolver extends AbstractEntryPointRe
             Class<?>[] classTypes = ClassUtils.getClassTypes(payload);
 
             method = ClassUtils.getMethod(component.getClass(), methodName, classTypes);
-            
+
             if (method == null)
             {
                 InvocationResult result = new InvocationResult(this, InvocationResult.State.FAILED);
@@ -111,7 +111,7 @@ public class MethodHeaderPropertyEntryPointResolver extends AbstractEntryPointRe
      * be executed.
      *
      * @param component the service component being invoked
-     * @param method the method to invoke on the component
+     * @param method    the method to invoke on the component
      * @throws NoSuchMethodException if the method does not exist on the component
      */
     protected void validateMethod(Object component, Method method) throws NoSuchMethodException

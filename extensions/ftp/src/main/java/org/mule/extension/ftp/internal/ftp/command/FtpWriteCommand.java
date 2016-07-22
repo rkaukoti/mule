@@ -6,7 +6,7 @@
  */
 package org.mule.extension.ftp.internal.ftp.command;
 
-import static java.lang.String.format;
+import org.apache.commons.net.ftp.FTPClient;
 import org.mule.extension.ftp.internal.ftp.connection.ClassicFtpFileSystem;
 import org.mule.runtime.api.message.MuleEvent;
 import org.mule.runtime.core.api.MuleContext;
@@ -16,13 +16,13 @@ import org.mule.runtime.module.extension.file.api.FileContentWrapper;
 import org.mule.runtime.module.extension.file.api.FileWriteMode;
 import org.mule.runtime.module.extension.file.api.FileWriterVisitor;
 import org.mule.runtime.module.extension.file.api.command.WriteCommand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.OutputStream;
 import java.nio.file.Path;
 
-import org.apache.commons.net.ftp.FTPClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
 
 /**
  * A {@link ClassicFtpCommand} which implements the {@link WriteCommand} contract
@@ -68,8 +68,9 @@ public final class FtpWriteCommand extends ClassicFtpCommand implements WriteCom
         {
             if (mode == FileWriteMode.CREATE_NEW)
             {
-                throw new IllegalArgumentException(String.format("Cannot write to path '%s' because it already exists and write mode '%s' was selected. " +
-                                                                 "Use a different write mode or point to a path which doesn't exists", path, mode));
+                throw new IllegalArgumentException(
+                        String.format("Cannot write to path '%s' because it already exists and write mode '%s' was selected. " +
+                                      "Use a different write mode or point to a path which doesn't exists", path, mode));
             }
             else if (mode == FileWriteMode.OVERWRITE)
             {
@@ -97,8 +98,8 @@ public final class FtpWriteCommand extends ClassicFtpCommand implements WriteCom
         try
         {
             return mode == FileWriteMode.APPEND
-                   ? client.appendFileStream(path)
-                   : client.storeFileStream(path);
+                    ? client.appendFileStream(path)
+                    : client.storeFileStream(path);
         }
         catch (Exception e)
         {

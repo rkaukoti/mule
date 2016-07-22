@@ -6,11 +6,11 @@
  */
 package org.mule.runtime.core.util;
 
-import static org.mule.runtime.core.util.ClassUtils.getResources;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.config.i18n.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,8 +27,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.util.ClassUtils.getResources;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * <code>PropertiesHelper</code> is a utility class for manipulating and filtering
@@ -49,7 +49,9 @@ public final class PropertiesUtils
         registerMaskedPropertyName("password");
     }
 
-    /** Do not instanciate. */
+    /**
+     * Do not instanciate.
+     */
     protected PropertiesUtils()
     {
         // no-op
@@ -80,9 +82,8 @@ public final class PropertiesUtils
      * {@link #registerMaskedPropertyName(String)}.
      *
      * @param property a key/value pair
-     * @return String of the property value or a "masked" String that hides the
-     *         contents, or <code>null</code> if the property, its key or its value
-     *         is <code>null</code>.
+     * @return String of the property value or a "masked" String that hides the contents, or <code>null</code> if the property, its key or
+     * its value is <code>null</code>.
      */
     public static String maskedPropertyValue(Map.Entry<?, ?> property)
     {
@@ -114,8 +115,7 @@ public final class PropertiesUtils
      * system or the classpath.
      *
      * @param fileName     - The name of the properties file
-     * @param callingClass - The Class which is calling this method. This is used to
-     *                     determine the classpath.
+     * @param callingClass - The Class which is calling this method. This is used to determine the classpath.
      * @return a java.util.Properties object containing the properties.
      */
     public static synchronized Properties loadProperties(String fileName, final Class<?> callingClass)
@@ -220,7 +220,7 @@ public final class PropertiesUtils
     {
         HashMap props = new HashMap(properties.size());
         Map.Entry entry;
-        for (Iterator iter = properties.entrySet().iterator(); iter.hasNext();)
+        for (Iterator iter = properties.entrySet().iterator(); iter.hasNext(); )
         {
             entry = (Map.Entry) iter.next();
             props.put(removeNamespacePrefix((String) entry.getKey()), entry.getValue());
@@ -235,8 +235,7 @@ public final class PropertiesUtils
      *
      * @param props    the source set of properties
      * @param prefix   the prefix to filter on
-     * @param newProps return map containing the filtered list of properties or an
-     *                 empty map if no properties matched the prefix
+     * @param newProps return map containing the filtered list of properties or an empty map if no properties matched the prefix
      */
     public static void getPropertiesWithPrefix(Map props, String prefix, Map newProps)
     {
@@ -245,7 +244,7 @@ public final class PropertiesUtils
             return;
         }
 
-        for (Iterator iterator = props.entrySet().iterator(); iterator.hasNext();)
+        for (Iterator iterator = props.entrySet().iterator(); iterator.hasNext(); )
         {
             Map.Entry entry = (Map.Entry) iterator.next();
             Object key = entry.getKey();
@@ -259,7 +258,7 @@ public final class PropertiesUtils
     public static Map getPropertiesWithoutPrefix(Map props, String prefix)
     {
         Map newProps = new HashMap();
-        for (Iterator iterator = props.entrySet().iterator(); iterator.hasNext();)
+        for (Iterator iterator = props.entrySet().iterator(); iterator.hasNext(); )
         {
             Map.Entry entry = (Map.Entry) iterator.next();
             Object key = entry.getKey();
@@ -283,7 +282,8 @@ public final class PropertiesUtils
         query = new StringBuilder(query.length() + 1).append('&').append(query).toString();
 
         int x = 0;
-        while ((x = addProperty(query, x, '&', props)) != -1);
+        while ((x = addProperty(query, x, '&', props)) != -1)
+            ;
 
         return props;
     }
@@ -358,7 +358,7 @@ public final class PropertiesUtils
      * Discovers properties files available on the given classloader.
      *
      * @param classLoader classloader used to find properties resources. Not null.
-     * @param resource resource to find. Not empty
+     * @param resource    resource to find. Not empty
      * @return a non null list of Properties
      * @throws IOException when a property file cannot be processed
      */

@@ -13,11 +13,12 @@ import javax.naming.NamingException;
 
 /**
  * A default implementation of {@link NameParser}
- *
  */
-public class DefaultNameParser implements NameParser {
+public class DefaultNameParser implements NameParser
+{
 
-    public Name parse(String name) throws NamingException {
+    public Name parse(String name) throws NamingException
+    {
         return new CompositeName(name);
     }
 }

@@ -7,10 +7,10 @@
 
 package org.mule.runtime.module.db.integration.update;
 
-import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import org.mule.runtime.module.db.integration.AbstractQueryTimeoutTestCase;
+import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 
-public class UpdateTimeoutTestCase  extends AbstractQueryTimeoutTestCase
+public class UpdateTimeoutTestCase extends AbstractQueryTimeoutTestCase
 {
 
     public UpdateTimeoutTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)

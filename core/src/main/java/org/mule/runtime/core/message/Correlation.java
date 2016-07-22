@@ -6,36 +6,34 @@
  */
 package org.mule.runtime.core.message;
 
-import static java.util.Optional.ofNullable;
-
 import org.mule.runtime.api.message.MuleMessage;
 
 import java.io.Serializable;
 import java.util.Optional;
 
+import static java.util.Optional.ofNullable;
+
 /**
  * Immutable container for correlation properties relative to a {@link MuleMessage}.
  * <p>
  * TODO MULE-10115 Review how correlation is implemented/achieved
- * 
+ *
  * @since 4.0
  */
 public class Correlation implements Serializable
 {
-    private static final long serialVersionUID = -5687080761804624442L;
-
     public static final String NOT_SET = "<not set>";
-
+    private static final long serialVersionUID = -5687080761804624442L;
     private final String id;
     private final Integer groupSize;
     private final Integer sequence;
 
     /**
      * Builds a new {@link Correlation} with the given parameters.
-     * 
-     * @param id see {@link #getId()}.
+     *
+     * @param id        see {@link #getId()}.
      * @param groupSize see {@link #getGroupSize()}.
-     * @param sequence see {@link #getSequence()}.
+     * @param sequence  see {@link #getSequence()}.
      */
     Correlation(String id, Integer groupSize, Integer sequence)
     {

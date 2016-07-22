@@ -13,6 +13,8 @@ import org.mule.runtime.module.db.internal.domain.type.DbType;
 import org.mule.runtime.module.db.internal.domain.type.DbTypeManager;
 import org.mule.runtime.module.db.internal.domain.type.ResolvedDbType;
 import org.mule.runtime.module.db.internal.domain.type.UnknownDbTypeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -21,9 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Resolves parameter types for stored procedure queries
@@ -66,7 +65,8 @@ public class StoredProcedureParamTypeResolver implements ParamTypeResolver
         }
     }
 
-    private Map<Integer, DbType> getStoredProcedureParamTypes(DbConnection connection, String storedProcedureName, ResultSet procedureColumns) throws SQLException
+    private Map<Integer, DbType> getStoredProcedureParamTypes(DbConnection connection, String storedProcedureName,
+                                                              ResultSet procedureColumns) throws SQLException
     {
         Map<Integer, DbType> paramTypes = new HashMap<Integer, DbType>();
 
@@ -80,7 +80,8 @@ public class StoredProcedureParamTypeResolver implements ParamTypeResolver
             if (logger.isDebugEnabled())
             {
                 String name = procedureColumns.getString(PARAM_NAME_COLUN_INDEX);
-                logger.debug(String.format("Resolved parameter type: Store procedure: %s Name: %s Index: %s Type ID: %s Type Name: %s", storedProcedureName, name, position, typeId, typeName));
+                logger.debug(String.format("Resolved parameter type: Store procedure: %s Name: %s Index: %s Type ID: %s Type Name: %s",
+                        storedProcedureName, name, position, typeId, typeName));
             }
 
             DbType dbType;

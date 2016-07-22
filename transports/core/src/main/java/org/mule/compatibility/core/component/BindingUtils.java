@@ -48,7 +48,7 @@ public class BindingUtils
                     Method setterMethod;
 
                     List methods = ClassUtils.getSatisfiableMethods(componentObject.getClass(),
-                                                                    new Class[] {interfaceBinding.getInterface()}, true, false, null);
+                            new Class[] {interfaceBinding.getInterface()}, true, false, null);
                     if (methods.size() == 1)
                     {
                         setterMethod = (Method) methods.get(0);
@@ -56,12 +56,12 @@ public class BindingUtils
                     else if (methods.size() > 1)
                     {
                         throw new TooManySatisfiableMethodsException(componentObject.getClass(),
-                                                                     new Class[] {interfaceBinding.getInterface()});
+                                new Class[] {interfaceBinding.getInterface()});
                     }
                     else
                     {
                         throw new NoSatisfiableMethodsException(componentObject.getClass(),
-                                                                new Class[] {interfaceBinding.getInterface()});
+                                new Class[] {interfaceBinding.getInterface()});
                     }
 
                     try
@@ -71,7 +71,7 @@ public class BindingUtils
                     catch (Exception e)
                     {
                         throw new InitialisationException(TransportCoreMessages.failedToSetProxyOnService(interfaceBinding,
-                                                                                                 componentObject.getClass()), e, null);
+                                componentObject.getClass()), e, null);
                     }
                 }
                 else

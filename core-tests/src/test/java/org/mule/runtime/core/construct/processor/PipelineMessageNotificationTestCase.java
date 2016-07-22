@@ -6,21 +6,13 @@
  */
 package org.mule.runtime.core.construct.processor;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
-import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
-import static org.mule.runtime.core.context.notification.AsyncMessageNotification.PROCESS_ASYNC_COMPLETE;
-import static org.mule.runtime.core.context.notification.AsyncMessageNotification.PROCESS_ASYNC_SCHEDULED;
-import static org.mule.runtime.core.context.notification.PipelineMessageNotification.PROCESS_COMPLETE;
-import static org.mule.runtime.core.context.notification.PipelineMessageNotification.PROCESS_END;
-import static org.mule.runtime.core.context.notification.PipelineMessageNotification.PROCESS_START;
-import static org.mule.tck.junit4.AbstractMuleContextTestCase.RECEIVE_TIMEOUT;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.ArgumentMatcher;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.TransformationService;
 import org.mule.runtime.core.api.MessagingException;
@@ -61,24 +53,31 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.ArgumentMatcher;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
+import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
+import static org.mule.runtime.core.context.notification.AsyncMessageNotification.PROCESS_ASYNC_COMPLETE;
+import static org.mule.runtime.core.context.notification.AsyncMessageNotification.PROCESS_ASYNC_SCHEDULED;
+import static org.mule.runtime.core.context.notification.PipelineMessageNotification.PROCESS_COMPLETE;
+import static org.mule.runtime.core.context.notification.PipelineMessageNotification.PROCESS_END;
+import static org.mule.runtime.core.context.notification.PipelineMessageNotification.PROCESS_START;
+import static org.mule.tck.junit4.AbstractMuleContextTestCase.RECEIVE_TIMEOUT;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PipelineMessageNotificationTestCase extends AbstractMuleTestCase
 {
 
+    private final String pipelineName = "testPipeline";
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     private MuleContext muleContext;
     private MuleEvent event;
     private ServerNotificationManager notificationManager;
     private TestPipeline pipeline;
-    private final String pipelineName = "testPipeline";
 
     @Before
     public void createMocks() throws Exception
@@ -330,7 +329,7 @@ public class PipelineMessageNotificationTestCase extends AbstractMuleTestCase
         verify(notificationManager, times(1)).fireNotification(
                 argThat(new PipelineMessageNotificiationArgumentMatcher(PROCESS_START, false, event)));
         verify(notificationManager, times(1)).fireNotification(
-            argThat(new PipelineMessageNotificiationArgumentMatcher(PROCESS_COMPLETE, true, null)));
+                argThat(new PipelineMessageNotificiationArgumentMatcher(PROCESS_COMPLETE, true, null)));
         verify(notificationManager, times(2)).fireNotification(any(PipelineMessageNotification.class));
     }
 
@@ -381,6 +380,14 @@ public class PipelineMessageNotificationTestCase extends AbstractMuleTestCase
         pipeline.dispose();
     }
 
+    public static class ExceptionThrowingMessageProcessor implements MessageProcessor
+    {
+        @Override
+        public MuleEvent process(MuleEvent event) throws MuleException
+        {
+            throw new IllegalStateException();
+        }
+    }
 
     private class TestPipeline extends AbstractPipeline
     {
@@ -422,7 +429,7 @@ public class PipelineMessageNotificationTestCase extends AbstractMuleTestCase
     }
 
     private class PipelineMessageNotificiationArgumentMatcher extends
-        ArgumentMatcher<PipelineMessageNotification>
+            ArgumentMatcher<PipelineMessageNotification>
     {
         private int expectedAction;
         private boolean exceptionExpected;
@@ -463,15 +470,6 @@ public class PipelineMessageNotificationTestCase extends AbstractMuleTestCase
                        && (this.event == null || this.event == notification.getSource());
             }
 
-        }
-    }
-
-    public static class ExceptionThrowingMessageProcessor implements MessageProcessor
-    {
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            throw new IllegalStateException();
         }
     }
 

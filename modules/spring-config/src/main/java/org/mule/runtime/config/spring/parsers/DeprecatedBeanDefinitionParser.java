@@ -7,7 +7,6 @@
 package org.mule.runtime.config.spring.parsers;
 
 import org.mule.runtime.core.util.OneTimeWarning;
-
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.xml.BeanDefinitionParser;

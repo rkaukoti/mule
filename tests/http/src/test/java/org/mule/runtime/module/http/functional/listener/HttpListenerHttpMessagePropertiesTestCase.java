@@ -6,6 +6,28 @@
  */
 package org.mule.runtime.module.http.functional.listener;
 
+import com.google.common.base.Charsets;
+import com.google.common.collect.ImmutableMap;
+
+import org.apache.http.HttpVersion;
+import org.apache.http.client.fluent.Request;
+import org.hamcrest.Matchers;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.extension.http.api.HttpRequestAttributes;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
+import org.mule.runtime.module.http.internal.ParameterMap;
+import org.mule.runtime.module.http.internal.domain.HttpProtocol;
+import org.mule.tck.junit4.rule.DynamicPort;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
+
 import static org.apache.http.client.fluent.Request.Post;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -15,28 +37,6 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mule.runtime.module.http.api.HttpHeaders.Names.X_FORWARDED_FOR;
 import static org.mule.runtime.module.http.internal.domain.HttpProtocol.HTTP_1_1;
-import org.mule.extension.http.api.HttpRequestAttributes;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.module.http.functional.AbstractHttpTestCase;
-import org.mule.runtime.module.http.internal.ParameterMap;
-import org.mule.runtime.module.http.internal.domain.HttpProtocol;
-import org.mule.tck.junit4.rule.DynamicPort;
-
-import com.google.common.base.Charsets;
-import com.google.common.collect.ImmutableMap;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
-
-import org.apache.http.HttpVersion;
-import org.apache.http.client.fluent.Request;
-import org.hamcrest.Matchers;
-import org.junit.Rule;
-import org.junit.Test;
 
 public class HttpListenerHttpMessagePropertiesTestCase extends AbstractHttpTestCase
 {
@@ -50,14 +50,12 @@ public class HttpListenerHttpMessagePropertiesTestCase extends AbstractHttpTestC
     public static final String CONTEXT_PATH = "/context/path";
     public static final String API_CONTEXT_PATH = "/api" + CONTEXT_PATH;
     public static final String BASE_PATH = "/";
-
-    private static final String FIRST_URI_PARAM_NAME = "uri-param1";
-    private static final String SECOND_URI_PARAM_NAME = "uri-param2";
-    private static final String THIRD_URI_PARAM_NAME = "uri-param3";
     public static final String FIRST_URI_PARAM = "uri-param-value-1";
     public static final String SECOND_URI_PARAM_VALUE = "uri-param-value-2";
     public static final String THIRD_URI_PARAM_VALUE = "uri-param-value-3";
-
+    private static final String FIRST_URI_PARAM_NAME = "uri-param1";
+    private static final String SECOND_URI_PARAM_NAME = "uri-param2";
+    private static final String THIRD_URI_PARAM_NAME = "uri-param3";
     @Rule
     public DynamicPort listenPort = new DynamicPort("port1");
 
@@ -117,7 +115,7 @@ public class HttpListenerHttpMessagePropertiesTestCase extends AbstractHttpTestC
     public void getWithQueryParamMultipleValues() throws Exception
     {
         final ImmutableMap<String, Object> queryParams = ImmutableMap.<String, Object>builder()
-                .put(QUERY_PARAM_NAME, Arrays.asList(QUERY_PARAM_VALUE,QUERY_PARAM_SECOND_VALUE))
+                .put(QUERY_PARAM_NAME, Arrays.asList(QUERY_PARAM_VALUE, QUERY_PARAM_SECOND_VALUE))
                 .build();
         final String url = String.format("http://localhost:%s/?" + buildQueryString(queryParams), listenPort.getNumber());
         Request.Get(url).connectTimeout(RECEIVE_TIMEOUT).execute();
@@ -128,7 +126,8 @@ public class HttpListenerHttpMessagePropertiesTestCase extends AbstractHttpTestC
         assertThat(retrivedQueryParams.size(), is(1));
         assertThat(retrivedQueryParams.get(QUERY_PARAM_NAME), is(QUERY_PARAM_SECOND_VALUE));
         assertThat(retrivedQueryParams.getAll(QUERY_PARAM_NAME).size(), is(2));
-        assertThat(retrivedQueryParams.getAll(QUERY_PARAM_NAME), Matchers.containsInAnyOrder(new String[] {QUERY_PARAM_VALUE, QUERY_PARAM_SECOND_VALUE}));
+        assertThat(retrivedQueryParams.getAll(QUERY_PARAM_NAME),
+                Matchers.containsInAnyOrder(new String[] {QUERY_PARAM_VALUE, QUERY_PARAM_SECOND_VALUE}));
     }
 
     @Test
@@ -151,7 +150,7 @@ public class HttpListenerHttpMessagePropertiesTestCase extends AbstractHttpTestC
     public void putWithOldProtocol() throws Exception
     {
         final ImmutableMap<String, Object> queryParams = ImmutableMap.<String, Object>builder()
-                .put(QUERY_PARAM_NAME, Arrays.asList(QUERY_PARAM_VALUE,QUERY_PARAM_VALUE))
+                .put(QUERY_PARAM_NAME, Arrays.asList(QUERY_PARAM_VALUE, QUERY_PARAM_VALUE))
                 .build();
         final String url = String.format("http://localhost:%s/?" + buildQueryString(queryParams), listenPort.getNumber());
         Request.Put(url).version(HttpVersion.HTTP_1_0).connectTimeout(RECEIVE_TIMEOUT).execute();
@@ -176,7 +175,8 @@ public class HttpListenerHttpMessagePropertiesTestCase extends AbstractHttpTestC
     @Test
     public void getAllUriParams() throws Exception
     {
-        final String url = String.format("http://localhost:%s/%s/%s/%s", listenPort.getNumber(), FIRST_URI_PARAM, SECOND_URI_PARAM_VALUE, THIRD_URI_PARAM_VALUE);
+        final String url = String.format("http://localhost:%s/%s/%s/%s", listenPort.getNumber(), FIRST_URI_PARAM, SECOND_URI_PARAM_VALUE,
+                THIRD_URI_PARAM_VALUE);
         Post(url).connectTimeout(RECEIVE_TIMEOUT).execute();
         final MuleMessage message = muleContext.getClient().request("test://out", RECEIVE_TIMEOUT);
         ParameterMap uriParams = getAttributes(message).getUriParams();
@@ -260,7 +260,7 @@ public class HttpListenerHttpMessagePropertiesTestCase extends AbstractHttpTestC
             final Object value = queryParams.get(paramName);
             if (value instanceof Collection)
             {
-                for (java.lang.Object eachValue : (Collection)value)
+                for (java.lang.Object eachValue : (Collection) value)
                 {
                     queryString.append(paramName + "=" + URLEncoder.encode(eachValue.toString(), Charset.defaultCharset().name()));
                     queryString.append("&");

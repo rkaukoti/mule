@@ -65,7 +65,7 @@ public class CompositeDbTypeManager implements DbTypeManager
      * managers to use.
      *
      * @param connection connection used to connect to the database if required
-     * @param name type name
+     * @param name       type name
      * @return a type that corresponds to the given name
      * @throws UnknownDbTypeException when there is no managed type with the given ID and name
      */

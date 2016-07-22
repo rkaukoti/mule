@@ -63,5 +63,5 @@ public class OrphanBean extends AbstractBean
     {
         this.object = object;
     }
-    
+
 }

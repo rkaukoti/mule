@@ -6,10 +6,12 @@
  */
 package org.mule.runtime.module.cxf.builder;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-
+import org.apache.cxf.interceptor.Interceptor;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
+import org.apache.ws.security.handler.WSHandlerConstants;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.module.cxf.CxfOutboundMessageProcessor;
 import org.mule.runtime.module.cxf.config.WsConfig;
@@ -20,18 +22,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.cxf.interceptor.Interceptor;
-import org.apache.cxf.message.Message;
-import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
-import org.apache.ws.security.handler.WSHandlerConstants;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 public class SimpleClientMessageProcessorBuilderTestCase extends AbstractMuleContextTestCase
 {
-    private SimpleClientMessageProcessorBuilder simpleClientMessageProcessorBuilder;
     private static final String SERVICE_CLASS = "org.mule.runtime.module.cxf.testmodels.Echo";
-
+    private SimpleClientMessageProcessorBuilder simpleClientMessageProcessorBuilder;
 
     @Before
     public void setUp()
@@ -63,11 +61,11 @@ public class SimpleClientMessageProcessorBuilderTestCase extends AbstractMuleCon
 
     private WSS4JOutInterceptor getInterceptor(List<Interceptor<? extends Message>> interceptors)
     {
-        for(Interceptor interceptor : interceptors)
+        for (Interceptor interceptor : interceptors)
         {
-            if(interceptor instanceof WSS4JOutInterceptor)
+            if (interceptor instanceof WSS4JOutInterceptor)
             {
-                return (WSS4JOutInterceptor)interceptor;
+                return (WSS4JOutInterceptor) interceptor;
             }
         }
         return null;

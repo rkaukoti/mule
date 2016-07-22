@@ -38,9 +38,19 @@ public class ListenerSubscriptionPair
         setSubscription(subscription);
     }
 
+    public ServerNotificationListener getListener()
+    {
+        return listener;
+    }
+
     public void setListener(ServerNotificationListener listener)
     {
         this.listener = listener;
+    }
+
+    public String getSubscription()
+    {
+        return subscription;
     }
 
     public void setSubscription(String subscription)
@@ -52,16 +62,6 @@ public class ListenerSubscriptionPair
         }
     }
 
-    public ServerNotificationListener getListener()
-    {
-        return listener;
-    }
-
-    public String getSubscription()
-    {
-        return subscription;
-    }
-
     public boolean isNullSubscription()
     {
         return nullSubscription;
@@ -70,7 +70,7 @@ public class ListenerSubscriptionPair
     @Override
     public int hashCode()
     {
-        return ClassUtils.hash(new Object[]{listener, subscription, nullSubscription});
+        return ClassUtils.hash(new Object[] {listener, subscription, nullSubscription});
     }
 
     @Override
@@ -86,15 +86,15 @@ public class ListenerSubscriptionPair
         }
 
         ListenerSubscriptionPair other = (ListenerSubscriptionPair) obj;
-        return ClassUtils.equal(listener, other.listener) 
-            && ClassUtils.equal(subscription, other.subscription)
-            && (nullSubscription == other.nullSubscription);
+        return ClassUtils.equal(listener, other.listener)
+               && ClassUtils.equal(subscription, other.subscription)
+               && (nullSubscription == other.nullSubscription);
     }
 
     @Override
     public String toString()
     {
         return "ListenerSubscriptionPair [listener=" + listener + ", subscription=" + subscription + "]";
-    } 
+    }
 
 }

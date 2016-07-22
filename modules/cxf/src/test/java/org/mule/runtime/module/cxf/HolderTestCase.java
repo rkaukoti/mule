@@ -6,9 +6,8 @@
  */
 package org.mule.runtime.module.cxf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.transformer.TransformerException;
@@ -19,8 +18,8 @@ import java.nio.charset.Charset;
 
 import javax.xml.ws.Holder;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class HolderTestCase extends FunctionalTestCase
 {
@@ -38,11 +37,11 @@ public class HolderTestCase extends FunctionalTestCase
     {
         MuleMessage received = flowRunner("echoServiceClient").withPayload(getTestMuleMessage(TEST_PAYLOAD)).run().getMessage();
         assertNotNull(received);
-        Object[] payload = (Object[])received.getPayload();
+        Object[] payload = (Object[]) received.getPayload();
         assertEquals("one-response", payload[0]);
         assertEquals(null, payload[1]);
-        assertEquals("one-holder1", ((Holder)payload[2]).value);
-        assertEquals("one-holder2", ((Holder)payload[3]).value);
+        assertEquals("one-holder1", ((Holder) payload[2]).value);
+        assertEquals("one-holder2", ((Holder) payload[3]).value);
     }
 
     @Test
@@ -50,10 +49,10 @@ public class HolderTestCase extends FunctionalTestCase
     {
         MuleMessage received = flowRunner("echoServiceClientProxy").withPayload(getTestMuleMessage(TEST_PAYLOAD)).run().getMessage();
         assertNotNull(received);
-        Object[] payload = (Object[])received.getPayload();
+        Object[] payload = (Object[]) received.getPayload();
         assertEquals("one-response", payload[0]);
-        assertEquals("one-holder1", ((Holder)payload[1]).value);
-        assertEquals("one-holder2", ((Holder)payload[2]).value);
+        assertEquals("one-holder1", ((Holder) payload[1]).value);
+        assertEquals("one-holder2", ((Holder) payload[2]).value);
     }
 
     @Test
@@ -61,10 +60,10 @@ public class HolderTestCase extends FunctionalTestCase
     {
         MuleMessage received = flowRunner("echo2ServiceClient").withPayload(getTestMuleMessage(TEST_PAYLOAD)).run().getMessage();
         assertNotNull(received);
-        Object[] payload = (Object[])received.getPayload();
+        Object[] payload = (Object[]) received.getPayload();
         assertEquals("one-response", payload[0]);
         assertEquals(null, payload[1]);
-        assertEquals("two-holder", ((Holder)payload[2]).value);
+        assertEquals("two-holder", ((Holder) payload[2]).value);
     }
 
     @Test
@@ -72,9 +71,9 @@ public class HolderTestCase extends FunctionalTestCase
     {
         MuleMessage received = flowRunner("echo2ServiceClientProxy").withPayload(getTestMuleMessage(TEST_PAYLOAD)).run().getMessage();
         assertNotNull(received);
-        Object[] payload = (Object[])received.getPayload();
+        Object[] payload = (Object[]) received.getPayload();
         assertEquals("one-response", payload[0]);
-        assertEquals("two-holder", ((Holder)payload[1]).value);
+        assertEquals("two-holder", ((Holder) payload[1]).value);
     }
 
     @Test
@@ -82,9 +81,9 @@ public class HolderTestCase extends FunctionalTestCase
     {
         MuleMessage received = flowRunner("echo3ServiceClient").withPayload(getTestMuleMessage(TEST_PAYLOAD)).run().getMessage();
         assertNotNull(received);
-        Object[] payload = (Object[])received.getPayload();
+        Object[] payload = (Object[]) received.getPayload();
         assertEquals(null, payload[0]);
-        assertEquals("one", ((Holder)payload[1]).value);
+        assertEquals("one", ((Holder) payload[1]).value);
     }
 
     @Test
@@ -92,9 +91,9 @@ public class HolderTestCase extends FunctionalTestCase
     {
         MuleMessage received = flowRunner("echo3ServiceClientProxy").withPayload(getTestMuleMessage(TEST_PAYLOAD)).run().getMessage();
         assertNotNull(received);
-        Object[] payload = (Object[])received.getPayload();
+        Object[] payload = (Object[]) received.getPayload();
         assertEquals(null, payload[0]);
-        assertEquals("one", ((Holder)payload[1]).value);
+        assertEquals("one", ((Holder) payload[1]).value);
     }
 
     public static class HolderTransformer extends AbstractTransformer

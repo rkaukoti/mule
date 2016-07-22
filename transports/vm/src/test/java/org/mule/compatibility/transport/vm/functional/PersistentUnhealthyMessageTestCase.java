@@ -6,9 +6,7 @@
  */
 package org.mule.compatibility.transport.vm.functional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.client.MuleClient;
@@ -17,7 +15,8 @@ import org.mule.runtime.core.util.queue.DualRandomAccessFileQueueStoreDelegate;
 
 import java.io.File;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class PersistentUnhealthyMessageTestCase extends FunctionalTestCase
 {
@@ -34,7 +33,8 @@ public class PersistentUnhealthyMessageTestCase extends FunctionalTestCase
     @Test
     public void testUnhealthyMessageIgnored() throws Exception
     {
-        File firstQueueFile = DualRandomAccessFileQueueStoreDelegate.getFirstQueueFileForTesting(OUTPUT_QUEUE_NAME, getWorkingDirectory().getAbsolutePath());
+        File firstQueueFile = DualRandomAccessFileQueueStoreDelegate.getFirstQueueFileForTesting(OUTPUT_QUEUE_NAME,
+                getWorkingDirectory().getAbsolutePath());
         FileUtils.createFile(firstQueueFile.getAbsolutePath());
 
         muleContext.start();

@@ -21,16 +21,16 @@ import java.util.List;
 public interface Pipeline extends FlowConstruct, MessageProcessorContainer, ProcessingDescriptor, MessageProcessorPathResolver
 {
 
-    public void setMessageSource(MessageSource messageSource);
-
     public MessageSource getMessageSource();
 
-    public void setMessageProcessors(List<MessageProcessor> messageProcessors);
+    public void setMessageSource(MessageSource messageSource);
 
     public List<MessageProcessor> getMessageProcessors();
 
-    public void setProcessingStrategy(ProcessingStrategy processingStrategy);
+    public void setMessageProcessors(List<MessageProcessor> messageProcessors);
 
     public ProcessingStrategy getProcessingStrategy();
+
+    public void setProcessingStrategy(ProcessingStrategy processingStrategy);
 
 }

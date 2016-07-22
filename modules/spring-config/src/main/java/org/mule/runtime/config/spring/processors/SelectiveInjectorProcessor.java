@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.config.spring.processors;
 
-import java.beans.PropertyDescriptor;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValues;
+
+import java.beans.PropertyDescriptor;
 
 /**
  * Base class for specializations of {@link MuleInjectorProcessor}
@@ -26,7 +26,8 @@ abstract class SelectiveInjectorProcessor extends MuleInjectorProcessor
      * {@inheritDoc}
      */
     @Override
-    public PropertyValues postProcessPropertyValues(PropertyValues pvs, PropertyDescriptor[] pds, Object bean, String beanName) throws BeansException
+    public PropertyValues postProcessPropertyValues(PropertyValues pvs, PropertyDescriptor[] pds, Object bean, String beanName)
+            throws BeansException
     {
         if (shouldInject(pvs, pds, bean, beanName))
         {

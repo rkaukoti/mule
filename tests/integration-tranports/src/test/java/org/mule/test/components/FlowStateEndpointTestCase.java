@@ -6,17 +6,16 @@
  */
 package org.mule.test.components;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.transport.MessageReceiver;
 import org.mule.compatibility.core.transport.AbstractConnector;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.construct.AbstractFlowConstruct;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class FlowStateEndpointTestCase extends FunctionalTestCase
 {
@@ -41,7 +40,7 @@ public class FlowStateEndpointTestCase extends FunctionalTestCase
     protected void doTestStarted(String flowName) throws Exception
     {
         AbstractFlowConstruct f = (AbstractFlowConstruct) muleContext.getRegistry().lookupFlowConstruct(
-            flowName + "Flow");
+                flowName + "Flow");
         // Flow initially started
         assertTrue(f.isStarted());
         assertFalse(f.isStopped());
@@ -54,7 +53,7 @@ public class FlowStateEndpointTestCase extends FunctionalTestCase
     public void testInitialStateStopped() throws Exception
     {
         AbstractFlowConstruct f = (AbstractFlowConstruct) muleContext.getRegistry().lookupFlowConstruct(
-            "stoppedFlow");
+                "stoppedFlow");
         assertEquals("stopped", f.getInitialState());
         // Flow initially stopped
         assertFalse(f.isStarted());
@@ -74,7 +73,7 @@ public class FlowStateEndpointTestCase extends FunctionalTestCase
     protected void doListenerTests(String receiverName, int expectedCount, boolean isConnected)
     {
         AbstractConnector connector = (AbstractConnector) muleContext.getRegistry().lookupObject(
-            "connector.test.mule.default");
+                "connector.test.mule.default");
         assertNotNull(connector);
         assertTrue(connector.isStarted());
         MessageReceiver[] receivers = connector.getReceivers("*" + receiverName + "*");

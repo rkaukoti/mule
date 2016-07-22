@@ -6,11 +6,8 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.transport.Connector;
-import org.mule.compatibility.transport.file.FileConnector;
 import org.mule.functional.functional.EventCallback;
 import org.mule.functional.functional.FunctionalTestComponent;
 import org.mule.functional.junit4.FunctionalTestCase;
@@ -21,7 +18,8 @@ import java.io.File;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class FileComparatorTestCase extends FunctionalTestCase
 {
@@ -55,7 +53,7 @@ public class FileComparatorTestCase extends FunctionalTestCase
         ((FunctionalTestComponent) getComponent(COMPONENT_NAME)).setEventCallback(callback);
 
         ((Connector) muleContext.getRegistry().lookupObject(FILE_CONNECTOR_NAME)).stop();
-        File f1 = FileUtils.newFile(getFileInsideWorkingDirectory(INPUT_FOLDER + File.separator +  FILE_NAMES[0]).getAbsolutePath());
+        File f1 = FileUtils.newFile(getFileInsideWorkingDirectory(INPUT_FOLDER + File.separator + FILE_NAMES[0]).getAbsolutePath());
         assertTrue(f1.createNewFile());
         Thread.sleep(1000);
         File f2 = FileUtils.newFile(getFileInsideWorkingDirectory(INPUT_FOLDER + File.separator + FILE_NAMES[1]).getAbsolutePath());

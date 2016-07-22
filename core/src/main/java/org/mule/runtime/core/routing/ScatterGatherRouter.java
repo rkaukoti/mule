@@ -7,6 +7,7 @@
 
 package org.mule.runtime.core.routing;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.OptimizedRequestContext;
 import org.mule.runtime.core.api.DefaultMuleException;
@@ -36,16 +37,14 @@ import org.mule.runtime.core.util.Preconditions;
 import org.mule.runtime.core.util.concurrent.ThreadNameHelper;
 import org.mule.runtime.core.work.ProcessingMuleEventWork;
 import org.mule.runtime.core.work.SerialWorkManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.resource.spi.work.WorkException;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -79,7 +78,7 @@ import org.slf4j.LoggerFactory;
  * <b>EIP Reference:</b> <a
  * href="http://www.eaipatterns.com/BroadcastAggregate.html"<a/>
  * </p>
- * 
+ *
  * @since 3.5.0
  */
 public class ScatterGatherRouter extends AbstractMessageProcessorOwner implements MessageRouter
@@ -150,7 +149,7 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
     }
 
     private MuleEvent processResponses(MuleEvent event, List<ProcessingMuleEventWork> works)
-        throws MuleException
+            throws MuleException
     {
         List<MuleEvent> responses = new ArrayList<>(works.size());
 
@@ -175,7 +174,7 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
             catch (InterruptedException e)
             {
                 throw new DefaultMuleException(MessageFactory.createStaticMessage(String.format(
-                    "Was interrupted while waiting for route %d", routeIndex)), e);
+                        "Was interrupted while waiting for route %d", routeIndex)), e);
             }
             catch (MessagingException e)
             {
@@ -193,8 +192,8 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
                 if (logger.isDebugEnabled())
                 {
                     logger.debug(
-                        String.format("route %d generated exception for MuleEvent %s", routeIndex,
-                            event.getId()), exception);
+                            String.format("route %d generated exception for MuleEvent %s", routeIndex,
+                                    event.getId()), exception);
                 }
 
                 if (exception instanceof MessagingException)
@@ -218,7 +217,7 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
                 if (logger.isDebugEnabled())
                 {
                     logger.debug(String.format("route %d executed successfully for event %s", routeIndex,
-                        event.getId()));
+                            event.getId()));
                 }
             }
 
@@ -249,7 +248,7 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
         catch (WorkException e)
         {
             throw new DefaultMuleException(
-                MessageFactory.createStaticMessage("Could not schedule work for route"), e);
+                    MessageFactory.createStaticMessage("Could not schedule work for route"), e);
         }
 
         return works;
@@ -314,7 +313,7 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
         catch (Exception e)
         {
             logger.error(
-                "Exception found while tring to dispose work manager. Will continue with the disposal", e);
+                    "Exception found while tring to dispose work manager. Will continue with the disposal", e);
         }
         finally
         {
@@ -324,9 +323,8 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws IllegalStateException if invoked after {@link #initialise()} is
-     *             completed
+     *
+     * @throws IllegalStateException if invoked after {@link #initialise()} is completed
      */
     @Override
     public void addRoute(MessageProcessor processor) throws MuleException
@@ -337,9 +335,8 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws IllegalStateException if invoked after {@link #initialise()} is
-     *             completed
+     *
+     * @throws IllegalStateException if invoked after {@link #initialise()} is completed
      */
     @Override
     public void removeRoute(MessageProcessor processor) throws MuleException
@@ -368,7 +365,7 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
     private void checkNotInitialised()
     {
         Preconditions.checkState(initialised == false,
-            "<scatter-gather> router is not dynamic. Cannot modify routes after initialisation");
+                "<scatter-gather> router is not dynamic. Cannot modify routes after initialisation");
     }
 
     @Override

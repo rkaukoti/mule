@@ -24,13 +24,9 @@ public final class TimedSocket
 
     /**
      * Creates a socket and waits until the given timeout is reached.
-     * 
-     * @param host
-     * @param port
+     *
      * @param timeout in milliseconds
      * @return Connected socket or <code>null</code>.
-     * @throws InterruptedIOException
-     * @throws IOException
      */
     public static Socket createSocket(String host, int port, int timeout) throws IOException
     {

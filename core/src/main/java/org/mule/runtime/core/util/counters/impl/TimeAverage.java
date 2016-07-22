@@ -10,9 +10,9 @@ import org.mule.runtime.core.util.counters.CounterFactory.Type;
 
 public class TimeAverage extends AggregateCounter
 {
+    private final long firstTime = System.currentTimeMillis();
     private double sum = 0.0;
     private double lastValue = 0.0;
-    private final long firstTime = System.currentTimeMillis();
     private long lastTime = firstTime;
 
     public TimeAverage(String name, AbstractCounter base)

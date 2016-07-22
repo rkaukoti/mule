@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.module.xml.transformers.xml.xslt;
 
+import org.custommonkey.xmlunit.XMLUnit;
+import org.hamcrest.CoreMatchers;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.MessagingException;
+import org.mule.runtime.core.util.IOUtils;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.MessagingException;
-import org.mule.functional.junit4.FunctionalTestCase;
-import org.mule.runtime.core.util.IOUtils;
-
-import org.custommonkey.xmlunit.XMLUnit;
-import org.hamcrest.CoreMatchers;
-import org.junit.Test;
 
 public class Xslt3TestCase extends FunctionalTestCase
 {

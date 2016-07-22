@@ -6,8 +6,7 @@
  */
 package org.mule.functional.junit4;
 
-import static org.junit.Assert.fail;
-
+import org.mockito.Mockito;
 import org.mule.runtime.api.message.Attributes;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.MessageExchangePattern;
@@ -21,7 +20,7 @@ import java.util.Map;
 
 import javax.activation.DataHandler;
 
-import org.mockito.Mockito;
+import static org.junit.Assert.fail;
 
 /**
  * Provides a fluent API for running events through batch FlowConstructs.
@@ -34,6 +33,16 @@ public abstract class FlowConstructRunner<R extends FlowConstructRunner>
     protected MuleContext muleContext;
     protected TestEventBuilder eventBuilder = new TestEventBuilder();
     private MuleEvent requestEvent;
+
+    /**
+     * Initializes this runner with a mule context.
+     *
+     * @param muleContext the context of the mule application
+     */
+    public FlowConstructRunner(MuleContext muleContext)
+    {
+        this.muleContext = muleContext;
+    }
 
     /**
      * Prepares the given data to be sent as the payload of the {@link MuleEvent} to the configured flow.
@@ -137,8 +146,8 @@ public abstract class FlowConstructRunner<R extends FlowConstructRunner>
      *
      * @param key         the key of the attachment to add
      * @param object      the content of the attachment to add
-     * @param contentType the content type of the attachment to add. Note that the charset attribute can be specifed too
-     *                    i.e. text/plain;charset=UTF-8
+     * @param contentType the content type of the attachment to add. Note that the charset attribute can be specifed too i.e.
+     *                    text/plain;charset=UTF-8
      * @return this {@link FlowRunner}
      */
     public R withOutboundAttachment(String key, Object object, MediaType contentType)
@@ -217,7 +226,6 @@ public abstract class FlowConstructRunner<R extends FlowConstructRunner>
         return (R) this;
     }
 
-
     /**
      * Will spy the built {@link MuleMessage} and {@link MuleEvent}. See {@link Mockito#spy(Object) spy}.
      *
@@ -228,16 +236,6 @@ public abstract class FlowConstructRunner<R extends FlowConstructRunner>
         eventBuilder.spyObjects();
 
         return (R) this;
-    }
-
-    /**
-     * Initializes this runner with a mule context.
-     *
-     * @param muleContext the context of the mule application
-     */
-    public FlowConstructRunner(MuleContext muleContext)
-    {
-        this.muleContext = muleContext;
     }
 
     protected MuleEvent getOrBuildEvent()

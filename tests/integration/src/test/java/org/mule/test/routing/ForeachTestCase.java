@@ -6,20 +6,11 @@
  */
 package org.mule.test.routing;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.singletonMap;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.startsWith;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.collection.IsArrayWithSize.arrayWithSize;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.api.LocatedMuleException.INFO_LOCATION_KEY;
+import org.apache.commons.lang.RandomStringUtils;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.functional.FlowAssert;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MessagingException;
@@ -36,18 +27,29 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang.RandomStringUtils;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonMap;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.collection.IsArrayWithSize.arrayWithSize;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.api.LocatedMuleException.INFO_LOCATION_KEY;
 
 public class ForeachTestCase extends FunctionalTestCase
 {
 
+    static String sampleXml = "<PurchaseOrder>" + "<Address><Name>Ellen Adams</Name></Address>" + "<Items>"
+                              + "<Item PartNumber=\"872-AA\"><Price>140</Price></Item>"
+                              + "<Item PartNumber=\"926-AA\"><Price>35</Price></Item>" + "</Items>" + "</PurchaseOrder>";
     @Rule
     public SystemProperty systemProperty = new SystemProperty("batch.size", "3");
-
     private MuleClient client;
 
     @Before
@@ -115,9 +117,9 @@ public class ForeachTestCase extends FunctionalTestCase
 
         MuleMessage message = MuleMessage.builder().payload("message payload").addOutboundProperty("names", names).build();
         MuleMessage result = flowRunner("minimal-config-expression").withPayload("message payload")
-                .withInboundProperty("names", names)
-                .run()
-                .getMessage();
+                                                                    .withInboundProperty("names", names)
+                                                                    .run()
+                                                                    .getMessage();
 
         assertThat(result.getPayload(), instanceOf(String.class));
         assertThat((message.getOutboundProperty("names")), hasSize(names.size()));
@@ -245,18 +247,14 @@ public class ForeachTestCase extends FunctionalTestCase
 
         MuleMessage message = MuleMessage.builder().payload("message payload").addOutboundProperty("names", names).build();
         MuleMessage result = flowRunner("map-expression-config").withPayload("message payload")
-                .withInboundProperty("names", names)
-                .run()
-                .getMessage();
+                                                                .withInboundProperty("names", names)
+                                                                .run()
+                                                                .getMessage();
 
         assertThat(result.getPayload(), instanceOf(String.class));
         assertThat(((Collection<?>) message.getOutboundProperty("names")), hasSize(names.size()));
         assertThat(result.getOutboundProperty("totalMessages"), is(names.size()));
     }
-
-    static String sampleXml = "<PurchaseOrder>" + "<Address><Name>Ellen Adams</Name></Address>" + "<Items>"
-                              + "<Item PartNumber=\"872-AA\"><Price>140</Price></Item>"
-                              + "<Item PartNumber=\"926-AA\"><Price>35</Price></Item>" + "</Items>" + "</PurchaseOrder>";
 
     @Test
     public void xmlUpdate() throws Exception
@@ -281,7 +279,8 @@ public class ForeachTestCase extends FunctionalTestCase
     @Test
     public void jsonUpdate() throws Exception
     {
-        String json = "{\"order\": {\"name\": \"Ellen\", \"email\": \"ellen@mail.com\", \"items\": [{\"key1\": \"value1\"}, {\"key2\": \"value2\"}] } }";
+        String json =
+                "{\"order\": {\"name\": \"Ellen\", \"email\": \"ellen@mail.com\", \"items\": [{\"key1\": \"value1\"}, {\"key2\": \"value2\"}] } }";
         flowRunner("process-json-update").withPayload(json).run();
         FlowAssert.verify("process-json-update");
     }

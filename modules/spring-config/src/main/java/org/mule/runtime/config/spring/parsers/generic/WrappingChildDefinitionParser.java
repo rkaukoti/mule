@@ -48,7 +48,7 @@ public class WrappingChildDefinitionParser extends ChildDefinitionParser
 
     @Override
     public String getPropertyName(Element
-        e)
+                                          e)
     {
         if (!wrappingController.shouldWrap(e))
         {
@@ -62,7 +62,7 @@ public class WrappingChildDefinitionParser extends ChildDefinitionParser
 
     @Override
     protected void preProcess(Element
-        element)
+                                      element)
     {
         super.preProcess(element);
         if (wrappingController.shouldWrap(element))

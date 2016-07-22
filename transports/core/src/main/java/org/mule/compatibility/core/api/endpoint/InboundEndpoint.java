@@ -19,7 +19,7 @@ import org.mule.runtime.core.processor.AbstractRedeliveryPolicy;
  */
 @Deprecated
 public interface InboundEndpoint
-    extends ImmutableEndpoint, MessageRequesting, MessageSource, FlowConstructAware, Startable, Stoppable, LegacyInboundEndpoint
+        extends ImmutableEndpoint, MessageRequesting, MessageSource, FlowConstructAware, Startable, Stoppable, LegacyInboundEndpoint
 {
     AbstractRedeliveryPolicy createDefaultRedeliveryPolicy(int maxRedelivery);
 

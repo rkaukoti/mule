@@ -6,6 +6,13 @@
  */
 package org.mule.runtime.module.cxf.support;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.cxf.common.i18n.Message;
+import org.apache.cxf.common.logging.LogUtils;
+import org.apache.cxf.service.factory.DefaultServiceConfiguration;
+import org.apache.cxf.service.factory.ServiceConstructionException;
+import org.apache.cxf.wsdl.WSDLManager;
 import org.mule.runtime.module.cxf.i18n.CxfMessages;
 
 import java.util.Iterator;
@@ -21,14 +28,6 @@ import javax.wsdl.WSDLException;
 import javax.wsdl.extensions.soap.SOAPBinding;
 import javax.wsdl.extensions.soap12.SOAP12Binding;
 import javax.xml.namespace.QName;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.cxf.common.i18n.Message;
-import org.apache.cxf.common.logging.LogUtils;
-import org.apache.cxf.service.factory.DefaultServiceConfiguration;
-import org.apache.cxf.service.factory.ServiceConstructionException;
-import org.apache.cxf.wsdl.WSDLManager;
 
 public class ProxyServiceConfiguration extends DefaultServiceConfiguration
 {
@@ -52,8 +51,8 @@ public class ProxyServiceConfiguration extends DefaultServiceConfiguration
             if (getServiceFactory().getWsdlURL() != null)
             {
                 Definition definition = getServiceFactory().getBus()
-                    .getExtension(WSDLManager.class)
-                    .getDefinition(getServiceFactory().getWsdlURL());
+                                                           .getExtension(WSDLManager.class)
+                                                           .getDefinition(getServiceFactory().getWsdlURL());
                 Service service = getServiceFromDefinition(definition);
                 setServiceNamespace(service.getQName().getNamespaceURI());
 
@@ -112,7 +111,7 @@ public class ProxyServiceConfiguration extends DefaultServiceConfiguration
             List<QName> probableServices = getProbableServices(definition);
             List<QName> allServices = getAllServices(definition);
             throw new ComponentNotFoundRuntimeException(CxfMessages.invalidOrMissingNamespace(
-                getServiceFactory().getServiceQName(), probableServices, allServices));
+                    getServiceFactory().getServiceQName(), probableServices, allServices));
         }
         return service;
     }
@@ -126,13 +125,13 @@ public class ProxyServiceConfiguration extends DefaultServiceConfiguration
     protected List<QName> getAllServices(Definition definition)
     {
         return new LinkedList<QName>(CollectionUtils.select(definition.getServices().keySet(),
-            new Predicate()
-            {
-                public boolean evaluate(Object object)
+                new Predicate()
                 {
-                    return object instanceof QName;
-                }
-            }));
+                    public boolean evaluate(Object object)
+                    {
+                        return object instanceof QName;
+                    }
+                }));
     }
 
     /**
@@ -145,7 +144,7 @@ public class ProxyServiceConfiguration extends DefaultServiceConfiguration
         QName serviceQName = getServiceFactory().getServiceQName();
         List<QName> probableServices = new LinkedList<QName>();
         Map<?, ?> services = definition.getServices();
-        for (Iterator<?> iterator = services.keySet().iterator(); iterator.hasNext();)
+        for (Iterator<?> iterator = services.keySet().iterator(); iterator.hasNext(); )
         {
             Object key = iterator.next();
             if (key instanceof QName)

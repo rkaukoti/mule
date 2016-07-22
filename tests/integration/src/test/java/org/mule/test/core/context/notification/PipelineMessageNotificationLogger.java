@@ -12,7 +12,7 @@ import org.mule.runtime.core.context.notification.PipelineMessageNotification;
 import java.util.List;
 
 public class PipelineMessageNotificationLogger extends PipelineAndAsyncMessageNotificationLogger
-    implements PipelineMessageNotificationListener<PipelineMessageNotification>
+        implements PipelineMessageNotificationListener<PipelineMessageNotification>
 {
 
     public synchronized void onNotification(PipelineMessageNotification notification)

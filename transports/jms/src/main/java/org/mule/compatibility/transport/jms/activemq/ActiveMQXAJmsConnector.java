@@ -19,7 +19,7 @@ public class ActiveMQXAJmsConnector extends ActiveMQJmsConnector
     {
         super(context);
     }
-    
+
     @Override
     protected ConnectionFactory getDefaultConnectionFactory() throws Exception
     {

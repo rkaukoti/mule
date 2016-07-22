@@ -1,4 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://example.cxf.module.runtime.mule.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="ArtistRegistryWebServicesService" targetNamespace="http://example.cxf.module.runtime.mule.org/">
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://example.cxf.module.runtime.mule.org/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="ArtistRegistryWebServicesService"
+                  targetNamespace="http://example.cxf.module.runtime.mule.org/">
     <wsdl:types>
         <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://example.cxf.module.runtime.mule.org/" targetNamespace="http://example.cxf.module.runtime.mule.org/" version="1.0">
             <xs:complexType name="artist">
@@ -22,7 +25,8 @@
                     <xs:enumeration value="PAINTER"/>
                 </xs:restriction>
             </xs:simpleType>
-        </xs:schema>  </wsdl:types>
+        </xs:schema>
+    </wsdl:types>
     <wsdl:message name="getAllResponse">
         <wsdl:part name="return" type="tns:artistArray">
         </wsdl:part>

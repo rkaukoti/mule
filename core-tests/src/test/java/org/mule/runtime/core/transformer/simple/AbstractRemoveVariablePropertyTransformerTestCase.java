@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
-import static java.nio.charset.StandardCharsets.US_ASCII;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -27,10 +26,10 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.mockito.Mockito;
+import static java.nio.charset.StandardCharsets.US_ASCII;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public abstract class AbstractRemoveVariablePropertyTransformerTestCase extends AbstractMuleContextTestCase

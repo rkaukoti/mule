@@ -21,6 +21,8 @@ import org.mule.runtime.core.api.store.ObjectStoreManager;
 import org.mule.runtime.core.api.store.PartitionableExpirableObjectStore;
 import org.mule.runtime.core.api.store.PartitionableObjectStore;
 import org.mule.runtime.core.util.concurrent.DaemonThreadFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,17 +31,14 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class MuleObjectStoreManager
-    implements ObjectStoreManager, MuleContextAware, Initialisable, Disposable
+        implements ObjectStoreManager, MuleContextAware, Initialisable, Disposable
 {
     private static Logger logger = LoggerFactory.getLogger(MuleObjectStoreManager.class);
+    private final ConcurrentMap<String, ScheduledFuture<?>> monitors = new ConcurrentHashMap<>();
     protected ScheduledThreadPoolExecutor scheduler;
     MuleContext muleContext;
     ConcurrentMap<String, ObjectStore<?>> stores = new ConcurrentHashMap<String, ObjectStore<?>>();
-    private final ConcurrentMap<String, ScheduledFuture<?>> monitors = new ConcurrentHashMap<>();
     private String baseTransientStoreKey = MuleProperties.OBJECT_STORE_DEFAULT_IN_MEMORY_NAME;
     private String basePersistentStoreKey = MuleProperties.OBJECT_STORE_DEFAULT_PERSISTENT_NAME;
     private String baseTransientUserStoreKey = MuleProperties.DEFAULT_USER_TRANSIENT_OBJECT_STORE_NAME;
@@ -80,15 +79,16 @@ public class MuleObjectStoreManager
                                                                                 int expirationInterval)
     {
         return internalCreateStore(getBaseUserStore(isPersistent), name, maxEntries, entryTTL,
-            expirationInterval);
+                expirationInterval);
     }
 
     @SuppressWarnings({"unchecked"})
-    synchronized public <T extends ObjectStore<? extends Serializable>> T internalCreateStore(ListableObjectStore<? extends Serializable> baseStore,
-                                                                                              String name,
-                                                                                              int maxEntries,
-                                                                                              int entryTTL,
-                                                                                              int expirationInterval)
+    synchronized public <T extends ObjectStore<? extends Serializable>> T internalCreateStore(
+            ListableObjectStore<? extends Serializable> baseStore,
+            String name,
+            int maxEntries,
+            int entryTTL,
+            int expirationInterval)
     {
 
         if (maxEntries < UNBOUNDED)
@@ -160,21 +160,22 @@ public class MuleObjectStoreManager
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    private <T extends ObjectStore<? extends Serializable>> T getPartitionFromBaseObjectStore(ListableObjectStore<? extends Serializable> baseStore,
-                                                                                              String partitionName)
-        throws ObjectStoreException
+    private <T extends ObjectStore<? extends Serializable>> T getPartitionFromBaseObjectStore(
+            ListableObjectStore<? extends Serializable> baseStore,
+            String partitionName)
+            throws ObjectStoreException
     {
         if (baseStore instanceof PartitionableObjectStore)
         {
             ObjectStorePartition objectStorePartition = new ObjectStorePartition(partitionName,
-                (PartitionableObjectStore) baseStore);
+                    (PartitionableObjectStore) baseStore);
             objectStorePartition.open();
             return (T) objectStorePartition;
         }
         else
         {
             PartitionedObjectStoreWrapper partitionedObjectStoreWrapper = new PartitionedObjectStoreWrapper(
-                partitionName, muleContext, baseStore);
+                    partitionName, muleContext, baseStore);
             partitionedObjectStoreWrapper.open();
             return (T) partitionedObjectStoreWrapper;
         }
@@ -230,7 +231,7 @@ public class MuleObjectStoreManager
                     return (T) stores.get(name);
                 }
                 monObjectStore = new MonitoredObjectStoreWrapper((ListableObjectStore) store, maxEntries,
-                    entryTTL, expirationInterval);
+                        entryTTL, expirationInterval);
                 monObjectStore.setMuleContext(muleContext);
                 try
                 {
@@ -275,7 +276,7 @@ public class MuleObjectStoreManager
     {
         scheduler = new ScheduledThreadPoolExecutor(1);
         scheduler.setThreadFactory(new DaemonThreadFactory("ObjectStoreManager-Monitor", this.getClass()
-            .getClassLoader()));
+                                                                                             .getClassLoader()));
     }
 
     @Override
@@ -288,7 +289,7 @@ public class MuleObjectStoreManager
             partition.getBaseStore().disposePartition(partitionName);
 
             ScheduledFuture<?> future = monitors.remove(partitionName);
-            if(future!=null)
+            if (future != null)
             {
                 future.cancel(false);
             }
@@ -303,13 +304,13 @@ public class MuleObjectStoreManager
             catch (UnsupportedOperationException e)
             {
                 logger.warn(String.format("ObjectStore of class %s does not support clearing",
-                    store.getClass().getCanonicalName()), e);
+                        store.getClass().getCanonicalName()), e);
             }
             try
             {
                 stores.values().remove(store);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 logger.warn("Can not remove object store" + store.toString(), e);
             }
@@ -319,6 +320,31 @@ public class MuleObjectStoreManager
         {
             ((Disposable) store).dispose();
         }
+    }
+
+    int getMonitorsCount()
+    {
+        return monitors.size();
+    }
+
+    public void setBasePersistentStoreKey(String basePersistentStoreKey)
+    {
+        this.basePersistentStoreKey = basePersistentStoreKey;
+    }
+
+    public void setBaseTransientStoreKey(String baseTransientStoreKey)
+    {
+        this.baseTransientStoreKey = baseTransientStoreKey;
+    }
+
+    public void setBasePersistentUserStoreKey(String basePersistentUserStoreKey)
+    {
+        this.basePersistentUserStoreKey = basePersistentUserStoreKey;
+    }
+
+    public void setBaseTransientUserStoreKey(String baseTransientUserStoreKey)
+    {
+        this.baseTransientUserStoreKey = baseTransientUserStoreKey;
     }
 
     class Monitor implements Runnable
@@ -357,30 +383,5 @@ public class MuleObjectStoreManager
             }
         }
 
-    }
-
-    int getMonitorsCount()
-    {
-        return monitors.size();
-    }
-
-    public void setBasePersistentStoreKey(String basePersistentStoreKey)
-    {
-        this.basePersistentStoreKey = basePersistentStoreKey;
-    }
-
-    public void setBaseTransientStoreKey(String baseTransientStoreKey)
-    {
-        this.baseTransientStoreKey = baseTransientStoreKey;
-    }
-
-    public void setBasePersistentUserStoreKey(String basePersistentUserStoreKey)
-    {
-        this.basePersistentUserStoreKey = basePersistentUserStoreKey;
-    }
-
-    public void setBaseTransientUserStoreKey(String baseTransientUserStoreKey)
-    {
-        this.baseTransientUserStoreKey = baseTransientUserStoreKey;
     }
 }

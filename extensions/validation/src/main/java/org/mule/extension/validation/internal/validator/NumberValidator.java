@@ -7,14 +7,15 @@
 
 package org.mule.extension.validation.internal.validator;
 
-import static org.mule.extension.validation.internal.ImmutableValidationResult.ok;
 import org.mule.extension.validation.api.NumberType;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.config.i18n.Message;
 import org.mule.extension.validation.api.ValidationResult;
 import org.mule.extension.validation.internal.ValidationContext;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.config.i18n.Message;
 
 import java.util.Locale;
+
+import static org.mule.extension.validation.internal.ImmutableValidationResult.ok;
 
 /**
  * A validator which tets that a given {@link String} {@link #value}
@@ -57,7 +58,8 @@ public class NumberValidator extends AbstractValidator
 
     private Message errorMessage;
 
-    public NumberValidator(String value, Locale locale, String pattern, Number minValue, Number maxValue, NumberType numberType, ValidationContext validationContext)
+    public NumberValidator(String value, Locale locale, String pattern, Number minValue, Number maxValue, NumberType numberType,
+                           ValidationContext validationContext)
     {
         super(validationContext);
         this.value = value;

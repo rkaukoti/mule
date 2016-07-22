@@ -7,19 +7,21 @@
 package org.mule.runtime.module.tls.internal;
 
 
+import com.google.common.base.Joiner;
+
+import org.mule.runtime.api.tls.TlsContextFactory;
+import org.mule.runtime.api.tls.TlsContextKeyStoreConfiguration;
+import org.mule.runtime.api.tls.TlsContextTrustStoreConfiguration;
 import org.mule.runtime.core.api.lifecycle.CreateException;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.security.tls.TlsConfiguration;
 import org.mule.runtime.core.config.i18n.MessageFactory;
-import org.mule.runtime.api.tls.TlsContextFactory;
-import org.mule.runtime.api.tls.TlsContextKeyStoreConfiguration;
-import org.mule.runtime.api.tls.TlsContextTrustStoreConfiguration;
 import org.mule.runtime.core.util.ArrayUtils;
 import org.mule.runtime.core.util.FileUtils;
 import org.mule.runtime.core.util.StringUtils;
-
-import com.google.common.base.Joiner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -29,9 +31,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation of the {@code TlsContextFactory} interface, which delegates all its operations to a
@@ -103,7 +102,9 @@ public class DefaultTlsContextFactory implements TlsContextFactory, Initialisabl
 
     private void globalConfigNotHonored(String element, String[] elementArray) throws InitialisationException
     {
-        throw new InitialisationException(MessageFactory.createStaticMessage(String.format("Some selected %1$s are invalid. Valid %1$s according to your TLS configuration file are: %2$s", element, Joiner.on(", ").join(elementArray))), this);
+        throw new InitialisationException(MessageFactory.createStaticMessage(
+                String.format("Some selected %1$s are invalid. Valid %1$s according to your TLS configuration file are: %2$s", element,
+                        Joiner.on(", ").join(elementArray))), this);
     }
 
     public String getName()
@@ -230,7 +231,9 @@ public class DefaultTlsContextFactory implements TlsContextFactory, Initialisabl
     {
         if (insecure)
         {
-            logger.warn(String.format("TLS context %s trust store set as insecure. No certificate validations will be performed, rendering connections vulnerable to attacks. Use at own risk.", name == null ? StringUtils.EMPTY : name));
+            logger.warn(String.format(
+                    "TLS context %s trust store set as insecure. No certificate validations will be performed, rendering connections vulnerable to attacks. Use at own risk.",
+                    name == null ? StringUtils.EMPTY : name));
         }
         this.trustStoreInsecure = insecure;
     }
@@ -242,7 +245,7 @@ public class DefaultTlsContextFactory implements TlsContextFactory, Initialisabl
         SSLContext sslContext;
         if (trustStoreInsecure)
         {
-            sslContext = tlsConfiguration.getSslContext(new TrustManager[]{new InsecureTrustManager()});
+            sslContext = tlsConfiguration.getSslContext(new TrustManager[] {new InsecureTrustManager()});
         }
         else
         {
@@ -410,14 +413,17 @@ public class DefaultTlsContextFactory implements TlsContextFactory, Initialisabl
     private static class InsecureTrustManager implements X509TrustManager
     {
 
-        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+        public java.security.cert.X509Certificate[] getAcceptedIssuers()
+        {
             return new java.security.cert.X509Certificate[0];
         }
 
-        public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType) {
+        public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType)
+        {
         }
 
-        public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType) {
+        public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType)
+        {
         }
     }
 }

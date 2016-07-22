@@ -6,11 +6,6 @@
  */
 package org.mule.runtime.core;
 
-import org.mule.runtime.core.api.DefaultMuleException;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.config.i18n.CoreMessages;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-
 import org.databene.contiperf.PerfTest;
 import org.databene.contiperf.junit.ContiPerfRule;
 import org.junit.Rule;
@@ -18,6 +13,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.DefaultMuleException;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.config.i18n.CoreMessages;
+import org.mule.tck.junit4.AbstractMuleTestCase;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MessagingExceptionCreationPerformanceTestCase extends AbstractMuleTestCase

@@ -6,6 +6,24 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.connectivity;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.api.connection.ConnectionHandler;
+import org.mule.runtime.core.api.connector.ConnectionManager;
+import org.mule.runtime.core.transaction.MuleTransactionConfig;
+import org.mule.runtime.module.extension.internal.runtime.OperationContextAdapter;
+import org.mule.runtime.module.extension.internal.runtime.transaction.ExtensionTransactionFactory;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+import org.mule.test.petstore.extension.PetStoreClient;
+import org.mule.test.petstore.extension.PetStoreConnector;
+import org.mule.test.petstore.extension.SimplePetStoreConnectionProvider;
+
+import java.util.Optional;
+
 import static java.util.Optional.empty;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -21,24 +39,6 @@ import static org.mockito.Mockito.when;
 import static org.mule.runtime.core.api.transaction.TransactionConfig.ACTION_ALWAYS_BEGIN;
 import static org.mule.runtime.core.execution.TransactionalExecutionTemplate.createTransactionalExecutionTemplate;
 import static org.mule.runtime.module.extension.internal.ExtensionProperties.CONNECTION_PARAM;
-import org.mule.runtime.api.connection.ConnectionHandler;
-import org.mule.runtime.core.api.connector.ConnectionManager;
-import org.mule.runtime.core.transaction.MuleTransactionConfig;
-import org.mule.runtime.module.extension.internal.runtime.OperationContextAdapter;
-import org.mule.runtime.module.extension.internal.runtime.transaction.ExtensionTransactionFactory;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-import org.mule.test.petstore.extension.PetStoreClient;
-import org.mule.test.petstore.extension.PetStoreConnector;
-import org.mule.test.petstore.extension.SimplePetStoreConnectionProvider;
-
-import java.util.Optional;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConnectionInterceptorTestCase extends AbstractMuleContextTestCase
@@ -116,12 +116,12 @@ public class ConnectionInterceptorTestCase extends AbstractMuleContextTestCase
         when(operationContext.getTransactionConfig()).thenReturn(Optional.of(txConfig));
 
         createTransactionalExecutionTemplate(muleContext, txConfig).execute(() ->
-                                                                            {
-                                                                                PetStoreClient connection = getConnection();
-                                                                                assertThat(connection, is(sameInstance(getConnection())));
+        {
+            PetStoreClient connection = getConnection();
+            assertThat(connection, is(sameInstance(getConnection())));
 
-                                                                                return null;
-                                                                            });
+            return null;
+        });
     }
 
     private PetStoreClient getConnection() throws Exception

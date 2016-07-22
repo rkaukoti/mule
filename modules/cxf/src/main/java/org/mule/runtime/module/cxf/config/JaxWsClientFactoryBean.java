@@ -8,7 +8,6 @@ package org.mule.runtime.module.cxf.config;
 
 import org.mule.runtime.module.cxf.CxfOutboundMessageProcessor;
 import org.mule.runtime.module.cxf.builder.JaxWsClientMessageProcessorBuilder;
-
 import org.springframework.beans.factory.FactoryBean;
 
 public class JaxWsClientFactoryBean extends JaxWsClientMessageProcessorBuilder implements FactoryBean

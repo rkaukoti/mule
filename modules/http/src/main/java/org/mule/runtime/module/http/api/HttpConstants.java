@@ -14,6 +14,8 @@ import static org.mule.runtime.module.http.api.HttpConstants.RequestProperties.H
 public abstract class HttpConstants
 {
 
+    public static final String ALL_INTERFACES_IP = "0.0.0.0";
+
     public enum Methods
     {
         POST, GET, PUT, OPTIONS, HEAD, DELETE;
@@ -42,35 +44,6 @@ public abstract class HttpConstants
             return defaultPort;
         }
     }
-
-    public static final class RequestProperties
-    {
-        public static final String HTTP_PREFIX = "http.";
-        public static final String HTTP_STATUS_PROPERTY = HTTP_PREFIX + "status";
-        public static final String HTTP_VERSION_PROPERTY = HTTP_PREFIX + "version";
-        public static final String HTTP_QUERY_PARAMS = HTTP_PREFIX + "query.params";
-        public static final String HTTP_URI_PARAMS = HTTP_PREFIX + "uri.params";
-        public static final String HTTP_QUERY_STRING = HTTP_PREFIX + "query.string";
-        public static final String HTTP_METHOD_PROPERTY = HTTP_PREFIX + "method";
-        public static final String HTTP_RELATIVE_PATH = HTTP_PREFIX + "relative.path";
-        public static final String HTTP_REQUEST_PROPERTY = HTTP_PREFIX + "request";
-        public static final String HTTP_REQUEST_PATH_PROPERTY = HTTP_PREFIX + "request.path";
-        public static final String HTTP_CONTEXT_PATH_PROPERTY = HTTP_PREFIX + "context.path";
-        public static final String HTTP_REQUEST_URI = HTTP_PREFIX + "request.uri";
-        public static final String HTTP_REMOTE_ADDRESS = HTTP_PREFIX + "remote.address";
-        public static final String HTTP_LISTENER_PATH = HTTP_PREFIX + "listener.path";
-        public static final String HTTP_SCHEME = HTTP_PREFIX + "scheme";
-        public static final String HTTP_CLIENT_CERTIFICATE = HTTP_PREFIX + "client.cert";
-        public static final String HTTP_DISABLE_STATUS_CODE_EXCEPTION_CHECK = HTTP_PREFIX + "disable.status.code.exception.check";
-    }
-
-    public static final class ResponseProperties
-    {
-        public static final String HTTP_STATUS_PROPERTY = RequestProperties.HTTP_STATUS_PROPERTY;
-        public static final String HTTP_REASON_PROPERTY = HTTP_PREFIX + "reason";
-    }
-
-    public static final String ALL_INTERFACES_IP = "0.0.0.0";
 
     public enum HttpStatus
     {
@@ -126,19 +99,9 @@ public abstract class HttpConstants
             this.reasonPhrase = reasonPhrase;
         }
 
-        public int getStatusCode()
-        {
-            return statusCode;
-        }
-
-        public String getReasonPhrase()
-        {
-            return reasonPhrase;
-        }
-
         public static String getReasonPhraseForStatusCode(int statusCode)
         {
-            for(HttpStatus httpStatus : HttpStatus.values())
+            for (HttpStatus httpStatus : HttpStatus.values())
             {
                 if (httpStatus.getStatusCode() == statusCode)
                 {
@@ -148,6 +111,43 @@ public abstract class HttpConstants
 
             return null;
         }
+
+        public int getStatusCode()
+        {
+            return statusCode;
+        }
+
+        public String getReasonPhrase()
+        {
+            return reasonPhrase;
+        }
+    }
+
+    public static final class RequestProperties
+    {
+        public static final String HTTP_PREFIX = "http.";
+        public static final String HTTP_STATUS_PROPERTY = HTTP_PREFIX + "status";
+        public static final String HTTP_VERSION_PROPERTY = HTTP_PREFIX + "version";
+        public static final String HTTP_QUERY_PARAMS = HTTP_PREFIX + "query.params";
+        public static final String HTTP_URI_PARAMS = HTTP_PREFIX + "uri.params";
+        public static final String HTTP_QUERY_STRING = HTTP_PREFIX + "query.string";
+        public static final String HTTP_METHOD_PROPERTY = HTTP_PREFIX + "method";
+        public static final String HTTP_RELATIVE_PATH = HTTP_PREFIX + "relative.path";
+        public static final String HTTP_REQUEST_PROPERTY = HTTP_PREFIX + "request";
+        public static final String HTTP_REQUEST_PATH_PROPERTY = HTTP_PREFIX + "request.path";
+        public static final String HTTP_CONTEXT_PATH_PROPERTY = HTTP_PREFIX + "context.path";
+        public static final String HTTP_REQUEST_URI = HTTP_PREFIX + "request.uri";
+        public static final String HTTP_REMOTE_ADDRESS = HTTP_PREFIX + "remote.address";
+        public static final String HTTP_LISTENER_PATH = HTTP_PREFIX + "listener.path";
+        public static final String HTTP_SCHEME = HTTP_PREFIX + "scheme";
+        public static final String HTTP_CLIENT_CERTIFICATE = HTTP_PREFIX + "client.cert";
+        public static final String HTTP_DISABLE_STATUS_CODE_EXCEPTION_CHECK = HTTP_PREFIX + "disable.status.code.exception.check";
+    }
+
+    public static final class ResponseProperties
+    {
+        public static final String HTTP_STATUS_PROPERTY = RequestProperties.HTTP_STATUS_PROPERTY;
+        public static final String HTTP_REASON_PROPERTY = HTTP_PREFIX + "reason";
     }
 
 }

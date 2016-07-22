@@ -11,6 +11,8 @@ import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.config.i18n.MessageFactory;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,24 +21,20 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.ExportException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Binds to an existing RMI registry or creates a new one on a defined URI. The
  * default is <code>rmi://localhost:1099</code>
  */
 public class RmiRegistryAgent extends AbstractAgent
 {
-    /**
-     * logger used by this class
-     */
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-
     public static final String DEFAULT_HOSTNAME = "localhost";
     public static final int DEFAULT_PORT = 1099;
     private static final String PROTOCOL_PREFIX = "rmi://";
     public static final String DEFAULT_SERVER_URI = PROTOCOL_PREFIX + DEFAULT_HOSTNAME + ":" + DEFAULT_PORT;
+    /**
+     * logger used by this class
+     */
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
     private Registry rmiRegistry;
     private String serverUri;
     private String host;
@@ -58,9 +56,10 @@ public class RmiRegistryAgent extends AbstractAgent
     {
         if (serverUri == null)
         {
-            throw new InitialisationException(MessageFactory.createStaticMessage("serverUri has not been set, this agent has not been initialized properly."), this);
+            throw new InitialisationException(
+                    MessageFactory.createStaticMessage("serverUri has not been set, this agent has not been initialized properly."), this);
         }
-        
+
         URI uri;
         try
         {

@@ -9,14 +9,13 @@ package org.mule.runtime.config.spring.parsers.delegate;
 import org.mule.runtime.config.spring.parsers.MuleDefinitionParser;
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
 import org.mule.runtime.core.util.CollectionUtils;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Select sub parser depending on presence of a particular attribute
@@ -52,8 +51,8 @@ public class AttributeSelectionDefinitionParser extends AbstractParallelDelegati
             }
         }
         throw new IllegalArgumentException("Element " + SpringXMLUtils.elementToString(element) +
-                " does not contain any attribute from " +
-                CollectionUtils.toString(attributeToParserIndex.keySet(), 10, false));
+                                           " does not contain any attribute from " +
+                                           CollectionUtils.toString(attributeToParserIndex.keySet(), 10, false));
     }
 
 }

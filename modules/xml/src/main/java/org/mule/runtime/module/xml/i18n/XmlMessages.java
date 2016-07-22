@@ -12,7 +12,7 @@ import org.mule.runtime.core.config.i18n.MessageFactory;
 public class XmlMessages extends MessageFactory
 {
     private static final XmlMessages factory = new XmlMessages();
-    
+
     private static final String BUNDLE_PATH = getBundlePath("xml");
 
     public static Message failedToProcessXPath(String expression)

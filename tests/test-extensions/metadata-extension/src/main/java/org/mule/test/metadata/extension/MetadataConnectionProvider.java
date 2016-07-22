@@ -34,7 +34,8 @@ public class MetadataConnectionProvider implements ConnectionProvider<MetadataCo
     }
 
     @Override
-    public ConnectionHandlingStrategy<MetadataConnection> getHandlingStrategy(ConnectionHandlingStrategyFactory<MetadataConnection> handlingStrategyFactory)
+    public ConnectionHandlingStrategy<MetadataConnection> getHandlingStrategy(
+            ConnectionHandlingStrategyFactory<MetadataConnection> handlingStrategyFactory)
     {
         return handlingStrategyFactory.cached();
     }

@@ -6,16 +6,15 @@
  */
 package org.mule.runtime.module.xml.transformers.xml;
 
+import com.thoughtworks.xstream.XStream;
+
+import org.junit.Test;
+import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.module.xml.transformer.XStreamFactory;
 import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.runtime.core.util.StringUtils;
-
-import com.thoughtworks.xstream.XStream;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -25,7 +24,7 @@ public class XStreamFactoryTestCase extends AbstractMuleTestCase
 {
     @Test
     public void testConcurrentHashMapConverter()
-        throws ClassNotFoundException, IllegalAccessException, InstantiationException
+            throws ClassNotFoundException, IllegalAccessException, InstantiationException
     {
         ConcurrentHashMap<Object, Object> map = new ConcurrentHashMap<Object, Object>();
         map.put("foo", "bar");

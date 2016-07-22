@@ -7,12 +7,12 @@
 package org.mule.runtime.module.extension.internal.introspection.describer;
 
 import org.mule.metadata.api.ClassTypeLoader;
-import org.mule.runtime.core.api.config.ThreadingProfile;
 import org.mule.runtime.api.tls.TlsContextFactory;
+import org.mule.runtime.core.api.config.ThreadingProfile;
 import org.mule.runtime.extension.api.annotation.param.Optional;
-import org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport;
 import org.mule.runtime.extension.api.introspection.declaration.fluent.ParameterDeclarer;
 import org.mule.runtime.extension.api.introspection.declaration.fluent.ParameterizedDeclarer;
+import org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport;
 import org.mule.runtime.module.extension.internal.model.property.DeclaringMemberModelProperty;
 import org.mule.runtime.module.extension.internal.model.property.InfrastructureParameterModelProperty;
 
@@ -35,7 +35,6 @@ public class InfrastructureFieldDescriber implements FieldDescriber
     /**
      * @param clazz         Class of the desired parameter
      * @param attributeName Name of the attribute for the generated xsd schema
-     * @param typeLoader
      */
     public InfrastructureFieldDescriber(Class<?> clazz, String attributeName, ClassTypeLoader typeLoader)
     {
@@ -69,12 +68,12 @@ public class InfrastructureFieldDescriber implements FieldDescriber
     public ParameterDeclarer describe(Field field, ParameterizedDeclarer declarer)
     {
         ParameterDeclarer descriptor = field.getAnnotation(Optional.class) != null
-                                       ? declarer.withOptionalParameter(attributeName)
-                                       : declarer.withRequiredParameter(attributeName);
+                ? declarer.withOptionalParameter(attributeName)
+                : declarer.withRequiredParameter(attributeName);
 
         return descriptor.ofType(typeLoader.load(clazz))
-                .withExpressionSupport(ExpressionSupport.NOT_SUPPORTED)
-                .withModelProperty(new DeclaringMemberModelProperty(field))
-                .withModelProperty(new InfrastructureParameterModelProperty());
+                         .withExpressionSupport(ExpressionSupport.NOT_SUPPORTED)
+                         .withModelProperty(new DeclaringMemberModelProperty(field))
+                         .withModelProperty(new InfrastructureParameterModelProperty());
     }
 }

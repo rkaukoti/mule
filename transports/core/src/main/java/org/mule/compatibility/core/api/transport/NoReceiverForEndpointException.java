@@ -13,7 +13,7 @@ import org.mule.runtime.core.config.i18n.Message;
 /**
  * <code>NoReceiverForEndpointException</code> is thrown when an enpoint is specified for a receiver but no such
  * receiver exists.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -42,7 +42,7 @@ public class NoReceiverForEndpointException extends EndpointException
 
     /**
      * @param message the exception message
-     * @param cause the exception that cause this exception to be thrown
+     * @param cause   the exception that cause this exception to be thrown
      */
     public NoReceiverForEndpointException(Message message, Throwable cause)
     {

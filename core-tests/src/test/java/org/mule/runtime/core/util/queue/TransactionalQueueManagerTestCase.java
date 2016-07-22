@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.core.util.queue;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class TransactionalQueueManagerTestCase extends AbstractMuleContextTestCase
 {
@@ -46,7 +45,8 @@ public class TransactionalQueueManagerTestCase extends AbstractMuleContextTestCa
     @Test
     public void doNotCreateTwiceTheSameRecoveryQueue()
     {
-        TransactionalQueueManager queueManager = (TransactionalQueueManager) ((DelegateQueueManager) muleContext.getQueueManager()).getDelegate();
+        TransactionalQueueManager queueManager =
+                (TransactionalQueueManager) ((DelegateQueueManager) muleContext.getQueueManager()).getDelegate();
         final RecoverableQueueStore recoryQueue = queueManager.getRecoveryQueue(TEST_QUEUE_NAME);
         assertThat(recoryQueue, is(queueManager.getRecoveryQueue(TEST_QUEUE_NAME)));
     }

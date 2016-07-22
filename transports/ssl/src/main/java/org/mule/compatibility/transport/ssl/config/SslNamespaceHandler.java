@@ -30,5 +30,5 @@ public class SslNamespaceHandler extends AbstractMuleTransportsNamespaceHandler
         registerBeanDefinitionParser("server", new TrustStoreDefinitionParser());
         registerBeanDefinitionParser("protocol-handler", new ProtocolHandlerDefinitionParser());
     }
-    
+
 }

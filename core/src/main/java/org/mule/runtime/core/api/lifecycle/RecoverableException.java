@@ -17,10 +17,14 @@ import org.mule.runtime.core.config.i18n.Message;
 public class RecoverableException extends InitialisationException
 {
 
-    /** Serial version */
+    /**
+     * Serial version
+     */
     private static final long serialVersionUID = -5799024626172482665L;
 
-    /** @param message the exception message */
+    /**
+     * @param message the exception message
+     */
     public RecoverableException(Message message, Initialisable object)
     {
         super(message, object);

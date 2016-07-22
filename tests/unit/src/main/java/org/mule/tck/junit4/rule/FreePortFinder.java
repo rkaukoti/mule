@@ -6,14 +6,14 @@
  */
 package org.mule.tck.junit4.rule;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Finds available port numbers in a specified range.
@@ -26,7 +26,7 @@ public class FreePortFinder
     private final int minPortNumber;
     private final int portRange;
     private final Set<Integer> selectedPorts = new HashSet<Integer>();
-    private final Random random  = new Random();
+    private final Random random = new Random();
 
     public FreePortFinder(int minPortNumber, int maxPortNumber)
     {

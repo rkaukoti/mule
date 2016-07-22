@@ -7,10 +7,10 @@
 
 package org.mule.runtime.core.el.mvel.datatype;
 
-import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.SESSION_VARS;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleEvent;
+
+import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.SESSION_VARS;
 
 /**
  * Resolves data type for session var when sessionVars['x'] syntax is used

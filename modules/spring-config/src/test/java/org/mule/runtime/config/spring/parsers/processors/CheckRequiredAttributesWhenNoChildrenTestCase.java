@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.config.spring.parsers.processors;
 
+import org.junit.Test;
 import org.mule.runtime.config.spring.parsers.PreProcessor;
 
 import javax.xml.parsers.ParserConfigurationException;
-
-import org.junit.Test;
 
 public class CheckRequiredAttributesWhenNoChildrenTestCase extends AbstractPreProcessorTestCase
 {
@@ -20,25 +19,26 @@ public class CheckRequiredAttributesWhenNoChildrenTestCase extends AbstractPrePr
     @Test
     public void testChildWithoutNamespace() throws ParserConfigurationException
     {
-        assertOk(new String[][]{new String[] {"constraintAttribute"}}, "", "aChild", null);
+        assertOk(new String[][] {new String[] {"constraintAttribute"}}, "", "aChild", null);
     }
 
     @Test
     public void testChildWithNamespace() throws ParserConfigurationException
     {
-        assertOk(new String[][]{new String[] {"constraintAttribute"}}, "", "aChild", MULE_NAMESPACE_URL);
+        assertOk(new String[][] {new String[] {"constraintAttribute"}}, "", "aChild", MULE_NAMESPACE_URL);
     }
 
     @Test(expected = CheckRequiredAttributes.CheckRequiredAttributesException.class)
-    public void testAttributeNotPresentAndNoChildren() throws CheckRequiredAttributes.CheckRequiredAttributesException, ParserConfigurationException
+    public void testAttributeNotPresentAndNoChildren()
+            throws CheckRequiredAttributes.CheckRequiredAttributesException, ParserConfigurationException
     {
-        assertOk(new String[][]{new String[] {"constraintAttribute"}}, "", null, MULE_NAMESPACE_URL);
+        assertOk(new String[][] {new String[] {"constraintAttribute"}}, "", null, MULE_NAMESPACE_URL);
     }
 
     @Test
     public void testAttributePresentAndNoChildren() throws ParserConfigurationException
     {
-        assertOk(new String[][]{new String[] {"constraintAttribute"}}, "constraintAttribute", null, MULE_NAMESPACE_URL);
+        assertOk(new String[][] {new String[] {"constraintAttribute"}}, "constraintAttribute", null, MULE_NAMESPACE_URL);
     }
 
     @Override

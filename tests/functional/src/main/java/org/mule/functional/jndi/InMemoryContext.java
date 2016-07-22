@@ -68,7 +68,7 @@ public class InMemoryContext implements Context
     //////////////////////////////////////////////////////////////////////
     // The remaining methods are not implemented.
     //////////////////////////////////////////////////////////////////////
-    
+
     public Object addToEnvironment(String propName, Object propVal) throws NamingException
     {
         return null;

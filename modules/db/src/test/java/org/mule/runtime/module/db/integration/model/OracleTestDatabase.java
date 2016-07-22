@@ -30,12 +30,12 @@ public class OracleTestDatabase extends AbstractTestDatabase
         executeDdl(connection, "CREATE SEQUENCE PLANET_SEQ INCREMENT BY 1 START WITH 1");
 
         executeDdl(connection,
-                   "CREATE TRIGGER PLANET_TRIGGER\n" +
-                   "BEFORE INSERT ON PLANET\n" +
-                   "FOR EACH ROW WHEN (new.ID is null)\n" +
-                   "begin\n" +
-                   "    select PLANET_SEQ.nextval into :new.ID from dual;\n" +
-                   "end;");
+                "CREATE TRIGGER PLANET_TRIGGER\n" +
+                "BEFORE INSERT ON PLANET\n" +
+                "FOR EACH ROW WHEN (new.ID is null)\n" +
+                "begin\n" +
+                "    select PLANET_SEQ.nextval into :new.ID from dual;\n" +
+                "end;");
     }
 
     @Override
@@ -116,12 +116,13 @@ public class OracleTestDatabase extends AbstractTestDatabase
     @Override
     public void createStoredProcedureGetSplitRecords(DataSource dataSource) throws SQLException
     {
-        final String sql = "CREATE OR REPLACE PROCEDURE getSplitTestRecords ( st_cursor1 OUT SYS_REFCURSOR, st_cursor2 OUT SYS_REFCURSOR  )\n" +
-                           "is\n" +
-                           "BEGIN\n" +
-                           "   OPEN st_cursor1 FOR SELECT * FROM PLANET WHERE POSITION <= 2;\n" +
-                           "   OPEN st_cursor2 FOR SELECT * FROM PLANET WHERE POSITION > 2;\n" +
-                           "END;";
+        final String sql =
+                "CREATE OR REPLACE PROCEDURE getSplitTestRecords ( st_cursor1 OUT SYS_REFCURSOR, st_cursor2 OUT SYS_REFCURSOR  )\n" +
+                "is\n" +
+                "BEGIN\n" +
+                "   OPEN st_cursor1 FOR SELECT * FROM PLANET WHERE POSITION <= 2;\n" +
+                "   OPEN st_cursor2 FOR SELECT * FROM PLANET WHERE POSITION > 2;\n" +
+                "END;";
 
         createStoredProcedure(dataSource, sql);
     }
@@ -142,15 +143,16 @@ public class OracleTestDatabase extends AbstractTestDatabase
     @Override
     public void createStoredProcedureMultiplyInts(DataSource dataSource) throws SQLException
     {
-        final String sql = "CREATE OR REPLACE PROCEDURE multiplyInts(INT1 IN NUMBER, INT2 IN NUMBER, RESULT1 OUT NUMBER, INT3 IN NUMBER, RESULT2 OUT NUMBER) IS\n" +
-                           "BEGIN\n" +
-                           "    SELECT INT1 * INT2 \n" +
-                           "    INTO   RESULT1\n" +
-                           "    FROM   DUAL;\n" +
-                           "    SELECT INT1 * INT2 * INT3 \n" +
-                           "    INTO   RESULT2\n" +
-                           "    FROM   DUAL;\n" +
-                           "END multiplyInts;";
+        final String sql =
+                "CREATE OR REPLACE PROCEDURE multiplyInts(INT1 IN NUMBER, INT2 IN NUMBER, RESULT1 OUT NUMBER, INT3 IN NUMBER, RESULT2 OUT NUMBER) IS\n" +
+                "BEGIN\n" +
+                "    SELECT INT1 * INT2 \n" +
+                "    INTO   RESULT1\n" +
+                "    FROM   DUAL;\n" +
+                "    SELECT INT1 * INT2 * INT3 \n" +
+                "    INTO   RESULT2\n" +
+                "    FROM   DUAL;\n" +
+                "END multiplyInts;";
 
         createStoredProcedure(dataSource, sql);
     }
@@ -158,12 +160,13 @@ public class OracleTestDatabase extends AbstractTestDatabase
     @Override
     public void createStoredProcedureConcatenateStrings(DataSource dataSource) throws SQLException
     {
-        final String sql = "CREATE OR REPLACE PROCEDURE concatenateStrings(STRING1 IN VARCHAR2, STRING2 IN VARCHAR2, RESULT OUT VARCHAR2) IS\n" +
-                           "BEGIN\n" +
-                           "    SELECT STRING1 || STRING2\n" +
-                           "    INTO   RESULT\n" +
-                           "    FROM   DUAL;\n" +
-                           "END concatenateStrings;";
+        final String sql =
+                "CREATE OR REPLACE PROCEDURE concatenateStrings(STRING1 IN VARCHAR2, STRING2 IN VARCHAR2, RESULT OUT VARCHAR2) IS\n" +
+                "BEGIN\n" +
+                "    SELECT STRING1 || STRING2\n" +
+                "    INTO   RESULT\n" +
+                "    FROM   DUAL;\n" +
+                "END concatenateStrings;";
 
         createStoredProcedure(dataSource, sql);
     }
@@ -233,8 +236,8 @@ public class OracleTestDatabase extends AbstractTestDatabase
     @Override
     protected String getInsertAlienSql(Alien alien)
     {
-        String sql = "INSERT INTO Alien VALUES ('" + alien.getName()  + "' , XMLType('" +
-                     alien.getXml()+ "'))";
+        String sql = "INSERT INTO Alien VALUES ('" + alien.getName() + "' , XMLType('" +
+                     alien.getXml() + "'))";
 
         return sql;
     }
@@ -243,10 +246,10 @@ public class OracleTestDatabase extends AbstractTestDatabase
     public void createStoredProcedureGetAlienDescription(DataSource dataSource) throws SQLException
     {
         final String sql = "CREATE OR REPLACE PROCEDURE getAlienDescription(pName IN VARCHAR2, pDescription OUT XMLType)\n" +
-                     "IS\n" +
-                     "BEGIN\n" +
-                     "    select description into pDescription from Alien where name= pName; \n" +
-                     "END;\n";
+                           "IS\n" +
+                           "BEGIN\n" +
+                           "    select description into pDescription from Alien where name= pName; \n" +
+                           "END;\n";
 
         executeDdl(dataSource, sql);
     }
@@ -356,7 +359,8 @@ public class OracleTestDatabase extends AbstractTestDatabase
     @Override
     protected String getInsertContactSql(Contact contact)
     {
-        StringBuilder builder = new StringBuilder("INSERT INTO CONTACTS VALUES ('").append(contact.getName()).append("', CONTACT_DETAILS_ARRAY(");
+        StringBuilder builder =
+                new StringBuilder("INSERT INTO CONTACTS VALUES ('").append(contact.getName()).append("', CONTACT_DETAILS_ARRAY(");
 
         boolean first = true;
         for (ContactDetails contactDetails : contact.getDetails())
@@ -369,7 +373,13 @@ public class OracleTestDatabase extends AbstractTestDatabase
             {
                 builder.append(",");
             }
-            builder.append("CONTACT_DETAILS('" ).append(contactDetails.getDescription()).append("', '").append(contactDetails.getPhoneNumber()).append("', '").append(contactDetails.getEmail()).append("')");
+            builder.append("CONTACT_DETAILS('")
+                   .append(contactDetails.getDescription())
+                   .append("', '")
+                   .append(contactDetails.getPhoneNumber())
+                   .append("', '")
+                   .append(contactDetails.getEmail())
+                   .append("')");
         }
         builder.append("))");
 
@@ -396,7 +406,8 @@ public class OracleTestDatabase extends AbstractTestDatabase
     @Override
     protected String getInsertRegionSql(Region region)
     {
-        StringBuilder builder = new StringBuilder("INSERT INTO REGIONS VALUES ('").append(region.getName()).append("', ").append(" ZIPARRAY(");
+        StringBuilder builder =
+                new StringBuilder("INSERT INTO REGIONS VALUES ('").append(region.getName()).append("', ").append(" ZIPARRAY(");
 
         boolean first = true;
         for (String zipCode : region.getZips())
@@ -440,7 +451,7 @@ public class OracleTestDatabase extends AbstractTestDatabase
                      "REGION_NAME varchar(32) NOT NULL," +
                      "MANAGER_NAME varchar(32) NOT NULL," +
                      "DETAILS CONTACT_DETAILS NOT NULL," +
-                     "PRIMARY KEY (REGION_NAME));" ;
+                     "PRIMARY KEY (REGION_NAME));";
 
         executeDdl(connection, ddl);
     }
@@ -454,12 +465,17 @@ public class OracleTestDatabase extends AbstractTestDatabase
     @Override
     protected String getInsertRegionManagerSql(RegionManager regionManager)
     {
-        StringBuilder builder = new StringBuilder("INSERT INTO REGION_MANAGERS VALUES ('").append(regionManager.getRegionName()).append("', '")
-                .append(regionManager.getName()).append("', CONTACT_DETAILS('")
-                .append(regionManager.getContactDetails().getDescription()).append("', '")
-                .append(regionManager.getContactDetails().getPhoneNumber()).append("', '")
-                .append(regionManager.getContactDetails().getEmail())
-                .append("'))");
+        StringBuilder builder =
+                new StringBuilder("INSERT INTO REGION_MANAGERS VALUES ('").append(regionManager.getRegionName())
+                                                                          .append("', '")
+                                                                          .append(regionManager.getName())
+                                                                          .append("', CONTACT_DETAILS('")
+                                                                          .append(regionManager.getContactDetails().getDescription())
+                                                                          .append("', '")
+                                                                          .append(regionManager.getContactDetails().getPhoneNumber())
+                                                                          .append("', '")
+                                                                          .append(regionManager.getContactDetails().getEmail())
+                                                                          .append("'))");
 
         return builder.toString();
     }

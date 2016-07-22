@@ -7,19 +7,18 @@
 
 package org.mule.test.core.context.notification;
 
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.context.notification.ExceptionNotificationListener;
 import org.mule.runtime.core.api.context.notification.ServerNotification;
-import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
 import org.mule.tck.probe.Prober;
 
-import org.junit.Test;
-
 public class FailingNotificationListenerTestCase extends FunctionalTestCase
 {
-    private static int count = 0;
     private static final Object lock = new Object();
+    private static int count = 0;
 
     @Override
     protected String getConfigFile()

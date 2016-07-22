@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.core.util.generics;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
@@ -16,9 +18,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -36,8 +35,8 @@ public class GenericsUtilsTestCase extends AbstractMuleTestCase
     public void createTestData()
     {
         this.targetClass = Foo.class;
-        this.methods = new String[]{"a", "b", "b2", "b3", "c", "d", "d2", "d3", "e", "e2", "e3"};
-        this.expectedResults = new Class[]{
+        this.methods = new String[] {"a", "b", "b2", "b3", "c", "d", "d2", "d3", "e", "e2", "e3"};
+        this.expectedResults = new Class[] {
                 Integer.class, null, Set.class, Set.class, null, Integer.class,
                 Integer.class, Integer.class, Integer.class, Integer.class, Integer.class};
     }
@@ -125,14 +124,20 @@ public class GenericsUtilsTestCase extends AbstractMuleTestCase
                 GenericsUtils.getCollectionReturnType(getter));
     }
 
-
-    private abstract class CustomMap<T> extends AbstractMap<String, Integer>
+    protected void executeTest() throws NoSuchMethodException
     {
-    }
-
-
-    private abstract class OtherCustomMap<T> implements Map<String, Integer>
-    {
+        String methodName = name.getMethodName().trim().replaceFirst("test", "").toLowerCase();
+        for (int i = 0; i < this.methods.length; i++)
+        {
+            if (methodName.equals(this.methods[i]))
+            {
+                Method method = this.targetClass.getMethod(methodName);
+                Type type = getType(method);
+                assertEquals(this.expectedResults[i], type);
+                return;
+            }
+        }
+        throw new IllegalStateException("Bad test data");
     }
 
 
@@ -162,21 +167,12 @@ public class GenericsUtilsTestCase extends AbstractMuleTestCase
         OtherCustomMap e3();
     }
 
-
-    protected void executeTest() throws NoSuchMethodException
+    private abstract class CustomMap<T> extends AbstractMap<String, Integer>
     {
-        String methodName = name.getMethodName().trim().replaceFirst("test", "").toLowerCase();
-        for (int i = 0; i < this.methods.length; i++)
-        {
-            if (methodName.equals(this.methods[i]))
-            {
-                Method method = this.targetClass.getMethod(methodName);
-                Type type = getType(method);
-                assertEquals(this.expectedResults[i], type);
-                return;
-            }
-        }
-        throw new IllegalStateException("Bad test data");
+    }
+
+    private abstract class OtherCustomMap<T> implements Map<String, Integer>
+    {
     }
 
 

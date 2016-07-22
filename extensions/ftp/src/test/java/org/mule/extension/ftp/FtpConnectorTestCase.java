@@ -6,7 +6,10 @@
  */
 package org.mule.extension.ftp;
 
-import static org.mule.extension.FtpTestHarness.HELLO_PATH;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.mule.extension.FtpTestHarness;
 import org.mule.extension.ftp.internal.FtpConnector;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
@@ -18,19 +21,21 @@ import org.mule.runtime.module.extension.file.api.stream.AbstractFileInputStream
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Rule;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import static org.mule.extension.FtpTestHarness.HELLO_PATH;
 
 @RunWith(Parameterized.class)
 public abstract class FtpConnectorTestCase extends ExtensionFunctionalTestCase
 {
 
-    private final String name;
-
     @Rule
     public final FtpTestHarness testHarness;
+    private final String name;
+
+    public FtpConnectorTestCase(String name, FtpTestHarness testHarness)
+    {
+        this.name = name;
+        this.testHarness = testHarness;
+    }
 
     @Parameters(name = "{0}")
     public static Collection<Object[]> data()
@@ -39,12 +44,6 @@ public abstract class FtpConnectorTestCase extends ExtensionFunctionalTestCase
                 {"ftp", new ClassicFtpTestHarness()},
                 {"sftp", new SftpTestHarness()}
         });
-    }
-
-    public FtpConnectorTestCase(String name, FtpTestHarness testHarness)
-    {
-        this.name = name;
-        this.testHarness = testHarness;
     }
 
     @Override
@@ -73,7 +72,8 @@ public abstract class FtpConnectorTestCase extends ExtensionFunctionalTestCase
         doWrite(flow, path, content, mode, createParent, null);
     }
 
-    protected void doWrite(String flow, String path, Object content, FileWriteMode mode, boolean createParent, String encoding) throws Exception
+    protected void doWrite(String flow, String path, Object content, FileWriteMode mode, boolean createParent, String encoding)
+            throws Exception
     {
         flowRunner(flow)
                 .withFlowVariable("path", path)

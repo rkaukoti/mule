@@ -117,15 +117,15 @@ public class CompositeConverter implements Converter
     }
 
     @Override
-    public void setReturnDataType(DataType type)
-    {
-        chain.peekLast().setReturnDataType(type);
-    }
-
-    @Override
     public DataType getReturnDataType()
     {
         return chain.peekLast().getReturnDataType();
+    }
+
+    @Override
+    public void setReturnDataType(DataType type)
+    {
+        chain.peekLast().setReturnDataType(type);
     }
 
     @Override
@@ -174,15 +174,15 @@ public class CompositeConverter implements Converter
     }
 
     @Override
-    public void setName(String name)
-    {
-        throw new UnsupportedOperationException("Cannot change composite converter name");
-    }
-
-    @Override
     public String getName()
     {
         return name;
+    }
+
+    @Override
+    public void setName(String name)
+    {
+        throw new UnsupportedOperationException("Cannot change composite converter name");
     }
 
     @Override

@@ -7,8 +7,6 @@
 package org.mule.runtime.module.launcher.domain;
 
 import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.config.ConfigurationBuilder;
-import org.mule.runtime.module.launcher.application.Application;
 import org.mule.runtime.module.launcher.artifact.DeployableArtifactWrapper;
 import org.mule.runtime.module.launcher.descriptor.DomainDescriptor;
 

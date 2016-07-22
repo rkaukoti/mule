@@ -7,19 +7,13 @@
 
 package org.mule.runtime.module.db.internal.resolver.database;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsSame.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import static org.junit.matchers.JUnitMatchers.containsString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.registry.MuleRegistry;
+import org.junit.Test;
 import org.mule.common.Result;
 import org.mule.common.TestResult;
 import org.mule.common.metadata.MetaData;
 import org.mule.common.metadata.MetaDataKey;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.registry.MuleRegistry;
 import org.mule.runtime.module.db.internal.domain.database.DbConfig;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
@@ -28,7 +22,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsSame.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.junit.matchers.JUnitMatchers.containsString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class DefaultDbConfigResolverTestCase extends AbstractMuleTestCase

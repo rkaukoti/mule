@@ -8,9 +8,8 @@ package org.mule.functional.testmodels.services;
 
 public class TestComponentException extends Exception
 {
-    private static final long serialVersionUID = -3906931231398539327L;
-
     public static final String MESSAGE_PREFIX = "Message: ";
+    private static final long serialVersionUID = -3906931231398539327L;
 
     public TestComponentException(String message)
     {

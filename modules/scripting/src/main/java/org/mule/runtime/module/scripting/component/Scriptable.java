@@ -6,10 +6,6 @@
  */
 package org.mule.runtime.module.scripting.component;
 
-import static org.mule.runtime.core.config.i18n.CoreMessages.cannotLoadFromClasspath;
-import static org.mule.runtime.core.config.i18n.CoreMessages.propertiesNotSet;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.IOUtils.getResourceAsStream;
 import org.mule.runtime.core.DefaultMuleEventContext;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
@@ -21,6 +17,8 @@ import org.mule.runtime.core.el.context.FlowVariableMapContext;
 import org.mule.runtime.core.el.context.SessionVariableMapContext;
 import org.mule.runtime.core.util.CollectionUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,8 +36,10 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.config.i18n.CoreMessages.cannotLoadFromClasspath;
+import static org.mule.runtime.core.config.i18n.CoreMessages.propertiesNotSet;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.IOUtils.getResourceAsStream;
 
 /**
  * A JSR 223 Script service. Allows any JSR 223 compliant script engines such as JavaScript, Groovy or Rhino
@@ -48,6 +48,7 @@ import org.slf4j.LoggerFactory;
 public class Scriptable implements Initialisable, MuleContextAware
 {
 
+    public static final String BINDING_MESSAGE = "message";
     private static final String BINDING_LOG = "log";
     private static final String BINDING_RESULT = "result";
     private static final String BINDING_MULE_CONTEXT = "muleContext";
@@ -60,33 +61,34 @@ public class Scriptable implements Initialisable, MuleContextAware
     private static final String BINDING_FLOW_VARS = "flowVars";
     private static final String BINDING_SESSION_VARS = "sessionVars";
     private static final String BINDING_EXCEPTION = "exception";
-    public static final String BINDING_MESSAGE = "message";
-
-    /** The actual body of the script */
+    protected transient Logger logger = LoggerFactory.getLogger(getClass());
+    /**
+     * The actual body of the script
+     */
     private String scriptText;
-
-    /** A file from which the script will be loaded */
+    /**
+     * A file from which the script will be loaded
+     */
     private String scriptFile;
-
-    /** Parameters to be made available to the script as variables */
+    /**
+     * Parameters to be made available to the script as variables
+     */
     private Properties properties;
-
-    /** The name of the JSR 223 scripting engine (e.g., "groovy") */
-    private String scriptEngineName;
 
     // ///////////////////////////////////////////////////////////////////////////
     // Internal variables, not exposed as properties
     // ///////////////////////////////////////////////////////////////////////////
-
-    /** A compiled version of the script, if the scripting engine supports it */
+    /**
+     * The name of the JSR 223 scripting engine (e.g., "groovy")
+     */
+    private String scriptEngineName;
+    /**
+     * A compiled version of the script, if the scripting engine supports it
+     */
     private CompiledScript compiledScript;
-
     private ScriptEngine scriptEngine;
     private ScriptEngineManager scriptEngineManager;
-
     private MuleContext muleContext;
-
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
 
     public Scriptable()
     {
@@ -302,7 +304,7 @@ public class Scriptable implements Initialisable, MuleContextAware
         try
         {
             RegistryLookupBindings registryLookupBindings = new RegistryLookupBindings(
-                muleContext.getRegistry(), bindings);
+                    muleContext.getRegistry(), bindings);
             if (compiledScript != null)
             {
                 result = compiledScript.eval(registryLookupBindings);
@@ -370,14 +372,14 @@ public class Scriptable implements Initialisable, MuleContextAware
         this.scriptFile = scriptFile;
     }
 
-    public void setScriptEngineName(String scriptEngineName)
-    {
-        this.scriptEngineName = scriptEngineName;
-    }
-
     public String getScriptEngineName()
     {
         return scriptEngineName;
+    }
+
+    public void setScriptEngineName(String scriptEngineName)
+    {
+        this.scriptEngineName = scriptEngineName;
     }
 
     public Properties getProperties()

@@ -6,12 +6,12 @@
  */
 package org.mule.tck.junit4;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Provides a tool to detect the cause of flaky tests by running then multiple times.
@@ -20,18 +20,18 @@ import org.junit.runners.model.InitializationError;
  * test methods.
  *
  * <p>
- *     NOTE: This is a tool intended to be used by developers but not to commit any test
- *     using this test runner. That would be only valid when a flaky test fails on the
- *     continuous integration server but not locally.
+ * NOTE: This is a tool intended to be used by developers but not to commit any test
+ * using this test runner. That would be only valid when a flaky test fails on the
+ * continuous integration server but not locally.
  * </p>
  * <p>
- *     To use this tool annotate the test class with
- *     <pre>
+ * To use this tool annotate the test class with
+ * <pre>
  *         &#64;RunWith(FlakinessDetectorTestRunner)
  *     </pre>
  *
- *     And then annotate the flaky test class or flaky test method with
- *     <pre>
+ * And then annotate the flaky test class or flaky test method with
+ * <pre>
  *         &#64;FlakyTest(times= n) // where n is the number of times you want the test executed
  *     </pre>
  * </p>
@@ -42,6 +42,26 @@ public class FlakinessDetectorTestRunner extends BlockJUnit4ClassRunner
     public FlakinessDetectorTestRunner(Class<?> type) throws InitializationError
     {
         super(type);
+    }
+
+    private static boolean isFlakyTest(FrameworkMethod method)
+    {
+        return method.getAnnotation(FlakyTest.class) != null;
+    }
+
+    private static boolean isFlakyClass(Class<?> type)
+    {
+        return type.getAnnotation(FlakyTest.class) != null;
+    }
+
+    private static int getTimes(FrameworkMethod method)
+    {
+        return method.getAnnotation(FlakyTest.class).times();
+    }
+
+    private static int getTimes(Class<?> type)
+    {
+        return type.getAnnotation(FlakyTest.class).times();
     }
 
     @Override
@@ -99,26 +119,6 @@ public class FlakinessDetectorTestRunner extends BlockJUnit4ClassRunner
         }
 
         return result;
-    }
-
-    private static boolean isFlakyTest(FrameworkMethod method)
-    {
-        return method.getAnnotation(FlakyTest.class) != null;
-    }
-
-    private static boolean isFlakyClass(Class<?> type)
-    {
-        return type.getAnnotation(FlakyTest.class) != null;
-    }
-
-    private static int getTimes(FrameworkMethod method)
-    {
-        return method.getAnnotation(FlakyTest.class).times();
-    }
-
-    private static int getTimes(Class<?> type)
-    {
-        return type.getAnnotation(FlakyTest.class).times();
     }
 
 }

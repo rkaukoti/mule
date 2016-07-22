@@ -6,14 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
-import static java.lang.String.format;
-import static org.apache.commons.lang.StringUtils.isBlank;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import static org.mule.runtime.core.util.TemplateParser.createMuleStyleParser;
-import static org.mule.runtime.extension.api.util.NameUtils.hyphenize;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getClassLoader;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getInitialiserEvent;
 import org.mule.runtime.api.metadata.MetadataAware;
 import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataKey;
@@ -45,14 +37,22 @@ import org.mule.runtime.module.extension.internal.metadata.MetadataMediator;
 import org.mule.runtime.module.extension.internal.runtime.config.DynamicConfigurationProvider;
 import org.mule.runtime.module.extension.internal.runtime.operation.OperationMessageProcessor;
 import org.mule.runtime.module.extension.internal.runtime.source.ExtensionMessageSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 import java.util.Set;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.String.format;
+import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+import static org.mule.runtime.core.util.TemplateParser.createMuleStyleParser;
+import static org.mule.runtime.extension.api.util.NameUtils.hyphenize;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getClassLoader;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getInitialiserEvent;
 
 /**
  * Class that groups all the common behaviour between different extension's components, like {@link OperationMessageProcessor}
@@ -66,24 +66,21 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
 {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ExtensionComponent.class);
-
+    protected final ExtensionManagerAdapter extensionManager;
     private final TemplateParser expressionParser = createMuleStyleParser();
     private final RuntimeExtensionModel extensionModel;
     private final ComponentModel componentModel;
     private final String configurationProviderName;
-    protected final ExtensionManagerAdapter extensionManager;
-
-    private MetadataMediator metadataMediator;
     protected FlowConstruct flowConstruct;
     protected MuleContext muleContext;
-
     @Inject
     protected ConnectionManagerAdapter connectionManager;
-
+    private MetadataMediator metadataMediator;
     @Inject
     private MuleMetadataManager metadataManager;
 
-    protected ExtensionComponent(RuntimeExtensionModel extensionModel, RuntimeComponentModel componentModel, String configurationProviderName, ExtensionManagerAdapter extensionManager)
+    protected ExtensionComponent(RuntimeExtensionModel extensionModel, RuntimeComponentModel componentModel,
+                                 String configurationProviderName, ExtensionManagerAdapter extensionManager)
     {
         this.extensionModel = extensionModel;
         this.componentModel = componentModel;
@@ -101,7 +98,8 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
     @Override
     public final void initialise() throws InitialisationException
     {
-        withContextClassLoader(getExtensionClassLoader(), () -> {
+        withContextClassLoader(getExtensionClassLoader(), () ->
+        {
             validateConfigurationProviderIsNotExpression();
             Optional<ConfigurationProvider<Object>> provider = findConfigurationProvider();
 
@@ -112,7 +110,8 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
 
             doInitialise();
             return null;
-        }, InitialisationException.class, e -> {
+        }, InitialisationException.class, e ->
+        {
             throw new InitialisationException(e, this);
         });
     }
@@ -126,10 +125,12 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
     @Override
     public final void start() throws MuleException
     {
-        withContextClassLoader(getExtensionClassLoader(), () -> {
+        withContextClassLoader(getExtensionClassLoader(), () ->
+        {
             doStart();
             return null;
-        }, MuleException.class, e -> {
+        }, MuleException.class, e ->
+        {
             throw new DefaultMuleException(e);
         });
     }
@@ -143,10 +144,12 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
     @Override
     public final void stop() throws MuleException
     {
-        withContextClassLoader(getExtensionClassLoader(), () -> {
+        withContextClassLoader(getExtensionClassLoader(), () ->
+        {
             doStop();
             return null;
-        }, MuleException.class, e -> {
+        }, MuleException.class, e ->
+        {
             throw new DefaultMuleException(e);
         });
     }
@@ -160,7 +163,8 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
     {
         try
         {
-            withContextClassLoader(getExtensionClassLoader(), () -> {
+            withContextClassLoader(getExtensionClassLoader(), () ->
+            {
                 doDispose();
                 return null;
             });
@@ -204,8 +208,6 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
     /**
      * Validates that the configuration returned by the {@code configurationProvider}
      * is compatible with the associated {@link RuntimeComponentModel}
-     *
-     * @param configurationProvider
      */
     protected abstract void validateOperationConfiguration(ConfigurationProvider<Object> configurationProvider);
 
@@ -255,11 +257,13 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
         MuleEvent fakeEvent = getInitialiserEvent(muleContext);
         ConfigurationInstance<Object> configuration = getConfiguration(fakeEvent);
         ConfigurationProvider<Object> configurationProvider = findConfigurationProvider()
-                .orElseThrow(() -> new MetadataResolvingException("Failed to create the required configuration for Metadata retrieval", FailureCode.INVALID_CONFIGURATION));
+                .orElseThrow(() -> new MetadataResolvingException("Failed to create the required configuration for Metadata retrieval",
+                        FailureCode.INVALID_CONFIGURATION));
 
         if (configurationProvider instanceof DynamicConfigurationProvider)
         {
-            throw new MetadataResolvingException("Configuration used for Metadata fetch cannot be dynamic", FailureCode.INVALID_CONFIGURATION);
+            throw new MetadataResolvingException("Configuration used for Metadata fetch cannot be dynamic",
+                    FailureCode.INVALID_CONFIGURATION);
         }
 
         String cacheId = configuration.getName();
@@ -276,8 +280,9 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
         {
             return getConfigurationProviderByName()
                     .map(provider -> provider.get(event))
-                    .orElseThrow(() -> new IllegalModelDefinitionException(format("Flow '%s' contains a reference to config '%s' but it doesn't exists",
-                                                                                  flowConstruct.getName(), configurationProviderName)));
+                    .orElseThrow(() -> new IllegalModelDefinitionException(
+                            format("Flow '%s' contains a reference to config '%s' but it doesn't exists",
+                                    flowConstruct.getName(), configurationProviderName)));
         }
 
         return getConfigurationProviderByModel()
@@ -293,7 +298,7 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
     private Optional<ConfigurationProvider<Object>> findConfigurationProvider()
     {
         return isConfigurationSpecified() ? getConfigurationProviderByName()
-                                          : getConfigurationProviderByModel();
+                : getConfigurationProviderByModel();
     }
 
     private Optional<ConfigurationProvider<Object>> getConfigurationProviderByName()

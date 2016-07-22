@@ -6,10 +6,9 @@
  */
 package org.mule.test.config.spring.parsers;
 
+import org.junit.Test;
 import org.mule.test.config.spring.parsers.beans.ChildBean;
 import org.mule.test.config.spring.parsers.beans.OrphanBean;
-
-import org.junit.Test;
 
 public class NamedNamespaceTestCase extends AbstractNamespaceTestCase
 {

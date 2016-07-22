@@ -7,12 +7,12 @@
 
 package org.mule.functional.classloading.isolation.maven;
 
+import java.io.IOException;
+import java.util.Properties;
+
 import static java.lang.Thread.currentThread;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 import static org.mule.runtime.core.util.PropertiesUtils.loadProperties;
-
-import java.io.IOException;
-import java.util.Properties;
 
 /**
  * Mule default implementation for getting modules based on artifactIds.
@@ -49,7 +49,7 @@ public class MuleMavenMultiModuleArtifactMapping implements MavenMultiModuleArti
     public String getFolderName(String artifactId) throws IllegalArgumentException
     {
         String folder = mappings.getProperty(artifactId);
-        if(isEmpty(folder))
+        if (isEmpty(folder))
         {
             throw new IllegalArgumentException("No folder mapped in multi-module for artifactId: " + artifactId);
         }
@@ -62,7 +62,7 @@ public class MuleMavenMultiModuleArtifactMapping implements MavenMultiModuleArti
     @Override
     public String getArtifactId(String path) throws IllegalArgumentException
     {
-        for(Object propertyName : mappings.keySet())
+        for (Object propertyName : mappings.keySet())
         {
             String relativeFolder = (String) mappings.get(propertyName);
             if (path.endsWith(relativeFolder))

@@ -11,11 +11,10 @@ import org.mule.runtime.module.http.internal.domain.request.HttpRequestContext;
 import org.mule.runtime.module.http.internal.listener.async.HttpResponseReadyCallback;
 import org.mule.runtime.module.http.internal.listener.async.RequestHandler;
 import org.mule.runtime.module.http.internal.listener.async.ResponseStatusCallback;
-
-import java.io.ByteArrayInputStream;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.ByteArrayInputStream;
 
 public class ErrorRequestHandler implements RequestHandler
 {
@@ -37,10 +36,10 @@ public class ErrorRequestHandler implements RequestHandler
     {
         String resolvedEntity = String.format(entityFormat, requestContext.getRequest().getUri());
         responseCallback.responseReady(new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder()
-                                               .setStatusCode(statusCode)
-                                               .setReasonPhrase(reasonPhrase)
-                                               .setEntity(new InputStreamHttpEntity(new ByteArrayInputStream(resolvedEntity.getBytes())))
-                                               .build(), new ResponseStatusCallback()
+                .setStatusCode(statusCode)
+                .setReasonPhrase(reasonPhrase)
+                .setEntity(new InputStreamHttpEntity(new ByteArrayInputStream(resolvedEntity.getBytes())))
+                .build(), new ResponseStatusCallback()
         {
             @Override
             public void responseSendFailure(Throwable exception)
@@ -48,7 +47,7 @@ public class ErrorRequestHandler implements RequestHandler
                 logger.warn(String.format("Error while sending %s response %s", statusCode, exception.getMessage()));
                 if (logger.isDebugEnabled())
                 {
-                    logger.debug("exception thrown",exception);
+                    logger.debug("exception thrown", exception);
                 }
             }
 

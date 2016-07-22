@@ -6,10 +6,6 @@
  */
 package org.mule.extension.http.internal.request;
 
-import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_REQUEST_BEGIN;
-import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_REQUEST_END;
-import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
-
 import org.mule.extension.http.api.HttpSendBodyMode;
 import org.mule.extension.http.api.HttpStreamingType;
 import org.mule.extension.http.api.request.authentication.HttpAuthentication;
@@ -32,11 +28,14 @@ import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.module.http.internal.domain.request.HttpRequest;
 import org.mule.runtime.module.http.internal.domain.request.HttpRequestAuthentication;
 import org.mule.runtime.module.http.internal.domain.response.HttpResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_REQUEST_BEGIN;
+import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_REQUEST_END;
+import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
 
 /**
  * Component capable of performing an HTTP request given a {@link MuleEvent}.
@@ -69,7 +68,8 @@ public class HttpRequester
         this.responseValidator = responseValidator;
         this.config = config;
         this.eventToHttpRequest = eventToHttpRequest;
-        this.notificationHelper = new NotificationHelper(config.getMuleContext().getNotificationManager(), ConnectorMessageNotification.class, false);
+        this.notificationHelper =
+                new NotificationHelper(config.getMuleContext().getNotificationManager(), ConnectorMessageNotification.class, false);
     }
 
     public MuleMessage doRequest(MuleEvent muleEvent, HttpClient client,
@@ -96,7 +96,7 @@ public class HttpRequester
 
         // Create a new muleEvent based on the old and the response so that the auth can use it
         MuleEvent responseEvent = new DefaultMuleEvent(org.mule.runtime.core.api.MuleMessage.builder(responseMessage).build(),
-                                                       muleEvent, muleEvent.isSynchronous());
+                muleEvent, muleEvent.isSynchronous());
         if (resendRequest(responseEvent, checkRetry, authentication))
         {
             consumePayload(responseEvent);
@@ -141,7 +141,8 @@ public class HttpRequester
     {
         if (HTTPS.getScheme().equals(uriParameters.getScheme()) && StringUtils.containsIgnoreCase(exception.getMessage(), REMOTELY_CLOSED))
         {
-            logger.error("Remote host closed connection. Possible SSL/TLS handshake issue. Check protocols, cipher suites and certificate set up. Use -Djavax.net.debug=handshake for further debugging.");
+            logger.error(
+                    "Remote host closed connection. Possible SSL/TLS handshake issue. Check protocols, cipher suites and certificate set up. Use -Djavax.net.debug=handshake for further debugging.");
         }
     }
 
@@ -230,10 +231,10 @@ public class HttpRequester
         public HttpRequester build()
         {
             MuleEventToHttpRequest eventToHttpRequest = new MuleEventToHttpRequest(config, uri, method,
-                                                                                   requestStreamingMode, sendBodyMode,
-                                                                                   source);
+                    requestStreamingMode, sendBodyMode,
+                    source);
             return new HttpRequester(eventToHttpRequest, followRedirects, authentication, parseResponse,
-                                     responseTimeout, responseValidator, config);
+                    responseTimeout, responseValidator, config);
         }
     }
 }

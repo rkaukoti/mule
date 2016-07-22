@@ -31,8 +31,8 @@ public abstract class AbstractAnnotatedModelEnricher implements ModelEnricher
      * @param declaration    a {@link BaseDeclaration} to be enriched
      * @param annotationType the type of the annotation you want
      * @param <A>            the annotation's generic type
-     * @return an {@link Annotation} or {@code null} if the annotation is not present or the {@code declaration} doesn't
-     * have a backing annotated type
+     * @return an {@link Annotation} or {@code null} if the annotation is not present or the {@code declaration} doesn't have a backing
+     * annotated type
      */
     protected <A extends Annotation> A extractAnnotation(BaseDeclaration<? extends BaseDeclaration> declaration, Class<A> annotationType)
     {
@@ -52,6 +52,8 @@ public abstract class AbstractAnnotatedModelEnricher implements ModelEnricher
      */
     protected <T> Class<T> extractExtensionType(BaseDeclaration<? extends BaseDeclaration> declaration)
     {
-        return (Class<T>) declaration.getModelProperty(ImplementingTypeModelProperty.class).map(ImplementingTypeModelProperty::getType).orElse(null);
+        return (Class<T>) declaration.getModelProperty(ImplementingTypeModelProperty.class)
+                                     .map(ImplementingTypeModelProperty::getType)
+                                     .orElse(null);
     }
 }

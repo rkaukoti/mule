@@ -14,7 +14,9 @@ import java.util.Map;
 public class PrototypeObjectFactory extends AbstractObjectFactory
 {
 
-    /** For Spring only */
+    /**
+     * For Spring only
+     */
     public PrototypeObjectFactory()
     {
         super();

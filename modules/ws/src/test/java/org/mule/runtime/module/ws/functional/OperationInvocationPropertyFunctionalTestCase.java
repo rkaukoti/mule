@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.module.ws.functional;
 
+import org.junit.Test;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.module.cxf.CxfConstants;
+
 import static junit.framework.Assert.assertNull;
 import static org.custommonkey.xmlunit.XMLAssert.assertXMLEqual;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.module.cxf.CxfConstants;
-
-import org.junit.Test;
 
 /**
  * This test verifies that WS consumer doesn't fail if the message contains an invocation property

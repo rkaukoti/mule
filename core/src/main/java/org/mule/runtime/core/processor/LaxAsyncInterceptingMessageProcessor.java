@@ -20,8 +20,8 @@ public class LaxAsyncInterceptingMessageProcessor extends AsyncInterceptingMessa
     }
 
     public LaxAsyncInterceptingMessageProcessor(ThreadingProfile threadingProfile,
-                                                 String name,
-                                                 int shutdownTimeout)
+                                                String name,
+                                                int shutdownTimeout)
     {
         super(threadingProfile, name, shutdownTimeout);
     }

@@ -9,15 +9,14 @@ package org.mule.compatibility.transport.file;
 import org.mule.compatibility.transport.file.i18n.FileMessages;
 import org.mule.runtime.core.api.DefaultMuleException;
 import org.mule.runtime.core.util.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This implementation is used when streaming and will move or delete the source file
@@ -36,7 +35,7 @@ class ReceiverFileInputStream extends FileInputStream
     private AtomicBoolean alreadyNotified = new AtomicBoolean(false);
 
     public ReceiverFileInputStream(File currentFile, boolean deleteOnClose, File moveToOnClose)
-        throws FileNotFoundException
+            throws FileNotFoundException
     {
         super(currentFile);
         this.currentFile = currentFile;
@@ -44,7 +43,8 @@ class ReceiverFileInputStream extends FileInputStream
         this.moveToOnClose = moveToOnClose;
     }
 
-    public ReceiverFileInputStream(File sourceFile, boolean deleteOnClose, File destinationFile, InputStreamCloseListener closeListener) throws FileNotFoundException
+    public ReceiverFileInputStream(File sourceFile, boolean deleteOnClose, File destinationFile, InputStreamCloseListener closeListener)
+            throws FileNotFoundException
     {
         this(sourceFile, deleteOnClose, destinationFile);
         this.closeListener = closeListener;

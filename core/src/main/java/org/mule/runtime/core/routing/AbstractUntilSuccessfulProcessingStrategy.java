@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.routing;
 
-import static org.mule.runtime.core.util.ClassUtils.isConsumable;
-
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.core.api.MuleContext;
@@ -21,6 +19,8 @@ import org.mule.runtime.core.config.i18n.MessageFactory;
 import java.io.NotSerializableException;
 import java.io.Serializable;
 
+import static org.mule.runtime.core.util.ClassUtils.isConsumable;
+
 /**
  * Abstract class with common logic for until successful processing strategies.
  */
@@ -30,18 +30,12 @@ public abstract class AbstractUntilSuccessfulProcessingStrategy implements Until
     private UntilSuccessfulConfiguration untilSuccessfulConfiguration;
     private MuleContext muleContext;
 
-    @Override
-    public void setUntilSuccessfulConfiguration(final UntilSuccessfulConfiguration untilSuccessfulConfiguration)
-    {
-        this.untilSuccessfulConfiguration = untilSuccessfulConfiguration;
-    }
-
     /**
      * Process the event through the configured route in the until-successful configuration.
      *
      * @param event the event to process through the until successful inner route.
-     * @return the response from the route if there's no ack expression. If there's ack expression
-     * then a message with the response event but with a payload defined by the ack expression.
+     * @return the response from the route if there's no ack expression. If there's ack expression then a message with the response event
+     * but with a payload defined by the ack expression.
      */
     protected MuleEvent processEvent(final MuleEvent event)
     {
@@ -64,8 +58,9 @@ public abstract class AbstractUntilSuccessfulProcessingStrategy implements Until
         if (msg == null)
         {
             throw new MuleRuntimeException(
-                    MessageFactory.createStaticMessage("No message found in response to processing, which is therefore considered failed for event: "
-                                                       + event));
+                    MessageFactory.createStaticMessage(
+                            "No message found in response to processing, which is therefore considered failed for event: "
+                            + event));
         }
 
         final boolean errorDetected = untilSuccessfulConfiguration.getFailureExpressionFilter().accept(returnEvent);
@@ -98,7 +93,7 @@ public abstract class AbstractUntilSuccessfulProcessingStrategy implements Until
                                     .payload(getUntilSuccessfulConfiguration().getMuleContext()
                                                                               .getExpressionManager()
                                                                               .evaluate(ackExpression, event))
-                .build());
+                                    .build());
         return event;
     }
 
@@ -108,6 +103,12 @@ public abstract class AbstractUntilSuccessfulProcessingStrategy implements Until
     protected UntilSuccessfulConfiguration getUntilSuccessfulConfiguration()
     {
         return untilSuccessfulConfiguration;
+    }
+
+    @Override
+    public void setUntilSuccessfulConfiguration(final UntilSuccessfulConfiguration untilSuccessfulConfiguration)
+    {
+        this.untilSuccessfulConfiguration = untilSuccessfulConfiguration;
     }
 
     @Override
@@ -142,7 +143,8 @@ public abstract class AbstractUntilSuccessfulProcessingStrategy implements Until
         }
         catch (final Exception e)
         {
-            throw new MessagingException(MessageFactory.createStaticMessage("Failed to prepare message for processing"), event, e, getUntilSuccessfulConfiguration().getRouter());
+            throw new MessagingException(MessageFactory.createStaticMessage("Failed to prepare message for processing"), event, e,
+                    getUntilSuccessfulConfiguration().getRouter());
         }
     }
 

@@ -6,14 +6,11 @@
  */
 package org.mule.extension.socket.api.client;
 
-import static java.util.Arrays.copyOf;
-import static org.mule.extension.socket.internal.SocketUtils.createPacket;
-import static org.mule.extension.socket.internal.SocketUtils.getUdpAllowedByteArray;
 import org.mule.extension.socket.api.ConnectionSettings;
 import org.mule.extension.socket.api.ImmutableSocketAttributes;
-import org.mule.extension.socket.api.socket.udp.UdpSocketProperties;
-import org.mule.extension.socket.api.exceptions.ReadingTimeoutException;
 import org.mule.extension.socket.api.SocketAttributes;
+import org.mule.extension.socket.api.exceptions.ReadingTimeoutException;
+import org.mule.extension.socket.api.socket.udp.UdpSocketProperties;
 import org.mule.runtime.core.api.serialization.ObjectSerializer;
 
 import java.io.ByteArrayInputStream;
@@ -23,6 +20,10 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
+
+import static java.util.Arrays.copyOf;
+import static org.mule.extension.socket.internal.SocketUtils.createPacket;
+import static org.mule.extension.socket.internal.SocketUtils.getUdpAllowedByteArray;
 
 /**
  * This {@link SocketClient} implementation allows the reading and writing
@@ -36,7 +37,8 @@ public final class UdpClient implements SocketClient
     private final DatagramSocket socket;
     private final SocketAddress socketAddress;
 
-    public UdpClient(DatagramSocket socket, ConnectionSettings connectionSettings, UdpSocketProperties socketProperties, ObjectSerializer objectSerializer)
+    public UdpClient(DatagramSocket socket, ConnectionSettings connectionSettings, UdpSocketProperties socketProperties,
+                     ObjectSerializer objectSerializer)
     {
         this.objectSerializer = objectSerializer;
         this.socketProperties = socketProperties;

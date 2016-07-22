@@ -7,11 +7,11 @@
 package org.mule.runtime.module.ws.security;
 
 
-import static org.apache.ws.security.handler.WSHandlerConstants.PW_CALLBACK_REF;
+import org.apache.ws.security.handler.WSHandlerConstants;
 
 import java.util.Map;
 
-import org.apache.ws.security.handler.WSHandlerConstants;
+import static org.apache.ws.security.handler.WSHandlerConstants.PW_CALLBACK_REF;
 
 public abstract class AbstractSecurityStrategy implements SecurityStrategy
 {

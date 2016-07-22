@@ -1,74 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:spring="http://www.springframework.org/schema/beans" xmlns:test="http://www.mulesoft.org/schema/mule/test"
-    xsi:schemaLocation="
-               http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
-               http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-               http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd">
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+               http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
 
 
     <flow name="defaultFlow">
-        <echo-component />
+        <echo-component/>
     </flow>
 
     <flow name="synchronousFlow" processingStrategy="synchronous">
-        <echo-component />
+        <echo-component/>
     </flow>
 
     <flow name="asynchronousFlow" processingStrategy="asynchronous">
-        <echo-component />
+        <echo-component/>
     </flow>
 
     <flow name="nonBlockingFlow" processingStrategy="non-blocking">
-        <echo-component />
+        <echo-component/>
     </flow>
 
     <flow name="customAsynchronousFlow" processingStrategy="customAsynchronousStrategy">
-        <echo-component />
+        <echo-component/>
     </flow>
 
     <flow name="customNonBlockingFlow" processingStrategy="customNonBlockingStrategy">
-        <echo-component />
+        <echo-component/>
     </flow>
 
     <flow name="customProcessingStrategyFlow" processingStrategy="customStrategy">
-        <echo-component />
+        <echo-component/>
     </flow>
-    
+
     <flow name="defaultAsync">
         <async>
-            <echo-component />
+            <echo-component/>
         </async>
     </flow>
-    
+
     <flow name="asynchronousAsync">
         <async processingStrategy="asynchronous">
-            <echo-component />
+            <echo-component/>
         </async>
     </flow>
 
     <flow name="customAsynchronousAsync">
         <async processingStrategy="customAsynchronousStrategy">
-            <echo-component />
+            <echo-component/>
         </async>
     </flow>
 
     <flow name="customProcessingStrategyAsync">
         <async processingStrategy="customStrategy">
-            <echo-component />
+            <echo-component/>
         </async>
     </flow>
- 
+
     <asynchronous-processing-strategy name="customAsynchronousStrategy"
-        maxThreads="10" minThreads="5" threadTTL="100" maxBufferSize="10" threadWaitTimeout="1000"
-        poolExhaustedAction="WAIT" />
+                                      maxThreads="10" minThreads="5" threadTTL="100" maxBufferSize="10" threadWaitTimeout="1000"
+                                      poolExhaustedAction="WAIT"/>
 
     <non-blocking-processing-strategy name="customNonBlockingStrategy"
                                       maxThreads="10" minThreads="5" threadTTL="100" maxBufferSize="10" threadWaitTimeout="1000"
-                                      poolExhaustedAction="WAIT" />
+                                      poolExhaustedAction="WAIT"/>
 
     <custom-processing-strategy name="customStrategy" class="org.mule.test.config.spring.flow.FlowProcessingStrategyConfigTestCase$CustomProcessingStrategy">
-        <spring:property name="foo" value="bar" />
+        <spring:property name="foo" value="bar"/>
     </custom-processing-strategy>
 
 </mule>

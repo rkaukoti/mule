@@ -7,6 +7,24 @@
 
 package org.mule.runtime.module.http.internal.request;
 
+import org.hamcrest.Matcher;
+import org.junit.Before;
+import org.junit.Test;
+import org.mule.runtime.core.DefaultMuleEvent;
+import org.mule.runtime.core.MessageExchangePattern;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.core.api.debug.FieldDebugInfo;
+import org.mule.runtime.core.api.lifecycle.InitialisationException;
+import org.mule.runtime.module.http.api.requester.HttpSendBodyMode;
+import org.mule.runtime.module.http.internal.HttpParam;
+import org.mule.runtime.module.http.internal.HttpSingleParam;
+import org.mule.runtime.module.http.internal.domain.request.HttpRequestAuthentication;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.lang.Boolean.TRUE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -31,28 +49,16 @@ import static org.mule.runtime.module.http.internal.request.DefaultHttpRequester
 import static org.mule.runtime.module.http.internal.request.DefaultHttpRequester.WORKSTATION_DEBUG;
 import static org.mule.tck.junit4.matcher.FieldDebugInfoMatcher.fieldLike;
 import static org.mule.tck.junit4.matcher.ObjectDebugInfoMatcher.objectLike;
-import org.mule.runtime.core.DefaultMuleEvent;
-import org.mule.runtime.core.MessageExchangePattern;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.core.api.debug.FieldDebugInfo;
-import org.mule.runtime.core.api.lifecycle.InitialisationException;
-import org.mule.runtime.module.http.api.requester.HttpSendBodyMode;
-import org.mule.runtime.module.http.internal.HttpParam;
-import org.mule.runtime.module.http.internal.HttpSingleParam;
-import org.mule.runtime.module.http.internal.domain.request.HttpRequestAuthentication;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hamcrest.Matcher;
-import org.junit.Before;
-import org.junit.Test;
 
 public class DefaultHttpRequesterDebugInfoTestCase extends AbstractMuleContextTestCase
 {
 
+    public static final String PARAM_NAME1 = "paramName1";
+    public static final String PARAM_NAME2 = "paramName2";
+    public static final String PARAM2_SECOND_VALUE_PROPERTY = PARAM_NAME2 + "_2";
+    public static final String PARAM2_FIRST_VALUE_PROPERTY = PARAM_NAME2 + "_1";
+    public static final String PARAM_VALUE1 = "foo";
+    public static final String PARAM_VALUE2 = "bar";
     private static final String DOMAIN_PROPERTY = "domain";
     private static final String PASSWORD_PROPERTY = "password";
     private static final String PREEMPTIVE_PROPERTY = "preemptive";
@@ -66,7 +72,6 @@ public class DefaultHttpRequesterDebugInfoTestCase extends AbstractMuleContextTe
     private static final String FOLLOW_REDIRECTS_PROPERTY = "followRedirects";
     private static final String PARSE_RESPONSE_PROPERTY = "parseResponse";
     private static final String RESPONSE_TIMEOUT_PROPERTY = "responseTimeout";
-
     private static final String DOMAIN = "myDomain";
     private static final String PASSWORD = "myPassword";
     private static final String USERNAME = "myUsername";
@@ -75,14 +80,6 @@ public class DefaultHttpRequesterDebugInfoTestCase extends AbstractMuleContextTe
     private static final String HOST = "myHost";
     private static final String PORT = "7777";
     private static final String METHOD = "GET";
-    public static final String PARAM_NAME1 = "paramName1";
-    public static final String PARAM_NAME2 = "paramName2";
-    public static final String PARAM2_SECOND_VALUE_PROPERTY = PARAM_NAME2 + "_2";
-    public static final String PARAM2_FIRST_VALUE_PROPERTY = PARAM_NAME2 + "_1";
-    public static final String PARAM_VALUE1 = "foo";
-    public static final String PARAM_VALUE2 = "bar";
-
-
     private DefaultHttpRequester requester = new DefaultHttpRequester();
     private DefaultHttpRequesterConfig config = new DefaultHttpRequesterConfig();
     private MuleMessage message;
@@ -116,7 +113,8 @@ public class DefaultHttpRequesterDebugInfoTestCase extends AbstractMuleContextTe
         doDebugInfoTest(message, event, null);
     }
 
-    private void doDebugInfoTest(MuleMessage message, DefaultMuleEvent event, List<Matcher<FieldDebugInfo<?>>> securityFieldMatchers) throws InitialisationException
+    private void doDebugInfoTest(MuleMessage message, DefaultMuleEvent event, List<Matcher<FieldDebugInfo<?>>> securityFieldMatchers)
+            throws InitialisationException
     {
         configureRequesterExpressions();
         addRequesterProperties(message);

@@ -7,8 +7,8 @@
 package org.mule.runtime.module.scripting.transformer;
 
 import org.mule.runtime.core.api.transformer.Transformer;
-import org.mule.runtime.module.scripting.component.Scriptable;
 import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
+import org.mule.runtime.module.scripting.component.Scriptable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class GroovyScriptTransformerTestCase extends AbstractTransformerTestCase
         script.setScriptEngineName("groovy");
         script.setScriptFile("StringToList.groovy");
         script.initialise();
-        
+
         ScriptTransformer transformer = new ScriptTransformer();
         transformer.setName("StringToList");
         transformer.setMuleContext(muleContext);
@@ -36,7 +36,7 @@ public class GroovyScriptTransformerTestCase extends AbstractTransformerTestCase
         script.setScriptFile("ListToString.groovy");
         script.setScriptEngineName("groovy");
         script.initialise();
-        
+
         ScriptTransformer transformer = new ScriptTransformer();
         transformer.setName("ListToString");
         transformer.setMuleContext(muleContext);

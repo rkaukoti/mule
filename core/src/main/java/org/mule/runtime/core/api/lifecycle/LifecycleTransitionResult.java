@@ -20,12 +20,12 @@ public final class LifecycleTransitionResult
     /**
      * The logic for processing a collection of children
      *
-     * @param iface The lifecycle interface to be called
+     * @param iface   The lifecycle interface to be called
      * @param objects An iterator over all children that must also be called
      * @throws org.mule.runtime.core.api.lifecycle.LifecycleException if any fail
      */
-    private static void processAllNoRetry(Class<? extends Initialisable> iface, 
-        Iterator<? extends Initialisable> objects) throws LifecycleException
+    private static void processAllNoRetry(Class<? extends Initialisable> iface,
+                                          Iterator<? extends Initialisable> objects) throws LifecycleException
     {
         if (!iface.isAssignableFrom(Lifecycle.class))
         {
@@ -45,13 +45,13 @@ public final class LifecycleTransitionResult
         }
     }
 
-    private static void processSingleNoRetry(Object target, Method method, Class<?> exception, 
-        Class<?> iface) throws LifecycleException
+    private static void processSingleNoRetry(Object target, Method method, Class<?> exception,
+                                             Class<?> iface) throws LifecycleException
     {
-        if (! iface.isAssignableFrom(target.getClass()))
+        if (!iface.isAssignableFrom(target.getClass()))
         {
             throw new IllegalArgumentException(ClassUtils.getSimpleName(target.getClass()) +
-                    " is not an " + ClassUtils.getSimpleName(iface));
+                                               " is not an " + ClassUtils.getSimpleName(iface));
         }
         try
         {

@@ -15,20 +15,19 @@ import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class TransformerUtils
 {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(AbstractTransformer.class);
     public static final String COMMA = ",";
+    private static Logger LOGGER = LoggerFactory.getLogger(AbstractTransformer.class);
 
     /**
      * @deprecated Transport infrastructure is deprecated.
@@ -76,7 +75,7 @@ public class TransformerUtils
     /**
      * Builds a list of Transformers.
      *
-     * @param names - a list of transformers separated by commands
+     * @param names       - a list of transformers separated by commands
      * @param muleContext the current muleContext. This is used to look up transformers in the registry
      * @return a list (possibly empty) of transformers or
      * @throws org.mule.runtime.core.api.DefaultMuleException if any of the transformers cannot be found
@@ -110,12 +109,12 @@ public class TransformerUtils
      * Checks whether a given value is a valid output for a transformer.
      *
      * @param transformer the transformer used to validate
-     * @param value the output value
+     * @param value       the output value
      * @throws TransformerException if the out[ut value is of a unexpected type.
      */
     public static void checkTransformerReturnClass(Transformer transformer, Object value) throws TransformerException
     {
-        if (value == null && (transformer instanceof AbstractTransformer &&((AbstractTransformer) transformer).isAllowNullReturn()))
+        if (value == null && (transformer instanceof AbstractTransformer && ((AbstractTransformer) transformer).isAllowNullReturn()))
         {
             return;
         }
@@ -163,11 +162,13 @@ public class TransformerUtils
         }
         catch (TransformerException e)
         {
-            LOGGER.debug("Could not find a transformer from type {} to {}", sourceDataType.getType().getName(), resultDataType.getType().getName());
+            LOGGER.debug("Could not find a transformer from type {} to {}", sourceDataType.getType().getName(),
+                    resultDataType.getType().getName());
             return null;
         }
 
-        LOGGER.debug("Located transformer {} from type {} to type {}. Attempting transformation...", transformer.getName(), sourceDataType.getType().getName(), resultDataType.getType().getName());
+        LOGGER.debug("Located transformer {} from type {} to type {}. Attempting transformation...", transformer.getName(),
+                sourceDataType.getType().getName(), resultDataType.getType().getName());
 
         try
         {
@@ -179,7 +180,7 @@ public class TransformerUtils
             {
                 LOGGER.debug(
                         String.format("Transformer %s threw exception while trying to transform an object of type %s into a %s",
-                                      transformer.getName(), sourceDataType.getType().getName(), resultDataType.getType().getName())
+                                transformer.getName(), sourceDataType.getType().getName(), resultDataType.getType().getName())
                         , e);
             }
 

@@ -6,35 +6,12 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.operation;
 
-import static java.nio.charset.Charset.defaultCharset;
-import static java.util.Collections.emptySet;
-import static java.util.Optional.empty;
-import static org.apache.commons.lang.StringUtils.EMPTY;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Answers.RETURNS_DEEP_STUBS;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.api.metadata.MediaType.ANY;
-import static org.mule.runtime.core.message.NullAttributes.NULL_ATTRIBUTES;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
-import static org.mule.runtime.module.extension.internal.metadata.PartAwareMetadataKeyBuilder.newKey;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.TYPE_BUILDER;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.mockClassLoaderModelProperty;
-import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.toMetadataType;
-import static org.mule.test.metadata.extension.resolver.TestNoConfigMetadataResolver.KeyIds.BOOLEAN;
-import static org.mule.test.metadata.extension.resolver.TestNoConfigMetadataResolver.KeyIds.STRING;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.metadata.api.model.StringType;
 import org.mule.runtime.api.message.Attributes;
 import org.mule.runtime.api.metadata.MediaType;
@@ -89,12 +66,35 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static java.nio.charset.Charset.defaultCharset;
+import static java.util.Collections.emptySet;
+import static java.util.Optional.empty;
+import static org.apache.commons.lang.StringUtils.EMPTY;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.same;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.api.metadata.MediaType.ANY;
+import static org.mule.runtime.core.message.NullAttributes.NULL_ATTRIBUTES;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
+import static org.mule.runtime.module.extension.internal.metadata.PartAwareMetadataKeyBuilder.newKey;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.TYPE_BUILDER;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.mockClassLoaderModelProperty;
+import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.toMetadataType;
+import static org.mule.test.metadata.extension.resolver.TestNoConfigMetadataResolver.KeyIds.BOOLEAN;
+import static org.mule.test.metadata.extension.resolver.TestNoConfigMetadataResolver.KeyIds.STRING;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -183,9 +183,11 @@ public class OperationMessageProcessorTestCase extends AbstractMuleContextTestCa
         configureMockEvent(event);
 
         when(operationModel.getName()).thenReturn(getClass().getName());
-        when(operationModel.getOutput()).thenReturn(new ImmutableOutputModel("MuleMessage.Payload", toMetadataType(String.class), false, emptySet()));
+        when(operationModel.getOutput()).thenReturn(
+                new ImmutableOutputModel("MuleMessage.Payload", toMetadataType(String.class), false, emptySet()));
         when(operationModel.getExecutor()).thenReturn(operationExecutorFactory);
-        when(operationModel.getModelProperty(MetadataKeyIdModelProperty.class)).thenReturn(Optional.of(new MetadataKeyIdModelProperty(ExtensionsTypeLoaderFactory.getDefault().createTypeLoader().load(String.class))));
+        when(operationModel.getModelProperty(MetadataKeyIdModelProperty.class)).thenReturn(Optional.of(
+                new MetadataKeyIdModelProperty(ExtensionsTypeLoaderFactory.getDefault().createTypeLoader().load(String.class))));
         when(operationModel.getModelProperty(ConnectivityModelProperty.class)).thenReturn(empty());
         when(operationExecutorFactory.createExecutor()).thenReturn(operationExecutor);
 
@@ -202,7 +204,8 @@ public class OperationMessageProcessorTestCase extends AbstractMuleContextTestCa
 
         when(keyParamMock.getName()).thenReturn("type");
         when(keyParamMock.getType()).thenReturn(stringType);
-        when(keyParamMock.getModelProperty(MetadataKeyPartModelProperty.class)).thenReturn(Optional.of(new MetadataKeyPartModelProperty(0)));
+        when(keyParamMock.getModelProperty(MetadataKeyPartModelProperty.class)).thenReturn(
+                Optional.of(new MetadataKeyPartModelProperty(0)));
         when(keyParamMock.getModelProperty(MetadataContentModelProperty.class)).thenReturn(empty());
 
         when(contentMock.getName()).thenReturn("content");
@@ -277,10 +280,10 @@ public class OperationMessageProcessorTestCase extends AbstractMuleContextTestCa
         Attributes attributes = mock(Attributes.class);
 
         when(operationExecutor.execute(any(OperationContext.class))).thenReturn(OperationResult.builder()
-                                                                                        .output(payload)
-                                                                                        .mediaType(mediaType)
-                                                                                        .attributes(attributes)
-                                                                                        .build());
+                                                                                               .output(payload)
+                                                                                               .mediaType(mediaType)
+                                                                                               .attributes(attributes)
+                                                                                               .build());
 
         ArgumentCaptor<MuleMessage> captor = ArgumentCaptor.forClass(MuleMessage.class);
 
@@ -306,10 +309,10 @@ public class OperationMessageProcessorTestCase extends AbstractMuleContextTestCa
         Attributes attributes = mock(Attributes.class);
 
         when(operationExecutor.execute(any(OperationContext.class))).thenReturn(OperationResult.builder()
-                                                                                        .output(payload)
-                                                                                        .mediaType(mediaType)
-                                                                                        .attributes(attributes)
-                                                                                        .build());
+                                                                                               .output(payload)
+                                                                                               .mediaType(mediaType)
+                                                                                               .attributes(attributes)
+                                                                                               .build());
 
         messageProcessor.process(event);
 
@@ -332,9 +335,9 @@ public class OperationMessageProcessorTestCase extends AbstractMuleContextTestCa
         MediaType mediaType = ANY.withCharset(getDefaultEncoding(context));
 
         when(operationExecutor.execute(any(OperationContext.class))).thenReturn(OperationResult.builder()
-                                                                                        .output(payload)
-                                                                                        .mediaType(mediaType)
-                                                                                        .build());
+                                                                                               .output(payload)
+                                                                                               .mediaType(mediaType)
+                                                                                               .build());
 
         when(event.getMessage()).thenReturn(MuleMessage.builder().payload("").attributes(mock(Attributes.class)).build());
         ArgumentCaptor<MuleMessage> captor = ArgumentCaptor.forClass(MuleMessage.class);
@@ -377,8 +380,8 @@ public class OperationMessageProcessorTestCase extends AbstractMuleContextTestCa
         Attributes attributes = mock(Attributes.class);
 
         when(operationExecutor.execute(any(OperationContext.class))).thenReturn(OperationResult.builder().output(payload)
-                                                                                        .attributes(attributes)
-                                                                                        .build());
+                                                                                               .attributes(attributes)
+                                                                                               .build());
         ArgumentCaptor<MuleMessage> captor = ArgumentCaptor.forClass(MuleMessage.class);
 
         messageProcessor.process(event);
@@ -432,7 +435,8 @@ public class OperationMessageProcessorTestCase extends AbstractMuleContextTestCa
     @Test
     public void operationIsVoid() throws Exception
     {
-        when(operationModel.getOutput()).thenReturn(new ImmutableOutputModel("MuleMessage.Payload", toMetadataType(void.class), false, emptySet()));
+        when(operationModel.getOutput()).thenReturn(
+                new ImmutableOutputModel("MuleMessage.Payload", toMetadataType(void.class), false, emptySet()));
         messageProcessor = createOperationMessageProcessor();
 
         when(operationExecutor.execute(any(OperationContext.class))).thenReturn(null);
@@ -546,7 +550,7 @@ public class OperationMessageProcessorTestCase extends AbstractMuleContextTestCa
     private OperationMessageProcessor createOperationMessageProcessor() throws Exception
     {
         OperationMessageProcessor messageProcessor = new OperationMessageProcessor(extensionModel, operationModel, configurationName,
-                                                                                   target, resolverSet, extensionManager);
+                target, resolverSet, extensionManager);
         messageProcessor.setMuleContext(context);
         messageProcessor.initialise();
         muleContext.getInjector().inject(messageProcessor);

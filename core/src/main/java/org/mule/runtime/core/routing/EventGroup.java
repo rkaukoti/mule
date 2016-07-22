@@ -6,9 +6,7 @@
  */
 package org.mule.runtime.core.routing;
 
-import static java.util.stream.Collectors.toList;
-import static org.mule.runtime.core.message.Correlation.NOT_SET;
-
+import org.apache.commons.collections.IteratorUtils;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MuleContext;
@@ -31,7 +29,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.collections.IteratorUtils;
+import static java.util.stream.Collectors.toList;
+import static org.mule.runtime.core.message.Correlation.NOT_SET;
 
 /**
  * <code>EventGroup</code> is a holder over events grouped by a common group Id. This
@@ -40,28 +39,24 @@ import org.apache.commons.collections.IteratorUtils;
 // @ThreadSafe
 public class EventGroup implements Comparable<EventGroup>, Serializable, DeserializationPostInitialisable
 {
+    public static final MuleEvent[] EMPTY_EVENTS_ARRAY = new MuleEvent[0];
+    public static final String MULE_ARRIVAL_ORDER_PROPERTY = MuleProperties.PROPERTY_PREFIX + "ARRIVAL_ORDER";
+    public static final String DEFAULT_STORE_PREFIX = "DEFAULT_STORE";
     /**
      * Serial version
      */
     private static final long serialVersionUID = 953739659615692697L;
-
-    public static final MuleEvent[] EMPTY_EVENTS_ARRAY = new MuleEvent[0];
-
-    public static final String MULE_ARRIVAL_ORDER_PROPERTY = MuleProperties.PROPERTY_PREFIX + "ARRIVAL_ORDER";
-
+    private static boolean hasNoCommonRootId = false;
     private final Object groupId;
-    private transient PartitionableObjectStore<MuleEvent> eventsObjectStore;
     private final String storePrefix;
     private final String eventsPartitionKey;
     private final long created;
     private final Integer expectedSize;
+    private transient PartitionableObjectStore<MuleEvent> eventsObjectStore;
     transient private MuleContext muleContext;
     private String commonRootId = null;
-    private static boolean hasNoCommonRootId = false;
     private int arrivalOrderCounter = 0;
     private Serializable lastStoredEventKey;
-
-    public static final String DEFAULT_STORE_PREFIX = "DEFAULT_STORE";
 
     public EventGroup(Object groupId, MuleContext muleContext)
     {
@@ -69,9 +64,9 @@ public class EventGroup implements Comparable<EventGroup>, Serializable, Deseria
     }
 
     public EventGroup(Object groupId,
-            MuleContext muleContext,
-            Optional<Integer> expectedSize,
-            String storePrefix)
+                      MuleContext muleContext,
+                      Optional<Integer> expectedSize,
+                      String storePrefix)
     {
         super();
         this.created = System.currentTimeMillis();
@@ -169,7 +164,6 @@ public class EventGroup implements Comparable<EventGroup>, Serializable, Deseria
      * wrap the iteration in a synchronized block on the group instance.
      *
      * @return an iterator over collected {@link MuleEvent}s.
-     * @throws ObjectStoreException
      */
     public Iterator<MuleEvent> iterator() throws ObjectStoreException
     {
@@ -185,7 +179,6 @@ public class EventGroup implements Comparable<EventGroup>, Serializable, Deseria
      * wrap the iteration in a synchronized block on the group instance.
      *
      * @return an iterator over collected {@link MuleEvent}s.
-     * @throws ObjectStoreException
      */
     @SuppressWarnings("unchecked")
     public Iterator<MuleEvent> iterator(boolean sortByArrival) throws ObjectStoreException
@@ -208,7 +201,6 @@ public class EventGroup implements Comparable<EventGroup>, Serializable, Deseria
      * Returns a snapshot of collected events in this group sorted by their arrival time.
      *
      * @return an array of collected {@link MuleEvent}s.
-     * @throws ObjectStoreException
      */
     public MuleEvent[] toArray() throws ObjectStoreException
     {
@@ -219,7 +211,6 @@ public class EventGroup implements Comparable<EventGroup>, Serializable, Deseria
      * Returns a snapshot of collected events in this group, optionally sorted by their arrival time.
      *
      * @return an array of collected {@link MuleEvent}s.
-     * @throws ObjectStoreException
      */
     public MuleEvent[] toArray(boolean sortByArrival) throws ObjectStoreException
     {
@@ -247,7 +238,6 @@ public class EventGroup implements Comparable<EventGroup>, Serializable, Deseria
      * Add the given event to this group.
      *
      * @param event the event to add
-     * @throws ObjectStoreException
      */
     public void addEvent(MuleEvent event) throws ObjectStoreException
     {
@@ -255,7 +245,7 @@ public class EventGroup implements Comparable<EventGroup>, Serializable, Deseria
         {
             //Using both event ID and CorrelationSequence since in certain instances
             //when an event is split up, the same event IDs are used.
-            Serializable key= getEventKey(event);
+            Serializable key = getEventKey(event);
             event.setFlowVariable(MULE_ARRIVAL_ORDER_PROPERTY, ++arrivalOrderCounter);
             lastStoredEventKey = key;
             eventsObjectStore.store(key, event, eventsPartitionKey);
@@ -285,7 +275,6 @@ public class EventGroup implements Comparable<EventGroup>, Serializable, Deseria
      * Remove the given event from the group.
      *
      * @param event the evnt to remove
-     * @throws ObjectStoreException
      */
     public void removeEvent(MuleEvent event) throws ObjectStoreException
     {
@@ -338,8 +327,6 @@ public class EventGroup implements Comparable<EventGroup>, Serializable, Deseria
 
     /**
      * Removes all events from this group.
-     *
-     * @throws ObjectStoreException
      */
     public void clear() throws ObjectStoreException
     {
@@ -493,7 +480,6 @@ public class EventGroup implements Comparable<EventGroup>, Serializable, Deseria
      * event key is high, is better to use lazy initialization for that field.
      *
      * @return the key of that last event added to the group. Null if no events added yet.
-     * @throws ObjectStoreException
      */
     private String findLastStoredEventKey() throws ObjectStoreException
     {

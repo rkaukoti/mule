@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.transport.http.functional;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.functional.junit4.ApplicationContextBuilder;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.util.ExceptionUtils;
 import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.net.BindException;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 public class HttpSamePortTestCase
 {

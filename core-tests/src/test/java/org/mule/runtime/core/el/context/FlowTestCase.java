@@ -6,14 +6,13 @@
  */
 package org.mule.runtime.core.el.context;
 
-import static org.junit.Assert.assertEquals;
-import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
-
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
 
 public class FlowTestCase extends AbstractELTestCase
 {

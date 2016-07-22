@@ -10,7 +10,7 @@ import org.mule.runtime.core.api.MuleException;
 
 /**
  * Builds {@link MessageProcessor} instances.
- * 
+ *
  * @since 3.0
  */
 public interface MessageProcessorBuilder

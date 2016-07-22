@@ -55,13 +55,13 @@ public final class UnsupportedMessageDispatcher extends AbstractMessageDispatche
     }
 
     @Override
-    protected void doStart() 
+    protected void doStart()
     {
         // empty
     }
 
     @Override
-    protected void doStop() 
+    protected void doStop()
     {
         // empty
     }

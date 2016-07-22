@@ -6,34 +6,33 @@
  */
 package org.mule.runtime.module.extension.file;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.rules.ExpectedException.none;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mule.runtime.module.extension.file.api.FileAttributes;
 import org.mule.runtime.module.extension.file.api.FilePredicateBuilder;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.rules.ExpectedException.none;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SmallTest
-public class FilePredicateBuilderContractTestCase<T extends FilePredicateBuilder, Attributes extends FileAttributes> extends AbstractMuleTestCase
+public class FilePredicateBuilderContractTestCase<T extends FilePredicateBuilder, Attributes extends FileAttributes>
+        extends AbstractMuleTestCase
 {
 
     private static final String FILENAME = "Mule.java";
     private static final String PATH = "a/b/c/" + FILENAME;
     private static final long SIZE = 1024;
-
-    protected T builder = createPredicateBuilder();
-    protected Attributes attributes;
-
     @Rule
     public ExpectedException expectedException = none();
+    protected T builder = createPredicateBuilder();
+    protected Attributes attributes;
 
     @Before
     public void before()
@@ -45,11 +44,6 @@ public class FilePredicateBuilderContractTestCase<T extends FilePredicateBuilder
         when(attributes.isRegularFile()).thenReturn(true);
         when(attributes.isSymbolicLink()).thenReturn(false);
         when(attributes.isDirectory()).thenReturn(false);
-    }
-
-    private class TestFilePredicateBuilder extends FilePredicateBuilder
-    {
-
     }
 
     protected T createPredicateBuilder()
@@ -250,7 +244,6 @@ public class FilePredicateBuilderContractTestCase<T extends FilePredicateBuilder
         assertReject();
     }
 
-
     @Test
     public void isSymbolicLink()
     {
@@ -299,5 +292,10 @@ public class FilePredicateBuilderContractTestCase<T extends FilePredicateBuilder
     protected void assertReject()
     {
         assertThat(builder.build().test(attributes), is(false));
+    }
+
+    private class TestFilePredicateBuilder extends FilePredicateBuilder
+    {
+
     }
 }

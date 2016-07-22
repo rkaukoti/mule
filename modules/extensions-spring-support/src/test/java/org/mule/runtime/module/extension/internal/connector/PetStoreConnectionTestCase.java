@@ -6,11 +6,7 @@
  */
 package org.mule.runtime.module.extension.internal.connector;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.extension.api.runtime.ConfigurationInstance;
@@ -19,7 +15,11 @@ import org.mule.test.petstore.extension.PetStoreConnector;
 
 import java.util.List;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.junit.Assert.assertThat;
 
 public abstract class PetStoreConnectionTestCase extends ExtensionFunctionalTestCase
 {

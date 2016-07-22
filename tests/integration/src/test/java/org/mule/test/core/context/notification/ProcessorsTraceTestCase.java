@@ -6,19 +6,19 @@
  */
 package org.mule.test.core.context.notification;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.CoreMatchers.startsWith;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_FLOW_TRACE;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.context.notification.MessageProcessorNotificationListener;
 import org.mule.runtime.core.api.context.notification.ProcessorsTrace;
 import org.mule.runtime.core.api.processor.MessageProcessor;
-import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.context.notification.MessageProcessorNotification;
 import org.mule.tck.junit4.rule.SystemProperty;
 
@@ -29,43 +29,16 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_FLOW_TRACE;
 
 public class ProcessorsTraceTestCase extends FunctionalTestCase
 {
-
-    public static class ProcessorsTraceAsserter implements MessageProcessor
-    {
-
-        public static ProcessorsTrace processorsTraceToAssert;
-
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            processorsTraceToAssert = event.getProcessorsTrace();
-            return event;
-        }
-    }
-
-    public static class ProcessorsTraceAsyncAsserter extends ProcessorsTraceAsserter
-    {
-
-        public static CountDownLatch latch;
-
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            super.process(event);
-            latch.countDown();
-            return event;
-        }
-    }
 
     @Rule
     public SystemProperty flowTraceEnabled = new SystemProperty(MULE_FLOW_TRACE, "true");
@@ -472,6 +445,65 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase
                 "/subFlowDynamicWithScatterGatherChain/processors/0/1/0/subFlow/subprocessors/0"));
     }
 
+    private Matcher<ProcessorsTrace> hasExecutedProcessors(final String... expectedProcessors)
+    {
+        return new ProcessorsMatcher(expectedProcessors)
+        {
+            @Override
+            protected void doMatch(ProcessorsTrace processorsTrace, int i, String expectedProcessor)
+            {
+                Matcher processorItemMatcher = startsWith(expectedProcessor + " @");
+                if (!processorItemMatcher.matches(processorsTrace.getExecutedProcessors().get(i)))
+                {
+                    failed.add(processorItemMatcher);
+                }
+            }
+        };
+    }
+
+    private Matcher<ProcessorsTrace> hasExecutedProcessorsNoOrder(final String... expectedProcessors)
+    {
+        return new ProcessorsMatcher(expectedProcessors)
+        {
+            @Override
+            protected void doMatch(ProcessorsTrace processorsTrace, int i, String expectedProcessor)
+            {
+                Matcher<Iterable<? super String>> processorItemMatcher = hasItem(startsWith(expectedProcessor + " @"));
+                if (!processorItemMatcher.matches(processorsTrace.getExecutedProcessors()))
+                {
+                    failed.add(processorItemMatcher);
+                }
+            }
+        };
+    }
+
+    public static class ProcessorsTraceAsserter implements MessageProcessor
+    {
+
+        public static ProcessorsTrace processorsTraceToAssert;
+
+        @Override
+        public MuleEvent process(MuleEvent event) throws MuleException
+        {
+            processorsTraceToAssert = event.getProcessorsTrace();
+            return event;
+        }
+    }
+
+    public static class ProcessorsTraceAsyncAsserter extends ProcessorsTraceAsserter
+    {
+
+        public static CountDownLatch latch;
+
+        @Override
+        public MuleEvent process(MuleEvent event) throws MuleException
+        {
+            super.process(event);
+            latch.countDown();
+            return event;
+        }
+    }
+
     private abstract class ProcessorsMatcher extends TypeSafeMatcher<ProcessorsTrace>
     {
         protected List<Matcher> failed = new ArrayList<>();
@@ -514,37 +546,5 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase
         {
             description.appendText("was ").appendValue(item.getExecutedProcessors());
         }
-    }
-
-    private Matcher<ProcessorsTrace> hasExecutedProcessors(final String... expectedProcessors)
-    {
-        return new ProcessorsMatcher(expectedProcessors)
-        {
-            @Override
-            protected void doMatch(ProcessorsTrace processorsTrace, int i, String expectedProcessor)
-            {
-                Matcher processorItemMatcher = startsWith(expectedProcessor + " @");
-                if (!processorItemMatcher.matches(processorsTrace.getExecutedProcessors().get(i)))
-                {
-                    failed.add(processorItemMatcher);
-                }
-            }
-        };
-    }
-
-    private Matcher<ProcessorsTrace> hasExecutedProcessorsNoOrder(final String... expectedProcessors)
-    {
-        return new ProcessorsMatcher(expectedProcessors)
-        {
-            @Override
-            protected void doMatch(ProcessorsTrace processorsTrace, int i, String expectedProcessor)
-            {
-                Matcher<Iterable<? super String>> processorItemMatcher = hasItem(startsWith(expectedProcessor + " @"));
-                if (!processorItemMatcher.matches(processorsTrace.getExecutedProcessors()))
-                {
-                    failed.add(processorItemMatcher);
-                }
-            }
-        };
     }
 }

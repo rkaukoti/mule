@@ -7,14 +7,14 @@
 
 package org.mule.runtime.module.db.integration.config;
 
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertMessageContains;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.getAllPlanetRecords;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 
-import org.junit.Test;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertMessageContains;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.getAllPlanetRecords;
 
 public abstract class AbstractDatabaseConfigTestCase extends AbstractDbIntegrationTestCase
 {

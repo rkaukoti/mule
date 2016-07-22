@@ -6,16 +6,6 @@
  */
 package org.mule.runtime.module.http.internal.request.grizzly;
 
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import org.mule.runtime.core.api.MuleRuntimeException;
-import org.mule.runtime.module.http.internal.HttpMessageLogger;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
 import org.glassfish.grizzly.filterchain.FilterChainBuilder;
 import org.glassfish.grizzly.http.HttpCodecFilter;
 import org.junit.Rule;
@@ -25,21 +15,29 @@ import org.junit.runner.RunWith;
 import org.mockito.Answers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.MuleRuntimeException;
+import org.mule.runtime.module.http.internal.HttpMessageLogger;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
 public class LoggerTransportCustomizerTestCase extends AbstractMuleTestCase
 {
 
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
     @Mock
     private FilterChainBuilder mockFilterChainBuilder;
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     private HttpCodecFilter mockHttpCodeFilter;
     @Mock
     private MuleRuntimeException mockMuleRuntimeException;
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
     private LoggerTransportCustomizer loggerTransportCustomizer = new LoggerTransportCustomizer();
 
     @Test

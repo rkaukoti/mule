@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:test="http://www.mulesoft.org/schema/mule/test"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
                http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd">
 
     <configuration>
         <expression-language autoResolveVariables="false">
-            <import class="org.mule.runtime.core.util.StringUtils" />
+            <import class="org.mule.runtime.core.util.StringUtils"/>
             <global-functions>
                 def reversePayload() { StringUtils.reverse(payload) }
             </global-functions>
@@ -17,16 +17,16 @@
 
         <append-string-transformer message="hello"></append-string-transformer>
 
-        <test:queue name="test.out.1" />
+        <test:queue name="test.out.1"/>
 
-        <expression-transformer expression="payload.replaceAll('hello', 'bye')" />
+        <expression-transformer expression="payload.replaceAll('hello', 'bye')"/>
 
-        <test:queue name="test.out.2" />
-        
-        <expression-transformer expression="payload.replaceAll('bye', '')" />
-        <expression-transformer expression="reversePayload()" />
-            
-        <test:queue name="test.out.3" />
+        <test:queue name="test.out.2"/>
+
+        <expression-transformer expression="payload.replaceAll('bye', '')"/>
+        <expression-transformer expression="reversePayload()"/>
+
+        <test:queue name="test.out.3"/>
 
     </flow>
 

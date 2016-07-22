@@ -35,94 +35,6 @@ public class TcpMessageDispatcher extends AbstractMessageDispatcher
         this.connector = (TcpConnector) endpoint.getConnector();
     }
 
-    @Override
-    protected synchronized void doDispatch(MuleEvent event) throws Exception
-    {
-        Socket socket = connector.getSocket(endpoint);
-        try 
-        {
-            dispatchToSocket(socket, event);
-        }
-        finally 
-        {
-            connector.releaseSocket(socket, endpoint);
-        }
-    }
-
-    private void doDispatchToSocket(Socket socket, MuleEvent event) throws Exception
-    {
-        try
-        {
-            dispatchToSocket(socket, event);
-        }
-        catch(Exception e)
-        {
-            connector.releaseSocket(socket, endpoint);
-            throw new Exception(e);
-        }
-    }
-
-    @Override
-    protected synchronized MuleMessage doSend(MuleEvent event) throws Exception
-    {
-        Socket socket = connector.getSocket(endpoint);
-        doDispatchToSocket(socket, event);
-        try
-        {
-            if (returnResponse(event))
-            {
-                try
-                {
-                    Object result = receiveFromSocket(socket, event.getTimeout(), endpoint);
-                    if (result == null)
-                    {
-                        return MuleMessage.builder().nullPayload().build();
-                    }
-                    
-                    if (result instanceof MuleMessage)
-                    {
-                        return (MuleMessage) result;
-                    }
-                    
-                    return createMuleMessage(result, endpoint.getEncoding());
-                }
-                catch (SocketTimeoutException e)
-                {
-                    // we don't necessarily expect to receive a response here
-                    logger.info("Socket timed out normally while doing a synchronous receive on endpointUri: "
-                        + endpoint.getEndpointURI());
-                    return MuleMessage.builder().nullPayload().build();
-                }
-            }
-            else
-            {
-                return MuleMessage.builder().nullPayload().build();
-            }
-        }
-        finally
-        {
-            if (!returnResponse(event))
-            {
-                connector.releaseSocket(socket, endpoint);
-            }
-        }
-        
-    }
-
-    // Socket management (get and release) is handled outside this method
-    private void dispatchToSocket(Socket socket, MuleEvent event) throws Exception
-    {
-        Object payload = event.getMessage().getPayload();
-        write(socket, payload);
-    }
-
-    private void write(Socket socket, Object data) throws IOException, TransformerException
-    {
-        BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream());
-        connector.getTcpProtocol().write(bos, data);
-        bos.flush();
-    }
-
     protected static Object receiveFromSocket(final Socket socket, int timeout, final ImmutableEndpoint endpoint)
             throws IOException
     {
@@ -139,7 +51,7 @@ public class TcpMessageDispatcher extends AbstractMessageDispatcher
                 }
                 catch (IOException e)
                 {
-                   throw e;
+                    throw e;
                 }
                 catch (Exception e)
                 {
@@ -168,6 +80,94 @@ public class TcpMessageDispatcher extends AbstractMessageDispatcher
                 tis.close();
             }
         }
+    }
+
+    @Override
+    protected synchronized void doDispatch(MuleEvent event) throws Exception
+    {
+        Socket socket = connector.getSocket(endpoint);
+        try
+        {
+            dispatchToSocket(socket, event);
+        }
+        finally
+        {
+            connector.releaseSocket(socket, endpoint);
+        }
+    }
+
+    private void doDispatchToSocket(Socket socket, MuleEvent event) throws Exception
+    {
+        try
+        {
+            dispatchToSocket(socket, event);
+        }
+        catch (Exception e)
+        {
+            connector.releaseSocket(socket, endpoint);
+            throw new Exception(e);
+        }
+    }
+
+    @Override
+    protected synchronized MuleMessage doSend(MuleEvent event) throws Exception
+    {
+        Socket socket = connector.getSocket(endpoint);
+        doDispatchToSocket(socket, event);
+        try
+        {
+            if (returnResponse(event))
+            {
+                try
+                {
+                    Object result = receiveFromSocket(socket, event.getTimeout(), endpoint);
+                    if (result == null)
+                    {
+                        return MuleMessage.builder().nullPayload().build();
+                    }
+
+                    if (result instanceof MuleMessage)
+                    {
+                        return (MuleMessage) result;
+                    }
+
+                    return createMuleMessage(result, endpoint.getEncoding());
+                }
+                catch (SocketTimeoutException e)
+                {
+                    // we don't necessarily expect to receive a response here
+                    logger.info("Socket timed out normally while doing a synchronous receive on endpointUri: "
+                                + endpoint.getEndpointURI());
+                    return MuleMessage.builder().nullPayload().build();
+                }
+            }
+            else
+            {
+                return MuleMessage.builder().nullPayload().build();
+            }
+        }
+        finally
+        {
+            if (!returnResponse(event))
+            {
+                connector.releaseSocket(socket, endpoint);
+            }
+        }
+
+    }
+
+    // Socket management (get and release) is handled outside this method
+    private void dispatchToSocket(Socket socket, MuleEvent event) throws Exception
+    {
+        Object payload = event.getMessage().getPayload();
+        write(socket, payload);
+    }
+
+    private void write(Socket socket, Object data) throws IOException, TransformerException
+    {
+        BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream());
+        connector.getTcpProtocol().write(bos, data);
+        bos.flush();
     }
 
     @Override
@@ -226,7 +226,7 @@ public class TcpMessageDispatcher extends AbstractMessageDispatcher
                 }
             }
         }
-        
+
         return retryContext;
     }
 }

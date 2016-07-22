@@ -25,7 +25,7 @@ public class TestDocumentedExtensionOperations
     /**
      * This method greets a friend
      *
-     * @param friend This is one of my friends
+     * @param friend      This is one of my friends
      * @param otherFriend Some other friend
      */
     public void greetFriend(String friend, String otherFriend)
@@ -34,8 +34,6 @@ public class TestDocumentedExtensionOperations
 
     /**
      * Test Operation with blank parameter description
-     *
-     * @param value
      */
     public void operationWithBlankParameterDescription(String value)
     {

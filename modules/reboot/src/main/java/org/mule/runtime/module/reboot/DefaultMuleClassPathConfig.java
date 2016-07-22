@@ -96,7 +96,7 @@ public class DefaultMuleClassPathConfig
 
     public void addFiles(List<File> files)
     {
-        for (Iterator<File> i = files.iterator(); i.hasNext();)
+        for (Iterator<File> i = files.iterator(); i.hasNext(); )
         {
             this.addFile(i.next());
         }

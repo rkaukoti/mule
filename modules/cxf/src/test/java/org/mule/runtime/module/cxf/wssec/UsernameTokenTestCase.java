@@ -6,30 +6,28 @@
  */
 package org.mule.runtime.module.cxf.wssec;
 
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.util.concurrent.Latch;
 import org.mule.tck.junit4.rule.DynamicPort;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 public class UsernameTokenTestCase extends FunctionalTestCase
 {
-    private Latch greetLatch;
-
     @Rule
     public DynamicPort dynamicPort = new DynamicPort("port1");
+    private Latch greetLatch;
 
     @Override
     protected String[] getConfigFiles()
     {
         return new String[] {
-                             "org/mule/runtime/module/cxf/wssec/cxf-secure-service-flow-httpn.xml",
-                             "org/mule/runtime/module/cxf/wssec/username-token-conf.xml"
+                "org/mule/runtime/module/cxf/wssec/cxf-secure-service-flow-httpn.xml",
+                "org/mule/runtime/module/cxf/wssec/username-token-conf.xml"
         };
     }
 

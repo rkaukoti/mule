@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.el.datetime;
 
+import org.apache.commons.lang.LocaleUtils;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.api.el.datetime.Instant;
 import org.mule.runtime.core.config.i18n.CoreMessages;
@@ -20,13 +21,8 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.apache.commons.lang.LocaleUtils;
-
 public abstract class AbstractInstant implements Instant
 {
-
-    protected Locale locale;
-    protected Calendar calendar;
 
     protected static final DatatypeFactory datatypeFactory;
 
@@ -41,6 +37,9 @@ public abstract class AbstractInstant implements Instant
             throw new Error(e);
         }
     }
+
+    protected Locale locale;
+    protected Calendar calendar;
 
     public AbstractInstant(Calendar calendar, Locale locale)
     {
@@ -137,7 +136,8 @@ public abstract class AbstractInstant implements Instant
         else
         {
             throw new MuleRuntimeException(
-                CoreMessages.createStaticMessage("org.mule.runtime.core.el.DateTime.toXMLCalendar() does not support non-gregorian calendars."));
+                    CoreMessages.createStaticMessage(
+                            "org.mule.runtime.core.el.DateTime.toXMLCalendar() does not support non-gregorian calendars."));
         }
     }
 

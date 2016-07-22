@@ -6,9 +6,6 @@
  */
 package org.mule.functional.listener;
 
-import static java.lang.String.format;
-import static org.junit.Assert.fail;
-
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.notification.ExceptionNotificationListener;
 import org.mule.runtime.core.context.notification.ExceptionNotification;
@@ -19,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+
+import static java.lang.String.format;
+import static org.junit.Assert.fail;
 
 /**
  * Listener for exception thrown by a message source or flow.

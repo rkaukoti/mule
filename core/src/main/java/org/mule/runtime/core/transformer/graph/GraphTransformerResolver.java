@@ -6,6 +6,7 @@
  */
 package org.mule.runtime.core.transformer.graph;
 
+import org.apache.commons.collections.map.LRUMap;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.registry.ResolverException;
 import org.mule.runtime.core.api.registry.TransformerResolver;
@@ -15,8 +16,6 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 
 import java.util.List;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
-import org.apache.commons.collections.map.LRUMap;
 
 public class GraphTransformerResolver implements TransformerResolver
 {
@@ -32,7 +31,8 @@ public class GraphTransformerResolver implements TransformerResolver
         this.readWriteLock = new ReentrantReadWriteLock();
         this.graph = new TransformationGraph();
         lookupStrategyTransformation = new TransformationGraphLookupStrategy(graph);
-        converterFilter = new CompositeConverterFilter(new TransformationLengthConverterFilter(), new PriorityWeightingConverterFilter(), new NameConverterFilter());
+        converterFilter = new CompositeConverterFilter(new TransformationLengthConverterFilter(), new PriorityWeightingConverterFilter(),
+                new NameConverterFilter());
         cache = new LRUMap();
     }
 

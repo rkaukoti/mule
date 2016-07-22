@@ -6,7 +6,6 @@
  */
 package org.mule.runtime.core.serialization.internal;
 
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.serialization.ObjectSerializer;
@@ -18,6 +17,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Base class for implementations of {@link org.mule.runtime.core.api.serialization.ObjectSerializer}
@@ -156,7 +157,7 @@ public abstract class AbstractObjectSerializer implements ObjectSerializer, Mule
             {
                 throw new SerializationException(String.format(
                         "Could not initialize instance of %s after deserialization", object.getClass()
-                                .getName()), e);
+                                                                                           .getName()), e);
             }
         }
 

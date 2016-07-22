@@ -22,7 +22,7 @@ public class SleepyFileMessageDispatcher extends FileMessageDispatcher
     {
         // TODO
         String sleepTime = event.getMessage().getOutboundProperty(
-            FlowSyncAsyncProcessingStrategyTestCase.SLEEP_TIME);
+                FlowSyncAsyncProcessingStrategyTestCase.SLEEP_TIME);
 
         Thread.sleep(Integer.valueOf(sleepTime));
 

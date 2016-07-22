@@ -30,6 +30,8 @@ import org.mule.runtime.core.processor.AbstractRedeliveryPolicy;
 import org.mule.runtime.core.processor.SecurityFilterMessageProcessor;
 import org.mule.runtime.core.routing.MessageFilter;
 import org.mule.runtime.core.util.ClassUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.net.URI;
@@ -42,9 +44,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * <code>ImmutableMuleEndpoint</code> describes a Provider in the Mule Server. A
  * endpoint is a grouping of an endpoint, an endpointUri and a transformer.
@@ -52,15 +51,12 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractEndpoint extends AbstractAnnotatedObject implements ImmutableEndpoint, Disposable
 {
 
-    private static final long serialVersionUID = -1650380871293160973L;
-
     public static final String PROPERTY_PROCESS_SYNCHRONOUSLY = "processSynchronously";
-
     /**
      * logger used by this class
      */
     protected static final Logger logger = LoggerFactory.getLogger(AbstractEndpoint.class);
-
+    private static final long serialVersionUID = -1650380871293160973L;
     /**
      * The endpoint used to communicate with the external system
      */
@@ -73,60 +69,46 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
 
     private final EndpointMessageProcessorChainFactory messageProcessorsFactory;
 
-    private final List <MessageProcessor> messageProcessors;
+    private final List<MessageProcessor> messageProcessors;
 
-    private final List <MessageProcessor> responseMessageProcessors;
-    
-    private MessageProcessor messageProcessorChain;
-
+    private final List<MessageProcessor> responseMessageProcessors;
     /**
      * The name for the endpoint
      */
     private final String name;
-
-    /**
-     * Any additional properties for the endpoint
-     * // TODO This should be final. See MULE-3105
-     * // TODO Shouldn't this be guarded from concurrent writes?
-     */
-    private Map<String, Serializable> properties = new HashMap();
-
     /**
      * The transaction configuration for this endpoint
      */
     private final TransactionConfig transactionConfig;
-
     /**
      * determines whether unaccepted filtered events should be removed from the
      * source. If they are not removed its up to the Message receiver to handle
      * recieving the same message again
      */
     private final boolean deleteUnacceptedMessages;
-
     private final MessageExchangePattern messageExchangePattern;
-    
     /**
      * How long to block when performing a remote synchronisation to a remote host.
      * This property is optional and will be set to the default Synchonous MuleEvent
      * time out value if not set
      */
     private final int responseTimeout;
-
     /**
      * The state that the endpoint is initialised in such as started or stopped
      */
     private final String initialState;
-
     private final Charset endpointEncoding;
-
-    private MuleContext muleContext;
-
-    protected RetryPolicyTemplate retryPolicyTemplate;
-
-    private String endpointBuilderName;
-
     private final MediaType endpointMimeType;
-
+    protected RetryPolicyTemplate retryPolicyTemplate;
+    private MessageProcessor messageProcessorChain;
+    /**
+     * Any additional properties for the endpoint
+     * // TODO This should be final. See MULE-3105
+     * // TODO Shouldn't this be guarded from concurrent writes?
+     */
+    private Map<String, Serializable> properties = new HashMap();
+    private MuleContext muleContext;
+    private String endpointBuilderName;
     private AbstractRedeliveryPolicy redeliveryPolicy;
 
     private boolean disableTransportTransformer = false;
@@ -146,10 +128,10 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
                             RetryPolicyTemplate retryPolicyTemplate,
                             AbstractRedeliveryPolicy redeliveryPolicy,
                             EndpointMessageProcessorChainFactory messageProcessorsFactory,
-                            List <MessageProcessor> messageProcessors,
-                            List <MessageProcessor> responseMessageProcessors,
+                            List<MessageProcessor> messageProcessors,
+                            List<MessageProcessor> responseMessageProcessors,
                             boolean disableTransportTransformer,
-            MediaType endpointMimeType)
+                            MediaType endpointMimeType)
     {
         this.connector = connector;
         this.endpointUri = endpointUri;
@@ -187,6 +169,11 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
         {
             this.responseMessageProcessors = responseMessageProcessors;
         }
+    }
+
+    protected static boolean equal(Object a, Object b)
+    {
+        return ClassUtils.equal(a, b);
     }
 
     @Override
@@ -240,18 +227,20 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
     }
 
     @Override
-    public List <MessageProcessor> getMessageProcessors()
+    public List<MessageProcessor> getMessageProcessors()
     {
         return messageProcessors;
     }
 
     @Override
-    public List <MessageProcessor> getResponseMessageProcessors()
+    public List<MessageProcessor> getResponseMessageProcessors()
     {
         return responseMessageProcessors;
     }
 
-    /** @deprecated use getMessageProcessors() */
+    /**
+     * @deprecated use getMessageProcessors()
+     */
     @Deprecated
     public List<Transformer> getTransformers()
     {
@@ -286,7 +275,7 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
         // the embedded password. This will only remove the password if the
         // uri contains all the necessary information to successfully rebuild the url
         if (uri != null && (uri.getRawUserInfo() != null) && (uri.getScheme() != null) && (uri.getHost() != null)
-                && (uri.getRawPath() != null))
+            && (uri.getRawPath() != null))
         {
             // build a pattern up that matches what we need tp strip out the password
             Pattern sanitizerPattern = Pattern.compile("(.*):.*");
@@ -294,12 +283,12 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
             if (sanitizerMatcher.matches())
             {
                 sanitizedEndPointUri = new StringBuilder(uri.getScheme()).append("://")
-                        .append(sanitizerMatcher.group(1))
-                        .append(":<password>")
-                        .append("@")
-                        .append(uri.getHost())
-                        .append(uri.getRawPath())
-                        .toString();
+                                                                         .append(sanitizerMatcher.group(1))
+                                                                         .append(":<password>")
+                                                                         .append("@")
+                                                                         .append(uri.getHost())
+                                                                         .append(uri.getRawPath())
+                                                                         .toString();
             }
             if (uri.getRawQuery() != null)
             {
@@ -309,11 +298,11 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
         }
 
         return ClassUtils.getClassName(getClass()) + "{endpointUri=" + sanitizedEndPointUri + ", connector="
-                + connector + ",  name='" + name + "', mep=" + messageExchangePattern + ", properties=" + properties
-                + ", transactionConfig=" + transactionConfig + ", deleteUnacceptedMessages=" + deleteUnacceptedMessages
-                + ", initialState=" + initialState + ", responseTimeout="
-                + responseTimeout + ", endpointEncoding=" + endpointEncoding + ", disableTransportTransformer="
-                + disableTransportTransformer + "}";
+               + connector + ",  name='" + name + "', mep=" + messageExchangePattern + ", properties=" + properties
+               + ", transactionConfig=" + transactionConfig + ", deleteUnacceptedMessages=" + deleteUnacceptedMessages
+               + ", initialState=" + initialState + ", responseTimeout="
+               + responseTimeout + ", endpointEncoding=" + endpointEncoding + ", disableTransportTransformer="
+               + disableTransportTransformer + "}";
     }
 
     @Override
@@ -326,11 +315,6 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
     public TransactionConfig getTransactionConfig()
     {
         return transactionConfig;
-    }
-
-    protected static boolean equal(Object a, Object b)
-    {
-        return ClassUtils.equal(a, b);
     }
 
     @Override
@@ -347,41 +331,41 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
 
         final AbstractEndpoint other = (AbstractEndpoint) obj;
         return equal(retryPolicyTemplate, other.retryPolicyTemplate)
-                && equal(connector, other.connector)
-                && deleteUnacceptedMessages == other.deleteUnacceptedMessages
-                && equal(endpointEncoding, other.endpointEncoding)
-                && equal(endpointUri, other.endpointUri)
-                && equal(initialState, other.initialState)
-                // don't include lifecycle state as lifecycle code includes hashing
-                // && equal(initialised, other.initialised)
-                && equal(messageExchangePattern, other.messageExchangePattern)
-                && equal(name, other.name) 
-                && equal(properties, other.properties)
-                && responseTimeout == other.responseTimeout
-                && equal(messageProcessors, other.messageProcessors)
-                && equal(responseMessageProcessors, other.responseMessageProcessors)
-                && equal(transactionConfig, other.transactionConfig)
-                && disableTransportTransformer == other.disableTransportTransformer;
+               && equal(connector, other.connector)
+               && deleteUnacceptedMessages == other.deleteUnacceptedMessages
+               && equal(endpointEncoding, other.endpointEncoding)
+               && equal(endpointUri, other.endpointUri)
+               && equal(initialState, other.initialState)
+               // don't include lifecycle state as lifecycle code includes hashing
+               // && equal(initialised, other.initialised)
+               && equal(messageExchangePattern, other.messageExchangePattern)
+               && equal(name, other.name)
+               && equal(properties, other.properties)
+               && responseTimeout == other.responseTimeout
+               && equal(messageProcessors, other.messageProcessors)
+               && equal(responseMessageProcessors, other.responseMessageProcessors)
+               && equal(transactionConfig, other.transactionConfig)
+               && disableTransportTransformer == other.disableTransportTransformer;
     }
 
     @Override
     public int hashCode()
     {
-        return ClassUtils.hash(new Object[]{this.getClass(), retryPolicyTemplate, connector,
-                deleteUnacceptedMessages ? Boolean.TRUE : Boolean.FALSE,
-                endpointEncoding,
-                endpointUri,
-                initialState,
-                // don't include lifecycle state as lifecycle code includes hashing
-                // initialised,
-                messageExchangePattern,
-                name,
-                properties, 
-                Integer.valueOf(responseTimeout),
-                responseMessageProcessors,
-                transactionConfig,
-                messageProcessors,
-                disableTransportTransformer ? Boolean.TRUE : Boolean.FALSE});
+        return ClassUtils.hash(new Object[] {this.getClass(), retryPolicyTemplate, connector,
+                                             deleteUnacceptedMessages ? Boolean.TRUE : Boolean.FALSE,
+                                             endpointEncoding,
+                                             endpointUri,
+                                             initialState,
+                                             // don't include lifecycle state as lifecycle code includes hashing
+                                             // initialised,
+                                             messageExchangePattern,
+                                             name,
+                                             properties,
+                                             Integer.valueOf(responseTimeout),
+                                             responseMessageProcessors,
+                                             transactionConfig,
+                                             messageProcessors,
+                                             disableTransportTransformer ? Boolean.TRUE : Boolean.FALSE});
     }
 
     @Override
@@ -408,8 +392,7 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
      * Returns an EndpointSecurityFilter for this endpoint. If one is not set, there
      * will be no authentication on events sent via this endpoint
      *
-     * @return EndpointSecurityFilter responsible for authenticating message flow via
-     *         this endpoint.
+     * @return EndpointSecurityFilter responsible for authenticating message flow via this endpoint.
      * @see org.mule.compatibility.core.api.security.EndpointSecurityFilter
      */
     @Override
@@ -419,7 +402,7 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
         {
             if (mp instanceof SecurityFilterMessageProcessor)
             {
-                SecurityFilter filter = ((SecurityFilterMessageProcessor)mp).getFilter();
+                SecurityFilter filter = ((SecurityFilterMessageProcessor) mp).getFilter();
                 if (filter instanceof EndpointSecurityFilter)
                 {
                     return (EndpointSecurityFilter) filter;
@@ -515,9 +498,9 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
     {
         return connector.supportsProtocol(protocol);
     }
-    
+
     @Override
-    public boolean isDisableTransportTransformer() 
+    public boolean isDisableTransportTransformer()
     {
         return disableTransportTransformer;
     }

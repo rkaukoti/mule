@@ -6,28 +6,27 @@
  */
 package org.mule.runtime.module.cxf.support;
 
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_GROUP_SIZE_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_ID_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_SEQUENCE_PROPERTY;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROPERTY;
-
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.MuleMessage;
-import org.mule.runtime.module.cxf.CxfConstants;
-
-import java.util.Set;
-
-import javax.xml.namespace.QName;
-
 import org.apache.cxf.binding.soap.SoapMessage;
 import org.apache.cxf.headers.Header;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.Phase;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.MuleMessage;
+import org.mule.runtime.module.cxf.CxfConstants;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+
+import java.util.Set;
+
+import javax.xml.namespace.QName;
+
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_GROUP_SIZE_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_ID_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_SEQUENCE_PROPERTY;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROPERTY;
 
 /**
  * Reads the Mule Soap Header and sets the various header properties on the message.
@@ -80,13 +79,13 @@ public class MuleHeadersInInterceptor extends AbstractMuleHeaderInterceptor
             {
                 continue;
             }
-            
+
             if (SUPPORTED_HEADERS.contains(child_el.getLocalName()))
             {
                 message.put(child_el.getLocalName(), collectTextFrom(child_el));
             }
         }
-        
+
 
         MuleEvent reqEvent = ((MuleEvent) message.getExchange().get(CxfConstants.MULE_EVENT));
 

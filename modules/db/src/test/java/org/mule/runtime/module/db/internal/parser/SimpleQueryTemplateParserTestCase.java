@@ -7,12 +7,7 @@
 
 package org.mule.runtime.module.db.internal.parser;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.runtime.module.db.internal.domain.param.InputQueryParam;
 import org.mule.runtime.module.db.internal.domain.param.QueryParam;
 import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
@@ -21,7 +16,12 @@ import org.mule.runtime.module.db.internal.domain.type.UnknownDbType;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 @SmallTest
 public class SimpleQueryTemplateParserTestCase extends AbstractMuleTestCase
@@ -230,7 +230,8 @@ public class SimpleQueryTemplateParserTestCase extends AbstractMuleTestCase
     @Test
     public void definesTemplateWithComplexExpressionParam() throws Exception
     {
-        QueryTemplate queryTemplate = parser.parse("SELECT * FROM PLANET WHERE POSITION = #[message.inboundProperties['position']] AND NAME= #[planetName]");
+        QueryTemplate queryTemplate =
+                parser.parse("SELECT * FROM PLANET WHERE POSITION = #[message.inboundProperties['position']] AND NAME= #[planetName]");
 
         assertEquals(QueryType.SELECT, queryTemplate.getType());
         assertEquals("SELECT * FROM PLANET WHERE POSITION = ? AND NAME= ?", queryTemplate.getSqlText());

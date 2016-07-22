@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.management.support;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.MuleContextBuilder;
 import org.mule.runtime.core.config.DefaultMuleConfiguration;
@@ -16,7 +15,8 @@ import org.mule.runtime.core.context.DefaultMuleContextFactory;
 import org.mule.runtime.module.management.agent.JmxApplicationAgent;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class JmxMissingIdTestCase extends AbstractMuleTestCase
 {
@@ -49,7 +49,7 @@ public class JmxMissingIdTestCase extends AbstractMuleTestCase
             muleContext.getRegistry().registerAgent(jmxAgent);
 
             muleContext.start();
-            
+
             fail("Should have failed.");
         }
         catch (Exception e)

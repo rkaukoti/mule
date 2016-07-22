@@ -7,11 +7,10 @@
 package org.mule.runtime.config.spring.factories;
 
 import org.mule.runtime.core.api.store.ObjectStore;
-
-import java.io.Serializable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
 
 public abstract class AbstractQueueStoreFactoryBean extends ObjectStoreFromRegistryFactoryBean
 {

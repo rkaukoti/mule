@@ -15,6 +15,8 @@ import org.mule.runtime.core.execution.TransactionalExecutionTemplate;
 import org.mule.runtime.core.transaction.MuleTransactionConfig;
 import org.mule.runtime.core.transaction.TransactionCoordination;
 import org.mule.runtime.core.transaction.XaTransactionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -27,9 +29,6 @@ import javax.transaction.TransactionManager;
 import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 import javax.transaction.xa.Xid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public abstract class AbstractExternalTransactionTestCase extends FunctionalTestCase
@@ -94,9 +93,12 @@ public abstract class AbstractExternalTransactionTestCase extends FunctionalTest
         return executionTemplate;
     }
 
-    /** An XA resource that allows setting, committing, and rolling back the value of one resource */
+    /**
+     * An XA resource that allows setting, committing, and rolling back the value of one resource
+     */
     public static class TestResource implements XAResource
     {
+        protected int _timeout = 0;
         private Map<Transaction, Integer> transientValue = new HashMap<Transaction, Integer>();
         private int persistentValue;
         private TransactionManager tm;
@@ -104,12 +106,6 @@ public abstract class AbstractExternalTransactionTestCase extends FunctionalTest
         public TestResource(TransactionManager tm)
         {
             this.tm = tm;
-        }
-
-        public void setValue(int val)
-        {
-            Transaction tx = getCurrentTransaction();
-            transientValue.put(tx, val);
         }
 
         private Transaction getCurrentTransaction()
@@ -150,6 +146,12 @@ public abstract class AbstractExternalTransactionTestCase extends FunctionalTest
             }
             Integer val = transientValue.get(tx);
             return val == null ? persistentValue : val;
+        }
+
+        public void setValue(int val)
+        {
+            Transaction tx = getCurrentTransaction();
+            transientValue.put(tx, val);
         }
 
         @Override
@@ -227,8 +229,6 @@ public abstract class AbstractExternalTransactionTestCase extends FunctionalTest
             logger.debug("XA_START[" + xid + "] Flags=" + flags);
             dumpStackTrace();
         }
-
-        protected int _timeout = 0;
 
         private void dumpStackTrace()
         {

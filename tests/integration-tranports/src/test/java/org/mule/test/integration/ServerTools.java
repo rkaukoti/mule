@@ -6,13 +6,6 @@
  */
 package org.mule.test.integration;
 
-import org.mule.compatibility.transport.file.filters.FilenameWildcardFilter;
-import org.mule.runtime.core.util.FileUtils;
-
-import java.io.File;
-
-import javax.jms.JMSException;
-
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.tools.ant.BuildException;
@@ -23,6 +16,12 @@ import org.apache.tools.ant.taskdefs.Java;
 import org.apache.tools.ant.types.Environment;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.util.Watchdog;
+import org.mule.compatibility.transport.file.filters.FilenameWildcardFilter;
+import org.mule.runtime.core.util.FileUtils;
+
+import java.io.File;
+
+import javax.jms.JMSException;
 
 /**
  * Will start external test servers needed for the integration tests
@@ -67,9 +66,9 @@ public class ServerTools
         if (activeMqHome == null)
         {
             throw new IllegalArgumentException(
-                "You must set the "
-                                + ACTIVEMQ_HOME
-                                + " system property to the root path of an ActiveMq distribution (v3.0 and greater) before running these tests");
+                    "You must set the "
+                    + ACTIVEMQ_HOME
+                    + " system property to the root path of an ActiveMq distribution (v3.0 and greater) before running these tests");
         }
         Project project = new Project();
         DefaultLogger consoleLogger = new DefaultLogger();
@@ -132,6 +131,14 @@ public class ServerTools
         }
     }
 
+    static Environment.Variable createVar(String name, String value)
+    {
+        Environment.Variable var = new Environment.Variable();
+        var.setKey(name);
+        var.setValue(value);
+        return var;
+    }
+
     static class JavaTask extends Java
     {
         public KillableWatchdog watchDog;
@@ -179,14 +186,6 @@ public class ServerTools
         {
             super.timeoutOccured(null);
         }
-    }
-
-    static Environment.Variable createVar(String name, String value)
-    {
-        Environment.Variable var = new Environment.Variable();
-        var.setKey(name);
-        var.setValue(value);
-        return var;
     }
 
 }

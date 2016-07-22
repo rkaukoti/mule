@@ -6,30 +6,30 @@
  */
 package org.mule.functional.util.ftp;
 
+import org.apache.ftpserver.ftplet.Ftplet;
 import org.mule.runtime.core.util.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.ftpserver.ftplet.Ftplet;
-
 public class FtpServer
 {
     public static final String FTP_SERVER_BASE_DIR = "target/ftpserver";
-    
+
     private String ftpHost;
     private int ftpPort;
     private String ftpUser;
     private String ftpPassword;
     private Server server;
     private FtpClient ftpClient;
-    
+
     private Ftplet ftplet = new MuleFtplet(new MuleFtplet.Callback()
     {
         @Override
         public void fileUploadCompleted()
         {
         }
+
         @Override
         public void fileMoveCompleted()
         {
@@ -90,7 +90,7 @@ public class FtpServer
         server = new Server(ftpPort, ftplet);
         // this is really ugly, but the above doesn't get to waiting.
         // need to improve this as part of ftp server work
-        synchronized(this)
+        synchronized (this)
         {
             wait(500);
         }

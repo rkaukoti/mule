@@ -6,10 +6,9 @@
  */
 package org.mule.runtime.module.http.functional.requester;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
-
+import org.eclipse.jetty.io.EndPoint;
+import org.eclipse.jetty.server.Request;
+import org.junit.Test;
 import org.mule.tck.probe.JUnitProbe;
 import org.mule.tck.probe.PollingProber;
 
@@ -19,9 +18,9 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.io.EndPoint;
-import org.eclipse.jetty.server.Request;
-import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 public class HttpRequestConnectionsPersistenceTestCase extends AbstractHttpRequestTestCase
 {

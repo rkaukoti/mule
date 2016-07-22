@@ -7,9 +7,9 @@
 package org.mule.runtime.module.ws.consumer;
 
 
-import javax.xml.ws.WebFault;
-
 import org.apache.cxf.frontend.FaultInfoException;
+
+import javax.xml.ws.WebFault;
 
 @WebFault
 public class EchoException extends FaultInfoException

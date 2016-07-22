@@ -8,10 +8,10 @@ package org.mule.compatibility.core.api.endpoint;
 
 import org.mule.compatibility.core.api.security.EndpointSecurityFilter;
 import org.mule.compatibility.core.api.transport.Connector;
+import org.mule.runtime.api.meta.NamedObject;
 import org.mule.runtime.api.metadata.MediaType;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.api.meta.NamedObject;
 import org.mule.runtime.core.api.endpoint.LegacyImmutableEndpoint;
 import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.retry.RetryPolicyTemplate;
@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * <code>ImmutableEndpoint</code> describes a Message endpoint where data is sent or received. An Enpoint is an Resource
  * address (EndpointUri), with associated transformation, transaction and filtering rules.
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
@@ -66,8 +66,7 @@ public interface ImmutableEndpoint extends Serializable, NamedObject, LegacyImmu
     /**
      * Decides the encoding to be used for events received by this endpoint
      *
-     * @return the encoding set on the endpoint or null if no codin has been
-     *         specified
+     * @return the encoding set on the endpoint or null if no codin has been specified
      */
     Charset getEncoding();
 
@@ -104,17 +103,15 @@ public interface ImmutableEndpoint extends Serializable, NamedObject, LegacyImmu
     String getProtocol();
 
     /**
-     * @return true if this endpoint is read-only and none of it's properties can
-     *         change. Global endpoints should be read-only so that unexpected
-     *         behaviour is avoided.
+     * @return true if this endpoint is read-only and none of it's properties can change. Global endpoints should be read-only so that
+     * unexpected behaviour is avoided.
      */
     boolean isReadOnly();
 
     /**
      * Returns the transaction configuration for this endpoint
      *
-     * @return the transaction configuration for this endpoint or null if the
-     *         endpoint is not transactional
+     * @return the transaction configuration for this endpoint or null if the endpoint is not transactional
      */
     TransactionConfig getTransactionConfig();
 
@@ -138,8 +135,7 @@ public interface ImmutableEndpoint extends Serializable, NamedObject, LegacyImmu
      * Returns an EndpointSecurityFilter for this endpoint. If one is not set,
      * there will be no authentication on events sent via this endpoint
      *
-     * @return EndpointSecurityFilter responsible for authenticating message flow
-     *         via this endpoint.
+     * @return EndpointSecurityFilter responsible for authenticating message flow via this endpoint.
      * @see EndpointSecurityFilter
      */
     @Deprecated
@@ -147,9 +143,9 @@ public interface ImmutableEndpoint extends Serializable, NamedObject, LegacyImmu
 
     EndpointMessageProcessorChainFactory getMessageProcessorsFactory();
 
-    List <MessageProcessor> getMessageProcessors();
+    List<MessageProcessor> getMessageProcessors();
 
-    List <MessageProcessor> getResponseMessageProcessors();
+    List<MessageProcessor> getResponseMessageProcessors();
 
     MessageExchangePattern getExchangePattern();
 

@@ -47,15 +47,14 @@ import javax.transaction.xa.XAResource;
  */
 @Deprecated
 public class TransactionalQueueManager extends AbstractXAResourceManager
-    implements QueueManager, MuleContextAware
+        implements QueueManager, MuleContextAware
 {
     private final Map<String, QueueInfo> queues = new HashMap<String, QueueInfo>();
-
-    private QueueConfiguration defaultQueueConfiguration;
-    private MuleContext muleContext;
     private final Set<QueueStore> queueObjectStores = new HashSet<QueueStore>();
     private final Set<ListableObjectStore> listableObjectStores = new HashSet<ListableObjectStore>();
     private final ReadWriteLock queuesLock = new ReentrantReadWriteLock();
+    private QueueConfiguration defaultQueueConfiguration;
+    private MuleContext muleContext;
 
     /**
      * {@inheritDoc}
@@ -74,8 +73,8 @@ public class TransactionalQueueManager extends AbstractXAResourceManager
     @Override
     public synchronized void setDefaultQueueConfiguration(org.mule.runtime.core.util.queue.QueueConfiguration config)
     {
-        this.defaultQueueConfiguration = (QueueConfiguration)config;
-        addStore(((QueueConfiguration)config).objectStore);
+        this.defaultQueueConfiguration = (QueueConfiguration) config;
+        addStore(((QueueConfiguration) config).objectStore);
     }
 
     /**
@@ -85,7 +84,7 @@ public class TransactionalQueueManager extends AbstractXAResourceManager
     public synchronized void setQueueConfiguration(String queueName, org.mule.runtime.core.util.queue.QueueConfiguration config)
     {
         getQueue(queueName, (QueueConfiguration) config).setConfig((QueueConfiguration) config);
-        addStore(((QueueConfiguration)config).objectStore);
+        addStore(((QueueConfiguration) config).objectStore);
     }
 
     protected void disposeQueue(Queue queue) throws MuleException, InterruptedException
@@ -302,8 +301,8 @@ public class TransactionalQueueManager extends AbstractXAResourceManager
         if (muleContext != null)
         {
             for (ListableObjectStore store : muleContext.getRegistry()
-                .lookupByType(ListableObjectStore.class)
-                .values())
+                                                        .lookupByType(ListableObjectStore.class)
+                                                        .values())
             {
                 addStore(store);
             }
@@ -321,15 +320,15 @@ public class TransactionalQueueManager extends AbstractXAResourceManager
         }
     }
 
+    public MuleContext getMuleContext()
+    {
+        return muleContext;
+    }
+
     @Override
     public void setMuleContext(MuleContext context)
     {
         this.muleContext = context;
-    }
-
-    public MuleContext getMuleContext()
-    {
-        return muleContext;
     }
 
     private void addStore(ListableObjectStore<?> store)

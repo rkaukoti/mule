@@ -16,14 +16,12 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 
 
 /**
- *
  * Routes a message through a set of routes that will be obtained
  * dynamically (per message) using a {@link DynamicRouteResolver}.
  *
  * The message will be route to the first route, if the route execution is successful then
  * execution ends, if not the message will be route to the next route. This continues until a
  * successful route is found.
- *
  */
 public class DynamicFirstSuccessful implements MessageProcessor, Initialisable, MuleContextAware
 {
@@ -55,7 +53,6 @@ public class DynamicFirstSuccessful implements MessageProcessor, Initialisable, 
      * Specifies an expression that when evaluated as determines if the processing of
      * one a route was a failure or not.
      *
-     * @param failureExpression
      * @see org.mule.runtime.core.routing.filters.ExpressionFilter
      */
     public void setFailureExpression(String failureExpression)

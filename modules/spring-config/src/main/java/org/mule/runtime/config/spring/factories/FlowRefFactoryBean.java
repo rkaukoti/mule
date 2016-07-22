@@ -6,10 +6,8 @@
  */
 package org.mule.runtime.config.spring.factories;
 
-import static org.mule.runtime.core.util.NotificationUtils.buildPathResolver;
-
-import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.runtime.api.meta.AnnotatedObject;
+import org.mule.runtime.core.AbstractAnnotatedObject;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -29,6 +27,10 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.processor.NonBlockingMessageProcessor;
 import org.mule.runtime.core.processor.chain.DynamicMessageProcessorContainer;
 import org.mule.runtime.core.util.NotificationUtils.FlowMap;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.FactoryBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -36,72 +38,12 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.xml.namespace.QName;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.FactoryBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import static org.mule.runtime.core.util.NotificationUtils.buildPathResolver;
 
 public class FlowRefFactoryBean extends AbstractAnnotatedObject
-    implements FactoryBean<MessageProcessor>, ApplicationContextAware, MuleContextAware, Initialisable,
-    Disposable
+        implements FactoryBean<MessageProcessor>, ApplicationContextAware, MuleContextAware, Initialisable,
+        Disposable
 {
-
-    private abstract class FlowRefMessageProcessor implements NonBlockingMessageProcessor, AnnotatedObject
-    {
-        @Override
-        public Object getAnnotation(QName name)
-        {
-            return FlowRefFactoryBean.this.getAnnotation(name);
-        }
-
-        @Override
-        public Map<QName, Object> getAnnotations()
-        {
-            return FlowRefFactoryBean.this.getAnnotations();
-        }
-
-        @Override
-        public void setAnnotations(Map<QName, Object> annotations)
-        {
-            FlowRefFactoryBean.this.setAnnotations(annotations);
-        }
-    }
-    
-    private abstract class FlowRefMessageProcessorContainer extends FlowRefMessageProcessor implements DynamicMessageProcessorContainer
-    {
-        private MessageProcessorPathElement pathElement;
-        private MessageProcessor dynamicMessageProcessor;
-
-        @Override
-        public void addMessageProcessorPathElements(MessageProcessorPathElement pathElement) {
-            this.pathElement = pathElement;
-        }
-        
-        @Override
-        public FlowMap buildInnerPaths()
-        {
-            if (dynamicMessageProcessor instanceof MessageProcessorContainer)
-            {
-                ((MessageProcessorContainer) dynamicMessageProcessor).addMessageProcessorPathElements(getPathElement());
-                return buildPathResolver(getPathElement());
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public MessageProcessorPathElement getPathElement()
-        {
-            return pathElement;
-        }
-
-        protected void setResolvedMessageProcessor(MessageProcessor dynamicMessageProcessor)
-        {
-            this.dynamicMessageProcessor = dynamicMessageProcessor;
-        }
-
-    }
 
     private static final String NULL_FLOW_CONTRUCT_NAME = "null";
     private static final String MULE_PREFIX = "_mule-";
@@ -297,5 +239,63 @@ public class FlowRefFactoryBean extends AbstractAnnotatedObject
     public void setMuleContext(MuleContext context)
     {
         this.muleContext = context;
+    }
+
+    private abstract class FlowRefMessageProcessor implements NonBlockingMessageProcessor, AnnotatedObject
+    {
+        @Override
+        public Object getAnnotation(QName name)
+        {
+            return FlowRefFactoryBean.this.getAnnotation(name);
+        }
+
+        @Override
+        public Map<QName, Object> getAnnotations()
+        {
+            return FlowRefFactoryBean.this.getAnnotations();
+        }
+
+        @Override
+        public void setAnnotations(Map<QName, Object> annotations)
+        {
+            FlowRefFactoryBean.this.setAnnotations(annotations);
+        }
+    }
+
+    private abstract class FlowRefMessageProcessorContainer extends FlowRefMessageProcessor implements DynamicMessageProcessorContainer
+    {
+        private MessageProcessorPathElement pathElement;
+        private MessageProcessor dynamicMessageProcessor;
+
+        @Override
+        public void addMessageProcessorPathElements(MessageProcessorPathElement pathElement)
+        {
+            this.pathElement = pathElement;
+        }
+
+        @Override
+        public FlowMap buildInnerPaths()
+        {
+            if (dynamicMessageProcessor instanceof MessageProcessorContainer)
+            {
+                ((MessageProcessorContainer) dynamicMessageProcessor).addMessageProcessorPathElements(getPathElement());
+                return buildPathResolver(getPathElement());
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public MessageProcessorPathElement getPathElement()
+        {
+            return pathElement;
+        }
+
+        protected void setResolvedMessageProcessor(MessageProcessor dynamicMessageProcessor)
+        {
+            this.dynamicMessageProcessor = dynamicMessageProcessor;
+        }
+
     }
 }

@@ -15,7 +15,9 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
  */
 public class EntryPointNotFoundException extends MuleException
 {
-    /** @param message the exception message */
+    /**
+     * @param message the exception message
+     */
     public EntryPointNotFoundException(String message)
     {
         super(CoreMessages.failedToFindEntrypointForComponent(message));

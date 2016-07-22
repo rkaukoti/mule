@@ -29,8 +29,8 @@ public interface ReadCommand
      * @param message  the incoming MuleMessage
      * @param filePath the path of the file you want to read
      * @param lock     whether or not to lock the file
-     * @return An {@link OperationResult} with an {@link InputStream} with the file's content as payload
-     * and a {@link FileAttributes} object as {@link MuleMessage#getAttributes()}
+     * @return An {@link OperationResult} with an {@link InputStream} with the file's content as payload and a {@link FileAttributes} object
+     * as {@link MuleMessage#getAttributes()}
      * @throws IllegalArgumentException if the file at the given path doesn't exists
      */
     OperationResult<InputStream, FileAttributes> read(FileConnectorConfig config, MuleMessage message, String filePath, boolean lock);

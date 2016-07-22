@@ -6,14 +6,8 @@
  */
 package org.mule.extension.ftp;
 
-import static java.util.stream.Collectors.toList;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.functional.util.sftp.SftpServer.PASSWORD;
-import static org.mule.functional.util.sftp.SftpServer.USERNAME;
-import static org.mule.runtime.module.extension.file.api.FileWriteMode.APPEND;
-import static org.mule.runtime.module.extension.file.api.FileWriteMode.OVERWRITE;
+import org.junit.rules.TemporaryFolder;
+import org.junit.rules.TestRule;
 import org.mule.extension.AbstractFtpTestHarness;
 import org.mule.extension.FtpTestHarness;
 import org.mule.extension.ftp.api.FtpFileAttributes;
@@ -30,8 +24,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import org.junit.rules.TemporaryFolder;
-import org.junit.rules.TestRule;
+import static java.util.stream.Collectors.toList;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.functional.util.sftp.SftpServer.PASSWORD;
+import static org.mule.functional.util.sftp.SftpServer.USERNAME;
+import static org.mule.runtime.module.extension.file.api.FileWriteMode.APPEND;
+import static org.mule.runtime.module.extension.file.api.FileWriteMode.OVERWRITE;
 
 /**
  * Implementation of {@link FtpTestHarness} for classic SFTP connections

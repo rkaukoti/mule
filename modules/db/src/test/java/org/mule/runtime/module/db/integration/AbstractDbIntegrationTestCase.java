@@ -7,16 +7,15 @@
 
 package org.mule.runtime.module.db.integration;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
-import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import org.mule.runtime.module.db.integration.model.Field;
 import org.mule.runtime.module.db.integration.model.Record;
 import org.mule.runtime.module.db.internal.domain.database.DbConfig;
 import org.mule.runtime.module.db.internal.resolver.database.DbConfigResolver;
-import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,16 +24,17 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.junit.Before;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
+import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
 
 @RunWith(Parameterized.class)
 public abstract class AbstractDbIntegrationTestCase extends FunctionalTestCase
 {
 
-    private final String dataSourceConfigResource;
     protected final AbstractTestDatabase testDatabase;
+    private final String dataSourceConfigResource;
 
     public AbstractDbIntegrationTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
     {
@@ -108,7 +108,8 @@ public abstract class AbstractDbIntegrationTestCase extends FunctionalTestCase
             records.add(new Record(new Field("NAME", name)));
         }
 
-        List<Map<String, String>> result = selectData(String.format("select * from PLANET where name in (%s)", conditionBuilder.toString()), getDefaultDataSource());
+        List<Map<String, String>> result =
+                selectData(String.format("select * from PLANET where name in (%s)", conditionBuilder.toString()), getDefaultDataSource());
 
         assertRecords(result, records.toArray(new Record[0]));
     }
@@ -131,7 +132,8 @@ public abstract class AbstractDbIntegrationTestCase extends FunctionalTestCase
             conditionBuilder.append("'").append(name).append("'");
         }
 
-        List<Map<String, String>> result = selectData(String.format("select * from PLANET where name in (%s)", conditionBuilder.toString()), getDefaultDataSource());
+        List<Map<String, String>> result =
+                selectData(String.format("select * from PLANET where name in (%s)", conditionBuilder.toString()), getDefaultDataSource());
         assertThat(result.size(), equalTo(0));
     }
 

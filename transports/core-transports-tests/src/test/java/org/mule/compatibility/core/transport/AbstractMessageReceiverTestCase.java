@@ -6,16 +6,15 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.MessageReceiver;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
 import org.mule.tck.testmodels.fruit.Orange;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 public abstract class AbstractMessageReceiverTestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -58,8 +57,6 @@ public abstract class AbstractMessageReceiverTestCase extends AbstractMuleContex
     /**
      * Implementations of this method should ensure that the correct connector is set
      * on the endpoint
-     * 
-     * @throws Exception
      */
     public abstract InboundEndpoint getEndpoint() throws Exception;
 }

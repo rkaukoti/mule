@@ -19,35 +19,43 @@ import java.util.List;
  * @author David Dossot (david@dossot.net)
  */
 public abstract class AbstractLifecycleTracker implements Lifecycle,
-        MuleContextAware {
+        MuleContextAware
+{
 
     private final List<String> tracker = new ArrayList<String>();
 
-    public List<String> getTracker() {
+    public List<String> getTracker()
+    {
         return tracker;
     }
 
-    public void setProperty(final String value) {
+    public void setProperty(final String value)
+    {
         getTracker().add("setProperty");
     }
 
-    public void setMuleContext(final MuleContext context) {
+    public void setMuleContext(final MuleContext context)
+    {
         getTracker().add("setMuleContext");
     }
 
-    public void initialise() throws InitialisationException {
+    public void initialise() throws InitialisationException
+    {
         getTracker().add("initialise");
     }
 
-    public void start() throws MuleException {
+    public void start() throws MuleException
+    {
         getTracker().add("start");
     }
 
-    public void stop() throws MuleException {
+    public void stop() throws MuleException
+    {
         getTracker().add("stop");
     }
 
-    public void dispose() {
+    public void dispose()
+    {
         getTracker().add("dispose");
     }
 

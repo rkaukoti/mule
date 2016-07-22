@@ -68,8 +68,9 @@ public class EndpointMessageProcessorChainBuilder extends SimpleMessageProcessor
         return super.initializeMessageProcessor(processor);
     }
 
-    private class EndpointAwareMessageProcessorChain implements NonBlockingMessageProcessor, MessageProcessorChain, Lifecycle, FlowConstructAware,
-        MuleContextAware, EndpointAware, MessageProcessorContainer, MessagingExceptionHandlerAware
+    private class EndpointAwareMessageProcessorChain
+            implements NonBlockingMessageProcessor, MessageProcessorChain, Lifecycle, FlowConstructAware,
+            MuleContextAware, EndpointAware, MessageProcessorContainer, MessagingExceptionHandlerAware
     {
         private AbstractMessageProcessorChain chain;
 
@@ -78,6 +79,12 @@ public class EndpointMessageProcessorChainBuilder extends SimpleMessageProcessor
         public EndpointAwareMessageProcessorChain(AbstractMessageProcessorChain chain)
         {
             this.chain = chain;
+        }
+
+        @Override
+        public ImmutableEndpoint getEndpoint()
+        {
+            return endpoint;
         }
 
         @Override
@@ -91,12 +98,6 @@ public class EndpointMessageProcessorChainBuilder extends SimpleMessageProcessor
                     ((EndpointAware) processor).setEndpoint(ep);
                 }
             }
-        }
-        
-        @Override
-        public ImmutableEndpoint getEndpoint()
-        {
-            return endpoint;
         }
 
         @Override
@@ -178,6 +179,12 @@ public class EndpointMessageProcessorChainBuilder extends SimpleMessageProcessor
         }
 
         @Override
+        public ImmutableEndpoint getEndpoint()
+        {
+            return endpoint;
+        }
+
+        @Override
         public void setEndpoint(ImmutableEndpoint ep)
         {
             this.endpoint = ep;
@@ -185,12 +192,6 @@ public class EndpointMessageProcessorChainBuilder extends SimpleMessageProcessor
             {
                 ((EndpointAware) sfmp.getFilter()).setEndpoint(ep);
             }
-        }
-
-        @Override
-        public ImmutableEndpoint getEndpoint()
-        {
-            return endpoint;
         }
 
         @Override
@@ -218,21 +219,15 @@ public class EndpointMessageProcessorChainBuilder extends SimpleMessageProcessor
         }
 
         @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            return sfmp.process(event);
-        }
-
-        @Override
         public void setFilter(SecurityFilter filter)
         {
             sfmp.setFilter(filter);
         }
 
         @Override
-        public void setMuleContext(MuleContext context)
+        public MuleEvent process(MuleEvent event) throws MuleException
         {
-            sfmp.setMuleContext(context);
+            return sfmp.process(event);
         }
 
         @Override
@@ -251,6 +246,12 @@ public class EndpointMessageProcessorChainBuilder extends SimpleMessageProcessor
         public MuleContext getMuleContext()
         {
             return sfmp.getMuleContext();
+        }
+
+        @Override
+        public void setMuleContext(MuleContext context)
+        {
+            sfmp.setMuleContext(context);
         }
 
         @Override

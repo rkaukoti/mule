@@ -14,6 +14,8 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.transaction.IllegalTransactionStateException;
 import org.mule.runtime.core.transaction.TransactionCoordination;
 import org.mule.runtime.core.transaction.XaTransaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Proxy;
 import java.sql.Array;
@@ -38,28 +40,23 @@ import java.util.concurrent.Executor;
 import javax.sql.XAConnection;
 import javax.transaction.xa.XAResource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Using for unification XAConnection and Connection
  */
 public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
 {
 
+    protected static final transient Logger logger = LoggerFactory.getLogger(ConnectionWrapper.class);
     private final XAConnection xaConnection;
-    private Connection connection;
-
     /**
      * This is the lock object that guards access to {@link #enlistedXAResource}.
      */
     private final Object enlistedXAResourceLock = new Object();
+    private Connection connection;
     /**
      * @GuardedBy {@link #enlistedXAResourceLock}
      */
     private XAResource enlistedXAResource;
-
-    protected static final transient Logger logger = LoggerFactory.getLogger(ConnectionWrapper.class);
     private volatile boolean reuseObject = false;
 
     public ConnectionWrapper(XAConnection xaCon) throws SQLException
@@ -75,9 +72,21 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     }
 
     @Override
+    public void setHoldability(int holdability) throws SQLException
+    {
+        connection.setHoldability(holdability);
+    }
+
+    @Override
     public int getTransactionIsolation() throws SQLException
     {
         return connection.getTransactionIsolation();
+    }
+
+    @Override
+    public void setTransactionIsolation(int level) throws SQLException
+    {
+        connection.setTransactionIsolation(level);
     }
 
     @Override
@@ -121,6 +130,12 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     }
 
     @Override
+    public void setAutoCommit(boolean autoCommit) throws SQLException
+    {
+        connection.setAutoCommit(autoCommit);
+    }
+
+    @Override
     public boolean isClosed() throws SQLException
     {
         return connection.isClosed();
@@ -130,24 +145,6 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     public boolean isReadOnly() throws SQLException
     {
         return connection.isReadOnly();
-    }
-
-    @Override
-    public void setHoldability(int holdability) throws SQLException
-    {
-        connection.setHoldability(holdability);
-    }
-
-    @Override
-    public void setTransactionIsolation(int level) throws SQLException
-    {
-        connection.setTransactionIsolation(level);
-    }
-
-    @Override
-    public void setAutoCommit(boolean autoCommit) throws SQLException
-    {
-        connection.setAutoCommit(autoCommit);
     }
 
     @Override
@@ -203,7 +200,7 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     {
         Statement st = connection.createStatement();
         return (Statement) Proxy.newProxyInstance(Statement.class.getClassLoader(),
-                                                  new Class[] {Statement.class}, new StatementInvocationHandler(st));
+                new Class[] {Statement.class}, new StatementInvocationHandler(st));
     }
 
     @Override
@@ -211,7 +208,7 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     {
         Statement st = connection.createStatement(resultSetType, resultSetConcurrency);
         return (Statement) Proxy.newProxyInstance(Statement.class.getClassLoader(),
-                                                  new Class[] {Statement.class}, new StatementInvocationHandler(st));
+                new Class[] {Statement.class}, new StatementInvocationHandler(st));
     }
 
     @Override
@@ -220,7 +217,7 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     {
         Statement st = connection.createStatement(resultSetType, resultSetConcurrency, resultSetHoldability);
         return (Statement) Proxy.newProxyInstance(Statement.class.getClassLoader(),
-                                                  new Class[] {Statement.class}, new StatementInvocationHandler(st));
+                new Class[] {Statement.class}, new StatementInvocationHandler(st));
     }
 
     @Override
@@ -246,7 +243,7 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     {
         CallableStatement cs = connection.prepareCall(sql);
         return (CallableStatement) Proxy.newProxyInstance(CallableStatement.class.getClassLoader(),
-                                                          new Class[] {CallableStatement.class}, new StatementInvocationHandler(cs));
+                new Class[] {CallableStatement.class}, new StatementInvocationHandler(cs));
     }
 
     @Override
@@ -255,7 +252,7 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     {
         CallableStatement cs = connection.prepareCall(sql, resultSetType, resultSetConcurrency);
         return (CallableStatement) Proxy.newProxyInstance(CallableStatement.class.getClassLoader(),
-                                                          new Class[] {CallableStatement.class}, new StatementInvocationHandler(cs));
+                new Class[] {CallableStatement.class}, new StatementInvocationHandler(cs));
     }
 
     @Override
@@ -266,7 +263,7 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     {
         CallableStatement cs = connection.prepareCall(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
         return (CallableStatement) Proxy.newProxyInstance(CallableStatement.class.getClassLoader(),
-                                                          new Class[] {CallableStatement.class}, new StatementInvocationHandler(cs));
+                new Class[] {CallableStatement.class}, new StatementInvocationHandler(cs));
     }
 
     @Override
@@ -274,7 +271,7 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     {
         PreparedStatement ps = connection.prepareStatement(sql);
         return (PreparedStatement) Proxy.newProxyInstance(PreparedStatement.class.getClassLoader(),
-                                                          new Class[] {PreparedStatement.class}, new StatementInvocationHandler(ps));
+                new Class[] {PreparedStatement.class}, new StatementInvocationHandler(ps));
     }
 
     @Override
@@ -282,7 +279,7 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     {
         PreparedStatement ps = connection.prepareStatement(sql, autoGeneratedKeys);
         return (PreparedStatement) Proxy.newProxyInstance(PreparedStatement.class.getClassLoader(),
-                                                          new Class[] {PreparedStatement.class}, new StatementInvocationHandler(ps));
+                new Class[] {PreparedStatement.class}, new StatementInvocationHandler(ps));
     }
 
     @Override
@@ -291,7 +288,7 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     {
         PreparedStatement ps = connection.prepareStatement(sql, resultSetType, resultSetConcurrency);
         return (PreparedStatement) Proxy.newProxyInstance(PreparedStatement.class.getClassLoader(),
-                                                          new Class[] {PreparedStatement.class}, new StatementInvocationHandler(ps));
+                new Class[] {PreparedStatement.class}, new StatementInvocationHandler(ps));
     }
 
     @Override
@@ -301,9 +298,9 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
                                               int resultSetHoldability) throws SQLException
     {
         PreparedStatement ps = connection.prepareStatement(sql, resultSetType, resultSetConcurrency,
-                                                           resultSetHoldability);
+                resultSetHoldability);
         return (PreparedStatement) Proxy.newProxyInstance(PreparedStatement.class.getClassLoader(),
-                                                          new Class[] {PreparedStatement.class}, new StatementInvocationHandler(ps));
+                new Class[] {PreparedStatement.class}, new StatementInvocationHandler(ps));
     }
 
     @Override
@@ -311,7 +308,7 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     {
         PreparedStatement ps = connection.prepareStatement(sql, columnIndexes);
         return (PreparedStatement) Proxy.newProxyInstance(PreparedStatement.class.getClassLoader(),
-                                                          new Class[] {PreparedStatement.class}, new StatementInvocationHandler(ps));
+                new Class[] {PreparedStatement.class}, new StatementInvocationHandler(ps));
     }
 
     @Override
@@ -325,7 +322,7 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     {
         PreparedStatement ps = connection.prepareStatement(sql, columnNames);
         return (PreparedStatement) Proxy.newProxyInstance(PreparedStatement.class.getClassLoader(),
-                                                          new Class[] {PreparedStatement.class}, new StatementInvocationHandler(ps));
+                new Class[] {PreparedStatement.class}, new StatementInvocationHandler(ps));
     }
 
     @Override
@@ -414,7 +411,7 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
             if (isEnlisted())
             {
                 boolean wasAbleToDelist = ((XaTransaction) transaction).delistResource(enlistedXAResource,
-                                                                                       XAResource.TMSUCCESS);
+                        XAResource.TMSUCCESS);
                 if (wasAbleToDelist)
                 {
                     enlistedXAResource = null;
@@ -493,6 +490,12 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     }
 
     @Override
+    public void setClientInfo(Properties properties) throws SQLClientInfoException
+    {
+        connection.setClientInfo(properties);
+    }
+
+    @Override
     public String getClientInfo(String name) throws SQLException
     {
         return connection.getClientInfo(name);
@@ -502,12 +505,6 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     public boolean isValid(int timeout) throws SQLException
     {
         return connection.isValid(timeout);
-    }
-
-    @Override
-    public void setClientInfo(Properties properties) throws SQLClientInfoException
-    {
-        connection.setClientInfo(properties);
     }
 
     @Override
@@ -529,15 +526,15 @@ public class ConnectionWrapper implements Connection, XaTransaction.MuleXaObject
     }
 
     @Override
-    public void setSchema(String schema) throws SQLException
-    {
-        connection.setSchema(schema);
-    }
-
-    @Override
     public String getSchema() throws SQLException
     {
         return connection.getSchema();
+    }
+
+    @Override
+    public void setSchema(String schema) throws SQLException
+    {
+        connection.setSchema(schema);
     }
 
     @Override

@@ -43,7 +43,7 @@ public final class MetadataScopeAdapter
 
     public boolean isCustomScope()
     {
-         return customScope;
+        return customScope;
     }
 
     public boolean hasKeysResolver()

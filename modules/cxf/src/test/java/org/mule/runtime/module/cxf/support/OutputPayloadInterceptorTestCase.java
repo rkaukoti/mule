@@ -6,10 +6,10 @@
  */
 package org.mule.runtime.module.cxf.support;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-
+import org.apache.cxf.message.MessageContentsList;
+import org.apache.cxf.service.model.MessagePartInfo;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import org.mule.tck.size.SmallTest;
 
@@ -19,10 +19,9 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
-import org.apache.cxf.message.MessageContentsList;
-import org.apache.cxf.service.model.MessagePartInfo;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 @SmallTest
 public class OutputPayloadInterceptorTestCase extends AbstractMuleContextTestCase
@@ -50,33 +49,34 @@ public class OutputPayloadInterceptorTestCase extends AbstractMuleContextTestCas
     public void testCleanUpPayload_NonObjectArray() throws Exception
     {
         final String someString = "Some String";
-        assertSame(someString, interceptor.cleanUpPayload(new String[]{someString, null}));
+        assertSame(someString, interceptor.cleanUpPayload(new String[] {someString, null}));
 
         final String[] arrayOf2Strings = {someString, "someOther String"};
         assertSame(arrayOf2Strings, interceptor.cleanUpPayload(arrayOf2Strings));
 
         final String[] arrayOf2Strings1Null = {someString, "someOther String", null};
-        assertTrue(Arrays.equals(new String[]{arrayOf2Strings1Null[0], arrayOf2Strings1Null[1]},
-            (Object[]) interceptor.cleanUpPayload(arrayOf2Strings1Null)));
+        assertTrue(Arrays.equals(new String[] {arrayOf2Strings1Null[0], arrayOf2Strings1Null[1]},
+                (Object[]) interceptor.cleanUpPayload(arrayOf2Strings1Null)));
     }
 
     @Test
     public void testCleanUpPayload_ArrayOfObjects()
     {
         final Integer someInteger = Integer.valueOf(1);
-        assertSame(someInteger, interceptor.cleanUpPayload(new Object[]{someInteger, null}));
+        assertSame(someInteger, interceptor.cleanUpPayload(new Object[] {someInteger, null}));
 
         final Object[] arrayOf2Objects = {someInteger, new Object()};
         assertSame(arrayOf2Objects, interceptor.cleanUpPayload(arrayOf2Objects));
 
         final Object[] arrayOf2Objects1Null = {someInteger, null, new Object(),
-            MessageContentsList.REMOVED_MARKER};
-        assertTrue(Arrays.equals(new Object[]{arrayOf2Objects1Null[0], arrayOf2Objects1Null[2]},
-            (Object[]) interceptor.cleanUpPayload(arrayOf2Objects1Null)));
+                                               MessageContentsList.REMOVED_MARKER};
+        assertTrue(Arrays.equals(new Object[] {arrayOf2Objects1Null[0], arrayOf2Objects1Null[2]},
+                (Object[]) interceptor.cleanUpPayload(arrayOf2Objects1Null)));
     }
 
     @Test
-    public void testAddsMissingPartContentOnHandleMessage() {
+    public void testAddsMissingPartContentOnHandleMessage()
+    {
         MessageContentsList messageContentsList = new MessageContentsList();
         Object content1 = new Object();
         messageContentsList.add(content1);
@@ -95,7 +95,8 @@ public class OutputPayloadInterceptorTestCase extends AbstractMuleContextTestCas
     }
 
     @Test
-    public void testAddsMissingPartContentWithUnsortedPartListOnHandleMessage() {
+    public void testAddsMissingPartContentWithUnsortedPartListOnHandleMessage()
+    {
         MessageContentsList messageContentsList = new MessageContentsList();
         Object content1 = new Object();
         messageContentsList.add(content1);

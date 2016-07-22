@@ -6,15 +6,15 @@
  */
 package org.mule.compatibility.transport.http;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mule.compatibility.transport.http.HttpConstants.HEADER_AUTHORIZATION;
-import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.auth.AuthScope;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
 import org.mule.compatibility.core.endpoint.MuleEndpointURI;
 import org.mule.runtime.core.api.MuleEvent;
@@ -28,15 +28,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mule.compatibility.transport.http.HttpConstants.HEADER_AUTHORIZATION;
+import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HttpConnectorClientAuthorizationTestCase extends AbstractMuleContextEndpointTestCase
@@ -72,7 +72,8 @@ public class HttpConnectorClientAuthorizationTestCase extends AbstractMuleContex
     private HttpConnector connector;
 
     @Before
-    public void setup() throws URISyntaxException {
+    public void setup() throws URISyntaxException
+    {
         uri = new URI(URI_WITHOUT_CREDENTIALS);
         message = MuleMessage.builder().payload(StringUtils.EMPTY).build();
         encoding = getDefaultEncoding(muleContext);
@@ -91,7 +92,8 @@ public class HttpConnectorClientAuthorizationTestCase extends AbstractMuleContex
 
         connector.setupClientAuthorization(mockMuleEvent, mockHttpMethod, mockHttpClient, mockImmutableEndpoint);
 
-        verify(mockHttpClient.getState(), atLeast(1)).setCredentials(isA(AuthScope.class), isA(org.apache.commons.httpclient.Credentials.class));
+        verify(mockHttpClient.getState(), atLeast(1)).setCredentials(isA(AuthScope.class),
+                isA(org.apache.commons.httpclient.Credentials.class));
     }
 
     @Test

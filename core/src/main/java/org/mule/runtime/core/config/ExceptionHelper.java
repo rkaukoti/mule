@@ -19,6 +19,8 @@ import org.mule.runtime.core.util.ClassUtils;
 import org.mule.runtime.core.util.MapUtils;
 import org.mule.runtime.core.util.PropertiesUtils;
 import org.mule.runtime.core.util.SystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -28,9 +30,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>ExceptionHelper</code> provides a number of helper functions that can be
@@ -44,35 +43,28 @@ import org.slf4j.LoggerFactory;
 public final class ExceptionHelper
 {
     public static final String SERVICE_ROOT = "META-INF/services/";
-
-    private static final String MULE_PACKAGE_REGEXP = "(?:org|com)\\.mule(?:soft)?\\.(?!mvel2)(?!el).*";
-
     /**
      * This is the property to set the error code to no the message it is the
      * property name the Transport provider uses set the set the error code on the
      * underlying message
      */
     public static final String ERROR_CODE_PROPERTY = "error.code.property";
-
     /**
      * logger used by this class
      */
     protected static final Logger logger = LoggerFactory.getLogger(ExceptionHelper.class);
-
-    private static String J2SE_VERSION = "";
-
+    private static final String MULE_PACKAGE_REGEXP = "(?:org|com)\\.mule(?:soft)?\\.(?!mvel2)(?!el).*";
     /**
      * todo How do you get the j2ee version??
      */
     private static final String J2EE_VERSION = "1.3ee";
-
+    private static final int EXCEPTION_THRESHOLD = 3;
+    private static String J2SE_VERSION = "";
     private static Properties errorDocs = new Properties();
     private static Properties errorCodes = new Properties();
     private static Map reverseErrorCodes = null;
-    private static Map<String,Properties> errorMappings = new HashMap<String,Properties>();
-    private static Map<String,Boolean> disposeListenerRegistered = new HashMap<String,Boolean>();
-
-    private static final int EXCEPTION_THRESHOLD = 3;
+    private static Map<String, Properties> errorMappings = new HashMap<String, Properties>();
+    private static Map<String, Boolean> disposeListenerRegistered = new HashMap<String, Boolean>();
     private static boolean verbose = true;
 
     private static boolean initialised = false;
@@ -114,7 +106,7 @@ public final class ExceptionHelper
             J2SE_VERSION = System.getProperty("java.specification.version");
 
             String name = SERVICE_ROOT + ServiceType.EXCEPTION.getPath()
-                    + "/mule-exception-codes.properties";
+                          + "/mule-exception-codes.properties";
             InputStream in = ExceptionHelper.class.getClassLoader().getResourceAsStream(name);
             if (in == null)
             {
@@ -126,7 +118,7 @@ public final class ExceptionHelper
             reverseErrorCodes = MapUtils.invertMap(errorCodes);
 
             name = SERVICE_ROOT + ServiceType.EXCEPTION.getPath()
-                    + "/mule-exception-config.properties";
+                   + "/mule-exception-config.properties";
             in = ExceptionHelper.class.getClassLoader().getResourceAsStream(name);
             if (in == null)
             {
@@ -179,7 +171,7 @@ public final class ExceptionHelper
 
     private static Properties getErrorMappings(String protocol, final MuleContext muleContext)
     {
-        Properties m = errorMappings.get(getErrorMappingCacheKey(protocol,muleContext));
+        Properties m = errorMappings.get(getErrorMappingCacheKey(protocol, muleContext));
         if (m != null)
         {
             return m;
@@ -201,7 +193,7 @@ public final class ExceptionHelper
             try
             {
                 muleContext.registerListener(createClearCacheListenerOnContextDispose(muleContext));
-                disposeListenerRegistered.put(muleContext.getConfiguration().getId(),true);
+                disposeListenerRegistered.put(muleContext.getConfiguration().getId(), true);
             }
             catch (NotificationException e)
             {
@@ -210,9 +202,11 @@ public final class ExceptionHelper
         }
     }
 
-    private static MuleContextNotificationListener<MuleContextNotification> createClearCacheListenerOnContextDispose(final MuleContext muleContext)
+    private static MuleContextNotificationListener<MuleContextNotification> createClearCacheListenerOnContextDispose(
+            final MuleContext muleContext)
     {
-        return new MuleContextNotificationListener<MuleContextNotification>() {
+        return new MuleContextNotificationListener<MuleContextNotification>()
+        {
             @Override
             public void onNotification(MuleContextNotification notification)
             {
@@ -233,7 +227,7 @@ public final class ExceptionHelper
     public static String getErrorCodePropertyName(String protocol, MuleContext muleContext)
     {
         protocol = protocol.toLowerCase();
-        Properties mappings = getErrorMappings(protocol,muleContext);
+        Properties mappings = getErrorMappings(protocol, muleContext);
         if (mappings == null)
         {
             return null;
@@ -246,8 +240,8 @@ public final class ExceptionHelper
      * When there's no specific error for such transport it will return a generic error.
      * Most likely the returned error is an integer code.
      *
-     * @param protocol scheme for the transport
-     * @param exception exception mapped to error
+     * @param protocol    scheme for the transport
+     * @param exception   exception mapped to error
      * @param muleContext the application context
      * @return the error for exception for the specific protocol
      */
@@ -265,12 +259,11 @@ public final class ExceptionHelper
     }
 
     /**
-     *
      * Maps an exception thrown for a certain protocol to an error.
      * Most likely the returned error is an integer code.
      *
-     * @param protocol scheme for the transport
-     * @param exception exception mapped to error
+     * @param protocol    scheme for the transport
+     * @param exception   exception mapped to error
      * @param muleContext the application context
      * @return the error for exception for the specific protocol
      */
@@ -582,13 +575,13 @@ public final class ExceptionHelper
                 {
                     break;
                 }
-                
+
                 ++processedElements;
                 if (stackTraceElement.getClassName().matches(MULE_PACKAGE_REGEXP))
                 {
                     ++processedMuleElements;
                 }
-                
+
                 buf.append("  ")
                    .append(stackTraceElement.getClassName())
                    .append(".")
@@ -600,7 +593,7 @@ public final class ExceptionHelper
                    .append(")")
                    .append(SystemUtils.LINE_SEPARATOR);
             }
-            
+
             if (root.getStackTrace().length - processedElements > 0)
             {
                 buf.append("  (")
@@ -609,7 +602,7 @@ public final class ExceptionHelper
                    .append(SystemUtils.LINE_SEPARATOR);
             }
         }
-        
+
         return buf.toString();
     }
 
@@ -647,8 +640,7 @@ public final class ExceptionHelper
      * Gets an exception reader for the exception
      *
      * @param t the exception to get a reader for
-     * @return either a specific reader or an instance of DefaultExceptionReader.
-     *         This method never returns null;
+     * @return either a specific reader or an instance of DefaultExceptionReader. This method never returns null;
      */
     public static ExceptionReader getExceptionReader(Throwable t)
     {
@@ -670,19 +662,14 @@ public final class ExceptionHelper
         return msg.toString();
     }
 
-    public static <T extends Throwable>T unwrap(T t)
+    public static <T extends Throwable> T unwrap(T t)
     {
-        if(t instanceof InvocationTargetException)
+        if (t instanceof InvocationTargetException)
         {
-            return (T)((InvocationTargetException)t).getTargetException();
+            return (T) ((InvocationTargetException) t).getTargetException();
         }
         return t;
 
-    }
-
-    public static interface ExceptionEvaluator<T>
-    {
-        T evaluate(Throwable e);
     }
 
     public static Throwable getNonMuleException(Throwable t)
@@ -719,5 +706,10 @@ public final class ExceptionHelper
         {
             errorMappings.remove(key);
         }
+    }
+
+    public static interface ExceptionEvaluator<T>
+    {
+        T evaluate(Throwable e);
     }
 }

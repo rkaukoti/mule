@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.module.pgp;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.Provider;
-
 import org.apache.commons.io.IOUtils;
 import org.bouncycastle.openpgp.PGPPublicKey;
 import org.bouncycastle.openpgp.PGPSecretKey;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.Provider;
 
 public class SignedMessage implements Message
 {
@@ -26,7 +26,7 @@ public class SignedMessage implements Message
                          Provider provider) throws IOException
     {
         StreamTransformer transformer = new DecryptStreamTransformer(toBeDecrypted, publicKey, secretKey,
-            password, provider);
+                password, provider);
         this.encryptedMessage = new LazyTransformedInputStream(new TransformContinuouslyPolicy(), transformer);
     }
 

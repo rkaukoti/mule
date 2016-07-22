@@ -56,7 +56,8 @@ public class ExpressionRecipientList extends AbstractRecipientList
         {
             logger.error("Recipients on message are neither String nor List but: " + msgRecipients.getClass());
             throw new CouldNotRouteOutboundMessageException(
-                    CoreMessages.propertyIsNotSupportedType(getFullExpression(), new Class[] {String.class, List.class}, msgRecipients.getClass()), event, null);
+                    CoreMessages.propertyIsNotSupportedType(getFullExpression(), new Class[] {String.class, List.class},
+                            msgRecipients.getClass()), event, null);
         }
     }
 

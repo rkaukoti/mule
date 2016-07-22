@@ -6,27 +6,27 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.describer;
 
+import org.junit.Test;
+import org.mule.runtime.api.connection.ConnectionProvider;
+import org.mule.runtime.extension.api.exception.IllegalModelDefinitionException;
+import org.mule.runtime.extension.api.introspection.connection.ConnectionProviderFactory;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+import org.mule.test.petstore.extension.SimplePetStoreConnectionProvider;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import org.mule.runtime.api.connection.ConnectionProvider;
-import org.mule.runtime.extension.api.exception.IllegalModelDefinitionException;
-import org.mule.runtime.extension.api.introspection.connection.ConnectionProviderFactory;
-import org.mule.test.petstore.extension.SimplePetStoreConnectionProvider;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import org.junit.Test;
 
 @SmallTest
 public class DefaultConnectionProviderFactoryTestCase extends AbstractMuleTestCase
 {
 
     private ConnectionProviderFactory factory = new DefaultConnectionProviderFactory<>(SimplePetStoreConnectionProvider.class,
-                                                                                       SimplePetStoreConnectionProvider.class.getClassLoader());
+            SimplePetStoreConnectionProvider.class.getClassLoader());
 
     @Test
     public void getObjectType()

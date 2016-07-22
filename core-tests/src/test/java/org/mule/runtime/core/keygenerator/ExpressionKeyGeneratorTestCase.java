@@ -6,10 +6,8 @@
  */
 package org.mule.runtime.core.keygenerator;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -19,8 +17,9 @@ import org.mule.tck.junit4.AbstractMuleTestCase;
 import java.io.NotSerializableException;
 import java.io.Serializable;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ExpressionKeyGeneratorTestCase extends AbstractMuleTestCase
 {
@@ -31,6 +30,7 @@ public class ExpressionKeyGeneratorTestCase extends AbstractMuleTestCase
     private ExpressionMuleEventKeyGenerator keyGenerator;
     private MuleMessage message;
     private MuleEvent event;
+    private ExpressionManager expressionManager;
 
     @Before
     public void setUp() throws Exception
@@ -48,8 +48,6 @@ public class ExpressionKeyGeneratorTestCase extends AbstractMuleTestCase
         keyGenerator = new ExpressionMuleEventKeyGenerator();
         keyGenerator.setExpression(EXPRESSION);
     }
-
-    private ExpressionManager expressionManager;
 
     @Test
     public void testGeneratesSerializableKey() throws Exception

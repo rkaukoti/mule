@@ -26,12 +26,13 @@ import java.util.Map;
 public abstract class AbstractDbConnection implements DbConnection
 {
 
+    protected final Connection delegate;
     private final TransactionalAction transactionalAction;
     private final DefaultDbConnectionReleaser connectionReleaseListener;
     private final ParamTypeResolverFactory paramTypeResolverFactory;
-    protected final Connection delegate;
 
-    public AbstractDbConnection(Connection delegate, TransactionalAction transactionalAction, DefaultDbConnectionReleaser connectionReleaseListener, ParamTypeResolverFactory paramTypeResolverFactory)
+    public AbstractDbConnection(Connection delegate, TransactionalAction transactionalAction,
+                                DefaultDbConnectionReleaser connectionReleaseListener, ParamTypeResolverFactory paramTypeResolverFactory)
     {
         this.delegate = delegate;
         this.transactionalAction = transactionalAction;

@@ -6,15 +6,14 @@
  */
 package org.mule.runtime.module.xml.transformers.xml;
 
+import org.dom4j.DocumentHelper;
+import org.dom4j.io.DOMWriter;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.util.IOUtils;
 import org.mule.runtime.module.xml.transformer.XmlToDomDocument;
 
 import java.io.InputStream;
-
-import org.dom4j.DocumentHelper;
-import org.dom4j.io.DOMWriter;
 
 public class DomXmlTransformerEncodingByteArrayTestCase extends DomXmlTransformerEncodingTestCase
 {
@@ -26,11 +25,11 @@ public class DomXmlTransformerEncodingByteArrayTestCase extends DomXmlTransforme
     {
         InputStream resourceStream = IOUtils.getResourceAsStream("cdcatalog-utf-8.xml", getClass());
         srcData = IOUtils.toString(resourceStream, "UTF-8").getBytes("UTF-8");
-        
+
         resourceStream = IOUtils.getResourceAsStream("cdcatalog-us-ascii.xml", getClass());
         resultData = IOUtils.toString(resourceStream, "US-ASCII");
     }
-    
+
     @Override
     public Transformer getRoundTripTransformer() throws Exception
     {
@@ -60,9 +59,9 @@ public class DomXmlTransformerEncodingByteArrayTestCase extends DomXmlTransforme
             if (expected instanceof byte[])
             {
                 org.dom4j.Document dom4jDoc = null;
-                dom4jDoc = DocumentHelper.parseText(new String((byte[])expected, "UTF-8"));
+                dom4jDoc = DocumentHelper.parseText(new String((byte[]) expected, "UTF-8"));
                 expected = new DOMWriter().write(dom4jDoc);
-                dom4jDoc = DocumentHelper.parseText(new String((byte[])result, "UTF-8"));
+                dom4jDoc = DocumentHelper.parseText(new String((byte[]) result, "UTF-8"));
                 result = new DOMWriter().write(dom4jDoc);
             }
         }

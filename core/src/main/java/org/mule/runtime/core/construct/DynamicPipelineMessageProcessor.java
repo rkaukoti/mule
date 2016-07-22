@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.core.construct;
 
-import org.mule.runtime.core.api.NonBlockingSupported;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.api.NonBlockingSupported;
 import org.mule.runtime.core.api.lifecycle.Lifecycle;
 import org.mule.runtime.core.api.processor.DynamicPipeline;
 import org.mule.runtime.core.api.processor.DynamicPipelineBuilder;
@@ -73,7 +73,8 @@ public class DynamicPipelineMessageProcessor extends AbstractInterceptingMessage
         super.setListener(next);
     }
 
-    private String resetAndUpdatePipeline(String id, List<MessageProcessor> preMessageProcessors, List<MessageProcessor> postMessageProcessors) throws MuleException
+    private String resetAndUpdatePipeline(String id, List<MessageProcessor> preMessageProcessors,
+                                          List<MessageProcessor> postMessageProcessors) throws MuleException
     {
         checkPipelineId(id);
 

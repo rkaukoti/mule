@@ -6,7 +6,8 @@
  */
 package org.mule.extension.socket.api.connection.tcp.protocol;
 
-import static java.lang.String.format;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.mule.extension.socket.api.socket.tcp.TcpProtocol;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -18,8 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import static java.lang.String.format;
 
 /**
  * @since 4.0
@@ -28,12 +28,10 @@ public class CustomProtocol implements TcpProtocol, Initialisable
 {
 
     private static final Log LOGGER = LogFactory.getLog(CustomProtocol.class);
-
-    private TcpProtocol delegate;
-
     @Parameter
     @Alias("class")
     public String clazz;
+    private TcpProtocol delegate;
 
     public CustomProtocol()
     {

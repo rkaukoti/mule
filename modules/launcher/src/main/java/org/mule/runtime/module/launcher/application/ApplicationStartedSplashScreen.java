@@ -6,12 +6,13 @@
  */
 package org.mule.runtime.module.launcher.application;
 
-import static org.mule.runtime.module.launcher.MuleFoldersUtil.getAppLibFolder;
 import org.mule.runtime.module.launcher.artifact.ArtifactStartedSplashScreen;
 import org.mule.runtime.module.launcher.descriptor.ApplicationDescriptor;
 import org.mule.runtime.module.launcher.plugin.ArtifactPluginDescriptor;
 
 import java.util.Set;
+
+import static org.mule.runtime.module.launcher.MuleFoldersUtil.getAppLibFolder;
 
 /**
  * Splash screen specific for {@link Application} startup based on it's {@link ApplicationDescriptor}.

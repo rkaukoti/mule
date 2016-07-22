@@ -7,11 +7,7 @@
 
 package org.mule.runtime.module.db.internal.domain.type;
 
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
@@ -19,7 +15,11 @@ import org.mule.tck.size.SmallTest;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class CompositeDbTypeManagerTestCase extends AbstractMuleTestCase

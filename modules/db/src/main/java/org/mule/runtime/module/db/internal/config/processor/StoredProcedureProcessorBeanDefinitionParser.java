@@ -12,7 +12,6 @@ import org.mule.runtime.module.db.internal.metadata.NullMetadataProvider;
 import org.mule.runtime.module.db.internal.processor.StoredProcedureMessageProcessor;
 import org.mule.runtime.module.db.internal.result.statement.EagerStatementResultHandler;
 import org.mule.runtime.module.db.internal.result.statement.StreamingStatementResultHandler;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;

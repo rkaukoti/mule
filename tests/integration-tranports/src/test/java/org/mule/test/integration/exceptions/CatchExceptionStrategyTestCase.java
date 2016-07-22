@@ -6,9 +6,13 @@
  */
 package org.mule.test.integration.exceptions;
 
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
-import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.hamcrest.core.Is;
+import org.hamcrest.core.IsNull;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -25,13 +29,9 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.hamcrest.core.Is;
-import org.hamcrest.core.IsNull;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
+import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class CatchExceptionStrategyTestCase extends FunctionalTestCase
 {
@@ -39,14 +39,14 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase
     public static final String ERROR_PROCESSING_NEWS = "error processing news";
     public static final String JSON_RESPONSE = "{\"errorMessage\":\"error processing news\",\"userId\":15,\"title\":\"News title\"}";
     public static final String JSON_REQUEST = "{\"userId\":\"15\"}";
-
+    public static final String MESSAGE = "some message";
+    public static final String MESSAGE_EXPECTED = "some message consumed successfully";
     @Rule
     public DynamicPort dynamicPort1 = new DynamicPort("port1");
     @Rule
     public DynamicPort dynamicPort2 = new DynamicPort("port2");
     @Rule
     public DynamicPort dynamicPort3 = new DynamicPort("port3");
-
     private DefaultTlsContextFactory tlsContextFactory;
 
     @Override
@@ -74,7 +74,8 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase
     private void testJsonErrorResponse(String endpointUri) throws Exception
     {
         MuleClient client = muleContext.getClient();
-        final HttpRequestOptions httpRequestOptions = newOptions().method(POST.name()).tlsContextFactory(tlsContextFactory).responseTimeout(TIMEOUT).build();
+        final HttpRequestOptions httpRequestOptions =
+                newOptions().method(POST.name()).tlsContextFactory(tlsContextFactory).responseTimeout(TIMEOUT).build();
         MuleMessage response = client.send(endpointUri, getTestMuleMessage(JSON_REQUEST), httpRequestOptions);
         assertThat(response, IsNull.<Object>notNullValue());
         // compare the structure and values but not the attributes' order
@@ -84,9 +85,6 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase
         assertThat(actualJsonNode, Is.is(expectedJsonNode));
     }
 
-    public static final String MESSAGE = "some message";
-    public static final String MESSAGE_EXPECTED = "some message consumed successfully";
-    
     public static class LoadNewsProcessor implements MessageProcessor
     {
         @Override
@@ -107,7 +105,7 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase
         @Override
         public MuleEvent process(MuleEvent event) throws MuleException
         {
-            ((NewsResponse)event.getMessage().getPayload()).setErrorMessage(ERROR_PROCESSING_NEWS);
+            ((NewsResponse) event.getMessage().getPayload()).setErrorMessage(ERROR_PROCESSING_NEWS);
             return event;
         }
     }
@@ -167,8 +165,8 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase
     @WebService
     public static class Echo
     {
-        @WebResult(name="text")
-        public String echo(@WebParam(name="text") String string)
+        @WebResult(name = "text")
+        public String echo(@WebParam(name = "text") String string)
         {
             throw new RuntimeException();
         }

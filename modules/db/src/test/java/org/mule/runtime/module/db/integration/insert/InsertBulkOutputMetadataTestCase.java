@@ -7,27 +7,27 @@
 
 package org.mule.runtime.module.db.integration.insert;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import org.mule.runtime.core.api.processor.MessageProcessor;
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.common.Result;
 import org.mule.common.metadata.DefaultListMetaDataModel;
 import org.mule.common.metadata.DefaultParameterizedMapMetaDataModel;
 import org.mule.common.metadata.MetaData;
 import org.mule.common.metadata.SimpleMetaDataModel;
 import org.mule.common.metadata.datatype.DataType;
+import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.construct.Flow;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
-import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import org.mule.runtime.module.db.integration.TestDbConfig;
+import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import org.mule.runtime.module.db.internal.processor.PreparedBulkUpdateMessageProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runners.Parameterized;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class InsertBulkOutputMetadataTestCase extends AbstractDbIntegrationTestCase
 {
@@ -78,7 +78,8 @@ public class InsertBulkOutputMetadataTestCase extends AbstractDbIntegrationTestC
 
         DefaultListMetaDataModel innerListMetaDataModel = (DefaultListMetaDataModel) listMetaDataModel.getElementModel();
         assertEquals(ArrayList.class.getName(), innerListMetaDataModel.getImplementationClass());
-        DefaultParameterizedMapMetaDataModel mapMetaDataModel = (DefaultParameterizedMapMetaDataModel) innerListMetaDataModel.getElementModel();
+        DefaultParameterizedMapMetaDataModel mapMetaDataModel =
+                (DefaultParameterizedMapMetaDataModel) innerListMetaDataModel.getElementModel();
         assertEquals(DataType.STRING, mapMetaDataModel.getKeyMetaDataModel().getDataType());
         assertEquals(DataType.POJO, mapMetaDataModel.getValueMetaDataModel().getDataType());
     }

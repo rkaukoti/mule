@@ -6,16 +6,7 @@
  */
 package org.mule.runtime.core.routing;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.VoidMuleEvent;
 import org.mule.runtime.core.api.MuleEvent;
@@ -37,7 +28,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class CollectionMessageSplitterTestCase extends AbstractMuleContextTestCase
 {
@@ -67,7 +66,7 @@ public class CollectionMessageSplitterTestCase extends AbstractMuleContextTestCa
     @Test
     public void testRouterArray() throws Exception
     {
-        assertRouted(new String[]{"abc", "def", "ghi"}, 3, true);
+        assertRouted(new String[] {"abc", "def", "ghi"}, 3, true);
     }
 
     /**
@@ -168,7 +167,8 @@ public class CollectionMessageSplitterTestCase extends AbstractMuleContextTestCa
             expectedSequences.add(i);
         }
 
-        MuleMessage toSplit = MuleMessage.builder().payload(payload).inboundProperties(inboundProps).outboundProperties(outboundProps).build();
+        MuleMessage toSplit =
+                MuleMessage.builder().payload(payload).inboundProperties(inboundProps).outboundProperties(outboundProps).build();
         CollectionSplitter splitter = new CollectionSplitter();
         splitter.setMuleContext(muleContext);
         Grabber grabber = new Grabber();
@@ -184,7 +184,7 @@ public class CollectionMessageSplitterTestCase extends AbstractMuleContextTestCa
 
         Set<Object> actualSequences = new HashSet<>();
         assertSplitParts(count, counted, inboundProps, outboundProps, invocationProps, splits,
-            actualSequences);
+                actualSequences);
         assertEquals(expectedSequences, actualSequences);
     }
 
@@ -209,7 +209,7 @@ public class CollectionMessageSplitterTestCase extends AbstractMuleContextTestCa
                 assertThat(msg.getCorrelation().getGroupSize().isPresent(), is(false));
             }
             actualSequences.add(msg.getCorrelation().getSequence().get());
-            String str = (String)msg.getPayload();
+            String str = (String) msg.getPayload();
             assertTrue(TEST_LIST_MULTIPLE.contains(str));
             for (String key : inboundProps.keySet())
             {

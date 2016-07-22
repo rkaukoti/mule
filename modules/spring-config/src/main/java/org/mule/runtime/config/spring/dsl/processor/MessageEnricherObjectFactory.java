@@ -8,8 +8,8 @@
 package org.mule.runtime.config.spring.dsl.processor;
 
 
-import org.mule.runtime.config.spring.dsl.api.ObjectFactory;
 import org.mule.runtime.api.meta.AnnotatedObject;
+import org.mule.runtime.config.spring.dsl.api.ObjectFactory;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.construct.FlowConstruct;
 import org.mule.runtime.core.api.construct.FlowConstructAware;

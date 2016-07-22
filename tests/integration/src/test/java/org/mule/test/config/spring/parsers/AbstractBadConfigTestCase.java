@@ -6,19 +6,19 @@
  */
 package org.mule.test.config.spring.parsers;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.config.spring.SpringXmlConfigurationBuilder;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.config.ConfigurationBuilder;
 import org.mule.runtime.core.context.DefaultMuleContextFactory;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 /**
- * A stripped-down version of FunctionalTestCase that allows us to test the parsing of a bad configuration. 
+ * A stripped-down version of FunctionalTestCase that allows us to test the parsing of a bad configuration.
  */
 public abstract class AbstractBadConfigTestCase extends FunctionalTestCase
 {
@@ -32,19 +32,19 @@ public abstract class AbstractBadConfigTestCase extends FunctionalTestCase
 
     public void assertErrorContains(String phrase) throws Exception
     {
-        try 
+        try
         {
             parseConfig();
             fail("expected error");
-        } 
-        catch (Exception e) 
-        {            
+        }
+        catch (Exception e)
+        {
             logger.debug("Caught " + e);
             assertTrue("Missing phrase '" + phrase + "' in '" + e.toString() + "'",
                     e.toString().indexOf(phrase) > -1);
         }
     }
-    
+
     protected void parseConfig() throws Exception
     {
         new DefaultMuleContextFactory().createMuleContext(getConfigurationBuilder());

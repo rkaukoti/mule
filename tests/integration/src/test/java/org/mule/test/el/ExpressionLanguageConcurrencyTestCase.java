@@ -6,14 +6,13 @@
  */
 package org.mule.test.el;
 
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.Test;
+import static org.junit.Assert.fail;
 
 public class ExpressionLanguageConcurrencyTestCase extends FunctionalTestCase
 {

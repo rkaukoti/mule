@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SimpleMemoryObjectStore<T extends Serializable> extends AbstractObjectStore<T>
-    implements ListableObjectStore<T>
+        implements ListableObjectStore<T>
 {
     private Map<Serializable, T> map = Collections.synchronizedMap(new HashMap<Serializable, T>());
 
@@ -50,7 +50,7 @@ public class SimpleMemoryObjectStore<T extends Serializable> extends AbstractObj
     {
         return map.get(key);
     }
-    
+
     @Override
     public void clear() throws ObjectStoreException
     {

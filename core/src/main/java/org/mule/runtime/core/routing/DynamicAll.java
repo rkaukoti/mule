@@ -16,13 +16,11 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.routing.RouterResultsHandler;
 
 /**
- *
  * Routes a message through a set of routes that will be obtained
  * dynamically (per message) using a {@link DynamicRouteResolver}.
  *
  * The message will be route to all the routes returned by {@link DynamicRouteResolver}
  * and then all the results will be aggregated.
- *
  */
 public class DynamicAll implements MessageProcessor, MuleContextAware, Initialisable
 {
@@ -40,7 +38,7 @@ public class DynamicAll implements MessageProcessor, MuleContextAware, Initialis
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException
     {
-        return routingStrategy.route(event,dynamicRouteResolver.resolveRoutes(event));
+        return routingStrategy.route(event, dynamicRouteResolver.resolveRoutes(event));
     }
 
     @Override

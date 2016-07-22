@@ -6,16 +6,15 @@
  */
 package org.mule.runtime.module.ws.consumer;
 
-import org.mule.runtime.module.cxf.support.StreamClosingInterceptor;
-
-import javax.xml.soap.SOAPConstants;
-import javax.xml.stream.XMLStreamReader;
-
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.interceptor.StaxInInterceptor;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
 import org.apache.cxf.phase.Phase;
+import org.mule.runtime.module.cxf.support.StreamClosingInterceptor;
+
+import javax.xml.soap.SOAPConstants;
+import javax.xml.stream.XMLStreamReader;
 
 /**
  * CXF interceptor that wraps the XML Stream with a decorator that is able to restore namespace declarations for fragments

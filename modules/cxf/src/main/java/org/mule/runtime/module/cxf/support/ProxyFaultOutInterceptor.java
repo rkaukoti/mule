@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.module.cxf.support;
 
-import javax.xml.stream.XMLStreamWriter;
-
 import org.apache.cxf.databinding.DataBinding;
 import org.apache.cxf.databinding.DataWriter;
 import org.apache.cxf.interceptor.Fault;
@@ -22,6 +20,8 @@ import org.apache.cxf.staxutils.W3CDOMStreamWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.stream.XMLStreamWriter;
+
 /**
  * Fault out interceptor for Proxy configuration considering that FaultInfo might not have an associated class
  * and that it uses StaxDatabinding.
@@ -31,22 +31,26 @@ public class ProxyFaultOutInterceptor extends FaultOutInterceptor
     protected transient Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
-    public void handleMessage(Message message) throws Fault {
-        Fault f = (Fault)message.getContent(Exception.class);
+    public void handleMessage(Message message) throws Fault
+    {
+        Fault f = (Fault) message.getContent(Exception.class);
 
         Throwable cause = f.getCause();
-        if (cause == null) {
+        if (cause == null)
+        {
             return;
         }
 
         BindingOperationInfo bop = message.getExchange().get(BindingOperationInfo.class);
-        if (bop == null) {
+        if (bop == null)
+        {
             return;
         }
         FaultInfo fi = getFaultForClass(bop, cause.getClass());
 
-        if (cause instanceof Exception && fi != null) {
-            Exception ex = (Exception)cause;
+        if (cause instanceof Exception && fi != null)
+        {
+            Exception ex = (Exception) cause;
             Object bean = getFaultBean(cause, fi, message);
             Service service = message.getExchange().get(Service.class);
 
@@ -60,7 +64,8 @@ public class ProxyFaultOutInterceptor extends FaultOutInterceptor
                     XMLStreamWriter xsw = new W3CDOMStreamWriter(f.getDetail());
                     DataWriter<XMLStreamWriter> writer = db.createWriter(XMLStreamWriter.class);
                     writer.write(bean, part, xsw);
-                } else
+                }
+                else
                 {
                     XMLStreamWriter xsw = new W3CDOMStreamWriter(f.getOrCreateDetail());
                     DataWriter<XMLStreamWriter> writer = db.createWriter(XMLStreamWriter.class);
@@ -73,7 +78,8 @@ public class ProxyFaultOutInterceptor extends FaultOutInterceptor
 
                 f.setMessage(ex.getMessage());
             }
-            catch (Exception fex) {
+            catch (Exception fex)
+            {
                 //ignore - if any exceptions occur here, we'll ignore them
                 //and let the default fault handling of the binding convert
                 //the fault like it was an unchecked exception.
@@ -84,12 +90,15 @@ public class ProxyFaultOutInterceptor extends FaultOutInterceptor
     }
 
     @Override
-    public FaultInfo getFaultForClass(BindingOperationInfo op, Class class1) {
-        for (BindingFaultInfo bfi : op.getFaults()) {
+    public FaultInfo getFaultForClass(BindingOperationInfo op, Class class1)
+    {
+        for (BindingFaultInfo bfi : op.getFaults())
+        {
 
             FaultInfo faultInfo = bfi.getFaultInfo();
-            Class<?> c = (Class)faultInfo.getProperty(Class.class.getName());
-            if (c != null && c.isAssignableFrom(class1)) {
+            Class<?> c = (Class) faultInfo.getProperty(Class.class.getName());
+            if (c != null && c.isAssignableFrom(class1))
+            {
                 return faultInfo;
             }
         }

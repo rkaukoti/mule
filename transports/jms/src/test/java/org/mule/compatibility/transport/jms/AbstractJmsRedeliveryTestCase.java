@@ -6,10 +6,8 @@
  */
 package org.mule.compatibility.transport.jms;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.After;
+import org.junit.Before;
 import org.mule.functional.exceptions.FunctionalTestException;
 import org.mule.functional.functional.CounterCallback;
 import org.mule.functional.functional.FunctionalTestComponent;
@@ -25,8 +23,9 @@ import org.mule.runtime.core.context.notification.NotificationException;
 import org.mule.runtime.core.message.ExceptionMessage;
 import org.mule.runtime.core.util.concurrent.Latch;
 
-import org.junit.After;
-import org.junit.Before;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractJmsRedeliveryTestCase extends FunctionalTestCase
 {
@@ -75,7 +74,7 @@ public abstract class AbstractJmsRedeliveryTestCase extends FunctionalTestCase
     protected void assertMessageInDlqRollbackEs() throws Exception
     {
         MuleMessage dl = client.request(JMS_DEAD_LETTER, 1000);
-        assertNotNull(dl);        
+        assertNotNull(dl);
         assertTrue(getPayloadAsString(dl).equals(TEST_MESSAGE));
     }
 

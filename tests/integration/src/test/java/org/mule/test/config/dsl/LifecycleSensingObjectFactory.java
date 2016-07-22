@@ -6,11 +6,6 @@
  */
 package org.mule.test.config.dsl;
 
-import static org.mule.test.config.dsl.LifecycleAction.DISPOSE;
-import static org.mule.test.config.dsl.LifecycleAction.GET_OBJECT;
-import static org.mule.test.config.dsl.LifecycleAction.INITIALISE;
-import static org.mule.test.config.dsl.LifecycleAction.START;
-import static org.mule.test.config.dsl.LifecycleAction.STOP;
 import org.mule.runtime.config.spring.dsl.api.ObjectFactory;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
@@ -19,6 +14,12 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import static org.mule.test.config.dsl.LifecycleAction.DISPOSE;
+import static org.mule.test.config.dsl.LifecycleAction.GET_OBJECT;
+import static org.mule.test.config.dsl.LifecycleAction.INITIALISE;
+import static org.mule.test.config.dsl.LifecycleAction.START;
+import static org.mule.test.config.dsl.LifecycleAction.STOP;
 
 public class LifecycleSensingObjectFactory implements ObjectFactory<MessageProcessor>, Lifecycle
 {

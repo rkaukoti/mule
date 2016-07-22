@@ -6,15 +6,8 @@
  */
 package org.mule.runtime.module.launcher.coreextension;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
+import org.mockito.Matchers;
 import org.mule.runtime.container.api.CoreExtensionsAware;
 import org.mule.runtime.container.api.MuleCoreExtension;
 import org.mule.runtime.container.api.MuleCoreExtensionDependency;
@@ -29,8 +22,15 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Test;
-import org.mockito.Matchers;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SmallTest
 public class ReflectionMuleCoreExtensionDependencyResolverTestCase extends AbstractMuleTestCase
@@ -41,7 +41,8 @@ public class ReflectionMuleCoreExtensionDependencyResolverTestCase extends Abstr
     public static final String DEPENDANT_EXTENSION = "dependantCoreExtension";
 
     private MuleCoreExtensionDependencyDiscoverer dependencyDiscoverer = mock(MuleCoreExtensionDependencyDiscoverer.class);
-    private ReflectionMuleCoreExtensionDependencyResolver dependencyResolver = new ReflectionMuleCoreExtensionDependencyResolver(dependencyDiscoverer);
+    private ReflectionMuleCoreExtensionDependencyResolver dependencyResolver =
+            new ReflectionMuleCoreExtensionDependencyResolver(dependencyDiscoverer);
 
     @Test
     public void resolvesEmptyDependencies() throws Exception
@@ -81,7 +82,9 @@ public class ReflectionMuleCoreExtensionDependencyResolverTestCase extends Abstr
         coreExtensions.add(dependantCoreExtension);
 
         final List<LinkedMuleCoreExtensionDependency> dependencies = new LinkedList<>();
-        final LinkedMuleCoreExtensionDependency linkedMuleCoreExtensionDependency = new LinkedMuleCoreExtensionDependency(TestCoreExtension.class, TestCoreExtensionDependency.class.getMethod("setTestCoreExtension", TestCoreExtension.class));
+        final LinkedMuleCoreExtensionDependency linkedMuleCoreExtensionDependency =
+                new LinkedMuleCoreExtensionDependency(TestCoreExtension.class,
+                        TestCoreExtensionDependency.class.getMethod("setTestCoreExtension", TestCoreExtension.class));
         dependencies.add(linkedMuleCoreExtensionDependency);
 
         when(dependencyDiscoverer.findDependencies(dependantCoreExtension)).thenReturn(dependencies);
@@ -107,7 +110,9 @@ public class ReflectionMuleCoreExtensionDependencyResolverTestCase extends Abstr
         coreExtensions.add(testCoreExtension);
 
         final List<LinkedMuleCoreExtensionDependency> dependencies = new LinkedList<>();
-        final LinkedMuleCoreExtensionDependency linkedMuleCoreExtensionDependency = new LinkedMuleCoreExtensionDependency(TestCoreExtension.class, TestCoreExtensionDependency.class.getMethod("setTestCoreExtension", TestCoreExtension.class));
+        final LinkedMuleCoreExtensionDependency linkedMuleCoreExtensionDependency =
+                new LinkedMuleCoreExtensionDependency(TestCoreExtension.class,
+                        TestCoreExtensionDependency.class.getMethod("setTestCoreExtension", TestCoreExtension.class));
         dependencies.add(linkedMuleCoreExtensionDependency);
 
         when(dependencyDiscoverer.findDependencies(dependantCoreExtension)).thenReturn(dependencies);
@@ -197,7 +202,9 @@ public class ReflectionMuleCoreExtensionDependencyResolverTestCase extends Abstr
         coreExtensions.add(dependantCoreExtension);
 
         final List<LinkedMuleCoreExtensionDependency> dependencies = new LinkedList<>();
-        final LinkedMuleCoreExtensionDependency linkedMuleCoreExtensionDependency = new LinkedMuleCoreExtensionDependency(TestCoreExtension.class, TestCoreExtensionDependency.class.getMethod("setTestCoreExtension", TestCoreExtension.class));
+        final LinkedMuleCoreExtensionDependency linkedMuleCoreExtensionDependency =
+                new LinkedMuleCoreExtensionDependency(TestCoreExtension.class,
+                        TestCoreExtensionDependency.class.getMethod("setTestCoreExtension", TestCoreExtension.class));
         dependencies.add(linkedMuleCoreExtensionDependency);
         when(dependencyDiscoverer.findDependencies(dependantCoreExtension)).thenReturn(dependencies);
 
@@ -212,7 +219,9 @@ public class ReflectionMuleCoreExtensionDependencyResolverTestCase extends Abstr
         coreExtensions.add(dependantCoreExtension);
 
         final List<LinkedMuleCoreExtensionDependency> dependencies = new LinkedList<>();
-        final LinkedMuleCoreExtensionDependency linkedMuleCoreExtensionDependency = new LinkedMuleCoreExtensionDependency(TestCoreExtension.class, TestCoreExtensionDependency.class.getMethod("setTestCoreExtension", TestCoreExtension.class));
+        final LinkedMuleCoreExtensionDependency linkedMuleCoreExtensionDependency =
+                new LinkedMuleCoreExtensionDependency(TestCoreExtension.class,
+                        TestCoreExtensionDependency.class.getMethod("setTestCoreExtension", TestCoreExtension.class));
         dependencies.add(linkedMuleCoreExtensionDependency);
         when(dependencyDiscoverer.findDependencies(dependantCoreExtension)).thenReturn(dependencies);
 
@@ -225,6 +234,23 @@ public class ReflectionMuleCoreExtensionDependencyResolverTestCase extends Abstr
         when(extension1.getName()).thenReturn(extension11);
 
         return extension1;
+    }
+
+    public interface TestCoreExtensionDependency extends MuleCoreExtension
+    {
+        @MuleCoreExtensionDependency
+        void setTestCoreExtension(TestCoreExtension coreExtension);
+    }
+
+    public interface TestIllegalCoreExtensionDependency extends MuleCoreExtension, CoreExtensionsAware
+    {
+        @MuleCoreExtensionDependency
+        void setTestCoreExtension(TestCoreExtension coreExtension);
+    }
+
+    public interface CoreExtensionsAwareExtension extends MuleCoreExtension, CoreExtensionsAware
+    {
+
     }
 
     public static class AbstractTestCoreExtension implements MuleCoreExtension
@@ -271,22 +297,5 @@ public class ReflectionMuleCoreExtensionDependencyResolverTestCase extends Abstr
         {
             return "testCoreExtension";
         }
-    }
-
-    public interface TestCoreExtensionDependency extends MuleCoreExtension
-    {
-        @MuleCoreExtensionDependency
-        void setTestCoreExtension(TestCoreExtension coreExtension);
-    }
-
-    public interface TestIllegalCoreExtensionDependency extends MuleCoreExtension, CoreExtensionsAware
-    {
-        @MuleCoreExtensionDependency
-        void setTestCoreExtension(TestCoreExtension coreExtension);
-    }
-
-    public interface CoreExtensionsAwareExtension extends MuleCoreExtension, CoreExtensionsAware
-    {
-
     }
 }

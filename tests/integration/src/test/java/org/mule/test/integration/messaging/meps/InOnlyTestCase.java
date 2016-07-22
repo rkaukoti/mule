@@ -6,16 +6,15 @@
  */
 package org.mule.test.integration.messaging.meps;
 
-import static org.junit.Assert.assertTrue;
-
-import org.mule.runtime.core.api.context.notification.ServerNotification;
+import org.junit.Test;
 import org.mule.functional.functional.FunctionalTestNotificationListener;
 import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.api.context.notification.ServerNotification;
 import org.mule.runtime.core.util.concurrent.Latch;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 public class InOnlyTestCase extends FunctionalTestCase
 {

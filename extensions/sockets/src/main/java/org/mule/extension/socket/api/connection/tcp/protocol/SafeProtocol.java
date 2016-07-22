@@ -52,9 +52,8 @@ public class SafeProtocol extends AbstractByteProtocol
 
     /**
      * Reads the actual data only after assuring that the cookie was preceding the message.
-     * @param inputStream
+     *
      * @return {@code null} if the cookie could not be successfully received.
-     * @throws IOException
      */
     public InputStream read(InputStream inputStream) throws IOException
     {
@@ -86,9 +85,6 @@ public class SafeProtocol extends AbstractByteProtocol
 
     /**
      * Writes COOKIE message into #{code outputStream}. It should be invoked before sending the actual data.
-     *
-     * @param outputStream
-     * @throws IOException
      */
     private void assureSibling(OutputStream outputStream, String encoding) throws IOException
     {
@@ -100,7 +96,6 @@ public class SafeProtocol extends AbstractByteProtocol
      *
      * @param inputStream Stream to read data from
      * @return true if further data are available; false if EOF
-     * @throws IOException
      */
     private boolean assertSiblingSafe(InputStream inputStream) throws IOException
     {

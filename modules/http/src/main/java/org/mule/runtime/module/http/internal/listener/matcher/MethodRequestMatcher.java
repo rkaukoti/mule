@@ -6,14 +6,13 @@
  */
 package org.mule.runtime.module.http.internal.listener.matcher;
 
-import org.mule.runtime.module.http.internal.domain.request.HttpRequest;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 import org.mule.runtime.core.util.Preconditions;
+import org.mule.runtime.module.http.internal.domain.request.HttpRequest;
 
 import java.util.Arrays;
 import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 
 /**
  * Request matcher for http methods.

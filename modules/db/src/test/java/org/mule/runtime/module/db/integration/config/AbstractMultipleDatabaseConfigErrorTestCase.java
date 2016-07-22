@@ -7,15 +7,14 @@
 
 package org.mule.runtime.module.db.integration.config;
 
+import org.junit.Test;
+import org.junit.runners.Parameterized;
 import org.mule.runtime.core.api.MessagingException;
 import org.mule.runtime.module.db.integration.AbstractDbIntegrationTestCase;
 import org.mule.runtime.module.db.integration.TestDbConfig;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 
 import java.util.List;
-
-import org.junit.Test;
-import org.junit.runners.Parameterized;
 
 public abstract class AbstractMultipleDatabaseConfigErrorTestCase extends AbstractDbIntegrationTestCase
 {

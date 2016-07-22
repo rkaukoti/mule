@@ -6,8 +6,8 @@
  */
 package org.mule.runtime.module.launcher;
 
-import org.mule.runtime.module.launcher.application.Application;
 import org.mule.runtime.module.artifact.Artifact;
+import org.mule.runtime.module.launcher.application.Application;
 import org.mule.runtime.module.launcher.domain.Domain;
 
 import java.util.Collection;
@@ -18,9 +18,9 @@ import java.util.Collections;
  */
 public final class DomainDeploymentTemplate implements ArtifactDeploymentTemplate
 {
-    private Collection<Application> domainApplications = Collections.emptyList();
     private final DefaultArchiveDeployer<Application> applicationDeployer;
     private final DeploymentService deploymentservice;
+    private Collection<Application> domainApplications = Collections.emptyList();
 
     public DomainDeploymentTemplate(DefaultArchiveDeployer<Application> applicationDeployer, DeploymentService deploymentservice)
     {

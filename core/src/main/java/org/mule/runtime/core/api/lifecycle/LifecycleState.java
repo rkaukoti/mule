@@ -30,7 +30,7 @@ public interface LifecycleState
     boolean isDisposing();
 
     boolean isPhaseComplete(String phase);
-    
+
     boolean isPhaseExecuting(String phase);
 
     boolean isValidTransition(String phase);

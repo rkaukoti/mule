@@ -6,12 +6,7 @@
  */
 package org.mule.extension.email.util;
 
-import static java.lang.Thread.currentThread;
-import static javax.mail.Message.RecipientType.TO;
-import static javax.mail.Part.ATTACHMENT;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.api.metadata.MediaType.TEXT;
+import com.icegreen.greenmail.util.ServerSetup;
 
 import org.mule.runtime.core.util.IOUtils;
 
@@ -31,8 +26,12 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import com.icegreen.greenmail.util.GreenMail;
-import com.icegreen.greenmail.util.ServerSetup;
+import static java.lang.Thread.currentThread;
+import static javax.mail.Message.RecipientType.TO;
+import static javax.mail.Part.ATTACHMENT;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.api.metadata.MediaType.TEXT;
 
 public class EmailTestUtils
 {
@@ -40,8 +39,8 @@ public class EmailTestUtils
     public static final String EMAIL_CONTENT = "Email Content";
     public static final String EMAIL_TEXT_PLAIN_ATTACHMENT_CONTENT = "This is the email text attachment";
     public static final String EMAIL_TEXT_PLAIN_ATTACHMENT_NAME = "text-attachment";
-    public static final String EMAIL_JSON_ATTACHMENT_CONTENT =  "{\"key\": \"value\"}";
-    public static final String EMAIL_JSON_ATTACHMENT_NAME =  "attachment.json";
+    public static final String EMAIL_JSON_ATTACHMENT_CONTENT = "{\"key\": \"value\"}";
+    public static final String EMAIL_JSON_ATTACHMENT_NAME = "attachment.json";
 
     public static final String PABLON_EMAIL = "pablo.musumeci@mulesoft.com";
     public static final String ESTEBAN_EMAIL = "esteban.wasinger@mulesoft.com";
@@ -91,7 +90,8 @@ public class EmailTestUtils
         return message;
     }
 
-    public static void assertAttachmentContent(Map<String, DataHandler> attachments, String attachmentKey, Object expectedResult) throws IOException
+    public static void assertAttachmentContent(Map<String, DataHandler> attachments, String attachmentKey, Object expectedResult)
+            throws IOException
     {
         DataHandler attachment = attachments.get(attachmentKey);
         String attachmentAsString = IOUtils.toString((InputStream) attachment.getContent());

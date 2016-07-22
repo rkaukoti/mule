@@ -53,7 +53,7 @@ public abstract class AbstractEndpointURIBuilder implements EndpointURIBuilder
         }
 
         EndpointURI ep = new MuleEndpointURI(address, endpointName, connectorName, transformers,
-            responseTransformers, props, this.uri, userInfo, muleContext);
+                responseTransformers, props, this.uri, userInfo, muleContext);
         address = null;
         endpointName = null;
         connectorName = null;
@@ -110,7 +110,7 @@ public abstract class AbstractEndpointURIBuilder implements EndpointURIBuilder
         {
             responseTransformers = responseTransformers.replaceAll(" ", ",");
         }
-        
+
         userInfo = uri.getUserInfo();
         return properties;
     }
@@ -120,7 +120,7 @@ public abstract class AbstractEndpointURIBuilder implements EndpointURIBuilder
         try
         {
             String encoding = "UTF-8";
-            if(context!=null)
+            if (context != null)
             {
                 encoding = context.getConfiguration().getDefaultEncoding();
             }

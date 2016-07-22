@@ -6,16 +6,16 @@
  */
 package org.mule.runtime.core.util.compression;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <code>GZipCompression</code> is a CompressionStrategy implementation using the
@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 public class GZipCompression implements CompressionStrategy
 {
     public static final int DEFAULT_BUFFER_SIZE = 32768;
-    
+
     /**
      * The logger for this class
      */
@@ -36,7 +36,7 @@ public class GZipCompression implements CompressionStrategy
      * Determines if a byte array is compressed. The java.util.zip GZip
      * implementaiton does not expose the GZip header so it is difficult to determine
      * if a string is compressed.
-     * 
+     *
      * @param bytes an array of bytes
      * @return true if the array is compressed or false otherwise
      * @throws java.io.IOException if the byte array couldn't be read
@@ -55,7 +55,7 @@ public class GZipCompression implements CompressionStrategy
 
     /**
      * Used for compressing a byte array into a new byte array using GZIP
-     * 
+     *
      * @param bytes An array of bytes to compress
      * @return a compressed byte array
      * @throws java.io.IOException if it fails to write to a GZIPOutputStream
@@ -119,7 +119,7 @@ public class GZipCompression implements CompressionStrategy
 
     /**
      * Used for uncompressing a byte array into a uncompressed byte array using GZIP
-     * 
+     *
      * @param bytes An array of bytes to uncompress
      * @return an uncompressed byte array
      * @throws java.io.IOException if it fails to read from a GZIPInputStream

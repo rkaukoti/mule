@@ -38,7 +38,8 @@ public class ImmutableSetCollector<T> implements Collector<T, ImmutableSet.Build
     @Override
     public BinaryOperator<ImmutableSet.Builder<T>> combiner()
     {
-        return (left, right) -> {
+        return (left, right) ->
+        {
             left.addAll(right.build());
             return left;
         };

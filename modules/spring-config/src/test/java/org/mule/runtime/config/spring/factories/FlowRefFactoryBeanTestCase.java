@@ -6,18 +6,9 @@
  */
 package org.mule.runtime.config.spring.factories;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.withSettings;
-
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.MockSettings;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
@@ -34,19 +25,28 @@ import org.mule.runtime.core.api.processor.MessageProcessorChain;
 import org.mule.runtime.core.processor.chain.SubFlowMessageProcessor;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
+import org.springframework.context.ApplicationContext;
 
 import java.util.Arrays;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.MockSettings;
-import org.springframework.context.ApplicationContext;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
 
 @SmallTest
 public class FlowRefFactoryBeanTestCase extends AbstractMuleTestCase
 {
 
-    private static final MockSettings INITIALIZABLE_MESSAGE_PROCESSOR = withSettings().extraInterfaces(MessageProcessor.class, Initialisable.class, Disposable.class);
+    private static final MockSettings INITIALIZABLE_MESSAGE_PROCESSOR =
+            withSettings().extraInterfaces(MessageProcessor.class, Initialisable.class, Disposable.class);
     private static final String STATIC_REFERENCED_FLOW = "staticReferencedFlow";
     private static final String DYNAMIC_REFERENCED_FLOW = "dynamicReferencedFlow";
     private static final String PARSED_DYNAMIC_REFERENCED_FLOW = "parsedDynamicReferencedFlow";

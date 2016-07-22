@@ -6,13 +6,13 @@
  */
 package org.mule.runtime.core.util;
 
+import org.apache.commons.collections.map.AbstractHashedMap;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
-
-import org.apache.commons.collections.map.AbstractHashedMap;
 
 /**
  * A case-insensitive <code>Map</code>.

@@ -7,13 +7,12 @@
 
 package org.mule.runtime.module.db.integration.vendor.oracle;
 
+import org.junit.runners.Parameterized;
 import org.mule.runtime.module.db.integration.TestDbConfig;
 import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 import org.mule.runtime.module.db.integration.storedprocedure.AbstractStoredProcedureReturningResultsetTestCase;
 
 import java.util.List;
-
-import org.junit.runners.Parameterized;
 
 public class OracleStoredProcedureResultsetAssignmentTestCase extends AbstractStoredProcedureReturningResultsetTestCase
 {

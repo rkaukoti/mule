@@ -9,7 +9,6 @@ package org.mule.runtime.config.spring.parsers.processors;
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssembler;
 import org.mule.runtime.config.spring.parsers.assembly.BeanAssemblerFactory;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
-
 import org.w3c.dom.Element;
 
 /**
@@ -20,8 +19,7 @@ import org.w3c.dom.Element;
  * {@link org.mule.runtime.config.spring.MuleHierarchicalBeanDefinitionParserDelegate#MULE_NO_RECURSE}
  * on the parser.
  *
- * @see org.mule.runtime.config.spring.parsers.processors.AbstractChildElementIterator - please read the
- * documentation for that processor
+ * @see org.mule.runtime.config.spring.parsers.processors.AbstractChildElementIterator - please read the documentation for that processor
  */
 public class NamedSetterChildElementIterator extends AbstractChildElementIterator
 {

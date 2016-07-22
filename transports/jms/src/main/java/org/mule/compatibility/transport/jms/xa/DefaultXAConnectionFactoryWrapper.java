@@ -7,6 +7,8 @@
 package org.mule.compatibility.transport.jms.xa;
 
 import org.mule.runtime.core.util.xa.XaResourceFactoryHolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Proxy;
 
@@ -22,9 +24,6 @@ import javax.jms.XAQueueConnection;
 import javax.jms.XAQueueConnectionFactory;
 import javax.jms.XATopicConnection;
 import javax.jms.XATopicConnectionFactory;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class DefaultXAConnectionFactoryWrapper
         implements XAConnectionFactoryWrapper, QueueConnectionFactory, TopicConnectionFactory
@@ -53,8 +52,8 @@ public class DefaultXAConnectionFactoryWrapper
     {
         XAConnection xac = ((XAConnectionFactory) factory).createXAConnection();
         Connection proxy = (Connection) Proxy.newProxyInstance(Connection.class.getClassLoader(),
-                                                               new Class[]{Connection.class, XaResourceFactoryHolder.class},
-                                                               new ConnectionInvocationHandler(xac, sameRMOverrideValue));
+                new Class[] {Connection.class, XaResourceFactoryHolder.class},
+                new ConnectionInvocationHandler(xac, sameRMOverrideValue));
         return proxy;
     }
 
@@ -63,8 +62,8 @@ public class DefaultXAConnectionFactoryWrapper
     {
         XAConnection xac = ((XAConnectionFactory) factory).createXAConnection(username, password);
         Connection proxy = (Connection) Proxy.newProxyInstance(Connection.class.getClassLoader(),
-                                                               new Class[]{Connection.class, XaResourceFactoryHolder.class},
-                                                               new ConnectionInvocationHandler(xac, sameRMOverrideValue));
+                new Class[] {Connection.class, XaResourceFactoryHolder.class},
+                new ConnectionInvocationHandler(xac, sameRMOverrideValue));
         return proxy;
     }
 
@@ -73,8 +72,8 @@ public class DefaultXAConnectionFactoryWrapper
     {
         XAQueueConnection xaqc = ((XAQueueConnectionFactory) factory).createXAQueueConnection();
         QueueConnection proxy = (QueueConnection) Proxy.newProxyInstance(Connection.class.getClassLoader(),
-                                                                         new Class[]{QueueConnection.class, XaResourceFactoryHolder.class},
-                                                                         new ConnectionInvocationHandler(xaqc, sameRMOverrideValue));
+                new Class[] {QueueConnection.class, XaResourceFactoryHolder.class},
+                new ConnectionInvocationHandler(xaqc, sameRMOverrideValue));
         return proxy;
     }
 
@@ -82,10 +81,10 @@ public class DefaultXAConnectionFactoryWrapper
     public QueueConnection createQueueConnection(String username, String password) throws JMSException
     {
         XAQueueConnection xaqc = ((XAQueueConnectionFactory) factory).createXAQueueConnection(username,
-                                                                                              password);
+                password);
         QueueConnection proxy = (QueueConnection) Proxy.newProxyInstance(Connection.class.getClassLoader(),
-                                                                         new Class[]{QueueConnection.class, XaResourceFactoryHolder.class},
-                                                                         new ConnectionInvocationHandler(xaqc, sameRMOverrideValue));
+                new Class[] {QueueConnection.class, XaResourceFactoryHolder.class},
+                new ConnectionInvocationHandler(xaqc, sameRMOverrideValue));
         return proxy;
     }
 
@@ -94,8 +93,8 @@ public class DefaultXAConnectionFactoryWrapper
     {
         XATopicConnection xatc = ((XATopicConnectionFactory) factory).createXATopicConnection();
         TopicConnection proxy = (TopicConnection) Proxy.newProxyInstance(Connection.class.getClassLoader(),
-                                                                         new Class[]{TopicConnection.class, XaResourceFactoryHolder.class},
-                                                                         new ConnectionInvocationHandler(xatc, sameRMOverrideValue));
+                new Class[] {TopicConnection.class, XaResourceFactoryHolder.class},
+                new ConnectionInvocationHandler(xatc, sameRMOverrideValue));
         return proxy;
     }
 
@@ -103,10 +102,10 @@ public class DefaultXAConnectionFactoryWrapper
     public TopicConnection createTopicConnection(String username, String password) throws JMSException
     {
         XATopicConnection xatc = ((XATopicConnectionFactory) factory).createXATopicConnection(username,
-                                                                                              password);
+                password);
         TopicConnection proxy = (TopicConnection) Proxy.newProxyInstance(Connection.class.getClassLoader(),
-                                                                         new Class[]{TopicConnection.class, XaResourceFactoryHolder.class},
-                                                                         new ConnectionInvocationHandler(xatc, sameRMOverrideValue));
+                new Class[] {TopicConnection.class, XaResourceFactoryHolder.class},
+                new ConnectionInvocationHandler(xatc, sameRMOverrideValue));
         return proxy;
     }
 

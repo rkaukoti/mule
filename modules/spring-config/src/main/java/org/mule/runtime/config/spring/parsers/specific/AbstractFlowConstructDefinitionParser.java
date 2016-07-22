@@ -8,7 +8,6 @@ package org.mule.runtime.config.spring.parsers.specific;
 
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
 import org.mule.runtime.core.util.StringUtils;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
@@ -16,22 +15,18 @@ import org.w3c.dom.Element;
 
 public abstract class AbstractFlowConstructDefinitionParser extends AbstractMuleBeanDefinitionParser
 {
-    private static final String ABSTRACT_ATTRIBUTE = "abstract";
-    private static final String PARENT_ATTRIBUTE = "parent";
-
     protected static final String ENDPOINT_REF_ATTRIBUTE = "endpoint-ref";
     protected static final String ADDRESS_ATTRIBUTE = "address";
-
     protected static final String INBOUND_ADDRESS_ATTRIBUTE = "inboundAddress";
     protected static final String INBOUND_ENDPOINT_REF_ATTRIBUTE = "inboundEndpoint-ref";
     protected static final String INBOUND_ENDPOINT_CHILD = "inbound-endpoint";
-
     protected static final String OUTBOUND_ADDRESS_ATTRIBUTE = "outboundAddress";
     protected static final String OUTBOUND_ENDPOINT_REF_ATTRIBUTE = "outboundEndpoint-ref";
     protected static final String OUTBOUND_ENDPOINT_CHILD = "outboundEndpoint";
-
     protected static final String TRANSFORMER_REFS_ATTRIBUTE = "transformer-refs";
     protected static final String RESPONSE_TRANSFORMER_REFS_ATTRIBUTE = "responseTransformer-refs";
+    private static final String ABSTRACT_ATTRIBUTE = "abstract";
+    private static final String PARENT_ATTRIBUTE = "parent";
 
     @Override
     protected BeanDefinitionBuilder createBeanDefinitionBuilder(Element element, Class<?> beanClass)

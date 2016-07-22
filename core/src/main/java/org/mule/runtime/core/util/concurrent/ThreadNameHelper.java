@@ -35,7 +35,7 @@ public class ThreadNameHelper
         return String.format("%s%s.requester", getPrefix(muleContext), connectorName);
     }
 
-    public static String async(MuleContext muleContext, String name, int sequenceNumber )
+    public static String async(MuleContext muleContext, String name, int sequenceNumber)
     {
         return String.format("%s%s.async%s", getPrefix(muleContext), name, sequenceNumber);
     }
@@ -52,6 +52,7 @@ public class ThreadNameHelper
 
     /**
      * Generate a generic thread name prefix for this context.
+     *
      * @param muleContext context to generate the name prefix for
      * @return "[appName]." if Mule is running as a container, otherwise empty string
      */

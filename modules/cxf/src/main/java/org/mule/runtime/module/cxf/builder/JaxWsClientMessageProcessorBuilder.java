@@ -6,6 +6,12 @@
  */
 package org.mule.runtime.module.cxf.builder;
 
+import org.apache.cxf.common.classloader.ClassLoaderUtils;
+import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.frontend.ClientProxy;
+import org.apache.cxf.jaxws.JaxWsClientFactoryBean;
+import org.apache.cxf.resource.ResourceManager;
+import org.apache.cxf.resource.URIResolver;
 import org.mule.runtime.core.api.lifecycle.CreateException;
 import org.mule.runtime.module.cxf.CxfOutboundMessageProcessor;
 import org.mule.runtime.module.cxf.i18n.CxfMessages;
@@ -23,15 +29,8 @@ import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
 import javax.xml.ws.WebServiceClient;
 
-import org.apache.cxf.common.classloader.ClassLoaderUtils;
-import org.apache.cxf.endpoint.Client;
-import org.apache.cxf.frontend.ClientProxy;
-import org.apache.cxf.jaxws.JaxWsClientFactoryBean;
-import org.apache.cxf.resource.ResourceManager;
-import org.apache.cxf.resource.URIResolver;
-
 /**
- * Builds a JAX-WS client based {@link CxfOutboundMessageProcessor}. There 
+ * Builds a JAX-WS client based {@link CxfOutboundMessageProcessor}. There
  * are two ways to configure the client:
  * <ol>
  * <li>WSDL generated client: using the CXF wsdl2java tool, you can configure
@@ -42,8 +41,8 @@ import org.apache.cxf.resource.URIResolver;
  * The MessageProcessor will then use this client instnace to make invocations.
  * </ol>
  * The serviceClass and clientClass attributes are mutually exclusive.
- * @author Dan
  *
+ * @author Dan
  */
 public class JaxWsClientMessageProcessorBuilder extends AbstractClientMessageProcessorBuilder
 {
@@ -59,11 +58,11 @@ public class JaxWsClientMessageProcessorBuilder extends AbstractClientMessagePro
     @Override
     protected Client createClient() throws CreateException, Exception
     {
-        if (clientClass != null && serviceClass != null) 
+        if (clientClass != null && serviceClass != null)
         {
             throw new CreateException(CxfMessages.onlyServiceOrClientClassIsValid(), this);
         }
-        
+
         if (clientClass != null)
         {
             return createClientFromJaxWsProxy();
@@ -78,7 +77,7 @@ public class JaxWsClientMessageProcessorBuilder extends AbstractClientMessagePro
     {
         JaxWsClientFactoryBean cpf = new JaxWsClientFactoryBean();
         cpf.setServiceClass(serviceClass);
-        if (databinding == null) 
+        if (databinding == null)
         {
             cpf.setDataBinding(databinding);
         }
@@ -87,7 +86,7 @@ public class JaxWsClientMessageProcessorBuilder extends AbstractClientMessagePro
         cpf.setProperties(properties);
 
         // If there's a soapVersion defined then the corresponding bindingId will be set
-        if(soapVersion != null)
+        if (soapVersion != null)
         {
             cpf.setBindingId(CxfUtils.getBindingIdForSoapVersion(soapVersion));
         }
@@ -101,8 +100,8 @@ public class JaxWsClientMessageProcessorBuilder extends AbstractClientMessagePro
     }
 
     private Client createClientFromJaxWsProxy()
-        throws ClassNotFoundException, NoSuchMethodException, IOException, CreateException,
-        InstantiationException, IllegalAccessException, InvocationTargetException
+            throws ClassNotFoundException, NoSuchMethodException, IOException, CreateException,
+            InstantiationException, IllegalAccessException, InvocationTargetException
     {
         Class<?> clientCls = ClassLoaderUtils.loadClass(clientClass, getClass());
 

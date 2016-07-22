@@ -9,7 +9,7 @@ package org.mule.runtime.core.streaming;
 
 /**
  * Inmutable pojo to carry pagination parameters
- * 
+ *
  * @since 3.5.0
  */
 public class PagingConfiguration

@@ -6,15 +6,8 @@
  */
 package org.mule.runtime.module.ws.security;
 
-import static org.apache.ws.security.WSConstants.CREATED_LN;
-import static org.apache.ws.security.WSConstants.NONCE_LN;
-import static org.apache.ws.security.WSPasswordCallback.USERNAME_TOKEN;
-import static org.apache.ws.security.handler.WSHandlerConstants.ADD_UT_ELEMENTS;
-import static org.apache.ws.security.handler.WSHandlerConstants.PASSWORD_TYPE;
-import static org.apache.ws.security.handler.WSHandlerConstants.PW_CALLBACK_REF;
-import static org.apache.ws.security.handler.WSHandlerConstants.USER;
-import static org.junit.Assert.assertEquals;
-import static org.mule.runtime.module.ws.security.PasswordType.TEXT;
+import org.apache.ws.security.WSPasswordCallback;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
@@ -24,8 +17,15 @@ import java.util.Map;
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 
-import org.apache.ws.security.WSPasswordCallback;
-import org.junit.Test;
+import static org.apache.ws.security.WSConstants.CREATED_LN;
+import static org.apache.ws.security.WSConstants.NONCE_LN;
+import static org.apache.ws.security.WSPasswordCallback.USERNAME_TOKEN;
+import static org.apache.ws.security.handler.WSHandlerConstants.ADD_UT_ELEMENTS;
+import static org.apache.ws.security.handler.WSHandlerConstants.PASSWORD_TYPE;
+import static org.apache.ws.security.handler.WSHandlerConstants.PW_CALLBACK_REF;
+import static org.apache.ws.security.handler.WSHandlerConstants.USER;
+import static org.junit.Assert.assertEquals;
+import static org.mule.runtime.module.ws.security.PasswordType.TEXT;
 
 @SmallTest
 public class WssUsernameTokenSecurityStrategyTestCase extends AbstractMuleTestCase
@@ -51,7 +51,7 @@ public class WssUsernameTokenSecurityStrategyTestCase extends AbstractMuleTestCa
 
         CallbackHandler handler = (CallbackHandler) properties.get(PW_CALLBACK_REF);
         WSPasswordCallback passwordCallback = new WSPasswordCallback(username, USERNAME_TOKEN);
-        handler.handle(new Callback[] { passwordCallback });
+        handler.handle(new Callback[] {passwordCallback});
 
         assertEquals(password, passwordCallback.getPassword());
     }

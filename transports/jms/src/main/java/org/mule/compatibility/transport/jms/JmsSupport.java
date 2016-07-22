@@ -28,7 +28,7 @@ public interface JmsSupport
     Connection createConnection(ConnectionFactory connectionFactory) throws JMSException;
 
     Connection createConnection(ConnectionFactory connectionFactory, String username, String password)
-        throws JMSException;
+            throws JMSException;
 
     Session createSession(Connection connection,
                           boolean topic,
@@ -37,7 +37,7 @@ public interface JmsSupport
                           boolean noLocal) throws JMSException;
 
     MessageProducer createProducer(Session session, Destination destination, boolean topic)
-        throws JMSException;
+            throws JMSException;
 
     MessageConsumer createConsumer(Session session,
                                    Destination destination,
@@ -47,7 +47,7 @@ public interface JmsSupport
                                    boolean topic, ImmutableEndpoint endpoint) throws JMSException;
 
     MessageConsumer createConsumer(Session session, Destination destination, boolean topic, ImmutableEndpoint endpoint)
-        throws JMSException;
+            throws JMSException;
 
     Destination createDestination(Session session, String name, boolean topic, ImmutableEndpoint endpoint) throws JMSException;
 

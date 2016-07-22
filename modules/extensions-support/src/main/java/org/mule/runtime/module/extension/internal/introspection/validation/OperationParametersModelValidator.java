@@ -6,9 +6,11 @@
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
-import static java.lang.String.format;
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.TARGET_ATTRIBUTE;
-import static org.mule.runtime.module.extension.internal.ExtensionProperties.TRANSACTIONAL_ACTION_PARAMETER_NAME;
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.Multimap;
+
 import org.mule.runtime.extension.api.exception.IllegalModelDefinitionException;
 import org.mule.runtime.extension.api.introspection.ExtensionModel;
 import org.mule.runtime.extension.api.introspection.operation.OperationModel;
@@ -16,12 +18,11 @@ import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
 import org.mule.runtime.module.extension.internal.exception.IllegalOperationModelDefinitionException;
 import org.mule.runtime.module.extension.internal.util.IdempotentExtensionWalker;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.Multimap;
-
 import java.util.List;
+
+import static java.lang.String.format;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.TARGET_ATTRIBUTE;
+import static org.mule.runtime.module.extension.internal.ExtensionProperties.TRANSACTIONAL_ACTION_PARAMETER_NAME;
 
 /**
  * Validates that no {@link ParameterModel parameters} named {@code target}, since that word is reserved.
@@ -50,8 +51,9 @@ public final class OperationParametersModelValidator implements ModelValidator
 
         if (!offenses.isEmpty())
         {
-            StringBuilder message = new StringBuilder(format("Extension '%s' defines operations which have parameters named after reserved words. Offending operations are:\n"
-                    , extensionModel.getName()));
+            StringBuilder message = new StringBuilder(
+                    format("Extension '%s' defines operations which have parameters named after reserved words. Offending operations are:\n"
+                            , extensionModel.getName()));
 
             offenses.asMap().forEach((key, values) -> message.append(format("%s: [%s]", key, Joiner.on(", ").join(values))));
 
@@ -62,7 +64,7 @@ public final class OperationParametersModelValidator implements ModelValidator
     private void collectOffenses(Multimap<String, String> offenses, OperationModel operationModel)
     {
         operationModel.getParameterModels().stream()
-                .filter(parameter -> reservedWords.contains(parameter.getName()))
-                .forEach(parameter -> offenses.put(parameter.getName(), operationModel.getName()));
+                      .filter(parameter -> reservedWords.contains(parameter.getName()))
+                      .forEach(parameter -> offenses.put(parameter.getName(), operationModel.getName()));
     }
 }

@@ -19,16 +19,16 @@ public class NoRetryPolicyTemplate extends AbstractPolicyTemplate
         return new NoRetryPolicy();
     }
 
+    public String toString()
+    {
+        return "NoRetryPolicy{}";
+    }
+
     protected static class NoRetryPolicy implements RetryPolicy
     {
         public PolicyStatus applyPolicy(Throwable cause)
         {
             return PolicyStatus.policyExhausted(cause);
         }
-    }
-
-    public String toString()
-    {
-        return "NoRetryPolicy{}";
     }
 }

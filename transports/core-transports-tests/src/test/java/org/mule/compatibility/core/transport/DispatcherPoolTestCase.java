@@ -6,10 +6,8 @@
  */
 package org.mule.compatibility.core.transport;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.registerConnector;
-
+import org.apache.commons.pool.impl.GenericKeyedObjectPool;
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.compatibility.core.api.transport.MessageDispatcher;
 import org.mule.runtime.core.api.config.ThreadingProfile;
@@ -18,8 +16,9 @@ import org.mule.runtime.core.util.concurrent.Latch;
 import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
 import org.mule.tck.testmodels.mule.TestConnector;
 
-import org.apache.commons.pool.impl.GenericKeyedObjectPool;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.registerConnector;
 
 public class DispatcherPoolTestCase extends AbstractMuleContextEndpointTestCase
 {
@@ -31,13 +30,13 @@ public class DispatcherPoolTestCase extends AbstractMuleContextEndpointTestCase
 
         // ThreadingProfile exhausted action default is RUN
         assertEquals(ThreadingProfile.WHEN_EXHAUSTED_RUN, connector.getDispatcherThreadingProfile()
-            .getPoolExhaustedAction());
+                                                                   .getPoolExhaustedAction());
         assertEquals(2, connector.dispatchers.getMaxActive());
         // This must equal maxActive dispatchers because low maxIdle would result in
         // a lot of dispatcher churn
         assertEquals(2, connector.dispatchers.getMaxIdle());
         assertEquals(GenericKeyedObjectPool.WHEN_EXHAUSTED_BLOCK,
-            connector.dispatchers.getWhenExhaustedAction());
+                connector.dispatchers.getWhenExhaustedAction());
         assertEquals(-1, connector.dispatchers.getMaxWait());
     }
 
@@ -47,11 +46,11 @@ public class DispatcherPoolTestCase extends AbstractMuleContextEndpointTestCase
         final TestConnector connector = createConnectorWithSingleObjectDispatcherPool(ThreadingProfile.WHEN_EXHAUSTED_WAIT);
 
         assertEquals(ThreadingProfile.WHEN_EXHAUSTED_WAIT, connector.getDispatcherThreadingProfile()
-            .getPoolExhaustedAction());
+                                                                    .getPoolExhaustedAction());
         assertEquals(1, connector.dispatchers.getMaxActive());
         assertEquals(1, connector.dispatchers.getMaxIdle());
         assertEquals(GenericKeyedObjectPool.WHEN_EXHAUSTED_BLOCK,
-            connector.dispatchers.getWhenExhaustedAction());
+                connector.dispatchers.getWhenExhaustedAction());
         assertEquals(-1, connector.dispatchers.getMaxWait());
     }
 
@@ -177,7 +176,7 @@ public class DispatcherPoolTestCase extends AbstractMuleContextEndpointTestCase
     {
         TestConnector connector = new TestConnector(muleContext);
         ThreadingProfile threadingProfile = new ImmutableThreadingProfile(1, 1, 1, 1, 1, exhaustedAction,
-            true, null, null);
+                true, null, null);
         connector.setDispatcherThreadingProfile(threadingProfile);
         connector.createReceiver(getTestFlow(), getTestInboundEndpoint("test", "test://test"));
         registerConnector(muleContext.getRegistry(), connector);

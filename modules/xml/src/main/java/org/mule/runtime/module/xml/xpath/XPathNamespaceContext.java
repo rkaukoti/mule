@@ -10,15 +10,15 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
 
+import net.sf.saxon.lib.NamespaceConstant;
+import net.sf.saxon.om.NamespaceResolver;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
-
-import net.sf.saxon.lib.NamespaceConstant;
-import net.sf.saxon.om.NamespaceResolver;
 
 /**
  * Implementation of {@link NamespaceContext} which can be parametrized

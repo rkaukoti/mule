@@ -6,6 +6,18 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.core.api.MuleEvent;
+import org.mule.runtime.core.api.NestedProcessor;
+import org.mule.runtime.core.api.processor.MessageProcessor;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
@@ -13,18 +25,6 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.core.api.NestedProcessor;
-import org.mule.runtime.core.api.processor.MessageProcessor;
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class NestedProcessorValueResolverTestCase extends AbstractMuleContextTestCase

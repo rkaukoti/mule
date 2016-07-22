@@ -6,19 +6,18 @@
  */
 package org.mule.runtime.core.util.journal.queue;
 
+import com.google.common.collect.Multimap;
+
+import org.apache.commons.collections.Predicate;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.core.util.CollectionUtils;
 import org.mule.runtime.core.util.queue.QueueProvider;
 import org.mule.runtime.core.util.queue.RecoverableQueueStore;
-
-import com.google.common.collect.Multimap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Collection;
-
-import org.apache.commons.collections.Predicate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Process for recover pending transactions after a server crash.
@@ -28,10 +27,9 @@ import org.slf4j.LoggerFactory;
 public class LocalTxQueueTransactionRecoverer
 {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
-
     private final LocalTxQueueTransactionJournal localTxQueueTransactionJournal;
     private final QueueProvider queueProvider;
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     public LocalTxQueueTransactionRecoverer(LocalTxQueueTransactionJournal localTxQueueTransactionJournal, QueueProvider queueProvider)
     {
@@ -53,7 +51,7 @@ public class LocalTxQueueTransactionRecoverer
         {
             logger.debug("Executing transaction recovery");
         }
-        Multimap<Integer,LocalQueueTxJournalEntry> allEntries = this.localTxQueueTransactionJournal.getAllLogEntries();
+        Multimap<Integer, LocalQueueTxJournalEntry> allEntries = this.localTxQueueTransactionJournal.getAllLogEntries();
         if (logger.isDebugEnabled())
         {
             logger.debug("Found " + allEntries.size() + " txs to recover");

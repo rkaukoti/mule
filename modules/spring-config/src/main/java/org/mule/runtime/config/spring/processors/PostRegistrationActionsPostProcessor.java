@@ -6,17 +6,14 @@
  */
 package org.mule.runtime.config.spring.processors;
 
-import static org.mule.runtime.config.spring.MuleArtifactContext.INNER_BEAN_PREFIX;
-import org.mule.runtime.config.spring.MuleArtifactContext;
 import org.mule.runtime.core.registry.MuleRegistryHelper;
-
-import java.util.HashSet;
-import java.util.Queue;
-import java.util.Set;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.context.ConfigurableApplicationContext;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.mule.runtime.config.spring.MuleArtifactContext.INNER_BEAN_PREFIX;
 
 /**
  * A {@link BeanPostProcessor} which invokes {@link MuleRegistryHelper#postObjectRegistrationActions(Object)}
@@ -52,7 +49,6 @@ public class PostRegistrationActionsPostProcessor implements BeanPostProcessor
      * @param bean     the bean instance
      * @param beanName the bean name
      * @return the bean instance
-     * @throws BeansException
      */
     //TODO MULE-9638 - remove check for duplicates. It should not happen anymore when old parsing mode is not used anymore.
     @Override

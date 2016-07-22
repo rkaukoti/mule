@@ -11,7 +11,6 @@ import org.mule.runtime.core.config.i18n.MessageFactory;
 /**
  * <code>TransportServiceNotFoundException</code> is thorown if no matching service
  * endpoint descriptor is found for the connector protocol.
- * 
  */
 
 public class TransportServiceNotFoundException extends TransportFactoryException
@@ -31,7 +30,7 @@ public class TransportServiceNotFoundException extends TransportFactoryException
 
     /**
      * @param location the path of the service
-     * @param cause the exception that cause this exception to be thrown
+     * @param cause    the exception that cause this exception to be thrown
      */
     public TransportServiceNotFoundException(String location, Throwable cause)
     {

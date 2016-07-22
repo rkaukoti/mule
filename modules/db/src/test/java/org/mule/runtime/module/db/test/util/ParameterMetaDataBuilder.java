@@ -7,12 +7,13 @@
 
 package org.mule.runtime.module.db.test.util;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import org.mule.runtime.module.db.internal.domain.type.DbType;
 
 import java.sql.ParameterMetaData;
 import java.sql.SQLException;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Builds {@link ParameterMetaData} mocks

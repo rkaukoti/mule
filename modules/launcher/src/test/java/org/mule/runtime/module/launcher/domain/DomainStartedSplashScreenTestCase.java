@@ -6,19 +6,19 @@
  */
 package org.mule.runtime.module.launcher.domain;
 
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mule.runtime.core.util.FileUtils.newFile;
+import org.hamcrest.Matcher;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.mule.runtime.module.launcher.AbstractSplashScreenTestCase;
 import org.mule.runtime.module.launcher.descriptor.DomainDescriptor;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.hamcrest.Matcher;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mule.runtime.core.util.FileUtils.newFile;
 
 public class DomainStartedSplashScreenTestCase extends AbstractSplashScreenTestCase<DomainStartedSplashScreen>
 {
@@ -38,6 +38,11 @@ public class DomainStartedSplashScreenTestCase extends AbstractSplashScreenTestC
         newFile(workingDirectory.getRoot(), getDomainPathFor(MY_ZIP)).mkdir();
     }
 
+    private static String getDomainPathFor(String fileName)
+    {
+        return String.format("domains/%s/lib/%s", DOMAIN_NAME, fileName);
+    }
+
     @Before
     public void setUp()
     {
@@ -49,28 +54,23 @@ public class DomainStartedSplashScreenTestCase extends AbstractSplashScreenTestC
     protected Matcher<String> getSimpleLogMatcher()
     {
         return is("\n**********************************************************************\n" +
-                    "* Started domain '" + DOMAIN_NAME + "'                                      *\n" +
-                    "**********************************************************************");
+                  "* Started domain '" + DOMAIN_NAME + "'                                      *\n" +
+                  "**********************************************************************");
     }
 
     @Override
     protected Matcher<String> getComplexLogMatcher()
     {
         return is("\n**********************************************************************\n" +
-                    "* Started domain '"+ DOMAIN_NAME +"'                                      *\n" +
-                    "* Domain libraries:                                                  *\n" +
-                    "*  - " + SOME_JAR + "                                                        *\n" +
-                    "**********************************************************************");
+                  "* Started domain '" + DOMAIN_NAME + "'                                      *\n" +
+                  "* Domain libraries:                                                  *\n" +
+                  "*  - " + SOME_JAR + "                                                        *\n" +
+                  "**********************************************************************");
     }
 
     @Override
     protected void setUpSplashScreen()
     {
         splashScreen.createMessage(descriptor);
-    }
-
-    private static String getDomainPathFor(String fileName)
-    {
-        return String.format("domains/%s/lib/%s", DOMAIN_NAME, fileName);
     }
 }

@@ -6,15 +6,14 @@
  */
 package org.mule.test.integration.util;
 
+import org.junit.Test;
+import org.mule.runtime.core.util.ObjectNameHelper;
+import org.mule.tck.junit4.AbstractMuleContextTestCase;
+
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 import static org.junit.Assert.assertThat;
-
-import org.mule.tck.junit4.AbstractMuleContextTestCase;
-import org.mule.runtime.core.util.ObjectNameHelper;
-
-import org.junit.Test;
 
 public class ObjectNameHelperTestCase extends AbstractMuleContextTestCase
 {

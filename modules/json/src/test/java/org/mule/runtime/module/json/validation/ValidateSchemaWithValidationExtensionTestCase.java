@@ -6,15 +6,15 @@
  */
 package org.mule.runtime.module.json.validation;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.extension.validation.api.ValidationException;
 import org.mule.extension.validation.api.ValidationExtension;
 import org.mule.functional.junit4.ExtensionFunctionalTestCase;
 import org.mule.runtime.core.api.MessagingException;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class ValidateSchemaWithValidationExtensionTestCase extends ExtensionFunctionalTestCase
 {

@@ -6,12 +6,14 @@
  */
 package org.mule.test.infrastructure.process.rules;
 
-import static java.lang.Integer.parseInt;
-import static java.lang.System.getProperty;
-import static org.apache.commons.io.FilenameUtils.removeExtension;
+import org.apache.commons.io.FilenameUtils;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
 import org.mule.tck.probe.JUnitProbe;
 import org.mule.tck.probe.PollingProber;
 import org.mule.test.infrastructure.process.MuleProcessController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,19 +22,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.FilenameUtils;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.Integer.parseInt;
+import static java.lang.System.getProperty;
+import static org.apache.commons.io.FilenameUtils.removeExtension;
 
 /**
- * JUnit rule to deploy a Mule application for testing in a local Mule server. Usage:
- * <p>
+ * JUnit rule to deploy a Mule application for testing in a local Mule server. Usage: <p>
  * <pre>
  * public class MuleApplicationTestCase {
  *  &#064;ClassRule
- *  public static MuleDeployment deployment = builder().withApplications(&quot;/path/to/application.zip&quot;).withProperty("-M-Dproperty", "value").timeout(120).deploy();
+ *  public static MuleDeployment deployment = builder().withApplications(&quot;/path/to/application.zip&quot;).withProperty("-M-Dproperty",
+ * "value").timeout(120).deploy();
  *
  *  &#064;Test
  *  public void useApplication() throws IOException {
@@ -56,106 +56,14 @@ public class MuleDeployment extends MuleInstallation
     private MuleProcessController mule;
     private Map<String, String> properties = new HashMap<>();
 
-    public static class Builder
+    private MuleDeployment()
     {
-
-        MuleDeployment deployment;
-
-        Builder()
-        {
-            deployment = new MuleDeployment();
-        }
-
-        /**
-         * Deploys and starts the Mule instance with the specified configuration.
-         * @return
-         */
-        public MuleDeployment deploy()
-        {
-            return deployment;
-        }
-
-        /**
-         * Specifies the deployment timeout for each deployed artifact.
-         * @param seconds
-         * @return
-         */
-        public Builder timeout(int seconds)
-        {
-            deployment.deploymentTimeout = seconds * 1000;
-            return this;
-        }
-
-        /**
-         * Specifies a system property to be passed in the command line when starting Mule.
-         * @param property
-         * @param value
-         * @return
-         */
-        public Builder withProperty(String property, String value)
-        {
-            deployment.properties.put(property, value);
-            return this;
-        }
-
-        /**
-         * Specifies a Map of system properties to be passed in the command line when starting Mule.
-         * @param properties
-         * @return
-         */
-        public Builder withProperties(Map<String, String> properties)
-        {
-            if (deployment.properties.size() != 0)
-            {
-                throw new IllegalStateException("Properties map already has properties defined. Can't overwrite all properties");
-            }
-            deployment.properties = properties;
-            return this;
-        }
-
-        /**
-         * Specifies application folders or ZIP files to be deployed to the apps folder.
-         * @param applications
-         * @return
-         */
-        public Builder withApplications(String... applications)
-        {
-            Collections.addAll(deployment.applications, applications);
-            return this;
-        }
-
-        /**
-         * Specifies domains or domain-bundles to be deployed to the domains folder.
-         * @param domains
-         * @return
-         */
-        public Builder withDomains(String... domains)
-        {
-            Collections.addAll(deployment.domains, domains);
-            return this;
-        }
-
-        /**
-         * Adds libraries to lib/user folder.
-         * @param libraries
-         * @return
-         */
-        public Builder withLibraries(String... libraries)
-        {
-            Collections.addAll(deployment.libraries, libraries);
-            return this;
-        }
-
+        super();
     }
 
     public static MuleDeployment.Builder builder()
     {
         return new Builder();
-    }
-
-    private MuleDeployment()
-    {
-        super();
     }
 
     private String[] toArray(Map<String, String> map)
@@ -251,6 +159,84 @@ public class MuleDeployment extends MuleInstallation
             mule.stop();
         }
         super.after();
+    }
+
+    public static class Builder
+    {
+
+        MuleDeployment deployment;
+
+        Builder()
+        {
+            deployment = new MuleDeployment();
+        }
+
+        /**
+         * Deploys and starts the Mule instance with the specified configuration.
+         */
+        public MuleDeployment deploy()
+        {
+            return deployment;
+        }
+
+        /**
+         * Specifies the deployment timeout for each deployed artifact.
+         */
+        public Builder timeout(int seconds)
+        {
+            deployment.deploymentTimeout = seconds * 1000;
+            return this;
+        }
+
+        /**
+         * Specifies a system property to be passed in the command line when starting Mule.
+         */
+        public Builder withProperty(String property, String value)
+        {
+            deployment.properties.put(property, value);
+            return this;
+        }
+
+        /**
+         * Specifies a Map of system properties to be passed in the command line when starting Mule.
+         */
+        public Builder withProperties(Map<String, String> properties)
+        {
+            if (deployment.properties.size() != 0)
+            {
+                throw new IllegalStateException("Properties map already has properties defined. Can't overwrite all properties");
+            }
+            deployment.properties = properties;
+            return this;
+        }
+
+        /**
+         * Specifies application folders or ZIP files to be deployed to the apps folder.
+         */
+        public Builder withApplications(String... applications)
+        {
+            Collections.addAll(deployment.applications, applications);
+            return this;
+        }
+
+        /**
+         * Specifies domains or domain-bundles to be deployed to the domains folder.
+         */
+        public Builder withDomains(String... domains)
+        {
+            Collections.addAll(deployment.domains, domains);
+            return this;
+        }
+
+        /**
+         * Adds libraries to lib/user folder.
+         */
+        public Builder withLibraries(String... libraries)
+        {
+            Collections.addAll(deployment.libraries, libraries);
+            return this;
+        }
+
     }
 
 }

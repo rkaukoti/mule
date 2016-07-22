@@ -6,16 +6,7 @@
  */
 package org.mule.runtime.core.session;
 
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThat;
-import static org.mule.runtime.core.api.config.MuleProperties.MULE_SESSION_PROPERTY;
-
+import org.junit.Test;
 import org.mule.runtime.core.DefaultMuleEvent;
 import org.mule.runtime.core.MessageExchangePattern;
 import org.mule.runtime.core.api.MuleEvent;
@@ -31,7 +22,15 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
+import static org.mule.runtime.core.api.config.MuleProperties.MULE_SESSION_PROPERTY;
 
 public class SessionPropertiesTestCase extends AbstractMuleContextTestCase
 {
@@ -44,7 +43,7 @@ public class SessionPropertiesTestCase extends AbstractMuleContextTestCase
     public void asyncInterceptingProcessorSessionPropertyPropagation() throws Exception
     {
         AsyncInterceptingMessageProcessor async = new AsyncInterceptingMessageProcessor(
-            muleContext.getDefaultThreadingProfile(), "async", 0);
+                muleContext.getDefaultThreadingProfile(), "async", 0);
         SensingNullMessageProcessor asyncListener = new SensingNullMessageProcessor();
         async.setListener(asyncListener);
         async.start();
@@ -126,7 +125,9 @@ public class SessionPropertiesTestCase extends AbstractMuleContextTestCase
 
         // Serialize and deserialize session using default session handler
         message = new SerializeAndEncodeSessionHandler().storeSessionInfoToMessage(event.getSession(), message, muleContext);
-        message = MuleMessage.builder(message).addInboundProperty(MULE_SESSION_PROPERTY, message.getOutboundProperty(MULE_SESSION_PROPERTY)).build();
+        message = MuleMessage.builder(message)
+                             .addInboundProperty(MULE_SESSION_PROPERTY, message.getOutboundProperty(MULE_SESSION_PROPERTY))
+                             .build();
         MuleSession newSession = new SerializeAndEncodeSessionHandler().retrieveSessionInfoFromMessage(message, muleContext);
 
         // Session after deserialization is a new instance that does not equal old
@@ -190,7 +191,9 @@ public class SessionPropertiesTestCase extends AbstractMuleContextTestCase
 
         // Serialize and deserialize session using default session handler
         message = new SerializeAndEncodeSessionHandler().storeSessionInfoToMessage(event.getSession(), message, muleContext);
-        message = MuleMessage.builder(message).addInboundProperty(MULE_SESSION_PROPERTY, message.getOutboundProperty(MULE_SESSION_PROPERTY)).build();
+        message = MuleMessage.builder(message)
+                             .addInboundProperty(MULE_SESSION_PROPERTY, message.getOutboundProperty(MULE_SESSION_PROPERTY))
+                             .build();
         MuleSession newSession = new SerializeAndEncodeSessionHandler().retrieveSessionInfoFromMessage(message, muleContext);
 
         // Session after deserialization is a new instance that does not equal old
@@ -218,7 +221,7 @@ public class SessionPropertiesTestCase extends AbstractMuleContextTestCase
 
         SensingNullMessageProcessor flowListener = new SensingNullMessageProcessor();
         Flow flow = new Flow("flow", muleContext);
-        flow.setMessageProcessors(Collections.<MessageProcessor> singletonList(flowListener));
+        flow.setMessageProcessors(Collections.<MessageProcessor>singletonList(flowListener));
         flow.initialise();
         flow.start();
 

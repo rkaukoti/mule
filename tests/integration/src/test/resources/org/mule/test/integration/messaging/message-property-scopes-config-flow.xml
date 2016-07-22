@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
       xsi:schemaLocation="
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd">
 
     <flow name="InService1">
-        <set-session-variable variableName="testProperty" value="#[new Date()]" />
+        <set-session-variable variableName="testProperty" value="#[new Date()]"/>
         <!-- 2 issues here: * Use MPT's copy/propagate simplified syntax * Session props should probably be propagated
             automatically? -->
         <set-property propertyName="testProperty" value="#[sessionVars.testProperty]"/>
@@ -15,7 +15,7 @@
     </flow>
 
     <flow name="InService2">
-        <set-session-variable variableName="testProperty" value="date" />
+        <set-session-variable variableName="testProperty" value="date"/>
         <flow-ref name="ResponseService"/>
     </flow>
 

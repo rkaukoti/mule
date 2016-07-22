@@ -51,11 +51,6 @@ public class RoutingException extends MessagingException
         this.route = route;
     }
 
-    public MessageProcessor getRoute()
-    {
-        return route;
-    }
-
     private static Message generateMessage(Message message, MessageProcessor target)
     {
         Message m = CoreMessages.failedToRouterViaEndpoint(target);
@@ -68,5 +63,10 @@ public class RoutingException extends MessagingException
         {
             return m;
         }
+    }
+
+    public MessageProcessor getRoute()
+    {
+        return route;
     }
 }

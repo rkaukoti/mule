@@ -18,7 +18,6 @@ import org.mule.runtime.core.api.lifecycle.Startable;
 import org.mule.runtime.core.api.lifecycle.Stoppable;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.lifecycle.SimpleLifecycleManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +43,8 @@ public class ComponentLifecycleManager extends SimpleLifecycleManager<Component>
     public void fireInitialisePhase(LifecycleCallback<Component> callback) throws InitialisationException
     {
         checkPhase(Initialisable.PHASE_NAME);
-        if (logger.isInfoEnabled()) logger.info("Initialising component: " + lifecycleManagerId);
+        if (logger.isInfoEnabled())
+            logger.info("Initialising component: " + lifecycleManagerId);
         try
         {
             invokePhase(Initialisable.PHASE_NAME, getLifecycleObject(), callback);
@@ -63,7 +63,8 @@ public class ComponentLifecycleManager extends SimpleLifecycleManager<Component>
     public void fireStartPhase(LifecycleCallback<Component> callback) throws MuleException
     {
         checkPhase(Startable.PHASE_NAME);
-        if (logger.isInfoEnabled()) logger.info("Starting component: " + lifecycleManagerId);
+        if (logger.isInfoEnabled())
+            logger.info("Starting component: " + lifecycleManagerId);
         invokePhase(Startable.PHASE_NAME, getLifecycleObject(), callback);
     }
 
@@ -71,7 +72,8 @@ public class ComponentLifecycleManager extends SimpleLifecycleManager<Component>
     public void fireStopPhase(LifecycleCallback<Component> callback) throws MuleException
     {
         checkPhase(Stoppable.PHASE_NAME);
-        if (logger.isInfoEnabled()) logger.info("Stopping component: " + lifecycleManagerId);
+        if (logger.isInfoEnabled())
+            logger.info("Stopping component: " + lifecycleManagerId);
         invokePhase(Stoppable.PHASE_NAME, getLifecycleObject(), callback);
     }
 
@@ -79,7 +81,8 @@ public class ComponentLifecycleManager extends SimpleLifecycleManager<Component>
     public void fireDisposePhase(LifecycleCallback<Component> callback)
     {
         checkPhase(Disposable.PHASE_NAME);
-        if (logger.isInfoEnabled()) logger.info("Disposing component: " + lifecycleManagerId);
+        if (logger.isInfoEnabled())
+            logger.info("Disposing component: " + lifecycleManagerId);
         try
         {
             invokePhase(Disposable.PHASE_NAME, getLifecycleObject(), callback);

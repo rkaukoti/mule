@@ -6,11 +6,10 @@
  */
 package org.mule.runtime.core.util.journal;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-
+import org.apache.commons.lang.RandomStringUtils;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mule.runtime.core.util.journal.queue.LocalQueueTxJournalEntry;
 import org.mule.runtime.core.util.journal.queue.LocalTxQueueTransactionJournal;
 import org.mule.tck.junit4.AbstractMuleContextTestCase;
@@ -19,10 +18,10 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.Collection;
 
-import org.apache.commons.lang.RandomStringUtils;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 public class TransactionJournalFileTestCase extends AbstractMuleContextTestCase
 {

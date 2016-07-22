@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.core.util.queue;
 
+import org.apache.commons.collections.Closure;
+import org.apache.commons.collections.CollectionUtils;
 import org.mule.runtime.core.util.journal.queue.XaQueueTxJournalEntry;
 import org.mule.runtime.core.util.journal.queue.XaTxQueueTransactionJournal;
 import org.mule.runtime.core.util.xa.ResourceManagerException;
@@ -15,9 +17,6 @@ import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.transaction.xa.Xid;
-
-import org.apache.commons.collections.Closure;
-import org.apache.commons.collections.CollectionUtils;
 
 /**
  * Implementation of {@link org.mule.runtime.core.util.queue.XaQueueTransactionContext} for persistent queues using XA transactions
@@ -36,7 +35,7 @@ public class PersistentXaTransactionContext implements XaQueueTransactionContext
     }
 
     public boolean offer(QueueStore queue, Serializable item, long offerTimeout)
-        throws InterruptedException
+            throws InterruptedException
     {
         this.transactionJournal.logAdd(xid, queue, item);
         return true;
@@ -51,12 +50,13 @@ public class PersistentXaTransactionContext implements XaQueueTransactionContext
     {
         synchronized (queue)
         {
-            while (poll(queue, 100) != null);
+            while (poll(queue, 100) != null)
+                ;
         }
     }
 
     public Serializable poll(QueueStore queue, long pollTimeout)
-        throws InterruptedException
+            throws InterruptedException
     {
         synchronized (queue)
         {
@@ -83,7 +83,7 @@ public class PersistentXaTransactionContext implements XaQueueTransactionContext
             @Override
             public void execute(Object value)
             {
-                if (((XaQueueTxJournalEntry)value).isAdd() ||  ((XaQueueTxJournalEntry)value).isAddFirst())
+                if (((XaQueueTxJournalEntry) value).isAdd() || ((XaQueueTxJournalEntry) value).isAddFirst())
                 {
                     addSize.incrementAndGet();
                 }

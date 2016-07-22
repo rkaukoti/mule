@@ -13,7 +13,7 @@ import org.mule.runtime.core.api.MuleException;
  * Cache endpoints in order to prevent memory leaks.
  *
  * see MULE-5422
- * 
+ *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated

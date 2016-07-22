@@ -10,10 +10,9 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.api.processor.MessageProcessorBuilder;
 import org.mule.runtime.core.api.processor.MessageProcessorChainBuilder;
 import org.mule.runtime.core.processor.chain.DefaultMessageProcessorChainBuilder;
+import org.springframework.beans.factory.FactoryBean;
 
 import java.util.List;
-
-import org.springframework.beans.factory.FactoryBean;
 
 public class MessageProcessorChainFactoryBean implements FactoryBean
 {
@@ -47,7 +46,7 @@ public class MessageProcessorChainFactoryBean implements FactoryBean
             else
             {
                 throw new IllegalArgumentException(
-                    "MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
+                        "MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
             }
         }
         return builder.build();
@@ -56,7 +55,7 @@ public class MessageProcessorChainFactoryBean implements FactoryBean
     protected MessageProcessorChainBuilder getBuilderInstance()
     {
         DefaultMessageProcessorChainBuilder builder = new DefaultMessageProcessorChainBuilder();
-        builder.setName("processor chain '"+name+"'");
+        builder.setName("processor chain '" + name + "'");
         return builder;
     }
 

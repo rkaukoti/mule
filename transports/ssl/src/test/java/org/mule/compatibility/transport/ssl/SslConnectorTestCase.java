@@ -6,17 +6,15 @@
  */
 package org.mule.compatibility.transport.ssl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.core.transport.AbstractConnectorTestCase;
-import org.mule.compatibility.transport.ssl.SslConnector;
 import org.mule.runtime.core.construct.Flow;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 public class SslConnectorTestCase extends AbstractConnectorTestCase
 {
@@ -79,7 +77,7 @@ public class SslConnectorTestCase extends AbstractConnectorTestCase
     @Test
     public void testProperties() throws Exception
     {
-        SslConnector c = (SslConnector)getConnector();
+        SslConnector c = (SslConnector) getConnector();
 
         c.setSendBufferSize(1024);
         assertEquals(1024, c.getSendBufferSize());

@@ -6,14 +6,13 @@
  */
 package org.mule.test.config.spring.parsers;
 
-import org.mule.test.config.spring.parsers.beans.AbstractBean;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.util.ClassUtils;
+import org.mule.test.config.spring.parsers.beans.AbstractBean;
 
 import java.util.List;
 import java.util.Map;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

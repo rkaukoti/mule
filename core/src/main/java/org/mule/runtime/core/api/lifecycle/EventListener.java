@@ -13,7 +13,7 @@ package org.mule.runtime.core.api.lifecycle;
  * the method to invoke on the listener. Developers can implement
  * <code>org.mule.runtime.core.api.lifecycle.Callable</code> to implement a specific Mule
  * listener interface.
- * 
+ *
  * @see Callable
  */
 public interface EventListener

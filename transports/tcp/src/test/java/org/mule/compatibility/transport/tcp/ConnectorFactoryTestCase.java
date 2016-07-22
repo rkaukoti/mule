@@ -6,13 +6,12 @@
  */
 package org.mule.compatibility.transport.tcp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.endpoint.ImmutableEndpoint;
 import org.mule.tck.junit4.AbstractMuleContextEndpointTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ConnectorFactoryTestCase extends AbstractMuleContextEndpointTestCase
 {

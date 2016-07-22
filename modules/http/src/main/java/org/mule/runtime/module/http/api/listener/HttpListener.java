@@ -8,7 +8,6 @@ package org.mule.runtime.module.http.api.listener;
 
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.Lifecycle;
-import org.mule.runtime.core.api.source.MessageSource;
 import org.mule.runtime.core.api.source.NonBlockingMessageSource;
 
 /**
@@ -31,14 +30,12 @@ public interface HttpListener extends NonBlockingMessageSource, Lifecycle
 
     /**
      * Starts an stopped listener. The listener will start to accept requests again.
-     *
-     * @throws MuleException
      */
     public void start() throws MuleException;
 
     /**
-     * Get rid of this listener. Subsequent call made to the listener will return {@link org.mule.runtime.module.http.internal.listener.NoListenerRequestHandler#RESOURCE_NOT_FOUND_STATUS_CODE} unless
-     * there's another listener which path matches the request criteria.
+     * Get rid of this listener. Subsequent call made to the listener will return {@link org.mule.runtime.module.http.internal.listener.NoListenerRequestHandler#RESOURCE_NOT_FOUND_STATUS_CODE}
+     * unless there's another listener which path matches the request criteria.
      */
     public void dispose();
 

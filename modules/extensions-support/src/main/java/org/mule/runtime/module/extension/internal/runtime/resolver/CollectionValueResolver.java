@@ -6,20 +6,21 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.checkInstantiable;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import com.google.common.collect.ImmutableList;
+
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.lifecycle.Lifecycle;
 import org.mule.runtime.module.extension.internal.util.MuleExtensionUtils;
-
-import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.checkInstantiable;
 
 /**
  * A {@link ValueResolver} that takes a list of {@link ValueResolver}s
@@ -38,6 +39,21 @@ public final class CollectionValueResolver<T> implements ValueResolver<Collectio
     private final List<ValueResolver<T>> resolvers;
     private final Class<? extends Collection> collectionType;
 
+    /**
+     * Creates a new instance
+     *
+     * @param collectionType the {@link Class} for a concrete {@link Collection} type with a default constructor
+     * @param resolvers      a not {@code null} {@link List} of resolvers
+     */
+    public CollectionValueResolver(Class<? extends Collection> collectionType, List<ValueResolver<T>> resolvers)
+    {
+        checkInstantiable(collectionType);
+        checkArgument(resolvers != null, "resolvers cannot be null");
+
+        this.collectionType = collectionType;
+        this.resolvers = ImmutableList.copyOf(resolvers);
+    }
+
     public static <T> CollectionValueResolver<T> of(Class<? extends Collection> collectionType, List<ValueResolver<T>> resolvers)
     {
         if (List.class.equals(collectionType) || Collection.class.equals(collectionType) || Iterable.class.equals(collectionType))
@@ -55,27 +71,11 @@ public final class CollectionValueResolver<T> implements ValueResolver<Collectio
     }
 
     /**
-     * Creates a new instance
-     *
-     * @param collectionType the {@link Class} for a concrete {@link Collection} type with a default constructor
-     * @param resolvers      a not {@code null} {@link List} of resolvers
-     */
-    public CollectionValueResolver(Class<? extends Collection> collectionType, List<ValueResolver<T>> resolvers)
-    {
-        checkInstantiable(collectionType);
-        checkArgument(resolvers != null, "resolvers cannot be null");
-
-        this.collectionType = collectionType;
-        this.resolvers = ImmutableList.copyOf(resolvers);
-    }
-
-    /**
      * Passes the given {@code event} to each resolvers and outputs
      * a collection of type {@code collectionType} with each result
      *
      * @param event a {@link MuleEvent} the event to evaluate
      * @return a {@link Collection} of type {@code collectionType}
-     * @throws MuleException
      */
     @Override
     public Collection<T> resolve(MuleEvent event) throws MuleException

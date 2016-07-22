@@ -6,13 +6,12 @@
  */
 package org.mule.runtime.core.mule.security;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-
+import org.junit.Test;
 import org.mule.runtime.core.security.PasswordBasedEncryptionStrategy;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 public class PbeEncryptionStrategyTestCase extends AbstractMuleTestCase
 {

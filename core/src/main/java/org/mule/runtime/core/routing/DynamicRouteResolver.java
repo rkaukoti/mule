@@ -23,7 +23,6 @@ public interface DynamicRouteResolver
      *
      * @param event the event holding the message to route
      * @return a list of {@link MessageProcessor} to which the message will be routed to
-     * @throws MessagingException
      */
     List<MessageProcessor> resolveRoutes(MuleEvent event) throws MessagingException;
 }

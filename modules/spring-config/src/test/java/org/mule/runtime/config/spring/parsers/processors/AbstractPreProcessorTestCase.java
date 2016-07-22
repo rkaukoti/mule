@@ -6,18 +6,17 @@
  */
 package org.mule.runtime.config.spring.parsers.processors;
 
-import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.core.util.ArrayUtils;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import java.util.StringTokenizer;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -43,7 +42,8 @@ public abstract class AbstractPreProcessorTestCase extends AbstractMuleTestCase
         createCheck(constraint, null, null).preProcess(null, createElement(attributes));
     }
 
-    protected void assertOk(String[][] constraint, String attributes, String elementName, String namespaceUri) throws ParserConfigurationException
+    protected void assertOk(String[][] constraint, String attributes, String elementName, String namespaceUri)
+            throws ParserConfigurationException
     {
         createCheck(constraint, elementName, namespaceUri).preProcess(null, createElement(attributes, elementName, namespaceUri));
     }

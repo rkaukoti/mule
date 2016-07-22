@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.core.context.notification;
 
-import static java.lang.Thread.currentThread;
-
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.context.WorkManager;
@@ -18,6 +16,8 @@ import org.mule.runtime.core.api.context.notification.ServerNotificationListener
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.api.lifecycle.LifecycleException;
 import org.mule.runtime.core.util.ClassUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -32,8 +32,7 @@ import javax.resource.spi.work.Work;
 import javax.resource.spi.work.WorkException;
 import javax.resource.spi.work.WorkListener;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.lang.Thread.currentThread;
 
 /**
  * A reworking of the event manager that allows efficient behaviour without global on/off
@@ -72,21 +71,43 @@ public class ServerNotificationManager implements Work, Disposable, ServerNotifi
     private BlockingDeque<ServerNotification> eventQueue = new LinkedBlockingDeque<ServerNotification>();
     private MuleContext muleContext;
 
+    /**
+     * Support string or class parameters
+     */
+    static Class toClass(Object value) throws ClassNotFoundException
+    {
+        Class clazz;
+        if (value instanceof String)
+        {
+            clazz = ClassUtils.loadClass(value.toString(), value.getClass());
+        }
+        else if (value instanceof Class)
+        {
+            clazz = (Class) value;
+        }
+        else
+        {
+            throw new IllegalArgumentException(
+                    "Notification types and listeners must be a Class with fully qualified class name. Value is: " + value);
+        }
+        return clazz;
+    }
+
     @Override
     public boolean isNotificationDynamic()
     {
         return dynamic;
     }
 
+    public void setNotificationDynamic(boolean dynamic)
+    {
+        this.dynamic = dynamic;
+    }
+
     @Override
     public void setMuleContext(MuleContext context)
     {
         muleContext = context;
-    }
-
-    public void setNotificationDynamic(boolean dynamic)
-    {
-        this.dynamic = dynamic;
     }
 
     public void start(WorkManager workManager, WorkListener workListener) throws LifecycleException
@@ -104,11 +125,6 @@ public class ServerNotificationManager implements Work, Disposable, ServerNotifi
     public void addInterfaceToType(Class<? extends ServerNotificationListener> iface, Class<? extends ServerNotification> event)
     {
         configuration.addInterfaceToType(iface, event);
-    }
-
-    public void setInterfaceToTypes(Map<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>> interfaceToEvents) throws ClassNotFoundException
-    {
-        configuration.addAllInterfaceToTypes(interfaceToEvents);
     }
 
     public void addListenerSubscriptionPair(ListenerSubscriptionPair pair)
@@ -259,37 +275,23 @@ public class ServerNotificationManager implements Work, Disposable, ServerNotifi
         }
     }
 
-    /**
-     * Support string or class parameters
-     */
-    static Class toClass(Object value) throws ClassNotFoundException
-    {
-        Class clazz;
-        if (value instanceof String)
-        {
-            clazz = ClassUtils.loadClass(value.toString(), value.getClass());
-        }
-        else if(value instanceof Class)
-        {
-            clazz = (Class)value;
-        }
-        else
-        {
-           throw new IllegalArgumentException("Notification types and listeners must be a Class with fully qualified class name. Value is: " + value);
-        }
-        return clazz;
-    }
-
-    // for tests -------------------------------------------------------
-
     Policy getPolicy()
     {
         return configuration.getPolicy();
     }
 
+    // for tests -------------------------------------------------------
+
     public Map<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>> getInterfaceToTypes()
     {
         return Collections.unmodifiableMap(configuration.getInterfaceToTypes());
+    }
+
+    public void setInterfaceToTypes(
+            Map<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>> interfaceToEvents)
+            throws ClassNotFoundException
+    {
+        configuration.addAllInterfaceToTypes(interfaceToEvents);
     }
 
     public Set<ListenerSubscriptionPair> getListeners()

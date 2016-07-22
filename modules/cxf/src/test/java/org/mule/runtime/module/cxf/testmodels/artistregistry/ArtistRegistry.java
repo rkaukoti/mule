@@ -28,7 +28,8 @@ public class ArtistRegistry implements ArtistRegistryWebServices
     }
 
     @Override
-    public ArtistArray getAll(@WebParam(partName = "pageSize", name = "pageSize") int pageSize, @WebParam(partName = "pageNumber", name = "pageNumber") int pageNumber)
+    public ArtistArray getAll(@WebParam(partName = "pageSize", name = "pageSize") int pageSize,
+                              @WebParam(partName = "pageNumber", name = "pageNumber") int pageNumber)
     {
         ArtistArray artistArray = new ArtistArray();
         List<Artist> artistList = artistArray.getItem();

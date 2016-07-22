@@ -6,8 +6,9 @@
  */
 package org.mule.test.integration.streaming;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
 import org.mule.runtime.core.util.FileUtils;
 import org.mule.tck.junit4.rule.DynamicPort;
@@ -16,9 +17,7 @@ import org.mule.tck.probe.file.FileExists;
 
 import java.io.File;
 
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 @Ignore("MULE-6926: Flaky test - fails on build server")
 public class FileToTcpStreamingTestCase extends FunctionalTestCase

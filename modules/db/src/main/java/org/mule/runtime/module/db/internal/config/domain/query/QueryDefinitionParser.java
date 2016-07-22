@@ -13,11 +13,6 @@ import org.mule.runtime.module.db.internal.config.domain.param.InputParamValueBe
 import org.mule.runtime.module.db.internal.config.domain.param.OutputParamDefinitionDefinitionParser;
 import org.mule.runtime.module.db.internal.domain.query.Query;
 import org.mule.runtime.module.db.internal.parser.SimpleQueryTemplateParser;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.ManagedList;
@@ -25,6 +20,10 @@ import org.springframework.beans.factory.xml.BeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.util.xml.DomUtils;
 import org.w3c.dom.Element;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Parses {@link org.w3c.dom.Element} representing queries
@@ -38,6 +37,29 @@ public class QueryDefinitionParser
     public static final String DYNAMIC_QUERY = "dynamic-query";
     public static final String[] QUERY_TAG_NAMES = new String[] {PARAMETERIZED_QUERY, TEMPLATE_QUERY_REF, DYNAMIC_QUERY};
     public static final String IN_PARAM_TAG = "in-param";
+
+    public static List<BeanDefinition> parseOverriddenTemplateParameters(List<Element> paramElements, ParserContext nestedCtx)
+    {
+        List<BeanDefinition> params = new ManagedList<BeanDefinition>();
+        for (Element param : paramElements)
+        {
+            BeanDefinitionParser paramParser;
+            if (IN_PARAM_TAG.equals(param.getLocalName()))
+            {
+                paramParser = new InputParamValueBeanDefinitionParser();
+            }
+            else
+            {
+                throw new IllegalStateException("Unsupported param type: " + param.getLocalName());
+            }
+
+            BeanDefinition paramBean = paramParser.parse(param, nestedCtx);
+
+            params.add(paramBean);
+        }
+
+        return params;
+    }
 
     private BeanDefinition parseQuery(Element queryElement, List<Element> paramElements, ParserContext nestedCtx)
     {
@@ -91,7 +113,8 @@ public class QueryDefinitionParser
     {
         List<BeanDefinition> params = parseStoreProcedureParams(paramElements, nestedCtx);
 
-        BeanDefinitionBuilder queryTemplateFactory = BeanDefinitionBuilder.genericBeanDefinition(ParameterizedQueryTemplateFactoryBean.class);
+        BeanDefinitionBuilder queryTemplateFactory =
+                BeanDefinitionBuilder.genericBeanDefinition(ParameterizedQueryTemplateFactoryBean.class);
         queryTemplateFactory.addConstructorArgValue(queryElement.getTextContent());
         queryTemplateFactory.addConstructorArgValue(params);
         queryTemplateFactory.addConstructorArgValue(new SimpleQueryTemplateParser());
@@ -134,35 +157,14 @@ public class QueryDefinitionParser
         return params;
     }
 
-    public static List<BeanDefinition> parseOverriddenTemplateParameters(List<Element> paramElements, ParserContext nestedCtx)
-    {
-        List<BeanDefinition> params = new ManagedList<BeanDefinition>();
-        for (Element param : paramElements)
-        {
-            BeanDefinitionParser paramParser;
-            if (IN_PARAM_TAG.equals(param.getLocalName()))
-            {
-                paramParser = new InputParamValueBeanDefinitionParser();
-            }
-            else
-            {
-                throw new IllegalStateException("Unsupported param type: " + param.getLocalName());
-            }
-
-            BeanDefinition paramBean = paramParser.parse(param, nestedCtx);
-
-            params.add(paramBean);
-        }
-
-        return params;
-    }
-
     public BeanDefinition parseQuery(Element element, ParserContext nestedCtx)
     {
         List<Element> childElementsByTagName = DomUtils.getChildElementsByTagName(element, QUERY_TAG_NAMES);
         if (childElementsByTagName.size() == 0)
         {
-            throw new IllegalArgumentException(String.format("Element %s must contain one of the following elements: %s", element.getTagName(), Arrays.toString(QUERY_TAG_NAMES)));
+            throw new IllegalArgumentException(
+                    String.format("Element %s must contain one of the following elements: %s", element.getTagName(),
+                            Arrays.toString(QUERY_TAG_NAMES)));
         }
 
         List<Element> params = DomUtils.getChildElementsByTagName(element, new String[] {IN_PARAM_TAG, "out-param", "inout-param"});

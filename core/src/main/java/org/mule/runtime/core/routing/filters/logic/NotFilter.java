@@ -6,12 +6,12 @@
  */
 package org.mule.runtime.core.routing.filters.logic;
 
-import static org.mule.runtime.core.util.ClassUtils.equal;
-import static org.mule.runtime.core.util.ClassUtils.hash;
-
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.core.api.routing.filter.ObjectFilter;
+
+import static org.mule.runtime.core.util.ClassUtils.equal;
+import static org.mule.runtime.core.util.ClassUtils.hash;
 
 /**
  * <code>NotFilter</code> accepts if the filter does not accept.
@@ -56,8 +56,10 @@ public class NotFilter implements Filter, ObjectFilter
     @Override
     public boolean equals(Object obj)
     {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
 
         final NotFilter other = (NotFilter) obj;
         return equal(filter, other.filter);
@@ -66,6 +68,6 @@ public class NotFilter implements Filter, ObjectFilter
     @Override
     public int hashCode()
     {
-        return hash(new Object[]{this.getClass(), filter});
+        return hash(new Object[] {this.getClass(), filter});
     }
 }

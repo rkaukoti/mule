@@ -52,28 +52,28 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "annotated", propOrder = {"annotation"})
 @XmlSeeAlso({
-                    ExtensionType.class,
-                    Element.class,
-                    AttributeGroup.class,
-                    ComplexType.class,
-                    Attribute.class,
-                    RestrictionType.class,
-                    SimpleType.class,
-                    Group.class,
-                    SimpleContent.class,
-                    List.class,
-                    Restriction.class,
-                    Facet.class,
-                    Wildcard.class,
-                    Union.class,
-                    Notation.class,
-                    Import.class,
-                    Include.class,
-                    Field.class,
-                    Keybase.class,
-                    ComplexContent.class,
-                    Selector.class
-            })
+        ExtensionType.class,
+        Element.class,
+        AttributeGroup.class,
+        ComplexType.class,
+        Attribute.class,
+        RestrictionType.class,
+        SimpleType.class,
+        Group.class,
+        SimpleContent.class,
+        List.class,
+        Restriction.class,
+        Facet.class,
+        Wildcard.class,
+        Union.class,
+        Notation.class,
+        Import.class,
+        Include.class,
+        Field.class,
+        Keybase.class,
+        ComplexContent.class,
+        Selector.class
+})
 public class Annotated
         extends OpenAttrs
 {
@@ -88,8 +88,7 @@ public class Annotated
     /**
      * Gets the value of the annotation property.
      *
-     * @return possible object is
-     * {@link Annotation }
+     * @return possible object is {@link Annotation }
      */
     public Annotation getAnnotation()
     {
@@ -99,8 +98,7 @@ public class Annotated
     /**
      * Sets the value of the annotation property.
      *
-     * @param value allowed object is
-     *              {@link Annotation }
+     * @param value allowed object is {@link Annotation }
      */
     public void setAnnotation(Annotation value)
     {
@@ -110,8 +108,7 @@ public class Annotated
     /**
      * Gets the value of the id property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getId()
     {
@@ -121,8 +118,7 @@ public class Annotated
     /**
      * Sets the value of the id property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setId(String value)
     {

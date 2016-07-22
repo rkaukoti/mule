@@ -6,6 +6,29 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
+import com.google.common.collect.ImmutableList;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.util.collection.ImmutableListCollector;
+import org.mule.runtime.extension.api.runtime.ConfigurationInstance;
+import org.mule.runtime.extension.api.runtime.ExpirationPolicy;
+import org.mule.runtime.module.extension.internal.runtime.ImmutableExpirationPolicy;
+import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSet;
+import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSetResult;
+import org.mule.runtime.module.extension.internal.runtime.resolver.StaticValueResolver;
+import org.mule.tck.size.SmallTest;
+import org.mule.test.heisenberg.extension.HeisenbergExtension;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
@@ -18,29 +41,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.mockClassLoaderModelProperty;
-import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.core.util.collection.ImmutableListCollector;
-import org.mule.runtime.extension.api.runtime.ConfigurationInstance;
-import org.mule.runtime.extension.api.runtime.ExpirationPolicy;
-import org.mule.runtime.module.extension.internal.runtime.ImmutableExpirationPolicy;
-import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSet;
-import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSetResult;
-import org.mule.runtime.module.extension.internal.runtime.resolver.StaticValueResolver;
-import org.mule.tck.size.SmallTest;
-import org.mule.test.heisenberg.extension.HeisenbergExtension;
-
-import com.google.common.collect.ImmutableList;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -78,10 +78,10 @@ public class DynamicConfigurationProviderTestCase extends AbstractConfigurationP
         expirationPolicy = new ImmutableExpirationPolicy(5, TimeUnit.MINUTES, timeSupplier);
 
         provider = new DynamicConfigurationProvider(CONFIG_NAME,
-                                                    configurationModel,
-                                                    resolverSet,
-                                                    new StaticValueResolver<>(null),
-                                                    expirationPolicy);
+                configurationModel,
+                resolverSet,
+                new StaticValueResolver<>(null),
+                expirationPolicy);
 
         super.before();
         provider.initialise();

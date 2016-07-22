@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.executor;
 
-import static org.apache.commons.lang.ArrayUtils.isEmpty;
-import static org.mule.runtime.module.extension.internal.introspection.describer.MuleExtensionAnnotationParser.toMap;
-import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.isParameterContainer;
 import org.mule.metadata.java.api.JavaTypeLoader;
 import org.mule.runtime.api.message.MuleMessage;
 import org.mule.runtime.core.api.MuleEvent;
@@ -30,6 +27,10 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
+
+import static org.apache.commons.lang.ArrayUtils.isEmpty;
+import static org.mule.runtime.module.extension.internal.introspection.describer.MuleExtensionAnnotationParser.toMap;
+import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.isParameterContainer;
 
 
 /**

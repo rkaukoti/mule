@@ -6,6 +6,21 @@
  */
 package org.mule.runtime.module.launcher.application;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.MuleContext;
+import org.mule.runtime.extension.api.manifest.ExtensionManifest;
+import org.mule.runtime.module.extension.internal.manager.ExtensionManagerAdapter;
+import org.mule.runtime.module.extension.internal.manager.ExtensionManagerAdapterFactory;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.net.URL;
+
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
@@ -17,21 +32,6 @@ import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mule.runtime.module.extension.internal.ExtensionProperties.EXTENSION_MANIFEST_FILE_NAME;
-import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.extension.api.manifest.ExtensionManifest;
-import org.mule.runtime.module.extension.internal.manager.ExtensionManagerAdapter;
-import org.mule.runtime.module.extension.internal.manager.ExtensionManagerAdapterFactory;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
-import java.net.URL;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
@@ -73,7 +73,8 @@ public class ApplicationExtensionsManagerConfigurationBuilderTestCase extends Ab
         when(extensionManagerAdapterFactory.createExtensionManager(muleContext)).thenReturn(extensionManager);
         when(extensionManager.parseExtensionManifestXml(any())).thenReturn(manifest);
 
-        builder = new ApplicationExtensionsManagerConfigurationBuilder(asList(extensionPlugin, notExtensionPlugin), extensionManagerAdapterFactory);
+        builder = new ApplicationExtensionsManagerConfigurationBuilder(asList(extensionPlugin, notExtensionPlugin),
+                extensionManagerAdapterFactory);
     }
 
     @Test

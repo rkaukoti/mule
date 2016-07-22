@@ -7,11 +7,13 @@
 
 package org.mule.runtime.module.db.integration.config;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 import org.mule.runtime.module.db.internal.domain.type.DbType;
 import org.mule.runtime.module.db.internal.domain.type.JdbcTypes;
 import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import java.io.File;
 import java.net.URL;
@@ -23,10 +25,8 @@ import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * Checks that every type defined in JdbcTypes is defined in the schema and
@@ -36,37 +36,6 @@ public class JdbcParamTypeTestCase extends AbstractMuleTestCase
 {
 
     private static final List<String> schemaJdbcTypes = getSchemaJdbcTypes();
-
-    @Test
-    public void definesJdbcTypesInSchemaValues() throws Exception
-    {
-        Set<String> schemaJdbcTypes = new HashSet<String>();
-
-        for (String schemaType : getSchemaJdbcTypes())
-        {
-            schemaJdbcTypes.add(schemaType);
-        }
-
-        for (DbType dbType : JdbcTypes.types)
-        {
-            assertThat(schemaJdbcTypes.contains(dbType.getName()), is(true));
-        }
-    }
-
-    @Test
-    public void definesSchemaValueInJdbcTypes() throws Exception
-    {
-        Set<String> jdbcTypes = new HashSet<String>();
-        for (DbType dbType : JdbcTypes.types)
-        {
-            jdbcTypes.add(dbType.getName());
-        }
-
-        for (String schemaJdbcType : schemaJdbcTypes)
-        {
-            assertThat(jdbcTypes.contains(schemaJdbcType), is(true));
-        }
-    }
 
     private static List<String> getSchemaJdbcTypes()
     {
@@ -123,5 +92,36 @@ public class JdbcParamTypeTestCase extends AbstractMuleTestCase
         docBuilder = docBuilderFactory.newDocumentBuilder();
 
         return docBuilder.parse(file);
+    }
+
+    @Test
+    public void definesJdbcTypesInSchemaValues() throws Exception
+    {
+        Set<String> schemaJdbcTypes = new HashSet<String>();
+
+        for (String schemaType : getSchemaJdbcTypes())
+        {
+            schemaJdbcTypes.add(schemaType);
+        }
+
+        for (DbType dbType : JdbcTypes.types)
+        {
+            assertThat(schemaJdbcTypes.contains(dbType.getName()), is(true));
+        }
+    }
+
+    @Test
+    public void definesSchemaValueInJdbcTypes() throws Exception
+    {
+        Set<String> jdbcTypes = new HashSet<String>();
+        for (DbType dbType : JdbcTypes.types)
+        {
+            jdbcTypes.add(dbType.getName());
+        }
+
+        for (String schemaJdbcType : schemaJdbcTypes)
+        {
+            assertThat(jdbcTypes.contains(schemaJdbcType), is(true));
+        }
     }
 }

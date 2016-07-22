@@ -7,9 +7,7 @@
 
 package org.mule.runtime.core.transformer;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.transformer.Transformer;
@@ -22,7 +20,8 @@ import org.mule.tck.testmodels.fruit.Orange;
 
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 @SmallTest
 public class TransformerResolutionTestCase extends AbstractMuleContextTestCase
@@ -43,8 +42,9 @@ public class TransformerResolutionTestCase extends AbstractMuleContextTestCase
         try
         {
             Transformer transformer = muleContext.getRegistry().lookupTransformer(DataType.STRING, FRUIT_DATA_TYPE);
-            assertTrue(String.format("Expected a %s transformer but got %s", StringToFruit.class.getName(), transformer.getClass().getName()),
-                       transformer instanceof StringToFruit);
+            assertTrue(
+                    String.format("Expected a %s transformer but got %s", StringToFruit.class.getName(), transformer.getClass().getName()),
+                    transformer instanceof StringToFruit);
         }
         catch (TransformerException e)
         {

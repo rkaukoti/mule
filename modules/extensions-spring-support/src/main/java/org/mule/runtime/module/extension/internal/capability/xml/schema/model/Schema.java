@@ -78,22 +78,22 @@ public class Schema extends OpenAttrs
 {
 
     @XmlElements({
-                         @XmlElement(name = "redefine", type = Redefine.class),
-                         @XmlElement(name = "annotation", type = Annotation.class),
-                         @XmlElement(name = "import", type = Import.class),
-                         @XmlElement(name = "include", type = Include.class)
-                 })
+            @XmlElement(name = "redefine", type = Redefine.class),
+            @XmlElement(name = "annotation", type = Annotation.class),
+            @XmlElement(name = "import", type = Import.class),
+            @XmlElement(name = "include", type = Include.class)
+    })
     protected List<OpenAttrs> includeOrImportOrRedefine;
     @XmlElements({
-                         @XmlElement(name = "attribute", type = TopLevelAttribute.class),
-                         @XmlElement(name = "group", type = NamedGroup.class),
-                         @XmlElement(name = "notation", type = Notation.class),
-                         @XmlElement(name = "attributeGroup", type = NamedAttributeGroup.class),
-                         @XmlElement(name = "element", type = TopLevelElement.class),
-                         @XmlElement(name = "annotation", type = Annotation.class),
-                         @XmlElement(name = "complexType", type = TopLevelComplexType.class),
-                         @XmlElement(name = "simpleType", type = TopLevelSimpleType.class)
-                 })
+            @XmlElement(name = "attribute", type = TopLevelAttribute.class),
+            @XmlElement(name = "group", type = NamedGroup.class),
+            @XmlElement(name = "notation", type = Notation.class),
+            @XmlElement(name = "attributeGroup", type = NamedAttributeGroup.class),
+            @XmlElement(name = "element", type = TopLevelElement.class),
+            @XmlElement(name = "annotation", type = Annotation.class),
+            @XmlElement(name = "complexType", type = TopLevelComplexType.class),
+            @XmlElement(name = "simpleType", type = TopLevelSimpleType.class)
+    })
     protected Set<OpenAttrs> simpleTypeOrComplexTypeOrGroup;
     @XmlAttribute(name = "targetNamespace")
     @XmlSchemaType(name = "anyURI")
@@ -191,8 +191,7 @@ public class Schema extends OpenAttrs
     /**
      * Gets the value of the targetNamespace property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getTargetNamespace()
     {
@@ -202,8 +201,7 @@ public class Schema extends OpenAttrs
     /**
      * Sets the value of the targetNamespace property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setTargetNamespace(String value)
     {
@@ -213,8 +211,7 @@ public class Schema extends OpenAttrs
     /**
      * Gets the value of the version property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getVersion()
     {
@@ -224,8 +221,7 @@ public class Schema extends OpenAttrs
     /**
      * Sets the value of the version property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setVersion(String value)
     {
@@ -293,8 +289,7 @@ public class Schema extends OpenAttrs
     /**
      * Gets the value of the attributeFormDefault property.
      *
-     * @return possible object is
-     * {@link FormChoice }
+     * @return possible object is {@link FormChoice }
      */
     public FormChoice getAttributeFormDefault()
     {
@@ -311,8 +306,7 @@ public class Schema extends OpenAttrs
     /**
      * Sets the value of the attributeFormDefault property.
      *
-     * @param value allowed object is
-     *              {@link FormChoice }
+     * @param value allowed object is {@link FormChoice }
      */
     public void setAttributeFormDefault(FormChoice value)
     {
@@ -322,8 +316,7 @@ public class Schema extends OpenAttrs
     /**
      * Gets the value of the elementFormDefault property.
      *
-     * @return possible object is
-     * {@link FormChoice }
+     * @return possible object is {@link FormChoice }
      */
     public FormChoice getElementFormDefault()
     {
@@ -340,8 +333,7 @@ public class Schema extends OpenAttrs
     /**
      * Sets the value of the elementFormDefault property.
      *
-     * @param value allowed object is
-     *              {@link FormChoice }
+     * @param value allowed object is {@link FormChoice }
      */
     public void setElementFormDefault(FormChoice value)
     {
@@ -351,8 +343,7 @@ public class Schema extends OpenAttrs
     /**
      * Gets the value of the id property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getId()
     {
@@ -362,8 +353,7 @@ public class Schema extends OpenAttrs
     /**
      * Sets the value of the id property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setId(String value)
     {
@@ -373,8 +363,7 @@ public class Schema extends OpenAttrs
     /**
      * Gets the value of the lang property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return possible object is {@link String }
      */
     public String getLang()
     {
@@ -384,8 +373,7 @@ public class Schema extends OpenAttrs
     /**
      * Sets the value of the lang property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value allowed object is {@link String }
      */
     public void setLang(String value)
     {

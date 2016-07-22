@@ -6,8 +6,7 @@
  */
 package org.mule.runtime.core.processor;
 
-import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
-
+import org.apache.commons.collections.Factory;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
@@ -26,6 +25,8 @@ import org.mule.runtime.core.transformer.simple.ObjectToByteArray;
 import org.mule.runtime.core.util.lock.LockFactory;
 import org.mule.runtime.core.util.store.ObjectStorePartition;
 import org.mule.runtime.core.util.store.ProvidedObjectStoreWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.security.MessageDigest;
@@ -33,9 +34,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 
-import org.apache.commons.collections.Factory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
 
 /**
  * Implement a retry policy for Mule.  This is similar to JMS retry policies that will redeliver a message a maximum
@@ -72,15 +71,15 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy
         if (!useSecureHash && messageDigestAlgorithm != null)
         {
             throw new InitialisationException(
-                CoreMessages.initialisationFailure(String.format(
-                    "The message digest algorithm '%s' was specified when a secure hash will not be used",
-                    messageDigestAlgorithm)), this);
+                    CoreMessages.initialisationFailure(String.format(
+                            "The message digest algorithm '%s' was specified when a secure hash will not be used",
+                            messageDigestAlgorithm)), this);
         }
         if (!useSecureHash && idExpression == null)
         {
             throw new InitialisationException(
-                CoreMessages.initialisationFailure(
-                    "No method for identifying messages was specified"), this);
+                    CoreMessages.initialisationFailure(
+                            "No method for identifying messages was specified"), this);
         }
         if (useSecureHash)
         {
@@ -95,15 +94,16 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy
             catch (NoSuchAlgorithmException e)
             {
                 throw new InitialisationException(
-                    CoreMessages.initialisationFailure(
-                        String.format("Exception '%s' initializing message digest algorithm %s", e.getMessage(), messageDigestAlgorithm)), this);
+                        CoreMessages.initialisationFailure(
+                                String.format("Exception '%s' initializing message digest algorithm %s", e.getMessage(),
+                                        messageDigestAlgorithm)), this);
 
             }
         }
 
         String appName = muleContext.getConfiguration().getId();
         String flowName = flowConstruct.getName();
-        idrId = String.format("%s-%s-%s",appName,flowName,"idr");
+        idrId = String.format("%s-%s-%s", appName, flowName, "idr");
         lockFactory = muleContext.getLockFactory();
         if (store == null)
         {
@@ -133,7 +133,7 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy
             {
                 try
                 {
-                    ((ObjectStorePartition)store).close();
+                    ((ObjectStorePartition) store).close();
                 }
                 catch (ObjectStoreException e)
                 {
@@ -173,7 +173,8 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy
         }
         catch (TransformerException e)
         {
-            logger.warn("The message cannot be processed because the digest could not be generated. Either make the payload serializable or use an expression.");
+            logger.warn(
+                    "The message cannot be processed because the digest could not be generated. Either make the payload serializable or use an expression.");
             return null;
         }
         catch (Exception ex)
@@ -202,7 +203,8 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy
                     }
                     else
                     {
-                        throw new MessageRedeliveredException(messageId, counter.get(), maxRedeliveryCount, event, CoreMessages.createStaticMessage("Redelivery exhausted"), this);
+                        throw new MessageRedeliveredException(messageId, counter.get(), maxRedeliveryCount, event,
+                                CoreMessages.createStaticMessage("Redelivery exhausted"), this);
                     }
                 }
                 catch (MessageRedeliveredException ex)
@@ -272,7 +274,7 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy
             store.remove(messageId);
         }
         counter.incrementAndGet();
-        store.store(messageId,counter);
+        store.store(messageId, counter);
         return counter;
     }
 
@@ -289,11 +291,11 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy
             }
             MessageDigest md = MessageDigest.getInstance(messageDigestAlgorithm);
             byte[] digestedBytes = md.digest(bytes);
-            return (String)byteArrayToHexString.transform(digestedBytes);
+            return (String) byteArrayToHexString.transform(digestedBytes);
         }
         else
         {
-             return event.getMuleContext().getExpressionManager().parse(idExpression, event, true);
+            return event.getMuleContext().getExpressionManager().parse(idExpression, event, true);
         }
     }
 
@@ -326,7 +328,7 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy
     {
         this.idExpression = idExpression;
     }
-    
+
     public void setObjectStore(ObjectStore<AtomicInteger> store)
     {
         this.store = new ProvidedObjectStoreWrapper<>(store, internalObjectStoreFactory());

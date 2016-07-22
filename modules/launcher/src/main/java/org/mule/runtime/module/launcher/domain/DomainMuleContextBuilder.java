@@ -6,8 +6,6 @@
  */
 package org.mule.runtime.module.launcher.domain;
 
-import static org.mule.runtime.core.config.bootstrap.ArtifactType.DOMAIN;
-
 import org.mule.runtime.core.DefaultMuleContext;
 import org.mule.runtime.core.api.config.MuleConfiguration;
 import org.mule.runtime.core.api.context.notification.ClusterNodeNotificationListener;
@@ -27,6 +25,8 @@ import org.mule.runtime.core.context.notification.ManagementNotification;
 import org.mule.runtime.core.context.notification.MuleContextNotification;
 import org.mule.runtime.core.context.notification.SecurityNotification;
 import org.mule.runtime.core.context.notification.ServerNotificationManager;
+
+import static org.mule.runtime.core.config.bootstrap.ArtifactType.DOMAIN;
 
 /**
  * Builder for domain MuleContext instance.
@@ -63,16 +63,16 @@ public class DomainMuleContextBuilder extends DefaultMuleContextBuilder
     {
         ServerNotificationManager manager = new ServerNotificationManager();
         manager.addInterfaceToType(MuleContextNotificationListener.class,
-                                   MuleContextNotification.class);
+                MuleContextNotification.class);
         manager.addInterfaceToType(SecurityNotificationListener.class,
-                                   SecurityNotification.class);
+                SecurityNotification.class);
         manager.addInterfaceToType(ManagementNotificationListener.class,
-                                   ManagementNotification.class);
+                ManagementNotification.class);
         manager.addInterfaceToType(CustomNotificationListener.class, CustomNotification.class);
         manager.addInterfaceToType(ConnectionNotificationListener.class,
-                                   ConnectionNotification.class);
+                ConnectionNotification.class);
         manager.addInterfaceToType(ExceptionNotificationListener.class,
-                                   ExceptionNotification.class);
+                ExceptionNotification.class);
         manager.addInterfaceToType(ClusterNodeNotificationListener.class, ClusterNodeNotification.class);
         return manager;
     }

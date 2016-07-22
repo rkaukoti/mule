@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/transport/http"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:mule="http://www.mulesoft.org/schema/mule/core"
             xmlns:httpc="http://www.mulesoft.org/schema/mule/http"
             xmlns:transports="http://www.mulesoft.org/schema/mule/transports"
             xmlns:tcp="http://www.mulesoft.org/schema/mule/transport/tcp"
             xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
+            xmlns="http://www.mulesoft.org/schema/mule/transport/http"
             targetNamespace="http://www.mulesoft.org/schema/mule/transport/http"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">
@@ -18,12 +18,15 @@
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/http"
                 schemaLocation="http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd"/>
     <xsd:import namespace="http://www.mulesoft.org/schema/mule/transports"
-                schemaLocation="http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd" />
-    <xsd:import namespace = "http://www.mulesoft.org/schema/mule/schemadoc"
-                schemaLocation = "http://www.mulesoft.org/schema/mule/schemadoc/3.7/mule-schemadoc.xsd"/>
+                schemaLocation="http://www.mulesoft.org/schema/mule/transports/current/mule-transports.xsd"/>
+    <xsd:import namespace="http://www.mulesoft.org/schema/mule/schemadoc"
+                schemaLocation="http://www.mulesoft.org/schema/mule/schemadoc/3.7/mule-schemadoc.xsd"/>
 
     <xsd:annotation>
-        <xsd:documentation>The HTTP transport provides support for exposing services over HTTP and making HTTP client requests from Mule services to external services as part of service event flows. Mule supports inbound, outbound, and polling HTTP endpooints. These endpoints support all common features of the HTTP spec, such as ETag processing, cookies, and keepalive. Both HTTP 1.0 and 1.1 are supported.</xsd:documentation>
+        <xsd:documentation>The HTTP transport provides support for exposing services over HTTP and making HTTP client requests from Mule services to external services as part of service event flows.
+            Mule supports inbound, outbound, and polling HTTP endpooints. These endpoints support all common features of the HTTP spec, such as ETag processing, cookies, and keepalive. Both HTTP 1.0
+            and 1.1 are supported.
+        </xsd:documentation>
         <xsd:appinfo>
             <schemadoc:short-name>HTTP</schemadoc:short-name>
             <schemadoc:page-title>HTTP Transport</schemadoc:page-title>
@@ -102,7 +105,8 @@
                 </xsd:attribute>
                 <xsd:attribute name="proxyNtlmAuthentication" type="mule:substitutableBoolean" use="optional">
                     <xsd:annotation>
-                        <xsd:documentation>Whether the proxy authentication scheme is NTLM or not. This property is required in order to use the right credentials under that scheme. Default is false</xsd:documentation>
+                        <xsd:documentation>Whether the proxy authentication scheme is NTLM or not. This property is required in order to use the right credentials under that scheme. Default is false
+                        </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
                 <xsd:attribute name="enableCookies" type="mule:substitutableBoolean">
@@ -133,7 +137,9 @@
                 </xsd:attribute>
                 <xsd:attribute name="discardEmptyContent" type="mule:substitutableBoolean">
                     <xsd:annotation>
-                        <xsd:documentation>Whether Mule should discard any messages from the remote server that have a zero content length. For many services a zero length would mean there was no data to return. If the remote HTTP server does return content to say that that the request is empty, users can configure a content filter on the endpoint to filter these messages out.
+                        <xsd:documentation>Whether Mule should discard any messages from the remote server that have a zero content length. For many services a zero length would mean there was no data
+                            to return. If the remote HTTP server does return content to say that that the request is empty, users can configure a content filter on the endpoint to filter these
+                            messages out.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -166,19 +172,22 @@
                     </xsd:element>
                     <xsd:element name="payloadParameterName" type="mule:valueType" minOccurs="0" maxOccurs="unbounded">
                         <xsd:annotation>
-                            <xsd:documentation>If the payload of the message is to be attached as a URL parameter, this should be set to the parameter name. If the message payload is an array of objects that multiple parameters can be set to, use each element in the array.
+                            <xsd:documentation>If the payload of the message is to be attached as a URL parameter, this should be set to the parameter name. If the message payload is an array of
+                                objects that multiple parameters can be set to, use each element in the array.
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
                     <xsd:element name="requiredParameter" type="mule:keyValueType" minOccurs="0" maxOccurs="unbounded">
                         <xsd:annotation>
-                            <xsd:documentation>These are parameters that must be available on the current message for the request to be successful. The Key maps to the parameter name, the value can be any one of the valid expressions supported by Mule.
+                            <xsd:documentation>These are parameters that must be available on the current message for the request to be successful. The Key maps to the parameter name, the value can be
+                                any one of the valid expressions supported by Mule.
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
                     <xsd:element name="optionalParameter" type="mule:keyValueType" minOccurs="0" maxOccurs="unbounded">
                         <xsd:annotation>
-                            <xsd:documentation>These are parameters that if they are on the current message will be added to the request, otherwise they will be ignored. The Key maps to the parameter name, the value can be any one of the valid expressions supported by Mule.
+                            <xsd:documentation>These are parameters that if they are on the current message will be added to the request, otherwise they will be ignored. The Key maps to the parameter
+                                name, the value can be any one of the valid expressions supported by Mule.
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
@@ -197,7 +206,8 @@
                 </xsd:attribute>
                 <xsd:attribute name="serviceUrl" use="required">
                     <xsd:annotation>
-                        <xsd:documentation>The service URL to use when making the request. This should not contain any parameters, since these should be configured on the component. The service URL can contain Mule expressions, so the URL can be dynamic for each message request.
+                        <xsd:documentation>The service URL to use when making the request. This should not contain any parameters, since these should be configured on the component. The service URL
+                            can contain Mule expressions, so the URL can be dynamic for each message request.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -274,7 +284,8 @@
     <xsd:element name="inbound-endpoint" type="inboundEndpointType" substitutionGroup="transports:abstract-inbound-endpoint">
         <xsd:annotation>
             <xsd:documentation>
-            An inbound HTTP endpoint exposes a service over HTTP, essentially making it an HTTP server. If polling of a remote HTTP service is required, this endpoint should be configured with a polling HTTP connector.
+                An inbound HTTP endpoint exposes a service over HTTP, essentially making it an HTTP server. If polling of a remote HTTP service is required, this endpoint should be configured with a
+                polling HTTP connector.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
@@ -304,7 +315,7 @@
                     <xsd:annotation>
                         <xsd:documentation>
                             If a request is made using GET that responds with a redirectLocation header, setting this to true will
-                            make the request on the redirect URL.  This only works when using GET since you cannot automatically follow
+                            make the request on the redirect URL. This only works when using GET since you cannot automatically follow
                             redirects when perfroming a POST (a restriction according to RFC 2616).
                         </xsd:documentation>
                     </xsd:annotation>
@@ -337,7 +348,7 @@
                     <xsd:annotation>
                         <xsd:documentation>
                             If a request is made using GET that responds with a redirectLocation header, setting this to true will
-                            make the request on the redirect URL.  This only works when using GET since you cannot automatically follow
+                            make the request on the redirect URL. This only works when using GET since you cannot automatically follow
                             redirects when perfroming a POST (a restriction according to RFC 2616).
                         </xsd:documentation>
                     </xsd:annotation>
@@ -457,11 +468,11 @@
         </xsd:complexContent>
     </xsd:complexType>
 
-     <xsd:complexType name="headerType">
+    <xsd:complexType name="headerType">
         <xsd:complexContent>
             <xsd:extension base="mule:annotatedType">
                 <xsd:attribute name="headerName" type="xsd:string" use="required"/>
-                <xsd:attribute name="value" type="xsd:string" />
+                <xsd:attribute name="value" type="xsd:string"/>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
@@ -521,7 +532,7 @@
                 <xsd:attribute name="version" type="mule:substitutableInt" use="optional">
                     <xsd:annotation>
                         <xsd:documentation>
-                             Sets the version of the cookie specification to which this cookie conforms.
+                            Sets the version of the cookie specification to which this cookie conforms.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -576,14 +587,16 @@
                 <xsd:attribute name="mustRevalidate" type="mule:substitutableBoolean" use="optional" default="false">
                     <xsd:annotation>
                         <xsd:documentation>
-                             When the must-revalidate directive is present in a response received by a cache, that cache MUST NOT use the entry after it becomes stale to respond to a subsequent request without first revalidating it with the origin server.
+                            When the must-revalidate directive is present in a response received by a cache, that cache MUST NOT use the entry after it becomes stale to respond to a subsequent request
+                            without first revalidating it with the origin server.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
                 <xsd:attribute name="maxAge" type="mule:substitutableInt" use="optional">
                     <xsd:annotation>
                         <xsd:documentation>
-                            When the max-age cache-control directive is present in a cached response, the response is stale if its current age is greater than the age value given. If a response includes both an Expires header and a max-age directive, the max-age directive overrides the Expires header, even if the Expires header is more restrictive.
+                            When the max-age cache-control directive is present in a cached response, the response is stale if its current age is greater than the age value given. If a response
+                            includes both an Expires header and a max-age directive, the max-age directive overrides the Expires header, even if the Expires header is more restrictive.
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:attribute>
@@ -615,7 +628,7 @@
                     <xsd:enumeration value="101">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Switching Protocol
+                                Switching Protocol
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -629,7 +642,7 @@
                     <xsd:enumeration value="201">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Created
+                                Created
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -643,7 +656,7 @@
                     <xsd:enumeration value="203">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Non-Authoritative Information
+                                Non-Authoritative Information
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -657,7 +670,7 @@
                     <xsd:enumeration value="205">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Reset Content
+                                Reset Content
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -671,7 +684,7 @@
                     <xsd:enumeration value="206">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Partial Content
+                                Partial Content
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -685,7 +698,7 @@
                     <xsd:enumeration value="301">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Moved Permanently
+                                Moved Permanently
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -699,7 +712,7 @@
                     <xsd:enumeration value="303">
                         <xsd:annotation>
                             <xsd:documentation>
-                               See Other
+                                See Other
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -713,7 +726,7 @@
                     <xsd:enumeration value="305">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Use Proxy
+                                Use Proxy
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -727,7 +740,7 @@
                     <xsd:enumeration value="400">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Bad Request
+                                Bad Request
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -741,7 +754,7 @@
                     <xsd:enumeration value="402">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Payment Required
+                                Payment Required
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -755,7 +768,7 @@
                     <xsd:enumeration value="404">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Not Found
+                                Not Found
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -769,7 +782,7 @@
                     <xsd:enumeration value="406">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Not Acceptable
+                                Not Acceptable
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -783,7 +796,7 @@
                     <xsd:enumeration value="408">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Request Timeout
+                                Request Timeout
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -797,7 +810,7 @@
                     <xsd:enumeration value="410">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Gone
+                                Gone
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -811,7 +824,7 @@
                     <xsd:enumeration value="412">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Precondition Failed
+                                Precondition Failed
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -825,7 +838,7 @@
                     <xsd:enumeration value="414">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Request-URI too long
+                                Request-URI too long
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -839,7 +852,7 @@
                     <xsd:enumeration value="416">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Requested Range Not Satisfiable
+                                Requested Range Not Satisfiable
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -853,7 +866,7 @@
                     <xsd:enumeration value="500">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Internal Server Error
+                                Internal Server Error
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -867,7 +880,7 @@
                     <xsd:enumeration value="502">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Bad Gateway
+                                Bad Gateway
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -881,7 +894,7 @@
                     <xsd:enumeration value="504">
                         <xsd:annotation>
                             <xsd:documentation>
-                               Gateway Timeout
+                                Gateway Timeout
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -895,7 +908,7 @@
                     <xsd:enumeration value="505">
                         <xsd:annotation>
                             <xsd:documentation>
-                               HTTP Version Not Supported
+                                HTTP Version Not Supported
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>

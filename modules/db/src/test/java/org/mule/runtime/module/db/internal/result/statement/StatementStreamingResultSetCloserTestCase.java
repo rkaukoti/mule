@@ -7,16 +7,15 @@
 
 package org.mule.runtime.module.db.internal.result.statement;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
+import org.junit.Test;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.sql.ResultSet;
 
-import org.junit.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 @SmallTest
 public class StatementStreamingResultSetCloserTestCase extends AbstractMuleTestCase

@@ -6,9 +6,8 @@
  */
 package org.mule.test.config.spring;
 
-import org.mule.functional.junit4.FunctionalTestCase;
-
 import org.junit.Test;
+import org.mule.functional.junit4.FunctionalTestCase;
 
 /**
  * This tests that we can have references to management context aware objects within a config

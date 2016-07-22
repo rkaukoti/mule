@@ -7,18 +7,18 @@
 package org.mule.test.xml.functional;
 
 
-import static org.junit.Assert.assertNotNull;
+import org.apache.commons.io.IOUtils;
 import org.mule.functional.junit4.FunctionalTestCase;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.io.IOUtils;
+import static org.junit.Assert.assertNotNull;
 
 public abstract class AbstractXmlFunctionalTestCase extends FunctionalTestCase
 {
     public static final long TIMEOUT = 3000L;
-    
+
     protected String getConfigAsString() throws IOException
     {
         return getResourceAsString(getConfigFile());

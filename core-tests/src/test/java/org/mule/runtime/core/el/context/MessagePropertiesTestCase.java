@@ -6,16 +6,9 @@
  */
 package org.mule.runtime.core.el.context;
 
-import static java.util.Collections.singletonMap;
-import static org.hamcrest.CoreMatchers.anyOf;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-
+import org.apache.commons.collections.keyvalue.DefaultMapEntry;
+import org.junit.Before;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 
@@ -26,9 +19,15 @@ import java.util.Set;
 
 import javax.activation.DataHandler;
 
-import org.apache.commons.collections.keyvalue.DefaultMapEntry;
-import org.junit.Before;
-import org.junit.Test;
+import static java.util.Collections.singletonMap;
+import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 public class MessagePropertiesTestCase extends AbstractELTestCase
 {
@@ -177,8 +176,8 @@ public class MessagePropertiesTestCase extends AbstractELTestCase
                                     .addInboundProperty("foo", "abc")
                                     .addInboundProperty("bar", "xyz")
                                     .build());
-        Set<Map.Entry<String, Object>> entrySet = (Set<Entry<String, Object>>)evaluate(
-            "message.inboundProperties.entrySet()", event);
+        Set<Map.Entry<String, Object>> entrySet = (Set<Entry<String, Object>>) evaluate(
+                "message.inboundProperties.entrySet()", event);
         assertEquals(2, entrySet.size());
         entrySet.contains(new DefaultMapEntry("foo", "abc"));
         entrySet.contains(new DefaultMapEntry("bar", "xyz"));
@@ -193,8 +192,8 @@ public class MessagePropertiesTestCase extends AbstractELTestCase
                                     .addInboundProperty("foo", "abc")
                                     .addInboundProperty("bar", "xyz")
                                     .build());
-        Collection<DataHandler> values = (Collection<DataHandler>)evaluate(
-            "message.inboundProperties.values()", event);
+        Collection<DataHandler> values = (Collection<DataHandler>) evaluate(
+                "message.inboundProperties.values()", event);
         assertEquals(2, values.size());
         values.contains("abc");
         values.contains("xyz");
@@ -229,8 +228,8 @@ public class MessagePropertiesTestCase extends AbstractELTestCase
     {
         event.setMessage(MuleMessage.builder(event.getMessage())
                                     .addOutboundProperty("foo", "abc")
-                .addOutboundProperty("bar", "xyz")
-                .build());
+                                    .addOutboundProperty("bar", "xyz")
+                                    .build());
         evaluate("message.outboundProperties.clear()", event);
         assertEquals(0, event.getMessage().getOutboundPropertyNames().size());
     }
@@ -252,8 +251,8 @@ public class MessagePropertiesTestCase extends AbstractELTestCase
                                     .addOutboundProperty("foo", "abc")
                                     .addOutboundProperty("bar", "xyz")
                                     .build());
-        assertThat(evaluate("message.outboundProperties.keySet().toArray()[0]", event), anyOf(equalTo("foo"),equalTo("bar")));
-        assertThat(evaluate("message.outboundProperties.keySet().toArray()[1]", event), anyOf(equalTo("foo"),equalTo("bar")));
+        assertThat(evaluate("message.outboundProperties.keySet().toArray()[0]", event), anyOf(equalTo("foo"), equalTo("bar")));
+        assertThat(evaluate("message.outboundProperties.keySet().toArray()[1]", event), anyOf(equalTo("foo"), equalTo("bar")));
     }
 
     @Test
@@ -284,8 +283,8 @@ public class MessagePropertiesTestCase extends AbstractELTestCase
                                     .addOutboundProperty("foo", "abc")
                                     .addOutboundProperty("bar", "xyz")
                                     .build());
-        Set<Map.Entry<String, Object>> entrySet = (Set<Entry<String, Object>>)evaluate(
-            "message.outboundProperties.entrySet()", event);
+        Set<Map.Entry<String, Object>> entrySet = (Set<Entry<String, Object>>) evaluate(
+                "message.outboundProperties.entrySet()", event);
         assertEquals(2, entrySet.size());
         entrySet.contains(new DefaultMapEntry("foo", "abc"));
         entrySet.contains(new DefaultMapEntry("bar", "xyz"));
@@ -299,8 +298,8 @@ public class MessagePropertiesTestCase extends AbstractELTestCase
                                     .addOutboundProperty("foo", "abc")
                                     .addOutboundProperty("bar", "xyz")
                                     .build());
-        Collection<DataHandler> values = (Collection<DataHandler>)evaluate(
-            "message.outboundProperties.values()", event);
+        Collection<DataHandler> values = (Collection<DataHandler>) evaluate(
+                "message.outboundProperties.values()", event);
         assertEquals(2, values.size());
         values.contains("abc");
         values.contains("xyz");

@@ -7,6 +7,7 @@
 
 package org.mule.runtime.config.spring.factories;
 
+import org.apache.commons.lang.StringUtils;
 import org.mule.runtime.api.meta.AnnotatedObject;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.MuleContextAware;
@@ -16,6 +17,7 @@ import org.mule.runtime.core.source.polling.watermark.Watermark;
 import org.mule.runtime.core.source.polling.watermark.selector.SelectorWatermark;
 import org.mule.runtime.core.source.polling.watermark.selector.WatermarkSelectorBroker;
 import org.mule.runtime.core.util.store.MuleObjectStoreManager;
+import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -23,11 +25,8 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.config.AbstractFactoryBean;
-
 public class WatermarkFactoryBean extends AbstractFactoryBean<Watermark>
-    implements MuleContextAware, AnnotatedObject
+        implements MuleContextAware, AnnotatedObject
 {
 
     public static final String MULE_WATERMARK_PARTITION = "mule.watermark";
@@ -57,20 +56,20 @@ public class WatermarkFactoryBean extends AbstractFactoryBean<Watermark>
             if (!StringUtils.isEmpty(this.updateExpression))
             {
                 throw new IllegalArgumentException(
-                    "You specified a watermark with both an update expression and a selector and/or a selector.\n"
-                                    + "Those cannot co-exist. You have to either specify an updateExpression or selector options");
+                        "You specified a watermark with both an update expression and a selector and/or a selector.\n"
+                        + "Those cannot co-exist. You have to either specify an updateExpression or selector options");
             }
             String selectorExpression = StringUtils.isEmpty(this.selectorExpression)
-                                                                                    ? DEFAULT_SELECTOR_EXPRESSION
-                                                                                    : this.selectorExpression;
+                    ? DEFAULT_SELECTOR_EXPRESSION
+                    : this.selectorExpression;
 
             return new SelectorWatermark(this.acquireObjectStore(), this.variable, this.defaultExpression,
-                this.selector, selectorExpression);
+                    this.selector, selectorExpression);
         }
         else
         {
             return new UpdateExpressionWatermark(this.acquireObjectStore(), this.variable,
-                this.defaultExpression, updateExpression);
+                    this.defaultExpression, updateExpression);
         }
 
     }

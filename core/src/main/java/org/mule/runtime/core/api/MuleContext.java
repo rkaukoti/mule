@@ -54,23 +54,21 @@ import javax.xml.namespace.QName;
 public interface MuleContext extends Lifecycle
 {
     /**
+     * Returns the Jta transaction manager used by this Mule server instance. or
+     * null if a transaction manager has not been set
+     *
+     * @return the Jta transaction manager used by this Mule server instance. or null if a transaction manager has not been set
+     */
+    TransactionManager getTransactionManager();
+
+    /**
      * Sets the Jta Transaction Manager to use with this Mule server instance
      *
      * @param manager the manager to use
-     * @throws Exception
      * @deprecated Use only for test cases.
      */
     @Deprecated
     void setTransactionManager(TransactionManager manager) throws Exception;
-
-    /**
-     * Returns the Jta transaction manager used by this Mule server instance. or
-     * null if a transaction manager has not been set
-     *
-     * @return the Jta transaction manager used by this Mule server instance. or
-     *         null if a transaction manager has not been set
-     */
-    TransactionManager getTransactionManager();
 
     ServerNotificationManager getNotificationManager();
 
@@ -124,9 +122,8 @@ public interface MuleContext extends Lifecycle
      * this class
      *
      * @param l                  the listener to register
-     * @param resourceIdentifier a particular resource name for the given type
-     *                           of listener For example, the resourceName could be the name of
-     *                           a service if the listener was a ServiceNotificationListener
+     * @param resourceIdentifier a particular resource name for the given type of listener For example, the resourceName could be the name
+     *                           of a service if the listener was a ServiceNotificationListener
      */
     void registerListener(ServerNotificationListener l, String resourceIdentifier) throws NotificationException;
 
@@ -146,25 +143,22 @@ public interface MuleContext extends Lifecycle
     void fireNotification(ServerNotification notification);
 
     /**
-     * Sets the security manager used by this Mule instance to authenticate and
-     * authorise incoming and outgoing event traffic and service invocations
-     *
-     * @param securityManager the security manager used by this Mule instance to
-     *                        authenticate and authorise incoming and outgoing event traffic
-     *                        and service invocations
-     * @throws RegistrationException
-     */
-    void setSecurityManager(SecurityManager securityManager) throws InitialisationException, RegistrationException;
-
-    /**
      * Gets the security manager used by this Mule instance to authenticate and
      * authorise incoming and outgoing event traffic and service invocations
      *
-     * @return he security manager used by this Mule instance to authenticate
-     *         and authorise incoming and outgoing event traffic and service
-     *         invocations
+     * @return he security manager used by this Mule instance to authenticate and authorise incoming and outgoing event traffic and service
+     * invocations
      */
     SecurityManager getSecurityManager();
+
+    /**
+     * Sets the security manager used by this Mule instance to authenticate and
+     * authorise incoming and outgoing event traffic and service invocations
+     *
+     * @param securityManager the security manager used by this Mule instance to authenticate and authorise incoming and outgoing event
+     *                        traffic and service invocations
+     */
+    void setSecurityManager(SecurityManager securityManager) throws InitialisationException, RegistrationException;
 
     /**
      * Obtains a workManager instance that can be used to schedule work in a
@@ -180,21 +174,17 @@ public interface MuleContext extends Lifecycle
     WorkListener getWorkListener();
 
     /**
-     * Sets the queue manager used by mule for queuing events. This is used for
-     * service queues
-     *
-     * @param queueManager
-     * @throws RegistrationException
-     *
-     */
-    void setQueueManager(QueueManager queueManager) throws RegistrationException;
-
-    /**
      * Gets the queue manager used by mule for queuing events. This is used for
      * service queues.
      */
     QueueManager getQueueManager();
-    
+
+    /**
+     * Sets the queue manager used by mule for queuing events. This is used for
+     * service queues
+     */
+    void setQueueManager(QueueManager queueManager) throws RegistrationException;
+
     ObjectStoreManager getObjectStoreManager();
 
     ExtensionManager getExtensionManager();
@@ -257,20 +247,22 @@ public interface MuleContext extends Lifecycle
 
     /**
      * Returns the date when the server was started.
+     *
      * @return the date when the server was started.
      */
     long getStartDate();
 
     /**
      * Returns the Expression Manager configured for this instance of Mule
+     *
      * @return the Expression Manager configured for this instance of Mule
      * @see org.mule.runtime.core.api.expression.ExpressionManager
      */
     ExpressionManager getExpressionManager();
 
-    void setExecutionClassLoader(ClassLoader cl);
-
     ClassLoader getExecutionClassLoader();
+
+    void setExecutionClassLoader(ClassLoader cl);
 
     boolean isStopped();
 
@@ -285,26 +277,23 @@ public interface MuleContext extends Lifecycle
     void setExceptionListener(SystemExceptionHandler exceptionListener);
 
     void setObjectStore(String name, ListableObjectStore<Serializable> store) throws RegistrationException;
-    
+
     void handleException(Exception e, RollbackSourceCallback rollbackMethod);
 
     void handleException(Exception e);
 
     /**
-     * @return the ID of the cluster the current instance belongs to.  Returns the empty string if this instance
-     * isn't part of a cluster.
+     * @return the ID of the cluster the current instance belongs to.  Returns the empty string if this instance isn't part of a cluster.
      */
     String getClusterId();
 
     /**
-     * @return the cluster node ID for the current instance belongs to.  Returns 0 if this instance
-     * isn't part of a cluster.
+     * @return the cluster node ID for the current instance belongs to.  Returns 0 if this instance isn't part of a cluster.
      */
     int getClusterNodeId();
 
     /**
-     * @return true if this instance in the designated poller.  This will always be true unless the instance is part of
-     * a cluster.
+     * @return true if this instance in the designated poller.  This will always be true unless the instance is part of a cluster.
      */
     boolean isPrimaryPollingInstance();
 
@@ -320,12 +309,14 @@ public interface MuleContext extends Lifecycle
     Map<QName, Set<Object>> getConfigurationAnnotations();
 
     /**
-     * @return default exception strategy. If no default exception strategy was configured it returns {@link org.mule.runtime.core.exception.DefaultMessagingExceptionStrategy}
+     * @return default exception strategy. If no default exception strategy was configured it returns {@link
+     * org.mule.runtime.core.exception.DefaultMessagingExceptionStrategy}
      */
     MessagingExceptionHandler getDefaultExceptionStrategy();
 
     /**
-     * @return single resource transaction factory manager. Used to retrieve a transaction factory for each transactional resource (i.e jdbc DataSource, jms Connection)
+     * @return single resource transaction factory manager. Used to retrieve a transaction factory for each transactional resource (i.e jdbc
+     * DataSource, jms Connection)
      */
     SingleResourceTransactionFactoryManager getTransactionFactoryManager();
 
@@ -333,10 +324,9 @@ public interface MuleContext extends Lifecycle
      * @return a non null {@link org.mule.runtime.core.DataTypeConversionResolver} instance to resolve implicit data type conversions
      */
     DataTypeConversionResolver getDataTypeConverterResolver();
-    
+
     /**
      * Expression Language for evaluating expressions using Mule as the context
-     * @return 
      */
     ExpressionLanguage getExpressionLanguage();
 
@@ -370,14 +360,12 @@ public interface MuleContext extends Lifecycle
 
     /**
      * @return the callbacks for notifying when a flow call from another flow is started or completed.
-     * 
      * @since 3.8.0
      */
     FlowTraceManager getFlowTraceManager();
 
     /**
      * @return the providers for additional context information for exceptions.
-     * 
      * @since 3.8.0
      */
     Collection<ExceptionContextProvider> getExceptionContextProviders();

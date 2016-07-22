@@ -6,10 +6,7 @@
  */
 package org.mule.test.core.context.notification;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.component.Component;
 import org.mule.runtime.core.api.context.MuleContextBuilder;
@@ -27,7 +24,10 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 
 import java.util.Collections;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test ComponentNotifications/Listeners by sending events to a component. A pre and
@@ -50,7 +50,7 @@ public class ComponentMessageNotificationNoXMLTestCase extends AbstractMuleConte
         ServerNotificationManager notificationManager = new ServerNotificationManager();
         notificationManager.setNotificationDynamic(true);
         notificationManager.addInterfaceToType(ComponentMessageNotificationListener.class,
-                                               ComponentMessageNotification.class);
+                ComponentMessageNotification.class);
         contextBuilder.setNotificationManager(notificationManager);
     }
 

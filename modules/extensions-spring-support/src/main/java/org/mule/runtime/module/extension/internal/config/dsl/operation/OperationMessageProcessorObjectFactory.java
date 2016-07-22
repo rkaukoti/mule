@@ -6,9 +6,6 @@
  */
 package org.mule.runtime.module.extension.internal.config.dsl.operation;
 
-import static org.apache.commons.lang.StringUtils.EMPTY;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
-import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getClassLoader;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.extension.api.introspection.RuntimeExtensionModel;
@@ -17,6 +14,10 @@ import org.mule.runtime.module.extension.internal.config.dsl.AbstractExtensionOb
 import org.mule.runtime.module.extension.internal.manager.ExtensionManagerAdapter;
 import org.mule.runtime.module.extension.internal.runtime.operation.OperationMessageProcessor;
 import org.mule.runtime.module.extension.internal.runtime.resolver.ResolverSet;
+
+import static org.apache.commons.lang.StringUtils.EMPTY;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getClassLoader;
 
 /**
  * An {@link AbstractExtensionObjectFactory} which produces {@link OperationMessageProcessor} instances
@@ -33,7 +34,8 @@ public class OperationMessageProcessorObjectFactory extends AbstractExtensionObj
     private String configurationProviderName;
     private String target = EMPTY;
 
-    public OperationMessageProcessorObjectFactory(RuntimeExtensionModel extensionModel, RuntimeOperationModel operationModel, MuleContext muleContext)
+    public OperationMessageProcessorObjectFactory(RuntimeExtensionModel extensionModel, RuntimeOperationModel operationModel,
+                                                  MuleContext muleContext)
     {
         this.extensionModel = extensionModel;
         this.operationModel = operationModel;
@@ -43,16 +45,17 @@ public class OperationMessageProcessorObjectFactory extends AbstractExtensionObj
     @Override
     public OperationMessageProcessor getObject() throws Exception
     {
-        return withContextClassLoader(getClassLoader(extensionModel), () -> {
+        return withContextClassLoader(getClassLoader(extensionModel), () ->
+        {
             try
             {
                 ResolverSet resolverSet = getParametersAsResolverSet();
                 OperationMessageProcessor processor = new OperationMessageProcessor(extensionModel,
-                                                                                    operationModel,
-                                                                                    configurationProviderName,
-                                                                                    target,
-                                                                                    resolverSet,
-                                                                                    (ExtensionManagerAdapter) muleContext.getExtensionManager());
+                        operationModel,
+                        configurationProviderName,
+                        target,
+                        resolverSet,
+                        (ExtensionManagerAdapter) muleContext.getExtensionManager());
 
                 //TODO: MULE-5002 this should not be necessary but lifecycle issues when injecting message processors automatically
                 muleContext.getInjector().inject(processor);

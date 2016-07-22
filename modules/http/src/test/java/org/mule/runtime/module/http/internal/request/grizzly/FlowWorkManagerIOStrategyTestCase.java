@@ -6,22 +6,7 @@
  */
 package org.mule.runtime.module.http.internal.request.grizzly;
 
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import org.mule.runtime.core.api.MuleException;
-import org.mule.runtime.core.api.context.WorkManager;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-
 import com.ning.http.client.AsyncHandler;
-
-import java.io.IOException;
-import java.util.concurrent.ExecutorService;
 
 import org.glassfish.grizzly.Connection;
 import org.glassfish.grizzly.IOEvent;
@@ -32,6 +17,20 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.api.context.WorkManager;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest

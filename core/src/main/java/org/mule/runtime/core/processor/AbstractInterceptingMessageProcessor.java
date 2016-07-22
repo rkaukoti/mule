@@ -14,6 +14,6 @@ import org.mule.runtime.core.api.processor.InterceptingMessageProcessor;
  * attribute.
  */
 public abstract class AbstractInterceptingMessageProcessor extends AbstractInterceptingMessageProcessorBase
-    implements InterceptingMessageProcessor
+        implements InterceptingMessageProcessor
 {
 }

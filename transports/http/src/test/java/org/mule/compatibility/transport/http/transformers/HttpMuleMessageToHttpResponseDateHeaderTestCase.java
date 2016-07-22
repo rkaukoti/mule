@@ -8,7 +8,6 @@ package org.mule.compatibility.transport.http.transformers;
 
 import org.mule.compatibility.transport.http.AbstractDateHeaderTestCase;
 import org.mule.compatibility.transport.http.HttpResponse;
-import org.mule.compatibility.transport.http.transformers.MuleMessageToHttpResponse;
 
 public class HttpMuleMessageToHttpResponseDateHeaderTestCase extends AbstractDateHeaderTestCase
 {

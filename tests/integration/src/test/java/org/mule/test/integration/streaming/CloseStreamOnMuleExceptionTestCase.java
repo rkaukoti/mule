@@ -6,15 +6,15 @@
  */
 package org.mule.test.integration.streaming;
 
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.functional.junit4.FunctionalTestCase;
+import org.mule.runtime.core.util.concurrent.Latch;
 import org.mule.runtime.module.xml.stax.DelegateXMLStreamReader;
 import org.mule.runtime.module.xml.stax.StaxSource;
 import org.mule.runtime.module.xml.util.XMLUtils;
 import org.mule.tck.probe.PollingProber;
 import org.mule.tck.probe.Probe;
-import org.mule.runtime.core.util.concurrent.Latch;
+import org.xml.sax.InputSource;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -27,14 +27,13 @@ import javax.xml.transform.Source;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
 
-import org.junit.Test;
-import org.xml.sax.InputSource;
+import static org.junit.Assert.assertTrue;
 
 public class CloseStreamOnMuleExceptionTestCase extends FunctionalTestCase
 {
-    private final int timeoutMs = 3000;
     private static Latch inputStreamLatch = new Latch();
     private static Latch streamReaderLatch;
+    private final int timeoutMs = 3000;
     private String xmlText = "<test attribute=\"1\"/>";
     private TestByteArrayInputStream inputStream;
 
@@ -87,7 +86,7 @@ public class CloseStreamOnMuleExceptionTestCase extends FunctionalTestCase
     public void testCloseXMLStreamReaderOnComponentException() throws Exception
     {
         TestXMLStreamReader stream = new TestXMLStreamReader(XMLInputFactory.newInstance()
-            .createXMLStreamReader(inputStream));
+                                                                            .createXMLStreamReader(inputStream));
 
         flowRunner("echo").withPayload(stream).asynchronously().run();
 
@@ -109,7 +108,7 @@ public class CloseStreamOnMuleExceptionTestCase extends FunctionalTestCase
     public void testCloseStaxSourceOnComponentException() throws Exception
     {
         StaxSource stream = new StaxSource(new TestXMLStreamReader(XMLInputFactory.newInstance()
-            .createXMLStreamReader(inputStream)));
+                                                                                  .createXMLStreamReader(inputStream)));
 
         flowRunner("echo").withPayload(stream).asynchronously().run();
 
@@ -152,12 +151,6 @@ public class CloseStreamOnMuleExceptionTestCase extends FunctionalTestCase
     {
         private boolean closed;
 
-        @Override
-        public boolean isClosed()
-        {
-            return closed;
-        }
-
         public TestByteArrayInputStream(byte[] arg0)
         {
             super(arg0);
@@ -166,6 +159,12 @@ public class CloseStreamOnMuleExceptionTestCase extends FunctionalTestCase
         public TestByteArrayInputStream(byte[] buf, int offset, int length)
         {
             super(buf, offset, length);
+        }
+
+        @Override
+        public boolean isClosed()
+        {
+            return closed;
         }
 
         @Override
@@ -181,15 +180,15 @@ public class CloseStreamOnMuleExceptionTestCase extends FunctionalTestCase
     {
         private boolean closed;
 
+        public TestXMLStreamReader(XMLStreamReader reader)
+        {
+            super(reader);
+        }
+
         @Override
         public boolean isClosed()
         {
             return closed;
-        }
-
-        public TestXMLStreamReader(XMLStreamReader reader)
-        {
-            super(reader);
         }
 
         @Override

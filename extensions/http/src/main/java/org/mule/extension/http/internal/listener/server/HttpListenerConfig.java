@@ -6,11 +6,6 @@
  */
 package org.mule.extension.http.internal.listener.server;
 
-import static org.mule.extension.http.internal.HttpConnector.OTHER_SETTINGS;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-import static org.mule.runtime.extension.api.annotation.param.display.Placement.ADVANCED;
-import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
-
 import org.mule.extension.http.internal.listener.HttpListener;
 import org.mule.extension.http.internal.listener.HttpListenerProvider;
 import org.mule.runtime.core.api.lifecycle.Initialisable;
@@ -24,6 +19,11 @@ import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.module.http.internal.HttpParser;
 import org.mule.runtime.module.http.internal.listener.ListenerPath;
+
+import static org.mule.extension.http.internal.HttpConnector.OTHER_SETTINGS;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
+import static org.mule.runtime.extension.api.annotation.param.display.Placement.ADVANCED;
+import static org.mule.runtime.extension.api.introspection.parameter.ExpressionSupport.NOT_SUPPORTED;
 
 /**
  * Configuration element for a {@link HttpListener}.

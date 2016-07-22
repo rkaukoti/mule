@@ -6,13 +6,12 @@
  */
 package org.mule.test.integration.domain.http;
 
+import org.junit.Before;
 import org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder;
-import org.mule.tck.junit4.rule.SystemProperty;
 import org.mule.runtime.module.tls.internal.DefaultTlsContextFactory;
+import org.mule.tck.junit4.rule.SystemProperty;
 
 import java.io.IOException;
-
-import org.junit.Before;
 
 public class HttpsSharePortTestCase extends HttpSharePortTestCase
 {
@@ -38,7 +37,8 @@ public class HttpsSharePortTestCase extends HttpSharePortTestCase
     @Override
     public ApplicationConfig[] getConfigResources()
     {
-        return new ApplicationConfig[] {new ApplicationConfig(HELLO_WORLD_SERVICE_APP, new String[] {"domain/http/http-hello-world-app.xml"}),
+        return new ApplicationConfig[] {
+                new ApplicationConfig(HELLO_WORLD_SERVICE_APP, new String[] {"domain/http/http-hello-world-app.xml"}),
                 new ApplicationConfig(HELLO_MULE_SERVICE_APP, new String[] {"domain/http/http-hello-mule-app.xml"})
         };
     }

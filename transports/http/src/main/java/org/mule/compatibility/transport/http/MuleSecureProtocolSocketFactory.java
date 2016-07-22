@@ -6,6 +6,10 @@
  */
 package org.mule.compatibility.transport.http;
 
+import org.apache.commons.httpclient.ConnectTimeoutException;
+import org.apache.commons.httpclient.params.HttpConnectionParams;
+import org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -14,11 +18,6 @@ import java.net.SocketAddress;
 import java.net.UnknownHostException;
 
 import javax.net.ssl.SSLSocketFactory;
-
-import org.apache.commons.httpclient.ConnectTimeoutException;
-import org.apache.commons.httpclient.params.HttpConnectionParams;
-import org.apache.commons.httpclient.protocol.ReflectionSocketFactory;
-import org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory;
 
 public class MuleSecureProtocolSocketFactory implements SecureProtocolSocketFactory
 {
@@ -32,7 +31,7 @@ public class MuleSecureProtocolSocketFactory implements SecureProtocolSocketFact
 
 
     public Socket createSocket(Socket socket, String host, int port, boolean autoClose)
-        throws IOException, UnknownHostException
+            throws IOException, UnknownHostException
     {
         return socketFactory.createSocket(socket, host, port, autoClose);
     }
@@ -43,27 +42,27 @@ public class MuleSecureProtocolSocketFactory implements SecureProtocolSocketFact
     }
 
     public Socket createSocket(String host, int port, InetAddress localAddress, int localPort)
-        throws IOException, UnknownHostException
+            throws IOException, UnknownHostException
     {
         return socketFactory.createSocket(host, port, localAddress, localPort);
     }
 
     public Socket createSocket(String host, int port, InetAddress localAddress, int localPort,
-        HttpConnectionParams params) throws IOException, UnknownHostException, ConnectTimeoutException
+                               HttpConnectionParams params) throws IOException, UnknownHostException, ConnectTimeoutException
     {
         int timeout = params.getConnectionTimeout();
-        if (timeout == 0) 
+        if (timeout == 0)
         {
             return createSocket(host, port, localAddress, localPort);
-        } 
-        else 
+        }
+        else
         {
             return createSocketWithTimeout(host, port, localAddress, localPort, timeout);
         }
     }
 
     protected Socket createSocketWithTimeout(String host, int port, InetAddress localAddress,
-        int localPort, int timeout) throws IOException
+                                             int localPort, int timeout) throws IOException
     {
         // Create and connect underlying socket first to enable connect timeout to be defined.
         Socket plainSocket = new Socket();

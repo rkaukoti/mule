@@ -28,8 +28,7 @@ public interface YourKitProfilerServiceMBean
     long SNAPSHOT_CAPTURING = 256;
 
     /**
-     * @return name of host where controlled profiled application is running. The
-     *         method never returns null.
+     * @return name of host where controlled profiled application is running. The method never returns null.
      */
     String getHost();
 
@@ -41,7 +40,7 @@ public interface YourKitProfilerServiceMBean
     /**
      * This method is just a convenient replacement of
      * captureSnapshot(YourKitProfilerServiceMBean.SNAPSHOT_WITH_HEAP)
-     * 
+     *
      * @return absolute path to the captured snapshot.
      */
     String captureMemorySnapshot() throws Exception;
@@ -54,25 +53,17 @@ public interface YourKitProfilerServiceMBean
      * {@link #startAllocationRecording(long)}, or remotely), it won't stop after the
      * capture. To stop it, explicitly call {@link #stopCPUProfiling()},
      * {@link #stopMonitorProfiling()} or {@link #stopAllocationRecording()}.
-     * 
-     * @param snapshotFlags defines how much information should be stored:
-     *            <ul>
-     *            <li>YourKitProfilerServiceMBean.SNAPSHOT_WITHOUT_HEAP - capture
-     *            snapshot with all the recorded information (CPU profiling,
-     *            monitors, telemetry), but without the heap dump. <li>
-     *            YourKitProfilerServiceMBean.SNAPSHOT_WITH_HEAP - capture snapshot
-     *            with all the recorded information (CPU profiling, monitors,
-     *            telemetry, allocations), as well as with the heap dump. <li>
-     *            YourKitProfilerServiceMBean.SNAPSHOT_HPROF - capture snapshot in
-     *            HPROF format (it will including the heap dump only).
-     *            </ul>
+     *
+     * @param snapshotFlags defines how much information should be stored: <ul> <li>YourKitProfilerServiceMBean.SNAPSHOT_WITHOUT_HEAP -
+     *                      capture snapshot with all the recorded information (CPU profiling, monitors, telemetry), but without the heap
+     *                      dump. <li> YourKitProfilerServiceMBean.SNAPSHOT_WITH_HEAP - capture snapshot with all the recorded information
+     *                      (CPU profiling, monitors, telemetry, allocations), as well as with the heap dump. <li>
+     *                      YourKitProfilerServiceMBean.SNAPSHOT_HPROF - capture snapshot in HPROF format (it will including the heap dump
+     *                      only). </ul>
      * @return absolute path to the captured snapshot.
-     * @throws Exception if capture failed. The possible reasons are:
-     *             <ul>
-     *             <li>there's no Java application with properly configured profiler
-     *             agent listening on port at host <li>profiled application has
-     *             terminated <li>agent cannot capture snapshot for some reason
-     *             </ul>
+     * @throws Exception if capture failed. The possible reasons are: <ul> <li>there's no Java application with properly configured profiler
+     *                   agent listening on port at host <li>profiled application has terminated <li>agent cannot capture snapshot for some
+     *                   reason </ul>
      */
     String captureSnapshot(long snapshotFlags) throws Exception;
 
@@ -81,7 +72,7 @@ public interface YourKitProfilerServiceMBean
      * objects will belong to the new generation. Note that generations are also
      * automatically advanced on capturing snapshots. Generations are only available
      * if the profiled application runs on Java 5 or newer.
-     * 
+     *
      * @param description optional description associated with the generation
      * @throws Exception if generation could not be advanced.
      */
@@ -89,59 +80,37 @@ public interface YourKitProfilerServiceMBean
 
     /**
      * Start object allocation recording.
-     * 
-     * @param mode YourKitProfilerServiceMBean.ALLOCATION_RECORDING_ALL or
-     *            YourKitProfilerServiceMBean.ALLOCATION_RECORDING_ADAPTIVE
-     * @throws Exception if capture failed. The possible reasons are:
-     *             <ul>
-     *             <li>there's no Java application with properly configured profiler
-     *             agent listening on port at host
-     *             <li>profiled application has terminated
-     *             <li>agent cannot capture snapshot for some reason
-     *             </ul>
+     *
+     * @param mode YourKitProfilerServiceMBean.ALLOCATION_RECORDING_ALL or YourKitProfilerServiceMBean.ALLOCATION_RECORDING_ADAPTIVE
+     * @throws Exception if capture failed. The possible reasons are: <ul> <li>there's no Java application with properly configured profiler
+     *                   agent listening on port at host <li>profiled application has terminated <li>agent cannot capture snapshot for some
+     *                   reason </ul>
      * @see #captureMemorySnapshot()
      * @see #stopCPUProfiling()
      */
     void startAllocationRecording(long mode) throws Exception;
 
     /**
-     * @throws Exception if capture failed. The possible reasons are:
-     *             <ul>
-     *             <li>there's no Java application with properly configured profiler
-     *             agent listening on port at host
-     *             <li>profiled application has terminated
-     *             <li>agent cannot capture snapshot for some reason
-     *             </ul>
+     * @throws Exception if capture failed. The possible reasons are: <ul> <li>there's no Java application with properly configured profiler
+     *                   agent listening on port at host <li>profiled application has terminated <li>agent cannot capture snapshot for some
+     *                   reason </ul>
      */
     void stopAllocationRecording() throws Exception;
 
     /**
      * Start CPU profiling.
-     * 
-     * @param mode YourKitProfilerServiceMBean.CPU_SAMPLING or
-     *            YourKitProfilerServiceMBean.CPU_TRACING or
-     *            YourKitProfilerServiceMBean.CPU_SAMPLING |
-     *            YourKitProfilerServiceMBean.CPU_J2EE or
-     *            YourKitProfilerServiceMBean.CPU_TRACING |
-     *            YourKitProfilerServiceMBean.CPU_J2EE
-     * @param filters string containing '\n'-separated list of classes whose methods
-     *            should not be profiled. Wildcards are accepted ('*'). More methods
-     *            are profiled, bigger the overhead. The filters are used with
-     *            YourKitProfilerServiceMBean.CPU_TRACING only; with
-     *            YourKitProfilerServiceMBean.CPU_SAMPLING the value is ignored. If
-     *            null or empty string passed, all methods will be profiled (not
-     *            recommended due to high overhead). For example, you can pass
-     *            DEFAULT_FILTERS.
-     * @throws Exception if capture failed. The possible reasons are:
-     *             <ul>
-     *             <li>there's no Java application with properly configured profiler
-     *             agent listening on port at host
-     *             <li>specified profiling mode is not supported by the JVM of the
-     *             profiled application, e.g. tracing is supported with Java 5 and
-     *             newer and thus is not available with Java 1.4.
-     *             <li>profiled application has terminated
-     *             <li>agent cannot capture snapshot for some reason
-     *             </ul>
+     *
+     * @param mode    YourKitProfilerServiceMBean.CPU_SAMPLING or YourKitProfilerServiceMBean.CPU_TRACING or
+     *                YourKitProfilerServiceMBean.CPU_SAMPLING | YourKitProfilerServiceMBean.CPU_J2EE or
+     *                YourKitProfilerServiceMBean.CPU_TRACING | YourKitProfilerServiceMBean.CPU_J2EE
+     * @param filters string containing '\n'-separated list of classes whose methods should not be profiled. Wildcards are accepted ('*').
+     *                More methods are profiled, bigger the overhead. The filters are used with YourKitProfilerServiceMBean.CPU_TRACING
+     *                only; with YourKitProfilerServiceMBean.CPU_SAMPLING the value is ignored. If null or empty string passed, all methods
+     *                will be profiled (not recommended due to high overhead). For example, you can pass DEFAULT_FILTERS.
+     * @throws Exception if capture failed. The possible reasons are: <ul> <li>there's no Java application with properly configured profiler
+     *                   agent listening on port at host <li>specified profiling mode is not supported by the JVM of the profiled
+     *                   application, e.g. tracing is supported with Java 5 and newer and thus is not available with Java 1.4. <li>profiled
+     *                   application has terminated <li>agent cannot capture snapshot for some reason </ul>
      * @see #captureSnapshot(long)
      * @see #stopCPUProfiling()
      */
@@ -149,43 +118,31 @@ public interface YourKitProfilerServiceMBean
 
     /**
      * Stop CPU profiling.
-     * 
-     * @throws Exception if capture failed. The possible reasons are:
-     *             <ul>
-     *             <li>there's no Java application with properly configured profiler
-     *             agent listening on port at host
-     *             <li>profiled application has terminated
-     *             <li>agent cannot capture snapshot for some reason
-     *             </ul>
+     *
+     * @throws Exception if capture failed. The possible reasons are: <ul> <li>there's no Java application with properly configured profiler
+     *                   agent listening on port at host <li>profiled application has terminated <li>agent cannot capture snapshot for some
+     *                   reason </ul>
      * @see #captureSnapshot(long)
-     * @see #startCPUProfiling(long , String)
+     * @see #startCPUProfiling(long, String)
      */
     void stopCPUProfiling() throws Exception;
 
     /**
      * Force GC
-     * 
-     * @return Message contains size of objects in heap before GC, bytes and size of
-     *         objects in heap after GC, bytes
-     * @throws Exception
+     *
+     * @return Message contains size of objects in heap before GC, bytes and size of objects in heap after GC, bytes
      */
     String forceGC() throws Exception;
 
     /**
      * Start monitor profiling (requires that the profiled application runs on Java 5
      * or newer)
-     * 
-     * @throws Exception if capture failed. The possible reasons are:
-     *             <ul>
-     *             <li>there's no Java application with properly configured profiler
-     *             agent listening on port at host
-     *             <li>specified profiling mode is not supported by the JVM of the
-     *             profiled application, e.g. tracing is supported with Java 5 and
-     *             newer and thus is not available with Java 1.4.
-     *             <li>CPU profiling has already been started
-     *             <li>profiled application has terminated
-     *             <li>agent cannot capture snapshot for some reason
-     *             </ul>
+     *
+     * @throws Exception if capture failed. The possible reasons are: <ul> <li>there's no Java application with properly configured profiler
+     *                   agent listening on port at host <li>specified profiling mode is not supported by the JVM of the profiled
+     *                   application, e.g. tracing is supported with Java 5 and newer and thus is not available with Java 1.4. <li>CPU
+     *                   profiling has already been started <li>profiled application has terminated <li>agent cannot capture snapshot for
+     *                   some reason </ul>
      * @see #stopMonitorProfiling()
      * @see #captureSnapshot(long)
      */
@@ -194,14 +151,10 @@ public interface YourKitProfilerServiceMBean
     /**
      * Stop monitor profiling (requires that the profiled application runs on Java 5
      * or newer)
-     * 
-     * @throws Exception if capture failed. The possible reasons are:
-     *             <ul>
-     *             <li>there's no Java application with properly configured profiler
-     *             agent listening on port at host
-     *             <li>profiled application has terminated
-     *             <li>agent cannot capture snapshot for some reason
-     *             </ul>
+     *
+     * @throws Exception if capture failed. The possible reasons are: <ul> <li>there's no Java application with properly configured profiler
+     *                   agent listening on port at host <li>profiled application has terminated <li>agent cannot capture snapshot for some
+     *                   reason </ul>
      * @see #startMonitorProfiling()
      * @see #captureSnapshot(long)
      */
@@ -210,7 +163,7 @@ public interface YourKitProfilerServiceMBean
     /**
      * Starts new daemon thread which calls {@link #captureMemorySnapshot()} every N
      * seconds.
-     * 
+     *
      * @param seconds delay between calls
      * @see #captureMemorySnapshot()
      */
@@ -259,9 +212,8 @@ public interface YourKitProfilerServiceMBean
      *  System.out.println("Snaphot capturing is off");
      * }
      * </pre></code>
-     * 
+     *
      * @return a bit mask to check against Profiling Modes
-     * @throws java.lang.Exception
      */
     long getStatus() throws java.lang.Exception;
 

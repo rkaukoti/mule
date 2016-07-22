@@ -48,7 +48,7 @@ public class DateTime extends AbstractInstant implements Date, Time, Serializabl
     public DateTime(java.util.Date date)
     {
         this(Calendar.getInstance(Calendar.getInstance().getTimeZone(), Locale.getDefault()),
-            Locale.getDefault());
+                Locale.getDefault());
         this.calendar.setTime(date);
     }
 
@@ -191,7 +191,9 @@ public class DateTime extends AbstractInstant implements Date, Time, Serializabl
     {
         super.withTimeZone(newTimezone);
         return this;
-    };
+    }
+
+    ;
 
     @Override
     public DateTime changeTimeZone(String newTimezone)
@@ -208,6 +210,20 @@ public class DateTime extends AbstractInstant implements Date, Time, Serializabl
     public Time getTime()
     {
         return new InternalTime((Calendar) calendar.clone(), locale);
+    }
+
+    private void writeObject(ObjectOutputStream out) throws Exception
+    {
+        out.defaultWriteObject();
+        out.writeObject(this.calendar);
+        out.writeObject(this.locale);
+    }
+
+    private void readObject(ObjectInputStream in) throws Exception
+    {
+        in.defaultReadObject();
+        this.calendar = (Calendar) in.readObject();
+        this.locale = (Locale) in.readObject();
     }
 
     class InternalDate extends AbstractInstant implements Date
@@ -299,7 +315,9 @@ public class DateTime extends AbstractInstant implements Date, Time, Serializabl
         {
             super.withTimeZone(newTimezone);
             return this;
-        };
+        }
+
+        ;
 
         @Override
         public Date changeTimeZone(String newTimezone)
@@ -392,7 +410,9 @@ public class DateTime extends AbstractInstant implements Date, Time, Serializabl
         {
             super.withTimeZone(newTimezone);
             return this;
-        };
+        }
+
+        ;
 
         @Override
         public String toString()
@@ -409,20 +429,6 @@ public class DateTime extends AbstractInstant implements Date, Time, Serializabl
             calendar.set(Calendar.DAY_OF_YEAR, 1);
         }
 
-    }
-
-    private void writeObject(ObjectOutputStream out) throws Exception
-    {
-        out.defaultWriteObject();
-        out.writeObject(this.calendar);
-        out.writeObject(this.locale);
-    }
-
-    private void readObject(ObjectInputStream in) throws Exception
-    {
-        in.defaultReadObject();
-        this.calendar = (Calendar) in.readObject();
-        this.locale = (Locale) in.readObject();
     }
 
 }

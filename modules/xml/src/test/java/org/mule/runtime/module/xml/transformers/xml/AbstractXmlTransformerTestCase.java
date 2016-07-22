@@ -6,14 +6,13 @@
  */
 package org.mule.runtime.module.xml.transformers.xml;
 
-import org.mule.runtime.module.xml.util.XMLUtils;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.mule.runtime.core.transformer.AbstractTransformerTestCase;
+import org.mule.runtime.module.xml.util.XMLUtils;
+import org.w3c.dom.Document;
 
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.TransformerFactoryConfigurationError;
-
-import org.custommonkey.xmlunit.XMLUnit;
-import org.w3c.dom.Document;
 
 /**
  * Use this superclass if you intend to compare Xml contents.
@@ -41,14 +40,14 @@ public abstract class AbstractXmlTransformerTestCase extends AbstractTransformer
     {
         if (expected instanceof Document && result instanceof Document)
         {
-            return XMLUnit.compareXML((Document)expected, (Document)result).similar();
+            return XMLUnit.compareXML((Document) expected, (Document) result).similar();
         }
         else if (expected instanceof String && result instanceof String)
         {
             try
             {
-                String expectedString = this.normalizeString((String)expected);
-                String resultString = this.normalizeString((String)result);
+                String expectedString = this.normalizeString((String) expected);
+                String resultString = this.normalizeString((String) result);
                 return XMLUnit.compareXML(expectedString, resultString).similar();
             }
             catch (Exception ex)

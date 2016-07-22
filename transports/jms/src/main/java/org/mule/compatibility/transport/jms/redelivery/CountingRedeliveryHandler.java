@@ -6,21 +6,20 @@
  */
 package org.mule.compatibility.transport.jms.redelivery;
 
+import org.apache.commons.collections.map.LRUMap;
 import org.mule.compatibility.core.api.endpoint.InboundEndpoint;
 import org.mule.compatibility.transport.jms.JmsConnector;
 import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.construct.FlowConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.Map;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
-
-import org.apache.commons.collections.map.LRUMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This redelivery handler will keep counting the redelivery attempts for each message redelivered. Used for
@@ -47,13 +46,12 @@ public class CountingRedeliveryHandler extends AbstractRedeliveryHandler
      * message, it should be returned. Otherwise the connector should throw a
      * <code>EndpointMessageRedeliveredException</code> to indicate that the message should
      * be handled by the connector Exception Handler.
-     * 
      */
     @Override
     public void handleRedelivery(Message message, InboundEndpoint endpoint, FlowConstruct flow) throws JMSException, MuleException
     {
         final int connectorRedelivery = connector.getMaxRedelivery();
-        if (connectorRedelivery == JmsConnector.REDELIVERY_IGNORE || connectorRedelivery < 0 ) // just in case, for manual setting)
+        if (connectorRedelivery == JmsConnector.REDELIVERY_IGNORE || connectorRedelivery < 0) // just in case, for manual setting)
         {
             if (logger.isDebugEnabled())
             {

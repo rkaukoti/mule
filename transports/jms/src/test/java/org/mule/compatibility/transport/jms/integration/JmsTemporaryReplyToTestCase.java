@@ -6,11 +6,8 @@
  */
 package org.mule.compatibility.transport.jms.integration;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.transformer.TransformerException;
@@ -18,8 +15,11 @@ import org.mule.runtime.core.transformer.AbstractMessageTransformer;
 
 import java.nio.charset.Charset;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 /**
  * TODO this test does not use the Test scenarios, I think it would need a new Method
@@ -131,7 +131,8 @@ public class JmsTemporaryReplyToTestCase extends AbstractJmsFunctionalTestCase
         @Override
         public Object transformMessage(MuleEvent event, Charset outputEncoding) throws TransformerException
         {
-            final MuleMessage message = MuleMessage.builder(event.getMessage()).replyTo(muleContext.getRegistry().get(MIDDLE_ENDPOINT_KEY)).build();
+            final MuleMessage message =
+                    MuleMessage.builder(event.getMessage()).replyTo(muleContext.getRegistry().get(MIDDLE_ENDPOINT_KEY)).build();
             event.setMessage(message);
             return message;
         }

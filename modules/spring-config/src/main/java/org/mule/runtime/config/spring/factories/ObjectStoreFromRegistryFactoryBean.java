@@ -9,10 +9,9 @@ package org.mule.runtime.config.spring.factories;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.store.ObjectStore;
+import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 import java.io.Serializable;
-
-import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 /**
  * Lookup an {@link ObjectStore} from the registry.
@@ -27,7 +26,7 @@ public class ObjectStoreFromRegistryFactoryBean extends AbstractFactoryBean<Obje
         super();
         objectStoreName = name;
     }
-    
+
     @Override
     public Class<?> getObjectType()
     {

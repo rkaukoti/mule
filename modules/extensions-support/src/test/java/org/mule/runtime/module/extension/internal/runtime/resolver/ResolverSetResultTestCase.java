@@ -6,19 +6,19 @@
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
+import org.mule.tck.junit4.AbstractMuleTestCase;
+import org.mule.tck.size.SmallTest;
+import org.mule.test.heisenberg.extension.model.HealthStatus;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getParameter;
-import org.mule.runtime.extension.api.introspection.parameter.ParameterModel;
-import org.mule.tck.junit4.AbstractMuleTestCase;
-import org.mule.tck.size.SmallTest;
-import org.mule.test.heisenberg.extension.model.HealthStatus;
-
-import org.junit.Before;
-import org.junit.Test;
 
 @SmallTest
 public class ResolverSetResultTestCase extends AbstractMuleTestCase
@@ -114,8 +114,8 @@ public class ResolverSetResultTestCase extends AbstractMuleTestCase
     private ResolverSetResult.Builder getBuilder()
     {
         return ResolverSetResult.newBuilder()
-                .add(nameParameterModel.getName(), NAME)
-                .add(ageParameterModel.getName(), AGE)
-                .add(healthParameterModel.getName(), HEALTH);
+                                .add(nameParameterModel.getName(), NAME)
+                                .add(ageParameterModel.getName(), AGE)
+                                .add(healthParameterModel.getName(), HEALTH);
     }
 }

@@ -6,21 +6,7 @@
  */
 package org.mule.runtime.core.util;
 
-import static java.lang.Thread.currentThread;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mule.runtime.core.util.ClassUtils.getSatisfiableMethods;
-import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 import org.mule.tck.testmodels.fruit.AbstractFruit;
@@ -40,7 +26,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Test;
+import static java.lang.Thread.currentThread;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mule.runtime.core.util.ClassUtils.getSatisfiableMethods;
+import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 
 @SmallTest
 public class ClassUtilsTestCase extends AbstractMuleTestCase
@@ -49,7 +49,7 @@ public class ClassUtilsTestCase extends AbstractMuleTestCase
     // we do not want to match these methods when looking for a service method to
     // invoke
     protected final Set<String> ignoreMethods = new HashSet<String>(Arrays.asList("equals",
-                                                                                  "getInvocationHandler"));
+            "getInvocationHandler"));
 
     @Test
     public void testIsConcrete() throws Exception
@@ -192,37 +192,37 @@ public class ClassUtilsTestCase extends AbstractMuleTestCase
     public void testGetSatisfiableMethods() throws Exception
     {
         List methods = getSatisfiableMethods(FruitBowl.class, new Class[] {Apple.class}, true,
-                                                        true, ignoreMethods);
+                true, ignoreMethods);
         assertNotNull(methods);
         assertEquals(2, methods.size());
 
         methods = getSatisfiableMethods(FruitBowl.class, new Class[] {Apple.class}, false, true,
-                                                   ignoreMethods);
+                ignoreMethods);
         assertNotNull(methods);
         assertEquals(0, methods.size());
 
         // Test object param being unacceptible
         methods = getSatisfiableMethods(DummyObject.class, new Class[] {WaterMelon.class}, true,
-                                                   false, ignoreMethods);
+                false, ignoreMethods);
         assertNotNull(methods);
         assertEquals(0, methods.size());
 
         // Test object param being acceptible
         methods = getSatisfiableMethods(DummyObject.class, new Class[] {WaterMelon.class}, true,
-                                                   true, ignoreMethods);
+                true, ignoreMethods);
         assertNotNull(methods);
         assertEquals(2, methods.size());
 
         // Test object param being acceptible but not void
         methods = getSatisfiableMethods(DummyObject.class, new Class[] {WaterMelon.class}, false,
-                                                   true, ignoreMethods);
+                true, ignoreMethods);
         assertNotNull(methods);
         assertEquals(1, methods.size());
         assertEquals("doSomethingElse", ((Method) methods.get(0)).getName());
 
         // Test object param being acceptible by interface Type
         methods = getSatisfiableMethods(FruitBowl.class, new Class[] {WaterMelon[].class}, true,
-                                                   true, ignoreMethods);
+                true, ignoreMethods);
         assertNotNull(methods);
         assertEquals(1, methods.size());
         assertEquals("setFruit", ((Method) methods.get(0)).getName());
@@ -396,7 +396,8 @@ public class ClassUtilsTestCase extends AbstractMuleTestCase
         final ClassLoader originalClassLoader = currentThread().getContextClassLoader();
         final ClassLoader mockClassLoader = mock(ClassLoader.class);
 
-        String response = withContextClassLoader(mockClassLoader, () -> {
+        String response = withContextClassLoader(mockClassLoader, () ->
+        {
             assertContextClassLoader(mockClassLoader);
             return value;
         });

@@ -6,6 +6,11 @@
  */
 package org.mule.runtime.module.xml.transformer;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.transformer.AbstractTransformer;
@@ -13,12 +18,6 @@ import org.mule.runtime.core.util.StringUtils;
 import org.mule.runtime.module.xml.util.XMLUtils;
 
 import java.nio.charset.Charset;
-
-import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
 
 public class XmlPrettyPrinter extends AbstractTransformer
 {

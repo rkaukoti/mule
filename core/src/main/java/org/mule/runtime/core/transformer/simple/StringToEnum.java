@@ -6,16 +6,16 @@
  */
 package org.mule.runtime.core.transformer.simple;
 
-import static java.lang.String.format;
-import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
-import static org.mule.runtime.core.util.Preconditions.checkArgument;
-
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.DiscoverableTransformer;
 import org.mule.runtime.core.api.transformer.TransformerException;
 import org.mule.runtime.core.transformer.AbstractTransformer;
 
 import java.nio.charset.Charset;
+
+import static java.lang.String.format;
+import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
+import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
  * Transforms a {@link String} to an {@link Enum} of a class specified
@@ -55,7 +55,7 @@ public class StringToEnum extends AbstractTransformer implements DiscoverableTra
         catch (Exception e)
         {
             throw new TransformerException(createStaticMessage(format("Could not transform value '%s' to an enum of type %s",
-                                                                      src, enumClass.getName())), e);
+                    src, enumClass.getName())), e);
         }
     }
 

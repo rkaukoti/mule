@@ -7,12 +7,9 @@
 
 package org.mule.runtime.module.db.internal.processor;
 
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.mockito.Matchers;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
@@ -28,9 +25,12 @@ import org.mule.tck.size.SmallTest;
 
 import java.util.Collections;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import org.mockito.Matchers;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @Ignore("Re-add query validation")
 @SmallTest

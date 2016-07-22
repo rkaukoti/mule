@@ -6,12 +6,9 @@
  */
 package org.mule.compatibility.transport.file;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.compatibility.core.api.transport.Connector;
 import org.mule.compatibility.core.registry.MuleRegistryTransportHelper;
-import org.mule.compatibility.transport.file.FileConnector;
 import org.mule.runtime.core.RequestContext;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.MuleMessage;
@@ -24,25 +21,27 @@ import org.mule.tck.probe.Prober;
 import java.io.File;
 import java.io.InputStream;
 
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class AutoDeleteOnFileDispatcherReceiverTestCase extends AbstractMuleContextEndpointTestCase
 {
 
-    private File validMessage;
-    private String tempDirName = "input";
     File tempDir;
     Connector connector;
+    private File validMessage;
+    private String tempDirName = "input";
 
     @Test
     public void testAutoDeleteFalseOnDispatcher() throws Exception
     {
-        ((FileConnector)connector).setAutoDelete(false);
+        ((FileConnector) connector).setAutoDelete(false);
 
         MuleEvent event = getTestEvent("TestData");
         event = RequestContext.setEvent(event);
 
-        MuleMessage message = RequestContext.getEventContext().requestEvent(getTestEndpointURI()+"/"+tempDirName+"?connector=FileConnector", 50000);
+        MuleMessage message =
+                RequestContext.getEventContext().requestEvent(getTestEndpointURI() + "/" + tempDirName + "?connector=FileConnector", 50000);
         // read the payload into a string so the file is deleted on InputStream.close()
         assertNotNull(getPayloadAsString(message));
 
@@ -58,12 +57,12 @@ public class AutoDeleteOnFileDispatcherReceiverTestCase extends AbstractMuleCont
     @Test
     public void testAutoDeleteTrueOnDispatcher() throws Exception
     {
-        ((FileConnector)connector).setAutoDelete(true);
+        ((FileConnector) connector).setAutoDelete(true);
 
         MuleEvent event = getTestEvent("TestData");
         event = RequestContext.setEvent(event);
 
-        MuleMessage message = RequestContext.getEventContext().requestEvent(getTestEndpointURI()+"/"+tempDirName, 50000);
+        MuleMessage message = RequestContext.getEventContext().requestEvent(getTestEndpointURI() + "/" + tempDirName, 50000);
         assertNotNull(message.getPayload());
         assertTrue(message.getPayload() instanceof InputStream);
 
@@ -87,8 +86,8 @@ public class AutoDeleteOnFileDispatcherReceiverTestCase extends AbstractMuleCont
             }
         });
         assertTrue(tempDir.listFiles().length == 0);
-        
-        
+
+
     }
 
     @Override
@@ -117,7 +116,8 @@ public class AutoDeleteOnFileDispatcherReceiverTestCase extends AbstractMuleCont
         super.doTearDown();
     }
 
-    public Connector getConnector() throws Exception {
+    public Connector getConnector() throws Exception
+    {
         Connector connector = new FileConnector(muleContext);
         connector.setName("FileConnector");
         MuleRegistryTransportHelper.registerConnector(muleContext.getRegistry(), connector);

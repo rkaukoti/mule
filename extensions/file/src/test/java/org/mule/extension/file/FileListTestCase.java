@@ -6,14 +6,8 @@
  */
 package org.mule.extension.file;
 
-import static org.hamcrest.CoreMatchers.endsWith;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
+import org.apache.commons.io.IOUtils;
+import org.junit.Test;
 import org.mule.runtime.core.api.MuleRuntimeException;
 import org.mule.runtime.module.extension.file.api.FileAttributes;
 import org.mule.runtime.module.extension.file.api.TreeNode;
@@ -22,8 +16,14 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.endsWith;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
 
 public class FileListTestCase extends FileConnectorTestCase
 {
@@ -74,8 +74,8 @@ public class FileListTestCase extends FileConnectorTestCase
         assertThat(assertListedFiles(childs), is(true));
 
         List<TreeNode> subDirectories = childs.stream()
-                .filter(child -> child.getAttributes().isDirectory())
-                .collect(Collectors.toList());
+                                              .filter(child -> child.getAttributes().isDirectory())
+                                              .collect(Collectors.toList());
 
         assertThat(subDirectories, hasSize(1));
         TreeNode subDirectory = subDirectories.get(0);

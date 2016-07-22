@@ -37,18 +37,19 @@ import javax.resource.spi.work.WorkException;
 /**
  * Registers a single JmsMessage listener but uses a thread pool to process incoming
  * messages.
+ *
  * @deprecated use {@link org.mule.compatibility.transport.jms.MultiConsumerJmsMessageReceiver} (set by default).
  */
 @Deprecated
 public class JmsMessageReceiver extends AbstractMessageReceiver implements MessageListener
 {
 
+    private final boolean topic;
     protected JmsConnector connector;
     protected RedeliveryHandler redeliveryHandler;
     protected MessageConsumer consumer;
     protected Session session;
     protected boolean startOnConnect = false;
-    private final boolean topic;
 
     public JmsMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint)
             throws CreateException
@@ -101,72 +102,6 @@ public class JmsMessageReceiver extends AbstractMessageReceiver implements Messa
     public boolean shouldConsumeInEveryNode()
     {
         return !this.topic;
-    }
-
-    protected  class JmsWorker extends AbstractReceiverWorker
-    {
-        public JmsWorker(Message message, AbstractMessageReceiver receiver)
-        {
-            super(new ArrayList<Object>(1), receiver);
-            messages.add(message);
-        }
-
-        public JmsWorker(List<Object> messages, AbstractMessageReceiver receiver)
-        {
-            super(messages, receiver);
-        }
-
-        @Override
-        protected Object preProcessMessage(Object message) throws Exception
-        {
-            Message m = (Message) message;
-
-            if (logger.isDebugEnabled())
-            {
-                logger.debug("Message received it is of type: " +
-                        ClassUtils.getSimpleName(message.getClass()));
-                if (m.getJMSDestination() != null)
-                {
-                    logger.debug("Message received on " + m.getJMSDestination() + " ("
-                            + m.getJMSDestination().getClass().getName() + ")");
-                }
-                else
-                {
-                    logger.debug("Message received on unknown destination");
-                }
-                logger.debug("Message CorrelationId is: " + m.getJMSCorrelationID());
-                logger.debug("Jms Message Id is: " + m.getJMSMessageID());
-            }
-
-            if (m.getJMSRedelivered() && redeliveryHandler != null)
-            {
-                if (logger.isDebugEnabled())
-                {
-                    logger.debug("Message with correlationId: " + m.getJMSCorrelationID()
-                            + " has redelivered flag set, handing off to Exception Handler");
-                }
-                redeliveryHandler.handleRedelivery(m, receiver.getEndpoint(), receiver.getFlowConstruct());
-            }
-            return m;
-
-        }
-
-        @Override
-        protected void bindTransaction(Transaction tx) throws TransactionException
-        {
-            if(tx instanceof JmsTransaction)
-            {
-                tx.bindResource(connector.getConnection(), ReusableSessionWrapperFactory.createWrapper(session));
-            }
-            else if(tx instanceof JmsClientAcknowledgeTransaction)
-            {
-                //We should still bind the session to the transaction, but we also need the message itself
-                //since that is the object that gets Acknowledged
-
-                tx.bindResource(connector.getConnection(), ReusableSessionWrapperFactory.createWrapper(session));
-                ((JmsClientAcknowledgeTransaction)tx).setMessage((Message)messages.get(0));
-            }
-        }
     }
 
     @Override
@@ -230,8 +165,6 @@ public class JmsMessageReceiver extends AbstractMessageReceiver implements Messa
 
     /**
      * Create a consumer for the jms destination
-     *
-     * @throws Exception
      */
     protected void createConsumer() throws Exception
     {
@@ -273,7 +206,7 @@ public class JmsMessageReceiver extends AbstractMessageReceiver implements Messa
             {
                 durableName = "mule." + connector.getName() + "." + endpoint.getEndpointURI().getAddress();
                 logger.debug("Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: "
-                        + durableName);
+                             + durableName);
             }
 
             // Create consumer
@@ -283,6 +216,72 @@ public class JmsMessageReceiver extends AbstractMessageReceiver implements Messa
         catch (JMSException e)
         {
             throw new EndpointConnectException(e, this);
+        }
+    }
+
+    protected class JmsWorker extends AbstractReceiverWorker
+    {
+        public JmsWorker(Message message, AbstractMessageReceiver receiver)
+        {
+            super(new ArrayList<Object>(1), receiver);
+            messages.add(message);
+        }
+
+        public JmsWorker(List<Object> messages, AbstractMessageReceiver receiver)
+        {
+            super(messages, receiver);
+        }
+
+        @Override
+        protected Object preProcessMessage(Object message) throws Exception
+        {
+            Message m = (Message) message;
+
+            if (logger.isDebugEnabled())
+            {
+                logger.debug("Message received it is of type: " +
+                             ClassUtils.getSimpleName(message.getClass()));
+                if (m.getJMSDestination() != null)
+                {
+                    logger.debug("Message received on " + m.getJMSDestination() + " ("
+                                 + m.getJMSDestination().getClass().getName() + ")");
+                }
+                else
+                {
+                    logger.debug("Message received on unknown destination");
+                }
+                logger.debug("Message CorrelationId is: " + m.getJMSCorrelationID());
+                logger.debug("Jms Message Id is: " + m.getJMSMessageID());
+            }
+
+            if (m.getJMSRedelivered() && redeliveryHandler != null)
+            {
+                if (logger.isDebugEnabled())
+                {
+                    logger.debug("Message with correlationId: " + m.getJMSCorrelationID()
+                                 + " has redelivered flag set, handing off to Exception Handler");
+                }
+                redeliveryHandler.handleRedelivery(m, receiver.getEndpoint(), receiver.getFlowConstruct());
+            }
+            return m;
+
+        }
+
+        @Override
+        protected void bindTransaction(Transaction tx) throws TransactionException
+        {
+            if (tx instanceof JmsTransaction)
+            {
+                tx.bindResource(connector.getConnection(), ReusableSessionWrapperFactory.createWrapper(session));
+            }
+            else if (tx instanceof JmsClientAcknowledgeTransaction)
+            {
+                //We should still bind the session to the transaction, but we also need the message itself
+                //since that is the object that gets Acknowledged
+
+                tx.bindResource(connector.getConnection(), ReusableSessionWrapperFactory.createWrapper(session));
+                ((JmsClientAcknowledgeTransaction) tx).setMessage((Message) messages.get(0));
+            }
         }
     }
 }

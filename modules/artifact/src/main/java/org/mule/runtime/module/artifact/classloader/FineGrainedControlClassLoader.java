@@ -6,14 +6,14 @@
  */
 package org.mule.runtime.module.artifact.classloader;
 
+import org.mule.runtime.module.artifact.classloader.exception.CompositeClassNotFoundException;
+
+import java.net.URL;
+
 import static java.util.Arrays.asList;
 import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_FIRST;
 import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStrategy.PARENT_ONLY;
-
-import org.mule.runtime.module.artifact.classloader.exception.CompositeClassNotFoundException;
-
-import java.net.URL;
 
 /**
  * Defines a {@link ClassLoader} which enables the control of the class

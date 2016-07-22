@@ -6,14 +6,13 @@
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
-import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.delegate.ParentContextDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.MuleOrphanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.OrphanDefinitionParser;
 import org.mule.runtime.config.spring.parsers.generic.WrappingChildDefinitionParser;
+import org.mule.runtime.core.api.routing.filter.Filter;
 import org.mule.runtime.core.routing.MessageFilter;
-
 import org.w3c.dom.Element;
 
 /**
@@ -22,7 +21,7 @@ import org.w3c.dom.Element;
  * into the parent.
  */
 public class FilterDefinitionParser extends ParentContextDefinitionParser
-    implements WrappingChildDefinitionParser.WrappingController
+        implements WrappingChildDefinitionParser.WrappingController
 {
 
     public static final String FILTER = "filter";
@@ -32,7 +31,7 @@ public class FilterDefinitionParser extends ParentContextDefinitionParser
     {
         super(MuleOrphanDefinitionParser.ROOT_ELEMENT, new OrphanDefinitionParser(filter, false));
         otherwise(new WrappingChildDefinitionParser("messageProcessor", filter, Filter.class, false,
-            MessageFilter.class, FILTER, FILTER, this));
+                MessageFilter.class, FILTER, FILTER, this));
         addIgnored(ATTRIBUTE_NAME);
     }
 
@@ -40,7 +39,7 @@ public class FilterDefinitionParser extends ParentContextDefinitionParser
     {
         super(MuleOrphanDefinitionParser.ROOT_ELEMENT, new OrphanDefinitionParser(false));
         otherwise(new WrappingChildDefinitionParser("messageProcessor", null, Filter.class, true,
-            MessageFilter.class, FILTER, FILTER, this));
+                MessageFilter.class, FILTER, FILTER, this));
         addIgnored(ATTRIBUTE_NAME);
     }
 

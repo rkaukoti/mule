@@ -9,14 +9,13 @@ package org.mule.runtime.config.spring.parsers.processors;
 import org.mule.runtime.config.spring.parsers.PreProcessor;
 import org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration;
 import org.mule.runtime.config.spring.util.SpringXMLUtils;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 
 /**
  * Throws an exception if any of the disallowed attributes (after translation) is present.
@@ -29,7 +28,7 @@ public class BlockAttribute implements PreProcessor
 
     public BlockAttribute(String disallowed)
     {
-        this(new String[]{ disallowed });
+        this(new String[] {disallowed});
     }
 
     public BlockAttribute(String[] disallowed)

@@ -6,9 +6,9 @@
  */
 package org.mule.runtime.module.xml.transformers.xml;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import org.dom4j.DocumentHelper;
+import org.dom4j.io.DOMWriter;
+import org.junit.Test;
 import org.mule.runtime.api.metadata.DataType;
 import org.mule.runtime.core.api.transformer.Transformer;
 import org.mule.runtime.core.util.IOUtils;
@@ -16,6 +16,8 @@ import org.mule.runtime.module.xml.transformer.DomDocumentToXml;
 import org.mule.runtime.module.xml.transformer.XmlToDomDocument;
 import org.mule.runtime.module.xml.util.XMLTestUtils;
 import org.mule.runtime.module.xml.util.XMLUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -29,17 +31,23 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.dom4j.DocumentHelper;
-import org.dom4j.io.DOMWriter;
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class DomXmlTransformersTestCase extends AbstractXmlTransformerTestCase
 {
 
     private String srcData;
     private Document resultData;
+
+    public static void writeXml(Node n, OutputStream os) throws TransformerException
+    {
+        TransformerFactory tf = TransformerFactory.newInstance();
+        // identity
+        javax.xml.transform.Transformer t = tf.newTransformer();
+        t.setOutputProperty(OutputKeys.INDENT, "yes");
+        t.transform(new DOMSource(n), new StreamResult(os));
+    }
 
     @Override
     protected void doSetUp() throws Exception
@@ -82,9 +90,9 @@ public class DomXmlTransformersTestCase extends AbstractXmlTransformerTestCase
     {
         Object expectedResult = getResultData();
         assertNotNull(expectedResult);
-        
+
         XmlToDomDocument transformer = (XmlToDomDocument) getTransformer();
-        
+
         InputStream is = IOUtils.getResourceAsStream("cdcatalog.xml", XMLTestUtils.class);
         XMLStreamReader sr = XMLUtils.toXMLStreamReader(transformer.getXMLInputFactory(), is);
 
@@ -94,23 +102,15 @@ public class DomXmlTransformersTestCase extends AbstractXmlTransformerTestCase
         assertTrue("expected: " + expectedResult + "\nresult: " + result, compareResults(expectedResult, result));
     }
 
-    public static void writeXml(Node n, OutputStream os) throws TransformerException {
-        TransformerFactory tf = TransformerFactory.newInstance();
-        // identity
-        javax.xml.transform.Transformer t = tf.newTransformer();
-        t.setOutputProperty(OutputKeys.INDENT, "yes");
-        t.transform(new DOMSource(n), new StreamResult(os));
-    }
-    
     @Test
     public void testAllXmlMessageTypes() throws Exception
     {
         List list = XMLTestUtils.getXmlMessageVariants("cdcatalog.xml");
         Iterator it = list.iterator();
-        
+
         Object expectedResult = getResultData();
         assertNotNull(expectedResult);
-        
+
         Object msg, result;
         while (it.hasNext())
         {

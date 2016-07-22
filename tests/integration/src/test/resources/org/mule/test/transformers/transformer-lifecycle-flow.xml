@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:spring="http://www.springframework.org/schema/beans"
-    xsi:schemaLocation="
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="
        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd">
 
     <flow name="EchoService">
-        <echo-component />
+        <echo-component/>
         <custom-transformer
-            class="org.mule.test.integration.transformer.LifecycleTrackerTransformer">
-            <spring:property name="property" value="ltt" />
+                class="org.mule.test.integration.transformer.LifecycleTrackerTransformer">
+            <spring:property name="property" value="ltt"/>
         </custom-transformer>
     </flow>
 

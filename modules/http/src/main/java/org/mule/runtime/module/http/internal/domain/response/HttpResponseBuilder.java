@@ -6,12 +6,11 @@
  */
 package org.mule.runtime.module.http.internal.domain.response;
 
+import org.apache.commons.collections.MultiMap;
+import org.apache.commons.collections.map.MultiValueMap;
 import org.mule.runtime.module.http.internal.domain.HttpEntity;
 
 import java.util.Collection;
-
-import org.apache.commons.collections.MultiMap;
-import org.apache.commons.collections.map.MultiValueMap;
 
 public class HttpResponseBuilder
 {
@@ -41,7 +40,7 @@ public class HttpResponseBuilder
     public String getFirstHeader(String headerName)
     {
         final Object value = headers.get(headerName);
-        return (String) (value == null ? value : ((Collection)value).iterator().next());
+        return (String) (value == null ? value : ((Collection) value).iterator().next());
     }
 
     public Collection<String> getHeader(String headerName)

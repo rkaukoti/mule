@@ -6,16 +6,15 @@
  */
 package org.mule.runtime.core.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Test;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.size.SmallTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @SmallTest
 public class StringMessageUtilsTestCase extends AbstractMuleTestCase
@@ -53,7 +52,7 @@ public class StringMessageUtilsTestCase extends AbstractMuleTestCase
     @Test
     public void toStringOnStringArrayShouldReturnStringRepresentation()
     {
-        Object test = new String[]{"foo", "bar"};
+        Object test = new String[] {"foo", "bar"};
         String result = StringMessageUtils.toString(test);
         assertEquals("{foo,bar}", result);
     }
@@ -61,7 +60,7 @@ public class StringMessageUtilsTestCase extends AbstractMuleTestCase
     @Test
     public void toStringOnByteArrayShouldReturnStringRepresentation()
     {
-        Object test = new byte[]{1, 2};
+        Object test = new byte[] {1, 2};
         String result = StringMessageUtils.toString(test);
         assertEquals("{1,2}", result);
     }
@@ -85,7 +84,7 @@ public class StringMessageUtilsTestCase extends AbstractMuleTestCase
     @Test
     public void toStringOnLongArrayShouldReturnStringRepresentation()
     {
-        long[] test = new long[] { 5068875495743534L, 457635546759674L };
+        long[] test = new long[] {5068875495743534L, 457635546759674L};
         Object result = StringMessageUtils.toString(test);
         assertEquals("{5068875495743534,457635546759674}", result);
     }
@@ -93,7 +92,7 @@ public class StringMessageUtilsTestCase extends AbstractMuleTestCase
     @Test
     public void toStringOnDoubleArrayShouldReturnStringRepresentation()
     {
-        double[] test = new double[] { 1.1, 2.02 };
+        double[] test = new double[] {1.1, 2.02};
         String result = StringMessageUtils.toString(test);
         assertEquals("{1.1,2.02}", result);
     }
@@ -123,11 +122,11 @@ public class StringMessageUtilsTestCase extends AbstractMuleTestCase
         result = StringMessageUtils.getFormattedMessage(msg1, null);
         assertEquals(msg1, result);
 
-        result = StringMessageUtils.getFormattedMessage(msg1, new Object[]{});
+        result = StringMessageUtils.getFormattedMessage(msg1, new Object[] {});
         assertEquals(msg1, result);
 
         String msg2 = "There should be a variable {0}, {1} and {2}";
-        result = StringMessageUtils.getFormattedMessage(msg2, new Object[]{"here", "there", "everywhere"});
+        result = StringMessageUtils.getFormattedMessage(msg2, new Object[] {"here", "there", "everywhere"});
         assertEquals("There should be a variable here, there and everywhere", result);
     }
 

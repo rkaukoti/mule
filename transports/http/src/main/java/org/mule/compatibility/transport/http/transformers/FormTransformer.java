@@ -34,7 +34,7 @@ public class FormTransformer extends AbstractMessageTransformer
             String v = event.getMessageAsString();
             Map<String, Object> values = new HashMap<>();
 
-            for (StringTokenizer st = new StringTokenizer(v, "&"); st.hasMoreTokens();)
+            for (StringTokenizer st = new StringTokenizer(v, "&"); st.hasMoreTokens(); )
             {
                 String token = st.nextToken();
                 int idx = token.indexOf('=');
