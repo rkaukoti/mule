@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck.testmodels.fruit;
 
@@ -13,37 +11,36 @@ import java.util.Map;
  * TODO
  */
 
-public interface OrangeInterface extends Fruit
-{
-    String getBrand();
+public interface OrangeInterface extends Fruit {
+  String getBrand();
 
-    void setBrand(String string);
+  void setBrand(String string);
 
-    Integer getSegments();
+  Integer getSegments();
 
-    void setSegments(Integer integer);
+  void setSegments(Integer integer);
 
-    Double getRadius();
+  Double getRadius();
 
-    void setRadius(Double double1);
+  void setRadius(Double double1);
 
-    List getListProperties();
+  List getListProperties();
 
-    void setListProperties(List listProperties);
+  void setListProperties(List listProperties);
 
-    Map getMapProperties();
+  Map getMapProperties();
 
-    void setMapProperties(Map mapProperties);
+  void setMapProperties(Map mapProperties);
 
-    List getArrayProperties();
+  List getArrayProperties();
 
-    void setArrayProperties(List arrayProperties);
+  void setArrayProperties(List arrayProperties);
 
-    FruitCleaner getCleaner();
+  FruitCleaner getCleaner();
 
-    void setCleaner(FruitCleaner cleaner);
+  void setCleaner(FruitCleaner cleaner);
 
-    void wash();
+  void wash();
 
-    void polish();
+  void polish();
 }

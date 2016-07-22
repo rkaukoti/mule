@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
@@ -33,124 +31,110 @@ import static org.mockito.Mockito.mock;
 import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getResolver;
 
 @RunWith(Parameterized.class)
-public class CollectionValueResolverTestCase extends AbstractMuleTestCase
-{
+public class CollectionValueResolverTestCase extends AbstractMuleTestCase {
 
-    private Class<? extends Collection> collectionType;
-    private CollectionValueResolver resolver;
-    private List<ValueResolver> childResolvers;
-    private List<Integer> expectedValues;
-    private MuleContext muleContext;
-    private MuleEvent event;
-    public CollectionValueResolverTestCase(Class<? extends Collection> collectionType)
-    {
-        this.collectionType = collectionType;
+  private Class<? extends Collection> collectionType;
+  private CollectionValueResolver resolver;
+  private List<ValueResolver> childResolvers;
+  private List<Integer> expectedValues;
+  private MuleContext muleContext;
+  private MuleEvent event;
+
+  public CollectionValueResolverTestCase(Class<? extends Collection> collectionType) {
+    this.collectionType = collectionType;
+  }
+
+  @Parameterized.Parameters
+  public static Collection<Object[]> data() {
+    return Arrays.asList(new Object[][] {{ArrayList.class}, {HashSet.class}});
+  }
+
+  @Before
+  public void before() throws Exception {
+    muleContext = mock(MuleContext.class);
+    event = mock(MuleEvent.class);
+
+    collectionType = ArrayList.class;
+    childResolvers = new ArrayList();
+    expectedValues = new ArrayList<>();
+
+    for (int i = 0; i < getChildResolversCount(); i++) {
+      ValueResolver childResolver = getResolver(i, event, false, MuleContextAware.class, Lifecycle.class);
+      childResolvers.add(childResolver);
+      expectedValues.add(i);
     }
 
-    @Parameterized.Parameters
-    public static Collection<Object[]> data()
-    {
-        return Arrays.asList(new Object[][] {{ArrayList.class}, {HashSet.class}});
-    }
+    resolver = createCollectionResolver(childResolvers);
+  }
 
-    @Before
-    public void before() throws Exception
-    {
-        muleContext = mock(MuleContext.class);
-        event = mock(MuleEvent.class);
+  @Test
+  public void resolve() throws Exception {
+    Collection<Object> resolved = (Collection<Object>) resolver.resolve(event);
 
-        collectionType = ArrayList.class;
-        childResolvers = new ArrayList();
-        expectedValues = new ArrayList<>();
+    assertThat(resolved, notNullValue());
+    assertThat(resolved.size(), equalTo(getChildResolversCount()));
+    assertThat(resolved, hasItems(expectedValues.toArray()));
+  }
 
-        for (int i = 0; i < getChildResolversCount(); i++)
-        {
-            ValueResolver childResolver = getResolver(i, event, false, MuleContextAware.class, Lifecycle.class);
-            childResolvers.add(childResolver);
-            expectedValues.add(i);
-        }
+  @Test
+  public void resolversAreCopied() throws Exception {
+    int initialResolversCount = childResolvers.size();
+    childResolvers.add(ExtensionsTestUtils.getResolver(-1, event, false));
 
-        resolver = createCollectionResolver(childResolvers);
-    }
+    Collection<Object> resolved = (Collection<Object>) resolver.resolve(event);
+    assertThat(resolved.size(), equalTo(initialResolversCount));
+  }
 
-    @Test
-    public void resolve() throws Exception
-    {
-        Collection<Object> resolved = (Collection<Object>) resolver.resolve(event);
+  @Test
+  public void emptyList() throws Exception {
+    childResolvers.clear();
+    resolver = createCollectionResolver(childResolvers);
 
-        assertThat(resolved, notNullValue());
-        assertThat(resolved.size(), equalTo(getChildResolversCount()));
-        assertThat(resolved, hasItems(expectedValues.toArray()));
-    }
+    Collection<Object> resolved = (Collection<Object>) resolver.resolve(mock(MuleEvent.class));
+    assertThat(resolved, notNullValue());
+    assertThat(resolved.size(), equalTo(0));
+  }
 
-    @Test
-    public void resolversAreCopied() throws Exception
-    {
-        int initialResolversCount = childResolvers.size();
-        childResolvers.add(ExtensionsTestUtils.getResolver(-1, event, false));
+  @Test
+  public void isNotDynamic() {
+    assertThat(resolver.isDynamic(), is(false));
+  }
 
-        Collection<Object> resolved = (Collection<Object>) resolver.resolve(event);
-        assertThat(resolved.size(), equalTo(initialResolversCount));
-    }
+  @Test
+  public void isDynamic() throws Exception {
+    childResolvers = new ArrayList();
+    childResolvers.add(getResolver(null, event, false));
+    childResolvers.add(getResolver(null, event, true));
 
-    @Test
-    public void emptyList() throws Exception
-    {
-        childResolvers.clear();
-        resolver = createCollectionResolver(childResolvers);
+    resolver = createCollectionResolver(childResolvers);
+    assertThat(resolver.isDynamic(), is(true));
+  }
 
-        Collection<Object> resolved = (Collection<Object>) resolver.resolve(mock(MuleEvent.class));
-        assertThat(resolved, notNullValue());
-        assertThat(resolved.size(), equalTo(0));
-    }
+  @Test
+  public void collectionOfExpectedType() throws Exception {
+    Collection<Object> resolved = (Collection<Object>) resolver.resolve(mock(MuleEvent.class));
+    assertThat(resolved, instanceOf(collectionType));
+  }
 
-    @Test
-    public void isNotDynamic()
-    {
-        assertThat(resolver.isDynamic(), is(false));
-    }
+  @Test
+  public void resolvedCollectionIsMutalbe() throws Exception {
+    Collection<Object> resolved = (Collection<Object>) resolver.resolve(mock(MuleEvent.class));
+    int originalSize = resolved.size();
+    resolved.add(-1);
 
-    @Test
-    public void isDynamic() throws Exception
-    {
-        childResolvers = new ArrayList();
-        childResolvers.add(getResolver(null, event, false));
-        childResolvers.add(getResolver(null, event, true));
+    assertThat(resolved.size(), equalTo(originalSize + 1));
+  }
 
-        resolver = createCollectionResolver(childResolvers);
-        assertThat(resolver.isDynamic(), is(true));
-    }
+  protected int getChildResolversCount() {
+    return 10;
+  }
 
-    @Test
-    public void collectionOfExpectedType() throws Exception
-    {
-        Collection<Object> resolved = (Collection<Object>) resolver.resolve(mock(MuleEvent.class));
-        assertThat(resolved, instanceOf(collectionType));
-    }
+  private CollectionValueResolver createCollectionResolver(List<ValueResolver> childResolvers) {
+    return new CollectionValueResolver(collectionType, childResolvers);
+  }
 
-    @Test
-    public void resolvedCollectionIsMutalbe() throws Exception
-    {
-        Collection<Object> resolved = (Collection<Object>) resolver.resolve(mock(MuleEvent.class));
-        int originalSize = resolved.size();
-        resolved.add(-1);
-
-        assertThat(resolved.size(), equalTo(originalSize + 1));
-    }
-
-    protected int getChildResolversCount()
-    {
-        return 10;
-    }
-
-    private CollectionValueResolver createCollectionResolver(List<ValueResolver> childResolvers)
-    {
-        return new CollectionValueResolver(collectionType, childResolvers);
-    }
-
-    protected void doAssertOf(Class<? extends Collection> collectionType, Class<? extends ValueResolver> expectedResolverType)
-    {
-        ValueResolver resolver = new CollectionValueResolver(mock(collectionType).getClass(), new ArrayList<ValueResolver>());
-        assertThat(resolver.getClass() == expectedResolverType, is(true));
-    }
+  protected void doAssertOf(Class<? extends Collection> collectionType, Class<? extends ValueResolver> expectedResolverType) {
+    ValueResolver resolver = new CollectionValueResolver(mock(collectionType).getClass(), new ArrayList<ValueResolver>());
+    assertThat(resolver.getClass() == expectedResolverType, is(true));
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
@@ -32,53 +30,48 @@ import static org.mule.runtime.module.extension.internal.ExtensionProperties.EXT
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class ClassLoaderModelEnricherTestCase extends AbstractMuleTestCase
-{
+public class ClassLoaderModelEnricherTestCase extends AbstractMuleTestCase {
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private DescribingContext describingContext;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private DescribingContext describingContext;
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private ExtensionDeclarer extensionDeclarer;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private ExtensionDeclarer extensionDeclarer;
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private ExtensionDeclaration extensionDeclaration;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private ExtensionDeclaration extensionDeclaration;
 
-    @Mock
-    private ClassLoader classLoader;
+  @Mock
+  private ClassLoader classLoader;
 
-    private ClassLoaderModelEnricher enricher = new ClassLoaderModelEnricher();
+  private ClassLoaderModelEnricher enricher = new ClassLoaderModelEnricher();
 
-    @Before
-    public void before()
-    {
-        when(describingContext.getExtensionDeclarer()).thenReturn(extensionDeclarer);
-        when(extensionDeclarer.getDeclaration()).thenReturn(extensionDeclaration);
-    }
+  @Before
+  public void before() {
+    when(describingContext.getExtensionDeclarer()).thenReturn(extensionDeclarer);
+    when(extensionDeclarer.getDeclaration()).thenReturn(extensionDeclaration);
+  }
 
-    @Test
-    public void enrich()
-    {
-        setClassLoaderParameter(classLoader);
-        enricher.enrich(describingContext);
+  @Test
+  public void enrich() {
+    setClassLoaderParameter(classLoader);
+    enricher.enrich(describingContext);
 
-        ArgumentCaptor<ClassLoaderModelProperty> captor = forClass(ClassLoaderModelProperty.class);
-        verify(extensionDeclarer).withModelProperty(captor.capture());
+    ArgumentCaptor<ClassLoaderModelProperty> captor = forClass(ClassLoaderModelProperty.class);
+    verify(extensionDeclarer).withModelProperty(captor.capture());
 
-        ClassLoaderModelProperty property = captor.getValue();
-        assertThat(property, is(notNullValue()));
-        assertThat(property.getClassLoader(), is(sameInstance(classLoader)));
-    }
+    ClassLoaderModelProperty property = captor.getValue();
+    assertThat(property, is(notNullValue()));
+    assertThat(property.getClassLoader(), is(sameInstance(classLoader)));
+  }
 
-    @Test(expected = IllegalModelDefinitionException.class)
-    public void noClassLoaderForEnrichment()
-    {
-        setClassLoaderParameter(null);
-        enricher.enrich(describingContext);
-    }
+  @Test(expected = IllegalModelDefinitionException.class)
+  public void noClassLoaderForEnrichment() {
+    setClassLoaderParameter(null);
+    enricher.enrich(describingContext);
+  }
 
-    private void setClassLoaderParameter(ClassLoader classLoader)
-    {
-        when(describingContext.getParameter(EXTENSION_CLASSLOADER, ClassLoader.class)).thenReturn(classLoader);
-    }
+  private void setClassLoaderParameter(ClassLoader classLoader) {
+    when(describingContext.getParameter(EXTENSION_CLASSLOADER, ClassLoader.class)).thenReturn(classLoader);
+  }
 }

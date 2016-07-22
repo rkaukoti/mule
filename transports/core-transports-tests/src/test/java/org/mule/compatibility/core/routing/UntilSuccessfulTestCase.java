@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.routing;
 
@@ -26,110 +24,95 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class UntilSuccessfulTestCase extends AbstractMuleContextTestCase
-{
-    private EndpointDlqUntilSuccessful untilSuccessful;
-    private ListableObjectStore<MuleEvent> objectStore;
-    private ConfigurableMessageProcessor targetMessageProcessor;
-    private Prober pollingProber = new PollingProber(10000, 500l);
+public class UntilSuccessfulTestCase extends AbstractMuleContextTestCase {
+  private EndpointDlqUntilSuccessful untilSuccessful;
+  private ListableObjectStore<MuleEvent> objectStore;
+  private ConfigurableMessageProcessor targetMessageProcessor;
+  private Prober pollingProber = new PollingProber(10000, 500l);
+
+  @Override
+  protected void doSetUp() throws Exception {
+    super.doSetUp();
+    untilSuccessful = buildUntiSuccessful(1000L);
+  }
+
+  private EndpointDlqUntilSuccessful buildUntiSuccessful(Long millisBetweenRetries) throws Exception {
+    EndpointDlqUntilSuccessful untilSuccessful = new EndpointDlqUntilSuccessful();
+    untilSuccessful.setMuleContext(muleContext);
+    untilSuccessful.setMessagingExceptionHandler(muleContext.getDefaultExceptionStrategy());
+    untilSuccessful.setFlowConstruct(getTestFlow());
+    untilSuccessful.setMaxRetries(2);
+
+    if (millisBetweenRetries != null) {
+      untilSuccessful.setMillisBetweenRetries(millisBetweenRetries);
+    }
+
+    objectStore = new SimpleMemoryObjectStore<MuleEvent>();
+    untilSuccessful.setObjectStore(objectStore);
+
+    targetMessageProcessor = new ConfigurableMessageProcessor();
+    untilSuccessful.addRoute(targetMessageProcessor);
+
+    return untilSuccessful;
+  }
+
+  @Override
+  protected void doTearDown() throws Exception {
+    untilSuccessful.stop();
+  }
+
+  @Test
+  public void testPermanentDeliveryFailureDLQ() throws Exception {
+    targetMessageProcessor.setNumberOfFailuresToSimulate(Integer.MAX_VALUE);
+    EndpointBuilder dlqEndpointBuilder = mock(EndpointBuilder.class);
+    final OutboundEndpoint dlqEndpoint = mock(OutboundEndpoint.class);
+    when(dlqEndpointBuilder.buildOutboundEndpoint()).thenReturn(dlqEndpoint);
+    untilSuccessful.setDeadLetterQueue(dlqEndpointBuilder);
+    untilSuccessful.initialise();
+    untilSuccessful.start();
+
+    final MuleEvent testEvent = getTestEvent("ERROR");
+    assertSame(VoidMuleEvent.getInstance(), untilSuccessful.process(testEvent));
+
+    pollingProber.check(new JUnitProbe() {
+      @Override
+      protected boolean test() throws Exception {
+        verify(dlqEndpoint).process(any(MuleEvent.class));
+        return true;
+      }
+
+      @Override
+      public String describeFailure() {
+        return "Dead letter queue was not called";
+      }
+    });
+  }
+
+  public static class ConfigurableMessageProcessor implements MessageProcessor {
+    private volatile int eventCount;
+    private volatile MuleEvent event;
+    private volatile int numberOfFailuresToSimulate;
 
     @Override
-    protected void doSetUp() throws Exception
-    {
-        super.doSetUp();
-        untilSuccessful = buildUntiSuccessful(1000L);
+    public MuleEvent process(final MuleEvent evt) throws MuleException {
+      eventCount++;
+      if (numberOfFailuresToSimulate-- > 0) {
+        throw new RuntimeException("simulated problem");
+      }
+      this.event = evt;
+      return evt;
     }
 
-    private EndpointDlqUntilSuccessful buildUntiSuccessful(Long millisBetweenRetries) throws Exception
-    {
-        EndpointDlqUntilSuccessful untilSuccessful = new EndpointDlqUntilSuccessful();
-        untilSuccessful.setMuleContext(muleContext);
-        untilSuccessful.setMessagingExceptionHandler(muleContext.getDefaultExceptionStrategy());
-        untilSuccessful.setFlowConstruct(getTestFlow());
-        untilSuccessful.setMaxRetries(2);
-
-        if (millisBetweenRetries != null)
-        {
-            untilSuccessful.setMillisBetweenRetries(millisBetweenRetries);
-        }
-
-        objectStore = new SimpleMemoryObjectStore<MuleEvent>();
-        untilSuccessful.setObjectStore(objectStore);
-
-        targetMessageProcessor = new ConfigurableMessageProcessor();
-        untilSuccessful.addRoute(targetMessageProcessor);
-
-        return untilSuccessful;
+    public MuleEvent getEventReceived() {
+      return event;
     }
 
-    @Override
-    protected void doTearDown() throws Exception
-    {
-        untilSuccessful.stop();
+    public int getEventCount() {
+      return eventCount;
     }
 
-    @Test
-    public void testPermanentDeliveryFailureDLQ() throws Exception
-    {
-        targetMessageProcessor.setNumberOfFailuresToSimulate(Integer.MAX_VALUE);
-        EndpointBuilder dlqEndpointBuilder = mock(EndpointBuilder.class);
-        final OutboundEndpoint dlqEndpoint = mock(OutboundEndpoint.class);
-        when(dlqEndpointBuilder.buildOutboundEndpoint()).thenReturn(dlqEndpoint);
-        untilSuccessful.setDeadLetterQueue(dlqEndpointBuilder);
-        untilSuccessful.initialise();
-        untilSuccessful.start();
-
-        final MuleEvent testEvent = getTestEvent("ERROR");
-        assertSame(VoidMuleEvent.getInstance(), untilSuccessful.process(testEvent));
-
-        pollingProber.check(new JUnitProbe()
-        {
-            @Override
-            protected boolean test() throws Exception
-            {
-                verify(dlqEndpoint).process(any(MuleEvent.class));
-                return true;
-            }
-
-            @Override
-            public String describeFailure()
-            {
-                return "Dead letter queue was not called";
-            }
-        });
+    public void setNumberOfFailuresToSimulate(int numberOfFailuresToSimulate) {
+      this.numberOfFailuresToSimulate = numberOfFailuresToSimulate;
     }
-
-    public static class ConfigurableMessageProcessor implements MessageProcessor
-    {
-        private volatile int eventCount;
-        private volatile MuleEvent event;
-        private volatile int numberOfFailuresToSimulate;
-
-        @Override
-        public MuleEvent process(final MuleEvent evt) throws MuleException
-        {
-            eventCount++;
-            if (numberOfFailuresToSimulate-- > 0)
-            {
-                throw new RuntimeException("simulated problem");
-            }
-            this.event = evt;
-            return evt;
-        }
-
-        public MuleEvent getEventReceived()
-        {
-            return event;
-        }
-
-        public int getEventCount()
-        {
-            return eventCount;
-        }
-
-        public void setNumberOfFailuresToSimulate(int numberOfFailuresToSimulate)
-        {
-            this.numberOfFailuresToSimulate = numberOfFailuresToSimulate;
-        }
-    }
+  }
 }

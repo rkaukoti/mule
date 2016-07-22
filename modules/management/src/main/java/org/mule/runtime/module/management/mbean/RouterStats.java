@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.mbean;
 
@@ -13,39 +11,32 @@ import java.util.Map;
 /**
  * <code>RouterStats</code> TODO
  */
-public class RouterStats implements RouterStatsMBean
-{
+public class RouterStats implements RouterStatsMBean {
 
-    private RouterStatistics statistics;
+  private RouterStatistics statistics;
 
-    public RouterStats(RouterStatistics statistics)
-    {
-        this.statistics = statistics;
-    }
+  public RouterStats(RouterStatistics statistics) {
+    this.statistics = statistics;
+  }
 
-    public long getCaughtMessages()
-    {
-        return statistics.getCaughtMessages();
-    }
+  public long getCaughtMessages() {
+    return statistics.getCaughtMessages();
+  }
 
-    public long getNotRouted()
-    {
-        return statistics.getNotRouted();
-    }
+  public long getNotRouted() {
+    return statistics.getNotRouted();
+  }
 
-    public long getTotalReceived()
-    {
-        return statistics.getTotalReceived();
-    }
+  public long getTotalReceived() {
+    return statistics.getTotalReceived();
+  }
 
-    public long getTotalRouted()
-    {
-        return statistics.getTotalRouted();
-    }
+  public long getTotalRouted() {
+    return statistics.getTotalRouted();
+  }
 
-    public Map getRouted()
-    {
-        return statistics.getRouted();
-    }
+  public Map getRouted() {
+    return statistics.getRouted();
+  }
 
 }

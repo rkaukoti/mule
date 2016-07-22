@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.internal.connection;
 
@@ -32,102 +30,90 @@ import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class CachedConnectionHandlerTestCase extends AbstractMuleTestCase
-{
+public class CachedConnectionHandlerTestCase extends AbstractMuleTestCase {
 
-    private Banana connection = new Banana();
+  private Banana connection = new Banana();
 
-    @Mock
-    private ConnectionProvider<Banana> connectionProvider;
+  @Mock
+  private ConnectionProvider<Banana> connectionProvider;
 
-    @Mock
-    private MuleContext muleContext;
+  @Mock
+  private MuleContext muleContext;
 
-    private CachedConnectionHandler<Banana> managedConnection;
+  private CachedConnectionHandler<Banana> managedConnection;
 
-    @Before
-    public void before() throws Exception
-    {
-        when(connectionProvider.connect()).thenReturn(connection);
-        managedConnection = new CachedConnectionHandler<>(connectionProvider, muleContext);
-        when(connectionProvider.validate(connection)).thenReturn(ConnectionValidationResult.success());
-    }
+  @Before
+  public void before() throws Exception {
+    when(connectionProvider.connect()).thenReturn(connection);
+    managedConnection = new CachedConnectionHandler<>(connectionProvider, muleContext);
+    when(connectionProvider.validate(connection)).thenReturn(ConnectionValidationResult.success());
+  }
 
-    @Test
-    public void getConnection() throws Exception
-    {
-        Banana connection = managedConnection.getConnection();
-        verify(connectionProvider).connect();
-        assertThat(connection, is(sameInstance(connection)));
-    }
+  @Test
+  public void getConnection() throws Exception {
+    Banana connection = managedConnection.getConnection();
+    verify(connectionProvider).connect();
+    assertThat(connection, is(sameInstance(connection)));
+  }
 
-    @Test
-    public void returnsAlwaysSameConnectionAndConnectOnlyOnce() throws Exception
-    {
-        Banana connection1 = managedConnection.getConnection();
-        Banana connection2 = managedConnection.getConnection();
+  @Test
+  public void returnsAlwaysSameConnectionAndConnectOnlyOnce() throws Exception {
+    Banana connection1 = managedConnection.getConnection();
+    Banana connection2 = managedConnection.getConnection();
 
-        assertThat(connection1, is(sameInstance(connection2)));
-        verify(connectionProvider).connect();
-    }
+    assertThat(connection1, is(sameInstance(connection2)));
+    verify(connectionProvider).connect();
+  }
 
-    @Test
-    public void getConnectionConcurrentlyAndConnectOnlyOnce() throws Exception
-    {
-        Banana mockConnection = mock(Banana.class);
-        connectionProvider = mock(ConnectionProvider.class);
-        before();
+  @Test
+  public void getConnectionConcurrentlyAndConnectOnlyOnce() throws Exception {
+    Banana mockConnection = mock(Banana.class);
+    connectionProvider = mock(ConnectionProvider.class);
+    before();
 
-        Latch latch = new Latch();
-        when(connectionProvider.connect()).thenAnswer(invocation ->
-        {
-            new Thread(() ->
-            {
-                try
-                {
-                    latch.release();
-                    getConnection();
-                }
-                catch (Exception e)
-                {
-                    throw new RuntimeException(e);
-                }
-            }).start();
+    Latch latch = new Latch();
+    when(connectionProvider.connect()).thenAnswer(invocation -> {
+      new Thread(() -> {
+        try {
+          latch.release();
+          getConnection();
+        } catch (Exception e) {
+          throw new RuntimeException(e);
+        }
+      }).start();
 
-            return mockConnection;
-        });
+      return mockConnection;
+    });
 
-        Banana connection = managedConnection.getConnection();
-        assertThat(latch.await(5, TimeUnit.SECONDS), is(true));
-        assertThat(connection, is(sameInstance(mockConnection)));
-        verify(connectionProvider).connect();
-    }
+    Banana connection = managedConnection.getConnection();
+    assertThat(latch.await(5, TimeUnit.SECONDS), is(true));
+    assertThat(connection, is(sameInstance(mockConnection)));
+    verify(connectionProvider).connect();
+  }
 
-    @Test
-    public void release() throws Exception
-    {
-        getConnection();
-        managedConnection.release();
-        verify(connectionProvider, never()).disconnect(connection);
+  @Test
+  public void release() throws Exception {
+    getConnection();
+    managedConnection.release();
+    verify(connectionProvider, never()).disconnect(connection);
 
-        // re-test to make sure everything is still functional
-        getConnection();
-    }
+    // re-test to make sure everything is still functional
+    getConnection();
+  }
 
-    @Test
-    public void close() throws Exception
-    {
-        getConnection();
-        managedConnection.close();
-        verify(connectionProvider).disconnect(connection);
+  @Test
+  public void close() throws Exception {
+    getConnection();
+    managedConnection.close();
+    verify(connectionProvider).disconnect(connection);
 
-        reset(connectionProvider);
-        Banana newConnection = new Banana();
-        when(connectionProvider.validate(connection)).thenReturn(ConnectionValidationResult.success());
-        when(connectionProvider.connect()).thenReturn(newConnection);
+    reset(connectionProvider);
+    Banana newConnection = new Banana();
+    when(connectionProvider.validate(connection)).thenReturn(ConnectionValidationResult.success());
+    when(connectionProvider.connect()).thenReturn(newConnection);
 
-        getConnection();
-        assertThat(managedConnection.getConnection(), is(sameInstance(newConnection)));
-    }
+    getConnection();
+    assertThat(managedConnection.getConnection(), is(sameInstance(newConnection)));
+  }
 }
 

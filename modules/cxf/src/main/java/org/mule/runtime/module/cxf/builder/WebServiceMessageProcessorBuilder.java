@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.builder;
 
@@ -25,125 +23,100 @@ import org.slf4j.LoggerFactory;
 import javax.xml.namespace.QName;
 
 /**
- * Builds a CXF web service MessageProcessor using either the JAX-WS or
- * simple frontends.  It must be configured in the following way:
+ * Builds a CXF web service MessageProcessor using either the JAX-WS or simple frontends. It must be configured in the following way:
  * <ul>
- * <li>If it is part of a {@link org.mule.runtime.core.construct.Flow}, then the serviceClass
- * attribute must be supplied.</li>
+ * <li>If it is part of a {@link org.mule.runtime.core.construct.Flow}, then the serviceClass attribute must be supplied.</li>
  * <li>The builder will use the JAX-WS frontend by default.</li>
  */
-public class WebServiceMessageProcessorBuilder
-        extends AbstractInboundMessageProcessorBuilder implements FlowConstructAware
-{
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-    protected FlowConstruct flowConstruct;
-    private DataBinding databinding;
-    private String frontend = CxfConstants.JAX_WS_FRONTEND;
-    private Class<?> serviceClass;
+public class WebServiceMessageProcessorBuilder extends AbstractInboundMessageProcessorBuilder implements FlowConstructAware {
+  protected transient Logger logger = LoggerFactory.getLogger(getClass());
+  protected FlowConstruct flowConstruct;
+  private DataBinding databinding;
+  private String frontend = CxfConstants.JAX_WS_FRONTEND;
+  private Class<?> serviceClass;
 
-    @Override
-    protected ServerFactoryBean createServerFactory() throws Exception
-    {
-        ServerFactoryBean sfb;
-        if (CxfConstants.SIMPLE_FRONTEND.equals(frontend))
-        {
-            sfb = new ServerFactoryBean();
-            sfb.setDataBinding(new AegisDatabinding());
-        }
-        else if (CxfConstants.JAX_WS_FRONTEND.equals(frontend))
-        {
-            sfb = new JaxWsServerFactoryBean();
-        }
-        else
-        {
-            throw new CreateException(CxfMessages.invalidFrontend(frontend), this);
-        }
-
-        if (serviceClass == null)
-        {
-            throw new DefaultMuleException(CxfMessages.serviceClassRequiredWithPassThrough());
-        }
-        sfb.setServiceClass(serviceClass);
-
-        logger.info("Built CXF Inbound MessageProcessor for service class " + serviceClass.getName());
-
-        // Configure Databinding
-        if (databinding != null)
-        {
-            sfb.setDataBinding(databinding);
-        }
-
-        if (getService() != null && getNamespace() != null)
-        {
-            sfb.setServiceName(new QName(getNamespace(), getService()));
-        }
-
-        return sfb;
+  @Override
+  protected ServerFactoryBean createServerFactory() throws Exception {
+    ServerFactoryBean sfb;
+    if (CxfConstants.SIMPLE_FRONTEND.equals(frontend)) {
+      sfb = new ServerFactoryBean();
+      sfb.setDataBinding(new AegisDatabinding());
+    } else if (CxfConstants.JAX_WS_FRONTEND.equals(frontend)) {
+      sfb = new JaxWsServerFactoryBean();
+    } else {
+      throw new CreateException(CxfMessages.invalidFrontend(frontend), this);
     }
 
-    @Override
-    protected Invoker createInvoker(CxfInboundMessageProcessor processor)
-    {
-        Invoker invoker = super.createInvoker(processor);
-        if (CxfConstants.JAX_WS_FRONTEND.equals(frontend))
-        {
-            invoker = new MuleJAXWSInvoker(invoker);
-        }
+    if (serviceClass == null) {
+      throw new DefaultMuleException(CxfMessages.serviceClassRequiredWithPassThrough());
+    }
+    sfb.setServiceClass(serviceClass);
 
-        return invoker;
+    logger.info("Built CXF Inbound MessageProcessor for service class " + serviceClass.getName());
+
+    // Configure Databinding
+    if (databinding != null) {
+      sfb.setDataBinding(databinding);
     }
 
-    @Override
-    protected String getAddress()
-    {
-        return "http://internalMuleCxfRegistry/" + hashCode();
+    if (getService() != null && getNamespace() != null) {
+      sfb.setServiceName(new QName(getNamespace(), getService()));
     }
 
-    @Override
-    public boolean isProxy()
-    {
-        return false;
+    return sfb;
+  }
+
+  @Override
+  protected Invoker createInvoker(CxfInboundMessageProcessor processor) {
+    Invoker invoker = super.createInvoker(processor);
+    if (CxfConstants.JAX_WS_FRONTEND.equals(frontend)) {
+      invoker = new MuleJAXWSInvoker(invoker);
     }
 
-    @Override
-    public Class<?> getServiceClass()
-    {
-        return serviceClass;
-    }
+    return invoker;
+  }
 
-    public void setServiceClass(Class<?> serviceClass)
-    {
-        this.serviceClass = serviceClass;
-    }
+  @Override
+  protected String getAddress() {
+    return "http://internalMuleCxfRegistry/" + hashCode();
+  }
 
-    @Override
-    public void setFlowConstruct(FlowConstruct flowConstruct)
-    {
-        this.flowConstruct = flowConstruct;
-    }
+  @Override
+  public boolean isProxy() {
+    return false;
+  }
 
-    public String getFrontend()
-    {
-        return frontend;
-    }
+  @Override
+  public Class<?> getServiceClass() {
+    return serviceClass;
+  }
 
-    /**
-     * Whether to use the simple frontend or JAX-WS frontend. Valid values
-     * are "simple" or "jaxws".
-     */
-    public void setFrontend(String frontend)
-    {
-        this.frontend = frontend;
-    }
+  public void setServiceClass(Class<?> serviceClass) {
+    this.serviceClass = serviceClass;
+  }
 
-    public DataBinding getDatabinding()
-    {
-        return databinding;
-    }
+  @Override
+  public void setFlowConstruct(FlowConstruct flowConstruct) {
+    this.flowConstruct = flowConstruct;
+  }
 
-    public void setDatabinding(DataBinding databinding)
-    {
-        this.databinding = databinding;
-    }
+  public String getFrontend() {
+    return frontend;
+  }
+
+  /**
+   * Whether to use the simple frontend or JAX-WS frontend. Valid values are "simple" or "jaxws".
+   */
+  public void setFrontend(String frontend) {
+    this.frontend = frontend;
+  }
+
+  public DataBinding getDatabinding() {
+    return databinding;
+  }
+
+  public void setDatabinding(DataBinding databinding) {
+    this.databinding = databinding;
+  }
 
 }

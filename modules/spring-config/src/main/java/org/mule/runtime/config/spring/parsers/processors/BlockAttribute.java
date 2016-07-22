@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.processors;
 
@@ -18,43 +16,34 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Throws an exception if any of the disallowed attributes (after translation) is present.
- * Designed to cooperates with
+ * Throws an exception if any of the disallowed attributes (after translation) is present. Designed to cooperates with
  * {@link org.mule.runtime.config.spring.parsers.delegate.AbstractSerialDelegatingDefinitionParser#addHandledException(Class)}
  */
-public class BlockAttribute implements PreProcessor
-{
-    private Set<String> disallowed;
+public class BlockAttribute implements PreProcessor {
+  private Set<String> disallowed;
 
-    public BlockAttribute(String disallowed)
-    {
-        this(new String[] {disallowed});
-    }
+  public BlockAttribute(String disallowed) {
+    this(new String[] {disallowed});
+  }
 
-    public BlockAttribute(String[] disallowed)
-    {
-        this.disallowed = new HashSet<String>(Arrays.asList(disallowed));
-    }
+  public BlockAttribute(String[] disallowed) {
+    this.disallowed = new HashSet<String>(Arrays.asList(disallowed));
+  }
 
-    public void preProcess(PropertyConfiguration config, Element element)
-    {
-        NamedNodeMap attributes = element.getAttributes();
-        for (int i = 0; i < attributes.getLength(); i++)
-        {
-            String alias = SpringXMLUtils.attributeName((Attr) attributes.item(i));
-            String name = config.translateName(alias);
-            if (disallowed.contains(name))
-            {
-                throw new BlockAttributeException("Attribute " + alias + " is not allowed here.");
-            }
-        }
+  public void preProcess(PropertyConfiguration config, Element element) {
+    NamedNodeMap attributes = element.getAttributes();
+    for (int i = 0; i < attributes.getLength(); i++) {
+      String alias = SpringXMLUtils.attributeName((Attr) attributes.item(i));
+      String name = config.translateName(alias);
+      if (disallowed.contains(name)) {
+        throw new BlockAttributeException("Attribute " + alias + " is not allowed here.");
+      }
     }
+  }
 
-    public static class BlockAttributeException extends IllegalStateException
-    {
-        BlockAttributeException(String message)
-        {
-            super(message);
-        }
+  public static class BlockAttributeException extends IllegalStateException {
+    BlockAttributeException(String message) {
+      super(message);
     }
+  }
 }

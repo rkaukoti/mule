@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.config;
 
@@ -25,41 +23,33 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
-public class ConfigLevelOperationTestCase extends ExtensionFunctionalTestCase
-{
+public class ConfigLevelOperationTestCase extends ExtensionFunctionalTestCase {
 
-    private final Class<? extends Fruit> fruitType;
+  private final Class<? extends Fruit> fruitType;
 
-    public ConfigLevelOperationTestCase(Class<? extends Fruit> fruitType)
-    {
-        this.fruitType = fruitType;
-    }
+  public ConfigLevelOperationTestCase(Class<? extends Fruit> fruitType) {
+    this.fruitType = fruitType;
+  }
 
-    @Parameters
-    public static Collection<Object[]> data()
-    {
-        return Arrays.asList(new Object[][] {
-                {Apple.class}, {Banana.class}, {Kiwi.class}
-        });
-    }
+  @Parameters
+  public static Collection<Object[]> data() {
+    return Arrays.asList(new Object[][] {{Apple.class}, {Banana.class}, {Kiwi.class}});
+  }
 
-    @Override
-    protected Class<?>[] getAnnotatedExtensionClasses()
-    {
-        return new Class[] {VeganExtension.class};
-    }
+  @Override
+  protected Class<?>[] getAnnotatedExtensionClasses() {
+    return new Class[] {VeganExtension.class};
+  }
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "vegan-config.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "vegan-config.xml";
+  }
 
-    @Test
-    public void execute() throws Exception
-    {
-        Fruit fruit = (Fruit) flowRunner(fruitType.getSimpleName().toLowerCase() + "Ok").run().getMessage().getPayload();
-        assertThat(fruit.getClass(), equalTo(fruitType));
-        assertThat(fruit.isBitten(), is(true));
-    }
+  @Test
+  public void execute() throws Exception {
+    Fruit fruit = (Fruit) flowRunner(fruitType.getSimpleName().toLowerCase() + "Ok").run().getMessage().getPayload();
+    assertThat(fruit.getClass(), equalTo(fruitType));
+    assertThat(fruit.isBitten(), is(true));
+  }
 }

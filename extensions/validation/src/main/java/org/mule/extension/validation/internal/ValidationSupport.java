@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.internal;
 
@@ -22,67 +20,50 @@ import java.util.Locale;
 import static org.mule.extension.validation.internal.ImmutableValidationResult.error;
 
 /**
- * Base class for validation operations with common
- * concerns
+ * Base class for validation operations with common concerns
  *
  * @since 3.7.0
  */
-abstract class ValidationSupport
-{
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
+abstract class ValidationSupport {
+  protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected void validateWith(Validator validator, ValidationContext validationContext, MuleEvent event) throws Exception
-    {
-        ValidationResult result = validator.validate(event);
-        if (result.isError())
-        {
-            result = evaluateCustomMessage(result, validationContext);
-            String customExceptionClass = validationContext.getOptions().getExceptionClass();
-            if (StringUtils.isEmpty(customExceptionClass))
-            {
-                throw validationContext.getConfig().getExceptionFactory().createException(result, ValidationException.class, event);
-            }
-            else
-            {
-                throw validationContext.getConfig().getExceptionFactory().createException(result, customExceptionClass, event);
-            }
-        }
-        else
-        {
-            logSuccessfulValidation(validator, event);
-        }
+  protected void validateWith(Validator validator, ValidationContext validationContext, MuleEvent event) throws Exception {
+    ValidationResult result = validator.validate(event);
+    if (result.isError()) {
+      result = evaluateCustomMessage(result, validationContext);
+      String customExceptionClass = validationContext.getOptions().getExceptionClass();
+      if (StringUtils.isEmpty(customExceptionClass)) {
+        throw validationContext.getConfig().getExceptionFactory().createException(result, ValidationException.class, event);
+      } else {
+        throw validationContext.getConfig().getExceptionFactory().createException(result, customExceptionClass, event);
+      }
+    } else {
+      logSuccessfulValidation(validator, event);
+    }
+  }
+
+  private ValidationResult evaluateCustomMessage(ValidationResult result, ValidationContext validationContext) {
+    String customMessage = validationContext.getOptions().getMessage();
+    if (!StringUtils.isBlank(customMessage)) {
+      result = error(
+          validationContext.getMuleEvent().getMuleContext().getExpressionManager().parse(customMessage, validationContext.getMuleEvent()));
     }
 
-    private ValidationResult evaluateCustomMessage(ValidationResult result, ValidationContext validationContext)
-    {
-        String customMessage = validationContext.getOptions().getMessage();
-        if (!StringUtils.isBlank(customMessage))
-        {
-            result = error(validationContext.getMuleEvent()
-                                            .getMuleContext()
-                                            .getExpressionManager()
-                                            .parse(customMessage, validationContext.getMuleEvent()));
-        }
+    return result;
+  }
 
-        return result;
-    }
+  protected ValidationContext createContext(ValidationOptions options, MuleEvent muleEvent, ValidationExtension config) {
+    return new ValidationContext(options, muleEvent, config);
+  }
 
-    protected ValidationContext createContext(ValidationOptions options, MuleEvent muleEvent, ValidationExtension config)
-    {
-        return new ValidationContext(options, muleEvent, config);
-    }
+  protected Locale parseLocale(String locale) {
+    locale = StringUtils.isBlank(locale) ? ValidationExtension.DEFAULT_LOCALE : locale;
+    return new Locale(locale);
+  }
 
-    protected Locale parseLocale(String locale)
-    {
-        locale = StringUtils.isBlank(locale) ? ValidationExtension.DEFAULT_LOCALE : locale;
-        return new Locale(locale);
+  protected void logSuccessfulValidation(Validator validator, MuleEvent event) {
+    if (logger.isDebugEnabled()) {
+      logger.debug("Successfully executed validator {}", ToStringBuilder.reflectionToString(validator));
     }
-
-    protected void logSuccessfulValidation(Validator validator, MuleEvent event)
-    {
-        if (logger.isDebugEnabled())
-        {
-            logger.debug("Successfully executed validator {}", ToStringBuilder.reflectionToString(validator));
-        }
-    }
+  }
 }

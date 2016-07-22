@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformer;
 
@@ -21,71 +19,57 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.Source;
 
-public class XmlToXMLStreamReader extends AbstractXmlTransformer implements DiscoverableTransformer
-{
+public class XmlToXMLStreamReader extends AbstractXmlTransformer implements DiscoverableTransformer {
 
-    private int priorityWeighting = DiscoverableTransformer.DEFAULT_PRIORITY_WEIGHTING;
-    private boolean reversible;
+  private int priorityWeighting = DiscoverableTransformer.DEFAULT_PRIORITY_WEIGHTING;
+  private boolean reversible;
 
-    public XmlToXMLStreamReader()
-    {
-        super();
-        registerSourceType(DataType.fromType(Source.class));
-        registerSourceType(DataType.INPUT_STREAM);
-        registerSourceType(DataType.fromType(Document.class));
-        registerSourceType(DataType.BYTE_ARRAY);
-        registerSourceType(DataType.STRING);
+  public XmlToXMLStreamReader() {
+    super();
+    registerSourceType(DataType.fromType(Source.class));
+    registerSourceType(DataType.INPUT_STREAM);
+    registerSourceType(DataType.fromType(Document.class));
+    registerSourceType(DataType.BYTE_ARRAY);
+    registerSourceType(DataType.STRING);
 
-        setReturnDataType(DataType.fromType(XMLStreamReader.class));
+    setReturnDataType(DataType.fromType(XMLStreamReader.class));
+  }
+
+  @Override
+  public Object transformMessage(MuleEvent event, Charset encoding) throws TransformerException {
+    Object src = event.getMessage().getPayload();
+    try {
+      XMLStreamReader xsr = XMLUtils.toXMLStreamReader(getXMLInputFactory(), src);
+      if (xsr == null) {
+        throw new TransformerException(MessageFactory.createStaticMessage("Unable to convert " + src.getClass() + " to XMLStreamReader."),
+            this);
+      }
+
+      if (reversible && !(xsr instanceof ReversibleXMLStreamReader)) {
+        return new ReversibleXMLStreamReader(xsr);
+      } else {
+        return xsr;
+      }
+    } catch (XMLStreamException e) {
+      throw new TransformerException(this, e);
     }
+  }
 
-    @Override
-    public Object transformMessage(MuleEvent event, Charset encoding) throws TransformerException
-    {
-        Object src = event.getMessage().getPayload();
-        try
-        {
-            XMLStreamReader xsr = XMLUtils.toXMLStreamReader(getXMLInputFactory(), src);
-            if (xsr == null)
-            {
-                throw new TransformerException(MessageFactory
-                        .createStaticMessage("Unable to convert " + src.getClass() + " to XMLStreamReader."), this);
-            }
+  public boolean isReversible() {
+    return reversible;
+  }
 
-            if (reversible && !(xsr instanceof ReversibleXMLStreamReader))
-            {
-                return new ReversibleXMLStreamReader(xsr);
-            }
-            else
-            {
-                return xsr;
-            }
-        }
-        catch (XMLStreamException e)
-        {
-            throw new TransformerException(this, e);
-        }
-    }
+  public void setReversible(boolean reversible) {
+    this.reversible = reversible;
+  }
 
-    public boolean isReversible()
-    {
-        return reversible;
-    }
+  @Override
+  public int getPriorityWeighting() {
+    return priorityWeighting;
+  }
 
-    public void setReversible(boolean reversible)
-    {
-        this.reversible = reversible;
-    }
-
-    @Override
-    public int getPriorityWeighting()
-    {
-        return priorityWeighting;
-    }
-
-    @Override
-    public void setPriorityWeighting(int priorityWeighting)
-    {
-        this.priorityWeighting = priorityWeighting;
-    }
+  @Override
+  public void setPriorityWeighting(int priorityWeighting) {
+    this.priorityWeighting = priorityWeighting;
+  }
 }

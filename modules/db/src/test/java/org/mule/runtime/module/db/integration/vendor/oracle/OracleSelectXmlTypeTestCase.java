@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.vendor.oracle;
@@ -19,32 +17,27 @@ import java.util.List;
 import static org.mule.runtime.module.db.integration.TestRecordUtil.assertMessageContains;
 import static org.mule.runtime.module.db.integration.TestRecordUtil.getAllAlienRecords;
 
-public class OracleSelectXmlTypeTestCase extends AbstractOracleXmlTypeTestCase
-{
+public class OracleSelectXmlTypeTestCase extends AbstractOracleXmlTypeTestCase {
 
-    public OracleSelectXmlTypeTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
-    }
+  public OracleSelectXmlTypeTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
+    super(dataSourceConfigResource, testDatabase);
+  }
 
-    @Parameterized.Parameters
-    public static List<Object[]> parameters()
-    {
-        return TestDbConfig.getOracleResource();
-    }
+  @Parameterized.Parameters
+  public static List<Object[]> parameters() {
+    return TestDbConfig.getOracleResource();
+  }
 
-    @Override
-    protected String[] getFlowConfigurationResources()
-    {
-        return new String[] {"integration/vendor/oracle/oracle-select-xml-type-config.xml"};
-    }
+  @Override
+  protected String[] getFlowConfigurationResources() {
+    return new String[] {"integration/vendor/oracle/oracle-select-xml-type-config.xml"};
+  }
 
-    @Test
-    public void returnsXmlTypeColumn() throws Exception
-    {
-        final MuleEvent responseEvent = flowRunner("managesXmlType").withPayload(TEST_MESSAGE).run();
+  @Test
+  public void returnsXmlTypeColumn() throws Exception {
+    final MuleEvent responseEvent = flowRunner("managesXmlType").withPayload(TEST_MESSAGE).run();
 
-        final MuleMessage response = responseEvent.getMessage();
-        assertMessageContains(response, getAllAlienRecords());
-    }
+    final MuleMessage response = responseEvent.getMessage();
+    assertMessageContains(response, getAllAlienRecords());
+  }
 }

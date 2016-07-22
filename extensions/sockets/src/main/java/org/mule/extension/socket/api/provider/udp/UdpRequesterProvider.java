@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.provider.udp;
 
@@ -25,59 +23,53 @@ import org.mule.runtime.extension.api.annotation.param.Optional;
 import java.net.DatagramSocket;
 
 /**
- * A {@link ConnectionProvider} which provides instances of
- * {@link UdpRequesterConnection} to be used by the {@link SocketOperations}
+ * A {@link ConnectionProvider} which provides instances of {@link UdpRequesterConnection} to be used by the {@link SocketOperations}
  *
  * @since 4.0
  */
 @Alias("udp-requester")
-public final class UdpRequesterProvider implements ConnectionProvider<UdpRequesterConnection>
-{
+public final class UdpRequesterProvider implements ConnectionProvider<UdpRequesterConnection> {
 
-    /**
-     * This configuration parameter refers to the address where the {@link DatagramSocket} should send packages to.
-     */
-    @ParameterGroup
-    private ConnectionSettings connectionSettings;
+  /**
+   * This configuration parameter refers to the address where the {@link DatagramSocket} should send packages to.
+   */
+  @ParameterGroup
+  private ConnectionSettings connectionSettings;
 
-    /**
-     * {@link DatagramSocket} configuration properties
-     */
-    @ParameterGroup
-    private UdpSocketProperties udpSocketProperties;
+  /**
+   * {@link DatagramSocket} configuration properties
+   */
+  @ParameterGroup
+  private UdpSocketProperties udpSocketProperties;
 
-    /**
-     * This configuration parameter refers to the address where the {@link DatagramSocket} should bind to.
-     */
-    @Parameter
-    @Optional
-    private ConnectionSettings localAddressSettings = new ConnectionSettings();
+  /**
+   * This configuration parameter refers to the address where the {@link DatagramSocket} should bind to.
+   */
+  @Parameter
+  @Optional
+  private ConnectionSettings localAddressSettings = new ConnectionSettings();
 
-    @Override
-    public UdpRequesterConnection connect() throws ConnectionException, UnresolvableHostException
-    {
-        UdpRequesterConnection connection = new UdpRequesterConnection(connectionSettings, localAddressSettings, udpSocketProperties);
-        connection.connect();
-        return connection;
-    }
+  @Override
+  public UdpRequesterConnection connect() throws ConnectionException, UnresolvableHostException {
+    UdpRequesterConnection connection = new UdpRequesterConnection(connectionSettings, localAddressSettings, udpSocketProperties);
+    connection.connect();
+    return connection;
+  }
 
-    @Override
-    public void disconnect(UdpRequesterConnection connection)
-    {
-        connection.disconnect();
-    }
+  @Override
+  public void disconnect(UdpRequesterConnection connection) {
+    connection.disconnect();
+  }
 
-    @Override
-    public ConnectionValidationResult validate(UdpRequesterConnection connection)
-    {
-        return SocketUtils.validate(connection);
-    }
+  @Override
+  public ConnectionValidationResult validate(UdpRequesterConnection connection) {
+    return SocketUtils.validate(connection);
+  }
 
-    @Override
-    public ConnectionHandlingStrategy<UdpRequesterConnection> getHandlingStrategy(
-            ConnectionHandlingStrategyFactory<UdpRequesterConnection> handlingStrategyFactory)
-    {
-        return handlingStrategyFactory.supportsPooling();
-    }
+  @Override
+  public ConnectionHandlingStrategy<UdpRequesterConnection> getHandlingStrategy(
+      ConnectionHandlingStrategyFactory<UdpRequesterConnection> handlingStrategyFactory) {
+    return handlingStrategyFactory.supportsPooling();
+  }
 }
 

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.junit4;
 
@@ -20,40 +18,34 @@ import java.util.List;
 import static java.util.Collections.emptyMap;
 import static org.mule.runtime.core.config.bootstrap.ArtifactType.DOMAIN;
 
-public class DomainContextBuilder
-{
+public class DomainContextBuilder {
 
-    private String domainConfig;
-    private MuleContextBuilder muleContextBuilder = new DefaultMuleContextBuilder()
-    {
-        @Override
-        protected DefaultMuleContext createDefaultMuleContext()
-        {
-            DefaultMuleContext muleContext = super.createDefaultMuleContext();
-            muleContext.setArtifactType(DOMAIN);
-            return muleContext;
-        }
-    };
-
-    public DomainContextBuilder setDomainConfig(String domainConfig)
-    {
-        this.domainConfig = domainConfig;
-        return this;
+  private String domainConfig;
+  private MuleContextBuilder muleContextBuilder = new DefaultMuleContextBuilder() {
+    @Override
+    protected DefaultMuleContext createDefaultMuleContext() {
+      DefaultMuleContext muleContext = super.createDefaultMuleContext();
+      muleContext.setArtifactType(DOMAIN);
+      return muleContext;
     }
+  };
 
-    public MuleContext build() throws Exception
-    {
-        List<ConfigurationBuilder> builders = new ArrayList<ConfigurationBuilder>(3);
-        ConfigurationBuilder cfgBuilder = getDomainBuilder(domainConfig);
-        builders.add(cfgBuilder);
-        DefaultMuleContextFactory muleContextFactory = new DefaultMuleContextFactory();
-        MuleContext domainContext = muleContextFactory.createMuleContext(builders, muleContextBuilder);
-        domainContext.start();
-        return domainContext;
-    }
+  public DomainContextBuilder setDomainConfig(String domainConfig) {
+    this.domainConfig = domainConfig;
+    return this;
+  }
 
-    protected ConfigurationBuilder getDomainBuilder(String configResource) throws Exception
-    {
-        return new SpringXmlConfigurationBuilder(configResource, emptyMap(), DOMAIN);
-    }
+  public MuleContext build() throws Exception {
+    List<ConfigurationBuilder> builders = new ArrayList<ConfigurationBuilder>(3);
+    ConfigurationBuilder cfgBuilder = getDomainBuilder(domainConfig);
+    builders.add(cfgBuilder);
+    DefaultMuleContextFactory muleContextFactory = new DefaultMuleContextFactory();
+    MuleContext domainContext = muleContextFactory.createMuleContext(builders, muleContextBuilder);
+    domainContext.start();
+    return domainContext;
+  }
+
+  protected ConfigurationBuilder getDomainBuilder(String configResource) throws Exception {
+    return new SpringXmlConfigurationBuilder(configResource, emptyMap(), DOMAIN);
+  }
 }

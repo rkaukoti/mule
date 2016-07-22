@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.construct;
 
@@ -28,66 +26,59 @@ import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class FlowProcessingStrategyTestCase extends AbstractMuleTestCase
-{
+public class FlowProcessingStrategyTestCase extends AbstractMuleTestCase {
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    protected MuleContext muleContext;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  protected MuleContext muleContext;
 
-    @Mock
-    private MuleConfiguration configuration;
+  @Mock
+  private MuleConfiguration configuration;
 
-    private AbstractPipeline flow;
+  private AbstractPipeline flow;
 
-    @Before
-    public void before()
-    {
-        when(muleContext.getConfiguration()).thenReturn(configuration);
-        createFlow();
-    }
+  @Before
+  public void before() {
+    when(muleContext.getConfiguration()).thenReturn(configuration);
+    createFlow();
+  }
 
-    @Test
-    public void fixedProcessingStrategyIsHonoured() throws Exception
-    {
-        ProcessingStrategy processingStrategy = mock(ProcessingStrategy.class);
-        createFlow();
-        flow.setProcessingStrategy(processingStrategy);
+  @Test
+  public void fixedProcessingStrategyIsHonoured() throws Exception {
+    ProcessingStrategy processingStrategy = mock(ProcessingStrategy.class);
+    createFlow();
+    flow.setProcessingStrategy(processingStrategy);
 
-        assertThat(flow.getProcessingStrategy(), is(sameInstance(processingStrategy)));
-    }
+    assertThat(flow.getProcessingStrategy(), is(sameInstance(processingStrategy)));
+  }
 
-    @Test
-    public void defaultProcessingStrategyInConfigIsHonoured() throws Exception
-    {
-        ProcessingStrategy processingStrategy = mock(ProcessingStrategy.class);
-        when(configuration.getDefaultProcessingStrategy()).thenReturn(processingStrategy);
+  @Test
+  public void defaultProcessingStrategyInConfigIsHonoured() throws Exception {
+    ProcessingStrategy processingStrategy = mock(ProcessingStrategy.class);
+    when(configuration.getDefaultProcessingStrategy()).thenReturn(processingStrategy);
 
-        createFlow();
-        assertThat(flow.getProcessingStrategy(), is(sameInstance(processingStrategy)));
-    }
+    createFlow();
+    assertThat(flow.getProcessingStrategy(), is(sameInstance(processingStrategy)));
+  }
 
-    @Test
-    public void fixedProcessingStrategyTakesPrecedenceOverConfig() throws Exception
-    {
-        ProcessingStrategy configProcessingStrategy = mock(ProcessingStrategy.class);
-        when(configuration.getDefaultProcessingStrategy()).thenReturn(configProcessingStrategy);
+  @Test
+  public void fixedProcessingStrategyTakesPrecedenceOverConfig() throws Exception {
+    ProcessingStrategy configProcessingStrategy = mock(ProcessingStrategy.class);
+    when(configuration.getDefaultProcessingStrategy()).thenReturn(configProcessingStrategy);
 
-        ProcessingStrategy processingStrategy = mock(ProcessingStrategy.class);
-        createFlow();
-        flow.setProcessingStrategy(processingStrategy);
+    ProcessingStrategy processingStrategy = mock(ProcessingStrategy.class);
+    createFlow();
+    flow.setProcessingStrategy(processingStrategy);
 
-        assertThat(flow.getProcessingStrategy(), is(sameInstance(processingStrategy)));
-    }
+    assertThat(flow.getProcessingStrategy(), is(sameInstance(processingStrategy)));
+  }
 
-    @Test
-    public void createDefaultProcessingStrategyIfNoneSpecified() throws Exception
-    {
-        flow.initialise();
-        assertThat(flow.getProcessingStrategy(), is(instanceOf(DefaultFlowProcessingStrategy.class)));
-    }
+  @Test
+  public void createDefaultProcessingStrategyIfNoneSpecified() throws Exception {
+    flow.initialise();
+    assertThat(flow.getProcessingStrategy(), is(instanceOf(DefaultFlowProcessingStrategy.class)));
+  }
 
-    private void createFlow()
-    {
-        flow = new Flow("test", muleContext);
-    }
+  private void createFlow() {
+    flow = new Flow("test", muleContext);
+  }
 }

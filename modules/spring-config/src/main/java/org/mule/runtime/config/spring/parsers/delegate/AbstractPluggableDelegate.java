@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.delegate;
 
@@ -18,88 +16,72 @@ import org.w3c.dom.Element;
 import java.util.Map;
 
 /**
- * Support for extending a
- * {@link org.mule.runtime.config.spring.parsers.MuleDefinitionParser} without
- * needing to subclass.
+ * Support for extending a {@link org.mule.runtime.config.spring.parsers.MuleDefinitionParser} without needing to subclass.
  */
-public abstract class AbstractPluggableDelegate implements MuleDefinitionParser
-{
+public abstract class AbstractPluggableDelegate implements MuleDefinitionParser {
 
-    private MuleDefinitionParser delegate;
+  private MuleDefinitionParser delegate;
 
-    public AbstractPluggableDelegate(MuleDefinitionParser delegate)
-    {
-        this.delegate = delegate;
-    }
+  public AbstractPluggableDelegate(MuleDefinitionParser delegate) {
+    this.delegate = delegate;
+  }
 
-    public AbstractBeanDefinition muleParse(Element element, ParserContext parserContext)
-    {
-        return delegate.muleParse(element, parserContext);
-    }
+  public AbstractBeanDefinition muleParse(Element element, ParserContext parserContext) {
+    return delegate.muleParse(element, parserContext);
+  }
 
-    public MuleDefinitionParserConfiguration registerPreProcessor(PreProcessor preProcessor)
-    {
-        delegate.registerPreProcessor(preProcessor);
-        return this;
-    }
+  public MuleDefinitionParserConfiguration registerPreProcessor(PreProcessor preProcessor) {
+    delegate.registerPreProcessor(preProcessor);
+    return this;
+  }
 
-    public MuleDefinitionParserConfiguration registerPostProcessor(PostProcessor postProcessor)
-    {
-        delegate.registerPostProcessor(postProcessor);
-        return this;
-    }
+  public MuleDefinitionParserConfiguration registerPostProcessor(PostProcessor postProcessor) {
+    delegate.registerPostProcessor(postProcessor);
+    return this;
+  }
 
-    public MuleDefinitionParserConfiguration addReference(String propertyName)
-    {
-        delegate.addReference(propertyName);
-        return this;
-    }
+  public MuleDefinitionParserConfiguration addReference(String propertyName) {
+    delegate.addReference(propertyName);
+    return this;
+  }
 
-    public MuleDefinitionParserConfiguration addMapping(String propertyName, Map mappings)
-    {
-        delegate.addMapping(propertyName, mappings);
-        return this;
-    }
+  public MuleDefinitionParserConfiguration addMapping(String propertyName, Map mappings) {
+    delegate.addMapping(propertyName, mappings);
+    return this;
+  }
 
-    public MuleDefinitionParserConfiguration addMapping(String propertyName, String mappings)
-    {
-        delegate.addMapping(propertyName, mappings);
-        return this;
-    }
+  public MuleDefinitionParserConfiguration addMapping(String propertyName, String mappings) {
+    delegate.addMapping(propertyName, mappings);
+    return this;
+  }
 
-    public MuleDefinitionParserConfiguration addMapping(String propertyName, ValueMap mappings)
-    {
-        delegate.addMapping(propertyName, mappings);
-        return this;
-    }
+  public MuleDefinitionParserConfiguration addMapping(String propertyName, ValueMap mappings) {
+    delegate.addMapping(propertyName, mappings);
+    return this;
+  }
 
-    public MuleDefinitionParserConfiguration addAlias(String alias, String propertyName)
-    {
-        delegate.addAlias(alias, propertyName);
-        return this;
-    }
+  public MuleDefinitionParserConfiguration addAlias(String alias, String propertyName) {
+    delegate.addAlias(alias, propertyName);
+    return this;
+  }
 
-    public MuleDefinitionParserConfiguration addCollection(String propertyName)
-    {
-        delegate.addCollection(propertyName);
-        return this;
-    }
+  public MuleDefinitionParserConfiguration addCollection(String propertyName) {
+    delegate.addCollection(propertyName);
+    return this;
+  }
 
-    public MuleDefinitionParserConfiguration addIgnored(String propertyName)
-    {
-        delegate.addIgnored(propertyName);
-        return this;
-    }
+  public MuleDefinitionParserConfiguration addIgnored(String propertyName) {
+    delegate.addIgnored(propertyName);
+    return this;
+  }
 
-    public MuleDefinitionParserConfiguration removeIgnored(String propertyName)
-    {
-        delegate.removeIgnored(propertyName);
-        return this;
-    }
+  public MuleDefinitionParserConfiguration removeIgnored(String propertyName) {
+    delegate.removeIgnored(propertyName);
+    return this;
+  }
 
-    public MuleDefinitionParserConfiguration setIgnoredDefault(boolean ignoreAll)
-    {
-        delegate.setIgnoredDefault(ignoreAll);
-        return this;
-    }
+  public MuleDefinitionParserConfiguration setIgnoredDefault(boolean ignoreAll) {
+    delegate.setIgnoredDefault(ignoreAll);
+    return this;
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.storedprocedure;
@@ -28,46 +26,40 @@ import static org.mule.runtime.module.db.integration.model.Planet.EARTH;
 import static org.mule.runtime.module.db.integration.model.Planet.MARS;
 import static org.mule.runtime.module.db.integration.model.Planet.VENUS;
 
-public abstract class AbstractStoredProcedureStreamingReturningResultsetTestCase extends AbstractDbIntegrationTestCase
-{
+public abstract class AbstractStoredProcedureStreamingReturningResultsetTestCase extends AbstractDbIntegrationTestCase {
 
-    public AbstractStoredProcedureStreamingReturningResultsetTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
-    }
+  public AbstractStoredProcedureStreamingReturningResultsetTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
+    super(dataSourceConfigResource, testDatabase);
+  }
 
-    @Test
-    public void testOneWay() throws Exception
-    {
-        flowRunner("messagePerRecordOneWay").withPayload(TEST_MESSAGE).asynchronously().run();
+  @Test
+  public void testOneWay() throws Exception {
+    flowRunner("messagePerRecordOneWay").withPayload(TEST_MESSAGE).asynchronously().run();
 
-        MuleClient client = muleContext.getClient();
-        List<MuleMessage> responses = new LinkedList<MuleMessage>();
-        MuleMessage response = client.request("test://testOut", RECEIVE_TIMEOUT);
-        responses.add(response);
-        response = client.request("test://testOut", RECEIVE_TIMEOUT);
-        responses.add(response);
-        response = client.request("test://testOut", RECEIVE_TIMEOUT);
-        responses.add(response);
+    MuleClient client = muleContext.getClient();
+    List<MuleMessage> responses = new LinkedList<MuleMessage>();
+    MuleMessage response = client.request("test://testOut", RECEIVE_TIMEOUT);
+    responses.add(response);
+    response = client.request("test://testOut", RECEIVE_TIMEOUT);
+    responses.add(response);
+    response = client.request("test://testOut", RECEIVE_TIMEOUT);
+    responses.add(response);
 
-        assertEquals(3, responses.size());
-        assertThat(responses,
-                AllOf.allOf(ContainsMessage.mapPayloadWith("NAME", MARS.getName()), ContainsMessage.mapPayloadWith("NAME", EARTH.getName()),
-                        ContainsMessage.mapPayloadWith("NAME", VENUS.getName())));
-    }
+    assertEquals(3, responses.size());
+    assertThat(responses, AllOf.allOf(ContainsMessage.mapPayloadWith("NAME", MARS.getName()),
+        ContainsMessage.mapPayloadWith("NAME", EARTH.getName()), ContainsMessage.mapPayloadWith("NAME", VENUS.getName())));
+  }
 
-    @Test
-    public void testRequestResponse() throws Exception
-    {
-        final MuleEvent responseEvent = flowRunner("defaultQueryRequestResponse").withPayload(TEST_MESSAGE).run();
+  @Test
+  public void testRequestResponse() throws Exception {
+    final MuleEvent responseEvent = flowRunner("defaultQueryRequestResponse").withPayload(TEST_MESSAGE).run();
 
-        final MuleMessage response = responseEvent.getMessage();
-        assertMessageContains(response, getAllPlanetRecords());
-    }
+    final MuleMessage response = responseEvent.getMessage();
+    assertMessageContains(response, getAllPlanetRecords());
+  }
 
-    @Before
-    public void setupStoredProcedure() throws Exception
-    {
-        testDatabase.createStoredProcedureGetRecords(getDefaultDataSource());
-    }
+  @Before
+  public void setupStoredProcedure() throws Exception {
+    testDatabase.createStoredProcedureGetRecords(getDefaultDataSource());
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.object;
 
@@ -21,193 +19,152 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-public class JndiObjectFactory implements ObjectFactory
-{
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
-    /**
-     * If true, the object is looked up from JNDI each time create() is called, otherwise it
-     * is looked up once and stored locally.  Default value is false.
-     */
-    private boolean lookupOnEachCall = false;
-    private String objectName;
-    private String initialFactory;
-    private String url;
-    private Map properties;
-    private Context _context;
-    private Object _object;
+public class JndiObjectFactory implements ObjectFactory {
+  protected final Logger logger = LoggerFactory.getLogger(getClass());
+  /**
+   * If true, the object is looked up from JNDI each time create() is called, otherwise it is looked up once and stored locally. Default
+   * value is false.
+   */
+  private boolean lookupOnEachCall = false;
+  private String objectName;
+  private String initialFactory;
+  private String url;
+  private Map properties;
+  private Context _context;
+  private Object _object;
 
-    public JndiObjectFactory()
-    {
-        // for IoC only
+  public JndiObjectFactory() {
+    // for IoC only
+  }
+
+  public JndiObjectFactory(String objectName, String initialFactory, String url) {
+    this(objectName, initialFactory, url, null);
+  }
+
+  public JndiObjectFactory(String objectName, String initialFactory, String url, Map properties) {
+    this.objectName = objectName;
+    this.initialFactory = initialFactory;
+    this.url = url;
+    this.properties = properties;
+  }
+
+  public void initialise() throws InitialisationException {
+    if (_context == null) {
+      Hashtable props = new Hashtable();
+
+      if (initialFactory != null) {
+        props.put(Context.INITIAL_CONTEXT_FACTORY, initialFactory);
+      } else if (properties == null || !properties.containsKey(Context.INITIAL_CONTEXT_FACTORY)) {
+        throw new InitialisationException(CoreMessages.objectIsNull("jndiInitialFactory"), this);
+      }
+
+      if (url != null) {
+        props.put(Context.PROVIDER_URL, url);
+      }
+
+      if (properties != null) {
+        props.putAll(properties);
+      }
+
+      try {
+        _context = new InitialContext(props);
+      } catch (NamingException e) {
+        throw new InitialisationException(e, this);
+      }
     }
+  }
 
-    public JndiObjectFactory(String objectName, String initialFactory, String url)
-    {
-        this(objectName, initialFactory, url, null);
+  public void dispose() {
+    if (_context != null) {
+      try {
+        _context.close();
+      } catch (NamingException e) {
+        logger.error("JNDI Context failed to dispose properly: ", e);
+      } finally {
+        _context = null;
+      }
     }
+  }
 
-    public JndiObjectFactory(String objectName, String initialFactory, String url, Map properties)
-    {
-        this.objectName = objectName;
-        this.initialFactory = initialFactory;
-        this.url = url;
-        this.properties = properties;
+  public Object getInstance(MuleContext muleContext) throws Exception {
+    if (_object == null || lookupOnEachCall == true) {
+      _object = _context.lookup(objectName);
     }
+    return _object;
+  }
 
-    public void initialise() throws InitialisationException
-    {
-        if (_context == null)
-        {
-            Hashtable props = new Hashtable();
+  /**
+   * {@inheritDoc}
+   */
+  public Class<?> getObjectClass() {
+    throw new UnsupportedOperationException();
+  }
 
-            if (initialFactory != null)
-            {
-                props.put(Context.INITIAL_CONTEXT_FACTORY, initialFactory);
-            }
-            else if (properties == null
-                     || !properties.containsKey(Context.INITIAL_CONTEXT_FACTORY))
-            {
-                throw new InitialisationException(CoreMessages.objectIsNull("jndiInitialFactory"), this);
-            }
+  ///////////////////////////////////////////////////////////////////////////////////////////
+  // Getters and Setters
+  ///////////////////////////////////////////////////////////////////////////////////////////
 
-            if (url != null)
-            {
-                props.put(Context.PROVIDER_URL, url);
-            }
+  public String getInitialFactory() {
+    return initialFactory;
+  }
 
-            if (properties != null)
-            {
-                props.putAll(properties);
-            }
+  public void setInitialFactory(String initialFactory) {
+    this.initialFactory = initialFactory;
+  }
 
-            try
-            {
-                _context = new InitialContext(props);
-            }
-            catch (NamingException e)
-            {
-                throw new InitialisationException(e, this);
-            }
-        }
-    }
+  public boolean isLookupOnEachCall() {
+    return lookupOnEachCall;
+  }
 
-    public void dispose()
-    {
-        if (_context != null)
-        {
-            try
-            {
-                _context.close();
-            }
-            catch (NamingException e)
-            {
-                logger.error("JNDI Context failed to dispose properly: ", e);
-            }
-            finally
-            {
-                _context = null;
-            }
-        }
-    }
+  public void setLookupOnEachCall(boolean lookupOnEachCall) {
+    this.lookupOnEachCall = lookupOnEachCall;
+  }
 
-    public Object getInstance(MuleContext muleContext) throws Exception
-    {
-        if (_object == null || lookupOnEachCall == true)
-        {
-            _object = _context.lookup(objectName);
-        }
-        return _object;
-    }
+  public String getObjectName() {
+    return objectName;
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    public Class<?> getObjectClass()
-    {
-        throw new UnsupportedOperationException();
-    }
+  public void setObjectName(String objectName) {
+    this.objectName = objectName;
+  }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    // Getters and Setters
-    ///////////////////////////////////////////////////////////////////////////////////////////    
+  public Map getProperties() {
+    return properties;
+  }
 
-    public String getInitialFactory()
-    {
-        return initialFactory;
-    }
+  public void setProperties(Map properties) {
+    this.properties = properties;
+  }
 
-    public void setInitialFactory(String initialFactory)
-    {
-        this.initialFactory = initialFactory;
-    }
+  public String getUrl() {
+    return url;
+  }
 
-    public boolean isLookupOnEachCall()
-    {
-        return lookupOnEachCall;
-    }
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-    public void setLookupOnEachCall(boolean lookupOnEachCall)
-    {
-        this.lookupOnEachCall = lookupOnEachCall;
-    }
+  public Context getContext() {
+    return _context;
+  }
 
-    public String getObjectName()
-    {
-        return objectName;
-    }
+  protected void setContext(Context context) {
+    this._context = context;
+  }
 
-    public void setObjectName(String objectName)
-    {
-        this.objectName = objectName;
-    }
+  public void addObjectInitialisationCallback(InitialisationCallback callback) {
+    throw new UnsupportedOperationException();
+  }
 
-    public Map getProperties()
-    {
-        return properties;
-    }
+  public boolean isSingleton() {
+    return false;
+  }
 
-    public void setProperties(Map properties)
-    {
-        this.properties = properties;
-    }
+  public boolean isExternallyManagedLifecycle() {
+    return false;
+  }
 
-    public String getUrl()
-    {
-        return url;
-    }
-
-    public void setUrl(String url)
-    {
-        this.url = url;
-    }
-
-    public Context getContext()
-    {
-        return _context;
-    }
-
-    protected void setContext(Context context)
-    {
-        this._context = context;
-    }
-
-    public void addObjectInitialisationCallback(InitialisationCallback callback)
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public boolean isSingleton()
-    {
-        return false;
-    }
-
-    public boolean isExternallyManagedLifecycle()
-    {
-        return false;
-    }
-
-    public boolean isAutoWireObject()
-    {
-        return true;
-    }
+  public boolean isAutoWireObject() {
+    return true;
+  }
 }

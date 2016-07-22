@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.db.internal.domain.xa;
 
@@ -28,54 +26,49 @@ import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class CompositeDataSourceDecoratorTestCase extends AbstractMuleTestCase
-{
+public class CompositeDataSourceDecoratorTestCase extends AbstractMuleTestCase {
 
-    public static final String DATA_SOURCE_NAME = "name";
-    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
-    private MuleContext mockMuleContext;
-    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
-    private DataSourceDecorator mockFirstDataSourceDecorator;
-    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
-    private DataSourceDecorator mockSecondDataSourceDecorator;
-    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
-    private DataSource mockDataSource;
+  public static final String DATA_SOURCE_NAME = "name";
+  @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+  private MuleContext mockMuleContext;
+  @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+  private DataSourceDecorator mockFirstDataSourceDecorator;
+  @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+  private DataSourceDecorator mockSecondDataSourceDecorator;
+  @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+  private DataSource mockDataSource;
 
-    private CompositeDataSourceDecorator decorator;
+  private CompositeDataSourceDecorator decorator;
 
 
-    @Before
-    public void prepareCompositeDataSourceDecorator()
-    {
-        decorator = new CompositeDataSourceDecorator();
-        when(mockMuleContext.getRegistry().lookupObjects(DataSourceDecorator.class)).thenReturn(getDecoratorMocks());
-        decorator.init(mockMuleContext);
-    }
+  @Before
+  public void prepareCompositeDataSourceDecorator() {
+    decorator = new CompositeDataSourceDecorator();
+    when(mockMuleContext.getRegistry().lookupObjects(DataSourceDecorator.class)).thenReturn(getDecoratorMocks());
+    decorator.init(mockMuleContext);
+  }
 
-    @Test
-    public void appliesStopsAfterFirstPositive()
-    {
-        when(mockFirstDataSourceDecorator.appliesTo(mockDataSource, mockMuleContext)).thenReturn(true);
-        decorator.decorate(mockDataSource, DATA_SOURCE_NAME, null, mockMuleContext);
-        verify(mockFirstDataSourceDecorator).appliesTo(mockDataSource, mockMuleContext);
-        verify(mockSecondDataSourceDecorator, Mockito.never()).appliesTo(mockDataSource, mockMuleContext);
-    }
+  @Test
+  public void appliesStopsAfterFirstPositive() {
+    when(mockFirstDataSourceDecorator.appliesTo(mockDataSource, mockMuleContext)).thenReturn(true);
+    decorator.decorate(mockDataSource, DATA_SOURCE_NAME, null, mockMuleContext);
+    verify(mockFirstDataSourceDecorator).appliesTo(mockDataSource, mockMuleContext);
+    verify(mockSecondDataSourceDecorator, Mockito.never()).appliesTo(mockDataSource, mockMuleContext);
+  }
 
-    @Test
-    public void ifFirstAppliesIsFalseContinueWithNext()
-    {
-        when(mockFirstDataSourceDecorator.appliesTo(mockDataSource, mockMuleContext)).thenReturn(false);
-        decorator.decorate(mockDataSource, DATA_SOURCE_NAME, null, mockMuleContext);
-        verify(mockFirstDataSourceDecorator).appliesTo(mockDataSource, mockMuleContext);
-        verify(mockSecondDataSourceDecorator).appliesTo(mockDataSource, mockMuleContext);
-    }
+  @Test
+  public void ifFirstAppliesIsFalseContinueWithNext() {
+    when(mockFirstDataSourceDecorator.appliesTo(mockDataSource, mockMuleContext)).thenReturn(false);
+    decorator.decorate(mockDataSource, DATA_SOURCE_NAME, null, mockMuleContext);
+    verify(mockFirstDataSourceDecorator).appliesTo(mockDataSource, mockMuleContext);
+    verify(mockSecondDataSourceDecorator).appliesTo(mockDataSource, mockMuleContext);
+  }
 
-    private Collection<DataSourceDecorator> getDecoratorMocks()
-    {
-        List<DataSourceDecorator> decorators = new ArrayList<DataSourceDecorator>();
-        decorators.add(mockSecondDataSourceDecorator);
-        decorators.add(mockFirstDataSourceDecorator);
-        return decorators;
-    }
+  private Collection<DataSourceDecorator> getDecoratorMocks() {
+    List<DataSourceDecorator> decorators = new ArrayList<DataSourceDecorator>();
+    decorators.add(mockSecondDataSourceDecorator);
+    decorators.add(mockFirstDataSourceDecorator);
+    return decorators;
+  }
 
 }

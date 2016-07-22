@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.payload;
 
@@ -13,35 +11,28 @@ import org.mule.runtime.core.api.client.MuleClient;
 
 import static org.junit.Assert.assertEquals;
 
-class CallAndExpectPayloadResult implements CallAndExpect
-{
-    private final MuleContext muleContext;
-    private Object expectedPayloadResult;
-    private String outputEndpointName;
-    private Object payload;
+class CallAndExpectPayloadResult implements CallAndExpect {
+  private final MuleContext muleContext;
+  private Object expectedPayloadResult;
+  private String outputEndpointName;
+  private Object payload;
 
-    public CallAndExpectPayloadResult(String outputEndpointName,
-                                      Object payload,
-                                      Object expectedPayloadResult,
-                                      MuleContext muleContext)
-    {
-        this.expectedPayloadResult = expectedPayloadResult;
-        this.outputEndpointName = outputEndpointName;
-        this.payload = payload;
-        this.muleContext = muleContext;
-    }
+  public CallAndExpectPayloadResult(String outputEndpointName, Object payload, Object expectedPayloadResult, MuleContext muleContext) {
+    this.expectedPayloadResult = expectedPayloadResult;
+    this.outputEndpointName = outputEndpointName;
+    this.payload = payload;
+    this.muleContext = muleContext;
+  }
 
-    @Override
-    public void callEndpointAndExecuteAsserts() throws MuleException
-    {
-        MuleClient client = muleContext.getClient();
-        MuleMessage result = client.send(outputEndpointName, payload, null);
+  @Override
+  public void callEndpointAndExecuteAsserts() throws MuleException {
+    MuleClient client = muleContext.getClient();
+    MuleMessage result = client.send(outputEndpointName, payload, null);
 
-        assertEquals(here(), expectedPayloadResult, result.getPayload());
-    }
+    assertEquals(here(), expectedPayloadResult, result.getPayload());
+  }
 
-    private String here()
-    {
-        return "In [" + outputEndpointName + "," + payload + "," + expectedPayloadResult + "]";
-    }
+  private String here() {
+    return "In [" + outputEndpointName + "," + payload + "," + expectedPayloadResult + "]";
+  }
 }

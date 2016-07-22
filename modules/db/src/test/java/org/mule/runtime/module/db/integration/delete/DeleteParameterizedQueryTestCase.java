@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.delete;
@@ -21,33 +19,28 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mule.runtime.module.db.integration.model.Planet.VENUS;
 
-public class DeleteParameterizedQueryTestCase extends AbstractDbIntegrationTestCase
-{
+public class DeleteParameterizedQueryTestCase extends AbstractDbIntegrationTestCase {
 
-    public DeleteParameterizedQueryTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
-    }
+  public DeleteParameterizedQueryTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
+    super(dataSourceConfigResource, testDatabase);
+  }
 
-    @Parameterized.Parameters
-    public static List<Object[]> parameters()
-    {
-        return TestDbConfig.getResources();
-    }
+  @Parameterized.Parameters
+  public static List<Object[]> parameters() {
+    return TestDbConfig.getResources();
+  }
 
-    @Override
-    protected String[] getFlowConfigurationResources()
-    {
-        return new String[] {"integration/delete/delete-parameterized-query-config.xml"};
-    }
+  @Override
+  protected String[] getFlowConfigurationResources() {
+    return new String[] {"integration/delete/delete-parameterized-query-config.xml"};
+  }
 
-    @Test
-    public void usesParameterizedQuery() throws Exception
-    {
-        final MuleEvent responseEvent = flowRunner("deleteParameterizedQuery").withPayload(VENUS.getName()).run();
+  @Test
+  public void usesParameterizedQuery() throws Exception {
+    final MuleEvent responseEvent = flowRunner("deleteParameterizedQuery").withPayload(VENUS.getName()).run();
 
-        final MuleMessage response = responseEvent.getMessage();
-        assertThat(response.getPayload(), equalTo(1));
-        assertDeletedPlanetRecords(VENUS.getName());
-    }
+    final MuleMessage response = responseEvent.getMessage();
+    assertThat(response.getPayload(), equalTo(1));
+    assertDeletedPlanetRecords(VENUS.getName());
+  }
 }

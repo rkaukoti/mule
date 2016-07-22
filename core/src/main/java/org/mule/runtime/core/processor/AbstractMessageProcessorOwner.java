@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor;
 
@@ -26,37 +24,31 @@ import javax.xml.namespace.QName;
  * An object that owns message processors and delegates startup/shutdown events to them.
  */
 public abstract class AbstractMessageProcessorOwner extends AbstractMuleObjectOwner<MessageProcessor>
-        implements Lifecycle, MuleContextAware, FlowConstructAware, AnnotatedObject, MessageProcessorContainer
-{
-    private final Map<QName, Object> annotations = new ConcurrentHashMap<QName, Object>();
+    implements Lifecycle, MuleContextAware, FlowConstructAware, AnnotatedObject, MessageProcessorContainer {
+  private final Map<QName, Object> annotations = new ConcurrentHashMap<QName, Object>();
 
-    public final Object getAnnotation(QName name)
-    {
-        return annotations.get(name);
-    }
+  public final Object getAnnotation(QName name) {
+    return annotations.get(name);
+  }
 
-    public final Map<QName, Object> getAnnotations()
-    {
-        return Collections.unmodifiableMap(annotations);
-    }
+  public final Map<QName, Object> getAnnotations() {
+    return Collections.unmodifiableMap(annotations);
+  }
 
-    public synchronized final void setAnnotations(Map<QName, Object> newAnnotations)
-    {
-        annotations.clear();
-        annotations.putAll(newAnnotations);
-    }
+  public synchronized final void setAnnotations(Map<QName, Object> newAnnotations) {
+    annotations.clear();
+    annotations.putAll(newAnnotations);
+  }
 
-    protected List<MessageProcessor> getOwnedObjects()
-    {
-        return getOwnedMessageProcessors();
-    }
+  protected List<MessageProcessor> getOwnedObjects() {
+    return getOwnedMessageProcessors();
+  }
 
-    protected abstract List<MessageProcessor> getOwnedMessageProcessors();
+  protected abstract List<MessageProcessor> getOwnedMessageProcessors();
 
-    @Override
-    public void addMessageProcessorPathElements(MessageProcessorPathElement pathElement)
-    {
-        NotificationUtils.addMessageProcessorPathElements(getOwnedMessageProcessors(), pathElement);
-    }
+  @Override
+  public void addMessageProcessorPathElements(MessageProcessorPathElement pathElement) {
+    NotificationUtils.addMessageProcessorPathElements(getOwnedMessageProcessors(), pathElement);
+  }
 }
 

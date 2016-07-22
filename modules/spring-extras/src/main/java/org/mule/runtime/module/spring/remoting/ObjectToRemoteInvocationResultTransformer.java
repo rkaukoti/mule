@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.spring.remoting;
 
@@ -19,44 +17,34 @@ import java.nio.charset.Charset;
  * Converts an Object to a Spring RemoteInvocationResult and then into a byte[].
  */
 
-public class ObjectToRemoteInvocationResultTransformer extends AbstractTransformer
-{
-    public ObjectToRemoteInvocationResultTransformer()
-    {
-        super();
-        setReturnDataType(DataType.BYTE_ARRAY);
+public class ObjectToRemoteInvocationResultTransformer extends AbstractTransformer {
+  public ObjectToRemoteInvocationResultTransformer() {
+    super();
+    setReturnDataType(DataType.BYTE_ARRAY);
+  }
+
+  @Override
+  protected Object doTransform(Object src, Charset outputEncoding) throws TransformerException {
+    try {
+      if (logger.isDebugEnabled()) {
+        logger.debug("ObjectToRemoteInvocationResult.doTransform(" + src + ")");
+      }
+
+      RemoteInvocationResult rval;
+
+      if (src instanceof RemoteInvocationResult) {
+        rval = (RemoteInvocationResult) src;
+      } else {
+        rval = new RemoteInvocationResult(src);
+      }
+
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      ObjectOutputStream oos = new ObjectOutputStream(baos);
+      oos.writeObject(rval);
+      oos.close();
+      return baos.toByteArray();
+    } catch (Exception e) {
+      throw new TransformerException(this, e);
     }
-
-    @Override
-    protected Object doTransform(Object src, Charset outputEncoding) throws TransformerException
-    {
-        try
-        {
-            if (logger.isDebugEnabled())
-            {
-                logger.debug("ObjectToRemoteInvocationResult.doTransform(" + src + ")");
-            }
-
-            RemoteInvocationResult rval;
-
-            if (src instanceof RemoteInvocationResult)
-            {
-                rval = (RemoteInvocationResult) src;
-            }
-            else
-            {
-                rval = new RemoteInvocationResult(src);
-            }
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(rval);
-            oos.close();
-            return baos.toByteArray();
-        }
-        catch (Exception e)
-        {
-            throw new TransformerException(this, e);
-        }
-    }
+  }
 }

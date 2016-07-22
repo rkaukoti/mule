@@ -1,39 +1,35 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.mbean;
 
 /**
- * <code>MuleConfigurationServiceMBean</code> is a JMx service interface for the
- * Mule server configuration. This is read-only after start-up
+ * <code>MuleConfigurationServiceMBean</code> is a JMx service interface for the Mule server configuration. This is read-only after start-up
  */
-public interface MuleConfigurationServiceMBean
-{
-    String DEFAULT_JMX_NAME = "name=Configuration";
+public interface MuleConfigurationServiceMBean {
+  String DEFAULT_JMX_NAME = "name=Configuration";
 
-    int getSynchronousEventTimeout();
+  int getSynchronousEventTimeout();
 
-    String getWorkingDirectory();
+  String getWorkingDirectory();
 
-    int getTransactionTimeout();
+  int getTransactionTimeout();
 
-    int getShutdownTimeout();
+  int getShutdownTimeout();
 
-    String getEncoding();
+  String getEncoding();
 
-    boolean isContainerMode();
+  boolean isContainerMode();
 
-    boolean isFullStackTraces();
+  boolean isFullStackTraces();
 
-    void setFullStackTraces(boolean sanitize);
+  void setFullStackTraces(boolean sanitize);
 
-    String getStackTraceFilter();
+  String getStackTraceFilter();
 
-    /**
-     * Comma-separated list of packages and/or classes to remove.
-     */
-    void setStackTraceFilter(String filterAsString);
+  /**
+   * Comma-separated list of packages and/or classes to remove.
+   */
+  void setStackTraceFilter(String filterAsString);
 }

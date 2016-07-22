@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.capability.xml.schema.builder;
 
@@ -28,74 +26,65 @@ import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.MUL
 import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.UNBOUNDED;
 
 /**
- * Builder delegation class to generate a XSD schema that describes a
- * {@link ConnectionProviderModel}
+ * Builder delegation class to generate a XSD schema that describes a {@link ConnectionProviderModel}
  *
  * @since 4.0.0
  */
-final class ConnectionProviderSchemaDelegate
-{
+final class ConnectionProviderSchemaDelegate {
 
-    private final ObjectFactory objectFactory = new ObjectFactory();
-    private final SchemaBuilder builder;
-    private final ClassTypeLoader typeLoader = ExtensionsTypeLoaderFactory.getDefault().createTypeLoader();
+  private final ObjectFactory objectFactory = new ObjectFactory();
+  private final SchemaBuilder builder;
+  private final ClassTypeLoader typeLoader = ExtensionsTypeLoaderFactory.getDefault().createTypeLoader();
 
-    public ConnectionProviderSchemaDelegate(SchemaBuilder builder)
-    {
-        this.builder = builder;
-    }
+  public ConnectionProviderSchemaDelegate(SchemaBuilder builder) {
+    this.builder = builder;
+  }
 
-    public void registerConnectionProviderElement(ConnectionProviderModel providerModel)
-    {
-        Element providerElement = new TopLevelElement();
-        providerElement.setName(providerModel.getName());
-        providerElement.setSubstitutionGroup(MULE_EXTENSION_CONNECTION_PROVIDER_ELEMENT);
+  public void registerConnectionProviderElement(ConnectionProviderModel providerModel) {
+    Element providerElement = new TopLevelElement();
+    providerElement.setName(providerModel.getName());
+    providerElement.setSubstitutionGroup(MULE_EXTENSION_CONNECTION_PROVIDER_ELEMENT);
 
-        LocalComplexType complexType = new LocalComplexType();
-        providerElement.setComplexType(complexType);
+    LocalComplexType complexType = new LocalComplexType();
+    providerElement.setComplexType(complexType);
 
-        ExtensionType providerType = new ExtensionType();
-        providerType.setBase(MULE_EXTENSION_CONNECTION_PROVIDER_TYPE);
+    ExtensionType providerType = new ExtensionType();
+    providerType.setBase(MULE_EXTENSION_CONNECTION_PROVIDER_TYPE);
 
-        ComplexContent complexContent = new ComplexContent();
-        complexContent.setExtension(providerType);
-        complexType.setComplexContent(complexContent);
+    ComplexContent complexContent = new ComplexContent();
+    complexContent.setExtension(providerType);
+    complexType.setComplexContent(complexContent);
 
-        builder.getSchema().getSimpleTypeOrComplexTypeOrGroup().add(providerElement);
+    builder.getSchema().getSimpleTypeOrComplexTypeOrGroup().add(providerElement);
 
-        final ExplicitGroup choice = new ExplicitGroup();
-        choice.setMinOccurs(ZERO);
-        choice.setMaxOccurs(UNBOUNDED);
+    final ExplicitGroup choice = new ExplicitGroup();
+    choice.setMinOccurs(ZERO);
+    choice.setMaxOccurs(UNBOUNDED);
 
-        providerModel.getModelProperty(ConnectionHandlingTypeModelProperty.class).ifPresent(connectionHandlingType ->
-        {
-            if (connectionHandlingType.isPooled() || connectionHandlingType.isCached())
-            {
-                addValidationFlag(providerType);
-                builder.addRetryPolicy(choice);
-            }
-            if (connectionHandlingType.isPooled())
-            {
-                addConnectionProviderPoolingProfile(choice, providerModel);
-            }
-        });
+    providerModel.getModelProperty(ConnectionHandlingTypeModelProperty.class).ifPresent(connectionHandlingType -> {
+      if (connectionHandlingType.isPooled() || connectionHandlingType.isCached()) {
+        addValidationFlag(providerType);
+        builder.addRetryPolicy(choice);
+      }
+      if (connectionHandlingType.isPooled()) {
+        addConnectionProviderPoolingProfile(choice, providerModel);
+      }
+    });
 
-        builder.registerParameters(providerType, choice, providerModel.getParameterModels());
-    }
+    builder.registerParameters(providerType, choice, providerModel.getParameterModels());
+  }
 
-    private void addConnectionProviderPoolingProfile(ExplicitGroup choice, ConnectionProviderModel providerModel)
-    {
-        PoolingSupport poolingSupport = providerModel.getModelProperty(ConnectionHandlingTypeModelProperty.class).get().getPoolingSupport();
-        TopLevelElement objectElement = builder.createRefElement(MULE_POOLING_PROFILE_TYPE, poolingSupport == PoolingSupport.REQUIRED);
+  private void addConnectionProviderPoolingProfile(ExplicitGroup choice, ConnectionProviderModel providerModel) {
+    PoolingSupport poolingSupport = providerModel.getModelProperty(ConnectionHandlingTypeModelProperty.class).get().getPoolingSupport();
+    TopLevelElement objectElement = builder.createRefElement(MULE_POOLING_PROFILE_TYPE, poolingSupport == PoolingSupport.REQUIRED);
 
-        choice.getParticle().add(objectFactory.createElement(objectElement));
-    }
+    choice.getParticle().add(objectFactory.createElement(objectElement));
+  }
 
-    private void addValidationFlag(ExtensionType providerType)
-    {
-        providerType.getAttributeOrAttributeGroup()
-                    .add(builder.createAttribute(DISABLE_VALIDATION, typeLoader.load(boolean.class), false, NOT_SUPPORTED));
-    }
+  private void addValidationFlag(ExtensionType providerType) {
+    providerType.getAttributeOrAttributeGroup()
+        .add(builder.createAttribute(DISABLE_VALIDATION, typeLoader.load(boolean.class), false, NOT_SUPPORTED));
+  }
 
 
 }

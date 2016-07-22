@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection;
 
@@ -35,42 +33,38 @@ import static org.mule.test.vegan.extension.VeganExtension.APPLE;
 import static org.mule.test.vegan.extension.VeganExtension.BANANA;
 
 @SmallTest
-public class DefaultExtensionFactoryTestCase extends AbstractMuleTestCase
-{
+public class DefaultExtensionFactoryTestCase extends AbstractMuleTestCase {
 
-    private final ExtensionFactory extensionFactory = new DefaultExtensionFactory(new SpiServiceRegistry(), getClass().getClassLoader());
-    private ExtensionModel extensionModel;
+  private final ExtensionFactory extensionFactory = new DefaultExtensionFactory(new SpiServiceRegistry(), getClass().getClassLoader());
+  private ExtensionModel extensionModel;
 
-    @Before
-    public void before()
-    {
-        Describer describer = new AnnotationsBasedDescriber(VeganExtension.class, new StaticVersionResolver(getProductVersion()));
-        final DescribingContext context = new DefaultDescribingContext(getClass().getClassLoader());
-        extensionModel = extensionFactory.createFrom(describer.describe(context), context);
-    }
+  @Before
+  public void before() {
+    Describer describer = new AnnotationsBasedDescriber(VeganExtension.class, new StaticVersionResolver(getProductVersion()));
+    final DescribingContext context = new DefaultDescribingContext(getClass().getClassLoader());
+    extensionModel = extensionFactory.createFrom(describer.describe(context), context);
+  }
 
-    @Test
-    public void flyweight()
-    {
-        final ConfigurationModel appleConfiguration = aggresiveGet(extensionModel.getConfigurationModel(APPLE));
-        final ConfigurationModel bananaConfiguration = aggresiveGet(extensionModel.getConfigurationModel(BANANA));
+  @Test
+  public void flyweight() {
+    final ConfigurationModel appleConfiguration = aggresiveGet(extensionModel.getConfigurationModel(APPLE));
+    final ConfigurationModel bananaConfiguration = aggresiveGet(extensionModel.getConfigurationModel(BANANA));
 
-        final String sourceName = PaulMcCartneySource.class.getSimpleName();
-        SourceModel appleSource = aggresiveGet(appleConfiguration.getSourceModel(sourceName));
-        SourceModel bananaSource = aggresiveGet(bananaConfiguration.getSourceModel(sourceName));
+    final String sourceName = PaulMcCartneySource.class.getSimpleName();
+    SourceModel appleSource = aggresiveGet(appleConfiguration.getSourceModel(sourceName));
+    SourceModel bananaSource = aggresiveGet(bananaConfiguration.getSourceModel(sourceName));
 
-        assertThat(appleSource, is(sameInstance(appleSource)));
-        assertThat(bananaSource, is(sameInstance(bananaSource)));
+    assertThat(appleSource, is(sameInstance(appleSource)));
+    assertThat(bananaSource, is(sameInstance(bananaSource)));
 
-        final String operationName = "spreadTheWord";
-        OperationModel appleOperation = aggresiveGet(appleConfiguration.getOperationModel(operationName));
-        OperationModel bananaOperation = aggresiveGet(bananaConfiguration.getOperationModel(operationName));
+    final String operationName = "spreadTheWord";
+    OperationModel appleOperation = aggresiveGet(appleConfiguration.getOperationModel(operationName));
+    OperationModel bananaOperation = aggresiveGet(bananaConfiguration.getOperationModel(operationName));
 
-        assertThat(appleOperation, is(sameInstance(bananaOperation)));
-    }
+    assertThat(appleOperation, is(sameInstance(bananaOperation)));
+  }
 
-    private <T> T aggresiveGet(Optional<T> optional)
-    {
-        return optional.orElseThrow(() -> new NoSuchElementException());
-    }
+  private <T> T aggresiveGet(Optional<T> optional) {
+    return optional.orElseThrow(() -> new NoSuchElementException());
+  }
 }

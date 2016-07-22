@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -16,31 +14,28 @@ import org.mule.tck.junit4.rule.DynamicPort;
 
 import static org.junit.Assert.assertEquals;
 
-public class HttpPatchTestCase extends FunctionalTestCase
-{
-    private static final String REQUEST = "{ \"name\" : \"alan\" }";
+public class HttpPatchTestCase extends FunctionalTestCase {
+  private static final String REQUEST = "{ \"name\" : \"alan\" }";
 
-    @Rule
-    public DynamicPort port = new DynamicPort("port");
+  @Rule
+  public DynamicPort port = new DynamicPort("port");
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "mule-http-patch.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "mule-http-patch.xml";
+  }
 
-    @Test
-    public void patchBodyShouldBeEchoed() throws Exception
-    {
-        String url = String.format("http://localhost:%d/httpPatch", port.getNumber());
-        PatchMethod patch = new PatchMethod(url);
+  @Test
+  public void patchBodyShouldBeEchoed() throws Exception {
+    String url = String.format("http://localhost:%d/httpPatch", port.getNumber());
+    PatchMethod patch = new PatchMethod(url);
 
-        RequestEntity requestEntity = new StringRequestEntity(REQUEST, "text/plain", "UTF-8");
-        patch.setRequestEntity(requestEntity);
+    RequestEntity requestEntity = new StringRequestEntity(REQUEST, "text/plain", "UTF-8");
+    patch.setRequestEntity(requestEntity);
 
-        new HttpClient().executeMethod(patch);
+    new HttpClient().executeMethod(patch);
 
-        String response = patch.getResponseBodyAsString();
-        assertEquals(REQUEST, response);
-    }
+    String response = patch.getResponseBodyAsString();
+    assertEquals(REQUEST, response);
+  }
 }

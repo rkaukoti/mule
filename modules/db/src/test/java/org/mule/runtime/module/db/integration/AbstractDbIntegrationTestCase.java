@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration;
@@ -30,111 +28,94 @@ import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
 import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
 
 @RunWith(Parameterized.class)
-public abstract class AbstractDbIntegrationTestCase extends FunctionalTestCase
-{
+public abstract class AbstractDbIntegrationTestCase extends FunctionalTestCase {
 
-    protected final AbstractTestDatabase testDatabase;
-    private final String dataSourceConfigResource;
+  protected final AbstractTestDatabase testDatabase;
+  private final String dataSourceConfigResource;
 
-    public AbstractDbIntegrationTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        this.dataSourceConfigResource = dataSourceConfigResource;
-        this.testDatabase = testDatabase;
+  public AbstractDbIntegrationTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
+    this.dataSourceConfigResource = dataSourceConfigResource;
+    this.testDatabase = testDatabase;
+  }
+
+  @Before
+  public void configDB() throws SQLException {
+    testDatabase.createDefaultDatabaseConfig(getDefaultDataSource());
+  }
+
+  protected DataSource getDefaultDataSource() {
+    DbConfigResolver dbConfigResolver = muleContext.getRegistry().get("dbConfig");
+    DbConfig config = resolveConfig(dbConfigResolver);
+
+    return config.getDataSource();
+  }
+
+  protected DbConfig resolveConfig(DbConfigResolver dbConfigResolver) {
+    return dbConfigResolver.resolve(null);
+  }
+
+  @Override
+  protected final String[] getConfigFiles() {
+    StringBuilder builder = new StringBuilder();
+
+    builder.append(getDatasourceConfigurationResource());
+
+    for (String resource : getFlowConfigurationResources()) {
+      if (builder.length() != 0) {
+        builder.append(",");
+      }
+
+      builder.append(resource);
     }
 
-    @Before
-    public void configDB() throws SQLException
-    {
-        testDatabase.createDefaultDatabaseConfig(getDefaultDataSource());
+    return builder.toString().split(",");
+  }
+
+  protected final String getDatasourceConfigurationResource() {
+    return dataSourceConfigResource;
+  }
+
+  protected abstract String[] getFlowConfigurationResources();
+
+  protected void assertPlanetRecordsFromQuery(String... names) throws SQLException {
+    if (names.length == 0) {
+      throw new IllegalArgumentException("Must provide at least a name to query on the DB");
     }
 
-    protected DataSource getDefaultDataSource()
-    {
-        DbConfigResolver dbConfigResolver = muleContext.getRegistry().get("dbConfig");
-        DbConfig config = resolveConfig(dbConfigResolver);
+    StringBuilder conditionBuilder = new StringBuilder();
+    List<Record> records = new ArrayList<Record>(names.length);
 
-        return config.getDataSource();
+    for (String name : names) {
+      if (conditionBuilder.length() != 0) {
+        conditionBuilder.append(",");
+      }
+      conditionBuilder.append("'").append(name).append("'");
+      records.add(new Record(new Field("NAME", name)));
     }
 
-    protected DbConfig resolveConfig(DbConfigResolver dbConfigResolver)
-    {
-        return dbConfigResolver.resolve(null);
+    List<Map<String, String>> result =
+        selectData(String.format("select * from PLANET where name in (%s)", conditionBuilder.toString()), getDefaultDataSource());
+
+    assertRecords(result, records.toArray(new Record[0]));
+  }
+
+  protected void assertDeletedPlanetRecords(String... names) throws SQLException {
+    if (names.length == 0) {
+      throw new IllegalArgumentException("Must provide at least a name to query on the DB");
     }
 
-    @Override
-    protected final String[] getConfigFiles()
-    {
-        StringBuilder builder = new StringBuilder();
+    StringBuilder conditionBuilder = new StringBuilder();
 
-        builder.append(getDatasourceConfigurationResource());
-
-        for (String resource : getFlowConfigurationResources())
-        {
-            if (builder.length() != 0)
-            {
-                builder.append(",");
-            }
-
-            builder.append(resource);
-        }
-
-        return builder.toString().split(",");
+    for (String name : names) {
+      if (conditionBuilder.length() != 0) {
+        conditionBuilder.append(",");
+      }
+      conditionBuilder.append("'").append(name).append("'");
     }
 
-    protected final String getDatasourceConfigurationResource()
-    {
-        return dataSourceConfigResource;
-    }
-
-    protected abstract String[] getFlowConfigurationResources();
-
-    protected void assertPlanetRecordsFromQuery(String... names) throws SQLException
-    {
-        if (names.length == 0)
-        {
-            throw new IllegalArgumentException("Must provide at least a name to query on the DB");
-        }
-
-        StringBuilder conditionBuilder = new StringBuilder();
-        List<Record> records = new ArrayList<Record>(names.length);
-
-        for (String name : names)
-        {
-            if (conditionBuilder.length() != 0)
-            {
-                conditionBuilder.append(",");
-            }
-            conditionBuilder.append("'").append(name).append("'");
-            records.add(new Record(new Field("NAME", name)));
-        }
-
-        List<Map<String, String>> result =
-                selectData(String.format("select * from PLANET where name in (%s)", conditionBuilder.toString()), getDefaultDataSource());
-
-        assertRecords(result, records.toArray(new Record[0]));
-    }
-
-    protected void assertDeletedPlanetRecords(String... names) throws SQLException
-    {
-        if (names.length == 0)
-        {
-            throw new IllegalArgumentException("Must provide at least a name to query on the DB");
-        }
-
-        StringBuilder conditionBuilder = new StringBuilder();
-
-        for (String name : names)
-        {
-            if (conditionBuilder.length() != 0)
-            {
-                conditionBuilder.append(",");
-            }
-            conditionBuilder.append("'").append(name).append("'");
-        }
-
-        List<Map<String, String>> result =
-                selectData(String.format("select * from PLANET where name in (%s)", conditionBuilder.toString()), getDefaultDataSource());
-        assertThat(result.size(), equalTo(0));
-    }
+    List<Map<String, String>> result =
+        selectData(String.format("select * from PLANET where name in (%s)", conditionBuilder.toString()), getDefaultDataSource());
+    assertThat(result.size(), equalTo(0));
+  }
 
 }

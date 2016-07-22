@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.json.transformers;
 
@@ -34,62 +32,50 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 /**
  * Convert Json to Json using XSLT
  */
-public class JsonXsltTransformer extends XsltTransformer
-{
-    public JsonXsltTransformer()
-    {
-        this.registerSourceType(DataType.STRING);
-        this.registerSourceType(DataType.INPUT_STREAM);
-        this.registerSourceType(DataType.BYTE_ARRAY);
-        this.registerSourceType(DataType.fromType(Reader.class));
-        this.registerSourceType(DataType.fromType(URL.class));
-        this.registerSourceType(DataType.fromType(File.class));
-        setReturnDataType(DataType.XML_STRING);
+public class JsonXsltTransformer extends XsltTransformer {
+  public JsonXsltTransformer() {
+    this.registerSourceType(DataType.STRING);
+    this.registerSourceType(DataType.INPUT_STREAM);
+    this.registerSourceType(DataType.BYTE_ARRAY);
+    this.registerSourceType(DataType.fromType(Reader.class));
+    this.registerSourceType(DataType.fromType(URL.class));
+    this.registerSourceType(DataType.fromType(File.class));
+    setReturnDataType(DataType.XML_STRING);
 
-        setXslTransformerFactory(TransformerInputs.getPreferredTransactionFactoryClassname());
+    setXslTransformerFactory(TransformerInputs.getPreferredTransactionFactoryClassname());
+  }
+
+  /**
+   * run a JSON to JSON XSLT transformationn XML string
+   */
+  @Override
+  public Object transformMessage(MuleEvent event, Charset enc) throws TransformerException {
+    XMLInputFactory inputFactory = new JsonXMLInputFactory();
+    inputFactory.setProperty(JsonXMLInputFactory.PROP_MULTIPLE_PI, false);
+    TransformerInputs inputs = new TransformerInputs(this, event.getMessage().getPayload());
+    Source source;
+    try {
+      if (inputs.getInputStream() != null) {
+        source = new StAXSource(inputFactory.createXMLStreamReader(inputs.getInputStream(), enc == null ? UTF_8.name() : enc.name()));
+      } else {
+        source = new StAXSource(inputFactory.createXMLStreamReader(inputs.getReader()));
+      }
+
+      XMLOutputFactory outputFactory = new JsonXMLOutputFactory();
+      outputFactory.setProperty(JsonXMLOutputFactory.PROP_AUTO_ARRAY, true);
+      outputFactory.setProperty(JsonXMLOutputFactory.PROP_PRETTY_PRINT, true);
+      StringWriter writer = new StringWriter();
+      XMLStreamWriter output = outputFactory.createXMLStreamWriter(writer);
+      Result result = new StAXResult(output);
+
+      doTransform(event, enc, source, result);
+      return writer.toString();
+    } catch (Exception ex) {
+      throw new TransformerException(this, ex);
+    } finally {
+      IOUtils.closeQuietly(inputs.getInputStream());
+      IOUtils.closeQuietly(inputs.getReader());
     }
-
-    /**
-     * run a JSON to JSON XSLT transformationn XML string
-     */
-    @Override
-    public Object transformMessage(MuleEvent event, Charset enc) throws TransformerException
-    {
-        XMLInputFactory inputFactory = new JsonXMLInputFactory();
-        inputFactory.setProperty(JsonXMLInputFactory.PROP_MULTIPLE_PI, false);
-        TransformerInputs inputs = new TransformerInputs(this, event.getMessage().getPayload());
-        Source source;
-        try
-        {
-            if (inputs.getInputStream() != null)
-            {
-                source = new StAXSource(
-                        inputFactory.createXMLStreamReader(inputs.getInputStream(), enc == null ? UTF_8.name() : enc.name()));
-            }
-            else
-            {
-                source = new StAXSource(inputFactory.createXMLStreamReader(inputs.getReader()));
-            }
-
-            XMLOutputFactory outputFactory = new JsonXMLOutputFactory();
-            outputFactory.setProperty(JsonXMLOutputFactory.PROP_AUTO_ARRAY, true);
-            outputFactory.setProperty(JsonXMLOutputFactory.PROP_PRETTY_PRINT, true);
-            StringWriter writer = new StringWriter();
-            XMLStreamWriter output = outputFactory.createXMLStreamWriter(writer);
-            Result result = new StAXResult(output);
-
-            doTransform(event, enc, source, result);
-            return writer.toString();
-        }
-        catch (Exception ex)
-        {
-            throw new TransformerException(this, ex);
-        }
-        finally
-        {
-            IOUtils.closeQuietly(inputs.getInputStream());
-            IOUtils.closeQuietly(inputs.getReader());
-        }
-    }
+  }
 
 }

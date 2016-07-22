@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core;
 
@@ -10,49 +8,41 @@ import java.io.ObjectStreamException;
 import java.io.Serializable;
 
 // @Immutable
-public final class VoidResult implements Serializable
-{
-    /**
-     * Serial version
-     */
-    private static final long serialVersionUID = -3828573682818093673L;
+public final class VoidResult implements Serializable {
+  /**
+   * Serial version
+   */
+  private static final long serialVersionUID = -3828573682818093673L;
 
-    private VoidResult()
-    {
-        super();
-    }
+  private VoidResult() {
+    super();
+  }
 
-    public static VoidResult getInstance()
-    {
-        return VoidResultHolder.instance;
-    }
+  public static VoidResult getInstance() {
+    return VoidResultHolder.instance;
+  }
 
-    private Object readResolve() throws ObjectStreamException
-    {
-        return VoidResultHolder.instance;
-    }
+  private Object readResolve() throws ObjectStreamException {
+    return VoidResultHolder.instance;
+  }
 
-    @Override
-    public boolean equals(Object obj)
-    {
-        return obj instanceof VoidResult;
-    }
+  @Override
+  public boolean equals(Object obj) {
+    return obj instanceof VoidResult;
+  }
 
-    @Override
-    public int hashCode()
-    {
-        return 0;
-    }
+  @Override
+  public int hashCode() {
+    return 0;
+  }
 
-    @Override
-    public String toString()
-    {
-        return "{VoidResult}";
-    }
+  @Override
+  public String toString() {
+    return "{VoidResult}";
+  }
 
-    private static class VoidResultHolder
-    {
-        private static final VoidResult instance = new VoidResult();
-    }
+  private static class VoidResultHolder {
+    private static final VoidResult instance = new VoidResult();
+  }
 
 }

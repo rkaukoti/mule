@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.junit4.runners;
 
@@ -47,8 +45,8 @@ import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
  * See {@link RunnerDelegateTo} for those scenarios where another JUnit runner needs to be used but still the test has to be executed within
  * an isolated class loading model. {@link ArtifactClassLoaderRunnerConfig} allows to define the Extensions to be discovered in the
  * classpath, for each Extension a plugin class loader would be created. {@link PluginClassLoadersAware} allows the test to be injected with
- * the list of {@link ClassLoader}s that were created for each plugin, mostly used in {@link org.mule.functional.junit4.ArtifactFunctionalTestCase}
- * in order to register the extensions.
+ * the list of {@link ClassLoader}s that were created for each plugin, mostly used in
+ * {@link org.mule.functional.junit4.ArtifactFunctionalTestCase} in order to register the extensions.
  * <p/>
  * The class loading model is built by doing a classification of the ClassPath URLs loaded by IDEs and surfire-maven-plugin. The
  * classification bases its logic by reading the dependency tree graph generated with depgraph-maven-plugin. It goes over the tree to select
@@ -66,161 +64,137 @@ import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
  * Only one instance of the {@link ClassLoader} is created and used for running all the tests classes that are marked to run with this
  * {@link Runner} due to creating the {@link ClassLoader} requires time and has impact when running tests.
  * <p/>
- * A best practice is to a base abstract class for your module tests that extends {@link org.mule.functional.junit4.ArtifactFunctionalTestCase}
- * and defines if needed anything related to the configuration with this annotation that will be applied to all the tests that are being
- * executed for the same VM.
+ * A best practice is to a base abstract class for your module tests that extends
+ * {@link org.mule.functional.junit4.ArtifactFunctionalTestCase} and defines if needed anything related to the configuration with this
+ * annotation that will be applied to all the tests that are being executed for the same VM.
  *
  * @since 4.0
  */
-public class ArtifactClassLoaderRunner extends Runner implements Filterable
-{
-    private static ClassLoaderTestRunner classLoaderTestRunner;
-    private static boolean pluginClassLoadersInjected = false;
-    private final Runner delegate;
+public class ArtifactClassLoaderRunner extends Runner implements Filterable {
+  private static ClassLoaderTestRunner classLoaderTestRunner;
+  private static boolean pluginClassLoadersInjected = false;
+  private final Runner delegate;
 
-    /**
-     * Creates a Runner to run {@code klass}
-     *
-     * @throws Throwable if there was an error while initializing the runner.
-     */
-    public ArtifactClassLoaderRunner(Class<?> clazz, RunnerBuilder builder) throws Throwable
-    {
-        if (classLoaderTestRunner == null)
-        {
-            classLoaderTestRunner = createClassLoaderTestRunner(clazz);
-        }
-
-        final Class<?> isolatedTestClass = getTestClass(clazz);
-
-        final Class<? extends Annotation> runnerDelegateToClass =
-                (Class<? extends Annotation>) classLoaderTestRunner.loadClassWithApplicationClassLoader(RunnerDelegateTo.class.getName());
-
-        final AnnotatedBuilder annotatedBuilder = new AnnotatedBuilder(builder);
-        delegate = annotatedBuilder.buildRunner(getAnnotationAttributeFrom(isolatedTestClass, runnerDelegateToClass, "value"),
-                isolatedTestClass);
-
-        if (!pluginClassLoadersInjected)
-        {
-            injectPluginsClassLoaders(classLoaderTestRunner, isolatedTestClass);
-            pluginClassLoadersInjected = true;
-        }
+  /**
+   * Creates a Runner to run {@code klass}
+   *
+   * @throws Throwable if there was an error while initializing the runner.
+   */
+  public ArtifactClassLoaderRunner(Class<?> clazz, RunnerBuilder builder) throws Throwable {
+    if (classLoaderTestRunner == null) {
+      classLoaderTestRunner = createClassLoaderTestRunner(clazz);
     }
 
-    /**
-     * Creates the {@link ClassLoaderTestRunner} with the isolated class loaders.
-     *
-     * @param klass the test class being executed
-     * @return creates a {@link ClassLoaderTestRunner} that would be used to run the test. This way the test will be isolated and it will
-     * behave similar as an application running in a Mule standalone container.
-     * @throws IOException if an error happened while reading {@link org.mule.functional.classloading.isolation.utils.RunnerModuleUtils#EXCLUDED_PROPERTIES_FILE}
-     *                     file
-     */
-    private static ClassLoaderTestRunner createClassLoaderTestRunner(Class<?> klass) throws IOException
-    {
-        // Initializes utility classes
-        ClassPathUrlProvider classPathUrlsProvider = new ClassPathUrlProvider();
-        MavenDependenciesResolver mavenDependenciesResolver = new DependencyGraphMavenDependenciesResolver();
-        MavenMultiModuleArtifactMapping mavenMultiModuleArtifactMapping = new MuleMavenMultiModuleArtifactMapping();
-        MuleClassLoaderRunnerFactory classLoaderRunnerFactory = new MuleClassLoaderRunnerFactory();
-        ClassPathClassifier classPathClassifier = new MuleClassPathClassifier();
+    final Class<?> isolatedTestClass = getTestClass(clazz);
 
-        // Does the classification and creation of the isolated ClassLoader
-        ClassPathClassifierContext context = new ClassPathClassifierContext(klass, classPathUrlsProvider.getURLs(),
-                mavenDependenciesResolver.buildDependencies(), mavenMultiModuleArtifactMapping);
-        ArtifactUrlClassification artifactUrlClassification = classPathClassifier.classify(context);
-        return classLoaderRunnerFactory.createClassLoaderTestRunner(context.getExtraBootPackages(), artifactUrlClassification);
-    }
+    final Class<? extends Annotation> runnerDelegateToClass =
+        (Class<? extends Annotation>) classLoaderTestRunner.loadClassWithApplicationClassLoader(RunnerDelegateTo.class.getName());
 
-    /**
-     * Invokes the method to inject the plugin class loaders as the test is annotated with {@link PluginClassLoadersAware}.
-     *
-     * @param classLoaderTestRunner the result {@link ArtifactClassLoader}s defined for container, plugins and application
-     * @param isolatedTestClass     the test {@link Class} loaded with the isolated {@link ClassLoader}
-     * @throws IllegalStateException if the test doesn't have an annotated method to inject plugin class loaders or if it has more than one
-     *                               method annotated.
-     * @throws Throwable             if an error ocurrs while setting the list of {@link ArtifactClassLoader}s for plugins.
-     */
-    private static void injectPluginsClassLoaders(ClassLoaderTestRunner classLoaderTestRunner, Class<?> isolatedTestClass) throws Throwable
-    {
-        TestClass testClass = new TestClass(isolatedTestClass);
-        Class<? extends Annotation> artifactContextAwareAnn =
-                (Class<? extends Annotation>) classLoaderTestRunner.loadClassWithApplicationClassLoader(
-                        PluginClassLoadersAware.class.getName());
-        List<FrameworkMethod> contextAwareMethods = testClass.getAnnotatedMethods(artifactContextAwareAnn);
-        if (contextAwareMethods.size() != 1)
-        {
-            throw new IllegalStateException(
-                    "Isolation tests need to have one method marked with annotation " + PluginClassLoadersAware.class.getName());
-        }
-        for (FrameworkMethod method : contextAwareMethods)
-        {
-            if (!method.isStatic() || method.isPublic())
-            {
-                throw new IllegalStateException("Method marked with annotation " + PluginClassLoadersAware.class.getName() +
-                                                " should be private static and it should receive a parameter of type List<" +
-                                                ArtifactClassLoader.class + ">");
-            }
-            method.getMethod().setAccessible(true);
-            try
-            {
-                method.invokeExplosively(null, classLoaderTestRunner.getPluginsClassLoaders());
-            }
-            catch (IllegalArgumentException e)
-            {
-                throw new IllegalStateException("Method marked with annotation " + PluginClassLoadersAware.class.getName() +
-                                                " should receive a parameter of type List<" + ArtifactClassLoader.class + ">");
-            }
-            finally
-            {
-                method.getMethod().setAccessible(false);
-            }
-        }
-    }
+    final AnnotatedBuilder annotatedBuilder = new AnnotatedBuilder(builder);
+    delegate =
+        annotatedBuilder.buildRunner(getAnnotationAttributeFrom(isolatedTestClass, runnerDelegateToClass, "value"), isolatedTestClass);
 
-    private Class<?> getTestClass(Class<?> clazz) throws InitializationError
-    {
-        try
-        {
-            return classLoaderTestRunner.loadClassWithApplicationClassLoader(clazz.getName());
-        }
-        catch (Exception e)
-        {
-            throw new InitializationError(e);
-        }
+    if (!pluginClassLoadersInjected) {
+      injectPluginsClassLoaders(classLoaderTestRunner, isolatedTestClass);
+      pluginClassLoadersInjected = true;
     }
+  }
 
-    /**
-     * @return delegates to the internal runner to get the description needed by JUnit.
-     */
-    @Override
-    public Description getDescription()
-    {
-        return delegate.getDescription();
-    }
+  /**
+   * Creates the {@link ClassLoaderTestRunner} with the isolated class loaders.
+   *
+   * @param klass the test class being executed
+   * @return creates a {@link ClassLoaderTestRunner} that would be used to run the test. This way the test will be isolated and it will
+   *         behave similar as an application running in a Mule standalone container.
+   * @throws IOException if an error happened while reading
+   *         {@link org.mule.functional.classloading.isolation.utils.RunnerModuleUtils#EXCLUDED_PROPERTIES_FILE} file
+   */
+  private static ClassLoaderTestRunner createClassLoaderTestRunner(Class<?> klass) throws IOException {
+    // Initializes utility classes
+    ClassPathUrlProvider classPathUrlsProvider = new ClassPathUrlProvider();
+    MavenDependenciesResolver mavenDependenciesResolver = new DependencyGraphMavenDependenciesResolver();
+    MavenMultiModuleArtifactMapping mavenMultiModuleArtifactMapping = new MuleMavenMultiModuleArtifactMapping();
+    MuleClassLoaderRunnerFactory classLoaderRunnerFactory = new MuleClassLoaderRunnerFactory();
+    ClassPathClassifier classPathClassifier = new MuleClassPathClassifier();
 
-    /**
-     * When the test is about to be executed the ThreadContextClassLoader is changed to use the application class loader that
-     * was created so the execution of the test will be done using an isolated class loader that mimics the standalone container.
-     *
-     * @param notifier the {@link RunNotifier} from JUnit that will be notified about the results of the test methods invoked.
-     */
-    @Override
-    public void run(RunNotifier notifier)
-    {
-        withContextClassLoader(classLoaderTestRunner.getApplicationClassLoader().getClassLoader(), () -> delegate.run(notifier));
-    }
+    // Does the classification and creation of the isolated ClassLoader
+    ClassPathClassifierContext context = new ClassPathClassifierContext(klass, classPathUrlsProvider.getURLs(),
+        mavenDependenciesResolver.buildDependencies(), mavenMultiModuleArtifactMapping);
+    ArtifactUrlClassification artifactUrlClassification = classPathClassifier.classify(context);
+    return classLoaderRunnerFactory.createClassLoaderTestRunner(context.getExtraBootPackages(), artifactUrlClassification);
+  }
 
-    /**
-     * Delegates to the inner runner to filter.
-     *
-     * @param filter the {@link Filter} from JUnit to select a single test.
-     */
-    @Override
-    public void filter(Filter filter) throws NoTestsRemainException
-    {
-        if (delegate instanceof Filterable)
-        {
-            ((Filterable) delegate).filter(filter);
-        }
+  /**
+   * Invokes the method to inject the plugin class loaders as the test is annotated with {@link PluginClassLoadersAware}.
+   *
+   * @param classLoaderTestRunner the result {@link ArtifactClassLoader}s defined for container, plugins and application
+   * @param isolatedTestClass the test {@link Class} loaded with the isolated {@link ClassLoader}
+   * @throws IllegalStateException if the test doesn't have an annotated method to inject plugin class loaders or if it has more than one
+   *         method annotated.
+   * @throws Throwable if an error ocurrs while setting the list of {@link ArtifactClassLoader}s for plugins.
+   */
+  private static void injectPluginsClassLoaders(ClassLoaderTestRunner classLoaderTestRunner, Class<?> isolatedTestClass) throws Throwable {
+    TestClass testClass = new TestClass(isolatedTestClass);
+    Class<? extends Annotation> artifactContextAwareAnn =
+        (Class<? extends Annotation>) classLoaderTestRunner.loadClassWithApplicationClassLoader(PluginClassLoadersAware.class.getName());
+    List<FrameworkMethod> contextAwareMethods = testClass.getAnnotatedMethods(artifactContextAwareAnn);
+    if (contextAwareMethods.size() != 1) {
+      throw new IllegalStateException(
+          "Isolation tests need to have one method marked with annotation " + PluginClassLoadersAware.class.getName());
     }
+    for (FrameworkMethod method : contextAwareMethods) {
+      if (!method.isStatic() || method.isPublic()) {
+        throw new IllegalStateException("Method marked with annotation " + PluginClassLoadersAware.class.getName()
+            + " should be private static and it should receive a parameter of type List<" + ArtifactClassLoader.class + ">");
+      }
+      method.getMethod().setAccessible(true);
+      try {
+        method.invokeExplosively(null, classLoaderTestRunner.getPluginsClassLoaders());
+      } catch (IllegalArgumentException e) {
+        throw new IllegalStateException("Method marked with annotation " + PluginClassLoadersAware.class.getName()
+            + " should receive a parameter of type List<" + ArtifactClassLoader.class + ">");
+      } finally {
+        method.getMethod().setAccessible(false);
+      }
+    }
+  }
+
+  private Class<?> getTestClass(Class<?> clazz) throws InitializationError {
+    try {
+      return classLoaderTestRunner.loadClassWithApplicationClassLoader(clazz.getName());
+    } catch (Exception e) {
+      throw new InitializationError(e);
+    }
+  }
+
+  /**
+   * @return delegates to the internal runner to get the description needed by JUnit.
+   */
+  @Override
+  public Description getDescription() {
+    return delegate.getDescription();
+  }
+
+  /**
+   * When the test is about to be executed the ThreadContextClassLoader is changed to use the application class loader that was created so
+   * the execution of the test will be done using an isolated class loader that mimics the standalone container.
+   *
+   * @param notifier the {@link RunNotifier} from JUnit that will be notified about the results of the test methods invoked.
+   */
+  @Override
+  public void run(RunNotifier notifier) {
+    withContextClassLoader(classLoaderTestRunner.getApplicationClassLoader().getClassLoader(), () -> delegate.run(notifier));
+  }
+
+  /**
+   * Delegates to the inner runner to filter.
+   *
+   * @param filter the {@link Filter} from JUnit to select a single test.
+   */
+  @Override
+  public void filter(Filter filter) throws NoTestsRemainException {
+    if (delegate instanceof Filterable) {
+      ((Filterable) delegate).filter(filter);
+    }
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -15,14 +13,13 @@ import java.util.Map;
  *
  * @since 3.7.0
  */
-interface RegistrationDelegate
-{
+interface RegistrationDelegate {
 
-    void registerObject(String key, Object value) throws RegistrationException;
+  void registerObject(String key, Object value) throws RegistrationException;
 
-    void registerObject(String key, Object value, Object metadata) throws RegistrationException;
+  void registerObject(String key, Object value, Object metadata) throws RegistrationException;
 
-    void registerObjects(Map<String, Object> objects) throws RegistrationException;
+  void registerObjects(Map<String, Object> objects) throws RegistrationException;
 
-    Object unregisterObject(String key) throws RegistrationException;
+  Object unregisterObject(String key) throws RegistrationException;
 }

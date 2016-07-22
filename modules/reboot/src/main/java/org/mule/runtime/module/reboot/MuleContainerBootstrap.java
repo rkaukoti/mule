@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.reboot;
 
@@ -20,126 +18,100 @@ import java.util.Date;
 import java.util.Properties;
 
 /**
- * Determine which is the main class to run and delegate control to the Java Service
- * Wrapper.  If OSGi is not being used to boot with, configure the classpath based on
- * the libraries in $MULE_HOME/lib/*
+ * Determine which is the main class to run and delegate control to the Java Service Wrapper. If OSGi is not being used to boot with,
+ * configure the classpath based on the libraries in $MULE_HOME/lib/*
  * <p/>
- * Note: this class is intentionally kept free of any external library dependencies and
- * therefore repeats a few utility methods.
+ * Note: this class is intentionally kept free of any external library dependencies and therefore repeats a few utility methods.
  */
-public class MuleContainerBootstrap
-{
-    public static final String CLI_OPTIONS[][] = {
-            {"main", "true", "Main Class"},
-            {"production", "false", "Modify the system class loader for production use (as in Mule 2.x)"},
-            {"version", "false", "Show product and version information"}
-    };
-    private static final String MULE_MODULE_REBOOT_POM_FILE_PATH = "META-INF/maven/org.mule.module/mule-module-reboot/pom.properties";
+public class MuleContainerBootstrap {
+  public static final String CLI_OPTIONS[][] =
+      {{"main", "true", "Main Class"}, {"production", "false", "Modify the system class loader for production use (as in Mule 2.x)"},
+          {"version", "false", "Show product and version information"}};
+  private static final String MULE_MODULE_REBOOT_POM_FILE_PATH = "META-INF/maven/org.mule.module/mule-module-reboot/pom.properties";
 
-    public static void main(String[] args) throws Exception
-    {
-        // Parse any command line options based on the list above.
-        CommandLine commandLine = parseCommandLine(args);
-        // Any unrecognized arguments get passed through to the next class (e.g., to the OSGi Framework).
-        String[] remainingArgs = commandLine.getArgs();
+  public static void main(String[] args) throws Exception {
+    // Parse any command line options based on the list above.
+    CommandLine commandLine = parseCommandLine(args);
+    // Any unrecognized arguments get passed through to the next class (e.g., to the OSGi Framework).
+    String[] remainingArgs = commandLine.getArgs();
 
-        prepareBootstrapPhase(commandLine);
+    prepareBootstrapPhase(commandLine);
 
-        System.out.println("Starting the Mule Container...");
-        WrapperManager.start(new MuleContainerWrapper(), remainingArgs);
+    System.out.println("Starting the Mule Container...");
+    WrapperManager.start(new MuleContainerWrapper(), remainingArgs);
+  }
+
+  private static void prepareBootstrapPhase(CommandLine commandLine) throws Exception {
+    boolean production = commandLine.hasOption("production");
+    prepareBootstrapPhase(production);
+  }
+
+  private static void prepareBootstrapPhase(boolean production) throws Exception {
+    File muleHome = lookupMuleHome();
+    File muleBase = lookupMuleBase();
+    if (muleBase == null) {
+      muleBase = muleHome;
     }
 
-    private static void prepareBootstrapPhase(CommandLine commandLine) throws Exception
-    {
-        boolean production = commandLine.hasOption("production");
-        prepareBootstrapPhase(production);
+    setSystemMuleVersion();
+  }
+
+  public static File lookupMuleHome() throws Exception {
+    File muleHome = null;
+    String muleHomeVar = System.getProperty("mule.home");
+
+    if (muleHomeVar != null && !muleHomeVar.trim().equals("") && !muleHomeVar.equals("%MULE_HOME%")) {
+      muleHome = new File(muleHomeVar).getCanonicalFile();
     }
 
-    private static void prepareBootstrapPhase(boolean production) throws Exception
-    {
-        File muleHome = lookupMuleHome();
-        File muleBase = lookupMuleBase();
-        if (muleBase == null)
-        {
-            muleBase = muleHome;
-        }
-
-        setSystemMuleVersion();
+    if (muleHome == null || !muleHome.exists() || !muleHome.isDirectory()) {
+      throw new IllegalArgumentException("Either the system property mule.home is not set or does not contain a valid directory.");
     }
+    return muleHome;
+  }
 
-    public static File lookupMuleHome() throws Exception
-    {
-        File muleHome = null;
-        String muleHomeVar = System.getProperty("mule.home");
+  public static File lookupMuleBase() throws Exception {
+    File muleBase = null;
+    String muleBaseVar = System.getProperty("mule.base");
 
-        if (muleHomeVar != null && !muleHomeVar.trim().equals("") && !muleHomeVar.equals("%MULE_HOME%"))
-        {
-            muleHome = new File(muleHomeVar).getCanonicalFile();
-        }
-
-        if (muleHome == null || !muleHome.exists() || !muleHome.isDirectory())
-        {
-            throw new IllegalArgumentException("Either the system property mule.home is not set or does not contain a valid directory.");
-        }
-        return muleHome;
+    if (muleBaseVar != null && !muleBaseVar.trim().equals("") && !muleBaseVar.equals("%MULE_BASE%")) {
+      muleBase = new File(muleBaseVar).getCanonicalFile();
     }
+    return muleBase;
+  }
 
-    public static File lookupMuleBase() throws Exception
-    {
-        File muleBase = null;
-        String muleBaseVar = System.getProperty("mule.base");
+  private static void setSystemMuleVersion() {
+    InputStream propertiesStream = null;
+    try {
+      URL mavenPropertiesUrl = MuleContainerBootstrapUtils.getResource(MULE_MODULE_REBOOT_POM_FILE_PATH, MuleContainerWrapper.class);
+      propertiesStream = mavenPropertiesUrl.openStream();
 
-        if (muleBaseVar != null && !muleBaseVar.trim().equals("") && !muleBaseVar.equals("%MULE_BASE%"))
-        {
-            muleBase = new File(muleBaseVar).getCanonicalFile();
+      Properties mavenProperties = new Properties();
+      mavenProperties.load(propertiesStream);
+
+      System.setProperty("mule.version", mavenProperties.getProperty("version"));
+      System.setProperty("mule.reference.version", mavenProperties.getProperty("version") + '-' + (new Date()).getTime());
+    } catch (Exception ignore) {
+      // ignore;
+    } finally {
+      if (propertiesStream != null) {
+        try {
+          propertiesStream.close();
+        } catch (IOException iox) {
+          // ignore
         }
-        return muleBase;
+      }
     }
+  }
 
-    private static void setSystemMuleVersion()
-    {
-        InputStream propertiesStream = null;
-        try
-        {
-            URL mavenPropertiesUrl = MuleContainerBootstrapUtils.getResource(MULE_MODULE_REBOOT_POM_FILE_PATH, MuleContainerWrapper.class);
-            propertiesStream = mavenPropertiesUrl.openStream();
-
-            Properties mavenProperties = new Properties();
-            mavenProperties.load(propertiesStream);
-
-            System.setProperty("mule.version", mavenProperties.getProperty("version"));
-            System.setProperty("mule.reference.version", mavenProperties.getProperty("version") + '-' + (new Date()).getTime());
-        }
-        catch (Exception ignore)
-        {
-            // ignore;
-        }
-        finally
-        {
-            if (propertiesStream != null)
-            {
-                try
-                {
-                    propertiesStream.close();
-                }
-                catch (IOException iox)
-                {
-                    // ignore
-                }
-            }
-        }
+  /**
+   * Parse any command line arguments using the Commons CLI library.
+   */
+  private static CommandLine parseCommandLine(String[] args) throws ParseException {
+    Options options = new Options();
+    for (int i = 0; i < CLI_OPTIONS.length; i++) {
+      options.addOption(CLI_OPTIONS[i][0], "true".equalsIgnoreCase(CLI_OPTIONS[i][1]), CLI_OPTIONS[i][2]);
     }
-
-    /**
-     * Parse any command line arguments using the Commons CLI library.
-     */
-    private static CommandLine parseCommandLine(String[] args) throws ParseException
-    {
-        Options options = new Options();
-        for (int i = 0; i < CLI_OPTIONS.length; i++)
-        {
-            options.addOption(CLI_OPTIONS[i][0], "true".equalsIgnoreCase(CLI_OPTIONS[i][1]), CLI_OPTIONS[i][2]);
-        }
-        return new BasicParser().parse(options, args, true);
-    }
+    return new BasicParser().parse(options, args, true);
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.delete;
@@ -23,27 +21,24 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public abstract class AbstractUpdateInputMetadataTestCase extends AbstractDbIntegrationTestCase
-{
+public abstract class AbstractUpdateInputMetadataTestCase extends AbstractDbIntegrationTestCase {
 
-    public AbstractUpdateInputMetadataTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
-    }
+  public AbstractUpdateInputMetadataTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
+    super(dataSourceConfigResource, testDatabase);
+  }
 
-    protected void doResolvedMetadataTest(String flowName)
-    {
-        Flow flowConstruct = (Flow) muleContext.getRegistry().lookupFlowConstruct(flowName);
+  protected void doResolvedMetadataTest(String flowName) {
+    Flow flowConstruct = (Flow) muleContext.getRegistry().lookupFlowConstruct(flowName);
 
-        List<MessageProcessor> messageProcessors = flowConstruct.getMessageProcessors();
-        AbstractSingleQueryDbMessageProcessor queryMessageProcessor = (AbstractSingleQueryDbMessageProcessor) messageProcessors.get(0);
-        Result<MetaData> inputMetaData = queryMessageProcessor.getInputMetaData();
+    List<MessageProcessor> messageProcessors = flowConstruct.getMessageProcessors();
+    AbstractSingleQueryDbMessageProcessor queryMessageProcessor = (AbstractSingleQueryDbMessageProcessor) messageProcessors.get(0);
+    Result<MetaData> inputMetaData = queryMessageProcessor.getInputMetaData();
 
-        DefinedMapMetaDataModel mapDataModel = (DefinedMapMetaDataModel) inputMetaData.get().getPayload();
-        assertThat(mapDataModel.getKeys().size(), equalTo(2));
-        MetaDataModel id = mapDataModel.getValueMetaDataModel("position");
-        assertThat(id.getDataType(), equalTo(testDatabase.getIdFieldInputMetaDataType()));
-        MetaDataModel data = mapDataModel.getValueMetaDataModel("name");
-        assertThat(data.getDataType(), equalTo(DataType.STRING));
-    }
+    DefinedMapMetaDataModel mapDataModel = (DefinedMapMetaDataModel) inputMetaData.get().getPayload();
+    assertThat(mapDataModel.getKeys().size(), equalTo(2));
+    MetaDataModel id = mapDataModel.getValueMetaDataModel("position");
+    assertThat(id.getDataType(), equalTo(testDatabase.getIdFieldInputMetaDataType()));
+    MetaDataModel data = mapDataModel.getValueMetaDataModel("name");
+    assertThat(data.getDataType(), equalTo(DataType.STRING));
+  }
 }

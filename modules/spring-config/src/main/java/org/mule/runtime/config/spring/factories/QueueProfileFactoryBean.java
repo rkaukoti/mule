@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.factories;
 
@@ -15,55 +13,46 @@ import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 import java.io.Serializable;
 
-public class QueueProfileFactoryBean extends AbstractFactoryBean<QueueProfile> implements MuleContextAware
-{
-    private int maxOutstandingMessages;
-    private MuleContext muleContext;
-    private QueueStore<Serializable> queueStore;
+public class QueueProfileFactoryBean extends AbstractFactoryBean<QueueProfile> implements MuleContextAware {
+  private int maxOutstandingMessages;
+  private MuleContext muleContext;
+  private QueueStore<Serializable> queueStore;
 
-    @Override
-    public Class<?> getObjectType()
-    {
-        return QueueProfile.class;
+  @Override
+  public Class<?> getObjectType() {
+    return QueueProfile.class;
+  }
+
+  @Override
+  protected QueueProfile createInstance() throws Exception {
+    QueueStore<Serializable> objectStore = queueStore;
+    if (objectStore == null) {
+      objectStore = muleContext.getRegistry().lookupObject(MuleProperties.QUEUE_STORE_DEFAULT_IN_MEMORY_NAME);
     }
 
-    @Override
-    protected QueueProfile createInstance() throws Exception
-    {
-        QueueStore<Serializable> objectStore = queueStore;
-        if (objectStore == null)
-        {
-            objectStore = muleContext.getRegistry().lookupObject(MuleProperties.QUEUE_STORE_DEFAULT_IN_MEMORY_NAME);
-        }
+    return new QueueProfile(getMaxOutstandingMessages(), objectStore);
+  }
 
-        return new QueueProfile(getMaxOutstandingMessages(), objectStore);
-    }
+  @Override
+  public void setMuleContext(MuleContext context) {
+    muleContext = context;
+  }
 
-    @Override
-    public void setMuleContext(MuleContext context)
-    {
-        muleContext = context;
-    }
+  public int getMaxOutstandingMessages() {
+    return maxOutstandingMessages;
+  }
 
-    public int getMaxOutstandingMessages()
-    {
-        return maxOutstandingMessages;
-    }
+  public void setMaxOutstandingMessages(int maxOutstandingMessages) {
+    this.maxOutstandingMessages = maxOutstandingMessages;
+  }
 
-    public void setMaxOutstandingMessages(int maxOutstandingMessages)
-    {
-        this.maxOutstandingMessages = maxOutstandingMessages;
-    }
+  public QueueStore<Serializable> getQueueStore() {
+    return queueStore;
+  }
 
-    public QueueStore<Serializable> getQueueStore()
-    {
-        return queueStore;
-    }
-
-    public void setQueueStore(QueueStore<Serializable> queueStore)
-    {
-        this.queueStore = queueStore;
-    }
+  public void setQueueStore(QueueStore<Serializable> queueStore) {
+    this.queueStore = queueStore;
+  }
 }
 
 

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.util;
 
@@ -24,32 +22,29 @@ import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class SingleValueResolverTestCase extends AbstractMuleTestCase
-{
+public class SingleValueResolverTestCase extends AbstractMuleTestCase {
 
-    private static final String NAME = "name";
+  private static final String NAME = "name";
 
-    @Mock
-    private ParameterModel parameterModel;
+  @Mock
+  private ParameterModel parameterModel;
 
-    @Mock
-    private ResolverSetResult result;
+  @Mock
+  private ResolverSetResult result;
 
 
-    private ValueSetter valueSetter;
+  private ValueSetter valueSetter;
 
-    @Before
-    public void before()
-    {
-        when(result.get(NAME)).thenReturn(NAME);
-        valueSetter = new SingleValueSetter(NAME, getField(PersonalInfo.class, "name"));
-    }
+  @Before
+  public void before() {
+    when(result.get(NAME)).thenReturn(NAME);
+    valueSetter = new SingleValueSetter(NAME, getField(PersonalInfo.class, "name"));
+  }
 
-    @Test
-    public void set() throws Exception
-    {
-        PersonalInfo info = new PersonalInfo();
-        valueSetter.set(info, result);
-        assertThat(info.getName(), is(NAME));
-    }
+  @Test
+  public void set() throws Exception {
+    PersonalInfo info = new PersonalInfo();
+    valueSetter.set(info, result);
+    assertThat(info.getName(), is(NAME));
+  }
 }

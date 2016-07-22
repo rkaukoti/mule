@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file.issues;
 
@@ -21,33 +19,30 @@ import java.io.File;
 import static org.junit.Assert.assertNotNull;
 
 /**
- * This used to be part of FileFunctionalTest; moved here to allow isolation of
- * individual case.
+ * This used to be part of FileFunctionalTest; moved here to allow isolation of individual case.
  */
-public class IndirectReceiveMule1842TestCase extends AbstractFileFunctionalTestCase
-{
+public class IndirectReceiveMule1842TestCase extends AbstractFileFunctionalTestCase {
 
-    @Test
-    public void testIndirectRequest() throws Exception
-    {
-        File target = initForRequest();
+  @Test
+  public void testIndirectRequest() throws Exception {
+    File target = initForRequest();
 
-        // add a receiver endpoint that will poll the readFromDirectory
-        Object relay = muleContext.getRegistry().lookupObject("relay");
-        assertNotNull(relay);
-        String url = fileToUrl(target) + "?connector=receiveConnector";
-        logger.debug(url);
+    // add a receiver endpoint that will poll the readFromDirectory
+    Object relay = muleContext.getRegistry().lookupObject("relay");
+    assertNotNull(relay);
+    String url = fileToUrl(target) + "?connector=receiveConnector";
+    logger.debug(url);
 
-        InboundEndpoint endpoint = getEndpointFactory().getInboundEndpoint(url);
+    InboundEndpoint endpoint = getEndpointFactory().getInboundEndpoint(url);
 
-        ((CompositeMessageSource) ((Flow) relay).getMessageSource()).addSource(endpoint);
+    ((CompositeMessageSource) ((Flow) relay).getMessageSource()).addSource(endpoint);
 
-        ((Stoppable) relay).stop();
-        ((Startable) relay).start();
+    ((Stoppable) relay).stop();
+    ((Startable) relay).start();
 
-        // then read from the queue that the polling receiver will write to
-        MuleClient client = muleContext.getClient();
-        MuleMessage message = client.request("receive", 3000);
-        checkReceivedMessage(message);
-    }
+    // then read from the queue that the polling receiver will write to
+    MuleClient client = muleContext.getClient();
+    MuleMessage message = client.request("receive", 3000);
+    checkReceivedMessage(message);
+  }
 }

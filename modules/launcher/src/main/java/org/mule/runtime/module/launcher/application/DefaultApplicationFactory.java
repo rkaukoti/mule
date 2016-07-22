@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.application;
 
@@ -32,107 +30,85 @@ import static org.mule.runtime.core.util.Preconditions.checkArgument;
 /**
  * Creates default mule applications
  */
-public class DefaultApplicationFactory implements ArtifactFactory<Application>
-{
+public class DefaultApplicationFactory implements ArtifactFactory<Application> {
 
-    private final ApplicationDescriptorFactory applicationDescriptorFactory;
-    private final DomainRepository domainRepository;
-    private final ApplicationClassLoaderBuilderFactory applicationClassLoaderBuilderFactory;
-    private final ArtifactPluginRepository artifactPluginRepository;
-    protected DeploymentListener deploymentListener;
+  private final ApplicationDescriptorFactory applicationDescriptorFactory;
+  private final DomainRepository domainRepository;
+  private final ApplicationClassLoaderBuilderFactory applicationClassLoaderBuilderFactory;
+  private final ArtifactPluginRepository artifactPluginRepository;
+  protected DeploymentListener deploymentListener;
 
-    public DefaultApplicationFactory(ApplicationClassLoaderBuilderFactory applicationClassLoaderBuilderFactory,
-                                     ApplicationDescriptorFactory applicationDescriptorFactory,
-                                     ArtifactPluginRepository artifactPluginRepository, DomainRepository domainRepository)
-    {
-        checkArgument(applicationClassLoaderBuilderFactory != null, "Application classloader builder factory cannot be null");
-        checkArgument(applicationDescriptorFactory != null, "Application descriptor factory cannot be null");
-        checkArgument(artifactPluginRepository != null, "Artifact plugin repository cannot be null");
-        checkArgument(domainRepository != null, "Domain repository cannot be null");
+  public DefaultApplicationFactory(ApplicationClassLoaderBuilderFactory applicationClassLoaderBuilderFactory,
+      ApplicationDescriptorFactory applicationDescriptorFactory, ArtifactPluginRepository artifactPluginRepository,
+      DomainRepository domainRepository) {
+    checkArgument(applicationClassLoaderBuilderFactory != null, "Application classloader builder factory cannot be null");
+    checkArgument(applicationDescriptorFactory != null, "Application descriptor factory cannot be null");
+    checkArgument(artifactPluginRepository != null, "Artifact plugin repository cannot be null");
+    checkArgument(domainRepository != null, "Domain repository cannot be null");
 
-        this.applicationClassLoaderBuilderFactory = applicationClassLoaderBuilderFactory;
-        this.applicationDescriptorFactory = applicationDescriptorFactory;
-        this.artifactPluginRepository = artifactPluginRepository;
-        this.domainRepository = domainRepository;
+    this.applicationClassLoaderBuilderFactory = applicationClassLoaderBuilderFactory;
+    this.applicationDescriptorFactory = applicationDescriptorFactory;
+    this.artifactPluginRepository = artifactPluginRepository;
+    this.domainRepository = domainRepository;
+  }
+
+  public void setDeploymentListener(DeploymentListener deploymentListener) {
+    this.deploymentListener = deploymentListener;
+  }
+
+  public Application createArtifact(String appName) throws IOException {
+    if (appName.contains(" ")) {
+      throw new IllegalArgumentException("Mule application name may not contain spaces: " + appName);
     }
 
-    public void setDeploymentListener(DeploymentListener deploymentListener)
-    {
-        this.deploymentListener = deploymentListener;
+    final File appsDir = MuleContainerBootstrapUtils.getMuleAppsDir();
+    final ApplicationDescriptor descriptor = applicationDescriptorFactory.create(new File(appsDir, appName));
+
+    return createAppFrom(descriptor);
+  }
+
+  @Override
+  public File getArtifactDir() {
+    return MuleContainerBootstrapUtils.getMuleAppsDir();
+  }
+
+  protected Application createAppFrom(ApplicationDescriptor descriptor) throws IOException {
+    Domain domain = domainRepository.getDomain(descriptor.getDomain());
+
+    if (domain == null) {
+      throw new DeploymentException(createStaticMessage(
+          format("Domain '%s' has to be deployed in order to deploy Application '%s'", descriptor.getDomain(), descriptor.getName())));
     }
 
-    public Application createArtifact(String appName) throws IOException
-    {
-        if (appName.contains(" "))
-        {
-            throw new IllegalArgumentException("Mule application name may not contain spaces: " + appName);
-        }
+    MuleApplicationClassLoader applicationClassLoader = applicationClassLoaderBuilderFactory.createArtifactClassLoaderBuilder()
+        .setDomain(domain).setPluginsSharedLibFolder(descriptor.getSharedPluginFolder())
+        .addArtifactPluginDescriptors(descriptor.getPlugins().toArray(new ArtifactPluginDescriptor[0])).setArtifactId(descriptor.getName())
+        .setArtifactDescriptor(descriptor).build();
 
-        final File appsDir = MuleContainerBootstrapUtils.getMuleAppsDir();
-        final ApplicationDescriptor descriptor = applicationDescriptorFactory.create(new File(appsDir, appName));
+    List<ArtifactPluginDescriptor> applicationPluginDescriptors =
+        concat(artifactPluginRepository.getContainerArtifactPluginDescriptors().stream(), descriptor.getPlugins().stream())
+            .collect(toList());
 
-        return createAppFrom(descriptor);
+    List<ArtifactPlugin> artifactPlugins = createArtifactPluginList(applicationClassLoader, applicationPluginDescriptors);
+
+    DefaultMuleApplication delegate = new DefaultMuleApplication(descriptor, applicationClassLoader, artifactPlugins, domainRepository);
+
+    if (deploymentListener != null) {
+      delegate.setDeploymentListener(deploymentListener);
     }
 
-    @Override
-    public File getArtifactDir()
-    {
-        return MuleContainerBootstrapUtils.getMuleAppsDir();
-    }
+    return new ApplicationWrapper(delegate);
+  }
 
-    protected Application createAppFrom(ApplicationDescriptor descriptor) throws IOException
-    {
-        Domain domain = domainRepository.getDomain(descriptor.getDomain());
-
-        if (domain == null)
-        {
-            throw new DeploymentException(createStaticMessage(
-                    format("Domain '%s' has to be deployed in order to deploy Application '%s'", descriptor.getDomain(),
-                            descriptor.getName())));
-        }
-
-        MuleApplicationClassLoader applicationClassLoader = applicationClassLoaderBuilderFactory.createArtifactClassLoaderBuilder()
-                                                                                                .setDomain(domain)
-                                                                                                .setPluginsSharedLibFolder(
-                                                                                                        descriptor.getSharedPluginFolder())
-                                                                                                .addArtifactPluginDescriptors(
-                                                                                                        descriptor.getPlugins()
-                                                                                                                  .toArray(
-                                                                                                                          new ArtifactPluginDescriptor[0]))
-                                                                                                .setArtifactId(descriptor.getName())
-                                                                                                .setArtifactDescriptor(descriptor)
-                                                                                                .build();
-
-        List<ArtifactPluginDescriptor> applicationPluginDescriptors =
-                concat(artifactPluginRepository.getContainerArtifactPluginDescriptors().stream(), descriptor.getPlugins().stream())
-                        .collect(toList());
-
-        List<ArtifactPlugin> artifactPlugins = createArtifactPluginList(applicationClassLoader, applicationPluginDescriptors);
-
-        DefaultMuleApplication delegate = new DefaultMuleApplication(descriptor, applicationClassLoader, artifactPlugins, domainRepository);
-
-        if (deploymentListener != null)
-        {
-            delegate.setDeploymentListener(deploymentListener);
-        }
-
-        return new ApplicationWrapper(delegate);
-    }
-
-    private List<ArtifactPlugin> createArtifactPluginList(MuleApplicationClassLoader applicationClassLoader,
-                                                          List<ArtifactPluginDescriptor> plugins)
-    {
-        return plugins.stream().map(artifactPluginDescriptor ->
-                new DefaultArtifactPlugin(artifactPluginDescriptor,
-                        applicationClassLoader.getArtifactPluginClassLoaders()
-                                              .stream()
-                                              .filter(artifactClassLoader -> artifactClassLoader.getArtifactName()
-                                                                                                .endsWith(
-                                                                                                        artifactPluginDescriptor.getName()))
-                                              .findFirst()
-                                              .get()))
-                      .collect(toList());
-    }
+  private List<ArtifactPlugin> createArtifactPluginList(MuleApplicationClassLoader applicationClassLoader,
+      List<ArtifactPluginDescriptor> plugins) {
+    return plugins.stream()
+        .map(artifactPluginDescriptor -> new DefaultArtifactPlugin(artifactPluginDescriptor,
+            applicationClassLoader.getArtifactPluginClassLoaders().stream()
+                .filter(artifactClassLoader -> artifactClassLoader.getArtifactName().endsWith(artifactPluginDescriptor.getName()))
+                .findFirst().get()))
+        .collect(toList());
+  }
 
 
 }

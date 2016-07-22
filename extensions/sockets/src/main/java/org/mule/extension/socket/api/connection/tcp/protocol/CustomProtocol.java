@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.connection.tcp.protocol;
 
@@ -24,41 +22,32 @@ import static java.lang.String.format;
 /**
  * @since 4.0
  */
-public class CustomProtocol implements TcpProtocol, Initialisable
-{
+public class CustomProtocol implements TcpProtocol, Initialisable {
 
-    private static final Log LOGGER = LogFactory.getLog(CustomProtocol.class);
-    @Parameter
-    @Alias("class")
-    public String clazz;
-    private TcpProtocol delegate;
+  private static final Log LOGGER = LogFactory.getLog(CustomProtocol.class);
+  @Parameter
+  @Alias("class")
+  public String clazz;
+  private TcpProtocol delegate;
 
-    public CustomProtocol()
-    {
+  public CustomProtocol() {}
+
+  @Override
+  public InputStream read(InputStream is) throws IOException {
+    return delegate.read(is);
+  }
+
+  @Override
+  public void write(OutputStream os, Object data, String encoding) throws IOException {
+    delegate.write(os, data, encoding);
+  }
+
+  @Override
+  public void initialise() throws InitialisationException {
+    try {
+      delegate = (TcpProtocol) ClassUtils.instanciateClass(clazz);
+    } catch (Exception e) {
+      throw new RuntimeException(format("Could not load class '%s'", clazz));
     }
-
-    @Override
-    public InputStream read(InputStream is) throws IOException
-    {
-        return delegate.read(is);
-    }
-
-    @Override
-    public void write(OutputStream os, Object data, String encoding) throws IOException
-    {
-        delegate.write(os, data, encoding);
-    }
-
-    @Override
-    public void initialise() throws InitialisationException
-    {
-        try
-        {
-            delegate = (TcpProtocol) ClassUtils.instanciateClass(clazz);
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException(format("Could not load class '%s'", clazz));
-        }
-    }
+  }
 }

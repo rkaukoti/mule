@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.matcher;
 
@@ -18,35 +16,26 @@ import java.util.Map;
 
 import static org.junit.Assert.assertThat;
 
-public class ParamMapMatcher
-{
+public class ParamMapMatcher {
 
-    public static Matcher<ParameterMap> isEqual(final Map<String, ? extends List<String>> parameters)
-    {
-        return new BaseMatcher<ParameterMap>()
-        {
-            @Override
-            public boolean matches(Object o)
-            {
-                ParameterMap parameterMap = (ParameterMap) o;
-                assertThat(parameterMap.size(), Is.is(parameters.size()));
-                for (String key : parameters.keySet())
-                {
-                    assertThat(parameterMap.keySet(),
-                            Matchers.containsInAnyOrder(parameters.keySet().toArray(new String[parameterMap.size()])));
-                    final List<String> parameterKeyValues = parameters.get(key);
-                    final List<String> parameterMapValues = parameterMap.getAll(key);
-                    assertThat(parameterMapValues,
-                            Matchers.containsInAnyOrder(parameterKeyValues.toArray(new String[parameterKeyValues.size()])));
-                }
-                return true;
-            }
+  public static Matcher<ParameterMap> isEqual(final Map<String, ? extends List<String>> parameters) {
+    return new BaseMatcher<ParameterMap>() {
+      @Override
+      public boolean matches(Object o) {
+        ParameterMap parameterMap = (ParameterMap) o;
+        assertThat(parameterMap.size(), Is.is(parameters.size()));
+        for (String key : parameters.keySet()) {
+          assertThat(parameterMap.keySet(), Matchers.containsInAnyOrder(parameters.keySet().toArray(new String[parameterMap.size()])));
+          final List<String> parameterKeyValues = parameters.get(key);
+          final List<String> parameterMapValues = parameterMap.getAll(key);
+          assertThat(parameterMapValues, Matchers.containsInAnyOrder(parameterKeyValues.toArray(new String[parameterKeyValues.size()])));
+        }
+        return true;
+      }
 
-            @Override
-            public void describeTo(Description description)
-            {
-            }
-        };
-    }
+      @Override
+      public void describeTo(Description description) {}
+    };
+  }
 
 }

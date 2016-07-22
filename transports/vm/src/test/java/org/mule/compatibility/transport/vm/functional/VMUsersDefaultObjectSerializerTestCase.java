@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.vm.functional;
 
@@ -28,55 +26,48 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
-public class VMUsersDefaultObjectSerializerTestCase extends FunctionalTestCase
-{
+public class VMUsersDefaultObjectSerializerTestCase extends FunctionalTestCase {
 
-    private ObjectSerializer objectSerializer;
+  private ObjectSerializer objectSerializer;
 
-    @Override
-    protected void addBuilders(List<ConfigurationBuilder> builders)
-    {
-        super.addBuilders(builders);
+  @Override
+  protected void addBuilders(List<ConfigurationBuilder> builders) {
+    super.addBuilders(builders);
 
-        objectSerializer = new JavaObjectSerializer();
-        try
-        {
-            LifecycleUtils.initialiseIfNeeded(objectSerializer);
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException(e);
-        }
-        objectSerializer = spy(objectSerializer);
-
-        Map<String, Object> serializerMap = new HashMap<>();
-        serializerMap.put("customSerializer", objectSerializer);
-        builders.add(0, new SimpleConfigurationBuilder(serializerMap));
+    objectSerializer = new JavaObjectSerializer();
+    try {
+      LifecycleUtils.initialiseIfNeeded(objectSerializer);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
+    objectSerializer = spy(objectSerializer);
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "vm/vm-uses-default-object-serializer-test-flow.xml";
-    }
+    Map<String, Object> serializerMap = new HashMap<>();
+    serializerMap.put("customSerializer", objectSerializer);
+    builders.add(0, new SimpleConfigurationBuilder(serializerMap));
+  }
 
-    @Test
-    public void serializeWithKryo() throws Exception
-    {
-        final String payload = "payload";
-        flowRunner("dispatch").withPayload(payload).run();
+  @Override
+  protected String getConfigFile() {
+    return "vm/vm-uses-default-object-serializer-test-flow.xml";
+  }
 
-        MuleMessage response = muleContext.getClient().request("vm://in", 5000);
-        assertThat(response, is(notNullValue()));
-        assertThat(getPayloadAsString(response), is(payload));
+  @Test
+  public void serializeWithKryo() throws Exception {
+    final String payload = "payload";
+    flowRunner("dispatch").withPayload(payload).run();
 
-        ArgumentCaptor<MuleMessage> messageArgumentCaptor = ArgumentCaptor.forClass(MuleMessage.class);
-        verify(objectSerializer, atLeastOnce()).serialize(messageArgumentCaptor.capture());
-        MuleMessage capturedMessage = messageArgumentCaptor.getValue();
-        assertThat(capturedMessage, is(notNullValue()));
-        assertThat(getPayloadAsString(capturedMessage), is(payload));
+    MuleMessage response = muleContext.getClient().request("vm://in", 5000);
+    assertThat(response, is(notNullValue()));
+    assertThat(getPayloadAsString(response), is(payload));
 
-        verify(objectSerializer, atLeastOnce()).deserialize(any(byte[].class));
-    }
+    ArgumentCaptor<MuleMessage> messageArgumentCaptor = ArgumentCaptor.forClass(MuleMessage.class);
+    verify(objectSerializer, atLeastOnce()).serialize(messageArgumentCaptor.capture());
+    MuleMessage capturedMessage = messageArgumentCaptor.getValue();
+    assertThat(capturedMessage, is(notNullValue()));
+    assertThat(getPayloadAsString(capturedMessage), is(payload));
+
+    verify(objectSerializer, atLeastOnce()).deserialize(any(byte[].class));
+  }
 
 }

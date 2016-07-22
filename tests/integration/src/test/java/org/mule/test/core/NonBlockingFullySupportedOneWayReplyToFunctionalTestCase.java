@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.core;
 
@@ -20,26 +18,20 @@ import java.util.Collection;
 
 @Ignore("MULE-9792")
 @RunWith(Parameterized.class)
-public class NonBlockingFullySupportedOneWayReplyToFunctionalTestCase extends NonBlockingFullySupportedFunctionalTestCase
-{
+public class NonBlockingFullySupportedOneWayReplyToFunctionalTestCase extends NonBlockingFullySupportedFunctionalTestCase {
 
-    public NonBlockingFullySupportedOneWayReplyToFunctionalTestCase(ProcessingStrategy processingStrategy)
-    {
-        super(processingStrategy);
-    }
+  public NonBlockingFullySupportedOneWayReplyToFunctionalTestCase(ProcessingStrategy processingStrategy) {
+    super(processingStrategy);
+  }
 
-    @Parameters
-    public static Collection<Object[]> parameters()
-    {
-        return Arrays.asList(new Object[][] {
-                {new DefaultFlowProcessingStrategy()},
-                {new NonBlockingProcessingStrategy()}});
-    }
+  @Parameters
+  public static Collection<Object[]> parameters() {
+    return Arrays.asList(new Object[][] {{new DefaultFlowProcessingStrategy()}, {new NonBlockingProcessingStrategy()}});
+  }
 
-    @Override
-    protected MessageExchangePattern getMessageExchnagePattern()
-    {
-        return MessageExchangePattern.ONE_WAY;
-    }
+  @Override
+  protected MessageExchangePattern getMessageExchnagePattern() {
+    return MessageExchangePattern.ONE_WAY;
+  }
 }
 

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.el.mvel.datatype;
@@ -26,37 +24,33 @@ import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.MESSA
 import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.PAYLOAD;
 import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
 
-public class PayloadEnricherDataTypePropagatorTestCase extends AbstractMuleContextTestCase
-{
+public class PayloadEnricherDataTypePropagatorTestCase extends AbstractMuleContextTestCase {
 
-    public static final Charset CUSTOM_ENCODING = UTF_16;
+  public static final Charset CUSTOM_ENCODING = UTF_16;
 
-    private final PayloadEnricherDataTypePropagator dataTypePropagator = new PayloadEnricherDataTypePropagator();
+  private final PayloadEnricherDataTypePropagator dataTypePropagator = new PayloadEnricherDataTypePropagator();
 
-    @Test
-    public void propagatesPayloadDataType() throws Exception
-    {
-        doPayloadDataTypeTest(PAYLOAD + " = 'unused'");
-    }
+  @Test
+  public void propagatesPayloadDataType() throws Exception {
+    doPayloadDataTypeTest(PAYLOAD + " = 'unused'");
+  }
 
-    @Test
-    public void propagatesMessagePayloadDataType() throws Exception
-    {
-        doPayloadDataTypeTest(MESSAGE_PAYLOAD + " = 'unused'");
-    }
+  @Test
+  public void propagatesMessagePayloadDataType() throws Exception {
+    doPayloadDataTypeTest(MESSAGE_PAYLOAD + " = 'unused'");
+  }
 
-    private void doPayloadDataTypeTest(String expression) throws Exception
-    {
-        final DataType expectedDataType = DataType.builder().type(String.class).mediaType(JSON).charset(CUSTOM_ENCODING).build();
+  private void doPayloadDataTypeTest(String expression) throws Exception {
+    final DataType expectedDataType = DataType.builder().type(String.class).mediaType(JSON).charset(CUSTOM_ENCODING).build();
 
-        MVELExpressionLanguage expressionLanguage = (MVELExpressionLanguage) muleContext.getExpressionLanguage();
-        final CompiledExpression compiledExpression =
-                (CompiledExpression) compileExpression(expression, new ParserContext(expressionLanguage.getParserConfiguration()));
+    MVELExpressionLanguage expressionLanguage = (MVELExpressionLanguage) muleContext.getExpressionLanguage();
+    final CompiledExpression compiledExpression =
+        (CompiledExpression) compileExpression(expression, new ParserContext(expressionLanguage.getParserConfiguration()));
 
-        MuleEvent testEvent = getTestEvent(TEST_MESSAGE);
+    MuleEvent testEvent = getTestEvent(TEST_MESSAGE);
 
-        dataTypePropagator.propagate(testEvent, new TypedValue(TEST_MESSAGE, expectedDataType), compiledExpression);
+    dataTypePropagator.propagate(testEvent, new TypedValue(TEST_MESSAGE, expectedDataType), compiledExpression);
 
-        assertThat(testEvent.getMessage().getDataType(), like(String.class, JSON, CUSTOM_ENCODING));
-    }
+    assertThat(testEvent.getMessage().getDataType(), like(String.class, JSON, CUSTOM_ENCODING));
+  }
 }

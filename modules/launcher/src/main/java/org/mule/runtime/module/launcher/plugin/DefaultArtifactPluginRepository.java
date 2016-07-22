@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.launcher.plugin;
@@ -28,99 +26,81 @@ import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import static org.mule.runtime.module.launcher.MuleFoldersUtil.getContainerAppPluginsFolder;
 
 /**
- * Default implementation of an {@link ArtifactPluginRepository} that holds in memory the list
- * of artifact plugin descriptors bundled with the container.
+ * Default implementation of an {@link ArtifactPluginRepository} that holds in memory the list of artifact plugin descriptors bundled with
+ * the container.
  *
  * @since 4.0
  */
-public class DefaultArtifactPluginRepository implements ArtifactPluginRepository
-{
-    private final ArtifactPluginDescriptorFactory pluginDescriptorFactory;
-    private volatile List<ArtifactPluginDescriptor> containerArtifactPluginDescriptors;
+public class DefaultArtifactPluginRepository implements ArtifactPluginRepository {
+  private final ArtifactPluginDescriptorFactory pluginDescriptorFactory;
+  private volatile List<ArtifactPluginDescriptor> containerArtifactPluginDescriptors;
 
-    /**
-     * @param pluginDescriptorFactory a {@link ArtifactPluginDescriptorFactory} for creating from the container applications plugins folder
-     *                                the list of {@link ArtifactPluginDescriptor}'s
-     */
-    public DefaultArtifactPluginRepository(ArtifactPluginDescriptorFactory pluginDescriptorFactory)
-    {
-        checkArgument(pluginDescriptorFactory != null, "Application plugin descriptor factory cannot be null");
-        this.pluginDescriptorFactory = pluginDescriptorFactory;
+  /**
+   * @param pluginDescriptorFactory a {@link ArtifactPluginDescriptorFactory} for creating from the container applications plugins folder
+   *        the list of {@link ArtifactPluginDescriptor}'s
+   */
+  public DefaultArtifactPluginRepository(ArtifactPluginDescriptorFactory pluginDescriptorFactory) {
+    checkArgument(pluginDescriptorFactory != null, "Application plugin descriptor factory cannot be null");
+    this.pluginDescriptorFactory = pluginDescriptorFactory;
+  }
+
+  public List<ArtifactPluginDescriptor> getContainerArtifactPluginDescriptors() {
+    if (containerArtifactPluginDescriptors == null) {
+      synchronized (this) {
+        if (containerArtifactPluginDescriptors == null) {
+          try {
+            containerArtifactPluginDescriptors = unmodifiableList(collectContainerApplicationPluginDescriptors());
+          } catch (IOException e) {
+            throw new ArtifactDescriptorCreateException("Cannot load application plugin descriptors from container", e);
+          }
+        }
+      }
+    }
+    return containerArtifactPluginDescriptors;
+  }
+
+  /**
+   * @return collects and initializes a {@link List} of {@link ArtifactPluginDescriptor} by loading the container application plugins
+   */
+  private List<ArtifactPluginDescriptor> collectContainerApplicationPluginDescriptors() throws IOException {
+    File[] containerPlugins = getContainerAppPluginsFolder().listFiles();
+    if (containerPlugins != null) {
+      unzipPluginsIfNeeded();
+      return createApplicationPluginDescriptors();
+    } else {
+      return EMPTY_LIST;
+    }
+  }
+
+  /**
+   * Iterates the list of zip files in container application plugin folder, unzip them and once the plugin is expanded it deletes the zip
+   * from the container app plugins folder.
+   */
+  private void unzipPluginsIfNeeded() throws IOException {
+    for (File pluginZipFile : getContainerAppPluginsFolder().listFiles((FileFilter) new SuffixFileFilter(".zip", INSENSITIVE))) {
+      String pluginName = removeExtension(pluginZipFile.getName());
+
+      final File pluginFolderExpanded = new File(getContainerAppPluginsFolder(), separator + pluginName);
+      unzip(pluginZipFile, pluginFolderExpanded);
+
+      forceDelete(pluginZipFile);
+    }
+  }
+
+  /**
+   * For each plugin expanded in container application plugins folder it creates an {@link ArtifactPluginDescriptor} for it and adds the
+   * descriptor the given list.
+   *
+   * @return a non null {@link List} of {@link ArtifactPluginDescriptor}
+   */
+  private List<ArtifactPluginDescriptor> createApplicationPluginDescriptors() {
+    List<ArtifactPluginDescriptor> pluginDescriptors = new LinkedList<>();
+
+    for (File pluginExpandedFolder : getContainerAppPluginsFolder().listFiles((FileFilter) DirectoryFileFilter.DIRECTORY)) {
+      final ArtifactPluginDescriptor appPluginDescriptor = pluginDescriptorFactory.create(pluginExpandedFolder);
+      pluginDescriptors.add(appPluginDescriptor);
     }
 
-    public List<ArtifactPluginDescriptor> getContainerArtifactPluginDescriptors()
-    {
-        if (containerArtifactPluginDescriptors == null)
-        {
-            synchronized (this)
-            {
-                if (containerArtifactPluginDescriptors == null)
-                {
-                    try
-                    {
-                        containerArtifactPluginDescriptors = unmodifiableList(collectContainerApplicationPluginDescriptors());
-                    }
-                    catch (IOException e)
-                    {
-                        throw new ArtifactDescriptorCreateException("Cannot load application plugin descriptors from container", e);
-                    }
-                }
-            }
-        }
-        return containerArtifactPluginDescriptors;
-    }
-
-    /**
-     * @return collects and initializes a {@link List} of {@link ArtifactPluginDescriptor} by loading the container application plugins
-     */
-    private List<ArtifactPluginDescriptor> collectContainerApplicationPluginDescriptors() throws IOException
-    {
-        File[] containerPlugins = getContainerAppPluginsFolder().listFiles();
-        if (containerPlugins != null)
-        {
-            unzipPluginsIfNeeded();
-            return createApplicationPluginDescriptors();
-        }
-        else
-        {
-            return EMPTY_LIST;
-        }
-    }
-
-    /**
-     * Iterates the list of zip files in container application plugin folder, unzip them and once the plugin is expanded
-     * it deletes the zip from the container app plugins folder.
-     */
-    private void unzipPluginsIfNeeded() throws IOException
-    {
-        for (File pluginZipFile : getContainerAppPluginsFolder().listFiles((FileFilter) new SuffixFileFilter(".zip", INSENSITIVE)))
-        {
-            String pluginName = removeExtension(pluginZipFile.getName());
-
-            final File pluginFolderExpanded = new File(getContainerAppPluginsFolder(),
-                    separator + pluginName);
-            unzip(pluginZipFile, pluginFolderExpanded);
-
-            forceDelete(pluginZipFile);
-        }
-    }
-
-    /**
-     * For each plugin expanded in container application plugins folder it creates an {@link ArtifactPluginDescriptor} for it and
-     * adds the descriptor the given list.
-     *
-     * @return a non null {@link List} of {@link ArtifactPluginDescriptor}
-     */
-    private List<ArtifactPluginDescriptor> createApplicationPluginDescriptors()
-    {
-        List<ArtifactPluginDescriptor> pluginDescriptors = new LinkedList<>();
-
-        for (File pluginExpandedFolder : getContainerAppPluginsFolder().listFiles((FileFilter) DirectoryFileFilter.DIRECTORY))
-        {
-            final ArtifactPluginDescriptor appPluginDescriptor = pluginDescriptorFactory.create(pluginExpandedFolder);
-            pluginDescriptors.add(appPluginDescriptor);
-        }
-
-        return pluginDescriptors;
-    }
+    return pluginDescriptors;
+  }
 }

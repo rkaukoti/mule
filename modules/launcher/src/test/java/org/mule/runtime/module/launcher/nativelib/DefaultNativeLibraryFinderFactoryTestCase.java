@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.launcher.nativelib;
@@ -19,32 +17,27 @@ import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.junit.Assert.assertThat;
 
 @SmallTest
-public class DefaultNativeLibraryFinderFactoryTestCase extends AbstractMuleTestCase
-{
+public class DefaultNativeLibraryFinderFactoryTestCase extends AbstractMuleTestCase {
 
-    private final DefaultNativeLibraryFinderFactory nativeLibraryFinderFactory = new DefaultNativeLibraryFinderFactory();
-    @Rule
-    public TemporaryFolder muleHomeFolder = new TemporaryFolder();
+  private final DefaultNativeLibraryFinderFactory nativeLibraryFinderFactory = new DefaultNativeLibraryFinderFactory();
+  @Rule
+  public TemporaryFolder muleHomeFolder = new TemporaryFolder();
 
-    @Test
-    public void createsPerAppNativeLibraryFinderWhenPropertyIsFalse() throws Exception
-    {
-        doCreateNativeLibraryFinderTest(PerAppNativeLibraryFinder.class);
-    }
+  @Test
+  public void createsPerAppNativeLibraryFinderWhenPropertyIsFalse() throws Exception {
+    doCreateNativeLibraryFinderTest(PerAppNativeLibraryFinder.class);
+  }
 
-    private void doCreateNativeLibraryFinderTest(final Class<? extends NativeLibraryFinder> expectedNativeLibraryFinderClass)
-            throws Exception
-    {
-        MuleTestUtils.testWithSystemProperty(MuleProperties.MULE_HOME_DIRECTORY_PROPERTY, muleHomeFolder.getRoot().getAbsolutePath(),
-                new MuleTestUtils.TestCallback()
-                {
-                    @Override
-                    public void run() throws Exception
-                    {
-                        NativeLibraryFinder nativeLibraryFinder = nativeLibraryFinderFactory.create("testApp");
+  private void doCreateNativeLibraryFinderTest(final Class<? extends NativeLibraryFinder> expectedNativeLibraryFinderClass)
+      throws Exception {
+    MuleTestUtils.testWithSystemProperty(MuleProperties.MULE_HOME_DIRECTORY_PROPERTY, muleHomeFolder.getRoot().getAbsolutePath(),
+        new MuleTestUtils.TestCallback() {
+          @Override
+          public void run() throws Exception {
+            NativeLibraryFinder nativeLibraryFinder = nativeLibraryFinderFactory.create("testApp");
 
-                        assertThat(nativeLibraryFinder, instanceOf(expectedNativeLibraryFinderClass));
-                    }
-                });
-    }
+            assertThat(nativeLibraryFinder, instanceOf(expectedNativeLibraryFinderClass));
+          }
+        });
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.security;
 
@@ -24,33 +22,25 @@ import static org.junit.Assert.assertThat;
 /**
  * See MULE-4916: spring beans inside a security filter
  */
-public class CustomSecurityFilterTestCase extends FunctionalTestCase
-{
-    @Override
-    protected String getConfigFile()
-    {
-        return "org/mule/test/integration/security/custom-security-filter-test.xml";
-    }
+public class CustomSecurityFilterTestCase extends FunctionalTestCase {
+  @Override
+  protected String getConfigFile() {
+    return "org/mule/test/integration/security/custom-security-filter-test.xml";
+  }
 
-    @Test
-    public void testOutboundAutenticationSend() throws Exception
-    {
-        Map<String, Serializable> props = new HashMap<>();
-        props.put("username", "ross");
-        props.put("pass", "ross");
+  @Test
+  public void testOutboundAutenticationSend() throws Exception {
+    Map<String, Serializable> props = new HashMap<>();
+    props.put("username", "ross");
+    props.put("pass", "ross");
 
-        MuleMessage result = flowRunner("test").withPayload("hi")
-                                               .withInboundProperties(props)
-                                               .run()
-                                               .getMessage();
+    MuleMessage result = flowRunner("test").withPayload("hi").withInboundProperties(props).run().getMessage();
 
-        assertNull(result.getExceptionPayload());
+    assertNull(result.getExceptionPayload());
 
-        props.put("pass", "badpass");
+    props.put("pass", "badpass");
 
-        MessagingException e = flowRunner("test").withPayload("hi")
-                                                 .withInboundProperties(props)
-                                                 .runExpectingException();
-        assertThat(ExceptionHelper.getRootException(e), instanceOf(BadCredentialsException.class));
-    }
+    MessagingException e = flowRunner("test").withPayload("hi").withInboundProperties(props).runExpectingException();
+    assertThat(ExceptionHelper.getRootException(e), instanceOf(BadCredentialsException.class));
+  }
 }

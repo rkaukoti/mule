@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal;
 
@@ -36,150 +34,124 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
-public class ImplicitConfigTestCase extends ExtensionFunctionalTestCase
-{
+public class ImplicitConfigTestCase extends ExtensionFunctionalTestCase {
+
+  @Override
+  protected Class<?>[] getAnnotatedExtensionClasses() {
+    return new Class<?>[] {ImplicitConfigExtension.class};
+  }
+
+  @Override
+  protected String getConfigFile() {
+    return "implicit-config.xml";
+  }
+
+  @Test
+  public void getImplicitConfig() throws Exception {
+    final Integer defaultValue = 42;
+    ImplicitConfigExtension config = (ImplicitConfigExtension) flowRunner("implicitConfig").withPayload("")
+        .withFlowVariable("optionalWithDefault", defaultValue).run().getMessage().getPayload();
+
+
+    assertThat(config, is(notNullValue()));
+    assertThat(config.getMuleContext(), is(sameInstance(muleContext)));
+    assertThat(config.getInitialise(), is(1));
+    assertThat(config.getStart(), is(1));
+    assertThat(config.getOptionalNoDefault(), is(nullValue()));
+    assertThat(config.getOptionalWithDefault(), is(defaultValue));
+  }
+
+  @Test
+  public void getImplicitConnection() throws Exception {
+    Object connection = flowRunner("implicitConnection").run().getMessage().getPayload();
+    assertThat(connection, is(instanceOf(Apple.class)));
+  }
+
+  @Extension(name = "implicit")
+  @Operations({ImplicitOperations.class})
+  @Xml(namespaceLocation = "http://www.mulesoft.org/schema/mule/implicit", namespace = "implicit")
+  @Providers(ImplicitConnectionProvider.class)
+  public static class ImplicitConfigExtension implements Initialisable, Startable, MuleContextAware {
+
+    private MuleContext muleContext;
+    private int initialise = 0;
+    private int start = 0;
+
+    @Parameter
+    @Optional
+    private String optionalNoDefault;
+
+    @Parameter
+    @Optional(defaultValue = "#[flowVars['optionalWithDefault']]")
+    private Integer optionalWithDefault;
 
     @Override
-    protected Class<?>[] getAnnotatedExtensionClasses()
-    {
-        return new Class<?>[] {ImplicitConfigExtension.class};
+    public void initialise() throws InitialisationException {
+      initialise++;
     }
 
     @Override
-    protected String getConfigFile()
-    {
-        return "implicit-config.xml";
+    public void start() throws MuleException {
+      start++;
     }
 
-    @Test
-    public void getImplicitConfig() throws Exception
-    {
-        final Integer defaultValue = 42;
-        ImplicitConfigExtension config = (ImplicitConfigExtension) flowRunner("implicitConfig").withPayload("")
-                                                                                               .withFlowVariable("optionalWithDefault",
-                                                                                                       defaultValue)
-                                                                                               .run()
-                                                                                               .getMessage()
-                                                                                               .getPayload();
-
-
-        assertThat(config, is(notNullValue()));
-        assertThat(config.getMuleContext(), is(sameInstance(muleContext)));
-        assertThat(config.getInitialise(), is(1));
-        assertThat(config.getStart(), is(1));
-        assertThat(config.getOptionalNoDefault(), is(nullValue()));
-        assertThat(config.getOptionalWithDefault(), is(defaultValue));
+    public MuleContext getMuleContext() {
+      return muleContext;
     }
 
-    @Test
-    public void getImplicitConnection() throws Exception
-    {
-        Object connection = flowRunner("implicitConnection").run().getMessage().getPayload();
-        assertThat(connection, is(instanceOf(Apple.class)));
+    @Override
+    public void setMuleContext(MuleContext context) {
+      muleContext = context;
     }
 
-    @Extension(name = "implicit")
-    @Operations({ImplicitOperations.class})
-    @Xml(namespaceLocation = "http://www.mulesoft.org/schema/mule/implicit", namespace = "implicit")
-    @Providers(ImplicitConnectionProvider.class)
-    public static class ImplicitConfigExtension implements Initialisable, Startable, MuleContextAware
-    {
-
-        private MuleContext muleContext;
-        private int initialise = 0;
-        private int start = 0;
-
-        @Parameter
-        @Optional
-        private String optionalNoDefault;
-
-        @Parameter
-        @Optional(defaultValue = "#[flowVars['optionalWithDefault']]")
-        private Integer optionalWithDefault;
-
-        @Override
-        public void initialise() throws InitialisationException
-        {
-            initialise++;
-        }
-
-        @Override
-        public void start() throws MuleException
-        {
-            start++;
-        }
-
-        public MuleContext getMuleContext()
-        {
-            return muleContext;
-        }
-
-        @Override
-        public void setMuleContext(MuleContext context)
-        {
-            muleContext = context;
-        }
-
-        public int getInitialise()
-        {
-            return initialise;
-        }
-
-        public int getStart()
-        {
-            return start;
-        }
-
-        public String getOptionalNoDefault()
-        {
-            return optionalNoDefault;
-        }
-
-        public Integer getOptionalWithDefault()
-        {
-            return optionalWithDefault;
-        }
+    public int getInitialise() {
+      return initialise;
     }
 
-    public static class ImplicitConnectionProvider implements ConnectionProvider<Apple>
-    {
-
-        @Override
-        public Apple connect() throws ConnectionException
-        {
-            return new Apple();
-        }
-
-        @Override
-        public void disconnect(Apple apple)
-        {
-
-        }
-
-        @Override
-        public ConnectionValidationResult validate(Apple apple)
-        {
-            return ConnectionValidationResult.success();
-        }
-
-        @Override
-        public ConnectionHandlingStrategy<Apple> getHandlingStrategy(ConnectionHandlingStrategyFactory<Apple> handlingStrategyFactory)
-        {
-            return handlingStrategyFactory.none();
-        }
+    public int getStart() {
+      return start;
     }
 
-    public static class ImplicitOperations
-    {
-
-        public ImplicitConfigExtension getConfig(@UseConfig ImplicitConfigExtension config)
-        {
-            return config;
-        }
-
-        public Apple getConnection(@Connection Apple connection)
-        {
-            return connection;
-        }
+    public String getOptionalNoDefault() {
+      return optionalNoDefault;
     }
+
+    public Integer getOptionalWithDefault() {
+      return optionalWithDefault;
+    }
+  }
+
+  public static class ImplicitConnectionProvider implements ConnectionProvider<Apple> {
+
+    @Override
+    public Apple connect() throws ConnectionException {
+      return new Apple();
+    }
+
+    @Override
+    public void disconnect(Apple apple) {
+
+    }
+
+    @Override
+    public ConnectionValidationResult validate(Apple apple) {
+      return ConnectionValidationResult.success();
+    }
+
+    @Override
+    public ConnectionHandlingStrategy<Apple> getHandlingStrategy(ConnectionHandlingStrategyFactory<Apple> handlingStrategyFactory) {
+      return handlingStrategyFactory.none();
+    }
+  }
+
+  public static class ImplicitOperations {
+
+    public ImplicitConfigExtension getConfig(@UseConfig ImplicitConfigExtension config) {
+      return config;
+    }
+
+    public Apple getConnection(@Connection Apple connection) {
+      return connection;
+    }
+  }
 }

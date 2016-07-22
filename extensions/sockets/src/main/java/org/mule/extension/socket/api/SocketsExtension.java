@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api;
 
@@ -36,12 +34,9 @@ import org.mule.runtime.extension.api.annotation.SubTypeMapping;
 @Extension(name = "sockets")
 @Configurations({ListenerConfig.class, RequesterConfig.class})
 @SubTypeMapping(baseType = TcpProtocol.class, subTypes = {SafeProtocol.class, DirectProtocol.class, LengthProtocol.class,
-                                                          StreamingProtocol.class, XmlMessageProtocol.class, XmlMessageEOFProtocol.class,
-                                                          CustomProtocol.class, EOFProtocol.class})
+    StreamingProtocol.class, XmlMessageProtocol.class, XmlMessageEOFProtocol.class, CustomProtocol.class, EOFProtocol.class})
 @Export(classes = {TcpClientSocketProperties.class, TcpServerSocketProperties.class, UdpSocketProperties.class,
-                   ReadingTimeoutException.class, LengthExceededException.class,
-                   LengthProtocol.class, AbstractByteProtocol.class})
-public class SocketsExtension
-{
+    ReadingTimeoutException.class, LengthExceededException.class, LengthProtocol.class, AbstractByteProtocol.class})
+public class SocketsExtension {
 
 }

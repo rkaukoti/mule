@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.http.internal.request.validator;
 
@@ -34,43 +32,36 @@ import static org.mule.runtime.api.metadata.MetadataKeyBuilder.newKey;
  *
  * @since 4.0
  */
-public class HttpMetadataResolver implements Initialisable, MetadataKeysResolver, MetadataOutputResolver<String>
-{
-    private static final ClassTypeLoader TYPE_LOADER = ExtensionsTypeLoaderFactory.getDefault().createTypeLoader();
-    private static final String ANY = "ANY";
+public class HttpMetadataResolver implements Initialisable, MetadataKeysResolver, MetadataOutputResolver<String> {
+  private static final ClassTypeLoader TYPE_LOADER = ExtensionsTypeLoaderFactory.getDefault().createTypeLoader();
+  private static final String ANY = "ANY";
 
-    private Class[] classes = new Class[] {InputStream.class, ParameterMap.class};
-    private Map<String, MetadataType> types;
-    private Set<MetadataKey> keys;
+  private Class[] classes = new Class[] {InputStream.class, ParameterMap.class};
+  private Map<String, MetadataType> types;
+  private Set<MetadataKey> keys;
 
-    @Override
-    public Set<MetadataKey> getMetadataKeys(MetadataContext context) throws MetadataResolvingException, ConnectionException
-    {
-        return keys;
-    }
+  @Override
+  public Set<MetadataKey> getMetadataKeys(MetadataContext context) throws MetadataResolvingException, ConnectionException {
+    return keys;
+  }
 
-    @Override
-    public MetadataType getOutputMetadata(MetadataContext context, String key) throws MetadataResolvingException, ConnectionException
-    {
-        return types.get(key);
-    }
+  @Override
+  public MetadataType getOutputMetadata(MetadataContext context, String key) throws MetadataResolvingException, ConnectionException {
+    return types.get(key);
+  }
 
-    @Override
-    public void initialise() throws InitialisationException
-    {
-        UnionTypeBuilder builder = new BaseTypeBuilder<>(JAVA).unionType();
-        //Create all MetadataTypes and store them by String key
-        Arrays.stream(classes).forEach(aClass ->
-        {
-            MetadataType type = TYPE_LOADER.load(aClass);
-            types.put(aClass.getSimpleName(), type);
-            builder.of(type);
-        });
-        types.put(ANY, builder.build());
-        //Create MetadataKeys
-        types.keySet().stream().forEach(
-                aKey -> keys.add(newKey(aKey).build())
-        );
-    }
+  @Override
+  public void initialise() throws InitialisationException {
+    UnionTypeBuilder builder = new BaseTypeBuilder<>(JAVA).unionType();
+    // Create all MetadataTypes and store them by String key
+    Arrays.stream(classes).forEach(aClass -> {
+      MetadataType type = TYPE_LOADER.load(aClass);
+      types.put(aClass.getSimpleName(), type);
+      builder.of(type);
+    });
+    types.put(ANY, builder.build());
+    // Create MetadataKeys
+    types.keySet().stream().forEach(aKey -> keys.add(newKey(aKey).build()));
+  }
 
 }

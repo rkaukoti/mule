@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.infrastructure.process.matchers;
 
@@ -12,32 +10,27 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.mule.test.infrastructure.process.MuleProcessController;
 
-public class Deployment extends TypeSafeMatcher<MuleProcessController>
-{
+public class Deployment extends TypeSafeMatcher<MuleProcessController> {
 
-    private String applicationName;
+  private String applicationName;
 
-    public Deployment(String applicationName)
-    {
-        this.applicationName = applicationName;
-    }
+  public Deployment(String applicationName) {
+    this.applicationName = applicationName;
+  }
 
-    @Factory
-    public static <T> Matcher<MuleProcessController> hasDeployed(String applicationName)
-    {
-        return new Deployment(applicationName);
-    }
+  @Factory
+  public static <T> Matcher<MuleProcessController> hasDeployed(String applicationName) {
+    return new Deployment(applicationName);
+  }
 
-    @Override
-    public boolean matchesSafely(MuleProcessController mule)
-    {
-        return mule.isDeployed(applicationName);
-    }
+  @Override
+  public boolean matchesSafely(MuleProcessController mule) {
+    return mule.isDeployed(applicationName);
+  }
 
-    @Override
-    public void describeTo(Description description)
-    {
-        description.appendText("a Mule Standalone server that has successfully deployed: " + applicationName);
-    }
+  @Override
+  public void describeTo(Description description) {
+    description.appendText("a Mule Standalone server that has successfully deployed: " + applicationName);
+  }
 
 };

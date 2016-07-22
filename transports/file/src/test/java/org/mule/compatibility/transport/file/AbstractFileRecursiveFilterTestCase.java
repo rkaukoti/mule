@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.compatibility.transport.file;
@@ -21,24 +19,21 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 @Ignore("This is abstract")
-public class AbstractFileRecursiveFilterTestCase extends FunctionalTestCase
-{
+public class AbstractFileRecursiveFilterTestCase extends FunctionalTestCase {
 
-    @Before
-    public void setUpFile() throws Exception
-    {
-        File subfolder = FileTestUtils.createFolder(workingDirectory.getRoot(), "subfolder");
+  @Before
+  public void setUpFile() throws Exception {
+    File subfolder = FileTestUtils.createFolder(workingDirectory.getRoot(), "subfolder");
 
-        FileTestUtils.createDataFile(subfolder, TEST_MESSAGE);
-    }
+    FileTestUtils.createDataFile(subfolder, TEST_MESSAGE);
+  }
 
-    @Test
-    public void filtersFiles() throws Exception
-    {
-        MuleClient client = muleContext.getClient();
+  @Test
+  public void filtersFiles() throws Exception {
+    MuleClient client = muleContext.getClient();
 
-        MuleMessage response = client.request("vm://testOut", RECEIVE_TIMEOUT);
-        assertNotNull(response);
-        assertThat(getPayloadAsString(response), equalTo(TEST_MESSAGE));
-    }
+    MuleMessage response = client.request("vm://testOut", RECEIVE_TIMEOUT);
+    assertNotNull(response);
+    assertThat(getPayloadAsString(response), equalTo(TEST_MESSAGE));
+  }
 }

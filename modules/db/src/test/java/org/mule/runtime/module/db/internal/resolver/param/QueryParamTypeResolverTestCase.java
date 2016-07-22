@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.resolver.param;
@@ -35,59 +33,54 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SmallTest
-public class QueryParamTypeResolverTestCase extends AbstractMuleTestCase
-{
+public class QueryParamTypeResolverTestCase extends AbstractMuleTestCase {
 
-    public static final String SQL_TEXT = "select * from test where id = ?";
+  public static final String SQL_TEXT = "select * from test where id = ?";
 
-    @Test
-    public void resolvesQueryParameterKnownType() throws Exception
-    {
-        DbConnection connection = createDbConnection();
+  @Test
+  public void resolvesQueryParameterKnownType() throws Exception {
+    DbConnection connection = createDbConnection();
 
-        DbTypeManager dbTypeManager = new DbTypeManagerBuilder().on(connection).managing(JdbcTypes.INTEGER_DB_TYPE).build();
+    DbTypeManager dbTypeManager = new DbTypeManagerBuilder().on(connection).managing(JdbcTypes.INTEGER_DB_TYPE).build();
 
-        QueryTemplate queryTemplate = createQueryTemplate();
+    QueryTemplate queryTemplate = createQueryTemplate();
 
-        QueryParamTypeResolver paramTypeResolver = new QueryParamTypeResolver(dbTypeManager);
+    QueryParamTypeResolver paramTypeResolver = new QueryParamTypeResolver(dbTypeManager);
 
-        Map<Integer, DbType> parameterTypes = paramTypeResolver.getParameterTypes(connection, queryTemplate);
+    Map<Integer, DbType> parameterTypes = paramTypeResolver.getParameterTypes(connection, queryTemplate);
 
-        assertThat(parameterTypes.size(), equalTo(1));
-        assertThat(parameterTypes.get(1), equalTo(JdbcTypes.INTEGER_DB_TYPE));
-    }
+    assertThat(parameterTypes.size(), equalTo(1));
+    assertThat(parameterTypes.get(1), equalTo(JdbcTypes.INTEGER_DB_TYPE));
+  }
 
-    @Test
-    public void resolvesQueryParameterUnknownType() throws Exception
-    {
-        DbConnection connection = createDbConnection();
+  @Test
+  public void resolvesQueryParameterUnknownType() throws Exception {
+    DbConnection connection = createDbConnection();
 
-        QueryTemplate queryTemplate = createQueryTemplate();
+    QueryTemplate queryTemplate = createQueryTemplate();
 
-        DbTypeManager dbTypeManager = new DbTypeManagerBuilder().on(connection).unknowing(JdbcTypes.INTEGER_DB_TYPE).build();
+    DbTypeManager dbTypeManager = new DbTypeManagerBuilder().on(connection).unknowing(JdbcTypes.INTEGER_DB_TYPE).build();
 
-        QueryParamTypeResolver paramTypeResolver = new QueryParamTypeResolver(dbTypeManager);
+    QueryParamTypeResolver paramTypeResolver = new QueryParamTypeResolver(dbTypeManager);
 
-        Map<Integer, DbType> parameterTypes = paramTypeResolver.getParameterTypes(connection, queryTemplate);
+    Map<Integer, DbType> parameterTypes = paramTypeResolver.getParameterTypes(connection, queryTemplate);
 
-        assertThat(parameterTypes.size(), equalTo(1));
-        assertThat(parameterTypes.get(1).getId(), equalTo(JdbcTypes.INTEGER_DB_TYPE.getId()));
-        assertThat(parameterTypes.get(1).getName(), equalTo(JdbcTypes.INTEGER_DB_TYPE.getName()));
-    }
+    assertThat(parameterTypes.size(), equalTo(1));
+    assertThat(parameterTypes.get(1).getId(), equalTo(JdbcTypes.INTEGER_DB_TYPE.getId()));
+    assertThat(parameterTypes.get(1).getName(), equalTo(JdbcTypes.INTEGER_DB_TYPE.getName()));
+  }
 
-    private DbConnection createDbConnection() throws SQLException
-    {
-        ParameterMetaData parameterMetaData = new ParameterMetaDataBuilder().withParameter(1, JdbcTypes.INTEGER_DB_TYPE).build();
+  private DbConnection createDbConnection() throws SQLException {
+    ParameterMetaData parameterMetaData = new ParameterMetaDataBuilder().withParameter(1, JdbcTypes.INTEGER_DB_TYPE).build();
 
-        PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        when(preparedStatement.getParameterMetaData()).thenReturn(parameterMetaData);
+    PreparedStatement preparedStatement = mock(PreparedStatement.class);
+    when(preparedStatement.getParameterMetaData()).thenReturn(parameterMetaData);
 
-        return new DbConnectionBuilder().preparing(SQL_TEXT, preparedStatement).build();
-    }
+    return new DbConnectionBuilder().preparing(SQL_TEXT, preparedStatement).build();
+  }
 
-    private QueryTemplate createQueryTemplate()
-    {
-        return new QueryTemplate(SQL_TEXT, QueryType.SELECT,
-                Collections.<QueryParam>singletonList(new DefaultInputQueryParam(1, UnknownDbType.getInstance(), "7", "param1")));
-    }
+  private QueryTemplate createQueryTemplate() {
+    return new QueryTemplate(SQL_TEXT, QueryType.SELECT,
+        Collections.<QueryParam>singletonList(new DefaultInputQueryParam(1, UnknownDbType.getInstance(), "7", "param1")));
+  }
 }

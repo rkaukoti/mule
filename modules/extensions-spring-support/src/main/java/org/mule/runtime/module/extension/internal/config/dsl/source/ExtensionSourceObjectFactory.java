@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.config.dsl.source;
 
@@ -41,105 +39,80 @@ import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessa
  *
  * @since 4.0
  */
-public class ExtensionSourceObjectFactory extends AbstractExtensionObjectFactory<ExtensionMessageSource>
-{
+public class ExtensionSourceObjectFactory extends AbstractExtensionObjectFactory<ExtensionMessageSource> {
 
-    private final RuntimeExtensionModel extensionModel;
-    private final RuntimeSourceModel sourceModel;
-    private final MuleContext muleContext;
+  private final RuntimeExtensionModel extensionModel;
+  private final RuntimeSourceModel sourceModel;
+  private final MuleContext muleContext;
 
-    private String configurationProviderName;
-    private RetryPolicyTemplate retryPolicyTemplate;
+  private String configurationProviderName;
+  private RetryPolicyTemplate retryPolicyTemplate;
 
-    @Inject
-    private ConnectionManagerAdapter connectionManager;
+  @Inject
+  private ConnectionManagerAdapter connectionManager;
 
-    public ExtensionSourceObjectFactory(RuntimeExtensionModel extensionModel, RuntimeSourceModel sourceModel, MuleContext muleContext)
-    {
-        this.extensionModel = extensionModel;
-        this.sourceModel = sourceModel;
-        this.muleContext = muleContext;
+  public ExtensionSourceObjectFactory(RuntimeExtensionModel extensionModel, RuntimeSourceModel sourceModel, MuleContext muleContext) {
+    this.extensionModel = extensionModel;
+    this.sourceModel = sourceModel;
+    this.muleContext = muleContext;
+  }
+
+  @Override
+  public ExtensionMessageSource getObject() throws ConfigurationException {
+    ResolverSet resolverSet = getParametersAsResolverSet();
+    if (resolverSet.isDynamic()) {
+      throw dynamicParameterException(resolverSet, sourceModel);
     }
 
-    @Override
-    public ExtensionMessageSource getObject() throws ConfigurationException
-    {
-        ResolverSet resolverSet = getParametersAsResolverSet();
-        if (resolverSet.isDynamic())
-        {
-            throw dynamicParameterException(resolverSet, sourceModel);
-        }
-
-        ExtensionMessageSource messageSource = new ExtensionMessageSource(extensionModel,
-                sourceModel,
-                getSourceFactory(resolverSet),
-                configurationProviderName,
-                getThreadingProfile(),
-                getRetryPolicyTemplate(),
-                (ExtensionManagerAdapter) muleContext.getExtensionManager());
-        try
-        {
-            muleContext.getInjector().inject(messageSource);
-        }
-        catch (MuleException e)
-        {
-            throw new ConfigurationException(createStaticMessage("Could not inject dependencies into source"), e);
-        }
-
-        return messageSource;
+    ExtensionMessageSource messageSource =
+        new ExtensionMessageSource(extensionModel, sourceModel, getSourceFactory(resolverSet), configurationProviderName,
+            getThreadingProfile(), getRetryPolicyTemplate(), (ExtensionManagerAdapter) muleContext.getExtensionManager());
+    try {
+      muleContext.getInjector().inject(messageSource);
+    } catch (MuleException e) {
+      throw new ConfigurationException(createStaticMessage("Could not inject dependencies into source"), e);
     }
 
-    private ThreadingProfile getThreadingProfile()
-    {
-        ThreadingProfile tp = new ImmutableThreadingProfile(DEFAULT_THREADING_PROFILE);
-        tp.setMuleContext(muleContext);
+    return messageSource;
+  }
 
-        return tp;
-    }
+  private ThreadingProfile getThreadingProfile() {
+    ThreadingProfile tp = new ImmutableThreadingProfile(DEFAULT_THREADING_PROFILE);
+    tp.setMuleContext(muleContext);
+
+    return tp;
+  }
 
 
-    private SourceFactory getSourceFactory(ResolverSet resolverSet)
-    {
-        return () ->
-        {
-            Source source = sourceModel.getSourceFactory().createSource();
-            try
-            {
-                return new SourceConfigurer(sourceModel, resolverSet, muleContext).configure(source);
-            }
-            catch (Exception e)
-            {
-                throw new MuleRuntimeException(
-                        createStaticMessage(format("Could not create generator for source '%s'", sourceModel.getName())));
-            }
-        };
-    }
+  private SourceFactory getSourceFactory(ResolverSet resolverSet) {
+    return () -> {
+      Source source = sourceModel.getSourceFactory().createSource();
+      try {
+        return new SourceConfigurer(sourceModel, resolverSet, muleContext).configure(source);
+      } catch (Exception e) {
+        throw new MuleRuntimeException(createStaticMessage(format("Could not create generator for source '%s'", sourceModel.getName())));
+      }
+    };
+  }
 
-    private RetryPolicyTemplate getRetryPolicyTemplate() throws ConfigurationException
-    {
-        return retryPolicyTemplate != null ? retryPolicyTemplate : connectionManager.getDefaultRetryPolicyTemplate();
-    }
+  private RetryPolicyTemplate getRetryPolicyTemplate() throws ConfigurationException {
+    return retryPolicyTemplate != null ? retryPolicyTemplate : connectionManager.getDefaultRetryPolicyTemplate();
+  }
 
-    public void setRetryPolicyTemplate(RetryPolicyTemplate retryPolicyTemplate)
-    {
-        this.retryPolicyTemplate = retryPolicyTemplate;
-    }
+  public void setRetryPolicyTemplate(RetryPolicyTemplate retryPolicyTemplate) {
+    this.retryPolicyTemplate = retryPolicyTemplate;
+  }
 
-    private ConfigurationException dynamicParameterException(ResolverSet resolverSet, SourceModel model)
-    {
-        List<String> dynamicParams = resolverSet.getResolvers().entrySet().stream()
-                                                .filter(entry -> entry.getValue().isDynamic())
-                                                .map(entry -> entry.getKey())
-                                                .collect(toList());
+  private ConfigurationException dynamicParameterException(ResolverSet resolverSet, SourceModel model) {
+    List<String> dynamicParams = resolverSet.getResolvers().entrySet().stream().filter(entry -> entry.getValue().isDynamic())
+        .map(entry -> entry.getKey()).collect(toList());
 
-        return new ConfigurationException(
-                createStaticMessage(format("The '%s' message source is using expressions, which are not allowed on message sources. " +
-                                           "Offending parameters are: [%s]",
-                        model.getName(), Joiner.on(',').join(dynamicParams))));
-    }
+    return new ConfigurationException(createStaticMessage(format(
+        "The '%s' message source is using expressions, which are not allowed on message sources. " + "Offending parameters are: [%s]",
+        model.getName(), Joiner.on(',').join(dynamicParams))));
+  }
 
-    public void setConfigurationProviderName(String configurationProviderName)
-    {
-        this.configurationProviderName = configurationProviderName;
-    }
+  public void setConfigurationProviderName(String configurationProviderName) {
+    this.configurationProviderName = configurationProviderName;
+  }
 }

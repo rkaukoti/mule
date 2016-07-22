@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
@@ -30,42 +28,37 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExecutorPerServerAddressIOStrategyTestCase extends AbstractMuleTestCase
-{
+public class ExecutorPerServerAddressIOStrategyTestCase extends AbstractMuleTestCase {
 
-    @Mock
-    private ExecutorProvider executorProvider;
-    @Mock
-    private Connection connection;
-    @Mock
-    private Executor executor;
+  @Mock
+  private ExecutorProvider executorProvider;
+  @Mock
+  private Connection connection;
+  @Mock
+  private Executor executor;
 
-    private IOStrategy ioStrategy;
+  private IOStrategy ioStrategy;
 
-    @Before
-    public void before() throws UnknownHostException
-    {
-        ioStrategy = new ExecutorPerServerAddressIOStrategy(executorProvider);
-        when(connection.getLocalAddress()).thenReturn(new InetSocketAddress(InetAddress.getLocalHost(), 80));
-        when(executorProvider.getExecutor(any(ServerAddress.class))).thenReturn(executor);
-    }
+  @Before
+  public void before() throws UnknownHostException {
+    ioStrategy = new ExecutorPerServerAddressIOStrategy(executorProvider);
+    when(connection.getLocalAddress()).thenReturn(new InetSocketAddress(InetAddress.getLocalHost(), 80));
+    when(executorProvider.getExecutor(any(ServerAddress.class))).thenReturn(executor);
+  }
 
-    @Test
-    public void serverAcceptIOEventDoesNotUseExecutor()
-    {
-        assertThat(ioStrategy.getThreadPoolFor(connection, IOEvent.SERVER_ACCEPT), is(nullValue()));
-    }
+  @Test
+  public void serverAcceptIOEventDoesNotUseExecutor() {
+    assertThat(ioStrategy.getThreadPoolFor(connection, IOEvent.SERVER_ACCEPT), is(nullValue()));
+  }
 
-    @Test
-    public void readIOEventUsesExecutor()
-    {
-        assertThat(ioStrategy.getThreadPoolFor(connection, IOEvent.READ), is(equalTo(executor)));
-    }
+  @Test
+  public void readIOEventUsesExecutor() {
+    assertThat(ioStrategy.getThreadPoolFor(connection, IOEvent.READ), is(equalTo(executor)));
+  }
 
-    @Test
-    public void closeIOEventUsesExecutor()
-    {
-        assertThat(ioStrategy.getThreadPoolFor(connection, IOEvent.CLOSED), is(equalTo(executor)));
-    }
+  @Test
+  public void closeIOEventUsesExecutor() {
+    assertThat(ioStrategy.getThreadPoolFor(connection, IOEvent.CLOSED), is(equalTo(executor)));
+  }
 
 }

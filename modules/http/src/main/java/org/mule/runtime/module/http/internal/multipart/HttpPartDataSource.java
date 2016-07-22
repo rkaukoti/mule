@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.multipart;
 
@@ -23,107 +21,84 @@ import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 
-public class HttpPartDataSource implements DataSource
-{
+public class HttpPartDataSource implements DataSource {
 
-    private final HttpPart part;
-    private byte[] content;
+  private final HttpPart part;
+  private byte[] content;
 
-    private HttpPartDataSource(HttpPart part)
-    {
-        try
-        {
-            this.part = part;
-            this.content = IOUtils.toByteArray(part.getInputStream());
+  private HttpPartDataSource(HttpPart part) {
+    try {
+      this.part = part;
+      this.content = IOUtils.toByteArray(part.getInputStream());
+    } catch (IOException e) {
+      throw new MuleRuntimeException(e);
+    }
+  }
+
+  public static Collection<HttpPartDataSource> createFrom(Collection<HttpPart> parts) {
+    final ArrayList<HttpPartDataSource> httpParts = new ArrayList<>(parts.size());
+    for (HttpPart part : parts) {
+      httpParts.add(new HttpPartDataSource(part));
+    }
+    return httpParts;
+  }
+
+  public static Map<String, DataHandler> createDataHandlerFrom(Collection<HttpPart> parts) {
+    final Map<String, DataHandler> httpParts = new HashMap<>(parts.size());
+    for (HttpPart part : parts) {
+      httpParts.put(part.getName(), new DataHandler(new HttpPartDataSource(part)));
+    }
+    return httpParts;
+  }
+
+  public static Collection<HttpPart> createFrom(Map<String, DataHandler> parts) throws IOException {
+    final ArrayList<HttpPart> httpParts = new ArrayList<>(parts.size());
+    for (String partName : parts.keySet()) {
+      final DataHandler dataHandlerPart = parts.get(partName);
+      if (dataHandlerPart.getDataSource() instanceof HttpPartDataSource) {
+        httpParts.add(((HttpPartDataSource) dataHandlerPart.getDataSource()).getPart());
+      } else {
+        byte[] data = IOUtils.toByteArray(dataHandlerPart.getInputStream());
+        String fileName = null;
+
+        if (dataHandlerPart.getDataSource() instanceof FileDataSource || dataHandlerPart.getDataSource() instanceof ByteArrayDataSource) {
+          fileName = dataHandlerPart.getDataSource().getName();
         }
-        catch (IOException e)
-        {
-            throw new MuleRuntimeException(e);
-        }
+        httpParts.add(new HttpPart(partName, fileName, data, dataHandlerPart.getContentType(), data.length));
+      }
     }
+    return httpParts;
+  }
 
-    public static Collection<HttpPartDataSource> createFrom(Collection<HttpPart> parts)
-    {
-        final ArrayList<HttpPartDataSource> httpParts = new ArrayList<>(parts.size());
-        for (HttpPart part : parts)
-        {
-            httpParts.add(new HttpPartDataSource(part));
-        }
-        return httpParts;
-    }
+  public byte[] getContent() throws IOException {
+    return this.content;
+  }
 
-    public static Map<String, DataHandler> createDataHandlerFrom(Collection<HttpPart> parts)
-    {
-        final Map<String, DataHandler> httpParts = new HashMap<>(parts.size());
-        for (HttpPart part : parts)
-        {
-            httpParts.put(part.getName(), new DataHandler(new HttpPartDataSource(part)));
-        }
-        return httpParts;
-    }
+  @Override
+  public InputStream getInputStream() throws IOException {
+    return new ByteArrayInputStream(getContent());
+  }
 
-    public static Collection<HttpPart> createFrom(Map<String, DataHandler> parts) throws IOException
-    {
-        final ArrayList<HttpPart> httpParts = new ArrayList<>(parts.size());
-        for (String partName : parts.keySet())
-        {
-            final DataHandler dataHandlerPart = parts.get(partName);
-            if (dataHandlerPart.getDataSource() instanceof HttpPartDataSource)
-            {
-                httpParts.add(((HttpPartDataSource) dataHandlerPart.getDataSource()).getPart());
-            }
-            else
-            {
-                byte[] data = IOUtils.toByteArray(dataHandlerPart.getInputStream());
-                String fileName = null;
+  @Override
+  public OutputStream getOutputStream() throws IOException {
+    throw new UnsupportedOperationException();
+  }
 
-                if (dataHandlerPart.getDataSource() instanceof FileDataSource ||
-                    dataHandlerPart.getDataSource() instanceof ByteArrayDataSource)
-                {
-                    fileName = dataHandlerPart.getDataSource().getName();
-                }
-                httpParts.add(new HttpPart(partName, fileName, data, dataHandlerPart.getContentType(), data.length));
-            }
-        }
-        return httpParts;
-    }
+  @Override
+  public String getContentType() {
+    return part.getContentType();
+  }
 
-    public byte[] getContent() throws IOException
-    {
-        return this.content;
-    }
+  public String getHeader(String headerName) {
+    return part.getHeader(headerName);
+  }
 
-    @Override
-    public InputStream getInputStream() throws IOException
-    {
-        return new ByteArrayInputStream(getContent());
-    }
+  @Override
+  public String getName() {
+    return part.getName();
+  }
 
-    @Override
-    public OutputStream getOutputStream() throws IOException
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String getContentType()
-    {
-        return part.getContentType();
-    }
-
-    public String getHeader(String headerName)
-    {
-        return part.getHeader(headerName);
-    }
-
-    @Override
-    public String getName()
-    {
-        return part.getName();
-    }
-
-    public HttpPart getPart()
-    {
-        return part;
-    }
+  public HttpPart getPart() {
+    return part;
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.connector;
 
@@ -34,139 +32,108 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 @RunWith(Parameterized.class)
-public class PetStoreConnectionPoolingTestCase extends PetStoreConnectionTestCase
-{
+public class PetStoreConnectionPoolingTestCase extends PetStoreConnectionTestCase {
 
-    private static final String CUSTOM_POOLING_CONFIG = "customPooling";
-    private static final String CUSTOM_POOLING_POOLED_CONFIG = CUSTOM_POOLING_CONFIG + "Pooled";
-    private static final String CUSTOM_POOLING_POOLABLE_CONFIG = CUSTOM_POOLING_CONFIG + "Poolable";
-    private static final String NO_POOLING = "noPooling";
-    @Rule
-    public SystemProperty configNameProperty;
-    protected int poolSize;
-    protected String name;
-    private ExecutorService executorService = null;
-    private Latch connectionLatch = new Latch();
-    private CountDownLatch testLatch;
-    public PetStoreConnectionPoolingTestCase(String name, int poolSize)
-    {
-        this.name = name;
-        this.poolSize = poolSize;
-        configNameProperty = new SystemProperty("configName", name);
-        testLatch = new CountDownLatch(poolSize);
+  private static final String CUSTOM_POOLING_CONFIG = "customPooling";
+  private static final String CUSTOM_POOLING_POOLED_CONFIG = CUSTOM_POOLING_CONFIG + "Pooled";
+  private static final String CUSTOM_POOLING_POOLABLE_CONFIG = CUSTOM_POOLING_CONFIG + "Poolable";
+  private static final String NO_POOLING = "noPooling";
+  @Rule
+  public SystemProperty configNameProperty;
+  protected int poolSize;
+  protected String name;
+  private ExecutorService executorService = null;
+  private Latch connectionLatch = new Latch();
+  private CountDownLatch testLatch;
+
+  public PetStoreConnectionPoolingTestCase(String name, int poolSize) {
+    this.name = name;
+    this.poolSize = poolSize;
+    configNameProperty = new SystemProperty("configName", name);
+    testLatch = new CountDownLatch(poolSize);
+  }
+
+  @Parameterized.Parameters(name = "{0}")
+  public static Collection<Object[]> data() {
+    return asList(new Object[][] {{CUSTOM_POOLING_POOLABLE_CONFIG, 3}, {CUSTOM_POOLING_POOLED_CONFIG, 3}, {NO_POOLING, 0}});
+  }
+
+  @Override
+  protected String getConfigFile() {
+    return "petstore-pooling-connection.xml";
+  }
+
+  @Override
+  protected void doTearDown() throws Exception {
+    if (executorService != null) {
+      executorService.shutdown();
+    }
+  }
+
+  @Test
+  public void exhaustion() throws Exception {
+    if (NO_POOLING.equals(name)) {
+      // test does not apply
+      return;
     }
 
-    @Parameterized.Parameters(name = "{0}")
-    public static Collection<Object[]> data()
-    {
-        return asList(new Object[][] {
-                {CUSTOM_POOLING_POOLABLE_CONFIG, 3},
-                {CUSTOM_POOLING_POOLED_CONFIG, 3},
-                {NO_POOLING, 0}});
+    executorService = Executors.newFixedThreadPool(poolSize);
+
+    List<Future<PetStoreClient>> clients = new ArrayList<>(poolSize);
+    for (int i = 0; i < poolSize; i++) {
+      clients.add(getClientOnLatch());
     }
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "petstore-pooling-connection.xml";
+    testLatch.await();
+
+    try {
+      getClient();
+      fail("was expecting pool to be exhausted when using config: " + name);
+    } catch (MessagingException e) {
+      assertThat(e.getCauseException(), is(instanceOf(ConnectionException.class)));
+    } catch (Exception e) {
+      fail("a connection exception was expected");
     }
 
-    @Override
-    protected void doTearDown() throws Exception
-    {
-        if (executorService != null)
-        {
-            executorService.shutdown();
+    connectionLatch.release();
+
+    for (Future<PetStoreClient> future : clients) {
+      PollingProber prober = new PollingProber(1000, 100);
+      prober.check(new JUnitProbe() {
+        @Override
+        protected boolean test() throws Exception {
+          PetStoreClient client = future.get(100, MILLISECONDS);
+          assertValidClient(client);
+          return true;
         }
+
+        @Override
+        public String describeFailure() {
+          return "Could not obtain valid client";
+        }
+      });
     }
 
-    @Test
-    public void exhaustion() throws Exception
-    {
-        if (NO_POOLING.equals(name))
-        {
-            // test does not apply
-            return;
-        }
+    // now test that the pool is usable again
+    assertValidClient(getClient());
+  }
 
-        executorService = Executors.newFixedThreadPool(poolSize);
+  protected Future<PetStoreClient> getClientOnLatch() {
+    return executorService.submit(() -> (PetStoreClient) flowRunner("getClientOnLatch").withPayload("")
+        .withFlowVariable("testLatch", testLatch).withFlowVariable("connectionLatch", connectionLatch).run().getMessage().getPayload());
+  }
 
-        List<Future<PetStoreClient>> clients = new ArrayList<>(poolSize);
-        for (int i = 0; i < poolSize; i++)
-        {
-            clients.add(getClientOnLatch());
-        }
-
-        testLatch.await();
-
-        try
-        {
-            getClient();
-            fail("was expecting pool to be exhausted when using config: " + name);
-        }
-        catch (MessagingException e)
-        {
-            assertThat(e.getCauseException(), is(instanceOf(ConnectionException.class)));
-        }
-        catch (Exception e)
-        {
-            fail("a connection exception was expected");
-        }
-
-        connectionLatch.release();
-
-        for (Future<PetStoreClient> future : clients)
-        {
-            PollingProber prober = new PollingProber(1000, 100);
-            prober.check(new JUnitProbe()
-            {
-                @Override
-                protected boolean test() throws Exception
-                {
-                    PetStoreClient client = future.get(100, MILLISECONDS);
-                    assertValidClient(client);
-                    return true;
-                }
-
-                @Override
-                public String describeFailure()
-                {
-                    return "Could not obtain valid client";
-                }
-            });
-        }
-
-        //now test that the pool is usable again
-        assertValidClient(getClient());
+  @Override
+  protected void assertConnected(PetStoreClient client) {
+    if (NO_POOLING.equals(name)) {
+      assertThat(client.isConnected(), is(false));
+    } else {
+      super.assertConnected(client);
     }
+  }
 
-    protected Future<PetStoreClient> getClientOnLatch()
-    {
-        return executorService.submit(() -> (PetStoreClient) flowRunner("getClientOnLatch").withPayload("")
-                                                                                           .withFlowVariable("testLatch", testLatch)
-                                                                                           .withFlowVariable("connectionLatch",
-                                                                                                   connectionLatch)
-                                                                                           .run()
-                                                                                           .getMessage()
-                                                                                           .getPayload());
-    }
-
-    @Override
-    protected void assertConnected(PetStoreClient client)
-    {
-        if (NO_POOLING.equals(name))
-        {
-            assertThat(client.isConnected(), is(false));
-        }
-        else
-        {
-            super.assertConnected(client);
-        }
-    }
-
-    @Override
-    protected String getConfigName()
-    {
-        return name;
-    }
+  @Override
+  protected String getConfigName() {
+    return name;
+  }
 }

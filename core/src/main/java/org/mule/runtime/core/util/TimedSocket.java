@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -13,98 +11,79 @@ import java.net.Socket;
 /**
  * This class implements a timeout feature on socket connections.
  */
-public final class TimedSocket
-{
-    private static final int WATCHDOG_FREQUENCY = 100;
+public final class TimedSocket {
+  private static final int WATCHDOG_FREQUENCY = 100;
 
-    private TimedSocket()
-    {
-        // utility class only
+  private TimedSocket() {
+    // utility class only
+  }
+
+  /**
+   * Creates a socket and waits until the given timeout is reached.
+   *
+   * @param timeout in milliseconds
+   * @return Connected socket or <code>null</code>.
+   */
+  public static Socket createSocket(String host, int port, int timeout) throws IOException {
+    SocketConnector connector = new SocketConnector(host, port);
+    connector.start();
+
+    int timer = 0;
+
+    while (!connector.isConnected()) {
+      if (connector.hasException()) {
+        throw (connector.getException());
+      }
+
+      try {
+        Thread.sleep(WATCHDOG_FREQUENCY);
+      } catch (InterruptedException unexpectedInterruption) {
+        throw new InterruptedIOException("Connection interruption: " + unexpectedInterruption.getMessage());
+      }
+
+      timer += WATCHDOG_FREQUENCY;
+
+      if (timer >= timeout) {
+        throw new InterruptedIOException("Connection timeout on " + host + ":" + port + " after " + timer + " milliseconds");
+      }
     }
 
-    /**
-     * Creates a socket and waits until the given timeout is reached.
-     *
-     * @param timeout in milliseconds
-     * @return Connected socket or <code>null</code>.
-     */
-    public static Socket createSocket(String host, int port, int timeout) throws IOException
-    {
-        SocketConnector connector = new SocketConnector(host, port);
-        connector.start();
+    return connector.getSocket();
+  }
 
-        int timer = 0;
+  static class SocketConnector extends Thread {
+    private volatile Socket connectedSocket;
+    private String host;
+    private int port;
+    private IOException exception;
 
-        while (!connector.isConnected())
-        {
-            if (connector.hasException())
-            {
-                throw (connector.getException());
-            }
-
-            try
-            {
-                Thread.sleep(WATCHDOG_FREQUENCY);
-            }
-            catch (InterruptedException unexpectedInterruption)
-            {
-                throw new InterruptedIOException("Connection interruption: " + unexpectedInterruption.getMessage());
-            }
-
-            timer += WATCHDOG_FREQUENCY;
-
-            if (timer >= timeout)
-            {
-                throw new InterruptedIOException("Connection timeout on " + host + ":" + port + " after " + timer + " milliseconds");
-            }
-        }
-
-        return connector.getSocket();
+    public SocketConnector(String host, int port) {
+      this.host = host;
+      this.port = port;
     }
 
-    static class SocketConnector extends Thread
-    {
-        private volatile Socket connectedSocket;
-        private String host;
-        private int port;
-        private IOException exception;
-
-        public SocketConnector(String host, int port)
-        {
-            this.host = host;
-            this.port = port;
-        }
-
-        public void run()
-        {
-            try
-            {
-                connectedSocket = new Socket(host, port);
-            }
-            catch (IOException ioe)
-            {
-                exception = ioe;
-            }
-        }
-
-        public boolean isConnected()
-        {
-            return connectedSocket != null;
-        }
-
-        public boolean hasException()
-        {
-            return exception != null;
-        }
-
-        public Socket getSocket()
-        {
-            return connectedSocket;
-        }
-
-        public IOException getException()
-        {
-            return exception;
-        }
+    public void run() {
+      try {
+        connectedSocket = new Socket(host, port);
+      } catch (IOException ioe) {
+        exception = ioe;
+      }
     }
+
+    public boolean isConnected() {
+      return connectedSocket != null;
+    }
+
+    public boolean hasException() {
+      return exception != null;
+    }
+
+    public Socket getSocket() {
+      return connectedSocket;
+    }
+
+    public IOException getException() {
+      return exception;
+    }
+  }
 }

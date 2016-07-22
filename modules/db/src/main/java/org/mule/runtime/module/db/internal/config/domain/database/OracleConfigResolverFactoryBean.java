@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.config.domain.database;
@@ -13,17 +11,15 @@ import org.mule.runtime.module.db.internal.resolver.database.DbConfigResolver;
 /**
  * Creates {@link DbConfigResolver} for Oracle databases
  */
-public class OracleConfigResolverFactoryBean extends AbstractVendorConfigResolverFactoryBean
-{
+public class OracleConfigResolverFactoryBean extends AbstractVendorConfigResolverFactoryBean {
 
-    private static final String DRIVER_CLASS_NAME = "oracle.jdbc.driver.OracleDriver";
-    private static final String ORACLE_URL_PREFIX = "jdbc:oracle:thin:@";
+  private static final String DRIVER_CLASS_NAME = "oracle.jdbc.driver.OracleDriver";
+  private static final String ORACLE_URL_PREFIX = "jdbc:oracle:thin:@";
 
-    public OracleConfigResolverFactoryBean()
-    {
-        super(ORACLE_URL_PREFIX, new OracleDbConfigFactory());
-        setDriverClassName(DRIVER_CLASS_NAME);
-    }
+  public OracleConfigResolverFactoryBean() {
+    super(ORACLE_URL_PREFIX, new OracleDbConfigFactory());
+    setDriverClassName(DRIVER_CLASS_NAME);
+  }
 
 
 }

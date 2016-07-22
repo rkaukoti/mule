@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.tck.junit4.rule;
@@ -12,44 +10,35 @@ import org.junit.rules.TemporaryFolder;
 import java.io.File;
 
 /**
- * Sets up a temporary folder that is also set as a system property before a test
- * and guaranties to tear it down afterward.
+ * Sets up a temporary folder that is also set as a system property before a test and guaranties to tear it down afterward.
  */
-public class SystemPropertyTemporaryFolder extends TemporaryFolder
-{
+public class SystemPropertyTemporaryFolder extends TemporaryFolder {
 
-    private final String propertyName;
-    private String originalPropertyValue;
+  private final String propertyName;
+  private String originalPropertyValue;
 
-    public SystemPropertyTemporaryFolder(String propertyName)
-    {
-        this.propertyName = propertyName;
+  public SystemPropertyTemporaryFolder(String propertyName) {
+    this.propertyName = propertyName;
+  }
+
+  public SystemPropertyTemporaryFolder(File parentFolder, String propertyName) {
+    super(parentFolder);
+    this.propertyName = propertyName;
+  }
+
+  @Override
+  protected void before() throws Throwable {
+    super.before();
+    originalPropertyValue = System.setProperty(propertyName, getRoot().getCanonicalPath());
+  }
+
+  @Override
+  protected void after() {
+    if (originalPropertyValue == null) {
+      System.clearProperty(propertyName);
+    } else {
+      System.setProperty(propertyName, originalPropertyValue);
     }
-
-    public SystemPropertyTemporaryFolder(File parentFolder, String propertyName)
-    {
-        super(parentFolder);
-        this.propertyName = propertyName;
-    }
-
-    @Override
-    protected void before() throws Throwable
-    {
-        super.before();
-        originalPropertyValue = System.setProperty(propertyName, getRoot().getCanonicalPath());
-    }
-
-    @Override
-    protected void after()
-    {
-        if (originalPropertyValue == null)
-        {
-            System.clearProperty(propertyName);
-        }
-        else
-        {
-            System.setProperty(propertyName, originalPropertyValue);
-        }
-        super.after();
-    }
+    super.after();
+  }
 }

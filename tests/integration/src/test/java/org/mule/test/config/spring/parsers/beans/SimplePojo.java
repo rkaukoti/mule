@@ -1,56 +1,44 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.config.spring.parsers.beans;
 
-public class SimplePojo
-{
+public class SimplePojo {
 
-    private String someParameter;
+  private String someParameter;
 
-    public SimplePojo()
-    {
+  public SimplePojo() {}
+
+  public SimplePojo(String someParameter) {
+    this.someParameter = someParameter;
+  }
+
+  public String getSomeParameter() {
+    return someParameter;
+  }
+
+  public void setSomeParameter(String someParameter) {
+    this.someParameter = someParameter;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
 
-    public SimplePojo(String someParameter)
-    {
-        this.someParameter = someParameter;
-    }
+    SimplePojo that = (SimplePojo) o;
 
-    public String getSomeParameter()
-    {
-        return someParameter;
-    }
+    return someParameter != null ? someParameter.equals(that.someParameter) : that.someParameter == null;
 
-    public void setSomeParameter(String someParameter)
-    {
-        this.someParameter = someParameter;
-    }
+  }
 
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o)
-        {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass())
-        {
-            return false;
-        }
-
-        SimplePojo that = (SimplePojo) o;
-
-        return someParameter != null ? someParameter.equals(that.someParameter) : that.someParameter == null;
-
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return someParameter != null ? someParameter.hashCode() : 0;
-    }
+  @Override
+  public int hashCode() {
+    return someParameter != null ? someParameter.hashCode() : 0;
+  }
 }

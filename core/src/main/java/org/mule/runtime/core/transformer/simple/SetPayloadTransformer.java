@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.simple;
 
@@ -19,36 +17,30 @@ import java.nio.charset.Charset;
 /**
  * Transformer that modifies the payload of the message according to the provided value.
  */
-public class SetPayloadTransformer extends AbstractMessageTransformer
-{
-    private AttributeEvaluator valueEvaluator;
+public class SetPayloadTransformer extends AbstractMessageTransformer {
+  private AttributeEvaluator valueEvaluator;
 
-    public SetPayloadTransformer()
-    {
-        registerSourceType(DataType.OBJECT);
-        setReturnDataType(DataType.OBJECT);
+  public SetPayloadTransformer() {
+    registerSourceType(DataType.OBJECT);
+    setReturnDataType(DataType.OBJECT);
+  }
+
+  @Override
+  public void initialise() throws InitialisationException {
+    super.initialise();
+    valueEvaluator.initialize(muleContext.getExpressionManager());
+  }
+
+  @Override
+  public Object transformMessage(MuleEvent event, Charset outputEncoding) throws TransformerException {
+    if (valueEvaluator.getRawValue() == null) {
+      return null;
     }
 
-    @Override
-    public void initialise() throws InitialisationException
-    {
-        super.initialise();
-        valueEvaluator.initialize(muleContext.getExpressionManager());
-    }
+    return valueEvaluator.resolveValue(event);
+  }
 
-    @Override
-    public Object transformMessage(MuleEvent event, Charset outputEncoding) throws TransformerException
-    {
-        if (valueEvaluator.getRawValue() == null)
-        {
-            return null;
-        }
-
-        return valueEvaluator.resolveValue(event);
-    }
-
-    public void setValue(String value)
-    {
-        valueEvaluator = new AttributeEvaluator(value);
-    }
+  public void setValue(String value) {
+    valueEvaluator = new AttributeEvaluator(value);
+  }
 }

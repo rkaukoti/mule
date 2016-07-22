@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.config;
@@ -20,32 +18,27 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class CustomParamTypeTestCase extends AbstractDbIntegrationTestCase
-{
+public class CustomParamTypeTestCase extends AbstractDbIntegrationTestCase {
 
-    public CustomParamTypeTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
-    }
+  public CustomParamTypeTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
+    super(dataSourceConfigResource, testDatabase);
+  }
 
-    @Parameterized.Parameters
-    public static List<Object[]> parameters()
-    {
-        return TestDbConfig.getDerbyResource();
-    }
+  @Parameterized.Parameters
+  public static List<Object[]> parameters() {
+    return TestDbConfig.getDerbyResource();
+  }
 
-    @Override
-    protected String[] getFlowConfigurationResources()
-    {
-        return new String[] {"integration/config/custom-param-type-config.xml"};
-    }
+  @Override
+  protected String[] getFlowConfigurationResources() {
+    return new String[] {"integration/config/custom-param-type-config.xml"};
+  }
 
-    @Test
-    public void usesCustomType() throws Exception
-    {
-        QueryTemplate parameterizedQueryTemplate = muleContext.getRegistry().lookupObject("parameterizedQuery");
-        QueryParam queryParam = parameterizedQueryTemplate.getParams().get(0);
+  @Test
+  public void usesCustomType() throws Exception {
+    QueryTemplate parameterizedQueryTemplate = muleContext.getRegistry().lookupObject("parameterizedQuery");
+    QueryParam queryParam = parameterizedQueryTemplate.getParams().get(0);
 
-        assertThat(queryParam.getType().getName(), equalTo("CUSTOM_TYPE1"));
-    }
+    assertThat(queryParam.getType().getName(), equalTo("CUSTOM_TYPE1"));
+  }
 }

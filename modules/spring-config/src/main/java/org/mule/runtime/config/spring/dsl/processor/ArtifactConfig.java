@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.processor;
 
@@ -20,75 +18,64 @@ import java.util.Map;
  *
  * @since 4.0
  */
-public class ArtifactConfig
-{
+public class ArtifactConfig {
 
-    private String artifactName;
-    private List<ConfigFile> configFiles = new ArrayList<>();
-    private Map<String, String> applicationProperties;
+  private String artifactName;
+  private List<ConfigFile> configFiles = new ArrayList<>();
+  private Map<String, String> applicationProperties;
 
-    private ArtifactConfig()
-    {
-    }
+  private ArtifactConfig() {}
 
-    public String getArtifactName()
-    {
-        return artifactName;
-    }
+  public String getArtifactName() {
+    return artifactName;
+  }
 
-    public List<ConfigFile> getConfigFiles()
-    {
-        return Collections.unmodifiableList(configFiles);
+  public List<ConfigFile> getConfigFiles() {
+    return Collections.unmodifiableList(configFiles);
+  }
+
+  /**
+   * @return properties associated to the configuration.
+   */
+  public Map<String, String> getApplicationProperties() {
+    return applicationProperties;
+  }
+
+  /**
+   * Builder for {@link ArtifactConfig} instances.
+   */
+  public static class Builder {
+    private ArtifactConfig applicationConfig = new ArtifactConfig();
+
+    /**
+     * @param applicationName the artifact name
+     * @return the builder
+     */
+    public Builder setApplicationName(String applicationName) {
+      this.applicationConfig.artifactName = applicationName;
+      return this;
     }
 
     /**
-     * @return properties associated to the configuration.
+     * @param configFile a {@code ConfigFile} to be added to the application.
+     * @return the builder
      */
-    public Map<String, String> getApplicationProperties()
-    {
-        return applicationProperties;
+    public Builder addConfigFile(ConfigFile configFile) {
+      this.applicationConfig.configFiles.add(configFile);
+      return this;
     }
 
     /**
-     * Builder for {@link ArtifactConfig} instances.
+     * @param applicationProperties properties associated to the configuration.
+     * @return the builder
      */
-    public static class Builder
-    {
-        private ArtifactConfig applicationConfig = new ArtifactConfig();
-
-        /**
-         * @param applicationName the artifact name
-         * @return the builder
-         */
-        public Builder setApplicationName(String applicationName)
-        {
-            this.applicationConfig.artifactName = applicationName;
-            return this;
-        }
-
-        /**
-         * @param configFile a {@code ConfigFile} to be added to the application.
-         * @return the builder
-         */
-        public Builder addConfigFile(ConfigFile configFile)
-        {
-            this.applicationConfig.configFiles.add(configFile);
-            return this;
-        }
-
-        /**
-         * @param applicationProperties properties associated to the configuration.
-         * @return the builder
-         */
-        public Builder setApplicationProperties(Map<String, String> applicationProperties)
-        {
-            this.applicationConfig.applicationProperties = applicationProperties;
-            return this;
-        }
-
-        public ArtifactConfig build()
-        {
-            return this.applicationConfig;
-        }
+    public Builder setApplicationProperties(Map<String, String> applicationProperties) {
+      this.applicationConfig.applicationProperties = applicationProperties;
+      return this;
     }
+
+    public ArtifactConfig build() {
+      return this.applicationConfig;
+    }
+  }
 }

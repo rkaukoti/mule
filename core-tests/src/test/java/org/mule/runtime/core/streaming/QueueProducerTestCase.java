@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.streaming;
@@ -27,75 +25,65 @@ import java.util.Set;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class QueueProducerTestCase
-{
-    @Mock
-    private Queue queue;
-    ;
+public class QueueProducerTestCase {
+  @Mock
+  private Queue queue;;
 
-    private Set<String> values;
-    private Iterator<String> valuesIterator;
-    private QueueProducer<Serializable> producer;
+  private Set<String> values;
+  private Iterator<String> valuesIterator;
+  private QueueProducer<Serializable> producer;
 
-    @Before
-    public void setUp() throws Exception
-    {
-        this.values = new HashSet<String>();
-        this.values.add("banana");
-        this.values.add("chocolate");
-        this.values.add("coke");
+  @Before
+  public void setUp() throws Exception {
+    this.values = new HashSet<String>();
+    this.values.add("banana");
+    this.values.add("chocolate");
+    this.values.add("coke");
 
-        this.valuesIterator = this.values.iterator();
+    this.valuesIterator = this.values.iterator();
 
-        Mockito.when(this.queue.poll(Mockito.anyLong())).thenAnswer(new Answer<Serializable>()
-        {
-            @Override
-            public Serializable answer(InvocationOnMock invocation) throws Throwable
-            {
-                return valuesIterator.hasNext() ? valuesIterator.next() : null;
-            }
-        });
+    Mockito.when(this.queue.poll(Mockito.anyLong())).thenAnswer(new Answer<Serializable>() {
+      @Override
+      public Serializable answer(InvocationOnMock invocation) throws Throwable {
+        return valuesIterator.hasNext() ? valuesIterator.next() : null;
+      }
+    });
 
-        Mockito.when(this.queue.size()).thenReturn(this.values.size());
+    Mockito.when(this.queue.size()).thenReturn(this.values.size());
 
-        this.producer = new QueueProducer<Serializable>(this.queue);
+    this.producer = new QueueProducer<Serializable>(this.queue);
+  }
+
+  @Test
+  public void happyPath() throws Exception {
+    Set<Serializable> returnedValues = new HashSet<Serializable>();
+
+    Serializable page = this.producer.produce();
+    while (page != null) {
+      returnedValues.add(page);
+      page = this.producer.produce();
     }
 
-    @Test
-    public void happyPath() throws Exception
-    {
-        Set<Serializable> returnedValues = new HashSet<Serializable>();
+    Assert.assertEquals(returnedValues.size(), this.values.size());
 
-        Serializable page = this.producer.produce();
-        while (page != null)
-        {
-            returnedValues.add(page);
-            page = this.producer.produce();
-        }
-
-        Assert.assertEquals(returnedValues.size(), this.values.size());
-
-        for (String value : this.values)
-        {
-            Assert.assertTrue(returnedValues.contains(value));
-        }
-
-        Assert.assertNull(this.producer.produce());
+    for (String value : this.values) {
+      Assert.assertTrue(returnedValues.contains(value));
     }
 
-    @Test
-    public void size() throws Exception
-    {
-        Assert.assertEquals(this.values.size(), this.producer.size());
-    }
+    Assert.assertNull(this.producer.produce());
+  }
 
-    @Test
-    public void earlyClose() throws Exception
-    {
-        this.producer.produce();
-        this.producer.close();
+  @Test
+  public void size() throws Exception {
+    Assert.assertEquals(this.values.size(), this.producer.size());
+  }
 
-        Assert.assertNull(this.producer.produce());
-    }
+  @Test
+  public void earlyClose() throws Exception {
+    this.producer.produce();
+    this.producer.close();
+
+    Assert.assertNull(this.producer.produce());
+  }
 
 }

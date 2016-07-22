@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -16,60 +14,45 @@ import java.util.Set;
 
 import static org.junit.Assert.fail;
 
-public class ConflictedHttpsTlsConfigTestCase extends FunctionalTestCase
-{
-    private int configNumber;
+public class ConflictedHttpsTlsConfigTestCase extends FunctionalTestCase {
+  private int configNumber;
 
-    @Override
-    protected MuleContext createMuleContext() throws Exception
-    {
-        return null;
+  @Override
+  protected MuleContext createMuleContext() throws Exception {
+    return null;
+  }
+
+  @Override
+  protected String getConfigFile() {
+    return "conflicted-https-config-" + configNumber + ".xml";
+  }
+
+  @Test
+  public void testConfigs() throws Exception {
+    for (configNumber = 1; configNumber <= 3; configNumber++) {
+      try {
+        super.createMuleContext();
+        fail("No conflict seen");
+      } catch (Exception ex) {
+        assertExceptionIsOfType(ex, CheckExclusiveAttributes.CheckExclusiveAttributesException.class);
+      }
     }
+  }
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "conflicted-https-config-" + configNumber + ".xml";
+  public void assertExceptionIsOfType(Throwable ex, Class<? extends Throwable> type) {
+    Set<Throwable> seen = new HashSet<Throwable>();
+
+    while (true) {
+      if (type.isInstance(ex)) {
+        return;
+      } else if (ex == null || seen.contains(ex)) {
+        fail("Bad exception type");
+      } else {
+        seen.add(ex);
+        ex = ex.getCause();
+      }
     }
-
-    @Test
-    public void testConfigs() throws Exception
-    {
-        for (configNumber = 1; configNumber <= 3; configNumber++)
-        {
-            try
-            {
-                super.createMuleContext();
-                fail("No conflict seen");
-            }
-            catch (Exception ex)
-            {
-                assertExceptionIsOfType(ex, CheckExclusiveAttributes.CheckExclusiveAttributesException.class);
-            }
-        }
-    }
-
-    public void assertExceptionIsOfType(Throwable ex, Class<? extends Throwable> type)
-    {
-        Set<Throwable> seen = new HashSet<Throwable>();
-
-        while (true)
-        {
-            if (type.isInstance(ex))
-            {
-                return;
-            }
-            else if (ex == null || seen.contains(ex))
-            {
-                fail("Bad exception type");
-            }
-            else
-            {
-                seen.add(ex);
-                ex = ex.getCause();
-            }
-        }
-    }
+  }
 }
 
 

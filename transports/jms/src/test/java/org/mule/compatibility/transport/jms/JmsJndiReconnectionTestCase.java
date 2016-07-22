@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -20,54 +18,43 @@ import static org.junit.Assert.assertThat;
 /**
  *
  */
-public class JmsJndiReconnectionTestCase extends FunctionalTestCase
-{
-    @BeforeClass
-    public static void makeInitialContextFail()
-    {
-        JmsTestContextFactory.failWhenRetrievingInitialContext = true;
-    }
+public class JmsJndiReconnectionTestCase extends FunctionalTestCase {
+  @BeforeClass
+  public static void makeInitialContextFail() {
+    JmsTestContextFactory.failWhenRetrievingInitialContext = true;
+  }
 
-    @AfterClass
-    public static void restoreInitialContextState()
-    {
-        JmsTestContextFactory.failWhenRetrievingInitialContext = false;
-    }
+  @AfterClass
+  public static void restoreInitialContextState() {
+    JmsTestContextFactory.failWhenRetrievingInitialContext = false;
+  }
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "jms-jndi-reconnection-config.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "jms-jndi-reconnection-config.xml";
+  }
 
-    @Test
-    public void testReconnectionWorksWhenInitialContextIsNotAvailable() throws Exception
-    {
-        JmsTestContextFactory.failWhenRetrievingInitialContext = true;
-        try
-        {
-            final JmsConnector jmsConnector = (JmsConnector) muleContext.getRegistry().lookupObject("jmsConnector");
-            assertThat(jmsConnector.isConnected(), is(false));
-            JmsTestContextFactory.failWhenRetrievingInitialContext = false;
-            PollingProber prober = new PollingProber(RECEIVE_TIMEOUT, 100);
-            prober.check(new Probe()
-            {
-                @Override
-                public boolean isSatisfied()
-                {
-                    return jmsConnector.isConnected();
-                }
-
-                @Override
-                public String describeFailure()
-                {
-                    return "jms connector should be connected by now.";
-                }
-            });
+  @Test
+  public void testReconnectionWorksWhenInitialContextIsNotAvailable() throws Exception {
+    JmsTestContextFactory.failWhenRetrievingInitialContext = true;
+    try {
+      final JmsConnector jmsConnector = (JmsConnector) muleContext.getRegistry().lookupObject("jmsConnector");
+      assertThat(jmsConnector.isConnected(), is(false));
+      JmsTestContextFactory.failWhenRetrievingInitialContext = false;
+      PollingProber prober = new PollingProber(RECEIVE_TIMEOUT, 100);
+      prober.check(new Probe() {
+        @Override
+        public boolean isSatisfied() {
+          return jmsConnector.isConnected();
         }
-        finally
-        {
-            JmsTestContextFactory.failWhenRetrievingInitialContext = false;
+
+        @Override
+        public String describeFailure() {
+          return "jms connector should be connected by now.";
         }
+      });
+    } finally {
+      JmsTestContextFactory.failWhenRetrievingInitialContext = false;
     }
+  }
 }

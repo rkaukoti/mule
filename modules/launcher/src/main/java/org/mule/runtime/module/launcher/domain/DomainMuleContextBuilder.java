@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.domain;
 
@@ -31,49 +29,39 @@ import static org.mule.runtime.core.config.bootstrap.ArtifactType.DOMAIN;
 /**
  * Builder for domain MuleContext instance.
  */
-public class DomainMuleContextBuilder extends DefaultMuleContextBuilder
-{
+public class DomainMuleContextBuilder extends DefaultMuleContextBuilder {
 
-    private final String domainId;
+  private final String domainId;
 
-    public DomainMuleContextBuilder(String domainId)
-    {
-        this.domainId = domainId;
-    }
+  public DomainMuleContextBuilder(String domainId) {
+    this.domainId = domainId;
+  }
 
-    @Override
-    protected DefaultMuleContext createDefaultMuleContext()
-    {
-        DefaultMuleContext muleContext = super.createDefaultMuleContext();
-        muleContext.setArtifactType(DOMAIN);
-        return muleContext;
-    }
+  @Override
+  protected DefaultMuleContext createDefaultMuleContext() {
+    DefaultMuleContext muleContext = super.createDefaultMuleContext();
+    muleContext.setArtifactType(DOMAIN);
+    return muleContext;
+  }
 
-    @Override
-    protected MuleConfiguration getMuleConfiguration()
-    {
-        DefaultMuleConfiguration defaultMuleConfiguration = new DefaultMuleConfiguration(true);
-        defaultMuleConfiguration.setDomainId(domainId);
-        defaultMuleConfiguration.setId(domainId);
-        return defaultMuleConfiguration;
-    }
+  @Override
+  protected MuleConfiguration getMuleConfiguration() {
+    DefaultMuleConfiguration defaultMuleConfiguration = new DefaultMuleConfiguration(true);
+    defaultMuleConfiguration.setDomainId(domainId);
+    defaultMuleConfiguration.setId(domainId);
+    return defaultMuleConfiguration;
+  }
 
-    @Override
-    protected ServerNotificationManager createNotificationManager()
-    {
-        ServerNotificationManager manager = new ServerNotificationManager();
-        manager.addInterfaceToType(MuleContextNotificationListener.class,
-                MuleContextNotification.class);
-        manager.addInterfaceToType(SecurityNotificationListener.class,
-                SecurityNotification.class);
-        manager.addInterfaceToType(ManagementNotificationListener.class,
-                ManagementNotification.class);
-        manager.addInterfaceToType(CustomNotificationListener.class, CustomNotification.class);
-        manager.addInterfaceToType(ConnectionNotificationListener.class,
-                ConnectionNotification.class);
-        manager.addInterfaceToType(ExceptionNotificationListener.class,
-                ExceptionNotification.class);
-        manager.addInterfaceToType(ClusterNodeNotificationListener.class, ClusterNodeNotification.class);
-        return manager;
-    }
+  @Override
+  protected ServerNotificationManager createNotificationManager() {
+    ServerNotificationManager manager = new ServerNotificationManager();
+    manager.addInterfaceToType(MuleContextNotificationListener.class, MuleContextNotification.class);
+    manager.addInterfaceToType(SecurityNotificationListener.class, SecurityNotification.class);
+    manager.addInterfaceToType(ManagementNotificationListener.class, ManagementNotification.class);
+    manager.addInterfaceToType(CustomNotificationListener.class, CustomNotification.class);
+    manager.addInterfaceToType(ConnectionNotificationListener.class, ConnectionNotification.class);
+    manager.addInterfaceToType(ExceptionNotificationListener.class, ExceptionNotification.class);
+    manager.addInterfaceToType(ClusterNodeNotificationListener.class, ClusterNodeNotification.class);
+    return manager;
+  }
 }

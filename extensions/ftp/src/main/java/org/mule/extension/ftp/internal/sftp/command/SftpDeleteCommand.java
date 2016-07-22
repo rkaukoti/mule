@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.ftp.internal.sftp.command;
 
@@ -22,82 +20,67 @@ import java.nio.file.Paths;
  *
  * @since 4.0
  */
-public final class SftpDeleteCommand extends SftpCommand implements DeleteCommand
-{
+public final class SftpDeleteCommand extends SftpCommand implements DeleteCommand {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SftpDeleteCommand.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(SftpDeleteCommand.class);
 
-    /**
-     * {@inheritDoc}
-     */
-    public SftpDeleteCommand(SftpFileSystem fileSystem, SftpClient client)
-    {
-        super(fileSystem, client);
+  /**
+   * {@inheritDoc}
+   */
+  public SftpDeleteCommand(SftpFileSystem fileSystem, SftpClient client) {
+    super(fileSystem, client);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void delete(FileConnectorConfig config, String filePath) {
+    FileAttributes fileAttributes = getExistingFile(config, filePath);
+    final boolean isDirectory = fileAttributes.isDirectory();
+    final String path = fileAttributes.getPath();
+
+    if (isDirectory) {
+      deleteDirectory(path);
+    } else {
+      deleteFile(path);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void delete(FileConnectorConfig config, String filePath)
-    {
-        FileAttributes fileAttributes = getExistingFile(config, filePath);
-        final boolean isDirectory = fileAttributes.isDirectory();
-        final String path = fileAttributes.getPath();
+    logDelete(path);
+  }
 
-        if (isDirectory)
-        {
-            deleteDirectory(path);
-        }
-        else
-        {
-            deleteFile(path);
-        }
+  private void deleteFile(String path) {
+    fileSystem.verifyNotLocked(Paths.get(path));
+    LOGGER.debug("Preparing to delete file '{}'", path);
+    client.deleteFile(path);
+  }
 
-        logDelete(path);
+  private void deleteDirectory(String path) {
+    LOGGER.debug("Preparing to delete directory '{}'", path);
+    for (FileAttributes file : client.list(path)) {
+      final String filePath = file.getPath();
+      if (isVirtualDirectory(file.getName())) {
+        continue;
+      }
+
+      if (file.isDirectory()) {
+        deleteDirectory(filePath);
+      } else {
+        deleteFile(filePath);
+      }
     }
 
-    private void deleteFile(String path)
-    {
-        fileSystem.verifyNotLocked(Paths.get(path));
-        LOGGER.debug("Preparing to delete file '{}'", path);
-        client.deleteFile(path);
+    Path directoryPath = Paths.get(path);
+    Path directoryFragment = directoryPath.getName(directoryPath.getNameCount() - 1);
+    if (isVirtualDirectory(directoryFragment.getFileName().toString())) {
+      path = Paths.get("/").resolve(directoryPath.subpath(0, directoryPath.getNameCount() - 1)).toAbsolutePath().toString();
     }
+    client.deleteDirectory(path);
 
-    private void deleteDirectory(String path)
-    {
-        LOGGER.debug("Preparing to delete directory '{}'", path);
-        for (FileAttributes file : client.list(path))
-        {
-            final String filePath = file.getPath();
-            if (isVirtualDirectory(file.getName()))
-            {
-                continue;
-            }
+    logDelete(path);
+  }
 
-            if (file.isDirectory())
-            {
-                deleteDirectory(filePath);
-            }
-            else
-            {
-                deleteFile(filePath);
-            }
-        }
-
-        Path directoryPath = Paths.get(path);
-        Path directoryFragment = directoryPath.getName(directoryPath.getNameCount() - 1);
-        if (isVirtualDirectory(directoryFragment.getFileName().toString()))
-        {
-            path = Paths.get("/").resolve(directoryPath.subpath(0, directoryPath.getNameCount() - 1)).toAbsolutePath().toString();
-        }
-        client.deleteDirectory(path);
-
-        logDelete(path);
-    }
-
-    private void logDelete(String path)
-    {
-        LOGGER.debug("Successfully deleted '{}'", path);
-    }
+  private void logDelete(String path) {
+    LOGGER.debug("Successfully deleted '{}'", path);
+  }
 }

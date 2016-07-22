@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.execution;
 
@@ -22,38 +20,37 @@ import org.mule.runtime.core.api.transaction.TransactionConfig;
  * access, if available, to the {@link WorkManager} to use for processing the message - Provide the {@link MessageSource} transaction
  * configuration
  */
-public interface MessageProcessContext
-{
+public interface MessageProcessContext {
 
-    /**
-     * @return true if the message can be processed in a different thread than the one it was acquired, false otherwise
-     */
-    boolean supportsAsynchronousProcessing();
+  /**
+   * @return true if the message can be processed in a different thread than the one it was acquired, false otherwise
+   */
+  boolean supportsAsynchronousProcessing();
 
-    /**
-     * @return the {@link MessageSource} that retrieve the message. Can not be null
-     */
-    MessageSource getMessageSource();
+  /**
+   * @return the {@link MessageSource} that retrieve the message. Can not be null
+   */
+  MessageSource getMessageSource();
 
-    /**
-     * @return the {@link FlowConstruct} were the incoming message is going to be executed. Can not be null
-     */
-    FlowConstruct getFlowConstruct();
+  /**
+   * @return the {@link FlowConstruct} were the incoming message is going to be executed. Can not be null
+   */
+  FlowConstruct getFlowConstruct();
 
-    /**
-     * @return the {@link WorkManager} were the incoming message must be processed. If null it will be executed in the same thread were the
-     * message was received
-     */
-    WorkManager getFlowExecutionWorkManager();
+  /**
+   * @return the {@link WorkManager} were the incoming message must be processed. If null it will be executed in the same thread were the
+   *         message was received
+   */
+  WorkManager getFlowExecutionWorkManager();
 
-    /**
-     * @return the {@link TransactionConfig} associated to the {@link MessageSource} that received the message. If null then no transaction
-     * config will be used.
-     */
-    TransactionConfig getTransactionConfig();
+  /**
+   * @return the {@link TransactionConfig} associated to the {@link MessageSource} that received the message. If null then no transaction
+   *         config will be used.
+   */
+  TransactionConfig getTransactionConfig();
 
-    /**
-     * @return the class loader to be used for processing the message.
-     */
-    ClassLoader getExecutionClassLoader();
+  /**
+   * @return the class loader to be used for processing the message.
+   */
+  ClassLoader getExecutionClassLoader();
 }

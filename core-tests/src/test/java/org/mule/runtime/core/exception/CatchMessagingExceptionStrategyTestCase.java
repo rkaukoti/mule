@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.exception;
 
@@ -45,144 +43,127 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CatchMessagingExceptionStrategyTestCase extends AbstractMuleContextTestCase
-{
+public class CatchMessagingExceptionStrategyTestCase extends AbstractMuleContextTestCase {
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    protected MuleContext muleContext;
-    private MuleContext mockMuleContext = mock(MuleContext.class, RETURNS_DEEP_STUBS.get());
-    @Mock
-    private Exception mockException;
-    private MuleEvent mockMuleEvent;
-    private MuleMessage muleMessage = MuleMessage.builder().payload("").build();
-    @Mock
-    private StreamCloserService mockStreamCloserService;
-    @Spy
-    private TestTransaction mockTransaction = new TestTransaction(mockMuleContext);
-    @Spy
-    private TestTransaction mockXaTransaction = new TestTransaction(mockMuleContext, true);
-    private CatchMessagingExceptionStrategy catchMessagingExceptionStrategy;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  protected MuleContext muleContext;
+  private MuleContext mockMuleContext = mock(MuleContext.class, RETURNS_DEEP_STUBS.get());
+  @Mock
+  private Exception mockException;
+  private MuleEvent mockMuleEvent;
+  private MuleMessage muleMessage = MuleMessage.builder().payload("").build();
+  @Mock
+  private StreamCloserService mockStreamCloserService;
+  @Spy
+  private TestTransaction mockTransaction = new TestTransaction(mockMuleContext);
+  @Spy
+  private TestTransaction mockXaTransaction = new TestTransaction(mockMuleContext, true);
+  private CatchMessagingExceptionStrategy catchMessagingExceptionStrategy;
 
-    @Before
-    public void before() throws Exception
-    {
-        Transaction currentTransaction = TransactionCoordination.getInstance().getTransaction();
-        if (currentTransaction != null)
-        {
-            TransactionCoordination.getInstance().unbindTransaction(currentTransaction);
-        }
-        catchMessagingExceptionStrategy = new CatchMessagingExceptionStrategy();
-        catchMessagingExceptionStrategy.setMuleContext(mockMuleContext);
-        when(mockMuleContext.getStreamCloserService()).thenReturn(mockStreamCloserService);
-
-        mockMuleEvent = new DefaultMuleEvent(muleMessage, getTestFlow());
+  @Before
+  public void before() throws Exception {
+    Transaction currentTransaction = TransactionCoordination.getInstance().getTransaction();
+    if (currentTransaction != null) {
+      TransactionCoordination.getInstance().unbindTransaction(currentTransaction);
     }
+    catchMessagingExceptionStrategy = new CatchMessagingExceptionStrategy();
+    catchMessagingExceptionStrategy.setMuleContext(mockMuleContext);
+    when(mockMuleContext.getStreamCloserService()).thenReturn(mockStreamCloserService);
 
-    @Test
-    public void testHandleExceptionWithNoConfig() throws Exception
-    {
-        configureXaTransactionAndSingleResourceTransaction();
+    mockMuleEvent = new DefaultMuleEvent(muleMessage, getTestFlow());
+  }
 
-        MuleEvent resultEvent = catchMessagingExceptionStrategy.handleException(mockException, mockMuleEvent);
-        assertThat(resultEvent, is(mockMuleEvent));
+  @Test
+  public void testHandleExceptionWithNoConfig() throws Exception {
+    configureXaTransactionAndSingleResourceTransaction();
 
-        verify(mockTransaction, times(0)).setRollbackOnly();
-        verify(mockTransaction, times(0)).commit();
-        verify(mockTransaction, times(0)).rollback();
-        verify(mockStreamCloserService).closeStream(any(Object.class));
-    }
+    MuleEvent resultEvent = catchMessagingExceptionStrategy.handleException(mockException, mockMuleEvent);
+    assertThat(resultEvent, is(mockMuleEvent));
 
-    @Test
-    public void testHandleExceptionWithConfiguredMessageProcessors() throws Exception
-    {
-        mockMuleEvent = spy(mockMuleEvent);
+    verify(mockTransaction, times(0)).setRollbackOnly();
+    verify(mockTransaction, times(0)).commit();
+    verify(mockTransaction, times(0)).rollback();
+    verify(mockStreamCloserService).closeStream(any(Object.class));
+  }
 
-        catchMessagingExceptionStrategy.setMessageProcessors(
-                asList(createSetStringMessageProcessor("A"), createSetStringMessageProcessor("B")));
-        catchMessagingExceptionStrategy.initialise();
-        final MuleEvent result = catchMessagingExceptionStrategy.handleException(mockException, mockMuleEvent);
+  @Test
+  public void testHandleExceptionWithConfiguredMessageProcessors() throws Exception {
+    mockMuleEvent = spy(mockMuleEvent);
 
-        verify(mockMuleEvent, times(1)).setMessage(argThat(new ArgumentMatcher<MuleMessage>()
-        {
-            @Override
-            public boolean matches(Object argument)
-            {
-                return ((MuleMessage) argument).getPayload().equals("A");
-            }
-        }));
-        assertThat(result.getMessage().getPayload(), is("B"));
-        assertThat(result.getMessage().getExceptionPayload(), is(nullValue()));
-    }
+    catchMessagingExceptionStrategy
+        .setMessageProcessors(asList(createSetStringMessageProcessor("A"), createSetStringMessageProcessor("B")));
+    catchMessagingExceptionStrategy.initialise();
+    final MuleEvent result = catchMessagingExceptionStrategy.handleException(mockException, mockMuleEvent);
 
-    @Test
-    public void testHandleExceptionWithMessageProcessorsChangingEvent() throws Exception
-    {
-        MuleEvent lastEventCreated = new DefaultMuleEvent(muleMessage, getTestFlow());
-        catchMessagingExceptionStrategy.setMessageProcessors(
-                asList(createChagingEventMessageProcessor(new DefaultMuleEvent(muleMessage, getTestFlow())),
-                        createChagingEventMessageProcessor(lastEventCreated)));
-        catchMessagingExceptionStrategy.initialise();
-        MuleEvent exceptionHandlingResult = catchMessagingExceptionStrategy.handleException(mockException, mockMuleEvent);
-        assertThat(exceptionHandlingResult.getId(), is(lastEventCreated.getId()));
-        assertThat(exceptionHandlingResult.getMessage().getUniqueId(), is(lastEventCreated.getMessage().getUniqueId()));
-    }
+    verify(mockMuleEvent, times(1)).setMessage(argThat(new ArgumentMatcher<MuleMessage>() {
+      @Override
+      public boolean matches(Object argument) {
+        return ((MuleMessage) argument).getPayload().equals("A");
+      }
+    }));
+    assertThat(result.getMessage().getPayload(), is("B"));
+    assertThat(result.getMessage().getExceptionPayload(), is(nullValue()));
+  }
 
-    /**
-     * On fatal error, the exception strategies are not supposed to use MuleMessage.toString() as it could
-     * potentially log sensible data.
-     */
-    @Test
-    public void testMessageToStringNotCalledOnFailure() throws Exception
-    {
-        mockMuleEvent.setMessage(spy(muleMessage));
-        mockMuleEvent = spy(mockMuleEvent);
+  @Test
+  public void testHandleExceptionWithMessageProcessorsChangingEvent() throws Exception {
+    MuleEvent lastEventCreated = new DefaultMuleEvent(muleMessage, getTestFlow());
+    catchMessagingExceptionStrategy
+        .setMessageProcessors(asList(createChagingEventMessageProcessor(new DefaultMuleEvent(muleMessage, getTestFlow())),
+            createChagingEventMessageProcessor(lastEventCreated)));
+    catchMessagingExceptionStrategy.initialise();
+    MuleEvent exceptionHandlingResult = catchMessagingExceptionStrategy.handleException(mockException, mockMuleEvent);
+    assertThat(exceptionHandlingResult.getId(), is(lastEventCreated.getId()));
+    assertThat(exceptionHandlingResult.getMessage().getUniqueId(), is(lastEventCreated.getMessage().getUniqueId()));
+  }
 
-        MuleEvent lastEventCreated = new DefaultMuleEvent(muleMessage, getTestFlow());
-        catchMessagingExceptionStrategy.setMessageProcessors(
-                asList(createFailingEventMessageProcessor(new DefaultMuleEvent(muleMessage, getTestFlow())),
-                        createFailingEventMessageProcessor(lastEventCreated)));
-        catchMessagingExceptionStrategy.initialise();
+  /**
+   * On fatal error, the exception strategies are not supposed to use MuleMessage.toString() as it could potentially log sensible data.
+   */
+  @Test
+  public void testMessageToStringNotCalledOnFailure() throws Exception {
+    mockMuleEvent.setMessage(spy(muleMessage));
+    mockMuleEvent = spy(mockMuleEvent);
 
-        when(mockMuleEvent.getMessage().toString()).thenThrow(new RuntimeException("MuleMessage.toString() should not be called"));
+    MuleEvent lastEventCreated = new DefaultMuleEvent(muleMessage, getTestFlow());
+    catchMessagingExceptionStrategy
+        .setMessageProcessors(asList(createFailingEventMessageProcessor(new DefaultMuleEvent(muleMessage, getTestFlow())),
+            createFailingEventMessageProcessor(lastEventCreated)));
+    catchMessagingExceptionStrategy.initialise();
 
-        MuleEvent exceptionHandlingResult =
-                exceptionHandlingResult = catchMessagingExceptionStrategy.handleException(mockException, mockMuleEvent);
-    }
+    when(mockMuleEvent.getMessage().toString()).thenThrow(new RuntimeException("MuleMessage.toString() should not be called"));
 
-    private MuleEvent createNonBlockingTestEvent() throws Exception
-    {
-        Flow flow = MuleTestUtils.getTestFlow(muleContext);
-        flow.setProcessingStrategy(new NonBlockingProcessingStrategy());
-        return new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).build(), REQUEST_RESPONSE,
-                new SensingNullReplyToHandler(), flow);
-    }
+    MuleEvent exceptionHandlingResult =
+        exceptionHandlingResult = catchMessagingExceptionStrategy.handleException(mockException, mockMuleEvent);
+  }
 
-    private MessageProcessor createChagingEventMessageProcessor(final MuleEvent lastEventCreated)
-    {
-        return event -> lastEventCreated;
-    }
+  private MuleEvent createNonBlockingTestEvent() throws Exception {
+    Flow flow = MuleTestUtils.getTestFlow(muleContext);
+    flow.setProcessingStrategy(new NonBlockingProcessingStrategy());
+    return new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).build(), REQUEST_RESPONSE, new SensingNullReplyToHandler(),
+        flow);
+  }
 
-    private MessageProcessor createFailingEventMessageProcessor(final MuleEvent lastEventCreated)
-    {
-        return event ->
-        {
-            throw new DefaultMuleException(mockException);
-        };
-    }
+  private MessageProcessor createChagingEventMessageProcessor(final MuleEvent lastEventCreated) {
+    return event -> lastEventCreated;
+  }
 
-    private MessageProcessor createSetStringMessageProcessor(final String appendText)
-    {
-        return event ->
-        {
-            event.setMessage(MuleMessage.builder(event.getMessage()).payload(appendText).build());
-            return event;
-        };
-    }
+  private MessageProcessor createFailingEventMessageProcessor(final MuleEvent lastEventCreated) {
+    return event -> {
+      throw new DefaultMuleException(mockException);
+    };
+  }
 
-    private void configureXaTransactionAndSingleResourceTransaction() throws TransactionException
-    {
-        TransactionCoordination.getInstance().bindTransaction(mockXaTransaction);
-        TransactionCoordination.getInstance().suspendCurrentTransaction();
-        TransactionCoordination.getInstance().bindTransaction(mockTransaction);
-    }
+  private MessageProcessor createSetStringMessageProcessor(final String appendText) {
+    return event -> {
+      event.setMessage(MuleMessage.builder(event.getMessage()).payload(appendText).build());
+      return event;
+    };
+  }
+
+  private void configureXaTransactionAndSingleResourceTransaction() throws TransactionException {
+    TransactionCoordination.getInstance().bindTransaction(mockXaTransaction);
+    TransactionCoordination.getInstance().suspendCurrentTransaction();
+    TransactionCoordination.getInstance().bindTransaction(mockTransaction);
+  }
 }

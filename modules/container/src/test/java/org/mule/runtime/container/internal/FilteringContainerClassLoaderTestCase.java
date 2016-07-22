@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.container.internal;
@@ -22,51 +20,46 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
-public class FilteringContainerClassLoaderTestCase extends FilteringArtifactClassLoaderTestCase
-{
+public class FilteringContainerClassLoaderTestCase extends FilteringArtifactClassLoaderTestCase {
 
-    public FilteringContainerClassLoaderTestCase(boolean verboseClassloadingLog)
-    {
-        super(verboseClassloadingLog);
-    }
+  public FilteringContainerClassLoaderTestCase(boolean verboseClassloadingLog) {
+    super(verboseClassloadingLog);
+  }
 
-    @Override
-    protected FilteringArtifactClassLoader doCreateClassLoader()
-    {
-        return new FilteringContainerClassLoader(artifactClassLoader, filter);
-    }
+  @Override
+  protected FilteringArtifactClassLoader doCreateClassLoader() {
+    return new FilteringContainerClassLoader(artifactClassLoader, filter);
+  }
 
-    @Test
-    @Override
-    public void loadsExportedResource() throws ClassNotFoundException, MalformedURLException
-    {
-        TestClassLoader classLoader = new TestClassLoader();
-        URL expectedResource = new URL("file:///app.txt");
-        classLoader.addResource(FilteringArtifactClassLoaderTestCase.RESOURCE_NAME, expectedResource);
+  @Test
+  @Override
+  public void loadsExportedResource() throws ClassNotFoundException, MalformedURLException {
+    TestClassLoader classLoader = new TestClassLoader();
+    URL expectedResource = new URL("file:///app.txt");
+    classLoader.addResource(FilteringArtifactClassLoaderTestCase.RESOURCE_NAME, expectedResource);
 
-        when(filter.exportsResource(FilteringArtifactClassLoaderTestCase.RESOURCE_NAME)).thenReturn(true);
-        when(artifactClassLoader.getClassLoader()).thenReturn(classLoader);
+    when(filter.exportsResource(FilteringArtifactClassLoaderTestCase.RESOURCE_NAME)).thenReturn(true);
+    when(artifactClassLoader.getClassLoader()).thenReturn(classLoader);
 
-        filteringArtifactClassLoader = doCreateClassLoader();
+    filteringArtifactClassLoader = doCreateClassLoader();
 
-        URL resource = filteringArtifactClassLoader.getResource(FilteringArtifactClassLoaderTestCase.RESOURCE_NAME);
-        assertThat(resource, equalTo(expectedResource));
-    }
+    URL resource = filteringArtifactClassLoader.getResource(FilteringArtifactClassLoaderTestCase.RESOURCE_NAME);
+    assertThat(resource, equalTo(expectedResource));
+  }
 
-    @Test
-    @Override
-    public void getsExportedResources() throws Exception
-    {
-        TestClassLoader classLoader = new TestClassLoader();
-        URL resource = new URL("file:/app.txt");
-        classLoader.addResource(FilteringArtifactClassLoaderTestCase.RESOURCE_NAME, resource);
+  @Test
+  @Override
+  public void getsExportedResources() throws Exception {
+    TestClassLoader classLoader = new TestClassLoader();
+    URL resource = new URL("file:/app.txt");
+    classLoader.addResource(FilteringArtifactClassLoaderTestCase.RESOURCE_NAME, resource);
 
-        when(filter.exportsResource(FilteringArtifactClassLoaderTestCase.RESOURCE_NAME)).thenReturn(true);
-        when(artifactClassLoader.getClassLoader()).thenReturn(classLoader);
+    when(filter.exportsResource(FilteringArtifactClassLoaderTestCase.RESOURCE_NAME)).thenReturn(true);
+    when(artifactClassLoader.getClassLoader()).thenReturn(classLoader);
 
-        filteringArtifactClassLoader = doCreateClassLoader();
+    filteringArtifactClassLoader = doCreateClassLoader();
 
-        Enumeration<URL> resources = filteringArtifactClassLoader.getResources(FilteringArtifactClassLoaderTestCase.RESOURCE_NAME);
-        assertThat(resources, EnumerationMatcher.equalTo(Collections.singletonList(resource)));
-    }
+    Enumeration<URL> resources = filteringArtifactClassLoader.getResources(FilteringArtifactClassLoaderTestCase.RESOURCE_NAME);
+    assertThat(resources, EnumerationMatcher.equalTo(Collections.singletonList(resource)));
+  }
 }

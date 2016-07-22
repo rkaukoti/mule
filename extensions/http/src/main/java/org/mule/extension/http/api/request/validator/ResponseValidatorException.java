@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.http.api.request.validator;
 
@@ -16,11 +14,9 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
  *
  * @since 4.0
  */
-public class ResponseValidatorException extends MessagingException
-{
+public class ResponseValidatorException extends MessagingException {
 
-    public ResponseValidatorException(String message, MuleMessage muleMessage, MuleContext context)
-    {
-        super(CoreMessages.createStaticMessage(message), (org.mule.runtime.core.api.MuleMessage) muleMessage, context);
-    }
+  public ResponseValidatorException(String message, MuleMessage muleMessage, MuleContext context) {
+    super(CoreMessages.createStaticMessage(message), (org.mule.runtime.core.api.MuleMessage) muleMessage, context);
+  }
 }

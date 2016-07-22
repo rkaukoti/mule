@@ -1,27 +1,24 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.launcher.application;
 
 /**
- * Indicates the status of a Mule application that corresponds to the last executed lifecycle phase
- * on the application's {@link org.mule.runtime.core.api.MuleContext}.
+ * Indicates the status of a Mule application that corresponds to the last executed lifecycle phase on the application's
+ * {@link org.mule.runtime.core.api.MuleContext}.
  */
-public enum ApplicationStatus
-{
-    CREATED,
+public enum ApplicationStatus {
+  CREATED,
 
-    INITIALISED,
+  INITIALISED,
 
-    STARTED,
+  STARTED,
 
-    STOPPED,
+  STOPPED,
 
-    DEPLOYMENT_FAILED,
+  DEPLOYMENT_FAILED,
 
-    DESTROYED
+  DESTROYED
 }

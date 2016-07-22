@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.properties;
 
@@ -18,28 +16,22 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
-public class InvalidSetVariableTestCase extends AbstractMuleTestCase
-{
-    private String muleConfigPath;
+public class InvalidSetVariableTestCase extends AbstractMuleTestCase {
+  private String muleConfigPath;
 
-    public InvalidSetVariableTestCase(String muleConfigPath)
-    {
-        this.muleConfigPath = muleConfigPath;
-    }
+  public InvalidSetVariableTestCase(String muleConfigPath) {
+    this.muleConfigPath = muleConfigPath;
+  }
 
-    @Parameterized.Parameters
-    public static Collection<Object[]> data()
-    {
-        return Arrays.asList(new Object[][] {
-                {"org/mule/properties/invalid-set-property.xml"},
-                {"org/mule/properties/invalid-set-variable.xml"}
-        });
-    }
+  @Parameterized.Parameters
+  public static Collection<Object[]> data() {
+    return Arrays
+        .asList(new Object[][] {{"org/mule/properties/invalid-set-property.xml"}, {"org/mule/properties/invalid-set-variable.xml"}});
+  }
 
-    @Test(expected = InitialisationException.class)
-    public void emptyVariableNameValidatedBySchema() throws Exception
-    {
-        //TODO MULE-10061 - Review once the MuleContext lifecycle is clearly defined
-        new DefaultMuleContextFactory().createMuleContext(new SpringXmlConfigurationBuilder(muleConfigPath));
-    }
+  @Test(expected = InitialisationException.class)
+  public void emptyVariableNameValidatedBySchema() throws Exception {
+    // TODO MULE-10061 - Review once the MuleContext lifecycle is clearly defined
+    new DefaultMuleContextFactory().createMuleContext(new SpringXmlConfigurationBuilder(muleConfigPath));
+  }
 }

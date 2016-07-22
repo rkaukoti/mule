@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -12,20 +10,16 @@ import org.mule.runtime.core.util.collection.EventToMessageSequenceSplittingStra
 import org.mule.runtime.core.util.collection.SplittingStrategy;
 
 /**
- * Splits a message that has a Collection, Iterable, MessageSequence or Iterator
- * payload invoking the next message processor one
- * for each item in it.
+ * Splits a message that has a Collection, Iterable, MessageSequence or Iterator payload invoking the next message processor one for each
+ * item in it.
  * <p>
- * <b>EIP Reference:</b> <a href="http://www.eaipatterns.com/Sequencer.html">http
- * ://www.eaipatterns.com/Sequencer.html</a>
+ * <b>EIP Reference:</b> <a href="http://www.eaipatterns.com/Sequencer.html">http ://www.eaipatterns.com/Sequencer.html</a>
  */
-public class CollectionSplitter extends AbstractMessageSequenceSplitter
-{
+public class CollectionSplitter extends AbstractMessageSequenceSplitter {
 
-    private SplittingStrategy<MuleEvent, MessageSequence<?>> strategy = new EventToMessageSequenceSplittingStrategy();
+  private SplittingStrategy<MuleEvent, MessageSequence<?>> strategy = new EventToMessageSequenceSplittingStrategy();
 
-    protected MessageSequence<?> splitMessageIntoSequence(MuleEvent event)
-    {
-        return this.strategy.split(event);
-    }
+  protected MessageSequence<?> splitMessageIntoSequence(MuleEvent event) {
+    return this.strategy.split(event);
+  }
 }

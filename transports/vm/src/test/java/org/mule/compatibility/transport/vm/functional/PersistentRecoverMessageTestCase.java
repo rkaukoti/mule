@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.vm.functional;
 
@@ -17,42 +15,38 @@ import org.mule.runtime.core.util.queue.TransactionalQueueManager;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class PersistentRecoverMessageTestCase extends FunctionalTestCase
-{
+public class PersistentRecoverMessageTestCase extends FunctionalTestCase {
 
-    public static final String TEST_QUEUE_NAME = "flowOut";
+  public static final String TEST_QUEUE_NAME = "flowOut";
 
-    public PersistentRecoverMessageTestCase()
-    {
-        setStartContext(false);
-    }
+  public PersistentRecoverMessageTestCase() {
+    setStartContext(false);
+  }
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "vm/persistent-vmqueue-test.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "vm/persistent-vmqueue-test.xml";
+  }
 
-    @Test
-    public void testRecoverMessage() throws Exception
-    {
-        TransactionalQueueManager transactionalQueueManager = new TransactionalQueueManager();
-        transactionalQueueManager.setMuleContext(muleContext);
-        transactionalQueueManager.setQueueConfiguration(TEST_QUEUE_NAME, new DefaultQueueConfiguration(0, true));
-        transactionalQueueManager.initialise();
-        transactionalQueueManager.start();
-        MuleEvent testEvent = getTestEvent("echo");
-        transactionalQueueManager.getQueueSession().getQueue(TEST_QUEUE_NAME).put(testEvent.getMessage());
+  @Test
+  public void testRecoverMessage() throws Exception {
+    TransactionalQueueManager transactionalQueueManager = new TransactionalQueueManager();
+    transactionalQueueManager.setMuleContext(muleContext);
+    transactionalQueueManager.setQueueConfiguration(TEST_QUEUE_NAME, new DefaultQueueConfiguration(0, true));
+    transactionalQueueManager.initialise();
+    transactionalQueueManager.start();
+    MuleEvent testEvent = getTestEvent("echo");
+    transactionalQueueManager.getQueueSession().getQueue(TEST_QUEUE_NAME).put(testEvent.getMessage());
 
-        transactionalQueueManager.stop();
+    transactionalQueueManager.stop();
 
-        muleContext.start();
+    muleContext.start();
 
-        MuleClient client = muleContext.getClient();
-        MuleMessage result = client.request("vm://" + TEST_QUEUE_NAME, RECEIVE_TIMEOUT);
-        assertNotNull(result);
-        assertEquals(getPayloadAsString(testEvent.getMessage()), result.getPayload());
-    }
+    MuleClient client = muleContext.getClient();
+    MuleMessage result = client.request("vm://" + TEST_QUEUE_NAME, RECEIVE_TIMEOUT);
+    assertNotNull(result);
+    assertEquals(getPayloadAsString(testEvent.getMessage()), result.getPayload());
+  }
 }
 
 

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.functional;
 
@@ -20,41 +18,36 @@ import org.mule.tck.junit4.rule.DynamicPort;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class HttpFunctionalTestCase extends FunctionalTestCase
-{
-    @ClassRule
-    public static DynamicPort dynamicPort = new DynamicPort("port1");
-    protected static String TEST_MESSAGE = "Test Http Request (R�dgr�d), 57 = \u06f7\u06f5 in Arabic";
-    protected boolean checkPathProperties = true;
+public class HttpFunctionalTestCase extends FunctionalTestCase {
+  @ClassRule
+  public static DynamicPort dynamicPort = new DynamicPort("port1");
+  protected static String TEST_MESSAGE = "Test Http Request (R�dgr�d), 57 = \u06f7\u06f5 in Arabic";
+  protected boolean checkPathProperties = true;
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "http-functional-test-flow.xml";
+  @Override
+  protected String getConfigFile() {
+    return "http-functional-test-flow.xml";
+  }
+
+  @Test
+  public void testSend() throws Exception {
+    FunctionalTestComponent testComponent = getFunctionalTestComponent("testComponent");
+    assertNotNull(testComponent);
+
+    if (checkPathProperties) {
+      EventCallback callback = (context, component) -> {
+        MuleMessage msg = context.getMessage();
+        assertEquals("/", msg.getInboundProperty(HttpConnector.HTTP_REQUEST_PROPERTY));
+        assertEquals("/", msg.getInboundProperty(HttpConnector.HTTP_REQUEST_PATH_PROPERTY));
+        assertEquals("/", msg.getInboundProperty(HttpConnector.HTTP_CONTEXT_PATH_PROPERTY));
+      };
+
+      testComponent.setEventCallback(callback);
     }
 
-    @Test
-    public void testSend() throws Exception
-    {
-        FunctionalTestComponent testComponent = getFunctionalTestComponent("testComponent");
-        assertNotNull(testComponent);
-
-        if (checkPathProperties)
-        {
-            EventCallback callback = (context, component) ->
-            {
-                MuleMessage msg = context.getMessage();
-                assertEquals("/", msg.getInboundProperty(HttpConnector.HTTP_REQUEST_PROPERTY));
-                assertEquals("/", msg.getInboundProperty(HttpConnector.HTTP_REQUEST_PATH_PROPERTY));
-                assertEquals("/", msg.getInboundProperty(HttpConnector.HTTP_CONTEXT_PATH_PROPERTY));
-            };
-
-            testComponent.setEventCallback(callback);
-        }
-
-        MuleClient client = muleContext.getClient();
-        MuleMessage result = client.send("clientEndpoint",
-                MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse("text/plain;charset=UTF-8")).build());
-        assertEquals(TEST_MESSAGE + " Received", getPayloadAsString(result));
-    }
+    MuleClient client = muleContext.getClient();
+    MuleMessage result = client.send("clientEndpoint",
+        MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse("text/plain;charset=UTF-8")).build());
+    assertEquals(TEST_MESSAGE + " Received", getPayloadAsString(result));
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.tls.api;
 
@@ -19,15 +17,13 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * A {@link Qualifier} annotation for injecting
- * the application's default {@link TlsContextFactoryBuilder}
+ * A {@link Qualifier} annotation for injecting the application's default {@link TlsContextFactoryBuilder}
  *
  * @since 4.0
  */
 @Qualifier
 @Retention(RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD, FIELD, PARAMETER})
-public @interface DefaultTlsContextFactoryBuilder
-{
+public @interface DefaultTlsContextFactoryBuilder {
 
 }

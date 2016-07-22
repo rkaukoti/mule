@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.testmodels.services;
 
@@ -10,40 +8,33 @@ package org.mule.functional.testmodels.services;
  * <code>Address</code> is a Persons address
  */
 
-public class Address
-{
-    private String address;
-    private String postcode;
+public class Address {
+  private String address;
+  private String postcode;
 
-    public Address()
-    {
-        super();
-    }
+  public Address() {
+    super();
+  }
 
-    public Address(String address, String postcode)
-    {
-        this.address = address;
-        this.postcode = postcode;
-    }
+  public Address(String address, String postcode) {
+    this.address = address;
+    this.postcode = postcode;
+  }
 
-    public String getAddress()
-    {
-        return address;
-    }
+  public String getAddress() {
+    return address;
+  }
 
-    public void setAddress(String address)
-    {
-        this.address = address;
-    }
+  public void setAddress(String address) {
+    this.address = address;
+  }
 
-    public String getPostcode()
-    {
-        return postcode;
-    }
+  public String getPostcode() {
+    return postcode;
+  }
 
-    public void setPostcode(String postcode)
-    {
-        this.postcode = postcode;
-    }
+  public void setPostcode(String postcode) {
+    this.postcode = postcode;
+  }
 
 }

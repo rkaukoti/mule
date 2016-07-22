@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.config.dsl.connection;
 
@@ -24,40 +22,35 @@ import static org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder
 import static org.mule.runtime.config.spring.dsl.api.TypeDefinition.fromType;
 
 /**
- * A {@link ExtensionDefinitionParser} for parsing {@link ConnectionProviderResolver}
- * instances through a {@link ConnectionProviderObjectFactory}
+ * A {@link ExtensionDefinitionParser} for parsing {@link ConnectionProviderResolver} instances through a
+ * {@link ConnectionProviderObjectFactory}
  *
  * @since 4.0
  */
-public final class ConnectionProviderDefinitionParser extends ExtensionDefinitionParser
-{
+public final class ConnectionProviderDefinitionParser extends ExtensionDefinitionParser {
 
-    private final ConnectionProviderModel providerModel;
-    private final MuleContext muleContext;
-    private final DslElementDeclaration connectionDsl;
+  private final ConnectionProviderModel providerModel;
+  private final MuleContext muleContext;
+  private final DslElementDeclaration connectionDsl;
 
-    public ConnectionProviderDefinitionParser(Builder definition, ConnectionProviderModel providerModel,
-                                              DslElementResolver dslElementResolver,
-                                              MuleContext muleContext, ExtensionParsingContext parsingContext)
-    {
-        super(definition, dslElementResolver, parsingContext);
-        this.providerModel = providerModel;
-        this.muleContext = muleContext;
-        this.connectionDsl = dslElementResolver.resolve(providerModel);
-    }
+  public ConnectionProviderDefinitionParser(Builder definition, ConnectionProviderModel providerModel,
+      DslElementResolver dslElementResolver, MuleContext muleContext, ExtensionParsingContext parsingContext) {
+    super(definition, dslElementResolver, parsingContext);
+    this.providerModel = providerModel;
+    this.muleContext = muleContext;
+    this.connectionDsl = dslElementResolver.resolve(providerModel);
+  }
 
-    @Override
-    protected void doParse(Builder definitionBuilder) throws ConfigurationException
-    {
-        definitionBuilder.withIdentifier(connectionDsl.getElementName())
-                         .withTypeDefinition(fromType(ConnectionProviderResolver.class))
-                         .withObjectFactoryType(ConnectionProviderObjectFactory.class)
-                         .withConstructorParameterDefinition(fromFixedValue(providerModel).build())
-                         .withConstructorParameterDefinition(fromFixedValue(muleContext).build())
-                         .withSetterParameterDefinition("disableValidation", fromSimpleParameter("disableValidation").build())
-                         .withSetterParameterDefinition("retryPolicyTemplate", fromChildConfiguration(RetryPolicyTemplate.class).build())
-                         .withSetterParameterDefinition("poolingProfile", fromChildConfiguration(PoolingProfile.class).build());
+  @Override
+  protected void doParse(Builder definitionBuilder) throws ConfigurationException {
+    definitionBuilder.withIdentifier(connectionDsl.getElementName()).withTypeDefinition(fromType(ConnectionProviderResolver.class))
+        .withObjectFactoryType(ConnectionProviderObjectFactory.class)
+        .withConstructorParameterDefinition(fromFixedValue(providerModel).build())
+        .withConstructorParameterDefinition(fromFixedValue(muleContext).build())
+        .withSetterParameterDefinition("disableValidation", fromSimpleParameter("disableValidation").build())
+        .withSetterParameterDefinition("retryPolicyTemplate", fromChildConfiguration(RetryPolicyTemplate.class).build())
+        .withSetterParameterDefinition("poolingProfile", fromChildConfiguration(PoolingProfile.class).build());
 
-        parseParameters(providerModel.getParameterModels());
-    }
+    parseParameters(providerModel.getParameterModels());
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf;
 
@@ -20,42 +18,36 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ConfigurationTestCase extends FunctionalTestCase
-{
+public class ConfigurationTestCase extends FunctionalTestCase {
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "configuration-conf-flow-httpn.xml";
+  @Override
+  protected String getConfigFile() {
+    return "configuration-conf-flow-httpn.xml";
+  }
+
+  @Test
+  public void testBusConfiguration() throws Exception {
+    CxfConfiguration config = muleContext.getRegistry().get("cxf");
+
+    Bus cxfBus = config.getCxfBus();
+    boolean found = false;
+    for (Interceptor<? extends Message> i : cxfBus.getInInterceptors()) {
+      if (i instanceof LoggingInInterceptor) {
+        found = true;
+        break;
+      }
     }
 
-    @Test
-    public void testBusConfiguration() throws Exception
-    {
-        CxfConfiguration config = muleContext.getRegistry().get("cxf");
+    assertTrue("Did not find logging interceptor.", found);
+  }
 
-        Bus cxfBus = config.getCxfBus();
-        boolean found = false;
-        for (Interceptor<? extends Message> i : cxfBus.getInInterceptors())
-        {
-            if (i instanceof LoggingInInterceptor)
-            {
-                found = true;
-                break;
-            }
-        }
-
-        assertTrue("Did not find logging interceptor.", found);
-    }
-
-    @Test
-    public void testSpringRefs() throws Exception
-    {
-        FlowConfiguringMessageProcessor processor =
-                muleContext.getRegistry().lookupObjects(FlowConfiguringMessageProcessor.class).iterator().next();
-        List<Interceptor<? extends Message>> inInterceptors =
-                ((ProxyServiceFactoryBean) processor.getMessageProcessorBuilder()).getInInterceptors();
-        assertEquals(muleContext.getRegistry().get("foo1"), inInterceptors.get(0));
-        assertEquals(muleContext.getRegistry().get("foo3"), inInterceptors.get(1));
-    }
+  @Test
+  public void testSpringRefs() throws Exception {
+    FlowConfiguringMessageProcessor processor =
+        muleContext.getRegistry().lookupObjects(FlowConfiguringMessageProcessor.class).iterator().next();
+    List<Interceptor<? extends Message>> inInterceptors =
+        ((ProxyServiceFactoryBean) processor.getMessageProcessorBuilder()).getInInterceptors();
+    assertEquals(muleContext.getRegistry().get("foo1"), inInterceptors.get(0));
+    assertEquals(muleContext.getRegistry().get("foo3"), inInterceptors.get(1));
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.routing;
 
@@ -26,58 +24,47 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-public class CollectionAggregatorRouterSerializationTestCase extends FunctionalTestCase
-{
+public class CollectionAggregatorRouterSerializationTestCase extends FunctionalTestCase {
+
+  @Override
+  protected String getConfigFile() {
+    return "collection-aggregator-router-serialization.xml";
+  }
+
+  @Test
+  public void eventGroupDeserialization() throws Exception {
+    muleContext.getRegistry().registerObject(MuleProperties.OBJECT_STORE_DEFAULT_IN_MEMORY_NAME,
+        new EventGroupSerializerObjectStore<Serializable>());
+    List<String> list = Arrays.asList("first", "second");
+    flowRunner("splitter").withPayload(list).asynchronously().run();
+
+    MuleClient client = muleContext.getClient();
+    MuleMessage request = client.request("test://out", RECEIVE_TIMEOUT);
+    assertNotNull(request);
+    assertThat(request.getPayload(), instanceOf(List.class));
+    assertThat(((List<MuleMessage>) request.getPayload()), hasSize(list.size()));
+  }
+
+  private class EventGroupSerializerObjectStore<T extends Serializable> extends SimpleMemoryObjectStore<Serializable> {
+    @Override
+    protected void doStore(Serializable key, Serializable value) throws ObjectStoreException {
+      if (value instanceof EventGroup) {
+        value = SerializationUtils.serialize(value);
+      }
+      super.doStore(key, value);
+    }
 
     @Override
-    protected String getConfigFile()
-    {
-        return "collection-aggregator-router-serialization.xml";
-    }
-
-    @Test
-    public void eventGroupDeserialization() throws Exception
-    {
-        muleContext.getRegistry().registerObject(MuleProperties.OBJECT_STORE_DEFAULT_IN_MEMORY_NAME,
-                new EventGroupSerializerObjectStore<Serializable>());
-        List<String> list = Arrays.asList("first", "second");
-        flowRunner("splitter").withPayload(list).asynchronously().run();
-
-        MuleClient client = muleContext.getClient();
-        MuleMessage request = client.request("test://out", RECEIVE_TIMEOUT);
-        assertNotNull(request);
-        assertThat(request.getPayload(), instanceOf(List.class));
-        assertThat(((List<MuleMessage>) request.getPayload()), hasSize(list.size()));
-    }
-
-    private class EventGroupSerializerObjectStore<T extends Serializable> extends SimpleMemoryObjectStore<Serializable>
-    {
-        @Override
-        protected void doStore(Serializable key, Serializable value) throws ObjectStoreException
-        {
-            if (value instanceof EventGroup)
-            {
-                value = SerializationUtils.serialize(value);
-            }
-            super.doStore(key, value);
+    protected Serializable doRetrieve(Serializable key) {
+      Object value = super.doRetrieve(key);
+      if (value instanceof byte[]) {
+        try {
+          value = SerializationUtils.deserialize((byte[]) value);
+        } catch (SerializationException e) {
+          // return original value
         }
-
-        @Override
-        protected Serializable doRetrieve(Serializable key)
-        {
-            Object value = super.doRetrieve(key);
-            if (value instanceof byte[])
-            {
-                try
-                {
-                    value = SerializationUtils.deserialize((byte[]) value);
-                }
-                catch (SerializationException e)
-                {
-                    // return original value
-                }
-            }
-            return (Serializable) value;
-        }
+      }
+      return (Serializable) value;
     }
+  }
 }

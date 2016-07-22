@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.config.dsl;
 
@@ -21,46 +19,39 @@ import static org.mule.test.config.dsl.LifecycleAction.INITIALISE;
 import static org.mule.test.config.dsl.LifecycleAction.START;
 import static org.mule.test.config.dsl.LifecycleAction.STOP;
 
-public class LifecycleSensingObjectFactory implements ObjectFactory<MessageProcessor>, Lifecycle
-{
+public class LifecycleSensingObjectFactory implements ObjectFactory<MessageProcessor>, Lifecycle {
 
-    private List<LifecycleAction> lifecycleActions = new LinkedList<>();
+  private List<LifecycleAction> lifecycleActions = new LinkedList<>();
 
-    @Override
-    public MessageProcessor getObject() throws Exception
-    {
-        lifecycleActions.add(GET_OBJECT);
-        LifecycleSensingMessageProcessor lifecycleSensingMessageProcessor = new LifecycleSensingMessageProcessor();
-        lifecycleSensingMessageProcessor.setObjectFactory(this);
-        return lifecycleSensingMessageProcessor;
-    }
+  @Override
+  public MessageProcessor getObject() throws Exception {
+    lifecycleActions.add(GET_OBJECT);
+    LifecycleSensingMessageProcessor lifecycleSensingMessageProcessor = new LifecycleSensingMessageProcessor();
+    lifecycleSensingMessageProcessor.setObjectFactory(this);
+    return lifecycleSensingMessageProcessor;
+  }
 
-    @Override
-    public void dispose()
-    {
-        lifecycleActions.add(DISPOSE);
-    }
+  @Override
+  public void dispose() {
+    lifecycleActions.add(DISPOSE);
+  }
 
-    @Override
-    public void initialise() throws InitialisationException
-    {
-        lifecycleActions.add(INITIALISE);
-    }
+  @Override
+  public void initialise() throws InitialisationException {
+    lifecycleActions.add(INITIALISE);
+  }
 
-    @Override
-    public void start() throws MuleException
-    {
-        lifecycleActions.add(START);
-    }
+  @Override
+  public void start() throws MuleException {
+    lifecycleActions.add(START);
+  }
 
-    @Override
-    public void stop() throws MuleException
-    {
-        lifecycleActions.add(STOP);
-    }
+  @Override
+  public void stop() throws MuleException {
+    lifecycleActions.add(STOP);
+  }
 
-    public List<LifecycleAction> getLifecycleActions()
-    {
-        return lifecycleActions;
-    }
+  public List<LifecycleAction> getLifecycleActions() {
+    return lifecycleActions;
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.collection;
 
@@ -24,29 +22,25 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SmallTest
-public class ImmutableMapCollectorTestCase extends AbstractMuleTestCase
-{
+public class ImmutableMapCollectorTestCase extends AbstractMuleTestCase {
 
-    private final ImmutableMapCollector<Fruit, String, Fruit> collector = new ImmutableMapCollector<>(f -> f.getClass().getName(), f -> f);
+  private final ImmutableMapCollector<Fruit, String, Fruit> collector = new ImmutableMapCollector<>(f -> f.getClass().getName(), f -> f);
 
-    @Test
-    public void collect()
-    {
-        final List<Fruit> fruits = Arrays.asList(new Apple(), new Banana(), new Kiwi());
-        Map<String, Fruit> map = fruits.stream().collect(collector);
+  @Test
+  public void collect() {
+    final List<Fruit> fruits = Arrays.asList(new Apple(), new Banana(), new Kiwi());
+    Map<String, Fruit> map = fruits.stream().collect(collector);
 
-        assertThat(map.size(), is(3));
-        fruits.forEach(fruit ->
-        {
-            Fruit value = map.get(fruit.getClass().getName());
-            assertThat(value, sameInstance(fruit));
-        });
-    }
+    assertThat(map.size(), is(3));
+    fruits.forEach(fruit -> {
+      Fruit value = map.get(fruit.getClass().getName());
+      assertThat(value, sameInstance(fruit));
+    });
+  }
 
-    @Test
-    public void emptyMap()
-    {
-        Map<String, Fruit> map = new ArrayList<Fruit>().stream().collect(collector);
-        assertThat(map.isEmpty(), is(true));
-    }
+  @Test
+  public void emptyMap() {
+    Map<String, Fruit> map = new ArrayList<Fruit>().stream().collect(collector);
+    assertThat(map.isEmpty(), is(true));
+  }
 }

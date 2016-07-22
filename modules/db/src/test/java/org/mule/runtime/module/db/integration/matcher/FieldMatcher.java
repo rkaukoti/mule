@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.matcher;
@@ -16,37 +14,31 @@ import org.mule.runtime.module.db.integration.model.Record;
 
 import static org.mule.runtime.module.db.integration.model.FieldUtils.getValueAsString;
 
-public class FieldMatcher extends TypeSafeMatcher<Record>
-{
+public class FieldMatcher extends TypeSafeMatcher<Record> {
 
-    private final Field field;
+  private final Field field;
 
-    public FieldMatcher(Field field)
-    {
-        this.field = field;
-    }
+  public FieldMatcher(Field field) {
+    this.field = field;
+  }
 
-    @Factory
-    public static Matcher<Record> containsField(Field field)
-    {
-        return new FieldMatcher(field);
-    }
+  @Factory
+  public static Matcher<Record> containsField(Field field) {
+    return new FieldMatcher(field);
+  }
 
-    @Override
-    public boolean matchesSafely(Record item)
-    {
-        return item.getFields().contains(field);
-    }
+  @Override
+  public boolean matchesSafely(Record item) {
+    return item.getFields().contains(field);
+  }
 
-    public void describeTo(Description description)
-    {
-        description.appendText(
-                "Does not contains a field with name = " + field.getName() + " with value = " + getValueAsString(field.getValue()));
-    }
+  public void describeTo(Description description) {
+    description
+        .appendText("Does not contains a field with name = " + field.getName() + " with value = " + getValueAsString(field.getValue()));
+  }
 
-    @Override
-    public void describeMismatch(Object item, Description description)
-    {
-        description.appendText("was ").appendValue(getValueAsString(item));
-    }
+  @Override
+  public void describeMismatch(Object item, Description description) {
+    description.appendText("was ").appendValue(getValueAsString(item));
+  }
 }

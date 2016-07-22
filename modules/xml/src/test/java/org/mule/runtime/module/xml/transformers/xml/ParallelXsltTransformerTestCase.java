@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformers.xml;
 
@@ -18,114 +16,91 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class ParallelXsltTransformerTestCase extends AbstractMuleContextTestCase
-{
-    int running = 0;
-    private String srcData;
-    private String resultData;
-    private Collection<Object> actualResults = new ConcurrentLinkedQueue<Object>();
+public class ParallelXsltTransformerTestCase extends AbstractMuleContextTestCase {
+  int running = 0;
+  private String srcData;
+  private String resultData;
+  private Collection<Object> actualResults = new ConcurrentLinkedQueue<Object>();
 
-    @Override
-    protected void doSetUp() throws Exception
-    {
-        srcData = IOUtils.toString(IOUtils.getResourceAsStream("cdcatalog-utf-8.xml", getClass()), "UTF-8");
-        resultData = IOUtils.toString(IOUtils.getResourceAsStream("cdcatalog-utf-8.html", getClass()),
-                "UTF-8");
-    }
+  @Override
+  protected void doSetUp() throws Exception {
+    srcData = IOUtils.toString(IOUtils.getResourceAsStream("cdcatalog-utf-8.xml", getClass()), "UTF-8");
+    resultData = IOUtils.toString(IOUtils.getResourceAsStream("cdcatalog-utf-8.html", getClass()), "UTF-8");
+  }
 
-    public Transformer getTransformer() throws Exception
-    {
-        XsltTransformer transformer = new XsltTransformer();
-        transformer.setReturnDataType(DataType.STRING);
-        transformer.setXslFile("cdcatalog.xsl");
-        transformer.setMuleContext(muleContext);
-        transformer.initialise();
-        return transformer;
-    }
+  public Transformer getTransformer() throws Exception {
+    XsltTransformer transformer = new XsltTransformer();
+    transformer.setReturnDataType(DataType.STRING);
+    transformer.setXslFile("cdcatalog.xsl");
+    transformer.setMuleContext(muleContext);
+    transformer.initialise();
+    return transformer;
+  }
 
-    public synchronized void signalStarted()
-    {
-        ++running;
-    }
+  public synchronized void signalStarted() {
+    ++running;
+  }
 
-    public synchronized void signalDone()
-    {
-        if (--running == 0)
-            this.notify();
-    }
+  public synchronized void signalDone() {
+    if (--running == 0)
+      this.notify();
+  }
 
-    @Test
-    public void testParallelTransformation() throws Exception
-    {
-        final Transformer transformer = getTransformer();
+  @Test
+  public void testParallelTransformation() throws Exception {
+    final Transformer transformer = getTransformer();
 
-        long startTime = System.currentTimeMillis();
+    long startTime = System.currentTimeMillis();
 
-        for (int i = 0; i < getParallelThreadCount(); ++i)
-        {
-            new Thread(() ->
-            {
-                signalStarted();
-                for (int j = 0; j < getCallsPerThread(); ++j)
-                {
-                    try
-                    {
-                        actualResults.add(transformer.transform(srcData));
-                    }
-                    catch (TransformerException e)
-                    {
-                        actualResults.add(e);
-                    }
-                }
-                signalDone();
-            }).start();
+    for (int i = 0; i < getParallelThreadCount(); ++i) {
+      new Thread(() -> {
+        signalStarted();
+        for (int j = 0; j < getCallsPerThread(); ++j) {
+          try {
+            actualResults.add(transformer.transform(srcData));
+          } catch (TransformerException e) {
+            actualResults.add(e);
+          }
         }
-
-        synchronized (this)
-        {
-            this.wait();
-        }
-
-        long endTime = System.currentTimeMillis();
-
-        checkResult();
-
-        if (logger.isDebugEnabled())
-        {
-            logger.debug("Parallel transformations in " + getParallelThreadCount() + " threads with "
-                         + getCallsPerThread() + " calls/thread took " + (endTime - startTime) + " ms.");
-        }
+        signalDone();
+      }).start();
     }
 
-    protected void checkResult() throws Exception
-    {
-        Object expectedResult = resultData;
-
-        for (Object result : actualResults)
-        {
-            if (result instanceof Exception)
-            {
-                throw (Exception) result;
-            }
-
-            if (expectedResult instanceof String && result instanceof String)
-            {
-                XMLAssert.assertXMLEqual((String) expectedResult, (String) result);
-            }
-            else
-            {
-                XMLAssert.assertEquals(expectedResult, result);
-            }
-        }
+    synchronized (this) {
+      this.wait();
     }
 
-    private int getParallelThreadCount()
-    {
-        return 20;
-    }
+    long endTime = System.currentTimeMillis();
 
-    private int getCallsPerThread()
-    {
-        return 100;
+    checkResult();
+
+    if (logger.isDebugEnabled()) {
+      logger.debug("Parallel transformations in " + getParallelThreadCount() + " threads with " + getCallsPerThread()
+          + " calls/thread took " + (endTime - startTime) + " ms.");
     }
+  }
+
+  protected void checkResult() throws Exception {
+    Object expectedResult = resultData;
+
+    for (Object result : actualResults) {
+      if (result instanceof Exception) {
+        throw (Exception) result;
+      }
+
+      if (expectedResult instanceof String && result instanceof String) {
+        XMLAssert.assertXMLEqual((String) expectedResult, (String) result);
+      } else {
+        XMLAssert.assertEquals(expectedResult, result);
+      }
+    }
+  }
+
+  private int getParallelThreadCount() {
+    return 20;
+  }
+
+  private int getCallsPerThread() {
+    return 100;
+  }
 }

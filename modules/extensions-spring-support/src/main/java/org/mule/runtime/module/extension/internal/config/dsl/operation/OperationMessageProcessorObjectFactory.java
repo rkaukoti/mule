@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.config.dsl.operation;
 
@@ -24,57 +22,44 @@ import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils
  *
  * @since 4.0
  */
-public class OperationMessageProcessorObjectFactory extends AbstractExtensionObjectFactory<OperationMessageProcessor>
-{
+public class OperationMessageProcessorObjectFactory extends AbstractExtensionObjectFactory<OperationMessageProcessor> {
 
-    private final RuntimeExtensionModel extensionModel;
-    private final RuntimeOperationModel operationModel;
-    private final MuleContext muleContext;
+  private final RuntimeExtensionModel extensionModel;
+  private final RuntimeOperationModel operationModel;
+  private final MuleContext muleContext;
 
-    private String configurationProviderName;
-    private String target = EMPTY;
+  private String configurationProviderName;
+  private String target = EMPTY;
 
-    public OperationMessageProcessorObjectFactory(RuntimeExtensionModel extensionModel, RuntimeOperationModel operationModel,
-                                                  MuleContext muleContext)
-    {
-        this.extensionModel = extensionModel;
-        this.operationModel = operationModel;
-        this.muleContext = muleContext;
-    }
+  public OperationMessageProcessorObjectFactory(RuntimeExtensionModel extensionModel, RuntimeOperationModel operationModel,
+      MuleContext muleContext) {
+    this.extensionModel = extensionModel;
+    this.operationModel = operationModel;
+    this.muleContext = muleContext;
+  }
 
-    @Override
-    public OperationMessageProcessor getObject() throws Exception
-    {
-        return withContextClassLoader(getClassLoader(extensionModel), () ->
-        {
-            try
-            {
-                ResolverSet resolverSet = getParametersAsResolverSet();
-                OperationMessageProcessor processor = new OperationMessageProcessor(extensionModel,
-                        operationModel,
-                        configurationProviderName,
-                        target,
-                        resolverSet,
-                        (ExtensionManagerAdapter) muleContext.getExtensionManager());
+  @Override
+  public OperationMessageProcessor getObject() throws Exception {
+    return withContextClassLoader(getClassLoader(extensionModel), () -> {
+      try {
+        ResolverSet resolverSet = getParametersAsResolverSet();
+        OperationMessageProcessor processor = new OperationMessageProcessor(extensionModel, operationModel, configurationProviderName,
+            target, resolverSet, (ExtensionManagerAdapter) muleContext.getExtensionManager());
 
-                //TODO: MULE-5002 this should not be necessary but lifecycle issues when injecting message processors automatically
-                muleContext.getInjector().inject(processor);
-                return processor;
-            }
-            catch (Exception e)
-            {
-                throw new MuleRuntimeException(e);
-            }
-        });
-    }
+        // TODO: MULE-5002 this should not be necessary but lifecycle issues when injecting message processors automatically
+        muleContext.getInjector().inject(processor);
+        return processor;
+      } catch (Exception e) {
+        throw new MuleRuntimeException(e);
+      }
+    });
+  }
 
-    public void setConfigurationProviderName(String configurationProviderName)
-    {
-        this.configurationProviderName = configurationProviderName;
-    }
+  public void setConfigurationProviderName(String configurationProviderName) {
+    this.configurationProviderName = configurationProviderName;
+  }
 
-    public void setTarget(String target)
-    {
-        this.target = target;
-    }
+  public void setTarget(String target) {
+    this.target = target;
+  }
 }

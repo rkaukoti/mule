@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.processors;
 
@@ -14,56 +12,42 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
 /**
- * <code>MuleObjectNameProcessor</code> is used to set spring ids to Mule object
- * names so the the bean id and name property on the object don't both have to be
- * set.
+ * <code>MuleObjectNameProcessor</code> is used to set spring ids to Mule object names so the the bean id and name property on the object
+ * don't both have to be set.
  */
 
-public class MuleObjectNameProcessor implements BeanPostProcessor
-{
-    private final Class<? extends NameableObject> managedTypes[] = new Class[] {
-            LegacyConnector.class,
-            Transformer.class,
-            Agent.class
-    };
-    private boolean overwrite = false;
+public class MuleObjectNameProcessor implements BeanPostProcessor {
+  private final Class<? extends NameableObject> managedTypes[] = new Class[] {LegacyConnector.class, Transformer.class, Agent.class};
+  private boolean overwrite = false;
 
-    @Override
-    public Object postProcessBeforeInitialization(Object object, String beanName) throws BeansException
-    {
-        for (Class<? extends NameableObject> managedType : managedTypes)
-        {
-            if (managedType.isInstance(object))
-            {
-                setNameIfNecessary((NameableObject) object, beanName);
-            }
-        }
-
-        return object;
+  @Override
+  public Object postProcessBeforeInitialization(Object object, String beanName) throws BeansException {
+    for (Class<? extends NameableObject> managedType : managedTypes) {
+      if (managedType.isInstance(object)) {
+        setNameIfNecessary((NameableObject) object, beanName);
+      }
     }
 
-    private void setNameIfNecessary(NameableObject nameable, String name)
-    {
-        if (nameable.getName() == null || overwrite)
-        {
-            nameable.setName(name);
-        }
-    }
+    return object;
+  }
 
-    @Override
-    public Object postProcessAfterInitialization(Object o, String s) throws BeansException
-    {
-        return o;
+  private void setNameIfNecessary(NameableObject nameable, String name) {
+    if (nameable.getName() == null || overwrite) {
+      nameable.setName(name);
     }
+  }
 
-    public boolean isOverwrite()
-    {
-        return overwrite;
-    }
+  @Override
+  public Object postProcessAfterInitialization(Object o, String s) throws BeansException {
+    return o;
+  }
 
-    public void setOverwrite(boolean overwrite)
-    {
-        this.overwrite = overwrite;
-    }
+  public boolean isOverwrite() {
+    return overwrite;
+  }
+
+  public void setOverwrite(boolean overwrite) {
+    this.overwrite = overwrite;
+  }
 
 }

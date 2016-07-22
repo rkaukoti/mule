@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.el;
 
@@ -14,20 +12,17 @@ import java.io.InputStream;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class XPath3NamespaceTestCase extends FunctionalTestCase
-{
+public class XPath3NamespaceTestCase extends FunctionalTestCase {
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "xpath-namespace-config.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "xpath-namespace-config.xml";
+  }
 
-    @Test
-    public void xpathWithNamespace() throws Exception
-    {
-        InputStream soapEnvelope = getClass().getResourceAsStream("/request.xml");
-        String result = getPayloadAsString(flowRunner("xpathWithNamespace").withPayload(soapEnvelope).run().getMessage());
-        assertThat(result, equalTo("Hello!"));
-    }
+  @Test
+  public void xpathWithNamespace() throws Exception {
+    InputStream soapEnvelope = getClass().getResourceAsStream("/request.xml");
+    String result = getPayloadAsString(flowRunner("xpathWithNamespace").withPayload(soapEnvelope).run().getMessage());
+    assertThat(result, equalTo("Hello!"));
+  }
 }

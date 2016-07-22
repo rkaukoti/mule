@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.executeddl;
@@ -23,45 +21,35 @@ import static org.junit.Assert.assertEquals;
 import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
 import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecords;
 
-public abstract class AbstractExecuteDdlTestCase extends AbstractDbIntegrationTestCase
-{
+public abstract class AbstractExecuteDdlTestCase extends AbstractDbIntegrationTestCase {
 
-    public AbstractExecuteDdlTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
+  public AbstractExecuteDdlTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
+    super(dataSourceConfigResource, testDatabase);
+  }
+
+  @Before
+  public void deleteTestDdlTable() throws Exception {
+
+    Connection connection = null;
+    try {
+      DataSource dataSource = getDefaultDataSource();
+      connection = dataSource.getConnection();
+
+      QueryRunner qr = new QueryRunner(dataSource);
+      qr.update(connection, "DROP TABLE TestDdl");
+    } catch (SQLException e) {
+      // Ignore: table does not exist
+    } finally {
+      if (connection != null) {
+        connection.close();
+      }
     }
+  }
 
-    @Before
-    public void deleteTestDdlTable() throws Exception
-    {
+  protected void assertTableCreation(Object payload) throws SQLException {
+    assertEquals(0, payload);
 
-        Connection connection = null;
-        try
-        {
-            DataSource dataSource = getDefaultDataSource();
-            connection = dataSource.getConnection();
-
-            QueryRunner qr = new QueryRunner(dataSource);
-            qr.update(connection, "DROP TABLE TestDdl");
-        }
-        catch (SQLException e)
-        {
-            // Ignore: table does not exist
-        }
-        finally
-        {
-            if (connection != null)
-            {
-                connection.close();
-            }
-        }
-    }
-
-    protected void assertTableCreation(Object payload) throws SQLException
-    {
-        assertEquals(0, payload);
-
-        List<Map<String, String>> result = selectData("select * from TestDdl", getDefaultDataSource());
-        assertRecords(result);
-    }
+    List<Map<String, String>> result = selectData("select * from TestDdl", getDefaultDataSource());
+    assertRecords(result);
+  }
 }

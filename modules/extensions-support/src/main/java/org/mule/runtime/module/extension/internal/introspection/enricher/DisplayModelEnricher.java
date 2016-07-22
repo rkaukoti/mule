@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
@@ -33,116 +31,96 @@ import java.util.Optional;
 import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getAnnotation;
 
 /**
- * Enriches the {@link ExtensionDeclarer} with a {@link DisplayModelProperty} from annotated elements with
- * {@link Summary} or {@link DisplayName}
+ * Enriches the {@link ExtensionDeclarer} with a {@link DisplayModelProperty} from annotated elements with {@link Summary} or
+ * {@link DisplayName}
  *
  * @since 4.0
  */
-public final class DisplayModelEnricher extends AbstractAnnotatedModelEnricher
-{
+public final class DisplayModelEnricher extends AbstractAnnotatedModelEnricher {
 
-    @Override
-    public void enrich(DescribingContext describingContext)
-    {
-        new IdempotentDeclarationWalker()
-        {
-            @Override
-            public void onSource(WithSourcesDeclaration owner, SourceDeclaration declaration)
-            {
-                enrichTypes(declaration);
-            }
+  @Override
+  public void enrich(DescribingContext describingContext) {
+    new IdempotentDeclarationWalker() {
+      @Override
+      public void onSource(WithSourcesDeclaration owner, SourceDeclaration declaration) {
+        enrichTypes(declaration);
+      }
 
-            @Override
-            public void onParameter(ParameterizedInterceptableDeclaration owner, ParameterDeclaration declaration)
-            {
-                enrichParameter(declaration);
-            }
+      @Override
+      public void onParameter(ParameterizedInterceptableDeclaration owner, ParameterDeclaration declaration) {
+        enrichParameter(declaration);
+      }
 
-            @Override
-            public void onOperation(WithOperationsDeclaration owner, OperationDeclaration declaration)
-            {
-                enrichOperation(declaration);
-            }
+      @Override
+      public void onOperation(WithOperationsDeclaration owner, OperationDeclaration declaration) {
+        enrichOperation(declaration);
+      }
 
-            @Override
-            public void onConnectionProvider(ConnectedDeclaration owner, ConnectionProviderDeclaration declaration)
-            {
-                enrichTypes(declaration);
-            }
+      @Override
+      public void onConnectionProvider(ConnectedDeclaration owner, ConnectionProviderDeclaration declaration) {
+        enrichTypes(declaration);
+      }
 
-            @Override
-            public void onConfiguration(ConfigurationDeclaration declaration)
-            {
-                enrichTypes(declaration);
-            }
-        }.walk(describingContext.getExtensionDeclarer().getDeclaration());
+      @Override
+      public void onConfiguration(ConfigurationDeclaration declaration) {
+        enrichTypes(declaration);
+      }
+    }.walk(describingContext.getExtensionDeclarer().getDeclaration());
+  }
+
+  private void enrichParameter(ParameterDeclaration declaration) {
+    final Optional<DeclaringMemberModelProperty> declaringMemberProperty = declaration.getModelProperty(DeclaringMemberModelProperty.class);
+    final Optional<ImplementingParameterModelProperty> implementingParameterProperty =
+        declaration.getModelProperty(ImplementingParameterModelProperty.class);
+    AnnotatedElement annotatedElement = null;
+
+    if (declaringMemberProperty.isPresent()) {
+      annotatedElement = declaringMemberProperty.get().getDeclaringField();
     }
 
-    private void enrichParameter(ParameterDeclaration declaration)
-    {
-        final Optional<DeclaringMemberModelProperty> declaringMemberProperty =
-                declaration.getModelProperty(DeclaringMemberModelProperty.class);
-        final Optional<ImplementingParameterModelProperty> implementingParameterProperty =
-                declaration.getModelProperty(ImplementingParameterModelProperty.class);
-        AnnotatedElement annotatedElement = null;
-
-        if (declaringMemberProperty.isPresent())
-        {
-            annotatedElement = declaringMemberProperty.get().getDeclaringField();
-        }
-
-        if (implementingParameterProperty.isPresent())
-        {
-            annotatedElement = implementingParameterProperty.get().getParameter();
-        }
-
-        enrichDeclaration(declaration, annotatedElement);
+    if (implementingParameterProperty.isPresent()) {
+      annotatedElement = implementingParameterProperty.get().getParameter();
     }
 
-    private void enrichTypes(BaseDeclaration declaration)
-    {
-        final Optional<ImplementingTypeModelProperty> modelProperty = declaration.getModelProperty(ImplementingTypeModelProperty.class);
-        if (modelProperty.isPresent())
-        {
-            final Class<?> annotatedType = modelProperty.get().getType();
-            final Summary summaryAnnotation = getAnnotation(annotatedType, Summary.class);
-            final DisplayName displayNameAnnotation = getAnnotation(annotatedType, DisplayName.class);
+    enrichDeclaration(declaration, annotatedElement);
+  }
 
-            createDisplayModelProperty(declaration, summaryAnnotation, displayNameAnnotation);
-        }
+  private void enrichTypes(BaseDeclaration declaration) {
+    final Optional<ImplementingTypeModelProperty> modelProperty = declaration.getModelProperty(ImplementingTypeModelProperty.class);
+    if (modelProperty.isPresent()) {
+      final Class<?> annotatedType = modelProperty.get().getType();
+      final Summary summaryAnnotation = getAnnotation(annotatedType, Summary.class);
+      final DisplayName displayNameAnnotation = getAnnotation(annotatedType, DisplayName.class);
+
+      createDisplayModelProperty(declaration, summaryAnnotation, displayNameAnnotation);
     }
+  }
 
-    private void enrichOperation(OperationDeclaration declaration)
-    {
-        final Optional<ImplementingMethodModelProperty> modelProperty = declaration.getModelProperty(ImplementingMethodModelProperty.class);
-        AnnotatedElement annotatedElement = null;
+  private void enrichOperation(OperationDeclaration declaration) {
+    final Optional<ImplementingMethodModelProperty> modelProperty = declaration.getModelProperty(ImplementingMethodModelProperty.class);
+    AnnotatedElement annotatedElement = null;
 
-        if (modelProperty.isPresent())
-        {
-            annotatedElement = modelProperty.get().getMethod();
-        }
-        enrichDeclaration(declaration, annotatedElement);
+    if (modelProperty.isPresent()) {
+      annotatedElement = modelProperty.get().getMethod();
     }
+    enrichDeclaration(declaration, annotatedElement);
+  }
 
-    private void enrichDeclaration(BaseDeclaration declaration, AnnotatedElement annotatedElement)
-    {
-        if (annotatedElement != null)
-        {
-            final Summary summaryAnnotation = annotatedElement.getAnnotation(Summary.class);
-            final DisplayName displayNameAnnotation = annotatedElement.getAnnotation(DisplayName.class);
+  private void enrichDeclaration(BaseDeclaration declaration, AnnotatedElement annotatedElement) {
+    if (annotatedElement != null) {
+      final Summary summaryAnnotation = annotatedElement.getAnnotation(Summary.class);
+      final DisplayName displayNameAnnotation = annotatedElement.getAnnotation(DisplayName.class);
 
-            createDisplayModelProperty(declaration, summaryAnnotation, displayNameAnnotation);
-        }
+      createDisplayModelProperty(declaration, summaryAnnotation, displayNameAnnotation);
     }
+  }
 
-    private void createDisplayModelProperty(BaseDeclaration declaration, Summary summaryAnnotation, DisplayName displayNameAnnotation)
-    {
-        String summary = summaryAnnotation != null ? summaryAnnotation.value() : null;
-        String displayName = displayNameAnnotation != null ? displayNameAnnotation.value() : null;
+  private void createDisplayModelProperty(BaseDeclaration declaration, Summary summaryAnnotation, DisplayName displayNameAnnotation) {
+    String summary = summaryAnnotation != null ? summaryAnnotation.value() : null;
+    String displayName = displayNameAnnotation != null ? displayNameAnnotation.value() : null;
 
-        if (summary != null || displayName != null)
-        {
-            declaration.addModelProperty(new DisplayModelProperty(displayName, summary));
-        }
+    if (summary != null || displayName != null) {
+      declaration.addModelProperty(new DisplayModelProperty(displayName, summary));
     }
+  }
 }

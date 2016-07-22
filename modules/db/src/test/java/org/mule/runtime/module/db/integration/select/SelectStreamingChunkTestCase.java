@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.select;
@@ -26,37 +24,32 @@ import static org.mule.runtime.module.db.integration.TestRecordUtil.getEarthReco
 import static org.mule.runtime.module.db.integration.TestRecordUtil.getMarsRecord;
 import static org.mule.runtime.module.db.integration.TestRecordUtil.getVenusRecord;
 
-public class SelectStreamingChunkTestCase extends AbstractDbIntegrationTestCase
-{
+public class SelectStreamingChunkTestCase extends AbstractDbIntegrationTestCase {
 
-    public SelectStreamingChunkTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
-    }
+  public SelectStreamingChunkTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
+    super(dataSourceConfigResource, testDatabase);
+  }
 
-    @Parameterized.Parameters
-    public static List<Object[]> parameters()
-    {
-        return TestDbConfig.getResources();
-    }
+  @Parameterized.Parameters
+  public static List<Object[]> parameters() {
+    return TestDbConfig.getResources();
+  }
 
-    @Override
-    protected String[] getFlowConfigurationResources()
-    {
-        return new String[] {"integration/select/select-streaming-chunk-config.xml"};
-    }
+  @Override
+  protected String[] getFlowConfigurationResources() {
+    return new String[] {"integration/select/select-streaming-chunk-config.xml"};
+  }
 
-    @Test
-    public void chunksStreamedRecords() throws Exception
-    {
-        final MuleEvent responseEvent = flowRunner("selectStreamingChunks").withPayload(TEST_MESSAGE).run();
+  @Test
+  public void chunksStreamedRecords() throws Exception {
+    final MuleEvent responseEvent = flowRunner("selectStreamingChunks").withPayload(TEST_MESSAGE).run();
 
-        final MuleMessage response = responseEvent.getMessage();
-        List chunks = (List) response.getPayload();
-        assertEquals(2, chunks.size());
-        assertThat(chunks.get(0), is(instanceOf(List.class)));
-        assertRecords(chunks.get(0), getVenusRecord(), getEarthRecord());
-        assertThat(chunks.get(1), is(instanceOf(List.class)));
-        assertRecords(chunks.get(1), getMarsRecord());
-    }
+    final MuleMessage response = responseEvent.getMessage();
+    List chunks = (List) response.getPayload();
+    assertEquals(2, chunks.size());
+    assertThat(chunks.get(0), is(instanceOf(List.class)));
+    assertRecords(chunks.get(0), getVenusRecord(), getEarthRecord());
+    assertThat(chunks.get(1), is(instanceOf(List.class)));
+    assertRecords(chunks.get(1), getMarsRecord());
+  }
 }

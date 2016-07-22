@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.registry;
 
@@ -21,60 +19,48 @@ import java.util.concurrent.atomic.AtomicReference;
  * @deprecated as of 3.7.0. This will be removed in Mule 4.0
  */
 @Deprecated
-public class DefaultRegistryBroker extends AbstractRegistryBroker
-{
-    private final List<Registry> registries = new CopyOnWriteArrayList<>();
-    private final AtomicReference<LifecycleRegistry> lifecycleRegistry = new AtomicReference<>(null);
+public class DefaultRegistryBroker extends AbstractRegistryBroker {
+  private final List<Registry> registries = new CopyOnWriteArrayList<>();
+  private final AtomicReference<LifecycleRegistry> lifecycleRegistry = new AtomicReference<>(null);
 
-    public DefaultRegistryBroker(MuleContext context)
-    {
-        super(context);
-        addRegistry(new SimpleRegistry(context));
+  public DefaultRegistryBroker(MuleContext context) {
+    super(context);
+    addRegistry(new SimpleRegistry(context));
+  }
+
+  @Override
+  public void addRegistry(Registry registry) {
+    registries.add(0, registry);
+    lifecycleRegistry.set(null);
+  }
+
+  @Override
+  public void removeRegistry(Registry registry) {
+    registries.remove(registry);
+    if (registry instanceof LifecycleRegistry) {
+      lifecycleRegistry.compareAndSet((LifecycleRegistry) registry, null);
     }
+  }
 
-    @Override
-    public void addRegistry(Registry registry)
-    {
-        registries.add(0, registry);
-        lifecycleRegistry.set(null);
-    }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Collection<Registry> getRegistries() {
+    return ImmutableList.copyOf(registries);
+  }
 
-    @Override
-    public void removeRegistry(Registry registry)
-    {
-        registries.remove(registry);
-        if (registry instanceof LifecycleRegistry)
-        {
-            lifecycleRegistry.compareAndSet((LifecycleRegistry) registry, null);
+  protected LifecycleRegistry getLifecycleRegistry() {
+    LifecycleRegistry cachedLifecycleRegistry = lifecycleRegistry.get();
+    if (cachedLifecycleRegistry == null) {
+      for (Registry registry : registries) {
+        if (registry instanceof LifecycleRegistry) {
+          cachedLifecycleRegistry = (LifecycleRegistry) registry;
+          return lifecycleRegistry.compareAndSet(null, cachedLifecycleRegistry) ? cachedLifecycleRegistry : lifecycleRegistry.get();
         }
+      }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Collection<Registry> getRegistries()
-    {
-        return ImmutableList.copyOf(registries);
-    }
-
-    protected LifecycleRegistry getLifecycleRegistry()
-    {
-        LifecycleRegistry cachedLifecycleRegistry = lifecycleRegistry.get();
-        if (cachedLifecycleRegistry == null)
-        {
-            for (Registry registry : registries)
-            {
-                if (registry instanceof LifecycleRegistry)
-                {
-                    cachedLifecycleRegistry = (LifecycleRegistry) registry;
-                    return lifecycleRegistry.compareAndSet(null, cachedLifecycleRegistry) ?
-                            cachedLifecycleRegistry :
-                            lifecycleRegistry.get();
-                }
-            }
-        }
-
-        return cachedLifecycleRegistry;
-    }
+    return cachedLifecycleRegistry;
+  }
 }

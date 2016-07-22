@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.metadata.extension;
 
@@ -20,28 +18,24 @@ import static org.mule.test.metadata.extension.MetadataConnection.PERSON;
 
 
 @MetadataScope(keysResolver = TestContentAndOutputResolverWithKeyResolver.class,
-        contentResolver = TestContentAndOutputResolverWithKeyResolver.class,
-        outputResolver = TestContentAndOutputWithAttributesResolverWithKeyResolver.class,
-        attributesResolver = TestContentAndOutputWithAttributesResolverWithKeyResolver.class)
-public class MetadataSource extends Source<Map<String, Object>, StringAttributes>
-{
+    contentResolver = TestContentAndOutputResolverWithKeyResolver.class,
+    outputResolver = TestContentAndOutputWithAttributesResolverWithKeyResolver.class,
+    attributesResolver = TestContentAndOutputWithAttributesResolverWithKeyResolver.class)
+public class MetadataSource extends Source<Map<String, Object>, StringAttributes> {
 
-    @MetadataKeyId
-    @Parameter
-    public String type;
+  @MetadataKeyId
+  @Parameter
+  public String type;
 
-    @Override
-    public void start()
-    {
-        if (!type.equals(PERSON))
-        {
-            throw new RuntimeException(String.format("Invalid MetadataKey with value [%s], the key should be [%s]", type, PERSON));
-        }
+  @Override
+  public void start() {
+    if (!type.equals(PERSON)) {
+      throw new RuntimeException(String.format("Invalid MetadataKey with value [%s], the key should be [%s]", type, PERSON));
     }
+  }
 
-    @Override
-    public void stop()
-    {
+  @Override
+  public void stop() {
 
-    }
+  }
 }

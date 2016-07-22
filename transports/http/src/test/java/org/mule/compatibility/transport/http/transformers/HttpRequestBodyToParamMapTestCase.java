@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.transformers;
 
@@ -40,81 +38,67 @@ import static org.mule.compatibility.transport.http.HttpConstants.METHOD_PUT;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
-public class HttpRequestBodyToParamMapTestCase extends AbstractMuleContextTestCase
-{
+public class HttpRequestBodyToParamMapTestCase extends AbstractMuleContextTestCase {
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private MuleContext muleContext;
-    @Mock
-    private TransformationService transformationService;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private MuleContext muleContext;
+  @Mock
+  private TransformationService transformationService;
 
-    @Before
-    public void setup() throws Exception
-    {
-        when(muleContext.getTransformationService()).thenReturn(transformationService);
-        when(transformationService.transform(any(MuleMessage.class), any(DataType.class))).thenAnswer(
-                inv -> (MuleMessage) inv.getArguments()[0]);
+  @Before
+  public void setup() throws Exception {
+    when(muleContext.getTransformationService()).thenReturn(transformationService);
+    when(transformationService.transform(any(MuleMessage.class), any(DataType.class)))
+        .thenAnswer(inv -> (MuleMessage) inv.getArguments()[0]);
+  }
+
+  @Test
+  public void validGet() throws Exception {
+    MuleMessage msg = createMessage(METHOD_GET, DEFAULT_CONTENT_TYPE);
+    verifyTransformation(transform(new DefaultMuleEvent(msg, getTestFlow())));
+  }
+
+  @Test
+  public void validPost() throws Exception {
+    MuleMessage msg = createMessage(METHOD_POST, FORM_URLENCODED_CONTENT_TYPE);
+    verifyTransformation(transform(new DefaultMuleEvent(msg, getTestFlow())));
+  }
+
+  @Test
+  public void validPut() throws Exception {
+    MuleMessage msg = createMessage(METHOD_PUT, FORM_URLENCODED_CONTENT_TYPE);
+    verifyTransformation(transform(new DefaultMuleEvent(msg, getTestFlow())));
+  }
+
+  @Test(expected = TransformerException.class)
+  public void invalidContentType() throws Exception {
+    MuleMessage msg = createMessage(METHOD_POST, "application/json");
+    transform(new DefaultMuleEvent(msg, getTestFlow()));
+  }
+
+  private Object transform(MuleEvent event) throws TransformerException {
+    HttpRequestBodyToParamMap transformer = new HttpRequestBodyToParamMap();
+    transformer.setMuleContext(muleContext);
+    return transformer.transformMessage(event, UTF_8);
+  }
+
+  private void verifyTransformation(Object payload) throws TransformerException {
+    assertThat(payload instanceof Map, is(true));
+    Map<String, String> map = (Map<String, String>) payload;
+    assertThat(map.size(), is(2));
+    assertThat(map.get("key1"), is("value1"));
+    assertThat(map.get("key2"), is("value2"));
+  }
+
+  private MuleMessage createMessage(String method, String contentType) {
+    Map<String, Serializable> inboundProperties = new HashMap<>();
+    inboundProperties.put("http.method", method);
+
+    String payload = "key1=value1&key2=value2";
+    if ("GET".equals(method)) {
+      payload = "http://localhost/?" + payload;
     }
-
-    @Test
-    public void validGet() throws Exception
-    {
-        MuleMessage msg = createMessage(METHOD_GET, DEFAULT_CONTENT_TYPE);
-        verifyTransformation(transform(new DefaultMuleEvent(msg, getTestFlow())));
-    }
-
-    @Test
-    public void validPost() throws Exception
-    {
-        MuleMessage msg = createMessage(METHOD_POST, FORM_URLENCODED_CONTENT_TYPE);
-        verifyTransformation(transform(new DefaultMuleEvent(msg, getTestFlow())));
-    }
-
-    @Test
-    public void validPut() throws Exception
-    {
-        MuleMessage msg = createMessage(METHOD_PUT, FORM_URLENCODED_CONTENT_TYPE);
-        verifyTransformation(transform(new DefaultMuleEvent(msg, getTestFlow())));
-    }
-
-    @Test(expected = TransformerException.class)
-    public void invalidContentType() throws Exception
-    {
-        MuleMessage msg = createMessage(METHOD_POST, "application/json");
-        transform(new DefaultMuleEvent(msg, getTestFlow()));
-    }
-
-    private Object transform(MuleEvent event) throws TransformerException
-    {
-        HttpRequestBodyToParamMap transformer = new HttpRequestBodyToParamMap();
-        transformer.setMuleContext(muleContext);
-        return transformer.transformMessage(event, UTF_8);
-    }
-
-    private void verifyTransformation(Object payload) throws TransformerException
-    {
-        assertThat(payload instanceof Map, is(true));
-        Map<String, String> map = (Map<String, String>) payload;
-        assertThat(map.size(), is(2));
-        assertThat(map.get("key1"), is("value1"));
-        assertThat(map.get("key2"), is("value2"));
-    }
-
-    private MuleMessage createMessage(String method, String contentType)
-    {
-        Map<String, Serializable> inboundProperties = new HashMap<>();
-        inboundProperties.put("http.method", method);
-
-        String payload = "key1=value1&key2=value2";
-        if ("GET".equals(method))
-        {
-            payload = "http://localhost/?" + payload;
-        }
-        return MuleMessage.builder()
-                          .payload(payload)
-                          .inboundProperties(inboundProperties)
-                          .mediaType(MediaType.parse(contentType))
-                          .build();
-    }
+    return MuleMessage.builder().payload(payload).inboundProperties(inboundProperties).mediaType(MediaType.parse(contentType)).build();
+  }
 
 }

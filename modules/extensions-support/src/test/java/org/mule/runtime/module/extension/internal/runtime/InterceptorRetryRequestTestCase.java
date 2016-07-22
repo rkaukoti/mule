@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
@@ -22,72 +20,61 @@ import static org.mockito.Mockito.mock;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class InterceptorRetryRequestTestCase extends AbstractMuleTestCase
-{
+public class InterceptorRetryRequestTestCase extends AbstractMuleTestCase {
 
-    @Mock
-    private Interceptor interceptor;
+  @Mock
+  private Interceptor interceptor;
 
-    private InterceptorsRetryRequest request;
+  private InterceptorsRetryRequest request;
 
-    @Before
-    public void before()
-    {
-        request = new InterceptorsRetryRequest(interceptor, null);
+  @Before
+  public void before() {
+    request = new InterceptorsRetryRequest(interceptor, null);
+  }
+
+  @Test
+  public void noRequest() {
+    assertThat(request.isRetryRequested(), is(false));
+  }
+
+  @Test
+  public void request() {
+    request.request();
+    assertThat(request.isRetryRequested(), is(true));
+  }
+
+  @Test
+  public void multipleRequestsOnSame() {
+    request();
+    requestAndFail();
+  }
+
+  @Test
+  public void multipleRequestOnDifferent() {
+    request();
+    request = new InterceptorsRetryRequest(interceptor, request);
+    assertThat(request.isRetryRequested(), is(false));
+    requestAndFail();
+  }
+
+  @Test
+  public void requestsByDifferentOwner() {
+    request();
+    request = new InterceptorsRetryRequest(mock(Interceptor.class), request);
+    assertThat(request.isRetryRequested(), is(false));
+    request();
+
+    // go back to original interceptor
+    request = new InterceptorsRetryRequest(interceptor, request);
+    requestAndFail();
+  }
+
+  private void requestAndFail() {
+    try {
+      request();
+      fail("was expecting exception");
+    } catch (IllegalStateException e) {
+      // we're cool bro...
     }
-
-    @Test
-    public void noRequest()
-    {
-        assertThat(request.isRetryRequested(), is(false));
-    }
-
-    @Test
-    public void request()
-    {
-        request.request();
-        assertThat(request.isRetryRequested(), is(true));
-    }
-
-    @Test
-    public void multipleRequestsOnSame()
-    {
-        request();
-        requestAndFail();
-    }
-
-    @Test
-    public void multipleRequestOnDifferent()
-    {
-        request();
-        request = new InterceptorsRetryRequest(interceptor, request);
-        assertThat(request.isRetryRequested(), is(false));
-        requestAndFail();
-    }
-
-    @Test
-    public void requestsByDifferentOwner()
-    {
-        request();
-        request = new InterceptorsRetryRequest(mock(Interceptor.class), request);
-        assertThat(request.isRetryRequested(), is(false));
-        request();
-
-        // go back to original interceptor
-        request = new InterceptorsRetryRequest(interceptor, request);
-        requestAndFail();
-    }
-
-    private void requestAndFail()
-    {
-        try
-        {
-            request();
-            fail("was expecting exception");
-        }
-        catch (IllegalStateException e)
-        {
-            // we're cool bro...
-        }
-    }
+  }
 }

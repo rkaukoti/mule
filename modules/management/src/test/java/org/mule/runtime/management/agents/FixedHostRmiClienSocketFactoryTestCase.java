@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.management.agents;
 
@@ -23,75 +21,64 @@ import java.nio.channels.ServerSocketChannel;
 
 import static org.junit.Assert.assertEquals;
 
-public class FixedHostRmiClienSocketFactoryTestCase extends AbstractMuleTestCase
-{
+public class FixedHostRmiClienSocketFactoryTestCase extends AbstractMuleTestCase {
 
-    @Rule
-    public DynamicPort dynamicPort = new DynamicPort("port1");
+  @Rule
+  public DynamicPort dynamicPort = new DynamicPort("port1");
 
-    protected volatile ServerSocket serverSocket;
+  protected volatile ServerSocket serverSocket;
 
-    @After
-    public void stopServerSocke() throws IOException
-    {
-        if (null != serverSocket)
-        {
-            serverSocket.close();
-        }
+  @After
+  public void stopServerSocke() throws IOException {
+    if (null != serverSocket) {
+      serverSocket.close();
     }
+  }
 
-    @Test
-    public void testHostConstructorOverride() throws Exception
-    {
-        final String overrideHost = "127.0.0.1";
-        final FixedHostRmiClientSocketFactory factory = new FixedHostRmiClientSocketFactory(overrideHost);
-        assertEquals(overrideHost, factory.getOverrideHost());
+  @Test
+  public void testHostConstructorOverride() throws Exception {
+    final String overrideHost = "127.0.0.1";
+    final FixedHostRmiClientSocketFactory factory = new FixedHostRmiClientSocketFactory(overrideHost);
+    assertEquals(overrideHost, factory.getOverrideHost());
 
-        final Socket clientSocket = factory.createSocket("www.example.com", dynamicPort.getNumber());
-        final InetAddress address = clientSocket.getInetAddress();
-        final String socketHost = address.getHostAddress();
-        assertEquals(overrideHost, socketHost);
+    final Socket clientSocket = factory.createSocket("www.example.com", dynamicPort.getNumber());
+    final InetAddress address = clientSocket.getInetAddress();
+    final String socketHost = address.getHostAddress();
+    assertEquals(overrideHost, socketHost);
+  }
+
+  /**
+   * Setter property may be used to dynamically switch the client socket host.
+   */
+  @Test
+  public void testHostSetterOverride() throws Exception {
+    final String overrideHost = "127.0.0.1";
+    final FixedHostRmiClientSocketFactory factory = new FixedHostRmiClientSocketFactory();
+    factory.setOverrideHost(overrideHost);
+
+    assertEquals(overrideHost, factory.getOverrideHost());
+    Socket clientSocket = null;
+    try {
+      clientSocket = factory.createSocket("www.example.com", dynamicPort.getNumber());
+      final InetAddress address = clientSocket.getInetAddress();
+      final String socketHost = address.getHostAddress();
+      assertEquals(overrideHost, socketHost);
+    } finally {
+      if (null != clientSocket && !clientSocket.isClosed()) {
+        clientSocket.close();
+      }
     }
-
-    /**
-     * Setter property may be used to dynamically switch the client socket host.
-     */
-    @Test
-    public void testHostSetterOverride() throws Exception
-    {
-        final String overrideHost = "127.0.0.1";
-        final FixedHostRmiClientSocketFactory factory =
-                new FixedHostRmiClientSocketFactory();
-        factory.setOverrideHost(overrideHost);
-
-        assertEquals(overrideHost, factory.getOverrideHost());
-        Socket clientSocket = null;
-        try
-        {
-            clientSocket = factory.createSocket("www.example.com", dynamicPort.getNumber());
-            final InetAddress address = clientSocket.getInetAddress();
-            final String socketHost = address.getHostAddress();
-            assertEquals(overrideHost, socketHost);
-        }
-        finally
-        {
-            if (null != clientSocket && !clientSocket.isClosed())
-            {
-                clientSocket.close();
-            }
-        }
-    }
+  }
 
 
-    /**
-     * Simple socket to have something to ping.
-     */
-    @Before
-    public void setupDummyServer() throws IOException
-    {
-        ServerSocketChannel ssChannel = ServerSocketChannel.open();
-        ssChannel.configureBlocking(false);
-        serverSocket = ssChannel.socket();
-        serverSocket.bind(new InetSocketAddress(dynamicPort.getNumber()));
-    }
+  /**
+   * Simple socket to have something to ping.
+   */
+  @Before
+  public void setupDummyServer() throws IOException {
+    ServerSocketChannel ssChannel = ServerSocketChannel.open();
+    ssChannel.configureBlocking(false);
+    serverSocket = ssChannel.socket();
+    serverSocket.bind(new InetSocketAddress(dynamicPort.getNumber()));
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.simple;
 
@@ -18,56 +16,47 @@ import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessa
 import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
- * Transforms a {@link String} to an {@link Enum} of a class specified
- * through at construction.
+ * Transforms a {@link String} to an {@link Enum} of a class specified through at construction.
  *
  * @since 4.0
  */
-public class StringToEnum extends AbstractTransformer implements DiscoverableTransformer
-{
+public class StringToEnum extends AbstractTransformer implements DiscoverableTransformer {
 
-    private final Class<? extends Enum> enumClass;
-    private int weighting = DiscoverableTransformer.DEFAULT_PRIORITY_WEIGHTING;
+  private final Class<? extends Enum> enumClass;
+  private int weighting = DiscoverableTransformer.DEFAULT_PRIORITY_WEIGHTING;
 
 
-    /**
-     * Creates a new instance
-     *
-     * @param enumClass the class of the transformed values
-     */
-    public StringToEnum(Class<? extends Enum> enumClass)
-    {
-        checkArgument(enumClass != null, "enumClass cannot be null");
-        this.enumClass = enumClass;
+  /**
+   * Creates a new instance
+   *
+   * @param enumClass the class of the transformed values
+   */
+  public StringToEnum(Class<? extends Enum> enumClass) {
+    checkArgument(enumClass != null, "enumClass cannot be null");
+    this.enumClass = enumClass;
 
-        registerSourceType(DataType.fromType(String.class));
-        setReturnDataType(DataType.fromType(enumClass));
-        setName(format("StringTo%sTransformer", enumClass.getSimpleName()));
+    registerSourceType(DataType.fromType(String.class));
+    setReturnDataType(DataType.fromType(enumClass));
+    setName(format("StringTo%sTransformer", enumClass.getSimpleName()));
+  }
+
+  @Override
+  protected Object doTransform(Object src, Charset encoding) throws TransformerException {
+    try {
+      return Enum.valueOf(enumClass, ((String) src));
+    } catch (Exception e) {
+      throw new TransformerException(
+          createStaticMessage(format("Could not transform value '%s' to an enum of type %s", src, enumClass.getName())), e);
     }
+  }
 
-    @Override
-    protected Object doTransform(Object src, Charset encoding) throws TransformerException
-    {
-        try
-        {
-            return Enum.valueOf(enumClass, ((String) src));
-        }
-        catch (Exception e)
-        {
-            throw new TransformerException(createStaticMessage(format("Could not transform value '%s' to an enum of type %s",
-                    src, enumClass.getName())), e);
-        }
-    }
+  @Override
+  public int getPriorityWeighting() {
+    return weighting;
+  }
 
-    @Override
-    public int getPriorityWeighting()
-    {
-        return weighting;
-    }
-
-    @Override
-    public void setPriorityWeighting(int weighting)
-    {
-        this.weighting = weighting;
-    }
+  @Override
+  public void setPriorityWeighting(int weighting) {
+    this.weighting = weighting;
+  }
 }

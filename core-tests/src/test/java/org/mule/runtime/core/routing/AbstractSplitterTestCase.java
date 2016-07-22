@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -30,90 +28,80 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-public class AbstractSplitterTestCase extends AbstractMuleContextTestCase
-{
+public class AbstractSplitterTestCase extends AbstractMuleContextTestCase {
 
-    @Test
-    public void simpleSplitter() throws Exception
-    {
-        TestSplitter splitter = new TestSplitter();
-        MultipleEventSensingMessageProcessor listener = new MultipleEventSensingMessageProcessor();
-        splitter.setListener(listener);
-        splitter.setMuleContext(muleContext);
+  @Test
+  public void simpleSplitter() throws Exception {
+    TestSplitter splitter = new TestSplitter();
+    MultipleEventSensingMessageProcessor listener = new MultipleEventSensingMessageProcessor();
+    splitter.setListener(listener);
+    splitter.setMuleContext(muleContext);
 
-        Apple apple = new Apple();
-        Banana banana = new Banana();
-        Orange orange = new Orange();
-        FruitBowl fruitBowl = new FruitBowl();
-        fruitBowl.addFruit(apple);
-        fruitBowl.addFruit(banana);
-        fruitBowl.addFruit(orange);
+    Apple apple = new Apple();
+    Banana banana = new Banana();
+    Orange orange = new Orange();
+    FruitBowl fruitBowl = new FruitBowl();
+    fruitBowl.addFruit(apple);
+    fruitBowl.addFruit(banana);
+    fruitBowl.addFruit(orange);
 
-        MuleEvent inEvent = new DefaultMuleEvent(MuleMessage.builder().payload(fruitBowl).build(),
-                getTestEvent(""));
+    MuleEvent inEvent = new DefaultMuleEvent(MuleMessage.builder().payload(fruitBowl).build(), getTestEvent(""));
 
-        MuleEvent resultEvent = splitter.process(inEvent);
+    MuleEvent resultEvent = splitter.process(inEvent);
 
-        assertEquals(3, listener.events.size());
-        assertTrue(listener.events.get(0).getMessage().getPayload() instanceof Fruit);
-        assertTrue(listener.events.get(1).getMessage().getPayload() instanceof Fruit);
-        assertTrue(listener.events.get(2).getMessage().getPayload() instanceof Fruit);
+    assertEquals(3, listener.events.size());
+    assertTrue(listener.events.get(0).getMessage().getPayload() instanceof Fruit);
+    assertTrue(listener.events.get(1).getMessage().getPayload() instanceof Fruit);
+    assertTrue(listener.events.get(2).getMessage().getPayload() instanceof Fruit);
 
-        assertThat(resultEvent.getMessage().getPayload(), instanceOf(List.class));
-        assertEquals(3, ((List<MuleMessage>) resultEvent.getMessage().getPayload()).size());
-        assertTrue(((List<MuleMessage>) resultEvent.getMessage().getPayload()).get(0).getPayload() instanceof Fruit);
-        assertTrue(((List<MuleMessage>) resultEvent.getMessage().getPayload()).get(1).getPayload() instanceof Fruit);
-        assertTrue(((List<MuleMessage>) resultEvent.getMessage().getPayload()).get(2).getPayload() instanceof Fruit);
+    assertThat(resultEvent.getMessage().getPayload(), instanceOf(List.class));
+    assertEquals(3, ((List<MuleMessage>) resultEvent.getMessage().getPayload()).size());
+    assertTrue(((List<MuleMessage>) resultEvent.getMessage().getPayload()).get(0).getPayload() instanceof Fruit);
+    assertTrue(((List<MuleMessage>) resultEvent.getMessage().getPayload()).get(1).getPayload() instanceof Fruit);
+    assertTrue(((List<MuleMessage>) resultEvent.getMessage().getPayload()).get(2).getPayload() instanceof Fruit);
+  }
+
+  @Test
+  public void allFilteredSplitter() throws Exception {
+    TestSplitter splitter = new TestSplitter();
+    splitter.setListener(new MessageFilter(new NotFilter(new AcceptAllFilter())));
+    splitter.setMuleContext(muleContext);
+
+    Apple apple = new Apple();
+    Banana banana = new Banana();
+    Orange orange = new Orange();
+    FruitBowl fruitBowl = new FruitBowl();
+    fruitBowl.addFruit(apple);
+    fruitBowl.addFruit(banana);
+    fruitBowl.addFruit(orange);
+
+    MuleEvent inEvent = new DefaultMuleEvent(MuleMessage.builder().payload(fruitBowl).build(), getTestEvent(""));
+
+    MuleEvent resultEvent = splitter.process(inEvent);
+
+    assertThat(resultEvent, nullValue());
+  }
+
+  private static class MultipleEventSensingMessageProcessor implements MessageProcessor {
+    List<MuleEvent> events = new ArrayList<>();
+
+    @Override
+    public MuleEvent process(MuleEvent event) throws MuleException {
+      events.add(event);
+      return event;
     }
+  }
 
-    @Test
-    public void allFilteredSplitter() throws Exception
-    {
-        TestSplitter splitter = new TestSplitter();
-        splitter.setListener(new MessageFilter(new NotFilter(new AcceptAllFilter())));
-        splitter.setMuleContext(muleContext);
-
-        Apple apple = new Apple();
-        Banana banana = new Banana();
-        Orange orange = new Orange();
-        FruitBowl fruitBowl = new FruitBowl();
-        fruitBowl.addFruit(apple);
-        fruitBowl.addFruit(banana);
-        fruitBowl.addFruit(orange);
-
-        MuleEvent inEvent = new DefaultMuleEvent(MuleMessage.builder().payload(fruitBowl).build(),
-                getTestEvent(""));
-
-        MuleEvent resultEvent = splitter.process(inEvent);
-
-        assertThat(resultEvent, nullValue());
+  private static class TestSplitter extends AbstractSplitter {
+    @Override
+    protected List<MuleEvent> splitMessage(MuleEvent event) {
+      FruitBowl bowl = (FruitBowl) event.getMessage().getPayload();
+      List<MuleEvent> parts = new ArrayList<>();
+      for (Fruit fruit : bowl.getFruit()) {
+        parts.add(new DefaultMuleEvent(MuleMessage.builder().payload(fruit).build(), event));
+      }
+      return parts;
     }
-
-    private static class MultipleEventSensingMessageProcessor implements MessageProcessor
-    {
-        List<MuleEvent> events = new ArrayList<>();
-
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            events.add(event);
-            return event;
-        }
-    }
-
-    private static class TestSplitter extends AbstractSplitter
-    {
-        @Override
-        protected List<MuleEvent> splitMessage(MuleEvent event)
-        {
-            FruitBowl bowl = (FruitBowl) event.getMessage().getPayload();
-            List<MuleEvent> parts = new ArrayList<>();
-            for (Fruit fruit : bowl.getFruit())
-            {
-                parts.add(new DefaultMuleEvent(MuleMessage.builder().payload(fruit).build(), event));
-            }
-            return parts;
-        }
-    }
+  }
 
 }

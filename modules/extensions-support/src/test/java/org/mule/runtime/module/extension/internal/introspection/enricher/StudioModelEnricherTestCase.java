@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
@@ -25,66 +23,57 @@ import static org.junit.Assert.assertThat;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class StudioModelEnricherTestCase extends AbstractMuleTestCase
-{
+public class StudioModelEnricherTestCase extends AbstractMuleTestCase {
 
-    private static final String EXTENSION_STUDIO_EDITOR_FILE_NAME = "custom.xml";
+  private static final String EXTENSION_STUDIO_EDITOR_FILE_NAME = "custom.xml";
 
-    private ExtensionDeclarer extensionDeclarer = new ExtensionDeclarer();
-    private ModelEnricher modelEnricher = new StudioModelEnricher();
+  private ExtensionDeclarer extensionDeclarer = new ExtensionDeclarer();
+  private ModelEnricher modelEnricher = new StudioModelEnricher();
 
-    @Test
-    public void enrich()
-    {
-        StudioModelProperty studioProperty = enrich(StudioSupport.class);
+  @Test
+  public void enrich() {
+    StudioModelProperty studioProperty = enrich(StudioSupport.class);
 
-        assertExpectedValuesAre(studioProperty, "", true);
-    }
+    assertExpectedValuesAre(studioProperty, "", true);
+  }
 
-    @Test
-    public void enrichWithCustomEditor()
-    {
-        StudioModelProperty studioProperty = enrich(DefaultStudioExtension.class);
+  @Test
+  public void enrichWithCustomEditor() {
+    StudioModelProperty studioProperty = enrich(DefaultStudioExtension.class);
 
-        assertExpectedValuesAre(studioProperty, EXTENSION_STUDIO_EDITOR_FILE_NAME, false);
-    }
+    assertExpectedValuesAre(studioProperty, EXTENSION_STUDIO_EDITOR_FILE_NAME, false);
+  }
 
-    @Test
-    public void enrichWithProvidedEditor()
-    {
-        StudioModelProperty studioProperty = enrich(DefaultStudioExtensionWithProvidedEditor.class);
+  @Test
+  public void enrichWithProvidedEditor() {
+    StudioModelProperty studioProperty = enrich(DefaultStudioExtensionWithProvidedEditor.class);
 
-        assertExpectedValuesAre(studioProperty, "", false);
-    }
+    assertExpectedValuesAre(studioProperty, "", false);
+  }
 
-    private StudioModelProperty enrich(Class<?> type)
-    {
-        extensionDeclarer.withModelProperty(new ImplementingTypeModelProperty(type));
-        modelEnricher.enrich(new DefaultDescribingContext(extensionDeclarer, type.getClassLoader()));
-        return extensionDeclarer.getDeclaration().getModelProperty(StudioModelProperty.class).get();
-    }
+  private StudioModelProperty enrich(Class<?> type) {
+    extensionDeclarer.withModelProperty(new ImplementingTypeModelProperty(type));
+    modelEnricher.enrich(new DefaultDescribingContext(extensionDeclarer, type.getClassLoader()));
+    return extensionDeclarer.getDeclaration().getModelProperty(StudioModelProperty.class).get();
+  }
 
-    private void assertExpectedValuesAre(StudioModelProperty studioProperty, String expectedEditor, boolean expectedDerived)
-    {
-        assertThat(studioProperty, is(notNullValue()));
-        assertThat(studioProperty.getEditorFileName(), is(expectedEditor));
-        assertThat(studioProperty.isDerived(), is(expectedDerived));
-    }
+  private void assertExpectedValuesAre(StudioModelProperty studioProperty, String expectedEditor, boolean expectedDerived) {
+    assertThat(studioProperty, is(notNullValue()));
+    assertThat(studioProperty.getEditorFileName(), is(expectedEditor));
+    assertThat(studioProperty.isDerived(), is(expectedDerived));
+  }
 
-    private static class StudioSupport
-    {
+  private static class StudioSupport {
 
-    }
+  }
 
-    @CustomStudioEditor(fileName = EXTENSION_STUDIO_EDITOR_FILE_NAME)
-    private static class DefaultStudioExtension
-    {
+  @CustomStudioEditor(fileName = EXTENSION_STUDIO_EDITOR_FILE_NAME)
+  private static class DefaultStudioExtension {
 
-    }
+  }
 
-    @StudioProvidedEditor
-    private static class DefaultStudioExtensionWithProvidedEditor
-    {
+  @StudioProvidedEditor
+  private static class DefaultStudioExtensionWithProvidedEditor {
 
-    }
+  }
 }

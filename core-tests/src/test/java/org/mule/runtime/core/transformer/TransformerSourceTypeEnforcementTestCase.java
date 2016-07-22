@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer;
 
@@ -25,78 +23,64 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SmallTest
-public class TransformerSourceTypeEnforcementTestCase extends AbstractMuleTestCase
-{
+public class TransformerSourceTypeEnforcementTestCase extends AbstractMuleTestCase {
 
-    private MuleContext muleContext = mock(MuleContext.class);
-    private MuleConfiguration muleConfiguration = mock(MuleConfiguration.class);
+  private MuleContext muleContext = mock(MuleContext.class);
+  private MuleConfiguration muleConfiguration = mock(MuleConfiguration.class);
 
-    @Before
-    public void setUp() throws Exception
-    {
-        when(muleConfiguration.getDefaultEncoding()).thenReturn(Charsets.UTF_8.name());
-        when(muleContext.getConfiguration()).thenReturn(muleConfiguration);
+  @Before
+  public void setUp() throws Exception {
+    when(muleConfiguration.getDefaultEncoding()).thenReturn(Charsets.UTF_8.name());
+    when(muleContext.getConfiguration()).thenReturn(muleConfiguration);
+  }
+
+  @Test
+  public void rejectsBadInputIfEnforcementOn() throws TransformerException {
+    AbstractTransformer transformer = createDummyTransformer(true);
+
+    try {
+      transformer.transform("TEST");
+      fail("Transformation should fail because source type is not supported");
+    } catch (TransformerException expected) {
     }
+  }
 
-    @Test
-    public void rejectsBadInputIfEnforcementOn() throws TransformerException
-    {
-        AbstractTransformer transformer = createDummyTransformer(true);
+  @Test
+  public void rejectsBadInputUsingDefaultEnforcement() throws TransformerException {
+    AbstractTransformer transformer = createDummyTransformer(true);
 
-        try
-        {
-            transformer.transform("TEST");
-            fail("Transformation should fail because source type is not supported");
-        }
-        catch (TransformerException expected)
-        {
-        }
+    try {
+      transformer.transform("TEST");
+      fail("Transformation should fail because source type is not supported");
+    } catch (TransformerException expected) {
     }
+  }
 
-    @Test
-    public void rejectsBadInputUsingDefaultEnforcement() throws TransformerException
-    {
-        AbstractTransformer transformer = createDummyTransformer(true);
+  @Test
+  public void transformsValidSourceTypeWithNoCheckForEnforcement() throws TransformerException {
+    AbstractTransformer transformer = createDummyTransformer(true);
+    transformer.sourceTypes.add(DataType.STRING);
+    transformer.setReturnDataType(DataType.STRING);
 
-        try
-        {
-            transformer.transform("TEST");
-            fail("Transformation should fail because source type is not supported");
-        }
-        catch (TransformerException expected)
-        {
-        }
-    }
+    when(muleContext.getConfiguration()).thenReturn(muleConfiguration);
 
-    @Test
-    public void transformsValidSourceTypeWithNoCheckForEnforcement() throws TransformerException
-    {
-        AbstractTransformer transformer = createDummyTransformer(true);
-        transformer.sourceTypes.add(DataType.STRING);
-        transformer.setReturnDataType(DataType.STRING);
+    Object result = transformer.transform("TEST");
+    assertEquals("TRANSFORMED", result);
+  }
 
-        when(muleContext.getConfiguration()).thenReturn(muleConfiguration);
+  private AbstractTransformer createDummyTransformer(boolean ignoreBadInput) {
+    AbstractTransformer result = new AbstractTransformer() {
 
-        Object result = transformer.transform("TEST");
-        assertEquals("TRANSFORMED", result);
-    }
+      @Override
+      protected Object doTransform(Object src, Charset enc) throws TransformerException {
+        return "TRANSFORMED";
+      }
+    };
 
-    private AbstractTransformer createDummyTransformer(boolean ignoreBadInput)
-    {
-        AbstractTransformer result = new AbstractTransformer()
-        {
+    result.sourceTypes.add(DataType.BYTE_ARRAY);
+    result.setMuleContext(muleContext);
+    result.setIgnoreBadInput(ignoreBadInput);
 
-            @Override
-            protected Object doTransform(Object src, Charset enc) throws TransformerException
-            {
-                return "TRANSFORMED";
-            }
-        };
-
-        result.sourceTypes.add(DataType.BYTE_ARRAY);
-        result.setMuleContext(muleContext);
-        result.setIgnoreBadInput(ignoreBadInput);
-
-        return result;
-    }
+    return result;
+  }
 }

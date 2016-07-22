@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal;
 
@@ -20,39 +18,32 @@ import java.util.List;
 
 import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
 
-public abstract class AbstractAnnotationsBasedDescriberTestCase extends AbstractMuleTestCase
-{
+public abstract class AbstractAnnotationsBasedDescriberTestCase extends AbstractMuleTestCase {
 
-    private Describer describer;
+  private Describer describer;
 
-    protected Describer getDescriber()
-    {
-        return describer;
-    }
+  protected Describer getDescriber() {
+    return describer;
+  }
 
-    protected void setDescriber(Describer describer)
-    {
-        this.describer = describer;
-    }
+  protected void setDescriber(Describer describer) {
+    this.describer = describer;
+  }
 
-    protected Describer describerFor(final Class<?> type)
-    {
-        return new AnnotationsBasedDescriber(type, new StaticVersionResolver(getProductVersion()));
-    }
+  protected Describer describerFor(final Class<?> type) {
+    return new AnnotationsBasedDescriber(type, new StaticVersionResolver(getProductVersion()));
+  }
 
-    protected ExtensionDeclarer describeExtension()
-    {
-        return getDescriber().describe(new DefaultDescribingContext(getClass().getClassLoader()));
-    }
+  protected ExtensionDeclarer describeExtension() {
+    return getDescriber().describe(new DefaultDescribingContext(getClass().getClassLoader()));
+  }
 
-    protected OperationDeclaration getOperation(ExtensionDeclaration extensionDeclaration, final String operationName)
-    {
-        return (OperationDeclaration) CollectionUtils.find(extensionDeclaration.getOperations(),
-                object -> ((OperationDeclaration) object).getName().equals(operationName));
-    }
+  protected OperationDeclaration getOperation(ExtensionDeclaration extensionDeclaration, final String operationName) {
+    return (OperationDeclaration) CollectionUtils.find(extensionDeclaration.getOperations(),
+        object -> ((OperationDeclaration) object).getName().equals(operationName));
+  }
 
-    protected ParameterDeclaration findParameter(List<ParameterDeclaration> parameters, final String name)
-    {
-        return (ParameterDeclaration) CollectionUtils.find(parameters, object -> name.equals(((ParameterDeclaration) object).getName()));
-    }
+  protected ParameterDeclaration findParameter(List<ParameterDeclaration> parameters, final String name) {
+    return (ParameterDeclaration) CollectionUtils.find(parameters, object -> name.equals(((ParameterDeclaration) object).getName()));
+  }
 }

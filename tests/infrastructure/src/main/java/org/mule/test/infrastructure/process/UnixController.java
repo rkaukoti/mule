@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.test.infrastructure.process;
@@ -19,52 +17,40 @@ import java.util.regex.Matcher;
 /**
  *
  */
-public class UnixController extends Controller
-{
+public class UnixController extends Controller {
 
-    public UnixController(String muleHome, int timeout)
-    {
-        super(muleHome, timeout);
-    }
+  public UnixController(String muleHome, int timeout) {
+    super(muleHome, timeout);
+  }
 
-    @Override
-    public String getMuleBin()
-    {
-        return muleHome + "/bin/mule";
-    }
+  @Override
+  public String getMuleBin() {
+    return muleHome + "/bin/mule";
+  }
 
-    @Override
-    public int getProcessId()
-    {
-        Map<Object, Object> newEnv = this.copyEnvironmentVariables();
-        DefaultExecutor executor = new DefaultExecutor();
-        ExecuteWatchdog watchdog = new ExecuteWatchdog(timeout);
-        executor.setWatchdog(watchdog);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PumpStreamHandler streamHandler = new PumpStreamHandler(outputStream);
-        executor.setStreamHandler(streamHandler);
-        if (this.doExecution(executor, new CommandLine(this.muleBin).addArgument("status"), newEnv) == 0)
-        {
-            Matcher matcher = STATUS_PATTERN.matcher(outputStream.toString());
-            if (matcher.find())
-            {
-                return Integer.parseInt(matcher.group(1));
-            }
-            else
-            {
-                throw new MuleControllerException("bin/mule status didn't return the expected pattern: "
-                                                  + STATUS);
-            }
-        }
-        else
-        {
-            throw new MuleControllerException("Mule Runtime is not running");
-        }
+  @Override
+  public int getProcessId() {
+    Map<Object, Object> newEnv = this.copyEnvironmentVariables();
+    DefaultExecutor executor = new DefaultExecutor();
+    ExecuteWatchdog watchdog = new ExecuteWatchdog(timeout);
+    executor.setWatchdog(watchdog);
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    PumpStreamHandler streamHandler = new PumpStreamHandler(outputStream);
+    executor.setStreamHandler(streamHandler);
+    if (this.doExecution(executor, new CommandLine(this.muleBin).addArgument("status"), newEnv) == 0) {
+      Matcher matcher = STATUS_PATTERN.matcher(outputStream.toString());
+      if (matcher.find()) {
+        return Integer.parseInt(matcher.group(1));
+      } else {
+        throw new MuleControllerException("bin/mule status didn't return the expected pattern: " + STATUS);
+      }
+    } else {
+      throw new MuleControllerException("Mule Runtime is not running");
     }
+  }
 
-    @Override
-    public int status(String[] args)
-    {
-        return runSync("status", args);
-    }
+  @Override
+  public int status(String[] args) {
+    return runSync("status", args);
+  }
 }

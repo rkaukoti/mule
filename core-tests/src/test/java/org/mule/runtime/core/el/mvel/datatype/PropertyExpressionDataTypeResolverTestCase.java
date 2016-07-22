@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.el.mvel.datatype;
@@ -23,43 +21,40 @@ import static org.mule.mvel2.MVEL.compileExpression;
 import static org.mule.runtime.api.metadata.MediaType.JSON;
 import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
 
-public class PropertyExpressionDataTypeResolverTestCase extends AbstractMuleContextTestCase
-{
+public class PropertyExpressionDataTypeResolverTestCase extends AbstractMuleContextTestCase {
 
-    public static final String EXPRESSION_VALUE = "bar";
-    public static final Charset CUSTOM_ENCODING = StandardCharsets.UTF_16;
-    private final ExpressionDataTypeResolver expressionDataTypeResolver = new PropertyExpressionDataTypeResolver();
+  public static final String EXPRESSION_VALUE = "bar";
+  public static final Charset CUSTOM_ENCODING = StandardCharsets.UTF_16;
+  private final ExpressionDataTypeResolver expressionDataTypeResolver = new PropertyExpressionDataTypeResolver();
 
-    @Test
-    public void returnsInlineFlowVarDataType() throws Exception
-    {
-        final String expression = "foo";
-        final DataType expectedDataType = DataType.builder().type(String.class).mediaType(JSON).charset(CUSTOM_ENCODING).build();
+  @Test
+  public void returnsInlineFlowVarDataType() throws Exception {
+    final String expression = "foo";
+    final DataType expectedDataType = DataType.builder().type(String.class).mediaType(JSON).charset(CUSTOM_ENCODING).build();
 
-        MVELExpressionLanguage expressionLanguage = (MVELExpressionLanguage) muleContext.getExpressionLanguage();
-        final CompiledExpression compiledExpression =
-                (CompiledExpression) compileExpression(expression, new ParserContext(expressionLanguage.getParserConfiguration()));
+    MVELExpressionLanguage expressionLanguage = (MVELExpressionLanguage) muleContext.getExpressionLanguage();
+    final CompiledExpression compiledExpression =
+        (CompiledExpression) compileExpression(expression, new ParserContext(expressionLanguage.getParserConfiguration()));
 
-        MuleEvent testEvent = getTestEvent(TEST_MESSAGE);
-        testEvent.setFlowVariable("foo", EXPRESSION_VALUE, expectedDataType);
+    MuleEvent testEvent = getTestEvent(TEST_MESSAGE);
+    testEvent.setFlowVariable("foo", EXPRESSION_VALUE, expectedDataType);
 
-        assertThat(expressionDataTypeResolver.resolve(testEvent, compiledExpression), like(String.class, JSON, CUSTOM_ENCODING));
-    }
+    assertThat(expressionDataTypeResolver.resolve(testEvent, compiledExpression), like(String.class, JSON, CUSTOM_ENCODING));
+  }
 
-    @Test
-    public void returnsInlineSessionPropertyDataType() throws Exception
-    {
-        final String expression = "foo";
-        final DataType expectedDataType = DataType.builder().type(String.class).mediaType(JSON).charset(CUSTOM_ENCODING).build();
+  @Test
+  public void returnsInlineSessionPropertyDataType() throws Exception {
+    final String expression = "foo";
+    final DataType expectedDataType = DataType.builder().type(String.class).mediaType(JSON).charset(CUSTOM_ENCODING).build();
 
-        MVELExpressionLanguage expressionLanguage = (MVELExpressionLanguage) muleContext.getExpressionLanguage();
-        final CompiledExpression compiledExpression =
-                (CompiledExpression) compileExpression(expression, new ParserContext(expressionLanguage.getParserConfiguration()));
+    MVELExpressionLanguage expressionLanguage = (MVELExpressionLanguage) muleContext.getExpressionLanguage();
+    final CompiledExpression compiledExpression =
+        (CompiledExpression) compileExpression(expression, new ParserContext(expressionLanguage.getParserConfiguration()));
 
-        MuleEvent testEvent = getTestEvent(TEST_MESSAGE);
-        testEvent.getSession().setProperty("foo", EXPRESSION_VALUE, expectedDataType);
+    MuleEvent testEvent = getTestEvent(TEST_MESSAGE);
+    testEvent.getSession().setProperty("foo", EXPRESSION_VALUE, expectedDataType);
 
-        assertThat(expressionDataTypeResolver.resolve(testEvent, compiledExpression), like(String.class, JSON, CUSTOM_ENCODING));
-    }
+    assertThat(expressionDataTypeResolver.resolve(testEvent, compiledExpression), like(String.class, JSON, CUSTOM_ENCODING));
+  }
 
 }

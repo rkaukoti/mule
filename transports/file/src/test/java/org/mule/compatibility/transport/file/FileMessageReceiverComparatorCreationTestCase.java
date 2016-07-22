@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.compatibility.transport.file;
@@ -25,46 +23,41 @@ import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
 @SmallTest
-public class FileMessageReceiverComparatorCreationTestCase extends AbstractMuleContextEndpointTestCase
-{
+public class FileMessageReceiverComparatorCreationTestCase extends AbstractMuleContextEndpointTestCase {
 
-    @Rule
-    public TemporaryFolder readFolder = new TemporaryFolder();
+  @Rule
+  public TemporaryFolder readFolder = new TemporaryFolder();
 
-    @Test
-    public void usesExecutionClassLoader() throws Exception
-    {
-        ClassLoader classLoader = spy(new URLClassLoader(new URL[0], muleContext.getExecutionClassLoader()));
-        muleContext.setExecutionClassLoader(classLoader);
+  @Test
+  public void usesExecutionClassLoader() throws Exception {
+    ClassLoader classLoader = spy(new URLClassLoader(new URL[0], muleContext.getExecutionClassLoader()));
+    muleContext.setExecutionClassLoader(classLoader);
 
-        InboundEndpoint endpoint = createEndpoint();
+    InboundEndpoint endpoint = createEndpoint();
 
-        FileMessageReceiver receiver = new FileMessageReceiver(endpoint.getConnector(), mock(Flow.class), endpoint,
-                readFolder.getRoot().getAbsolutePath(), null, null, RECEIVE_TIMEOUT);
+    FileMessageReceiver receiver = new FileMessageReceiver(endpoint.getConnector(), mock(Flow.class), endpoint,
+        readFolder.getRoot().getAbsolutePath(), null, null, RECEIVE_TIMEOUT);
 
-        receiver.connect();
+    receiver.connect();
 
-        receiver.poll();
+    receiver.poll();
 
-        verify(classLoader, timeout(RECEIVE_TIMEOUT)).loadClass(TestFileComparator.class.getName());
+    verify(classLoader, timeout(RECEIVE_TIMEOUT)).loadClass(TestFileComparator.class.getName());
+  }
+
+  private InboundEndpoint createEndpoint() throws Exception {
+    InboundEndpoint inboundEndpoint = getEndpointFactory().getInboundEndpoint("file://./simple");
+    inboundEndpoint.getProperties().put(FileMessageReceiver.COMPARATOR_CLASS_NAME_PROPERTY, TestFileComparator.class.getName());
+
+    return inboundEndpoint;
+  }
+
+  public static class TestFileComparator implements Comparator {
+
+    @Override
+    public int compare(Object file1, Object file2) {
+      return 0;
     }
-
-    private InboundEndpoint createEndpoint() throws Exception
-    {
-        InboundEndpoint inboundEndpoint = getEndpointFactory().getInboundEndpoint("file://./simple");
-        inboundEndpoint.getProperties().put(FileMessageReceiver.COMPARATOR_CLASS_NAME_PROPERTY, TestFileComparator.class.getName());
-
-        return inboundEndpoint;
-    }
-
-    public static class TestFileComparator implements Comparator
-    {
-
-        @Override
-        public int compare(Object file1, Object file2)
-        {
-            return 0;
-        }
-    }
+  }
 
 }

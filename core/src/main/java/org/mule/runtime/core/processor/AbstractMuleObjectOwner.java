@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor;
 
@@ -25,108 +23,86 @@ import java.util.List;
 /**
  * An object that owns Mule objects and delegates startup/shutdown events to them.
  */
-public abstract class AbstractMuleObjectOwner<T> implements Lifecycle, MuleContextAware, FlowConstructAware, MessagingExceptionHandlerAware
-{
+public abstract class AbstractMuleObjectOwner<T>
+    implements Lifecycle, MuleContextAware, FlowConstructAware, MessagingExceptionHandlerAware {
 
-    protected MuleContext muleContext;
-    protected FlowConstruct flowConstruct;
-    protected MessagingExceptionHandler messagingExceptionHandler;
+  protected MuleContext muleContext;
+  protected FlowConstruct flowConstruct;
+  protected MessagingExceptionHandler messagingExceptionHandler;
 
-    public MuleContext getMuleContext()
-    {
-        return muleContext;
+  public MuleContext getMuleContext() {
+    return muleContext;
+  }
+
+  public void setMuleContext(MuleContext context) {
+    this.muleContext = context;
+  }
+
+  public FlowConstruct getFlowConstruct() {
+    return flowConstruct;
+  }
+
+  public void setFlowConstruct(FlowConstruct flowConstruct) {
+    this.flowConstruct = flowConstruct;
+  }
+
+  public void initialise() throws InitialisationException {
+    for (T object : getOwnedObjects()) {
+      if (object instanceof MuleContextAware) {
+        ((MuleContextAware) object).setMuleContext(muleContext);
+      }
+      if (object instanceof FlowConstructAware) {
+        ((FlowConstructAware) object).setFlowConstruct(flowConstruct);
+      }
+      if (messagingExceptionHandler != null && object instanceof MessagingExceptionHandlerAware) {
+        ((MessagingExceptionHandlerAware) object).setMessagingExceptionHandler(messagingExceptionHandler);
+      }
+      if (object instanceof Initialisable) {
+        ((Initialisable) object).initialise();
+      }
     }
+  }
 
-    public void setMuleContext(MuleContext context)
-    {
-        this.muleContext = context;
+  public void dispose() {
+    for (T processor : getOwnedObjects()) {
+
+      if (processor instanceof Disposable) {
+        ((Disposable) processor).dispose();
+      }
     }
+  }
 
-    public FlowConstruct getFlowConstruct()
-    {
-        return flowConstruct;
+  public void start() throws MuleException {
+
+    for (T processor : getOwnedObjects()) {
+      if (processor instanceof Startable) {
+        ((Startable) processor).start();
+      }
     }
+  }
 
-    public void setFlowConstruct(FlowConstruct flowConstruct)
-    {
-        this.flowConstruct = flowConstruct;
+  public void stop() throws MuleException {
+
+    for (T processor : getOwnedObjects()) {
+      if (processor instanceof Stoppable) {
+        ((Stoppable) processor).stop();
+      }
+
     }
+  }
 
-    public void initialise() throws InitialisationException
-    {
-        for (T object : getOwnedObjects())
-        {
-            if (object instanceof MuleContextAware)
-            {
-                ((MuleContextAware) object).setMuleContext(muleContext);
-            }
-            if (object instanceof FlowConstructAware)
-            {
-                ((FlowConstructAware) object).setFlowConstruct(flowConstruct);
-            }
-            if (messagingExceptionHandler != null && object instanceof MessagingExceptionHandlerAware)
-            {
-                ((MessagingExceptionHandlerAware) object).setMessagingExceptionHandler(messagingExceptionHandler);
-            }
-            if (object instanceof Initialisable)
-            {
-                ((Initialisable) object).initialise();
-            }
-        }
+  protected MessagingExceptionHandler getMessagingExceptionHandler() {
+    return messagingExceptionHandler;
+  }
+
+  @Override
+  public void setMessagingExceptionHandler(MessagingExceptionHandler messagingExceptionHandler) {
+    if (this.messagingExceptionHandler == null) {
+      this.messagingExceptionHandler = messagingExceptionHandler;
     }
+  }
 
-    public void dispose()
-    {
-        for (T processor : getOwnedObjects())
-        {
-
-            if (processor instanceof Disposable)
-            {
-                ((Disposable) processor).dispose();
-            }
-        }
-    }
-
-    public void start() throws MuleException
-    {
-
-        for (T processor : getOwnedObjects())
-        {
-            if (processor instanceof Startable)
-            {
-                ((Startable) processor).start();
-            }
-        }
-    }
-
-    public void stop() throws MuleException
-    {
-
-        for (T processor : getOwnedObjects())
-        {
-            if (processor instanceof Stoppable)
-            {
-                ((Stoppable) processor).stop();
-            }
-
-        }
-    }
-
-    protected MessagingExceptionHandler getMessagingExceptionHandler()
-    {
-        return messagingExceptionHandler;
-    }
-
-    @Override
-    public void setMessagingExceptionHandler(MessagingExceptionHandler messagingExceptionHandler)
-    {
-        if (this.messagingExceptionHandler == null)
-        {
-            this.messagingExceptionHandler = messagingExceptionHandler;
-        }
-    }
-
-    protected abstract List<T> getOwnedObjects();
+  protected abstract List<T> getOwnedObjects();
 
 
 }

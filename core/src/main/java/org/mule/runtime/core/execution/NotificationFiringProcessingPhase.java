@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.execution;
 
@@ -23,59 +21,45 @@ import java.util.concurrent.ConcurrentHashMap;
  * Provides a reusable way for concrete {@link MessageProcessPhase}s to fire notifications.
  */
 public abstract class NotificationFiringProcessingPhase<Template extends MessageProcessTemplate>
-        implements MessageProcessPhase<Template>, Comparable<MessageProcessPhase>, MuleContextAware
-{
+    implements MessageProcessPhase<Template>, Comparable<MessageProcessPhase>, MuleContextAware {
 
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
+  protected transient Logger logger = LoggerFactory.getLogger(getClass());
 
-    private ConcurrentHashMap<ServerNotificationManager, NotificationHelper> notificationHelpers = new ConcurrentHashMap<>();
+  private ConcurrentHashMap<ServerNotificationManager, NotificationHelper> notificationHelpers = new ConcurrentHashMap<>();
 
-    private MuleContext muleContext;
+  private MuleContext muleContext;
 
-    protected void fireNotification(Object source, MuleEvent event, int action)
-    {
-        try
-        {
-            if (event == null || VoidMuleEvent.getInstance().equals(event))
-            {
-                // Null result only happens when there's a filter in the chain.
-                // Unfortunately a filter causes the whole chain to return null
-                // and there's no other way to retrieve the last event but using the RequestContext.
-                // see https://www.mulesoft.org/jira/browse/MULE-8670
-                event = RequestContext.getEvent();
-                if (event == null || VoidMuleEvent.getInstance().equals(event))
-                {
-                    return;
-                }
-            }
-            getNotificationHelper(muleContext.getNotificationManager()).fireNotification(
-                    source,
-                    event,
-                    event.getMessageSourceURI() != null ? event.getMessageSourceURI().toString() : null,
-                    event.getFlowConstruct(),
-                    action);
+  protected void fireNotification(Object source, MuleEvent event, int action) {
+    try {
+      if (event == null || VoidMuleEvent.getInstance().equals(event)) {
+        // Null result only happens when there's a filter in the chain.
+        // Unfortunately a filter causes the whole chain to return null
+        // and there's no other way to retrieve the last event but using the RequestContext.
+        // see https://www.mulesoft.org/jira/browse/MULE-8670
+        event = RequestContext.getEvent();
+        if (event == null || VoidMuleEvent.getInstance().equals(event)) {
+          return;
         }
-        catch (Exception e)
-        {
-            logger.warn("Could not fire notification. Action: " + action, e);
-        }
+      }
+      getNotificationHelper(muleContext.getNotificationManager()).fireNotification(source, event,
+          event.getMessageSourceURI() != null ? event.getMessageSourceURI().toString() : null, event.getFlowConstruct(), action);
+    } catch (Exception e) {
+      logger.warn("Could not fire notification. Action: " + action, e);
     }
+  }
 
-    protected NotificationHelper getNotificationHelper(ServerNotificationManager serverNotificationManager)
-    {
-        NotificationHelper notificationHelper = notificationHelpers.get(serverNotificationManager);
-        if (notificationHelper == null)
-        {
-            notificationHelper = new NotificationHelper(serverNotificationManager, ConnectorMessageNotification.class, false);
-            notificationHelpers.putIfAbsent(serverNotificationManager, notificationHelper);
-        }
-        return notificationHelper;
+  protected NotificationHelper getNotificationHelper(ServerNotificationManager serverNotificationManager) {
+    NotificationHelper notificationHelper = notificationHelpers.get(serverNotificationManager);
+    if (notificationHelper == null) {
+      notificationHelper = new NotificationHelper(serverNotificationManager, ConnectorMessageNotification.class, false);
+      notificationHelpers.putIfAbsent(serverNotificationManager, notificationHelper);
     }
+    return notificationHelper;
+  }
 
-    @Override
-    public void setMuleContext(MuleContext context)
-    {
-        this.muleContext = context;
+  @Override
+  public void setMuleContext(MuleContext context) {
+    this.muleContext = context;
 
-    }
+  }
 }

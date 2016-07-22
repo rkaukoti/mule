@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.update;
@@ -25,39 +23,33 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mule.runtime.module.db.integration.TestDbConfig.getOracleResource;
 import static org.mule.runtime.module.db.integration.model.RegionManager.SOUTHWEST_MANAGER;
 
-public class UpdateStructUdtTestCase extends AbstractDbIntegrationTestCase
-{
+public class UpdateStructUdtTestCase extends AbstractDbIntegrationTestCase {
 
-    public UpdateStructUdtTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
+  public UpdateStructUdtTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
+    super(dataSourceConfigResource, testDatabase);
+  }
+
+  @Parameterized.Parameters
+  public static List<Object[]> parameters() {
+    List<Object[]> params = new LinkedList<>();
+
+    if (!getOracleResource().isEmpty()) {
+      params.add(new Object[] {"integration/config/oracle-unmapped-udt-db-config.xml", new OracleTestDatabase()});
     }
 
-    @Parameterized.Parameters
-    public static List<Object[]> parameters()
-    {
-        List<Object[]> params = new LinkedList<>();
+    return params;
+  }
 
-        if (!getOracleResource().isEmpty())
-        {
-            params.add(new Object[] {"integration/config/oracle-unmapped-udt-db-config.xml", new OracleTestDatabase()});
-        }
+  @Override
+  protected String[] getFlowConfigurationResources() {
+    return new String[] {"integration/update/update-udt-config.xml"};
+  }
 
-        return params;
-    }
+  @Test
+  public void returnObject() throws Exception {
+    final MuleEvent responseEvent = flowRunner("updatesObject").withPayload(TEST_MESSAGE).run();
+    final MuleMessage response = responseEvent.getMessage();
 
-    @Override
-    protected String[] getFlowConfigurationResources()
-    {
-        return new String[] {"integration/update/update-udt-config.xml"};
-    }
-
-    @Test
-    public void returnObject() throws Exception
-    {
-        final MuleEvent responseEvent = flowRunner("updatesObject").withPayload(TEST_MESSAGE).run();
-        final MuleMessage response = responseEvent.getMessage();
-
-        assertThat(((Struct) response.getPayload()).getAttributes(), equalTo(SOUTHWEST_MANAGER.getContactDetails().asObjectArray()));
-    }
+    assertThat(((Struct) response.getPayload()).getAttributes(), equalTo(SOUTHWEST_MANAGER.getContactDetails().asObjectArray()));
+  }
 }

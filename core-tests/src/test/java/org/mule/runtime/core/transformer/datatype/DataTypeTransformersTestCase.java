@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.datatype;
 
@@ -22,58 +20,52 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @SmallTest
-public class DataTypeTransformersTestCase extends AbstractMuleTestCase
-{
-    @Rule
-    public ExpectedException expected = ExpectedException.none();
+public class DataTypeTransformersTestCase extends AbstractMuleTestCase {
+  @Rule
+  public ExpectedException expected = ExpectedException.none();
 
-    @Test
-    public void validCharset() throws TransformerException
-    {
-        final StringToCharsetTransformer transformer = new StringToCharsetTransformer();
+  @Test
+  public void validCharset() throws TransformerException {
+    final StringToCharsetTransformer transformer = new StringToCharsetTransformer();
 
-        assertThat(transformer.transform(US_ASCII.name()), is(US_ASCII));
-    }
+    assertThat(transformer.transform(US_ASCII.name()), is(US_ASCII));
+  }
 
-    @Test
-    public void invalidCharset() throws TransformerException
-    {
-        final StringToCharsetTransformer transformer = new StringToCharsetTransformer();
+  @Test
+  public void invalidCharset() throws TransformerException {
+    final StringToCharsetTransformer transformer = new StringToCharsetTransformer();
 
-        expected.expect(TransformerException.class);
-        expected.expectCause(instanceOf(UnsupportedCharsetException.class));
-        transformer.transform("invalid");
-    }
+    expected.expect(TransformerException.class);
+    expected.expectCause(instanceOf(UnsupportedCharsetException.class));
+    transformer.transform("invalid");
+  }
 
-    @Test
-    public void validMediaType() throws TransformerException
-    {
-        final StringToMediaTypeTransformer transformer = new StringToMediaTypeTransformer();
+  @Test
+  public void validMediaType() throws TransformerException {
+    final StringToMediaTypeTransformer transformer = new StringToMediaTypeTransformer();
 
-        final MediaType transformed = (MediaType) transformer.transform("text/plain");
-        assertThat(transformed.getPrimaryType(), is("text"));
-        assertThat(transformed.getSubType(), is("plain"));
-        assertThat(transformed.getCharset().isPresent(), is(false));
-    }
+    final MediaType transformed = (MediaType) transformer.transform("text/plain");
+    assertThat(transformed.getPrimaryType(), is("text"));
+    assertThat(transformed.getSubType(), is("plain"));
+    assertThat(transformed.getCharset().isPresent(), is(false));
+  }
 
-    @Test
-    public void validMediaTypeWithCharset() throws TransformerException
-    {
-        final StringToMediaTypeTransformer transformer = new StringToMediaTypeTransformer();
+  @Test
+  public void validMediaTypeWithCharset() throws TransformerException {
+    final StringToMediaTypeTransformer transformer = new StringToMediaTypeTransformer();
 
-        final MediaType transformed = (MediaType) transformer.transform("text/plain;charset=" + US_ASCII.name());
-        assertThat(transformed.getPrimaryType(), is("text"));
-        assertThat(transformed.getSubType(), is("plain"));
-        assertThat(transformed.getCharset().get(), is(US_ASCII));
-    }
+    final MediaType transformed = (MediaType) transformer.transform("text/plain;charset=" + US_ASCII.name());
+    assertThat(transformed.getPrimaryType(), is("text"));
+    assertThat(transformed.getSubType(), is("plain"));
+    assertThat(transformed.getCharset().get(), is(US_ASCII));
+  }
 
-    @Test
-    public void invalidMediaType() throws TransformerException
-    {
-        final StringToMediaTypeTransformer transformer = new StringToMediaTypeTransformer();
+  @Test
+  public void invalidMediaType() throws TransformerException {
+    final StringToMediaTypeTransformer transformer = new StringToMediaTypeTransformer();
 
-        expected.expect(TransformerException.class);
-        expected.expectCause(instanceOf(IllegalArgumentException.class));
-        transformer.transform("invalid");
-    }
+    expected.expect(TransformerException.class);
+    expected.expectCause(instanceOf(IllegalArgumentException.class));
+    transformer.transform("invalid");
+  }
 }

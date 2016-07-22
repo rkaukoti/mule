@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.resolver.database;
@@ -25,58 +23,53 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SmallTest
-public class ConfiguredDbConfigResolverTestCase extends AbstractMuleTestCase
-{
+public class ConfiguredDbConfigResolverTestCase extends AbstractMuleTestCase {
 
-    private DbConfigResolver dbConfigResolver = mock(DbConfigResolver.class);
-    private ConfiguredDbConfigResolver configuredDbConfigResolver = new ConfiguredDbConfigResolver(dbConfigResolver);
-    private DbConfig dbConfig = mock(DbConfig.class);
+  private DbConfigResolver dbConfigResolver = mock(DbConfigResolver.class);
+  private ConfiguredDbConfigResolver configuredDbConfigResolver = new ConfiguredDbConfigResolver(dbConfigResolver);
+  private DbConfig dbConfig = mock(DbConfig.class);
 
-    @Test
-    public void resolvesDbConfig() throws Exception
-    {
-        MuleEvent muleEvent = mock(MuleEvent.class);
-        when(dbConfigResolver.resolve(muleEvent)).thenReturn(dbConfig);
+  @Test
+  public void resolvesDbConfig() throws Exception {
+    MuleEvent muleEvent = mock(MuleEvent.class);
+    when(dbConfigResolver.resolve(muleEvent)).thenReturn(dbConfig);
 
-        DbConfig resolvedDbConfig = configuredDbConfigResolver.resolve(muleEvent);
+    DbConfig resolvedDbConfig = configuredDbConfigResolver.resolve(muleEvent);
 
-        assertThat(resolvedDbConfig, is(dbConfig));
-    }
+    assertThat(resolvedDbConfig, is(dbConfig));
+  }
 
-    @Test
-    public void testsConnection() throws Exception
-    {
-        TestResult expectedTestResult = mock(TestResult.class);
-        when(dbConfig.test()).thenReturn(expectedTestResult);
-        when(dbConfigResolver.resolve(null)).thenReturn(dbConfig);
+  @Test
+  public void testsConnection() throws Exception {
+    TestResult expectedTestResult = mock(TestResult.class);
+    when(dbConfig.test()).thenReturn(expectedTestResult);
+    when(dbConfigResolver.resolve(null)).thenReturn(dbConfig);
 
-        TestResult testResult = configuredDbConfigResolver.test();
+    TestResult testResult = configuredDbConfigResolver.test();
 
-        assertThat(testResult, is(expectedTestResult));
-    }
+    assertThat(testResult, is(expectedTestResult));
+  }
 
-    @Test
-    public void returnsMetaDataKeys() throws Exception
-    {
-        final Result<List<MetaDataKey>> expectedMetaDataResult = mock(Result.class);
-        when(dbConfig.getMetaDataKeys()).thenReturn(expectedMetaDataResult);
-        when(dbConfigResolver.resolve(null)).thenReturn(dbConfig);
+  @Test
+  public void returnsMetaDataKeys() throws Exception {
+    final Result<List<MetaDataKey>> expectedMetaDataResult = mock(Result.class);
+    when(dbConfig.getMetaDataKeys()).thenReturn(expectedMetaDataResult);
+    when(dbConfigResolver.resolve(null)).thenReturn(dbConfig);
 
-        final Result<List<MetaDataKey>> metaDataResult = configuredDbConfigResolver.getMetaDataKeys();
+    final Result<List<MetaDataKey>> metaDataResult = configuredDbConfigResolver.getMetaDataKeys();
 
-        assertThat(metaDataResult, is(expectedMetaDataResult));
-    }
+    assertThat(metaDataResult, is(expectedMetaDataResult));
+  }
 
-    @Test
-    public void returnsMetaData() throws Exception
-    {
-        final Result<MetaData> expectedMetaData = mock(Result.class);
-        final MetaDataKey metaDataKey = mock(MetaDataKey.class);
-        when(dbConfig.getMetaData(metaDataKey)).thenReturn(expectedMetaData);
-        when(dbConfigResolver.resolve(null)).thenReturn(dbConfig);
+  @Test
+  public void returnsMetaData() throws Exception {
+    final Result<MetaData> expectedMetaData = mock(Result.class);
+    final MetaDataKey metaDataKey = mock(MetaDataKey.class);
+    when(dbConfig.getMetaData(metaDataKey)).thenReturn(expectedMetaData);
+    when(dbConfigResolver.resolve(null)).thenReturn(dbConfig);
 
-        final Result<MetaData> metaData = configuredDbConfigResolver.getMetaData(metaDataKey);
+    final Result<MetaData> metaData = configuredDbConfigResolver.getMetaData(metaDataKey);
 
-        assertThat(metaData, is(expectedMetaData));
-    }
+    assertThat(metaData, is(expectedMetaData));
+  }
 }

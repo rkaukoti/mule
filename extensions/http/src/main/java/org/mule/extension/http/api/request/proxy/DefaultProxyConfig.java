@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.http.api.request.proxy;
 
@@ -17,54 +15,49 @@ import org.mule.runtime.extension.api.annotation.param.display.Password;
  * @since 4.0
  */
 @Alias("proxy")
-public class DefaultProxyConfig implements ProxyConfig
-{
-    /**
-     * Host where the proxy requests will be sent.
-     */
-    @Parameter
-    private String host;
+public class DefaultProxyConfig implements ProxyConfig {
+  /**
+   * Host where the proxy requests will be sent.
+   */
+  @Parameter
+  private String host;
 
-    /**
-     * Port where the proxy requests will be sent.
-     */
-    @Parameter
-    private int port = Integer.MAX_VALUE;
+  /**
+   * Port where the proxy requests will be sent.
+   */
+  @Parameter
+  private int port = Integer.MAX_VALUE;
 
-    /**
-     * The username to authenticate against the proxy.
-     */
-    @Parameter
-    @Optional
-    private String username;
+  /**
+   * The username to authenticate against the proxy.
+   */
+  @Parameter
+  @Optional
+  private String username;
 
-    /**
-     * The password to authenticate against the proxy.
-     */
-    @Parameter
-    @Optional
-    @Password
-    private String password;
+  /**
+   * The password to authenticate against the proxy.
+   */
+  @Parameter
+  @Optional
+  @Password
+  private String password;
 
-    public String getHost()
-    {
-        return host;
-    }
+  public String getHost() {
+    return host;
+  }
 
 
-    public int getPort()
-    {
-        return port;
-    }
+  public int getPort() {
+    return port;
+  }
 
-    public String getUsername()
-    {
-        return username;
-    }
+  public String getUsername() {
+    return username;
+  }
 
-    public String getPassword()
-    {
-        return password;
-    }
+  public String getPassword() {
+    return password;
+  }
 
 }

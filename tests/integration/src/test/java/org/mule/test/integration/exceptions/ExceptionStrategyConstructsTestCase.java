@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.exceptions;
 
@@ -21,47 +19,41 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class ExceptionStrategyConstructsTestCase extends FunctionalTestCase
-{
+public class ExceptionStrategyConstructsTestCase extends FunctionalTestCase {
+
+  @Override
+  protected String getConfigFile() {
+    return "org/mule/test/integration/exceptions/exception-strategy-constructs-config-flow.xml";
+  }
+
+  @Test
+  public void testDefaultExceptionStrategySingleEndpoint() throws Exception {
+    MuleClient client = muleContext.getClient();
+
+    flowRunner("testService").withPayload(getTestMuleMessage(TEST_PAYLOAD)).asynchronously().run();
+    assertExceptionMessage(client.request("test://modelout", RECEIVE_TIMEOUT));
+
+    flowRunner("testService1").withPayload(getTestMuleMessage(TEST_PAYLOAD)).asynchronously().run();
+    assertExceptionMessage(client.request("test://service1out", RECEIVE_TIMEOUT));
+
+    flowRunner("testflow1").withPayload(getTestMuleMessage(TEST_PAYLOAD)).asynchronously().run();
+    assertExceptionMessage(client.request("test://flow1out", RECEIVE_TIMEOUT));
+  }
+
+  private void assertExceptionMessage(MuleMessage out) {
+    assertNotNull(out);
+    assertTrue(out.getPayload() instanceof ExceptionMessage);
+    ExceptionMessage exceptionMessage = (ExceptionMessage) out.getPayload();
+    assertTrue(exceptionMessage.getException().getClass() == FunctionalTestException.class
+        || exceptionMessage.getException().getCause().getClass() == FunctionalTestException.class);
+    assertEquals("test", exceptionMessage.getPayload());
+  }
+
+  public static class ExceptionThrowingProcessor implements MessageProcessor {
 
     @Override
-    protected String getConfigFile()
-    {
-        return "org/mule/test/integration/exceptions/exception-strategy-constructs-config-flow.xml";
+    public MuleEvent process(MuleEvent event) throws MuleException {
+      throw new MessagingException(event, new FunctionalTestException());
     }
-
-    @Test
-    public void testDefaultExceptionStrategySingleEndpoint() throws Exception
-    {
-        MuleClient client = muleContext.getClient();
-
-        flowRunner("testService").withPayload(getTestMuleMessage(TEST_PAYLOAD)).asynchronously().run();
-        assertExceptionMessage(client.request("test://modelout", RECEIVE_TIMEOUT));
-
-        flowRunner("testService1").withPayload(getTestMuleMessage(TEST_PAYLOAD)).asynchronously().run();
-        assertExceptionMessage(client.request("test://service1out", RECEIVE_TIMEOUT));
-
-        flowRunner("testflow1").withPayload(getTestMuleMessage(TEST_PAYLOAD)).asynchronously().run();
-        assertExceptionMessage(client.request("test://flow1out", RECEIVE_TIMEOUT));
-    }
-
-    private void assertExceptionMessage(MuleMessage out)
-    {
-        assertNotNull(out);
-        assertTrue(out.getPayload() instanceof ExceptionMessage);
-        ExceptionMessage exceptionMessage = (ExceptionMessage) out.getPayload();
-        assertTrue(exceptionMessage.getException().getClass() == FunctionalTestException.class
-                   || exceptionMessage.getException().getCause().getClass() == FunctionalTestException.class);
-        assertEquals("test", exceptionMessage.getPayload());
-    }
-
-    public static class ExceptionThrowingProcessor implements MessageProcessor
-    {
-
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            throw new MessagingException(event, new FunctionalTestException());
-        }
-    }
+  }
 }

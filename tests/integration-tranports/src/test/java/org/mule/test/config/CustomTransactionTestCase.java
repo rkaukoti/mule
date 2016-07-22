@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.config;
 
@@ -18,37 +16,33 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupEndpointBuilder;
 
-public class CustomTransactionTestCase extends FunctionalTestCase
-{
-    @Override
-    protected String getConfigFile()
-    {
-        return "org/mule/test/config/custom-transaction-config.xml";
-    }
+public class CustomTransactionTestCase extends FunctionalTestCase {
+  @Override
+  protected String getConfigFile() {
+    return "org/mule/test/config/custom-transaction-config.xml";
+  }
 
-    @Test
-    public void testConfig1() throws Exception
-    {
-        EndpointBuilder epb = lookupEndpointBuilder(muleContext.getRegistry(), "testEndpoint1");
-        assertNotNull(epb);
-        InboundEndpoint iep = epb.buildInboundEndpoint();
+  @Test
+  public void testConfig1() throws Exception {
+    EndpointBuilder epb = lookupEndpointBuilder(muleContext.getRegistry(), "testEndpoint1");
+    assertNotNull(epb);
+    InboundEndpoint iep = epb.buildInboundEndpoint();
 
-        assertNotNull(iep.getTransactionConfig());
-        assertTrue(iep.getTransactionConfig().getFactory() instanceof TestTransactionFactory);
-        assertEquals(TransactionConfig.ACTION_ALWAYS_BEGIN, iep.getTransactionConfig().getAction());
-        assertEquals(4004, iep.getTransactionConfig().getTimeout());
-    }
+    assertNotNull(iep.getTransactionConfig());
+    assertTrue(iep.getTransactionConfig().getFactory() instanceof TestTransactionFactory);
+    assertEquals(TransactionConfig.ACTION_ALWAYS_BEGIN, iep.getTransactionConfig().getAction());
+    assertEquals(4004, iep.getTransactionConfig().getTimeout());
+  }
 
-    @Test
-    public void testConfig2() throws Exception
-    {
-        EndpointBuilder epb = lookupEndpointBuilder(muleContext.getRegistry(), "testEndpoint2");
-        assertNotNull(epb);
-        InboundEndpoint iep = epb.buildInboundEndpoint();
+  @Test
+  public void testConfig2() throws Exception {
+    EndpointBuilder epb = lookupEndpointBuilder(muleContext.getRegistry(), "testEndpoint2");
+    assertNotNull(epb);
+    InboundEndpoint iep = epb.buildInboundEndpoint();
 
-        assertNotNull(iep.getTransactionConfig());
-        assertTrue(iep.getTransactionConfig().getFactory() instanceof TestTransactionFactory);
-        assertEquals(TransactionConfig.ACTION_ALWAYS_BEGIN, iep.getTransactionConfig().getAction());
-        assertEquals(muleContext.getConfiguration().getDefaultTransactionTimeout(), iep.getTransactionConfig().getTimeout());
-    }
+    assertNotNull(iep.getTransactionConfig());
+    assertTrue(iep.getTransactionConfig().getFactory() instanceof TestTransactionFactory);
+    assertEquals(TransactionConfig.ACTION_ALWAYS_BEGIN, iep.getTransactionConfig().getAction());
+    assertEquals(muleContext.getConfiguration().getDefaultTransactionTimeout(), iep.getTransactionConfig().getTimeout());
+  }
 }

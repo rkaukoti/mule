@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.extension.email.retriever;
@@ -23,36 +21,29 @@ import static org.junit.Assert.assertThat;
 import static org.junit.runners.Parameterized.Parameters;
 
 @RunnerDelegateTo(Parameterized.class)
-public class POP3TestCase extends AbstractEmailRetrieverTestCase
-{
-    @Parameter
-    public String protocol;
+public class POP3TestCase extends AbstractEmailRetrieverTestCase {
+  @Parameter
+  public String protocol;
 
-    @Parameters
-    public static Collection<Object[]> data()
-    {
-        return Arrays.asList(new Object[][] {
-                {"pop3"}, {"pop3s"}
-        });
-    }
+  @Parameters
+  public static Collection<Object[]> data() {
+    return Arrays.asList(new Object[][] {{"pop3"}, {"pop3s"}});
+  }
 
-    @Override
-    protected String getConfigFile()
-    {
-        return format("retriever/%s.xml", protocol);
-    }
+  @Override
+  protected String getConfigFile() {
+    return format("retriever/%s.xml", protocol);
+  }
 
-    @Override
-    public String getProtocol()
-    {
-        return protocol;
-    }
+  @Override
+  public String getProtocol() {
+    return protocol;
+  }
 
-    @Test
-    public void retrieveAndRead() throws Exception
-    {
-        List<MuleMessage> messages = runFlowAndGetMessages(RETRIEVE_AND_READ);
-        assertThat(messages, hasSize(10));
-        messages.forEach(m -> assertBodyContent((String) m.getPayload()));
-    }
+  @Test
+  public void retrieveAndRead() throws Exception {
+    List<MuleMessage> messages = runFlowAndGetMessages(RETRIEVE_AND_READ);
+    assertThat(messages, hasSize(10));
+    messages.forEach(m -> assertBodyContent((String) m.getPayload()));
+  }
 }

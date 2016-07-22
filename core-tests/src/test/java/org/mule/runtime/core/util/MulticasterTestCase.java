@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -20,24 +18,22 @@ import java.util.List;
 import static org.junit.Assert.assertTrue;
 
 @SmallTest
-public class MulticasterTestCase extends AbstractMuleTestCase
-{
-    @Test
-    public void testMulticating() throws Exception
-    {
-        List<Fruit> fruit = new ArrayList<Fruit>();
-        Apple apple = new Apple();
-        Banana banana = new Banana();
-        WaterMelon melon = new WaterMelon();
-        fruit.add(apple);
-        fruit.add(banana);
-        fruit.add(melon);
+public class MulticasterTestCase extends AbstractMuleTestCase {
+  @Test
+  public void testMulticating() throws Exception {
+    List<Fruit> fruit = new ArrayList<Fruit>();
+    Apple apple = new Apple();
+    Banana banana = new Banana();
+    WaterMelon melon = new WaterMelon();
+    fruit.add(apple);
+    fruit.add(banana);
+    fruit.add(melon);
 
-        Fruit caster = (Fruit) Multicaster.create(Fruit.class, fruit);
-        caster.bite();
+    Fruit caster = (Fruit) Multicaster.create(Fruit.class, fruit);
+    caster.bite();
 
-        assertTrue(apple.isBitten());
-        assertTrue(banana.isBitten());
-        assertTrue(melon.isBitten());
-    }
+    assertTrue(apple.isBitten());
+    assertTrue(banana.isBitten());
+    assertTrue(melon.isBitten());
+  }
 }

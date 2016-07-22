@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.vendor.oracle;
@@ -28,54 +26,42 @@ import static org.mule.runtime.module.db.integration.TestRecordUtil.assertRecord
 /**
  * Base class for test that use oracle.xdb.XMLType values.
  * <p/>
- * These test required to include xdb.jar and xmlparserv2.jar libraries into
- * the project.
+ * These test required to include xdb.jar and xmlparserv2.jar libraries into the project.
  * <p/>
- * Also pass this property into the JVM runtime to force the usage of xerces
- * instead of oracle's implementation:
+ * Also pass this property into the JVM runtime to force the usage of xerces instead of oracle's implementation:
  * -Djavax.xml.parsers.DocumentBuilderFactory=com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl
  */
-public abstract class AbstractOracleXmlTypeTestCase extends AbstractDbIntegrationTestCase
-{
+public abstract class AbstractOracleXmlTypeTestCase extends AbstractDbIntegrationTestCase {
 
-    public AbstractOracleXmlTypeTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
-    }
+  public AbstractOracleXmlTypeTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
+    super(dataSourceConfigResource, testDatabase);
+  }
 
-    @Before
-    public void setUp() throws Exception
-    {
-        assumeThat(this, new TypeSafeMatcher<AbstractOracleXmlTypeTestCase>()
-        {
-            @Override
-            public boolean matchesSafely(AbstractOracleXmlTypeTestCase item)
-            {
-                try
-                {
-                    OracleXmlType.getXmlTypeClass();
-                    return true;
-                }
-                catch (ClassNotFoundException e)
-                {
-                    return false;
-                }
-            }
+  @Before
+  public void setUp() throws Exception {
+    assumeThat(this, new TypeSafeMatcher<AbstractOracleXmlTypeTestCase>() {
+      @Override
+      public boolean matchesSafely(AbstractOracleXmlTypeTestCase item) {
+        try {
+          OracleXmlType.getXmlTypeClass();
+          return true;
+        } catch (ClassNotFoundException e) {
+          return false;
+        }
+      }
 
-            @Override
-            public void describeTo(Description description)
-            {
-                description.appendText(String.format("Cannot find class %s. Check that required libraries are available",
-                        OracleXmlType.ORACLE_XMLTYPE_CLASS));
-            }
-        });
-    }
+      @Override
+      public void describeTo(Description description) {
+        description.appendText(
+            String.format("Cannot find class %s. Check that required libraries are available", OracleXmlType.ORACLE_XMLTYPE_CLASS));
+      }
+    });
+  }
 
-    protected void assertUpdatedAlienDscription() throws SQLException
-    {
-        List<Map<String, String>> result = selectData(
-                "SELECT name FROM Alien a where a.DESCRIPTION.extract('/Alien/Planet/text()').getStringVal() = 'Mars' ORDER BY NAME",
-                getDefaultDataSource());
-        assertRecords(result, new Record(new Field("NAME", Alien.ET.getName())), new Record(new Field("NAME", Alien.MONGUITO.getName())));
-    }
+  protected void assertUpdatedAlienDscription() throws SQLException {
+    List<Map<String, String>> result =
+        selectData("SELECT name FROM Alien a where a.DESCRIPTION.extract('/Alien/Planet/text()').getStringVal() = 'Mars' ORDER BY NAME",
+            getDefaultDataSource());
+    assertRecords(result, new Record(new Field("NAME", Alien.ET.getName())), new Record(new Field("NAME", Alien.MONGUITO.getName())));
+  }
 }

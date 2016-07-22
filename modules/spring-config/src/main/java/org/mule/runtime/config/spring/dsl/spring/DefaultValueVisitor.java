@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
@@ -18,20 +16,17 @@ import static java.util.Optional.empty;
  *
  * @since 4.0
  */
-public class DefaultValueVisitor extends AbstractAttributeDefinitionVisitor
-{
+public class DefaultValueVisitor extends AbstractAttributeDefinitionVisitor {
 
-    private Optional<Object> defaultValue = empty();
+  private Optional<Object> defaultValue = empty();
 
-    @Override
-    public void onConfigurationParameter(String parameterName, Object defaultValue, Optional<TypeConverter> typeConverter)
-    {
-        this.defaultValue = Optional.ofNullable(defaultValue);
-    }
+  @Override
+  public void onConfigurationParameter(String parameterName, Object defaultValue, Optional<TypeConverter> typeConverter) {
+    this.defaultValue = Optional.ofNullable(defaultValue);
+  }
 
-    public Optional<Object> getDefaultValue()
-    {
-        return defaultValue;
-    }
+  public Optional<Object> getDefaultValue() {
+    return defaultValue;
+  }
 
 }

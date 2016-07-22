@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -16,47 +14,40 @@ import org.mule.tck.testmodels.fruit.Orange;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
-public abstract class AbstractMessageReceiverTestCase extends AbstractMuleContextEndpointTestCase
-{
-    protected Flow flow;
-    protected InboundEndpoint endpoint;
+public abstract class AbstractMessageReceiverTestCase extends AbstractMuleContextEndpointTestCase {
+  protected Flow flow;
+  protected InboundEndpoint endpoint;
 
-    @Override
-    protected void doSetUp() throws Exception
-    {
-        flow = getTestFlow("orange", Orange.class);
-        endpoint = getEndpoint();
+  @Override
+  protected void doSetUp() throws Exception {
+    flow = getTestFlow("orange", Orange.class);
+    endpoint = getEndpoint();
+  }
+
+  @Test
+  public void testCreate() throws Exception {
+    InboundEndpoint endpoint = getTestInboundEndpoint("Test");
+    MessageReceiver receiver = getMessageReceiver();
+
+    assertNotNull(receiver.getEndpoint());
+
+    try {
+      receiver.setEndpoint(null);
+      fail("Provider cannot be set to null");
+    } catch (IllegalArgumentException e) {
+      // expected
     }
 
-    @Test
-    public void testCreate() throws Exception
-    {
-        InboundEndpoint endpoint = getTestInboundEndpoint("Test");
-        MessageReceiver receiver = getMessageReceiver();
+    receiver.setEndpoint(endpoint);
+    assertNotNull(receiver.getEndpoint());
 
-        assertNotNull(receiver.getEndpoint());
+    receiver.dispose();
+  }
 
-        try
-        {
-            receiver.setEndpoint(null);
-            fail("Provider cannot be set to null");
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
+  public abstract MessageReceiver getMessageReceiver() throws Exception;
 
-        receiver.setEndpoint(endpoint);
-        assertNotNull(receiver.getEndpoint());
-
-        receiver.dispose();
-    }
-
-    public abstract MessageReceiver getMessageReceiver() throws Exception;
-
-    /**
-     * Implementations of this method should ensure that the correct connector is set
-     * on the endpoint
-     */
-    public abstract InboundEndpoint getEndpoint() throws Exception;
+  /**
+   * Implementations of this method should ensure that the correct connector is set on the endpoint
+   */
+  public abstract InboundEndpoint getEndpoint() throws Exception;
 }

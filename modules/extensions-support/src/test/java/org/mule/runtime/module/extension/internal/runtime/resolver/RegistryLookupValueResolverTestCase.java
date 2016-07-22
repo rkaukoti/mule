@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
@@ -24,46 +22,40 @@ import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtil
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class RegistryLookupValueResolverTestCase extends AbstractMuleTestCase
-{
+public class RegistryLookupValueResolverTestCase extends AbstractMuleTestCase {
 
-    private static final String KEY = "key";
+  private static final String KEY = "key";
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private MuleEvent event;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private MuleEvent event;
 
-    private ValueResolver resolver;
+  private ValueResolver resolver;
 
-    @Before
-    public void before() throws Exception
-    {
-        when(event.getMuleContext().getRegistry().get(KEY)).thenReturn(HELLO_WORLD);
-        resolver = new RegistryLookupValueResolver(KEY);
-    }
+  @Before
+  public void before() throws Exception {
+    when(event.getMuleContext().getRegistry().get(KEY)).thenReturn(HELLO_WORLD);
+    resolver = new RegistryLookupValueResolver(KEY);
+  }
 
-    @Test
-    public void cache() throws Exception
-    {
-        Object value = resolver.resolve(event);
-        assertThat(value, is(HELLO_WORLD));
-        verify(event.getMuleContext().getRegistry()).get(KEY);
-    }
+  @Test
+  public void cache() throws Exception {
+    Object value = resolver.resolve(event);
+    assertThat(value, is(HELLO_WORLD));
+    verify(event.getMuleContext().getRegistry()).get(KEY);
+  }
 
-    @Test
-    public void isDynamic()
-    {
-        assertThat(resolver.isDynamic(), is(false));
-    }
+  @Test
+  public void isDynamic() {
+    assertThat(resolver.isDynamic(), is(false));
+  }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void nullKey()
-    {
-        new RegistryLookupValueResolver(null);
-    }
+  @Test(expected = IllegalArgumentException.class)
+  public void nullKey() {
+    new RegistryLookupValueResolver(null);
+  }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void blankKey()
-    {
-        new RegistryLookupValueResolver("");
-    }
+  @Test(expected = IllegalArgumentException.class)
+  public void blankKey() {
+    new RegistryLookupValueResolver("");
+  }
 }

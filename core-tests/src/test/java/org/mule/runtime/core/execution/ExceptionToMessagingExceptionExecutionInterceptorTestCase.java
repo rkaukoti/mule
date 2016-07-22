@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.execution;
 
@@ -27,95 +25,76 @@ import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class ExceptionToMessagingExceptionExecutionInterceptorTestCase extends AbstractMuleTestCase
-{
-    @Mock
-    private MessageProcessor mockMessageProcessor;
-    @Mock
-    private MuleEvent mockMuleEvent;
-    @Mock
-    private MuleEvent mockResultMuleEvent;
-    @Mock
-    private MessagingException mockMessagingException;
-    @Mock
-    private MuleException mockMuleException;
-    private ExceptionToMessagingExceptionExecutionInterceptor cut = new ExceptionToMessagingExceptionExecutionInterceptor();
+public class ExceptionToMessagingExceptionExecutionInterceptorTestCase extends AbstractMuleTestCase {
+  @Mock
+  private MessageProcessor mockMessageProcessor;
+  @Mock
+  private MuleEvent mockMuleEvent;
+  @Mock
+  private MuleEvent mockResultMuleEvent;
+  @Mock
+  private MessagingException mockMessagingException;
+  @Mock
+  private MuleException mockMuleException;
+  private ExceptionToMessagingExceptionExecutionInterceptor cut = new ExceptionToMessagingExceptionExecutionInterceptor();
 
-    @Before
-    public void before()
-    {
-        when(mockMuleEvent.getMuleContext()).thenReturn(mock(MuleContext.class));
+  @Before
+  public void before() {
+    when(mockMuleEvent.getMuleContext()).thenReturn(mock(MuleContext.class));
 
-        when(mockMessagingException.getFailingMessageProcessor()).thenCallRealMethod();
+    when(mockMessagingException.getFailingMessageProcessor()).thenCallRealMethod();
+  }
+
+  @Test
+  public void executionSuccessfully() throws MuleException {
+    when(mockMessageProcessor.process(mockMuleEvent)).thenReturn(mockResultMuleEvent);
+    MuleEvent result = cut.execute(mockMessageProcessor, mockMuleEvent);
+    assertThat(result, is(mockResultMuleEvent));
+  }
+
+  @Test
+  public void messageExceptionThrown() throws MuleException {
+    when(mockMessageProcessor.process(mockMuleEvent)).thenThrow(mockMessagingException);
+    try {
+      cut.execute(mockMessageProcessor, mockMuleEvent);
+      fail("Exception should be thrown");
+    } catch (MessagingException e) {
+      assertThat(e, is(mockMessagingException));
     }
+  }
 
-    @Test
-    public void executionSuccessfully() throws MuleException
-    {
-        when(mockMessageProcessor.process(mockMuleEvent)).thenReturn(mockResultMuleEvent);
-        MuleEvent result = cut.execute(mockMessageProcessor, mockMuleEvent);
-        assertThat(result, is(mockResultMuleEvent));
+  @Test
+  public void checkedExceptionThrown() throws MuleException {
+    when(mockMessageProcessor.process(mockMuleEvent)).thenThrow(mockMuleException);
+    try {
+      cut.execute(mockMessageProcessor, mockMuleEvent);
+      fail("Exception should be thrown");
+    } catch (MessagingException e) {
+      assertThat((MuleException) e.getCause(), is(mockMuleException));
     }
+  }
 
-    @Test
-    public void messageExceptionThrown() throws MuleException
-    {
-        when(mockMessageProcessor.process(mockMuleEvent)).thenThrow(mockMessagingException);
-        try
-        {
-            cut.execute(mockMessageProcessor, mockMuleEvent);
-            fail("Exception should be thrown");
-        }
-        catch (MessagingException e)
-        {
-            assertThat(e, is(mockMessagingException));
-        }
+  @Test
+  public void runtimeExceptionThrown() throws MuleException {
+    RuntimeException runtimeException = new RuntimeException();
+    when(mockMessageProcessor.process(mockMuleEvent)).thenThrow(runtimeException);
+    try {
+      cut.execute(mockMessageProcessor, mockMuleEvent);
+      fail("Exception should be thrown");
+    } catch (MessagingException e) {
+      assertThat((RuntimeException) e.getCause(), is(runtimeException));
     }
+  }
 
-    @Test
-    public void checkedExceptionThrown() throws MuleException
-    {
-        when(mockMessageProcessor.process(mockMuleEvent)).thenThrow(mockMuleException);
-        try
-        {
-            cut.execute(mockMessageProcessor, mockMuleEvent);
-            fail("Exception should be thrown");
-        }
-        catch (MessagingException e)
-        {
-            assertThat((MuleException) e.getCause(), is(mockMuleException));
-        }
+  @Test
+  public void errorThrown() throws MuleException {
+    Error error = new Error();
+    when(mockMessageProcessor.process(mockMuleEvent)).thenThrow(error);
+    try {
+      cut.execute(mockMessageProcessor, mockMuleEvent);
+      fail("Exception should be thrown");
+    } catch (MessagingException e) {
+      assertThat((Error) e.getCause(), is(error));
     }
-
-    @Test
-    public void runtimeExceptionThrown() throws MuleException
-    {
-        RuntimeException runtimeException = new RuntimeException();
-        when(mockMessageProcessor.process(mockMuleEvent)).thenThrow(runtimeException);
-        try
-        {
-            cut.execute(mockMessageProcessor, mockMuleEvent);
-            fail("Exception should be thrown");
-        }
-        catch (MessagingException e)
-        {
-            assertThat((RuntimeException) e.getCause(), is(runtimeException));
-        }
-    }
-
-    @Test
-    public void errorThrown() throws MuleException
-    {
-        Error error = new Error();
-        when(mockMessageProcessor.process(mockMuleEvent)).thenThrow(error);
-        try
-        {
-            cut.execute(mockMessageProcessor, mockMuleEvent);
-            fail("Exception should be thrown");
-        }
-        catch (MessagingException e)
-        {
-            assertThat((Error) e.getCause(), is(error));
-        }
-    }
+  }
 }

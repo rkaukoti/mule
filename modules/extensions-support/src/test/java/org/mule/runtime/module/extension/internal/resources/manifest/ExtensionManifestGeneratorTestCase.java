@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.resources.manifest;
 
@@ -34,38 +32,34 @@ import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
 import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.compareXML;
 
 @SmallTest
-public class ExtensionManifestGeneratorTestCase extends AbstractGeneratedResourceFactoryTestCase
-{
+public class ExtensionManifestGeneratorTestCase extends AbstractGeneratedResourceFactoryTestCase {
 
-    private ExtensionManifestGenerator generator = new ExtensionManifestGenerator();
+  private ExtensionManifestGenerator generator = new ExtensionManifestGenerator();
 
-    private ExtensionModel extensionModel;
+  private ExtensionModel extensionModel;
 
-    @Before
-    public void before()
-    {
-        Describer describer = new AnnotationsBasedDescriber(HeisenbergExtension.class, new StaticVersionResolver(getProductVersion()));
-        ExtensionFactory extensionFactory = new DefaultExtensionFactory(new SpiServiceRegistry(), getClass().getClassLoader());
-        final DescribingContext context = new DefaultDescribingContext(getClass().getClassLoader());
+  @Before
+  public void before() {
+    Describer describer = new AnnotationsBasedDescriber(HeisenbergExtension.class, new StaticVersionResolver(getProductVersion()));
+    ExtensionFactory extensionFactory = new DefaultExtensionFactory(new SpiServiceRegistry(), getClass().getClassLoader());
+    final DescribingContext context = new DefaultDescribingContext(getClass().getClassLoader());
 
-        extensionModel = extensionFactory.createFrom(describer.describe(context), context);
-    }
+    extensionModel = extensionFactory.createFrom(describer.describe(context), context);
+  }
 
-    @Override
-    protected Class<? extends GeneratedResourceFactory>[] getResourceFactoryTypes()
-    {
-        return new Class[] {ExtensionManifestGenerator.class};
-    }
+  @Override
+  protected Class<? extends GeneratedResourceFactory>[] getResourceFactoryTypes() {
+    return new Class[] {ExtensionManifestGenerator.class};
+  }
 
-    @Test
-    public void generate() throws Exception
-    {
-        InputStream in = getClass().getResourceAsStream("/heisenberg-test-manifest.xml");
-        assertThat(in, is(notNullValue()));
-        String expectedSchema = IOUtils.toString(in);
-        Optional<GeneratedResource> resource = generator.generateResource(extensionModel);
-        assertThat(resource.isPresent(), is(true));
+  @Test
+  public void generate() throws Exception {
+    InputStream in = getClass().getResourceAsStream("/heisenberg-test-manifest.xml");
+    assertThat(in, is(notNullValue()));
+    String expectedSchema = IOUtils.toString(in);
+    Optional<GeneratedResource> resource = generator.generateResource(extensionModel);
+    assertThat(resource.isPresent(), is(true));
 
-        compareXML(expectedSchema, new String(resource.get().getContent()));
-    }
+    compareXML(expectedSchema, new String(resource.get().getContent()));
+  }
 }

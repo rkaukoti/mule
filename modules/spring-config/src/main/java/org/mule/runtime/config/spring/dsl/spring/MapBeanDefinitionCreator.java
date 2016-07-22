@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
@@ -18,6 +16,7 @@ import java.util.Map;
  * {@code BeanDefinitionCreator} that handles components that define a mp in the configuration.
  *
  * <p>
+ * 
  * <pre>
  *  <parsers-test:complex-type-map>
  *      <parsers-test:complex-type-entry key="1">
@@ -31,31 +30,24 @@ import java.util.Map;
  *
  * @since 4.0
  */
-public class MapBeanDefinitionCreator extends BeanDefinitionCreator
-{
+public class MapBeanDefinitionCreator extends BeanDefinitionCreator {
 
-    @Override
-    boolean handleRequest(CreateBeanDefinitionRequest createBeanDefinitionRequest)
-    {
-        ComponentModel componentModel = createBeanDefinitionRequest.getComponentModel();
-        ObjectTypeVisitor objectTypeVisitor = new ObjectTypeVisitor(componentModel);
-        ComponentBuildingDefinition componentBuildingDefinition = createBeanDefinitionRequest.getComponentBuildingDefinition();
-        componentBuildingDefinition.getTypeDefinition().visit(objectTypeVisitor);
-        Class<?> type = objectTypeVisitor.getType();
-        if (Map.class.isAssignableFrom(type) && componentBuildingDefinition.getObjectFactoryType() == null)
-        {
-            ManagedList managedList = new ManagedList<>();
-            for (ComponentModel innerComponent : componentModel.getInnerComponents())
-            {
-                managedList.add(innerComponent.getBeanDefinition());
-            }
-            componentModel.setBeanDefinition(BeanDefinitionBuilder.genericBeanDefinition(MapFactoryBean.class)
-                                                                  .addConstructorArgValue(managedList)
-                                                                  .addConstructorArgValue(type)
-                                                                  .getBeanDefinition()
-            );
-            return true;
-        }
-        return false;
+  @Override
+  boolean handleRequest(CreateBeanDefinitionRequest createBeanDefinitionRequest) {
+    ComponentModel componentModel = createBeanDefinitionRequest.getComponentModel();
+    ObjectTypeVisitor objectTypeVisitor = new ObjectTypeVisitor(componentModel);
+    ComponentBuildingDefinition componentBuildingDefinition = createBeanDefinitionRequest.getComponentBuildingDefinition();
+    componentBuildingDefinition.getTypeDefinition().visit(objectTypeVisitor);
+    Class<?> type = objectTypeVisitor.getType();
+    if (Map.class.isAssignableFrom(type) && componentBuildingDefinition.getObjectFactoryType() == null) {
+      ManagedList managedList = new ManagedList<>();
+      for (ComponentModel innerComponent : componentModel.getInnerComponents()) {
+        managedList.add(innerComponent.getBeanDefinition());
+      }
+      componentModel.setBeanDefinition(BeanDefinitionBuilder.genericBeanDefinition(MapFactoryBean.class).addConstructorArgValue(managedList)
+          .addConstructorArgValue(type).getBeanDefinition());
+      return true;
     }
+    return false;
+  }
 }

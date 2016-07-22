@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.exceptions;
 
@@ -17,31 +15,26 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class CatchExceptionStrategyEnricherTestCase extends FunctionalTestCase
-{
+public class CatchExceptionStrategyEnricherTestCase extends FunctionalTestCase {
+  @Override
+  protected String getConfigFile() {
+    return "org/mule/test/integration/exceptions/catch-exception-strategy-enricher.xml";
+  }
+
+  @Test
+  public void testFlowRefHandlingException() throws Exception {
+    MuleMessage response = flowRunner("enricherExceptionFlow").withPayload(getTestMuleMessage()).run().getMessage();
+    assertThat(ErrorProcessor.handled, not(nullValue()));
+    assertThat(response.getExceptionPayload(), nullValue());
+  }
+
+  public static class ErrorProcessor implements MessageProcessor {
+    private static Throwable handled;
+
     @Override
-    protected String getConfigFile()
-    {
-        return "org/mule/test/integration/exceptions/catch-exception-strategy-enricher.xml";
+    public MuleEvent process(MuleEvent event) throws MuleException {
+      handled = event.getMessage().getExceptionPayload().getException();
+      return event;
     }
-
-    @Test
-    public void testFlowRefHandlingException() throws Exception
-    {
-        MuleMessage response = flowRunner("enricherExceptionFlow").withPayload(getTestMuleMessage()).run().getMessage();
-        assertThat(ErrorProcessor.handled, not(nullValue()));
-        assertThat(response.getExceptionPayload(), nullValue());
-    }
-
-    public static class ErrorProcessor implements MessageProcessor
-    {
-        private static Throwable handled;
-
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            handled = event.getMessage().getExceptionPayload().getException();
-            return event;
-        }
-    }
+  }
 }

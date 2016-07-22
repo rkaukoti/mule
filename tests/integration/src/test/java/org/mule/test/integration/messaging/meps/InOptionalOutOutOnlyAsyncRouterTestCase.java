@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.messaging.meps;
 
@@ -16,27 +14,22 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-public class InOptionalOutOutOnlyAsyncRouterTestCase extends FunctionalTestCase
-{
-    @Override
-    protected String getConfigFile()
-    {
-        return "org/mule/test/integration/messaging/meps/pattern_In-Optional-Out_Out-Only-Async-Router-flow.xml";
-    }
+public class InOptionalOutOutOnlyAsyncRouterTestCase extends FunctionalTestCase {
+  @Override
+  protected String getConfigFile() {
+    return "org/mule/test/integration/messaging/meps/pattern_In-Optional-Out_Out-Only-Async-Router-flow.xml";
+  }
 
-    @Test
-    public void testExchange() throws Exception
-    {
-        FlowRunner baseRunner = flowRunner("In-Out_Out-Only-Async-Service").withPayload("some data");
-        MuleEvent event = baseRunner.run();
-        assertNull(event);
+  @Test
+  public void testExchange() throws Exception {
+    FlowRunner baseRunner = flowRunner("In-Out_Out-Only-Async-Service").withPayload("some data");
+    MuleEvent event = baseRunner.run();
+    assertNull(event);
 
-        baseRunner.reset();
-        MuleMessage result = baseRunner.withInboundProperty("foo", "bar")
-                                       .run()
-                                       .getMessage();
+    baseRunner.reset();
+    MuleMessage result = baseRunner.withInboundProperty("foo", "bar").run().getMessage();
 
-        assertNotNull(result);
-        assertEquals("got it!", getPayloadAsString(result));
-    }
+    assertNotNull(result);
+    assertEquals("got it!", getPayloadAsString(result));
+  }
 }

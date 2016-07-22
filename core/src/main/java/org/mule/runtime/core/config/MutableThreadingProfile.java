@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.config;
 
@@ -17,10 +15,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
 
 /**
- * Partial mutability for a threading profile. A typical use case for this class is to
- * copy an existing immutable threading profile via a copying constructor, modify values and
- * reconfigure a thread pool (if the latter supports it).<p/>
- * <p/>The following parameters are copied locally and can be modified directly:
+ * Partial mutability for a threading profile. A typical use case for this class is to copy an existing immutable threading profile via a
+ * copying constructor, modify values and reconfigure a thread pool (if the latter supports it).
+ * <p/>
+ * <p/>
+ * The following parameters are copied locally and can be modified directly:
  * <ul>
  * <li>{@link #maxThreadsActive}
  * <li>{@link #maxThreadsIdle}
@@ -30,8 +29,9 @@ import java.util.concurrent.ThreadFactory;
  * <li>{@link #poolExhaustedAction}
  * <li>{@link #doThreading}
  * </ul>
- * <p/>The following parameters re-use the same object reference as the original threading
- * profile and <strong>are not deep clones</strong> of those:
+ * <p/>
+ * The following parameters re-use the same object reference as the original threading profile and <strong>are not deep clones</strong> of
+ * those:
  * <ul>
  * <li>{@link #poolFactory}
  * <li>{@link #workManagerFactory}
@@ -39,171 +39,142 @@ import java.util.concurrent.ThreadFactory;
  * <li>{@link #threadFactory}
  * </ul>
  */
-public class MutableThreadingProfile implements ThreadingProfile
-{
+public class MutableThreadingProfile implements ThreadingProfile {
 
-    private int maxThreadsActive;
-    private int maxThreadsIdle;
-    private int maxBufferSize;
-    private long threadTTL;
-    private long threadWaitTimeout;
-    private int poolExhaustedAction;
-    private boolean doThreading;
+  private int maxThreadsActive;
+  private int maxThreadsIdle;
+  private int maxBufferSize;
+  private long threadTTL;
+  private long threadWaitTimeout;
+  private int poolExhaustedAction;
+  private boolean doThreading;
 
-    private ThreadPoolFactory poolFactory;
-    private WorkManagerFactory workManagerFactory;
-    private RejectedExecutionHandler rejectedExecutionHandler;
-    private ThreadFactory threadFactory;
-    private MuleContext muleContext;
+  private ThreadPoolFactory poolFactory;
+  private WorkManagerFactory workManagerFactory;
+  private RejectedExecutionHandler rejectedExecutionHandler;
+  private ThreadFactory threadFactory;
+  private MuleContext muleContext;
 
-    public MutableThreadingProfile(ThreadingProfile tp)
-    {
-        this.maxThreadsActive = tp.getMaxThreadsActive();
-        this.maxThreadsIdle = tp.getMaxThreadsIdle();
-        this.maxBufferSize = tp.getMaxBufferSize();
-        this.threadTTL = tp.getThreadTTL();
-        this.threadWaitTimeout = tp.getThreadWaitTimeout();
-        this.poolExhaustedAction = tp.getPoolExhaustedAction();
-        this.doThreading = tp.isDoThreading();
-        this.rejectedExecutionHandler = tp.getRejectedExecutionHandler();
-        this.threadFactory = tp.getThreadFactory();
-        this.workManagerFactory = tp.getWorkManagerFactory();
-        this.poolFactory = tp.getPoolFactory();
-    }
+  public MutableThreadingProfile(ThreadingProfile tp) {
+    this.maxThreadsActive = tp.getMaxThreadsActive();
+    this.maxThreadsIdle = tp.getMaxThreadsIdle();
+    this.maxBufferSize = tp.getMaxBufferSize();
+    this.threadTTL = tp.getThreadTTL();
+    this.threadWaitTimeout = tp.getThreadWaitTimeout();
+    this.poolExhaustedAction = tp.getPoolExhaustedAction();
+    this.doThreading = tp.isDoThreading();
+    this.rejectedExecutionHandler = tp.getRejectedExecutionHandler();
+    this.threadFactory = tp.getThreadFactory();
+    this.workManagerFactory = tp.getWorkManagerFactory();
+    this.poolFactory = tp.getPoolFactory();
+  }
 
-    public ExecutorService createPool()
-    {
-        return createPool(null);
-    }
+  public ExecutorService createPool() {
+    return createPool(null);
+  }
 
-    public int getMaxThreadsActive()
-    {
-        return maxThreadsActive;
-    }
+  public int getMaxThreadsActive() {
+    return maxThreadsActive;
+  }
 
-    public void setMaxThreadsActive(int maxThreadsActive)
-    {
-        this.maxThreadsActive = maxThreadsActive;
-    }
+  public void setMaxThreadsActive(int maxThreadsActive) {
+    this.maxThreadsActive = maxThreadsActive;
+  }
 
-    public int getMaxThreadsIdle()
-    {
-        return maxThreadsIdle;
-    }
+  public int getMaxThreadsIdle() {
+    return maxThreadsIdle;
+  }
 
-    public void setMaxThreadsIdle(int maxThreadsIdle)
-    {
-        this.maxThreadsIdle = maxThreadsIdle;
-    }
+  public void setMaxThreadsIdle(int maxThreadsIdle) {
+    this.maxThreadsIdle = maxThreadsIdle;
+  }
 
-    public long getThreadTTL()
-    {
-        return threadTTL;
-    }
+  public long getThreadTTL() {
+    return threadTTL;
+  }
 
-    public void setThreadTTL(long threadTTL)
-    {
-        this.threadTTL = threadTTL;
-    }
+  public void setThreadTTL(long threadTTL) {
+    this.threadTTL = threadTTL;
+  }
 
-    public long getThreadWaitTimeout()
-    {
-        return threadWaitTimeout;
-    }
+  public long getThreadWaitTimeout() {
+    return threadWaitTimeout;
+  }
 
-    public void setThreadWaitTimeout(long threadWaitTimeout)
-    {
-        this.threadWaitTimeout = threadWaitTimeout;
-    }
+  public void setThreadWaitTimeout(long threadWaitTimeout) {
+    this.threadWaitTimeout = threadWaitTimeout;
+  }
 
-    public int getPoolExhaustedAction()
-    {
-        return poolExhaustedAction;
-    }
+  public int getPoolExhaustedAction() {
+    return poolExhaustedAction;
+  }
 
-    public void setPoolExhaustedAction(int poolExhaustedAction)
-    {
-        this.poolExhaustedAction = poolExhaustedAction;
-    }
+  public void setPoolExhaustedAction(int poolExhaustedAction) {
+    this.poolExhaustedAction = poolExhaustedAction;
+  }
 
-    public RejectedExecutionHandler getRejectedExecutionHandler()
-    {
-        return rejectedExecutionHandler;
-    }
+  public RejectedExecutionHandler getRejectedExecutionHandler() {
+    return rejectedExecutionHandler;
+  }
 
-    public void setRejectedExecutionHandler(RejectedExecutionHandler rejectedExecutionHandler)
-    {
-        this.rejectedExecutionHandler = rejectedExecutionHandler;
-    }
+  public void setRejectedExecutionHandler(RejectedExecutionHandler rejectedExecutionHandler) {
+    this.rejectedExecutionHandler = rejectedExecutionHandler;
+  }
 
-    public ThreadFactory getThreadFactory()
-    {
-        return threadFactory;
-    }
+  public ThreadFactory getThreadFactory() {
+    return threadFactory;
+  }
 
-    public void setThreadFactory(ThreadFactory threadFactory)
-    {
-        this.threadFactory = threadFactory;
-    }
+  public void setThreadFactory(ThreadFactory threadFactory) {
+    this.threadFactory = threadFactory;
+  }
 
-    public int getMaxBufferSize()
-    {
-        return maxBufferSize;
-    }
+  public int getMaxBufferSize() {
+    return maxBufferSize;
+  }
 
-    public void setMaxBufferSize(int maxBufferSize)
-    {
-        this.maxBufferSize = maxBufferSize;
-    }
+  public void setMaxBufferSize(int maxBufferSize) {
+    this.maxBufferSize = maxBufferSize;
+  }
 
-    public WorkManagerFactory getWorkManagerFactory()
-    {
-        return workManagerFactory;
-    }
+  public WorkManagerFactory getWorkManagerFactory() {
+    return workManagerFactory;
+  }
 
-    public void setWorkManagerFactory(WorkManagerFactory workManagerFactory)
-    {
-        this.workManagerFactory = workManagerFactory;
-    }
+  public void setWorkManagerFactory(WorkManagerFactory workManagerFactory) {
+    this.workManagerFactory = workManagerFactory;
+  }
 
-    public WorkManager createWorkManager(String name, int shutdownTimeout)
-    {
-        return workManagerFactory.createWorkManager(new ImmutableThreadingProfile(this), name, shutdownTimeout);
-    }
+  public WorkManager createWorkManager(String name, int shutdownTimeout) {
+    return workManagerFactory.createWorkManager(new ImmutableThreadingProfile(this), name, shutdownTimeout);
+  }
 
-    public ExecutorService createPool(String name)
-    {
-        return poolFactory.createPool(name, new ImmutableThreadingProfile(this));
-    }
+  public ExecutorService createPool(String name) {
+    return poolFactory.createPool(name, new ImmutableThreadingProfile(this));
+  }
 
-    public boolean isDoThreading()
-    {
-        return doThreading;
-    }
+  public boolean isDoThreading() {
+    return doThreading;
+  }
 
-    public void setDoThreading(boolean doThreading)
-    {
-        this.doThreading = doThreading;
-    }
+  public void setDoThreading(boolean doThreading) {
+    this.doThreading = doThreading;
+  }
 
-    public ThreadPoolFactory getPoolFactory()
-    {
-        return poolFactory;
-    }
+  public ThreadPoolFactory getPoolFactory() {
+    return poolFactory;
+  }
 
-    @Override
-    public ScheduledExecutorService createScheduledPool(String name)
-    {
-        return poolFactory.createScheduledPool(name, new ImmutableThreadingProfile(this));
-    }
+  @Override
+  public ScheduledExecutorService createScheduledPool(String name) {
+    return poolFactory.createScheduledPool(name, new ImmutableThreadingProfile(this));
+  }
 
-    public MuleContext getMuleContext()
-    {
-        return muleContext;
-    }
+  public MuleContext getMuleContext() {
+    return muleContext;
+  }
 
-    public void setMuleContext(MuleContext muleContext)
-    {
-        this.muleContext = muleContext;
-    }
+  public void setMuleContext(MuleContext muleContext) {
+    this.muleContext = muleContext;
+  }
 }

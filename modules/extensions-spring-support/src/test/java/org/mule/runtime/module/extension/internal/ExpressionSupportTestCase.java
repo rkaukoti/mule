@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal;
 
@@ -26,63 +24,51 @@ import static org.junit.Assert.fail;
 import static org.junit.rules.ExpectedException.none;
 
 @RunWith(Parameterized.class)
-public class ExpressionSupportTestCase extends ExtensionFunctionalTestCase
-{
+public class ExpressionSupportTestCase extends ExtensionFunctionalTestCase {
 
-    private final String config;
-    @Rule
-    public ExpectedException expectedException = none();
+  private final String config;
+  @Rule
+  public ExpectedException expectedException = none();
 
-    public ExpressionSupportTestCase(String config)
-    {
-        this.config = config;
-    }
+  public ExpressionSupportTestCase(String config) {
+    this.config = config;
+  }
 
-    @Parameters(name = "{0}")
-    public static Collection<Object[]> data()
-    {
-        return Arrays.asList(new Object[][] {
-                {"heisenberg-invalid-expression-parameter.xml"},
-                {"heisenberg-fixed-parameter-with-expression.xml"}
-        });
-    }
+  @Parameters(name = "{0}")
+  public static Collection<Object[]> data() {
+    return Arrays
+        .asList(new Object[][] {{"heisenberg-invalid-expression-parameter.xml"}, {"heisenberg-fixed-parameter-with-expression.xml"}});
+  }
 
-    @Override
-    protected Class<?>[] getAnnotatedExtensionClasses()
-    {
-        return new Class<?>[] {HeisenbergExtension.class};
-    }
+  @Override
+  protected Class<?>[] getAnnotatedExtensionClasses() {
+    return new Class<?>[] {HeisenbergExtension.class};
+  }
 
-    @Override
-    protected String[] getConfigFiles()
-    {
-        return new String[] {config};
-    }
+  @Override
+  protected String[] getConfigFiles() {
+    return new String[] {config};
+  }
 
-    @Override
-    protected void doSetUpBeforeMuleContextCreation() throws Exception
-    {
-        expectedException.expect(InitialisationException.class);
-        expectedException.expectCause(instanceOf(IllegalArgumentException.class));
-        expectedException.expectCause(new TypeSafeMatcher<Throwable>()
-        {
-            @Override
-            protected boolean matchesSafely(Throwable exception)
-            {
-                return exception.getMessage().contains("expressions");
-            }
+  @Override
+  protected void doSetUpBeforeMuleContextCreation() throws Exception {
+    expectedException.expect(InitialisationException.class);
+    expectedException.expectCause(instanceOf(IllegalArgumentException.class));
+    expectedException.expectCause(new TypeSafeMatcher<Throwable>() {
+      @Override
+      protected boolean matchesSafely(Throwable exception) {
+        return exception.getMessage().contains("expressions");
+      }
 
-            @Override
-            public void describeTo(Description description)
-            {
-                description.appendText("exception cause was expected to have the word expressions");
-            }
-        });
-    }
+      @Override
+      public void describeTo(Description description) {
+        description.appendText("exception cause was expected to have the word expressions");
+      }
+    });
+  }
 
-    @Test
-    public void invalidConfig() throws Exception
-    {
-        fail("Configuration should have been invalid");
-    }
+  @Test
+  public void invalidConfig() throws Exception {
+    fail("Configuration should have been invalid");
+  }
 }

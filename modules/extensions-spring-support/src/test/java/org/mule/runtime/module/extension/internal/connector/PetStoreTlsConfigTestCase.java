@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.connector;
 
@@ -27,56 +25,48 @@ import static org.junit.Assert.assertThat;
 import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtils.getConfigurationFromRegistry;
 
 @RunWith(Parameterized.class)
-public class PetStoreTlsConfigTestCase extends ExtensionFunctionalTestCase
-{
+public class PetStoreTlsConfigTestCase extends ExtensionFunctionalTestCase {
 
-    private static final String PASSWORD = "changeit";
-    @Rule
-    public SystemProperty systemProperty;
-    private String name;
-    private String configName;
+  private static final String PASSWORD = "changeit";
+  @Rule
+  public SystemProperty systemProperty;
+  private String name;
+  private String configName;
 
-    public PetStoreTlsConfigTestCase(String name, String configName)
-    {
-        this.name = name;
-        this.configName = configName;
-        systemProperty = new SystemProperty("config", configName);
-    }
+  public PetStoreTlsConfigTestCase(String name, String configName) {
+    this.name = name;
+    this.configName = configName;
+    systemProperty = new SystemProperty("config", configName);
+  }
 
-    @Parameterized.Parameters(name = "{0}")
-    public static Collection<Object[]> data()
-    {
-        return asList(new Object[][] {
-                {"global tls", "globalTls"},
-                {"inline tls", "inlineTls"}});
-    }
+  @Parameterized.Parameters(name = "{0}")
+  public static Collection<Object[]> data() {
+    return asList(new Object[][] {{"global tls", "globalTls"}, {"inline tls", "inlineTls"}});
+  }
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "petstore-tls-config.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "petstore-tls-config.xml";
+  }
 
-    @Override
-    protected Class<?>[] getAnnotatedExtensionClasses()
-    {
-        return new Class<?>[] {PetStoreConnector.class};
-    }
+  @Override
+  protected Class<?>[] getAnnotatedExtensionClasses() {
+    return new Class<?>[] {PetStoreConnector.class};
+  }
 
-    @Test
-    public void tls() throws Exception
-    {
-        PetStoreConnector connector = getConfigurationFromRegistry(configName, getTestEvent(""));
-        TlsContextFactory tls = connector.getTlsContext();
-        assertThat(tls, is(notNullValue()));
+  @Test
+  public void tls() throws Exception {
+    PetStoreConnector connector = getConfigurationFromRegistry(configName, getTestEvent(""));
+    TlsContextFactory tls = connector.getTlsContext();
+    assertThat(tls, is(notNullValue()));
 
-        TlsContextTrustStoreConfiguration trustStoreConfig = tls.getTrustStoreConfiguration();
-        assertThat(trustStoreConfig.getPath().endsWith("ssltest-cacerts.jks"), is(true));
-        assertThat(trustStoreConfig.getPassword(), equalTo(PASSWORD));
+    TlsContextTrustStoreConfiguration trustStoreConfig = tls.getTrustStoreConfiguration();
+    assertThat(trustStoreConfig.getPath().endsWith("ssltest-cacerts.jks"), is(true));
+    assertThat(trustStoreConfig.getPassword(), equalTo(PASSWORD));
 
-        TlsContextKeyStoreConfiguration keyStoreConfiguration = tls.getKeyStoreConfiguration();
-        assertThat(keyStoreConfiguration.getPath().endsWith("ssltest-keystore.jks"), is(true));
-        assertThat(keyStoreConfiguration.getKeyPassword(), equalTo(PASSWORD));
-        assertThat(keyStoreConfiguration.getPassword(), equalTo(PASSWORD));
-    }
+    TlsContextKeyStoreConfiguration keyStoreConfiguration = tls.getKeyStoreConfiguration();
+    assertThat(keyStoreConfiguration.getPath().endsWith("ssltest-keystore.jks"), is(true));
+    assertThat(keyStoreConfiguration.getKeyPassword(), equalTo(PASSWORD));
+    assertThat(keyStoreConfiguration.getPassword(), equalTo(PASSWORD));
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.endpoints;
 
@@ -24,31 +22,28 @@ import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.l
 /**
  * Test configuration of content-type in various endpoints
  */
-public class EndpointContentTypeTestCase extends FunctionalTestCase
-{
+public class EndpointContentTypeTestCase extends FunctionalTestCase {
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "content-type-setting-endpoint-configs-flow.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "content-type-setting-endpoint-configs-flow.xml";
+  }
 
-    @Test
-    public void testContentType() throws Exception
-    {
-        Flow flowService = muleContext.getRegistry().lookupObject("service");
-        InboundEndpoint inbound = (InboundEndpoint) flowService.getMessageSource();
-        assertThat(inbound.getMimeType().getPrimaryType(), is("text"));
-        assertThat(inbound.getMimeType().getSubType(), is("xml"));
-        assertThat(inbound.getEncoding(), is(UTF_8));
-        OutboundEndpoint outbound = (OutboundEndpoint) flowService.getMessageProcessors().get(0);
-        assertThat(outbound.getMimeType().getPrimaryType(), is("application"));
-        assertThat(outbound.getMimeType().getSubType(), is("json"));
-        assertThat(outbound.getEncoding(), is(Charset.forName("ISO-8859-2")));
-        EndpointBuilder global = lookupEndpointBuilder(muleContext.getRegistry(), "global");
-        InboundEndpoint created = global.buildInboundEndpoint();
-        assertThat(created.getMimeType().getPrimaryType(), is("application"));
-        assertThat(created.getMimeType().getSubType(), is("xml"));
-        assertThat(created.getEncoding(), is(ISO_8859_1));
-    }
+  @Test
+  public void testContentType() throws Exception {
+    Flow flowService = muleContext.getRegistry().lookupObject("service");
+    InboundEndpoint inbound = (InboundEndpoint) flowService.getMessageSource();
+    assertThat(inbound.getMimeType().getPrimaryType(), is("text"));
+    assertThat(inbound.getMimeType().getSubType(), is("xml"));
+    assertThat(inbound.getEncoding(), is(UTF_8));
+    OutboundEndpoint outbound = (OutboundEndpoint) flowService.getMessageProcessors().get(0);
+    assertThat(outbound.getMimeType().getPrimaryType(), is("application"));
+    assertThat(outbound.getMimeType().getSubType(), is("json"));
+    assertThat(outbound.getEncoding(), is(Charset.forName("ISO-8859-2")));
+    EndpointBuilder global = lookupEndpointBuilder(muleContext.getRegistry(), "global");
+    InboundEndpoint created = global.buildInboundEndpoint();
+    assertThat(created.getMimeType().getPrimaryType(), is("application"));
+    assertThat(created.getMimeType().getSubType(), is("xml"));
+    assertThat(created.getEncoding(), is(ISO_8859_1));
+  }
 }

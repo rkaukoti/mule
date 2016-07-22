@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
@@ -27,94 +25,78 @@ import org.mule.tck.size.SmallTest;
 import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
 
 @SmallTest
-public class ConfigurationModelValidatorTestCase extends AbstractMuleTestCase
-{
+public class ConfigurationModelValidatorTestCase extends AbstractMuleTestCase {
 
-    private ModelValidator validator = new ConfigurationModelValidator();
-    private ExtensionFactory extensionFactory = new DefaultExtensionFactory(new SpiServiceRegistry(), getClass().getClassLoader());
+  private ModelValidator validator = new ConfigurationModelValidator();
+  private ExtensionFactory extensionFactory = new DefaultExtensionFactory(new SpiServiceRegistry(), getClass().getClassLoader());
 
-    @Test
-    public void validConfigurationTypesForOperations() throws Exception
-    {
-        validate(ValidExtension.class);
-    }
+  @Test
+  public void validConfigurationTypesForOperations() throws Exception {
+    validate(ValidExtension.class);
+  }
 
-    @Test(expected = IllegalConfigurationModelDefinitionException.class)
-    public void invalidConfigurationTypesForOperations() throws Exception
-    {
-        validate(InvalidExtension.class);
-    }
+  @Test(expected = IllegalConfigurationModelDefinitionException.class)
+  public void invalidConfigurationTypesForOperations() throws Exception {
+    validate(InvalidExtension.class);
+  }
 
-    private ExtensionModel modelFor(Class<?> connectorClass)
-    {
-        DescribingContext context = new DefaultDescribingContext(connectorClass.getClassLoader());
-        return extensionFactory.createFrom(new AnnotationsBasedDescriber(connectorClass, new StaticVersionResolver(getProductVersion()))
-                .describe(context), context);
-    }
+  private ExtensionModel modelFor(Class<?> connectorClass) {
+    DescribingContext context = new DefaultDescribingContext(connectorClass.getClassLoader());
+    return extensionFactory.createFrom(
+        new AnnotationsBasedDescriber(connectorClass, new StaticVersionResolver(getProductVersion())).describe(context), context);
+  }
 
-    private void validate(Class<?> connectorClass)
-    {
-        validator.validate(modelFor(connectorClass));
-    }
+  private void validate(Class<?> connectorClass) {
+    validator.validate(modelFor(connectorClass));
+  }
 
-    interface Config
-    {
+  interface Config {
 
-    }
+  }
 
-    @Extension(name = "invalidExtension")
-    @Configurations({TestConfig.class})
-    @Operations(InvalidTestOperations.class)
-    public static class InvalidExtension
-    {
+  @Extension(name = "invalidExtension")
+  @Configurations({TestConfig.class})
+  @Operations(InvalidTestOperations.class)
+  public static class InvalidExtension {
 
-    }
+  }
 
-    @Extension(name = "validExtension")
-    @Configurations({TestConfig.class, TestConfig2.class})
-    @Operations(ValidTestOperations.class)
-    public static class ValidExtension
-    {
+  @Extension(name = "validExtension")
+  @Configurations({TestConfig.class, TestConfig2.class})
+  @Operations(ValidTestOperations.class)
+  public static class ValidExtension {
 
-    }
+  }
 
-    @Configuration(name = "config")
-    public static class TestConfig implements Config
-    {
+  @Configuration(name = "config")
+  public static class TestConfig implements Config {
 
-    }
+  }
 
-    @Configuration(name = "config2")
-    public static class TestConfig2 implements Config
-    {
+  @Configuration(name = "config2")
+  public static class TestConfig2 implements Config {
+
+  }
+
+  public static class ValidTestOperations {
+
+    public void foo(@UseConfig Config connection) {
 
     }
 
-    public static class ValidTestOperations
-    {
+    public void bar(@UseConfig Config connection) {
 
-        public void foo(@UseConfig Config connection)
-        {
+    }
+  }
 
-        }
+  public static class InvalidTestOperations {
 
-        public void bar(@UseConfig Config connection)
-        {
+    public void foo(@UseConfig Config connection) {
 
-        }
     }
 
-    public static class InvalidTestOperations
-    {
+    public void bar(@UseConfig TestConfig2 connection) {
 
-        public void foo(@UseConfig Config connection)
-        {
-
-        }
-
-        public void bar(@UseConfig TestConfig2 connection)
-        {
-
-        }
     }
+  }
 }

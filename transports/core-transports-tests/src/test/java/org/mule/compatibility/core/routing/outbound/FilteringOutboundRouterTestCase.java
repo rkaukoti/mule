@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.routing.outbound;
 
@@ -37,120 +35,107 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class FilteringOutboundRouterTestCase extends AbstractMuleContextEndpointTestCase
-{
-    public FilteringOutboundRouterTestCase()
-    {
-        setStartContext(true);
-    }
+public class FilteringOutboundRouterTestCase extends AbstractMuleContextEndpointTestCase {
+  public FilteringOutboundRouterTestCase() {
+    setStartContext(true);
+  }
 
-    @Test
-    public void testFilteringOutboundRouterAsync() throws Exception
-    {
-        OutboundEndpoint endpoint1 = getTestOutboundEndpoint("Test1Provider",
-                "test://Test1Provider?exchangePattern=request-response");
-        assertNotNull(endpoint1);
-        OutboundEndpoint mockEndpoint = RouterTestUtils.createMockEndpoint(endpoint1);
+  @Test
+  public void testFilteringOutboundRouterAsync() throws Exception {
+    OutboundEndpoint endpoint1 = getTestOutboundEndpoint("Test1Provider", "test://Test1Provider?exchangePattern=request-response");
+    assertNotNull(endpoint1);
+    OutboundEndpoint mockEndpoint = RouterTestUtils.createMockEndpoint(endpoint1);
 
-        FilteringOutboundRouter router = new EndpointMulticastingRouter();
-        router.setMuleContext(muleContext);
-        PayloadTypeFilter filter = new PayloadTypeFilter(String.class);
-        router.setMuleContext(muleContext);
-        router.setFilter(filter);
-        List<MessageProcessor> endpoints = new ArrayList<>();
-        endpoints.add(mockEndpoint);
-        router.setRoutes(endpoints);
+    FilteringOutboundRouter router = new EndpointMulticastingRouter();
+    router.setMuleContext(muleContext);
+    PayloadTypeFilter filter = new PayloadTypeFilter(String.class);
+    router.setMuleContext(muleContext);
+    router.setFilter(filter);
+    List<MessageProcessor> endpoints = new ArrayList<>();
+    endpoints.add(mockEndpoint);
+    router.setRoutes(endpoints);
 
-        // Default is now true
-        assertTrue(router.isUseTemplates());
-        assertEquals(filter, router.getFilter());
+    // Default is now true
+    assertTrue(router.isUseTemplates());
+    assertEquals(filter, router.getFilter());
 
-        MuleMessage message = MuleMessage.builder().payload("test event").build();
+    MuleMessage message = MuleMessage.builder().payload("test event").build();
 
-        assertTrue(router.isMatch(getTestEvent(message)));
+    assertTrue(router.isMatch(getTestEvent(message)));
 
-        when(mockEndpoint.process(any(MuleEvent.class))).thenAnswer(new MuleEventCheckAnswer());
-        MuleSession session = mock(MuleSession.class);
-        router.route(new OutboundRoutingTestEvent(message, session, muleContext));
+    when(mockEndpoint.process(any(MuleEvent.class))).thenAnswer(new MuleEventCheckAnswer());
+    MuleSession session = mock(MuleSession.class);
+    router.route(new OutboundRoutingTestEvent(message, session, muleContext));
 
-        //Test with transform
-        message = MuleMessage.builder().payload(new Exception("test event")).build();
+    // Test with transform
+    message = MuleMessage.builder().payload(new Exception("test event")).build();
 
-        assertTrue(!router.isMatch(getTestEvent(message)));
+    assertTrue(!router.isMatch(getTestEvent(message)));
 
-        router.setTransformers(
-                Arrays.<Transformer>asList(
-                        new AbstractTransformer()
-                        {
-                            @Override
-                            public Object doTransform(Object src, Charset outputEncoding) throws TransformerException
-                            {
-                                return ((Exception) src).getMessage();
-                            }
-                        }
-                )
-        );
+    router.setTransformers(Arrays.<Transformer>asList(new AbstractTransformer() {
+      @Override
+      public Object doTransform(Object src, Charset outputEncoding) throws TransformerException {
+        return ((Exception) src).getMessage();
+      }
+    }));
 
-        assertTrue(router.isMatch(getTestEvent(message)));
-    }
+    assertTrue(router.isMatch(getTestEvent(message)));
+  }
 
-    @Test
-    public void testFilteringOutboundRouterSync() throws Exception
-    {
-        OutboundEndpoint endpoint1 = getTestOutboundEndpoint("Test1Provider",
-                "test://Test1Provider?exchangePattern=request-response");
-        assertNotNull(endpoint1);
-        OutboundEndpoint mockEndpoint = RouterTestUtils.createMockEndpoint(endpoint1);
+  @Test
+  public void testFilteringOutboundRouterSync() throws Exception {
+    OutboundEndpoint endpoint1 = getTestOutboundEndpoint("Test1Provider", "test://Test1Provider?exchangePattern=request-response");
+    assertNotNull(endpoint1);
+    OutboundEndpoint mockEndpoint = RouterTestUtils.createMockEndpoint(endpoint1);
 
-        FilteringOutboundRouter router = new EndpointMulticastingRouter();
-        router.setMuleContext(muleContext);
-        PayloadTypeFilter filter = new PayloadTypeFilter(String.class);
-        router.setFilter(filter);
-        List<OutboundEndpoint> endpoints = new ArrayList<>();
-        endpoints.add(mockEndpoint);
-        router.setRoutes(new ArrayList<MessageProcessor>(endpoints));
+    FilteringOutboundRouter router = new EndpointMulticastingRouter();
+    router.setMuleContext(muleContext);
+    PayloadTypeFilter filter = new PayloadTypeFilter(String.class);
+    router.setFilter(filter);
+    List<OutboundEndpoint> endpoints = new ArrayList<>();
+    endpoints.add(mockEndpoint);
+    router.setRoutes(new ArrayList<MessageProcessor>(endpoints));
 
-        // Default is now true
-        assertTrue(router.isUseTemplates());
-        assertEquals(filter, router.getFilter());
+    // Default is now true
+    assertTrue(router.isUseTemplates());
+    assertEquals(filter, router.getFilter());
 
-        MuleMessage message = MuleMessage.builder().payload("test event").build();
-        MuleEvent event = new OutboundRoutingTestEvent(message, null, muleContext);
-        when(mockEndpoint.process(any(MuleEvent.class))).thenAnswer(new MuleEventCheckAnswer(event));
+    MuleMessage message = MuleMessage.builder().payload("test event").build();
+    MuleEvent event = new OutboundRoutingTestEvent(message, null, muleContext);
+    when(mockEndpoint.process(any(MuleEvent.class))).thenAnswer(new MuleEventCheckAnswer(event));
 
-        MuleSession session = mock(MuleSession.class);
-        MuleEvent result = router.route(new OutboundRoutingTestEvent(message, session, muleContext));
-        assertNotNull(result);
-        assertEquals(message, result.getMessage());
-    }
+    MuleSession session = mock(MuleSession.class);
+    MuleEvent result = router.route(new OutboundRoutingTestEvent(message, session, muleContext));
+    assertNotNull(result);
+    assertEquals(message, result.getMessage());
+  }
 
-    @Test
-    public void testFilteringOutboundRouterWithTemplates() throws Exception
-    {
-        OutboundEndpoint endpoint1 = getTestOutboundEndpoint("Test1Provider", "test://foo?[barValue]");
-        assertNotNull(endpoint1);
+  @Test
+  public void testFilteringOutboundRouterWithTemplates() throws Exception {
+    OutboundEndpoint endpoint1 = getTestOutboundEndpoint("Test1Provider", "test://foo?[barValue]");
+    assertNotNull(endpoint1);
 
-        FilteringOutboundRouter router = new EndpointMulticastingRouter();
-        router.setMuleContext(muleContext);
-        PayloadTypeFilter filter = new PayloadTypeFilter(String.class);
-        router.setFilter(filter);
-        List<OutboundEndpoint> endpoints = new ArrayList<>();
-        endpoints.add(endpoint1);
-        router.setRoutes(new ArrayList<MessageProcessor>(endpoints));
+    FilteringOutboundRouter router = new EndpointMulticastingRouter();
+    router.setMuleContext(muleContext);
+    PayloadTypeFilter filter = new PayloadTypeFilter(String.class);
+    router.setFilter(filter);
+    List<OutboundEndpoint> endpoints = new ArrayList<>();
+    endpoints.add(endpoint1);
+    router.setRoutes(new ArrayList<MessageProcessor>(endpoints));
 
-        assertTrue(router.isUseTemplates());
-        assertEquals(filter, router.getFilter());
+    assertTrue(router.isUseTemplates());
+    assertEquals(filter, router.getFilter());
 
-        Map<String, Serializable> m = new HashMap<>();
-        m.put("barValue", "bar");
-        MuleMessage message = MuleMessage.builder().payload("test event").outboundProperties(m).build();
-        MuleEvent event = new OutboundRoutingTestEvent(message, null, muleContext);
+    Map<String, Serializable> m = new HashMap<>();
+    m.put("barValue", "bar");
+    MuleMessage message = MuleMessage.builder().payload("test event").outboundProperties(m).build();
+    MuleEvent event = new OutboundRoutingTestEvent(message, null, muleContext);
 
-        assertTrue(router.isMatch(getTestEvent(message)));
-        OutboundEndpoint ep = (OutboundEndpoint) router.getRoute(0, event);
-        // MULE-2690: assert that templated targets are not mutated
-        assertNotSame(endpoint1, ep);
-        // assert that the returned endpoint has a resolved URI
-        assertEquals("test://foo?bar", ep.getEndpointURI().toString());
-    }
+    assertTrue(router.isMatch(getTestEvent(message)));
+    OutboundEndpoint ep = (OutboundEndpoint) router.getRoute(0, event);
+    // MULE-2690: assert that templated targets are not mutated
+    assertNotSame(endpoint1, ep);
+    // assert that the returned endpoint has a resolved URI
+    assertEquals("test://foo?bar", ep.getEndpointURI().toString());
+  }
 }

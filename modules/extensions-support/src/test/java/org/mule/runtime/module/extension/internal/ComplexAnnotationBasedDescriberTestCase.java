@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal;
 
@@ -23,41 +21,32 @@ import static org.mule.test.vegan.extension.VeganExtension.KIWI;
 import static org.mule.test.vegan.extension.VeganExtension.VEGAN;
 
 @SmallTest
-public class ComplexAnnotationBasedDescriberTestCase extends AbstractAnnotationsBasedDescriberTestCase
-{
+public class ComplexAnnotationBasedDescriberTestCase extends AbstractAnnotationsBasedDescriberTestCase {
 
-    private ExtensionDeclaration extensionDeclaration;
+  private ExtensionDeclaration extensionDeclaration;
 
-    @Before
-    public void setUp()
-    {
-        setDescriber(describerFor(VeganExtension.class));
-        extensionDeclaration = describeExtension().getDeclaration();
-    }
+  @Before
+  public void setUp() {
+    setDescriber(describerFor(VeganExtension.class));
+    extensionDeclaration = describeExtension().getDeclaration();
+  }
 
-    @Test
-    public void extension()
-    {
-        assertThat(extensionDeclaration.getName(), is(VEGAN));
-        assertThat(extensionDeclaration.getConfigurations(), hasSize(4));
-        assertOperation(APPLE, "eatApple");
-        assertOperation(BANANA, "eatBanana");
-        assertOperation(KIWI, "eatKiwi");
-    }
+  @Test
+  public void extension() {
+    assertThat(extensionDeclaration.getName(), is(VEGAN));
+    assertThat(extensionDeclaration.getConfigurations(), hasSize(4));
+    assertOperation(APPLE, "eatApple");
+    assertOperation(BANANA, "eatBanana");
+    assertOperation(KIWI, "eatKiwi");
+  }
 
-    private void assertOperation(String configName, String operationName)
-    {
-        ConfigurationDeclaration config = extensionDeclaration.getConfigurations().stream()
-                                                              .filter(c -> c.getName().equals(configName))
-                                                              .findFirst()
-                                                              .orElseThrow(() -> new IllegalArgumentException(
-                                                                      "No config with name " + configName));
+  private void assertOperation(String configName, String operationName) {
+    ConfigurationDeclaration config = extensionDeclaration.getConfigurations().stream().filter(c -> c.getName().equals(configName))
+        .findFirst().orElseThrow(() -> new IllegalArgumentException("No config with name " + configName));
 
-        OperationDeclaration operation = config.getOperations().stream()
-                                               .filter(model -> model.getName().equals(operationName))
-                                               .findFirst()
-                                               .orElseThrow(() -> new IllegalArgumentException("No operation with name " + operationName));
+    OperationDeclaration operation = config.getOperations().stream().filter(model -> model.getName().equals(operationName)).findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("No operation with name " + operationName));
 
-        assertThat(operation.getName(), is(operationName));
-    }
+    assertThat(operation.getName(), is(operationName));
+  }
 }

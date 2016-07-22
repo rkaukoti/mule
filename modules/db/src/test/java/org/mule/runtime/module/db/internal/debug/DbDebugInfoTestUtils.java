@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.debug;
@@ -23,26 +21,22 @@ import static org.mule.tck.junit4.matcher.ObjectDebugInfoMatcher.objectLike;
 /**
  * Provides utility methods for testing {@link FieldDebugInfo} on DB module
  */
-public class DbDebugInfoTestUtils
-{
+public class DbDebugInfoTestUtils {
 
-    private DbDebugInfoTestUtils()
-    {
-    }
+  private DbDebugInfoTestUtils() {}
 
-    /**
-     * Creates a matcher to assert the debug info generated for a query
-     *
-     * @param name          expected query name
-     * @param queryTemplate query to compare with the debug info
-     * @return a non null matcher
-     */
-    public static Matcher<FieldDebugInfo<?>> createQueryFieldDebugInfoMatcher(String name, QueryTemplate queryTemplate)
-    {
-        final List<Matcher<FieldDebugInfo<?>>> queryMatcher = new ArrayList<>();
-        queryMatcher.add(fieldLike(SQL_TEXT_DEBUG_FIELD, String.class, queryTemplate.getSqlText()));
-        queryMatcher.add(fieldLike(TYPE_DEBUG_FIELD, String.class, queryTemplate.getType().toString()));
+  /**
+   * Creates a matcher to assert the debug info generated for a query
+   *
+   * @param name expected query name
+   * @param queryTemplate query to compare with the debug info
+   * @return a non null matcher
+   */
+  public static Matcher<FieldDebugInfo<?>> createQueryFieldDebugInfoMatcher(String name, QueryTemplate queryTemplate) {
+    final List<Matcher<FieldDebugInfo<?>>> queryMatcher = new ArrayList<>();
+    queryMatcher.add(fieldLike(SQL_TEXT_DEBUG_FIELD, String.class, queryTemplate.getSqlText()));
+    queryMatcher.add(fieldLike(TYPE_DEBUG_FIELD, String.class, queryTemplate.getType().toString()));
 
-        return objectLike(name, Query.class, queryMatcher);
-    }
+    return objectLike(name, Query.class, queryMatcher);
+  }
 }

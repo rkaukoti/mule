@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.collection;
 
@@ -21,24 +19,21 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 
 @SmallTest
-public class ImmutableListCollectorTestCase extends AbstractMuleTestCase
-{
+public class ImmutableListCollectorTestCase extends AbstractMuleTestCase {
 
-    private final String[] items = new String[] {"a", "b", "c"};
+  private final String[] items = new String[] {"a", "b", "c"};
 
-    @Test
-    public void collect()
-    {
-        List<String> collected = Arrays.asList(items).stream().collect(new ImmutableListCollector<>());
-        assertThat(collected, hasSize(items.length));
-        assertThat(collected, contains(items));
-    }
+  @Test
+  public void collect() {
+    List<String> collected = Arrays.asList(items).stream().collect(new ImmutableListCollector<>());
+    assertThat(collected, hasSize(items.length));
+    assertThat(collected, contains(items));
+  }
 
-    @Test
-    public void emptyList()
-    {
-        List<String> collected = new ArrayList<String>().stream().collect(new ImmutableListCollector<>());
-        assertThat(collected, is(notNullValue()));
-        assertThat(collected, hasSize(0));
-    }
+  @Test
+  public void emptyList() {
+    List<String> collected = new ArrayList<String>().stream().collect(new ImmutableListCollector<>());
+    assertThat(collected, is(notNullValue()));
+    assertThat(collected, hasSize(0));
+  }
 }

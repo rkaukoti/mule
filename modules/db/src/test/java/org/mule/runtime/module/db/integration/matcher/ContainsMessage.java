@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.matcher;
@@ -16,43 +14,35 @@ import org.mule.runtime.core.api.MuleMessage;
 import java.util.List;
 import java.util.Map;
 
-public class ContainsMessage extends TypeSafeMatcher<List<MuleMessage>>
-{
+public class ContainsMessage extends TypeSafeMatcher<List<MuleMessage>> {
 
-    private final String key;
-    private final Object value;
+  private final String key;
+  private final Object value;
 
-    public ContainsMessage(String key, Object value)
-    {
-        this.key = key;
-        this.value = value;
-    }
+  public ContainsMessage(String key, Object value) {
+    this.key = key;
+    this.value = value;
+  }
 
-    @Factory
-    public static Matcher<List<MuleMessage>> mapPayloadWith(String key, Object value)
-    {
-        return new ContainsMessage(key, value);
-    }
+  @Factory
+  public static Matcher<List<MuleMessage>> mapPayloadWith(String key, Object value) {
+    return new ContainsMessage(key, value);
+  }
 
-    @Override
-    public boolean matchesSafely(List<MuleMessage> messages)
-    {
-        for (MuleMessage message : messages)
-        {
-            if (message.getPayload() instanceof Map)
-            {
-                if (((Map) message.getPayload()).get(key).equals(value))
-                {
-                    return true;
-                }
-            }
+  @Override
+  public boolean matchesSafely(List<MuleMessage> messages) {
+    for (MuleMessage message : messages) {
+      if (message.getPayload() instanceof Map) {
+        if (((Map) message.getPayload()).get(key).equals(value)) {
+          return true;
         }
-        return false;
+      }
     }
+    return false;
+  }
 
-    public void describeTo(Description description)
-    {
-        description.appendText("Does not contains a map payload with key = " + key + " and value = " + value);
-    }
+  public void describeTo(Description description) {
+    description.appendText("Does not contains a map payload with key = " + key + " and value = " + value);
+  }
 
 }

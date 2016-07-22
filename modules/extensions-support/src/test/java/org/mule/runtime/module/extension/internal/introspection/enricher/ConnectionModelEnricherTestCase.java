@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
@@ -40,61 +38,56 @@ import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtil
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class ConnectionModelEnricherTestCase extends AbstractMuleTestCase
-{
+public class ConnectionModelEnricherTestCase extends AbstractMuleTestCase {
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private DescribingContext describingContext;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private DescribingContext describingContext;
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private ExtensionDeclarer extensionDeclarer;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private ExtensionDeclarer extensionDeclarer;
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private ExtensionDeclaration extensionDeclaration;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private ExtensionDeclaration extensionDeclaration;
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private OperationDeclaration connectedOperation;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private OperationDeclaration connectedOperation;
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private OperationDeclaration notConnectedOperation;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private OperationDeclaration notConnectedOperation;
 
-    private ModelEnricher enricher = new ConnectionModelEnricher();
+  private ModelEnricher enricher = new ConnectionModelEnricher();
 
-    @Before
-    public void before() throws Exception
-    {
-        when(describingContext.getExtensionDeclarer()).thenReturn(extensionDeclarer);
-        when(extensionDeclarer.getDeclaration()).thenReturn(extensionDeclaration);
-        when(extensionDeclaration.getOperations()).thenReturn(asList(connectedOperation, notConnectedOperation));
-        when(connectedOperation.getModelProperty(ConnectivityModelProperty.class)).thenReturn(
-                Optional.of(new ConnectivityModelProperty(toMetadataType(Object.class))));
-        when(notConnectedOperation.getModelProperty(ConnectivityModelProperty.class)).thenReturn(Optional.empty());
-    }
+  @Before
+  public void before() throws Exception {
+    when(describingContext.getExtensionDeclarer()).thenReturn(extensionDeclarer);
+    when(extensionDeclarer.getDeclaration()).thenReturn(extensionDeclaration);
+    when(extensionDeclaration.getOperations()).thenReturn(asList(connectedOperation, notConnectedOperation));
+    when(connectedOperation.getModelProperty(ConnectivityModelProperty.class))
+        .thenReturn(Optional.of(new ConnectivityModelProperty(toMetadataType(Object.class))));
+    when(notConnectedOperation.getModelProperty(ConnectivityModelProperty.class)).thenReturn(Optional.empty());
+  }
 
-    @Test
-    public void enrichConnectedOperation() throws Exception
-    {
-        enricher.enrich(describingContext);
-        ArgumentCaptor<InterceptorFactory> captor = ArgumentCaptor.forClass(InterceptorFactory.class);
-        verify(connectedOperation).addInterceptorFactory(captor.capture());
+  @Test
+  public void enrichConnectedOperation() throws Exception {
+    enricher.enrich(describingContext);
+    ArgumentCaptor<InterceptorFactory> captor = ArgumentCaptor.forClass(InterceptorFactory.class);
+    verify(connectedOperation).addInterceptorFactory(captor.capture());
 
-        InterceptorFactory factory = captor.getValue();
-        assertThat(factory, is(notNullValue()));
-        assertThat(factory.createInterceptor(), is(instanceOf(ConnectionInterceptor.class)));
-    }
+    InterceptorFactory factory = captor.getValue();
+    assertThat(factory, is(notNullValue()));
+    assertThat(factory.createInterceptor(), is(instanceOf(ConnectionInterceptor.class)));
+  }
 
-    @Test
-    public void enrichOnlyOnceWhenFlyweight() throws Exception
-    {
-        when(extensionDeclaration.getOperations()).thenReturn(asList(connectedOperation, connectedOperation, notConnectedOperation));
-        enricher.enrich(describingContext);
-        verify(connectedOperation, times(1)).addInterceptorFactory(any());
-    }
+  @Test
+  public void enrichOnlyOnceWhenFlyweight() throws Exception {
+    when(extensionDeclaration.getOperations()).thenReturn(asList(connectedOperation, connectedOperation, notConnectedOperation));
+    enricher.enrich(describingContext);
+    verify(connectedOperation, times(1)).addInterceptorFactory(any());
+  }
 
-    @Test
-    public void skipNotConnectedOperation() throws Exception
-    {
-        enricher.enrich(describingContext);
-        verify(notConnectedOperation, never()).addInterceptorFactory(any(InterceptorFactory.class));
-    }
+  @Test
+  public void skipNotConnectedOperation() throws Exception {
+    enricher.enrich(describingContext);
+    verify(notConnectedOperation, never()).addInterceptorFactory(any(InterceptorFactory.class));
+  }
 }

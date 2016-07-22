@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.http.api.request.authentication;
 
@@ -19,40 +17,36 @@ import org.mule.runtime.module.http.internal.request.HttpAuthenticationType;
  *
  * @since 4.0
  */
-public abstract class UsernamePasswordAuthentication implements HttpAuthentication
-{
-    /**
-     * The username to authenticate.
-     */
-    @Parameter
-    private String username;
+public abstract class UsernamePasswordAuthentication implements HttpAuthentication {
+  /**
+   * The username to authenticate.
+   */
+  @Parameter
+  private String username;
 
-    /**
-     * The password to authenticate.
-     */
-    @Parameter
-    @Password
-    private String password;
+  /**
+   * The password to authenticate.
+   */
+  @Parameter
+  @Password
+  private String password;
 
-    @Override
-    public void authenticate(MuleEvent muleEvent, HttpRequestBuilder builder) throws MuleException
-    {
-        //do nothing
-    }
+  @Override
+  public void authenticate(MuleEvent muleEvent, HttpRequestBuilder builder) throws MuleException {
+    // do nothing
+  }
 
-    @Override
-    public boolean shouldRetry(MuleEvent firstAttemptResponseEvent) throws MuleException
-    {
-        return false;
-    }
+  @Override
+  public boolean shouldRetry(MuleEvent firstAttemptResponseEvent) throws MuleException {
+    return false;
+  }
 
-    public abstract HttpRequestAuthentication buildRequestAuthentication();
+  public abstract HttpRequestAuthentication buildRequestAuthentication();
 
-    protected HttpRequestAuthentication getBaseRequestAuthentication(HttpAuthenticationType authType)
-    {
-        HttpRequestAuthentication requestAuthentication = new HttpRequestAuthentication(authType);
-        requestAuthentication.setUsername(username);
-        requestAuthentication.setPassword(password);
-        return requestAuthentication;
-    }
+  protected HttpRequestAuthentication getBaseRequestAuthentication(HttpAuthenticationType authType) {
+    HttpRequestAuthentication requestAuthentication = new HttpRequestAuthentication(authType);
+    requestAuthentication.setUsername(username);
+    requestAuthentication.setPassword(password);
+    return requestAuthentication;
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.db.integration;
 
@@ -28,65 +26,53 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
-public class DbSharedConnectorTestCase extends DomainFunctionalTestCase
-{
+public class DbSharedConnectorTestCase extends DomainFunctionalTestCase {
 
-    public static final String CLIENT_APP = "client";
-    public static final String SERVER_APP = "server";
+  public static final String CLIENT_APP = "client";
+  public static final String SERVER_APP = "server";
 
-    private final String domainConfig;
+  private final String domainConfig;
 
-    public DbSharedConnectorTestCase(String domainConfig)
-    {
-        this.domainConfig = domainConfig;
-    }
+  public DbSharedConnectorTestCase(String domainConfig) {
+    this.domainConfig = domainConfig;
+  }
 
-    @Parameterized.Parameters
-    public static Collection<Object[]> parameters()
-    {
-        return Arrays.asList(new Object[][] {
-                {"integration/domain/db-shared-connnector.xml"},
-                {"integration/domain/db-derby-shared-connnector.xml"}
-        });
-    }
+  @Parameterized.Parameters
+  public static Collection<Object[]> parameters() {
+    return Arrays
+        .asList(new Object[][] {{"integration/domain/db-shared-connnector.xml"}, {"integration/domain/db-derby-shared-connnector.xml"}});
+  }
 
-    @Override
-    protected String getDomainConfig()
-    {
-        return domainConfig;
-    }
+  @Override
+  protected String getDomainConfig() {
+    return domainConfig;
+  }
 
-    @Before
-    public void configDB() throws SQLException
-    {
-        final DerbyTestDatabase testDatabase = new DerbyTestDatabase();
-        testDatabase.createDefaultDatabaseConfig(getDefaultDataSource());
-    }
+  @Before
+  public void configDB() throws SQLException {
+    final DerbyTestDatabase testDatabase = new DerbyTestDatabase();
+    testDatabase.createDefaultDatabaseConfig(getDefaultDataSource());
+  }
 
-    @Override
-    public ApplicationConfig[] getConfigResources()
-    {
-        return new ApplicationConfig[] {
-                new ApplicationConfig(CLIENT_APP, new String[] {"integration/domain/db-client-app.xml"}),
-                new ApplicationConfig(SERVER_APP, new String[] {"integration/domain/db-server-app.xml"})
-        };
-    }
+  @Override
+  public ApplicationConfig[] getConfigResources() {
+    return new ApplicationConfig[] {new ApplicationConfig(CLIENT_APP, new String[] {"integration/domain/db-client-app.xml"}),
+        new ApplicationConfig(SERVER_APP, new String[] {"integration/domain/db-server-app.xml"})};
+  }
 
-    @Test
-    public void createJdbcRecordAndConsumeIt() throws Exception
-    {
-        final MuleContext clientAppMuleContext = getMuleContextForApp(CLIENT_APP);
-        new FlowRunner(clientAppMuleContext, "dbClientService").withPayload(new Object()).run();
+  @Test
+  public void createJdbcRecordAndConsumeIt() throws Exception {
+    final MuleContext clientAppMuleContext = getMuleContextForApp(CLIENT_APP);
+    new FlowRunner(clientAppMuleContext, "dbClientService").withPayload(new Object()).run();
 
-        MuleMessage response = getMuleContextForApp(SERVER_APP).getClient().request("test://out", 5000);
-        assertThat(response, notNullValue());
-    }
+    MuleMessage response = getMuleContextForApp(SERVER_APP).getClient().request("test://out", 5000);
+    assertThat(response, notNullValue());
+  }
 
-    public DataSource getDefaultDataSource()
-    {
-        DbConfigResolver dbConfigResolver = getMuleContextForDomain().getRegistry().get("dbConfig");
-        DbConfig config = dbConfigResolver.resolve(null);
+  public DataSource getDefaultDataSource() {
+    DbConfigResolver dbConfigResolver = getMuleContextForDomain().getRegistry().get("dbConfig");
+    DbConfig config = dbConfigResolver.resolve(null);
 
-        return config.getDataSource();
-    }
+    return config.getDataSource();
+  }
 }

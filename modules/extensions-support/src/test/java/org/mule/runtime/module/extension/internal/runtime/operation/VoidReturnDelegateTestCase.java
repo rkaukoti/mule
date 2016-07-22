@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.operation;
 
@@ -19,17 +17,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SmallTest
-public class VoidReturnDelegateTestCase extends AbstractMuleTestCase
-{
+public class VoidReturnDelegateTestCase extends AbstractMuleTestCase {
 
-    @Test
-    public void returnsMuleEvent()
-    {
-        MuleEvent event = mock(MuleEvent.class);
-        OperationContextAdapter operationContext = mock(OperationContextAdapter.class);
-        when(operationContext.getEvent()).thenReturn(event);
+  @Test
+  public void returnsMuleEvent() {
+    MuleEvent event = mock(MuleEvent.class);
+    OperationContextAdapter operationContext = mock(OperationContextAdapter.class);
+    when(operationContext.getEvent()).thenReturn(event);
 
-        Object returnValue = VoidReturnDelegate.INSTANCE.asReturnValue(new Object(), operationContext);
-        assertThat(event, is(sameInstance(returnValue)));
-    }
+    Object returnValue = VoidReturnDelegate.INSTANCE.asReturnValue(new Object(), operationContext);
+    assertThat(event, is(sameInstance(returnValue)));
+  }
 }

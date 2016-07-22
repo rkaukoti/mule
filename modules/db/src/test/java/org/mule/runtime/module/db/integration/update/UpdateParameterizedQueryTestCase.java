@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.update;
@@ -21,42 +19,36 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class UpdateParameterizedQueryTestCase extends AbstractDbIntegrationTestCase
-{
+public class UpdateParameterizedQueryTestCase extends AbstractDbIntegrationTestCase {
 
-    public static final String PLUTO = "Pluto";
+  public static final String PLUTO = "Pluto";
 
-    public UpdateParameterizedQueryTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
-    }
+  public UpdateParameterizedQueryTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
+    super(dataSourceConfigResource, testDatabase);
+  }
 
-    @Parameterized.Parameters
-    public static List<Object[]> parameters()
-    {
-        return TestDbConfig.getResources();
-    }
+  @Parameterized.Parameters
+  public static List<Object[]> parameters() {
+    return TestDbConfig.getResources();
+  }
 
 
-    @Override
-    protected String[] getFlowConfigurationResources()
-    {
-        return new String[] {"integration/update/update-parameterized-query-config.xml"};
-    }
+  @Override
+  protected String[] getFlowConfigurationResources() {
+    return new String[] {"integration/update/update-parameterized-query-config.xml"};
+  }
 
-    @Test
-    public void usesParameterizedQuery() throws Exception
-    {
-        final MuleEvent responseEvent = flowRunner("jdbcUpdate").withPayload(PLUTO).run();
+  @Test
+  public void usesParameterizedQuery() throws Exception {
+    final MuleEvent responseEvent = flowRunner("jdbcUpdate").withPayload(PLUTO).run();
 
-        final MuleMessage response = responseEvent.getMessage();
-        assertUpdate(response);
-    }
+    final MuleMessage response = responseEvent.getMessage();
+    assertUpdate(response);
+  }
 
-    private void assertUpdate(MuleMessage response) throws SQLException
-    {
-        assertThat(response.getPayload(), equalTo(1));
+  private void assertUpdate(MuleMessage response) throws SQLException {
+    assertThat(response.getPayload(), equalTo(1));
 
-        assertPlanetRecordsFromQuery(PLUTO);
-    }
+    assertPlanetRecordsFromQuery(PLUTO);
+  }
 }

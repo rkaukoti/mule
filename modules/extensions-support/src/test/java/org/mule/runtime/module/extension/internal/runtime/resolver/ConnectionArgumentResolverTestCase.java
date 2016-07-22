@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
@@ -24,28 +22,25 @@ import static org.mule.runtime.module.extension.internal.ExtensionProperties.CON
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class ConnectionArgumentResolverTestCase extends AbstractMuleTestCase
-{
+public class ConnectionArgumentResolverTestCase extends AbstractMuleTestCase {
 
-    @Mock
-    private OperationContextAdapter operationContext;
+  @Mock
+  private OperationContextAdapter operationContext;
 
-    private ConnectionArgumentResolver resolver = new ConnectionArgumentResolver();
+  private ConnectionArgumentResolver resolver = new ConnectionArgumentResolver();
 
-    @Test
-    public void resolve() throws Exception
-    {
-        ConnectionHandler connectionHandler = mock(ConnectionHandler.class);
-        final Object connection = new Object();
-        when(connectionHandler.getConnection()).thenReturn(connection);
-        when(operationContext.getVariable(CONNECTION_PARAM)).thenReturn(connectionHandler);
+  @Test
+  public void resolve() throws Exception {
+    ConnectionHandler connectionHandler = mock(ConnectionHandler.class);
+    final Object connection = new Object();
+    when(connectionHandler.getConnection()).thenReturn(connection);
+    when(operationContext.getVariable(CONNECTION_PARAM)).thenReturn(connectionHandler);
 
-        assertThat(resolver.resolve(operationContext), is(sameInstance(connection)));
-    }
+    assertThat(resolver.resolve(operationContext), is(sameInstance(connection)));
+  }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void noConnection()
-    {
-        resolver.resolve(operationContext);
-    }
+  @Test(expected = IllegalArgumentException.class)
+  public void noConnection() {
+    resolver.resolve(operationContext);
+  }
 }

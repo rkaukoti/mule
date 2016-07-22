@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.internal.connection;
 
@@ -37,211 +35,175 @@ import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNee
 import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.startIfNeeded;
 
 /**
- * Implementation of {@link ConnectionManager} which manages connections
- * opened on a specific application.
+ * Implementation of {@link ConnectionManager} which manages connections opened on a specific application.
  *
  * @since 4.0
  */
-public final class DefaultConnectionManager implements ConnectionManagerAdapter, Lifecycle
-{
+public final class DefaultConnectionManager implements ConnectionManagerAdapter, Lifecycle {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultConnectionManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(DefaultConnectionManager.class);
 
-    private final Map<Reference<Object>, ConnectionHandlingStrategyAdapter> connections = new HashMap<>();
-    private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-    private final Lock readLock = readWriteLock.readLock();
-    private final Lock writeLock = readWriteLock.writeLock();
-    private final MuleContext muleContext;
-    private final RetryPolicyTemplate retryPolicyTemplate;
-    private final PoolingProfile poolingProfile;
+  private final Map<Reference<Object>, ConnectionHandlingStrategyAdapter> connections = new HashMap<>();
+  private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+  private final Lock readLock = readWriteLock.readLock();
+  private final Lock writeLock = readWriteLock.writeLock();
+  private final MuleContext muleContext;
+  private final RetryPolicyTemplate retryPolicyTemplate;
+  private final PoolingProfile poolingProfile;
 
-    /**
-     * Creates a new instance
-     *
-     * @param muleContext the {@link MuleContext} of the owned application
-     */
-    @Inject
-    public DefaultConnectionManager(MuleContext muleContext)
-    {
-        this.muleContext = muleContext;
-        this.poolingProfile = new PoolingProfile();
-        this.retryPolicyTemplate = new NoRetryPolicyTemplate();
+  /**
+   * Creates a new instance
+   *
+   * @param muleContext the {@link MuleContext} of the owned application
+   */
+  @Inject
+  public DefaultConnectionManager(MuleContext muleContext) {
+    this.muleContext = muleContext;
+    this.poolingProfile = new PoolingProfile();
+    this.retryPolicyTemplate = new NoRetryPolicyTemplate();
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @throws IllegalStateException if invoked while the {@link #muleContext} is stopped or stopping
+   */
+  @Override
+  public <Config, Connection> void bind(Config owner, ConnectionProvider<Connection> connectionProvider) {
+    assertNotStopping(muleContext, "Mule is shutting down... cannot bind new connections");
+
+    connectionProvider = new LifecycleAwareConnectionProviderWrapper<>(connectionProvider, muleContext);
+
+    ConnectionHandlingStrategyAdapter<Connection> managementStrategy = getManagementStrategy(connectionProvider);
+    ConnectionHandlingStrategyAdapter<Connection> previous = null;
+
+    writeLock.lock();
+    try {
+      previous = connections.put(new Reference<>(owner), managementStrategy);
+    } finally {
+      writeLock.unlock();
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @throws IllegalStateException if invoked while the {@link #muleContext} is stopped or stopping
-     */
-    @Override
-    public <Config, Connection> void bind(Config owner, ConnectionProvider<Connection> connectionProvider)
-    {
-        assertNotStopping(muleContext, "Mule is shutting down... cannot bind new connections");
+    if (previous != null) {
+      close(previous);
+    }
+  }
 
-        connectionProvider = new LifecycleAwareConnectionProviderWrapper<>(connectionProvider, muleContext);
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean hasBinding(Object config) {
+    return connections.containsKey(new Reference<>(config));
+  }
 
-        ConnectionHandlingStrategyAdapter<Connection> managementStrategy = getManagementStrategy(connectionProvider);
-        ConnectionHandlingStrategyAdapter<Connection> previous = null;
-
-        writeLock.lock();
-        try
-        {
-            previous = connections.put(new Reference<>(owner), managementStrategy);
-        }
-        finally
-        {
-            writeLock.unlock();
-        }
-
-        if (previous != null)
-        {
-            close(previous);
-        }
+  /**
+   * {@inheritDoc}
+   */
+  // TODO: MULE-9082
+  @Override
+  public void unbind(Object config) {
+    ConnectionHandlingStrategyAdapter managementStrategy;
+    writeLock.lock();
+    try {
+      managementStrategy = connections.remove(new Reference<>(config));
+    } finally {
+      writeLock.unlock();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean hasBinding(Object config)
-    {
-        return connections.containsKey(new Reference<>(config));
+    if (managementStrategy != null) {
+      close(managementStrategy);
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public <Config, Connection> ConnectionHandler<Connection> getConnection(Config config) throws ConnectionException {
+    ConnectionHandlingStrategy<Connection> handlingStrategy = null;
+    readLock.lock();
+    try {
+      handlingStrategy = connections.get(new Reference<>(config));
+    } finally {
+      readLock.unlock();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    //TODO: MULE-9082
-    @Override
-    public void unbind(Object config)
-    {
-        ConnectionHandlingStrategyAdapter managementStrategy;
-        writeLock.lock();
-        try
-        {
-            managementStrategy = connections.remove(new Reference<>(config));
-        }
-        finally
-        {
-            writeLock.unlock();
-        }
-
-        if (managementStrategy != null)
-        {
-            close(managementStrategy);
-        }
+    if (handlingStrategy == null) {
+      throw new ConnectionException("No ConnectionProvider has been registered for owner " + config);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <Config, Connection> ConnectionHandler<Connection> getConnection(Config config) throws ConnectionException
-    {
-        ConnectionHandlingStrategy<Connection> handlingStrategy = null;
-        readLock.lock();
-        try
-        {
-            handlingStrategy = connections.get(new Reference<>(config));
-        }
-        finally
-        {
-            readLock.unlock();
-        }
+    return handlingStrategy.getConnectionHandler();
+  }
 
-        if (handlingStrategy == null)
-        {
-            throw new ConnectionException("No ConnectionProvider has been registered for owner " + config);
-        }
+  /**
+   * Breaks all bindings and closes all connections
+   *
+   * @throws MuleException in case of error.
+   */
+  @Override
+  public void stop() throws MuleException {
+    writeLock.lock();
+    try {
+      connections.values().stream().forEach(this::close);
+      connections.clear();
+    } finally {
+      writeLock.unlock();
+    }
+  }
 
-        return handlingStrategy.getConnectionHandler();
+  // TODO: MULE-9082
+  private void close(ConnectionHandlingStrategyAdapter managementStrategy) {
+    try {
+      managementStrategy.close();
+    } catch (Exception e) {
+      LOGGER.warn("An error was found trying to release connections", e);
+    }
+  }
+
+  private <Connection> ConnectionHandlingStrategyAdapter<Connection> getManagementStrategy(
+      ConnectionProvider<Connection> connectionProvider) {
+    PoolingProfile poolingProfile;
+    if (connectionProvider instanceof ConnectionProviderWrapper) {
+      poolingProfile = ((ConnectionProviderWrapper) connectionProvider).getPoolingProfile().orElse(getDefaultPoolingProfile());
+    } else {
+      poolingProfile = getDefaultPoolingProfile();
     }
 
-    /**
-     * Breaks all bindings and closes all connections
-     *
-     * @throws MuleException in case of error.
-     */
-    @Override
-    public void stop() throws MuleException
-    {
-        writeLock.lock();
-        try
-        {
-            connections.values().stream().forEach(this::close);
-            connections.clear();
-        }
-        finally
-        {
-            writeLock.unlock();
-        }
-    }
+    ConnectionHandlingStrategyFactory<Connection> connectionHandlingStrategyFactory;
+    connectionHandlingStrategyFactory = new DefaultConnectionHandlingStrategyFactory<>(connectionProvider, poolingProfile, muleContext);
+    return (ConnectionHandlingStrategyAdapter<Connection>) connectionProvider.getHandlingStrategy(connectionHandlingStrategyFactory);
+  }
 
-    //TODO: MULE-9082
-    private void close(ConnectionHandlingStrategyAdapter managementStrategy)
-    {
-        try
-        {
-            managementStrategy.close();
-        }
-        catch (Exception e)
-        {
-            LOGGER.warn("An error was found trying to release connections", e);
-        }
-    }
+  @Override
+  public void dispose() {
+    disposeIfNeeded(retryPolicyTemplate, LOGGER);
+  }
 
-    private <Connection> ConnectionHandlingStrategyAdapter<Connection> getManagementStrategy(
-            ConnectionProvider<Connection> connectionProvider)
-    {
-        PoolingProfile poolingProfile;
-        if (connectionProvider instanceof ConnectionProviderWrapper)
-        {
-            poolingProfile = ((ConnectionProviderWrapper) connectionProvider).getPoolingProfile().orElse(getDefaultPoolingProfile());
-        }
-        else
-        {
-            poolingProfile = getDefaultPoolingProfile();
-        }
+  @Override
+  public void initialise() throws InitialisationException {
+    initialiseIfNeeded(retryPolicyTemplate, true, muleContext);
+  }
 
-        ConnectionHandlingStrategyFactory<Connection> connectionHandlingStrategyFactory;
-        connectionHandlingStrategyFactory = new DefaultConnectionHandlingStrategyFactory<>(connectionProvider, poolingProfile, muleContext);
-        return (ConnectionHandlingStrategyAdapter<Connection>) connectionProvider.getHandlingStrategy(connectionHandlingStrategyFactory);
-    }
+  @Override
+  public void start() throws MuleException {
+    startIfNeeded(retryPolicyTemplate);
+  }
 
-    @Override
-    public void dispose()
-    {
-        disposeIfNeeded(retryPolicyTemplate, LOGGER);
-    }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public RetryPolicyTemplate getDefaultRetryPolicyTemplate() {
+    return retryPolicyTemplate;
+  }
 
-    @Override
-    public void initialise() throws InitialisationException
-    {
-        initialiseIfNeeded(retryPolicyTemplate, true, muleContext);
-    }
-
-    @Override
-    public void start() throws MuleException
-    {
-        startIfNeeded(retryPolicyTemplate);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public RetryPolicyTemplate getDefaultRetryPolicyTemplate()
-    {
-        return retryPolicyTemplate;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PoolingProfile getDefaultPoolingProfile()
-    {
-        return poolingProfile;
-    }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public PoolingProfile getDefaultPoolingProfile() {
+    return poolingProfile;
+  }
 
 }

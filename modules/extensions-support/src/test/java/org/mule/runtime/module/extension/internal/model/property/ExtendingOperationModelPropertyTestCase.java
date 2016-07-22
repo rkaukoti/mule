@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.model.property;
 
@@ -16,31 +14,26 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 @SmallTest
-public class ExtendingOperationModelPropertyTestCase extends AbstractMuleTestCase
-{
+public class ExtendingOperationModelPropertyTestCase extends AbstractMuleTestCase {
 
-    @Test
-    public void extensible()
-    {
-        ExtendingOperationModelProperty<TestExtensibleType> modelProperty = new ExtendingOperationModelProperty(TestExtensibleType.class);
-        assertThat(modelProperty.getType(), is(sameInstance(TestExtensibleType.class)));
-    }
+  @Test
+  public void extensible() {
+    ExtendingOperationModelProperty<TestExtensibleType> modelProperty = new ExtendingOperationModelProperty(TestExtensibleType.class);
+    assertThat(modelProperty.getType(), is(sameInstance(TestExtensibleType.class)));
+  }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void notExtensible()
-    {
-        new ExtendingOperationModelProperty(Object.class);
-    }
+  @Test(expected = IllegalArgumentException.class)
+  public void notExtensible() {
+    new ExtendingOperationModelProperty(Object.class);
+  }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void nullImplementation()
-    {
-        new ExtendingOperationModelProperty(null);
-    }
+  @Test(expected = IllegalArgumentException.class)
+  public void nullImplementation() {
+    new ExtendingOperationModelProperty(null);
+  }
 
-    @Extensible
-    private class TestExtensibleType
-    {
+  @Extensible
+  private class TestExtensibleType {
 
-    }
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
@@ -19,36 +17,31 @@ import static org.junit.Assert.assertThat;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class StaticValueResolverTestCase extends AbstractMuleTestCase
-{
+public class StaticValueResolverTestCase extends AbstractMuleTestCase {
 
-    @Mock
-    private MuleEvent event;
+  @Mock
+  private MuleEvent event;
 
-    private ValueResolver resolver;
+  private ValueResolver resolver;
 
-    @Test
-    public void staticValue() throws Exception
-    {
-        assertExpected(new Object());
-    }
+  @Test
+  public void staticValue() throws Exception {
+    assertExpected(new Object());
+  }
 
-    @Test
-    public void nullValue() throws Exception
-    {
-        assertExpected(null);
-    }
+  @Test
+  public void nullValue() throws Exception {
+    assertExpected(null);
+  }
 
-    @Test
-    public void nullEvent() throws Exception
-    {
-        event = null;
-        staticValue();
-    }
+  @Test
+  public void nullEvent() throws Exception {
+    event = null;
+    staticValue();
+  }
 
-    private void assertExpected(Object expected) throws Exception
-    {
-        resolver = new StaticValueResolver(expected);
-        assertThat(resolver.resolve(event), is(expected));
-    }
+  private void assertExpected(Object expected) throws Exception {
+    resolver = new StaticValueResolver(expected);
+    assertThat(resolver.resolve(event), is(expected));
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.filters;
 
@@ -16,62 +14,46 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 /**
- * <code>IsXmlFilter</code> accepts a String or byte[] if its contents are valid
- * (well-formed) XML.
+ * <code>IsXmlFilter</code> accepts a String or byte[] if its contents are valid (well-formed) XML.
  */
 // @ThreadSafe
-public class IsXmlFilter implements Filter
-{
-    private final XMLInputFactory factory = XMLInputFactory.newInstance();
+public class IsXmlFilter implements Filter {
+  private final XMLInputFactory factory = XMLInputFactory.newInstance();
 
-    // TODO: add validation against a DTD, see MULE-1055
+  // TODO: add validation against a DTD, see MULE-1055
 
-    public IsXmlFilter()
-    {
-        super();
-    }
+  public IsXmlFilter() {
+    super();
+  }
 
-    public boolean accept(MuleMessage obj)
-    {
-        return accept((Object) obj.getPayload());
-    }
+  public boolean accept(MuleMessage obj) {
+    return accept((Object) obj.getPayload());
+  }
 
-    private boolean accept(Object obj)
-    {
-        XMLStreamReader parser = null;
-        try
-        {
-            parser = XMLUtils.toXMLStreamReader(factory, obj);
-            if (parser == null)
-            {
-                return false;
-            }
+  private boolean accept(Object obj) {
+    XMLStreamReader parser = null;
+    try {
+      parser = XMLUtils.toXMLStreamReader(factory, obj);
+      if (parser == null) {
+        return false;
+      }
 
-            while (parser.next() != XMLStreamConstants.END_DOCUMENT)
-            {
-                // meep meep!
-            }
+      while (parser.next() != XMLStreamConstants.END_DOCUMENT) {
+        // meep meep!
+      }
 
-            return true;
+      return true;
+    } catch (XMLStreamException ex) {
+      return false;
+    } finally {
+      if (parser != null) {
+        try {
+          parser.close();
+        } catch (XMLStreamException ignored) {
+          // bummer
         }
-        catch (XMLStreamException ex)
-        {
-            return false;
-        }
-        finally
-        {
-            if (parser != null)
-            {
-                try
-                {
-                    parser.close();
-                }
-                catch (XMLStreamException ignored)
-                {
-                    // bummer
-                }
-            }
-        }
+      }
     }
+  }
 
 }

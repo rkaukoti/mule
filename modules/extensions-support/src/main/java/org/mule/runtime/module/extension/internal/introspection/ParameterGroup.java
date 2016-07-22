@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection;
 
@@ -24,104 +22,90 @@ import java.util.Set;
 import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
- * A metadata class that groups a set of parameters together.
- * It caches reflection objects necessary for handling those parameters
- * so that introspection is not executed every time, resulting in a performance gain.
+ * A metadata class that groups a set of parameters together. It caches reflection objects necessary for handling those parameters so that
+ * introspection is not executed every time, resulting in a performance gain.
  * <p>
- * Because groups can be nested, this class also implements {@link EnrichableModel},
- * allowing for this group to have a {@link ParameterGroupModelProperty} which
- * describes the nested group.
+ * Because groups can be nested, this class also implements {@link EnrichableModel}, allowing for this group to have a
+ * {@link ParameterGroupModelProperty} which describes the nested group.
  * <p>
- * To decouple this class from the representation model (which depending on the
- * context could be a {@link ExtensionDeclaration} or an actual {@link ParameterModel}, this class
- * references parameters by name
+ * To decouple this class from the representation model (which depending on the context could be a {@link ExtensionDeclaration} or an actual
+ * {@link ParameterModel}, this class references parameters by name
  *
  * @since 3.7.0
  */
-public class ParameterGroup implements EnrichableModel
-{
+public class ParameterGroup implements EnrichableModel {
 
-    /**
-     * The type of the pojo which implements the group
-     */
-    private final Class<?> type;
+  /**
+   * The type of the pojo which implements the group
+   */
+  private final Class<?> type;
 
-    /**
-     * The {@link Field} in which the generated value of
-     * {@link #type} is to be assigned
-     */
-    private final Field field;
+  /**
+   * The {@link Field} in which the generated value of {@link #type} is to be assigned
+   */
+  private final Field field;
 
-    /**
-     * A {@link Map} in which the keys are parameter names
-     * and the values are their corresponding setter methods
-     */
-    private final Set<Field> parameters = new HashSet<>();
+  /**
+   * A {@link Map} in which the keys are parameter names and the values are their corresponding setter methods
+   */
+  private final Set<Field> parameters = new HashSet<>();
 
-    /**
-     * The model properties per the {@link EnrichableModel} interface
-     */
-    private Map<Class<? extends ModelProperty>, ModelProperty> modelProperties = new HashMap<>();
+  /**
+   * The model properties per the {@link EnrichableModel} interface
+   */
+  private Map<Class<? extends ModelProperty>, ModelProperty> modelProperties = new HashMap<>();
 
 
-    public ParameterGroup(Class<?> type, Field field)
-    {
-        checkArgument(type != null, "type cannot be null");
-        checkArgument(field != null, "field cannot be null");
+  public ParameterGroup(Class<?> type, Field field) {
+    checkArgument(type != null, "type cannot be null");
+    checkArgument(field != null, "field cannot be null");
 
-        this.type = type;
-        this.field = field;
-        field.setAccessible(true);
-    }
+    this.type = type;
+    this.field = field;
+    field.setAccessible(true);
+  }
 
-    /**
-     * Adds a parameter to the group
-     *
-     * @param field the parameter's {@link Field}
-     * @return {@code this}
-     */
-    public ParameterGroup addParameter(Field field)
-    {
-        parameters.add(field);
-        return this;
-    }
+  /**
+   * Adds a parameter to the group
+   *
+   * @param field the parameter's {@link Field}
+   * @return {@code this}
+   */
+  public ParameterGroup addParameter(Field field) {
+    parameters.add(field);
+    return this;
+  }
 
-    public Class<?> getType()
-    {
-        return type;
-    }
+  public Class<?> getType() {
+    return type;
+  }
 
-    public Field getField()
-    {
-        return field;
-    }
+  public Field getField() {
+    return field;
+  }
 
-    public Set<Field> getParameters()
-    {
-        return ImmutableSet.copyOf(parameters);
-    }
+  public Set<Field> getParameters() {
+    return ImmutableSet.copyOf(parameters);
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <T extends ModelProperty> Optional<T> getModelProperty(Class<T> propertyType)
-    {
-        return Optional.ofNullable((T) modelProperties.get(propertyType));
-    }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public <T extends ModelProperty> Optional<T> getModelProperty(Class<T> propertyType) {
+    return Optional.ofNullable((T) modelProperties.get(propertyType));
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Set<ModelProperty> getModelProperties()
-    {
-        return ImmutableSet.copyOf(modelProperties.values());
-    }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Set<ModelProperty> getModelProperties() {
+    return ImmutableSet.copyOf(modelProperties.values());
+  }
 
-    public void addModelProperty(ModelProperty modelProperty)
-    {
-        checkArgument(modelProperty != null, "Cannot add a null model property");
-        modelProperties.put(modelProperty.getClass(), modelProperty);
-    }
+  public void addModelProperty(ModelProperty modelProperty) {
+    checkArgument(modelProperty != null, "Cannot add a null model property");
+    modelProperties.put(modelProperty.getClass(), modelProperty);
+  }
 }

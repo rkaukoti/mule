@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.simple;
 
@@ -17,74 +15,61 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
-public class HexStringByteArrayTransformersTestCase extends AbstractTransformerTestCase
-{
+public class HexStringByteArrayTransformersTestCase extends AbstractTransformerTestCase {
 
-    public Transformer getTransformer()
-    {
-        return new HexStringToByteArray();
+  public Transformer getTransformer() {
+    return new HexStringToByteArray();
+  }
+
+  public Transformer getRoundTripTransformer() {
+    return new ByteArrayToHexString();
+  }
+
+  public Object getTestData() {
+    return "01020aff";
+  }
+
+  public Object getResultData() {
+    return new byte[] {1, 2, 10, (byte) 0xff};
+  }
+
+  @Override
+  public boolean compareResults(Object src, Object result) {
+    if (src == null && result == null) {
+      return true;
     }
-
-    public Transformer getRoundTripTransformer()
-    {
-        return new ByteArrayToHexString();
+    if (src == null || result == null) {
+      return false;
     }
+    return Arrays.equals((byte[]) src, (byte[]) result);
+  }
 
-    public Object getTestData()
-    {
-        return "01020aff";
+  @Override
+  public boolean compareRoundtripResults(Object src, Object result) {
+    if (src == null && result == null) {
+      return true;
     }
-
-    public Object getResultData()
-    {
-        return new byte[] {1, 2, 10, (byte) 0xff};
+    if (src == null || result == null) {
+      return false;
     }
+    return src.equals(result);
+  }
 
-    @Override
-    public boolean compareResults(Object src, Object result)
-    {
-        if (src == null && result == null)
-        {
-            return true;
-        }
-        if (src == null || result == null)
-        {
-            return false;
-        }
-        return Arrays.equals((byte[]) src, (byte[]) result);
-    }
+  // extra test for uppercase output
+  @Test
+  public void testUppercase() throws TransformerException {
+    ByteArrayToHexString t = new ByteArrayToHexString();
+    t.setUpperCase(true);
 
-    @Override
-    public boolean compareRoundtripResults(Object src, Object result)
-    {
-        if (src == null && result == null)
-        {
-            return true;
-        }
-        if (src == null || result == null)
-        {
-            return false;
-        }
-        return src.equals(result);
-    }
+    assertEquals(((String) getTestData()).toUpperCase(), t.transform(getResultData()));
+  }
 
-    // extra test for uppercase output
-    @Test
-    public void testUppercase() throws TransformerException
-    {
-        ByteArrayToHexString t = new ByteArrayToHexString();
-        t.setUpperCase(true);
+  @Test
+  public void testStreaming() throws TransformerException {
+    ByteArrayToHexString transformer = new ByteArrayToHexString();
+    InputStream input = new ByteArrayInputStream((byte[]) this.getResultData());
 
-        assertEquals(((String) getTestData()).toUpperCase(), t.transform(getResultData()));
-    }
-
-    @Test
-    public void testStreaming() throws TransformerException
-    {
-        ByteArrayToHexString transformer = new ByteArrayToHexString();
-        InputStream input = new ByteArrayInputStream((byte[]) this.getResultData());
-
-        assertEquals(this.getTestData(), transformer.transform(input));
-    }
+    assertEquals(this.getTestData(), transformer.transform(input));
+  }
 
 }

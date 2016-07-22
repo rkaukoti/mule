@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file;
 
@@ -17,26 +15,23 @@ import static org.junit.Assert.assertNotNull;
 import static org.mule.compatibility.transport.file.FileTestUtils.createDataFile;
 import static org.mule.compatibility.transport.file.FileTestUtils.createFolder;
 
-public class FileNameFilterTestCase extends AbstractFileFunctionalTestCase
-{
+public class FileNameFilterTestCase extends AbstractFileFunctionalTestCase {
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "file-filename-filter-config.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "file-filename-filter-config.xml";
+  }
 
-    @Test
-    public void filtersFile() throws Exception
-    {
-        File folder = createFolder(getWorkingDirectory().getAbsolutePath());
-        createDataFile(folder, TEST_MESSAGE);
+  @Test
+  public void filtersFile() throws Exception {
+    File folder = createFolder(getWorkingDirectory().getAbsolutePath());
+    createDataFile(folder, TEST_MESSAGE);
 
-        MuleClient client = muleContext.getClient();
+    MuleClient client = muleContext.getClient();
 
-        MuleMessage response = client.request("vm://testOut", RECEIVE_TIMEOUT);
+    MuleMessage response = client.request("vm://testOut", RECEIVE_TIMEOUT);
 
-        assertNotNull("Did not processed the file", response);
-        assertEquals(TEST_MESSAGE, response.getPayload());
-    }
+    assertNotNull("Did not processed the file", response);
+    assertEquals(TEST_MESSAGE, response.getPayload());
+  }
 }

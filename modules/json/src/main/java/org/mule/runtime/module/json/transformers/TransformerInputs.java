@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.json.transformers;
 
@@ -23,111 +21,81 @@ import java.net.URL;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.validation.SchemaFactory;
 
-public class TransformerInputs
-{
-    private static final String PREFERRED_TRANSFORMATION_FACTORY_CLASS_NAME =
-            "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl";
+public class TransformerInputs {
+  private static final String PREFERRED_TRANSFORMATION_FACTORY_CLASS_NAME =
+      "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl";
 
-    private static final String PREFERRED_SCHEMA_FACTORY_CLASS_NAME =
-            "com.sun.org.apache.xerces.internal.jaxp.validation.XMLSchemaFactory";
-    /**
-     * Turn whatever we got as the transformer's source into either an input stream or a reader
-     */
-    private InputStream is;
-    private Reader reader;
+  private static final String PREFERRED_SCHEMA_FACTORY_CLASS_NAME = "com.sun.org.apache.xerces.internal.jaxp.validation.XMLSchemaFactory";
+  /**
+   * Turn whatever we got as the transformer's source into either an input stream or a reader
+   */
+  private InputStream is;
+  private Reader reader;
 
-    TransformerInputs(Transformer xform, Object src) throws TransformerException
-    {
-        try
-        {
-            if (src instanceof InputStream)
-            {
-                is = (InputStream) src;
-            }
-            else if (src instanceof File)
-            {
-                is = new FileInputStream((File) src);
-            }
-            else if (src instanceof URL)
-            {
-                is = ((URL) src).openStream();
-            }
-            else if (src instanceof byte[])
-            {
-                is = new ByteArrayInputStream((byte[]) src);
-            }
-            else if (src instanceof Reader)
-            {
-                reader = (Reader) src;
-            }
-            else if (src instanceof String)
-            {
-                reader = new StringReader((String) src);
-            }
-            if (is != null || reader != null)
-            {
-                return;
-            }
-        }
-        catch (IOException ex)
-        {
-            throw new TransformerException(xform, ex);
-        }
-        throw new TransformerException(
-                CoreMessages.transformFailed(src.getClass().getName(), "xml"));
+  TransformerInputs(Transformer xform, Object src) throws TransformerException {
+    try {
+      if (src instanceof InputStream) {
+        is = (InputStream) src;
+      } else if (src instanceof File) {
+        is = new FileInputStream((File) src);
+      } else if (src instanceof URL) {
+        is = ((URL) src).openStream();
+      } else if (src instanceof byte[]) {
+        is = new ByteArrayInputStream((byte[]) src);
+      } else if (src instanceof Reader) {
+        reader = (Reader) src;
+      } else if (src instanceof String) {
+        reader = new StringReader((String) src);
+      }
+      if (is != null || reader != null) {
+        return;
+      }
+    } catch (IOException ex) {
+      throw new TransformerException(xform, ex);
+    }
+    throw new TransformerException(CoreMessages.transformFailed(src.getClass().getName(), "xml"));
+  }
+
+  public static TransformerFactory createTransformerFactory() {
+    TransformerFactory transformerFactory;
+
+    try {
+      // Create a factory we know to be STAX-compliant
+      transformerFactory = (TransformerFactory) ClassUtils.getClass(PREFERRED_TRANSFORMATION_FACTORY_CLASS_NAME).newInstance();
+    } catch (Exception ex) {
+      // Fall back to default factory
+      transformerFactory = TransformerFactory.newInstance();
     }
 
-    public static TransformerFactory createTransformerFactory()
-    {
-        TransformerFactory transformerFactory;
+    return transformerFactory;
+  }
 
-        try
-        {
-            // Create a factory we know to be STAX-compliant
-            transformerFactory = (TransformerFactory) ClassUtils.getClass(PREFERRED_TRANSFORMATION_FACTORY_CLASS_NAME).newInstance();
-        }
-        catch (Exception ex)
-        {
-            // Fall back to default factory
-            transformerFactory = TransformerFactory.newInstance();
-        }
+  public static SchemaFactory createSchemaFactory(String schemaLanguage) {
+    SchemaFactory schemaFactory;
 
-        return transformerFactory;
+    try {
+      // Create a factory we know to be STAX-compliant
+      schemaFactory = (SchemaFactory) ClassUtils.instanciateClass(PREFERRED_SCHEMA_FACTORY_CLASS_NAME);
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
+      // Fall back to default factory
+      schemaFactory = SchemaFactory.newInstance(schemaLanguage);
     }
 
-    public static SchemaFactory createSchemaFactory(String schemaLanguage)
-    {
-        SchemaFactory schemaFactory;
+    System.out.println(schemaFactory.getClass());
+    return schemaFactory;
+  }
 
-        try
-        {
-            // Create a factory we know to be STAX-compliant
-            schemaFactory = (SchemaFactory) ClassUtils.instanciateClass(PREFERRED_SCHEMA_FACTORY_CLASS_NAME);
-        }
-        catch (Exception ex)
-        {
-            System.out.println(ex.getMessage());
-            // Fall back to default factory
-            schemaFactory = SchemaFactory.newInstance(schemaLanguage);
-        }
+  public static String getPreferredTransactionFactoryClassname() {
+    return PREFERRED_TRANSFORMATION_FACTORY_CLASS_NAME;
+  }
 
-        System.out.println(schemaFactory.getClass());
-        return schemaFactory;
-    }
+  public InputStream getInputStream() {
+    return is;
+  }
 
-    public static String getPreferredTransactionFactoryClassname()
-    {
-        return PREFERRED_TRANSFORMATION_FACTORY_CLASS_NAME;
-    }
-
-    public InputStream getInputStream()
-    {
-        return is;
-    }
-
-    public Reader getReader()
-    {
-        return reader;
-    }
+  public Reader getReader() {
+    return reader;
+  }
 
 }

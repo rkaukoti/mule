@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -11,30 +9,26 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class HttpRequestSocketConfigTestCase extends AbstractHttpRequestTestCase
-{
+public class HttpRequestSocketConfigTestCase extends AbstractHttpRequestTestCase {
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "http-request-socket-config.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "http-request-socket-config.xml";
+  }
 
-    @Test
-    public void globalClientSocketProperties() throws Exception
-    {
-        // For now, just test that the context is parsed correctly.
-        flowRunner("globalConfigFlow").withPayload(TEST_MESSAGE).run();
-        assertThat(body, equalTo(TEST_MESSAGE));
-    }
+  @Test
+  public void globalClientSocketProperties() throws Exception {
+    // For now, just test that the context is parsed correctly.
+    flowRunner("globalConfigFlow").withPayload(TEST_MESSAGE).run();
+    assertThat(body, equalTo(TEST_MESSAGE));
+  }
 
-    @Test
-    public void nestedClientSocketProperties() throws Exception
-    {
-        // For now, just test that the context is parsed correctly.
-        flowRunner("nestedConfigFlow").withPayload(TEST_MESSAGE).run();
-        assertThat(body, equalTo(TEST_MESSAGE));
-    }
+  @Test
+  public void nestedClientSocketProperties() throws Exception {
+    // For now, just test that the context is parsed correctly.
+    flowRunner("nestedConfigFlow").withPayload(TEST_MESSAGE).run();
+    assertThat(body, equalTo(TEST_MESSAGE));
+  }
 
 
 }

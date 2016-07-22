@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.domain.database;
@@ -17,19 +15,17 @@ import java.util.List;
 /**
  * Creates {@link DbConfig} instances for Oracle databases
  */
-public class OracleDbConfigFactory extends GenericDbConfigFactory
-{
+public class OracleDbConfigFactory extends GenericDbConfigFactory {
 
-    private static final int CURSOR_TYPE_ID = -10;
-    private static final String CURSOR_TYPE_NAME = "CURSOR";
+  private static final int CURSOR_TYPE_ID = -10;
+  private static final String CURSOR_TYPE_NAME = "CURSOR";
 
-    @Override
-    protected List<DbType> getVendorDataTypes()
-    {
-        List<DbType> dbTypes = new ArrayList<DbType>();
-        dbTypes.add(new ResolvedDbType(CURSOR_TYPE_ID, CURSOR_TYPE_NAME));
-        dbTypes.add(new OracleXmlType());
+  @Override
+  protected List<DbType> getVendorDataTypes() {
+    List<DbType> dbTypes = new ArrayList<DbType>();
+    dbTypes.add(new ResolvedDbType(CURSOR_TYPE_ID, CURSOR_TYPE_NAME));
+    dbTypes.add(new OracleXmlType());
 
-        return dbTypes;
-    }
+    return dbTypes;
+  }
 }

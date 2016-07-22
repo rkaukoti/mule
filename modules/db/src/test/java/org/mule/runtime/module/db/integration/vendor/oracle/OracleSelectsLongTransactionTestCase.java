@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.vendor.oracle;
@@ -21,37 +19,31 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class OracleSelectsLongTransactionTestCase extends AbstractDbIntegrationTestCase
-{
+public class OracleSelectsLongTransactionTestCase extends AbstractDbIntegrationTestCase {
 
-    public OracleSelectsLongTransactionTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
+  public OracleSelectsLongTransactionTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
+    super(dataSourceConfigResource, testDatabase);
+  }
+
+  @Parameterized.Parameters
+  public static List<Object[]> parameters() {
+    return TestDbConfig.getOracleResource();
+  }
+
+  @Override
+  protected String[] getFlowConfigurationResources() {
+    return new String[] {"integration/vendor/oracle/selects-long-transaction-config.xml"};
+  }
+
+  @Test
+  public void longTransaction() throws Exception {
+    List<Integer> sequence = new ArrayList<>();
+    for (int i = 0; i < 500; i++) {
+      sequence.add(i);
     }
+    final MuleEvent responseEvent = flowRunner("longTransaction").withPayload(sequence).run();
 
-    @Parameterized.Parameters
-    public static List<Object[]> parameters()
-    {
-        return TestDbConfig.getOracleResource();
-    }
-
-    @Override
-    protected String[] getFlowConfigurationResources()
-    {
-        return new String[] {"integration/vendor/oracle/selects-long-transaction-config.xml"};
-    }
-
-    @Test
-    public void longTransaction() throws Exception
-    {
-        List<Integer> sequence = new ArrayList<>();
-        for (int i = 0; i < 500; i++)
-        {
-            sequence.add(i);
-        }
-        final MuleEvent responseEvent = flowRunner("longTransaction").withPayload(sequence).run();
-
-        final MuleMessage response = responseEvent.getMessage();
-        assertThat(response.getExceptionPayload(), nullValue());
-    }
+    final MuleMessage response = responseEvent.getMessage();
+    assertThat(response.getExceptionPayload(), nullValue());
+  }
 }

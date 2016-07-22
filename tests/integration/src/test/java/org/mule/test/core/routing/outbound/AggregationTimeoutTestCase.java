@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.test.core.routing.outbound;
@@ -22,57 +20,47 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertThat;
 
-public class AggregationTimeoutTestCase extends FunctionalTestCase
-{
+public class AggregationTimeoutTestCase extends FunctionalTestCase {
 
-    public static final String PROCESS_EVENT = "process";
-    public static final String BLOCK_EVENT = "block";
-    public static final String PROCESSED_EVENT = "processed";
-    private static final CountDownLatch blockExecution = new CountDownLatch(1);
+  public static final String PROCESS_EVENT = "process";
+  public static final String BLOCK_EVENT = "block";
+  public static final String PROCESSED_EVENT = "processed";
+  private static final CountDownLatch blockExecution = new CountDownLatch(1);
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "org/mule/test/integration/routing/outbound/aggregation-timeout-config.xml";
+  @Override
+  protected String getConfigFile() {
+    return "org/mule/test/integration/routing/outbound/aggregation-timeout-config.xml";
+  }
+
+  @Test
+  public void timeoutsAggregationWithPersistentStore() throws Exception {
+    List<String> inputData = new ArrayList<>();
+    inputData.add(PROCESS_EVENT);
+    inputData.add(BLOCK_EVENT);
+
+    try {
+      MuleClient client = muleContext.getClient();
+      flowRunner("main").withPayload(inputData).asynchronously().run();
+
+      MuleMessage response = client.request("test://testOut", RECEIVE_TIMEOUT);
+      assertThat(response.getPayload(), instanceOf(List.class));
+
+      List<String> payloads = ((List<MuleMessage>) response.getPayload()).stream().map(m -> (String) m.getPayload()).collect(toList());
+      assertThat(payloads.size(), equalTo(1));
+      assertThat(payloads, hasItem(PROCESSED_EVENT));
+    } finally {
+      // Release the blocked thread
+      blockExecution.countDown();
     }
+  }
 
-    @Test
-    public void timeoutsAggregationWithPersistentStore() throws Exception
-    {
-        List<String> inputData = new ArrayList<>();
-        inputData.add(PROCESS_EVENT);
-        inputData.add(BLOCK_EVENT);
+  public static class BlockExecutionComponent {
+    public Object onCall(Object payload) throws Exception {
+      if (payload.equals(BLOCK_EVENT)) {
+        blockExecution.await();
+      }
 
-        try
-        {
-            MuleClient client = muleContext.getClient();
-            flowRunner("main").withPayload(inputData).asynchronously().run();
-
-            MuleMessage response = client.request("test://testOut", RECEIVE_TIMEOUT);
-            assertThat(response.getPayload(), instanceOf(List.class));
-
-            List<String> payloads = ((List<MuleMessage>) response.getPayload()).stream().map(m -> (String) m
-                    .getPayload()).collect(toList());
-            assertThat(payloads.size(), equalTo(1));
-            assertThat(payloads, hasItem(PROCESSED_EVENT));
-        }
-        finally
-        {
-            // Release the blocked thread
-            blockExecution.countDown();
-        }
+      return PROCESSED_EVENT;
     }
-
-    public static class BlockExecutionComponent
-    {
-        public Object onCall(Object payload) throws Exception
-        {
-            if (payload.equals(BLOCK_EVENT))
-            {
-                blockExecution.await();
-            }
-
-            return PROCESSED_EVENT;
-        }
-    }
+  }
 }

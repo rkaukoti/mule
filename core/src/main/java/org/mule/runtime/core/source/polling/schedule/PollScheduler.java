@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.source.polling.schedule;
 
@@ -16,32 +14,30 @@ import org.mule.runtime.core.api.schedule.Scheduler;
  *
  * @since 3.5.0
  */
-public abstract class PollScheduler<T extends Runnable> implements Scheduler
-{
+public abstract class PollScheduler<T extends Runnable> implements Scheduler {
 
-    protected T job;
+  protected T job;
 
-    /**
-     * <p>The {@link org.mule.runtime.core.api.schedule.Scheduler} name used as an identifier in the {@link
-     * org.mule.runtime.core.api.registry.MuleRegistry}</p>
-     */
-    protected String name;
+  /**
+   * <p>
+   * The {@link org.mule.runtime.core.api.schedule.Scheduler} name used as an identifier in the
+   * {@link org.mule.runtime.core.api.registry.MuleRegistry}
+   * </p>
+   */
+  protected String name;
 
-    protected PollScheduler(String name, T job)
-    {
-        this.name = name;
-        this.job = job;
-    }
+  protected PollScheduler(String name, T job) {
+    this.name = name;
+    this.job = job;
+  }
 
-    @Override
-    public String getName()
-    {
-        return name;
-    }
+  @Override
+  public String getName() {
+    return name;
+  }
 
-    @Override
-    public void setName(String name)
-    {
-        this.name = name;
-    }
+  @Override
+  public void setName(String name) {
+    this.name = name;
+  }
 }

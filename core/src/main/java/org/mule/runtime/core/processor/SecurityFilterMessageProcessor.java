@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor;
 
@@ -15,55 +13,45 @@ import org.mule.runtime.core.api.lifecycle.LifecycleUtils;
 import org.mule.runtime.core.api.security.SecurityFilter;
 
 /**
- * Filters the flow using the specified {@link SecurityFilter}.
- * If unauthorised the flow is stopped and therefore the
- * message is not send or dispatched by the transport. When unauthorised the request
- * message is returned as the response.
+ * Filters the flow using the specified {@link SecurityFilter}. If unauthorised the flow is stopped and therefore the message is not send or
+ * dispatched by the transport. When unauthorised the request message is returned as the response.
  */
-public class SecurityFilterMessageProcessor extends AbstractInterceptingMessageProcessor implements Initialisable, NonBlockingSupported
-{
-    private SecurityFilter filter;
+public class SecurityFilterMessageProcessor extends AbstractInterceptingMessageProcessor implements Initialisable, NonBlockingSupported {
+  private SecurityFilter filter;
 
-    /**
-     * For IoC only
-     *
-     * @deprecated Use SecurityFilterMessageProcessor(SecurityFilter filter) instead
-     */
-    @Deprecated
-    public SecurityFilterMessageProcessor()
-    {
-        super();
-    }
+  /**
+   * For IoC only
+   *
+   * @deprecated Use SecurityFilterMessageProcessor(SecurityFilter filter) instead
+   */
+  @Deprecated
+  public SecurityFilterMessageProcessor() {
+    super();
+  }
 
-    public SecurityFilterMessageProcessor(SecurityFilter filter)
-    {
-        this.filter = filter;
-    }
+  public SecurityFilterMessageProcessor(SecurityFilter filter) {
+    this.filter = filter;
+  }
 
-    @Override
-    public void initialise() throws InitialisationException
-    {
-        LifecycleUtils.initialiseIfNeeded(filter, muleContext);
-    }
+  @Override
+  public void initialise() throws InitialisationException {
+    LifecycleUtils.initialiseIfNeeded(filter, muleContext);
+  }
 
-    public SecurityFilter getFilter()
-    {
-        return filter;
-    }
+  public SecurityFilter getFilter() {
+    return filter;
+  }
 
-    public void setFilter(SecurityFilter filter)
-    {
-        this.filter = filter;
-    }
+  public void setFilter(SecurityFilter filter) {
+    this.filter = filter;
+  }
 
-    @Override
-    public MuleEvent process(MuleEvent event) throws MuleException
-    {
-        if (filter != null)
-        {
-            filter.doFilter(event);
-        }
-        return processNext(event);
+  @Override
+  public MuleEvent process(MuleEvent event) throws MuleException {
+    if (filter != null) {
+      filter.doFilter(event);
     }
+    return processNext(event);
+  }
 
 }

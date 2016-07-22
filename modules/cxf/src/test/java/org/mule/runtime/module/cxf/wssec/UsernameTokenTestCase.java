@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.wssec;
 
@@ -16,41 +14,34 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
 
-public class UsernameTokenTestCase extends FunctionalTestCase
-{
-    @Rule
-    public DynamicPort dynamicPort = new DynamicPort("port1");
-    private Latch greetLatch;
+public class UsernameTokenTestCase extends FunctionalTestCase {
+  @Rule
+  public DynamicPort dynamicPort = new DynamicPort("port1");
+  private Latch greetLatch;
 
-    @Override
-    protected String[] getConfigFiles()
-    {
-        return new String[] {
-                "org/mule/runtime/module/cxf/wssec/cxf-secure-service-flow-httpn.xml",
-                "org/mule/runtime/module/cxf/wssec/username-token-conf.xml"
-        };
-    }
+  @Override
+  protected String[] getConfigFiles() {
+    return new String[] {"org/mule/runtime/module/cxf/wssec/cxf-secure-service-flow-httpn.xml",
+        "org/mule/runtime/module/cxf/wssec/username-token-conf.xml"};
+  }
 
-    @Override
-    protected void doSetUp() throws Exception
-    {
-        ClientPasswordCallback.setPassword("secret");
-        super.doSetUp();
+  @Override
+  protected void doSetUp() throws Exception {
+    ClientPasswordCallback.setPassword("secret");
+    super.doSetUp();
 
-        greetLatch = getGreeter().getLatch();
-    }
+    greetLatch = getGreeter().getLatch();
+  }
 
-    @Test
-    public void testUsernameToken() throws Exception
-    {
-        assertTrue(greetLatch.await(60, TimeUnit.SECONDS));
-    }
+  @Test
+  public void testUsernameToken() throws Exception {
+    assertTrue(greetLatch.await(60, TimeUnit.SECONDS));
+  }
 
-    protected GreeterWithLatch getGreeter() throws Exception
-    {
-        Object instance = getComponent("greeterService");
-        return (GreeterWithLatch) instance;
-    }
+  protected GreeterWithLatch getGreeter() throws Exception {
+    Object instance = getComponent("greeterService");
+    return (GreeterWithLatch) instance;
+  }
 }
 
 

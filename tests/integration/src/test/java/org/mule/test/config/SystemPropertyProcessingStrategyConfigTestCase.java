@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.config;
 
@@ -26,44 +24,37 @@ import static org.junit.Assert.assertThat;
 import static org.mule.runtime.core.api.config.MuleProperties.MULE_DEFAULT_PROCESSING_STRATEGY;
 
 @RunWith(Parameterized.class)
-public class SystemPropertyProcessingStrategyConfigTestCase extends FunctionalTestCase
-{
+public class SystemPropertyProcessingStrategyConfigTestCase extends FunctionalTestCase {
 
-    private final String[] configFiles;
-    @Rule
-    public SystemProperty globalProcessingStrategy =
-            new SystemProperty(MULE_DEFAULT_PROCESSING_STRATEGY, ProcessingStrategyUtils.SYNC_PROCESSING_STRATEGY);
-    @Rule
-    public SystemProperty localProcessingStrategy =
-            new SystemProperty("processingStrategy", ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
-    private Class<? extends ProcessingStrategy> expectedStrategyType;
+  private final String[] configFiles;
+  @Rule
+  public SystemProperty globalProcessingStrategy =
+      new SystemProperty(MULE_DEFAULT_PROCESSING_STRATEGY, ProcessingStrategyUtils.SYNC_PROCESSING_STRATEGY);
+  @Rule
+  public SystemProperty localProcessingStrategy =
+      new SystemProperty("processingStrategy", ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
+  private Class<? extends ProcessingStrategy> expectedStrategyType;
 
-    public SystemPropertyProcessingStrategyConfigTestCase(String name, String[] configFiles,
-                                                          Class<? extends ProcessingStrategy> expectedStrategyType)
-    {
-        this.configFiles = configFiles;
-        this.expectedStrategyType = expectedStrategyType;
-    }
+  public SystemPropertyProcessingStrategyConfigTestCase(String name, String[] configFiles,
+      Class<? extends ProcessingStrategy> expectedStrategyType) {
+    this.configFiles = configFiles;
+    this.expectedStrategyType = expectedStrategyType;
+  }
 
-    @Parameterized.Parameters(name = "{0}")
-    public static Collection<Object[]> parameters()
-    {
-        return Arrays.asList(new Object[][] {
-                {"Container level system property", new String[] {}, SynchronousProcessingStrategy.class},
-                {"Configuration overrides system property", new String[] {"configuration-processing-strategy-config.xml"},
-                 NonBlockingProcessingStrategy.class}
-        });
-    }
+  @Parameterized.Parameters(name = "{0}")
+  public static Collection<Object[]> parameters() {
+    return Arrays.asList(new Object[][] {{"Container level system property", new String[] {}, SynchronousProcessingStrategy.class},
+        {"Configuration overrides system property", new String[] {"configuration-processing-strategy-config.xml"},
+            NonBlockingProcessingStrategy.class}});
+  }
 
-    @Override
-    protected String[] getConfigFiles()
-    {
-        return configFiles;
-    }
+  @Override
+  protected String[] getConfigFiles() {
+    return configFiles;
+  }
 
-    @Test
-    public void assertDefaultProcessingStrategy() throws Exception
-    {
-        assertThat(muleContext.getConfiguration().getDefaultProcessingStrategy(), is(instanceOf(expectedStrategyType)));
-    }
+  @Test
+  public void assertDefaultProcessingStrategy() throws Exception {
+    assertThat(muleContext.getConfiguration().getDefaultProcessingStrategy(), is(instanceOf(expectedStrategyType)));
+  }
 }

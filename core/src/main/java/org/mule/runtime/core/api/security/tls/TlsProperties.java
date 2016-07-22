@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.security.tls;
 
@@ -17,91 +15,73 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class TlsProperties
-{
+public class TlsProperties {
 
-    private static final Logger logger = LoggerFactory.getLogger(TlsProperties.class);
+  private static final Logger logger = LoggerFactory.getLogger(TlsProperties.class);
 
-    private String[] enabledCipherSuites;
-    private String[] enabledProtocols;
+  private String[] enabledCipherSuites;
+  private String[] enabledProtocols;
 
-    public String[] getEnabledCipherSuites()
-    {
-        return enabledCipherSuites;
+  public String[] getEnabledCipherSuites() {
+    return enabledCipherSuites;
+  }
+
+  public String[] getEnabledProtocols() {
+    return enabledProtocols;
+  }
+
+  public void load(String fileName) {
+    Properties properties = new Properties();
+    try {
+      InputStream config = IOUtils.getResourceAsStream(fileName, TlsProperties.class);
+
+      if (config == null) {
+        logger.warn(String.format("File %s not found, using default configuration.", fileName));
+      } else {
+        logger.info(String.format("Loading configuration file: %s", fileName));
+        properties.load(config);
+
+        String enabledCipherSuitesProperty = properties.getProperty("enabledCipherSuites");
+        String enabledProtocolsProperty = properties.getProperty("enabledProtocols");
+
+        if (enabledCipherSuitesProperty != null) {
+          enabledCipherSuites = StringUtils.splitAndTrim(enabledCipherSuitesProperty, ",");
+
+        }
+        if (enabledProtocolsProperty != null) {
+          enabledProtocols = StringUtils.splitAndTrim(enabledProtocolsProperty, ",");
+        }
+      }
+    } catch (IOException e) {
+      logger.warn(String.format("Cannot read file %s, using default configuration", fileName), e);
+    }
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
 
-    public String[] getEnabledProtocols()
-    {
-        return enabledProtocols;
+    TlsProperties that = (TlsProperties) o;
+
+    if (!Arrays.equals(enabledCipherSuites, that.enabledCipherSuites)) {
+      return false;
+    }
+    if (!Arrays.equals(enabledProtocols, that.enabledProtocols)) {
+      return false;
     }
 
-    public void load(String fileName)
-    {
-        Properties properties = new Properties();
-        try
-        {
-            InputStream config = IOUtils.getResourceAsStream(fileName, TlsProperties.class);
+    return true;
+  }
 
-            if (config == null)
-            {
-                logger.warn(String.format("File %s not found, using default configuration.", fileName));
-            }
-            else
-            {
-                logger.info(String.format("Loading configuration file: %s", fileName));
-                properties.load(config);
-
-                String enabledCipherSuitesProperty = properties.getProperty("enabledCipherSuites");
-                String enabledProtocolsProperty = properties.getProperty("enabledProtocols");
-
-                if (enabledCipherSuitesProperty != null)
-                {
-                    enabledCipherSuites = StringUtils.splitAndTrim(enabledCipherSuitesProperty, ",");
-
-                }
-                if (enabledProtocolsProperty != null)
-                {
-                    enabledProtocols = StringUtils.splitAndTrim(enabledProtocolsProperty, ",");
-                }
-            }
-        }
-        catch (IOException e)
-        {
-            logger.warn(String.format("Cannot read file %s, using default configuration", fileName), e);
-        }
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o)
-        {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass())
-        {
-            return false;
-        }
-
-        TlsProperties that = (TlsProperties) o;
-
-        if (!Arrays.equals(enabledCipherSuites, that.enabledCipherSuites))
-        {
-            return false;
-        }
-        if (!Arrays.equals(enabledProtocols, that.enabledProtocols))
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int result = enabledCipherSuites != null ? Arrays.hashCode(enabledCipherSuites) : 0;
-        result = 31 * result + (enabledProtocols != null ? Arrays.hashCode(enabledProtocols) : 0);
-        return result;
-    }
+  @Override
+  public int hashCode() {
+    int result = enabledCipherSuites != null ? Arrays.hashCode(enabledCipherSuites) : 0;
+    result = 31 * result + (enabledProtocols != null ? Arrays.hashCode(enabledProtocols) : 0);
+    return result;
+  }
 }

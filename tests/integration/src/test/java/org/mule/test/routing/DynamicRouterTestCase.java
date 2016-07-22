@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.routing;
 
@@ -16,38 +14,33 @@ import org.mule.runtime.core.construct.Flow;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public abstract class DynamicRouterTestCase extends FunctionalTestCase
-{
+public abstract class DynamicRouterTestCase extends FunctionalTestCase {
 
-    protected static final String LETTER_A = "a";
-    protected static final String LETTER_B = "b";
-    protected static final String LETTER_C = "c";
-    protected static final String LETTER_D = "d";
-    protected static final String DOES_NOT_MATTER = "doesnotmatter";
+  protected static final String LETTER_A = "a";
+  protected static final String LETTER_B = "b";
+  protected static final String LETTER_C = "c";
+  protected static final String LETTER_D = "d";
+  protected static final String DOES_NOT_MATTER = "doesnotmatter";
 
-    @Before
-    public void clearRoutes()
-    {
-        CustomRouteResolver.routes.clear();
-    }
+  @Before
+  public void clearRoutes() {
+    CustomRouteResolver.routes.clear();
+  }
 
-    @Test(expected = MessagingException.class)
-    public void noRoutes() throws Exception
-    {
-        flowRunner(getFlowName()).withPayload(TEST_MESSAGE).run();
-    }
+  @Test(expected = MessagingException.class)
+  public void noRoutes() throws Exception {
+    flowRunner(getFlowName()).withPayload(TEST_MESSAGE).run();
+  }
 
-    public abstract String getFlowName();
+  public abstract String getFlowName();
 
-    protected MuleEvent runFlowAndAssertResponse(String flowName, Object expectedMessage) throws Exception
-    {
-        MuleEvent event = flowRunner(flowName).withPayload(TEST_MESSAGE).run();
-        assertThat(event.getMessageAsString(), is(expectedMessage));
-        return event;
-    }
+  protected MuleEvent runFlowAndAssertResponse(String flowName, Object expectedMessage) throws Exception {
+    MuleEvent event = flowRunner(flowName).withPayload(TEST_MESSAGE).run();
+    assertThat(event.getMessageAsString(), is(expectedMessage));
+    return event;
+  }
 
-    protected Flow getTestFlow(String flow) throws Exception
-    {
-        return (Flow) getFlowConstruct(flow);
-    }
+  protected Flow getTestFlow(String flow) throws Exception {
+    return (Flow) getFlowConstruct(flow);
+  }
 }

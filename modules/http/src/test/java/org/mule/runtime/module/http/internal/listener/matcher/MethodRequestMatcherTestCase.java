@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener.matcher;
 
@@ -15,30 +13,26 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 @SmallTest
-public class MethodRequestMatcherTestCase extends AbstractMuleTestCase
-{
+public class MethodRequestMatcherTestCase extends AbstractMuleTestCase {
 
-    @Test(expected = IllegalArgumentException.class)
-    public void doNotAcceptsNull()
-    {
-        new MethodRequestMatcher(null);
-    }
+  @Test(expected = IllegalArgumentException.class)
+  public void doNotAcceptsNull() {
+    new MethodRequestMatcher(null);
+  }
 
-    @Test
-    public void onlyAcceptsOneMethod()
-    {
-        final MethodRequestMatcher matcher = new MethodRequestMatcher("GET");
-        assertThat(matcher.matches(new HttpRequestBuilder().setMethod("GET").build()), is(true));
-        assertThat(matcher.matches(new HttpRequestBuilder().setMethod("POST").build()), is(false));
-    }
+  @Test
+  public void onlyAcceptsOneMethod() {
+    final MethodRequestMatcher matcher = new MethodRequestMatcher("GET");
+    assertThat(matcher.matches(new HttpRequestBuilder().setMethod("GET").build()), is(true));
+    assertThat(matcher.matches(new HttpRequestBuilder().setMethod("POST").build()), is(false));
+  }
 
-    @Test
-    public void acceptSeveralMethods()
-    {
-        final MethodRequestMatcher matcher = new MethodRequestMatcher("GET", "POST", "PATCH");
-        assertThat(matcher.matches(new HttpRequestBuilder().setMethod("GET").build()), is(true));
-        assertThat(matcher.matches(new HttpRequestBuilder().setMethod("POST").build()), is(true));
-        assertThat(matcher.matches(new HttpRequestBuilder().setMethod("PATCH").build()), is(true));
-        assertThat(matcher.matches(new HttpRequestBuilder().setMethod("OPTIONS").build()), is(false));
-    }
+  @Test
+  public void acceptSeveralMethods() {
+    final MethodRequestMatcher matcher = new MethodRequestMatcher("GET", "POST", "PATCH");
+    assertThat(matcher.matches(new HttpRequestBuilder().setMethod("GET").build()), is(true));
+    assertThat(matcher.matches(new HttpRequestBuilder().setMethod("POST").build()), is(true));
+    assertThat(matcher.matches(new HttpRequestBuilder().setMethod("PATCH").build()), is(true));
+    assertThat(matcher.matches(new HttpRequestBuilder().setMethod("OPTIONS").build()), is(false));
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -27,172 +25,137 @@ import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_P
 import static org.mule.runtime.core.api.config.MuleProperties.MULE_ROOT_MESSAGE_ID_PROPERTY;
 
 public abstract class AbstractTransportMessageProcessTemplate<MessageReceiverType extends AbstractMessageReceiver, ConnectorType extends AbstractConnector>
-        implements FlowProcessingPhaseTemplate, ValidationPhaseTemplate
-{
+    implements FlowProcessingPhaseTemplate, ValidationPhaseTemplate {
 
-    private final MessageReceiverType messageReceiver;
-    protected transient Logger logger = LoggerFactory.getLogger(getClass());
-    private Object rawMessage;
-    private MuleEvent muleEvent;
+  private final MessageReceiverType messageReceiver;
+  protected transient Logger logger = LoggerFactory.getLogger(getClass());
+  private Object rawMessage;
+  private MuleEvent muleEvent;
 
-    public AbstractTransportMessageProcessTemplate(MessageReceiverType messageReceiver)
-    {
-        this.messageReceiver = messageReceiver;
+  public AbstractTransportMessageProcessTemplate(MessageReceiverType messageReceiver) {
+    this.messageReceiver = messageReceiver;
+  }
+
+  @Override
+  public MuleEvent getMuleEvent() throws MuleException {
+    if (muleEvent == null) {
+      MuleMessage messageFromSource = createMessageFromSource(getOriginalMessage());
+      muleEvent = createEventFromMuleMessage(messageFromSource);
     }
+    return muleEvent;
+  }
 
-    @Override
-    public MuleEvent getMuleEvent() throws MuleException
-    {
-        if (muleEvent == null)
-        {
-            MuleMessage messageFromSource = createMessageFromSource(getOriginalMessage());
-            muleEvent = createEventFromMuleMessage(messageFromSource);
-        }
-        return muleEvent;
+  @Override
+  public Object getOriginalMessage() throws MuleException {
+
+    if (this.rawMessage == null) {
+      this.rawMessage = acquireMessage();
     }
+    return this.rawMessage;
+  }
 
-    @Override
-    public Object getOriginalMessage() throws MuleException
-    {
+  @Override
+  public void afterFailureProcessingFlow(MessagingException messagingException) throws MuleException {}
 
-        if (this.rawMessage == null)
-        {
-            this.rawMessage = acquireMessage();
-        }
-        return this.rawMessage;
+  @Override
+  public void afterFailureProcessingFlow(MuleException exception) throws MuleException {}
+
+  @Override
+  public MuleEvent routeEvent(MuleEvent muleEvent) throws MuleException {
+    MuleEvent response = messageReceiver.routeEvent(muleEvent);
+    if (!messageReceiver.getEndpoint().getExchangePattern().hasResponse()) {
+      return null;
     }
+    return response;
+  }
 
-    @Override
-    public void afterFailureProcessingFlow(MessagingException messagingException) throws MuleException
-    {
+  @Override
+  public void afterSuccessfulProcessingFlow(MuleEvent response) throws MuleException {}
+
+  /**
+   * This method will only be called once for the {@link MessageProcessContext}
+   *
+   * @return the raw message from the {@link MessageSource}
+   */
+  public abstract Object acquireMessage() throws MuleException;
+
+  protected MuleMessage propagateRootMessageIdProperty(MuleMessage message) {
+    String rootId = message.getInboundProperty(MULE_ROOT_MESSAGE_ID_PROPERTY);
+    if (rootId != null) {
+      return MuleMessage.builder(message).rootId(rootId).removeInboundProperty(MULE_ROOT_MESSAGE_ID_PROPERTY).build();
+    } else {
+      return message;
     }
+  }
 
-    @Override
-    public void afterFailureProcessingFlow(MuleException exception) throws MuleException
-    {
+  @Override
+  public boolean validateMessage() {
+    return true;
+  }
+
+  @Override
+  public void discardInvalidMessage() throws MuleException {}
+
+  protected MuleMessage warnIfMuleClientSendUsed(MuleMessage message) {
+    MuleMessage.Builder messageBuilder = MuleMessage.builder(message);
+    final Object remoteSyncProperty = message.getInboundProperty(MULE_REMOTE_SYNC_PROPERTY);
+    messageBuilder.removeInboundProperty(MULE_REMOTE_SYNC_PROPERTY);
+    if (ObjectUtils.getBoolean(remoteSyncProperty, false) && !messageReceiver.getEndpoint().getExchangePattern().hasResponse()) {
+      logger.warn("MuleClient.send() was used but inbound endpoint " + messageReceiver.getEndpoint().getEndpointURI().getUri().toString()
+          + " is not 'request-response'.  No response will be returned.");
     }
+    return messageBuilder.build();
+  }
 
-    @Override
-    public MuleEvent routeEvent(MuleEvent muleEvent) throws MuleException
-    {
-        MuleEvent response = messageReceiver.routeEvent(muleEvent);
-        if (!messageReceiver.getEndpoint().getExchangePattern().hasResponse())
-        {
-            return null;
-        }
-        return response;
+  protected MuleEvent createEventFromMuleMessage(MuleMessage muleMessage) throws MuleException {
+    MuleEvent muleEvent = messageReceiver.createMuleEvent(muleMessage, getOutputStream());
+    if (!messageReceiver.getEndpoint().isDisableTransportTransformer()) {
+      messageReceiver.applyInboundTransformers(muleEvent);
     }
+    return muleEvent;
+  }
 
-    @Override
-    public void afterSuccessfulProcessingFlow(MuleEvent response) throws MuleException
-    {
-    }
+  protected OutputStream getOutputStream() {
+    return null;
+  }
 
-    /**
-     * This method will only be called once for the {@link MessageProcessContext}
-     *
-     * @return the raw message from the {@link MessageSource}
-     */
-    public abstract Object acquireMessage() throws MuleException;
+  protected MuleMessage createMessageFromSource(Object message) throws MuleException {
+    MuleMessage muleMessage = messageReceiver.createMuleMessage(message, messageReceiver.getEndpoint().getEncoding());
+    muleMessage = warnIfMuleClientSendUsed(muleMessage);
+    muleMessage = propagateRootMessageIdProperty(muleMessage);
+    return muleMessage;
+  }
 
-    protected MuleMessage propagateRootMessageIdProperty(MuleMessage message)
-    {
-        String rootId = message.getInboundProperty(MULE_ROOT_MESSAGE_ID_PROPERTY);
-        if (rootId != null)
-        {
-            return MuleMessage.builder(message).rootId(rootId).removeInboundProperty(MULE_ROOT_MESSAGE_ID_PROPERTY).build();
-        }
-        else
-        {
-            return message;
-        }
-    }
+  protected MessageReceiverType getMessageReceiver() {
+    return this.messageReceiver;
+  }
 
-    @Override
-    public boolean validateMessage()
-    {
-        return true;
-    }
+  protected InboundEndpoint getInboundEndpoint() {
+    return this.messageReceiver.getEndpoint();
+  }
 
-    @Override
-    public void discardInvalidMessage() throws MuleException
-    {
-    }
+  @SuppressWarnings("unchecked")
+  protected ConnectorType getConnector() {
+    return (ConnectorType) this.messageReceiver.getConnector();
+  }
 
-    protected MuleMessage warnIfMuleClientSendUsed(MuleMessage message)
-    {
-        MuleMessage.Builder messageBuilder = MuleMessage.builder(message);
-        final Object remoteSyncProperty = message.getInboundProperty(MULE_REMOTE_SYNC_PROPERTY);
-        messageBuilder.removeInboundProperty(MULE_REMOTE_SYNC_PROPERTY);
-        if (ObjectUtils.getBoolean(remoteSyncProperty, false) && !messageReceiver.getEndpoint().getExchangePattern().hasResponse())
-        {
-            logger.warn("MuleClient.send() was used but inbound endpoint "
-                        + messageReceiver.getEndpoint().getEndpointURI().getUri().toString()
-                        + " is not 'request-response'.  No response will be returned.");
-        }
-        return messageBuilder.build();
-    }
+  protected MuleContext getMuleContext() {
+    return this.messageReceiver.getEndpoint().getMuleContext();
+  }
 
-    protected MuleEvent createEventFromMuleMessage(MuleMessage muleMessage) throws MuleException
-    {
-        MuleEvent muleEvent = messageReceiver.createMuleEvent(muleMessage, getOutputStream());
-        if (!messageReceiver.getEndpoint().isDisableTransportTransformer())
-        {
-            messageReceiver.applyInboundTransformers(muleEvent);
-        }
-        return muleEvent;
-    }
+  public FlowConstruct getFlowConstruct() {
+    return this.messageReceiver.getFlowConstruct();
+  }
 
-    protected OutputStream getOutputStream()
-    {
-        return null;
-    }
+  @Override
+  public MuleEvent beforeRouteEvent(MuleEvent muleEvent) throws MuleException {
+    return muleEvent;
+  }
 
-    protected MuleMessage createMessageFromSource(Object message) throws MuleException
-    {
-        MuleMessage muleMessage = messageReceiver.createMuleMessage(message, messageReceiver.getEndpoint().getEncoding());
-        muleMessage = warnIfMuleClientSendUsed(muleMessage);
-        muleMessage = propagateRootMessageIdProperty(muleMessage);
-        return muleMessage;
-    }
-
-    protected MessageReceiverType getMessageReceiver()
-    {
-        return this.messageReceiver;
-    }
-
-    protected InboundEndpoint getInboundEndpoint()
-    {
-        return this.messageReceiver.getEndpoint();
-    }
-
-    @SuppressWarnings("unchecked")
-    protected ConnectorType getConnector()
-    {
-        return (ConnectorType) this.messageReceiver.getConnector();
-    }
-
-    protected MuleContext getMuleContext()
-    {
-        return this.messageReceiver.getEndpoint().getMuleContext();
-    }
-
-    public FlowConstruct getFlowConstruct()
-    {
-        return this.messageReceiver.getFlowConstruct();
-    }
-
-    @Override
-    public MuleEvent beforeRouteEvent(MuleEvent muleEvent) throws MuleException
-    {
-        return muleEvent;
-    }
-
-    @Override
-    public MuleEvent afterRouteEvent(MuleEvent muleEvent) throws MuleException
-    {
-        return muleEvent;
-    }
+  @Override
+  public MuleEvent afterRouteEvent(MuleEvent muleEvent) throws MuleException {
+    return muleEvent;
+  }
 
 }
 

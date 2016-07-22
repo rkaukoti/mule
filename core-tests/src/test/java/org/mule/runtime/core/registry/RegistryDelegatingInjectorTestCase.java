@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.registry;
 
@@ -29,60 +27,53 @@ import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class RegistryDelegatingInjectorTestCase extends AbstractMuleTestCase
-{
+public class RegistryDelegatingInjectorTestCase extends AbstractMuleTestCase {
 
-    @Mock
-    private RegistryProvider registryProvider;
+  @Mock
+  private RegistryProvider registryProvider;
 
-    @Mock(extraInterfaces = Injector.class)
-    private Registry injectorRegistry;
+  @Mock(extraInterfaces = Injector.class)
+  private Registry injectorRegistry;
 
-    private Injector injector;
+  private Injector injector;
 
-    @Before
-    public void before()
-    {
-        injector = new RegistryDelegatingInjector(registryProvider);
-    }
+  @Before
+  public void before() {
+    injector = new RegistryDelegatingInjector(registryProvider);
+  }
 
-    @Test
-    public void inject() throws Exception
-    {
-        when(registryProvider.getRegistries()).thenReturn(asList(mock(Registry.class), injectorRegistry));
-        Object target = new Object();
-        Object injected = new Object();
+  @Test
+  public void inject() throws Exception {
+    when(registryProvider.getRegistries()).thenReturn(asList(mock(Registry.class), injectorRegistry));
+    Object target = new Object();
+    Object injected = new Object();
 
-        when(((Injector) injectorRegistry).inject(target)).thenReturn(injected);
-        assertThat(injector.inject(target), is(injected));
-    }
+    when(((Injector) injectorRegistry).inject(target)).thenReturn(injected);
+    assertThat(injector.inject(target), is(injected));
+  }
 
-    @Test
-    public void noSuitableRegistry() throws Exception
-    {
-        when(registryProvider.getRegistries()).thenReturn(asList(mock(Registry.class)));
-        assertNoinjection();
-    }
+  @Test
+  public void noSuitableRegistry() throws Exception {
+    when(registryProvider.getRegistries()).thenReturn(asList(mock(Registry.class)));
+    assertNoinjection();
+  }
 
-    @Test
-    public void noRegistriesAtAll() throws Exception
-    {
-        when(registryProvider.getRegistries()).thenReturn(ImmutableList.<Registry>of());
-        assertNoinjection();
-    }
+  @Test
+  public void noRegistriesAtAll() throws Exception {
+    when(registryProvider.getRegistries()).thenReturn(ImmutableList.<Registry>of());
+    assertNoinjection();
+  }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void nullProvider()
-    {
-        new RegistryDelegatingInjector(null);
-    }
+  @Test(expected = IllegalArgumentException.class)
+  public void nullProvider() {
+    new RegistryDelegatingInjector(null);
+  }
 
-    private void assertNoinjection() throws org.mule.runtime.core.api.MuleException
-    {
-        Object target = mock(Object.class);
+  private void assertNoinjection() throws org.mule.runtime.core.api.MuleException {
+    Object target = mock(Object.class);
 
-        assertThat(injector.inject(target), is(sameInstance(target)));
-        verifyNoMoreInteractions(target);
-    }
+    assertThat(injector.inject(target), is(sameInstance(target)));
+    verifyNoMoreInteractions(target);
+  }
 
 }

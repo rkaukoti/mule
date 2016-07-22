@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.metadata.extension;
 
@@ -28,7 +26,7 @@ import org.mule.test.metadata.extension.resolver.TestContentAndOutputResolverWit
 
 @Extension(name = "Metadata")
 @Operations({MetadataOperations.class, MetadataFailureOperations.class, MetadataInheritedExtensionResolversOperations.class,
-             MetadataInheritedOperationResolversOperations.class})
+    MetadataInheritedOperationResolversOperations.class})
 @Providers(MetadataConnectionProvider.class)
 @Sources({MetadataSource.class, MetadataSourceWithMultilevel.class})
 @SubTypeMapping(baseType = Animal.class, subTypes = Bear.class)
@@ -37,25 +35,21 @@ import org.mule.test.metadata.extension.resolver.TestContentAndOutputResolverWit
 @SubTypeMapping(baseType = Rectangle.class, subTypes = {Square.class})
 @Xml(namespaceLocation = "http://www.mulesoft.org/schema/mule/metadata", namespace = "metadata")
 @MetadataScope(keysResolver = TestContentAndOutputResolverWithKeyResolver.class,
-        contentResolver = TestContentAndOutputResolverWithKeyResolver.class,
-        outputResolver = TestContentAndOutputResolverWithKeyResolver.class)
-public class MetadataExtension
-{
+    contentResolver = TestContentAndOutputResolverWithKeyResolver.class, outputResolver = TestContentAndOutputResolverWithKeyResolver.class)
+public class MetadataExtension {
 
-    @Parameter
-    @Optional(defaultValue = "noExpression")
-    private String data;
-    @Parameter
-    @Optional(defaultValue = "#['defaultString']")
-    private String dataWithDefault;
+  @Parameter
+  @Optional(defaultValue = "noExpression")
+  private String data;
+  @Parameter
+  @Optional(defaultValue = "#['defaultString']")
+  private String dataWithDefault;
 
-    public String getData()
-    {
-        return data;
-    }
+  public String getData() {
+    return data;
+  }
 
-    public String getDataWithDefault()
-    {
-        return dataWithDefault;
-    }
+  public String getDataWithDefault() {
+    return dataWithDefault;
+  }
 }

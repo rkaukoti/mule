@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional;
 
@@ -23,48 +21,42 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public abstract class AbstractConfigBuilderWithBindingsTestCase extends AbstractScriptWithBindingsConfigBuilderTestCase
-{
+public abstract class AbstractConfigBuilderWithBindingsTestCase extends AbstractScriptWithBindingsConfigBuilderTestCase {
 
-    public AbstractConfigBuilderWithBindingsTestCase(boolean legacy)
-    {
-        super(legacy);
-    }
+  public AbstractConfigBuilderWithBindingsTestCase(boolean legacy) {
+    super(legacy);
+  }
 
-    private static EndpointFactory getEndpointFactory(MuleContext muleContext)
-    {
-        return (EndpointFactory) muleContext.getRegistry().lookupObject(MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY);
-    }
+  private static EndpointFactory getEndpointFactory(MuleContext muleContext) {
+    return (EndpointFactory) muleContext.getRegistry().lookupObject(MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY);
+  }
 
-    @Override
-    protected boolean isGracefulShutdown()
-    {
-        return true;
-    }
+  @Override
+  protected boolean isGracefulShutdown() {
+    return true;
+  }
 
-    @Test
-    public void testInterceptors()
-    {
-        Flow flow = (Flow) muleContext.getRegistry().lookupFlowConstruct("orangeComponent");
-        AbstractComponent component = (AbstractComponent) flow.getMessageProcessors().get(0);
-        assertEquals(3, component.getInterceptors().size());
-        assertEquals(LoggingInterceptor.class, component.getInterceptors().get(0).getClass());
-        assertEquals(InterceptorStack.class, component.getInterceptors().get(1).getClass());
-        assertEquals(TimerInterceptor.class, component.getInterceptors().get(2).getClass());
-    }
+  @Test
+  public void testInterceptors() {
+    Flow flow = (Flow) muleContext.getRegistry().lookupFlowConstruct("orangeComponent");
+    AbstractComponent component = (AbstractComponent) flow.getMessageProcessors().get(0);
+    assertEquals(3, component.getInterceptors().size());
+    assertEquals(LoggingInterceptor.class, component.getInterceptors().get(0).getClass());
+    assertEquals(InterceptorStack.class, component.getInterceptors().get(1).getClass());
+    assertEquals(TimerInterceptor.class, component.getInterceptors().get(2).getClass());
+  }
 
-    @Override
-    public void testEndpointConfig() throws MuleException
-    {
-        super.testEndpointConfig();
+  @Override
+  public void testEndpointConfig() throws MuleException {
+    super.testEndpointConfig();
 
-        // test that targets have been resolved on targets
-        ImmutableEndpoint endpoint = getEndpointFactory(muleContext).getInboundEndpoint("waterMelonEndpoint");
-        assertNotNull(endpoint);
-        assertEquals(UTF_8, endpoint.getEncoding());
-        assertEquals("test.queue", endpoint.getEndpointURI().getAddress());
+    // test that targets have been resolved on targets
+    ImmutableEndpoint endpoint = getEndpointFactory(muleContext).getInboundEndpoint("waterMelonEndpoint");
+    assertNotNull(endpoint);
+    assertEquals(UTF_8, endpoint.getEncoding());
+    assertEquals("test.queue", endpoint.getEndpointURI().getAddress());
 
-        FlowConstruct service = muleContext.getRegistry().lookupFlowConstruct("appleComponent2");
-        assertNotNull(service);
-    }
+    FlowConstruct service = muleContext.getRegistry().lookupFlowConstruct("appleComponent2");
+    assertNotNull(service);
+  }
 }

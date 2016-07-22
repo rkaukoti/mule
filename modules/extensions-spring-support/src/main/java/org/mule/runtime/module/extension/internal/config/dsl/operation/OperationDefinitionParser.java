@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.config.dsl.operation;
 
@@ -24,41 +22,37 @@ import static org.mule.runtime.module.extension.internal.ExtensionProperties.TAR
 import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.CONFIG_ATTRIBUTE;
 
 /**
- * A {@link ExtensionDefinitionParser} for parsing {@link OperationMessageProcessor}
- * instances through a {@link OperationMessageProcessorObjectFactory}
+ * A {@link ExtensionDefinitionParser} for parsing {@link OperationMessageProcessor} instances through a
+ * {@link OperationMessageProcessorObjectFactory}
  *
  * @since 4.0
  */
-public class OperationDefinitionParser extends ExtensionDefinitionParser
-{
+public class OperationDefinitionParser extends ExtensionDefinitionParser {
 
-    private final RuntimeExtensionModel extensionModel;
-    private final RuntimeOperationModel operationModel;
-    private final MuleContext muleContext;
-    private final DslElementDeclaration operationDsl;
+  private final RuntimeExtensionModel extensionModel;
+  private final RuntimeOperationModel operationModel;
+  private final MuleContext muleContext;
+  private final DslElementDeclaration operationDsl;
 
-    public OperationDefinitionParser(Builder definition, RuntimeExtensionModel extensionModel, RuntimeOperationModel operationModel,
-                                     DslElementResolver dslElementResolver, MuleContext muleContext, ExtensionParsingContext parsingContext)
-    {
-        super(definition, dslElementResolver, parsingContext);
-        this.extensionModel = extensionModel;
-        this.operationModel = operationModel;
-        this.muleContext = muleContext;
-        this.operationDsl = dslElementResolver.resolve(operationModel);
-    }
+  public OperationDefinitionParser(Builder definition, RuntimeExtensionModel extensionModel, RuntimeOperationModel operationModel,
+      DslElementResolver dslElementResolver, MuleContext muleContext, ExtensionParsingContext parsingContext) {
+    super(definition, dslElementResolver, parsingContext);
+    this.extensionModel = extensionModel;
+    this.operationModel = operationModel;
+    this.muleContext = muleContext;
+    this.operationDsl = dslElementResolver.resolve(operationModel);
+  }
 
-    @Override
-    protected void doParse(Builder definitionBuilder) throws ConfigurationException
-    {
-        definitionBuilder.withIdentifier(operationDsl.getElementName())
-                         .withTypeDefinition(fromType(OperationMessageProcessor.class))
-                         .withObjectFactoryType(OperationMessageProcessorObjectFactory.class)
-                         .withConstructorParameterDefinition(fromFixedValue(extensionModel).build())
-                         .withConstructorParameterDefinition(fromFixedValue(operationModel).build())
-                         .withConstructorParameterDefinition(fromFixedValue(muleContext).build())
-                         .withSetterParameterDefinition(TARGET_ATTRIBUTE, fromSimpleParameter(TARGET_ATTRIBUTE).build())
-                         .withSetterParameterDefinition("configurationProviderName", fromSimpleParameter(CONFIG_ATTRIBUTE).build());
+  @Override
+  protected void doParse(Builder definitionBuilder) throws ConfigurationException {
+    definitionBuilder.withIdentifier(operationDsl.getElementName()).withTypeDefinition(fromType(OperationMessageProcessor.class))
+        .withObjectFactoryType(OperationMessageProcessorObjectFactory.class)
+        .withConstructorParameterDefinition(fromFixedValue(extensionModel).build())
+        .withConstructorParameterDefinition(fromFixedValue(operationModel).build())
+        .withConstructorParameterDefinition(fromFixedValue(muleContext).build())
+        .withSetterParameterDefinition(TARGET_ATTRIBUTE, fromSimpleParameter(TARGET_ATTRIBUTE).build())
+        .withSetterParameterDefinition("configurationProviderName", fromSimpleParameter(CONFIG_ATTRIBUTE).build());
 
-        parseParameters(operationModel.getParameterModels());
-    }
+    parseParameters(operationModel.getParameterModels());
+  }
 }

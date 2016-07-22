@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.storedprocedure;
@@ -17,36 +15,32 @@ import org.mule.runtime.module.db.internal.domain.type.UnknownDbType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class StoredProcedureTemplateSqlTestCase extends FunctionalTestCase
-{
+public class StoredProcedureTemplateSqlTestCase extends FunctionalTestCase {
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "integration/storedprocedure/stored-procedure-template-query-config.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "integration/storedprocedure/stored-procedure-template-query-config.xml";
+  }
 
-    @Test
-    public void configuresSimpleStoredProcedure() throws Exception
-    {
-        Object queryTemplateBean = muleContext.getRegistry().get("simple");
-        assertTrue(queryTemplateBean instanceof QueryTemplate);
-        QueryTemplate queryTemplate = (QueryTemplate) queryTemplateBean;
-        assertEquals(QueryType.STORE_PROCEDURE_CALL, queryTemplate.getType());
-        assertEquals(0, queryTemplate.getInputParams().size());
-    }
+  @Test
+  public void configuresSimpleStoredProcedure() throws Exception {
+    Object queryTemplateBean = muleContext.getRegistry().get("simple");
+    assertTrue(queryTemplateBean instanceof QueryTemplate);
+    QueryTemplate queryTemplate = (QueryTemplate) queryTemplateBean;
+    assertEquals(QueryType.STORE_PROCEDURE_CALL, queryTemplate.getType());
+    assertEquals(0, queryTemplate.getInputParams().size());
+  }
 
-    @Test
-    public void configuresInputParam() throws Exception
-    {
-        Object queryTemplateBean = muleContext.getRegistry().get("inputParam");
-        assertTrue(queryTemplateBean instanceof QueryTemplate);
-        QueryTemplate queryTemplate = (QueryTemplate) queryTemplateBean;
-        assertEquals(QueryType.STORE_PROCEDURE_CALL, queryTemplate.getType());
-        assertEquals(1, queryTemplate.getInputParams().size());
+  @Test
+  public void configuresInputParam() throws Exception {
+    Object queryTemplateBean = muleContext.getRegistry().get("inputParam");
+    assertTrue(queryTemplateBean instanceof QueryTemplate);
+    QueryTemplate queryTemplate = (QueryTemplate) queryTemplateBean;
+    assertEquals(QueryType.STORE_PROCEDURE_CALL, queryTemplate.getType());
+    assertEquals(1, queryTemplate.getInputParams().size());
 
-        InputQueryParam inputSqlParam = queryTemplate.getInputParams().get(0);
-        assertEquals(UnknownDbType.getInstance(), inputSqlParam.getType());
-        assertEquals("foo", inputSqlParam.getValue());
-    }
+    InputQueryParam inputSqlParam = queryTemplate.getInputParams().get(0);
+    assertEquals(UnknownDbType.getInstance(), inputSqlParam.getType());
+    assertEquals("foo", inputSqlParam.getValue());
+  }
 }

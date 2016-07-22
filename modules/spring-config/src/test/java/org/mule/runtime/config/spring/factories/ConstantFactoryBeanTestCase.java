@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.factories;
 
@@ -30,64 +28,55 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
-public class ConstantFactoryBeanTestCase extends AbstractMuleTestCase
-{
+public class ConstantFactoryBeanTestCase extends AbstractMuleTestCase {
 
-    @Mock(extraInterfaces = {Lifecycle.class, MuleContextAware.class})
-    private Object value;
-    private ConstantFactoryBean<Object> factoryBean;
+  @Mock(extraInterfaces = {Lifecycle.class, MuleContextAware.class})
+  private Object value;
+  private ConstantFactoryBean<Object> factoryBean;
 
-    @Before
-    public void before() throws Exception
-    {
-        factoryBean = new ConstantFactoryBean<>(value);
-    }
+  @Before
+  public void before() throws Exception {
+    factoryBean = new ConstantFactoryBean<>(value);
+  }
 
-    @Test
-    public void returnsValue() throws Exception
-    {
-        assertThat(factoryBean.getObject(), is(sameInstance(value)));
-    }
+  @Test
+  public void returnsValue() throws Exception {
+    assertThat(factoryBean.getObject(), is(sameInstance(value)));
+  }
 
-    @Test
-    public void singleton()
-    {
-        assertThat(factoryBean.isSingleton(), is(true));
-    }
+  @Test
+  public void singleton() {
+    assertThat(factoryBean.isSingleton(), is(true));
+  }
 
-    @Test
-    public void assertClass()
-    {
-        assertThat(factoryBean.getObjectType() == value.getClass(), is(true));
-    }
+  @Test
+  public void assertClass() {
+    assertThat(factoryBean.getObjectType() == value.getClass(), is(true));
+  }
 
-    @Test
-    public void setMuleContext()
-    {
-        MuleContext muleContext = mock(MuleContext.class);
-        factoryBean.setMuleContext(muleContext);
-        verify((MuleContextAware) value).setMuleContext(muleContext);
-    }
+  @Test
+  public void setMuleContext() {
+    MuleContext muleContext = mock(MuleContext.class);
+    factoryBean.setMuleContext(muleContext);
+    verify((MuleContextAware) value).setMuleContext(muleContext);
+  }
 
-    @Test
-    public void initialise() throws InitialisationException
-    {
-        factoryBean.initialise();
-        verify((Initialisable) value).initialise();
-    }
+  @Test
+  public void initialise() throws InitialisationException {
+    factoryBean.initialise();
+    verify((Initialisable) value).initialise();
+  }
 
-    @Test
-    public void stop() throws MuleException
-    {
-        factoryBean.stop();
-        verify((Stoppable) value).stop();
-    }
+  @Test
+  public void stop() throws MuleException {
+    factoryBean.stop();
+    verify((Stoppable) value).stop();
+  }
 
-    @Test
-    public void dispose() throws Exception
-    {
-        factoryBean.dispose();
-        verify((Disposable) value).dispose();
-    }
+  @Test
+  public void dispose() throws Exception {
+    factoryBean.dispose();
+    verify((Disposable) value).dispose();
+  }
 
 }

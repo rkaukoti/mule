@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.message;
 
@@ -22,168 +20,134 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * <code>ExceptionMessage</code> is used by the DefaultServiceExceptionStrategy
- * for wrapping an exception with a message to send via an endpointUri.
+ * <code>ExceptionMessage</code> is used by the DefaultServiceExceptionStrategy for wrapping an exception with a message to send via an
+ * endpointUri.
  */
-public class ExceptionMessage implements Serializable
-{
-    /**
-     * Serial version
-     */
-    private static final long serialVersionUID = -538516243574950621L;
+public class ExceptionMessage implements Serializable {
+  /**
+   * Serial version
+   */
+  private static final long serialVersionUID = -538516243574950621L;
 
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionMessage.class);
-    protected Map<String, Object> properties;
-    // This object uses custom serialization via the writeObject() method
-    private transient Object payload;
-    // This object uses custom serialization via the writeObject() method
-    private transient Throwable exception;
-    private String componentName;
-    private String endpointUri;
-    private Date timeStamp;
+  private static final Logger logger = LoggerFactory.getLogger(ExceptionMessage.class);
+  protected Map<String, Object> properties;
+  // This object uses custom serialization via the writeObject() method
+  private transient Object payload;
+  // This object uses custom serialization via the writeObject() method
+  private transient Throwable exception;
+  private String componentName;
+  private String endpointUri;
+  private Date timeStamp;
 
-    public ExceptionMessage(MuleEvent event,
-                            Throwable exception,
-                            String componentName,
-                            URI endpointUri)
-    {
-        this.payload = event.getMessage().getPayload();
-        properties = new HashMap<String, Object>();
-        this.exception = exception;
-        timeStamp = new Date();
-        this.componentName = componentName;
-        if (endpointUri != null)
-        {
-            this.endpointUri = endpointUri.toString();
-        }
-
-        for (Iterator iterator = event.getMessage().getOutboundPropertyNames().iterator(); iterator.hasNext(); )
-        {
-            String propertyKey = (String) iterator.next();
-            setProperty(propertyKey, event.getMessage().getOutboundProperty(propertyKey));
-        }
+  public ExceptionMessage(MuleEvent event, Throwable exception, String componentName, URI endpointUri) {
+    this.payload = event.getMessage().getPayload();
+    properties = new HashMap<String, Object>();
+    this.exception = exception;
+    timeStamp = new Date();
+    this.componentName = componentName;
+    if (endpointUri != null) {
+      this.endpointUri = endpointUri.toString();
     }
 
-    private void writeObject(ObjectOutputStream out) throws IOException
-    {
-        out.defaultWriteObject();
-        try
-        {
-            out.writeObject(exception);
-        }
-        catch (NotSerializableException e)
-        {
-            logger.warn("Exception " + exception.getClass().getName() +
-                        " is not serializable and will be lost when sending ExceptionMessage over the wire: " + e.getMessage());
-        }
-        try
-        {
-            out.writeObject(payload);
-        }
-        catch (NotSerializableException e)
-        {
-            logger.warn("Payload " + payload.getClass().getName() +
-                        " is not serializable and will be lost when sending ExceptionMessage over the wire: " + e.getMessage());
-        }
+    for (Iterator iterator = event.getMessage().getOutboundPropertyNames().iterator(); iterator.hasNext();) {
+      String propertyKey = (String) iterator.next();
+      setProperty(propertyKey, event.getMessage().getOutboundProperty(propertyKey));
     }
+  }
 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
-    {
-        in.defaultReadObject();
-        try
-        {
-            exception = (Throwable) in.readObject();
-        }
-        catch (Exception e)
-        {
-            // ignore
-        }
-        try
-        {
-            payload = in.readObject();
-        }
-        catch (Exception e)
-        {
-            // ignore
-        }
+  private void writeObject(ObjectOutputStream out) throws IOException {
+    out.defaultWriteObject();
+    try {
+      out.writeObject(exception);
+    } catch (NotSerializableException e) {
+      logger.warn("Exception " + exception.getClass().getName()
+          + " is not serializable and will be lost when sending ExceptionMessage over the wire: " + e.getMessage());
     }
+    try {
+      out.writeObject(payload);
+    } catch (NotSerializableException e) {
+      logger.warn("Payload " + payload.getClass().getName()
+          + " is not serializable and will be lost when sending ExceptionMessage over the wire: " + e.getMessage());
+    }
+  }
 
-    /**
-     * @return the current message
-     */
-    public Object getPayload()
-    {
-        return payload;
+  private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    in.defaultReadObject();
+    try {
+      exception = (Throwable) in.readObject();
+    } catch (Exception e) {
+      // ignore
     }
+    try {
+      payload = in.readObject();
+    } catch (Exception e) {
+      // ignore
+    }
+  }
 
-    public void setPayload(Object payload)
-    {
-        this.payload = payload;
-    }
+  /**
+   * @return the current message
+   */
+  public Object getPayload() {
+    return payload;
+  }
 
-    /**
-     * Adds a map of properties to associated with this message
-     *
-     * @param properties the properties add to this message
-     */
-    public void addProperties(Map<String, Object> properties)
-    {
-        this.properties.putAll(properties);
-    }
+  public void setPayload(Object payload) {
+    this.payload = payload;
+  }
 
-    /**
-     * Removes all properties on this message
-     */
-    public void clearProperties()
-    {
-        properties.clear();
-    }
+  /**
+   * Adds a map of properties to associated with this message
+   *
+   * @param properties the properties add to this message
+   */
+  public void addProperties(Map<String, Object> properties) {
+    this.properties.putAll(properties);
+  }
 
-    /**
-     * Returns a map of all properties on this message
-     *
-     * @return a map of all properties on this message
-     */
-    public Map getProperties()
-    {
-        return properties;
-    }
+  /**
+   * Removes all properties on this message
+   */
+  public void clearProperties() {
+    properties.clear();
+  }
 
-    public void setProperty(String key, Object value)
-    {
-        properties.put(key, value);
-    }
+  /**
+   * Returns a map of all properties on this message
+   *
+   * @return a map of all properties on this message
+   */
+  public Map getProperties() {
+    return properties;
+  }
 
-    public Object getProperty(String key)
-    {
-        return properties.get(key);
-    }
+  public void setProperty(String key, Object value) {
+    properties.put(key, value);
+  }
 
-    public String getComponentName()
-    {
-        return componentName;
-    }
+  public Object getProperty(String key) {
+    return properties.get(key);
+  }
 
-    public String getEndpoint()
-    {
-        return endpointUri;
-    }
+  public String getComponentName() {
+    return componentName;
+  }
 
-    public Date getTimeStamp()
-    {
-        return timeStamp;
-    }
+  public String getEndpoint() {
+    return endpointUri;
+  }
 
-    public Throwable getException()
-    {
-        return exception;
-    }
+  public Date getTimeStamp() {
+    return timeStamp;
+  }
 
-    @Override
-    public String toString()
-    {
-        return "ExceptionMessage{" + "payload=" + getPayload() + ", context=" + properties + "exception=" + exception
-               + ", componentName='" + componentName + "'" + ", endpointUri=" + endpointUri + ", timeStamp="
-               + timeStamp + "}";
-    }
+  public Throwable getException() {
+    return exception;
+  }
+
+  @Override
+  public String toString() {
+    return "ExceptionMessage{" + "payload=" + getPayload() + ", context=" + properties + "exception=" + exception + ", componentName='"
+        + componentName + "'" + ", endpointUri=" + endpointUri + ", timeStamp=" + timeStamp + "}";
+  }
 }

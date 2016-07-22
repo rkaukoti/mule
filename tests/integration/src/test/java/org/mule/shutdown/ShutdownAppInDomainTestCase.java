@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.shutdown;
 
@@ -30,112 +28,94 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Tests that threads in pools defined in a domain do not hold references to objects of the application in their thread
- * locals.
+ * Tests that threads in pools defined in a domain do not hold references to objects of the application in their thread locals.
  */
-public class ShutdownAppInDomainTestCase extends DomainFunctionalTestCase
-{
+public class ShutdownAppInDomainTestCase extends DomainFunctionalTestCase {
 
-    private static final int PROBER_POLLING_INTERVAL = 100;
-    private static final int PROBER_POLIING_TIMEOUT = 5000;
-    private static final int MESSAGE_TIMEOUT = 2000;
+  private static final int PROBER_POLLING_INTERVAL = 100;
+  private static final int PROBER_POLIING_TIMEOUT = 5000;
+  private static final int MESSAGE_TIMEOUT = 2000;
 
-    private static final Set<PhantomReference<MuleEvent>> requestContextRefs = new HashSet<>();
-    @Rule
-    public DynamicPort httpPort = new DynamicPort("httpPort");
+  private static final Set<PhantomReference<MuleEvent>> requestContextRefs = new HashSet<>();
+  @Rule
+  public DynamicPort httpPort = new DynamicPort("httpPort");
 
-    @Before
-    public void before()
-    {
-        requestContextRefs.clear();
-    }
+  @Before
+  public void before() {
+    requestContextRefs.clear();
+  }
 
-    @Override
-    protected String getDomainConfig()
-    {
-        return "org/mule/shutdown/domain-with-connectors.xml";
-    }
+  @Override
+  protected String getDomainConfig() {
+    return "org/mule/shutdown/domain-with-connectors.xml";
+  }
 
-    @Override
-    public ApplicationConfig[] getConfigResources()
-    {
-        return new ApplicationConfig[] {
-                new ApplicationConfig("app-with-flows", new String[] {"org/mule/shutdown/app-with-flows.xml"})
-        };
-    }
+  @Override
+  public ApplicationConfig[] getConfigResources() {
+    return new ApplicationConfig[] {new ApplicationConfig("app-with-flows", new String[] {"org/mule/shutdown/app-with-flows.xml"})};
+  }
 
-    @Test
-    public void httpListener() throws MuleException
-    {
-        MuleContext muleContextForApp = getMuleContextForApp("app-with-flows");
+  @Test
+  public void httpListener() throws MuleException {
+    MuleContext muleContextForApp = getMuleContextForApp("app-with-flows");
 
-        muleContextForApp.getClient().request("http://localhost:" + httpPort.getNumber() + "/sync", MESSAGE_TIMEOUT);
-        muleContextForApp.dispose();
+    muleContextForApp.getClient().request("http://localhost:" + httpPort.getNumber() + "/sync", MESSAGE_TIMEOUT);
+    muleContextForApp.dispose();
 
-        assertEventsUnreferenced();
-    }
+    assertEventsUnreferenced();
+  }
 
-    @Test
-    public void httpListenerNonBlocking() throws MuleException
-    {
-        MuleContext muleContextForApp = getMuleContextForApp("app-with-flows");
+  @Test
+  public void httpListenerNonBlocking() throws MuleException {
+    MuleContext muleContextForApp = getMuleContextForApp("app-with-flows");
 
-        muleContextForApp.getClient().request("http://localhost:" + httpPort.getNumber() + "/nonBlocking", MESSAGE_TIMEOUT);
-        muleContextForApp.dispose();
+    muleContextForApp.getClient().request("http://localhost:" + httpPort.getNumber() + "/nonBlocking", MESSAGE_TIMEOUT);
+    muleContextForApp.dispose();
 
-        assertEventsUnreferenced();
-    }
+    assertEventsUnreferenced();
+  }
 
-    @Test
-    public void httpRequest() throws MuleException
-    {
-        MuleContext muleContextForApp = getMuleContextForApp("app-with-flows");
+  @Test
+  public void httpRequest() throws MuleException {
+    MuleContext muleContextForApp = getMuleContextForApp("app-with-flows");
 
-        muleContextForApp.getClient().request("http://localhost:" + httpPort.getNumber() + "/request", MESSAGE_TIMEOUT);
-        muleContextForApp.dispose();
+    muleContextForApp.getClient().request("http://localhost:" + httpPort.getNumber() + "/request", MESSAGE_TIMEOUT);
+    muleContextForApp.dispose();
 
-        assertEventsUnreferenced();
-    }
+    assertEventsUnreferenced();
+  }
 
-    @Test
-    @Ignore("Reimplement with the new JMS Connector")
-    public void jms() throws MuleException
-    {
-        final MuleContext muleContextForApp = getMuleContextForApp("app-with-flows");
+  @Test
+  @Ignore("Reimplement with the new JMS Connector")
+  public void jms() throws MuleException {
+    final MuleContext muleContextForApp = getMuleContextForApp("app-with-flows");
 
-        muleContextForApp.getClient().dispatch("jms://in?connector=sharedJmsConnector", MuleMessage.builder().payload("payload").build());
-        muleContextForApp.getClient().request("jms://out?connector=sharedJmsConnector", MESSAGE_TIMEOUT);
+    muleContextForApp.getClient().dispatch("jms://in?connector=sharedJmsConnector", MuleMessage.builder().payload("payload").build());
+    muleContextForApp.getClient().request("jms://out?connector=sharedJmsConnector", MESSAGE_TIMEOUT);
 
-        muleContextForApp.dispose();
+    muleContextForApp.dispose();
 
-        assertEventsUnreferenced();
-    }
+    assertEventsUnreferenced();
+  }
 
-    private void assertEventsUnreferenced()
-    {
-        new PollingProber(PROBER_POLIING_TIMEOUT, PROBER_POLLING_INTERVAL).check(new JUnitProbe()
-        {
-            @Override
-            protected boolean test() throws Exception
-            {
-                System.gc();
-                for (PhantomReference<MuleEvent> phantomReference : requestContextRefs)
-                {
-                    assertThat(phantomReference.isEnqueued(), is(true));
-                }
-                return true;
-            }
-        });
-    }
-
-    public static class RetrieveRequestContext implements MessageProcessor
-    {
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            requestContextRefs.add(new PhantomReference<>(RequestContext.getEvent(),
-                    new ReferenceQueue<MuleEvent>()));
-            return event;
+  private void assertEventsUnreferenced() {
+    new PollingProber(PROBER_POLIING_TIMEOUT, PROBER_POLLING_INTERVAL).check(new JUnitProbe() {
+      @Override
+      protected boolean test() throws Exception {
+        System.gc();
+        for (PhantomReference<MuleEvent> phantomReference : requestContextRefs) {
+          assertThat(phantomReference.isEnqueued(), is(true));
         }
+        return true;
+      }
+    });
+  }
+
+  public static class RetrieveRequestContext implements MessageProcessor {
+    @Override
+    public MuleEvent process(MuleEvent event) throws MuleException {
+      requestContextRefs.add(new PhantomReference<>(RequestContext.getEvent(), new ReferenceQueue<MuleEvent>()));
+      return event;
     }
+  }
 }

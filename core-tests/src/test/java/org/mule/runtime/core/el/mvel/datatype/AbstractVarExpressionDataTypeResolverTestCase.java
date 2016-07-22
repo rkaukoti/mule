@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.el.mvel.datatype;
@@ -33,71 +31,63 @@ import static org.mule.mvel2.MVEL.compileExpression;
 import static org.mule.runtime.api.metadata.MediaType.JSON;
 import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
 
-public abstract class AbstractVarExpressionDataTypeResolverTestCase extends AbstractMuleContextTestCase
-{
+public abstract class AbstractVarExpressionDataTypeResolverTestCase extends AbstractMuleContextTestCase {
 
-    public static final String EXPRESSION_VALUE = "bar";
-    public static final Charset CUSTOM_ENCODING = StandardCharsets.UTF_16;
-    public static final String PROPERTY_NAME = "foo";
+  public static final String EXPRESSION_VALUE = "bar";
+  public static final Charset CUSTOM_ENCODING = StandardCharsets.UTF_16;
+  public static final String PROPERTY_NAME = "foo";
 
-    private final ExpressionDataTypeResolver expressionDataTypeResolver;
-    private final String variableName;
+  private final ExpressionDataTypeResolver expressionDataTypeResolver;
+  private final String variableName;
 
-    protected AbstractVarExpressionDataTypeResolverTestCase(ExpressionDataTypeResolver expressionDataTypeResolver, String variableName)
-    {
-        this.expressionDataTypeResolver = expressionDataTypeResolver;
-        this.variableName = variableName;
-    }
+  protected AbstractVarExpressionDataTypeResolverTestCase(ExpressionDataTypeResolver expressionDataTypeResolver, String variableName) {
+    this.expressionDataTypeResolver = expressionDataTypeResolver;
+    this.variableName = variableName;
+  }
 
-    @Test
-    public void returnsFlowVarDataTypeUsingMapSyntax() throws Exception
-    {
-        doVarDataTypeTest(variableName + "['" + PROPERTY_NAME + "']");
-    }
+  @Test
+  public void returnsFlowVarDataTypeUsingMapSyntax() throws Exception {
+    doVarDataTypeTest(variableName + "['" + PROPERTY_NAME + "']");
+  }
 
-    @Test
-    public void returnsFlowVarDataTypeUsingDotSyntax() throws Exception
-    {
-        doVarDataTypeTest(variableName + "." + PROPERTY_NAME);
-    }
+  @Test
+  public void returnsFlowVarDataTypeUsingDotSyntax() throws Exception {
+    doVarDataTypeTest(variableName + "." + PROPERTY_NAME);
+  }
 
-    @Test
-    public void returnsFlowVarDataTypeUsingEscapedDotSyntax() throws Exception
-    {
-        doVarDataTypeTest(variableName + ".'" + PROPERTY_NAME + "'");
-    }
+  @Test
+  public void returnsFlowVarDataTypeUsingEscapedDotSyntax() throws Exception {
+    doVarDataTypeTest(variableName + ".'" + PROPERTY_NAME + "'");
+  }
 
-    protected void doVarDataTypeTest(String expression) throws Exception
-    {
-        DataType expectedDataType = DataType.builder().type(String.class).mediaType(JSON).charset(CUSTOM_ENCODING).build();
+  protected void doVarDataTypeTest(String expression) throws Exception {
+    DataType expectedDataType = DataType.builder().type(String.class).mediaType(JSON).charset(CUSTOM_ENCODING).build();
 
-        MuleEvent testEvent = getTestEvent(TEST_MESSAGE);
-        setVariable(testEvent, EXPRESSION_VALUE, expectedDataType);
+    MuleEvent testEvent = getTestEvent(TEST_MESSAGE);
+    setVariable(testEvent, EXPRESSION_VALUE, expectedDataType);
 
-        final ParserConfiguration parserConfiguration = MVELExpressionLanguage.createParserConfiguration(Collections.EMPTY_MAP);
-        final MVELExpressionLanguageContext context = createMvelExpressionLanguageContext(testEvent, parserConfiguration);
+    final ParserConfiguration parserConfiguration = MVELExpressionLanguage.createParserConfiguration(Collections.EMPTY_MAP);
+    final MVELExpressionLanguageContext context = createMvelExpressionLanguageContext(testEvent, parserConfiguration);
 
-        CompiledExpression compiledExpression = (CompiledExpression) compileExpression(expression, new ParserContext(parserConfiguration));
-        // Expression must be executed, otherwise the variable accessor is not properly configured
-        MVEL.executeExpression(compiledExpression, context);
+    CompiledExpression compiledExpression = (CompiledExpression) compileExpression(expression, new ParserContext(parserConfiguration));
+    // Expression must be executed, otherwise the variable accessor is not properly configured
+    MVEL.executeExpression(compiledExpression, context);
 
-        assertThat(expressionDataTypeResolver.resolve(testEvent, compiledExpression), like(String.class, JSON, CUSTOM_ENCODING));
-    }
+    assertThat(expressionDataTypeResolver.resolve(testEvent, compiledExpression), like(String.class, JSON, CUSTOM_ENCODING));
+  }
 
-    protected MVELExpressionLanguageContext createMvelExpressionLanguageContext(MuleEvent testEvent,
-                                                                                ParserConfiguration parserConfiguration)
-    {
-        final MVELExpressionLanguageContext context = new MVELExpressionLanguageContext(parserConfiguration, muleContext);
-        final StaticVariableResolverFactory staticContext = new StaticVariableResolverFactory(parserConfiguration, muleContext);
-        final GlobalVariableResolverFactory globalContext =
-                new GlobalVariableResolverFactory(Collections.EMPTY_MAP, Collections.EMPTY_MAP, parserConfiguration, muleContext);
+  protected MVELExpressionLanguageContext createMvelExpressionLanguageContext(MuleEvent testEvent,
+      ParserConfiguration parserConfiguration) {
+    final MVELExpressionLanguageContext context = new MVELExpressionLanguageContext(parserConfiguration, muleContext);
+    final StaticVariableResolverFactory staticContext = new StaticVariableResolverFactory(parserConfiguration, muleContext);
+    final GlobalVariableResolverFactory globalContext =
+        new GlobalVariableResolverFactory(Collections.EMPTY_MAP, Collections.EMPTY_MAP, parserConfiguration, muleContext);
 
-        context.setNextFactory(new CachedMapVariableResolverFactory(Collections.EMPTY_MAP,
-                new DelegateVariableResolverFactory(staticContext, new MessageVariableResolverFactory(
-                        parserConfiguration, muleContext, testEvent, new DelegateVariableResolverFactory(
-                        globalContext, new VariableVariableResolverFactory(parserConfiguration, muleContext, testEvent))))));
-        return context;
-    }
+    context.setNextFactory(new CachedMapVariableResolverFactory(Collections.EMPTY_MAP, new DelegateVariableResolverFactory(staticContext,
+        new MessageVariableResolverFactory(parserConfiguration, muleContext, testEvent, new DelegateVariableResolverFactory(globalContext,
+            new VariableVariableResolverFactory(parserConfiguration, muleContext, testEvent))))));
+    return context;
+  }
 
-    protected abstract void setVariable(MuleEvent testEvent, Object propertyValue, DataType expectedDataType);
+  protected abstract void setVariable(MuleEvent testEvent, Object propertyValue, DataType expectedDataType);
 }

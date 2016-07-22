@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -17,40 +15,36 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
 @SmallTest
-public class ConcurrentWorkTrackerTestCase extends AbstractMuleTestCase
-{
+public class ConcurrentWorkTrackerTestCase extends AbstractMuleTestCase {
 
-    private ConcurrentWorkTracker workTracker = new ConcurrentWorkTracker();
+  private ConcurrentWorkTracker workTracker = new ConcurrentWorkTracker();
 
-    @Test
-    public void addsWork()
-    {
-        Runnable work = mock(Runnable.class);
+  @Test
+  public void addsWork() {
+    Runnable work = mock(Runnable.class);
 
-        workTracker.addWork(work);
+    workTracker.addWork(work);
 
-        assertThat(workTracker.pendingWorks(), hasItem(work));
-    }
+    assertThat(workTracker.pendingWorks(), hasItem(work));
+  }
 
-    @Test
-    public void removesWork()
-    {
-        Runnable work = mock(Runnable.class);
+  @Test
+  public void removesWork() {
+    Runnable work = mock(Runnable.class);
 
-        workTracker.addWork(work);
-        workTracker.removeWork(work);
+    workTracker.addWork(work);
+    workTracker.removeWork(work);
 
-        assertThat(workTracker.pendingWorks(), not(hasItem(work)));
-    }
+    assertThat(workTracker.pendingWorks(), not(hasItem(work)));
+  }
 
-    @Test
-    public void cleansUpPendingWorksOnDispose() throws Exception
-    {
-        Runnable work = mock(Runnable.class);
-        workTracker.addWork(work);
+  @Test
+  public void cleansUpPendingWorksOnDispose() throws Exception {
+    Runnable work = mock(Runnable.class);
+    workTracker.addWork(work);
 
-        workTracker.dispose();
+    workTracker.dispose();
 
-        assertThat(workTracker.pendingWorks(), not(hasItem(work)));
-    }
+    assertThat(workTracker.pendingWorks(), not(hasItem(work)));
+  }
 }

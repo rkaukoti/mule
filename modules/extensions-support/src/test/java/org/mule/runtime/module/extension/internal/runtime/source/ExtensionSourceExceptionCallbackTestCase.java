@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.source;
 
@@ -20,28 +18,25 @@ import static org.mockito.Mockito.verify;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class ExtensionSourceExceptionCallbackTestCase extends AbstractMuleTestCase
-{
+public class ExtensionSourceExceptionCallbackTestCase extends AbstractMuleTestCase {
 
-    @Mock
-    private MuleEvent event;
+  @Mock
+  private MuleEvent event;
 
-    @Mock
-    private ResponseCompletionCallback responseCallback;
+  @Mock
+  private ResponseCompletionCallback responseCallback;
 
-    private ExtensionSourceExceptionCallback callback;
+  private ExtensionSourceExceptionCallback callback;
 
-    @Before
-    public void before()
-    {
-        callback = new ExtensionSourceExceptionCallback(responseCallback, event);
-    }
+  @Before
+  public void before() {
+    callback = new ExtensionSourceExceptionCallback(responseCallback, event);
+  }
 
-    @Test
-    public void onException()
-    {
-        final Exception exception = new Exception();
-        callback.onException(exception);
-        verify(responseCallback).responseSentWithFailure(exception, event);
-    }
+  @Test
+  public void onException() {
+    final Exception exception = new Exception();
+    callback.onException(exception);
+    verify(responseCallback).responseSentWithFailure(exception, event);
+  }
 }

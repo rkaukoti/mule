@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.internal.connection;
 
@@ -29,41 +27,37 @@ import static org.mockito.Mockito.when;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class NullConnectionHandlingStrategyTestCase extends AbstractMuleTestCase
-{
+public class NullConnectionHandlingStrategyTestCase extends AbstractMuleTestCase {
 
-    @Mock
-    private ConnectionProvider<Banana> connectionProvider;
+  @Mock
+  private ConnectionProvider<Banana> connectionProvider;
 
-    @Mock
-    private Apple config;
+  @Mock
+  private Apple config;
 
-    @Mock
-    private Banana connection;
+  @Mock
+  private Banana connection;
 
-    @Mock
-    private MuleContext muleContext;
+  @Mock
+  private MuleContext muleContext;
 
-    private NullConnectionHandlingStrategy<Banana> strategy;
+  private NullConnectionHandlingStrategy<Banana> strategy;
 
-    @Before
-    public void before() throws Exception
-    {
-        when(connectionProvider.connect()).thenReturn(connection);
-        strategy = new NullConnectionHandlingStrategy<>(connectionProvider, muleContext);
-    }
+  @Before
+  public void before() throws Exception {
+    when(connectionProvider.connect()).thenReturn(connection);
+    strategy = new NullConnectionHandlingStrategy<>(connectionProvider, muleContext);
+  }
 
-    @Test
-    public void getConnection() throws Exception
-    {
-        ConnectionHandler<Banana> connectionHandler = strategy.getConnectionHandler();
-        assertThat(connectionHandler.getConnection(), is(sameInstance(connection)));
-    }
+  @Test
+  public void getConnection() throws Exception {
+    ConnectionHandler<Banana> connectionHandler = strategy.getConnectionHandler();
+    assertThat(connectionHandler.getConnection(), is(sameInstance(connection)));
+  }
 
-    @Test
-    public void close() throws Exception
-    {
-        strategy.close();
-        verify(connectionProvider, never()).disconnect(any(Banana.class));
-    }
+  @Test
+  public void close() throws Exception {
+    strategy.close();
+    verify(connectionProvider, never()).disconnect(any(Banana.class));
+  }
 }

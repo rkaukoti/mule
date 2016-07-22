@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.collection;
 
@@ -31,40 +29,35 @@ import static org.mockito.Mockito.withSettings;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class EventToMessageSequenceSplittingStrategyTestCase extends AbstractMuleTestCase
-{
+public class EventToMessageSequenceSplittingStrategyTestCase extends AbstractMuleTestCase {
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private MuleEvent event;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private MuleEvent event;
 
-    private EventToMessageSequenceSplittingStrategy strategy = new EventToMessageSequenceSplittingStrategy();
-    private Collection<String> testCollection = Arrays.asList("Apple", "Banana", "Kiwi");
+  private EventToMessageSequenceSplittingStrategy strategy = new EventToMessageSequenceSplittingStrategy();
+  private Collection<String> testCollection = Arrays.asList("Apple", "Banana", "Kiwi");
 
-    @Test
-    public void copiableCollection()
-    {
-        Copiable<Collection<String>> collection = mock(Copiable.class, withSettings().extraInterfaces(Collection.class));
-        when(collection.copy()).thenReturn(testCollection);
-        when(event.getMessage().getPayload()).thenReturn(collection);
+  @Test
+  public void copiableCollection() {
+    Copiable<Collection<String>> collection = mock(Copiable.class, withSettings().extraInterfaces(Collection.class));
+    when(collection.copy()).thenReturn(testCollection);
+    when(event.getMessage().getPayload()).thenReturn(collection);
 
-        assertCollectionSequence();
-        verify(collection).copy();
+    assertCollectionSequence();
+    verify(collection).copy();
+  }
+
+  @Test
+  public void nonCopiableCollection() {
+    when(event.getMessage().getPayload()).thenReturn(testCollection);
+    assertCollectionSequence();
+  }
+
+  private void assertCollectionSequence() {
+    MessageSequence<String> sequence = (MessageSequence<String>) strategy.split(event);
+    Iterator<String> expectedIterator = testCollection.iterator();
+    while (sequence.hasNext()) {
+      assertThat(sequence.next(), is(sameInstance(expectedIterator.next())));
     }
-
-    @Test
-    public void nonCopiableCollection()
-    {
-        when(event.getMessage().getPayload()).thenReturn(testCollection);
-        assertCollectionSequence();
-    }
-
-    private void assertCollectionSequence()
-    {
-        MessageSequence<String> sequence = (MessageSequence<String>) strategy.split(event);
-        Iterator<String> expectedIterator = testCollection.iterator();
-        while (sequence.hasNext())
-        {
-            assertThat(sequence.next(), is(sameInstance(expectedIterator.next())));
-        }
-    }
+  }
 }

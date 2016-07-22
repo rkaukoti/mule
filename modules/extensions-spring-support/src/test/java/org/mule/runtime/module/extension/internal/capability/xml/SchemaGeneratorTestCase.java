@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.capability.xml;
 
@@ -49,58 +47,45 @@ import static org.mule.runtime.module.extension.internal.util.ExtensionsTestUtil
 
 @SmallTest
 @RunWith(Parameterized.class)
-public class SchemaGeneratorTestCase extends AbstractMuleTestCase
-{
+public class SchemaGeneratorTestCase extends AbstractMuleTestCase {
 
-    @Parameterized.Parameter(0)
-    public Class<?> extensionUnderTest;
-    @Parameterized.Parameter(1)
-    public String expectedXSD;
-    private SchemaGenerator generator;
-    private ExtensionFactory extensionFactory;
+  @Parameterized.Parameter(0)
+  public Class<?> extensionUnderTest;
+  @Parameterized.Parameter(1)
+  public String expectedXSD;
+  private SchemaGenerator generator;
+  private ExtensionFactory extensionFactory;
 
-    @Parameterized.Parameters(name = "{1}")
-    public static Collection<Object[]> data()
-    {
-        return Arrays.asList(new Object[][] {
-                {HeisenbergExtension.class, "heisenberg.xsd"},
-                {TestConnector.class, "basic.xsd"},
-                {GlobalPojoConnector.class, "global-pojo.xsd"},
-                {GlobalInnerPojoConnector.class, "global-inner-pojo.xsd"},
-                {MapConnector.class, "map.xsd"},
-                {ListConnector.class, "list.xsd"},
-                {StringListConnector.class, "string-list.xsd"},
-                {VeganExtension.class, "vegan.xsd"},
-                {SubTypesMappingConnector.class, "subtypes.xsd"},
-                {PetStoreConnector.class, "petstore.xsd"},
-                {MetadataExtension.class, "metadata.xsd"}
-        });
-    }
+  @Parameterized.Parameters(name = "{1}")
+  public static Collection<Object[]> data() {
+    return Arrays.asList(new Object[][] {{HeisenbergExtension.class, "heisenberg.xsd"}, {TestConnector.class, "basic.xsd"},
+        {GlobalPojoConnector.class, "global-pojo.xsd"}, {GlobalInnerPojoConnector.class, "global-inner-pojo.xsd"},
+        {MapConnector.class, "map.xsd"}, {ListConnector.class, "list.xsd"}, {StringListConnector.class, "string-list.xsd"},
+        {VeganExtension.class, "vegan.xsd"}, {SubTypesMappingConnector.class, "subtypes.xsd"}, {PetStoreConnector.class, "petstore.xsd"},
+        {MetadataExtension.class, "metadata.xsd"}});
+  }
 
-    @Before
-    public void before()
-    {
-        ClassLoader classLoader = getClass().getClassLoader();
-        ServiceRegistry serviceRegistry = mock(ServiceRegistry.class);
-        when(serviceRegistry.lookupProviders(ModelEnricher.class, classLoader)).thenReturn(asList(new XmlModelEnricher()));
+  @Before
+  public void before() {
+    ClassLoader classLoader = getClass().getClassLoader();
+    ServiceRegistry serviceRegistry = mock(ServiceRegistry.class);
+    when(serviceRegistry.lookupProviders(ModelEnricher.class, classLoader)).thenReturn(asList(new XmlModelEnricher()));
 
-        extensionFactory = new DefaultExtensionFactory(new SpiServiceRegistry(), getClass().getClassLoader());
-        generator = new SchemaGenerator();
-    }
+    extensionFactory = new DefaultExtensionFactory(new SpiServiceRegistry(), getClass().getClassLoader());
+    generator = new SchemaGenerator();
+  }
 
-    @Test
-    public void generate() throws Exception
-    {
-        String expectedSchema = IOUtils.getResourceAsString(expectedXSD, getClass());
+  @Test
+  public void generate() throws Exception {
+    String expectedSchema = IOUtils.getResourceAsString(expectedXSD, getClass());
 
-        ExtensionDeclarer declarer =
-                new AnnotationsBasedDescriber(extensionUnderTest, new StaticVersionResolver(getProductVersion())).describe(
-                        new DefaultDescribingContext(extensionUnderTest.getClassLoader()));
-        ExtensionModel extensionModel =
-                extensionFactory.createFrom(declarer, new DefaultDescribingContext(declarer, getClass().getClassLoader()));
-        XmlModelProperty capability = extensionModel.getModelProperty(XmlModelProperty.class).get();
+    ExtensionDeclarer declarer = new AnnotationsBasedDescriber(extensionUnderTest, new StaticVersionResolver(getProductVersion()))
+        .describe(new DefaultDescribingContext(extensionUnderTest.getClassLoader()));
+    ExtensionModel extensionModel =
+        extensionFactory.createFrom(declarer, new DefaultDescribingContext(declarer, getClass().getClassLoader()));
+    XmlModelProperty capability = extensionModel.getModelProperty(XmlModelProperty.class).get();
 
-        String schema = generator.generate(extensionModel, capability);
-        compareXML(expectedSchema, schema);
-    }
+    String schema = generator.generate(extensionModel, capability);
+    compareXML(expectedSchema, schema);
+  }
 }

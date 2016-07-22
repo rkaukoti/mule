@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.extension.internal.capability.xml.schema.model;
@@ -41,99 +39,77 @@ import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.SUB
 import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.SUBSTITUTABLE_MAP;
 import static org.mule.runtime.module.extension.internal.xml.SchemaConstants.SUBSTITUTABLE_NAME;
 
-public final class SchemaTypeConversion
-{
+public final class SchemaTypeConversion {
 
-    public static QName convertType(final MetadataType type, ExpressionSupport expressionSupport)
-    {
-        final boolean dynamic = MuleExtensionUtils.acceptsExpressions(expressionSupport);
-        final ValueHolder<QName> qName = new ValueHolder<>();
-        type.accept(new MetadataTypeVisitor()
-        {
+  public static QName convertType(final MetadataType type, ExpressionSupport expressionSupport) {
+    final boolean dynamic = MuleExtensionUtils.acceptsExpressions(expressionSupport);
+    final ValueHolder<QName> qName = new ValueHolder<>();
+    type.accept(new MetadataTypeVisitor() {
 
-            @Override
-            public void visitBoolean(BooleanType booleanType)
-            {
-                qName.set(dynamic ? EXPRESSION_BOOLEAN : SUBSTITUTABLE_BOOLEAN);
-            }
+      @Override
+      public void visitBoolean(BooleanType booleanType) {
+        qName.set(dynamic ? EXPRESSION_BOOLEAN : SUBSTITUTABLE_BOOLEAN);
+      }
 
-            @Override
-            public void visitNumber(NumberType numberType)
-            {
-                Class<Number> type = JavaTypeUtils.getType(numberType);
-                if (anyOf(type, Integer.class, int.class))
-                {
-                    qName.set(dynamic ? EXPRESSION_INTEGER : SUBSTITUTABLE_INT);
-                }
-                else if (anyOf(type, Double.class, double.class))
-                {
-                    qName.set(dynamic ? EXPRESSION_DOUBLE : SUBSTITUTABLE_DECIMAL);
-                }
-                else if (anyOf(type, Long.class, long.class))
-                {
-                    qName.set(dynamic ? EXPRESSION_LONG : SUBSTITUTABLE_LONG);
-                }
-                else
-                {
-                    qName.set(dynamic ? EXPRESSION_DECIMAL : SUBSTITUTABLE_DECIMAL);
-                }
-            }
+      @Override
+      public void visitNumber(NumberType numberType) {
+        Class<Number> type = JavaTypeUtils.getType(numberType);
+        if (anyOf(type, Integer.class, int.class)) {
+          qName.set(dynamic ? EXPRESSION_INTEGER : SUBSTITUTABLE_INT);
+        } else if (anyOf(type, Double.class, double.class)) {
+          qName.set(dynamic ? EXPRESSION_DOUBLE : SUBSTITUTABLE_DECIMAL);
+        } else if (anyOf(type, Long.class, long.class)) {
+          qName.set(dynamic ? EXPRESSION_LONG : SUBSTITUTABLE_LONG);
+        } else {
+          qName.set(dynamic ? EXPRESSION_DECIMAL : SUBSTITUTABLE_DECIMAL);
+        }
+      }
 
-            @Override
-            public void visitString(StringType stringType)
-            {
-                qName.set(dynamic ? EXPRESSION_STRING : STRING);
-            }
+      @Override
+      public void visitString(StringType stringType) {
+        qName.set(dynamic ? EXPRESSION_STRING : STRING);
+      }
 
-            @Override
-            public void visitDateTime(DateTimeType dateTimeType)
-            {
-                onDate();
-            }
+      @Override
+      public void visitDateTime(DateTimeType dateTimeType) {
+        onDate();
+      }
 
-            @Override
-            public void visitDate(DateType dateType)
-            {
-                onDate();
-            }
+      @Override
+      public void visitDate(DateType dateType) {
+        onDate();
+      }
 
-            @Override
-            public void visitArrayType(ArrayType arrayType)
-            {
-                qName.set(dynamic ? EXPRESSION_LIST : SUBSTITUTABLE_NAME);
-            }
+      @Override
+      public void visitArrayType(ArrayType arrayType) {
+        qName.set(dynamic ? EXPRESSION_LIST : SUBSTITUTABLE_NAME);
+      }
 
-            @Override
-            public void visitDictionary(DictionaryType dictionaryType)
-            {
-                qName.set(dynamic ? EXPRESSION_MAP : SUBSTITUTABLE_MAP);
-            }
+      @Override
+      public void visitDictionary(DictionaryType dictionaryType) {
+        qName.set(dynamic ? EXPRESSION_MAP : SUBSTITUTABLE_MAP);
+      }
 
-            @Override
-            protected void defaultVisit(MetadataType metadataType)
-            {
-                qName.set(STRING);
-            }
+      @Override
+      protected void defaultVisit(MetadataType metadataType) {
+        qName.set(STRING);
+      }
 
-            private void onDate()
-            {
-                qName.set(dynamic ? EXPRESSION_DATE_TIME : SUBSTITUTABLE_DATE_TIME);
-            }
+      private void onDate() {
+        qName.set(dynamic ? EXPRESSION_DATE_TIME : SUBSTITUTABLE_DATE_TIME);
+      }
 
-            private boolean anyOf(Class<Number> type, Class<?>... targets)
-            {
-                for (Class<?> target : targets)
-                {
-                    if (type.equals(target))
-                    {
-                        return true;
-                    }
-                }
+      private boolean anyOf(Class<Number> type, Class<?>... targets) {
+        for (Class<?> target : targets) {
+          if (type.equals(target)) {
+            return true;
+          }
+        }
 
-                return false;
-            }
-        });
+        return false;
+      }
+    });
 
-        return qName.get();
-    }
+    return qName.get();
+  }
 }

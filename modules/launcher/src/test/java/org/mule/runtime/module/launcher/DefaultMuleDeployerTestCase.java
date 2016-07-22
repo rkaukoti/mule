@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher;
 
@@ -18,25 +16,20 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SmallTest
-public class DefaultMuleDeployerTestCase extends AbstractMuleTestCase
-{
+public class DefaultMuleDeployerTestCase extends AbstractMuleTestCase {
 
-    @Test
-    public void disposesAppOnDeployFailure() throws Exception
-    {
-        DefaultArtifactDeployer deployer = new DefaultArtifactDeployer();
-        Application app = mock(Application.class);
-        doThrow(new IllegalStateException()).when(app).init();
+  @Test
+  public void disposesAppOnDeployFailure() throws Exception {
+    DefaultArtifactDeployer deployer = new DefaultArtifactDeployer();
+    Application app = mock(Application.class);
+    doThrow(new IllegalStateException()).when(app).init();
 
-        try
-        {
-            deployer.deploy(app);
-            fail("Deployment is supposed to fail");
-        }
-        catch (DeploymentException expected)
-        {
-        }
-
-        verify(app, times(1)).dispose();
+    try {
+      deployer.deploy(app);
+      fail("Deployment is supposed to fail");
+    } catch (DeploymentException expected) {
     }
+
+    verify(app, times(1)).dispose();
+  }
 }

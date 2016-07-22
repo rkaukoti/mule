@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.el.mvel;
 
@@ -18,34 +16,29 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-public class MVELExpressionLanguageContextTestCase extends AbstractMuleContextTestCase
-{
+public class MVELExpressionLanguageContextTestCase extends AbstractMuleContextTestCase {
 
-    private ParserConfiguration parserConfig = new ParserConfiguration();
+  private ParserConfiguration parserConfig = new ParserConfiguration();
 
-    @Test
-    public void testGetVariableResolver()
-    {
-        MuleBaseVariableResolverFactory resoverFactory = new MVELExpressionLanguageContext(parserConfig,
-                muleContext);
-        resoverFactory.addResolver("foo", new SimpleValueResolver("val"));
+  @Test
+  public void testGetVariableResolver() {
+    MuleBaseVariableResolverFactory resoverFactory = new MVELExpressionLanguageContext(parserConfig, muleContext);
+    resoverFactory.addResolver("foo", new SimpleValueResolver("val"));
 
-        assertNotNull(resoverFactory.getVariableResolver("foo"));
-        assertEquals("val", resoverFactory.getVariableResolver("foo").getValue());
-        assertNull(resoverFactory.getVariableResolver("bar"));
-    }
+    assertNotNull(resoverFactory.getVariableResolver("foo"));
+    assertEquals("val", resoverFactory.getVariableResolver("foo").getValue());
+    assertNull(resoverFactory.getVariableResolver("bar"));
+  }
 
-    @Test
-    public void testGetVariableResolverNextFactory()
-    {
-        parserConfig.addImport(String.class);
+  @Test
+  public void testGetVariableResolverNextFactory() {
+    parserConfig.addImport(String.class);
 
-        MuleBaseVariableResolverFactory resoverFactory = new MVELExpressionLanguageContext(parserConfig,
-                muleContext);
-        resoverFactory.setNextFactory(new MapVariableResolverFactory(Collections.singletonMap("foo", "val")));
+    MuleBaseVariableResolverFactory resoverFactory = new MVELExpressionLanguageContext(parserConfig, muleContext);
+    resoverFactory.setNextFactory(new MapVariableResolverFactory(Collections.singletonMap("foo", "val")));
 
-        assertNotNull(resoverFactory.getVariableResolver("foo"));
-        assertEquals("val", resoverFactory.getVariableResolver("foo").getValue());
-        assertNull(resoverFactory.getVariableResolver("bar"));
-    }
+    assertNotNull(resoverFactory.getVariableResolver("foo"));
+    assertEquals("val", resoverFactory.getVariableResolver("foo").getValue());
+    assertNull(resoverFactory.getVariableResolver("bar"));
+  }
 }

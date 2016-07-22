@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.ws.security;
 
@@ -20,36 +18,33 @@ import static org.apache.ws.security.handler.WSHandlerConstants.USERNAME_TOKEN;
 import static org.junit.Assert.assertEquals;
 
 @SmallTest
-public class WssTimestampSecurityStrategyTestCase extends AbstractMuleTestCase
-{
-    private static final long EXPIRES = 30;
+public class WssTimestampSecurityStrategyTestCase extends AbstractMuleTestCase {
+  private static final long EXPIRES = 30;
 
-    private WssTimestampSecurityStrategy strategy = new WssTimestampSecurityStrategy();
+  private WssTimestampSecurityStrategy strategy = new WssTimestampSecurityStrategy();
 
-    @Test
-    public void actionAndTtlTimestampFieldsAreSetOnEmptyMap()
-    {
-        Map<String, Object> properties = new HashMap<String, Object>();
-        strategy.setExpires(EXPIRES);
-        strategy.apply(properties, null);
+  @Test
+  public void actionAndTtlTimestampFieldsAreSetOnEmptyMap() {
+    Map<String, Object> properties = new HashMap<String, Object>();
+    strategy.setExpires(EXPIRES);
+    strategy.apply(properties, null);
 
-        assertEquals(TIMESTAMP, properties.get(ACTION));
-        assertEquals(String.valueOf(EXPIRES), properties.get(TTL_TIMESTAMP));
-    }
+    assertEquals(TIMESTAMP, properties.get(ACTION));
+    assertEquals(String.valueOf(EXPIRES), properties.get(TTL_TIMESTAMP));
+  }
 
-    @Test
-    public void actionIsAppendedAfterExistingAction()
-    {
-        Map<String, Object> properties = new HashMap<String, Object>();
-        properties.put(ACTION, USERNAME_TOKEN);
+  @Test
+  public void actionIsAppendedAfterExistingAction() {
+    Map<String, Object> properties = new HashMap<String, Object>();
+    properties.put(ACTION, USERNAME_TOKEN);
 
-        strategy.setExpires(EXPIRES);
-        strategy.apply(properties, null);
+    strategy.setExpires(EXPIRES);
+    strategy.apply(properties, null);
 
-        String expectedAction = USERNAME_TOKEN + " " + TIMESTAMP;
-        assertEquals(expectedAction, properties.get(ACTION));
-        assertEquals(String.valueOf(EXPIRES), properties.get(TTL_TIMESTAMP));
-    }
+    String expectedAction = USERNAME_TOKEN + " " + TIMESTAMP;
+    assertEquals(expectedAction, properties.get(ACTION));
+    assertEquals(String.valueOf(EXPIRES), properties.get(TTL_TIMESTAMP));
+  }
 
 
 }

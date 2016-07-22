@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.retry.async;
 
@@ -16,76 +14,58 @@ import org.slf4j.LoggerFactory;
 import javax.resource.spi.work.Work;
 
 /**
- * A {@link javax.resource.spi.work.Work} implementation used when executing a {@link RetryPolicyTemplate} in a separate
- * thread.
+ * A {@link javax.resource.spi.work.Work} implementation used when executing a {@link RetryPolicyTemplate} in a separate thread.
  */
-public class RetryWorker implements Work
-{
-    protected transient final Logger logger = LoggerFactory.getLogger(RetryWorker.class);
+public class RetryWorker implements Work {
+  protected transient final Logger logger = LoggerFactory.getLogger(RetryWorker.class);
 
-    private final RetryCallback callback;
-    private final WorkManager workManager;
-    private final FutureRetryContext context = new FutureRetryContext();
-    private final RetryPolicyTemplate delegate;
-    private Exception exception = null;
-    private Latch startLatch;
+  private final RetryCallback callback;
+  private final WorkManager workManager;
+  private final FutureRetryContext context = new FutureRetryContext();
+  private final RetryPolicyTemplate delegate;
+  private Exception exception = null;
+  private Latch startLatch;
 
-    public RetryWorker(RetryPolicyTemplate delegate, RetryCallback callback, WorkManager workManager)
-    {
-        this(delegate, callback, workManager, null);
+  public RetryWorker(RetryPolicyTemplate delegate, RetryCallback callback, WorkManager workManager) {
+    this(delegate, callback, workManager, null);
+  }
+
+  public RetryWorker(RetryPolicyTemplate delegate, RetryCallback callback, WorkManager workManager, Latch startLatch) {
+    this.callback = callback;
+    this.workManager = workManager;
+    this.delegate = delegate;
+    this.startLatch = startLatch;
+    if (this.startLatch == null) {
+      this.startLatch = new Latch();
+      this.startLatch.countDown();
     }
+  }
 
-    public RetryWorker(RetryPolicyTemplate delegate,
-                       RetryCallback callback,
-                       WorkManager workManager,
-                       Latch startLatch)
-    {
-        this.callback = callback;
-        this.workManager = workManager;
-        this.delegate = delegate;
-        this.startLatch = startLatch;
-        if (this.startLatch == null)
-        {
-            this.startLatch = new Latch();
-            this.startLatch.countDown();
-        }
+  public void release() {
+
+  }
+
+  public void run() {
+    try {
+      startLatch.await();
+    } catch (InterruptedException e) {
+      logger.warn("Retry thread interrupted for callback: " + callback.getWorkDescription());
+      return;
     }
-
-    public void release()
-    {
+    try {
+      context.setDelegateContext(delegate.execute(callback, workManager));
+    } catch (Exception e) {
+      this.exception = e;
+      logger.error("Error retrying work", e);
 
     }
+  }
 
-    public void run()
-    {
-        try
-        {
-            startLatch.await();
-        }
-        catch (InterruptedException e)
-        {
-            logger.warn("Retry thread interrupted for callback: " + callback.getWorkDescription());
-            return;
-        }
-        try
-        {
-            context.setDelegateContext(delegate.execute(callback, workManager));
-        }
-        catch (Exception e)
-        {
-            this.exception = e;
-            logger.error("Error retrying work", e);
+  public Exception getException() {
+    return exception;
+  }
 
-        }
-    }
-
-    public Exception getException()
-    {
-        return exception;
-    }
-
-    public FutureRetryContext getRetryContext()
-    {
-        return context;
-    }
+  public FutureRetryContext getRetryContext() {
+    return context;
+  }
 }

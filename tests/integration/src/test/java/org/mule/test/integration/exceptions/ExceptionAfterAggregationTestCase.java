@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.exceptions;
 
@@ -18,37 +16,30 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
-public class ExceptionAfterAggregationTestCase extends FunctionalTestCase
-{
+public class ExceptionAfterAggregationTestCase extends FunctionalTestCase {
 
-    private final String configResources;
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+  private final String configResources;
+  @Rule
+  public ExpectedException expectedException = ExpectedException.none();
 
-    public ExceptionAfterAggregationTestCase(String configResources)
-    {
-        super();
-        this.configResources = configResources;
-    }
+  public ExceptionAfterAggregationTestCase(String configResources) {
+    super();
+    this.configResources = configResources;
+  }
 
-    @Parameters
-    public static Collection<Object[]> parameters()
-    {
-        return Arrays.asList(new Object[][] {
-                {"exception-after-aggregation-test-config-simple.xml"},
-                });
-    }
+  @Parameters
+  public static Collection<Object[]> parameters() {
+    return Arrays.asList(new Object[][] {{"exception-after-aggregation-test-config-simple.xml"},});
+  }
 
-    @Override
-    protected String getConfigResources()
-    {
-        return configResources;
-    }
+  @Override
+  protected String getConfigResources() {
+    return configResources;
+  }
 
-    @Test
-    public void testReceiveCorrectExceptionAfterAggregation() throws Exception
-    {
-        expectedException.expectMessage("Ad hoc message exception");
-        flowRunner("main").withPayload(getTestMuleMessage("some data")).run();
-    }
+  @Test
+  public void testReceiveCorrectExceptionAfterAggregation() throws Exception {
+    expectedException.expectMessage("Ad hoc message exception");
+    flowRunner("main").withPayload(getTestMuleMessage("some data")).run();
+  }
 }

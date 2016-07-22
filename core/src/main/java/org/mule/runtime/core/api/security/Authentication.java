@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.security;
 
@@ -12,24 +10,22 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * <code>Authentication</code> represents an authentication request and contains
- * authentication information if the request was successful
+ * <code>Authentication</code> represents an authentication request and contains authentication information if the request was successful
  */
-public interface Authentication extends Serializable
-{
-    boolean isAuthenticated();
+public interface Authentication extends Serializable {
+  boolean isAuthenticated();
 
-    void setAuthenticated(boolean b);
+  void setAuthenticated(boolean b);
 
-    Object getCredentials();
+  Object getCredentials();
 
-    Object getPrincipal();
+  Object getPrincipal();
 
-    Map<String, Object> getProperties();
+  Map<String, Object> getProperties();
 
-    void setProperties(Map<String, Object> properties);
+  void setProperties(Map<String, Object> properties);
 
-    MuleEvent getEvent();
+  MuleEvent getEvent();
 
-    void setEvent(MuleEvent event);
+  void setEvent(MuleEvent event);
 }

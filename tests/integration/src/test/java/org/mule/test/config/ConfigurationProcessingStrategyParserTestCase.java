@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.config;
 
@@ -26,39 +24,32 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
-public class ConfigurationProcessingStrategyParserTestCase extends FunctionalTestCase
-{
+public class ConfigurationProcessingStrategyParserTestCase extends FunctionalTestCase {
 
-    private final Class<? extends ProcessingStrategy> expectedStrategyType;
-    @Rule
-    public SystemProperty processingStrategyProperty;
+  private final Class<? extends ProcessingStrategy> expectedStrategyType;
+  @Rule
+  public SystemProperty processingStrategyProperty;
 
-    public ConfigurationProcessingStrategyParserTestCase(String defaultProcessingStrategy,
-                                                         Class<? extends ProcessingStrategy> expectedStrategyType)
-    {
-        this.expectedStrategyType = expectedStrategyType;
-        processingStrategyProperty = new SystemProperty("processingStrategy", defaultProcessingStrategy);
-    }
+  public ConfigurationProcessingStrategyParserTestCase(String defaultProcessingStrategy,
+      Class<? extends ProcessingStrategy> expectedStrategyType) {
+    this.expectedStrategyType = expectedStrategyType;
+    processingStrategyProperty = new SystemProperty("processingStrategy", defaultProcessingStrategy);
+  }
 
-    @Parameterized.Parameters(name = "{0}")
-    public static Collection<Object[]> parameters()
-    {
-        return Arrays.asList(new Object[][] {
-                {ProcessingStrategyUtils.DEFAULT_PROCESSING_STRATEGY, DefaultFlowProcessingStrategy.class},
-                {ProcessingStrategyUtils.SYNC_PROCESSING_STRATEGY, SynchronousProcessingStrategy.class},
-                {ProcessingStrategyUtils.ASYNC_PROCESSING_STRATEGY, AsynchronousProcessingStrategy.class},
-                });
-    }
+  @Parameterized.Parameters(name = "{0}")
+  public static Collection<Object[]> parameters() {
+    return Arrays.asList(new Object[][] {{ProcessingStrategyUtils.DEFAULT_PROCESSING_STRATEGY, DefaultFlowProcessingStrategy.class},
+        {ProcessingStrategyUtils.SYNC_PROCESSING_STRATEGY, SynchronousProcessingStrategy.class},
+        {ProcessingStrategyUtils.ASYNC_PROCESSING_STRATEGY, AsynchronousProcessingStrategy.class},});
+  }
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "configuration-processing-strategy-config.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "configuration-processing-strategy-config.xml";
+  }
 
-    @Test
-    public void verifyConfigurationProcessingStrategy() throws Exception
-    {
-        assertThat(muleContext.getConfiguration().getDefaultProcessingStrategy(), is(instanceOf(expectedStrategyType)));
-    }
+  @Test
+  public void verifyConfigurationProcessingStrategy() throws Exception {
+    assertThat(muleContext.getConfiguration().getDefaultProcessingStrategy(), is(instanceOf(expectedStrategyType)));
+  }
 }

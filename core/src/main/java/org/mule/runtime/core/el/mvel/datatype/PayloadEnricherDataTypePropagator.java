@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.el.mvel.datatype;
@@ -19,27 +17,21 @@ import static org.mule.runtime.core.el.mvel.MessageVariableResolverFactory.PAYLO
 /**
  * Propagates data type when payload is used as enrichment target
  */
-public class PayloadEnricherDataTypePropagator extends AbstractEnricherDataTypePropagator
-{
+public class PayloadEnricherDataTypePropagator extends AbstractEnricherDataTypePropagator {
 
-    @Override
-    protected boolean doPropagate(MuleEvent event, TypedValue typedValue, ASTNode node)
-    {
-        if (node instanceof Assignment)
-        {
-            String assignmentVar = ((Assignment) node).getAssignmentVar();
+  @Override
+  protected boolean doPropagate(MuleEvent event, TypedValue typedValue, ASTNode node) {
+    if (node instanceof Assignment) {
+      String assignmentVar = ((Assignment) node).getAssignmentVar();
 
-            if (PAYLOAD.equals(assignmentVar) || MESSAGE_PAYLOAD.equals(assignmentVar))
-            {
-                event.setMessage(MuleMessage.builder(event.getMessage())
-                                            .payload(typedValue.getValue())
-                                            .mediaType(typedValue.getDataType().getMediaType())
-                                            .build());
-                return true;
-            }
+      if (PAYLOAD.equals(assignmentVar) || MESSAGE_PAYLOAD.equals(assignmentVar)) {
+        event.setMessage(MuleMessage.builder(event.getMessage()).payload(typedValue.getValue())
+            .mediaType(typedValue.getDataType().getMediaType()).build());
+        return true;
+      }
 
-        }
-        return false;
     }
+    return false;
+  }
 
 }

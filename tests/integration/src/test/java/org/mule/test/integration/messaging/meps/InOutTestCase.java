@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.messaging.meps;
 
@@ -21,33 +19,30 @@ import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class InOutTestCase extends FunctionalTestCase
-{
-    public static final long TIMEOUT = 3000;
+public class InOutTestCase extends FunctionalTestCase {
+  public static final long TIMEOUT = 3000;
 
-    @Rule
-    public DynamicPort httpPort = new DynamicPort("port1");
+  @Rule
+  public DynamicPort httpPort = new DynamicPort("port1");
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "org/mule/test/integration/messaging/meps/pattern_In-Out-flow.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "org/mule/test/integration/messaging/meps/pattern_In-Out-flow.xml";
+  }
 
-    @Test
-    public void testExchange() throws Exception
-    {
-        MuleClient client = muleContext.getClient();
+  @Test
+  public void testExchange() throws Exception {
+    MuleClient client = muleContext.getClient();
 
-        String listenerUrl = format("http://localhost:%s/", httpPort.getNumber());
-        MuleMessage result = client.send(listenerUrl, "some data", null);
-        assertNotNull(result);
-        assertEquals("foo header not received", getPayloadAsString(result));
+    String listenerUrl = format("http://localhost:%s/", httpPort.getNumber());
+    MuleMessage result = client.send(listenerUrl, "some data", null);
+    assertNotNull(result);
+    assertEquals("foo header not received", getPayloadAsString(result));
 
-        Map<String, Serializable> props = new HashMap<>();
-        props.put("foo", "bar");
-        result = client.send(listenerUrl, "some data", props);
-        assertNotNull(result);
-        assertEquals("foo header received", getPayloadAsString(result));
-    }
+    Map<String, Serializable> props = new HashMap<>();
+    props.put("foo", "bar");
+    result = client.send(listenerUrl, "some data", props);
+    assertNotNull(result);
+    assertEquals("foo header received", getPayloadAsString(result));
+  }
 }

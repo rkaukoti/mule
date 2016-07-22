@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.source;
 
@@ -19,59 +17,50 @@ import org.mule.runtime.module.extension.internal.util.MuleExtensionUtils;
 import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
- * Resolves and injects the values of a {@link Source} that has fields annotated
- * with {@link Parameter} or {@link org.mule.runtime.module.extension.internal.introspection.ParameterGroup}
+ * Resolves and injects the values of a {@link Source} that has fields annotated with {@link Parameter} or
+ * {@link org.mule.runtime.module.extension.internal.introspection.ParameterGroup}
  *
  * @since 4.0
  */
-public final class SourceConfigurer
-{
+public final class SourceConfigurer {
 
-    private final SourceModel model;
-    private final ResolverSet resolverSet;
-    private final MuleContext muleContext;
+  private final SourceModel model;
+  private final ResolverSet resolverSet;
+  private final MuleContext muleContext;
 
-    /**
-     * Create a new instance
-     *
-     * @param model       the {@link SourceModel} which describes the instances that the {@link #configure(Source)} method will accept
-     * @param resolverSet the {@link ResolverSet} used to resolve the parameters
-     * @param muleContext the current {@link MuleContext}
-     */
-    public SourceConfigurer(SourceModel model, ResolverSet resolverSet, MuleContext muleContext)
-    {
-        this.model = model;
-        this.resolverSet = resolverSet;
-        this.muleContext = muleContext;
+  /**
+   * Create a new instance
+   *
+   * @param model the {@link SourceModel} which describes the instances that the {@link #configure(Source)} method will accept
+   * @param resolverSet the {@link ResolverSet} used to resolve the parameters
+   * @param muleContext the current {@link MuleContext}
+   */
+  public SourceConfigurer(SourceModel model, ResolverSet resolverSet, MuleContext muleContext) {
+    this.model = model;
+    this.resolverSet = resolverSet;
+    this.muleContext = muleContext;
+  }
+
+  /**
+   * Performs the configuration of the given {@code source} and returns the result
+   *
+   * @param source a {@link Source}
+   * @return the configured instance
+   */
+  public Source configure(Source source) throws MuleException {
+    ParameterGroupAwareObjectBuilder<Source> builder = new ParameterGroupAwareObjectBuilder<Source>(source.getClass(), model, resolverSet) {
+      @Override
+      protected Source instantiateObject() {
+        return source;
+      }
+    };
+
+    try {
+      return builder.build(MuleExtensionUtils.getInitialiserEvent(muleContext));
+    } catch (Exception e) {
+      throw new MuleRuntimeException(
+          createStaticMessage("Exception was found trying to configure source of type " + source.getClass().getName()), e);
     }
-
-    /**
-     * Performs the configuration of the given {@code source} and returns the result
-     *
-     * @param source a {@link Source}
-     * @return the configured instance
-     */
-    public Source configure(Source source) throws MuleException
-    {
-        ParameterGroupAwareObjectBuilder<Source> builder =
-                new ParameterGroupAwareObjectBuilder<Source>(source.getClass(), model, resolverSet)
-                {
-                    @Override
-                    protected Source instantiateObject()
-                    {
-                        return source;
-                    }
-                };
-
-        try
-        {
-            return builder.build(MuleExtensionUtils.getInitialiserEvent(muleContext));
-        }
-        catch (Exception e)
-        {
-            throw new MuleRuntimeException(createStaticMessage("Exception was found trying to configure source of type "
-                                                               + source.getClass().getName()), e);
-        }
-    }
+  }
 
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.builder;
 
@@ -17,36 +15,31 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 @SmallTest
-public class HttpResponseDefinitionParserTransformerTestCase extends AbstractMuleTestCase
-{
-    private HttpResponseDefinitionParser httpResponseDefinitionParser;
+public class HttpResponseDefinitionParserTransformerTestCase extends AbstractMuleTestCase {
+  private HttpResponseDefinitionParser httpResponseDefinitionParser;
 
-    @Before
-    public void setUp()
-    {
-        httpResponseDefinitionParser = new HttpResponseDefinitionParser("header");
+  @Before
+  public void setUp() {
+    httpResponseDefinitionParser = new HttpResponseDefinitionParser("header");
+  }
+
+  @Test
+  public void testProcessHeaderName() {
+    Map<String, String> headerNameMapping = populateHeaderNamesMapping();
+
+    for (String headerName : headerNameMapping.keySet()) {
+      String processedHeaderName = httpResponseDefinitionParser.processHeaderName(headerName);
+      assertEquals(headerNameMapping.get(headerName), processedHeaderName);
     }
+  }
 
-    @Test
-    public void testProcessHeaderName()
-    {
-        Map<String, String> headerNameMapping = populateHeaderNamesMapping();
-
-        for (String headerName : headerNameMapping.keySet())
-        {
-            String processedHeaderName = httpResponseDefinitionParser.processHeaderName(headerName);
-            assertEquals(headerNameMapping.get(headerName), processedHeaderName);
-        }
-    }
-
-    private Map<String, String> populateHeaderNamesMapping()
-    {
-        Map<String, String> headerNameMapping = new HashMap<String, String>();
-        headerNameMapping.put("cache-control", "Cache-Control");
-        headerNameMapping.put("location", "Location");
-        headerNameMapping.put("expires", "Expires");
-        return headerNameMapping;
-    }
+  private Map<String, String> populateHeaderNamesMapping() {
+    Map<String, String> headerNameMapping = new HashMap<String, String>();
+    headerNameMapping.put("cache-control", "Cache-Control");
+    headerNameMapping.put("location", "Location");
+    headerNameMapping.put("expires", "Expires");
+    return headerNameMapping;
+  }
 
 
 }

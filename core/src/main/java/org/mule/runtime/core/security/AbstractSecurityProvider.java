@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.security;
 
@@ -13,64 +11,52 @@ import org.mule.runtime.core.api.security.SecurityContextFactory;
 import org.mule.runtime.core.api.security.SecurityProvider;
 import org.mule.runtime.core.api.security.UnknownAuthenticationTypeException;
 
-public abstract class AbstractSecurityProvider implements SecurityProvider
-{
-    private String name;
-    private SecurityContextFactory securityContextFactory;
+public abstract class AbstractSecurityProvider implements SecurityProvider {
+  private String name;
+  private SecurityContextFactory securityContextFactory;
 
-    public AbstractSecurityProvider(String name)
-    {
-        this.name = name;
+  public AbstractSecurityProvider(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public final void initialise() throws InitialisationException {
+    doInitialise();
+
+    if (securityContextFactory == null) {
+      securityContextFactory = new DefaultSecurityContextFactory();
     }
+  }
 
-    @Override
-    public final void initialise() throws InitialisationException
-    {
-        doInitialise();
+  protected void doInitialise() throws InitialisationException {
+    // do nothing by default
+  }
 
-        if (securityContextFactory == null)
-        {
-            securityContextFactory = new DefaultSecurityContextFactory();
-        }
-    }
+  @Override
+  public boolean supports(Class<?> aClass) {
+    return Authentication.class.isAssignableFrom(aClass);
+  }
 
-    protected void doInitialise() throws InitialisationException
-    {
-        // do nothing by default
-    }
+  @Override
+  public SecurityContext createSecurityContext(Authentication authentication) throws UnknownAuthenticationTypeException {
+    return securityContextFactory.create(authentication);
+  }
 
-    @Override
-    public boolean supports(Class<?> aClass)
-    {
-        return Authentication.class.isAssignableFrom(aClass);
-    }
+  @Override
+  public String getName() {
+    return name;
+  }
 
-    @Override
-    public SecurityContext createSecurityContext(Authentication authentication)
-            throws UnknownAuthenticationTypeException
-    {
-        return securityContextFactory.create(authentication);
-    }
+  @Override
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    @Override
-    public String getName()
-    {
-        return name;
-    }
+  public SecurityContextFactory getSecurityContextFactory() {
+    return securityContextFactory;
+  }
 
-    @Override
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public SecurityContextFactory getSecurityContextFactory()
-    {
-        return securityContextFactory;
-    }
-
-    public void setSecurityContextFactory(SecurityContextFactory securityContextFactory)
-    {
-        this.securityContextFactory = securityContextFactory;
-    }
+  public void setSecurityContextFactory(SecurityContextFactory securityContextFactory) {
+    this.securityContextFactory = securityContextFactory;
+  }
 }

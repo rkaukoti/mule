@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection;
 
@@ -25,56 +23,44 @@ import static org.mule.metadata.java.api.JavaTypeLoader.JAVA;
 
 @SmallTest
 @RunWith(Parameterized.class)
-public class BasicTypeMetadataVisitorTestCase extends AbstractMuleTestCase
-{
+public class BasicTypeMetadataVisitorTestCase extends AbstractMuleTestCase {
 
-    private static final BaseTypeBuilder<?> BUILDER = BaseTypeBuilder.create(JAVA);
-    @Parameterized.Parameter(0)
-    public MetadataType metadataType;
-    @Parameterized.Parameter(1)
-    public boolean expectedSimple;
-    private boolean simpleType;
-    private boolean complexType;
-    private BasicTypeMetadataVisitor visitor = new BasicTypeMetadataVisitor()
-    {
-        @Override
-        protected void visitBasicType(MetadataType metadataType)
-        {
-            simpleType = true;
-        }
-
-        @Override
-        protected void defaultVisit(MetadataType metadataType)
-        {
-            complexType = true;
-        }
-    };
-
-    @Parameters(name = "isSimpleType({0})")
-    public static Collection<Object[]> data()
-    {
-        return Arrays.asList(new Object[][] {
-                {BUILDER.stringType().build(), true},
-                {BUILDER.numberType().build(), true},
-                {BUILDER.booleanType().build(), true},
-                {BUILDER.objectType().build(), false},
-                {BUILDER.arrayType().of(BUILDER.stringType()).build(), false},
-                {BUILDER.dateTimeType().build(), false}
-        });
+  private static final BaseTypeBuilder<?> BUILDER = BaseTypeBuilder.create(JAVA);
+  @Parameterized.Parameter(0)
+  public MetadataType metadataType;
+  @Parameterized.Parameter(1)
+  public boolean expectedSimple;
+  private boolean simpleType;
+  private boolean complexType;
+  private BasicTypeMetadataVisitor visitor = new BasicTypeMetadataVisitor() {
+    @Override
+    protected void visitBasicType(MetadataType metadataType) {
+      simpleType = true;
     }
 
-    @Before
-    public void before()
-    {
-        simpleType = false;
-        complexType = false;
+    @Override
+    protected void defaultVisit(MetadataType metadataType) {
+      complexType = true;
     }
+  };
 
-    @Test
-    public void assertSimpleOrNot()
-    {
-        metadataType.accept(visitor);
-        assertThat(simpleType, is(expectedSimple));
-        assertThat(complexType, is(!expectedSimple));
-    }
+  @Parameters(name = "isSimpleType({0})")
+  public static Collection<Object[]> data() {
+    return Arrays.asList(new Object[][] {{BUILDER.stringType().build(), true}, {BUILDER.numberType().build(), true},
+        {BUILDER.booleanType().build(), true}, {BUILDER.objectType().build(), false},
+        {BUILDER.arrayType().of(BUILDER.stringType()).build(), false}, {BUILDER.dateTimeType().build(), false}});
+  }
+
+  @Before
+  public void before() {
+    simpleType = false;
+    complexType = false;
+  }
+
+  @Test
+  public void assertSimpleOrNot() {
+    metadataType.accept(visitor);
+    assertThat(simpleType, is(expectedSimple));
+    assertThat(complexType, is(!expectedSimple));
+  }
 }

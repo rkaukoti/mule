@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.tls.internal;
 
@@ -20,51 +18,42 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 @DefaultTlsContextFactoryBuilder
-public class MuleTlsContextFactoryBuilder implements TlsContextFactoryBuilder, Initialisable, MuleContextAware
-{
+public class MuleTlsContextFactoryBuilder implements TlsContextFactoryBuilder, Initialisable, MuleContextAware {
 
-    private final AtomicBoolean initialised = new AtomicBoolean(false);
-    private TlsContextFactory defaultTlsContextFactory;
-    private MuleContext muleContext;
+  private final AtomicBoolean initialised = new AtomicBoolean(false);
+  private TlsContextFactory defaultTlsContextFactory;
+  private MuleContext muleContext;
 
-    /**
-     * Creates a default {@link TlsContextFactory} and registers it under key
-     * {@link MuleProperties#DEFAULT_TLS_CONTEXT_FACTORY_REGISTRY_KEY}
-     *
-     * @throws InitialisationException if the {@link #defaultTlsContextFactory} could not be created or registered
-     */
-    @Override
-    public void initialise() throws InitialisationException
-    {
-        if (!initialised.compareAndSet(false, true))
-        {
-            return;
-        }
-
-        try
-        {
-            defaultTlsContextFactory = new DefaultTlsContextFactory();
-            muleContext.getRegistry().registerObject(MuleProperties.DEFAULT_TLS_CONTEXT_FACTORY_REGISTRY_KEY, defaultTlsContextFactory);
-        }
-        catch (Exception e)
-        {
-            throw new InitialisationException(createStaticMessage("Failed to create default " + TlsContextFactory.class.getSimpleName()), e,
-                    this);
-        }
+  /**
+   * Creates a default {@link TlsContextFactory} and registers it under key {@link MuleProperties#DEFAULT_TLS_CONTEXT_FACTORY_REGISTRY_KEY}
+   *
+   * @throws InitialisationException if the {@link #defaultTlsContextFactory} could not be created or registered
+   */
+  @Override
+  public void initialise() throws InitialisationException {
+    if (!initialised.compareAndSet(false, true)) {
+      return;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TlsContextFactory buildDefault()
-    {
-        return defaultTlsContextFactory;
+    try {
+      defaultTlsContextFactory = new DefaultTlsContextFactory();
+      muleContext.getRegistry().registerObject(MuleProperties.DEFAULT_TLS_CONTEXT_FACTORY_REGISTRY_KEY, defaultTlsContextFactory);
+    } catch (Exception e) {
+      throw new InitialisationException(createStaticMessage("Failed to create default " + TlsContextFactory.class.getSimpleName()), e,
+          this);
     }
+  }
 
-    @Override
-    public void setMuleContext(MuleContext muleContext)
-    {
-        this.muleContext = muleContext;
-    }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public TlsContextFactory buildDefault() {
+    return defaultTlsContextFactory;
+  }
+
+  @Override
+  public void setMuleContext(MuleContext muleContext) {
+    this.muleContext = muleContext;
+  }
 }

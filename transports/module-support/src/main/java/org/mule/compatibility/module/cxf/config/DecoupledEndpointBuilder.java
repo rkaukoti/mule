@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.module.cxf.config;
 
@@ -20,35 +18,31 @@ import org.mule.runtime.module.cxf.CxfOutboundMessageProcessor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DecoupledEndpointBuilder
-{
+public class DecoupledEndpointBuilder {
 
-    public static void build(MuleContext muleContext, String decoupledEndpoint, CxfOutboundMessageProcessor processor, Bus bus)
-            throws MuleException
-    {
-        if (decoupledEndpoint != null)
-        {
-            processor.setDecoupledEndpoint(decoupledEndpoint);
+  public static void build(MuleContext muleContext, String decoupledEndpoint, CxfOutboundMessageProcessor processor, Bus bus)
+      throws MuleException {
+    if (decoupledEndpoint != null) {
+      processor.setDecoupledEndpoint(decoupledEndpoint);
 
-            CxfInboundMessageProcessor cxfInboundMP = new CxfInboundMessageProcessor();
-            cxfInboundMP.setMuleContext(muleContext);
-            cxfInboundMP.setBus(bus);
+      CxfInboundMessageProcessor cxfInboundMP = new CxfInboundMessageProcessor();
+      cxfInboundMP.setMuleContext(muleContext);
+      cxfInboundMP.setBus(bus);
 
-            List<MessageProcessor> mps = new ArrayList<MessageProcessor>();
-            mps.add(cxfInboundMP);
+      List<MessageProcessor> mps = new ArrayList<MessageProcessor>();
+      mps.add(cxfInboundMP);
 
-            EndpointBuilder ep = getEndpointFactory(muleContext).getEndpointBuilder(decoupledEndpoint);
+      EndpointBuilder ep = getEndpointFactory(muleContext).getEndpointBuilder(decoupledEndpoint);
 
-            Flow flow = new Flow("decoupled-" + ep.toString(), muleContext);
-            flow.setMessageProcessors(mps);
-            flow.setMessageSource(ep.buildInboundEndpoint());
-            muleContext.getRegistry().registerObject(flow.getName(), flow);
-        }
-
+      Flow flow = new Flow("decoupled-" + ep.toString(), muleContext);
+      flow.setMessageProcessors(mps);
+      flow.setMessageSource(ep.buildInboundEndpoint());
+      muleContext.getRegistry().registerObject(flow.getName(), flow);
     }
 
-    private static EndpointFactory getEndpointFactory(MuleContext muleContext)
-    {
-        return (EndpointFactory) muleContext.getRegistry().lookupObject(MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY);
-    }
+  }
+
+  private static EndpointFactory getEndpointFactory(MuleContext muleContext) {
+    return (EndpointFactory) muleContext.getRegistry().lookupObject(MuleEndpointProperties.OBJECT_MULE_ENDPOINT_FACTORY);
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -17,17 +15,15 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 @SmallTest
-public class NullPayloadTestCase extends AbstractMuleTestCase
-{
+public class NullPayloadTestCase extends AbstractMuleTestCase {
 
-    @Test
-    public void testUniqueDeserialization()
-    {
-        byte[] serialized = SerializationUtils.serialize(null);
-        assertNotNull(serialized);
+  @Test
+  public void testUniqueDeserialization() {
+    byte[] serialized = SerializationUtils.serialize(null);
+    assertNotNull(serialized);
 
-        Object deserialized = SerializationUtils.deserialize(serialized);
-        assertThat(deserialized, is(nullValue()));
-    }
+    Object deserialized = SerializationUtils.deserialize(serialized);
+    assertThat(deserialized, is(nullValue()));
+  }
 
 }

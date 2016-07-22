@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.exceptions;
 
@@ -33,143 +31,122 @@ import static org.junit.Assert.assertThat;
 import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
 import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
-public class CatchExceptionStrategyTestCase extends FunctionalTestCase
-{
-    public static final int TIMEOUT = 5000;
-    public static final String ERROR_PROCESSING_NEWS = "error processing news";
-    public static final String JSON_RESPONSE = "{\"errorMessage\":\"error processing news\",\"userId\":15,\"title\":\"News title\"}";
-    public static final String JSON_REQUEST = "{\"userId\":\"15\"}";
-    public static final String MESSAGE = "some message";
-    public static final String MESSAGE_EXPECTED = "some message consumed successfully";
-    @Rule
-    public DynamicPort dynamicPort1 = new DynamicPort("port1");
-    @Rule
-    public DynamicPort dynamicPort2 = new DynamicPort("port2");
-    @Rule
-    public DynamicPort dynamicPort3 = new DynamicPort("port3");
-    private DefaultTlsContextFactory tlsContextFactory;
+public class CatchExceptionStrategyTestCase extends FunctionalTestCase {
+  public static final int TIMEOUT = 5000;
+  public static final String ERROR_PROCESSING_NEWS = "error processing news";
+  public static final String JSON_RESPONSE = "{\"errorMessage\":\"error processing news\",\"userId\":15,\"title\":\"News title\"}";
+  public static final String JSON_REQUEST = "{\"userId\":\"15\"}";
+  public static final String MESSAGE = "some message";
+  public static final String MESSAGE_EXPECTED = "some message consumed successfully";
+  @Rule
+  public DynamicPort dynamicPort1 = new DynamicPort("port1");
+  @Rule
+  public DynamicPort dynamicPort2 = new DynamicPort("port2");
+  @Rule
+  public DynamicPort dynamicPort3 = new DynamicPort("port3");
+  private DefaultTlsContextFactory tlsContextFactory;
+
+  @Override
+  protected String getConfigFile() {
+    return "org/mule/test/integration/exceptions/catch-exception-strategy-use-case-flow.xml";
+  }
+
+  @Before
+  public void setup() throws IOException {
+    tlsContextFactory = new DefaultTlsContextFactory();
+
+    // Configure trust store in the client with the certificate of the server.
+    tlsContextFactory.setTrustStorePath("trustStore");
+    tlsContextFactory.setTrustStorePassword("mulepassword");
+  }
+
+  @Test
+  public void testTcpJsonErrorResponse() throws Exception {
+    testJsonErrorResponse(String.format("tcp://localhost:%s", dynamicPort2.getNumber()));
+  }
+
+  private void testJsonErrorResponse(String endpointUri) throws Exception {
+    MuleClient client = muleContext.getClient();
+    final HttpRequestOptions httpRequestOptions =
+        newOptions().method(POST.name()).tlsContextFactory(tlsContextFactory).responseTimeout(TIMEOUT).build();
+    MuleMessage response = client.send(endpointUri, getTestMuleMessage(JSON_REQUEST), httpRequestOptions);
+    assertThat(response, IsNull.<Object>notNullValue());
+    // compare the structure and values but not the attributes' order
+    ObjectMapper mapper = new ObjectMapper();
+    JsonNode actualJsonNode = mapper.readTree(getPayloadAsString(response));
+    JsonNode expectedJsonNode = mapper.readTree(JSON_RESPONSE);
+    assertThat(actualJsonNode, Is.is(expectedJsonNode));
+  }
+
+  public static class LoadNewsProcessor implements MessageProcessor {
+    @Override
+    public MuleEvent process(MuleEvent event) throws MuleException {
+      NewsRequest newsRequest = (NewsRequest) event.getMessage().getPayload();
+      NewsResponse newsResponse = new NewsResponse();
+      newsResponse.setUserId(newsRequest.getUserId());
+      newsResponse.setTitle("News title");
+      event.setMessage(MuleMessage.builder(event.getMessage()).payload(newsResponse).build());
+      return event;
+    }
+  }
+
+  public static class NewsErrorProcessor implements MessageProcessor {
 
     @Override
-    protected String getConfigFile()
-    {
-        return "org/mule/test/integration/exceptions/catch-exception-strategy-use-case-flow.xml";
+    public MuleEvent process(MuleEvent event) throws MuleException {
+      ((NewsResponse) event.getMessage().getPayload()).setErrorMessage(ERROR_PROCESSING_NEWS);
+      return event;
+    }
+  }
+
+  public static class NewsRequest {
+    private int userId;
+
+    public int getUserId() {
+      return userId;
     }
 
-    @Before
-    public void setup() throws IOException
-    {
-        tlsContextFactory = new DefaultTlsContextFactory();
+    public void setUserId(int userId) {
+      this.userId = userId;
+    }
+  }
 
-        // Configure trust store in the client with the certificate of the server.
-        tlsContextFactory.setTrustStorePath("trustStore");
-        tlsContextFactory.setTrustStorePassword("mulepassword");
+  public static class NewsResponse {
+    private int userId;
+    private String title;
+    private String errorMessage;
+
+    public int getUserId() {
+      return userId;
     }
 
-    @Test
-    public void testTcpJsonErrorResponse() throws Exception
-    {
-        testJsonErrorResponse(String.format("tcp://localhost:%s", dynamicPort2.getNumber()));
+    public void setUserId(int userId) {
+      this.userId = userId;
     }
 
-    private void testJsonErrorResponse(String endpointUri) throws Exception
-    {
-        MuleClient client = muleContext.getClient();
-        final HttpRequestOptions httpRequestOptions =
-                newOptions().method(POST.name()).tlsContextFactory(tlsContextFactory).responseTimeout(TIMEOUT).build();
-        MuleMessage response = client.send(endpointUri, getTestMuleMessage(JSON_REQUEST), httpRequestOptions);
-        assertThat(response, IsNull.<Object>notNullValue());
-        // compare the structure and values but not the attributes' order
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode actualJsonNode = mapper.readTree(getPayloadAsString(response));
-        JsonNode expectedJsonNode = mapper.readTree(JSON_RESPONSE);
-        assertThat(actualJsonNode, Is.is(expectedJsonNode));
+    public String getTitle() {
+      return title;
     }
 
-    public static class LoadNewsProcessor implements MessageProcessor
-    {
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            NewsRequest newsRequest = (NewsRequest) event.getMessage().getPayload();
-            NewsResponse newsResponse = new NewsResponse();
-            newsResponse.setUserId(newsRequest.getUserId());
-            newsResponse.setTitle("News title");
-            event.setMessage(MuleMessage.builder(event.getMessage()).payload(newsResponse).build());
-            return event;
-        }
+    public void setTitle(String title) {
+      this.title = title;
     }
 
-    public static class NewsErrorProcessor implements MessageProcessor
-    {
-
-        @Override
-        public MuleEvent process(MuleEvent event) throws MuleException
-        {
-            ((NewsResponse) event.getMessage().getPayload()).setErrorMessage(ERROR_PROCESSING_NEWS);
-            return event;
-        }
+    public String getErrorMessage() {
+      return errorMessage;
     }
 
-    public static class NewsRequest
-    {
-        private int userId;
-
-        public int getUserId()
-        {
-            return userId;
-        }
-
-        public void setUserId(int userId)
-        {
-            this.userId = userId;
-        }
+    public void setErrorMessage(String errorMessage) {
+      this.errorMessage = errorMessage;
     }
+  }
 
-    public static class NewsResponse
-    {
-        private int userId;
-        private String title;
-        private String errorMessage;
-
-        public int getUserId()
-        {
-            return userId;
-        }
-
-        public void setUserId(int userId)
-        {
-            this.userId = userId;
-        }
-
-        public String getTitle()
-        {
-            return title;
-        }
-
-        public void setTitle(String title)
-        {
-            this.title = title;
-        }
-
-        public String getErrorMessage()
-        {
-            return errorMessage;
-        }
-
-        public void setErrorMessage(String errorMessage)
-        {
-            this.errorMessage = errorMessage;
-        }
+  @WebService
+  public static class Echo {
+    @WebResult(name = "text")
+    public String echo(@WebParam(name = "text") String string) {
+      throw new RuntimeException();
     }
-
-    @WebService
-    public static class Echo
-    {
-        @WebResult(name = "text")
-        public String echo(@WebParam(name = "text") String string)
-        {
-            throw new RuntimeException();
-        }
-    }
+  }
 
 }

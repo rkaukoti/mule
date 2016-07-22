@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.work;
 
@@ -27,143 +25,111 @@ import static org.junit.Assert.assertThat;
  * <li>StartWorkExecutor - block till the work is started, then async
  * <li>SyncWorkExecutor - blocking executor, meaning we should be running in the very same thread.
  * </ol>
- * It's not really important to make a distinction between <code>scheduleWork()</code> and
- * <code>startWork()</code> for this test, thus they just check for async execution.
+ * It's not really important to make a distinction between <code>scheduleWork()</code> and <code>startWork()</code> for this test, thus they
+ * just check for async execution.
  */
-public class MuleWorkManagerTestCase extends AbstractMuleContextTestCase
-{
-    private final transient Logger logger = LoggerFactory.getLogger(getClass());
+public class MuleWorkManagerTestCase extends AbstractMuleContextTestCase {
+  private final transient Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Test
-    public void testDoWorkExecutesSynchronously() throws Exception
-    {
-        final Thread callerThread = Thread.currentThread();
+  @Test
+  public void testDoWorkExecutesSynchronously() throws Exception {
+    final Thread callerThread = Thread.currentThread();
 
-        MuleWorkManager wm = new MuleWorkManager(ThreadingProfile.DEFAULT_THREADING_PROFILE, null, 5000);
-        wm.setMuleContext(muleContext);
+    MuleWorkManager wm = new MuleWorkManager(ThreadingProfile.DEFAULT_THREADING_PROFILE, null, 5000);
+    wm.setMuleContext(muleContext);
 
-        try
-        {
-            wm.start();
+    try {
+      wm.start();
 
-            wm.doWork(new Work()
-            {
-                public void release()
-                {
-                    // no-op
-                }
-
-                public void run()
-                {
-                    Thread calleeThread = Thread.currentThread();
-                    assertEquals("WorkManager.doWork() should have been executed in the same thread.",
-                            callerThread, calleeThread);
-                    if (logger.isDebugEnabled())
-                    {
-                        logger.debug("WORK: " + Thread.currentThread());
-                    }
-                }
-            });
-            if (logger.isDebugEnabled())
-            {
-                logger.debug("MAIN: " + Thread.currentThread());
-            }
-        }
-        finally
-        {
-            wm.dispose();
+      wm.doWork(new Work() {
+        public void release() {
+          // no-op
         }
 
+        public void run() {
+          Thread calleeThread = Thread.currentThread();
+          assertEquals("WorkManager.doWork() should have been executed in the same thread.", callerThread, calleeThread);
+          if (logger.isDebugEnabled()) {
+            logger.debug("WORK: " + Thread.currentThread());
+          }
+        }
+      });
+      if (logger.isDebugEnabled()) {
+        logger.debug("MAIN: " + Thread.currentThread());
+      }
+    } finally {
+      wm.dispose();
     }
 
-    @Test
-    public void testScheduleWorkExecutesAsynchronously() throws Exception
-    {
-        final Thread callerThread = Thread.currentThread();
+  }
 
-        MuleWorkManager wm = new MuleWorkManager(ThreadingProfile.DEFAULT_THREADING_PROFILE, null, 5000);
-        wm.setMuleContext(muleContext);
+  @Test
+  public void testScheduleWorkExecutesAsynchronously() throws Exception {
+    final Thread callerThread = Thread.currentThread();
 
-        try
-        {
-            wm.start();
+    MuleWorkManager wm = new MuleWorkManager(ThreadingProfile.DEFAULT_THREADING_PROFILE, null, 5000);
+    wm.setMuleContext(muleContext);
 
-            wm.scheduleWork(new Work()
-            {
-                public void release()
-                {
-                    // no-op
-                }
+    try {
+      wm.start();
 
-                public void run()
-                {
-                    Thread calleeThread = Thread.currentThread();
-                    assertFalse("WorkManager.scheduleWork() should have been executed in a different thread.",
-                            callerThread.equals(calleeThread));
-                    if (logger.isDebugEnabled())
-                    {
-                        logger.debug("WORK: " + Thread.currentThread());
-                    }
-                }
-            });
-            if (logger.isDebugEnabled())
-            {
-                logger.debug("MAIN: " + Thread.currentThread());
-            }
-        }
-        finally
-        {
-            wm.dispose();
+      wm.scheduleWork(new Work() {
+        public void release() {
+          // no-op
         }
 
+        public void run() {
+          Thread calleeThread = Thread.currentThread();
+          assertFalse("WorkManager.scheduleWork() should have been executed in a different thread.", callerThread.equals(calleeThread));
+          if (logger.isDebugEnabled()) {
+            logger.debug("WORK: " + Thread.currentThread());
+          }
+        }
+      });
+      if (logger.isDebugEnabled()) {
+        logger.debug("MAIN: " + Thread.currentThread());
+      }
+    } finally {
+      wm.dispose();
     }
 
-    @Test
-    public void testStartWorkExecutesAsynchronously() throws Exception
-    {
-        final Thread callerThread = Thread.currentThread();
+  }
 
-        MuleWorkManager wm = new MuleWorkManager(ThreadingProfile.DEFAULT_THREADING_PROFILE, null, 5000);
-        wm.setMuleContext(muleContext);
+  @Test
+  public void testStartWorkExecutesAsynchronously() throws Exception {
+    final Thread callerThread = Thread.currentThread();
 
-        try
-        {
-            wm.start();
+    MuleWorkManager wm = new MuleWorkManager(ThreadingProfile.DEFAULT_THREADING_PROFILE, null, 5000);
+    wm.setMuleContext(muleContext);
 
-            wm.startWork(new Work()
-            {
-                public void release()
-                {
-                    // no-op
-                }
+    try {
+      wm.start();
 
-                public void run()
-                {
-                    Thread calleeThread = Thread.currentThread();
-                    assertFalse("WorkManager.startWork() should have been executed in a different thread.",
-                            callerThread.equals(calleeThread));
-                    if (logger.isDebugEnabled())
-                    {
-                        logger.debug("WORK: " + Thread.currentThread());
-                    }
-                }
-            });
-            if (logger.isDebugEnabled())
-            {
-                logger.debug("MAIN: " + Thread.currentThread());
-            }
-        }
-        finally
-        {
-            wm.dispose();
+      wm.startWork(new Work() {
+        public void release() {
+          // no-op
         }
 
+        public void run() {
+          Thread calleeThread = Thread.currentThread();
+          assertFalse("WorkManager.startWork() should have been executed in a different thread.", callerThread.equals(calleeThread));
+          if (logger.isDebugEnabled()) {
+            logger.debug("WORK: " + Thread.currentThread());
+          }
+        }
+      });
+      if (logger.isDebugEnabled()) {
+        logger.debug("MAIN: " + Thread.currentThread());
+      }
+    } finally {
+      wm.dispose();
     }
 
-    @Test
-    public void testThreadingProfileIsNotShared()
-    {
-        MuleWorkManager wm = new MuleWorkManager(ThreadingProfile.DEFAULT_THREADING_PROFILE, null, 5000);
-        assertThat(wm.getThreadingProfile(), not(sameInstance(ThreadingProfile.DEFAULT_THREADING_PROFILE)));
-    }
+  }
+
+  @Test
+  public void testThreadingProfileIsNotShared() {
+    MuleWorkManager wm = new MuleWorkManager(ThreadingProfile.DEFAULT_THREADING_PROFILE, null, 5000);
+    assertThat(wm.getThreadingProfile(), not(sameInstance(ThreadingProfile.DEFAULT_THREADING_PROFILE)));
+  }
 }

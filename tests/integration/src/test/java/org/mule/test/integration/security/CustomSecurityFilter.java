@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.security;
 
@@ -19,54 +17,37 @@ import org.mule.runtime.core.api.security.UnknownAuthenticationTypeException;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.security.AbstractOperationSecurityFilter;
 
-public class CustomSecurityFilter extends AbstractOperationSecurityFilter
-{
+public class CustomSecurityFilter extends AbstractOperationSecurityFilter {
 
-    public CustomSecurityFilter()
-    {
+  public CustomSecurityFilter() {
 
+  }
+
+  @Override
+  protected void authenticateInbound(MuleEvent event) throws SecurityException, CryptoFailureException, SecurityProviderNotFoundException,
+      EncryptionStrategyNotFoundException, UnknownAuthenticationTypeException {
+    if (!isValid(event)) {
+      throw new UnauthorisedException(CoreMessages.authFailedForUser("a"));
     }
+  }
 
-    @Override
-    protected void authenticateInbound(MuleEvent event)
-            throws SecurityException, CryptoFailureException, SecurityProviderNotFoundException,
-            EncryptionStrategyNotFoundException, UnknownAuthenticationTypeException
-    {
-        if (!isValid(event))
-        {
-            throw new UnauthorisedException(CoreMessages.authFailedForUser("a"));
-        }
+  @Override
+  public void authenticate(MuleEvent event) throws SecurityException, SecurityProviderNotFoundException, CryptoFailureException {
+    if (!isValid(event)) {
+      throw new UnauthorisedException(CoreMessages.authFailedForUser("a"));
     }
+  }
 
-    @Override
-    public void authenticate(MuleEvent event)
-            throws SecurityException, SecurityProviderNotFoundException, CryptoFailureException
-    {
-        if (!isValid(event))
-        {
-            throw new UnauthorisedException(CoreMessages.authFailedForUser("a"));
-        }
+  private boolean isValid(MuleEvent event) {
+    try {
+      return event.getMuleContext().getTransformationService().transform(event.getMessage(), DataType.STRING).getPayload()
+          .equals(FunctionalTestCase.TEST_MESSAGE);
+    } catch (Exception e) {
+      return false;
     }
+  }
 
-    private boolean isValid(MuleEvent event)
-    {
-        try
-        {
-            return event.getMuleContext()
-                        .getTransformationService()
-                        .transform(event.getMessage(), DataType.STRING)
-                        .getPayload()
-                        .equals(FunctionalTestCase.TEST_MESSAGE);
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
-
-    @Override
-    protected void doInitialise() throws InitialisationException
-    {
-    }
+  @Override
+  protected void doInitialise() throws InitialisationException {}
 
 }

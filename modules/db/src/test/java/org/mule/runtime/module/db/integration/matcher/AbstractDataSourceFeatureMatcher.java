@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.matcher;
@@ -18,46 +16,34 @@ import javax.sql.DataSource;
 /**
  * Provides a base implementation for {@link DataSource} matchers
  */
-public abstract class AbstractDataSourceFeatureMatcher extends TypeSafeMatcher<DataSource>
-{
+public abstract class AbstractDataSourceFeatureMatcher extends TypeSafeMatcher<DataSource> {
 
-    @Override
-    public boolean matchesSafely(DataSource dataSource)
-    {
-        boolean supportFeature = false;
+  @Override
+  public boolean matchesSafely(DataSource dataSource) {
+    boolean supportFeature = false;
 
-        Connection connection = null;
-        try
-        {
-            try
-            {
-                connection = dataSource.getConnection();
-                DatabaseMetaData metaData;
-                metaData = connection.getMetaData();
-                try
-                {
-                    supportFeature = supportsFeature(metaData);
-                }
-                catch (Throwable t)
-                {
-                    // Ignore
-                }
-            }
-            finally
-            {
-                if (connection != null)
-                {
-                    connection.close();
-                }
-            }
+    Connection connection = null;
+    try {
+      try {
+        connection = dataSource.getConnection();
+        DatabaseMetaData metaData;
+        metaData = connection.getMetaData();
+        try {
+          supportFeature = supportsFeature(metaData);
+        } catch (Throwable t) {
+          // Ignore
         }
-        catch (Exception e)
-        {
-            // Ignore
+      } finally {
+        if (connection != null) {
+          connection.close();
         }
-
-        return supportFeature;
+      }
+    } catch (Exception e) {
+      // Ignore
     }
 
-    protected abstract boolean supportsFeature(DatabaseMetaData metaData) throws SQLException;
+    return supportFeature;
+  }
+
+  protected abstract boolean supportsFeature(DatabaseMetaData metaData) throws SQLException;
 }

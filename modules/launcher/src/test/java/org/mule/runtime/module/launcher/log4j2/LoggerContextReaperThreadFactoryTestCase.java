@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.log4j2;
 
@@ -22,36 +20,32 @@ import static org.mule.runtime.module.launcher.log4j2.LoggerContextReaperThreadF
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class LoggerContextReaperThreadFactoryTestCase extends AbstractMuleTestCase
-{
+public class LoggerContextReaperThreadFactoryTestCase extends AbstractMuleTestCase {
 
-    @Mock
-    private ClassLoader contextClassLoader;
+  @Mock
+  private ClassLoader contextClassLoader;
 
-    @Mock
-    private Runnable runnable;
+  @Mock
+  private Runnable runnable;
 
-    private LoggerContextReaperThreadFactory factory;
-    private Thread thread;
+  private LoggerContextReaperThreadFactory factory;
+  private Thread thread;
 
-    @Before
-    public void before()
-    {
-        factory = new LoggerContextReaperThreadFactory(contextClassLoader);
-        thread = factory.newThread(runnable);
-    }
+  @Before
+  public void before() {
+    factory = new LoggerContextReaperThreadFactory(contextClassLoader);
+    thread = factory.newThread(runnable);
+  }
 
-    @Test
-    public void testProperties() throws Exception
-    {
-        assertThat(thread.getName(), is(THREAD_NAME));
-        assertThat(thread.getContextClassLoader(), is(sameInstance(contextClassLoader)));
-    }
+  @Test
+  public void testProperties() throws Exception {
+    assertThat(thread.getName(), is(THREAD_NAME));
+    assertThat(thread.getContextClassLoader(), is(sameInstance(contextClassLoader)));
+  }
 
-    @Test
-    public void runDelegatesIntoTheRightRunnable()
-    {
-        thread.run();
-        verify(runnable).run();
-    }
+  @Test
+  public void runDelegatesIntoTheRightRunnable() {
+    thread.run();
+    verify(runnable).run();
+  }
 }

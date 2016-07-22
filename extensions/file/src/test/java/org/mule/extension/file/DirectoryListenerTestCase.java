@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.file;
 
@@ -30,62 +28,56 @@ import static org.mockito.Mockito.when;
 import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_MULE_CONTEXT;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DirectoryListenerTestCase extends AbstractMuleContextTestCase
-{
+public class DirectoryListenerTestCase extends AbstractMuleContextTestCase {
 
-    private DirectoryListener directoryListener;
+  private DirectoryListener directoryListener;
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private SourceContext sourceContext;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private SourceContext sourceContext;
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private FlowConstruct flowConstruct;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private FlowConstruct flowConstruct;
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private MuleContext mockMuleContext;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private MuleContext mockMuleContext;
 
-    @Override
-    protected void doSetUp() throws Exception
-    {
-        directoryListener = new DirectoryListener();
-        directoryListener.setFlowConstruct(flowConstruct);
-        directoryListener.setSourceContext(sourceContext);
+  @Override
+  protected void doSetUp() throws Exception {
+    directoryListener = new DirectoryListener();
+    directoryListener.setFlowConstruct(flowConstruct);
+    directoryListener.setSourceContext(sourceContext);
 
-        when(mockMuleContext.isPrimaryPollingInstance()).thenReturn(false);
-        muleContext.getRegistry().registerObject(OBJECT_MULE_CONTEXT, mockMuleContext);
-        muleContext.getInjector().inject(directoryListener);
+    when(mockMuleContext.isPrimaryPollingInstance()).thenReturn(false);
+    muleContext.getRegistry().registerObject(OBJECT_MULE_CONTEXT, mockMuleContext);
+    muleContext.getInjector().inject(directoryListener);
+  }
+
+  @Override
+  protected void doTearDown() throws Exception {
+    if (directoryListener.isStarted()) {
+      directoryListener.stop();
     }
+  }
 
-    @Override
-    protected void doTearDown() throws Exception
-    {
-        if (directoryListener.isStarted())
-        {
-            directoryListener.stop();
-        }
-    }
+  @Test
+  public void dontStartInSecondaryNode() throws Exception {
+    assertThat(directoryListener.isStarted(), is(false));
+  }
 
-    @Test
-    public void dontStartInSecondaryNode() throws Exception
-    {
-        assertThat(directoryListener.isStarted(), is(false));
-    }
+  @Test
+  public void startIfNodeBecomesSecondary() throws Exception {
+    ArgumentCaptor<PrimaryNodeLifecycleNotificationListener> listenerCaptor =
+        ArgumentCaptor.forClass(PrimaryNodeLifecycleNotificationListener.class);
 
-    @Test
-    public void startIfNodeBecomesSecondary() throws Exception
-    {
-        ArgumentCaptor<PrimaryNodeLifecycleNotificationListener> listenerCaptor =
-                ArgumentCaptor.forClass(PrimaryNodeLifecycleNotificationListener.class);
+    directoryListener.start();
 
-        directoryListener.start();
+    verify(mockMuleContext).registerListener(listenerCaptor.capture());
+    PrimaryNodeLifecycleNotificationListener listener = listenerCaptor.getValue();
+    assertThat(listener, is(notNullValue()));
 
-        verify(mockMuleContext).registerListener(listenerCaptor.capture());
-        PrimaryNodeLifecycleNotificationListener listener = listenerCaptor.getValue();
-        assertThat(listener, is(notNullValue()));
+    listener.onNotification(mock(ServerNotification.class));
 
-        listener.onNotification(mock(ServerNotification.class));
-
-        verify(mockMuleContext, times(2)).isPrimaryPollingInstance();
-    }
+    verify(mockMuleContext, times(2)).isPrimaryPollingInstance();
+  }
 
 }

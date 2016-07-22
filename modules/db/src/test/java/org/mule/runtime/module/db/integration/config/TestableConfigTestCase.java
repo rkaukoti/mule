@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.config;
@@ -21,34 +19,29 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mule.common.Result.Status.SUCCESS;
 
-public class TestableConfigTestCase extends AbstractDbIntegrationTestCase
-{
+public class TestableConfigTestCase extends AbstractDbIntegrationTestCase {
 
-    public TestableConfigTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
-    }
+  public TestableConfigTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
+    super(dataSourceConfigResource, testDatabase);
+  }
 
-    @Parameterized.Parameters
-    public static List<Object[]> parameters()
-    {
-        return TestDbConfig.getDerbyResource();
-    }
+  @Parameterized.Parameters
+  public static List<Object[]> parameters() {
+    return TestDbConfig.getDerbyResource();
+  }
 
-    @Override
-    protected String[] getFlowConfigurationResources()
-    {
-        return new String[0];
-    }
+  @Override
+  protected String[] getFlowConfigurationResources() {
+    return new String[0];
+  }
 
-    @Test
-    public void testsConnection() throws Exception
-    {
-        Testable testable = muleContext.getRegistry().lookupObject("dbConfig");
+  @Test
+  public void testsConnection() throws Exception {
+    Testable testable = muleContext.getRegistry().lookupObject("dbConfig");
 
-        TestResult result = testable.test();
+    TestResult result = testable.test();
 
-        assertThat(result.getStatus(), equalTo(SUCCESS));
-    }
+    assertThat(result.getStatus(), equalTo(SUCCESS));
+  }
 }
 

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.streaming;
@@ -23,101 +21,84 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
 @SmallTest
-public class SimpleConsumerTestCase
-{
+public class SimpleConsumerTestCase {
 
-    private final Set<String> values = new HashSet<String>(Arrays.asList("apple", "banana", "kiwi"));
-    private Producer<String> producer;
-    private Consumer<String> consumer;
+  private final Set<String> values = new HashSet<String>(Arrays.asList("apple", "banana", "kiwi"));
+  private Producer<String> producer;
+  private Consumer<String> consumer;
 
-    @Before
-    public void setUp() throws Exception
-    {
-        this.producer = new TestProducer();
-        this.consumer = new SimpleConsumer<String>(this.producer);
+  @Before
+  public void setUp() throws Exception {
+    this.producer = new TestProducer();
+    this.consumer = new SimpleConsumer<String>(this.producer);
+  }
+
+  @Test
+  public void happyPath() throws Exception {
+    assertFalse(this.consumer.isConsumed());
+    while (!this.consumer.isConsumed()) {
+      assertTrue(this.values.contains(this.consumer.consume()));
     }
 
-    @Test
-    public void happyPath() throws Exception
-    {
-        assertFalse(this.consumer.isConsumed());
-        while (!this.consumer.isConsumed())
-        {
-            assertTrue(this.values.contains(this.consumer.consume()));
+    assertTrue(this.consumer.isConsumed());
+  }
+
+  @Test(expected = ClosedConsumerException.class)
+  public void closeEarly() throws Exception {
+    assertFalse(this.consumer.isConsumed());
+    this.consumer.consume();
+    this.producer.close();
+    assertTrue(this.consumer.isConsumed());
+    assertNull(this.consumer.consume());
+  }
+
+  @Test
+  public void totalAvailable() {
+    assertEquals(this.consumer.size(), this.values.size());
+  }
+
+  @Test
+  public void doubleClose() throws MuleException {
+    this.consumer.close();
+    this.consumer.close();
+  }
+
+  private class TestProducer implements Producer<String> {
+
+    private final Iterator<String> iterator;
+    private boolean closed = false;
+
+    private TestProducer() {
+      this.iterator = values.iterator();
+    }
+
+    @Override
+    public String produce() {
+      if (this.closed) {
+        return null;
+      }
+
+      String value = this.iterator.next();
+      if (value == null) {
+        try {
+          this.close();
+        } catch (Exception e) {
+          throw new RuntimeException(e);
         }
+      }
 
-        assertTrue(this.consumer.isConsumed());
+      return value;
     }
 
-    @Test(expected = ClosedConsumerException.class)
-    public void closeEarly() throws Exception
-    {
-        assertFalse(this.consumer.isConsumed());
-        this.consumer.consume();
-        this.producer.close();
-        assertTrue(this.consumer.isConsumed());
-        assertNull(this.consumer.consume());
+    @Override
+    public int size() {
+      return values.size();
     }
 
-    @Test
-    public void totalAvailable()
-    {
-        assertEquals(this.consumer.size(), this.values.size());
+    @Override
+    public void close() throws MuleException {
+      this.closed = true;
     }
-
-    @Test
-    public void doubleClose() throws MuleException
-    {
-        this.consumer.close();
-        this.consumer.close();
-    }
-
-    private class TestProducer implements Producer<String>
-    {
-
-        private final Iterator<String> iterator;
-        private boolean closed = false;
-
-        private TestProducer()
-        {
-            this.iterator = values.iterator();
-        }
-
-        @Override
-        public String produce()
-        {
-            if (this.closed)
-            {
-                return null;
-            }
-
-            String value = this.iterator.next();
-            if (value == null)
-            {
-                try
-                {
-                    this.close();
-                }
-                catch (Exception e)
-                {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            return value;
-        }
-
-        @Override
-        public int size()
-        {
-            return values.size();
-        }
-
-        @Override
-        public void close() throws MuleException
-        {
-            this.closed = true;
-        }
-    }
+  }
 
 }

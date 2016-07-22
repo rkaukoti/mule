@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.scripting.component;
 
@@ -15,63 +13,51 @@ import org.mule.runtime.core.api.lifecycle.Callable;
 import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.util.StringUtils;
 
-public class GroovyRefreshableBeanBuilder implements Callable
-{
-    private static final String ON_CALL = "onCall";
-    private static final Class[] MULE_EVENT_CONTEXT = new Class[] {MuleEventContext.class};
-    private volatile Object refreshableBean;
-    private String methodName;
+public class GroovyRefreshableBeanBuilder implements Callable {
+  private static final String ON_CALL = "onCall";
+  private static final Class[] MULE_EVENT_CONTEXT = new Class[] {MuleEventContext.class};
+  private volatile Object refreshableBean;
+  private String methodName;
 
-    public GroovyRefreshableBeanBuilder()
-    {
-        super();
-    }
+  public GroovyRefreshableBeanBuilder() {
+    super();
+  }
 
-    public Object onCall(MuleEventContext eventContext) throws Exception
-    {
-        if (refreshableBean instanceof GroovyObject)
-        {
-            GroovyObject script = (GroovyObject) refreshableBean;
-            MetaMethod onCall = script.getMetaClass().pickMethod("onCall", MULE_EVENT_CONTEXT);
+  public Object onCall(MuleEventContext eventContext) throws Exception {
+    if (refreshableBean instanceof GroovyObject) {
+      GroovyObject script = (GroovyObject) refreshableBean;
+      MetaMethod onCall = script.getMetaClass().pickMethod("onCall", MULE_EVENT_CONTEXT);
 
-            if (onCall != null)
-            {
-                return script.invokeMethod(ON_CALL, eventContext);
-            }
-            else
-            {
-                if (StringUtils.isEmpty(methodName))
-                {
-                    throw new DefaultMuleException(CoreMessages.propertiesNotSet("methodName"));
-                }
-
-                return script.invokeMethod(methodName, eventContext.getMessage().getPayload());
-            }
-
+      if (onCall != null) {
+        return script.invokeMethod(ON_CALL, eventContext);
+      } else {
+        if (StringUtils.isEmpty(methodName)) {
+          throw new DefaultMuleException(CoreMessages.propertiesNotSet("methodName"));
         }
 
-        throw new Exception(new DefaultMuleException("script engine not supported"));
+        return script.invokeMethod(methodName, eventContext.getMessage().getPayload());
+      }
+
     }
 
-    public Object getRefreshableBean()
-    {
-        return refreshableBean;
-    }
+    throw new Exception(new DefaultMuleException("script engine not supported"));
+  }
 
-    public void setRefreshableBean(Object refreshableBean)
-    {
-        this.refreshableBean = refreshableBean;
-    }
+  public Object getRefreshableBean() {
+    return refreshableBean;
+  }
 
-    public String getMethodName()
-    {
-        return methodName;
-    }
+  public void setRefreshableBean(Object refreshableBean) {
+    this.refreshableBean = refreshableBean;
+  }
 
-    public void setMethodName(String methodName)
-    {
-        this.methodName = methodName;
-    }
+  public String getMethodName() {
+    return methodName;
+  }
+
+  public void setMethodName(String methodName) {
+    this.methodName = methodName;
+  }
 }
 
 

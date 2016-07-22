@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.listener;
 
@@ -18,26 +16,23 @@ import java.io.IOException;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class HttpAllInterfacesTestCase extends AbstractHttpTestCase
-{
+public class HttpAllInterfacesTestCase extends AbstractHttpTestCase {
 
-    private static final String PATH = "flowA";
+  private static final String PATH = "flowA";
 
-    @Rule
-    public DynamicPort listenPort = new DynamicPort("port");
+  @Rule
+  public DynamicPort listenPort = new DynamicPort("port");
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "http-all-interfaces-config.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "http-all-interfaces-config.xml";
+  }
 
-    @Test
-    public void testAllInterfaces() throws IOException
-    {
-        final String url = String.format("http://localhost:%s/%s", listenPort.getNumber(), PATH);
-        final Response response = Request.Get(url).connectTimeout(1000).execute();
-        assertThat(response.returnContent().asString(), is(PATH));
-    }
+  @Test
+  public void testAllInterfaces() throws IOException {
+    final String url = String.format("http://localhost:%s/%s", listenPort.getNumber(), PATH);
+    final Response response = Request.Get(url).connectTimeout(1000).execute();
+    assertThat(response.returnContent().asString(), is(PATH));
+  }
 
 }

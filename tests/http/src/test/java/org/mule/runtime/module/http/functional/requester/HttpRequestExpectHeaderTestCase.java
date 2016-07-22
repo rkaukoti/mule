@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -20,49 +18,42 @@ import static org.junit.Assert.assertThat;
 import static org.mule.runtime.module.http.api.HttpConstants.HttpStatus.EXPECTATION_FAILED;
 import static org.mule.runtime.module.http.functional.matcher.HttpMessageAttributesMatchers.hasStatusCode;
 
-public class HttpRequestExpectHeaderTestCase extends AbstractHttpExpectHeaderServerTestCase
-{
+public class HttpRequestExpectHeaderTestCase extends AbstractHttpExpectHeaderServerTestCase {
 
-    private static final String REQUEST_FLOW_NAME = "requestFlow";
+  private static final String REQUEST_FLOW_NAME = "requestFlow";
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "http-request-expect-header-config.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "http-request-expect-header-config.xml";
+  }
 
-    @Ignore("MULE-9892: Fix flaky")
-    @Test
-    public void handlesContinueResponse() throws Exception
-    {
-        startExpectContinueServer();
+  @Ignore("MULE-9892: Fix flaky")
+  @Test
+  public void handlesContinueResponse() throws Exception {
+    startExpectContinueServer();
 
-        flowRunner(REQUEST_FLOW_NAME).withPayload(TEST_MESSAGE).run();
-        assertThat(requestBody, equalTo(TEST_MESSAGE));
+    flowRunner(REQUEST_FLOW_NAME).withPayload(TEST_MESSAGE).run();
+    assertThat(requestBody, equalTo(TEST_MESSAGE));
 
-        stopServer();
-    }
+    stopServer();
+  }
 
-    @Test
-    public void handlesExpectationFailedResponse() throws Exception
-    {
-        startExpectFailedServer();
+  @Test
+  public void handlesExpectationFailedResponse() throws Exception {
+    startExpectFailedServer();
 
-        // Set a payload that will fail when consumed. As the server rejects the request after processing
-        // the header, the client should not send the body.
-        MuleEvent response = flowRunner(REQUEST_FLOW_NAME).withPayload(new InputStream()
-        {
-            @Override
-            public int read() throws IOException
-            {
-                throw new IOException("Payload should not be consumed");
-            }
-        }).run();
+    // Set a payload that will fail when consumed. As the server rejects the request after processing
+    // the header, the client should not send the body.
+    MuleEvent response = flowRunner(REQUEST_FLOW_NAME).withPayload(new InputStream() {
+      @Override
+      public int read() throws IOException {
+        throw new IOException("Payload should not be consumed");
+      }
+    }).run();
 
-        assertThat((HttpResponseAttributes) response.getMessage().getAttributes(),
-                hasStatusCode(EXPECTATION_FAILED.getStatusCode()));
+    assertThat((HttpResponseAttributes) response.getMessage().getAttributes(), hasStatusCode(EXPECTATION_FAILED.getStatusCode()));
 
-        stopServer();
-    }
+    stopServer();
+  }
 
 }

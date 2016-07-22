@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.db.integration.update;
 
@@ -18,31 +16,26 @@ import java.util.Map;
 import static junit.framework.Assert.assertTrue;
 import static org.mule.runtime.module.db.integration.DbTestUtil.selectData;
 
-public class TruncateTableTestCase extends AbstractDbIntegrationTestCase
-{
+public class TruncateTableTestCase extends AbstractDbIntegrationTestCase {
 
-    public TruncateTableTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
-    }
+  public TruncateTableTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
+    super(dataSourceConfigResource, testDatabase);
+  }
 
-    @Parameterized.Parameters
-    public static List<Object[]> parameters()
-    {
-        return TestDbConfig.getResources();
-    }
+  @Parameterized.Parameters
+  public static List<Object[]> parameters() {
+    return TestDbConfig.getResources();
+  }
 
-    @Override
-    protected String[] getFlowConfigurationResources()
-    {
-        return new String[] {"integration/update/truncate-table-config.xml"};
-    }
+  @Override
+  protected String[] getFlowConfigurationResources() {
+    return new String[] {"integration/update/truncate-table-config.xml"};
+  }
 
-    @Test
-    public void truncateTable() throws Exception
-    {
-        runFlow("truncateTable");
-        List<Map<String, String>> result = selectData("select * from PLANET", getDefaultDataSource());
-        assertTrue(result.isEmpty());
-    }
+  @Test
+  public void truncateTable() throws Exception {
+    runFlow("truncateTable");
+    List<Map<String, String>> result = selectData("select * from PLANET", getDefaultDataSource());
+    assertTrue(result.isEmpty());
+  }
 }

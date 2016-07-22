@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.manager;
 
@@ -35,42 +33,37 @@ import static org.mule.test.heisenberg.extension.HeisenbergExtension.HEISENBERG;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class DescriberResolverTestCase extends AbstractMuleTestCase
-{
+public class DescriberResolverTestCase extends AbstractMuleTestCase {
 
-    private final DescriberResolver resolver = new DescriberResolver();
-    private final ExtensionFactory extensionFactory = new DefaultExtensionFactory(new SpiServiceRegistry(), getClass().getClassLoader());
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private ExtensionManifest manifest;
+  private final DescriberResolver resolver = new DescriberResolver();
+  private final ExtensionFactory extensionFactory = new DefaultExtensionFactory(new SpiServiceRegistry(), getClass().getClassLoader());
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private ExtensionManifest manifest;
 
-    @Before
-    public void before()
-    {
-        when(manifest.getName()).thenReturn(HEISENBERG);
-        when(manifest.getVersion()).thenReturn("4.0.0");
-    }
+  @Before
+  public void before() {
+    when(manifest.getName()).thenReturn(HEISENBERG);
+    when(manifest.getVersion()).thenReturn("4.0.0");
+  }
 
-    @Test
-    public void getDescriber() throws Exception
-    {
-        when(manifest.getDescriberManifest().getId()).thenReturn(DESCRIBER_ID);
-        when(manifest.getDescriberManifest().getProperties()).thenReturn(ImmutableMap.<String, String>builder()
-                .put(AnnotationsBasedDescriber.TYPE_PROPERTY_NAME, HeisenbergExtension.class.getName())
-                .build());
+  @Test
+  public void getDescriber() throws Exception {
+    when(manifest.getDescriberManifest().getId()).thenReturn(DESCRIBER_ID);
+    when(manifest.getDescriberManifest().getProperties()).thenReturn(ImmutableMap.<String, String>builder()
+        .put(AnnotationsBasedDescriber.TYPE_PROPERTY_NAME, HeisenbergExtension.class.getName()).build());
 
-        Describer describer = resolver.resolve(manifest, getClass().getClassLoader());
-        assertThat(describer, instanceOf(AnnotationsBasedDescriber.class));
+    Describer describer = resolver.resolve(manifest, getClass().getClassLoader());
+    assertThat(describer, instanceOf(AnnotationsBasedDescriber.class));
 
-        final DefaultDescribingContext context = new DefaultDescribingContext(getClass().getClassLoader());
-        ExtensionModel model = extensionFactory.createFrom(describer.describe(context), context);
-        assertThat(model.getName(), equalTo(manifest.getName()));
-    }
+    final DefaultDescribingContext context = new DefaultDescribingContext(getClass().getClassLoader());
+    ExtensionModel model = extensionFactory.createFrom(describer.describe(context), context);
+    assertThat(model.getName(), equalTo(manifest.getName()));
+  }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void unsupportedDescriber()
-    {
-        when(manifest.getDescriberManifest().getId()).thenReturn("funkyDescriber");
-        resolver.resolve(manifest, getClass().getClassLoader());
-    }
+  @Test(expected = IllegalArgumentException.class)
+  public void unsupportedDescriber() {
+    when(manifest.getDescriberManifest().getId()).thenReturn("funkyDescriber");
+    resolver.resolve(manifest, getClass().getClassLoader());
+  }
 
 }

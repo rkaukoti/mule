@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.request.grizzly;
 
@@ -26,139 +24,103 @@ import java.util.logging.Logger;
 /**
  * Grizzly IO Strategy that will handle work using a Mule {@link org.mule.runtime.core.api.context.WorkManager}.
  */
-public class FlowWorkManagerIOStrategy extends AbstractIOStrategy
-{
+public class FlowWorkManagerIOStrategy extends AbstractIOStrategy {
 
-    private static final FlowWorkManagerIOStrategy INSTANCE = new FlowWorkManagerIOStrategy();
+  private static final FlowWorkManagerIOStrategy INSTANCE = new FlowWorkManagerIOStrategy();
 
-    private final static EnumSet<IOEvent> WORKER_THREAD_EVENT_SET =
-            EnumSet.of(IOEvent.READ, IOEvent.CLOSED);
+  private final static EnumSet<IOEvent> WORKER_THREAD_EVENT_SET = EnumSet.of(IOEvent.READ, IOEvent.CLOSED);
 
-    private static final Logger logger = Grizzly.logger(FlowWorkManagerIOStrategy.class);
+  private static final Logger logger = Grizzly.logger(FlowWorkManagerIOStrategy.class);
 
-    protected FlowWorkManagerIOStrategy()
-    {
-        // Use getInstance() to obtain singleton instance.
+  protected FlowWorkManagerIOStrategy() {
+    // Use getInstance() to obtain singleton instance.
+  }
+
+  private static void run0(final Connection connection, final IOEvent ioEvent, final IOEventLifeCycleListener lifeCycleListener) {
+
+    fireIOEvent(connection, ioEvent, lifeCycleListener, logger);
+
+  }
+
+  public static FlowWorkManagerIOStrategy getInstance() {
+    return INSTANCE;
+  }
+
+  @Override
+  public boolean executeIoEvent(final Connection connection, final IOEvent ioEvent, final boolean isIoEventEnabled) throws IOException
+
+  {
+    final boolean isReadOrWriteEvent = isReadWrite(ioEvent);
+
+    final IOEventLifeCycleListener listener;
+    if (isReadOrWriteEvent) {
+      if (isIoEventEnabled) {
+        connection.disableIOEvent(ioEvent);
+      }
+
+      listener = ENABLE_INTEREST_LIFECYCLE_LISTENER;
+    } else {
+      listener = null;
     }
 
-    private static void run0(final Connection connection,
-                             final IOEvent ioEvent,
-                             final IOEventLifeCycleListener lifeCycleListener)
-    {
-
-        fireIOEvent(connection, ioEvent, lifeCycleListener, logger);
-
+    final Executor threadPool = getThreadPoolFor(connection, ioEvent);
+    if (threadPool != null) {
+      threadPool.execute(new WorkerThreadRunnable(connection, ioEvent, listener));
+    } else {
+      run0(connection, ioEvent, listener);
     }
 
-    public static FlowWorkManagerIOStrategy getInstance()
-    {
-        return INSTANCE;
+    return true;
+  }
+
+  @Override
+  public Executor getThreadPoolFor(Connection connection, IOEvent ioEvent) {
+    if (WORKER_THREAD_EVENT_SET.contains(ioEvent)) {
+      try {
+        WorkManager workManager = getWorkManager(connection);
+        if (workManager != null) {
+          return workManager;
+        }
+      } catch (MuleException e) {
+        // ignore exception, log warning and fallback to using WorkerIOStrategy
+      }
+      if (logger.isLoggable(Level.FINE)) {
+        logger.fine("Unable to obtain Mule WorkManager instance for worker thread IO. Grizzly " + "WorkerIOStrategy will be used instead.");
+      }
+      return connection.getTransport().getWorkerThreadPool();
+    } else {
+      // Run other types of IOEvent in selector thread.
+      return null;
+    }
+  }
+
+  protected WorkManager getWorkManager(Connection connection) throws MuleException {
+    HttpTransactionContext httpTransactionContext =
+        (HttpTransactionContext) connection.getAttributes().getAttribute(HttpTransactionContext.class.getName());
+
+    if (httpTransactionContext != null && httpTransactionContext.getAsyncHandler() instanceof WorkManagerSource) {
+      return ((WorkManagerSource) httpTransactionContext.getAsyncHandler()).getWorkManager();
+    } else {
+      return null;
+    }
+  }
+
+  private static final class WorkerThreadRunnable implements Runnable {
+
+    final Connection connection;
+    final IOEvent ioEvent;
+    final IOEventLifeCycleListener lifeCycleListener;
+
+    private WorkerThreadRunnable(final Connection connection, final IOEvent ioEvent, final IOEventLifeCycleListener lifeCycleListener) {
+      this.connection = connection;
+      this.ioEvent = ioEvent;
+      this.lifeCycleListener = lifeCycleListener;
     }
 
     @Override
-    public boolean executeIoEvent(final Connection connection,
-                                  final IOEvent ioEvent, final boolean isIoEventEnabled)
-            throws IOException
-
-    {
-        final boolean isReadOrWriteEvent = isReadWrite(ioEvent);
-
-        final IOEventLifeCycleListener listener;
-        if (isReadOrWriteEvent)
-        {
-            if (isIoEventEnabled)
-            {
-                connection.disableIOEvent(ioEvent);
-            }
-
-            listener = ENABLE_INTEREST_LIFECYCLE_LISTENER;
-        }
-        else
-        {
-            listener = null;
-        }
-
-        final Executor threadPool = getThreadPoolFor(connection, ioEvent);
-        if (threadPool != null)
-        {
-            threadPool.execute(
-                    new WorkerThreadRunnable(connection, ioEvent, listener));
-        }
-        else
-        {
-            run0(connection, ioEvent, listener);
-        }
-
-        return true;
+    public void run() {
+      run0(connection, ioEvent, lifeCycleListener);
     }
-
-    @Override
-    public Executor getThreadPoolFor(Connection connection, IOEvent ioEvent)
-    {
-        if (WORKER_THREAD_EVENT_SET.contains(ioEvent))
-        {
-            try
-            {
-                WorkManager workManager = getWorkManager(connection);
-                if (workManager != null)
-                {
-                    return workManager;
-                }
-            }
-            catch (MuleException e)
-            {
-                // ignore exception, log warning and fallback to using WorkerIOStrategy
-            }
-            if (logger.isLoggable(Level.FINE))
-            {
-                logger.fine("Unable to obtain Mule WorkManager instance for worker thread IO. Grizzly " +
-                            "WorkerIOStrategy will be used instead.");
-            }
-            return connection.getTransport().getWorkerThreadPool();
-        }
-        else
-        {
-            // Run other types of IOEvent in selector thread.
-            return null;
-        }
-    }
-
-    protected WorkManager getWorkManager(Connection connection) throws MuleException
-    {
-        HttpTransactionContext httpTransactionContext = (HttpTransactionContext) connection.getAttributes().getAttribute
-                (HttpTransactionContext.class.getName());
-
-        if (httpTransactionContext != null && httpTransactionContext.getAsyncHandler() instanceof WorkManagerSource)
-        {
-            return ((WorkManagerSource) httpTransactionContext.getAsyncHandler()).getWorkManager();
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    private static final class WorkerThreadRunnable implements Runnable
-    {
-
-        final Connection connection;
-        final IOEvent ioEvent;
-        final IOEventLifeCycleListener lifeCycleListener;
-
-        private WorkerThreadRunnable(final Connection connection,
-                                     final IOEvent ioEvent,
-                                     final IOEventLifeCycleListener lifeCycleListener)
-        {
-            this.connection = connection;
-            this.ioEvent = ioEvent;
-            this.lifeCycleListener = lifeCycleListener;
-        }
-
-        @Override
-        public void run()
-        {
-            run0(connection, ioEvent, lifeCycleListener);
-        }
-    }
+  }
 
 }

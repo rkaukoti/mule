@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformers.xml.xstream;
 
@@ -27,95 +25,78 @@ import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 /**
  * Tests configuration and creation of XStream-based transformers
  */
-public class XStreamTransformerConfigurationTestCase extends AbstractMuleTestCase
-{
+public class XStreamTransformerConfigurationTestCase extends AbstractMuleTestCase {
 
-    public static volatile boolean MyDriverDidInitialize;
+  public static volatile boolean MyDriverDidInitialize;
 
-    @Before
-    public void doSetUp()
-    {
-        MyDriverDidInitialize = true;
+  @Before
+  public void doSetUp() {
+    MyDriverDidInitialize = true;
+  }
+
+  @After
+  public void doTearDown() {
+    MyDriverDidInitialize = false;
+  }
+
+  @Test
+  public void testDefaultDriver() throws Exception {
+    XmlToObject transformer = new XmlToObject();
+    // check for XStream's default
+    assertEquals(XStreamFactory.XSTREAM_XPP_DRIVER, transformer.getDriverClass());
+  }
+
+  @Test
+  public void testCustomDriver() throws Exception {
+    XmlToObject transformer = new XmlToObject();
+    // set custom driver
+    transformer.setDriverClass(MyDOMDriver.class.getName());
+    XStream xs = transformer.getXStream();
+
+    assertNotNull(xs);
+    assertSame(xs, transformer.getXStream());
+    assertTrue(MyDriverDidInitialize);
+  }
+
+  @Test
+  public void testBadDriver() throws Exception {
+    XmlToObject transformer = new XmlToObject();
+    // set nonexisting driver class
+    transformer.setDriverClass("DudeWhereIsMyDriver");
+
+    try {
+      assertNotNull(transformer.getXStream());
+      fail();
+    } catch (TransformerException tex) {
+      // OK
+      assertTrue(tex.getCause() instanceof ClassNotFoundException);
     }
+  }
 
-    @After
-    public void doTearDown()
-    {
-        MyDriverDidInitialize = false;
-    }
-
-    @Test
-    public void testDefaultDriver() throws Exception
-    {
+  @Test
+  public void testClassLoader() {
+    TestClassLoader classLoader = new TestClassLoader();
+    withContextClassLoader(classLoader, () -> {
+      try {
         XmlToObject transformer = new XmlToObject();
-        // check for XStream's default
-        assertEquals(XStreamFactory.XSTREAM_XPP_DRIVER, transformer.getDriverClass());
+        transformer.initialise();
+        assertEquals(classLoader, transformer.getXStream().getClassLoader());
+      } catch (Exception e) {
+        fail(e.getMessage());
+      }
+    });
+  }
+
+  protected static class MyDOMDriver extends DomDriver {
+
+    public MyDOMDriver() {
+      super();
+      XStreamTransformerConfigurationTestCase.MyDriverDidInitialize = true;
     }
+  }
 
-    @Test
-    public void testCustomDriver() throws Exception
-    {
-        XmlToObject transformer = new XmlToObject();
-        // set custom driver
-        transformer.setDriverClass(MyDOMDriver.class.getName());
-        XStream xs = transformer.getXStream();
+  private static class TestClassLoader extends ClassLoader {
 
-        assertNotNull(xs);
-        assertSame(xs, transformer.getXStream());
-        assertTrue(MyDriverDidInitialize);
-    }
-
-    @Test
-    public void testBadDriver() throws Exception
-    {
-        XmlToObject transformer = new XmlToObject();
-        // set nonexisting driver class
-        transformer.setDriverClass("DudeWhereIsMyDriver");
-
-        try
-        {
-            assertNotNull(transformer.getXStream());
-            fail();
-        }
-        catch (TransformerException tex)
-        {
-            // OK
-            assertTrue(tex.getCause() instanceof ClassNotFoundException);
-        }
-    }
-
-    @Test
-    public void testClassLoader()
-    {
-        TestClassLoader classLoader = new TestClassLoader();
-        withContextClassLoader(classLoader, () ->
-        {
-            try
-            {
-                XmlToObject transformer = new XmlToObject();
-                transformer.initialise();
-                assertEquals(classLoader, transformer.getXStream().getClassLoader());
-            }
-            catch (Exception e)
-            {
-                fail(e.getMessage());
-            }
-        });
-    }
-
-    protected static class MyDOMDriver extends DomDriver
-    {
-
-        public MyDOMDriver()
-        {
-            super();
-            XStreamTransformerConfigurationTestCase.MyDriverDidInitialize = true;
-        }
-    }
-
-    private static class TestClassLoader extends ClassLoader
-    {
-
-    }
+  }
 
 }

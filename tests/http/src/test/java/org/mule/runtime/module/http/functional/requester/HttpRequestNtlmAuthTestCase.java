@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -17,55 +15,46 @@ import static org.mule.runtime.module.http.api.HttpHeaders.Names.AUTHORIZATION;
 import static org.mule.runtime.module.http.api.HttpHeaders.Names.WWW_AUTHENTICATE;
 
 @RunWith(Parameterized.class)
-public class HttpRequestNtlmAuthTestCase extends AbstractNtlmTestCase
-{
+public class HttpRequestNtlmAuthTestCase extends AbstractNtlmTestCase {
 
-    @Parameterized.Parameter(0)
-    public String flowName;
+  @Parameterized.Parameter(0)
+  public String flowName;
 
-    @Parameterized.Parameter(1)
-    public String domain;
+  @Parameterized.Parameter(1)
+  public String domain;
 
-    @Parameterized.Parameter(2)
-    public String workstation;
+  @Parameterized.Parameter(2)
+  public String workstation;
 
-    public HttpRequestNtlmAuthTestCase()
-    {
-        super(AUTHORIZATION, WWW_AUTHENTICATE, SC_UNAUTHORIZED);
-    }
+  public HttpRequestNtlmAuthTestCase() {
+    super(AUTHORIZATION, WWW_AUTHENTICATE, SC_UNAUTHORIZED);
+  }
 
-    @Parameterized.Parameters(name = "{0}")
-    public static Collection<Object[]> parameters()
-    {
-        return Arrays.asList(new Object[][] {
-                {"ntlmAuthRequestWithDomain", "Ursa-Minor", null},
-                {"ntlmAuthRequestWithoutDomain", "", null},
-                {"ntlmAuthRequestWithWorkstation", "Ursa-Minor", "LightCity"}});
-    }
+  @Parameterized.Parameters(name = "{0}")
+  public static Collection<Object[]> parameters() {
+    return Arrays.asList(new Object[][] {{"ntlmAuthRequestWithDomain", "Ursa-Minor", null}, {"ntlmAuthRequestWithoutDomain", "", null},
+        {"ntlmAuthRequestWithWorkstation", "Ursa-Minor", "LightCity"}});
+  }
 
-    @Override
-    protected String getWorkstation()
-    {
-        return workstation;
-    }
+  @Override
+  protected String getWorkstation() {
+    return workstation;
+  }
 
-    @Override
-    protected String getDomain()
-    {
-        return domain;
-    }
+  @Override
+  protected String getDomain() {
+    return domain;
+  }
 
-    @Override
-    protected String getFlowName()
-    {
-        return flowName;
-    }
+  @Override
+  protected String getFlowName() {
+    return flowName;
+  }
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "http-request-ntlm-auth-config.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "http-request-ntlm-auth-config.xml";
+  }
 
 
 }

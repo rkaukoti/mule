@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformers.xml.xquery;
 
@@ -11,30 +9,26 @@ import org.mule.runtime.core.util.IOUtils;
 
 import java.io.InputStream;
 
-public class InlineXQueryTransformerByteArrayTestCase extends InlineXQueryTransformerTestCase
-{
-    private byte[] srcData;
-    private String resultData;
+public class InlineXQueryTransformerByteArrayTestCase extends InlineXQueryTransformerTestCase {
+  private byte[] srcData;
+  private String resultData;
 
-    @Override
-    protected void doSetUp() throws Exception
-    {
-        XMLUnit.setIgnoreWhitespace(true);
-        srcData = IOUtils.toByteArray(IOUtils.getResourceAsStream("cdcatalog-utf-8.xml", getClass()));
+  @Override
+  protected void doSetUp() throws Exception {
+    XMLUnit.setIgnoreWhitespace(true);
+    srcData = IOUtils.toByteArray(IOUtils.getResourceAsStream("cdcatalog-utf-8.xml", getClass()));
 
-        InputStream resourceStream = IOUtils.getResourceAsStream("cdcatalog-result-utf-8.xml", getClass());
-        resultData = new String(IOUtils.toByteArray(resourceStream), "UTF-8");
-    }
+    InputStream resourceStream = IOUtils.getResourceAsStream("cdcatalog-result-utf-8.xml", getClass());
+    resultData = new String(IOUtils.toByteArray(resourceStream), "UTF-8");
+  }
 
-    @Override
-    public Object getTestData()
-    {
-        return srcData;
-    }
+  @Override
+  public Object getTestData() {
+    return srcData;
+  }
 
-    @Override
-    public Object getResultData()
-    {
-        return resultData;
-    }
+  @Override
+  public Object getResultData() {
+    return resultData;
+  }
 }

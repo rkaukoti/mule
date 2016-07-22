@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.connector;
 
@@ -23,44 +21,36 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
-public class PetStoreTlsConnectionTestCase extends ExtensionFunctionalTestCase
-{
-    @Rule
-    public SystemProperty systemProperty;
-    private String name;
-    private String configName;
+public class PetStoreTlsConnectionTestCase extends ExtensionFunctionalTestCase {
+  @Rule
+  public SystemProperty systemProperty;
+  private String name;
+  private String configName;
 
-    public PetStoreTlsConnectionTestCase(String name, String configName)
-    {
-        this.name = name;
-        this.configName = configName;
-        systemProperty = new SystemProperty("config", configName);
-    }
+  public PetStoreTlsConnectionTestCase(String name, String configName) {
+    this.name = name;
+    this.configName = configName;
+    systemProperty = new SystemProperty("config", configName);
+  }
 
-    @Parameterized.Parameters(name = "{0}")
-    public static Collection<Object[]> data()
-    {
-        return asList(new Object[][] {
-                {"global tls", "globalTls"},
-                {"inline tls", "inlineTls"}});
-    }
+  @Parameterized.Parameters(name = "{0}")
+  public static Collection<Object[]> data() {
+    return asList(new Object[][] {{"global tls", "globalTls"}, {"inline tls", "inlineTls"}});
+  }
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "petstore-tls-connection.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "petstore-tls-connection.xml";
+  }
 
-    @Override
-    protected Class<?>[] getAnnotatedExtensionClasses()
-    {
-        return new Class<?>[] {PetStoreConnector.class};
-    }
+  @Override
+  protected Class<?>[] getAnnotatedExtensionClasses() {
+    return new Class<?>[] {PetStoreConnector.class};
+  }
 
-    @Test
-    public void tls() throws Exception
-    {
-        PetStoreClient client = (PetStoreClient) runFlow("getClient").getMessage().getPayload();
-        assertThat(client.getTlsContext(), is(notNullValue()));
-    }
+  @Test
+  public void tls() throws Exception {
+    PetStoreClient client = (PetStoreClient) runFlow("getClient").getMessage().getPayload();
+    assertThat(client.getTlsContext(), is(notNullValue()));
+  }
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.jaxws;
 
@@ -19,51 +17,42 @@ import org.mule.tck.junit4.rule.DynamicPort;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class HeaderPropertiesTestCase extends FunctionalTestCase
-{
+public class HeaderPropertiesTestCase extends FunctionalTestCase {
 
-    @Rule
-    public DynamicPort dynamicPort = new DynamicPort("port1");
+  @Rule
+  public DynamicPort dynamicPort = new DynamicPort("port1");
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "header-conf-httpn.xml";
-    }
+  @Override
+  protected String getConfigFile() {
+    return "header-conf-httpn.xml";
+  }
 
-    private GreeterImpl getGreeter() throws Exception
-    {
-        Object instance = getComponent("greeterService");
+  private GreeterImpl getGreeter() throws Exception {
+    Object instance = getComponent("greeterService");
 
-        return (GreeterImpl) instance;
-    }
+    return (GreeterImpl) instance;
+  }
 
-    @Test
-    public void testClientWithMuleClient() throws Exception
-    {
-        FunctionalTestComponent testComponent = getFunctionalTestComponent("testService");
-        assertNotNull(testComponent);
+  @Test
+  public void testClientWithMuleClient() throws Exception {
+    FunctionalTestComponent testComponent = getFunctionalTestComponent("testService");
+    assertNotNull(testComponent);
 
-        EventCallback callback = new EventCallback()
-        {
-            @Override
-            public void eventReceived(final MuleEventContext context, final Object component) throws Exception
-            {
-                MuleMessage msg = context.getMessage();
-                assertEquals("BAR", msg.getInboundProperty("FOO"));
-            }
-        };
-        testComponent.setEventCallback(callback);
+    EventCallback callback = new EventCallback() {
+      @Override
+      public void eventReceived(final MuleEventContext context, final Object component) throws Exception {
+        MuleMessage msg = context.getMessage();
+        assertEquals("BAR", msg.getInboundProperty("FOO"));
+      }
+    };
+    testComponent.setEventCallback(callback);
 
-        MuleMessage result = flowRunner("clientFlow").withPayload("Dan")
-                                                     .withOutboundProperty("operation", "greetMe")
-                                                     .withOutboundProperty("FOO", "BAR")
-                                                     .run()
-                                                     .getMessage();
+    MuleMessage result = flowRunner("clientFlow").withPayload("Dan").withOutboundProperty("operation", "greetMe")
+        .withOutboundProperty("FOO", "BAR").run().getMessage();
 
-        assertEquals("Hello Dan Received", result.getPayload());
+    assertEquals("Hello Dan Received", result.getPayload());
 
-        GreeterImpl impl = getGreeter();
-        assertEquals(1, impl.getInvocationCount());
-    }
+    GreeterImpl impl = getGreeter();
+    assertEquals(1, impl.getInvocationCount());
+  }
 }

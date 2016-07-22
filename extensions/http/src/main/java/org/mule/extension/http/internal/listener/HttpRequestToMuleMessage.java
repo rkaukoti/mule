@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.http.internal.listener;
 
@@ -39,68 +37,49 @@ import static org.mule.runtime.module.http.internal.util.HttpToMuleMessage.getMe
  *
  * @since 4.0
  */
-public class HttpRequestToMuleMessage
-{
-    private static Logger logger = LoggerFactory.getLogger(HttpRequestToMuleMessage.class);
+public class HttpRequestToMuleMessage {
+  private static Logger logger = LoggerFactory.getLogger(HttpRequestToMuleMessage.class);
 
-    public static MuleMessage transform(final HttpRequestContext requestContext, final MuleContext muleContext, Boolean parseRequest,
-                                        ListenerPath listenerPath) throws HttpRequestParsingException
-    {
-        final HttpRequest request = requestContext.getRequest();
+  public static MuleMessage transform(final HttpRequestContext requestContext, final MuleContext muleContext, Boolean parseRequest,
+      ListenerPath listenerPath) throws HttpRequestParsingException {
+    final HttpRequest request = requestContext.getRequest();
 
-        final MediaType mediaType = getMediaType(request.getHeaderValueIgnoreCase(CONTENT_TYPE), getDefaultEncoding(muleContext));
+    final MediaType mediaType = getMediaType(request.getHeaderValueIgnoreCase(CONTENT_TYPE), getDefaultEncoding(muleContext));
 
-        final Map<String, DataHandler> parts = new HashMap<>();
-        Object payload = null;
-        if (parseRequest)
-        {
-            final HttpEntity entity = request.getEntity();
-            if (entity != null && !(entity instanceof EmptyHttpEntity))
-            {
-                if (entity instanceof MultipartHttpEntity)
-                {
-                    parts.putAll(createDataHandlerFrom(((MultipartHttpEntity) entity).getParts()));
-                }
-                else
-                {
-                    if (mediaType != null)
-                    {
-                        if (mediaType.matches(HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED))
-                        {
-                            try
-                            {
-                                payload = decodeUrlEncodedBody(IOUtils.toString(((InputStreamHttpEntity) entity).getInputStream()),
-                                        mediaType.getCharset().get());
-                            }
-                            catch (IllegalArgumentException e)
-                            {
-                                throw new HttpRequestParsingException("Cannot decode x-www-form-urlencoded payload", e);
-                            }
-                        }
-                        else if (entity instanceof InputStreamHttpEntity)
-                        {
-                            payload = ((InputStreamHttpEntity) entity).getInputStream();
-                        }
-                    }
-                    else if (entity instanceof InputStreamHttpEntity)
-                    {
-                        payload = ((InputStreamHttpEntity) entity).getInputStream();
-                    }
-                }
+    final Map<String, DataHandler> parts = new HashMap<>();
+    Object payload = null;
+    if (parseRequest) {
+      final HttpEntity entity = request.getEntity();
+      if (entity != null && !(entity instanceof EmptyHttpEntity)) {
+        if (entity instanceof MultipartHttpEntity) {
+          parts.putAll(createDataHandlerFrom(((MultipartHttpEntity) entity).getParts()));
+        } else {
+          if (mediaType != null) {
+            if (mediaType.matches(HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED)) {
+              try {
+                payload =
+                    decodeUrlEncodedBody(IOUtils.toString(((InputStreamHttpEntity) entity).getInputStream()), mediaType.getCharset().get());
+              } catch (IllegalArgumentException e) {
+                throw new HttpRequestParsingException("Cannot decode x-www-form-urlencoded payload", e);
+              }
+            } else if (entity instanceof InputStreamHttpEntity) {
+              payload = ((InputStreamHttpEntity) entity).getInputStream();
             }
+          } else if (entity instanceof InputStreamHttpEntity) {
+            payload = ((InputStreamHttpEntity) entity).getInputStream();
+          }
         }
-        else
-        {
-            final InputStreamHttpEntity inputStreamEntity = request.getInputStreamEntity();
-            if (inputStreamEntity != null)
-            {
-                payload = inputStreamEntity.getInputStream();
-            }
-        }
-
-        HttpRequestAttributes attributes = new HttpRequestAttributesBuilder().setRequestContext(requestContext)
-                                                                             .setListenerPath(listenerPath).setParts(parts).build();
-        return MuleMessage.builder().payload(payload).mediaType(mediaType).attributes(attributes).build();
+      }
+    } else {
+      final InputStreamHttpEntity inputStreamEntity = request.getInputStreamEntity();
+      if (inputStreamEntity != null) {
+        payload = inputStreamEntity.getInputStream();
+      }
     }
+
+    HttpRequestAttributes attributes =
+        new HttpRequestAttributesBuilder().setRequestContext(requestContext).setListenerPath(listenerPath).setParts(parts).build();
+    return MuleMessage.builder().payload(payload).mediaType(mediaType).attributes(attributes).build();
+  }
 
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.transaction.extras;
 
@@ -10,31 +8,25 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.Types;
 
-public class JdbcLibraryDao implements LibraryDao
-{
+public class JdbcLibraryDao implements LibraryDao {
 
-    private JdbcTemplate jdbcTemplate;
+  private JdbcTemplate jdbcTemplate;
 
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate)
-    {
-        this.jdbcTemplate = jdbcTemplate;
+  public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+    this.jdbcTemplate = jdbcTemplate;
+  }
+
+  public boolean insertBook(Book book) throws Exception {
+    String sql = "insert into book (id, title, author) values (?,?,?)";
+    Object args[] = new Object[] {new Integer(book.getSerialNo()), book.getTitle(), book.getAuthor()};
+    int types[] = new int[] {Types.INTEGER, Types.VARCHAR, Types.VARCHAR};
+    try {
+      jdbcTemplate.update(sql, args, types);
+      return true;
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      throw e;
+      // return false;
     }
-
-    public boolean insertBook(Book book) throws Exception
-    {
-        String sql = "insert into book (id, title, author) values (?,?,?)";
-        Object args[] = new Object[] {new Integer(book.getSerialNo()), book.getTitle(), book.getAuthor()};
-        int types[] = new int[] {Types.INTEGER, Types.VARCHAR, Types.VARCHAR};
-        try
-        {
-            jdbcTemplate.update(sql, args, types);
-            return true;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            throw e;
-            //return false;
-        }
-    }
+  }
 }

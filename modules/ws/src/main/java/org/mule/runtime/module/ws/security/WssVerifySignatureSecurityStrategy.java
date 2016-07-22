@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.ws.security;
 
@@ -19,42 +17,35 @@ import static org.mule.runtime.module.ws.security.WSCryptoUtils.createTrustStore
 /**
  * Verifies the signature of a SOAP response, using certificates of the trust-store in the provided TLS context.
  */
-public class WssVerifySignatureSecurityStrategy extends AbstractSecurityStrategy
-{
+public class WssVerifySignatureSecurityStrategy extends AbstractSecurityStrategy {
 
-    private static final String WS_VERIFY_SIGNATURE_PROPERTIES_KEY = "verifySignatureProperties";
+  private static final String WS_VERIFY_SIGNATURE_PROPERTIES_KEY = "verifySignatureProperties";
 
-    private TlsContextFactory tlsContextFactory;
+  private TlsContextFactory tlsContextFactory;
 
-    @Override
-    public void apply(Map<String, Object> outConfigProperties, Map<String, Object> inConfigProperties)
-    {
-        appendAction(inConfigProperties, SIGNATURE);
+  @Override
+  public void apply(Map<String, Object> outConfigProperties, Map<String, Object> inConfigProperties) {
+    appendAction(inConfigProperties, SIGNATURE);
 
-        Properties signatureProperties;
+    Properties signatureProperties;
 
-        if (tlsContextFactory == null)
-        {
-            signatureProperties = createDefaultTrustStoreProperties();
-        }
-        else
-        {
-            signatureProperties = createTrustStoreProperties(tlsContextFactory.getTrustStoreConfiguration());
-        }
-
-        inConfigProperties.put(SIG_PROP_REF_ID, WS_VERIFY_SIGNATURE_PROPERTIES_KEY);
-        inConfigProperties.put(WS_VERIFY_SIGNATURE_PROPERTIES_KEY, signatureProperties);
+    if (tlsContextFactory == null) {
+      signatureProperties = createDefaultTrustStoreProperties();
+    } else {
+      signatureProperties = createTrustStoreProperties(tlsContextFactory.getTrustStoreConfiguration());
     }
 
+    inConfigProperties.put(SIG_PROP_REF_ID, WS_VERIFY_SIGNATURE_PROPERTIES_KEY);
+    inConfigProperties.put(WS_VERIFY_SIGNATURE_PROPERTIES_KEY, signatureProperties);
+  }
 
-    public TlsContextFactory getTlsContext()
-    {
-        return tlsContextFactory;
-    }
 
-    public void setTlsContext(TlsContextFactory tlsContextFactory)
-    {
-        this.tlsContextFactory = tlsContextFactory;
-    }
+  public TlsContextFactory getTlsContext() {
+    return tlsContextFactory;
+  }
+
+  public void setTlsContext(TlsContextFactory tlsContextFactory) {
+    this.tlsContextFactory = tlsContextFactory;
+  }
 
 }

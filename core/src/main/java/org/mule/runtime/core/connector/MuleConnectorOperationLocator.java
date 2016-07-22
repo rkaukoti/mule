@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.connector;
 
@@ -25,56 +23,45 @@ import java.util.List;
 import static java.util.Collections.sort;
 
 /**
- * Default {@link org.mule.runtime.core.api.connector.ConnectorOperationLocator} that will search
- * in the mule registry for registered {@link org.mule.runtime.core.api.connector.ConnectorOperationLocator}
- * to later provider operations through the use of URLs.
+ * Default {@link org.mule.runtime.core.api.connector.ConnectorOperationLocator} that will search in the mule registry for registered
+ * {@link org.mule.runtime.core.api.connector.ConnectorOperationLocator} to later provider operations through the use of URLs.
  */
-public class MuleConnectorOperationLocator implements ConnectorOperationLocator, MuleContextAware, Initialisable
-{
+public class MuleConnectorOperationLocator implements ConnectorOperationLocator, MuleContextAware, Initialisable {
 
-    private MuleContext muleContext;
-    private Collection<ConnectorOperationProvider> connectorOperationProviders;
+  private MuleContext muleContext;
+  private Collection<ConnectorOperationProvider> connectorOperationProviders;
 
-    @Override
-    public void initialise() throws InitialisationException
-    {
-        final List<ConnectorOperationProvider> providers =
-                new ArrayList<>(muleContext.getRegistry().lookupObjects(ConnectorOperationProvider.class));
-        sort(providers, ((ConnectorOperationProvider p1, ConnectorOperationProvider p2) -> priority(p2) - priority(p1)));
+  @Override
+  public void initialise() throws InitialisationException {
+    final List<ConnectorOperationProvider> providers =
+        new ArrayList<>(muleContext.getRegistry().lookupObjects(ConnectorOperationProvider.class));
+    sort(providers, ((ConnectorOperationProvider p1, ConnectorOperationProvider p2) -> priority(p2) - priority(p1)));
 
-        this.connectorOperationProviders = providers;
+    this.connectorOperationProviders = providers;
+  }
+
+  private int priority(ConnectorOperationProvider provider) {
+    if (provider instanceof AbstractPriorizableConnectorMessageProcessorProvider) {
+      return ((AbstractPriorizableConnectorMessageProcessorProvider) provider).priority();
+    } else {
+      return 0;
     }
+  }
 
-    private int priority(ConnectorOperationProvider provider)
-    {
-        if (provider instanceof AbstractPriorizableConnectorMessageProcessorProvider)
-        {
-            return ((AbstractPriorizableConnectorMessageProcessorProvider) provider).priority();
-        }
-        else
-        {
-            return 0;
-        }
-    }
+  @Override
+  public void setMuleContext(MuleContext context) {
+    this.muleContext = context;
+  }
 
-    @Override
-    public void setMuleContext(MuleContext context)
-    {
-        this.muleContext = context;
+  @Override
+  public MessageProcessor locateConnectorOperation(String url, OperationOptions operationOptions, MessageExchangePattern exchangePattern)
+      throws MuleException {
+    for (ConnectorOperationProvider connectorOperationProvider : connectorOperationProviders) {
+      if (connectorOperationProvider.supportsUrl(url)) {
+        return connectorOperationProvider.getMessageProcessor(url, operationOptions, exchangePattern);
+      }
     }
-
-    @Override
-    public MessageProcessor locateConnectorOperation(String url, OperationOptions operationOptions, MessageExchangePattern exchangePattern)
-            throws MuleException
-    {
-        for (ConnectorOperationProvider connectorOperationProvider : connectorOperationProviders)
-        {
-            if (connectorOperationProvider.supportsUrl(url))
-            {
-                return connectorOperationProvider.getMessageProcessor(url, operationOptions, exchangePattern);
-            }
-        }
-        return null;
-    }
+    return null;
+  }
 
 }

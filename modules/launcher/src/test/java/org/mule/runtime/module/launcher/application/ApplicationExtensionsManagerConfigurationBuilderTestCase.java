@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.application;
 
@@ -35,56 +33,53 @@ import static org.mule.runtime.module.extension.internal.ExtensionProperties.EXT
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class ApplicationExtensionsManagerConfigurationBuilderTestCase extends AbstractMuleTestCase
-{
+public class ApplicationExtensionsManagerConfigurationBuilderTestCase extends AbstractMuleTestCase {
 
-    private static final String MANIFEST_RESOURCE = "META-INF/" + EXTENSION_MANIFEST_FILE_NAME;
+  private static final String MANIFEST_RESOURCE = "META-INF/" + EXTENSION_MANIFEST_FILE_NAME;
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private MuleContext muleContext;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private MuleContext muleContext;
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private ArtifactPlugin extensionPlugin;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private ArtifactPlugin extensionPlugin;
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private ArtifactPlugin notExtensionPlugin;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private ArtifactPlugin notExtensionPlugin;
 
-    @Mock
-    private ExtensionManagerAdapterFactory extensionManagerAdapterFactory;
+  @Mock
+  private ExtensionManagerAdapterFactory extensionManagerAdapterFactory;
 
-    @Mock(answer = RETURNS_DEEP_STUBS)
-    private ExtensionManagerAdapter extensionManager;
+  @Mock(answer = RETURNS_DEEP_STUBS)
+  private ExtensionManagerAdapter extensionManager;
 
-    @Mock
-    private ClassLoader pluginClassLoader;
+  @Mock
+  private ClassLoader pluginClassLoader;
 
-    @Mock
-    private ExtensionManifest manifest;
+  @Mock
+  private ExtensionManifest manifest;
 
-    private ApplicationExtensionsManagerConfigurationBuilder builder;
+  private ApplicationExtensionsManagerConfigurationBuilder builder;
 
-    @Before
-    public void before() throws Exception
-    {
-        when(extensionPlugin.getArtifactClassLoader().findResource(MANIFEST_RESOURCE)).thenReturn(new URL("file:/blah"));
-        when(extensionPlugin.getArtifactClassLoader().getClassLoader()).thenReturn(pluginClassLoader);
-        when(notExtensionPlugin.getArtifactClassLoader().findResource(MANIFEST_RESOURCE)).thenReturn(null);
+  @Before
+  public void before() throws Exception {
+    when(extensionPlugin.getArtifactClassLoader().findResource(MANIFEST_RESOURCE)).thenReturn(new URL("file:/blah"));
+    when(extensionPlugin.getArtifactClassLoader().getClassLoader()).thenReturn(pluginClassLoader);
+    when(notExtensionPlugin.getArtifactClassLoader().findResource(MANIFEST_RESOURCE)).thenReturn(null);
 
-        when(extensionManagerAdapterFactory.createExtensionManager(muleContext)).thenReturn(extensionManager);
-        when(extensionManager.parseExtensionManifestXml(any())).thenReturn(manifest);
+    when(extensionManagerAdapterFactory.createExtensionManager(muleContext)).thenReturn(extensionManager);
+    when(extensionManager.parseExtensionManifestXml(any())).thenReturn(manifest);
 
-        builder = new ApplicationExtensionsManagerConfigurationBuilder(asList(extensionPlugin, notExtensionPlugin),
-                extensionManagerAdapterFactory);
-    }
+    builder =
+        new ApplicationExtensionsManagerConfigurationBuilder(asList(extensionPlugin, notExtensionPlugin), extensionManagerAdapterFactory);
+  }
 
-    @Test
-    public void register() throws Exception
-    {
-        builder.doConfigure(muleContext);
-        ArgumentCaptor<ExtensionManifest> manifestCaptor = forClass(ExtensionManifest.class);
+  @Test
+  public void register() throws Exception {
+    builder.doConfigure(muleContext);
+    ArgumentCaptor<ExtensionManifest> manifestCaptor = forClass(ExtensionManifest.class);
 
-        verify(extensionManager).registerExtension(manifestCaptor.capture(), same(pluginClassLoader));
-        ExtensionManifest manifest = manifestCaptor.getValue();
-        assertThat(manifest, is(sameInstance(manifest)));
-    }
+    verify(extensionManager).registerExtension(manifestCaptor.capture(), same(pluginClassLoader));
+    ExtensionManifest manifest = manifestCaptor.getValue();
+    assertThat(manifest, is(sameInstance(manifest)));
+  }
 }

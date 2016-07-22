@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener;
 
@@ -44,308 +42,245 @@ import static java.lang.String.format;
 import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
 import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
 
-public class DefaultHttpListenerConfig extends AbstractAnnotatedObject implements HttpListenerConfig, Initialisable, MuleContextAware
-{
+public class DefaultHttpListenerConfig extends AbstractAnnotatedObject implements HttpListenerConfig, Initialisable, MuleContextAware {
 
-    public static final int DEFAULT_MAX_THREADS = 128;
-    public static final int DEFAULT_CONNECTION_IDLE_TIMEOUT = 30 * 1000;
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-    private HttpConstants.Protocols protocol = HttpConstants.Protocols.HTTP;
-    private String name;
-    private String host;
-    private Integer port;
-    private String basePath;
-    private Boolean parseRequest;
-    private MuleContext muleContext;
-    @Inject
-    private HttpListenerConnectionManager connectionManager;
-    private TlsContextFactory tlsContext;
-    private TcpServerSocketProperties serverSocketProperties = new DefaultTcpServerSocketProperties();
-    private ThreadingProfile workerThreadingProfile;
-    private boolean started = false;
-    private Server server;
-    private WorkManager workManager;
-    private boolean initialised;
+  public static final int DEFAULT_MAX_THREADS = 128;
+  public static final int DEFAULT_CONNECTION_IDLE_TIMEOUT = 30 * 1000;
+  private final Logger logger = LoggerFactory.getLogger(getClass());
+  private HttpConstants.Protocols protocol = HttpConstants.Protocols.HTTP;
+  private String name;
+  private String host;
+  private Integer port;
+  private String basePath;
+  private Boolean parseRequest;
+  private MuleContext muleContext;
+  @Inject
+  private HttpListenerConnectionManager connectionManager;
+  private TlsContextFactory tlsContext;
+  private TcpServerSocketProperties serverSocketProperties = new DefaultTcpServerSocketProperties();
+  private ThreadingProfile workerThreadingProfile;
+  private boolean started = false;
+  private Server server;
+  private WorkManager workManager;
+  private boolean initialised;
 
-    private boolean usePersistentConnections = true;
-    private int connectionIdleTimeout = DEFAULT_CONNECTION_IDLE_TIMEOUT;
+  private boolean usePersistentConnections = true;
+  private int connectionIdleTimeout = DEFAULT_CONNECTION_IDLE_TIMEOUT;
 
-    public DefaultHttpListenerConfig()
-    {
+  public DefaultHttpListenerConfig() {}
+
+  DefaultHttpListenerConfig(HttpListenerConnectionManager connectionManager) {
+    this.connectionManager = connectionManager;
+  }
+
+  public void setWorkerThreadingProfile(ThreadingProfile workerThreadingProfile) {
+    this.workerThreadingProfile = workerThreadingProfile;
+  }
+
+  public void setProtocol(HttpConstants.Protocols protocol) {
+    this.protocol = protocol;
+  }
+
+  public void setBasePath(String basePath) {
+    this.basePath = basePath;
+  }
+
+  public void setServerSocketProperties(TcpServerSocketProperties serverSocketProperties) {
+    this.serverSocketProperties = serverSocketProperties;
+  }
+
+  public void setParseRequest(Boolean parseRequest) {
+    this.parseRequest = parseRequest;
+  }
+
+  public ListenerPath getFullListenerPath(String listenerPath) {
+    Preconditions.checkArgument(listenerPath.startsWith("/"), "listenerPath must start with /");
+    return new ListenerPath(basePath, listenerPath);
+  }
+
+  @Override
+  public synchronized void initialise() throws InitialisationException {
+    if (initialised) {
+      return;
+    }
+    basePath = HttpParser.sanitizePathWithStartSlash(this.basePath);
+    if (workerThreadingProfile == null) {
+      workerThreadingProfile = new MutableThreadingProfile(ThreadingProfile.DEFAULT_THREADING_PROFILE);
+      workerThreadingProfile.setMaxThreadsActive(DEFAULT_MAX_THREADS);
     }
 
-    DefaultHttpListenerConfig(HttpListenerConnectionManager connectionManager)
-    {
-        this.connectionManager = connectionManager;
+    if (port == null) {
+      port = protocol.getDefaultPort();
     }
 
-    public void setWorkerThreadingProfile(ThreadingProfile workerThreadingProfile)
-    {
-        this.workerThreadingProfile = workerThreadingProfile;
+    if (protocol.equals(HTTP) && tlsContext != null) {
+      throw new InitialisationException(CoreMessages.createStaticMessage("TlsContext cannot be configured with protocol HTTP. "
+          + "If you defined a tls:context element in your listener-config then you must set protocol=\"HTTPS\""), this);
+    }
+    if (protocol.equals(HTTPS) && tlsContext == null) {
+      throw new InitialisationException(
+          CoreMessages.createStaticMessage("Configured protocol is HTTPS but there's no TlsContext configured"), this);
+    }
+    if (tlsContext != null && !tlsContext.isKeyStoreConfigured()) {
+      throw new InitialisationException(CoreMessages.createStaticMessage("KeyStore must be configured for server side SSL"), this);
     }
 
-    public void setProtocol(HttpConstants.Protocols protocol)
-    {
-        this.protocol = protocol;
+    verifyConnectionsParameters();
+
+
+    ServerAddress serverAddress;
+
+    try {
+      serverAddress = createServerAddress();
+    } catch (UnknownHostException e) {
+      throw new InitialisationException(CoreMessages.createStaticMessage("Cannot resolve host %s", host), e, this);
     }
 
-    public void setBasePath(String basePath)
-    {
-        this.basePath = basePath;
+    if (tlsContext == null) {
+      server = connectionManager.createServer(serverAddress, createWorkManagerSource(), usePersistentConnections, connectionIdleTimeout);
+    } else {
+      LifecycleUtils.initialiseIfNeeded(tlsContext);
+      server = connectionManager.createSslServer(serverAddress, createWorkManagerSource(), tlsContext, usePersistentConnections,
+          connectionIdleTimeout);
     }
+    initialised = true;
+  }
 
-    public void setServerSocketProperties(TcpServerSocketProperties serverSocketProperties)
-    {
-        this.serverSocketProperties = serverSocketProperties;
-    }
-
-    public void setParseRequest(Boolean parseRequest)
-    {
-        this.parseRequest = parseRequest;
-    }
-
-    public ListenerPath getFullListenerPath(String listenerPath)
-    {
-        Preconditions.checkArgument(listenerPath.startsWith("/"), "listenerPath must start with /");
-        return new ListenerPath(basePath, listenerPath);
-    }
-
-    @Override
-    public synchronized void initialise() throws InitialisationException
-    {
-        if (initialised)
-        {
-            return;
-        }
-        basePath = HttpParser.sanitizePathWithStartSlash(this.basePath);
-        if (workerThreadingProfile == null)
-        {
-            workerThreadingProfile = new MutableThreadingProfile(ThreadingProfile.DEFAULT_THREADING_PROFILE);
-            workerThreadingProfile.setMaxThreadsActive(DEFAULT_MAX_THREADS);
-        }
-
-        if (port == null)
-        {
-            port = protocol.getDefaultPort();
-        }
-
-        if (protocol.equals(HTTP) && tlsContext != null)
-        {
-            throw new InitialisationException(CoreMessages.createStaticMessage("TlsContext cannot be configured with protocol HTTP. " +
-                                                                               "If you defined a tls:context element in your listener-config then you must set protocol=\"HTTPS\""),
-                    this);
-        }
-        if (protocol.equals(HTTPS) && tlsContext == null)
-        {
-            throw new InitialisationException(
-                    CoreMessages.createStaticMessage("Configured protocol is HTTPS but there's no TlsContext configured"), this);
-        }
-        if (tlsContext != null && !tlsContext.isKeyStoreConfigured())
-        {
-            throw new InitialisationException(CoreMessages.createStaticMessage("KeyStore must be configured for server side SSL"), this);
-        }
-
-        verifyConnectionsParameters();
-
-
-        ServerAddress serverAddress;
-
-        try
-        {
-            serverAddress = createServerAddress();
-        }
-        catch (UnknownHostException e)
-        {
-            throw new InitialisationException(CoreMessages.createStaticMessage("Cannot resolve host %s", host), e, this);
-        }
-
-        if (tlsContext == null)
-        {
-            server = connectionManager.createServer(serverAddress, createWorkManagerSource(), usePersistentConnections,
-                    connectionIdleTimeout);
-        }
-        else
-        {
-            LifecycleUtils.initialiseIfNeeded(tlsContext);
-            server = connectionManager.createSslServer(serverAddress, createWorkManagerSource(), tlsContext, usePersistentConnections,
-                    connectionIdleTimeout);
-        }
-        initialised = true;
-    }
-
-    //We use a WorkManagerSource since the workManager instance may be recreated during stop/start and it would leave the server with an invalid work manager instance.
-    private WorkManagerSource createWorkManagerSource()
-    {
-        return new WorkManagerSource()
-        {
-            @Override
-            public WorkManager getWorkManager() throws MuleException
-            {
-                return workManager;
-            }
-        };
-    }
-
-    private void verifyConnectionsParameters() throws InitialisationException
-    {
-        if (!usePersistentConnections)
-        {
-            connectionIdleTimeout = 0;
-        }
-    }
-
-    private WorkManager createWorkManager()
-    {
-        final WorkManager workManager =
-                workerThreadingProfile.createWorkManager(format("%s%s.%s", ThreadNameHelper.getPrefix(muleContext), name, "worker"),
-                        muleContext.getConfiguration().getShutdownTimeout());
-        if (workManager instanceof MuleContextAware)
-        {
-            ((MuleContextAware) workManager).setMuleContext(muleContext);
-        }
+  // We use a WorkManagerSource since the workManager instance may be recreated during stop/start and it would leave the server with an
+  // invalid work manager instance.
+  private WorkManagerSource createWorkManagerSource() {
+    return new WorkManagerSource() {
+      @Override
+      public WorkManager getWorkManager() throws MuleException {
         return workManager;
-    }
+      }
+    };
+  }
 
-    /**
-     * Creates the server address object with the IP and port that this config should bind to.
-     */
-    private ServerAddress createServerAddress() throws UnknownHostException
-    {
-        return new ServerAddress(NetworkUtils.getLocalHostIp(host), port);
+  private void verifyConnectionsParameters() throws InitialisationException {
+    if (!usePersistentConnections) {
+      connectionIdleTimeout = 0;
     }
+  }
 
-    public void setMuleContext(final MuleContext muleContext)
-    {
-        this.muleContext = muleContext;
+  private WorkManager createWorkManager() {
+    final WorkManager workManager = workerThreadingProfile.createWorkManager(
+        format("%s%s.%s", ThreadNameHelper.getPrefix(muleContext), name, "worker"), muleContext.getConfiguration().getShutdownTimeout());
+    if (workManager instanceof MuleContextAware) {
+      ((MuleContextAware) workManager).setMuleContext(muleContext);
     }
+    return workManager;
+  }
 
-    public RequestHandlerManager addRequestHandler(ListenerRequestMatcher requestMatcher, RequestHandler requestHandler) throws IOException
-    {
-        return server.addRequestHandler(requestMatcher, requestHandler);
+  /**
+   * Creates the server address object with the IP and port that this config should bind to.
+   */
+  private ServerAddress createServerAddress() throws UnknownHostException {
+    return new ServerAddress(NetworkUtils.getLocalHostIp(host), port);
+  }
+
+  public void setMuleContext(final MuleContext muleContext) {
+    this.muleContext = muleContext;
+  }
+
+  public RequestHandlerManager addRequestHandler(ListenerRequestMatcher requestMatcher, RequestHandler requestHandler) throws IOException {
+    return server.addRequestHandler(requestMatcher, requestHandler);
+  }
+
+  public Boolean resolveParseRequest(Boolean listenerParseRequest) {
+    return listenerParseRequest != null ? listenerParseRequest : (parseRequest != null ? parseRequest : true);
+  }
+
+  public int getPort() {
+    return port;
+  }
+
+  public void setPort(int port) {
+    this.port = port;
+  }
+
+  public String getHost() {
+    return host;
+  }
+
+  public void setHost(String host) {
+    this.host = host;
+  }
+
+  @Override
+  public TlsContextFactory getTlsContext() {
+    return tlsContext;
+  }
+
+  public void setTlsContext(TlsContextFactory tlsContext) {
+    this.tlsContext = tlsContext;
+  }
+
+  @Override
+  public synchronized void start() throws MuleException {
+    if (started) {
+      return;
     }
-
-    public Boolean resolveParseRequest(Boolean listenerParseRequest)
-    {
-        return listenerParseRequest != null ? listenerParseRequest : (parseRequest != null ? parseRequest : true);
+    try {
+      workManager = createWorkManager();
+      workManager.start();
+      server.start();
+    } catch (IOException e) {
+      throw new DefaultMuleException(e);
     }
+    started = true;
+    logger.info("Listening for requests on " + listenerUrl());
+  }
 
-    public int getPort()
-    {
-        return port;
-    }
+  @Override
+  public boolean hasTlsConfig() {
+    return this.tlsContext != null;
+  }
 
-    public void setPort(int port)
-    {
-        this.port = port;
-    }
-
-    public String getHost()
-    {
-        return host;
-    }
-
-    public void setHost(String host)
-    {
-        this.host = host;
-    }
-
-    @Override
-    public TlsContextFactory getTlsContext()
-    {
-        return tlsContext;
-    }
-
-    public void setTlsContext(TlsContextFactory tlsContext)
-    {
-        this.tlsContext = tlsContext;
-    }
-
-    @Override
-    public synchronized void start() throws MuleException
-    {
-        if (started)
-        {
-            return;
+  @Override
+  public synchronized void stop() throws MuleException {
+    if (started) {
+      try {
+        workManager.dispose();
+      } catch (Exception e) {
+        logger.warn("Failure shutting down work manager " + e.getMessage());
+        if (logger.isDebugEnabled()) {
+          logger.debug(e.getMessage(), e);
         }
-        try
-        {
-            workManager = createWorkManager();
-            workManager.start();
-            server.start();
-        }
-        catch (IOException e)
-        {
-            throw new DefaultMuleException(e);
-        }
-        started = true;
-        logger.info("Listening for requests on " + listenerUrl());
+      } finally {
+        workManager = null;
+      }
+      server.stop();
+      started = false;
+      logger.info("Stopped listener on " + listenerUrl());
     }
+  }
 
-    @Override
-    public boolean hasTlsConfig()
-    {
-        return this.tlsContext != null;
-    }
+  private String listenerUrl() {
+    return String.format("%s://%s:%d%s", protocol.getScheme(), getHost(), getPort(), StringUtils.defaultString(basePath));
+  }
 
-    @Override
-    public synchronized void stop() throws MuleException
-    {
-        if (started)
-        {
-            try
-            {
-                workManager.dispose();
-            }
-            catch (Exception e)
-            {
-                logger.warn("Failure shutting down work manager " + e.getMessage());
-                if (logger.isDebugEnabled())
-                {
-                    logger.debug(e.getMessage(), e);
-                }
-            }
-            finally
-            {
-                workManager = null;
-            }
-            server.stop();
-            started = false;
-            logger.info("Stopped listener on " + listenerUrl());
-        }
-    }
+  public String getName() {
+    return name;
+  }
 
-    private String listenerUrl()
-    {
-        return String.format("%s://%s:%d%s", protocol.getScheme(), getHost(), getPort(), StringUtils.defaultString(basePath));
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getName()
-    {
-        return name;
-    }
+  WorkManager getWorkManager() {
+    return workManager;
+  }
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
+  public void setUsePersistentConnections(boolean usePersistentConnections) {
+    this.usePersistentConnections = usePersistentConnections;
+  }
 
-    WorkManager getWorkManager()
-    {
-        return workManager;
-    }
+  public void setConnectionIdleTimeout(int connectionIdleTimeout) {
+    this.connectionIdleTimeout = connectionIdleTimeout;
+  }
 
-    public void setUsePersistentConnections(boolean usePersistentConnections)
-    {
-        this.usePersistentConnections = usePersistentConnections;
-    }
-
-    public void setConnectionIdleTimeout(int connectionIdleTimeout)
-    {
-        this.connectionIdleTimeout = connectionIdleTimeout;
-    }
-
-    public boolean isStarted()
-    {
-        return started;
-    }
+  public boolean isStarted() {
+    return started;
+  }
 }

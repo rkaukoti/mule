@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.config;
 
@@ -22,31 +20,29 @@ import org.mule.runtime.module.management.agent.YourKitProfilerAgent;
 /**
  * Handles all configuration elements in the Mule Management module.
  */
-public class ManagementNamespaceHandler extends AbstractMuleNamespaceHandler
-{
+public class ManagementNamespaceHandler extends AbstractMuleNamespaceHandler {
 
-    @Override
-    public void init()
-    {
-        registerBeanDefinitionParser("jmx-server", new JmxAgentDefinitionParser());
-        registerBeanDefinitionParser("mBeanServer", new ObjectFactoryWrapper("MBeanServerObjectFactory"));
-        registerBeanDefinitionParser("credentials", new ChildMapDefinitionParser("credentials"));
-        registerBeanDefinitionParser("jmx-log4j", new DefaultNameMuleOrphanDefinitionParser(Log4jAgent.class));
-        registerBeanDefinitionParser("jmx-mx4j-adaptor", new DefaultNameMuleOrphanDefinitionParser(Mx4jAgent.class));
-        registerBeanDefinitionParser("jmx-notifications", new DefaultNameMuleOrphanDefinitionParser(JmxServerNotificationAgent.class));
+  @Override
+  public void init() {
+    registerBeanDefinitionParser("jmx-server", new JmxAgentDefinitionParser());
+    registerBeanDefinitionParser("mBeanServer", new ObjectFactoryWrapper("MBeanServerObjectFactory"));
+    registerBeanDefinitionParser("credentials", new ChildMapDefinitionParser("credentials"));
+    registerBeanDefinitionParser("jmx-log4j", new DefaultNameMuleOrphanDefinitionParser(Log4jAgent.class));
+    registerBeanDefinitionParser("jmx-mx4j-adaptor", new DefaultNameMuleOrphanDefinitionParser(Mx4jAgent.class));
+    registerBeanDefinitionParser("jmx-notifications", new DefaultNameMuleOrphanDefinitionParser(JmxServerNotificationAgent.class));
 
-        MuleDefinitionParserConfiguration defaultJmxParser = registerMuleBeanDefinitionParser("jmx-default-config",
-                new DefaultNameMuleOrphanDefinitionParser(DefaultJmxSupportAgent.class));
-        defaultJmxParser.addAlias("registerMx4jAdapter", "loadMx4jAgent");
-        defaultJmxParser.addAlias("registerLog4j", "loadLog4jAgent");
+    MuleDefinitionParserConfiguration defaultJmxParser =
+        registerMuleBeanDefinitionParser("jmx-default-config", new DefaultNameMuleOrphanDefinitionParser(DefaultJmxSupportAgent.class));
+    defaultJmxParser.addAlias("registerMx4jAdapter", "loadMx4jAgent");
+    defaultJmxParser.addAlias("registerLog4j", "loadLog4jAgent");
 
-        registerBeanDefinitionParser("level-mapping", new ChildMapEntryDefinitionParser("levelMappings", "severity", "eventId"));
+    registerBeanDefinitionParser("level-mapping", new ChildMapEntryDefinitionParser("levelMappings", "severity", "eventId"));
 
-        registerBeanDefinitionParser("rmi-server", new DefaultNameMuleOrphanDefinitionParser(RmiRegistryAgent.class));
-        registerBeanDefinitionParser("yourkit-profiler", new DefaultNameMuleOrphanDefinitionParser(YourKitProfilerAgent.class));
+    registerBeanDefinitionParser("rmi-server", new DefaultNameMuleOrphanDefinitionParser(RmiRegistryAgent.class));
+    registerBeanDefinitionParser("yourkit-profiler", new DefaultNameMuleOrphanDefinitionParser(YourKitProfilerAgent.class));
 
-        // This gets processed by the jmx-server parser
-        registerIgnoredElement("connector-server");
-    }
+    // This gets processed by the jmx-server parser
+    registerIgnoredElement("connector-server");
+  }
 
 }

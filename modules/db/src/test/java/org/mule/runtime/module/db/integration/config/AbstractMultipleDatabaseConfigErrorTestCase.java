@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.config;
@@ -16,23 +14,19 @@ import org.mule.runtime.module.db.integration.model.AbstractTestDatabase;
 
 import java.util.List;
 
-public abstract class AbstractMultipleDatabaseConfigErrorTestCase extends AbstractDbIntegrationTestCase
-{
+public abstract class AbstractMultipleDatabaseConfigErrorTestCase extends AbstractDbIntegrationTestCase {
 
-    public AbstractMultipleDatabaseConfigErrorTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase)
-    {
-        super(dataSourceConfigResource, testDatabase);
-    }
+  public AbstractMultipleDatabaseConfigErrorTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
+    super(dataSourceConfigResource, testDatabase);
+  }
 
-    @Parameterized.Parameters
-    public static List<Object[]> parameters()
-    {
-        return TestDbConfig.getResources();
-    }
+  @Parameterized.Parameters
+  public static List<Object[]> parameters() {
+    return TestDbConfig.getResources();
+  }
 
-    @Test(expected = MessagingException.class)
-    public void returnsErrorWhenMultipleJdbcConfigDefined() throws Exception
-    {
-        flowRunner("testFlow").withPayload(TEST_MESSAGE).run();
-    }
+  @Test(expected = MessagingException.class)
+  public void returnsErrorWhenMultipleJdbcConfigDefined() throws Exception {
+    flowRunner("testFlow").withPayload(TEST_MESSAGE).run();
+  }
 }

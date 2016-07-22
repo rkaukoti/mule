@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.support;
 
@@ -16,34 +14,30 @@ import javax.management.ObjectName;
 /**
  * Support class using JMX 1.2 and newer calls.
  */
-public class JmxModernSupport extends AbstractJmxSupport
-{
+public class JmxModernSupport extends AbstractJmxSupport {
 
-    /**
-     * {@inheritDoc}
-     */
-    public String escape(String input)
-    {
-        return ObjectName.quote(input);
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public String escape(String input) {
+    return ObjectName.quote(input);
+  }
 
-    /**
-     * For modern JMX implementation just delegate to a standard factory method.
-     *
-     * @param name object name
-     * @return ObjectName for MBeanServer
-     * @throws MalformedObjectNameException for invalid names
-     */
-    public ObjectName getObjectName(String name) throws MalformedObjectNameException
-    {
-        return ObjectName.getInstance(name);
-    }
+  /**
+   * For modern JMX implementation just delegate to a standard factory method.
+   *
+   * @param name object name
+   * @return ObjectName for MBeanServer
+   * @throws MalformedObjectNameException for invalid names
+   */
+  public ObjectName getObjectName(String name) throws MalformedObjectNameException {
+    return ObjectName.getInstance(name);
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected Collection getDomains(final MBeanServer server)
-    {
-        return Arrays.asList(server.getDomains());
-    }
+  /**
+   * {@inheritDoc}
+   */
+  protected Collection getDomains(final MBeanServer server) {
+    return Arrays.asList(server.getDomains());
+  }
 }

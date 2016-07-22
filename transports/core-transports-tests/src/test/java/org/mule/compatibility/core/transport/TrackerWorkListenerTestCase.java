@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -24,59 +22,53 @@ import static org.mule.compatibility.core.transport.WorkEventMatcher.aStartedWor
 import static org.mule.compatibility.core.transport.WorkEventMatcher.anAcceptedWorkEventFor;
 
 @SmallTest
-public class TrackerWorkListenerTestCase extends AbstractMuleTestCase
-{
+public class TrackerWorkListenerTestCase extends AbstractMuleTestCase {
 
-    public static final int START_DURATION = 10;
+  public static final int START_DURATION = 10;
 
-    private final Work originalWork = mock(Work.class);
-    private final Work work = mock(Work.class);
-    private final WorkException workException = new WorkException();
-    private final WorkListener delegate = mock(WorkListener.class);
-    private final TrackerWorkListener trackerWorkListener = new TrackerWorkListener(work, delegate);
+  private final Work originalWork = mock(Work.class);
+  private final Work work = mock(Work.class);
+  private final WorkException workException = new WorkException();
+  private final WorkListener delegate = mock(WorkListener.class);
+  private final TrackerWorkListener trackerWorkListener = new TrackerWorkListener(work, delegate);
 
-    @Test
-    public void notifiesWorkAccepted()
-    {
-        WorkEvent workEvent = createWorkEvent(WorkEvent.WORK_ACCEPTED);
+  @Test
+  public void notifiesWorkAccepted() {
+    WorkEvent workEvent = createWorkEvent(WorkEvent.WORK_ACCEPTED);
 
-        trackerWorkListener.workAccepted(workEvent);
+    trackerWorkListener.workAccepted(workEvent);
 
-        verify(delegate).workAccepted(anAcceptedWorkEventFor(this, work, workException, START_DURATION));
-    }
+    verify(delegate).workAccepted(anAcceptedWorkEventFor(this, work, workException, START_DURATION));
+  }
 
-    @Test
-    public void notifiesWorkCompleted()
-    {
-        WorkEvent workEvent = createWorkEvent(WorkEvent.WORK_COMPLETED);
+  @Test
+  public void notifiesWorkCompleted() {
+    WorkEvent workEvent = createWorkEvent(WorkEvent.WORK_COMPLETED);
 
-        trackerWorkListener.workCompleted(workEvent);
+    trackerWorkListener.workCompleted(workEvent);
 
-        verify(delegate).workCompleted(aCompletedWorkEventFor(this, work, workException, START_DURATION));
-    }
+    verify(delegate).workCompleted(aCompletedWorkEventFor(this, work, workException, START_DURATION));
+  }
 
-    @Test
-    public void notifiesWorkRejected()
-    {
-        WorkEvent workEvent = createWorkEvent(WorkEvent.WORK_REJECTED);
+  @Test
+  public void notifiesWorkRejected() {
+    WorkEvent workEvent = createWorkEvent(WorkEvent.WORK_REJECTED);
 
-        trackerWorkListener.workRejected(workEvent);
+    trackerWorkListener.workRejected(workEvent);
 
-        verify(delegate).workRejected(aRejectedWorkEventFor(this, work, workException, START_DURATION));
-    }
+    verify(delegate).workRejected(aRejectedWorkEventFor(this, work, workException, START_DURATION));
+  }
 
-    @Test
-    public void notifiesWorkStarted()
-    {
-        int workStarted = WorkEvent.WORK_STARTED;
+  @Test
+  public void notifiesWorkStarted() {
+    int workStarted = WorkEvent.WORK_STARTED;
 
-        trackerWorkListener.workStarted(createWorkEvent(workStarted));
+    trackerWorkListener.workStarted(createWorkEvent(workStarted));
 
-        verify(delegate).workStarted(aStartedWorkEventFor(this, work, workException, START_DURATION));
-    }
+    verify(delegate).workStarted(aStartedWorkEventFor(this, work, workException, START_DURATION));
+  }
 
-    private WorkEvent createWorkEvent(int type)
-    {
-        return new WorkEvent(this, type, originalWork, workException, START_DURATION);
-    }
+  private WorkEvent createWorkEvent(int type) {
+    return new WorkEvent(this, type, originalWork, workException, START_DURATION);
+  }
 }

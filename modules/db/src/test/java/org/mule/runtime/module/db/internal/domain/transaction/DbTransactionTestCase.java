@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.db.internal.domain.transaction;
 
@@ -29,106 +27,94 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SmallTest
-public class DbTransactionTestCase extends AbstractMuleTestCase
-{
+public class DbTransactionTestCase extends AbstractMuleTestCase {
 
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+  @Rule
+  public ExpectedException expectedException = ExpectedException.none();
 
-    private SQLException expectedExceptionCause;
+  private SQLException expectedExceptionCause;
 
-    private DbTransaction tx;
-    private Connection connection;
+  private DbTransaction tx;
+  private Connection connection;
 
-    private MuleContext muleContext;
+  private MuleContext muleContext;
 
-    @Before
-    public void initializeMocks() throws SQLException, TransactionException
-    {
-        muleContext = mock(MuleContext.class, RETURNS_DEEP_STUBS);
-        when(muleContext.getConfiguration().getId()).thenReturn("myApp");
+  @Before
+  public void initializeMocks() throws SQLException, TransactionException {
+    muleContext = mock(MuleContext.class, RETURNS_DEEP_STUBS);
+    when(muleContext.getConfiguration().getId()).thenReturn("myApp");
 
-        tx = new DbTransaction(muleContext);
+    tx = new DbTransaction(muleContext);
 
-        connection = mock(Connection.class);
+    connection = mock(Connection.class);
 
-        when(connection.getAutoCommit()).thenReturn(false);
+    when(connection.getAutoCommit()).thenReturn(false);
 
-        tx.bindResource(mock(DataSource.class), connection);
-    }
+    tx.bindResource(mock(DataSource.class), connection);
+  }
 
-    @After
-    public void ensureConnectionCloseWasCalled() throws SQLException
-    {
-        verify(connection).close();
-    }
+  @After
+  public void ensureConnectionCloseWasCalled() throws SQLException {
+    verify(connection).close();
+  }
 
-    @Test
-    public void closeConnectionIfErrorOnCommit() throws Exception
-    {
-        addExceptionExpectation();
-        doThrow(expectedExceptionCause).when(connection).commit();
-        tx.commit();
-    }
+  @Test
+  public void closeConnectionIfErrorOnCommit() throws Exception {
+    addExceptionExpectation();
+    doThrow(expectedExceptionCause).when(connection).commit();
+    tx.commit();
+  }
 
-    @Test
-    public void closeConnectionIfErrorOnRollback() throws Exception
-    {
-        addExceptionExpectation();
-        doThrow(expectedExceptionCause).when(connection).rollback();
-        tx.rollback();
-    }
+  @Test
+  public void closeConnectionIfErrorOnRollback() throws Exception {
+    addExceptionExpectation();
+    doThrow(expectedExceptionCause).when(connection).rollback();
+    tx.rollback();
+  }
 
-    @Test
-    public void closeConnectionIfCommitOk() throws Exception
-    {
-        tx.commit();
-    }
+  @Test
+  public void closeConnectionIfCommitOk() throws Exception {
+    tx.commit();
+  }
 
-    @Test
-    public void closeConnectionIfRollbackOk() throws Exception
-    {
-        tx.rollback();
-    }
+  @Test
+  public void closeConnectionIfRollbackOk() throws Exception {
+    tx.rollback();
+  }
 
-    @Test
-    public void raiseCloseExceptionAfterCommitOk() throws Exception
-    {
-        addExceptionExpectation();
-        doThrow(expectedExceptionCause).when(connection).close();
-        tx.commit();
-    }
+  @Test
+  public void raiseCloseExceptionAfterCommitOk() throws Exception {
+    addExceptionExpectation();
+    doThrow(expectedExceptionCause).when(connection).close();
+    tx.commit();
+  }
 
-    @Test
-    public void raiseCloseExceptionAfterRollbackOk() throws Exception
-    {
-        addExceptionExpectation();
-        doThrow(expectedExceptionCause).when(connection).close();
-        tx.rollback();
-    }
+  @Test
+  public void raiseCloseExceptionAfterRollbackOk() throws Exception {
+    addExceptionExpectation();
+    doThrow(expectedExceptionCause).when(connection).close();
+    tx.rollback();
+  }
 
-    @Test
-    public void raiseCommitExceptionIfCommitAndCloseFail() throws Exception
-    {
-        addExceptionExpectation();
-        doThrow(expectedExceptionCause).when(connection).commit();
-        doThrow(new SQLException()).when(connection).close();
-        tx.commit();
-    }
+  @Test
+  public void raiseCommitExceptionIfCommitAndCloseFail() throws Exception {
+    addExceptionExpectation();
+    doThrow(expectedExceptionCause).when(connection).commit();
+    doThrow(new SQLException()).when(connection).close();
+    tx.commit();
+  }
 
-    @Test
-    public void raiseRollbackExceptionIfRollbackAndCloseFail() throws Exception
-    {
-        addExceptionExpectation();
-        doThrow(expectedExceptionCause).when(connection).rollback();
-        doThrow(new SQLException()).when(connection).close();
-        tx.rollback();
-    }
+  @Test
+  public void raiseRollbackExceptionIfRollbackAndCloseFail() throws Exception {
+    addExceptionExpectation();
+    doThrow(expectedExceptionCause).when(connection).rollback();
+    doThrow(new SQLException()).when(connection).close();
+    tx.rollback();
+  }
 
-    private void addExceptionExpectation()
-    {
-        expectedExceptionCause = new SQLException();
-        expectedException.expect(TransactionException.class);
-        expectedException.expectCause(is(expectedExceptionCause));
-    }
+  private void addExceptionExpectation() {
+    expectedExceptionCause = new SQLException();
+    expectedException.expect(TransactionException.class);
+    expectedException.expectCause(is(expectedExceptionCause));
+  }
 }

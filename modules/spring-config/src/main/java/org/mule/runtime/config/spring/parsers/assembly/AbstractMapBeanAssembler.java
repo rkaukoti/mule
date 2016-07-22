@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.assembly;
 
@@ -18,30 +16,25 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractMapBeanAssembler extends DefaultBeanAssembler
-{
+public abstract class AbstractMapBeanAssembler extends DefaultBeanAssembler {
 
-    public AbstractMapBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-                                    PropertyConfiguration targetConfig, BeanDefinition target)
-    {
-        super(beanConfig, bean, targetConfig, target);
-    }
+  public AbstractMapBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean, PropertyConfiguration targetConfig,
+      BeanDefinition target) {
+    super(beanConfig, bean, targetConfig, target);
+  }
 
-    protected void insertDefinitionAsMap(String oldName)
-    {
-        BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(MapCombiner.class);
-        Map map = new ManagedMap();
-        for (Iterator pvs = getBean().getBeanDefinition().getPropertyValues().getPropertyValueList().iterator();
-             pvs.hasNext(); )
-        {
-            PropertyValue pv = (PropertyValue) pvs.next();
-            map.put(pv.getName(), pv.getValue());
-        }
-        List list = new ManagedList();
-        list.add(map);
-        builder.addPropertyValue(MapCombiner.LIST, list);
-        setBean(builder);
-        super.insertBeanInTarget(oldName);
+  protected void insertDefinitionAsMap(String oldName) {
+    BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(MapCombiner.class);
+    Map map = new ManagedMap();
+    for (Iterator pvs = getBean().getBeanDefinition().getPropertyValues().getPropertyValueList().iterator(); pvs.hasNext();) {
+      PropertyValue pv = (PropertyValue) pvs.next();
+      map.put(pv.getName(), pv.getValue());
     }
+    List list = new ManagedList();
+    list.add(map);
+    builder.addPropertyValue(MapCombiner.LIST, list);
+    setBean(builder);
+    super.insertBeanInTarget(oldName);
+  }
 
 }

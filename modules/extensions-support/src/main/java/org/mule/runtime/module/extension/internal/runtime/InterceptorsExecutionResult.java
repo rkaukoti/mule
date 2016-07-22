@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
@@ -15,39 +13,34 @@ import java.util.List;
  *
  * @since 4.0
  */
-final class InterceptorsExecutionResult
-{
+final class InterceptorsExecutionResult {
 
-    private final Throwable throwable;
-    private final List<Interceptor> executedInterceptors;
+  private final Throwable throwable;
+  private final List<Interceptor> executedInterceptors;
 
-    public InterceptorsExecutionResult(Throwable throwable, List<Interceptor> executedInterceptors)
-    {
-        this.throwable = throwable;
-        this.executedInterceptors = executedInterceptors;
-    }
+  public InterceptorsExecutionResult(Throwable throwable, List<Interceptor> executedInterceptors) {
+    this.throwable = throwable;
+    this.executedInterceptors = executedInterceptors;
+  }
 
-    /**
-     * @return the {@link Throwable} that caused the execution failure
-     */
-    public Throwable getThrowable()
-    {
-        return throwable;
-    }
+  /**
+   * @return the {@link Throwable} that caused the execution failure
+   */
+  public Throwable getThrowable() {
+    return throwable;
+  }
 
-    /**
-     * @return a list of {@link Interceptor} that has been executed
-     */
-    public List<Interceptor> getExecutedInterceptors()
-    {
-        return executedInterceptors;
-    }
+  /**
+   * @return a list of {@link Interceptor} that has been executed
+   */
+  public List<Interceptor> getExecutedInterceptors() {
+    return executedInterceptors;
+  }
 
-    /**
-     * @return boolean that represents if the execution finished correctly
-     */
-    public boolean isOk()
-    {
-        return throwable == null;
-    }
+  /**
+   * @return boolean that represents if the execution finished correctly
+   */
+  public boolean isOk() {
+    return throwable == null;
+  }
 }

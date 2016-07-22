@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.modules.schedulers.cron;
 
@@ -18,49 +16,40 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 
 
-public class StoppedCronSchedulerTestCase extends FunctionalTestCase
-{
-    private static List<String> foo = new ArrayList<String>();
+public class StoppedCronSchedulerTestCase extends FunctionalTestCase {
+  private static List<String> foo = new ArrayList<String>();
 
-    @Override
-    protected String getConfigFile()
-    {
-        return "cron-scheduler-stopped-config.xml";
+  @Override
+  protected String getConfigFile() {
+    return "cron-scheduler-stopped-config.xml";
+  }
+
+  @Test
+  public void test() throws Exception {
+    runSchedulersOnce();
+    Thread.sleep(6000);
+
+    assertEquals(1, foo.size());
+  }
+
+  private void runSchedulersOnce() throws Exception {
+    Collection<Scheduler> schedulers = muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers("pollfoo"));
+
+    for (Scheduler scheduler : schedulers) {
+      scheduler.schedule();
     }
+  }
 
-    @Test
-    public void test() throws Exception
-    {
-        runSchedulersOnce();
-        Thread.sleep(6000);
+  public static class FooComponent {
 
-        assertEquals(1, foo.size());
+    public boolean process(String s) {
+      synchronized (foo) {
+
+        foo.add(s);
+
+      }
+
+      return false;
     }
-
-    private void runSchedulersOnce() throws Exception
-    {
-        Collection<Scheduler> schedulers = muleContext.getRegistry().lookupScheduler(
-                Schedulers.flowConstructPollingSchedulers("pollfoo"));
-
-        for (Scheduler scheduler : schedulers)
-        {
-            scheduler.schedule();
-        }
-    }
-
-    public static class FooComponent
-    {
-
-        public boolean process(String s)
-        {
-            synchronized (foo)
-            {
-
-                foo.add(s);
-
-            }
-
-            return false;
-        }
-    }
+  }
 }

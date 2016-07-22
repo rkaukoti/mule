@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.integration.activemq;
 
@@ -17,118 +15,95 @@ import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 
 /**
- * Abstracts all the Jms Vendor specific configuration.  This is the implementation for ActiveMQ.
+ * Abstracts all the Jms Vendor specific configuration. This is the implementation for ActiveMQ.
  */
-public class ActiveMQJmsConfiguration implements JmsVendorConfiguration
-{
-    public static final String DEFAULT_BROKER_URL = "vm://localhost?broker.persistent=false&broker.useJmx=false";
+public class ActiveMQJmsConfiguration implements JmsVendorConfiguration {
+  public static final String DEFAULT_BROKER_URL = "vm://localhost?broker.persistent=false&broker.useJmx=false";
 
-    public void initialise(Class callingClass) throws Exception
-    {
-        // empty
+  public void initialise(Class callingClass) throws Exception {
+    // empty
+  }
+
+  public Connection getConnection(boolean topic, boolean xa) throws Exception {
+    if (xa) {
+      return new ActiveMQXAConnectionFactory(DEFAULT_BROKER_URL).createConnection();
+
+    } else {
+      return new ActiveMQConnectionFactory(DEFAULT_BROKER_URL).createConnection();
     }
+  }
 
-    public Connection getConnection(boolean topic, boolean xa) throws Exception
-    {
-        if (xa)
-        {
-            return new ActiveMQXAConnectionFactory(DEFAULT_BROKER_URL).createConnection();
+  public String getInboundEndpoint() {
+    return getProtocol() + "://" + getInboundDestinationName();
+  }
 
-        }
-        else
-        {
-            return new ActiveMQConnectionFactory(DEFAULT_BROKER_URL).createConnection();
-        }
-    }
+  public String getOutboundEndpoint() {
+    return getProtocol() + "://" + getOutboundDestinationName();
+  }
 
-    public String getInboundEndpoint()
-    {
-        return getProtocol() + "://" + getInboundDestinationName();
-    }
+  public String getMiddleEndpoint() {
+    return getProtocol() + "://" + getMiddleDestinationName();
+  }
 
-    public String getOutboundEndpoint()
-    {
-        return getProtocol() + "://" + getOutboundDestinationName();
-    }
+  public String getTopicBroadcastEndpoint() {
+    return getProtocol() + "://topic:" + getBroadcastDestinationName();
+  }
 
-    public String getMiddleEndpoint()
-    {
-        return getProtocol() + "://" + getMiddleDestinationName();
-    }
+  public String getDeadLetterEndpoint() {
+    return getProtocol() + "://" + getDeadLetterDestinationName();
+  }
 
-    public String getTopicBroadcastEndpoint()
-    {
-        return getProtocol() + "://topic:" + getBroadcastDestinationName();
-    }
+  public String getInboundDestinationName() {
+    return "in";
+  }
 
-    public String getDeadLetterEndpoint()
-    {
-        return getProtocol() + "://" + getDeadLetterDestinationName();
-    }
+  public String getOutboundDestinationName() {
+    return "out";
+  }
 
-    public String getInboundDestinationName()
-    {
-        return "in";
-    }
+  public String getMiddleDestinationName() {
+    return "middle";
+  }
 
-    public String getOutboundDestinationName()
-    {
-        return "out";
-    }
+  public String getBroadcastDestinationName() {
+    return "broadcast";
+  }
 
-    public String getMiddleDestinationName()
-    {
-        return "middle";
-    }
+  public String getDeadLetterDestinationName() {
+    return "dlq";
+  }
 
-    public String getBroadcastDestinationName()
-    {
-        return "broadcast";
-    }
+  /**
+   * Timeout used when checking that a message is NOT present
+   */
+  public long getSmallTimeout() {
+    return 1000L;
+  }
 
-    public String getDeadLetterDestinationName()
-    {
-        return "dlq";
-    }
+  /**
+   * The timeout used when waiting for a message to arrive
+   */
+  public long getTimeout() {
+    return 5000L;
+  }
 
-    /**
-     * Timeout used when checking that a message is NOT present
-     */
-    public long getSmallTimeout()
-    {
-        return 1000L;
-    }
+  public String getProtocol() {
+    return "jms";
+  }
 
-    /**
-     * The timeout used when waiting for a message to arrive
-     */
-    public long getTimeout()
-    {
-        return 5000L;
-    }
+  public String getName() {
+    return "activemq";
+  }
 
-    public String getProtocol()
-    {
-        return "jms";
-    }
+  public Map getProperties() {
+    return Collections.EMPTY_MAP;
+  }
 
-    public String getName()
-    {
-        return "activemq";
-    }
+  public ConnectionFactory getTestConnectionFactory() {
+    return new ActiveMQTestReconnectionConnectionFactoryWrapper();
+  }
 
-    public Map getProperties()
-    {
-        return Collections.EMPTY_MAP;
-    }
-
-    public ConnectionFactory getTestConnectionFactory()
-    {
-        return new ActiveMQTestReconnectionConnectionFactoryWrapper();
-    }
-
-    public boolean isEnabled()
-    {
-        return true;
-    }
+  public boolean isEnabled() {
+    return true;
+  }
 }

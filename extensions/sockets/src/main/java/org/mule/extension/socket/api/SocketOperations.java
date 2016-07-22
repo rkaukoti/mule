@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api;
 
@@ -26,42 +24,35 @@ import java.io.IOException;
  *
  * @since 4.0
  */
-public class SocketOperations
-{
+public class SocketOperations {
 
-    /**
-     * Sends the data using the client associated to the {@link RequesterConnection}.
-     *
-     * If {@code hasResponse} is set, the operation blocks until  a response is received or the timeout is met,
-     * in which case the operation will return a {@link MuleMessage} with {@code null} payload.
-     *
-     * @param content        that will be serialized and sent through the socket.
-     * @param hasResponse    whether the operation should await for a response or not
-     * @param outputEncoding encoding that will be used to serialize the {@code data} if its type is {@link String}.
-     * @param muleMessage    if there is no response expected, the outcome of the operation will be the same {@link MuleMessage} as the
-     *                       input.
-     * @throws ConnectionException if the connection couldn't be established, if the remote host was unavailable.
-     */
-    @MetadataScope(outputResolver = SocketMetadataResolver.class, keysResolver = SocketMetadataResolver.class)
-    public OperationResult<?, ?> send(@Connection RequesterConnection connection,
-                                      @UseConfig RequesterConfig config,
-                                      @Optional(defaultValue = "#[payload]") @NoRef Object content,
-                                      @Optional String outputEncoding,
-                                      String hasResponse, // TODO Add metadata https://www.mulesoft.org/jira/browse/MULE-9894
-                                      MuleMessage muleMessage)
-            throws ConnectionException, IOException
-    {
-        SocketClient client = connection.getClient();
+  /**
+   * Sends the data using the client associated to the {@link RequesterConnection}.
+   *
+   * If {@code hasResponse} is set, the operation blocks until a response is received or the timeout is met, in which case the operation
+   * will return a {@link MuleMessage} with {@code null} payload.
+   *
+   * @param content that will be serialized and sent through the socket.
+   * @param hasResponse whether the operation should await for a response or not
+   * @param outputEncoding encoding that will be used to serialize the {@code data} if its type is {@link String}.
+   * @param muleMessage if there is no response expected, the outcome of the operation will be the same {@link MuleMessage} as the input.
+   * @throws ConnectionException if the connection couldn't be established, if the remote host was unavailable.
+   */
+  @MetadataScope(outputResolver = SocketMetadataResolver.class, keysResolver = SocketMetadataResolver.class)
+  public OperationResult<?, ?> send(@Connection RequesterConnection connection, @UseConfig RequesterConfig config,
+      @Optional(defaultValue = "#[payload]") @NoRef Object content, @Optional String outputEncoding, String hasResponse, // TODO Add
+                                                                                                                         // metadata
+                                                                                                                         // https://www.mulesoft.org/jira/browse/MULE-9894
+      MuleMessage muleMessage) throws ConnectionException, IOException {
+    SocketClient client = connection.getClient();
 
-        if (outputEncoding == null)
-        {
-            outputEncoding = config.getDefaultEncoding();
-        }
-
-        client.write(content, outputEncoding);
-
-        return Boolean.valueOf(hasResponse) ?
-                OperationResult.builder().output(client.read()).attributes(client.getAttributes()).build() :
-                OperationResult.builder(muleMessage).build();
+    if (outputEncoding == null) {
+      outputEncoding = config.getDefaultEncoding();
     }
+
+    client.write(content, outputEncoding);
+
+    return Boolean.valueOf(hasResponse) ? OperationResult.builder().output(client.read()).attributes(client.getAttributes()).build()
+        : OperationResult.builder(muleMessage).build();
+  }
 }

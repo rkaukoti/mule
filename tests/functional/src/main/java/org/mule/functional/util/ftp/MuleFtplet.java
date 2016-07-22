@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.util.ftp;
 
@@ -16,38 +14,32 @@ import org.apache.ftpserver.ftplet.FtpletResult;
 import java.io.IOException;
 
 /**
- * {@link Ftplet} implementation that calls methods on its callback. Although this seems a bit
- * like jumping through hoops, it frees the individual test classes from having to deal with
- * creating custom Ftplets.
+ * {@link Ftplet} implementation that calls methods on its callback. Although this seems a bit like jumping through hoops, it frees the
+ * individual test classes from having to deal with creating custom Ftplets.
  */
-public class MuleFtplet extends DefaultFtplet
-{
-    private Callback callback;
+public class MuleFtplet extends DefaultFtplet {
+  private Callback callback;
 
-    public MuleFtplet(Callback callback)
-    {
-        super();
-        this.callback = callback;
-    }
+  public MuleFtplet(Callback callback) {
+    super();
+    this.callback = callback;
+  }
 
-    @Override
-    public FtpletResult onUploadEnd(FtpSession session, FtpRequest request) throws FtpException, IOException
-    {
-        callback.fileUploadCompleted();
-        return null;
-    }
+  @Override
+  public FtpletResult onUploadEnd(FtpSession session, FtpRequest request) throws FtpException, IOException {
+    callback.fileUploadCompleted();
+    return null;
+  }
 
-    @Override
-    public FtpletResult onRenameEnd(FtpSession session, FtpRequest request) throws FtpException, IOException
-    {
-        callback.fileMoveCompleted();
-        return null;
-    }
+  @Override
+  public FtpletResult onRenameEnd(FtpSession session, FtpRequest request) throws FtpException, IOException {
+    callback.fileMoveCompleted();
+    return null;
+  }
 
-    public interface Callback
-    {
-        void fileUploadCompleted();
+  public interface Callback {
+    void fileUploadCompleted();
 
-        void fileMoveCompleted();
-    }
+    void fileMoveCompleted();
+  }
 }

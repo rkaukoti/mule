@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context.notification;
 
@@ -11,24 +9,20 @@ import org.mule.runtime.core.api.context.notification.MessageProcessorNotificati
 /**
  * Listener for MessageProcessorNotification that delegates notifications to NotificationTextDebugger
  */
-public class MessageProcessorTextDebugger implements MessageProcessorNotificationListener<MessageProcessorNotification>
-{
+public class MessageProcessorTextDebugger implements MessageProcessorNotificationListener<MessageProcessorNotification> {
 
-    private final MessageProcessingFlowTraceManager messageProcessingFlowTraceManager;
+  private final MessageProcessingFlowTraceManager messageProcessingFlowTraceManager;
 
-    public MessageProcessorTextDebugger(MessageProcessingFlowTraceManager messageProcessingFlowTraceManager)
-    {
-        this.messageProcessingFlowTraceManager = messageProcessingFlowTraceManager;
+  public MessageProcessorTextDebugger(MessageProcessingFlowTraceManager messageProcessingFlowTraceManager) {
+    this.messageProcessingFlowTraceManager = messageProcessingFlowTraceManager;
+  }
+
+
+  @Override
+  public void onNotification(MessageProcessorNotification notification) {
+    if (notification.getAction() == MessageProcessorNotification.MESSAGE_PROCESSOR_PRE_INVOKE) {
+      messageProcessingFlowTraceManager.onMessageProcessorNotificationPreInvoke(notification);
     }
-
-
-    @Override
-    public void onNotification(MessageProcessorNotification notification)
-    {
-        if (notification.getAction() == MessageProcessorNotification.MESSAGE_PROCESSOR_PRE_INVOKE)
-        {
-            messageProcessingFlowTraceManager.onMessageProcessorNotificationPreInvoke(notification);
-        }
-    }
+  }
 
 }

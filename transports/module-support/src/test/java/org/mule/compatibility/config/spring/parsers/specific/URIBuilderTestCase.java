@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.config.spring.parsers.specific;
 
@@ -17,67 +15,60 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class URIBuilderTestCase extends AbstractMuleTestCase
-{
+public class URIBuilderTestCase extends AbstractMuleTestCase {
 
-    private static final Map queries;
+  private static final Map queries;
 
-    static
-    {
-        queries = new HashMap();
-        queries.put("aname", "avalue");
-        queries.put("bname", "bvalue");
-    }
+  static {
+    queries = new HashMap();
+    queries.put("aname", "avalue");
+    queries.put("bname", "bvalue");
+  }
 
-    private MuleContext unusedMuleContext = null;
+  private MuleContext unusedMuleContext = null;
 
-    @Test
-    public void testAddressForProtocol()
-    {
-        URIBuilder uri = new URIBuilder(unusedMuleContext);
-        uri.setProtocol("foo");
-        uri.setAddress("foo://bar");
-        assertEquals("foo://bar", uri.toString());
-    }
+  @Test
+  public void testAddressForProtocol() {
+    URIBuilder uri = new URIBuilder(unusedMuleContext);
+    uri.setProtocol("foo");
+    uri.setAddress("foo://bar");
+    assertEquals("foo://bar", uri.toString());
+  }
 
-    @Test
-    public void testAddressForMeta()
-    {
-        URIBuilder uri = new URIBuilder(unusedMuleContext);
-        uri.setMeta("foo");
-        uri.setAddress("baz://bar");
-        assertEquals("foo:baz://bar", uri.toString());
-    }
+  @Test
+  public void testAddressForMeta() {
+    URIBuilder uri = new URIBuilder(unusedMuleContext);
+    uri.setMeta("foo");
+    uri.setAddress("baz://bar");
+    assertEquals("foo:baz://bar", uri.toString());
+  }
 
-    @Test
-    public void testQueriesWithAddress()
-    {
-        URIBuilder uri = new URIBuilder(unusedMuleContext);
-        uri.setAddress("foo://bar");
-        uri.setQueryMap(queries);
-        assertEquals("foo://bar?aname=avalue&bname=bvalue", uri.toString());
-    }
+  @Test
+  public void testQueriesWithAddress() {
+    URIBuilder uri = new URIBuilder(unusedMuleContext);
+    uri.setAddress("foo://bar");
+    uri.setQueryMap(queries);
+    assertEquals("foo://bar?aname=avalue&bname=bvalue", uri.toString());
+  }
 
-    @Test
-    public void testLiteralQueries()
-    {
-        URIBuilder uri = new URIBuilder(unusedMuleContext);
-        uri.setAddress("foo://bar?cname=cvalue");
-        uri.setQueryMap(queries);
-        assertEquals("foo://bar?cname=cvalue&aname=avalue&bname=bvalue", uri.toString());
-    }
+  @Test
+  public void testLiteralQueries() {
+    URIBuilder uri = new URIBuilder(unusedMuleContext);
+    uri.setAddress("foo://bar?cname=cvalue");
+    uri.setQueryMap(queries);
+    assertEquals("foo://bar?cname=cvalue&aname=avalue&bname=bvalue", uri.toString());
+  }
 
-    @Test
-    public void testFromString()
-    {
-        URIBuilder uri = new URIBuilder("test://bar", unusedMuleContext);
-        EndpointURI endpointURI = uri.getEndpoint();
-        assertEquals("test://bar", endpointURI.getUri().toString());
-        assertEquals("test", endpointURI.getSchemeMetaInfo());
-        uri = new URIBuilder("meta:test://bar", unusedMuleContext);
-        endpointURI = uri.getEndpoint();
-        assertEquals("test://bar", endpointURI.getUri().toString());
-        assertEquals("meta", endpointURI.getSchemeMetaInfo());
-    }
+  @Test
+  public void testFromString() {
+    URIBuilder uri = new URIBuilder("test://bar", unusedMuleContext);
+    EndpointURI endpointURI = uri.getEndpoint();
+    assertEquals("test://bar", endpointURI.getUri().toString());
+    assertEquals("test", endpointURI.getSchemeMetaInfo());
+    uri = new URIBuilder("meta:test://bar", unusedMuleContext);
+    endpointURI = uri.getEndpoint();
+    assertEquals("test://bar", endpointURI.getUri().toString());
+    assertEquals("meta", endpointURI.getSchemeMetaInfo());
+  }
 
 }

@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.messaging.meps;
 
@@ -16,29 +14,24 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-public class InOptionalOutOutOnlyTestCase extends FunctionalTestCase
-{
-    @Override
-    protected String getConfigFile()
-    {
-        return "org/mule/test/integration/messaging/meps/pattern_In-Optional-Out_Out-Only-flow.xml";
-    }
+public class InOptionalOutOutOnlyTestCase extends FunctionalTestCase {
+  @Override
+  protected String getConfigFile() {
+    return "org/mule/test/integration/messaging/meps/pattern_In-Optional-Out_Out-Only-flow.xml";
+  }
 
-    @Test
-    public void testExchange() throws Exception
-    {
-        FlowRunner baseRunner = flowRunner("In-Optional-Out_Out-Only-Service").withPayload("some data");
-        MuleMessage result = baseRunner.run().getMessage();
+  @Test
+  public void testExchange() throws Exception {
+    FlowRunner baseRunner = flowRunner("In-Optional-Out_Out-Only-Service").withPayload("some data");
+    MuleMessage result = baseRunner.run().getMessage();
 
-        assertNotNull(result);
-        assertThat(result.getPayload(), is(nullValue()));
+    assertNotNull(result);
+    assertThat(result.getPayload(), is(nullValue()));
 
-        baseRunner.reset();
-        result = baseRunner.withInboundProperty("foo", "bar")
-                           .run()
-                           .getMessage();
+    baseRunner.reset();
+    result = baseRunner.withInboundProperty("foo", "bar").run().getMessage();
 
-        assertNotNull(result);
-        assertThat(result.getPayload(), is("foo header received"));
-    }
+    assertNotNull(result);
+    assertThat(result.getPayload(), is("foo header received"));
+  }
 }

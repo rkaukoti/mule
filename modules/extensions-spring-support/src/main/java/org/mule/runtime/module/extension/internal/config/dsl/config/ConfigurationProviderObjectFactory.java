@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.config.dsl.config;
 
@@ -30,119 +28,89 @@ import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 
 /**
- * A {@link AbstractExtensionObjectFactory} which produces {@link ConfigurationProvider}
- * instances
+ * A {@link AbstractExtensionObjectFactory} which produces {@link ConfigurationProvider} instances
  *
  * @since 4.0
  */
 class ConfigurationProviderObjectFactory extends AbstractExtensionObjectFactory<ConfigurationProvider<Object>>
-        implements ObjectFactory<ConfigurationProvider<Object>>
-{
+    implements ObjectFactory<ConfigurationProvider<Object>> {
 
-    private final String name;
-    private final RuntimeConfigurationModel configurationModel;
-    private final ConfigurationProviderFactory configurationProviderFactory = new DefaultConfigurationProviderFactory();
-    private final MuleContext muleContext;
+  private final String name;
+  private final RuntimeConfigurationModel configurationModel;
+  private final ConfigurationProviderFactory configurationProviderFactory = new DefaultConfigurationProviderFactory();
+  private final MuleContext muleContext;
 
-    private DynamicConfigPolicy dynamicConfigPolicy;
-    private Optional<ValueResolver<ConnectionProvider>> connectionProviderResolver = empty();
-    private ConfigurationProvider<Object> instance;
-    private boolean requiresConnection = false;
+  private DynamicConfigPolicy dynamicConfigPolicy;
+  private Optional<ValueResolver<ConnectionProvider>> connectionProviderResolver = empty();
+  private ConfigurationProvider<Object> instance;
+  private boolean requiresConnection = false;
 
-    @Inject
-    private TimeSupplier timeSupplier;
+  @Inject
+  private TimeSupplier timeSupplier;
 
 
-    ConfigurationProviderObjectFactory(String name,
-                                       RuntimeConfigurationModel configurationModel,
-                                       MuleContext muleContext)
-    {
-        this.name = name;
-        this.configurationModel = configurationModel;
-        this.muleContext = muleContext;
+  ConfigurationProviderObjectFactory(String name, RuntimeConfigurationModel configurationModel, MuleContext muleContext) {
+    this.name = name;
+    this.configurationModel = configurationModel;
+    this.muleContext = muleContext;
+  }
+
+  @Override
+  public ConfigurationProvider<Object> getObject() throws Exception {
+    if (instance == null) {
+      instance = createInnerInstance();
+    }
+    return instance;
+  }
+
+  private ConfigurationProvider<Object> createInnerInstance() {
+    ResolverSet resolverSet = getParametersAsResolverSet();
+    final ValueResolver<ConnectionProvider> connectionProviderResolver = getConnectionProviderResolver();
+
+    ConfigurationProvider<Object> configurationProvider;
+    try {
+      if (resolverSet.isDynamic() || connectionProviderResolver.isDynamic()) {
+        configurationProvider = configurationProviderFactory.createDynamicConfigurationProvider(name, configurationModel, resolverSet,
+            connectionProviderResolver, getDynamicConfigPolicy());
+      } else {
+        configurationProvider = configurationProviderFactory.createStaticConfigurationProvider(name, configurationModel, resolverSet,
+            connectionProviderResolver, muleContext);
+      }
+
+      muleContext.getInjector().inject(configurationProvider);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
 
-    @Override
-    public ConfigurationProvider<Object> getObject() throws Exception
-    {
-        if (instance == null)
-        {
-            instance = createInnerInstance();
-        }
-        return instance;
+    return configurationProvider;
+  }
+
+  private DynamicConfigPolicy getDynamicConfigPolicy() {
+    if (dynamicConfigPolicy == null) {
+      dynamicConfigPolicy = DynamicConfigPolicy.getDefault(timeSupplier);
     }
 
-    private ConfigurationProvider<Object> createInnerInstance()
-    {
-        ResolverSet resolverSet = getParametersAsResolverSet();
-        final ValueResolver<ConnectionProvider> connectionProviderResolver = getConnectionProviderResolver();
+    return dynamicConfigPolicy;
+  }
 
-        ConfigurationProvider<Object> configurationProvider;
-        try
-        {
-            if (resolverSet.isDynamic() || connectionProviderResolver.isDynamic())
-            {
-                configurationProvider = configurationProviderFactory.createDynamicConfigurationProvider(
-                        name,
-                        configurationModel,
-                        resolverSet,
-                        connectionProviderResolver,
-                        getDynamicConfigPolicy());
-            }
-            else
-            {
-                configurationProvider = configurationProviderFactory.createStaticConfigurationProvider(
-                        name,
-                        configurationModel,
-                        resolverSet,
-                        connectionProviderResolver,
-                        muleContext);
-            }
+  public void setDynamicConfigPolicy(DynamicConfigPolicy dynamicConfigPolicy) {
+    this.dynamicConfigPolicy = dynamicConfigPolicy;
+  }
 
-            muleContext.getInjector().inject(configurationProvider);
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException(e);
-        }
+  private ValueResolver<ConnectionProvider> getConnectionProviderResolver() {
+    return connectionProviderResolver.orElseGet(() -> {
+      if (requiresConnection) {
+        return new ImplicitConnectionProviderValueResolver(name, configurationModel);
+      }
+      return new StaticValueResolver<>(null);
+    });
+  }
 
-        return configurationProvider;
-    }
+  public void setConnectionProviderResolver(ConnectionProviderResolver connectionProviderResolver) {
+    this.connectionProviderResolver = ofNullable(connectionProviderResolver);
+  }
 
-    private DynamicConfigPolicy getDynamicConfigPolicy()
-    {
-        if (dynamicConfigPolicy == null)
-        {
-            dynamicConfigPolicy = DynamicConfigPolicy.getDefault(timeSupplier);
-        }
-
-        return dynamicConfigPolicy;
-    }
-
-    public void setDynamicConfigPolicy(DynamicConfigPolicy dynamicConfigPolicy)
-    {
-        this.dynamicConfigPolicy = dynamicConfigPolicy;
-    }
-
-    private ValueResolver<ConnectionProvider> getConnectionProviderResolver()
-    {
-        return connectionProviderResolver.orElseGet(() ->
-        {
-            if (requiresConnection)
-            {
-                return new ImplicitConnectionProviderValueResolver(name, configurationModel);
-            }
-            return new StaticValueResolver<>(null);
-        });
-    }
-
-    public void setConnectionProviderResolver(ConnectionProviderResolver connectionProviderResolver)
-    {
-        this.connectionProviderResolver = ofNullable(connectionProviderResolver);
-    }
-
-    public void setRequiresConnection(boolean requiresConnection)
-    {
-        this.requiresConnection = requiresConnection;
-    }
+  public void setRequiresConnection(boolean requiresConnection) {
+    this.requiresConnection = requiresConnection;
+  }
 }

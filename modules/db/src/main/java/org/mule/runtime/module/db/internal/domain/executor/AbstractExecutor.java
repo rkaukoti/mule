@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.domain.executor;
@@ -28,55 +26,46 @@ import java.util.List;
 /**
  * Base class for query executors
  */
-public abstract class AbstractExecutor
-{
+public abstract class AbstractExecutor {
 
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-    protected final StatementFactory statementFactory;
-    protected QueryLoggerFactory queryLoggerFactory = new DefaultQueryLoggerFactory();
+  protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+  protected final StatementFactory statementFactory;
+  protected QueryLoggerFactory queryLoggerFactory = new DefaultQueryLoggerFactory();
 
-    public AbstractExecutor(StatementFactory statementFactory)
-    {
-        this.statementFactory = statementFactory;
+  public AbstractExecutor(StatementFactory statementFactory) {
+    this.statementFactory = statementFactory;
+  }
+
+  protected void doProcessParameters(PreparedStatement statement, QueryTemplate queryTemplate, List<QueryParamValue> paramValues,
+      SingleQueryLogger queryLogger) throws SQLException {
+    int valueIndex = 0;
+
+    for (int paramIndex = 1, inputParamsSize = queryTemplate.getParams().size(); paramIndex <= inputParamsSize; paramIndex++) {
+      QueryParam queryParam = queryTemplate.getParams().get(paramIndex - 1);
+      if (queryParam instanceof InputQueryParam) {
+        QueryParamValue param = paramValues.get(valueIndex);
+
+        queryLogger.addParameter(queryTemplate.getInputParams().get(valueIndex), param.getValue());
+
+        processInputParam(statement, paramIndex, param.getValue(), queryParam.getType());
+        valueIndex++;
+      }
+
+      if (queryParam instanceof OutputQueryParam) {
+        processOutputParam((CallableStatement) statement, paramIndex, queryParam.getType());
+      }
     }
+  }
 
-    protected void doProcessParameters(PreparedStatement statement, QueryTemplate queryTemplate, List<QueryParamValue> paramValues,
-                                       SingleQueryLogger queryLogger) throws SQLException
-    {
-        int valueIndex = 0;
+  protected void processInputParam(PreparedStatement statement, int index, Object value, DbType type) throws SQLException {
+    type.setParameterValue(statement, index, value);
+  }
 
-        for (int paramIndex = 1, inputParamsSize = queryTemplate.getParams().size(); paramIndex <= inputParamsSize; paramIndex++)
-        {
-            QueryParam queryParam = queryTemplate.getParams().get(paramIndex - 1);
-            if (queryParam instanceof InputQueryParam)
-            {
-                QueryParamValue param = paramValues.get(valueIndex);
+  private void processOutputParam(CallableStatement statement, int index, DbType type) throws SQLException {
+    type.registerOutParameter(statement, index);
+  }
 
-                queryLogger.addParameter(queryTemplate.getInputParams().get(valueIndex), param.getValue());
-
-                processInputParam(statement, paramIndex, param.getValue(), queryParam.getType());
-                valueIndex++;
-            }
-
-            if (queryParam instanceof OutputQueryParam)
-            {
-                processOutputParam((CallableStatement) statement, paramIndex, queryParam.getType());
-            }
-        }
-    }
-
-    protected void processInputParam(PreparedStatement statement, int index, Object value, DbType type) throws SQLException
-    {
-        type.setParameterValue(statement, index, value);
-    }
-
-    private void processOutputParam(CallableStatement statement, int index, DbType type) throws SQLException
-    {
-        type.registerOutParameter(statement, index);
-    }
-
-    public void setQueryLoggerFactory(QueryLoggerFactory queryLoggerFactory)
-    {
-        this.queryLoggerFactory = queryLoggerFactory;
-    }
+  public void setQueryLoggerFactory(QueryLoggerFactory queryLoggerFactory) {
+    this.queryLoggerFactory = queryLoggerFactory;
+  }
 }

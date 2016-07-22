@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.streaming;
 
@@ -23,48 +21,42 @@ import java.util.List;
 
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
-public class PagingDelegateProducerTestCase
-{
+public class PagingDelegateProducerTestCase {
 
-    @Mock
-    private PagingDelegate<String> delegate;
+  @Mock
+  private PagingDelegate<String> delegate;
 
-    private PagingDelegateProducer<String> producer;
+  private PagingDelegateProducer<String> producer;
 
-    @Before
-    public void setUp()
-    {
-        this.producer = new PagingDelegateProducer<String>(this.delegate);
-    }
+  @Before
+  public void setUp() {
+    this.producer = new PagingDelegateProducer<String>(this.delegate);
+  }
 
-    @Test
-    public void produce() throws Exception
-    {
-        List<String> page = new ArrayList<String>();
-        Mockito.when(this.delegate.getPage()).thenReturn(page);
-        Assert.assertSame(page, this.producer.produce());
-    }
+  @Test
+  public void produce() throws Exception {
+    List<String> page = new ArrayList<String>();
+    Mockito.when(this.delegate.getPage()).thenReturn(page);
+    Assert.assertSame(page, this.producer.produce());
+  }
 
-    @Test
-    public void totalAvailable()
-    {
-        final int total = 10;
-        Mockito.when(this.delegate.getTotalResults()).thenReturn(total);
-        Assert.assertEquals(this.producer.size(), total);
-    }
+  @Test
+  public void totalAvailable() {
+    final int total = 10;
+    Mockito.when(this.delegate.getTotalResults()).thenReturn(total);
+    Assert.assertEquals(this.producer.size(), total);
+  }
 
-    @Test
-    public void closeQuietly() throws MuleException
-    {
-        this.producer.close();
-        Mockito.verify(this.delegate).close();
-    }
+  @Test
+  public void closeQuietly() throws MuleException {
+    this.producer.close();
+    Mockito.verify(this.delegate).close();
+  }
 
-    @Test(expected = MuleException.class)
-    public void closeNoisely() throws MuleException
-    {
-        Mockito.doThrow(new DefaultMuleException(new Exception())).when(this.delegate).close();
-        this.producer.close();
+  @Test(expected = MuleException.class)
+  public void closeNoisely() throws MuleException {
+    Mockito.doThrow(new DefaultMuleException(new Exception())).when(this.delegate).close();
+    this.producer.close();
 
-    }
+  }
 }

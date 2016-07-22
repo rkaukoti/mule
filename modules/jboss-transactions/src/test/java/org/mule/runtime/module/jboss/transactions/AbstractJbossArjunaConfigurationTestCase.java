@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.jboss.transactions;
 
@@ -27,38 +25,33 @@ import static org.mule.runtime.module.jboss.transaction.JBossArjunaTransactionMa
 import static org.mule.runtime.module.jboss.transaction.JBossArjunaTransactionManagerFactory.PROPERTY_OBJECTSTORE_DIR;
 import static org.mule.runtime.module.jboss.transaction.JBossArjunaTransactionManagerFactory.PROPERTY_USER_DIR;
 
-public abstract class AbstractJbossArjunaConfigurationTestCase extends AbstractTxThreadAssociationTestCase
-{
+public abstract class AbstractJbossArjunaConfigurationTestCase extends AbstractTxThreadAssociationTestCase {
 
-    protected abstract String getConfigResources();
+  protected abstract String getConfigResources();
 
-    @Override
-    protected ConfigurationBuilder getBuilder() throws Exception
-    {
-        return new SpringXmlConfigurationBuilder(getConfigResources());
-    }
+  @Override
+  protected ConfigurationBuilder getBuilder() throws Exception {
+    return new SpringXmlConfigurationBuilder(getConfigResources());
+  }
 
-    @Override
-    protected TransactionManagerFactory getTransactionManagerFactory()
-    {
-        return new JBossArjunaTransactionManagerFactory();
-    }
+  @Override
+  protected TransactionManagerFactory getTransactionManagerFactory() {
+    return new JBossArjunaTransactionManagerFactory();
+  }
 
-    protected void assertTransactionManagerPresent()
-    {
-        assertNotNull(muleContext.getTransactionManager());
-        assertTrue(muleContext.getTransactionManager().getClass().getName().compareTo("arjuna") > 0);
-    }
+  protected void assertTransactionManagerPresent() {
+    assertNotNull(muleContext.getTransactionManager());
+    assertTrue(muleContext.getTransactionManager().getClass().getName().compareTo("arjuna") > 0);
+  }
 
-    protected void assertObjectStoreDir(String objectStoreDir, String workingDirectory)
-    {
-        assertThat(objectStoreDir, is(arjPropertyManager.getObjectStoreEnvironmentBean().getObjectStoreDir()));
-        assertThat(OS_ROOT, is(arjPropertyManager.getObjectStoreEnvironmentBean().getLocalOSRoot()));
+  protected void assertObjectStoreDir(String objectStoreDir, String workingDirectory) {
+    assertThat(objectStoreDir, is(arjPropertyManager.getObjectStoreEnvironmentBean().getObjectStoreDir()));
+    assertThat(OS_ROOT, is(arjPropertyManager.getObjectStoreEnvironmentBean().getLocalOSRoot()));
 
-        Properties props = PropertiesFactory.getDefaultProperties();
-        assertEquals(props.getProperty(PROPERTY_ENVIRONMENT_OBJECTSTORE_DIR), objectStoreDir);
-        assertEquals(props.getProperty(PROPERTY_OBJECTSTORE_DIR), objectStoreDir);
-        assertEquals(props.getProperty(PROPERTY_USER_DIR), workingDirectory);
-    }
+    Properties props = PropertiesFactory.getDefaultProperties();
+    assertEquals(props.getProperty(PROPERTY_ENVIRONMENT_OBJECTSTORE_DIR), objectStoreDir);
+    assertEquals(props.getProperty(PROPERTY_OBJECTSTORE_DIR), objectStoreDir);
+    assertEquals(props.getProperty(PROPERTY_USER_DIR), workingDirectory);
+  }
 
 }

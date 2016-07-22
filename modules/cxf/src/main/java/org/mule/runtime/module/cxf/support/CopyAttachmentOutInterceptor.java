@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.support;
 
@@ -20,29 +18,24 @@ import java.util.Collection;
 /**
  * Copies any attachments which were stored by the proxy to the outbound CXF message.
  */
-public class CopyAttachmentOutInterceptor extends AbstractPhaseInterceptor
-{
-    public CopyAttachmentOutInterceptor()
-    {
-        super(Phase.SETUP);
+public class CopyAttachmentOutInterceptor extends AbstractPhaseInterceptor {
+  public CopyAttachmentOutInterceptor() {
+    super(Phase.SETUP);
+  }
+
+  public void handleMessage(Message message) throws Fault {
+    MuleEvent event = (MuleEvent) message.getExchange().get(CxfConstants.MULE_EVENT);
+
+    if (event == null || event instanceof NonBlockingVoidMuleEvent) {
+      return;
     }
 
-    public void handleMessage(Message message) throws Fault
-    {
-        MuleEvent event = (MuleEvent) message.getExchange().get(CxfConstants.MULE_EVENT);
+    Collection<Attachment> a = event.getFlowVariable(CxfConstants.ATTACHMENTS);
 
-        if (event == null || event instanceof NonBlockingVoidMuleEvent)
-        {
-            return;
-        }
-
-        Collection<Attachment> a = event.getFlowVariable(CxfConstants.ATTACHMENTS);
-
-        if (a != null)
-        {
-            message.setAttachments(a);
-        }
+    if (a != null) {
+      message.setAttachments(a);
     }
+  }
 }
 
 

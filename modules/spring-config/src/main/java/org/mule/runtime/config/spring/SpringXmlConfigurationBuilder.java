@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -25,190 +23,150 @@ import static java.util.Collections.emptyMap;
 import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 
 /**
- * <code>SpringXmlConfigurationBuilder</code> enables Mule to be configured from a
- * Spring XML Configuration file used with Mule name-spaces. Multiple configuration
- * files can be loaded from this builder (specified as a comma-separated list).
+ * <code>SpringXmlConfigurationBuilder</code> enables Mule to be configured from a Spring XML Configuration file used with Mule name-spaces.
+ * Multiple configuration files can be loaded from this builder (specified as a comma-separated list).
  */
 public class SpringXmlConfigurationBuilder extends AbstractResourceConfigurationBuilder
-        implements ParentMuleContextAwareConfigurationBuilder
-{
+    implements ParentMuleContextAwareConfigurationBuilder {
 
-    private final ArtifactType artifactType;
-    protected boolean useDefaultConfigResource = true;
-    protected boolean useMinimalConfigResource = false;
-    protected SpringRegistry registry;
-    protected ApplicationContext domainContext;
-    protected ApplicationContext parentContext;
-    protected ApplicationContext applicationContext;
+  private final ArtifactType artifactType;
+  protected boolean useDefaultConfigResource = true;
+  protected boolean useMinimalConfigResource = false;
+  protected SpringRegistry registry;
+  protected ApplicationContext domainContext;
+  protected ApplicationContext parentContext;
+  protected ApplicationContext applicationContext;
 
-    public SpringXmlConfigurationBuilder(String[] configResources, Map<String, String> artifactProperties, ArtifactType artifactType)
-            throws ConfigurationException
-    {
-        super(configResources, artifactProperties);
-        this.artifactType = artifactType;
+  public SpringXmlConfigurationBuilder(String[] configResources, Map<String, String> artifactProperties, ArtifactType artifactType)
+      throws ConfigurationException {
+    super(configResources, artifactProperties);
+    this.artifactType = artifactType;
+  }
+
+  public SpringXmlConfigurationBuilder(String configResources, Map<String, String> artifactProperties, ArtifactType artifactType)
+      throws ConfigurationException {
+    this(new String[] {configResources}, artifactProperties, artifactType);
+  }
+
+  public SpringXmlConfigurationBuilder(ConfigResource[] configResources, Map<String, String> artifactProperties,
+      ArtifactType artifactType) {
+    super(configResources, artifactProperties);
+    this.artifactType = artifactType;
+  }
+
+  public SpringXmlConfigurationBuilder(String configResource) throws ConfigurationException {
+    this(configResource, emptyMap(), APP);
+  }
+
+  public SpringXmlConfigurationBuilder(String[] configFiles) throws ConfigurationException {
+    super(configFiles, emptyMap());
+    this.artifactType = APP;
+  }
+
+  @Override
+  protected void doConfigure(MuleContext muleContext) throws Exception {
+    applicationContext = createApplicationContext(muleContext);
+    createSpringRegistry(muleContext, applicationContext);
+  }
+
+  /**
+   * Template method for modifying the list of resources to be loaded. This operation is a no-op by default.
+   *
+   * @param allResources the list of {@link ConfigResource} to be loaded
+   */
+  @SuppressWarnings("unused")
+  protected void addResources(List<ConfigResource> allResources) {}
+
+  public void unconfigure(MuleContext muleContext) {
+    registry.dispose();
+    if (muleContext != null) {
+      muleContext.removeRegistry(registry);
+    }
+    registry = null;
+    configured = false;
+  }
+
+  private ApplicationContext createApplicationContext(MuleContext muleContext) throws Exception {
+    OptionalObjectsController applicationObjectcontroller = new DefaultOptionalObjectsController();
+    OptionalObjectsController parentObjectController = null;
+    ApplicationContext parentApplicationContext = parentContext != null ? parentContext : domainContext;
+
+    if (parentApplicationContext instanceof MuleArtifactContext) {
+      parentObjectController = ((MuleArtifactContext) parentApplicationContext).getOptionalObjectsController();
     }
 
-    public SpringXmlConfigurationBuilder(String configResources, Map<String, String> artifactProperties, ArtifactType artifactType)
-            throws ConfigurationException
-    {
-        this(new String[] {configResources}, artifactProperties, artifactType);
+    if (parentObjectController != null) {
+      applicationObjectcontroller = new CompositeOptionalObjectsController(applicationObjectcontroller, parentObjectController);
     }
 
-    public SpringXmlConfigurationBuilder(ConfigResource[] configResources, Map<String, String> artifactProperties,
-                                         ArtifactType artifactType)
-    {
-        super(configResources, artifactProperties);
-        this.artifactType = artifactType;
+    return doCreateApplicationContext(muleContext, artifactConfigResources, applicationObjectcontroller);
+  }
+
+  protected ApplicationContext doCreateApplicationContext(MuleContext muleContext, ConfigResource[] artifactConfigResources,
+      OptionalObjectsController optionalObjectsController) {
+    return new MuleArtifactContext(muleContext, artifactConfigResources, optionalObjectsController, getArtifactProperties(), artifactType);
+  }
+
+
+  protected void createSpringRegistry(MuleContext muleContext, ApplicationContext applicationContext) throws Exception {
+    if (parentContext != null && domainContext != null) {
+      throw new IllegalStateException("An application with a web xml context and domain resources is not supported");
+    }
+    if (parentContext != null) {
+      createRegistryWithParentContext(muleContext, applicationContext, parentContext);
+    } else if (domainContext != null) {
+      createRegistryWithParentContext(muleContext, applicationContext, domainContext);
+    } else {
+      registry = new SpringRegistry(applicationContext, muleContext);
     }
 
-    public SpringXmlConfigurationBuilder(String configResource) throws ConfigurationException
-    {
-        this(configResource, emptyMap(), APP);
+    // Note: The SpringRegistry must be created before
+    // applicationContext.refresh() gets called because
+    // some beans may try to look up other beans via the Registry during
+    // preInstantiateSingletons().
+    muleContext.addRegistry(registry);
+  }
+
+  private void createRegistryWithParentContext(MuleContext muleContext, ApplicationContext applicationContext,
+      ApplicationContext parentContext) throws ConfigurationException {
+    if (applicationContext instanceof ConfigurableApplicationContext) {
+      registry = new SpringRegistry((ConfigurableApplicationContext) applicationContext, parentContext, muleContext);
+    } else {
+      throw new ConfigurationException(MessageFactory
+          .createStaticMessage("Cannot set a parent context if the ApplicationContext does not implement ConfigurableApplicationContext"));
     }
+  }
 
-    public SpringXmlConfigurationBuilder(String[] configFiles) throws ConfigurationException
-    {
-        super(configFiles, emptyMap());
-        this.artifactType = APP;
+  @Override
+  protected void applyLifecycle(LifecycleManager lifecycleManager) throws Exception {
+    // If the MuleContext is started, start all objects in the new Registry.
+    if (lifecycleManager.isPhaseComplete(Startable.PHASE_NAME)) {
+      lifecycleManager.fireLifecycle(Startable.PHASE_NAME);
     }
+  }
 
-    @Override
-    protected void doConfigure(MuleContext muleContext) throws Exception
-    {
-        applicationContext = createApplicationContext(muleContext);
-        createSpringRegistry(muleContext, applicationContext);
-    }
+  public void setUseDefaultConfigResource(boolean useDefaultConfigResource) {
+    this.useDefaultConfigResource = useDefaultConfigResource;
+  }
 
-    /**
-     * Template method for modifying the list of resources to be loaded.
-     * This operation is a no-op by default.
-     *
-     * @param allResources the list of {@link ConfigResource} to be loaded
-     */
-    @SuppressWarnings("unused")
-    protected void addResources(List<ConfigResource> allResources)
-    {
-    }
+  public ApplicationContext getApplicationContext() {
+    return applicationContext;
+  }
 
-    public void unconfigure(MuleContext muleContext)
-    {
-        registry.dispose();
-        if (muleContext != null)
-        {
-            muleContext.removeRegistry(registry);
-        }
-        registry = null;
-        configured = false;
-    }
+  public void setUseMinimalConfigResource(boolean useMinimalConfigResource) {
+    this.useMinimalConfigResource = useMinimalConfigResource;
+  }
 
-    private ApplicationContext createApplicationContext(MuleContext muleContext) throws Exception
-    {
-        OptionalObjectsController applicationObjectcontroller = new DefaultOptionalObjectsController();
-        OptionalObjectsController parentObjectController = null;
-        ApplicationContext parentApplicationContext = parentContext != null ? parentContext : domainContext;
+  protected ApplicationContext getParentContext() {
+    return parentContext;
+  }
 
-        if (parentApplicationContext instanceof MuleArtifactContext)
-        {
-            parentObjectController = ((MuleArtifactContext) parentApplicationContext).getOptionalObjectsController();
-        }
+  @Override
+  public void setParentContext(MuleContext domainContext) {
+    this.domainContext = domainContext.getRegistry().get("springApplicationContext");
+  }
 
-        if (parentObjectController != null)
-        {
-            applicationObjectcontroller = new CompositeOptionalObjectsController(applicationObjectcontroller, parentObjectController);
-        }
-
-        return doCreateApplicationContext(muleContext, artifactConfigResources, applicationObjectcontroller);
-    }
-
-    protected ApplicationContext doCreateApplicationContext(MuleContext muleContext, ConfigResource[] artifactConfigResources,
-                                                            OptionalObjectsController optionalObjectsController)
-    {
-        return new MuleArtifactContext(muleContext, artifactConfigResources, optionalObjectsController, getArtifactProperties(),
-                artifactType);
-    }
-
-
-    protected void createSpringRegistry(MuleContext muleContext, ApplicationContext applicationContext)
-            throws Exception
-    {
-        if (parentContext != null && domainContext != null)
-        {
-            throw new IllegalStateException("An application with a web xml context and domain resources is not supported");
-        }
-        if (parentContext != null)
-        {
-            createRegistryWithParentContext(muleContext, applicationContext, parentContext);
-        }
-        else if (domainContext != null)
-        {
-            createRegistryWithParentContext(muleContext, applicationContext, domainContext);
-        }
-        else
-        {
-            registry = new SpringRegistry(applicationContext, muleContext);
-        }
-
-        // Note: The SpringRegistry must be created before
-        // applicationContext.refresh() gets called because
-        // some beans may try to look up other beans via the Registry during
-        // preInstantiateSingletons().
-        muleContext.addRegistry(registry);
-    }
-
-    private void createRegistryWithParentContext(MuleContext muleContext, ApplicationContext applicationContext,
-                                                 ApplicationContext parentContext) throws ConfigurationException
-    {
-        if (applicationContext instanceof ConfigurableApplicationContext)
-        {
-            registry = new SpringRegistry((ConfigurableApplicationContext) applicationContext,
-                    parentContext, muleContext);
-        }
-        else
-        {
-            throw new ConfigurationException(
-                    MessageFactory.createStaticMessage(
-                            "Cannot set a parent context if the ApplicationContext does not implement ConfigurableApplicationContext"));
-        }
-    }
-
-    @Override
-    protected void applyLifecycle(LifecycleManager lifecycleManager) throws Exception
-    {
-        // If the MuleContext is started, start all objects in the new Registry.
-        if (lifecycleManager.isPhaseComplete(Startable.PHASE_NAME))
-        {
-            lifecycleManager.fireLifecycle(Startable.PHASE_NAME);
-        }
-    }
-
-    public void setUseDefaultConfigResource(boolean useDefaultConfigResource)
-    {
-        this.useDefaultConfigResource = useDefaultConfigResource;
-    }
-
-    public ApplicationContext getApplicationContext()
-    {
-        return applicationContext;
-    }
-
-    public void setUseMinimalConfigResource(boolean useMinimalConfigResource)
-    {
-        this.useMinimalConfigResource = useMinimalConfigResource;
-    }
-
-    protected ApplicationContext getParentContext()
-    {
-        return parentContext;
-    }
-
-    @Override
-    public void setParentContext(MuleContext domainContext)
-    {
-        this.domainContext = domainContext.getRegistry().get("springApplicationContext");
-    }
-
-    public void setParentContext(ApplicationContext parentContext)
-    {
-        this.parentContext = parentContext;
-    }
+  public void setParentContext(ApplicationContext parentContext) {
+    this.parentContext = parentContext;
+  }
 }

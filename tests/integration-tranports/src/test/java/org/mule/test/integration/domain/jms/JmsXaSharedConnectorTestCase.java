@@ -1,8 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
- * The software in this package is published under the terms of the CPAL v1.0
- * license, a copy of which has been included with this distribution in the
- * LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
+ * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.domain.jms;
 
@@ -17,27 +15,21 @@ import java.util.Collection;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.junit.Assert.assertThat;
 
-public class JmsXaSharedConnectorTestCase extends JmsSharedConnectorTestCase
-{
+public class JmsXaSharedConnectorTestCase extends JmsSharedConnectorTestCase {
 
-    public JmsXaSharedConnectorTestCase(String domainConfig)
-    {
-        super(domainConfig);
-    }
+  public JmsXaSharedConnectorTestCase(String domainConfig) {
+    super(domainConfig);
+  }
 
-    @Parameterized.Parameters
-    public static Collection<Object[]> parameters()
-    {
-        return Arrays.asList(new Object[][] {
-                {"domain/jms/jms-activemq-xa-embedded-shared-connector.xml"}
-        });
-    }
+  @Parameterized.Parameters
+  public static Collection<Object[]> parameters() {
+    return Arrays.asList(new Object[][] {{"domain/jms/jms-activemq-xa-embedded-shared-connector.xml"}});
+  }
 
-    @Test
-    public void connectionFactoryWrapperIsUsed()
-    {
-        JmsConnector jmsConnector = (JmsConnector) getMuleContextForApp(CLIENT_APP).getRegistry().lookupObject("sharedJmsConnector");
-        assertThat(jmsConnector.getConnectionFactory(), instanceOf(DefaultXAConnectionFactoryWrapper.class));
-    }
+  @Test
+  public void connectionFactoryWrapperIsUsed() {
+    JmsConnector jmsConnector = (JmsConnector) getMuleContextForApp(CLIENT_APP).getRegistry().lookupObject("sharedJmsConnector");
+    assertThat(jmsConnector.getConnectionFactory(), instanceOf(DefaultXAConnectionFactoryWrapper.class));
+  }
 
 }
