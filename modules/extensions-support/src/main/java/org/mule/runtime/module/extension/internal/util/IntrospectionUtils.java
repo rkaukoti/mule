@@ -20,6 +20,7 @@ import static org.reflections.ReflectionUtils.getAllMethods;
 import static org.reflections.ReflectionUtils.withAnnotation;
 import static org.reflections.ReflectionUtils.withModifier;
 import static org.reflections.ReflectionUtils.withName;
+
 import org.mule.metadata.api.ClassTypeLoader;
 import org.mule.metadata.api.builder.BaseTypeBuilder;
 import org.mule.metadata.api.model.AnyType;
@@ -49,7 +50,9 @@ import org.mule.runtime.extension.api.introspection.property.MetadataContentMode
 import org.mule.runtime.extension.api.introspection.property.MetadataKeyPartModelProperty;
 import org.mule.runtime.extension.api.runtime.operation.OperationResult;
 import org.mule.runtime.extension.api.runtime.source.Source;
+import org.mule.runtime.module.extension.internal.introspection.describer.FieldWrapper;
 import org.mule.runtime.module.extension.internal.introspection.describer.MuleExtensionAnnotationParser;
+import org.mule.runtime.module.extension.internal.introspection.describer.TypeWrapper;
 import org.mule.runtime.module.extension.internal.model.property.DeclaringMemberModelProperty;
 
 import com.google.common.base.Predicates;
@@ -72,6 +75,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.core.ResolvableType;
@@ -113,7 +117,8 @@ public final class IntrospectionUtils
      */
     public static MetadataType getMethodReturnType(Method method, ClassTypeLoader typeLoader)
     {
-        return getMethodType(method, typeLoader, 0, () -> {
+        return getMethodType(method, typeLoader, 0, () ->
+        {
             ResolvableType methodType = getMethodResolvableType(method);
             return methodType.getRawClass().equals(OperationResult.class)
                    ? typeBuilder().anyType().build()
@@ -332,6 +337,27 @@ public final class IntrospectionUtils
         return new LinkedList<>();
     }
 
+    public static List<Type> getSuperClassGenerics(TypeWrapper<?> type, Class<?> superClass)
+    {
+        Class<?> searchClass = type.getDeclaredClass();
+
+        checkArgument(searchClass.getSuperclass().equals(superClass), String.format("Class '%s' does not extend the '%s' class", type.getName(), superClass.getName()));
+
+        while (!Object.class.equals(searchClass))
+        {
+            if (searchClass.getSuperclass().equals(superClass))
+            {
+                Type superType = searchClass.getGenericSuperclass();
+                if (superType instanceof ParameterizedType)
+                {
+                    return stream(((ParameterizedType) superType).getActualTypeArguments()).collect(toList());
+                }
+            }
+            searchClass = searchClass.getSuperclass();
+        }
+        return new LinkedList<>();
+    }
+
     public static void checkInstantiable(Class<?> declaringClass)
     {
         checkInstantiable(declaringClass, true);
@@ -478,6 +504,18 @@ public final class IntrospectionUtils
         return sourceType.getSimpleName();
     }
 
+
+    public static String getSourceName(TypeWrapper<? extends Source> sourceType)
+    {
+        java.util.Optional<Alias> alias = sourceType.getAnnotation(Alias.class);
+        if (alias.isPresent())
+        {
+            return alias.get().value();
+        }
+
+        return sourceType.getName();
+    }
+
     public static java.util.Optional<ParameterModel> getContentParameter(ComponentModel component)
     {
         return component.getParameterModels().stream()
@@ -594,6 +632,17 @@ public final class IntrospectionUtils
         return ImmutableList.<Field>builder()
                 .addAll(getParameterGroupFields(annotatedType))
                 .addAll(getMultilevelMetadataKeys(annotatedType, typeLoader)).build();
+    }
+
+    public static Collection<FieldWrapper> getParameterContainers(TypeWrapper<?> annotatedType, ClassTypeLoader typeLoader)
+    {
+        return ImmutableList.<FieldWrapper>builder()
+                .addAll(annotatedType.getAnnotatedFields(ParameterGroup.class))
+                .addAll(annotatedType.getAnnotatedFields(MetadataKeyId.class)
+                                .stream()
+                                .filter(field -> isMultiLevelMetadataKeyId(field.getField(), field.getField().getType(), typeLoader))
+                                .collect(Collectors.toList()))
+                .build();
     }
 
     /**

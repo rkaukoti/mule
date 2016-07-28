@@ -251,6 +251,20 @@ public final class MuleExtensionAnnotationParser
         }
     }
 
+    private static void parseLayoutAnnotations(Annotated annotatedElement, LayoutModelPropertyBuilder builder)
+    {
+        java.util.Optional<Password> passwordAnnotation = annotatedElement.getAnnotation(Password.class);
+        if (passwordAnnotation.isPresent())
+        {
+            builder.withPassword(true);
+        }
+        java.util.Optional<Text> textAnnotation = annotatedElement.getAnnotation(Text.class);
+        if (textAnnotation.isPresent())
+        {
+            builder.withText(true);
+        }
+    }
+
     private static void parsePlacementAnnotation(AnnotatedElement annotatedElement, LayoutModelPropertyBuilder builder)
     {
         Placement placementAnnotation = annotatedElement.getAnnotation(Placement.class);
@@ -259,6 +273,17 @@ public final class MuleExtensionAnnotationParser
             builder.order(placementAnnotation.order()).
                     groupName(placementAnnotation.group()).
                     tabName(placementAnnotation.tab());
+        }
+    }
+    private static void parsePlacementAnnotation(Annotated annotatedElement, LayoutModelPropertyBuilder builder)
+    {
+        java.util.Optional<Placement> placementAnnotation = annotatedElement.getAnnotation(Placement.class);
+        if (placementAnnotation.isPresent())
+        {
+            Placement placement = placementAnnotation.get();
+            builder.order(placement.order()).
+                    groupName(placement.group()).
+                    tabName(placement.tab());
         }
     }
 
@@ -270,6 +295,22 @@ public final class MuleExtensionAnnotationParser
     static LayoutModelProperty parseLayoutAnnotations(AnnotatedElement annotatedElement, String name)
     {
         return parseLayoutAnnotations(annotatedElement, name, LayoutModelPropertyBuilder.create());
+    }
+
+    static LayoutModelProperty parseLayoutAnnotations(Annotated annotatedElement, String name)
+    {
+        return parseLayoutAnnotations(annotatedElement, name, LayoutModelPropertyBuilder.create());
+    }
+
+    static LayoutModelProperty parseLayoutAnnotations(Annotated annotatedElement, String name, LayoutModelPropertyBuilder builder)
+    {
+        if (isDisplayAnnotationPresent(annotatedElement))
+        {
+            parseLayoutAnnotations(annotatedElement, builder);
+            parsePlacementAnnotation(annotatedElement, builder);
+            return builder.build();
+        }
+        return null;
     }
 
     static LayoutModelProperty parseLayoutAnnotations(AnnotatedElement annotatedElement, String name, LayoutModelPropertyBuilder builder)
@@ -284,6 +325,12 @@ public final class MuleExtensionAnnotationParser
     }
 
     private static boolean isDisplayAnnotationPresent(AnnotatedElement annotatedElement)
+    {
+        List<Class> displayAnnotations = Arrays.asList(Password.class, Text.class, Placement.class);
+        return displayAnnotations.stream().anyMatch(annotation -> annotatedElement.getAnnotation(annotation) != null);
+    }
+
+    private static boolean isDisplayAnnotationPresent(Annotated annotatedElement)
     {
         List<Class> displayAnnotations = Arrays.asList(Password.class, Text.class, Placement.class);
         return displayAnnotations.stream().anyMatch(annotation -> annotatedElement.getAnnotation(annotation) != null);
@@ -312,6 +359,32 @@ public final class MuleExtensionAnnotationParser
         {
             MetadataKeyPart metadataKeyPart = element.getAnnotation(MetadataKeyPart.class);
             elementWithModelProperties.withModelProperty(new MetadataKeyPartModelProperty(metadataKeyPart.order()));
+        }
+    }
+
+    /**
+     * Enriches the {@link ParameterDeclarer} with a {@link MetadataKeyPartModelProperty} or a {@link MetadataContentModelProperty} if the parsedParameter is
+     * annotated either as {@link MetadataKeyId}, {@link MetadataKeyPart} or {@link Content} respectibly.
+     *
+     * @param element                    the method annotated parameter parsed
+     * @param elementWithModelProperties the {@link ParameterDeclarer} associated to the parsed parameter
+     */
+    public static void parseMetadataAnnotations(Annotated element, HasModelProperties elementWithModelProperties)
+    {
+        if (element.isAnnotatedWith(Content.class))
+        {
+            elementWithModelProperties.withModelProperty(new MetadataContentModelProperty());
+        }
+
+        if (element.isAnnotatedWith(MetadataKeyId.class))
+        {
+            elementWithModelProperties.withModelProperty(new MetadataKeyPartModelProperty(1));
+        }
+
+        if (element.isAnnotatedWith(MetadataKeyPart.class))
+        {
+            java.util.Optional<MetadataKeyPart> metadataKeyPart = element.getAnnotation(MetadataKeyPart.class);
+            elementWithModelProperties.withModelProperty(new MetadataKeyPartModelProperty(metadataKeyPart.get().order()));
         }
     }
 
