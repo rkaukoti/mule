@@ -18,6 +18,7 @@ import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.api.connection.ConnectionValidationResult;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.MuleException;
+import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.lifecycle.InitialisationException;
 import org.mule.runtime.core.api.lifecycle.Lifecycle;
 import org.mule.runtime.core.api.retry.RetryPolicyTemplate;
@@ -121,4 +122,5 @@ public abstract class ConnectionProviderWrapper<Connection> implements Connectio
         disposeIfNeeded(delegate, LOGGER);
         disposeIfNeeded(getRetryPolicyTemplate(), LOGGER);
     }
+
 }
