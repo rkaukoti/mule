@@ -148,7 +148,6 @@
         </xs:complexContent>
     </xs:complexType>
     <xs:element xmlns="http://www.mulesoft.org/schema/mule/petstore" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="GetCageType" substitutionGroup="mule:abstract-message-processor" name="get-cage"></xs:element>
-    <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/petstore" type="GetCageType" substitutionGroup="mule:abstract-message-processor" name="get-cage"></xs:element>
     <xs:complexType name="GetCageType">
         <xs:complexContent>
             <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
